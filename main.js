@@ -39,6 +39,10 @@ app.on('ready', function(){
     mainWindow = null;
   });
 
+  mainWindow.on('blur', function(){
+    mainWindow.hide();
+  });
+
   globalShortcut.register('alt+space', function(){
     if(mainWindow.isVisible())
       mainWindow.hide();
