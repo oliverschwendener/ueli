@@ -28,9 +28,15 @@ input{
 	padding: 15px 0;
 }
 
-.result{
+.result-value{
 	width: 100%;
 	text-align: center;
 	color: #42A5F5;
 	font-size: 18px;
+}
+
+.result-path{
+	width: 100%;
+	text-align: center;
+	display: none;
 }
