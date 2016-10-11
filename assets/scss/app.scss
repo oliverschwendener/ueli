@@ -1,6 +1,6 @@
 @import 'https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i';
 
-$background-color: transparentize(#ECEFF1, 0.05);
+$background-color: #ECEFF1;
 $text-color: #212121;
 $highlight-color: #0277BD;
 
@@ -10,14 +10,6 @@ body{
 	padding: 0;
 
 	font-family: 'Roboto', 'Segoe UI', sans-serif;	
-}
-
-img.header-img{
-	position: fixed;
-	top: 5px;
-	left: 10px;
-	width: 25px;
-	height: 25px;
 }
 
 div.vertical-center{
