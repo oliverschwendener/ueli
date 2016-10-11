@@ -82,6 +82,11 @@ $(function(){
     }
 
     function StartProcess(pathToLnk){
+        if($(selector.input).val() === 'exit'){
+            ipc.send('close-main-window');
+            return;
+        }
+
         if(pathToLnk === '') return;
 
         var cmd = exec('start "" "' + pathToLnk + '"', function(error, stdout, stderr){
@@ -105,6 +110,7 @@ $(function(){
     // Input Text Change
     $(selector.input).bind('input propertychange', function(){
         var searchString = $(this).val();
+
         searchResult = GetSearchResult(searchString);
 
         if(searchResult === undefined || searchResult.length === 0){
