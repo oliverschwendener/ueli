@@ -1,0 +1,47 @@
+@import 'https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i';
+
+$background-color: transparentize(#ECEFF1, 0.05);
+$text-color: #212121;
+$highlight-color: #0277BD;
+
+body{
+	background-color: $background-color;
+	margin: 0;
+	padding: 0;
+
+	font-family: 'Roboto', 'Segoe UI', sans-serif;	
+}
+
+div.vertical-center{
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);	
+	width: 100%;
+
+	input{
+		width: 100%;
+		padding: 15px 0;
+		border: none;
+		outline: none;
+		text-align: center;
+		background-color: transparent;
+		color: $text-color;
+		font-size: 36px;		
+		font-weight: 600;
+	}
+
+	div.result-value{
+		width: 100%;
+		min-height: 40px;
+		text-align: center;
+		color: $highlight-color;
+		font-size: 24px;
+		font-weight: 400;
+	}
+
+	div.result-path{
+		width: 100%;
+		display: none;
+		text-align: center;
+	}
+}

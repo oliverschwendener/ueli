@@ -135,9 +135,5 @@ $(function(){
             searchResultIndex++;
             DisplaySearchResult();
         }
-        if(e.keyCode === 38){
-            searchResultIndex--;
-            DisplaySearchResult;
-        }
     });
 });
