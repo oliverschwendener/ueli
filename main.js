@@ -16,7 +16,8 @@ var mainWindowOptions = {
     //devTools: true,
     transparent: true,
     skipTaskbar: true,
-    show: false
+    show: false,
+    center: true
   };
 
 var mainWindowHtml = 'file://' + __dirname + '/main.html';
