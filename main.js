@@ -2,6 +2,7 @@ var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 
 var globalShortcut = require('global-shortcut');
+var ipc = require('ipc');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -21,9 +22,9 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    //frame:false
+    width: 600,
+    height: 150,
+    frame:false
   });
 
   // and load the index.html of the app.
@@ -42,5 +43,9 @@ app.on('ready', function() {
       mainWindow.hide();
     else
       mainWindow.show();
+  });
+
+  ipc.on('hide-main-window', function () {
+    mainWindow.hide();
   });
 });

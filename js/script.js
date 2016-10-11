@@ -3,7 +3,16 @@ $(function(){
     var os = require('os');
     var path = require('path');
     var exec = require('child_process').exec;
-    var levenshtein = require('fast-levenshtein');        
+    var levenshtein = require('fast-levenshtein');
+    var ipc = require('ipc');        
+
+    var selector = {
+        input: 'input',
+        value: '.result-value',
+        path: '.result-path'
+    }
+
+    var shortCutExtenstion = '.lnk';
 
     var walk = function(dir) {
         var results = [];
@@ -14,7 +23,7 @@ $(function(){
             if (stat && stat.isDirectory())
                 results = results.concat(walk(file));
             else
-                if(path.extname(file) === '.lnk' || path.extname(file) === '.exe') 
+                if(path.extname(file) === shortCutExtenstion) 
                     results.push(file);
         });
         return results;
@@ -30,20 +39,6 @@ $(function(){
     var searchResult = [];
     var searchResultIndex = 0;
 
-    // Input Text Change
-    $('input').bind('input propertychange', function(){
-        var searchString = $(this).val();
-        searchResult = GetSearchResult(searchString);
-
-        if(searchResult === undefined || searchResult.length === 0){
-            $('.result-value').html('');
-            $('.result-path').html('');
-            return;
-        }
-        else
-            DisplaySearchResult();                
-    });
-
     function DisplaySearchResult(){
         if(searchResult === undefined || searchResult.length === 0)
             return;
@@ -53,8 +48,8 @@ $(function(){
         if(searchResultIndex > searchResult.length - 1)
             searchResultIndex = 0;
 
-        $('.result-value').html(searchResult[searchResultIndex].Name);
-        $('.result-path').html(searchResult[searchResultIndex].Path);
+        $(selector.value).html(searchResult[searchResultIndex].Name);
+        $(selector.path).html(searchResult[searchResultIndex].Path);
     }
 
     function GetSearchResult(value){
@@ -64,14 +59,14 @@ $(function(){
         var apps = [];
 
         for(var i = 0; i < allShortCuts.length; i++){
-            var fileName = path.basename(allShortCuts[i]).toLowerCase().replace('.lnk', '');
+            var fileName = path.basename(allShortCuts[i]).toLowerCase().replace(shortCutExtenstion, '');
             var search = value.toLowerCase();
             var weight = levenshtein.get(fileName, search);
 
             if(fileName.indexOf(search) === -1) continue;
 
             apps.push({
-                Name: path.basename(allShortCuts[i]).replace('.lnk', ''),
+                Name: path.basename(allShortCuts[i]).replace(shortCutExtenstion, ''),
                 Path: allShortCuts[i],
                 Weight: weight
             });
@@ -86,11 +81,46 @@ $(function(){
         return sortedList;
     }
 
+    function StartProcess(pathToLnk){
+        if(pathToLnk === '') return;
+
+        var cmd = exec('start "" "' + pathToLnk + '"', function(error, stdout, stderr){
+            if(error) throw error;
+            
+            HideMainWindow();
+        });
+    }
+
+    function HideMainWindow(){
+        ResetGui();
+        ipc.send('hide-main-window');
+    }
+
+    function ResetGui(){
+        $(selector.input).val('');
+        $(selector.value).empty();
+        $(selector.path).empty();
+    }
+
+    // Input Text Change
+    $(selector.input).bind('input propertychange', function(){
+        var searchString = $(this).val();
+        searchResult = GetSearchResult(searchString);
+
+        if(searchResult === undefined || searchResult.length === 0){
+            $(selector.value).html('');
+            $(selector.path).html('');
+            return;
+        }
+        else
+            DisplaySearchResult();                
+    });
+
     // Keyboard Events
-    $('input').keyup(function(e) {
+    $(selector.input).keyup(function(e) {
         // When user hits enter on keyboard
         if(e.keyCode === 13){
-            var path = $('.result-path').html();
+            var path = $(selector.path).html();
             StartProcess(path);
         }
 
@@ -104,14 +134,4 @@ $(function(){
             DisplaySearchResult;
         }
     });
-
-    function StartProcess(pathToLnk){
-        if(pathToLnk === '') return;
-
-        var cmd = exec('start "" "' + pathToLnk + '"', function(error, stdout, stderr){
-            if(error) throw error;
-            
-            mainWindow.hide();
-        });
-    }
 });
