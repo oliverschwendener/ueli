@@ -1,0 +1,34 @@
+@import 'https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i';
+
+body{
+	background-color: #111;
+	margin: 0;
+	padding: 0;
+
+	color: #fff;
+	font-family: 'Roboto', 'Segoe UI', sans-serif;	
+	font-weight: 300;
+}
+
+.vertical-center{
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);	
+	width: 100%;
+}
+
+input{
+	background-color: transparent;
+	border: none;
+	outline: none;
+	text-align: center;
+	width: 100%;	
+	font-size: 24px;
+	color: #fff;
+	padding: 15px 0;
+}
+
+.result{
+	width: 100%;
+	text-align: center;
+}
