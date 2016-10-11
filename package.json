@@ -4,7 +4,8 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
-    "pretty-bytes": "^2.0.1"
+    "pretty-bytes": "^2.0.1",
+    "fast-levenshtein": "^2.0.5"
   },
   "devDependencies": {
     "electron-prebuilt": "^0.35.2"
