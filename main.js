@@ -15,7 +15,8 @@ var mainWindowOptions = {
     //resizable: true,
     //devTools: true,
     transparent: true,
-    skipTaskbar: true
+    skipTaskbar: true,
+    show: false
   };
 
 var mainWindowHtml = 'file://' + __dirname + '/main.html';
