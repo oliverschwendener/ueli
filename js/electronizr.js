@@ -4,9 +4,10 @@ $(function () {
     var path = require('path');
     var exec = require('child_process').exec;
     var levenshtein = require('fast-levenshtein');
-    var ipcMain = require('ipc');
+    var ipcRenderer = require('electron').ipcRenderer;
 
     var selector = {
+        body: 'body',
         input: 'input',
         value: '.result-value',
         path: '.result-path',
@@ -26,6 +27,7 @@ $(function () {
 
     var animationSpeed = 500;
     var transactionIsHandled = false;
+    var maxResultItems = 10;
 
     function GetFilesFromDirectory(directory, fileExtension) {
         var result = [];
@@ -67,8 +69,18 @@ $(function () {
         if (searchResultIndex > searchResult.length - 1)
             searchResultIndex = 0;
 
-        $(selector.value).html(searchResult[searchResultIndex].Name);
+        $(selector.value).empty();
+        $(selector.value).children('p').removeClass('active');
+
+        for(var i = 0; i < searchResult.length; i++){
+            $(selector.value).append('<p id="' + i +'">' + searchResult[i].Name + '</p>');
+            $(selector.value).find('#' + searchResultIndex).addClass('active');
+            $(selector.path).html(searchResult[searchResultIndex].Path);
+        }
+
         $(selector.path).html(searchResult[searchResultIndex].Path);
+
+        ipcRenderer.sendSync('resize-window', $(selector.body).height());
     }
 
     function GetSearchResult(value) {
@@ -96,6 +108,16 @@ $(function () {
             return 0;
         });
 
+        if(sortedResult.length > maxResultItems){
+            var newResult = [];
+            for(var i = 0; i < maxResultItems; i++){
+                if(i == maxResultItems)
+                    break;
+                newResult.push(sortedResult[i]);
+            }
+            return newResult;
+        }
+
         return sortedResult;
     }
 
@@ -110,7 +132,7 @@ $(function () {
 
     function HideMainWindow() {
         ResetGui();
-        ipcMain.send('hide-main-window');
+        ipcRenderer.sendSync('hide-main-window');
     }
 
     function ResetGui() {
@@ -164,7 +186,7 @@ $(function () {
     function UpdateAppList() {
         transactionIsHandled = true;
         shortCutFiles = GetFilesFromDirectoriesRecursively(startMenuFolders, shortCutFileExtension);
-        $(selector.infoMessage).html('<i class="fa fa-info" aria-hidden="true"></i> Updated app list');
+        $(selector.infoMessage).html('Updated app list');
         $(selector.infoMessage).slideDown(animationSpeed);
         setTimeout(function () {
             $(selector.infoMessage).slideUp(animationSpeed);
@@ -205,7 +227,7 @@ $(function () {
             var input = $(selector.input).val()
 
             if (input === 'exit') {
-                ipcMain.send('close-main-window');
+                ipcRenderer.sendSync('close-main-window');
                 return;
             }
 
@@ -221,6 +243,10 @@ $(function () {
         // Select Next or Prev Item
         if (e.keyCode === 40 || e.keyCode === 9) {
             searchResultIndex++;
+            DisplaySearchResult();
+        }
+        if (e.keyCode == 38){
+            searchResultIndex--;
             DisplaySearchResult();
         }
     });

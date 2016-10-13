@@ -8,8 +8,9 @@ var ipcMain = electron.ipcMain;
 var mainWindow = null;
 
 var mainWindowOptions = {
-  width: 600,
-  height: 200,
+  width: 800,
+  minWidth: 800,
+  maxHeight: 562,
   frame: false,
   //resizable: true,
   //devTools: true,
@@ -53,6 +54,11 @@ app.on('ready', function () {
 
   ipcMain.on('close-main-window', function () {
     app.quit();
-  })
+  });
+
+  ipcMain.on('resize-window', (event, height) => {
+    mainWindow.setSize(800, height, true);
+    event.returnValue = 0;
+  });
 
 });

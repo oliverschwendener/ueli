@@ -4,9 +4,9 @@ $background-color: #ECEFF1;
 $text-color: #212121;
 $info-message-color: lighten($text-color, 25);
 $highlight-color: #0277BD;
+$highlight-color2: #2ecc71;
 
 body{
-	background-color: $background-color;
 	margin: 0;
 	padding: 0;
 
@@ -14,10 +14,10 @@ body{
 }
 
 div.vertical-center{
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);	
+	background-color: $background-color;
 	width: 100%;
+	max-height: 562px;
+	overflow: hidden;
 
 	input{
 		width: 100%;
@@ -25,19 +25,39 @@ div.vertical-center{
 		border: none;
 		outline: none;
 		text-align: center;
-		background-color: transparent;
-		color: $text-color;
+		background: linear-gradient(to top left, #2c3e50, #34495e);
+		color: #fff;
 		font-size: 36px;		
 		font-weight: 600;
 	}
 
+	.search-icon{
+		position: fixed;
+		top: 36px;
+		right: 25px;
+		transform: translateY(-50%);
+		color: #fff;
+		font-size: 24px;
+		z-index: 10;
+	}
+
 	div.result-value{
 		width: 100%;
-		min-height: 40px;
 		text-align: center;
-		color: $highlight-color;
-		font-size: 24px;
-		font-weight: 400;
+
+		p{
+			color: $highlight-color;
+			font-size: 24px;
+			font-weight: 400;
+			-webkit-margin-before: 0;
+			-webkit-margin-after: 0;
+			padding: 10px 0;
+
+			&.active{
+				background: linear-gradient(to bottom right, $highlight-color, $highlight-color2);
+				color: #fff;
+			}
+		}
 	}
 
 	div.result-path{
@@ -48,8 +68,9 @@ div.vertical-center{
 
 	div.info-message{
 		color: $info-message-color;
-		padding: 5px;
+		padding: 25px;
 		text-align: center;
+		font-size: 18px;
 		display: none;
 	}
 }
