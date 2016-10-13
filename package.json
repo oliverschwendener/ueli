@@ -4,8 +4,9 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
-    "pretty-bytes": "^2.0.1",
-    "fast-levenshtein": "^2.0.5"
+    "fast-levenshtein": "^2.0.5",
+    "font-awesome": "^4.6.3",
+    "pretty-bytes": "^2.0.1"
   },
   "devDependencies": {
     "electron-prebuilt": "^0.35.2",
