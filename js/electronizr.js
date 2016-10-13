@@ -7,7 +7,7 @@ $(function () {
     var ipcRenderer = require('electron').ipcRenderer;
 
     var selector = {
-        body: 'body',
+        content: '.content',
         input: 'input',
         value: '.result-value',
         path: '.result-path',
@@ -79,8 +79,7 @@ $(function () {
         }
 
         $(selector.path).html(searchResult[searchResultIndex].Path);
-
-        ipcRenderer.sendSync('resize-window', $(selector.body).height());
+        ResizeWindow();
     }
 
     function GetSearchResult(value) {
@@ -250,4 +249,8 @@ $(function () {
             DisplaySearchResult();
         }
     });
+
+    function ResizeWindow(){
+        ipcRenderer.sendSync('resize-window', $(selector.content).height());
+    }
 });
