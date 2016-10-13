@@ -61,9 +61,10 @@ $(function(){
         for(var i = 0; i < allShortCuts.length; i++){
             var fileName = path.basename(allShortCuts[i]).toLowerCase().replace(shortCutExtenstion, '');
             var search = value.toLowerCase();
-            var weight = levenshtein.get(fileName, search);
+            var weight = GetWeight(fileName, search);
 
-            if(fileName.indexOf(search) === -1) continue;
+            //if(fileName.indexOf(search) === -1) continue;
+            if(!StringContainsSubstring(fileName, value)) continue;
 
             apps.push({
                 Name: path.basename(allShortCuts[i]).replace(shortCutExtenstion, ''),
@@ -72,13 +73,13 @@ $(function(){
             });
         }
 
-        var sortedList = apps.sort(function(a, b){
+        var sortedResult = apps.sort(function(a, b){
             if (a.Weight > b.Weight) return 1;
             if (a.Weight < b.Weight) return -1;
             return 0;
         });
 
-        return sortedList;
+        return sortedResult;
     }
 
     function StartProcess(pathToLnk){
@@ -123,7 +124,7 @@ $(function(){
     });
 
     // Keyboard Events
-    $(selector.input).keyup(function(e) {
+    $(selector.input).keyup(function(e){
         // When user hits enter on keyboard
         if(e.keyCode === 13){
             var path = $(selector.path).html();
@@ -136,4 +137,48 @@ $(function(){
             DisplaySearchResult();
         }
     });
+
+    function GetWeight(stringToSearch, value){
+        var result = [];
+        var stringToSearchWords = SplitStringToArray(stringToSearch);
+        var valueWords = SplitStringToArray(value);
+
+        for(var i = 0; i < stringToSearchWords.length; i++){
+            for(var j = 0; j < valueWords.length; j++){
+                result.push(levenshtein.get(stringToSearchWords[i], valueWords[j]));
+            }   
+        }
+        return GetAvg(result);
+    }
+
+    function GetAvg(array){
+        var sum = 0;
+
+        for(var i = 0; i < array.length; i++){
+            sum = sum + array[i];
+        }
+
+        return sum / array.length;
+    }
+
+    function SplitStringToArray(string){
+        return string.split(/\s+/);
+    }
+
+    function StringContainsSubstring(stringToSearch, substring){
+        var wordsOfSubstring = SplitStringToArray(substring.toLowerCase());
+        stringToSearch = stringToSearch.split(' ').join('').toLowerCase();
+
+        console.log(wordsOfSubstring, stringToSearch);
+
+        for(var i = 0; i < wordsOfSubstring.length; i++){
+            console.log(stringToSearch, wordsOfSubstring[i], stringToSearch.indexOf(wordsOfSubstring[i]));
+
+            if(stringToSearch.indexOf(wordsOfSubstring[i]) === -1)
+                return false;
+        }
+
+
+        return true;
+    }
 });
