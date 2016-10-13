@@ -111,6 +111,10 @@ $(function(){
     // Input Text Change
     $(selector.input).bind('input propertychange', function(){
         var searchString = $(this).val();
+        if(searchString.split(' ').join('') === ''){
+            ResetGui();
+            return;
+        }
 
         searchResult = GetSearchResult(searchString);
 
@@ -177,7 +181,6 @@ $(function(){
             if(stringToSearch.indexOf(wordsOfSubstring[i]) === -1)
                 return false;
         }
-
 
         return true;
     }
