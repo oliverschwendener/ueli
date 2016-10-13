@@ -6,7 +6,6 @@ var globalShortcut = electron.globalShortcut;
 var ipcMain = electron.ipcMain;
 
 var mainWindow = null;
-var optionsWindow = null;
 
 var mainWindowOptions = {
   width: 600,
