@@ -163,7 +163,7 @@ $(function () {
 
     function UpdateAppList() {
         transactionIsHandled = true;
-        shortCutFiles = GetFilesFromDirectoriesRecursively(startMenuFolders);
+        shortCutFiles = GetFilesFromDirectoriesRecursively(startMenuFolders, shortCutFileExtension);
         $(selector.infoMessage).html('<i class="fa fa-info" aria-hidden="true"></i> Updated app list');
         $(selector.infoMessage).slideDown(animationSpeed);
         setTimeout(function () {
