@@ -9,7 +9,7 @@ var mainWindow = null;
 
 var mainWindowOptions = {
   width: 600,
-  height: 150,
+  height: 200,
   frame: false,
   //resizable: true,
   //devTools: true,
@@ -54,4 +54,5 @@ app.on('ready', function () {
   ipcMain.on('close-main-window', function () {
     app.quit();
   })
+
 });

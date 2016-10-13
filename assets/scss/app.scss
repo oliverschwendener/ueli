@@ -2,6 +2,7 @@
 
 $background-color: #ECEFF1;
 $text-color: #212121;
+$info-message-color: lighten($text-color, 25);
 $highlight-color: #0277BD;
 
 body{
@@ -43,5 +44,12 @@ div.vertical-center{
 		width: 100%;
 		display: none;
 		text-align: center;
+	}
+
+	div.info-message{
+		color: $info-message-color;
+		padding: 5px;
+		text-align: center;
+		display: none;
 	}
 }

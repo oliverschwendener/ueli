@@ -4,12 +4,13 @@ $(function () {
     var path = require('path');
     var exec = require('child_process').exec;
     var levenshtein = require('fast-levenshtein');
-    var ipc = require('ipc');
+    var ipcMain = require('ipc');
 
     var selector = {
         input: 'input',
         value: '.result-value',
-        path: '.result-path'
+        path: '.result-path',
+        infoMessage: '.info-message'
     }
 
     var shortCutFileExtension = '.lnk';
@@ -22,6 +23,9 @@ $(function () {
 
     var searchResult = [];
     var searchResultIndex = 0;
+
+    var animationSpeed = 500;
+    var transactionIsHandled = false;
 
     function GetFilesFromDirectory(directory, fileExtension) {
         var result = [];
@@ -96,11 +100,6 @@ $(function () {
     }
 
     function StartProcess(pathToLnk) {
-        if ($(selector.input).val() === 'exit') {
-            ipc.send('close-main-window');
-            return;
-        }
-
         if (pathToLnk === '') return;
 
         var cmd = exec('start ' + pathToLnk, function (error, stdout, stderr) {
@@ -111,7 +110,7 @@ $(function () {
 
     function HideMainWindow() {
         ResetGui();
-        ipc.send('hide-main-window');
+        ipcMain.send('hide-main-window');
     }
 
     function ResetGui() {
@@ -156,6 +155,26 @@ $(function () {
         return true;
     }
 
+    function HandleEzrCommand(command) {
+        command = command.replace('ezr.', '');
+
+        if (command === 'reload') UpdateAppList();
+    }
+
+    function UpdateAppList() {
+        transactionIsHandled = true;
+        shortCutFiles = GetFilesFromDirectoriesRecursively(startMenuFolders);
+        $(selector.infoMessage).html('<i class="fa fa-info" aria-hidden="true"></i> Updated app list');
+        $(selector.infoMessage).slideDown(animationSpeed);
+        setTimeout(function () {
+            $(selector.infoMessage).slideUp(animationSpeed);
+            setTimeout(function () {
+                $(selector.infoMessage).empty();
+                transactionIsHandled = false;
+            }, animationSpeed);
+        }, 2000);
+    }
+
     // Input Text Change
     $(selector.input).bind('input propertychange', function () {
         var searchString = $(this).val();
@@ -179,7 +198,22 @@ $(function () {
     // Keyboard Events
     $(selector.input).keyup(function (e) {
         // When user hits enter on keyboard
+        if(transactionIsHandled) return;
+
         if (e.keyCode === 13) {
+
+            var input = $(selector.input).val()
+
+            if (input === 'exit') {
+                ipcMain.send('close-main-window');
+                return;
+            }
+
+            if (input.startsWith('ezr.')) {
+                HandleEzrCommand(input);
+                return;
+            }
+
             var path = $(selector.path).html();
             StartProcess(path);
         }
