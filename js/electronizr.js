@@ -63,7 +63,6 @@ $(function(){
             var search = value.toLowerCase();
             var weight = GetWeight(fileName, search);
 
-            //if(fileName.indexOf(search) === -1) continue;
             if(!StringContainsSubstring(fileName, value)) continue;
 
             apps.push({
@@ -92,7 +91,6 @@ $(function(){
 
         var cmd = exec('start "" "' + pathToLnk + '"', function(error, stdout, stderr){
             if(error) throw error;
-            
             HideMainWindow();
         });
     }
@@ -147,20 +145,18 @@ $(function(){
         var stringToSearchWords = SplitStringToArray(stringToSearch);
         var valueWords = SplitStringToArray(value);
 
-        for(var i = 0; i < stringToSearchWords.length; i++){
-            for(var j = 0; j < valueWords.length; j++){
+        for(var i = 0; i < stringToSearchWords.length; i++)
+            for(var j = 0; j < valueWords.length; j++)
                 result.push(levenshtein.get(stringToSearchWords[i], valueWords[j]));
-            }   
-        }
+
         return GetAvg(result);
     }
 
     function GetAvg(array){
         var sum = 0;
 
-        for(var i = 0; i < array.length; i++){
+        for(var i = 0; i < array.length; i++)
             sum = sum + array[i];
-        }
 
         return sum / array.length;
     }
@@ -173,14 +169,9 @@ $(function(){
         var wordsOfSubstring = SplitStringToArray(substring.toLowerCase());
         stringToSearch = stringToSearch.split(' ').join('').toLowerCase();
 
-        console.log(wordsOfSubstring, stringToSearch);
-
-        for(var i = 0; i < wordsOfSubstring.length; i++){
-            console.log(stringToSearch, wordsOfSubstring[i], stringToSearch.indexOf(wordsOfSubstring[i]));
-
+        for(var i = 0; i < wordsOfSubstring.length; i++)
             if(stringToSearch.indexOf(wordsOfSubstring[i]) === -1)
                 return false;
-        }
 
         return true;
     }
