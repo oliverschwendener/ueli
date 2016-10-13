@@ -12,18 +12,28 @@ $(function () {
         path: '.result-path'
     }
 
-    var shortCutExtenstion = '.lnk';
+    var shortCutFileExtension = '.lnk';
     var startMenuFolders = [
         os.homedir() + '\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu',
         'C:\\ProgramData\\Microsoft\\Windows\\Start Menu'
     ]
 
-    var shortCutFiles = GetFilesFromDirectories(startMenuFolders);
+    var shortCutFiles = GetFilesFromDirectoriesRecursively(startMenuFolders, shortCutFileExtension);
 
     var searchResult = [];
     var searchResultIndex = 0;
 
-    function GetFilesFromDirectories(directories) {
+    function GetFilesFromDirectory(directory, fileExtension) {
+        var result = [];
+        var files = fs.readdirSync(directory);
+        for (var i = 0; i < files.length; i++) {
+            if (files[i].endsWith(fileExtension))
+                result.push(files[i]);
+        }
+        return result;
+    }
+
+    function GetFilesFromDirectoriesRecursively(directories, fileExtension) {
         var result = [];
 
         for (var i = 0; i < directories.length; i++) {
@@ -34,9 +44,9 @@ $(function () {
                 file = dir + '/' + file;
                 var stat = fs.statSync(file);
                 if (stat && stat.isDirectory())
-                    result = result.concat(GetFilesFromDirectories([file]));
+                    result = result.concat(GetFilesFromDirectoriesRecursively([file], fileExtension));
                 else
-                    if (path.extname(file) === shortCutExtenstion)
+                    if (path.extname(file) === fileExtension)
                         result.push(file);
             });
         }
@@ -64,15 +74,14 @@ $(function () {
         var apps = [];
 
         for (var i = 0; i < allShortCuts.length; i++) {
-            var fileName = path.basename(allShortCuts[i]).toLowerCase().replace(shortCutExtenstion, '');
-            var search = value.toLowerCase();
-            var weight = GetWeight(fileName, search);
+            var fileName = path.basename(allShortCuts[i]).toLowerCase().replace(shortCutFileExtension, '');
+            var weight = GetWeight(fileName, value.toLowerCase());
 
             if (!StringContainsSubstring(fileName, value)) continue;
 
             apps.push({
-                Name: path.basename(allShortCuts[i]).replace(shortCutExtenstion, ''),
-                Path: allShortCuts[i],
+                Name: path.basename(allShortCuts[i]).replace(shortCutFileExtension, ''),
+                Path: '"" "' + allShortCuts[i] + '"',
                 Weight: weight
             });
         }
@@ -94,7 +103,7 @@ $(function () {
 
         if (pathToLnk === '') return;
 
-        var cmd = exec('start "" "' + pathToLnk + '"', function (error, stdout, stderr) {
+        var cmd = exec('start ' + pathToLnk, function (error, stdout, stderr) {
             if (error) throw error;
             HideMainWindow();
         });
