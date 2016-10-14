@@ -287,6 +287,7 @@ $(function () {
             DisplaySearchResult();
     });
 
+    // Prevent tab and arrow key from modifing input cursor 
     $(window).on('keydown', function(e){
         if(e.keyCode === 40 || e.keyCode === 9){
             e.preventDefault();
@@ -298,9 +299,6 @@ $(function () {
 
     // Keyboard Events
     $(selector.input).keyup(function (e) {
-
-        console.log(`Test ${e.keyCode}`);
-
         // When user hits enter on keyboard
         if (e.keyCode === 13) {
             var input = $(selector.input).val()
