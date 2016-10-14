@@ -20,11 +20,7 @@ $(function () {
         'C:\\ProgramData\\Microsoft\\Windows\\Start Menu'
     ]
 
-    var fileWatcher = fsWatcher();
-
-    for (var i = 0; i < startMenuFolders.length; i++) {
-        fileWatcher.add(startMenuFolders[i]);
-    }
+    var fileWatcher = InitializeFileWatcher();
 
     var shortCutFiles = GetFilesFromDirectoriesRecursively(startMenuFolders, shortCutFileExtension);
 
@@ -34,6 +30,14 @@ $(function () {
     var animationSpeed = 500;
     var transactionIsHandled = false;
     var maxResultItems = 10;
+
+    function InitializeFileWatcher() {
+        var result = fsWatcher()
+        for (var i = 0; i < startMenuFolders.length; i++) {
+            result.add(startMenuFolders[i]);
+        }
+        return result;
+    }
 
     function GetFilesFromDirectory(directory, fileExtension) {
         var result = [];
