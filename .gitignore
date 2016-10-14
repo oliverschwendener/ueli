@@ -2,8 +2,8 @@
 .idea
 
 # Gulp
-css
-js
+/css
+/js
 
 # Build
 electronizr-linux-armv7l/
