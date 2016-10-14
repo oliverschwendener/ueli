@@ -12,7 +12,6 @@ $(function () {
         input: 'input',
         value: '.result-value',
         path: '.result-path',
-        infoMessage: '.info-message'
     }
 
     var shortCutFileExtension = '.lnk';
@@ -22,8 +21,8 @@ $(function () {
     ]
 
     var fileWatcher = fsWatcher();
-    
-    for(var i = 0; i < startMenuFolders.length; i++){
+
+    for (var i = 0; i < startMenuFolders.length; i++) {
         fileWatcher.add(startMenuFolders[i]);
     }
 
@@ -199,9 +198,9 @@ $(function () {
 
     function ResizeWindow() {
         ipcRenderer.sendSync('resize-window', $(selector.content).height());
-    }    
+    }
 
-    fileWatcher.on('change', function(file, stat){
+    fileWatcher.on('change', function (file, stat) {
         UpdateAppList();
     });
 
