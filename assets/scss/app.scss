@@ -2,7 +2,6 @@
 
 $background-color: #ECEFF1;
 $text-color: #212121;
-$info-message-color: lighten($text-color, 25);
 $highlight-color: #0277BD;
 $highlight-color2: #2ecc71;
 
@@ -64,13 +63,5 @@ div.content{
 		width: 100%;
 		display: none;
 		text-align: center;
-	}
-
-	div.info-message{
-		color: $info-message-color;
-		padding: 25px;
-		text-align: center;
-		font-size: 18px;
-		display: none;
 	}
 }

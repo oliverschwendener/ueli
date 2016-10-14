@@ -1,5 +1,6 @@
 $(function () {
     var fs = require('fs');
+    var fsWatcher = require('filewatcher');
     var os = require('os');
     var path = require('path');
     var exec = require('child_process').exec;
@@ -19,6 +20,12 @@ $(function () {
         os.homedir() + '\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu',
         'C:\\ProgramData\\Microsoft\\Windows\\Start Menu'
     ]
+
+    var fileWatcher = fsWatcher();
+    
+    for(var i = 0; i < startMenuFolders.length; i++){
+        fileWatcher.add(startMenuFolders[i]);
+    }
 
     var shortCutFiles = GetFilesFromDirectoriesRecursively(startMenuFolders, shortCutFileExtension);
 
@@ -186,25 +193,17 @@ $(function () {
         return false;
     }
 
-    function HandleEzrCommand(command) {
-        command = command.replace('ezr.', '');
-
-        if (command === 'reload') UpdateAppList();
-    }
-
     function UpdateAppList() {
-        transactionIsHandled = true;
         shortCutFiles = GetFilesFromDirectoriesRecursively(startMenuFolders, shortCutFileExtension);
-        $(selector.infoMessage).html('Updated app list');
-        $(selector.infoMessage).slideDown(animationSpeed);
-        setTimeout(function () {
-            $(selector.infoMessage).slideUp(animationSpeed);
-            setTimeout(function () {
-                $(selector.infoMessage).empty();
-                transactionIsHandled = false;
-            }, animationSpeed);
-        }, 2000);
     }
+
+    function ResizeWindow() {
+        ipcRenderer.sendSync('resize-window', $(selector.content).height());
+    }    
+
+    fileWatcher.on('change', function(file, stat){
+        UpdateAppList();
+    });
 
     // Input Text Change
     $(selector.input).bind('input propertychange', function () {
@@ -240,11 +239,6 @@ $(function () {
                 return;
             }
 
-            if (input.startsWith('ezr.')) {
-                HandleEzrCommand(input);
-                return;
-            }
-
             var path = $(selector.path).html();
             StartProcess(path);
         }
@@ -259,8 +253,4 @@ $(function () {
             DisplaySearchResult();
         }
     });
-
-    function ResizeWindow() {
-        ipcRenderer.sendSync('resize-window', $(selector.content).height());
-    }
 });

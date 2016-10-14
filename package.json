@@ -5,6 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "fast-levenshtein": "^2.0.5",
+    "filewatcher": "^3.0.1",
     "font-awesome": "^4.6.3",
     "pretty-bytes": "^2.0.1"
   },
