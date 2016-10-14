@@ -4,6 +4,7 @@ $(function () {
     var os = require('os');
     var path = require('path');
     var exec = require('child_process').exec;
+    var open = require('open');
     var levenshtein = require('fast-levenshtein');
     var ipcRenderer = require('electron').ipcRenderer;
 
@@ -132,6 +133,34 @@ $(function () {
         return sortedResult;
     }
 
+    function HandleUrlInput(url) {
+        if (!url.startsWith('http://') || !url.startsWith('https://'))
+            url = 'http://' + url;
+
+        open(url, function (error) {
+            if (error) throw error;
+        });
+
+        HideMainWindow();
+    }
+
+    function HandleElectronizrCommand(command) {
+        switch (command) {
+            case 'exit':
+                ipcRenderer.sendSync('close-main-window');
+                break;
+
+            case 'reload':
+                UpdateAppList();
+                break;
+
+            default:
+                return;
+        }
+
+        HideMainWindow();
+    }
+
     function StartProcess(pathToLnk) {
         if (pathToLnk === '') return;
 
@@ -177,6 +206,23 @@ $(function () {
         return string.split(/\s+/);
     }
 
+    function IsValidUrl(url) {
+
+        var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+        var regex = new RegExp(expression);
+
+        if (url.match(regex))
+            return true;
+
+        return false;
+    }
+
+    function IsElectronizrCommand(command) {
+        if (command === 'exit'
+            || command === 'reload')
+            return true;
+    }
+
     function StringContainsSubstring(stringToSearch, substring) {
         var wordsOfSubstring = SplitStringToArray(substring.toLowerCase());
         stringToSearch = stringToSearch.split(' ').join('').toLowerCase();
@@ -210,14 +256,14 @@ $(function () {
 
     // Input Text Change
     $(selector.input).bind('input propertychange', function () {
-        var searchString = $(this).val();
+        var input = $(this).val();
 
-        if (searchString.split(' ').join('') === '') {
+        if (input.split(' ').join('') === '') {
             ResetGui();
             return;
         }
 
-        searchResult = GetSearchResult(searchString);
+        searchResult = GetSearchResult(input);
 
         if (searchResult === undefined || searchResult.length === 0) {
             $(selector.value).html('');
@@ -234,11 +280,15 @@ $(function () {
         if (transactionIsHandled) return;
 
         if (e.keyCode === 13) {
-
             var input = $(selector.input).val()
 
-            if (input === 'exit') {
-                ipcRenderer.sendSync('close-main-window');
+            if (IsElectronizrCommand(input)) {
+                HandleElectronizrCommand(input);
+                return;
+            }
+
+            if (IsValidUrl(input)) {
+                HandleUrlInput(input);
                 return;
             }
 
