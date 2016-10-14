@@ -1,25 +1,24 @@
-$(function () {
-    var fs = require('fs');
-    var fsWatcher = require('filewatcher');
-    var os = require('os');
-    var path = require('path');
-    var exec = require('child_process').exec;
-    var open = require('open');
-    var levenshtein = require('fast-levenshtein');
-    var ipcRenderer = require('electron').ipcRenderer;
+    import fs from 'fs';
+    import fsWatcher from 'filewatcher';
+    import os from 'os';
+    import path  from 'path';
+    import {exec} from 'child_process';
+    import open  from 'open';
+    import levenshtein from 'fast-levenshtein';
+    import {ipcRenderer} from 'electron';
 
     var selector = {
         content: '.content',
         input: 'input',
         value: '.result-value',
         path: '.result-path',
-    }
+    };
 
     var shortCutFileExtension = '.lnk';
     var startMenuFolders = [
         os.homedir() + '\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu',
         'C:\\ProgramData\\Microsoft\\Windows\\Start Menu'
-    ]
+    ];
 
     var fileWatcher = InitializeFileWatcher();
 
@@ -332,4 +331,3 @@ $(function () {
             DisplaySearchResult();
         }
     });
-});
