@@ -29,7 +29,6 @@ $(function () {
     var searchResultIndex = 0;
 
     var animationSpeed = 500;
-    var transactionIsHandled = false;
     var maxResultItems = 10;
 
     function InitializeFileWatcher() {
@@ -161,13 +160,20 @@ $(function () {
         HideMainWindow();
     }
 
+    function HandleWindowsPathInput(path) {
+        var command = '"" "' + path + '"';
+        StartProcess(command)
+    }
+
     function StartProcess(pathToLnk) {
         if (pathToLnk === '') return;
 
         var cmd = exec('start ' + pathToLnk, function (error, stdout, stderr) {
-            if (error) throw error;
-            HideMainWindow();
+            if (error)
+                throw error;
         });
+
+        HideMainWindow();
     }
 
     function HideMainWindow() {
@@ -223,6 +229,13 @@ $(function () {
             return true;
     }
 
+    function IsValidWindowsPath(path) {
+        var expression = /^[a-z]:\\(?:[^\\/:*?"<>|\r\n]+\\)*[^\\/:*?"<>|\r\n]*$/i;
+        var regex = new RegExp(expression);
+
+        return path.match(regex);
+    }
+
     function StringContainsSubstring(stringToSearch, substring) {
         var wordsOfSubstring = SplitStringToArray(substring.toLowerCase());
         stringToSearch = stringToSearch.split(' ').join('').toLowerCase();
@@ -274,11 +287,19 @@ $(function () {
             DisplaySearchResult();
     });
 
+    // Prevent tab and arrow key from modifing input cursor 
+    $(window).on('keydown', function(e){
+        if(e.keyCode === 40 || e.keyCode === 9){
+            e.preventDefault();
+        }
+        if (e.keyCode == 38) {
+            e.preventDefault();
+        }
+    });
+
     // Keyboard Events
     $(selector.input).keyup(function (e) {
         // When user hits enter on keyboard
-        if (transactionIsHandled) return;
-
         if (e.keyCode === 13) {
             var input = $(selector.input).val()
 
@@ -289,6 +310,11 @@ $(function () {
 
             if (IsValidUrl(input)) {
                 HandleUrlInput(input);
+                return;
+            }
+
+            if (IsValidWindowsPath(input)) {
+                HandleWindowsPathInput(input);
                 return;
             }
 
