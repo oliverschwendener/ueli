@@ -72,8 +72,8 @@ $(function () {
         $(selector.value).empty();
         $(selector.value).children('p').removeClass('active');
 
-        for(var i = 0; i < searchResult.length; i++){
-            $(selector.value).append('<p id="' + i +'">' + searchResult[i].Name + '</p>');
+        for (var i = 0; i < searchResult.length; i++) {
+            $(selector.value).append('<p id="' + i + '">' + searchResult[i].Name + '</p>');
             $(selector.value).find('#' + searchResultIndex).addClass('active');
             $(selector.path).html(searchResult[searchResultIndex].Path);
         }
@@ -89,13 +89,15 @@ $(function () {
         var apps = [];
 
         for (var i = 0; i < allShortCuts.length; i++) {
+            var displayName = path.basename(allShortCuts[i]).replace(shortCutFileExtension, '');
             var fileName = path.basename(allShortCuts[i]).toLowerCase().replace(shortCutFileExtension, '');
             var weight = GetWeight(fileName, value.toLowerCase());
 
             if (!StringContainsSubstring(fileName, value)) continue;
+            if (SearchResultListContainsValue(apps, displayName)) continue;
 
             apps.push({
-                Name: path.basename(allShortCuts[i]).replace(shortCutFileExtension, ''),
+                Name: displayName,
                 Path: '"" "' + allShortCuts[i] + '"',
                 Weight: weight
             });
@@ -107,10 +109,10 @@ $(function () {
             return 0;
         });
 
-        if(sortedResult.length > maxResultItems){
+        if (sortedResult.length > maxResultItems) {
             var newResult = [];
-            for(var i = 0; i < maxResultItems; i++){
-                if(i == maxResultItems)
+            for (var i = 0; i < maxResultItems; i++) {
+                if (i == maxResultItems)
                     break;
                 newResult.push(sortedResult[i]);
             }
@@ -176,6 +178,14 @@ $(function () {
         return true;
     }
 
+    function SearchResultListContainsValue(list, value) {
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].Name === value)
+                return true;
+        }
+        return false;
+    }
+
     function HandleEzrCommand(command) {
         command = command.replace('ezr.', '');
 
@@ -219,7 +229,7 @@ $(function () {
     // Keyboard Events
     $(selector.input).keyup(function (e) {
         // When user hits enter on keyboard
-        if(transactionIsHandled) return;
+        if (transactionIsHandled) return;
 
         if (e.keyCode === 13) {
 
@@ -244,13 +254,13 @@ $(function () {
             searchResultIndex++;
             DisplaySearchResult();
         }
-        if (e.keyCode == 38){
+        if (e.keyCode == 38) {
             searchResultIndex--;
             DisplaySearchResult();
         }
     });
 
-    function ResizeWindow(){
+    function ResizeWindow() {
         ipcRenderer.sendSync('resize-window', $(selector.content).height());
     }
 });
