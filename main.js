@@ -10,9 +10,10 @@ var mainWindow = null;
 var mainWindowOptions = {
   width: 800,
   minWidth: 800,
-  maxHeight: 562,
+  minHeight: 78,
+  maxHeight: 568,
   frame: false,
-  //resizable: true,
+  resizable: false,
   //devTools: true,
   transparent: true,
   skipTaskbar: true,
@@ -32,6 +33,9 @@ app.on('ready', function () {
   mainWindow = new BrowserWindow(mainWindowOptions);
 
   mainWindow.loadURL(mainWindowHtml);
+
+  //Set to start size
+  mainWindow.setSize(800, 78);
 
   mainWindow.on('closed', function () {
     mainWindow = null;

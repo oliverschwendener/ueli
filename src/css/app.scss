@@ -1,4 +1,4 @@
-@import 'https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i';
+@import 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900';
 @import 'scrollbar';
 
 $background-color: #ECEFF1;
@@ -16,7 +16,7 @@ body{
 div.content{
 	background-color: $background-color;
 	width: 100%;
-	max-height: 562px;
+	max-height: 568px;
 	overflow: hidden;
 
 	input{
@@ -26,15 +26,16 @@ div.content{
 		outline: none;
 		text-align: center;
 		background: linear-gradient(to top left, #2c3e50, #546E7A);
+		font-family: 'Roboto', 'Segoe UI', sans-serif;
 		color: #fff;
-		font-size: 36px;		
-		font-weight: 600;
+		font-size: 40px;		
+		font-weight: 400;
 	}
 
 	.search-icon{
 		position: fixed;
-		top: 36px;
-		right: 25px;
+		top: 39px;
+		right: 30px;
 		transform: translateY(-50%);
 		color: #fff;
 		font-size: 24px;
