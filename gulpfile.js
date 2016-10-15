@@ -3,7 +3,7 @@ const babel = require('gulp-babel');
 const sass = require('gulp-sass');
 const minifyCss = require('gulp-minify-css');
 
-var sourceFiles = {
+const sourceFiles = {
     sass: 'src/css/**/*.scss',
     js: 'src/js/**/*.js'
 };

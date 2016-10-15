@@ -1,73 +1,36 @@
-    import fs from 'fs';
-    import fsWatcher from 'filewatcher';
     import os from 'os';
     import path  from 'path';
     import {exec} from 'child_process';
     import open  from 'open';
     import levenshtein from 'fast-levenshtein';
     import {ipcRenderer} from 'electron';
+    import SearchService from './js/SearchService';
 
-    var selector = {
+    let searchService  = new SearchService();
+    let selector = {
         content: '.content',
         input: 'input',
         value: '.result-value',
         path: '.result-path',
     };
 
-    var shortCutFileExtension = '.lnk';
-    var startMenuFolders = [
+    let shortCutFileExtension = '.lnk';
+    let startMenuFolders = [
         os.homedir() + '\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu',
         'C:\\ProgramData\\Microsoft\\Windows\\Start Menu'
     ];
 
-    var fileWatcher = InitializeFileWatcher();
+    let fileWatcher = searchService.initializeFileWatcher(startMenuFolders);
 
-    var shortCutFiles = GetFilesFromDirectoriesRecursively(startMenuFolders, shortCutFileExtension);
+    let shortCutFiles = searchService.getFilesFromDirectoriesRecursively(startMenuFolders, shortCutFileExtension);
 
-    var searchResult = [];
-    var searchResultIndex = 0;
+    let searchResult = [];
+    let searchResultIndex = 0;
 
-    var animationSpeed = 500;
-    var maxResultItems = 10;
+    let animationSpeed = 500;
+    let maxResultItems = 10;
 
-    function InitializeFileWatcher() {
-        var result = fsWatcher()
-        for (var i = 0; i < startMenuFolders.length; i++) {
-            result.add(startMenuFolders[i]);
-        }
-        return result;
-    }
 
-    function GetFilesFromDirectory(directory, fileExtension) {
-        var result = [];
-        var files = fs.readdirSync(directory);
-        for (var i = 0; i < files.length; i++) {
-            if (files[i].endsWith(fileExtension))
-                result.push(files[i]);
-        }
-        return result;
-    }
-
-    function GetFilesFromDirectoriesRecursively(directories, fileExtension) {
-        var result = [];
-
-        for (var i = 0; i < directories.length; i++) {
-
-            var dir = directories[i];
-            var list = fs.readdirSync(dir)
-            list.forEach(function (file) {
-                file = dir + '/' + file;
-                var stat = fs.statSync(file);
-                if (stat && stat.isDirectory())
-                    result = result.concat(GetFilesFromDirectoriesRecursively([file], fileExtension));
-                else
-                    if (path.extname(file) === fileExtension)
-                        result.push(file);
-            });
-        }
-
-        return result;
-    };
 
     function DisplaySearchResult() {
         if (searchResult === undefined || searchResult.length === 0)
@@ -81,7 +44,7 @@
         $(selector.value).empty();
         $(selector.value).children('p').removeClass('active');
 
-        for (var i = 0; i < searchResult.length; i++) {
+        for (let i = 0; i < searchResult.length; i++) {
             $(selector.value).append('<p id="' + i + '">' + searchResult[i].Name + '</p>');
             $(selector.value).find('#' + searchResultIndex).addClass('active');
             $(selector.path).html(searchResult[searchResultIndex].Path);
@@ -94,13 +57,13 @@
     function GetSearchResult(value) {
         if (value === '') return;
 
-        var allShortCuts = shortCutFiles;
-        var apps = [];
+        let allShortCuts = shortCutFiles;
+        let apps = [];
 
-        for (var i = 0; i < allShortCuts.length; i++) {
-            var displayName = path.basename(allShortCuts[i]).replace(shortCutFileExtension, '');
-            var fileName = path.basename(allShortCuts[i]).toLowerCase().replace(shortCutFileExtension, '');
-            var weight = GetWeight(fileName, value.toLowerCase());
+        for (let i = 0; i < allShortCuts.length; i++) {
+            let displayName = path.basename(allShortCuts[i]).replace(shortCutFileExtension, '');
+            let fileName = path.basename(allShortCuts[i]).toLowerCase().replace(shortCutFileExtension, '');
+            let weight = GetWeight(fileName, value.toLowerCase());
 
             if (!StringContainsSubstring(fileName, value)) continue;
             if (SearchResultListContainsValue(apps, displayName)) continue;
@@ -112,15 +75,15 @@
             });
         }
 
-        var sortedResult = apps.sort(function (a, b) {
+        let sortedResult = apps.sort( (a, b) => {
             if (a.Weight > b.Weight) return 1;
             if (a.Weight < b.Weight) return -1;
             return 0;
         });
 
         if (sortedResult.length > maxResultItems) {
-            var newResult = [];
-            for (var i = 0; i < maxResultItems; i++) {
+            let newResult = [];
+            for (let i = 0; i < maxResultItems; i++) {
                 if (i == maxResultItems)
                     break;
                 newResult.push(sortedResult[i]);
@@ -135,7 +98,7 @@
         if (!url.startsWith('http://') || !url.startsWith('https://'))
             url = 'http://' + url;
 
-        open(url, function (error) {
+        open(url, error => {
             if (error) throw error;
         });
 
@@ -160,14 +123,14 @@
     }
 
     function HandleWindowsPathInput(path) {
-        var command = '"" "' + path + '"';
+        let command = '"" "' + path + '"';
         StartProcess(command)
     }
 
     function StartProcess(pathToLnk) {
         if (pathToLnk === '') return;
 
-        var cmd = exec('start ' + pathToLnk, function (error, stdout, stderr) {
+        let cmd = exec('start ' + pathToLnk,  (error, stdout, stderr)  => {
             if (error)
                 throw error;
         });
@@ -187,21 +150,21 @@
     }
 
     function GetWeight(stringToSearch, value) {
-        var result = [];
-        var stringToSearchWords = SplitStringToArray(stringToSearch);
-        var valueWords = SplitStringToArray(value);
+        let result = [];
+        let stringToSearchWords = SplitStringToArray(stringToSearch);
+        let valueWords = SplitStringToArray(value);
 
-        for (var i = 0; i < stringToSearchWords.length; i++)
-            for (var j = 0; j < valueWords.length; j++)
+        for (let i = 0; i < stringToSearchWords.length; i++)
+            for (let j = 0; j < valueWords.length; j++)
                 result.push(levenshtein.get(stringToSearchWords[i], valueWords[j]));
 
         return GetAvg(result);
     }
 
     function GetAvg(array) {
-        var sum = 0;
+        let sum = 0;
 
-        for (var i = 0; i < array.length; i++)
+        for (let i = 0; i < array.length; i++)
             sum = sum + array[i];
 
         return sum / array.length;
@@ -213,8 +176,8 @@
 
     function IsValidUrl(url) {
 
-        var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-        var regex = new RegExp(expression);
+        let expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+        let regex = new RegExp(expression);
 
         if (url.match(regex))
             return true;
@@ -229,17 +192,17 @@
     }
 
     function IsValidWindowsPath(path) {
-        var expression = /^[a-z]:\\(?:[^\\/:*?"<>|\r\n]+\\)*[^\\/:*?"<>|\r\n]*$/i;
-        var regex = new RegExp(expression);
+        let expression = /^[a-z]:\\(?:[^\\/:*?"<>|\r\n]+\\)*[^\\/:*?"<>|\r\n]*$/i;
+        let regex = new RegExp(expression);
 
         return path.match(regex);
     }
 
     function StringContainsSubstring(stringToSearch, substring) {
-        var wordsOfSubstring = SplitStringToArray(substring.toLowerCase());
+        let wordsOfSubstring = SplitStringToArray(substring.toLowerCase());
         stringToSearch = stringToSearch.split(' ').join('').toLowerCase();
 
-        for (var i = 0; i < wordsOfSubstring.length; i++)
+        for (let i = 0; i < wordsOfSubstring.length; i++)
             if (stringToSearch.indexOf(wordsOfSubstring[i]) === -1)
                 return false;
 
@@ -247,7 +210,7 @@
     }
 
     function SearchResultListContainsValue(list, value) {
-        for (var i = 0; i < list.length; i++) {
+        for (let i = 0; i < list.length; i++) {
             if (list[i].Name === value)
                 return true;
         }
@@ -255,20 +218,20 @@
     }
 
     function UpdateAppList() {
-        shortCutFiles = GetFilesFromDirectoriesRecursively(startMenuFolders, shortCutFileExtension);
+        shortCutFiles = searchService.getFilesFromDirectoriesRecursively(startMenuFolders, shortCutFileExtension);
     }
 
     function ResizeWindow() {
         ipcRenderer.sendSync('resize-window', $(selector.content).height());
     }
 
-    fileWatcher.on('change', function (file, stat) {
+    fileWatcher.on('change',  (file, stat) => {
         UpdateAppList();
     });
 
     // Input Text Change
-    $(selector.input).bind('input propertychange', function () {
-        var input = $(this).val();
+    $(selector.input).bind('input propertychange',  () => {
+        let input = $(this).val();
 
         if (input.split(' ').join('') === '') {
             ResetGui();
@@ -287,7 +250,7 @@
     });
 
     // Prevent tab and arrow key from modifing input cursor 
-    $(window).on('keydown', function(e){
+    $(window).on('keydown', e => {
         if(e.keyCode === 40 || e.keyCode === 9){
             e.preventDefault();
         }
@@ -297,10 +260,10 @@
     });
 
     // Keyboard Events
-    $(selector.input).keyup(function (e) {
+    $(selector.input).keyup( e => {
         // When user hits enter on keyboard
         if (e.keyCode === 13) {
-            var input = $(selector.input).val()
+            let input = $(selector.input).val()
 
             if (IsElectronizrCommand(input)) {
                 HandleElectronizrCommand(input);
@@ -317,7 +280,7 @@
                 return;
             }
 
-            var path = $(selector.path).html();
+            let path = $(selector.path).html();
             StartProcess(path);
         }
 
