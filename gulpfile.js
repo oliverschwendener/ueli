@@ -1,24 +1,39 @@
-'use strict';
+const gulp = require('gulp');
+const babel = require('gulp-babel');
+const sass = require('gulp-sass');
+const minifyCss = require('gulp-minify-css');
 
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var minifyCss = require('gulp-minify-css');
+const sourceFiles = {
+    sass: 'src/css/**/*.scss',
+    js: 'src/js/**/*.js'
+};
 
-var filesToWatch = [
-    './assets/scss/**/*.scss'
-];
+const jsDestFolder = './js';
+const sassDestFolder = './css';
 
-var sassFileToCompile = './assets/scss/app.scss';
-var sassDestFolder = './css';
+gulp.task('js', () => {
+    return gulp.src(sourceFiles.js)
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(gulp.dest(jsDestFolder));
+});
 
-gulp.task('sass', function(){
+gulp.task('sass', () => {
     return gulp
-        .src(sassFileToCompile)
+        .src(sourceFiles.sass)
         .pipe(sass().on('error', sass.logError))
         .pipe(minifyCss())
         .pipe(gulp.dest(sassDestFolder));
 });
 
-gulp.task('watch', ['sass'], function(){
-    gulp.watch(filesToWatch, ['sass'])
+gulp.task('build', ['js', 'sass']);
+
+gulp.task('watch', ['build'], () => {
+    gulp.watch(sourceFiles.sass, ['sass']);
+    gulp.watch(sourceFiles.js, ['js']);
 });
+
+gulp.task('default', ['watch']);
+
+

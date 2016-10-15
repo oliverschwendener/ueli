@@ -1,7 +1,9 @@
 .vscode/
+.idea
 
 # Gulp
-css
+/css
+/js
 
 # Build
 electronizr-linux-armv7l/
