@@ -232,6 +232,7 @@
     // Input Text Change
     $(selector.input).bind('input propertychange',  function() {
         let input = $(this).val();
+        searchResultIndex = 0;
 
         if (input.split(' ').join('') === '') {
             ResetGui();
