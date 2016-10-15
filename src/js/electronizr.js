@@ -230,7 +230,7 @@
     });
 
     // Input Text Change
-    $(selector.input).bind('input propertychange',  () => {
+    $(selector.input).bind('input propertychange',  function() {
         let input = $(this).val();
 
         if (input.split(' ').join('') === '') {
