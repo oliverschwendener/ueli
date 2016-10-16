@@ -57,12 +57,6 @@ div.content{
 			&.active{
 				background: linear-gradient(to bottom right, $highlight-color, $highlight-color2);
 				color: #fff;
-				animation-name: bestSearchResultAnimation;
-				animation-delay: 250ms;
-				animation-duration: 750ms;
-				animation-fill-mode: forwards;
-				animation-iteration-count: infinite;
-				animation-timing-function: ease-in-out;
 			}
 		}
 	}
@@ -71,17 +65,5 @@ div.content{
 		width: 100%;
 		display: none;
 		text-align: center;
-	}
-}
-
-@keyframes bestSearchResultAnimation{
-	0%{
-		transform: scale(1);
-	}
-	50%{
-		transform: scale(1.1);
-	}
-	100%{
-		transform: scale(1);
 	}
 }
