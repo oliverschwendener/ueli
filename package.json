@@ -1,7 +1,7 @@
 {
   "name": "electronizr",
   "version": "1.0.0",
-  "description": "",
+  "description": "An alt+space launcher for Windows",
   "main": "main.js",
   "dependencies": {
     "babel-preset-es2015": "^6.16.0",
@@ -13,13 +13,17 @@
     "pretty-bytes": "^2.0.1"
   },
   "devDependencies": {
+    "electron-installer-windows": "^0.2.0",
+    "electron-packager": "^8.1.0",
     "electron-prebuilt": "^0.35.2",
     "gulp": "^3.9.1",
     "gulp-minify-css": "^1.2.4",
     "gulp-sass": "^2.3.2"
   },
   "scripts": {
-    "start": "electron main.js"
+    "start": "electron main.js",
+    "build": "electron-packager . electronizr --platform win32 --arch x64 --out build/",
+    "setup": "electron-installer-windows --src build/electronizr-win32-x64/ --dest setup/"
   },
   "author": "",
   "license": "ISC"
