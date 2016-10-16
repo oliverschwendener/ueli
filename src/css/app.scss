@@ -58,6 +58,7 @@ div.content{
 				background: linear-gradient(to bottom right, $highlight-color, $highlight-color2);
 				color: #fff;
 				animation-name: bestSearchResultAnimation;
+				animation-delay: 250ms;
 				animation-duration: 750ms;
 				animation-fill-mode: forwards;
 				animation-iteration-count: infinite;
