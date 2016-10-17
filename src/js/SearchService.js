@@ -23,7 +23,7 @@ export default class SearchService {
                 if (stat && stat.isDirectory())
                     result = result.concat(this.getFilesFromDirectoriesRecursively([file], fileExtension));
                 else
-                if (path.extname(file) === fileExtension)
+                if (path.extname(file).toLowerCase() === fileExtension.toLowerCase())
                     result.push(file);
             }, this);
         }
@@ -34,7 +34,7 @@ export default class SearchService {
         let result = [];
         let files = fs.readdirSync(directory);
         for (var i = 0; i < files.length; i++) {
-           if (files[i].endsWith(fileExtension))
+           if (path.extname(files[i]).toLowerCase() === fileExtension.toLowerCase())
                result.push(files[i]);
         }
         return result;
