@@ -5,8 +5,11 @@ import open from 'open';
 import levenshtein from 'fast-levenshtein';
 import { ipcRenderer } from 'electron';
 import SearchService from './js/SearchService';
+import InputValidationService from './js/InputValidationService';
 
 let searchService = new SearchService();
+let inputValidationService = new InputValidationService();
+
 let selector = {
     content: '.content',
     input: 'input',
@@ -182,50 +185,6 @@ function SplitStringToArray(string) {
     return string.split(/\s+/);
 }
 
-function IsValidHttpOrHttpsUrl(url) {
-    if (url.endsWith('.exe')) return false;
-
-    let expression = /^[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gi;
-    let regex = new RegExp(expression);
-
-    if (url.match(regex))
-        return true;
-
-    return false;
-}
-
-function IsElectronizrCommand(command) {
-    if (command === 'exit'
-        || command === 'reload')
-        return true;
-}
-
-function IsValidWindowsPath(path) {
-    let expression = /^[a-z]:\\(?:[^\\/:*?"<>|\r\n]+\\)*[^\\/:*?"<>|\r\n]*$/i;
-    let regex = new RegExp(expression);
-
-    return path.match(regex);
-}
-
-function IsWindowsCommand(input) {
-    if (!input.startsWith('>'))
-        return false;
-
-    input = input.replace('>', '');
-    input = input.split(' ')[0];
-
-    if (!input.endsWith('.exe'))
-        input = `${input}.exe`.toLowerCase();
-
-    for (let command of windowsCommands) {
-        let fileName = path.basename(command.toLowerCase());
-        if (input === fileName)
-            return true;
-    }
-
-    return false;
-}
-
 function StringContainsSubstring(stringToSearch, substring) {
     let wordsOfSubstring = SplitStringToArray(substring.toLowerCase());
     stringToSearch = stringToSearch.split(' ').join('').toLowerCase();
@@ -294,22 +253,22 @@ $(selector.input).keyup(e => {
     if (e.keyCode === 13) {
         let input = $(selector.input).val()
 
-        if (IsElectronizrCommand(input)) {
+        if (inputValidationService.IsElectronizrCommand(input)) {
             HandleElectronizrCommand(input);
             return;
         }
 
-        if (IsValidHttpOrHttpsUrl(input)) {
+        if (inputValidationService.IsValidHttpOrHttpsUrl(input)) {
             HandleUrlInput(input);
             return;
         }
 
-        if (IsValidWindowsPath(input)) {
+        if (inputValidationService.IsValidWindowsPath(input)) {
             HandleWindowsPathInput(input);
             return;
         }
 
-        if (IsWindowsCommand(input)) {
+        if (inputValidationService.IsWindowsCommand(input)) {
             HandleWindowsCommand(input);
             return;
         }
