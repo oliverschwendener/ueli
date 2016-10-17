@@ -14,6 +14,8 @@ let selector = {
     path: '.result-path',
 };
 
+let windowsCommands = searchService.getFilesFromDirectory('C:\\Windows\\System32', '.exe');
+
 let shortCutFileExtension = '.lnk';
 let startMenuFolders = [
     os.homedir() + '\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu',
@@ -124,7 +126,12 @@ function HandleElectronizrCommand(command) {
 
 function HandleWindowsPathInput(path) {
     let command = '"" "' + path + '"';
-    StartProcess(command)
+    StartProcess(command);
+}
+
+function HandleWindowsCommand(command) {
+    command = `cmd.exe /K ${command}`;
+    StartProcess(command);
 }
 
 function StartProcess(pathToLnk) {
@@ -175,6 +182,7 @@ function SplitStringToArray(string) {
 }
 
 function IsValidUrl(url) {
+    if (url.endsWith('.exe')) return false;
 
     let expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
     let regex = new RegExp(expression);
@@ -196,6 +204,21 @@ function IsValidWindowsPath(path) {
     let regex = new RegExp(expression);
 
     return path.match(regex);
+}
+
+function IsWindowsCommand(input) {
+    input = input.split(' ')[0];
+
+    if (!input.endsWith('.exe'))
+        input = `${input}.exe`.toLowerCase();
+
+    for (let i = 0; i < windowsCommands.length; i++) {
+        let fileName = path.basename(windowsCommands[i].toLowerCase());
+        if (input === fileName)
+            return true;
+    }
+
+    return false;
 }
 
 function StringContainsSubstring(stringToSearch, substring) {
@@ -278,6 +301,11 @@ $(selector.input).keyup(e => {
 
         if (IsValidWindowsPath(input)) {
             HandleWindowsPathInput(input);
+            return;
+        }
+
+        if (IsWindowsCommand(input)) {
+            HandleWindowsCommand(input);
             return;
         }
 
