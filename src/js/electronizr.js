@@ -62,9 +62,9 @@ function GetSearchResult(value) {
     let allShortCuts = shortCutFiles;
     let apps = [];
 
-    for (let i = 0; i < allShortCuts.length; i++) {
-        let displayName = path.basename(allShortCuts[i]).replace(shortCutFileExtension, '');
-        let fileName = path.basename(allShortCuts[i]).toLowerCase().replace(shortCutFileExtension, '');
+    for (let shortcut of allShortCuts) {
+        let displayName = path.basename(shortcut).replace(shortCutFileExtension, '');
+        let fileName = path.basename(shortcut).toLowerCase().replace(shortCutFileExtension, '');
         let weight = GetWeight(fileName, value.toLowerCase());
 
         if (!StringContainsSubstring(fileName, value)) continue;
@@ -72,7 +72,7 @@ function GetSearchResult(value) {
 
         apps.push({
             Name: displayName,
-            Path: '"" "' + allShortCuts[i] + '"',
+            Path: '"" "' + shortcut + '"',
             Weight: weight
         });
     }
@@ -162,9 +162,9 @@ function GetWeight(stringToSearch, value) {
     let stringToSearchWords = SplitStringToArray(stringToSearch);
     let valueWords = SplitStringToArray(value);
 
-    for (let i = 0; i < stringToSearchWords.length; i++)
-        for (let j = 0; j < valueWords.length; j++)
-            result.push(levenshtein.get(stringToSearchWords[i], valueWords[j]));
+    for (let word of stringToSearchWords)
+        for (let value of valueWords)
+            result.push(levenshtein.get(word, value));
 
     return GetAvg(result);
 }
@@ -172,8 +172,8 @@ function GetWeight(stringToSearch, value) {
 function GetAvg(array) {
     let sum = 0;
 
-    for (let i = 0; i < array.length; i++)
-        sum = sum + array[i];
+    for (let value of array)
+        sum = sum + value;
 
     return sum / array.length;
 }
@@ -217,8 +217,8 @@ function IsWindowsCommand(input) {
     if (!input.endsWith('.exe'))
         input = `${input}.exe`.toLowerCase();
 
-    for (let i = 0; i < windowsCommands.length; i++) {
-        let fileName = path.basename(windowsCommands[i].toLowerCase());
+    for (let command of windowsCommands) {
+        let fileName = path.basename(command.toLowerCase());
         if (input === fileName)
             return true;
     }
@@ -230,16 +230,16 @@ function StringContainsSubstring(stringToSearch, substring) {
     let wordsOfSubstring = SplitStringToArray(substring.toLowerCase());
     stringToSearch = stringToSearch.split(' ').join('').toLowerCase();
 
-    for (let i = 0; i < wordsOfSubstring.length; i++)
-        if (stringToSearch.indexOf(wordsOfSubstring[i]) === -1)
+    for (let word of wordsOfSubstring)
+        if (stringToSearch.indexOf(word) === -1)
             return false;
 
     return true;
 }
 
 function SearchResultListContainsValue(list, value) {
-    for (let i = 0; i < list.length; i++) {
-        if (list[i].Name === value)
+    for (let item of list) {
+        if (item.Name === value)
             return true;
     }
     return false;

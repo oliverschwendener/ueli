@@ -5,8 +5,8 @@ import path  from 'path';
 export default class SearchService {
     initializeFileWatcher(foldersToWatch) {
         let result = fsWatcher();
-        for (var i = 0; i < foldersToWatch.length; i++) {
-            result.add(foldersToWatch[i]);
+        for (let folder of foldersToWatch) {
+            result.add(folder);
         }
         return result;
     }
@@ -14,8 +14,8 @@ export default class SearchService {
       getFilesFromDirectoriesRecursively(directories, fileExtension) {
         let result = [];
 
-        for (var i = 0; i < directories.length; i++) {
-            let dir = directories[i];
+        for (let directory of directories) {
+            let dir = directory;
             let list = fs.readdirSync(dir);
             list.forEach( (file) => {
                 file = dir + '/' + file;
@@ -33,9 +33,9 @@ export default class SearchService {
     getFilesFromDirectory(directory, fileExtension) {
         let result = [];
         let files = fs.readdirSync(directory);
-        for (var i = 0; i < files.length; i++) {
-           if (path.extname(files[i]).toLowerCase() === fileExtension.toLowerCase())
-               result.push(files[i]);
+        for (let file of files) {
+           if (path.extname(file).toLowerCase() === fileExtension.toLowerCase())
+               result.push(file);
         }
         return result;
     }
