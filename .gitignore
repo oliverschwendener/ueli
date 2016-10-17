@@ -6,13 +6,7 @@
 /js
 
 # Build
-electronizr-linux-armv7l/
-electronizr-linux-ia32/
-electronizr-linux-x64/
-electronizr-win32-ia32/
-electronizr-win32-x64/
-electronizr-darwin-ia32/
-electronizr-darwin-x64/
+dist/
 
 # Logs
 logs
