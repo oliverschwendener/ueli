@@ -130,6 +130,7 @@ function HandleWindowsPathInput(path) {
 }
 
 function HandleWindowsCommand(command) {
+    command = command.replace('>', '').toLowerCase();
     command = `cmd.exe /K ${command}`;
     StartProcess(command);
 }
@@ -207,6 +208,10 @@ function IsValidWindowsPath(path) {
 }
 
 function IsWindowsCommand(input) {
+    if (!input.startsWith('>'))
+        return false;
+
+    input = input.replace('>', '');
     input = input.split(' ')[0];
 
     if (!input.endsWith('.exe'))
