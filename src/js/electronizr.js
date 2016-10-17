@@ -182,10 +182,10 @@ function SplitStringToArray(string) {
     return string.split(/\s+/);
 }
 
-function IsValidUrl(url) {
+function IsValidHttpOrHttpsUrl(url) {
     if (url.endsWith('.exe')) return false;
 
-    let expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+    let expression = /^[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gi;
     let regex = new RegExp(expression);
 
     if (url.match(regex))
@@ -299,7 +299,7 @@ $(selector.input).keyup(e => {
             return;
         }
 
-        if (IsValidUrl(input)) {
+        if (IsValidHttpOrHttpsUrl(input)) {
             HandleUrlInput(input);
             return;
         }
