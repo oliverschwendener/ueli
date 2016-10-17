@@ -16,8 +16,6 @@
   },
   "devDependencies": {
     "electron-builder": "^7.14.1",
-    "electron-installer-windows": "^0.2.0",
-    "electron-packager": "^8.1.0",
     "electron-prebuilt": "^0.35.2",
     "gulp": "^3.9.1",
     "gulp-minify-css": "^1.2.4",
