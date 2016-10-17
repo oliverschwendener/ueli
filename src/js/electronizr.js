@@ -268,7 +268,7 @@ $(selector.input).keyup(e => {
             return;
         }
 
-        if (inputValidationService.IsWindowsCommand(input)) {
+        if (inputValidationService.IsWindowsCommand(input, windowsCommands)) {
             HandleWindowsCommand(input);
             return;
         }
