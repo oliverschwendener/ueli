@@ -239,6 +239,9 @@ $(selector.input).bind('input propertychange', function () {
 
 // Prevent tab and arrow key from modifing input cursor 
 $(window).on('keydown', e => {
+    if (e.keyCode === 27) {
+        ipcRenderer.send('hide-main-window');
+    }
     if (e.keyCode === 40 || e.keyCode === 9) {
         e.preventDefault();
     }

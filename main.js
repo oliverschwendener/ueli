@@ -52,10 +52,6 @@ app.on('ready', function () {
       mainWindow.show();
   });
 
-  globalShortcut.register('escape', function () {
-    mainWindow.hide();
-  });
-
   ipcMain.on('hide-main-window', function () {
     mainWindow.hide();
   });
