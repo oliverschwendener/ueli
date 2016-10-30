@@ -1,10 +1,6 @@
 @import 'roboto';
 @import 'scrollbar';
-
-$background-color: #222;
-$text-color: #fff;
-
-$highlight-color: #007acc;
+@import 'dark';
 
 body{
 	margin: 0;
@@ -14,7 +10,7 @@ body{
 }
 
 div.content{
-	background: lighten($background-color, 4);	
+	background: $content-background-color;
 	width: 100%;
 	max-height: 568px;
 	overflow: hidden;
@@ -25,9 +21,9 @@ div.content{
 		border: none;
 		outline: none;
 		text-align: center;
-		background: $background-color;
+		background: $input-background-color;
 		font-family: 'Roboto', 'Segoe UI', sans-serif;
-		color: $text-color;
+		color: $input-text-color;
 		font-size: 40px;		
 		font-weight: 400;
 	}
@@ -37,7 +33,7 @@ div.content{
 		top: 39px;
 		right: 30px;
 		transform: translateY(-50%);
-		color: $text-color;
+		color: $input-text-color;
 		font-size: 24px;
 		z-index: 10;
 	}
@@ -47,7 +43,7 @@ div.content{
 		top: 39px;
 		left: 30px;
 		transform: translateY(-50%);
-		color: darken($text-color, 50);
+		color: $input-icon-color;
 		font-size: 24px;
 		z-index: 10;
 	}
@@ -57,7 +53,7 @@ div.content{
 		text-align: center;
 
 		p{
-			color: darken($text-color, 30);
+			color: $content-text-color;
 			font-size: 24px;
 			font-weight: 400;
 			-webkit-margin-before: 0;
@@ -66,7 +62,7 @@ div.content{
 
 			&.active{
 				background-color: $highlight-color;
-				color: $text-color;
+				color: $highlight-text-color;
 			}
 		}
 	}

@@ -1,0 +1,9 @@
+$input-background-color: #222;
+$input-text-color: #fff;
+$input-icon-color: darken($input-text-color, 50);
+
+$content-background-color: lighten($input-background-color, 4);
+$content-text-color: darken($input-text-color, 40);
+
+$highlight-color: #007acc;
+$highlight-text-color: #fff;
