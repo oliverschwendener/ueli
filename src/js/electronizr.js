@@ -99,14 +99,27 @@ function GetSearchResult(value) {
     return sortedResult;
 }
 
+function ExtractQueryPrefix(prefix, query, separator) {
+    query = query.replace(prefix, '');
+    query = query.split(' ');
+
+    let result = [];
+    for (let item of query) {
+        if (item.length > 0)
+            result.push(item);
+    }
+
+    return result.join(separator);
+}
+
 function HandleGoogleQuery(query) {
-    query = query.replace('g:', '').replace(' ', '+');
-    HandleUrlInput('google.com/#q=' + query);
+    let googleSearch = ExtractQueryPrefix('g:', query, '+');
+    HandleUrlInput('google.com/search?q=' + googleSearch);
 }
 
 function HandleWikipediaQuery(query) {
-    query = query.replace('wiki:', '').replace(' ', '+');
-    HandleUrlInput('wikipedia.org/w/?search=' + query);
+    let wikiSearch = ExtractQueryPrefix('wiki:', query, '+');
+    HandleUrlInput('wikipedia.org/w/?search=' + wikiSearch);
 }
 
 function HandleUrlInput(url) {

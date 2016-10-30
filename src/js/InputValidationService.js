@@ -15,10 +15,13 @@ export default class InputValidationService {
     }
 
     IsValidGoogleQuery(query) {
-        if (query.startsWith('g:'))
-            return true;
-        else
+        if (!query.startsWith('g:'))
             return false;
+
+        if (query.length <= 0)
+            return false;
+
+        return true;
     }
 
     IsValidWikipediaQuery(query) {
