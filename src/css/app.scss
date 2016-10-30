@@ -42,6 +42,16 @@ div.content{
 		z-index: 10;
 	}
 
+	.input-type-icon {
+		position: fixed;
+		top: 39px;
+		left: 30px;
+		transform: translateY(-50%);
+		color: darken($text-color, 50);
+		font-size: 24px;
+		z-index: 10;
+	}
+
 	div.result-value{
 		width: 100%;
 		text-align: center;

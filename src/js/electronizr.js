@@ -1,20 +1,21 @@
 import os from 'os';
 import path from 'path';
-import { exec } from 'child_process';
-import open from 'open';
 import levenshtein from 'fast-levenshtein';
 import { ipcRenderer } from 'electron';
 import SearchService from './js/SearchService';
 import InputValidationService from './js/InputValidationService';
+import ExecutionService from './js/ExecutionService';
 
 let searchService = new SearchService();
 let inputValidationService = new InputValidationService();
+let executionService = new ExecutionService();
 
 let selector = {
     content: '.content',
     input: 'input',
     value: '.result-value',
     path: '.result-path',
+    inputTypeIcon: '.input-type-icon'
 };
 
 let windowsCommands = searchService.getFilesFromDirectory('C:\\Windows\\System32', '.exe');
@@ -34,8 +35,6 @@ let searchResultIndex = 0;
 
 let animationSpeed = 500;
 let maxResultItems = 10;
-
-
 
 function DisplaySearchResult() {
     if (searchResult === undefined || searchResult.length === 0)
@@ -99,79 +98,6 @@ function GetSearchResult(value) {
     return sortedResult;
 }
 
-function ExtractQueryPrefix(prefix, query, separator) {
-    query = query.replace(prefix, '');
-    query = query.split(' ');
-
-    let result = [];
-    for (let item of query) {
-        if (item.length > 0)
-            result.push(item);
-    }
-
-    return result.join(separator);
-}
-
-function HandleGoogleQuery(query) {
-    let googleSearch = ExtractQueryPrefix('g:', query, '+');
-    HandleUrlInput('google.com/search?q=' + googleSearch);
-}
-
-function HandleWikipediaQuery(query) {
-    let wikiSearch = ExtractQueryPrefix('wiki:', query, '+');
-    HandleUrlInput('wikipedia.org/w/?search=' + wikiSearch);
-}
-
-function HandleUrlInput(url) {
-    if (!url.startsWith('http://') || !url.startsWith('https://'))
-        url = 'http://' + url;
-
-    open(url, error => {
-        if (error) throw error;
-    });
-
-    HideMainWindow();
-}
-
-function HandleElectronizrCommand(command) {
-    switch (command) {
-        case 'exit':
-            ipcRenderer.sendSync('close-main-window');
-            break;
-
-        case 'reload':
-            UpdateAppList();
-            break;
-
-        default:
-            return;
-    }
-
-    HideMainWindow();
-}
-
-function HandleWindowsPathInput(path) {
-    let command = '"" "' + path + '"';
-    StartProcess(command);
-}
-
-function HandleWindowsCommand(command) {
-    command = command.replace('>', '').toLowerCase();
-    command = `cmd.exe /K ${command}`;
-    StartProcess(command);
-}
-
-function StartProcess(pathToLnk) {
-    if (pathToLnk === '') return;
-
-    let cmd = exec('start ' + pathToLnk, (error, stdout, stderr) => {
-        if (error)
-            throw error;
-    });
-
-    HideMainWindow();
-}
-
 function HideMainWindow() {
     ResetGui();
     ipcRenderer.sendSync('hide-main-window');
@@ -181,6 +107,7 @@ function ResetGui() {
     $(selector.input).val('');
     $(selector.value).empty();
     $(selector.path).empty();
+    $(selector.inputTypeIcon).attr('class', 'fa input-type-icon');
 }
 
 function GetWeight(stringToSearch, value) {
@@ -235,6 +162,32 @@ function ResizeWindow() {
     ipcRenderer.sendSync('resize-window', $(selector.content).height());
 }
 
+function SetInputTypeIcon(input) {
+    let icon = $(selector.inputTypeIcon);
+
+    icon.attr('class', 'fa input-type-icon');
+
+    if (inputValidationService.IsValidHttpOrHttpsUrl(input)) {
+        icon.addClass('fa-globe');
+    }
+
+    if (inputValidationService.IsValidGoogleQuery(input)) {
+        icon.addClass('fa-google');
+    }
+
+    if (inputValidationService.IsValidWikipediaQuery(input)) {
+        icon.addClass('fa-wikipedia-w');
+    }
+
+    if (inputValidationService.IsWindowsCommand(input)) {
+        icon.addClass('fa-terminal');
+    }
+
+    if (inputValidationService.IsValidWindowsPath(input)) {
+        icon.addClass('fa-folder-o');
+    }
+}
+
 fileWatcher.on('change', (file, stat) => {
     UpdateAppList();
 });
@@ -249,6 +202,7 @@ $(selector.input).bind('input propertychange', function () {
         return;
     }
 
+    SetInputTypeIcon(input);
     searchResult = GetSearchResult(input);
 
     if (searchResult === undefined || searchResult.length === 0) {
@@ -280,37 +234,37 @@ $(selector.input).keyup(e => {
         let input = $(selector.input).val()
 
         if (inputValidationService.IsElectronizrCommand(input)) {
-            HandleElectronizrCommand(input);
+            executionService.HandleElectronizrCommand(input);
             return;
         }
 
         if (inputValidationService.IsValidHttpOrHttpsUrl(input)) {
-            HandleUrlInput(input);
+            executionService.HandleUrlInput(input);
             return;
         }
 
         if (inputValidationService.IsValidGoogleQuery(input)) {
-            HandleGoogleQuery(input)
+            executionService.HandleGoogleQuery(input)
             return;
         }
 
         if (inputValidationService.IsValidWikipediaQuery(input)) {
-            HandleWikipediaQuery(input)
+            executionService.HandleWikipediaQuery(input)
             return;
         }
 
         if (inputValidationService.IsValidWindowsPath(input)) {
-            HandleWindowsPathInput(input);
+            executionService.HandleWindowsPathInput(input);
             return;
         }
 
         if (inputValidationService.IsWindowsCommand(input, windowsCommands)) {
-            HandleWindowsCommand(input);
+            executionService.HandleWindowsCommand(input);
             return;
         }
 
         let path = $(selector.path).html();
-        StartProcess(path);
+        executionService.StartProcess(path);
     }
 
     // Select Next or Prev Item
