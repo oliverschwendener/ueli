@@ -2,11 +2,10 @@
 
 ## An 'alt+space' launcher for Windows
 
-Just hit alt + space on the keyboard and type in the word for the program you want to launch.
+### Launch programs
 
-## Things to come in the future
+### Execute Windows commandline tools 
 
-* Possible to search for
-    * Windows 10 apps
-    * Windows Control Panel
-    * Windows Commandline Tools
+### Open websites by typing in a valid URL
+
+### Google or Wikipedia queries
