@@ -263,8 +263,11 @@ $(selector.input).keyup(e => {
             return;
         }
 
-        let path = $(selector.path).html();
-        executionService.StartProcess(path);
+        if (searchResult.length > 0) {
+            let path = $(selector.path).html();
+            executionService.StartProcess(path);
+            ResetGui();
+        }        
     }
 
     // Select Next or Prev Item
