@@ -1,7 +1,7 @@
 import path from 'path';
 
 export default class InputValidationService {
-    
+
     IsValidHttpOrHttpsUrl(url) {
         if (url.endsWith('.exe')) return false;
 
@@ -12,6 +12,20 @@ export default class InputValidationService {
             return true;
 
         return false;
+    }
+
+    IsValidGoogleQuery(query) {
+        if (query.startsWith('g:'))
+            return true;
+        else
+            return false;
+    }
+
+    IsValidWikipediaQuery(query) {
+        if (query.startsWith('wiki:'))
+            return true;
+        else
+            return false;
     }
 
     IsElectronizrCommand(command) {

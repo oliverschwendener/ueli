@@ -99,6 +99,16 @@ function GetSearchResult(value) {
     return sortedResult;
 }
 
+function HandleGoogleQuery(query) {
+    query = query.replace('g:', '').replace(' ', '+');
+    HandleUrlInput('google.com/#q=' + query);
+}
+
+function HandleWikipediaQuery(query) {
+    query = query.replace('wiki:', '').replace(' ', '+');
+    HandleUrlInput('wikipedia.org/w/?search=' + query);
+}
+
 function HandleUrlInput(url) {
     if (!url.startsWith('http://') || !url.startsWith('https://'))
         url = 'http://' + url;
@@ -263,6 +273,16 @@ $(selector.input).keyup(e => {
 
         if (inputValidationService.IsValidHttpOrHttpsUrl(input)) {
             HandleUrlInput(input);
+            return;
+        }
+
+        if (inputValidationService.IsValidGoogleQuery(input)) {
+            HandleGoogleQuery(input)
+            return;
+        }
+
+        if (inputValidationService.IsValidWikipediaQuery(input)) {
+            HandleWikipediaQuery(input)
             return;
         }
 
