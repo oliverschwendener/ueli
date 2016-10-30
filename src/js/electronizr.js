@@ -267,6 +267,7 @@ $(selector.input).keyup(e => {
             let path = $(selector.path).html();
             executionService.StartProcess(path);
             ResetGui();
+            ipcRenderer.sendSync('hide-main-window');
         }        
     }
 
