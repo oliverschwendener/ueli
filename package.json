@@ -28,6 +28,9 @@
   },
   "build": {
     "appId": "com.electron.electronizr",
-    "category": "Utility"
+    "category": "Utility",
+    "win": {
+      "icon": "build/icon"
+    }
   }
 }
