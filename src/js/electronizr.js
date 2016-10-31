@@ -188,6 +188,45 @@ function SetInputTypeIcon(input) {
     }
 }
 
+function ValidateInputAndExecute(input) {
+    if (inputValidationService.IsElectronizrCommand(input)) {
+        executionService.HandleElectronizrCommand(input);
+        return;
+    }
+
+    if (inputValidationService.IsValidGoogleQuery(input)) {
+        executionService.HandleGoogleQuery(input)
+        return;
+    }
+
+    if (inputValidationService.IsValidWikipediaQuery(input)) {
+        executionService.HandleWikipediaQuery(input)
+        return;
+    }
+
+    if (inputValidationService.IsValidHttpOrHttpsUrl(input)) {
+        executionService.HandleUrlInput(input);
+        return;
+    }
+
+    if (inputValidationService.IsValidWindowsPath(input)) {
+        executionService.HandleWindowsPathInput(input);
+        return;
+    }
+
+    if (inputValidationService.IsWindowsCommand(input, windowsCommands)) {
+        executionService.HandleWindowsCommand(input);
+        return;
+    }
+
+    if (searchResult.length > 0) {
+        let path = $(selector.path).html();
+        executionService.StartProcess(path);
+        ResetGui();
+        ipcRenderer.sendSync('hide-main-window');
+    }
+}
+
 fileWatcher.on('change', (file, stat) => {
     UpdateAppList();
 });
@@ -232,43 +271,7 @@ $(selector.input).keyup(e => {
     // When user hits enter on keyboard
     if (e.keyCode === 13) {
         let input = $(selector.input).val()
-
-        if (inputValidationService.IsElectronizrCommand(input)) {
-            executionService.HandleElectronizrCommand(input);
-            return;
-        }
-
-        if (inputValidationService.IsValidHttpOrHttpsUrl(input)) {
-            executionService.HandleUrlInput(input);
-            return;
-        }
-
-        if (inputValidationService.IsValidGoogleQuery(input)) {
-            executionService.HandleGoogleQuery(input)
-            return;
-        }
-
-        if (inputValidationService.IsValidWikipediaQuery(input)) {
-            executionService.HandleWikipediaQuery(input)
-            return;
-        }
-
-        if (inputValidationService.IsValidWindowsPath(input)) {
-            executionService.HandleWindowsPathInput(input);
-            return;
-        }
-
-        if (inputValidationService.IsWindowsCommand(input, windowsCommands)) {
-            executionService.HandleWindowsCommand(input);
-            return;
-        }
-
-        if (searchResult.length > 0) {
-            let path = $(selector.path).html();
-            executionService.StartProcess(path);
-            ResetGui();
-            ipcRenderer.sendSync('hide-main-window');
-        }        
+        ValidateInputAndExecute(input);
     }
 
     // Select Next or Prev Item
