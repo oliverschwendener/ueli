@@ -6,7 +6,7 @@ export default class ExecutionService {
 
     HandleUrlInput(url) {
         if (!url.startsWith('http://') || !url.startsWith('https://'))
-            url = 'http://' + url;
+            url = `http://${url}`;
 
         open(url, error => {
             if (error) throw error;
@@ -30,16 +30,16 @@ export default class ExecutionService {
 
     HandleGoogleQuery(query) {
         let googleSearch = this.ExtractQueryPrefix('g:', query, '+');
-        this.HandleUrlInput('google.com/search?q=' + googleSearch);
+        this.HandleUrlInput(`google.com/search?q=${googleSearch}`);
     }
 
     HandleWikipediaQuery(query) {
         let wikiSearch = this.ExtractQueryPrefix('wiki:', query, '+');
-        this.HandleUrlInput('wikipedia.org/w/?search=' + wikiSearch);
+        this.HandleUrlInput(`wikipedia.org/w/?search=${wikiSearch}`);
     }
 
     HandleWindowsPathInput(path) {
-        let command = '"" "' + path + '"';
+        let command = `"" "${path}"`;
         this.StartProcess(command);
     }
 
@@ -69,7 +69,7 @@ export default class ExecutionService {
     StartProcess(pathToLnk) {
         if (pathToLnk === '') return;
 
-        let cmd = exec('start ' + pathToLnk, (error, stdout, stderr) => {
+        let cmd = exec(`start ${pathToLnk}`, (error, stdout, stderr) => {
             if (error)
                 throw error;
         });

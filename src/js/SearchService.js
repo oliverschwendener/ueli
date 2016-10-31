@@ -42,7 +42,7 @@ export default class SearchService {
             let dir = directory;
             let list = fs.readdirSync(dir);
             list.forEach((file) => {
-                file = dir + '/' + file;
+                file = `${dir}/${file}`;
                 let stat = fs.statSync(file);
                 if (stat && stat.isDirectory())
                     result = result.concat(this.getFilesFromDirectoriesRecursively([file], fileExtension));

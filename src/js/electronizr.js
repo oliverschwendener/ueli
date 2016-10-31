@@ -49,8 +49,8 @@ function DisplaySearchResult() {
     $(selector.value).children('p').removeClass('active');
 
     for (let i = 0; i < searchResult.length; i++) {
-        $(selector.value).append('<p id="' + i + '">' + searchResult[i].Name + '</p>');
-        $(selector.value).find('#' + searchResultIndex).addClass('active');
+        $(selector.value).append(`<p id="${i}">${searchResult[i].Name}</p>`);
+        $(selector.value).find(`#${searchResultIndex}`).addClass('active');
         $(selector.path).html(searchResult[searchResultIndex].Path);
     }
 
@@ -74,7 +74,7 @@ function GetSearchResult(value) {
 
         apps.push({
             Name: displayName,
-            Path: '"" "' + shortcut + '"',
+            Path: `"" "${shortcut}"`,
             Weight: weight
         });
     }
