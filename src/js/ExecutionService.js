@@ -5,7 +5,7 @@ import { ipcRenderer } from 'electron';
 export default class ExecutionService {
 
     HandleUrlInput(url) {
-        if (!url.startsWith('http://') || !url.startsWith('https://'))
+        if(!url.startsWith('http://') && !url.startsWith('https://'))
             url = `http://${url}`;
 
         open(url, error => {
