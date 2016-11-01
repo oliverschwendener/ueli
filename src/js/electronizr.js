@@ -38,7 +38,7 @@ let maxResultItems = 10;
 
 let configFilePath = './config.json';
 let defaultConfig = {
-    theme: 'windows10'
+    theme: 'win10'
 }
 
 function InitializeElectronizrTheme() {
