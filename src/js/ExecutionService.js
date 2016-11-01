@@ -53,17 +53,23 @@ export default class ExecutionService {
         switch (command) {
             case 'exit':
                 ipcRenderer.sendSync('close-main-window');
-                break;
+                return;;
 
-            case 'reload':
+            case 'ezr:reload':
                 UpdateAppList();
-                break;
+                return;;
+
+            case 'ezr:dark-theme':
+                ChangeTheme('dark');
+                return;;
+
+            case 'ezr:windows10-theme':
+                ChangeTheme('windows10');
+                return;
 
             default:
                 return;
         }
-
-        HideMainWindow();
     }
 
     StartProcess(pathToLnk) {

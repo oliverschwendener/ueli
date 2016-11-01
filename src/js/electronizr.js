@@ -15,7 +15,8 @@ let selector = {
     input: 'input',
     value: '.result-value',
     path: '.result-path',
-    inputTypeIcon: '.input-type-icon'
+    inputTypeIcon: '.input-type-icon',
+    theme: '#theme'
 };
 
 let windowsCommands = searchService.getFilesFromDirectory('C:\\Windows\\System32', '.exe');
@@ -161,6 +162,11 @@ function UpdateAppList() {
 function ResizeWindow() {
     let height = $(selector.content).height();
     ipcRenderer.sendSync('resize-window', height);
+}
+
+function ChangeTheme(name) {
+    let stylePath = `./css/${name}-theme.css`;
+    $(selector.theme).attr('href', stylePath);
 }
 
 function SetInputTypeIcon(input) {

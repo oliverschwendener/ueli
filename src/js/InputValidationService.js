@@ -32,9 +32,10 @@ export default class InputValidationService {
     }
 
     IsElectronizrCommand(command) {
-        if (command === 'exit'
-            || command === 'reload')
+        if (command === 'exit' || command.startsWith('ezr:'))
             return true;
+        
+        return false;
     }
 
     IsValidWindowsPath(path) {
