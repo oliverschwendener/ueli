@@ -12,7 +12,7 @@ export default class ExecutionService {
             if (error) throw error;
         });
 
-        HideMainWindow();
+        ResetGui();
     }
 
     ExtractQueryPrefix(prefix, query, separator) {
@@ -73,5 +73,7 @@ export default class ExecutionService {
             if (error)
                 throw error;
         });
+
+        ResetGui();
     }
 }
