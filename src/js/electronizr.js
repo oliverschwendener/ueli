@@ -1,4 +1,5 @@
 import os from 'os';
+import fs from 'fs';
 import path from 'path';
 import levenshtein from 'fast-levenshtein';
 import { ipcRenderer } from 'electron';
@@ -33,9 +34,25 @@ let shortCutFiles = searchService.getFilesFromDirectoriesRecursively(startMenuFo
 
 let searchResult = [];
 let searchResultIndex = 0;
-
-let animationSpeed = 500;
 let maxResultItems = 10;
+
+let configFilePath = './config.json';
+let defaultConfig = {
+    theme: 'windows10'
+}
+
+function InitializeElectronizrTheme() {
+    if(!fs.existsSync(configFilePath)) {
+        fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig));
+    }
+    else {
+        fs.readFile(configFilePath, (err, data) => {
+            if (err) throw err;
+            data = JSON.parse(data);
+            ChangeTheme(data.theme);
+        });
+    }
+}
 
 function DisplaySearchResult() {
     if (searchResult === undefined || searchResult.length === 0)
@@ -165,6 +182,12 @@ function ResizeWindow() {
 }
 
 function ChangeTheme(name) {
+    let currentTheme = JSON.parse(fs.readFileSync(configFilePath)).theme;
+
+    if(currentTheme !== name) {
+        fs.writeFileSync(configFilePath, JSON.stringify({theme: name}));
+    }
+
     let stylePath = `./css/${name}-theme.css`;
     $(selector.theme).attr('href', stylePath);
 }
@@ -237,6 +260,8 @@ function ValidateInputAndExecute(input) {
 fileWatcher.on('change', (file, stat) => {
     UpdateAppList();
 });
+
+$(document).ready(InitializeElectronizrTheme());
 
 // Input Text Change
 $(selector.input).bind('input propertychange', function () {

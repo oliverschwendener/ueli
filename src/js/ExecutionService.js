@@ -63,8 +63,12 @@ export default class ExecutionService {
                 ChangeTheme('dark');
                 return;;
 
-            case 'ezr:windows10-theme':
-                ChangeTheme('windows10');
+            case 'ezr:win10-theme':
+                ChangeTheme('win10');
+                return;
+
+            case 'ezr:light-theme':
+                ChangeTheme('light');
                 return;
 
             default:
