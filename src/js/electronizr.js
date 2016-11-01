@@ -159,7 +159,8 @@ function UpdateAppList() {
 }
 
 function ResizeWindow() {
-    ipcRenderer.sendSync('resize-window', $(selector.content).height());
+    let height = $(selector.content).height();
+    ipcRenderer.sendSync('resize-window', height);
 }
 
 function SetInputTypeIcon(input) {
