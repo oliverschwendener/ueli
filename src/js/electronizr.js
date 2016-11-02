@@ -44,6 +44,7 @@ let defaultConfig = {
 function InitializeElectronizrTheme() {
     if(!fs.existsSync(configFilePath)) {
         fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig));
+        ChangeTheme(defaultConfig.theme);
     }
     else {
         fs.readFile(configFilePath, (err, data) => {
