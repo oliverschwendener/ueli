@@ -45,6 +45,13 @@ export default class InputValidationService {
         return path.match(regex);
     }
 
+    CouldBeConsoleCommand(input) {
+        if(input.startsWith('>'))
+            return true;
+
+        return false;
+    }
+
     IsWindowsCommand(input, windowsCommands) {
         if (!input.startsWith('>'))
             return false;

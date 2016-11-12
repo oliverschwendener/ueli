@@ -210,7 +210,7 @@ function SetInputTypeIcon(input) {
         icon.addClass('fa-wikipedia-w');
     }
 
-    if (inputValidationService.IsWindowsCommand(input)) {
+    if (inputValidationService.CouldBeConsoleCommand(input)) {
         icon.addClass('fa-terminal');
     }
 
