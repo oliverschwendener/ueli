@@ -15,7 +15,7 @@
     "pretty-bytes": "^2.0.1"
   },
   "devDependencies": {
-    "electron-builder": "^7.14.1",
+    "electron-builder": "*",
     "electron-prebuilt": "^0.35.2",
     "gulp": "^3.9.1",
     "gulp-minify-css": "^1.2.4",
