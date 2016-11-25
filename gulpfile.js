@@ -34,9 +34,9 @@ gulp.task('sass', () => {
         .pipe(gulp.dest(sassDestFolder));
 });
 
-gulp.task('build', ['clean', 'js', 'sass']);
+gulp.task('build', ['js', 'sass']);
 
-gulp.task('watch', ['js', 'sass'], () => {
+gulp.task('watch', ['build'], () => {
     gulp.watch(sourceFiles.sass, ['sass']);
     gulp.watch(sourceFiles.js, ['js']);
 });
