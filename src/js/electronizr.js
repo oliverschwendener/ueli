@@ -42,16 +42,16 @@ let defaultConfig = {
 }
 
 function InitializeElectronizrTheme() {
-    if(!fs.existsSync(configFilePath)) {
-        fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig));
-        ChangeTheme(defaultConfig.theme);
-    }
-    else {
-        fs.readFile(configFilePath, (err, data) => {
+    if (fs.existsSync(configFilePath)) {
+            fs.readFile(configFilePath, (err, data) => {
             if (err) throw err;
             data = JSON.parse(data);
             ChangeTheme(data.theme);
         });
+    }
+    else {
+        fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig));
+        ChangeTheme(defaultConfig.theme);
     }
 }
 
@@ -185,8 +185,8 @@ function ResizeWindow() {
 function ChangeTheme(name) {
     let currentTheme = JSON.parse(fs.readFileSync(configFilePath)).theme;
 
-    if(currentTheme !== name) {
-        fs.writeFileSync(configFilePath, JSON.stringify({theme: name}));
+    if (currentTheme !== name) {
+        fs.writeFileSync(configFilePath, JSON.stringify({ theme: name }));
     }
 
     let stylePath = `./css/${name}-theme.css`;
@@ -268,6 +268,10 @@ $(document).ready(InitializeElectronizrTheme());
 $(selector.input).bind('input propertychange', function () {
     let input = $(this).val();
     searchResultIndex = 0;
+
+    if (input === '') {
+        searchResult = [];
+    }
 
     if (input.split(' ').join('') === '') {
         ResetGui();
