@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const babel = require('gulp-babel');
 const sass = require('gulp-sass');
 const minifyCss = require('gulp-minify-css');
+const clean = require('gulp-clean');
 
 const sourceFiles = {
     sass: 'src/css/**/*.scss',
@@ -10,6 +11,12 @@ const sourceFiles = {
 
 const jsDestFolder = './js';
 const sassDestFolder = './css';
+
+gulp.task('clean', () => {
+    return gulp
+        .src('./dist', {read: false})
+        .pipe(clean());
+});
 
 gulp.task('js', () => {
     return gulp.src(sourceFiles.js)
@@ -27,13 +34,11 @@ gulp.task('sass', () => {
         .pipe(gulp.dest(sassDestFolder));
 });
 
-gulp.task('build', ['js', 'sass']);
+gulp.task('build', ['clean', 'js', 'sass']);
 
-gulp.task('watch', ['build'], () => {
+gulp.task('watch', ['js', 'sass'], () => {
     gulp.watch(sourceFiles.sass, ['sass']);
     gulp.watch(sourceFiles.js, ['js']);
 });
 
 gulp.task('default', ['watch']);
-
-

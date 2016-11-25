@@ -18,6 +18,7 @@
     "electron-builder": "*",
     "electron-prebuilt": "^0.35.2",
     "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
     "gulp-minify-css": "^1.2.4",
     "gulp-sass": "^2.3.2"
   },
