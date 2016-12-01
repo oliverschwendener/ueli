@@ -50,7 +50,7 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 * Different color themes:
     * Dark
     * Light
-    * 'default-windows10-like'
+    * 'Default Windows 10 like'
 
 ## Color Themes
 ### Dark
@@ -61,6 +61,15 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 
 ### 'Default Windows 10 like'
 ![color-theme-win10](https://raw.githubusercontent.com/oliverschwendener/random/master/electronizr/img/color-themes/win10.png)
+
+## electronizr specific commands
+|Command|Description|
+|---|---|
+|ezr:reload|Rescan of all Startmenu folders|
+|ezr:dark-theme|Load dark theme|
+|ezr:light-theme|Load light theme|
+|ezr:win10-theme|Load Windows 10 theme|
+|exit|Exit the application| 
 
 ## Planned Features
 * Browsing through history with `shift+arrow-up-key`
