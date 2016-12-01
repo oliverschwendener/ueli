@@ -26,11 +26,11 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 1. Install [Node](https://nodejs.org/en/)
 2. Clone Repo or Download ZIP
 3. Install npm packages
-    * > `$ npm install`
+    * `$ npm install`
 4. Run gulp build task
-    * > `$ gulp build`
+    * `$ gulp build`
 5. Run build script
-    * > `$ npm run build`
+    * `$ npm run build`
 6. Your application is now in the `dist/` folder
 7. Create a shortcut to `electronizr.exe` in the windows startup folder (`C:\Users\<your-username>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`) to run the application on windows logon    
 
