@@ -1,5 +1,14 @@
 # electronizr
 
+## Table of Contents
+* [Demo](#demo)
+* [Quick Tutorial](#quick-tutorial)
+* [Installation](#installation)
+* [Features](#features)
+* [Color Themes](#color-themes)
+* [Planned Features](#planned-features)
+* [Current Bugs](#current-bugs)
+
 ## An 'alt+space' launcher for Windows
 
 This is an 'alt+space' launcher for Windows because I thought the default Windows 10 search function doesn't always do what I want.
@@ -7,11 +16,23 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 ## Demo
 ![demo-video](https://raw.githubusercontent.com/oliverschwendener/random/master/electronizr/img/demo/ezr-demo.gif)
 
-## Quick Tutorial:
+## Quick Tutorial
 * Hit `alt + space` to show/hide the main program
 * Start typing a program name you're looking for
 * Hit enter to launch the highlighted program 
 * Use tab/arrow keys to scroll through the search result
+
+## Installation
+1. Install [Node](https://nodejs.org/en/)
+2. Clone Repo or Download ZIP
+3. Install npm packages
+    * > `$ npm install`
+4. Run gulp build task
+    * > `$ gulp build`
+5. Run build script
+    * > `$ npm run build`
+6. Your application is now in the `dist/` folder
+7. Create a shortcut to `electronizr.exe` in the windows startup folder (`C:\Users\<your-username>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`) to run the application on windows logon    
 
 ## Features
 * Search while typing
@@ -31,7 +52,7 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
     * Light
     * 'default-windows10-like'
 
-## Current Color themes
+## Color Themes
 ### Dark
 ![color-theme-dark](https://raw.githubusercontent.com/oliverschwendener/random/master/electronizr/img/color-themes/dark.png)
 
