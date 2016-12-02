@@ -6,10 +6,12 @@ import { ipcRenderer } from 'electron';
 import SearchService from './js/SearchService';
 import InputValidationService from './js/InputValidationService';
 import ExecutionService from './js/ExecutionService';
+import InputHistory from './js/InputHistory';
 
 let searchService = new SearchService();
 let inputValidationService = new InputValidationService();
 let executionService = new ExecutionService();
+let inputHistory = new InputHistory();
 
 let selector = {
     content: '.content',
@@ -43,7 +45,7 @@ let defaultConfig = {
 
 function InitializeElectronizrTheme() {
     if (fs.existsSync(configFilePath)) {
-            fs.readFile(configFilePath, (err, data) => {
+        fs.readFile(configFilePath, (err, data) => {
             if (err) throw err;
             data = JSON.parse(data);
             ChangeTheme(data.theme);
@@ -308,16 +310,26 @@ $(selector.input).keyup(e => {
     // When user hits enter on keyboard
     if (e.keyCode === 13) {
         let input = $(selector.input).val()
+        inputHistory.addItem(input);
         ValidateInputAndExecute(input);
     }
 
+    if (e.keyCode === 38) {
+        $(selector.input).val(inputHistory.getPrevious());
+        $(selector.input).trigger('propertychange');
+    }
+    else if (e.keyCode === 40) {
+        $(selector.input).val(inputHistory.getNext());
+        $(selector.input).trigger('propertychange');
+    }
+
     // Select Next with ArrowKeyDown or Tab
-    if (e.keyCode === 40 || (!e.shiftKey && e.keyCode === 9)) {
+    else if (!e.shiftKey && e.keyCode === 9) {
         searchResultIndex++;
         DisplaySearchResult();
     }
     // Select Next with ArrowKeyUp or Shift+Tab
-    else if (e.keyCode === 38 || (e.shiftKey && e.keyCode === 9)) {
+    else if (e.shiftKey && e.keyCode === 9) {
         searchResultIndex--;
         DisplaySearchResult();
     }
