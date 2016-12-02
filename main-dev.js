@@ -43,7 +43,7 @@ app.on('ready', function () {
   });
 
   mainWindow.on('blur', function () {
-    mainWindow.hide();
+    //mainWindow.hide();
   });
 
   globalShortcut.register('alt+space', function () {
