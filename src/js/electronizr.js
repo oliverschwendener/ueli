@@ -129,6 +129,7 @@ function ResetGui() {
     $(selector.value).empty();
     $(selector.path).empty();
     $(selector.inputTypeIcon).attr('class', 'fa input-type-icon');
+    ResizeWindow();
 }
 
 function GetWeight(stringToSearch, value) {
@@ -270,10 +271,6 @@ $(document).ready(InitializeElectronizrTheme());
 $(selector.input).bind('input propertychange', function () {
     let input = $(this).val();
     searchResultIndex = 0;
-
-    if (input === '') {
-        searchResult = [];
-    }
 
     if (input.split(' ').join('') === '') {
         ResetGui();
