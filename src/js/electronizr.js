@@ -311,12 +311,13 @@ $(selector.input).keyup(e => {
         ValidateInputAndExecute(input);
     }
 
-    // Select Next or Prev Item
-    if (e.keyCode === 40 || e.keyCode === 9) {
+    // Select Next with ArrowKeyDown or Tab
+    if (e.keyCode === 40 || (!e.shiftKey && e.keyCode === 9)) {
         searchResultIndex++;
         DisplaySearchResult();
     }
-    if (e.keyCode == 38) {
+    // Select Next with ArrowKeyUp or Shift+Tab
+    else if (e.keyCode === 38 || (e.shiftKey && e.keyCode === 9)) {
         searchResultIndex--;
         DisplaySearchResult();
     }
