@@ -24,6 +24,7 @@
   },
   "scripts": {
     "start": "electron main.js",
+    "dev": "electron main-dev.js",
     "build": "build --dir",
     "setup": "build"
   },
