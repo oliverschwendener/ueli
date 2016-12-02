@@ -20,7 +20,7 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 * Hit `alt + space` to show/hide the main program
 * Start typing a program name you're looking for
 * Hit enter to launch the highlighted program 
-* Use tab/arrow keys to scroll through the search result
+* Use tab/shift+tab to scroll through the search result
 
 ## Installation
 1. Install [Node](https://nodejs.org/en/)
@@ -72,7 +72,6 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 |exit|Exit the application| 
 
 ## Planned Features
-* Browsing through history with `shift+arrow-up-key`
 * Execution for all shell commands
     * Output will be displayed in the main application window
 * Favorite Programs will be listed higher in the search result
