@@ -49,6 +49,11 @@ export default class ExecutionService {
         this.StartProcess(command);
     }
 
+    HandleStartProgram(path) {
+        let command = `"" "${path}"`;
+        this.StartProcess(command);
+    }
+
     HandleElectronizrCommand(command) {
         switch (command) {
             case 'exit':

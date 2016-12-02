@@ -95,7 +95,7 @@ function GetSearchResult(value) {
 
         apps.push({
             Name: displayName,
-            Path: `"" "${shortcut}"`,
+            Path: `${shortcut}`,
             Weight: weight
         });
     }
@@ -255,10 +255,16 @@ function ValidateInputAndExecute(input) {
 
     if (searchResult.length > 0) {
         let path = $(selector.path).html();
-        executionService.StartProcess(path);
+        executionService.HandleStartProgram(path);
         ResetGui();
         ipcRenderer.sendSync('hide-main-window');
     }
+}
+
+function OpenFileLocation(filePath) {
+    var folder = path.dirname(filePath);
+    console.log(folder);
+    executionService.HandleWindowsPathInput(folder);
 }
 
 fileWatcher.on('change', (file, stat) => {
@@ -311,7 +317,12 @@ $(selector.input).keyup(e => {
         ValidateInputAndExecute(input);
     }
 
-    if (e.keyCode === 38) {
+    if (e.ctrlKey && e.keyCode === 79) {
+        if (searchResult.length > 0)
+            OpenFileLocation($(selector.path).html());
+    }
+
+    else if (e.keyCode === 38) {
         $(selector.input).val(inputHistory.getPrevious());
         $(selector.input).trigger('propertychange');
     }
