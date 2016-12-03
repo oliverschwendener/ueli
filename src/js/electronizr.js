@@ -327,8 +327,10 @@ $(selector.input).keyup(e => {
         $(selector.input).trigger('propertychange');
     }
     else if (e.keyCode === 40) {
-        $(selector.input).val(inputHistory.getNext());
-        $(selector.input).trigger('propertychange');
+        if(inputHistory.index < inputHistory.history.length) {
+            $(selector.input).val(inputHistory.getNext());
+            $(selector.input).trigger('propertychange');
+        }                      
     }
 
     // Select Next with ArrowKeyDown or Tab
