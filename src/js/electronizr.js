@@ -7,11 +7,13 @@ import SearchService from './js/SearchService';
 import InputValidationService from './js/InputValidationService';
 import ExecutionService from './js/ExecutionService';
 import InputHistory from './js/InputHistory';
+import Helper from './js/Helper';
 
 let searchService = new SearchService();
 let inputValidationService = new InputValidationService();
 let executionService = new ExecutionService();
 let inputHistory = new InputHistory();
+let helper = new Helper();
 
 let selector = {
     content: '.content',
@@ -79,8 +81,8 @@ function DisplaySearchResult() {
     ResizeWindow();
 }
 
-function GetSearchResult(value) {
-    if (value === '') return;
+function GetSearchResult(value) {   
+    if (helper.StringIsUndefinedEmptyOrWhitespaces(value)) return;
 
     let allShortCuts = shortCutFiles;
     let apps = [];
@@ -278,7 +280,7 @@ $(selector.input).bind('input propertychange', function () {
     let input = $(this).val();
     searchResultIndex = 0;
 
-    if (input.split(' ').join('') === '') {
+    if (helper.StringIsUndefinedEmptyOrWhitespaces(input)) {
         ResetGui();
         return;
     }
