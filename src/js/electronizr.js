@@ -120,7 +120,6 @@ function GetSearchResult(input) {
     }
 
     let customCommand = searchService.GetCustomCommand(input, config.customCommands);
-    console.log(customCommand);
     if (customCommand !== undefined)
         apps.push({
             Name: path.basename(customCommand.path).replace(shortCutFileExtension, ''),
@@ -212,7 +211,6 @@ function OpenConfigFile() {
 
 function OpenFileLocation(filePath) {
     let folder = path.dirname(filePath);
-    console.log(folder);
     executionService.HandleWindowsPathInput(folder);
 }
 
