@@ -99,16 +99,16 @@ If there is no config file run the application once, it should create one.
         * Example: `C:\\Users\\Oliver\\Desktop`
     * webSearches:
         * Example: 
-            ``` json
-            [
-                {
-                    "name": "Vimeo",
-                    "prefix": "v",
-                    "url": "vimeo.com/search?q="
-                },
-                ...
-            ]
-            ```
+        ``` json
+        [
+            {
+                "name": "Vimeo",
+                "prefix": "v",
+                "url": "vimeo.com/search?q="
+            }
+        ]
+        ```
+        
     * customCommands:
         * Example:
         ``` json
@@ -116,8 +116,7 @@ If there is no config file run the application once, it should create one.
             {
                 "code": "c",
                 "path": "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Google Chrome.lnk"
-            },
-            ...
+            }
         ]
         ```
 
