@@ -13,10 +13,10 @@ div.content{
 
 	input{
 		width: 100%;
-		padding: 15px 0;
+		padding: 15px 20px;
 		border: none;
 		outline: none;
-		text-align: center;
+		text-align: left;
 		background: $input-background-color;
 		font-family: 'Roboto', 'Segoe UI', sans-serif;
 		color: $input-text-color;
@@ -24,7 +24,7 @@ div.content{
 		font-weight: 400;
 	}
 
-	.search-icon{
+	#icon{
 		position: fixed;
 		top: 39px;
 		right: 30px;
@@ -34,19 +34,9 @@ div.content{
 		z-index: 10;
 	}
 
-	.input-type-icon {
-		position: fixed;
-		top: 39px;
-		left: 30px;
-		transform: translateY(-50%);
-		color: $input-icon-color;
-		font-size: 24px;
-		z-index: 10;
-	}
-
 	div.result-value{
 		width: 100%;
-		text-align: center;
+		text-align: left;
 
 		p{
 			color: $content-text-color;
@@ -54,7 +44,7 @@ div.content{
 			font-weight: 400;
 			-webkit-margin-before: 0;
 			-webkit-margin-after: 0;
-			padding: 10px 0;
+			padding: 10px 20px;
 
 			&.active{
 				background-color: $highlight-color;

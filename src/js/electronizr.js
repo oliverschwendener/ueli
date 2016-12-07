@@ -20,7 +20,7 @@ let selector = {
     input: 'input',
     value: '.result-value',
     path: '.result-path',
-    inputTypeIcon: '.input-type-icon',
+    icon: '#icon',
     theme: '#theme'
 };
 
@@ -155,7 +155,7 @@ function ResetGui() {
     $(selector.input).val('');
     $(selector.value).empty();
     $(selector.path).empty();
-    $(selector.inputTypeIcon).attr('class', 'fa input-type-icon');
+    $(selector.icon).attr('class', 'fa fa-search');
     ResizeWindow();
 }
 
@@ -215,9 +215,9 @@ function OpenFileLocation(filePath) {
 }
 
 function SetInputTypeIcon(input) {
-    let icon = $(selector.inputTypeIcon);
+    let icon = $(selector.icon);
 
-    icon.attr('class', 'fa input-type-icon');
+    icon.attr('class', 'fa fa-search');
 
     if (inputValidationService.IsValidHttpOrHttpsUrl(input)) {
         icon.addClass('fa-globe');
@@ -291,7 +291,7 @@ $(selector.input).bind('input propertychange', function() {
         ResetGui();
         return;
     }
-
+    
     SetInputTypeIcon(input);
     searchResult = GetSearchResult(input);
 
