@@ -113,21 +113,15 @@ If there is no config file run the application once, it should create one.
 |---|---|
 |ezr:reload|Rescan of all Startmenu folders|
 |ezr:config|Open config file|
+|ezr:default-config|Loads default configuration|
 |ezr:dark-theme|Load dark theme|
 |ezr:light-theme|Load light theme|
 |ezr:win10-theme|Load Windows 10 theme|
 |exit|Exit the application| 
 
 ## Planned Features
-* Execution for all shell commands
-    * Output will be displayed in the main application window
 * Favorite Programs will be listed higher in the search result
 * More user customization
     * custom color theme
-    * custom folders to search + fileextensions
-    * custom search engines
-    * custom shortcuts
-
-## Current Bugs
-* Changing color theme sometimes messes up the styling
-    * If that happens you have to exit the application and start it again. This should fix it.
+    * custom file extension search
+    * custom shortcut commands
