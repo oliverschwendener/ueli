@@ -52,6 +52,27 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
     * Light
     * 'Default Windows 10 like'
 
+## Default Settings
+``` json
+{
+    "theme": "win10",
+    "maxResultItems": 10,
+    "folders": [
+        "C:\\Users\\<your-username>\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu",
+        "C:\\Users\\ProgramData\\Microsoft\\Start Menu"
+    ]
+}
+```
+
+## Custom Settings
+Just modify the `dist/config.json` file.
+If there is no config file run the application once, it should create one.
+
+* Options:
+    * theme: `[light, dark, win10]`
+    * maxResultItems: `[1-10]`
+    * foldes: `[valid folder paths]`
+
 ## Color Themes
 ### Dark
 ![color-theme-dark](https://raw.githubusercontent.com/oliverschwendener/random/master/electronizr/img/color-themes/dark.png)
