@@ -1,23 +1,18 @@
 import fs from 'fs';
 import fsWatcher from 'filewatcher';
 import path from 'path';
+import Helper from './Helper';
+import levenshtein from 'fast-levenshtein';
+
+let helper = new Helper();
 
 export default class SearchService {
+
     initializeFileWatcher(foldersToWatch) {
-        let fileWatcher = fsWatcher();
-        let allSubDirs = this.getSubDirectoriesFromDirectoriesRecursively(foldersToWatch);
-
-        for (let folder of foldersToWatch) {
-            fileWatcher.add(folder);
-        }
-
-        for (let subDir of allSubDirs) {
-            fileWatcher.add(subDir);
-        }
-        return fileWatcher;
+        return fsWatcher();
     }
 
-    getSubDirectoriesFromDirectoriesRecursively(directories) {
+    GetSubDirectoriesFromDirectoriesRecursively(directories) {
         let result = [];
 
         for (let directory of directories) {
@@ -28,14 +23,14 @@ export default class SearchService {
                 let stat = fs.statSync(file);
                 if (stat && stat.isDirectory()) {
                     result.push(file);
-                    result = result.concat(this.getSubDirectoriesFromDirectoriesRecursively([file]));
+                    result = result.concat(this.GetSubDirectoriesFromDirectoriesRecursively([file]));
                 }
             }, this);
         }
         return result;
     }
 
-    getFilesFromDirectoriesRecursively(directories, fileExtension) {
+    GetFilesFromDirectoriesRecursively(directories, fileExtension) {
         let result = [];
 
         for (let directory of directories) {
@@ -45,7 +40,7 @@ export default class SearchService {
                 file = `${dir}/${file}`;
                 let stat = fs.statSync(file);
                 if (stat && stat.isDirectory())
-                    result = result.concat(this.getFilesFromDirectoriesRecursively([file], fileExtension));
+                    result = result.concat(this.GetFilesFromDirectoriesRecursively([file], fileExtension));
                 else
                     if (path.extname(file).toLowerCase() === fileExtension.toLowerCase())
                         result.push(file);
@@ -54,7 +49,7 @@ export default class SearchService {
         return result;
     }
 
-    getFilesFromDirectory(directory, fileExtension) {
+    GetFilesFromDirectory(directory, fileExtension) {
         let result = [];
         let files = fs.readdirSync(directory);
         for (let file of files) {
@@ -62,5 +57,17 @@ export default class SearchService {
                 result.push(file);
         }
         return result;
+    }
+
+    GetWeight(stringToSearch, value) {
+        let result = [];
+        let stringToSearchWords = helper.SplitStringToArray(stringToSearch);
+        let valueWords = helper.SplitStringToArray(value);
+
+        for (let word of stringToSearchWords)
+            for (let value of valueWords)
+                result.push(levenshtein.get(word, value));
+
+        return helper.GetAvg(result);
     }
 }

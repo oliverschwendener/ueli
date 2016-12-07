@@ -61,7 +61,6 @@ app.on('ready', function () {
   });
 
   ipcMain.on('reload-window', function() {
-    mainWindow.hide();
     mainWindow.reload();
   });
 

@@ -61,7 +61,7 @@ export default class ExecutionService {
                 return;;
 
             case 'ezr:reload':
-                UpdateAppList();
+                ipcRenderer.sendSync('reload-window');
                 return;;
 
             case 'ezr:dark-theme':

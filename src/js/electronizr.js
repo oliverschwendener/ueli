@@ -1,7 +1,6 @@
 import os from 'os';
 import fs from 'fs';
 import path from 'path';
-import levenshtein from 'fast-levenshtein';
 import { ipcRenderer } from 'electron';
 import SearchService from './js/SearchService';
 import InputValidationService from './js/InputValidationService';
@@ -16,7 +15,6 @@ let executionService = new ExecutionService();
 let inputHistory = new InputHistory();
 let helper = new Helper();
 
-
 let selector = {
     content: '.content',
     input: 'input',
@@ -27,15 +25,10 @@ let selector = {
 };
 
 let shortCutFileExtension = '.lnk';
-let startMenuFolders = [
-    os.homedir() + '\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu',
-    'C:\\ProgramData\\Microsoft\\Windows\\Start Menu'
-];
 
-let fileWatcher = searchService.initializeFileWatcher(startMenuFolders);
+let fileWatcher = searchService.initializeFileWatcher();
 
-let shortCutFiles = searchService.getFilesFromDirectoriesRecursively(startMenuFolders, shortCutFileExtension);
-
+let shortCutFiles = [];
 let searchResult = [];
 let searchResultIndex = 0;
 
@@ -49,15 +42,37 @@ function InitConfig() {
             if (err) throw err;
             data = JSON.parse(data);
             config = data;
-            SetTheme();
+            InitProgram();
         });
     }
     else {
         fs.writeFile(configFilePath, JSON.stringify(defaultConfig), (err) => {
-            if(err) throw err;
+            if (err) throw err;
             config = defaultConfig;
-            SetTheme();
+            InitProgram();
         });
+    }
+}
+
+function InitProgram() {
+    GetShortCutFiles();
+    AddFoldersToFileWatcher(config.folders)
+    SetTheme();
+}
+
+function GetShortCutFiles() {
+    shortCutFiles = searchService.GetFilesFromDirectoriesRecursively(config.folders, shortCutFileExtension);
+}
+
+function AddFoldersToFileWatcher(folders) {
+    let allSubDirs = searchService.GetSubDirectoriesFromDirectoriesRecursively(folders);
+
+    for (let folder of folders) {
+        fileWatcher.add(folder);
+    }
+
+    for (let subDir of allSubDirs) {
+        fileWatcher.add(subDir);
     }
 }
 
@@ -83,7 +98,7 @@ function DisplaySearchResult() {
     ResizeWindow();
 }
 
-function GetSearchResult(value) {   
+function GetSearchResult(value) {
     if (helper.StringIsUndefinedEmptyOrWhitespaces(value)) return;
 
     let allShortCuts = shortCutFiles;
@@ -92,7 +107,7 @@ function GetSearchResult(value) {
     for (let shortcut of allShortCuts) {
         let displayName = path.basename(shortcut).replace(shortCutFileExtension, '');
         let fileName = path.basename(shortcut).toLowerCase().replace(shortCutFileExtension, '');
-        let weight = GetWeight(fileName, value.toLowerCase());
+        let weight = searchService.GetWeight(fileName, value.toLowerCase());
 
         if (!StringContainsSubstring(fileName, value)) continue;
         if (SearchResultListContainsValue(apps, displayName)) continue;
@@ -136,33 +151,8 @@ function ResetGui() {
     ResizeWindow();
 }
 
-function GetWeight(stringToSearch, value) {
-    let result = [];
-    let stringToSearchWords = SplitStringToArray(stringToSearch);
-    let valueWords = SplitStringToArray(value);
-
-    for (let word of stringToSearchWords)
-        for (let value of valueWords)
-            result.push(levenshtein.get(word, value));
-
-    return GetAvg(result);
-}
-
-function GetAvg(array) {
-    let sum = 0;
-
-    for (let value of array)
-        sum = sum + value;
-
-    return sum / array.length;
-}
-
-function SplitStringToArray(string) {
-    return string.split(/\s+/);
-}
-
 function StringContainsSubstring(stringToSearch, substring) {
-    let wordsOfSubstring = SplitStringToArray(substring.toLowerCase());
+    let wordsOfSubstring = helper.SplitStringToArray(substring.toLowerCase());
     stringToSearch = stringToSearch.split(' ').join('').toLowerCase();
 
     for (let word of wordsOfSubstring)
@@ -180,10 +170,6 @@ function SearchResultListContainsValue(list, value) {
     return false;
 }
 
-function UpdateAppList() {
-    shortCutFiles = searchService.getFilesFromDirectoriesRecursively(startMenuFolders, shortCutFileExtension);
-}
-
 function ResizeWindow() {
     let height = $(selector.content).height();
     ipcRenderer.sendSync('resize-window', height);
@@ -198,7 +184,7 @@ function ChangeTheme(name) {
     config.theme = name;
 
     fs.writeFile(configFilePath, JSON.stringify(config), (err) => {
-        if(err) throw err;
+        if (err) throw err;
         ipcRenderer.sendSync('reload-window');
     });
 }
@@ -230,7 +216,7 @@ function SetInputTypeIcon(input) {
 }
 
 function ValidateInputAndExecute(input) {
-    if(helper.StringIsUndefinedEmptyOrWhitespaces(input))
+    if (helper.StringIsUndefinedEmptyOrWhitespaces(input))
         return;
 
     if (inputValidationService.IsElectronizrCommand(input)) {
@@ -281,12 +267,12 @@ fileWatcher.on('change', (file, stat) => {
     UpdateAppList();
 });
 
-$(document).ready(function(){
+$(document).ready(function() {
     InitConfig();
 });
 
 // Input Text Change
-$(selector.input).bind('input propertychange', function () {
+$(selector.input).bind('input propertychange', function() {
     let input = $(this).val();
     searchResultIndex = 0;
 
@@ -326,7 +312,7 @@ $(selector.input).keyup(e => {
     if (e.keyCode === 13) {
         let input = $(selector.input).val();
 
-        if(!helper.StringIsUndefinedEmptyOrWhitespaces(input))            
+        if (!helper.StringIsUndefinedEmptyOrWhitespaces(input))
             inputHistory.addItem(input);
 
         ValidateInputAndExecute(input);
@@ -342,10 +328,10 @@ $(selector.input).keyup(e => {
         $(selector.input).trigger('propertychange');
     }
     else if (e.keyCode === 40) {
-        if(inputHistory.index < inputHistory.history.length) {
+        if (inputHistory.index < inputHistory.history.length) {
             $(selector.input).val(inputHistory.getNext());
             $(selector.input).trigger('propertychange');
-        }                      
+        }
     }
 
     // Select Next with ArrowKeyDown or Tab
