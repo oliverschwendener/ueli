@@ -38,7 +38,6 @@ let shortCutFiles = searchService.getFilesFromDirectoriesRecursively(startMenuFo
 
 let searchResult = [];
 let searchResultIndex = 0;
-let maxResultItems = 10;
 
 let configFilePath = './config.json';
 let defaultConfig = new DefaultConfig().GetConfig();
@@ -111,10 +110,10 @@ function GetSearchResult(value) {
         return 0;
     });
 
-    if (sortedResult.length > maxResultItems) {
+    if (sortedResult.length > config.maxResultItems) {
         let newResult = [];
-        for (let i = 0; i < maxResultItems; i++) {
-            if (i == maxResultItems)
+        for (let i = 0; i < config.maxResultItems; i++) {
+            if (i == config.maxResultItems)
                 break;
             newResult.push(sortedResult[i]);
         }
