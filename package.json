@@ -9,7 +9,7 @@
     "babel-preset-es2015": "^6.16.0",
     "fast-levenshtein": "^2.0.5",
     "filewatcher": "^3.0.1",
-    "font-awesome": "^4.6.3",
+    "font-awesome": "4.7.0",
     "gulp-babel": "^6.1.2",
     "open": "0.0.5",
     "pretty-bytes": "^2.0.1"
