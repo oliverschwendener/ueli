@@ -202,12 +202,9 @@ function SetInputTypeIcon(input) {
         icon.addClass('fa-globe');
     }
 
-    if (inputValidationService.IsValidGoogleQuery(input)) {
-        icon.addClass('fa-google');
-    }
-
-    if (inputValidationService.IsValidWikipediaQuery(input)) {
-        icon.addClass('fa-wikipedia-w');
+    if (inputValidationService.IsValidWebSearch(input, config.webSearches)) {
+         var iconClass = inputValidationService.GetFontAwesomeIconClass(input, config.webSearches);
+         icon.addClass(iconClass);
     }
 
     if (inputValidationService.IsShellCommand(input)) {
@@ -228,13 +225,8 @@ function ValidateInputAndExecute(input) {
         return;
     }
 
-    if (inputValidationService.IsValidGoogleQuery(input)) {
-        executionService.HandleGoogleQuery(input)
-        return;
-    }
-
-    if (inputValidationService.IsValidWikipediaQuery(input)) {
-        executionService.HandleWikipediaQuery(input)
+    if (inputValidationService.IsValidWebSearch(input, config.webSearches)) {
+        executionService.HandleWebSearch(input, config.webSearches);
         return;
     }
 

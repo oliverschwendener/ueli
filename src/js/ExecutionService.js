@@ -1,11 +1,16 @@
 import open from 'open';
 import { exec } from 'child_process';
 import { ipcRenderer } from 'electron';
+import Helper from './Helper';
 
 export default class ExecutionService {
 
+    constructor() {
+        this.helper = new Helper();
+    }
+
     HandleUrlInput(url) {
-        if(!url.startsWith('http://') && !url.startsWith('https://'))
+        if (!url.startsWith('http://') && !url.startsWith('https://'))
             url = `http://${url}`;
 
         open(url, error => {
@@ -28,14 +33,16 @@ export default class ExecutionService {
         return result.join(separator);
     }
 
-    HandleGoogleQuery(query) {
-        let googleSearch = this.ExtractQueryPrefix('g:', query, '+');
-        this.HandleUrlInput(`google.com/search?q=${googleSearch}`);
-    }
+    HandleWebSearch(input, allWebSearches) {
+        let prefix = input.split(':')[0];
+        let query = input.split(':')[1];
+        query = this.helper.SplitStringToArray(query).join('+');
 
-    HandleWikipediaQuery(query) {
-        let wikiSearch = this.ExtractQueryPrefix('wiki:', query, '+');
-        this.HandleUrlInput(`wikipedia.org/w/?search=${wikiSearch}`);
+        for (let search of allWebSearches) {
+            if (prefix === search.prefix) {
+                this.HandleUrlInput(`${search.url}${query}`);
+            }
+        }
     }
 
     HandleWindowsPathInput(path) {

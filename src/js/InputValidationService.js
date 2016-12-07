@@ -1,7 +1,6 @@
 import path from 'path';
 
 export default class InputValidationService {
-
     IsValidHttpOrHttpsUrl(url) {
         if (url.endsWith('.exe')) return false;
 
@@ -14,21 +13,18 @@ export default class InputValidationService {
         return false;
     }
 
-    IsValidGoogleQuery(query) {
-        if (!query.startsWith('g:'))
+    IsValidWebSearch(query, allWebSearches) {
+        if(query.indexOf(':') < 0)
             return false;
 
-        if (query.length <= 0)
-            return false;
+        let prefix = query.split(':')[0];
 
-        return true;
-    }
+        for(let search of allWebSearches) {
+            if(prefix === search.prefix)
+                return true;
+        }
 
-    IsValidWikipediaQuery(query) {
-        if (query.startsWith('wiki:'))
-            return true;
-        else
-            return false;
+        return false;
     }
 
     IsElectronizrCommand(command) {
@@ -50,5 +46,21 @@ export default class InputValidationService {
             return true;
 
         return false;
+    }
+
+    GetFontAwesomeIconClass(input, allWebSearches) {
+        let defaultIcon = 'fa-globe';
+        let prefix = input.split(':')[0];
+
+        for(let search of allWebSearches) {
+            if(prefix === search.prefix) {
+                if(search.fontAwesomeIconClass === undefined)
+                    return defaultIcon;
+                else
+                    return search.fontAwesomeIconClass;
+            }
+        }
+
+        return defaultIcon;
     }
 }
