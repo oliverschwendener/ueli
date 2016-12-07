@@ -61,6 +61,11 @@ app.on('ready', function () {
     app.quit();
   });
 
+  ipcMain.on('reload-window', function() {
+    mainWindow.hide();
+    mainWindow.reload();
+  });
+
   ipcMain.on('resize-window', (event, height) => {
     /*
     mainWindow.setSize(800, height, true);

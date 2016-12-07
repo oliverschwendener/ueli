@@ -8,12 +8,14 @@ import InputValidationService from './js/InputValidationService';
 import ExecutionService from './js/ExecutionService';
 import InputHistory from './js/InputHistory';
 import Helper from './js/Helper';
+import DefaultConfig from './js/DefaultConfig';
 
 let searchService = new SearchService();
 let inputValidationService = new InputValidationService();
 let executionService = new ExecutionService();
 let inputHistory = new InputHistory();
 let helper = new Helper();
+
 
 let selector = {
     content: '.content',
@@ -39,21 +41,24 @@ let searchResultIndex = 0;
 let maxResultItems = 10;
 
 let configFilePath = './config.json';
-let defaultConfig = {
-    theme: 'win10'
-}
+let defaultConfig = new DefaultConfig().GetConfig();
+let config;
 
-function InitializeElectronizrTheme() {
+function InitConfig() {
     if (fs.existsSync(configFilePath)) {
         fs.readFile(configFilePath, (err, data) => {
             if (err) throw err;
             data = JSON.parse(data);
-            ChangeTheme(data.theme);
+            config = data;
+            SetTheme();
         });
     }
     else {
-        fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig));
-        ChangeTheme(defaultConfig.theme);
+        fs.writeFile(configFilePath, JSON.stringify(defaultConfig), (err) => {
+            if(err) throw err;
+            config = defaultConfig;
+            SetTheme();
+        });
     }
 }
 
@@ -185,15 +190,18 @@ function ResizeWindow() {
     ipcRenderer.sendSync('resize-window', height);
 }
 
-function ChangeTheme(name) {
-    let currentTheme = JSON.parse(fs.readFileSync(configFilePath)).theme;
-
-    if (currentTheme !== name) {
-        fs.writeFileSync(configFilePath, JSON.stringify({ theme: name }));
-    }
-
-    let stylePath = `./css/${name}-theme.css`;
+function SetTheme() {
+    let stylePath = `./css/${config.theme}-theme.css`;
     $(selector.theme).attr('href', stylePath);
+}
+
+function ChangeTheme(name) {
+    config.theme = name;
+
+    fs.writeFile(configFilePath, JSON.stringify(config), (err) => {
+        if(err) throw err;
+        ipcRenderer.sendSync('reload-window');
+    });
 }
 
 function SetInputTypeIcon(input) {
@@ -274,7 +282,9 @@ fileWatcher.on('change', (file, stat) => {
     UpdateAppList();
 });
 
-$(document).ready(InitializeElectronizrTheme());
+$(document).ready(function(){
+    InitConfig();
+});
 
 // Input Text Change
 $(selector.input).bind('input propertychange', function () {
