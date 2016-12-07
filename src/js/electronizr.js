@@ -223,6 +223,9 @@ function SetInputTypeIcon(input) {
 }
 
 function ValidateInputAndExecute(input) {
+    if(helper.StringIsUndefinedEmptyOrWhitespaces(input))
+        return;
+
     if (inputValidationService.IsElectronizrCommand(input)) {
         executionService.HandleElectronizrCommand(input);
         return;
@@ -312,8 +315,11 @@ $(window).on('keydown', e => {
 $(selector.input).keyup(e => {
     // When user hits enter on keyboard
     if (e.keyCode === 13) {
-        let input = $(selector.input).val()
-        inputHistory.addItem(input);
+        let input = $(selector.input).val();
+
+        if(!helper.StringIsUndefinedEmptyOrWhitespaces(input))            
+            inputHistory.addItem(input);
+
         ValidateInputAndExecute(input);
     }
 
