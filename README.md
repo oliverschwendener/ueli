@@ -43,11 +43,10 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
     * e.g. `google.com`
 * Use Google search function with a `g:` prefix
     * e.g. `g:how can i exit vi`
-* Use Wikipedia search function with a `wiki:` prefix
-    * e.g. `wiki:nissan gtr`
+* Use your own web search engines
 * Open Folder or Files with entering a file path
     * e.g. `C:\temp` or `C:\temp\myphoto.jpg`
-* Different color themes:
+* Current color themes:
     * Dark
     * Light
     * 'Default Windows 10 like'
@@ -80,7 +79,11 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
             "name": "DuckDuckGo",
             "prefix": "d",
             "url": "duckduckgo.com/?q="
-        }]
+        }
+    ],
+    "customCommands": [
+        {}
+    ]
 }
 ```
 
@@ -89,9 +92,34 @@ Just modify the `dist/config.json` file.
 If there is no config file run the application once, it should create one.
 
 * Options:
-    * theme: `[light, dark, win10]`
+    * theme:
+        * `dark` / `light` / `win10`
     * maxResultItems: `[1-10]`
-    * foldes: `[valid folder paths]`
+    * folders:
+        * Example: `C:\\Users\\Oliver\\Desktop`
+    * webSearches:
+        * Example: 
+            ``` json
+            [
+                {
+                    "name": "Vimeo",
+                    "prefix": "v",
+                    "url": "vimeo.com/search?q="
+                },
+                ...
+            ]
+            ```
+    * customCommands:
+        * Example:
+        ``` json
+        [
+            {
+                "code": "c",
+                "path": "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Google Chrome.lnk"
+            },
+            ...
+        ]
+        ```
 
 ## Color Themes
 ### Dark
@@ -115,8 +143,8 @@ If there is no config file run the application once, it should create one.
 |exit|Exit the application| 
 
 ## Planned Features
+* Installer / Prebuilt Downloads
 * Favorite Programs will be listed higher in the search result
 * More user customization
     * custom color theme
     * custom file extension search
-    * custom shortcut commands

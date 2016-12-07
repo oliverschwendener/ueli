@@ -18,5 +18,5 @@ export default class Helper {
 
         return sum / array.length;
     }
-    
+
 }

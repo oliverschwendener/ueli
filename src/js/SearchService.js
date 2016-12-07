@@ -70,4 +70,13 @@ export default class SearchService {
 
         return helper.GetAvg(result);
     }
+
+    GetCustomCommand(command, allCustomCommands) {
+        for (let customCommand of allCustomCommands) {
+            if (command === customCommand.code)
+                return customCommand;
+        }
+
+        return undefined;
+    }
 }

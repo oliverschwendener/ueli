@@ -30,7 +30,8 @@ export default class DefaultConfig {
                     "prefix": "d",
                     "url": "duckduckgo.com/?q="
                 }
-            ]
+            ],
+            customCommands: []
         }
     }
 

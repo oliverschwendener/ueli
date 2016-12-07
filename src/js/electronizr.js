@@ -98,8 +98,8 @@ function DisplaySearchResult() {
     ResizeWindow();
 }
 
-function GetSearchResult(value) {
-    if (helper.StringIsUndefinedEmptyOrWhitespaces(value)) return;
+function GetSearchResult(input) {
+    if (helper.StringIsUndefinedEmptyOrWhitespaces(input)) return;
 
     let allShortCuts = shortCutFiles;
     let apps = [];
@@ -107,9 +107,9 @@ function GetSearchResult(value) {
     for (let shortcut of allShortCuts) {
         let displayName = path.basename(shortcut).replace(shortCutFileExtension, '');
         let fileName = path.basename(shortcut).toLowerCase().replace(shortCutFileExtension, '');
-        let weight = searchService.GetWeight(fileName, value.toLowerCase());
+        let weight = searchService.GetWeight(fileName, input.toLowerCase());
 
-        if (!StringContainsSubstring(fileName, value)) continue;
+        if (!StringContainsSubstring(fileName, input)) continue;
         if (SearchResultListContainsValue(apps, displayName)) continue;
 
         apps.push({
@@ -118,6 +118,15 @@ function GetSearchResult(value) {
             Weight: weight
         });
     }
+
+    let customCommand = searchService.GetCustomCommand(input, config.customCommands);
+    console.log(customCommand);
+    if (customCommand !== undefined)
+        apps.push({
+            Name: path.basename(customCommand.path).replace(shortCutFileExtension, ''),
+            Path: customCommand.path,
+            Weight: 0
+        });
 
     let sortedResult = apps.sort((a, b) => {
         if (a.Weight > b.Weight) return 1;
@@ -202,7 +211,7 @@ function OpenConfigFile() {
 }
 
 function OpenFileLocation(filePath) {
-    var folder = path.dirname(filePath);
+    let folder = path.dirname(filePath);
     console.log(folder);
     executionService.HandleWindowsPathInput(folder);
 }
@@ -217,8 +226,8 @@ function SetInputTypeIcon(input) {
     }
 
     if (inputValidationService.IsValidWebSearch(input, config.webSearches)) {
-         var iconClass = inputValidationService.GetFontAwesomeIconClass(input, config.webSearches);
-         icon.addClass(iconClass);
+        let iconClass = inputValidationService.GetFontAwesomeIconClass(input, config.webSearches);
+        icon.addClass(iconClass);
     }
 
     if (inputValidationService.IsShellCommand(input)) {
@@ -271,12 +280,12 @@ fileWatcher.on('change', (file, stat) => {
     UpdateAppList();
 });
 
-$(document).ready(function () {
+$(document).ready(function() {
     InitConfig();
 });
 
 // Input Text Change
-$(selector.input).bind('input propertychange', function () {
+$(selector.input).bind('input propertychange', function() {
     let input = $(this).val();
     searchResultIndex = 0;
 

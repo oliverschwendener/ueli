@@ -11,6 +11,12 @@ export default class ExecutionService {
         this.electronizrCommands = new ElectronizrCommands().GetAll();
     }
 
+    HandleCustomCommand(command, allCustomCommands) {
+        for (var customCommand of allCustomCommands)
+            if (command === customCommand.code)
+                this.HandleStartProgram(customCommand.path);
+    }
+
     HandleUrlInput(url) {
         if (!url.startsWith('http://') && !url.startsWith('https://'))
             url = `http://${url}`;
