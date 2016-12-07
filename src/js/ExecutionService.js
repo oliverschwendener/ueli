@@ -75,6 +75,10 @@ export default class ExecutionService {
                 OpenConfigFile();
                 return;
 
+            case 'ezr:default-config': 
+                LoadDefaultConfig();
+                return;
+
             case 'ezr:dark-theme':
                 ChangeTheme('dark');
                 return;;

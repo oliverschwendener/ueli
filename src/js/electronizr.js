@@ -48,7 +48,7 @@ function InitConfig() {
     else {
         fs.writeFile(configFilePath, JSON.stringify(defaultConfig), (err) => {
             if (err) throw err;
-            config = defaultConfig;
+            LoadDefaultConfig();
             InitProgram();
         });
     }
@@ -189,8 +189,22 @@ function ChangeTheme(name) {
     });
 }
 
+function LoadDefaultConfig() {
+    config = defaultConfig;
+
+    fs.writeFile(configFilePath, JSON.stringify(config), (err) => {
+        ipcRenderer.sendSync('reload-window');
+    });
+}
+
 function OpenConfigFile() {
     executionService.HandleWindowsPathInput('./config.json');
+}
+
+function OpenFileLocation(filePath) {
+    var folder = path.dirname(filePath);
+    console.log(folder);
+    executionService.HandleWindowsPathInput(folder);
 }
 
 function SetInputTypeIcon(input) {
@@ -251,12 +265,6 @@ function ValidateInputAndExecute(input) {
         ResetGui();
         ipcRenderer.sendSync('hide-main-window');
     }
-}
-
-function OpenFileLocation(filePath) {
-    var folder = path.dirname(filePath);
-    console.log(folder);
-    executionService.HandleWindowsPathInput(folder);
 }
 
 fileWatcher.on('change', (file, stat) => {
