@@ -87,6 +87,7 @@ If there is no config file run the application once, it should create one.
 |Command|Description|
 |---|---|
 |ezr:reload|Rescan of all Startmenu folders|
+|ezr:config|Open config file|
 |ezr:dark-theme|Load dark theme|
 |ezr:light-theme|Load light theme|
 |ezr:win10-theme|Load Windows 10 theme|

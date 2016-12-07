@@ -64,6 +64,10 @@ export default class ExecutionService {
                 ipcRenderer.sendSync('reload-window');
                 return;;
 
+            case 'ezr:config':
+                OpenConfigFile();
+                return;
+
             case 'ezr:dark-theme':
                 ChangeTheme('dark');
                 return;;

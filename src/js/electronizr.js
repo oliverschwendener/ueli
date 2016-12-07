@@ -189,6 +189,10 @@ function ChangeTheme(name) {
     });
 }
 
+function OpenConfigFile() {
+    executionService.HandleWindowsPathInput('./config.json');
+}
+
 function SetInputTypeIcon(input) {
     let icon = $(selector.inputTypeIcon);
 
@@ -267,12 +271,12 @@ fileWatcher.on('change', (file, stat) => {
     UpdateAppList();
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     InitConfig();
 });
 
 // Input Text Change
-$(selector.input).bind('input propertychange', function() {
+$(selector.input).bind('input propertychange', function () {
     let input = $(this).val();
     searchResultIndex = 0;
 
