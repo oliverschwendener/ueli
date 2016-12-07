@@ -14,7 +14,7 @@ export default class InputValidationService {
         return false;
     }
 
-    IsValidHttpOrHttfpsUrl(url) {
+    IsValidHttpOrHttpsUrl(url) {
         if (url.endsWith('.exe')) return false;
 
         let expression = /^[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gi;
