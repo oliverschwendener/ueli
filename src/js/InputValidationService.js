@@ -1,6 +1,11 @@
 import path from 'path';
+import ElectronizrCommands from './ElectronizrCommands';
 
 export default class InputValidationService {
+    constructor() {
+        this.electronizrCommands = new ElectronizrCommands().GetAll();
+    }
+
     IsValidHttpOrHttpsUrl(url) {
         if (url.endsWith('.exe')) return false;
 
@@ -28,9 +33,10 @@ export default class InputValidationService {
     }
 
     IsElectronizrCommand(command) {
-        if (command === 'exit' || command.startsWith('ezr:'))
-            return true;
-        
+        for(let ezrCommand of this.electronizrCommands)
+            if(ezrCommand.command === command)
+                return true;
+
         return false;
     }
 
