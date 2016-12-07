@@ -83,5 +83,4 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 
 ## Current Bugs
 * Changing color theme sometimes messes up the styling
-    * If that happens you have to exit the application and start it over
-* Shell commands are limited to the Windows 10 default commandline tools like `ping`, `ipconfig` etc.
+    * If that happens you have to exit the application and start it again. This should fix it.
