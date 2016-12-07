@@ -2,11 +2,13 @@ import open from 'open';
 import { exec } from 'child_process';
 import { ipcRenderer } from 'electron';
 import Helper from './Helper';
+import ElectronizrCommands from './ElectronizrCommands';
 
 export default class ExecutionService {
 
     constructor() {
         this.helper = new Helper();
+        this.electronizrCommands = new ElectronizrCommands().GetAll();
     }
 
     HandleUrlInput(url) {
@@ -62,38 +64,9 @@ export default class ExecutionService {
     }
 
     HandleElectronizrCommand(command) {
-        switch (command) {
-            case 'exit':
-                ipcRenderer.sendSync('close-main-window');
-                return;;
-
-            case 'ezr:reload':
-                ipcRenderer.sendSync('reload-window');
-                return;;
-
-            case 'ezr:config':
-                OpenConfigFile();
-                return;
-
-            case 'ezr:default-config': 
-                LoadDefaultConfig();
-                return;
-
-            case 'ezr:dark-theme':
-                ChangeTheme('dark');
-                return;;
-
-            case 'ezr:win10-theme':
-                ChangeTheme('win10');
-                return;
-
-            case 'ezr:light-theme':
-                ChangeTheme('light');
-                return;
-
-            default:
-                return;
-        }
+        for (let ezrCommand of this.electronizrCommands)
+            if (ezrCommand.command === command)
+                ezrCommand.execute();
     }
 
     StartProcess(pathToLnk) {
