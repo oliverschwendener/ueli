@@ -43,7 +43,7 @@ export default class ExecutionService {
         this.StartProcess(command);
     }
 
-    HandleWindowsCommand(command) {
+    HandleShellCommand(command) {
         command = command.replace('>', '').toLowerCase();
         command = `cmd.exe /K ${command}`;
         this.StartProcess(command);

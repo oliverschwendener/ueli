@@ -45,28 +45,9 @@ export default class InputValidationService {
         return path.match(regex);
     }
 
-    CouldBeConsoleCommand(input) {
+    IsShellCommand(input) {
         if(input.startsWith('>'))
             return true;
-
-        return false;
-    }
-
-    IsWindowsCommand(input, windowsCommands) {
-        if (!input.startsWith('>'))
-            return false;
-
-        input = input.replace('>', '');
-        input = input.split(' ')[0];
-
-        if (!input.endsWith('.exe'))
-            input = `${input}.exe`.toLowerCase();
-
-        for (let command of windowsCommands) {
-            let fileName = path.basename(command.toLowerCase());
-            if (input === fileName)
-                return true;
-        }
 
         return false;
     }

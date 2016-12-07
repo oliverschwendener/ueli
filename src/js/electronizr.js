@@ -24,8 +24,6 @@ let selector = {
     theme: '#theme'
 };
 
-let windowsCommands = searchService.getFilesFromDirectory('C:\\Windows\\System32', '.exe');
-
 let shortCutFileExtension = '.lnk';
 let startMenuFolders = [
     os.homedir() + '\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu',
@@ -215,7 +213,7 @@ function SetInputTypeIcon(input) {
         icon.addClass('fa-wikipedia-w');
     }
 
-    if (inputValidationService.CouldBeConsoleCommand(input)) {
+    if (inputValidationService.IsShellCommand(input)) {
         icon.addClass('fa-terminal');
     }
 
@@ -250,8 +248,8 @@ function ValidateInputAndExecute(input) {
         return;
     }
 
-    if (inputValidationService.IsWindowsCommand(input, windowsCommands)) {
-        executionService.HandleWindowsCommand(input);
+    if (inputValidationService.IsShellCommand(input)) {
+        executionService.HandleShellCommand(input);
         return;
     }
 
