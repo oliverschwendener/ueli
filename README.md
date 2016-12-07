@@ -92,8 +92,7 @@ Just modify the `dist/config.json` file.
 If there is no config file run the application once, it should create one.
 
 * Options:
-    * theme:
-        * `dark` / `light` / `win10`
+    * theme: `dark` / `light` / `win10`
     * maxResultItems: `[1-10]`
     * folders:
         * Example: `C:\\Users\\Oliver\\Desktop`
@@ -108,7 +107,7 @@ If there is no config file run the application once, it should create one.
             }
         ]
         ```
-        
+
     * customCommands:
         * Example:
         ``` json
