@@ -12,7 +12,7 @@ export default class ExecutionService {
     }
 
     HandleCustomCommand(command, allCustomCommands) {
-        for (var customCommand of allCustomCommands)
+        for (let customCommand of allCustomCommands)
             if (command === customCommand.code)
                 this.HandleStartProgram(customCommand.path);
     }
