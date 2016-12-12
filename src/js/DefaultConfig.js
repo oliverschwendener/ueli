@@ -3,11 +3,12 @@ import os from 'os';
 export default class DefaultConfig {
     constructor() {
         this.config = {
-            theme: 'win10',
-            maxResultItems: 10,
+            theme: 'dark',
+            maxResultItems: 5,
             folders: [
                 os.homedir() + '\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu',
-                'C:\\ProgramData\\Microsoft\\Windows\\Start Menu'
+                'C:\\ProgramData\\Microsoft\\Windows\\Start Menu',
+                'C:\\Users\\' + process.env.USERNAME + '\\Desktop'
             ],
             webSearches: [
                 {

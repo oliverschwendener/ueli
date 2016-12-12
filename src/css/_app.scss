@@ -1,15 +1,22 @@
+$background-color: #1F2427;
+$text-color: #DBDBDB;
+$text-color-dence: #696969;
+$highlight-background-color: #2E3842;
+$highlight-text-color: #6FCEFF;
+$highlight-text-color-dence: #638892;
+
 body{
 	margin: 0;
 	padding: 0;
 
-	font-family: 'Roboto', 'Segoe UI', sans-serif;
+	font-family: 'Segoe UI', sans-serif;
 }
 
 div.content{
-	background: $content-background-color;
-	width: 100%;
-	max-height: 568px;
-	overflow: hidden;
+	background: transparentize($background-color, 0.05);
+	width: 100vw;
+	height: 100vh;
+	overflow: scroll;
 
 	input{
 		width: 100%;
@@ -17,10 +24,10 @@ div.content{
 		border: none;
 		outline: none;
 		text-align: left;
-		background: $input-background-color;
-		font-family: 'Roboto', 'Segoe UI', sans-serif;
-		color: $input-text-color;
-		font-size: 40px;		
+		background: transparent;
+		font-family: 'Segoe UI', sans-serif;
+		color: $text-color;
+		font-size: 48px;		
 		font-weight: 400;
 	}
 
@@ -29,7 +36,7 @@ div.content{
 		top: 39px;
 		right: 30px;
 		transform: translateY(-50%);
-		color: $input-text-color;
+		color: $text-color;
 		font-size: 24px;
 		z-index: 10;
 	}
@@ -37,18 +44,43 @@ div.content{
 	div.result-value{
 		width: 100%;
 		text-align: left;
+		overflow: hidden;
 
-		p{
-			color: $content-text-color;
-			font-size: 24px;
-			font-weight: 400;
-			-webkit-margin-before: 0;
-			-webkit-margin-after: 0;
-			padding: 10px 20px;
+		div{
+			padding: 20px;
+
+			p{
+				margin: 0;
+				padding: 0;
+			}
+
+			p.app-name{
+				color: $text-color;
+				font-size: 24px;
+				font-weight: 400;
+			}
+
+			p.app-path{
+				color: $text-color-dence;
+				font-size: 16px;
+				font-family: 'Segoe UI Light', sans-serif;
+			}
+
+			p.nothing-found-message{
+				color: $text-color;
+				font-size: 24px;
+			}
 
 			&.active{
-				background-color: $highlight-color;
-				color: $highlight-text-color;
+				background-color: transparentize(lighten($background-color, 10), 0.3);
+				
+				p.app-name{
+					color: $highlight-text-color;
+				}
+
+				p.app-path{
+					color: $highlight-text-color-dence;
+				}
 			}
 		}
 	}

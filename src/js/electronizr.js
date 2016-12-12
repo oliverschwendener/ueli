@@ -21,7 +21,8 @@ let selector = {
     value: '.result-value',
     path: '.result-path',
     icon: '#icon',
-    theme: '#theme'
+    theme: '#theme',
+    noResultsMessage: '#no-search-results-message'
 };
 
 let shortCutFileExtension = '.lnk';
@@ -77,7 +78,7 @@ function AddFoldersToFileWatcher(folders) {
 }
 
 function DisplaySearchResult() {
-    if (searchResult === undefined || searchResult.length === 0)
+    if (searchResult === undefined || (searchResult.length === 0))
         return;
 
     if (searchResultIndex < 0)
@@ -89,13 +90,12 @@ function DisplaySearchResult() {
     $(selector.value).children('p').removeClass('active');
 
     for (let i = 0; i < searchResult.length; i++) {
-        $(selector.value).append(`<p id="${i}">${searchResult[i].Name}</p>`);
+        $(selector.value).append(`<div id="${i}"><p class="app-name">${searchResult[i].Name}</p><p class="app-path">${searchResult[i].Path}</p></div>`);
         $(selector.value).find(`#${searchResultIndex}`).addClass('active');
         $(selector.path).html(searchResult[searchResultIndex].Path);
     }
 
     $(selector.path).html(searchResult[searchResultIndex].Path);
-    ResizeWindow();
 }
 
 function GetSearchResult(input) {
@@ -156,7 +156,6 @@ function ResetGui() {
     $(selector.value).empty();
     $(selector.path).empty();
     $(selector.icon).attr('class', 'fa fa-search');
-    ResizeWindow();
 }
 
 function StringContainsSubstring(stringToSearch, substring) {
@@ -176,11 +175,6 @@ function SearchResultListContainsValue(list, value) {
             return true;
     }
     return false;
-}
-
-function ResizeWindow() {
-    let height = $(selector.content).height();
-    ipcRenderer.sendSync('resize-window', height);
 }
 
 function SetTheme() {
@@ -278,12 +272,12 @@ fileWatcher.on('change', (file, stat) => {
     UpdateAppList();
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     InitConfig();
 });
 
 // Input Text Change
-$(selector.input).bind('input propertychange', function() {
+$(selector.input).bind('input propertychange', function () {
     let input = $(this).val();
     searchResultIndex = 0;
 
@@ -291,12 +285,12 @@ $(selector.input).bind('input propertychange', function() {
         ResetGui();
         return;
     }
-    
+
     SetInputTypeIcon(input);
     searchResult = GetSearchResult(input);
 
     if (searchResult === undefined || searchResult.length === 0) {
-        $(selector.value).html('');
+        $(selector.value).html('<div><p class="nothing-found-message">Nothing found</p></div>');
         $(selector.path).html('');
         return;
     }
