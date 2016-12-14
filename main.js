@@ -12,10 +12,10 @@ var mainWindowOptions = {
   height: 559,
   frame: false,
   resizable: false,
-  //devTools: true,
+  devTools: true,
   transparent: true,
   skipTaskbar: true,
-  show: false,
+  show: true,
   center: true
 };
 

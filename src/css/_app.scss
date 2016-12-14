@@ -1,19 +1,27 @@
-$background-color: #1F2427;
+// Colors
+$background-color: transparentize(#1F2427, 0.05);
+
 $text-color: #DBDBDB;
-$text-color-dence: #696969;
+$text-color-dim: #696969;
+
 $highlight-background-color: #2E3842;
 $highlight-text-color: #6FCEFF;
-$highlight-text-color-dence: #638892;
+$highlight-text-color-dim: #638892;
+
+// Fonts
+$font-family-input: 'Segoe UI', sans-serif;
+$font-family-app-name: 'Segoe UI', sans-serif;
+$font-family-app-path: 'Segoe UI Light', sans-serif;
 
 body{
 	margin: 0;
 	padding: 0;
-
-	font-family: 'Segoe UI', sans-serif;
+	font-family: $font-family-input;
+	background: transparent;
 }
 
 div.content{
-	background: transparentize($background-color, 0.05);
+	background: $background-color;
 	width: 100vw;
 	height: 100vh;
 	overflow: scroll;
@@ -25,7 +33,7 @@ div.content{
 		outline: none;
 		text-align: left;
 		background: transparent;
-		font-family: 'Segoe UI', sans-serif;
+		font-family: $font-family-input;
 		color: $text-color;
 		font-size: 48px;		
 		font-weight: 400;
@@ -41,7 +49,7 @@ div.content{
 		z-index: 10;
 	}
 
-	div.result-value{
+	div.search-results{
 		width: 100%;
 		text-align: left;
 		overflow: hidden;
@@ -52,18 +60,24 @@ div.content{
 			p{
 				margin: 0;
 				padding: 0;
+
+				span{
+					float: right;
+					color: $text-color-dim;
+				}
 			}
 
 			p.app-name{
 				color: $text-color;
 				font-size: 24px;
 				font-weight: 400;
+				font-family: $font-family-app-name;
 			}
 
 			p.app-path{
-				color: $text-color-dence;
+				color: $text-color-dim;
 				font-size: 16px;
-				font-family: 'Segoe UI Light', sans-serif;
+				font-family: $font-family-app-path;
 			}
 
 			p.nothing-found-message{
@@ -72,14 +86,14 @@ div.content{
 			}
 
 			&.active{
-				background-color: transparentize(lighten($background-color, 10), 0.3);
+				background-color: $highlight-background-color;
 				
 				p.app-name{
 					color: $highlight-text-color;
 				}
 
 				p.app-path{
-					color: $highlight-text-color-dence;
+					color: $highlight-text-color-dim;
 				}
 			}
 		}
