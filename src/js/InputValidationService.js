@@ -6,7 +6,7 @@ export default class InputValidationService {
         this.electronizrCommands = new ElectronizrCommands().GetAll();
     }
 
-    IsCustomCommand(command, allCustomCommands) {
+    isCustomCommand(command, allCustomCommands) {
         for (let customCommand of allCustomCommands)
             if (command === customCommand.code)
                 return true;
@@ -14,7 +14,7 @@ export default class InputValidationService {
         return false;
     }
 
-    IsValidHttpOrHttpsUrl(url) {
+    isValidHttpOrHttpsUrl(url) {
         if (url.endsWith('.exe')) return false;
 
         let expression = /^[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gi;
@@ -26,7 +26,7 @@ export default class InputValidationService {
         return false;
     }
 
-    IsValidWebSearch(query, allWebSearches) {
+    isValidWebSearch(query, allWebSearches) {
         if (query.indexOf(':') < 0)
             return false;
 
@@ -40,7 +40,7 @@ export default class InputValidationService {
         return false;
     }
 
-    IsElectronizrCommand(command) {
+    isElectronizrCommand(command) {
         for (let ezrCommand of this.electronizrCommands)
             if (ezrCommand.command === command)
                 return true;
@@ -48,21 +48,21 @@ export default class InputValidationService {
         return false;
     }
 
-    IsValidWindowsPath(path) {
+    isValidWindowsPath(path) {
         let expression = /^[a-z]:\\(?:[^\\/:*?"<>|\r\n]+\\)*[^\\/:*?"<>|\r\n]*$/i;
         let regex = new RegExp(expression);
 
         return path.match(regex);
     }
 
-    IsShellCommand(input) {
+    isShellCommand(input) {
         if (input.startsWith('>'))
             return true;
 
         return false;
     }
 
-    GetFontAwesomeIconClass(input, allWebSearches) {
+    getFontAwesomeIconClass(input, allWebSearches) {
         let defaultIcon = 'fa-globe';
         let prefix = input.split(':')[0];
 

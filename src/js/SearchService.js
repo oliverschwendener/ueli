@@ -12,7 +12,7 @@ export default class SearchService {
         return fsWatcher();
     }
 
-    GetSubDirectoriesFromDirectoriesRecursively(directories) {
+    getSubDirectoriesFromDirectoriesRecursively(directories) {
         let result = [];
 
         for (let directory of directories) {
@@ -23,14 +23,14 @@ export default class SearchService {
                 let stat = fs.statSync(file);
                 if (stat && stat.isDirectory()) {
                     result.push(file);
-                    result = result.concat(this.GetSubDirectoriesFromDirectoriesRecursively([file]));
+                    result = result.concat(this.getSubDirectoriesFromDirectoriesRecursively([file]));
                 }
             }, this);
         }
         return result;
     }
 
-    GetFilesFromDirectoriesRecursively(directories, fileExtension) {
+    getFilesFromDirectoriesRecursively(directories, fileExtension) {
         let result = [];
 
         for (let directory of directories) {
@@ -40,7 +40,7 @@ export default class SearchService {
                 file = `${dir}/${file}`;
                 let stat = fs.statSync(file);
                 if (stat && stat.isDirectory())
-                    result = result.concat(this.GetFilesFromDirectoriesRecursively([file], fileExtension));
+                    result = result.concat(this.getFilesFromDirectoriesRecursively([file], fileExtension));
                 else
                     if (path.extname(file).toLowerCase() === fileExtension.toLowerCase())
                         result.push(file);
@@ -49,7 +49,7 @@ export default class SearchService {
         return result;
     }
 
-    GetFilesFromDirectory(directory, fileExtension) {
+    getFilesFromDirectory(directory, fileExtension) {
         let result = [];
         let files = fs.readdirSync(directory);
         for (let file of files) {
@@ -59,19 +59,19 @@ export default class SearchService {
         return result;
     }
 
-    GetWeight(stringToSearch, value) {
+    getWeight(stringToSearch, value) {
         let result = [];
-        let stringToSearchWords = helper.SplitStringToArray(stringToSearch);
-        let valueWords = helper.SplitStringToArray(value);
+        let stringToSearchWords = helper.splitStringToArray(stringToSearch);
+        let valueWords = helper.splitStringToArray(value);
 
         for (let word of stringToSearchWords)
             for (let value of valueWords)
                 result.push(levenshtein.get(word, value));
 
-        return helper.GetAvg(result);
+        return helper.getAvg(result);
     }
 
-    GetCustomCommand(command, allCustomCommands) {
+    getCustomCommand(command, allCustomCommands) {
         for (let customCommand of allCustomCommands) {
             if (command === customCommand.code)
                 return customCommand;

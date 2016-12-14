@@ -1,16 +1,16 @@
 export default class Helper {
 
-    StringIsUndefinedEmptyOrWhitespaces(string) {
+    stringIsUndefinedEmptyOrWhitespaces(string) {
         let stringWithoutWhitespaces = string.replace(' ', '');
         return stringWithoutWhitespaces === undefined
             || stringWithoutWhitespaces === '';
     }
 
-    SplitStringToArray(string) {
+    splitStringToArray(string) {
         return string.split(/\s+/);
     }
 
-    GetAvg(array) {
+    getAvg(array) {
         let sum = 0;
 
         for (let value of array)

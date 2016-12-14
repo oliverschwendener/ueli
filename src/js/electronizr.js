@@ -1,7 +1,6 @@
-import os from 'os';
 import fs from 'fs';
 import path from 'path';
-import { ipcRenderer } from 'electron';
+import {ipcRenderer} from 'electron';
 import SearchService from './js/SearchService';
 import InputValidationService from './js/InputValidationService';
 import ExecutionService from './js/ExecutionService';
@@ -37,36 +36,36 @@ let configFilePath = './config.json';
 let defaultConfig = new DefaultConfig().GetConfig();
 let config;
 
-function InitConfig() {
+function initConfig() {
     if (fs.existsSync(configFilePath)) {
         fs.readFile(configFilePath, (err, data) => {
             if (err) throw err;
             data = JSON.parse(data);
             config = data;
-            InitProgram();
+            initProgram();
         });
     }
     else {
         fs.writeFile(configFilePath, JSON.stringify(defaultConfig), (err) => {
             if (err) throw err;
-            LoadDefaultConfig();
-            InitProgram();
+            loadDefaultConfig();
+            initProgram();
         });
     }
 }
 
-function InitProgram() {
-    GetShortCutFiles();
-    AddFoldersToFileWatcher(config.folders)
-    SetTheme();
+function initProgram() {
+    getShortCutFiles();
+    addFoldersToFileWatcher(config.folders)
+    setTheme();
 }
 
-function GetShortCutFiles() {
-    shortCutFiles = searchService.GetFilesFromDirectoriesRecursively(config.folders, shortCutFileExtension);
+function getShortCutFiles() {
+    shortCutFiles = searchService.getFilesFromDirectoriesRecursively(config.folders, shortCutFileExtension);
 }
 
-function AddFoldersToFileWatcher(folders) {
-    let allSubDirs = searchService.GetSubDirectoriesFromDirectoriesRecursively(folders);
+function addFoldersToFileWatcher(folders) {
+    let allSubDirs = searchService.getSubDirectoriesFromDirectoriesRecursively(folders);
 
     for (let folder of folders) {
         fileWatcher.add(folder);
@@ -77,7 +76,7 @@ function AddFoldersToFileWatcher(folders) {
     }
 }
 
-function DisplaySearchResult() {
+function displaySearchResult() {
     if (searchResult === undefined || (searchResult.length === 0))
         return;
 
@@ -98,8 +97,8 @@ function DisplaySearchResult() {
     $(selector.path).html(searchResult[searchResultIndex].Path);
 }
 
-function GetSearchResult(input) {
-    if (helper.StringIsUndefinedEmptyOrWhitespaces(input)) return;
+function getSearchResult(input) {
+    if (helper.stringIsUndefinedEmptyOrWhitespaces(input)) return;
 
     let allShortCuts = shortCutFiles;
     let apps = [];
@@ -107,10 +106,10 @@ function GetSearchResult(input) {
     for (let shortcut of allShortCuts) {
         let displayName = path.basename(shortcut).replace(shortCutFileExtension, '');
         let fileName = path.basename(shortcut).toLowerCase().replace(shortCutFileExtension, '');
-        let weight = searchService.GetWeight(fileName, input.toLowerCase());
+        let weight = searchService.getWeight(fileName, input.toLowerCase());
 
-        if (!StringContainsSubstring(fileName, input)) continue;
-        if (SearchResultListContainsValue(apps, displayName)) continue;
+        if (!stringContainsSubstring(fileName, input)) continue;
+        if (searchResultListContainsValue(apps, displayName)) continue;
 
         apps.push({
             Name: displayName,
@@ -119,7 +118,7 @@ function GetSearchResult(input) {
         });
     }
 
-    let customCommand = searchService.GetCustomCommand(input, config.customCommands);
+    let customCommand = searchService.getCustomCommand(input, config.customCommands);
     if (customCommand !== undefined)
         apps.push({
             Name: path.basename(customCommand.path).replace(shortCutFileExtension, ''),
@@ -146,20 +145,20 @@ function GetSearchResult(input) {
     return sortedResult;
 }
 
-function HideMainWindow() {
-    ResetGui();
+function hideMainWindow() {
+    resetGui();
     ipcRenderer.sendSync('hide-main-window');
 }
 
-function ResetGui() {
+function resetGui() {
     $(selector.input).val('');
     $(selector.value).empty();
     $(selector.path).empty();
     $(selector.icon).attr('class', 'fa fa-search');
 }
 
-function StringContainsSubstring(stringToSearch, substring) {
-    let wordsOfSubstring = helper.SplitStringToArray(substring.toLowerCase());
+function stringContainsSubstring(stringToSearch, substring) {
+    let wordsOfSubstring = helper.splitStringToArray(substring.toLowerCase());
     stringToSearch = stringToSearch.split(' ').join('').toLowerCase();
 
     for (let word of wordsOfSubstring)
@@ -169,7 +168,7 @@ function StringContainsSubstring(stringToSearch, substring) {
     return true;
 }
 
-function SearchResultListContainsValue(list, value) {
+function searchResultListContainsValue(list, value) {
     for (let item of list) {
         if (item.Name === value)
             return true;
@@ -177,7 +176,7 @@ function SearchResultListContainsValue(list, value) {
     return false;
 }
 
-function SetTheme() {
+function setTheme() {
     let stylePath = `./css/${config.theme}-theme.css`;
     $(selector.theme).attr('href', stylePath);
 }
@@ -191,7 +190,7 @@ function ChangeTheme(name) {
     });
 }
 
-function LoadDefaultConfig() {
+function loadDefaultConfig() {
     config = defaultConfig;
 
     fs.writeFile(configFilePath, JSON.stringify(config), (err) => {
@@ -200,70 +199,70 @@ function LoadDefaultConfig() {
 }
 
 function OpenConfigFile() {
-    executionService.HandleWindowsPathInput('./config.json');
+    executionService.executeWindowsPathInput('./config.json');
 }
 
-function OpenFileLocation(filePath) {
+function openFileLocation(filePath) {
     let folder = path.dirname(filePath);
-    executionService.HandleWindowsPathInput(folder);
+    executionService.executeWindowsPathInput(folder);
 }
 
-function SetInputTypeIcon(input) {
+function setInputTypeIcon(input) {
     let icon = $(selector.icon);
 
     icon.attr('class', 'fa fa-search');
 
-    if (inputValidationService.IsValidHttpOrHttpsUrl(input)) {
+    if (inputValidationService.isValidHttpOrHttpsUrl(input)) {
         icon.addClass('fa-globe');
     }
 
-    if (inputValidationService.IsValidWebSearch(input, config.webSearches)) {
-        let iconClass = inputValidationService.GetFontAwesomeIconClass(input, config.webSearches);
+    if (inputValidationService.isValidWebSearch(input, config.webSearches)) {
+        let iconClass = inputValidationService.getFontAwesomeIconClass(input, config.webSearches);
         icon.addClass(iconClass);
     }
 
-    if (inputValidationService.IsShellCommand(input)) {
+    if (inputValidationService.isShellCommand(input)) {
         icon.addClass('fa-terminal');
     }
 
-    if (inputValidationService.IsValidWindowsPath(input)) {
+    if (inputValidationService.isValidWindowsPath(input)) {
         icon.addClass('fa-folder-o');
     }
 }
 
-function ValidateInputAndExecute(input) {
-    if (helper.StringIsUndefinedEmptyOrWhitespaces(input))
+function validateInputAndExecute(input) {
+    if (helper.stringIsUndefinedEmptyOrWhitespaces(input))
         return;
 
-    if (inputValidationService.IsElectronizrCommand(input)) {
-        executionService.HandleElectronizrCommand(input);
-        return;
-    }
-
-    if (inputValidationService.IsValidWebSearch(input, config.webSearches)) {
-        executionService.HandleWebSearch(input, config.webSearches);
+    if (inputValidationService.isElectronizrCommand(input)) {
+        executionService.executeEzrCommand(input);
         return;
     }
 
-    if (inputValidationService.IsValidHttpOrHttpsUrl(input)) {
-        executionService.HandleUrlInput(input);
+    if (inputValidationService.isValidWebSearch(input, config.webSearches)) {
+        executionService.executeWebSearch(input, config.webSearches);
         return;
     }
 
-    if (inputValidationService.IsValidWindowsPath(input)) {
-        executionService.HandleWindowsPathInput(input);
+    if (inputValidationService.isValidHttpOrHttpsUrl(input)) {
+        executionService.executeWebUrlInput(input);
         return;
     }
 
-    if (inputValidationService.IsShellCommand(input)) {
-        executionService.HandleShellCommand(input);
+    if (inputValidationService.isValidWindowsPath(input)) {
+        executionService.executeWindowsPathInput(input);
+        return;
+    }
+
+    if (inputValidationService.isShellCommand(input)) {
+        executionService.executeShellCommand(input);
         return;
     }
 
     if (searchResult.length > 0) {
         let path = $(selector.path).html();
-        executionService.HandleStartProgram(path);
-        ResetGui();
+        executionService.executeProgram(path);
+        resetGui();
         ipcRenderer.sendSync('hide-main-window');
     }
 }
@@ -273,7 +272,7 @@ fileWatcher.on('change', (file, stat) => {
 });
 
 $(document).ready(function () {
-    InitConfig();
+    initConfig();
 });
 
 // Input Text Change
@@ -281,13 +280,13 @@ $(selector.input).bind('input propertychange', function () {
     let input = $(this).val();
     searchResultIndex = 0;
 
-    if (helper.StringIsUndefinedEmptyOrWhitespaces(input)) {
-        ResetGui();
+    if (helper.stringIsUndefinedEmptyOrWhitespaces(input)) {
+        resetGui();
         return;
     }
 
-    SetInputTypeIcon(input);
-    searchResult = GetSearchResult(input);
+    setInputTypeIcon(input);
+    searchResult = getSearchResult(input);
 
     if (searchResult === undefined || searchResult.length === 0) {
         $(selector.value).html('<div><p class="nothing-found-message">Nothing found</p></div>');
@@ -295,7 +294,7 @@ $(selector.input).bind('input propertychange', function () {
         return;
     }
     else
-        DisplaySearchResult();
+        displaySearchResult();
 });
 
 // Prevent tab and arrow key from modifing input cursor 
@@ -317,15 +316,15 @@ $(selector.input).keyup(e => {
     if (e.keyCode === 13) {
         let input = $(selector.input).val();
 
-        if (!helper.StringIsUndefinedEmptyOrWhitespaces(input))
+        if (!helper.stringIsUndefinedEmptyOrWhitespaces(input))
             inputHistory.addItem(input);
 
-        ValidateInputAndExecute(input);
+        validateInputAndExecute(input);
     }
 
     if (e.ctrlKey && e.keyCode === 79) {
         if (searchResult.length > 0)
-            OpenFileLocation($(selector.path).html());
+            openFileLocation($(selector.path).html());
     }
 
     else if (e.keyCode === 38) {
@@ -342,11 +341,11 @@ $(selector.input).keyup(e => {
     // Select Next with ArrowKeyDown or Tab
     else if (!e.shiftKey && e.keyCode === 9) {
         searchResultIndex++;
-        DisplaySearchResult();
+        displaySearchResult();
     }
     // Select Next with ArrowKeyUp or Shift+Tab
     else if (e.shiftKey && e.keyCode === 9) {
         searchResultIndex--;
-        DisplaySearchResult();
+        displaySearchResult();
     }
 });
