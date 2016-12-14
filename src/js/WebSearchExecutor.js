@@ -1,34 +1,11 @@
 import open from 'open';
+import fs from 'fs';
 import Helpers from './Helpers.js';
 
 export default class WebSearchExecutor {
     constructor() {
         this.helpers = new Helpers();
-        this.webSearches = [
-            {
-                "name": "Google",
-                "prefix": "g",
-                "url": "https://google.com/search?q=",
-                "fontAwesomeIconClass": "fa-google"
-            },
-            {
-                "name": "Wikipedia",
-                "prefix": "w",
-                "url": "https://wikipedia.org/w/?search=",
-                "fontAwesomeIconClass": "fa-wikipedia-w"
-            },
-            {
-                "name": "YouTube",
-                "prefix": "yt",
-                "url": "https://youtube.com/results?search_query=",
-                "fontAwesomeIconClass": "fa-youtube"
-            },
-            {
-                "name": "DuckDuckGo",
-                "prefix": "d",
-                "url": "https://duckduckgo.com/?q="
-            }
-        ]
+        this.webSearches = this.getWebSearches();
     }
 
     isValid(query) {
@@ -57,5 +34,20 @@ export default class WebSearchExecutor {
                 });
             }
         }
+    }
+
+    getWebSearches() {
+        let configFilePath = './config.json';
+        let userConfig = {};
+
+        if(fs.existsSync(configFilePath)) {
+            let configFileContent = fs.readFileSync(configFilePath);
+            userConfig = JSON.parse(configFileContent);
+        }
+
+        if(userConfig.webSearches !== undefined)
+            return userConfig.webSearches;
+
+        return [];
     }
 }

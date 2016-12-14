@@ -2,7 +2,6 @@
 
 import path from 'path';
 import os from 'os';
-import levenshtein from 'fast-levenshtein';
 import FileSystemSearch from './FileSystemSearch.js';
 import Helpers from './Helpers.js';
 import CustomShortcuts from './CustomShortcuts.js';
@@ -40,7 +39,7 @@ export default class InstalledPrograms {
         // Add Weight to Programs
         for(let program of this.programs) {
             if(this.helpers.stringContainsSubstring(program.name.toLowerCase(), input.toLowerCase())) {
-                program.weight = levenshtein.get(program.name.toLowerCase().replace(' ', ''), input.toLowerCase().replace(' ', ''));
+                program.weight = this.helpers.getWeight(program.name.toLowerCase(), input.toLowerCase());
                 searchResult.push(program);
             }
         }

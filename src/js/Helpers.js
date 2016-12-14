@@ -1,3 +1,5 @@
+import levenshtein from 'fast-levenshtein';
+
 export default class Helpers {
     stringContainsSubstring(stringToSearch, substring) {
         let wordsOfSubstring = this.splitStringToArray(substring.toLowerCase());
@@ -12,5 +14,26 @@ export default class Helpers {
 
     splitStringToArray(string) {
         return string.split(/\s+/);
+    }
+
+    getWeight(stringToSearch, value) {
+        let result = [];
+        let stringToSearchWords = this.splitStringToArray(stringToSearch);
+        let valueWords = this.splitStringToArray(value);
+
+        for (let word of stringToSearchWords)
+            for (let value of valueWords)
+                result.push(levenshtein.get(word, value));
+
+        return this.getAvg(result);
+    }
+
+    getAvg(numbers) {
+        let sum = 0;
+
+        for (let value of numbers)
+            sum = sum + value;
+
+        return sum / numbers.length;
     }
 }

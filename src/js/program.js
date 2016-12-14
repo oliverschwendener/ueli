@@ -2,10 +2,12 @@ import {ipcRenderer} from 'electron';
 import ExecutionService from './js/ExecutionService.js';
 import InstalledPrograms from './js/InstalledPrograms';
 import InputHistory from './js/InputHistory.js';
+import FilePathExecutor from './js/FilePathExecutor.js';
 
 let executionService = new ExecutionService();
 let installedPrograms = new InstalledPrograms();
 let inputHistory = new InputHistory();
+let filePathExecutor = new FilePathExecutor();
 
 let userInput = $('input');
 let searchResults = $('.search-results');
@@ -21,35 +23,14 @@ $(document).ready(() => {
 
 // User Input Change
 userInput.bind('input propertychange', () => {
-    $('.search-results').empty();
+    searchResults.empty();
     if (userInput.val() === '' || userInput.val() === undefined) {
         programs = [];
         return;
     }
 
     programs = installedPrograms.getSearchResult(userInput.val());
-
-    if (programs.length > 0) {
-        selectIndex = 0;
-        maxSelectIndex = programs.length - 1;
-
-        for (let program of programs)
-            searchResults
-                .append(`<div id="search-result-${program.number}">
-                            <p class="app-name">${program.name}</p>
-                            <p class="app-path">${program.path}</p>
-                        </div>`);
-
-        selectNextActiveItem('first');
-    }
-
-    else
-        searchResults
-            .html(`<div>
-                        <p class="nothing-found-message">
-                            Nothing found
-                        </p>
-                    </div>`);
+    showSearchResults();
 });
 
 userInput.on('keydown', e => {
@@ -66,30 +47,45 @@ userInput.on('keydown', e => {
         }
     }
 
-    // Browse Inputhistory
-    else if (e.keyCode === 38) {
-        userInput.val(inputHistory.getPrevious());
-        userInput.trigger('propertychange');
-    }
-    else if (e.keyCode === 40) {
-        if (inputHistory.index < inputHistory.history.length) {
-            userInput.val(inputHistory.getNext());
-            userInput.trigger('propertychange');
+    // Open file location with ctrl+o
+    else if (e.ctrlKey && e.keyCode === 79) {
+        console.log('key pressed');
+        if (programs.length > 0) {
+            console.log('programs > 0');
+            if(filePathExecutor.isValid(programs[selectIndex].path)) {
+                filePathExecutor.openFileLocation(programs[selectIndex].path);
+            }
         }
     }
 
-    // Select Previous Item
+    // Browse input history
+    else if (e.keyCode === 38) {
+        setNewInputValue(inputHistory.getPrevious(), e);
+    }
+    else if (e.keyCode === 40) {
+        setNewInputValue(inputHistory.getNext(), e);
+    }
+
+    // Select previous item
     else if (e.shiftKey && e.keyCode === 9) {
         selectNextActiveItem('prev');
         e.preventDefault();
     }
 
-    // Select Next Item
+    // Select next item
     else if (e.keyCode === 9) {
         selectNextActiveItem('next');
         e.preventDefault();
     }
 });
+
+function setNewInputValue(newInputValue, event) {
+    userInput.val(newInputValue);
+    userInput.trigger('propertychange');
+
+    if(event !== undefined)
+        event.preventDefault();
+}
 
 function selectNextActiveItem(param) {
     if (param === 'first')
@@ -119,5 +115,35 @@ function hideAndResetWindow() {
     userInput.val('');
     searchResults.empty();
     ipcRenderer.sendSync('hide-main-window');
+}
+
+function showSearchResults() {
+    searchResults.empty();
+
+    if (programs.length > 0) {
+        selectIndex = 0;
+        maxSelectIndex = programs.length - 1;
+
+        for (let program of programs)
+            searchResults
+                .append(`<div id="search-result-${program.number}">
+                            <p class="app-name">${program.name}</p>
+                            <p class="app-path">${program.path}</p>
+                        </div>`);
+
+        selectNextActiveItem('first');
+    }
+    else {
+        showInfoMessage('Nothing found');
+    }
+}
+
+function showInfoMessage(message) {
+    searchResults
+        .html(`<div>
+                    <p class="nothing-found-message">
+                        ${message}
+                    </p>
+                </div>`);
 }
 
