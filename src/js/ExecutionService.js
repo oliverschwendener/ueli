@@ -17,10 +17,10 @@ export default class ExecutionService {
         ];
     }
 
-    execute(arg) {
+    execute(executionArgument) {
         for (let executor of this.executors)
-            if (executor.isValid(arg)) {
-                executor.execute(arg);
+            if (executor.isValid(executionArgument)) {
+                executor.execute(executionArgument);
                 return true;
             }
 

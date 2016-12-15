@@ -7,8 +7,8 @@ export default class ProgramExecutor {
     }
 
     isValid(path) {
-        for(let program of this.programs)
-            if(program.path === path)
+        for (let program of this.programs)
+            if (program.path === path)
                 return true;
 
         return false;
@@ -16,7 +16,7 @@ export default class ProgramExecutor {
 
     execute(path) {
         exec(`start "" "${path}"`, (error, stdout, sterr) => {
-            if(error)
+            if (error)
                 throw error;
         });
     }

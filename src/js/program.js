@@ -1,4 +1,4 @@
-import {ipcRenderer} from 'electron';
+import { ipcRenderer } from 'electron';
 import ExecutionService from './js/ExecutionService.js';
 import InstalledPrograms from './js/InstalledPrograms';
 import InputHistory from './js/InputHistory.js';
@@ -52,7 +52,7 @@ userInput.on('keydown', e => {
         console.log('key pressed');
         if (programs.length > 0) {
             console.log('programs > 0');
-            if(filePathExecutor.isValid(programs[selectIndex].path)) {
+            if (filePathExecutor.isValid(programs[selectIndex].path)) {
                 filePathExecutor.openFileLocation(programs[selectIndex].path);
             }
         }
@@ -83,7 +83,7 @@ function setNewInputValue(newInputValue, event) {
     userInput.val(newInputValue);
     userInput.trigger('propertychange');
 
-    if(event !== undefined)
+    if (event !== undefined)
         event.preventDefault();
 }
 

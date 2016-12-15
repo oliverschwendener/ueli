@@ -2,15 +2,15 @@ import fs from 'fs';
 
 export default class CustomShortcuts {
     getCustomShortcuts() {
-        let userConfig = [];
+        let userConfig = {};
         let configFilePath = './config.json';
 
-        if(fs.existsSync(configFilePath)) {
+        if (fs.existsSync(configFilePath)) {
             let configFileContent = fs.readFileSync(configFilePath);
             userConfig = JSON.parse(configFileContent);
         }
 
-        if(userConfig.customShortcuts !== undefined)
+        if (userConfig.customShortcuts !== undefined)
             return userConfig.customShortcuts;
 
         else return [

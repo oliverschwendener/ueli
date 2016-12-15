@@ -1,4 +1,4 @@
-import {exec} from 'child_process';
+import { exec } from 'child_process';
 import { ipcRenderer } from 'electron';
 
 export default class EzrCommandExecutor {
@@ -20,7 +20,7 @@ export default class EzrCommandExecutor {
                 code: 'ezr:config',
                 execute: () => {
                     exec('start "" "config.json"', (error) => {
-                        if(error)
+                        if (error)
                             throw error;
                     });
                 }
@@ -29,16 +29,16 @@ export default class EzrCommandExecutor {
     }
 
     isValid(input) {
-        for(let command of this.commands)
-            if(command.code === input)
+        for (let command of this.commands)
+            if (command.code === input)
                 return true;
 
         return false;
     }
 
     execute(input) {
-        for(let command of this.commands)
-            if(command.code === input) {
+        for (let command of this.commands)
+            if (command.code === input) {
                 command.execute();
                 return;
             }

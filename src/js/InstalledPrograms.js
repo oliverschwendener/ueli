@@ -22,8 +22,8 @@ export default class InstalledPrograms {
         let maxResultLength = 5;
 
         // Add CustomShortCuts
-        for(let customShortcut of this.customShortcuts) {
-            if(customShortcut.code === input) {
+        for (let customShortcut of this.customShortcuts) {
+            if (customShortcut.code === input) {
                 let app = {
                     name: path.basename(customShortcut.path).replace('.lnk', ''),
                     path: customShortcut.path,
@@ -34,8 +34,8 @@ export default class InstalledPrograms {
         }
 
         // Add Weight to Programs
-        for(let program of this.programs) {
-            if(this.helpers.stringContainsSubstring(program.name.toLowerCase(), input.toLowerCase())) {
+        for (let program of this.programs) {
+            if (this.helpers.stringContainsSubstring(program.name.toLowerCase(), input.toLowerCase())) {
                 program.weight = this.helpers.getWeight(program.name.toLowerCase(), input.toLowerCase());
                 searchResult.push(program);
             }
@@ -49,15 +49,15 @@ export default class InstalledPrograms {
         });
 
         // Number Result
-        for(let i = 0; i < sortedResult.length; i++) {
+        for (let i = 0; i < sortedResult.length; i++) {
             sortedResult[i].number = i;
         }
 
         // Take only max 5 items
-        if(sortedResult.length > maxResultLength) {
+        if (sortedResult.length > maxResultLength) {
             let result = [];
 
-            for(let i = 0; i < maxResultLength; i++)
+            for (let i = 0; i < maxResultLength; i++)
                 result.push(sortedResult[i]);
 
             return result;
@@ -89,12 +89,12 @@ export default class InstalledPrograms {
         let configFilePath = './config.json';
         let userConfig = {};
 
-        if(fs.existsSync(configFilePath)) {
+        if (fs.existsSync(configFilePath)) {
             let fileContent = fs.readFileSync(configFilePath);
             userConfig = JSON.parse(fileContent);
         }
 
-        if(userConfig.folders !== undefined)
+        if (userConfig.folders !== undefined)
             return userConfig.folders;
 
         return [

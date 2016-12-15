@@ -16,8 +16,8 @@ export default class FileSystemSearch {
                 if (stat && stat.isDirectory())
                     result = result.concat(this.getFilesFromDirectoriesRecursivelyByFileExtension([file], fileExtension));
                 else
-                if (path.extname(file).toLowerCase() === fileExtension.toLowerCase())
-                    result.push(file);
+                    if (path.extname(file).toLowerCase() === fileExtension.toLowerCase())
+                        result.push(file);
             }, this);
         }
         return result;

@@ -40,12 +40,12 @@ export default class WebSearchExecutor {
         let configFilePath = './config.json';
         let userConfig = {};
 
-        if(fs.existsSync(configFilePath)) {
+        if (fs.existsSync(configFilePath)) {
             let configFileContent = fs.readFileSync(configFilePath);
             userConfig = JSON.parse(configFileContent);
         }
 
-        if(userConfig.webSearches !== undefined)
+        if (userConfig.webSearches !== undefined)
             return userConfig.webSearches;
 
         return [];
