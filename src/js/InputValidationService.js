@@ -1,29 +1,25 @@
-import ProgramExecutor from './ProgramExecutor.js';
+import InstalledPrograms from './InstalledPrograms.js'
 import FilePathExecutor from './FilePathExecutor.js';
 import WebUrlExecutor from './WebUrlExecutor.js';
 import ShellCommandExecutor from './ShellCommandExecutor.js';
 import EzrCommandExecutor from './EzrCommandExecutor.js';
 import WebSearchExecutor from './WebSearchExecutor.js';
 
-export default class ExecutionService {
+export default class InputValidationService {
     constructor() {
-        this.executors = [
-            new ProgramExecutor(),
+        this.validators = [
+            new InstalledPrograms(),
             new FilePathExecutor(),
-            new WebUrlExecutor(),
+            new WebUrlExecutor,
             new ShellCommandExecutor(),
             new EzrCommandExecutor(),
             new WebSearchExecutor()
         ];
     }
 
-    execute(executionArgument) {
-        for (let executor of this.executors)
-            if (executor.isValid(executionArgument)) {
-                executor.execute(executionArgument);
-                return true;
-            }
-
-        return false;
+    getInfoMessage(userInput) {
+        for (let validator of this.validators)
+            if (validator.isValid(userInput))
+                return validator.getInfoMessage(userInput);
     }
 }

@@ -17,4 +17,9 @@ export default class ShellCommandExecutor {
                 throw error;
         });
     }
+
+    getInfoMessage(command) {
+        command = command.replace('>', '');
+        return `Launch ${command}`;
+    }
 }

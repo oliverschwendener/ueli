@@ -21,4 +21,8 @@ export default class WebUrlExecutor {
             if (error) throw error;
         });
     }
+
+    getInfoMessage(url) {
+        return `Open Webbrowser: ${url}`;
+    }
 }

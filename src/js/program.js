@@ -1,10 +1,12 @@
-import { ipcRenderer } from 'electron';
+import {ipcRenderer} from 'electron';
 import ExecutionService from './js/ExecutionService.js';
+import InputValidationService from './js/InputValidationService.js';
 import InstalledPrograms from './js/InstalledPrograms';
 import InputHistory from './js/InputHistory.js';
 import FilePathExecutor from './js/FilePathExecutor.js';
 
 let executionService = new ExecutionService();
+let inputValidationService = new InputValidationService();
 let installedPrograms = new InstalledPrograms();
 let inputHistory = new InputHistory();
 let filePathExecutor = new FilePathExecutor();
@@ -31,6 +33,9 @@ userInput.bind('input propertychange', () => {
 
     programs = installedPrograms.getSearchResult(userInput.val());
     showSearchResults();
+
+    if (programs.length > 0)
+        selectNextActiveItem('first');
 });
 
 userInput.on('keydown', e => {
@@ -120,30 +125,19 @@ function hideAndResetWindow() {
 function showSearchResults() {
     searchResults.empty();
 
-    if (programs.length > 0) {
-        selectIndex = 0;
-        maxSelectIndex = programs.length - 1;
+    selectIndex = 0;
+    maxSelectIndex = programs.length - 1;
 
-        for (let program of programs)
-            searchResults
-                .append(`<div id="search-result-${program.number}">
-                            <p class="app-name">${program.name}</p>
-                            <p class="app-path">${program.path}</p>
-                        </div>`);
-
-        selectNextActiveItem('first');
+    let inputValidationResult = inputValidationService.getInfoMessage(userInput.val());
+    if (inputValidationResult !== undefined) {
+        if (programs.length > 0)
+            searchResults.html(inputValidationResult);
+        else
+            searchResults.html(`<div>
+                                    <p class="info-message">
+                                        ${inputValidationResult}
+                                    </p>
+                                </div>`);
     }
-    else {
-        showInfoMessage('Nothing found');
-    }
-}
-
-function showInfoMessage(message) {
-    searchResults
-        .html(`<div>
-                    <p class="nothing-found-message">
-                        ${message}
-                    </p>
-                </div>`);
 }
 

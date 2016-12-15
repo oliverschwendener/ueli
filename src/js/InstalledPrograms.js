@@ -103,4 +103,23 @@ export default class InstalledPrograms {
             `${os.homedir()}\\Desktop`
         ]
     }
+
+    isValid(input) {
+        if(this.getSearchResult(input).length > 0)
+            return true;
+
+        return false;
+    }
+
+    getInfoMessage(input) {
+        let programs = this.getSearchResult(input);
+        let result = '';
+        for (let program of programs)
+            result += `<div id="search-result-${program.number}">
+                            <p class="app-name">${program.name}</p>
+                            <p class="app-path">${program.path}</p>
+                        </div>`;
+
+        return result;
+    }
 }

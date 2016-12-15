@@ -18,4 +18,8 @@ export default class FilePathExecutor {
         let fileLocation = path.dirname(filePath);
         this.execute(fileLocation);
     }
+
+    getInfoMessage(path) {
+        return `Open ${path}`;
+    }
 }

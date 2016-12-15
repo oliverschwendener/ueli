@@ -8,13 +8,15 @@ export default class EzrCommandExecutor {
                 code: 'ezr:reload',
                 execute: () => {
                     ipcRenderer.sendSync('reload-window');
-                }
+                },
+                infoMessage: 'Reload electronizr'
             },
             {
                 code: 'exit',
                 execute: () => {
                     ipcRenderer.sendSync('close-main-window');
-                }
+                },
+                infoMessage: 'Exit electronizr'
             },
             {
                 code: 'ezr:config',
@@ -23,7 +25,8 @@ export default class EzrCommandExecutor {
                         if (error)
                             throw error;
                     });
-                }
+                },
+                infoMessage: 'Edit configuration'
             }
         ];
     }
@@ -42,5 +45,11 @@ export default class EzrCommandExecutor {
                 command.execute();
                 return;
             }
+    }
+
+    getInfoMessage(input) {
+        for (let command of this.commands)
+            if (command.code === input)
+                return command.infoMessage;
     }
 }

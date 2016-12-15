@@ -50,4 +50,15 @@ export default class WebSearchExecutor {
 
         return [];
     }
+
+    getInfoMessage(input) {
+        let prefix = input.split(':')[0];
+        let webSearchName = '';
+
+        for (let webSearch of this.webSearches)
+            if (webSearch.prefix === prefix)
+                webSearchName = webSearch.name;
+
+        return `${webSearchName} search`;
+    }
 }
