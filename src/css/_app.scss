@@ -78,6 +78,10 @@ div.content{
 				color: $text-color-dim;
 				font-size: 16px;
 				font-family: $font-family-app-path;
+
+				overflow: hidden; 
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
 
 			p.nothing-found-message{
