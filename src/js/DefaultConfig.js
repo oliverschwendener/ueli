@@ -15,7 +15,8 @@ export default class DefaultConfig {
                     prefix: "g",
                     url: "https://google.com/search?q="
                 }
-            ]
+            ],
+            customShortcuts: []
         }
 
         if(!fs.existsSync('config.json'))
