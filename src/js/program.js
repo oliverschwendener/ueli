@@ -4,12 +4,14 @@ import InputValidationService from './js/InputValidationService.js';
 import InstalledPrograms from './js/InstalledPrograms';
 import InputHistory from './js/InputHistory.js';
 import FilePathExecutor from './js/FilePathExecutor.js';
+import Helpers from './js/Helpers.js';
 
 let executionService = new ExecutionService();
 let inputValidationService = new InputValidationService();
 let installedPrograms = new InstalledPrograms();
 let inputHistory = new InputHistory();
 let filePathExecutor = new FilePathExecutor();
+let helpers = new Helpers();
 
 let userInput = $('input');
 let searchResults = $('.search-results');
@@ -92,25 +94,8 @@ function setNewInputValue(newInputValue, event) {
         event.preventDefault();
 }
 
-function selectNextActiveItem(param) {
-    if (param === 'first')
-        selectIndex = 0;
-
-    else if (param === 'next') {
-        if (selectIndex < maxSelectIndex)
-            selectIndex++;
-        else
-            selectIndex = 0;
-    }
-
-    else if (param === 'prev') {
-        if (selectIndex > 0)
-            selectIndex = selectIndex - 1;
-        else
-            selectIndex = maxSelectIndex;
-
-        console.log(selectIndex);
-    }
+function selectNextActiveItem(param) {        
+    selectIndex = helpers.getNextIndex(param, selectIndex, maxSelectIndex);
 
     $('.search-results div').attr('class', '');
     $(`#search-result-${selectIndex}`).attr('class', 'active');
