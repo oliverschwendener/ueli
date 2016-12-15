@@ -31,6 +31,7 @@ app.on('ready', function () {
   mainWindow = new BrowserWindow(mainWindowOptions);
 
   mainWindow.loadURL(mainWindowHtml);
+  mainWindow.hide();
 
   mainWindow.on('closed', function () {
     mainWindow = null;

@@ -5,15 +5,24 @@ export default class EzrCommandExecutor {
     constructor() {
         this.commands = [
             {
-                code: "ezr:reload",
+                code: 'ezr:reload',
                 execute: () => {
                     ipcRenderer.sendSync('reload-window');
                 }
             },
             {
-                code: "exit",
+                code: 'exit',
                 execute: () => {
                     ipcRenderer.sendSync('close-main-window');
+                }
+            },
+            {
+                code: 'ezr:config',
+                execute: () => {
+                    exec('start "" "config.json"', (error) => {
+                        if(error)
+                            throw error;
+                    });
                 }
             }
         ];

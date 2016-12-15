@@ -1,5 +1,6 @@
 'use strict';
 
+import fs from 'fs';
 import path from 'path';
 import os from 'os';
 import FileSystemSearch from './FileSystemSearch.js';
@@ -12,11 +13,7 @@ export default class InstalledPrograms {
         this.helpers = new Helpers();
         this.customShortcuts = new CustomShortcuts().getCustomShortcuts();
 
-        this.folders = [
-            'C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs',
-            `${os.homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs`
-        ]
-
+        this.folders = this.getFoldersToSearch();
         this.programs = this.getAllPrograms();
     }
 
@@ -86,5 +83,24 @@ export default class InstalledPrograms {
 
     getAll() {
         return this.programs;
+    }
+
+    getFoldersToSearch() {
+        let configFilePath = './config.json';
+        let userConfig = {};
+
+        if(fs.existsSync(configFilePath)) {
+            let fileContent = fs.readFileSync(configFilePath);
+            userConfig = JSON.parse(fileContent);
+        }
+
+        if(userConfig.folders !== undefined)
+            return userConfig.folders;
+
+        return [
+            'C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs',
+            `${os.homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs`,
+            `${os.homedir()}\\Desktop`
+        ]
     }
 }
