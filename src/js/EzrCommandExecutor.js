@@ -1,8 +1,11 @@
 import { exec } from 'child_process';
 import { ipcRenderer } from 'electron';
+import fs from 'fs';
+import DefaultConfig from './DefaultConfig';
 
 export default class EzrCommandExecutor {
     constructor() {
+        this.defaultConfig = new DefaultConfig().getConfig();
         this.commands = [
             {
                 code: 'ezr:reload',
