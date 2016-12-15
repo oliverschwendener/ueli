@@ -1,4 +1,4 @@
-import {ipcRenderer} from 'electron';
+import { ipcRenderer } from 'electron';
 import ExecutionService from './js/ExecutionService.js';
 import InputValidationService from './js/InputValidationService.js';
 import InstalledPrograms from './js/InstalledPrograms';
@@ -13,43 +13,39 @@ let inputHistory = new InputHistory();
 let filePathExecutor = new FilePathExecutor();
 let helpers = new Helpers();
 
-let userInput = $('input');
+let input = $('input');
 let searchResults = $('.search-results');
 
 let programs = [];
 let selectIndex = 0;
 let maxSelectIndex = 0;
 
-// Program Start
-$(document).ready(() => {
-
-});
-
-// User Input Change
-userInput.bind('input propertychange', () => {
+// Input Change
+input.bind('input propertychange', () => {
     searchResults.empty();
-    if (userInput.val() === '' || userInput.val() === undefined) {
+    if (input.val() === '' || input.val() === undefined) {
         programs = [];
         return;
     }
 
-    programs = installedPrograms.getSearchResult(userInput.val());
+    programs = installedPrograms.getSearchResult(input.val());
     showSearchResults();
 
     if (programs.length > 0)
         selectNextActiveItem('first');
 });
 
-userInput.on('keydown', e => {
+// Keypress
+input.on('keydown', e => {
     if (e.keyCode === 13) {
         let executionArgument;
         if (programs[selectIndex] !== undefined)
             executionArgument = programs[selectIndex].path;
         else
-            executionArgument = userInput.val();
+            executionArgument = input.val();
 
         if (executionService.execute(executionArgument)) {
-            inputHistory.addItem(userInput.val());
+            inputHistory.addItem(input.val());
             hideAndResetWindow();
         }
     }
@@ -87,22 +83,21 @@ userInput.on('keydown', e => {
 });
 
 function setNewInputValue(newInputValue, event) {
-    userInput.val(newInputValue);
-    userInput.trigger('propertychange');
+    input.val(newInputValue);
+    input.trigger('propertychange');
 
     if (event !== undefined)
         event.preventDefault();
 }
 
-function selectNextActiveItem(param) {        
+function selectNextActiveItem(param) {
     selectIndex = helpers.getNextIndex(param, selectIndex, maxSelectIndex);
-
     $('.search-results div').attr('class', '');
     $(`#search-result-${selectIndex}`).attr('class', 'active');
 }
 
 function hideAndResetWindow() {
-    userInput.val('');
+    input.val('');
     searchResults.empty();
     ipcRenderer.sendSync('hide-main-window');
 }
@@ -113,16 +108,12 @@ function showSearchResults() {
     selectIndex = 0;
     maxSelectIndex = programs.length - 1;
 
-    let inputValidationResult = inputValidationService.getInfoMessage(userInput.val());
+    let inputValidationResult = inputValidationService.getInfoMessage(input.val());
     if (inputValidationResult !== undefined) {
         if (programs.length > 0)
             searchResults.html(inputValidationResult);
         else
-            searchResults.html(`<div>
-                                    <p class="info-message">
-                                        ${inputValidationResult}
-                                    </p>
-                                </div>`);
+            searchResults.html(`<div><p class="info-message">${inputValidationResult}</p></div>`);
     }
 }
 
