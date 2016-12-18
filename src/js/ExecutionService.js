@@ -1,88 +1,29 @@
-import open from 'open';
-import { exec } from 'child_process';
-import { ipcRenderer } from 'electron';
-import Helper from './Helper';
-import ElectronizrCommands from './ElectronizrCommands';
+import ProgramExecutor from './ProgramExecutor.js';
+import FilePathExecutor from './FilePathExecutor.js';
+import WebUrlExecutor from './WebUrlExecutor.js';
+import ShellCommandExecutor from './ShellCommandExecutor.js';
+import EzrCommandExecutor from './EzrCommandExecutor.js';
+import WebSearchExecutor from './WebSearchExecutor.js';
 
 export default class ExecutionService {
-
     constructor() {
-        this.helper = new Helper();
-        this.electronizrCommands = new ElectronizrCommands().GetAll();
+        this.executors = [
+            new ProgramExecutor(),
+            new FilePathExecutor(),
+            new WebUrlExecutor(),
+            new ShellCommandExecutor(),
+            new EzrCommandExecutor(),
+            new WebSearchExecutor()
+        ];
     }
 
-    HandleCustomCommand(command, allCustomCommands) {
-        for (let customCommand of allCustomCommands)
-            if (command === customCommand.code)
-                this.HandleStartProgram(customCommand.path);
-    }
-
-    HandleUrlInput(url) {
-        if (!url.startsWith('http://') && !url.startsWith('https://'))
-            url = `http://${url}`;
-
-        open(url, error => {
-            if (error) throw error;
-        });
-
-        ResetGui();
-    }
-
-    ExtractQueryPrefix(prefix, query, separator) {
-        query = query.replace(prefix, '');
-        query = query.split(' ');
-
-        let result = [];
-        for (let item of query) {
-            if (item.length > 0)
-                result.push(item);
-        }
-
-        return result.join(separator);
-    }
-
-    HandleWebSearch(input, allWebSearches) {
-        let prefix = input.split(':')[0];
-        let query = input.split(':')[1];
-        query = this.helper.SplitStringToArray(query).join('+');
-
-        for (let search of allWebSearches) {
-            if (prefix === search.prefix) {
-                this.HandleUrlInput(`${search.url}${query}`);
+    execute(executionArgument) {
+        for (let executor of this.executors)
+            if (executor.isValid(executionArgument)) {
+                executor.execute(executionArgument);
+                return true;
             }
-        }
-    }
 
-    HandleWindowsPathInput(path) {
-        let command = `"" "${path}"`;
-        this.StartProcess(command);
-    }
-
-    HandleShellCommand(command) {
-        command = command.replace('>', '').toLowerCase();
-        command = `cmd.exe /K ${command}`;
-        this.StartProcess(command);
-    }
-
-    HandleStartProgram(path) {
-        let command = `"" "${path}"`;
-        this.StartProcess(command);
-    }
-
-    HandleElectronizrCommand(command) {
-        for (let ezrCommand of this.electronizrCommands)
-            if (ezrCommand.command === command)
-                ezrCommand.execute();
-    }
-
-    StartProcess(pathToLnk) {
-        if (pathToLnk === '') return;
-
-        let cmd = exec(`start ${pathToLnk}`, (error, stdout, stderr) => {
-            if (error)
-                throw error;
-        });
-
-        ResetGui();
+        return false;
     }
 }

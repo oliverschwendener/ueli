@@ -8,16 +8,14 @@ var ipcMain = electron.ipcMain;
 var mainWindow = null;
 
 var mainWindowOptions = {
-  width: 800,
-  minWidth: 800,
-  minHeight: 78,
-  maxHeight: 568,
+  width: 900,
+  height: 559,
   frame: false,
   resizable: false,
-  //devTools: true,
+  devTools: true,
   transparent: true,
   skipTaskbar: true,
-  show: false,
+  show: true,
   center: true
 };
 
@@ -33,9 +31,8 @@ app.on('ready', function () {
   mainWindow = new BrowserWindow(mainWindowOptions);
 
   mainWindow.loadURL(mainWindowHtml);
-
-  //Set to start size
-  mainWindow.setSize(800, 78);
+  //mainWindow.webContents.openDevTools();
+  mainWindow.hide();
 
   mainWindow.on('closed', function () {
     mainWindow = null;
@@ -62,11 +59,6 @@ app.on('ready', function () {
 
   ipcMain.on('reload-window', function() {
     mainWindow.reload();
-  });
-
-  ipcMain.on('resize-window', (event, height) => {
-    mainWindow.setSize(800, height, true);
-    event.returnValue = 0;
   });
 
 });
