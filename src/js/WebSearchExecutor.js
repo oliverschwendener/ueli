@@ -6,8 +6,8 @@ import Constants from './Constants.js';
 export default class WebSearchExecutor {
     constructor() {
         this.helpers = new Helpers();
-        this.webSearches = this.getWebSearches();
         this.configFilePath = new Constants().getConfigFilePath();
+        this.webSearches = this.getWebSearches();
     }
 
     isValid(query) {
