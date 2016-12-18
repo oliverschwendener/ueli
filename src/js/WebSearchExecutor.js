@@ -1,11 +1,13 @@
 import open from 'open';
 import fs from 'fs';
 import Helpers from './Helpers.js';
+import Constants from './Constants.js';
 
 export default class WebSearchExecutor {
     constructor() {
         this.helpers = new Helpers();
         this.webSearches = this.getWebSearches();
+        this.configFilePath = new Constants().getConfigFilePath();
     }
 
     isValid(query) {
@@ -37,11 +39,10 @@ export default class WebSearchExecutor {
     }
 
     getWebSearches() {
-        let configFilePath = './config.json';
         let userConfig = {};
 
-        if (fs.existsSync(configFilePath)) {
-            let configFileContent = fs.readFileSync(configFilePath);
+        if (fs.existsSync(this.configFilePath)) {
+            let configFileContent = fs.readFileSync(this.configFilePath);
             userConfig = JSON.parse(configFileContent);
         }
 

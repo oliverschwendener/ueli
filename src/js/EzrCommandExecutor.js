@@ -1,11 +1,12 @@
 import { exec } from 'child_process';
 import { ipcRenderer } from 'electron';
-import fs from 'fs';
+import Constants from './Constants.js';
 import DefaultConfig from './DefaultConfig';
 
 export default class EzrCommandExecutor {
     constructor() {
         this.defaultConfig = new DefaultConfig().getConfig();
+        this.configFilePath = new Constants().getConfigFilePath();
         this.commands = [
             {
                 code: 'ezr:reload',
@@ -24,7 +25,7 @@ export default class EzrCommandExecutor {
             {
                 code: 'ezr:config',
                 execute: () => {
-                    exec('start "" "config.json"', (error) => {
+                    exec(`start "" "${this.configFilePath}"`, (error) => {
                         if (error)
                             throw error;
                     });

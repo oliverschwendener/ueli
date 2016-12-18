@@ -1,23 +1,22 @@
 import fs from 'fs';
+import Constants from './Constants.js';
 
 export default class CustomShortcuts {
+    constructor() {
+        this.configFilePath = new Constants().getConfigFilePath();
+    }
+
     getCustomShortcuts() {
         let userConfig = {};
-        let configFilePath = './config.json';
 
-        if (fs.existsSync(configFilePath)) {
-            let configFileContent = fs.readFileSync(configFilePath);
+        if (fs.existsSync(this.configFilePath)) {
+            let configFileContent = fs.readFileSync(this.configFilePath);
             userConfig = JSON.parse(configFileContent);
         }
 
         if (userConfig.customShortcuts !== undefined)
             return userConfig.customShortcuts;
 
-        else return [
-            {
-                code: 'c',
-                path: 'C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Google Chrome.lnk'
-            }
-        ];
+        else return [];
     }
 }

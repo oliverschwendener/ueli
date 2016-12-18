@@ -6,12 +6,14 @@ import os from 'os';
 import FileSystemSearch from './FileSystemSearch.js';
 import Helpers from './Helpers.js';
 import CustomShortcuts from './CustomShortcuts.js';
+import Constants from './Constants.js';
 
 export default class InstalledPrograms {
     constructor() {
         this.fsSearch = new FileSystemSearch();
         this.helpers = new Helpers();
         this.customShortcuts = new CustomShortcuts().getCustomShortcuts();
+        this.configFilePath = new Constants().getConfigFilePath();
 
         this.folders = this.getFoldersToSearch();
         this.programs = this.getAllPrograms();
@@ -86,11 +88,10 @@ export default class InstalledPrograms {
     }
 
     getFoldersToSearch() {
-        let configFilePath = './config.json';
         let userConfig = {};
 
-        if (fs.existsSync(configFilePath)) {
-            let fileContent = fs.readFileSync(configFilePath);
+        if (fs.existsSync(this.configFilePath)) {
+            let fileContent = fs.readFileSync(this.configFilePath);
             userConfig = JSON.parse(fileContent);
         }
 

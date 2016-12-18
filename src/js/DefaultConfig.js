@@ -1,8 +1,10 @@
 import os from 'os';
 import fs from 'fs';
+import Constants from './Constants.js';
 
 export default class DefaultConfig {
     constructor() {
+        this.configFilePath = new Constants().getConfigFilePath();
         this.config = {
             folders: [
                 'C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs',
@@ -19,8 +21,8 @@ export default class DefaultConfig {
             customShortcuts: []
         }
 
-        if(!fs.existsSync('config.json'))
-            fs.writeFileSync('config.json', JSON.stringify(this.config));
+        if(!fs.existsSync(this.configFilePath))
+            fs.writeFileSync(this.configFilePath, JSON.stringify(this.config));
     }
 
     getConfig() {
