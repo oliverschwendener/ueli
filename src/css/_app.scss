@@ -72,6 +72,12 @@ div.content{
 				font-size: 24px;
 				font-weight: 400;
 				font-family: $font-family-app-name;
+
+				span.app-file-extension{
+					float: none;
+					color: $text-color;
+					opacity: 0.2;
+				}
 			}
 
 			p.app-path{
@@ -94,6 +100,10 @@ div.content{
 				
 				p.app-name{
 					color: $highlight-text-color;
+
+					span.app-file-extension{
+						color: $highlight-text-color;
+					}
 				}
 
 				p.app-path{

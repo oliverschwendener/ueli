@@ -26,8 +26,10 @@ export default class InstalledPrograms {
         // Add CustomShortCuts
         for (let customShortcut of this.customShortcuts) {
             if (customShortcut.code === input) {
+                let fileExtension = path.extname(customShortcut);
                 let app = {
-                    name: path.basename(customShortcut.path).replace('.lnk', ''),
+                    name: path.basename(customShortcut.path).replace(fileExtension, ''),
+                    fileExt: path.extname(customShortcut.path),
                     path: customShortcut.path,
                     weight: 0
                 };
@@ -37,8 +39,10 @@ export default class InstalledPrograms {
 
         // Add Weight to Programs
         for (let program of this.programs) {
-            if (this.helpers.stringContainsSubstring(program.name.toLowerCase(), input.toLowerCase())) {
-                program.weight = this.helpers.getWeight(program.name.toLowerCase(), input.toLowerCase());
+            let fileNameWithExtension = path.basename(program.path).toLowerCase();
+            if (this.helpers.stringContainsSubstring(fileNameWithExtension, input.toLowerCase())) {
+                program.weight = this.helpers.getWeight(fileNameWithExtension, input.toLowerCase());
+                if(program.weight > 10) continue;
                 searchResult.push(program);
             }
         }
@@ -69,11 +73,13 @@ export default class InstalledPrograms {
 
     getAllPrograms() {
         let result = [];
-        let allShortCutFiles = this.fsSearch.getFilesFromDirectoriesRecursivelyByFileExtension(this.folders, '.lnk');
+        let allShortCutFiles = this.fsSearch.getFilesFromDirectoriesRecursivelyByFileExtension(this.folders, '*');
 
         for (let shortcut of allShortCutFiles) {
+            let fileExtension = path.extname(shortcut);
             let program = {
-                name: path.basename(shortcut).replace('.lnk', ''),
+                name: path.basename(shortcut).replace(fileExtension, ''),
+                fileExt: path.extname(shortcut) === '.lnk' ? '' : fileExtension,
                 path: shortcut
             }
 
@@ -99,8 +105,8 @@ export default class InstalledPrograms {
             return userConfig.folders;
 
         return [
-            'C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs',
-            `${os.homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs`,
+            'C:\\ProgramData\\Microsoft\\Windows\\Start Menu',
+            `${os.homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`,
             `${os.homedir()}\\Desktop`
         ]
     }
@@ -117,7 +123,7 @@ export default class InstalledPrograms {
         let result = '';
         for (let program of programs)
             result += `<div id="search-result-${program.number}">
-                            <p class="app-name">${program.name}</p>
+                            <p class="app-name">${program.name}<span class="app-file-extension">${program.fileExt}</span></p>
                             <p class="app-path">${program.path}</p>
                         </div>`;
 
