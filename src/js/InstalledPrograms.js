@@ -42,7 +42,6 @@ export default class InstalledPrograms {
             let fileNameWithExtension = path.basename(program.path).toLowerCase();
             if (this.helpers.stringContainsSubstring(fileNameWithExtension, input.toLowerCase())) {
                 program.weight = this.helpers.getWeight(fileNameWithExtension, input.toLowerCase());
-                if(program.weight > 10) continue;
                 searchResult.push(program);
             }
         }
