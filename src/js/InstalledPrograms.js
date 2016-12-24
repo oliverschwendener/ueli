@@ -26,7 +26,7 @@ export default class InstalledPrograms {
         // Add CustomShortCuts
         for (let customShortcut of this.customShortcuts) {
             if (customShortcut.code === input) {
-                let fileExtension = path.extname(customShortcut);
+                let fileExtension = path.extname(customShortcut.path);
                 let app = {
                     name: path.basename(customShortcut.path).replace(fileExtension, ''),
                     fileExt: path.extname(customShortcut.path),
