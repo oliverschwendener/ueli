@@ -29,7 +29,7 @@ export default class InstalledPrograms {
                 let fileExtension = path.extname(customShortcut.path);
                 let app = {
                     name: path.basename(customShortcut.path).replace(fileExtension, ''),
-                    fileExt: path.extname(customShortcut.path),
+                    fileExt: path.extname(shortcut) === '.lnk' ? '' : fileExtension,
                     path: customShortcut.path,
                     weight: 0
                 };
