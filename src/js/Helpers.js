@@ -16,16 +16,24 @@ export default class Helpers {
         return string.split(/\s+/);
     }
 
-    getWeight(stringToSearch, value) {
-        let result = [];
-        let stringToSearchWords = this.splitStringToArray(stringToSearch);
-        let valueWords = this.splitStringToArray(value);
+    getWeight(programNameWithExtension, userInput) {
+        let results = [];
+        let stringToSearchWords = this.splitStringToArray(programNameWithExtension);
+        let valueWords = this.splitStringToArray(userInput);
 
         for (let word of stringToSearchWords)
-            for (let value of valueWords)
-                result.push(levenshtein.get(word, value));
+            for (let value of valueWords) {
+                let levenshteinDistance = levenshtein.get(word, value);
+                let result = word.startsWith(value)
+                    ? (levenshteinDistance / 4)
+                    : levenshteinDistance;
+                    
+                results.push(result);
+            }                
 
-        return this.getAvg(result);
+        let avgWeigth = this.getAvg(results);
+
+        return avgWeigth;
     }
 
     getAvg(numbers) {
