@@ -5,9 +5,9 @@
 * [Quick Tutorial](#quick-tutorial)
 * [Installation](#installation)
 * [Features](#features)
+* [Default Settings](#default-settings)
+* [Customization](#customization)
 * [Color Themes](#color-themes)
-* [Planned Features](#planned-features)
-* [Current Bugs](#current-bugs)
 
 ## An 'alt+space' launcher for Windows
 
@@ -37,7 +37,7 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 ## Features
 * Search while typing
 * Launch a program by hitting `Enter`
-* Launch shell commands with a `>` prefix
+* Launch console programs with a `>` prefix
     * e.g. `>ipconfig /all`
 * Open a web URL with your default web browser
     * e.g. `google.com`
@@ -47,55 +47,42 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 * Open Folder or Files with entering a file path
     * e.g. `C:\temp` or `C:\temp\myphoto.jpg`
 * Current color themes:
-    * Dark
-    * Light
-    * 'Default Windows 10 like'
+    * One Dark (Atom)
+    * More to come...
 
 ## Default Settings
 ``` json
 {
-    "theme": "win10",
-    "maxResultItems": 10,
     "folders": [
+        "C:\\ProgramData\\Microsoft\\Start Menu",
         "C:\\Users\\<your-username>\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu",
-        "C:\\Users\\ProgramData\\Microsoft\\Start Menu"
+        "C:\\Users\\<your-usernam>\\Desktop"
     ],
-    "webSearches": [{
+    "webSearches": [
+        {
             "name": "Google",
             "prefix": "g",
-            "url": "google.com/search?q=",
-            "fontAwesomeIconClass": "fa-google"
-        }, {
-            "name": "Wikipedia",
-            "prefix": "w",
-            "url": "wikipedia.org/w/?search=",
-            "fontAwesomeIconClass": "fa-wikipedia-w"
-        }, {
-            "name": "YouTube",
-            "prefix": "yt",
-            "url": "youtube.com/results?search_query=",
-            "fontAwesomeIconClass": "fa-youtube"
-        }, {
-            "name": "DuckDuckGo",
-            "prefix": "d",
-            "url": "duckduckgo.com/?q="
+            "url": "google.com/search?q="
         }
     ],
-    "customCommands": [
-        {}
-    ]
+    "customShortcuts": []
 }
 ```
 
-## Custom Settings
-Just modify the `dist/config.json` file.
+## Customization
+All Settings are stored in the `ezr_config.json` file in your home folder.
 If there is no config file run the application once, it should create one.
 
 * Options:
-    * theme: `dark` / `light` / `win10`
-    * maxResultItems: `[1-10]`
     * folders:
-        * Example: `C:\\Users\\Oliver\\Desktop`
+        * Example:
+        ``` json
+        [
+            C:\\Users\\<your-username>\\Downloads,
+            C:\\Users\\<your-username>\\Desktop,
+            ...
+        ]
+        ```
     * webSearches:
         * Example: 
         ``` json
@@ -103,7 +90,10 @@ If there is no config file run the application once, it should create one.
             {
                 "name": "Vimeo",
                 "prefix": "v",
-                "url": "vimeo.com/search?q="
+                "url": "https://vimeo.com/search?q="
+            },
+            {
+                ...
             }
         ]
         ```
@@ -115,34 +105,29 @@ If there is no config file run the application once, it should create one.
             {
                 "code": "c",
                 "path": "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Google Chrome.lnk"
+            },
+            {
+                ...
             }
         ]
         ```
 
 ## Color Themes
-### Dark
+### One Dark (Atom)
 ![color-theme-dark](https://raw.githubusercontent.com/oliverschwendener/random/master/electronizr/img/color-themes/dark.png)
 
-### Light
-![color-theme-light](https://raw.githubusercontent.com/oliverschwendener/random/master/electronizr/img/color-themes/light.png)
-
-### 'Default Windows 10 like'
-![color-theme-win10](https://raw.githubusercontent.com/oliverschwendener/random/master/electronizr/img/color-themes/win10.png)
+There are more to come in the future...
 
 ## electronizr specific commands
 |Command|Description|
 |---|---|
-|ezr:reload|Rescan of all Startmenu folders|
+|ezr:reload|Reload electronizr|
 |ezr:config|Open config file|
-|ezr:default-config|Loads default configuration|
-|ezr:dark-theme|Load dark theme|
-|ezr:light-theme|Load light theme|
-|ezr:win10-theme|Load Windows 10 theme|
 |exit|Exit the application| 
 
 ## Planned Features
 * Installer / Prebuilt Downloads
 * Favorite Programs will be listed higher in the search result
+* More Color themes
 * More user customization
-    * custom color theme
-    * custom file extension search
+    * custom color themes
