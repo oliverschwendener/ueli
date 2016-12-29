@@ -114,7 +114,7 @@ If there is no config file run the application once, it should create one.
 
 ## Color Themes
 ### One Dark (Atom)
-![color-theme-dark](https://raw.githubusercontent.com/oliverschwendener/random/master/electronizr/img/color-themes/dark.png)
+![color-theme-dark](https://raw.githubusercontent.com/oliverschwendener/random/master/electronizr/img/color-themes/one-dark.png)
 
 There are more to come in the future...
 
