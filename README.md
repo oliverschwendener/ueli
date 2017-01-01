@@ -1,20 +1,17 @@
 # electronizr
 
+## An 'alt+space' launcher for Windows
+This is an 'alt+space' launcher for Windows because I thought the default Windows 10 search function doesn't always do what I want.
+
+![example-image](https://raw.githubusercontent.com/oliverschwendener/electronizr/master/img/example.png)
+
 ## Table of Contents
-* [Demo](#demo)
 * [Quick Tutorial](#quick-tutorial)
 * [Installation](#installation)
 * [Features](#features)
 * [Default Settings](#default-settings)
 * [Customization](#customization)
 * [Color Themes](#color-themes)
-
-## An 'alt+space' launcher for Windows
-
-This is an 'alt+space' launcher for Windows because I thought the default Windows 10 search function doesn't always do what I want.
-
-## Demo
-![demo-video](http://electronizr.oliverschwendener.ch/video/electronizr-demo.mp4)
 
 ## Quick Tutorial
 * Hit `alt + space` to show/hide the main program
