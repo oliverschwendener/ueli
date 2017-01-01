@@ -14,7 +14,7 @@
 This is an 'alt+space' launcher for Windows because I thought the default Windows 10 search function doesn't always do what I want.
 
 ## Demo
-![demo-video](https://raw.githubusercontent.com/oliverschwendener/random/76b1244284056e6b6d0be28be54daebfe49dea82/electronizr/img/demo/ezr-demo.gif)
+![demo-video](http://electronizr.oliverschwendener.ch/video/electronizr-demo.mp4)
 
 ## Quick Tutorial
 * Hit `alt + space` to show/hide the main program
