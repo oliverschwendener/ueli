@@ -8,7 +8,7 @@ var ipcMain = electron.ipcMain;
 var mainWindow = null;
 
 var mainWindowOptions = {
-  width: 900,
+  width: 993,
   height: 559,
   frame: false,
   resizable: false,
