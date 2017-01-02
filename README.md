@@ -119,6 +119,7 @@ There are more to come in the future...
 ## Planned Features
 * Installer / Prebuilt Downloads
 * Favorite Programs will be listed higher in the search result
+* Access Control Panel items
 * More Color themes
 * More user customization
     * custom color themes
