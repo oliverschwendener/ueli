@@ -65,4 +65,8 @@ export default class Helpers {
 
         return current;
     }
+
+    stringIsEmptyOrWhitespaces(string) {
+        return (/^\s+$/.test(string));
+    }
 }

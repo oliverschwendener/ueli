@@ -23,7 +23,7 @@ let maxSelectIndex = 0;
 // Input Change
 input.bind('input propertychange', () => {
     searchResults.empty();
-    if (input.val() === '' || input.val() === undefined) {
+    if (input.val() === '' || input.val() === undefined || helpers.stringIsEmptyOrWhitespaces(input.val())) {
         programs = [];
         return;
     }
