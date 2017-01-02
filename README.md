@@ -75,9 +75,9 @@ If there is no config file run the application once, it should create one.
         * Example:
         ``` json
         [
+            C:\\ProgramData\\Microsoft\\Windows\\Start Menu,
             C:\\Users\\<your-username>\\Downloads,
-            C:\\Users\\<your-username>\\Desktop,
-            ...
+            C:\\Users\\<your-username>\\Desktop
         ]
         ```
     * webSearches:
@@ -88,9 +88,6 @@ If there is no config file run the application once, it should create one.
                 "name": "Vimeo",
                 "prefix": "v",
                 "url": "https://vimeo.com/search?q="
-            },
-            {
-                ...
             }
         ]
         ```
@@ -102,9 +99,6 @@ If there is no config file run the application once, it should create one.
             {
                 "code": "c",
                 "path": "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Google Chrome.lnk"
-            },
-            {
-                ...
             }
         ]
         ```
