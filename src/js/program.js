@@ -7,6 +7,9 @@ import FilePathExecutor from './js/FilePathExecutor.js';
 import Helpers from './js/Helpers.js';
 import ColorThemeManager from './js/ColorThemeManager.js';
 
+// Set color theme
+$('#theme').attr('href', `./css/${new ColorThemeManager().getColorTheme()}.css`);
+
 let executionService = new ExecutionService();
 let inputValidationService = new InputValidationService();
 let installedPrograms = new InstalledPrograms();
@@ -16,16 +19,12 @@ let helpers = new Helpers();
 
 let input = $('input');
 let searchResults = $('.search-results');
-let theme = $('#theme');
 
 let programs = [];
 let selectIndex = 0;
 let maxSelectIndex = 0;
 
-// Program Start
-theme.attr('href', `./css/${new ColorThemeManager().getColorTheme()}.css`);
-
-// Input Change
+// Input change
 input.bind('input propertychange', () => {
     searchResults.empty();
     if (input.val() === '' || input.val() === undefined || helpers.stringIsEmptyOrWhitespaces(input.val())) {

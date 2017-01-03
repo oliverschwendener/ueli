@@ -9,7 +9,7 @@ export default class ColorThemeManager {
     getColorTheme() {
         let userColorTheme = new ConfigHelper().getConfig().colorTheme
 
-        if(!fs.existsSync(`./css/${userColorTheme}.css`) || userColorTheme === undefined)
+        if(userColorTheme === undefined)
             userColorTheme = this.defaultColorTheme;
 
         return userColorTheme;
