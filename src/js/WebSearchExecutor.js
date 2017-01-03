@@ -48,12 +48,19 @@ export default class WebSearchExecutor {
 
     getInfoMessage(input) {
         let prefix = input.split(':')[0];
+        let search = encodeURIComponent(input.split(':')[1]);
         let webSearchName = '';
+        let url = '';
 
         for (let webSearch of this.webSearches)
-            if (webSearch.prefix === prefix)
+            if (webSearch.prefix === prefix) {
                 webSearchName = webSearch.name;
+                url = webSearch.url;
+            }
 
-        return `${webSearchName} search`;
+        return `<div>
+                    <p class="app-name">${webSearchName} search</p>
+                    <p class="app-path">${url}${search}</p>
+                </div>`;
     }
 }
