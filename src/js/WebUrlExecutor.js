@@ -14,15 +14,24 @@ export default class WebUrlExecutor {
     }
 
     execute(url) {
-        if (!url.startsWith('http://') && !url.startsWith('https://'))
-            url = `http://${url}`;
+        url = this.addHttpToUrl(url);
 
         open(url, error => {
             if (error) throw error;
         });
     }
 
+    addHttpToUrl(url) {
+        if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('//'))
+            url = `http://${url}`;
+
+        return url;
+    }
+
     getInfoMessage(url) {
-        return `Open Webbrowser: ${url}`;
+        return `<div>
+                    <p class="app-name">${this.addHttpToUrl(url)}</p>
+                    <p class="app-path">Open default Webbrowser</p>
+                </div>`;
     }
 }

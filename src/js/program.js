@@ -108,10 +108,7 @@ function showSearchResults() {
 
     let inputValidationResult = inputValidationService.getInfoMessage(input.val());
     if (inputValidationResult !== undefined) {
-        if (programs.length > 0)
-            searchResults.html(inputValidationResult);
-        else
-            searchResults.html(`<div><p class="info-message">${inputValidationResult}</p></div>`);
+        searchResults.html(inputValidationResult);
     }
 }
 

@@ -12,6 +12,7 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 * [Default Settings](#default-settings)
 * [Customization](#customization)
 * [Color Themes](#color-themes)
+* [electronizr specific commands](#electronizr-specific-commands)
 
 ## Quick Tutorial
 * Hit `alt + space` to show/hide the main program
@@ -114,7 +115,8 @@ There are more to come in the future...
 |---|---|
 |ezr:reload|Reload electronizr|
 |ezr:config|Open config file|
-|exit|Exit the application| 
+|ezr:reset-history|Resets the user history|
+|ezr:exit|Exit the application| 
 
 ## Planned Features
 * Installer / Prebuilt Downloads

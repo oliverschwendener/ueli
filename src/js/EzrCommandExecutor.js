@@ -1,5 +1,6 @@
 import { exec } from 'child_process';
 import { ipcRenderer } from 'electron';
+import fs from 'fs';
 import Constants from './Constants.js';
 import DefaultConfig from './DefaultConfig';
 
@@ -16,7 +17,7 @@ export default class EzrCommandExecutor {
                 infoMessage: 'Reload electronizr'
             },
             {
-                code: 'exit',
+                code: 'ezr:exit',
                 execute: () => {
                     ipcRenderer.sendSync('close-main-window');
                 },
@@ -30,7 +31,14 @@ export default class EzrCommandExecutor {
                             throw error;
                     });
                 },
-                infoMessage: 'Edit configuration'
+                infoMessage: 'Edit configuration file'
+            },
+            {
+                code: 'ezr:reset-history',
+                execute: () => {
+                    this.resetHistory();
+                },
+                infoMessage: 'Resets user history'
             }
         ];
     }
@@ -54,6 +62,19 @@ export default class EzrCommandExecutor {
     getInfoMessage(input) {
         for (let command of this.commands)
             if (command.code === input)
-                return command.infoMessage;
+                return `<div>
+                            <p class="app-name">${command.infoMessage}</p>
+                            <p class="app-path">electronizr specific command</p>
+                        </div>`;
+    }
+
+    resetHistory() {
+        if (fs.existsSync(this.configFilePath)) {
+            let currentConfigJson = fs.readFileSync(this.configFilePath, 'utf8');
+            let config = JSON.parse(currentConfigJson);
+            config.history = [];
+            let newConfigJson = JSON.stringify(config);
+            fs.writeFileSync(this.configFilePath, newConfigJson);
+        }
     }
 }

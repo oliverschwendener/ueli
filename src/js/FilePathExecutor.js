@@ -20,6 +20,9 @@ export default class FilePathExecutor {
     }
 
     getInfoMessage(path) {
-        return `Open ${path}`;
+        return `<div>
+                    <p class="app-name">Open file or folder</p>
+                    <p class="app-path">${path}</p>
+                </div>`;
     }
 }

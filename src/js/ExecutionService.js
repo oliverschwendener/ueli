@@ -1,7 +1,7 @@
 import ProgramExecutor from './ProgramExecutor.js';
 import FilePathExecutor from './FilePathExecutor.js';
 import WebUrlExecutor from './WebUrlExecutor.js';
-import ShellCommandExecutor from './ShellCommandExecutor.js';
+import ConsoleApplicationExecutor from './ConsoleApplicationExecutor.js';
 import EzrCommandExecutor from './EzrCommandExecutor.js';
 import WebSearchExecutor from './WebSearchExecutor.js';
 
@@ -11,7 +11,7 @@ export default class ExecutionService {
             new ProgramExecutor(),
             new FilePathExecutor(),
             new WebUrlExecutor(),
-            new ShellCommandExecutor(),
+            new ConsoleApplicationExecutor(),
             new EzrCommandExecutor(),
             new WebSearchExecutor()
         ];
