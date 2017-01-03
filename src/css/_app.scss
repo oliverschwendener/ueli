@@ -1,17 +1,9 @@
-// Colors
-$background-color: #21252b;
-
-$text-color: #d7dae0;
-$text-color-dim: #9da5b4;
-
-$highlight-background-color: #282c34;
-$highlight-text-color: #6494ed;
-$highlight-text-color-dim: #9da5b4;
-
 // Fonts
-$font-family-input: 'Segoe UI', sans-serif;
-$font-family-app-name: 'Segoe UI', sans-serif;
-$font-family-app-path: 'Segoe UI Light', sans-serif;
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700');
+
+$font-family-input: 'Fira Sans', 'Segoe UI', sans-serif;
+$font-family-app-name: 'Fira Sans', 'Segoe UI', sans-serif;
+$font-family-app-path: 'Fira Sans', 'Segoe UI Light', sans-serif;
 
 body{
 	margin: 0;
@@ -28,7 +20,7 @@ div.content{
 
 	input{
 		width: 100%;
-		padding: 15px 20px;
+		padding: 0 20px;
 		border: none;
 		outline: none;
 		text-align: left;
@@ -37,11 +29,12 @@ div.content{
 		color: $text-color;
 		font-size: 48px;		
 		font-weight: 400;
+		line-height: 120px;
 	}
 
 	#icon{
 		position: fixed;
-		top: 47px;
+		top: 54px;
 		right: 30px;
 		transform: translateY(-50%);
 		color: $text-color;
@@ -113,3 +106,5 @@ div.content{
 		}
 	}
 }
+
+@import "scrollbar";

@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700');
+
+$background-color: #21252b;
+
+$text-color: #d7dae0;
+$text-color-dim: #9da5b4;
+
+$highlight-background-color: #282c34;
+$highlight-text-color: #6494ed;
+$highlight-text-color-dim: #9da5b4;
+
+// Fonts
+$font-family-input: 'Fira Sans', 'Segoe UI', sans-serif;
+$font-family-app-name: 'Fira Sans', 'Segoe UI', sans-serif;
+$font-family-app-path: 'Fira Sans', 'Segoe UI Light', sans-serif;
+
+@import "app";
