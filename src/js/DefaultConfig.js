@@ -18,7 +18,8 @@ export default class DefaultConfig {
                     url: "https://google.com/search?q="
                 }
             ],
-            customShortcuts: []
+            customShortcuts: [],
+            history: []
         }
 
         if(!fs.existsSync(this.configFilePath))

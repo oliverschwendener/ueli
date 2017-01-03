@@ -52,9 +52,7 @@ input.on('keydown', e => {
 
     // Open file location with ctrl+o
     else if (e.ctrlKey && e.keyCode === 79) {
-        console.log('key pressed');
         if (programs.length > 0) {
-            console.log('programs > 0');
             if (filePathExecutor.isValid(programs[selectIndex].path)) {
                 filePathExecutor.openFileLocation(programs[selectIndex].path);
             }

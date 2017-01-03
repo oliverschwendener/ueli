@@ -7,6 +7,7 @@ import FileSystemSearch from './FileSystemSearch.js';
 import Helpers from './Helpers.js';
 import CustomShortcuts from './CustomShortcuts.js';
 import Constants from './Constants.js';
+import UserHistory from './UserHistory.js';
 
 export default class InstalledPrograms {
     constructor() {
@@ -46,6 +47,15 @@ export default class InstalledPrograms {
             }
         }
 
+        // Show Items of History at the top
+        let historyItems = new UserHistory().getItems();
+        for (let item of searchResult) {
+            for (let historyItem of historyItems) {
+                if (item.path === historyItem.path)
+                    item.weight = item.weight - historyItem.counter;
+            }
+        }
+
         // Sort Programs by weight
         let sortedResult = searchResult.sort((a, b) => {
             if (a.weight > b.weight) return 1;
@@ -67,6 +77,7 @@ export default class InstalledPrograms {
 
             return result;
         }
+
         return sortedResult;
     }
 
@@ -111,7 +122,7 @@ export default class InstalledPrograms {
     }
 
     isValid(input) {
-        if(this.getSearchResult(input).length > 0)
+        if (this.getSearchResult(input).length > 0)
             return true;
 
         return false;

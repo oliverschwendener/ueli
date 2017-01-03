@@ -1,9 +1,11 @@
 import { exec } from 'child_process';
 import InstalledPrograms from './InstalledPrograms.js';
+import UserHistory from './UserHistory.js';
 
 export default class ProgramExecutor {
     constructor() {
         this.programs = new InstalledPrograms().getAll();
+        this.history = new UserHistory();
     }
 
     isValid(path) {
@@ -19,5 +21,7 @@ export default class ProgramExecutor {
             if (error)
                 throw error;
         });
+
+        this.history.addItem(path);
     }
 }
