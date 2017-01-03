@@ -21,6 +21,10 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 * Use tab/shift+tab to scroll through the search result
 
 ## Installation
+### Download
+You can download the latest version [here](http://electronizr.oliverschwendener.ch) (Zip)
+
+### Manual Installation
 1. Install [Node](https://nodejs.org/en/)
 2. Clone Repo or Download ZIP
 3. Install npm packages
