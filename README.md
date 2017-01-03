@@ -21,6 +21,10 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 * Use tab/shift+tab to scroll through the search result
 
 ## Installation
+### Download
+You can download the latest version [here](http://electronizr.oliverschwendener.ch) (Zip)
+
+### Manual Installation
 1. Install [Node](https://nodejs.org/en/)
 2. Clone Repo or Download ZIP
 3. Install npm packages
@@ -63,12 +67,13 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
             "url": "google.com/search?q="
         }
     ],
-    "customShortcuts": []
+    "customShortcuts": [],
+    "history": []
 }
 ```
 
 ## Customization
-All Settings are stored in the `ezr_config.json` file in your home folder.
+All Settings, customization and user history are stored in the `ezr_config.json` file in your home folder.
 If there is no config file run the application once, it should create one.
 
 * Options:
@@ -76,9 +81,9 @@ If there is no config file run the application once, it should create one.
         * Example:
         ``` json
         [
-            C:\\ProgramData\\Microsoft\\Windows\\Start Menu,
-            C:\\Users\\<your-username>\\Downloads,
-            C:\\Users\\<your-username>\\Desktop
+            "C:\\ProgramData\\Microsoft\\Windows\\Start Menu",
+            "C:\\Users\\<your-username>\\Downloads",
+            "C:\\Users\\<your-username>\\Desktop"
         ]
         ```
     * webSearches:
@@ -120,7 +125,6 @@ There are more to come in the future...
 
 ## Planned Features
 * Installer / Prebuilt Downloads
-* Favorite Programs will be listed higher in the search result
 * Access Control Panel items
 * More Color themes
 * More user customization
