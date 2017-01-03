@@ -5,6 +5,7 @@ import Constants from './Constants.js';
 export default class ConfigHelper {
     constructor() {
         this.configFilePath = new Constants().getConfigFilePath();
+        this.noConfigFileMessage = `There is no config file. Please make sure there is an appropriate .json file in your home directory (${this.configFilePath})`;
         this.defaultConfig = {
             folders: [
                 'C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs',
@@ -31,10 +32,18 @@ export default class ConfigHelper {
     }
 
     getConfig() {
+        if(!fs.existsSync(this.configFilePath)) {
+            alert(this.noConfigFileMessage);
+            return {};
+        }
+        
         return JSON.parse(fs.readFileSync(this.configFilePath));
     }
 
     saveConfig(newConfig) {
-        fs.writeFileSync(this.configFilePath, JSON.stringify(newConfig));
+        if(!fs.existsSync(this.configFilePath))
+            alert(this.noConfigFileMessage);
+        else
+            fs.writeFileSync(this.configFilePath, JSON.stringify(newConfig));
     }
 }
