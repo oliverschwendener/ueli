@@ -1,9 +1,8 @@
 import fs from 'fs';
-import Constants from './Constants.js';
+import ConfigHelper from './ConfigHelper.js';
 
 export default class UserHistory {
     constructor() {
-        this.configFilePath = new Constants().getConfigFilePath();
         this.history = this.getHistoryFromConfiGile();
     }
 
@@ -47,26 +46,12 @@ export default class UserHistory {
     }
 
     getHistoryFromConfiGile() {
-        let result = [];
-        if (fs.existsSync(this.configFilePath)) {
-            let configJson = fs.readFileSync(this.configFilePath)
-            let config = JSON.parse(configJson);
-            if (config.history !== undefined)
-                result = config.history;
-        }
-
-        return result;
+        return new ConfigHelper().getConfig().history;
     }
 
     writeHistoryToConfigFile() {
-        if (fs.existsSync(this.configFilePath)) {
-            let currentConfigJson = fs.readFileSync(this.configFilePath, 'utf8');
-            let currentConfig = JSON.parse(currentConfigJson);
-
-            currentConfig.history = this.history;
-
-            let newConfigJson = JSON.stringify(currentConfig);
-            fs.writeFileSync(this.configFilePath, newConfigJson);
-        }
+        let config = new ConfigHelper().getConfig();
+        config.history = this.history;
+        new ConfigHelper().saveConfig(config);
     }
 }

@@ -2,11 +2,10 @@ import { exec } from 'child_process';
 import { ipcRenderer } from 'electron';
 import fs from 'fs';
 import Constants from './Constants.js';
-import DefaultConfig from './DefaultConfig';
+import ConfigHelper from './ConfigHelper';
 
 export default class EzrCommandExecutor {
     constructor() {
-        this.defaultConfig = new DefaultConfig().getConfig();
         this.configFilePath = new Constants().getConfigFilePath();
         this.commands = [
             {
@@ -69,12 +68,8 @@ export default class EzrCommandExecutor {
     }
 
     resetHistory() {
-        if (fs.existsSync(this.configFilePath)) {
-            let currentConfigJson = fs.readFileSync(this.configFilePath, 'utf8');
-            let config = JSON.parse(currentConfigJson);
-            config.history = [];
-            let newConfigJson = JSON.stringify(config);
-            fs.writeFileSync(this.configFilePath, newConfigJson);
-        }
+        let config = new ConfigHelper().getConfig();
+        config.history = [];
+        new ConfigHelper().saveConfig(config);
     }
 }

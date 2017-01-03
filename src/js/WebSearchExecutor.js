@@ -1,12 +1,11 @@
 import open from 'open';
 import fs from 'fs';
 import Helpers from './Helpers.js';
-import Constants from './Constants.js';
+import ConfigHelper from './ConfigHelper.js';
 
 export default class WebSearchExecutor {
     constructor() {
         this.helpers = new Helpers();
-        this.configFilePath = new Constants().getConfigFilePath();
         this.webSearches = this.getWebSearches();
     }
 
@@ -39,12 +38,7 @@ export default class WebSearchExecutor {
     }
 
     getWebSearches() {
-        let userConfig = {};
-
-        if (fs.existsSync(this.configFilePath)) {
-            let configFileContent = fs.readFileSync(this.configFilePath);
-            userConfig = JSON.parse(configFileContent);
-        }
+        let userConfig = new ConfigHelper().getConfig();
 
         if (userConfig.webSearches !== undefined)
             return userConfig.webSearches;
