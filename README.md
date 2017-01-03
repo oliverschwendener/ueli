@@ -67,12 +67,13 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
             "url": "google.com/search?q="
         }
     ],
-    "customShortcuts": []
+    "customShortcuts": [],
+    "history": []
 }
 ```
 
 ## Customization
-All Settings are stored in the `ezr_config.json` file in your home folder.
+All Settings, customization and user history are stored in the `ezr_config.json` file in your home folder.
 If there is no config file run the application once, it should create one.
 
 * Options:
@@ -80,9 +81,9 @@ If there is no config file run the application once, it should create one.
         * Example:
         ``` json
         [
-            C:\\ProgramData\\Microsoft\\Windows\\Start Menu,
-            C:\\Users\\<your-username>\\Downloads,
-            C:\\Users\\<your-username>\\Desktop
+            "C:\\ProgramData\\Microsoft\\Windows\\Start Menu",
+            "C:\\Users\\<your-username>\\Downloads",
+            "C:\\Users\\<your-username>\\Desktop"
         ]
         ```
     * webSearches:
