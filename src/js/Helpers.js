@@ -12,6 +12,7 @@ export default class Helpers {
         return true;
     }
 
+
     splitStringToArray(string) {
         return string.split(/\s+/);
     }

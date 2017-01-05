@@ -34,4 +34,8 @@ export default class WebUrlExecutor {
                     <p class="app-path">Open default Webbrowser</p>
                 </div>`;
     }
+
+    getIcon() {
+        return 'fa fa-globe';
+    }
 }

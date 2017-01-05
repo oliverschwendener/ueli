@@ -115,10 +115,17 @@ export default class InstalledPrograms {
     }
 
     isValid(input) {
+        if(input.replace(' ', '').length === 0)
+            return false;
+
         if (this.getSearchResult(input).length > 0)
             return true;
 
         return false;
+    }
+
+    getIcon() {
+        return 'fa fa-window-maximize';
     }
 
     getInfoMessage(input) {

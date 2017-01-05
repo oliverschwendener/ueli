@@ -13,14 +13,16 @@ export default class EzrCommandExecutor {
                 execute: () => {
                     ipcRenderer.sendSync('reload-window');
                 },
-                infoMessage: 'Reload electronizr'
+                infoMessage: 'Reload electronizr',
+                icon: 'fa fa-refresh'
             },
             {
                 code: 'ezr:exit',
                 execute: () => {
                     ipcRenderer.sendSync('close-main-window');
                 },
-                infoMessage: 'Exit electronizr'
+                infoMessage: 'Exit electronizr',
+                icon: 'fa fa-sign-out'
             },
             {
                 code: 'ezr:config',
@@ -30,46 +32,54 @@ export default class EzrCommandExecutor {
                             throw error;
                     });
                 },
-                infoMessage: 'Edit configuration file'
+                infoMessage: 'Edit configuration file',
+                icon: 'fa fa-wrench'
             },
             {
                 code: 'ezr:reset-history',
                 execute: () => {
                     this.resetHistory();
                 },
-                infoMessage: 'Resets user history'
+                infoMessage: 'Resets user history',
+                icon: 'fa fa-history'
             }
         ];
     }
 
-    isValid(input) {
-        for (let command of this.commands)
-            if (command.code === input)
-                return true;
-
-        return false;
+    isValid(userInput) {
+        return (this.getCommandByUserInput(userInput) !== undefined)
+            ? true
+            : false;
     }
 
-    execute(input) {
-        for (let command of this.commands)
-            if (command.code === input) {
-                command.execute();
-                return;
-            }
+    execute(userInput) {
+        let command = this.getCommandByUserInput(userInput);
+        command.execute();
     }
 
-    getInfoMessage(input) {
-        for (let command of this.commands)
-            if (command.code === input)
-                return `<div>
-                            <p class="app-name">${command.infoMessage}</p>
-                            <p class="app-path">electronizr specific command</p>
-                        </div>`;
+    getInfoMessage(userInput) {
+        let command = this.getCommandByUserInput(userInput);
+        return `<div>
+                    <p class="app-name">${command.infoMessage}</p>
+                    <p class="app-path">electronizr specific command</p>
+                </div>`;
+    }
+
+    getIcon(userInput) {
+        return this.getCommandByUserInput(userInput).icon;
     }
 
     resetHistory() {
         let config = new ConfigHelper().getConfig();
         config.history = [];
         new ConfigHelper().saveConfig(config);
+    }
+
+    getCommandByUserInput(userInput) {
+        for (let command of this.commands)
+            if (command.code.toLowerCase() === userInput.toLowerCase())
+                return command;
+
+        return undefined;
     }
 }

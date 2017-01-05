@@ -29,4 +29,8 @@ export default class ConsoleApplicationExecutor {
                     <p class="app-path">${this.cmdPath} /K ${command}</p>
                 </div>`;
     }
+
+    getIcon() {
+        return 'fa fa-terminal';
+    }
 }

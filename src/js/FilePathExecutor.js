@@ -25,4 +25,8 @@ export default class FilePathExecutor {
                     <p class="app-path">${path}</p>
                 </div>`;
     }
+
+    getIcon() {
+        return 'fa fa-folder-o';
+    }
 }

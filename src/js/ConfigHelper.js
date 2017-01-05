@@ -15,9 +15,10 @@ export default class ConfigHelper {
             ],
             webSearches: [
                 {
-                    name: "Google",
-                    prefix: "g",
-                    url: "https://google.com/search?q="
+                    name: 'Google',
+                    prefix: 'g',
+                    url: 'https://google.com/search?q=',
+                    icon: 'fa fa-google'
                 }
             ],
             customShortcuts: [],

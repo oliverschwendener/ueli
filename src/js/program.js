@@ -19,6 +19,7 @@ let helpers = new Helpers();
 
 let input = $('input');
 let searchResults = $('.search-results');
+let searchIcon = $('#search-icon');
 
 let programs = [];
 let selectIndex = 0;
@@ -27,6 +28,8 @@ let maxSelectIndex = 0;
 // Input change
 input.bind('input propertychange', () => {
     searchResults.empty();
+    showIcon();
+
     if (input.val() === '' || input.val() === undefined || helpers.stringIsEmptyOrWhitespaces(input.val())) {
         programs = [];
         return;
@@ -102,6 +105,11 @@ function hideAndResetWindow() {
     input.val('');
     searchResults.empty();
     ipcRenderer.sendSync('hide-main-window');
+}
+
+function showIcon() {
+    let icon = inputValidationService.getIcon(input.val());
+    searchIcon.attr('class', icon);
 }
 
 function showSearchResults() {

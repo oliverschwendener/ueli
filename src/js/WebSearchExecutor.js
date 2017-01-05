@@ -9,32 +9,22 @@ export default class WebSearchExecutor {
         this.webSearches = this.getWebSearches();
     }
 
-    isValid(query) {
-        if (query.indexOf(':') < 0)
+    isValid(userInput) {
+        if (userInput.indexOf(':') < 0)
             return false;
 
-        let prefix = query.split(':')[0];
-
-        for (let search of this.webSearches) {
-            if (prefix === search.prefix)
-                return true;
-        }
-
-        return false;
+        return this.getWebSearchByUserInput(userInput) !== undefined
+            ? true
+            : false;
     }
 
-    execute(input) {
-        let prefix = input.split(':')[0];
-        let query = input.split(':')[1];
-        query = this.helpers.splitStringToArray(query).join('+');
+    execute(userInput) {
+        let query = encodeURIComponent(userInput.split(':')[1]);
+        let webSearch = this.getWebSearchByUserInput(userInput);
 
-        for (let search of this.webSearches) {
-            if (prefix === search.prefix) {
-                open(`${search.url}${query}`, error => {
-                    if (error) throw error;
-                });
-            }
-        }
+        open(`${webSearch.url}${query}`, (error) => {
+            if (error) throw error;
+        });
     }
 
     getWebSearches() {
@@ -46,21 +36,32 @@ export default class WebSearchExecutor {
         return [];
     }
 
-    getInfoMessage(input) {
-        let prefix = input.split(':')[0];
-        let search = encodeURIComponent(input.split(':')[1]);
-        let webSearchName = '';
-        let url = '';
+    getInfoMessage(userInput) {
+        let prefix = userInput.split(':')[0];
+        let search = encodeURIComponent(userInput.split(':')[1]);
 
-        for (let webSearch of this.webSearches)
-            if (webSearch.prefix === prefix) {
-                webSearchName = webSearch.name;
-                url = webSearch.url;
-            }
+        let webSearch = this.getWebSearchByUserInput(userInput);
+        let webSearchName = webSearch.name;
+        let url = webSearch.url;
 
         return `<div>
                     <p class="app-name">${webSearchName} search</p>
                     <p class="app-path">${url}${search}</p>
                 </div>`;
+    }
+
+    getIcon(userInput) {
+        let webSearch = this.getWebSearchByUserInput(userInput);
+        return webSearch.icon;
+    }
+
+    getWebSearchByUserInput(userInput) {
+        let prefix = userInput.split(':')[0];
+
+        for (let webSearch of this.webSearches)
+            if (webSearch.prefix.toLowerCase() === prefix.toLowerCase())
+                return webSearch;
+
+        return undefined;
     }
 }
