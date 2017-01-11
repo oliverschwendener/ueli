@@ -16,6 +16,12 @@ export default class InstalledPrograms {
         this.customShortcuts = new CustomShortcuts().getCustomShortcuts();
         this.folders = this.getFoldersToSearch();
         this.programs = this.getAllPrograms();
+
+        for (let folder of this.folders) {
+            fs.watch(folder, {encoding: 'buffer'}, (eventType, fileName) => {
+                this.programs = this.getAllPrograms();
+            });
+        }
     }
 
     getSearchResult(input) {

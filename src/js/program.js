@@ -79,11 +79,15 @@ input.on('keydown', e => {
         selectNextActiveItem('prev');
         e.preventDefault();
     }
-
     // Select next item
     else if (e.keyCode === 9) {
         selectNextActiveItem('next');
         e.preventDefault();
+    }
+
+    // Hide window when escape is pressed
+    else if (e.keyCode === 27) {
+        ipcRenderer.sendSync('hide-main-window');
     }
 });
 
