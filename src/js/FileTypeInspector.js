@@ -2,6 +2,8 @@ import FileTypeFolderInspector from './FileTypeFolderInspector.js';
 import FileTypeImageInspector from './FileTypeImageInspector.js';
 import FileTypeVideoInspector from './FileTypeVideoInspector.js';
 import FileTypeTextFileInspector from './FileTypeTextFileInspector.js';
+import FileTypeExeInspector from './FileTypeExeInspector.js';
+import FileTypeLnkInspector from './FileTypeLnkInspector.js';
 
 export default class FileTypeInspector {
     constructor() {
@@ -9,11 +11,13 @@ export default class FileTypeInspector {
             new FileTypeFolderInspector(),
             new FileTypeImageInspector(),
             new FileTypeVideoInspector(),
-            new FileTypeTextFileInspector()
+            new FileTypeTextFileInspector(),
+            new FileTypeExeInspector(),
+            new FileTypeLnkInspector()
         ];
     }
 
-    getInfoMessage(filePath) {  
+    getInfoMessage(filePath) {
         for (let inspector of this.inspectors)
             if (inspector.isValid(filePath))
                 return inspector.getInfoMessage(filePath);

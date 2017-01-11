@@ -1,35 +1,30 @@
 import fs from 'fs';
-import mime from 'mime';
+import path from 'path';
+import textextensions from 'textextensions';
 
 export default class FileTypeTextFileInspector {
     isValid(filePath) {
-        let result = false;
+        let fileExtension = path.extname(filePath).replace('.', '');
+        for (let ext of textextensions)
+            if (ext === fileExtension)
+                return true;
 
-        try{
-            fs.readFileSync(filePath)
-            result = true;
-        }
-        catch(exception) {
-            console.log(exception);
-            result = false;
-        }
-
-        return result;
+        return false;
     }
 
     getInfoMessage(filePath) {
         let fileContent;
-        
-        try{
+
+        try {
             fileContent = fs.readFileSync(filePath);
         }
-        catch(exception) {
+        catch (exception) {
             fileContent = exception;
         }
 
         return `<div>
-                    <p class="app-name">Open File</p>
-                    <p class="app-path">File Content:</p>
+                    <p class="app-name">Open file</p>
+                    <p class="app-path">File preview:</p>
                 </div>
                 <div class="file-content">
                     <pre>${fileContent}</pre>

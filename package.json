@@ -13,7 +13,8 @@
     "gulp-babel": "^6.1.2",
     "mime": "^1.3.4",
     "open": "0.0.5",
-    "pretty-bytes": "^2.0.1"
+    "pretty-bytes": "^2.0.1",
+    "textextensions": "^2.0.1"
   },
   "devDependencies": {
     "electron-builder": "*",
