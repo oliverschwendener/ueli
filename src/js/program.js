@@ -96,6 +96,9 @@ function setNewInputValue(newInputValue, event) {
 }
 
 function selectNextActiveItem(param) {
+    if (programs.length === 0)
+        return;
+
     selectIndex = helpers.getNextIndex(param, selectIndex, maxSelectIndex);
     $('.search-results div').attr('class', '');
     $(`#search-result-${selectIndex}`).attr('class', 'active');

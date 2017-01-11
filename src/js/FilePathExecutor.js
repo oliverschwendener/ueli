@@ -1,14 +1,20 @@
 import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
+import FileTypeInspector from './FileTypeInspector.js';
 
 export default class FilePathExecutor {
-    isValid(path) {
-        return fs.existsSync(path);
+    constructor() {
+        this.fileTypeInspector = new FileTypeInspector();
     }
 
-    execute(path) {
-        exec(`start "" "${path}"`, (error, stdout, stderr) => {
+    isValid(filePath) {
+        filePath = this.replaceFilePrefix(filePath);
+        return fs.existsSync(filePath);
+    }
+
+    execute(filePath) {
+        exec(`start "" "${filePath}"`, (error, stdout, stderr) => {
             if (error)
                 throw error;
         });
@@ -19,14 +25,19 @@ export default class FilePathExecutor {
         this.execute(fileLocation);
     }
 
-    getInfoMessage(path) {
-        return `<div>
-                    <p class="app-name">Open file or folder</p>
-                    <p class="app-path">${path}</p>
-                </div>`;
+    getInfoMessage(filePath) {
+        filePath = this.replaceFilePrefix(filePath);
+        return this.fileTypeInspector.getInfoMessage(filePath);
     }
 
     getIcon() {
         return 'fa fa-folder-o';
+    }
+
+    replaceFilePrefix(filePath) {
+        let filePrefix = 'file:///';
+        return filePath.startsWith('file:///')
+            ? filePath.replace('file:///', '')
+            : filePath;
     }
 }

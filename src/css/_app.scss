@@ -1,9 +1,11 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Fira+Mono:400,500');
 
 $font-family-input: 'Fira Sans', 'Segoe UI', sans-serif;
 $font-family-app-name: 'Fira Sans', 'Segoe UI', sans-serif;
 $font-family-app-path: 'Fira Sans', 'Segoe UI Light', sans-serif;
+$font-family-mono: 'Fira Mono', monospace;
 
 body{
 	margin: 0;
@@ -13,7 +15,7 @@ body{
 }
 
 div.content{
-	background: $background-color;
+	background: transparentize($background-color, 0.05);
 	width: 100vw;
 	height: 100vh;
 	overflow: scroll;
@@ -65,6 +67,7 @@ div.content{
 				font-size: 24px;
 				font-weight: 400;
 				font-family: $font-family-app-name;
+				padding-bottom: 5px;
 
 				span.app-file-extension{
 					float: none;
@@ -77,6 +80,7 @@ div.content{
 				color: $text-color-dim;
 				font-size: 16px;
 				font-family: $font-family-app-path;
+				font-weight: lighter;
 
 				overflow: hidden; 
 				text-overflow: ellipsis;
@@ -102,6 +106,34 @@ div.content{
 				p.app-path{
 					color: $highlight-text-color-dim;
 				}
+			}
+		}
+
+		div.file-content{
+			color: $text-color-dim;
+			padding: 0 20px;
+			position: relative;
+			max-height: 350px;
+			overflow: scroll;
+
+			img, video{
+				height: 100%;
+			}
+
+			ul.folder-content{
+				margin: 0;
+
+				li.child-item{
+					color: $text-color-dim;
+					padding-bottom: 3px;
+				}
+			}
+
+			pre{
+				color: $text-color-dim;
+				font-family: $font-family-mono;
+				font-size: 12px;
+				padding-top: 5px;
 			}
 		}
 	}
