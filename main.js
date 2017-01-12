@@ -38,8 +38,22 @@ app.on('ready', function () {
     mainWindow = null;
   });
 
-  mainWindow.on('blur', function () {
+  mainWindow.on('blur', function (event, arg) {
     mainWindow.hide();
+    event.returnValue = true;
+  });
+
+  ipcMain.on('hide-main-window', function (event, arg) {
+    mainWindow.hide();
+    event.returnValue = true;
+  });
+
+  ipcMain.on('close-main-window', function () {
+    app.quit();
+  });
+
+  ipcMain.on('reload-window', function () {
+    mainWindow.reload();
   });
 
   globalShortcut.register('alt+space', function () {
@@ -47,18 +61,6 @@ app.on('ready', function () {
       mainWindow.hide();
     else
       mainWindow.show();
-  });
-
-  ipcMain.on('hide-main-window', function () {
-    mainWindow.hide();
-  });
-
-  ipcMain.on('close-main-window', function () {
-    app.quit();
-  });
-
-  ipcMain.on('reload-window', function() {
-    mainWindow.reload();
   });
 
 });
