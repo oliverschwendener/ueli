@@ -12,6 +12,7 @@ hljs.initHighlightingOnLoad();
 
 // Set color theme
 $('#theme').attr('href', `./css/${new ColorThemeManager().getColorTheme()}.css`);
+$('#highlight-theme').attr('href', `./node_modules/highlight.js/styles/${new ColorThemeManager().getHighlightColorTheme()}.css`);
 
 let executionService = new ExecutionService();
 let inputValidationService = new InputValidationService();
@@ -47,6 +48,7 @@ input.bind('input propertychange', () => {
 
 // Keypress
 input.on('keydown', e => {
+    // When user hits enter
     if (e.keyCode === 13) {
         let executionArgument;
         if (programs[selectIndex] !== undefined)
@@ -55,7 +57,7 @@ input.on('keydown', e => {
             executionArgument = input.val().toLowerCase();
 
         if (executionService.execute(executionArgument)) {
-            inputHistory.addItem(input.val());
+            inputHistory.addItem(executionArgument);
             hideAndResetWindow();
         }
     }

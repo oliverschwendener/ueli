@@ -18,8 +18,8 @@
     "textextensions": "^2.0.1"
   },
   "devDependencies": {
+    "electron": "^1.4.14",
     "electron-builder": "*",
-    "electron-prebuilt": "^0.35.2",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-minify-css": "^1.2.4",

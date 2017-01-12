@@ -8,6 +8,7 @@ export default class ConfigHelper {
         this.noConfigFileMessage = `There is no config file. Please make sure there is an appropriate .json file in your home directory (${this.configFilePath})`;
         this.defaultConfig = {
             colorTheme: 'osc-dark-blue',
+            highlightColorTheme: 'atom-one-dark',
             folders: [
                 'C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs',
                 `${os.homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs`,
