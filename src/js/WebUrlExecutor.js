@@ -29,8 +29,9 @@ export default class WebUrlExecutor {
     }
 
     getInfoMessage(url) {
+        url = this.addHttpToUrl(url);
         return `<div>
-                    <p class="app-name">${this.addHttpToUrl(url)}</p>
+                    <p class="app-name">${url}</p>
                     <p class="app-path">Open default Webbrowser</p>
                 </div>`;
     }

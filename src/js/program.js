@@ -7,6 +7,9 @@ import FilePathExecutor from './js/FilePathExecutor.js';
 import Helpers from './js/Helpers.js';
 import ColorThemeManager from './js/ColorThemeManager.js';
 
+import hljs from 'highlight.js';
+hljs.initHighlightingOnLoad();
+
 // Set color theme
 $('#theme').attr('href', `./css/${new ColorThemeManager().getColorTheme()}.css`);
 
@@ -128,5 +131,9 @@ function showSearchResults() {
     let inputValidationResult = inputValidationService.getInfoMessage(input.val().toLowerCase());
     if (inputValidationResult !== undefined) {
         searchResults.html(inputValidationResult);
+
+        $("pre code").each(function (i, e) {
+            hljs.highlightBlock(e);
+        });
     }
 }

@@ -129,10 +129,9 @@ div.content{
 				}
 			}
 
-			pre{
-				color: $text-color-dim;
+			pre code{
 				font-family: $font-family-mono;
-				font-size: 12px;
+				font-size: 14px;
 				padding-top: 5px;
 			}
 		}

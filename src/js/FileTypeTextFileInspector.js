@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import textextensions from 'textextensions';
+import escape from 'escape-html';
 
 export default class FileTypeTextFileInspector {
     isValid(filePath) {
@@ -22,12 +23,14 @@ export default class FileTypeTextFileInspector {
             fileContent = exception;
         }
 
+        fileContent = escape(fileContent);
+
         return `<div>
                     <p class="app-name">Open file</p>
                     <p class="app-path">File preview:</p>
                 </div>
                 <div class="file-content">
-                    <pre>${fileContent}</pre>
+                    <pre><code class="">${fileContent}<code></pre>
                 </div>`;
     }
 }
