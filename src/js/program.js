@@ -35,7 +35,7 @@ input.bind('input propertychange', () => {
         return;
     }
 
-    programs = installedPrograms.getSearchResult(input.val());
+    programs = installedPrograms.getSearchResult(input.val().toLowerCase());
     showSearchResults();
 
     if (programs.length > 0)
@@ -49,7 +49,7 @@ input.on('keydown', e => {
         if (programs[selectIndex] !== undefined)
             executionArgument = programs[selectIndex].path;
         else
-            executionArgument = input.val();
+            executionArgument = input.val().toLowerCase();
 
         if (executionService.execute(executionArgument)) {
             inputHistory.addItem(input.val());
@@ -60,8 +60,8 @@ input.on('keydown', e => {
     // Open file location with ctrl+o
     else if (e.ctrlKey && e.keyCode === 79) {
         if (programs.length > 0) {
-            if (filePathExecutor.isValid(programs[selectIndex].path)) {
-                filePathExecutor.openFileLocation(programs[selectIndex].path);
+            if (filePathExecutor.isValid(programs[selectIndex].path.toLowerCase())) {
+                filePathExecutor.openFileLocation(programs[selectIndex].path.toLowerCase());
             }
         }
     }
@@ -115,7 +115,7 @@ function hideAndResetWindow() {
 }
 
 function showIcon() {
-    let icon = inputValidationService.getIcon(input.val());
+    let icon = inputValidationService.getIcon(input.val().toLowerCase());
     searchIcon.attr('class', icon);
 }
 
@@ -125,7 +125,7 @@ function showSearchResults() {
     selectIndex = 0;
     maxSelectIndex = programs.length - 1;
 
-    let inputValidationResult = inputValidationService.getInfoMessage(input.val());
+    let inputValidationResult = inputValidationService.getInfoMessage(input.val().toLowerCase());
     if (inputValidationResult !== undefined) {
         searchResults.html(inputValidationResult);
     }
