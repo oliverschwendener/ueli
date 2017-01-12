@@ -10,7 +10,7 @@ export default class FilePathExecutor {
 
     isValid(filePath) {
         filePath = this.replaceFilePrefix(filePath);
-        return fs.existsSync(filePath);
+        return fs.existsSync(filePath) && (/[a-zA-Z]:[\\|/]/g).test(filePath);
     }
 
     execute(filePath) {
@@ -36,8 +36,6 @@ export default class FilePathExecutor {
 
     replaceFilePrefix(filePath) {
         let filePrefix = 'file:///';
-        return filePath.startsWith('file:///')
-            ? filePath.replace('file:///', '')
-            : filePath;
+        return filePath.replace(filePrefix, '');
     }
 }
