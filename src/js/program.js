@@ -57,7 +57,7 @@ input.on('keydown', e => {
             executionArgument = input.val().toLowerCase();
 
         if (executionService.execute(executionArgument)) {
-            inputHistory.addItem(executionArgument);
+            inputHistory.addItem(input.val());
             hideAndResetWindow();
         }
     }
