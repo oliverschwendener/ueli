@@ -52,8 +52,9 @@ app.on('ready', function () {
     app.quit();
   });
 
-  ipcMain.on('reload-window', function () {
+  ipcMain.on('reload-window', function (event, arg) {
     mainWindow.reload();
+    event.returnValue = true;
   });
 
   globalShortcut.register('alt+space', function () {
