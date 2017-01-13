@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
-import InstalledPrograms from './InstalledPrograms.js';
-import UserHistory from './UserHistory.js';
+import InstalledPrograms from './InstalledPrograms';
+import UserHistory from './UserHistory';
 
 export default class ProgramExecutor {
     constructor() {
