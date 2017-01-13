@@ -18,7 +18,7 @@ export default class InstalledPrograms {
         this.programs = this.getAllPrograms();
 
         for (let folder of this.folders) {
-            fs.watch(folder, {encoding: 'buffer'}, (eventType, fileName) => {
+            fs.watch(folder, { encoding: 'buffer' }, (eventType, fileName) => {
                 this.programs = this.getAllPrograms();
             });
         }
@@ -72,18 +72,6 @@ export default class InstalledPrograms {
             sortedResult[i].number = i;
         }
 
-        // Take only max 5 items
-        /*
-        if (sortedResult.length > maxResultLength) {
-            let result = [];
-
-            for (let i = 0; i < maxResultLength; i++)
-                result.push(sortedResult[i]);
-
-            return result;
-        }
-        */
-
         return sortedResult;
     }
 
@@ -123,7 +111,7 @@ export default class InstalledPrograms {
     }
 
     isValid(input) {
-        if(input.replace(' ', '').length === 0)
+        if (input.replace(' ', '').length === 0)
             return false;
 
         if (this.getSearchResult(input).length > 0)
