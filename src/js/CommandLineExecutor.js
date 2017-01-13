@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
 
-export default class ConsoleApplicationExecutor {
+export default class CommandLineExecutor {
     constructor() {
         this.cmdPath = 'C:\\Windows\\System32\\cmd.exe';
     }
@@ -25,7 +25,7 @@ export default class ConsoleApplicationExecutor {
     getInfoMessage(command) {
         command = command.replace('>', '');
         return `<div>
-                    <p class="app-name">Execute ${command}</p>
+                    <p class="app-name">Command Prompt: ${command}</p>
                     <p class="app-path">${this.cmdPath} /K ${command}</p>
                 </div>`;
     }
