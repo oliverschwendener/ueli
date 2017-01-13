@@ -15,8 +15,9 @@ var mainWindowOptions = {
   devTools: true,
   transparent: true,
   skipTaskbar: true,
-  show: true,
-  center: true
+  show: false,
+  center: true,
+  icon: 'build/icon.ico'
 };
 
 var mainWindowHtml = 'file://' + __dirname + '/main.html';
@@ -32,7 +33,6 @@ app.on('ready', function () {
 
   mainWindow.loadURL(mainWindowHtml);
   //mainWindow.webContents.openDevTools();
-  mainWindow.hide();
 
   mainWindow.on('closed', function () {
     mainWindow = null;

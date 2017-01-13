@@ -104,13 +104,15 @@ function setNewInputValue(newInputValue, event) {
         event.preventDefault();
 }
 
-function selectNextActiveItem(param) {
+function selectNextActiveItem(direction) {
     if (programs.length === 0)
         return;
 
-    selectIndex = helpers.getNextIndex(param, selectIndex, maxSelectIndex);
+    selectIndex = helpers.getNextIndex(direction, selectIndex, maxSelectIndex);
     $('.search-results div').attr('class', '');
     $(`#search-result-${selectIndex}`).attr('class', 'active');
+
+    scrollToId(selectIndex, direction, programs.length - 1);
 }
 
 function hideAndResetWindow() {
@@ -137,5 +139,28 @@ function showSearchResults() {
         $("pre code").each(function (i, e) {
             hljs.highlightBlock(e);
         });
+    }
+}
+
+function scrollToId(id, direction, max) {
+    let idToScroll;
+
+    if (id === max)
+        idToScroll = id;
+    else if (id === 0)
+        idToScroll = id;
+    else {
+        if (direction === 'next' && id % 5 === 0 && id >= 5)
+            idToScroll = id;
+        else if ((direction === 'prev') && ((id + 1) % 5 === 0) && (id >= 4))
+            idToScroll = id - 4;
+        else if (direction === 'next' && id === 0)
+            idToScroll = id;
+    }
+
+    if (idToScroll !== undefined) {
+        let selectorId = `search-result-${idToScroll}`;
+        let offset = document.getElementById(selectorId).offsetTop;
+        $('.search-results').animate({ scrollTop: offset }, 'fast');
     }
 }

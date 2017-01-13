@@ -73,6 +73,7 @@ export default class InstalledPrograms {
         }
 
         // Take only max 5 items
+        /*
         if (sortedResult.length > maxResultLength) {
             let result = [];
 
@@ -81,6 +82,7 @@ export default class InstalledPrograms {
 
             return result;
         }
+        */
 
         return sortedResult;
     }
