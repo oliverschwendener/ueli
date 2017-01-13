@@ -101,6 +101,12 @@ input.on('keydown', e => {
     }
 });
 
+$(document).on('keydown', (e) => {
+    // F6
+    if(e.keyCode === 117)
+        input.focus();
+});
+
 function setNewInputValue(newInputValue, event) {
     input.val(newInputValue);
     input.trigger('propertychange');
