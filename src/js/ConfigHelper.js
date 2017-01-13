@@ -9,6 +9,7 @@ export default class ConfigHelper {
         this.defaultConfig = {
             colorTheme: 'osc-dark-blue',
             highlightColorTheme: 'atom-one-dark',
+            welcomeMessage: 'What are you looking for?',
             folders: [
                 'C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs',
                 `${os.homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs`,

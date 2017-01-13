@@ -1,4 +1,5 @@
 import { ipcRenderer } from 'electron';
+import hljs from 'highlight.js';
 import ExecutionService from './js/ExecutionService.js';
 import InputValidationService from './js/InputValidationService.js';
 import InstalledPrograms from './js/InstalledPrograms';
@@ -6,13 +7,7 @@ import InputHistory from './js/InputHistory.js';
 import FilePathExecutor from './js/FilePathExecutor.js';
 import Helpers from './js/Helpers.js';
 import ColorThemeManager from './js/ColorThemeManager.js';
-
-import hljs from 'highlight.js';
-hljs.initHighlightingOnLoad();
-
-// Set color theme
-$('#theme').attr('href', `./css/${new ColorThemeManager().getColorTheme()}.css`);
-$('#highlight-theme').attr('href', `./node_modules/highlight.js/styles/${new ColorThemeManager().getHighlightColorTheme()}.css`);
+import WelcomeMessageManager from './js/WelcomeMessageManager.js';
 
 let executionService = new ExecutionService();
 let inputValidationService = new InputValidationService();
@@ -28,6 +23,16 @@ let searchIcon = $('#search-icon');
 let programs = [];
 let selectIndex = 0;
 let maxSelectIndex = 0;
+
+// Initalize highlight.js
+hljs.initHighlightingOnLoad();
+
+// Set color theme
+$('#theme').attr('href', `./css/${new ColorThemeManager().getColorTheme()}.css`);
+$('#highlight-theme').attr('href', `./node_modules/highlight.js/styles/${new ColorThemeManager().getHighlightColorTheme()}.css`);
+
+// Set welcome message
+input.attr('placeholder', new WelcomeMessageManager().getMessage());
 
 // Input change
 input.bind('input propertychange', () => {
