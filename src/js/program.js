@@ -1,13 +1,13 @@
 import { ipcRenderer } from 'electron';
 import hljs from 'highlight.js';
-import ExecutionService from './js/ExecutionService.js';
-import InputValidationService from './js/InputValidationService.js';
+import ExecutionService from './js/ExecutionService';
+import InputValidationService from './js/InputValidationService';
 import InstalledPrograms from './js/InstalledPrograms';
-import InputHistory from './js/InputHistory.js';
-import FilePathExecutor from './js/FilePathExecutor.js';
-import Helpers from './js/Helpers.js';
-import ColorThemeManager from './js/ColorThemeManager.js';
-import WelcomeMessageManager from './js/WelcomeMessageManager.js';
+import InputHistory from './js/InputHistory';
+import FilePathExecutor from './js/FilePathExecutor';
+import Helpers from './js/Helpers';
+import ColorThemeManager from './js/ColorThemeManager';
+import WelcomeMessageManager from './js/WelcomeMessageManager';
 
 let executionService = new ExecutionService();
 let inputValidationService = new InputValidationService();

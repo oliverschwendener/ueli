@@ -1,9 +1,9 @@
-import InstalledPrograms from './InstalledPrograms.js'
-import FilePathExecutor from './FilePathExecutor.js';
-import WebUrlExecutor from './WebUrlExecutor.js';
-import CommandLineExecutor from './CommandLineExecutor.js';
-import EzrCommandExecutor from './EzrCommandExecutor.js';
-import WebSearchExecutor from './WebSearchExecutor.js';
+import InstalledPrograms from './InstalledPrograms'
+import FilePathExecutor from './FilePathExecutor';
+import WebUrlExecutor from './WebUrlExecutor';
+import CommandLineExecutor from './CommandLineExecutor';
+import EzrCommandExecutor from './EzrCommandExecutor';
+import WebSearchExecutor from './WebSearchExecutor';
 
 export default class InputValidationService {
     constructor() {

@@ -1,9 +1,9 @@
-import FileTypeFolderInspector from './FileTypeFolderInspector.js';
-import FileTypeImageInspector from './FileTypeImageInspector.js';
-import FileTypeVideoInspector from './FileTypeVideoInspector.js';
-import FileTypeTextFileInspector from './FileTypeTextFileInspector.js';
-import FileTypeExeInspector from './FileTypeExeInspector.js';
-import FileTypeLnkInspector from './FileTypeLnkInspector.js';
+import FileTypeFolderInspector from './FileTypeFolderInspector';
+import FileTypeImageInspector from './FileTypeImageInspector';
+import FileTypeVideoInspector from './FileTypeVideoInspector';
+import FileTypeTextFileInspector from './FileTypeTextFileInspector';
+import FileTypeExeInspector from './FileTypeExeInspector';
+import FileTypeLnkInspector from './FileTypeLnkInspector';
 
 export default class FileTypeInspector {
     constructor() {

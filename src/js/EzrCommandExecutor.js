@@ -1,7 +1,7 @@
 import { exec } from 'child_process';
 import { ipcRenderer } from 'electron';
 import fs from 'fs';
-import Constants from './Constants.js';
+import Constants from './Constants';
 import ConfigHelper from './ConfigHelper';
 
 export default class EzrCommandExecutor {

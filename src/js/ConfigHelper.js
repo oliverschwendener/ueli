@@ -1,6 +1,6 @@
 import os from 'os';
 import fs from 'fs';
-import Constants from './Constants.js';
+import Constants from './Constants';
 
 export default class ConfigHelper {
     constructor() {

@@ -1,4 +1,4 @@
-import ConfigHelper from './ConfigHelper.js';
+import ConfigHelper from './ConfigHelper';
 
 export default class WelcomeMessageManager {
     getMessage() {

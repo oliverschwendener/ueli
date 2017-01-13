@@ -1,13 +1,11 @@
-'use strict';
-
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
-import FileSystemSearch from './FileSystemSearch.js';
-import Helpers from './Helpers.js';
-import CustomShortcuts from './CustomShortcuts.js';
-import ConfigHelper from './ConfigHelper.js';
-import UserHistory from './UserHistory.js';
+import FileSystemSearch from './FileSystemSearch';
+import Helpers from './Helpers';
+import CustomShortcuts from './CustomShortcuts';
+import ConfigHelper from './ConfigHelper';
+import UserHistory from './UserHistory';
 
 export default class InstalledPrograms {
     constructor() {
