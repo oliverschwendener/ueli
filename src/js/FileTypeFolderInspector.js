@@ -7,14 +7,20 @@ export default class FileTypeFolderInspector {
 
     getInfoMessage(filePath) {
         let childitems = fs.readdirSync(filePath);
+
         let childItemsHtmlTag = '';
 
-        for(let child of childitems)
-            childItemsHtmlTag += `<li class="child-item">${child}</li>`;
+        if (childitems.length > 0)
+            for (let child of childitems)
+                childItemsHtmlTag += `<li class="child-item">${child}</li>`;        
+
+        let folderContentLabel = childitems.length > 0
+                        ? 'Folder content:'
+                        : 'Empty folder'
 
         return `<div>
                     <p class="app-name">Open Folder</p>
-                    <p class="app-path">Folder Content:</p>
+                    <p class="app-path">${folderContentLabel}</p>
                 </div>
                 <div class="file-content">
                     <ul class="folder-content">
