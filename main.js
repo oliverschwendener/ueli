@@ -9,7 +9,7 @@ var mainWindow = null;
 
 var mainWindowOptions = {
   width: 900,
-  height: 580,
+  height: 586,
   frame: false,
   resizable: false,
   devTools: true,
