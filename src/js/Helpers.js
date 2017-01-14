@@ -46,27 +46,6 @@ export default class Helpers {
         return sum / numbers.length;
     }
 
-    getNextIndex(direction, current, max) {
-        if (direction === 'first')
-            current = 0;
-
-        else if (direction === 'next') {
-            if (current < max)
-                current++;
-            else
-                current = 0;
-        }
-
-        else if (direction === 'prev') {
-            if (current > 0)
-                current = current - 1;
-            else
-                current = max;
-        }
-
-        return current;
-    }
-
     stringIsEmptyOrWhitespaces(string) {
         return (/^\s+$/.test(string));
     }

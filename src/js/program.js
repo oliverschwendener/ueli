@@ -8,7 +8,8 @@ import FilePathExecutor from './js/FilePathExecutor';
 import Helpers from './js/Helpers';
 import ColorThemeManager from './js/ColorThemeManager';
 import WelcomeMessageManager from './js/WelcomeMessageManager';
-import AnimationManager from './js/AnimationManager';
+import PageScroller from './js/PageScroller';
+import ItemSelector from './js/ItemSelector';
 
 let executionService = new ExecutionService();
 let inputValidationService = new InputValidationService();
@@ -16,6 +17,8 @@ let installedPrograms = new InstalledPrograms();
 let inputHistory = new InputHistory();
 let filePathExecutor = new FilePathExecutor();
 let helpers = new Helpers();
+let pageScroller = new PageScroller();
+let itemSelector = new ItemSelector();
 
 let input = $('#user-input');
 let searchResults = $('.search-results');
@@ -51,7 +54,7 @@ input.bind('input propertychange', () => {
     showScrollbarIfMoreThanFiveSearchResults(programs.length);
 
     if (programs.length > 0)
-        selectNextActiveItem('first');
+        itemSelector.selectNextActiveItem('first');
 });
 
 // Keypress
@@ -89,12 +92,12 @@ input.on('keydown', e => {
 
     // Select previous item
     else if (e.shiftKey && e.keyCode === 9) {
-        selectNextActiveItem('prev');
+        itemSelector.selectNextActiveItem('prev');
         e.preventDefault();
     }
     // Select next item
     else if (e.keyCode === 9) {
-        selectNextActiveItem('next');
+        itemSelector.selectNextActiveItem('next');
         e.preventDefault();
     }
 
@@ -124,17 +127,6 @@ function setNewInputValue(newInputValue, event) {
         event.preventDefault();
 }
 
-function selectNextActiveItem(direction) {
-    if (programs.length === 0)
-        return;
-
-    selectIndex = helpers.getNextIndex(direction, selectIndex, maxSelectIndex);
-    $('.search-results div').attr('class', '');
-    $(`#search-result-${selectIndex}`).attr('class', 'active');
-
-    scrollToId(selectIndex, direction, programs.length - 1);
-}
-
 function showIcon() {
     let icon = inputValidationService.getIcon(input.val().toLowerCase());
     searchIcon.attr('class', icon);
@@ -153,32 +145,6 @@ function showSearchResults() {
         $("pre code").each(function (i, e) {
             hljs.highlightBlock(e);
         });
-    }
-}
-
-function scrollToId(id, direction, max) {
-    let idToScroll;
-
-    if (id === max)
-        idToScroll = id;
-    else if (id === 0)
-        idToScroll = id;
-    else {
-        if (direction === 'next' && id % 5 === 0 && id >= 5)
-            idToScroll = id;
-        else if ((direction === 'prev') && ((id + 1) % 5 === 0) && (id >= 4))
-            idToScroll = id - 4;
-        else if (direction === 'next' && id === 0)
-            idToScroll = id;
-    }
-
-    if (idToScroll !== undefined) {
-        let selectorId = `search-result-${idToScroll}`;
-        let offset = document.getElementById(selectorId).offsetTop;
-
-        $('.search-results').animate({
-            scrollTop: offset
-        }, new AnimationManager().getScrollAnimationSpeed());
     }
 }
 
