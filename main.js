@@ -13,7 +13,6 @@ var mainWindowOptions = {
   frame: false,
   resizable: false,
   devTools: true,
-  transparent: true,
   skipTaskbar: true,
   show: false,
   center: true,
