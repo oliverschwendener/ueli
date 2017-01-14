@@ -11,7 +11,7 @@ export default class EzrCommandExecutor {
             {
                 code: 'ezr:reload',
                 execute: () => {
-                    ipcRenderer.sendSync('reload-window');
+                    ipcRenderer.send('reload-window');
                 },
                 infoMessage: 'Reload electronizr',
                 icon: 'fa fa-refresh'
@@ -19,7 +19,7 @@ export default class EzrCommandExecutor {
             {
                 code: 'ezr:exit',
                 execute: () => {
-                    ipcRenderer.sendSync('close-main-window');
+                    ipcRenderer.send('close-main-window');
                 },
                 infoMessage: 'Exit electronizr',
                 icon: 'fa fa-sign-out'

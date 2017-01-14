@@ -38,13 +38,12 @@ app.on('ready', function () {
   });
 
   mainWindow.on('blur', function (event, arg) {
-    mainWindow.hide();
-    event.returnValue = true;
+    if (mainWindow.isVisible())
+      mainWindow.hide();
   });
 
   ipcMain.on('hide-main-window', function (event, arg) {
     mainWindow.hide();
-    event.returnValue = true;
   });
 
   ipcMain.on('close-main-window', function () {
@@ -53,7 +52,6 @@ app.on('ready', function () {
 
   ipcMain.on('reload-window', function (event, arg) {
     mainWindow.reload();
-    event.returnValue = true;
   });
 
   globalShortcut.register('alt+space', function () {

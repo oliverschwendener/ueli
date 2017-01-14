@@ -17,7 +17,7 @@ let inputHistory = new InputHistory();
 let filePathExecutor = new FilePathExecutor();
 let helpers = new Helpers();
 
-let input = $('input');
+let input = $('#user-input');
 let searchResults = $('.search-results');
 let searchIcon = $('#search-icon');
 
@@ -66,7 +66,7 @@ input.on('keydown', e => {
 
         if (executionService.execute(executionArgument)) {
             inputHistory.addItem(input.val());
-            hideAndResetWindow();
+            resetAndHideWindow();
         }
     }
 
@@ -100,7 +100,7 @@ input.on('keydown', e => {
 
     // Hide window when escape is pressed
     else if (e.keyCode === 27) {
-        ipcRenderer.sendSync('hide-main-window');
+        ipcRenderer.send('hide-main-window');
     }
 });
 
@@ -109,6 +109,12 @@ $(document).on('keydown', (e) => {
     if (e.keyCode === 117)
         input.focus();
 });
+
+function resetAndHideWindow() {
+    input.val('');
+    searchResults.empty();
+    ipcRenderer.send('hide-main-window');
+}
 
 function setNewInputValue(newInputValue, event) {
     input.val(newInputValue);
@@ -127,12 +133,6 @@ function selectNextActiveItem(direction) {
     $(`#search-result-${selectIndex}`).attr('class', 'active');
 
     scrollToId(selectIndex, direction, programs.length - 1);
-}
-
-function hideAndResetWindow() {
-    input.val('');
-    searchResults.empty();
-    ipcRenderer.sendSync('hide-main-window');
 }
 
 function showIcon() {
