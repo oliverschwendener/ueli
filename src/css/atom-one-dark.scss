@@ -8,5 +8,6 @@ $highlight-text-color: #6494ed;
 $highlight-text-color-dim: #9da5b4;
 
 $scrollbar-color: $highlight-text-color;
+$scrollbar-background-color: lighten($background-color, 5);
 
 @import "app";

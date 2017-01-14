@@ -50,7 +50,7 @@ div.content{
 		top: 120px;
 		text-align: left;
 		overflow-x: hidden;
-		overflow-y: scroll;
+		overflow-y: hidden;
 
 		div{
 			padding: 20px;
@@ -139,7 +139,7 @@ div.content{
 
 $scrollbar-size: 7px;
 $scrollbar-foreground-color: $scrollbar-color;
-$scrollbar-background-color: $background-color;
+$scrollbar-background-color: $scrollbar-background-color;
 
 ::-webkit-scrollbar {
     width: $scrollbar-size;

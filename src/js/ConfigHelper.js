@@ -10,6 +10,7 @@ export default class ConfigHelper {
             colorTheme: 'osc-dark-blue',
             highlightColorTheme: 'atom-one-dark',
             welcomeMessage: 'What are you looking for?',
+            scrollAnimationSpeed: 'fast',
             folders: [
                 'C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs',
                 `${os.homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs`,

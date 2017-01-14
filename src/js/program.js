@@ -8,6 +8,7 @@ import FilePathExecutor from './js/FilePathExecutor';
 import Helpers from './js/Helpers';
 import ColorThemeManager from './js/ColorThemeManager';
 import WelcomeMessageManager from './js/WelcomeMessageManager';
+import AnimationManager from './js/AnimationManager';
 
 let executionService = new ExecutionService();
 let inputValidationService = new InputValidationService();
@@ -41,11 +42,13 @@ input.bind('input propertychange', () => {
 
     if (input.val() === '' || input.val() === undefined || helpers.stringIsEmptyOrWhitespaces(input.val())) {
         programs = [];
+        hideScrollbar();
         return;
     }
 
     programs = installedPrograms.getSearchResult(input.val().toLowerCase());
     showSearchResults();
+    showScrollbarIfMoreThanFiveSearchResults(programs.length);
 
     if (programs.length > 0)
         selectNextActiveItem('first');
@@ -103,7 +106,7 @@ input.on('keydown', e => {
 
 $(document).on('keydown', (e) => {
     // F6
-    if(e.keyCode === 117)
+    if (e.keyCode === 117)
         input.focus();
 });
 
@@ -172,6 +175,22 @@ function scrollToId(id, direction, max) {
     if (idToScroll !== undefined) {
         let selectorId = `search-result-${idToScroll}`;
         let offset = document.getElementById(selectorId).offsetTop;
-        $('.search-results').animate({ scrollTop: offset }, 'fast');
+
+        $('.search-results').animate({
+            scrollTop: offset
+        }, new AnimationManager().getScrollAnimationSpeed());
     }
+}
+
+function showScrollbarIfMoreThanFiveSearchResults(searchResultsCount) {
+    if(searchResultsCount > 5) showScrollbar();
+    else hideScrollbar();
+}
+
+function hideScrollbar() {
+    searchResults.css('overflow-y', 'hidden');
+}
+
+function showScrollbar() {
+    searchResults.css('overflow-y', 'scroll');
 }
