@@ -12,7 +12,7 @@ export default class FileTypeVideoInspector {
                     <p class="app-path">Video Preview:</p>
                 </div>
                 <div class="file-content">
-                    <video src="${filePath}" controls autoplay loop muted>
+                    <video src="${filePath}" autoplay loop muted>
                 </div>`;
     }
 }

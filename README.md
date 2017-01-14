@@ -3,16 +3,16 @@
 ## An 'alt+space' launcher for Windows
 This is an 'alt+space' launcher for Windows because I thought the default Windows 10 search function doesn't always do what I want.
 
-![example-image](https://raw.githubusercontent.com/oliverschwendener/electronizr/master/img/example.png)
+![example-image](img/example.png)
 
 ## Table of Contents
 * [Quick Tutorial](#quick-tutorial)
 * [Installation](#installation)
 * [Features](#features)
-* [Default Settings](#default-settings)
 * [Customization](#customization)
 * [Color Themes](#color-themes)
 * [electronizr specific commands](#electronizr-specific-commands)
+* [Planned Features](#planned-features)
 
 ## Quick Tutorial
 * Hit `alt + space` to show/hide the main program
@@ -22,7 +22,7 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 
 ## Installation
 ### Download
-You can download the latest version [here](http://electronizr.oliverschwendener.ch) (Zip)
+You can download the latest version [here](http://electronizr.oliverschwendener.ch)
 
 ### Manual Installation
 1. Install [Node](https://nodejs.org/en/)
@@ -39,7 +39,7 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
 ## Features
 * Search while typing
 * Launch a program by hitting `Enter`
-* Launch console programs with a `>` prefix
+* Launch commandline tool with a `>` prefix
     * e.g. `>ipconfig /all`
 * Open a web URL with your default web browser
     * e.g. `google.com`
@@ -48,72 +48,84 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
 * Use your own web search engines
 * Open Folder or Files with entering a file path
     * e.g. `C:\temp` or `C:\temp\myphoto.jpg`
-* Current color themes:
-    * One Dark (Atom)
-    * More to come...
-
-## Default Settings
-``` json
-{
-    "folders": [
-        "C:\\ProgramData\\Microsoft\\Start Menu",
-        "C:\\Users\\<your-username>\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu",
-        "C:\\Users\\<your-usernam>\\Desktop"
-    ],
-    "webSearches": [
-        {
-            "name": "Google",
-            "prefix": "g",
-            "url": "google.com/search?q="
-        }
-    ],
-    "customShortcuts": [],
-    "history": []
-}
-```
+* Available color themes:
+    * atom-one-dark
+    * osc-dark-blue
+    * osc-dark-green
+    * osc-light-blue
+    * osc-light-green
 
 ## Customization
 All Settings, customization and user history are stored in the `ezr_config.json` file in your home folder.
 If there is no config file run the application once, it should create one.
 
-* Options:
-    * folders:
-        * Example:
-        ``` json
-        [
-            "C:\\ProgramData\\Microsoft\\Windows\\Start Menu",
-            "C:\\Users\\<your-username>\\Downloads",
-            "C:\\Users\\<your-username>\\Desktop"
-        ]
-        ```
-    * webSearches:
-        * Example: 
-        ``` json
-        [
-            {
-                "name": "Vimeo",
-                "prefix": "v",
-                "url": "https://vimeo.com/search?q="
-            }
-        ]
-        ```
+* colorTheme
+``` javascript
+colorTheme: "atom-one-dark"
+```
 
-    * customCommands:
-        * Example:
-        ``` json
-        [
-            {
-                "code": "c",
-                "path": "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Google Chrome.lnk"
-            }
-        ]
-        ```
+* highlightColorTheme (syntax highlighting when preview a text file)
+    * use a [highlight.js](https://highlightjs.org/) color theme
+``` javascript
+highlightColorTheme: "atom-one-dark"
+```
+
+* scrollAnimationSpeed ('fast' / 'slow' / number(int))
+``` javascript
+scrollAnimationSpeed: 'fast'
+```
+
+* welcomeMessage
+``` javascript
+welcomeMessage: "What are you looking for?"
+```
+
+* folders
+``` javascript
+[
+    "C:\\ProgramData\\Microsoft\\Windows\\Start Menu",
+    "C:\\Users\\<your-username>\\Downloads",
+    "C:\\Users\\<your-username>\\Desktop"
+]
+```
+
+* webSearches
+``` javascript
+[
+    {
+        name: "Google",
+        prefix: "g",
+        url: "https://google.com/search?q=",
+        icon: "fa fa-google"
+    }
+]
+```
+
+* customCommands
+``` javascript
+[
+    {
+        code: "c",
+        path: "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Google Chrome.lnk"
+    }
+]
+```
 
 ## Color Themes
-### One Dark (Atom)
-![color-theme-dark](https://raw.githubusercontent.com/oliverschwendener/random/master/electronizr/img/color-themes/one-dark.png)
+### atom-one-dark
+![atom-one-dark](img/color-themes/atom-one-dark.png)
 
-There are more to come in the future...
+### osc-dark-blue
+![osc-dark-blue](img/color-themes/osc-dark-blue.png)
+
+### osc-dark-green
+![osc-dark-green](img/color-themes/osc-dark-green.png)
+
+### osc-light-blue
+![osc-light-blue](img/color-themes/osc-light-blue.png)
+
+### osc-light-green
+![osc-light-green](img/color-themes/osc-light-green.png)
 
 ## electronizr specific commands
 |Command|Description|
@@ -126,6 +138,3 @@ There are more to come in the future...
 ## Planned Features
 * Installer / Prebuilt Downloads
 * Access Control Panel items
-* More Color themes
-* More user customization
-    * custom color themes
