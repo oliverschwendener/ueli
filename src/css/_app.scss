@@ -128,10 +128,13 @@ div.content{
 				}
 			}
 
-			pre code{
-				font-family: $font-family-mono;
-				font-size: 14px;
-				padding-top: 5px;
+			pre {
+				margin: 0;
+
+				code{
+					font-family: $font-family-mono;
+					font-size: 14px;
+				}
 			}
 		}
 	}
