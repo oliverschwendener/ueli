@@ -9,11 +9,11 @@ export default class InputValidationService {
     constructor() {
         this.validators = [
             new InstalledPrograms(),
-            new FilePathExecutor(),
-            new WebUrlExecutor,
             new CommandLineExecutor(),
-            new EzrCommandExecutor(),
-            new WebSearchExecutor()
+            new FilePathExecutor(),
+            new WebSearchExecutor(),
+            new WebUrlExecutor,
+            new EzrCommandExecutor()
         ];
     }
 

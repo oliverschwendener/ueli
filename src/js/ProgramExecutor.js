@@ -1,11 +1,11 @@
 import { exec } from 'child_process';
 import InstalledPrograms from './InstalledPrograms';
-import UserHistory from './UserHistory';
+import Favorites from './Favorites';
 
 export default class ProgramExecutor {
     constructor() {
         this.programs = new InstalledPrograms().getAll();
-        this.history = new UserHistory();
+        this.history = new Favorites();
     }
 
     isValid(path) {

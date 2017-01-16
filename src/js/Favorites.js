@@ -1,9 +1,9 @@
 import fs from 'fs';
 import ConfigHelper from './ConfigHelper';
 
-export default class UserHistory {
+export default class Favorites {
     constructor() {
-        this.history = this.getHistoryFromConfiGile();
+        this.favorites = this.getFavoritesFromConfigFile();
     }
 
     addItem(path) {
@@ -14,12 +14,12 @@ export default class UserHistory {
                 this.addNewItem(path);
         }
         finally {
-            this.writeHistoryToConfigFile();
+            this.writeFavoritesToConfigFile();
         }
     }
 
     itemAlreadyExists(path) {
-        for (let item of this.history)
+        for (let item of this.favorites)
             if (item.path === path)
                 return true;
 
@@ -32,26 +32,26 @@ export default class UserHistory {
             counter: 1
         }
 
-        this.history.push(newItem);
+        this.favorites.push(newItem);
     }
 
     updateItem(path) {
-        for (let item of this.history)
+        for (let item of this.favorites)
             if (item.path === path)
                 item.counter++;
     }
 
     getItems() {
-        return this.history;
+        return this.favorites;
     }
 
-    getHistoryFromConfiGile() {
+    getFavoritesFromConfigFile() {
         return new ConfigHelper().getConfig().history;
     }
 
-    writeHistoryToConfigFile() {
+    writeFavoritesToConfigFile() {
         let config = new ConfigHelper().getConfig();
-        config.history = this.history;
+        config.history = this.favorites;
         new ConfigHelper().saveConfig(config);
     }
 }

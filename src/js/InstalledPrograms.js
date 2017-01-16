@@ -5,7 +5,7 @@ import FileSystemSearch from './FileSystemSearch';
 import Helpers from './Helpers';
 import CustomShortcuts from './CustomShortcuts';
 import ConfigHelper from './ConfigHelper';
-import UserHistory from './UserHistory';
+import Favorites from './Favorites';
 
 export default class InstalledPrograms {
     constructor() {
@@ -50,7 +50,7 @@ export default class InstalledPrograms {
         }
 
         // Show Items of History at the top
-        let historyItems = new UserHistory().getItems();
+        let historyItems = new Favorites().getItems();
         for (let item of searchResult) {
             for (let historyItem of historyItems) {
                 if (item.path === historyItem.path)
