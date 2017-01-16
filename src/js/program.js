@@ -116,6 +116,7 @@ $(document).on('keydown', (e) => {
 function resetAndHideWindow() {
     input.val('');
     searchResults.empty();
+    hideScrollbar();
     ipcRenderer.send('hide-main-window');
 }
 
