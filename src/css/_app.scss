@@ -3,8 +3,8 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Mono:400,500');
 
 $font-family-input: 'Fira Sans', 'Segoe UI', sans-serif;
-$font-family-app-name: 'Fira Sans', 'Segoe UI', sans-serif;
-$font-family-app-path: 'Fira Sans', 'Segoe UI Light', sans-serif;
+$font-family-search-result-name: 'Fira Sans', 'Segoe UI', sans-serif;
+$font-family-search-result-description: 'Fira Sans', 'Segoe UI Light', sans-serif;
 $font-family-mono: 'Fira Mono', monospace;
 
 body{
@@ -46,14 +46,14 @@ div.content{
 		background: $background-color;
 		position: absolute;
 		width: 100%;
-		height: 466;
+		height: 480px;
 		top: 120px;
 		text-align: left;
 		overflow-x: hidden;
 		overflow-y: hidden;
 
 		div{
-			padding: 20px;
+			padding: 10px 20px;
 
 			p{
 				margin: 0;
@@ -64,8 +64,8 @@ div.content{
 				color: $text-color;
 				font-size: 24px;
 				font-weight: 400;
-				font-family: $font-family-app-name;
-				padding-bottom: 5px;
+				font-family: $font-family-search-result-name;
+				line-height: 46px;
 
 				span.file-extension{
 					float: none;
@@ -77,8 +77,9 @@ div.content{
 			p.result-description{
 				color: $text-color-dim;
 				font-size: 16px;
-				font-family: $font-family-app-path;
+				font-family: $font-family-search-result-description;
 				font-weight: lighter;
+				line-height: 30px;
 
 				overflow: hidden; 
 				text-overflow: ellipsis;
@@ -111,7 +112,7 @@ div.content{
 			color: $text-color-dim;
 			padding: 0 20px;
 			position: relative;
-			max-height: 350px;
+			max-height: 316px;
 			overflow-y: scroll;
 			overflow-x: hidden;
 
