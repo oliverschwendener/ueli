@@ -19,8 +19,8 @@ export default class FileTypeFolderInspector {
                         : 'Empty folder'
 
         return `<div>
-                    <p class="app-name">Open Folder</p>
-                    <p class="app-path">${folderContentLabel}</p>
+                    <p class="result-name">Open Folder</p>
+                    <p class="result-description">${folderContentLabel}</p>
                 </div>
                 <div class="file-content">
                     <ul class="folder-content">

@@ -9,8 +9,8 @@ export default class FileTypeExeInspector {
         let fileName = path.basename(filePath);
 
         return `<div>
-                    <p class="app-name">Execute file</p>
-                    <p class="app-path">${fileName}</p>
+                    <p class="result-name">Execute file</p>
+                    <p class="result-description">${fileName}</p>
                 </div>`;
     }
 }

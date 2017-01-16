@@ -8,8 +8,8 @@ export default class FileTypeVideoInspector {
 
     getInfoMessage(filePath) {
         return `<div>
-                    <p class="app-name">Open File</p>
-                    <p class="app-path">Video Preview:</p>
+                    <p class="result-name">Open File</p>
+                    <p class="result-description">Video Preview:</p>
                 </div>
                 <div class="file-content">
                     <video src="${filePath}" autoplay loop muted>

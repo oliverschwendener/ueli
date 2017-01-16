@@ -8,8 +8,8 @@ export default class FileTypeImageInspector {
 
     getInfoMessage(filePath) {
         return `<div>
-                    <p class="app-name">Open File</p>
-                    <p class="app-path">Image Preview:</p>                  
+                    <p class="result-name">Open File</p>
+                    <p class="result-description">Image Preview:</p>                  
                 </div>
                 <div class="file-content">
                     <img src="${filePath}">

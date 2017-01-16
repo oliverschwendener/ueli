@@ -23,8 +23,8 @@ export default class FileTypeInspector {
                 return inspector.getInfoMessage(filePath);
 
         return `<div>
-                    <p class="app-name">Open file</p>
-                    <p class="app-path">${filePath}</p>
+                    <p class="result-name">Open file</p>
+                    <p class="result-description">${filePath}</p>
                 </div>`;
     }
 }

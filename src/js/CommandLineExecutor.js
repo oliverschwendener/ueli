@@ -25,8 +25,8 @@ export default class CommandLineExecutor {
     getInfoMessage(command) {
         command = command.replace('>', '');
         return `<div>
-                    <p class="app-name">Command Prompt: ${command}</p>
-                    <p class="app-path">${this.cmdPath} /K ${command}</p>
+                    <p class="result-name">Command Prompt: ${command}</p>
+                    <p class="result-description">${this.cmdPath} /K ${command}</p>
                 </div>`;
     }
 

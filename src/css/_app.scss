@@ -60,21 +60,21 @@ div.content{
 				padding: 0;
 			}
 
-			p.app-name{
+			p.result-name{
 				color: $text-color;
 				font-size: 24px;
 				font-weight: 400;
 				font-family: $font-family-app-name;
 				padding-bottom: 5px;
 
-				span.app-file-extension{
+				span.file-extension{
 					float: none;
 					color: $text-color;
 					opacity: 0.2;
 				}
 			}
 
-			p.app-path{
+			p.result-description{
 				color: $text-color-dim;
 				font-size: 16px;
 				font-family: $font-family-app-path;
@@ -93,15 +93,15 @@ div.content{
 			&.active{
 				background-color: $highlight-background-color;
 				
-				p.app-name{
+				p.result-name{
 					color: $highlight-text-color;
 
-					span.app-file-extension{
+					span.file-extension{
 						color: $highlight-text-color;
 					}
 				}
 
-				p.app-path{
+				p.result-description{
 					color: $highlight-text-color-dim;
 				}
 			}

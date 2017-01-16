@@ -26,8 +26,8 @@ export default class FileTypeTextFileInspector {
         fileContent = escape(fileContent);
 
         return `<div>
-                    <p class="app-name">Open file</p>
-                    <p class="app-path">File preview:</p>
+                    <p class="result-name">Open file</p>
+                    <p class="result-description">File preview:</p>
                 </div>
                 <div class="file-content">
                     <pre><code class="">${fileContent}<code></pre>

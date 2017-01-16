@@ -127,8 +127,8 @@ export default class InstalledPrograms {
         let result = '';
         for (let program of programs)
             result += `<div id="search-result-${program.number}">
-                            <p class="app-name">${program.name}<span class="app-file-extension">${program.fileExt}</span></p>
-                            <p class="app-path">${program.path}</p>
+                            <p class="result-name">${program.name}<span class="file-extension">${program.fileExt}</span></p>
+                            <p class="result-description">${program.path}</p>
                         </div>`;
 
         return result;

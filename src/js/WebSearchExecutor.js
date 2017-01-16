@@ -45,8 +45,8 @@ export default class WebSearchExecutor {
         let url = webSearch.url;
 
         return `<div>
-                    <p class="app-name">${webSearchName} search</p>
-                    <p class="app-path">${url}${search}</p>
+                    <p class="result-name">${webSearchName} search</p>
+                    <p class="result-description">${url}${search}</p>
                 </div>`;
     }
 

@@ -9,8 +9,8 @@ export default class FileTypeLnkInspector {
         let fileName = path.basename(filePath).replace('.lnk', '');
 
         return `<div>
-                    <p class="app-name">Open Shortcut</p>
-                    <p class="app-path">${fileName}</p>
+                    <p class="result-name">Open Shortcut</p>
+                    <p class="result-description">${fileName}</p>
                 </div>`;
     }
 }

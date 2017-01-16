@@ -60,8 +60,8 @@ export default class EzrCommandExecutor {
     getInfoMessage(userInput) {
         let command = this.getCommandByUserInput(userInput);
         return `<div>
-                    <p class="app-name">${command.infoMessage}</p>
-                    <p class="app-path">electronizr specific command</p>
+                    <p class="result-name">${command.infoMessage}</p>
+                    <p class="result-description">electronizr specific command</p>
                 </div>`;
     }
 
