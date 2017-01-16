@@ -1,13 +1,15 @@
-var electron = require('electron');
+import electron from 'electron';
+import HotKeyManager from './HotKeyManager';
 
-var app = electron.app;
-var BrowserWindow = electron.BrowserWindow;
-var globalShortcut = electron.globalShortcut;
-var ipcMain = electron.ipcMain;
+let app = electron.app;
+let BrowserWindow = electron.BrowserWindow;
+let globalShortcut = electron.globalShortcut;
+let ipcMain = electron.ipcMain;
+let hotKey = new HotKeyManager().getHotKey();
 
-var mainWindow = null;
+let mainWindow = null;
 
-var mainWindowOptions = {
+let mainWindowOptions = {
   width: 960,
   height: 600,
   frame: false,
@@ -20,7 +22,7 @@ var mainWindowOptions = {
   icon: 'build/icon.ico'
 };
 
-var mainWindowHtml = 'file://' + __dirname + '/main.html';
+let mainWindowHtml = 'file://' + __dirname + '/../main.html';
 
 app.on('window-all-closed', function () {
   if (process.platform != 'darwin') {
@@ -55,7 +57,7 @@ app.on('ready', function () {
     mainWindow.reload();
   });
 
-  globalShortcut.register('alt+space', function () {
+  globalShortcut.register(hotKey, function () {
     if (mainWindow.isVisible())
       mainWindow.hide();
     else

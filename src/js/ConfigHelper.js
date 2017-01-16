@@ -7,6 +7,7 @@ export default class ConfigHelper {
         this.configFilePath = new Constants().getConfigFilePath();
         this.noConfigFileMessage = `There is no config file. Please make sure there is an appropriate .json file in your home directory (${this.configFilePath})`;
         this.defaultConfig = {
+            hotKey: 'alt+space',
             colorTheme: 'osc-dark-blue',
             highlightColorTheme: 'atom-one-dark',
             welcomeMessage: 'What are you looking for?',

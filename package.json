@@ -4,7 +4,7 @@
   "description": "An alt+space launcher for Windows",
   "author": "Oliver Schwendener",
   "license": "MIT",
-  "main": "main.js",
+  "main": "./js/main.js",
   "dependencies": {
     "babel-preset-es2015": "^6.16.0",
     "escape-html": "^1.0.3",
@@ -27,7 +27,7 @@
     "gulp-sass": "^2.3.2"
   },
   "scripts": {
-    "start": "electron main.js",
+    "start": "electron ./js/main.js",
     "build": "build --dir",
     "setup": "build"
   },
