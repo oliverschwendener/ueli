@@ -10,7 +10,7 @@ export default class FilePathExecutor {
 
     isValid(filePath) {
         filePath = this.replaceFilePrefix(filePath);
-        return fs.existsSync(filePath) && (/[a-zA-Z]:[\\|/]/g).test(filePath);
+        return fs.existsSync(filePath) && (/[a-zA-Z]:[\\/]/g).test(filePath);
     }
 
     execute(filePath) {
