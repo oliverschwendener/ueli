@@ -16,7 +16,6 @@ let mainWindowOptions = {
   resizable: false,
   devTools: true,
   skipTaskbar: true,
-  transparent: true,
   show: false,
   center: true,
   icon: 'build/icon.ico'
