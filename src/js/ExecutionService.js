@@ -1,9 +1,9 @@
-import ProgramExecutor from './ProgramExecutor';
-import FilePathExecutor from './FilePathExecutor';
-import WebUrlExecutor from './WebUrlExecutor';
-import CommandLineExecutor from './CommandLineExecutor';
-import EzrCommandExecutor from './EzrCommandExecutor';
-import WebSearchExecutor from './WebSearchExecutor';
+import ProgramExecutor from './Executors/ProgramExecutor';
+import FilePathExecutor from './Executors/FilePathExecutor';
+import WebUrlExecutor from './Executors/WebUrlExecutor';
+import CommandLineExecutor from './Executors/CommandLineExecutor';
+import EzrCommandExecutor from './Executors/EzrCommandExecutor';
+import WebSearchExecutor from './Executors/WebSearchExecutor';
 
 export default class ExecutionService {
     constructor() {

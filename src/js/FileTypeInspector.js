@@ -1,19 +1,19 @@
-import FileTypeFolderInspector from './FileTypeFolderInspector';
-import FileTypeImageInspector from './FileTypeImageInspector';
-import FileTypeVideoInspector from './FileTypeVideoInspector';
-import FileTypeTextFileInspector from './FileTypeTextFileInspector';
-import FileTypeExeInspector from './FileTypeExeInspector';
-import FileTypeLnkInspector from './FileTypeLnkInspector';
+import FileTypeFolderHandler from './FileTypeHandlers/FileTypeFolderHandler';
+import FileTypeImageHandler from './FileTypeHandlers/FileTypeImageHandler';
+import FileTypeVideoHandler from './FileTypeHandlers/FileTypeVideoHandler';
+import FileTypeTextFileHandler from './FileTypeHandlers/FileTypeTextFileHandler';
+import FileTypeExeHandler from './FileTypeHandlers/FileTypeExeHandler';
+import FileTypeLnkHandler from './FileTypeHandlers/FileTypeLnkHandler';
 
 export default class FileTypeInspector {
     constructor() {
         this.inspectors = [
-            new FileTypeFolderInspector(),
-            new FileTypeImageInspector(),
-            new FileTypeVideoInspector(),
-            new FileTypeTextFileInspector(),
-            new FileTypeExeInspector(),
-            new FileTypeLnkInspector()
+            new FileTypeFolderHandler(),
+            new FileTypeImageHandler(),
+            new FileTypeVideoHandler(),
+            new FileTypeTextFileHandler(),
+            new FileTypeExeHandler(),
+            new FileTypeLnkHandler()
         ];
     }
 

@@ -1,7 +1,7 @@
 import open from 'open';
 import fs from 'fs';
-import Helpers from './Helpers';
-import ConfigHelper from './ConfigHelper';
+import Helpers from './../Helpers';
+import ConfigHelper from './../ConfigHelper';
 
 export default class WebSearchExecutor {
     constructor() {

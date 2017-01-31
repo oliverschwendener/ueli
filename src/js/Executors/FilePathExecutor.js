@@ -1,7 +1,7 @@
 import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import FileTypeInspector from './FileTypeInspector.js';
+import FileTypeInspector from './../FileTypeInspector.js';
 
 export default class FilePathExecutor {
     constructor() {
@@ -10,12 +10,14 @@ export default class FilePathExecutor {
 
     isValid(filePath) {
         filePath = this.replaceFilePrefix(filePath);
-        filePath = this.getParentDirIfFileDoesntExist(filePath);
+        filePath = this.getParentDirIfFileDoesntExist(filePath);        
 
         return fs.existsSync(filePath) && (/[a-zA-Z]:[\\/]/g).test(filePath);
     }
 
     execute(filePath) {
+        filePath = this.getParentDirIfFileDoesntExist(filePath);
+
         exec(`start "" "${filePath}"`, (error, stdout, stderr) => {
             if (error)
                 throw error;

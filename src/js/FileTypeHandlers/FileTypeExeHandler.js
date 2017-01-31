@@ -1,6 +1,6 @@
 import path from 'path';
 
-export default class FileTypeExeInspector {
+export default class FileTypeExeHandler {
     isValid(filePath) {
         return path.extname(filePath) === '.exe';
     }

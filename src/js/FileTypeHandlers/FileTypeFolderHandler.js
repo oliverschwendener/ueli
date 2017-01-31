@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export default class FileTypeFolderInspector {
+export default class FileTypeFolderHandler {
     isValid(filePath) {
         return fs.lstatSync(filePath).isDirectory();
     }
