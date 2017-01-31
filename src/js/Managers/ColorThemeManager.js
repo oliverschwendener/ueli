@@ -1,5 +1,5 @@
 import fs from 'fs';
-import ConfigHelper from './ConfigHelper';
+import ConfigManager from './ConfigManager';
 
 export default class ColorThemeManager {
     constructor() {
@@ -8,7 +8,7 @@ export default class ColorThemeManager {
     }
 
     getColorTheme() {
-        let userColorTheme = new ConfigHelper().getConfig().colorTheme;
+        let userColorTheme = new ConfigManager().getConfig().colorTheme;
 
         if(userColorTheme === undefined)
             userColorTheme = this.defaultColorTheme;
@@ -17,7 +17,7 @@ export default class ColorThemeManager {
     }
 
     getHighlightColorTheme() {
-        let userHighLightColorTheme = new ConfigHelper().getConfig().highlightColorTheme;
+        let userHighLightColorTheme = new ConfigManager().getConfig().highlightColorTheme;
 
         if (userHighLightColorTheme === undefined)
             userHighLightColorTheme = this.defaultHighlightColorTheme;

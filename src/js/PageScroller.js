@@ -1,4 +1,4 @@
-import AnimationManager from './AnimationManager';
+import AnimationManager from './Managers/AnimationManager';
 
 export default class PageScroller {
     constructor() {

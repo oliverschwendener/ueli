@@ -6,7 +6,7 @@ import InstalledPrograms from './js/InstalledPrograms';
 import InputHistory from './js/InputHistory';
 import FilePathExecutor from './js/FilePathExecutor';
 import Helpers from './js/Helpers';
-import ColorThemeManager from './js/ColorThemeManager';
+import ColorThemeManager from './js/Managers/ColorThemeManager';
 import WelcomeMessageManager from './js/WelcomeMessageManager';
 import PageScroller from './js/PageScroller';
 import ItemSelector from './js/ItemSelector';

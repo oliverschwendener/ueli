@@ -1,10 +1,10 @@
 import os from 'os';
 import fs from 'fs';
-import Constants from './Constants';
+import ConstantsManager from './ConstantsManager';
 
-export default class ConfigHelper {
+export default class ConfigManager {
     constructor() {
-        this.configFilePath = new Constants().getConfigFilePath();
+        this.configFilePath = new ConstantsManager().getConfigFilePath();
         this.noConfigFileMessage = `There is no config file. Please make sure there is an appropriate .json file in your home directory (${this.configFilePath})`;
         this.defaultConfig = {
             hotKey: 'alt+space',

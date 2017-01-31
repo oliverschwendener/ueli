@@ -4,7 +4,7 @@ import os from 'os';
 import FileSystemSearch from './FileSystemSearch';
 import Helpers from './Helpers';
 import CustomShortcuts from './CustomShortcuts';
-import ConfigHelper from './ConfigHelper';
+import ConfigManager from './Managers/ConfigManager';
 import Favorites from './Favorites';
 
 export default class InstalledPrograms {
@@ -96,7 +96,7 @@ export default class InstalledPrograms {
     }
 
     getFoldersToSearch() {
-        let userConfig = new ConfigHelper().getConfig();
+        let userConfig = new ConfigManager().getConfig();
 
         if (userConfig.folders !== undefined)
             return userConfig.folders;

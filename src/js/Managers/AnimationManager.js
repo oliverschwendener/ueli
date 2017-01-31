@@ -1,8 +1,8 @@
-import ConfigHelper from './ConfigHelper';
+import ConfigManager from './ConfigManager';
 
 export default class AnimationManager {
     getScrollAnimationSpeed() {
-        let configAnimationSpeed = new ConfigHelper().getConfig().scrollAnimationSpeed;
+        let configAnimationSpeed = new ConfigManager().getConfig().scrollAnimationSpeed;
         return configAnimationSpeed === undefined
             ? 'fast'
             : configAnimationSpeed;

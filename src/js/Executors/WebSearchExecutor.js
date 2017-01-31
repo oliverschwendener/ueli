@@ -1,7 +1,7 @@
 import open from 'open';
 import fs from 'fs';
 import Helpers from './../Helpers';
-import ConfigHelper from './../ConfigHelper';
+import ConfigManager from './../Managers/ConfigManager';
 
 export default class WebSearchExecutor {
     constructor() {
@@ -28,7 +28,7 @@ export default class WebSearchExecutor {
     }
 
     getWebSearches() {
-        let userConfig = new ConfigHelper().getConfig();
+        let userConfig = new ConfigManager().getConfig();
 
         if (userConfig.webSearches !== undefined)
             return userConfig.webSearches;

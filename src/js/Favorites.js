@@ -1,5 +1,5 @@
 import fs from 'fs';
-import ConfigHelper from './ConfigHelper';
+import ConfigManager from './Managers/ConfigManager';
 
 export default class Favorites {
     constructor() {
@@ -46,12 +46,12 @@ export default class Favorites {
     }
 
     getFavoritesFromConfigFile() {
-        return new ConfigHelper().getConfig().history;
+        return new ConfigManager().getConfig().history;
     }
 
     writeFavoritesToConfigFile() {
-        let config = new ConfigHelper().getConfig();
+        let config = new ConfigManager().getConfig();
         config.history = this.favorites;
-        new ConfigHelper().saveConfig(config);
+        new ConfigManager().saveConfig(config);
     }
 }

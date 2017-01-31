@@ -1,12 +1,12 @@
 import { exec } from 'child_process';
 import { ipcRenderer } from 'electron';
 import fs from 'fs';
-import Constants from './../Constants';
-import ConfigHelper from './../ConfigHelper';
+import ConstantsManager from './../ConstantsManager';
+import ConfigManager from './../Managers/ConfigManager';
 
 export default class EzrCommandExecutor {
     constructor() {
-        this.configFilePath = new Constants().getConfigFilePath();
+        this.configFilePath = new ConstantsManager().getConfigFilePath();
         this.commands = [
             {
                 code: 'ezr:reload',
@@ -70,9 +70,9 @@ export default class EzrCommandExecutor {
     }
 
     resetHistory() {
-        let config = new ConfigHelper().getConfig();
+        let config = new ConfigManager().getConfig();
         config.history = [];
-        new ConfigHelper().saveConfig(config);
+        new ConfigManager().saveConfig(config);
     }
 
     getCommandByUserInput(userInput) {
