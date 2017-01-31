@@ -10,6 +10,8 @@ export default class FilePathExecutor {
 
     isValid(filePath) {
         filePath = this.replaceFilePrefix(filePath);
+        filePath = this.getParentDirIfFileDoesntExist(filePath);
+
         return fs.existsSync(filePath) && (/[a-zA-Z]:[\\/]/g).test(filePath);
     }
 
@@ -27,6 +29,8 @@ export default class FilePathExecutor {
 
     getInfoMessage(filePath) {
         filePath = this.replaceFilePrefix(filePath);
+        filePath = this.getParentDirIfFileDoesntExist(filePath);
+        
         return this.fileTypeInspector.getInfoMessage(filePath);
     }
 
@@ -37,5 +41,12 @@ export default class FilePathExecutor {
     replaceFilePrefix(filePath) {
         let filePrefix = 'file:///';
         return filePath.replace(filePrefix, '');
+    }
+
+    getParentDirIfFileDoesntExist(filePath) {
+        if (!fs.existsSync(filePath))
+            filePath = path.dirname(filePath);
+
+        return filePath;
     }
 }
