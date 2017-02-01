@@ -12,12 +12,13 @@ let mainWindow = null;
 let mainWindowOptions = {
   width: 960,
   height: 600,
+  minHeight: 600,
+  maxHeight: 600,
   frame: false,
-  resizable: false,
+  resizable: true,
   devTools: true,
   skipTaskbar: true,
   show: false,
-  center: true,
   icon: 'build/icon.ico'
 };
 
