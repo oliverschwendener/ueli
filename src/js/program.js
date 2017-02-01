@@ -4,10 +4,10 @@ import ExecutionService from './js/ExecutionService';
 import InputValidationService from './js/InputValidationService';
 import InstalledPrograms from './js/InstalledPrograms';
 import InputHistory from './js/InputHistory';
-import FilePathExecutor from './js/FilePathExecutor';
+import FilePathExecutor from './js/Executors/FilePathExecutor';
 import Helpers from './js/Helpers';
 import ColorThemeManager from './js/Managers/ColorThemeManager';
-import WelcomeMessageManager from './js/WelcomeMessageManager';
+import WelcomeMessageManager from './js/Managers/WelcomeMessageManager';
 import PageScroller from './js/PageScroller';
 import ItemSelector from './js/ItemSelector';
 

@@ -1,5 +1,5 @@
 import electron from 'electron';
-import HotKeyManager from './HotKeyManager';
+import HotKeyManager from './Managers/HotKeyManager';
 
 let app = electron.app;
 let BrowserWindow = electron.BrowserWindow;
