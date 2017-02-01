@@ -22,7 +22,7 @@ let mainWindowOptions = {
   icon: 'build/icon.ico'
 };
 
-let mainWindowHtml = 'file://' + __dirname + '/../main.html';
+let mainWindowHtml = `file://${__dirname}/../main.html`;
 
 app.on('window-all-closed', function () {
   if (process.platform != 'darwin') {
@@ -30,38 +30,37 @@ app.on('window-all-closed', function () {
   }
 });
 
-app.on('ready', function () {
+app.on('ready', () => {
   mainWindow = new BrowserWindow(mainWindowOptions);
 
   mainWindow.loadURL(mainWindowHtml);
   //mainWindow.webContents.openDevTools();
 
-  mainWindow.on('closed', function () {
+  mainWindow.on('closed', () => {
     mainWindow = null;
   });
 
-  mainWindow.on('blur', function (event, arg) {
+  mainWindow.on('blur', (event, arg) => {
     if (mainWindow.isVisible())
       mainWindow.hide();
   });
 
-  ipcMain.on('hide-main-window', function (event, arg) {
+  ipcMain.on('hide-main-window', (event, arg) => {
     mainWindow.hide();
   });
 
-  ipcMain.on('close-main-window', function () {
+  ipcMain.on('close-main-window', () => {
     app.quit();
   });
 
-  ipcMain.on('reload-window', function (event, arg) {
+  ipcMain.on('reload-window', (event, arg) => {
     mainWindow.reload();
   });
 
-  globalShortcut.register(hotKey, function () {
+  globalShortcut.register(hotKey, () => {
     if (mainWindow.isVisible())
       mainWindow.hide();
     else
       mainWindow.show();
   });
-
 });
