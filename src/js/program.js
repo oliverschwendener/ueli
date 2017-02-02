@@ -87,6 +87,9 @@ input.on('keydown', e => {
         setNewInputValue(inputHistory.getPrevious(), e);
     }
     else if (e.keyCode === 40) {
+        if (inputHistory.isAtLastIndex())
+            return;
+            
         setNewInputValue(inputHistory.getNext(), e);
     }
 

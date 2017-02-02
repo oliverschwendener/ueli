@@ -25,4 +25,8 @@ export default class InputHistory {
 
         return this.history[this.index];
     }
+
+    isAtLastIndex() {
+        return this.history.length <= this.index;
+    }
 }
