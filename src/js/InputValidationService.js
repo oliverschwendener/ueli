@@ -5,6 +5,8 @@ import CommandLineExecutor from './Executors/CommandLineExecutor';
 import EzrCommandExecutor from './Executors/EzrCommandExecutor';
 import WebSearchExecutor from './Executors/WebSearchExecutor';
 
+const defaultSearchIcon = 'fa fa-search';
+
 export default class InputValidationService {
     constructor() {
         this.validators = [
@@ -24,7 +26,6 @@ export default class InputValidationService {
     }
 
     getIcon(userInput) {
-        let defaultIcon = 'fa fa-search';
         let result;
 
         try {
@@ -34,11 +35,15 @@ export default class InputValidationService {
         }
         catch(exception) {
             console.log(exception);
-            return defaultIcon;
+            return defaultSearchIcon;
         }
 
         return (result === undefined || result === null || result === '')
-            ? defaultIcon
+            ? defaultSearchIcon
             : result;
+    }
+
+    getDefaultSearchIcon() {
+        return defaultSearchIcon;
     }
 }

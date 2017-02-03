@@ -20,7 +20,7 @@ let helpers = new Helpers();
 let pageScroller = new PageScroller();
 let itemSelector = new ItemSelector();
 
-let input = $('#user-input');
+let userInput = $('#user-input');
 let searchResults = $('.search-results');
 let searchIcon = $('#search-icon');
 
@@ -36,20 +36,20 @@ $('#theme').attr('href', `./css/${new ColorThemeManager().getColorTheme()}.css`)
 $('#highlight-theme').attr('href', `./node_modules/highlight.js/styles/${new ColorThemeManager().getHighlightColorTheme()}.css`);
 
 // Set welcome message
-input.attr('placeholder', new WelcomeMessageManager().getMessage());
+userInput.attr('placeholder', new WelcomeMessageManager().getMessage());
 
 // Input change
-input.bind('input propertychange', () => {
+userInput.bind('input propertychange', () => {
     searchResults.empty();
     showIcon();
 
-    if (input.val() === '' || input.val() === undefined || helpers.stringIsEmptyOrWhitespaces(input.val())) {
+    if (userInput.val() === '' || userInput.val() === undefined || helpers.stringIsEmptyOrWhitespaces(userInput.val())) {
         programs = [];
         hideScrollbar();
         return;
     }
 
-    programs = installedPrograms.getSearchResult(input.val());
+    programs = installedPrograms.getSearchResult(userInput.val());
     showSearchResults();
     showScrollbarIfMoreThanFiveSearchResults(programs.length);
 
@@ -58,17 +58,17 @@ input.bind('input propertychange', () => {
 });
 
 // Keypress
-input.on('keydown', e => {
+userInput.on('keydown', e => {
     // When user hits enter
     if (e.keyCode === 13) {
         let executionArgument;
         if (programs[selectIndex] !== undefined)
             executionArgument = programs[selectIndex].path;
         else
-            executionArgument = input.val();
+            executionArgument = userInput.val();
 
         if (executionService.execute(executionArgument)) {
-            inputHistory.addItem(input.val());
+            inputHistory.addItem(userInput.val());
             resetAndHideWindow();
         }
     }
@@ -113,26 +113,39 @@ input.on('keydown', e => {
 $(document).on('keydown', (e) => {
     // F6
     if (e.keyCode === 117)
-        input.focus();
+        userInput.focus();
 });
 
 function resetAndHideWindow() {
-    input.val('');
-    searchResults.empty();
+    emptyUserInput();
+    emptySearchResults();
+    resetSearchIcon();
     hideScrollbar();
     ipcRenderer.send('hide-main-window');
 }
 
+function emptyUserInput() {
+    userInput.val('');
+}
+
+function emptySearchResults() {
+    searchResults.empty();
+}
+
+function resetSearchIcon() {
+    searchIcon.attr('class', inputValidationService.getDefaultSearchIcon());
+}
+
 function setNewInputValue(newInputValue, event) {
-    input.val(newInputValue);
-    input.trigger('propertychange');
+    userInput.val(newInputValue);
+    userInput.trigger('propertychange');
 
     if (event !== undefined)
         event.preventDefault();
 }
 
 function showIcon() {
-    let icon = inputValidationService.getIcon(input.val());
+    let icon = inputValidationService.getIcon(userInput.val());
     searchIcon.attr('class', icon);
 }
 
@@ -142,7 +155,7 @@ function showSearchResults() {
     selectIndex = 0;
     maxSelectIndex = programs.length - 1;
 
-    let inputValidationResult = inputValidationService.getInfoMessage(input.val());
+    let inputValidationResult = inputValidationService.getInfoMessage(userInput.val());
     if (inputValidationResult !== undefined) {
         searchResults.html(inputValidationResult);
 
@@ -153,8 +166,10 @@ function showSearchResults() {
 }
 
 function showScrollbarIfMoreThanFiveSearchResults(searchResultsCount) {
-    if(searchResultsCount > 5) showScrollbar();
-    else hideScrollbar();
+    if(searchResultsCount > 5)
+        showScrollbar();
+    else
+        hideScrollbar();
 }
 
 function hideScrollbar() {
