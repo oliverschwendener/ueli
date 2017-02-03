@@ -23,7 +23,7 @@ export default class CommandLineExecutor {
     }
 
     getInfoMessage(command) {
-        command = command.replace('>', '');
+        command = command.toLowerCase().replace('>', '');
         return `<div>
                     <p class="result-name">Command Prompt: ${command}</p>
                     <p class="result-description">${this.cmdPath} /K ${command}</p>

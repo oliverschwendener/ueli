@@ -18,6 +18,8 @@ export default class FileTypeInspector {
     }
 
     getInfoMessage(filePath) {
+        filePath = filePath.toLowerCase();
+
         for (let inspector of this.inspectors)
             if (inspector.isValid(filePath))
                 return inspector.getInfoMessage(filePath);
