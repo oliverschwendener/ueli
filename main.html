@@ -4,21 +4,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>electronizr</title>
-    <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css">
-    <link id="highlight-theme" rel="stylesheet" href="">
-    <link id="theme" rel="stylesheet" href="">
+    <link rel="stylesheet" href="./css/app.css">
 </head>
 
 <body>
-    <div class="content">
-        <input id="user-input" type="text" autofocus>
-        <i class="fa fa-search" id="search-icon" aria-hidden="true"></i>
-        <div class="search-results">
-        </div>
+
+    <div id="root">
+        <input type="text" v-model="userInput" v-on:keyUp="handleKeyPress" :autofocus="{ true: focusOnInput }">
+        <ul>
+            <li v-for="item in searchResult" :class="{ active: item.isActive }">{{ item.name }}</li>
+        </ul>
     </div>
 
-    <script>window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.min.js');</script>
-    <script src="./js/program.js"></script>        
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/vue/dist/vue.min.js"></script>
+    <script src="./js/program.js"></script>
 </body>
 
 </html>

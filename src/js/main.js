@@ -1,22 +1,17 @@
 import electron from 'electron';
-import HotKeyManager from './Managers/HotKeyManager';
 
 let app = electron.app;
 let BrowserWindow = electron.BrowserWindow;
 let globalShortcut = electron.globalShortcut;
 let ipcMain = electron.ipcMain;
-let hotKey = new HotKeyManager().getHotKey();
 
 let mainWindow = null;
 
 let mainWindowOptions = {
   width: 960,
   height: 600,
-  minHeight: 600,
-  maxHeight: 600,
   frame: false,
   resizable: true,
-  devTools: true,
   skipTaskbar: true,
   show: false,
   icon: 'build/icon.ico'
@@ -57,7 +52,7 @@ app.on('ready', () => {
     mainWindow.reload();
   });
 
-  globalShortcut.register(hotKey, () => {
+  globalShortcut.register('alt+space', () => {
     if (mainWindow.isVisible())
       mainWindow.hide();
     else

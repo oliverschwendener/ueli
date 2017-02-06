@@ -1,181 +1,159 @@
-import { ipcRenderer } from 'electron';
-import hljs from 'highlight.js';
-import ExecutionService from './js/ExecutionService';
-import InputValidationService from './js/InputValidationService';
-import InstalledPrograms from './js/InstalledPrograms';
-import InputHistory from './js/InputHistory';
-import FilePathExecutor from './js/Executors/FilePathExecutor';
-import Helpers from './js/Helpers';
-import ColorThemeManager from './js/Managers/ColorThemeManager';
-import WelcomeMessageManager from './js/Managers/WelcomeMessageManager';
-import PageScroller from './js/PageScroller';
-import ItemSelector from './js/ItemSelector';
+import fs from 'fs'
+import path from 'path'
 
-let executionService = new ExecutionService();
-let inputValidationService = new InputValidationService();
-let installedPrograms = new InstalledPrograms();
-let inputHistory = new InputHistory();
-let filePathExecutor = new FilePathExecutor();
-let helpers = new Helpers();
-let pageScroller = new PageScroller();
-let itemSelector = new ItemSelector();
+let vue = new Vue({
+    el: '#root',
+    data: {
+        userInput: '',
+        focusOnInput: true,
+        elements: [],
+        searchResult: []
+    },
+    methods: {
+        init() {
+            getFilesRecursively('C:\\ProgramData\\Microsoft\\Windows\\Start Menu', this.appendToElements)
+        },
+        appendToElements(data) {
+            this.elements.push(data)
+        },
+        handleKeyPress(e) {
+            if (e.key === 'Enter')
+                this.execute()
+            else if (e.ctrlKey && e.key === 'o')
+                this.openFileLocation()
+        },
+        selectNext() {
+            let iterator = 0
+            let maxIndex = this.searchResult.length - 1
+            for (let item of this.searchResult) {
+                if (item.isActive) {
+                    if (iterator === maxIndex) {
+                        this.selectFirst()
+                        return
+                    }
 
-let userInput = $('#user-input');
-let searchResults = $('.search-results');
-let searchIcon = $('#search-icon');
-
-let programs = [];
-let selectIndex = 0;
-let maxSelectIndex = 0;
-
-// Initalize highlight.js
-hljs.initHighlightingOnLoad();
-
-// Set color theme
-$('#theme').attr('href', `./css/${new ColorThemeManager().getColorTheme()}.css`);
-$('#highlight-theme').attr('href', `./node_modules/highlight.js/styles/${new ColorThemeManager().getHighlightColorTheme()}.css`);
-
-// Set welcome message
-userInput.attr('placeholder', new WelcomeMessageManager().getMessage());
-
-// Input change
-userInput.bind('input propertychange', () => {
-    searchResults.empty();
-    showIcon();
-
-    if (userInput.val() === '' || userInput.val() === undefined || helpers.stringIsEmptyOrWhitespaces(userInput.val())) {
-        programs = [];
-        hideScrollbar();
-        return;
-    }
-
-    programs = installedPrograms.getSearchResult(userInput.val());
-    showSearchResults();
-    showScrollbarIfMoreThanFiveSearchResults(programs.length);
-
-    if (programs.length > 0)
-        itemSelector.selectNextActiveItem('first');
-});
-
-// Keypress
-userInput.on('keydown', e => {
-    // When user hits enter
-    if (e.keyCode === 13) {
-        let executionArgument;
-        if (programs[selectIndex] !== undefined)
-            executionArgument = programs[selectIndex].path;
-        else
-            executionArgument = userInput.val();
-
-        if (executionService.execute(executionArgument)) {
-            inputHistory.addItem(userInput.val());
-            resetAndHideWindow();
-        }
-    }
-
-    // Open file location with ctrl+o
-    else if (e.ctrlKey && e.keyCode === 79) {
-        if (programs.length > 0) {
-            if (filePathExecutor.isValid(programs[selectIndex].path)) {
-                filePathExecutor.openFileLocation(programs[selectIndex].path);
+                    item.isActive = false
+                    this.searchResult[iterator + 1].isActive = true
+                    break
+                }
+                iterator++
             }
+        },
+        selectPrevious() {
+            let iterator = 0
+            for (let item of this.searchResult) {
+                if (item.isActive) {
+                    if (iterator === 0) {
+                        this.selectLast()
+                        return
+                    }
+
+                    item.isActive = false
+                    this.searchResult[iterator - 1].isActive = true
+                    break
+                }
+                iterator++
+            }
+        },
+        selectFirst() {
+            for (let item of this.searchResult)
+                item.isActive = false
+
+            this.searchResult[0].isActive = true
+        },
+        selectLast() {
+            for (let item of this.searchResult)
+                item.isActive = false
+
+            let lastIndex = this.searchResult.length - 1
+            this.searchResult[lastIndex].isActive = true
+        },
+        execute() {
+            for (let item of this.searchResult)
+                if (item.isActive)
+                    alert(`Executing: ${item.execArgs}`)
+        },
+        openFileLocation() {
+            for (let item of this.searchResult)
+                if (item.isActive)
+                    alert(`Opening file location: ${item.execArgs}`)
+        }
+    },
+    watch: {
+        // Fire when user input changes
+        userInput: function(val, oldVal) {
+            let result = []
+
+            if (this.userInput.replace(' ', '').length === 0) {
+                this.searchResult = []
+                return
+            }
+
+            for (let element of this.elements) {
+                let appName = path.basename(element).replace('.lnk', '')
+                let weigth = getWeight(appName, this.userInput)
+
+                if (weigth > 0) {
+                    result.push({
+                        name: appName,
+                        weight: weigth,
+                        execArgs: element,
+                        isActive: false
+                    })
+                }
+            }
+
+            let sortedResult = result.sort((a, b) => {
+                if (a.weight < b.weight) return 1
+                else if (a.weight > b.weight) return -1
+                else return 0
+            })
+
+            if (sortedResult.length > 0)
+                sortedResult[0].isActive = true
+
+            this.searchResult = sortedResult
+        }
+    }
+})
+
+vue.init()
+
+function getFilesRecursively(folder, success) {
+    fs.readdir(folder, (err, data) => {
+        if (err) throw err
+
+        for (let file of data) {
+            file = `${folder}/${file}`
+
+            fs.lstat(file, (err, stats) => {
+                if (err) throw err
+
+                if (stats.isDirectory() && !stats.isSymbolicLink())
+                    getFilesRecursively(file, success)
+                else if (stats.isFile())
+                    success(file)
+            })
+        }
+    })
+}
+
+function getWeight(string, substring) {
+    let hits = 0;
+    let strings = string.split(' ')
+    let substrings = substring.split(' ')
+
+    for (let word of strings) {
+        if (word.length === 0)
+            continue
+
+        for (let word2 of substrings) {
+            if (word2.length === 0)
+                continue
+            else if (word.toLowerCase().indexOf(word2.toLowerCase()) > -1)
+                hits++
         }
     }
 
-    // Browse input history
-    else if (e.keyCode === 38) {
-        setNewInputValue(inputHistory.getPrevious(), e);
-    }
-    else if (e.keyCode === 40) {
-        if (inputHistory.isAtLastIndex())
-            return;
-            
-        setNewInputValue(inputHistory.getNext(), e);
-    }
-
-    // Select previous item
-    else if (e.shiftKey && e.keyCode === 9) {
-        itemSelector.selectNextActiveItem('prev');
-        e.preventDefault();
-    }
-    // Select next item
-    else if (e.keyCode === 9) {
-        itemSelector.selectNextActiveItem('next');
-        e.preventDefault();
-    }
-
-    // Hide window when escape is pressed
-    else if (e.keyCode === 27) {
-        ipcRenderer.send('hide-main-window');
-    }
-});
-
-$(document).on('keydown', (e) => {
-    // F6
-    if (e.keyCode === 117)
-        userInput.focus();
-});
-
-function resetAndHideWindow() {
-    emptyUserInput();
-    emptySearchResults();
-    resetSearchIcon();
-    hideScrollbar();
-    ipcRenderer.send('hide-main-window');
-}
-
-function emptyUserInput() {
-    userInput.val('');
-}
-
-function emptySearchResults() {
-    searchResults.empty();
-}
-
-function resetSearchIcon() {
-    searchIcon.attr('class', inputValidationService.getDefaultSearchIcon());
-}
-
-function setNewInputValue(newInputValue, event) {
-    userInput.val(newInputValue);
-    userInput.trigger('propertychange');
-
-    if (event !== undefined)
-        event.preventDefault();
-}
-
-function showIcon() {
-    let icon = inputValidationService.getIcon(userInput.val());
-    searchIcon.attr('class', icon);
-}
-
-function showSearchResults() {
-    searchResults.empty();
-
-    selectIndex = 0;
-    maxSelectIndex = programs.length - 1;
-
-    let inputValidationResult = inputValidationService.getInfoMessage(userInput.val());
-    if (inputValidationResult !== undefined) {
-        searchResults.html(inputValidationResult);
-
-        $("pre code").each(function (i, e) {
-            hljs.highlightBlock(e);
-        });
-    }
-}
-
-function showScrollbarIfMoreThanFiveSearchResults(searchResultsCount) {
-    if(searchResultsCount > 5)
-        showScrollbar();
-    else
-        hideScrollbar();
-}
-
-function hideScrollbar() {
-    searchResults.css('overflow-y', 'hidden');
-}
-
-function showScrollbar() {
-    searchResults.css('overflow-y', 'scroll');
+    return hits
 }
