@@ -4,19 +4,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>electronizr</title>
-    <link rel="stylesheet" href="./css/app.css">
+    <link rel="stylesheet" ref="theme" href="./css/osc-light-green.css">
 </head>
 
 <body>
 
     <div id="root">
-        <input type="text" v-model="userInput" v-on:keyUp="handleKeyPress" :autofocus="{ true: focusOnInput }">
+        <input type="text" v-model="userInput" ref="input" v-on:keyDown="handleKeyPress" :autofocus="{ true: focusOnInput }">
         <ul>
-            <li v-for="item in searchResult" :class="{ active: item.isActive }">{{ item.name }}</li>
+            <li v-for="item in searchResult" :class="{ active: item.isActive }">
+                <span class="name">{{ item.name }}</span>
+                <span class="exec-args">{{ item.execArgs }}</span>
+            </li>
         </ul>
     </div>
 
-    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/vue/dist/vue.min.js"></script>
     <script src="./js/program.js"></script>
 </body>

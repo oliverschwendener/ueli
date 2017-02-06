@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Fira+Mono:400,500');
+
+body {
+    position: relative;
+    padding: 0;
+    margin: 0;
+
+    background: $background-color;
+    font-size: 16px;
+    font-family: 'Fira Sans', sans-serif;
+}
+
+input {
+    font-family: 'Fira Sans', sans-serif;
+    background: transparent;
+    color: $text-color;
+    outline: none;
+    border: none;
+    font-size: 3rem;
+    padding: 0 15px;
+    line-height: 100px;
+}
+
+ul {
+    position: absolute;
+    top: 100px;
+    width: 100%;
+    height: calc(100vh - 100px);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    li{
+        padding: 15px;
+        white-space: nowrap;
+
+        span {
+            display: block;
+            padding: 5px 0;
+
+            &.name {
+                color: $text-color;
+                font-size: 1.5rem;
+            }
+
+            &.exec-args {
+                color: $text-color-dim;
+                font-size: 1rem;
+            }
+        }
+
+        &.active {
+            background-color: $highlight-background-color;
+
+            span {
+                &.name {
+                    color: $highlight-text-color;
+                }
+
+                &.exec-args {
+                    color: $highlight-text-color-dim;
+                }
+            }
+        }
+    }
+}
+
+$scrollbar-size: 7px;
+$scrollbar-foreground-color: $scrollbar-color;
+$scrollbar-background-color: $scrollbar-background-color;
+
+::-webkit-scrollbar {
+    width: $scrollbar-size;
+    height: $scrollbar-size;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $scrollbar-foreground-color;
+}
+
+::-webkit-scrollbar-track {
+    background: $scrollbar-background-color;
+}
