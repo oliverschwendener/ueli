@@ -11,8 +11,8 @@ export default class ExecutionService {
     }
     
     openFileLocation(filePath) {        
-        let fileLocation = path.dirname(filePath);
-        let command = `start "" "${fileLocation}"`
+        filePath = path.win32.normalize(filePath)
+        let command = `start explorer.exe /select,"${filePath}"`
 
         exec(command, (err, stout, sterr) => {
             if (err) throw err

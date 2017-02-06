@@ -9,7 +9,8 @@ let vue = new Vue({
         userInput: '',
         focusOnInput: true,
         elements: [],
-        searchResult: []
+        searchResult: [],
+        theme: './css/osc-dark-blue.css'
     },
     methods: {
         init() {
