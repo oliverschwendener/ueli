@@ -9,19 +9,23 @@
 <body>
     <div id="root">
 
-        <link rel="stylesheet" :href="theme">
+        <link rel="stylesheet" :href="themePath">
 
         <input type="text" v-model="userInput" ref="input" v-on:keyDown="handleKeyPress" :autofocus="{ true: focusOnInput }">
+        <select v-model="theme">
+            <option>osc-dark-blue</option>
+            <option>atom-one-dark</option>
+        </select>
         <ul>
             <li v-for="item in searchResult" :class="{ 'active': item.isActive }">
                 <span class="name">{{ item.name }}</span>
-                <span class="exec-args">{{ item.execArgs }}</span>
+                <span class="exec-args">{{ item.execArg }}</span>
             </li>
         </ul>
 
     </div>
     <script src="./node_modules/vue/dist/vue.min.js"></script>
-    <script src="./js/program.js"></script>
+    <script src="./js/app.js"></script>
 </body>
 
 </html>

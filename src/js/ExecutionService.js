@@ -1,14 +1,22 @@
 import { exec } from 'child_process'
 import path from 'path'
 
-export default class ExecutionService {
-    execute(filePath) {
-        let args = `start "" "${filePath}"`
+import ProgramExecutor from './Executors/ProgramExecutor'
+import WebUrlExecutor from './Executors/WebUrlExecutor'
 
-        exec(args, (err, stdout, sterr) => {
-            if (err) throw err
-        })
+export default class ExecutionService {
+    constructor() {
+        this.executors = [
+            new ProgramExecutor(),
+            new WebUrlExecutor()
+        ]
     }
+
+    execute(execArgs) {
+        for (let executor of this.executors)
+            if (executor.isValid(execArgs))
+                executor.execute(execArgs)
+    }   
     
     openFileLocation(filePath) {        
         filePath = path.win32.normalize(filePath)

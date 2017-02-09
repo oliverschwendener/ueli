@@ -1,25 +1,18 @@
-import fs from 'fs'
 import path from 'path'
 
-import ExecutionService from './js/ExecutionService'
+import PluginManager from './js/PluginManager'
+let pluginManager = new PluginManager()
 
 let vue = new Vue({
     el: '#root',
     data: {
         userInput: '',
         focusOnInput: true,
-        elements: [],
         searchResult: [],
-        theme: './css/osc-dark-blue.css'
+        theme: 'osc-dark-blue',
+        themePath: './css/osc-dark-blue.css'
     },
     methods: {
-        init() {
-            getFilesRecursively('C:\\ProgramData\\Microsoft\\Windows\\Start Menu', this.appendToElements)
-            getFilesRecursively(`C:\\Users\\Oliver\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`, this.appendToElements)
-        },
-        appendToElements(data) {
-            this.elements.push(data)
-        },
         handleKeyPress(e) {
             if (e.key === 'Enter')
                 this.execute()
@@ -49,7 +42,6 @@ let vue = new Vue({
 
                     item.isActive = false
                     this.searchResult[iterator + 1].isActive = true
-                    console.log(this.searchResult[iterator + 1])
                     break
                 }
                 iterator++
@@ -88,80 +80,21 @@ let vue = new Vue({
             this.userInput = ''
         },
         execute() {
-            for (let item of this.searchResult)
-                if (item.isActive) {
-                    new ExecutionService().execute(item.execArgs)
-                    this.resetUserInput()
-                }
+            alert('Executing')
         },
         openFileLocation() {
-            for (let item of this.searchResult)
-                if (item.isActive)
-                    new ExecutionService().openFileLocation(item.execArgs)
+            alert('Open file location')
         }
     },
     watch: {
-        // Fire when user input changes
         userInput: function (val, oldVal) {
-            // return if userinput is empty or only whitespace
-            if (this.userInput.replace(' ', '').length === 0) {
-                this.searchResult = []
-                return
-            }
-
-            // get searchResult
-            let result = []
-
-            for (let element of this.elements) {
-                let appName = path.basename(element).replace('.lnk', '')
-                let weigth = getWeight(appName, this.userInput)
-
-                if (weigth > 0) {
-                    result.push({
-                        name: appName,
-                        weight: weigth,
-                        execArgs: element,
-                        isActive: false
-                    })
-                }
-            }
-
-            // Sort search result
-            let sortedResult = result.sort((a, b) => {
-                if (a.weight < b.weight) return 1
-                else if (a.weight > b.weight) return -1
-                else return 0
-            })
-
-            // Set first item to be active
-            if (sortedResult.length > 0)
-                sortedResult[0].isActive = true
-
-            this.searchResult = sortedResult
+            this.searchResult = pluginManager.getSearchResult(val)
+        },
+        theme: function(val, oldVal) {
+            this.themePath = `./css/${this.theme}.css`
         }
     }
 })
-
-vue.init()
-
-function getFilesRecursively(folder, success) {
-    fs.readdir(folder, (err, data) => {
-        if (err) throw err
-
-        for (let file of data) {
-            file = `${folder}/${file}`
-
-            fs.lstat(file, (err, stats) => {
-                if (err) throw err
-
-                if (stats.isDirectory() && !stats.isSymbolicLink())
-                    getFilesRecursively(file, success)
-                else if (stats.isFile())
-                    success(file)
-            })
-        }
-    })
-}
 
 function getWeight(string, substring) {
     let weight = 0

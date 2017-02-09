@@ -34,7 +34,10 @@ ul {
     overflow-y: scroll;
 
     li{
+        max-width: 100vw;
         padding: 15px;
+        overflow: hidden; 
+        text-overflow: ellipsis;
         white-space: nowrap;
 
         span {
