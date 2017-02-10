@@ -1,18 +1,21 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700');
 @import url('https://fonts.googleapis.com/css?family=Fira+Mono:400,500');
 
-body {
-    position: relative;
-    padding: 0;
-    margin: 0;
-
-    background: $background-color;
-    font-size: 16px;
+@mixin font() {
     font-family: 'Fira Sans', sans-serif;
 }
 
+body {
+    @include font();
+    position: relative;
+    padding: 0;
+    margin: 0;
+    background: $background-color;
+    font-size: 16px;
+}
+
 input {
-    font-family: 'Fira Sans', sans-serif;
+    @include font();
     background: transparent;
     color: $text-color;
     outline: none;
@@ -69,6 +72,16 @@ ul {
             }
         }
     }
+}
+
+select {
+    @include font();
+    font-size: 1.25rem;
+    background-color: $highlight-background-color;
+    color: $highlight-text-color;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
 }
 
 $scrollbar-size: 7px;
