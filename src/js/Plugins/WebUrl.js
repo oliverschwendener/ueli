@@ -1,5 +1,8 @@
 import open from 'open'
 
+import ConfigManager from './../ConfigManager'
+let configManager = new ConfigManager()
+
 export default class WebUrl {
     isValid(url) {
         if (url.endsWith('.exe'))

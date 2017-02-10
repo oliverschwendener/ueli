@@ -1,10 +1,12 @@
 import InstalledPrograms from './Plugins/InstalledPrograms'
 import WebUrl from './Plugins/WebUrl'
 import WebSearch from './Plugins/WebSearch'
+import CustomShortcuts from './Plugins/CustomShortcuts'
 
 export default class PluginManager {
     constructor() {
         this.plugins = [
+            new CustomShortcuts(),
             new InstalledPrograms(),
             new WebUrl(),
             new WebSearch()

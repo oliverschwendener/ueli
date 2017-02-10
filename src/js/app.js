@@ -2,8 +2,11 @@ import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
 
+import ConfigManager from './js/ConfigManager'
 import PluginManager from './js/PluginManager'
+
 let pluginManager = new PluginManager()
+let configManager = new ConfigManager()
 
 let vue = new Vue({
     el: '#root',
@@ -11,8 +14,8 @@ let vue = new Vue({
         userInput: '',
         focusOnInput: true,
         searchResult: [],
-        theme: 'osc-dark-blue',
-        themePath: './css/osc-dark-blue.css'
+        colorTheme: configManager.getConfig().colorTheme,
+        colorThemePath: `./css/${configManager.getConfig().colorTheme}.css`
     },
     methods: {
         handleKeyPress(e) {
@@ -111,8 +114,12 @@ let vue = new Vue({
             if (this.searchResult.length > 0)
                 this.searchResult[0].isActive = true
         },
-        theme: function (val, oldVal) {
-            this.themePath = `./css/${this.theme}.css`
+        colorTheme: function (val, oldVal) {
+            this.colorThemePath = `./css/${this.colorTheme}.css`
+
+            let config = configManager.getConfig()
+            config.colorTheme = this.colorTheme
+            configManager.setConfig(config)
         }
     }
 })

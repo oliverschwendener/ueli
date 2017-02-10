@@ -2,14 +2,13 @@ import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
 import levenshtein from 'fast-levenshtein'
+import ConfigManager from './../ConfigManager'
+import Favorites from './Favorites'
 
 export default class InstalledPrograms {
     constructor() {
-        this.folders = [
-            'C:\\ProgramData\\Microsoft\\Windows\\Start Menu',
-            `${process.env.HOME}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`,
-            `${process.env.HOME}\\Desktop`
-        ]
+        this.folders = new ConfigManager().getConfig().folders
+        this.favorites = new Favorites().getFavorites()
 
         this.programs = []
 
@@ -29,6 +28,7 @@ export default class InstalledPrograms {
     getSearchResult(userInput) {
         let result = []
 
+        // add programs with weight
         for (let program of this.programs) {
             if (stringContainsSubstring(program, userInput)) {
                 let weight = getWeight(program, userInput)
@@ -42,11 +42,22 @@ export default class InstalledPrograms {
             }
         }
 
+        // list favorite item higher
+        if (this.favorites.length > 0)
+            for (let item of result)
+                for (let favorite of this.favorites)
+                    if (favorite.path === item.execArg)
+                        item.weight = item.weight - (favorite.counter * 2)
+
+        // sort desc result by weigth
         let sortedResult = result.sort((a, b) => {
             if (a.weight > b.weight) return 1
             if (a.weight < b.weight) return -1
             return 0
         })
+
+        for (let i of sortedResult)
+            console.log(i.name, i.weight)
 
         return sortedResult
     }
@@ -55,7 +66,11 @@ export default class InstalledPrograms {
         let args = `start "" "${filePath}"`
 
         exec(args, (err, stdout, sterr) => {
-            if (err) throw err
+            if (err)
+                throw err
+            else {
+                new Favorites().addFavorite(filePath)
+            }
         })
     }
 }
@@ -64,9 +79,12 @@ function stringContainsSubstring(stringToSearch, substring) {
     let wordsOfSubstring = splitStringToArray(substring.toLowerCase())
     stringToSearch = stringToSearch.split(' ').join('').toLowerCase()
 
-    for (let word of wordsOfSubstring)
-        if (stringToSearch.indexOf(word) === -1)
+    for (let word of wordsOfSubstring) {
+        if (word.replace(' ', '') === '')
+            continue
+        else if (stringToSearch.indexOf(word) === -1)
             return false
+    }   
 
     return true
 }
@@ -89,7 +107,7 @@ function getWeight(programNameWithExtension, userInput) {
     return getAvg(results)
 }
 
-function getAvg(numbers) {  
+function getAvg(numbers) {
     let sum = 0
 
     for (let value of numbers)

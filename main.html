@@ -9,10 +9,10 @@
 <body>
     <div id="root">
 
-        <link rel="stylesheet" :href="themePath">
+        <link rel="stylesheet" :href="colorThemePath">
 
         <input type="text" v-model="userInput" ref="input" v-on:keyDown="handleKeyPress" :autofocus="{ true: focusOnInput }">
-        <select v-model="theme">
+        <select v-model="colorTheme">
             <option>atom-one-dark</option>
             <option>osc-dark-blue</option>
             <option>osc-dark-green</option>

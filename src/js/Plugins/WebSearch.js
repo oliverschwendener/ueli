@@ -1,19 +1,9 @@
 import open from 'open'
+import ConfigManager from './../ConfigManager'
 
 export default class WebSearch {
     constructor() {
-        this.webSearches = [
-            {
-                name: 'Google',
-                prefix: 'g',
-                url: 'https://google.com/search?q='
-            },
-            {
-                name: 'DuckDuckGo',
-                prefix: 'd',
-                url: 'https://duckduckgo.com/?q='
-            }
-        ]
+        this.webSearches = new ConfigManager().getConfig().webSearches
     }
 
     isValid(userInput) {
