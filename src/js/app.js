@@ -1,4 +1,6 @@
+import fs from 'fs'
 import path from 'path'
+import { exec } from 'child_process'
 
 import PluginManager from './js/PluginManager'
 let pluginManager = new PluginManager()
@@ -18,7 +20,7 @@ let vue = new Vue({
                 this.execute()
 
             else if (e.ctrlKey && e.key === 'o')
-                this.openFileLocation()                
+                this.openFileLocation()
 
             else if (e.shiftKey && e.key === 'Tab') {
                 e.preventDefault()
@@ -76,42 +78,36 @@ let vue = new Vue({
             let lastIndex = this.searchResult.length - 1
             this.searchResult[lastIndex].isActive = true
         },
-        resetUserInput () {
+        resetUserInput() {
             this.userInput = ''
         },
         execute() {
-            alert('Executing')
+            pluginManager.execute(this.userInput)
+            this.resetUserInput()
         },
         openFileLocation() {
-            alert('Open file location')
+            if (this.searchResult.length === 0)
+                return
+
+            let filePath = this.searchResult[0].execArg
+
+            if (filePath === undefined || !fs.existsSync(filePath))
+                return
+            else
+                exec(`start explorer.exe /select,"${path.win32.normalize(filePath)}"`, (err, stout, sterr) => {
+                    if (err) throw err
+                })
         }
     },
     watch: {
         userInput: function (val, oldVal) {
             this.searchResult = pluginManager.getSearchResult(val)
+
+            if (this.searchResult.length > 0)
+                this.searchResult[0].isActive = true
         },
-        theme: function(val, oldVal) {
+        theme: function (val, oldVal) {
             this.themePath = `./css/${this.theme}.css`
         }
     }
 })
-
-function getWeight(string, substring) {
-    let weight = 0
-    let strings = string.split(' ')
-    let substrings = substring.split(' ')
-
-    for (let word of strings) {
-        if (word.length === 0)
-            continue
-
-        for (let word2 of substrings) {
-            if (word2.length === 0)
-                continue
-            else if (word.toLowerCase().indexOf(word2.toLowerCase()) > -1)
-                weight++
-        }
-    }
-
-    return weight
-}

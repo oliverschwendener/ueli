@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
+import levenshtein from 'fast-levenshtein';
 
 export default class InstalledPrograms {
     constructor() {
@@ -28,18 +29,26 @@ export default class InstalledPrograms {
     getSearchResult(userInput) {
         let result = []
 
-        for (let program of this.programs)
-            if (program.indexOf(userInput) > -1)
-                result.push({
-                    name: path.basename(program),
-                    execArg: program,
-                    isActive: false
-                })
+        for (let program of this.programs) {
+            if (stringContainsSubstring(program, userInput)) {
+                let weight = getWeight(program, userInput)
+                if (weight > 0)
+                    result.push({
+                        name: path.basename(program),
+                        execArg: program,
+                        weight: weight,
+                        isActive: false
+                    })
+            }
+        }
 
-        if (result.length > 0)
-            result[0].isActive = true
+        let sortedResult = result.sort((a, b) => {
+            if (a.weight > b.weight) return 1
+            if (a.weight < b.weight) return -1
+            return 0
+        })
 
-        return result
+        return sortedResult
     }
 
     execute(filePath) {
@@ -49,6 +58,54 @@ export default class InstalledPrograms {
             if (err) throw err
         })
     }
+}
+
+function stringContainsSubstring(stringToSearch, substring) {
+    let wordsOfSubstring = splitStringToArray(substring.toLowerCase())
+    stringToSearch = stringToSearch.split(' ').join('').toLowerCase()
+
+    for (let word of wordsOfSubstring)
+        if (stringToSearch.indexOf(word) === -1)
+            return false
+
+    return true
+}
+
+function getWeight(programNameWithExtension, userInput) {
+    let results = []
+    let stringToSearchWords = splitStringToArray(programNameWithExtension)
+    let valueWords = splitStringToArray(userInput)
+
+    for (let word of stringToSearchWords)
+        for (let value of valueWords) {
+            let levenshteinDistance = levenshtein.get(word, value)
+            let result = word.startsWith(value)
+                ? (levenshteinDistance / 4)
+                : levenshteinDistance
+
+            results.push(result)
+        }
+
+    let avgWeigth = getAvg(results)
+
+    return avgWeigth
+}
+
+function getAvg(numbers) {
+    let sum = 0
+
+    for (let value of numbers)
+        sum = sum + value
+
+    return sum / numbers.length
+}
+
+function stringIsEmptyOrWhitespaces(string) {
+    return (/^\s+$/.test(string))
+}
+
+function splitStringToArray(string) {
+    return string.split(/\s+/)
 }
 
 function getFilesRecursively(folder, success) {

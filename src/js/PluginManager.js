@@ -1,9 +1,11 @@
 import InstalledPrograms from './Plugins/InstalledPrograms'
+import WebUrl from './Plugins/WebUrl'
 
 export default class PluginManager {
     constructor() {
         this.plugins = [
-            new InstalledPrograms()
+            new InstalledPrograms(),
+            new WebUrl()
         ]
     }
 
