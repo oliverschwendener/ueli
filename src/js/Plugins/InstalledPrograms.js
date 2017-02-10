@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
-import levenshtein from 'fast-levenshtein';
+import levenshtein from 'fast-levenshtein'
 
 export default class InstalledPrograms {
     constructor() {
@@ -34,7 +34,7 @@ export default class InstalledPrograms {
                 let weight = getWeight(program, userInput)
                 if (weight > 0)
                     result.push({
-                        name: path.basename(program),
+                        name: path.basename(program).replace('.lnk', ''),
                         execArg: program,
                         weight: weight,
                         isActive: false
@@ -86,12 +86,10 @@ function getWeight(programNameWithExtension, userInput) {
             results.push(result)
         }
 
-    let avgWeigth = getAvg(results)
-
-    return avgWeigth
+    return getAvg(results)
 }
 
-function getAvg(numbers) {
+function getAvg(numbers) {  
     let sum = 0
 
     for (let value of numbers)
