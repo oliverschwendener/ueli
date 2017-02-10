@@ -17,9 +17,7 @@ export default class WebUrl {
     execute(url) {
         url = addHttpToUrl(url)
 
-        open(url, error => {
-            if (error) throw error
-        })
+        open(url)
     }
 
     getSearchResult(userInput) {

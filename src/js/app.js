@@ -82,8 +82,13 @@ let vue = new Vue({
             this.userInput = ''
         },
         execute() {
-            pluginManager.execute(this.userInput)
-            this.resetUserInput()
+            if (this.searchResult.length > 0) {
+                for (let item of this.searchResult)
+                    if (item.isActive)
+                        pluginManager.execute(this.userInput, item.execArg)
+                
+                this.resetUserInput()
+            }
         },
         openFileLocation() {
             if (this.searchResult.length === 0)

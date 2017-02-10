@@ -1,11 +1,13 @@
 import InstalledPrograms from './Plugins/InstalledPrograms'
 import WebUrl from './Plugins/WebUrl'
+import WebSearch from './Plugins/WebSearch'
 
 export default class PluginManager {
     constructor() {
         this.plugins = [
             new InstalledPrograms(),
-            new WebUrl()
+            new WebUrl(),
+            new WebSearch()
         ]
     }
 
@@ -17,10 +19,10 @@ export default class PluginManager {
         return false
     }
 
-    execute(args) {
+    execute(userInput, execArg) {
         for (let plugin of this.plugins)
-            if (plugin.isValid(args))
-                plugin.execute(args)
+            if (plugin.isValid(userInput))
+                plugin.execute(execArg)
     }
 
     getSearchResult(args) {
