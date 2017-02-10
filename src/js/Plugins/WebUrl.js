@@ -24,7 +24,7 @@ export default class WebUrl {
 
     getSearchResult(userInput) {
         return [{
-            name: `Open default web browser: ${userInput}`,
+            name: `Open default web browser`,
             execArg: addHttpToUrl(userInput)
         }]
     }
