@@ -1,11 +1,11 @@
-import electron from 'electron';
+import electron from 'electron'
 
-let app = electron.app;
-let BrowserWindow = electron.BrowserWindow;
-let globalShortcut = electron.globalShortcut;
-let ipcMain = electron.ipcMain;
+let app = electron.app
+let BrowserWindow = electron.BrowserWindow
+let globalShortcut = electron.globalShortcut
+let ipcMain = electron.ipcMain
 
-let mainWindow = null;
+let mainWindow = null
 
 let mainWindowOptions = {
   width: 960,
@@ -15,47 +15,47 @@ let mainWindowOptions = {
   skipTaskbar: true,
   show: false,
   icon: 'build/icon.ico'
-};
+}
 
-let mainWindowHtml = `file://${__dirname}/../main.html`;
+let mainWindowHtml = `file://${__dirname}/../main.html`
 
 app.on('window-all-closed', function () {
   if (process.platform != 'darwin') {
-    app.quit();
+    app.quit()
   }
-});
+})
 
 app.on('ready', () => {
-  mainWindow = new BrowserWindow(mainWindowOptions);
+  mainWindow = new BrowserWindow(mainWindowOptions)
 
-  mainWindow.loadURL(mainWindowHtml);
-  //mainWindow.webContents.openDevTools();
+  mainWindow.loadURL(mainWindowHtml)
+  //mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
+    mainWindow = null
+  })
 
   mainWindow.on('blur', (event, arg) => {
     if (mainWindow.isVisible())
-      mainWindow.hide();
-  });
+      mainWindow.hide()
+  })
 
   ipcMain.on('hide-main-window', (event, arg) => {
-    mainWindow.hide();
-  });
+    mainWindow.hide()
+  })
 
   ipcMain.on('close-main-window', () => {
-    app.quit();
-  });
+    app.quit()
+  })
 
   ipcMain.on('reload-window', (event, arg) => {
-    mainWindow.reload();
-  });
+    mainWindow.reload()
+  })
 
   globalShortcut.register('alt+space', () => {
     if (mainWindow.isVisible())
-      mainWindow.hide();
+      mainWindow.hide()
     else
-      mainWindow.show();
-  });
-});
+      mainWindow.show()
+  })
+})
