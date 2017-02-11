@@ -65,9 +65,8 @@ export default class InstalledPrograms {
         exec(args, (err, stdout, sterr) => {
             if (err)
                 throw err
-            else {
+            else
                 new FavoritesManager().addFavorite(filePath)
-            }
         })
     }
 }
