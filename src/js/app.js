@@ -1,13 +1,14 @@
 import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
+import { ipcRenderer } from 'electron'
 
 import ConfigManager from './js/ConfigManager'
 import PluginManager from './js/PluginManager'
 import HistoryManager from './js/HistoryManager'
 
-let pluginManager = new PluginManager()
 let configManager = new ConfigManager()
+let pluginManager = new PluginManager()
 let historyManager = new HistoryManager()
 
 let vue = new Vue({
@@ -17,6 +18,8 @@ let vue = new Vue({
         focusOnInput: true,
         searchResult: [],
         executeOutput: '',
+        hideExecuteOutput: true,
+        hideConfig: true,
         colorTheme: configManager.getConfig().colorTheme,
         colorThemePath: `./css/${configManager.getConfig().colorTheme}.css`
     },
@@ -100,9 +103,11 @@ let vue = new Vue({
         },
         appendExecuteOutput(output) {
             this.executeOutput += output
+            this.hideExecuteOutput = false
         },
         resetExecuteOutput() {
             this.executeOutput = ''
+            this.hideExecuteOutput = true
         },
         execute() {
             this.resetExecuteOutput()
@@ -135,8 +140,10 @@ let vue = new Vue({
         userInput: function (val, oldVal) {
             this.searchResult = pluginManager.getSearchResult(val)
 
-            if (this.searchResult.length > 0)
+            if (this.searchResult.length > 0) {
                 this.searchResult[0].isActive = true
+                this.hideConfig = true
+            }
 
             this.resetExecuteOutput()
         },
@@ -148,4 +155,8 @@ let vue = new Vue({
             configManager.setConfig(config)
         }
     }
+})
+
+ipcRenderer.on('show-config', () => {
+    vue.hideConfig = false
 })

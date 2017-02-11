@@ -16,6 +16,7 @@ body {
     margin: 0;
     background: $background-color;
     font-size: 16px;
+    color: $text-color;
 }
 
 input {
@@ -33,7 +34,7 @@ ul {
     position: absolute;
     top: 100px;
     width: 100%;
-    height: calc(100vh - 100px);
+    max-height: calc(100vh - 100px);
     list-style: none;
     padding: 0;
     margin: 0;
@@ -77,29 +78,40 @@ ul {
     }
 }
 
-select {
-    @include font-sans();
-    font-size: 1.25rem;
-    background-color: $highlight-background-color;
-    color: $highlight-text-color;
-    border: none;
-    outline: none;
-    padding: 5px 15px;
-    display: none;
-}
-
 div.execute-output {
     position: absolute;
     top: 100px;
     width: 100%;
-    height: calc(100vh - 100px);
+    max-height: calc(100vh - 100px);
     overflow-y: scroll;
 
     pre {
         @include font-mono();
-        color: $text-color;
         padding: 30px;
+        color: $text-color;
     }
+}
+
+div.config {
+    position: absolute;
+    top: 100px;
+    width: 100%;
+    max-height: calc(100vh - 100px);
+    overflow-y: scroll;
+
+    select {
+        @include font-sans();
+        font-size: 1.25rem;
+        background-color: $highlight-background-color;
+        color: $highlight-text-color;
+        border: none;
+        outline: none;
+        padding: 5px 15px;
+    }
+}
+
+.hidden {
+    display: none;
 }
 
 $scrollbar-size: 7px;

@@ -13,10 +13,7 @@ export default class EzrCommands {
                 command: `${commandPrefix}:config`,
                 description: 'Edit configuration',
                 execute() {
-                    exec(`start "" "${new ConfigManager().getConfigFilePath()}"`, (err, stdout, sterr) => {
-                        if (err)
-                            throw err
-                    })
+                    vue.hideConfig = false
                 }
             },
             {
@@ -31,6 +28,14 @@ export default class EzrCommands {
                 description: 'Exit electronizr',
                 execute() {
                     ipcRenderer.send('close-main-window')
+                }
+            },
+            {
+                command: `${commandPrefix}:reset`,
+                description: 'Reset electronizr configuration to default',
+                execute() {
+                    new ConfigManager().resetConfigToDefault()
+                    ipcRenderer.send('reload-window')
                 }
             }
         ]

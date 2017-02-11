@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    
+</head>
+
+<body>
+
+    <div id="root">
+
+        <link rel="stylesheet" :href="colorThemePath">
+
+        <input type="text" v-model="userInput" ref="input" v-on:keyDown="handleKeyPress" :autofocus="{ true: focusOnInput }">
+        <select v-model="colorTheme">
+            <option>atom-one-dark</option>
+            <option>osc-dark-blue</option>
+            <option>osc-dark-green</option>
+            <option>osc-light-blue</option>
+            <option>osc-light-green</option>
+        </select>
+        <div class="search-result">
+            <ul>
+                <li v-for="item in searchResult" :class="{ 'active': item.isActive }">
+                    <span class="name">{{ item.name }}</span>
+                    <span class="exec-args">{{ item.execArg }}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="execute-output">
+            <pre>{{ executeOutput }}</pre>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

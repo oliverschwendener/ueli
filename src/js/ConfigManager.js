@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-let configFilePath = `${process.env.HOME}\\ezr_config.json`
+let configFilePath = `${process.env.USERPROFILE}\\ezr_config.json`
 
 export default class ConfigManager {
     constructor() {
@@ -28,6 +28,10 @@ export default class ConfigManager {
     getMissingConfigFileMessage() {
         return `There is no config file (${configFilePath})`
     }
+
+    resetConfigToDefault() {
+        this.setConfig(getDefaultConfig())
+    }
 }
 
 function getDefaultConfig() {
@@ -35,8 +39,8 @@ function getDefaultConfig() {
         colorTheme: 'osc-dark-blue',
         folders: [
             `C:\\ProgramData\\Microsoft\\Windows\\Start Menu`,
-            `${process.env.HOME}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`,
-            `${process.env.HOME}\\Desktop`
+            `${process.env.USERPROFILE}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`,
+            `${process.env.USERPROFILE}\\Desktop`
         ],
         webSearches: [
             {
