@@ -4,9 +4,10 @@ let configFilePath = `${process.env.HOME}\\ezr_config.json`
 
 export default class ConfigManager {
     constructor() {
-        this.config = fs.existsSync(configFilePath)
-            ? getConfigFromConfigFile()
-            : getDefaultConfig()
+        if (!fs.existsSync(configFilePath))
+            fs.writeFileSync(configFilePath, JSON.stringify(getDefaultConfig()), 'utf-8')
+
+        this.config = getConfigFromConfigFile()
     }
 
     getConfig() {
@@ -31,6 +32,7 @@ export default class ConfigManager {
 
 function getDefaultConfig() {
     return {
+        colorTheme: 'osc-dark-blue',
         folders: [
             `C:\\ProgramData\\Microsoft\\Windows\\Start Menu`,
             `${process.env.HOME}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`,

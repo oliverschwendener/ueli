@@ -4,9 +4,11 @@ import { exec } from 'child_process'
 
 import ConfigManager from './js/ConfigManager'
 import PluginManager from './js/PluginManager'
+import HistoryManager from './js/HistoryManager'
 
 let pluginManager = new PluginManager()
 let configManager = new ConfigManager()
+let historyManager = new HistoryManager()
 
 let vue = new Vue({
     el: '#root',
@@ -14,6 +16,7 @@ let vue = new Vue({
         userInput: '',
         focusOnInput: true,
         searchResult: [],
+        executeOutput: '',
         colorTheme: configManager.getConfig().colorTheme,
         colorThemePath: `./css/${configManager.getConfig().colorTheme}.css`
     },
@@ -33,6 +36,16 @@ let vue = new Vue({
             else if (e.key === 'Tab') {
                 e.preventDefault();
                 this.selectNext()
+            }
+
+            else if (e.key === 'ArrowUp') {
+                e.preventDefault()
+                this.userInput = historyManager.getPrevious()
+            }
+
+            else if (e.key === 'ArrowDown') {
+                e.preventDefault()
+                this.userInput = historyManager.getNext()
             }
         },
         selectNext() {
@@ -84,11 +97,21 @@ let vue = new Vue({
         resetUserInput() {
             this.userInput = ''
         },
+        appendExecuteOutput(output) {
+            this.executeOutput += output
+        },
+        resetExecuteOutput() {
+            this.executeOutput = ''
+        },
         execute() {
+            this.resetExecuteOutput()
+
             if (this.searchResult.length > 0) {
                 for (let item of this.searchResult)
-                    if (item.isActive)
-                        pluginManager.execute(this.userInput, item.execArg)
+                    if (item.isActive) {
+                        pluginManager.execute(this.userInput, item.execArg, this.appendExecuteOutput)
+                        historyManager.addItem(this.userInput)
+                    }
                 
                 this.resetUserInput()
             }
@@ -113,6 +136,8 @@ let vue = new Vue({
 
             if (this.searchResult.length > 0)
                 this.searchResult[0].isActive = true
+
+            this.resetExecuteOutput()
         },
         colorTheme: function (val, oldVal) {
             this.colorThemePath = `./css/${this.colorTheme}.css`

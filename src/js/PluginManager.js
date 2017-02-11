@@ -2,6 +2,7 @@ import InstalledPrograms from './Plugins/InstalledPrograms'
 import WebUrl from './Plugins/WebUrl'
 import WebSearch from './Plugins/WebSearch'
 import CustomShortcuts from './Plugins/CustomShortcuts'
+import CommandLine from './Plugins/CommandLine'
 
 export default class PluginManager {
     constructor() {
@@ -9,7 +10,8 @@ export default class PluginManager {
             new CustomShortcuts(),
             new InstalledPrograms(),
             new WebUrl(),
-            new WebSearch()
+            new WebSearch(),
+            new CommandLine()
         ]
     }
 
@@ -21,10 +23,10 @@ export default class PluginManager {
         return false
     }
 
-    execute(userInput, execArg) {
+    execute(userInput, execArg, callback) {
         for (let plugin of this.plugins)
             if (plugin.isValid(userInput))
-                plugin.execute(execArg)
+                plugin.execute(execArg, callback)
     }
 
     getSearchResult(args) {

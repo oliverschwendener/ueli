@@ -56,9 +56,6 @@ export default class InstalledPrograms {
             return 0
         })
 
-        for (let i of sortedResult)
-            console.log(i.name, i.weight)
-
         return sortedResult
     }
 

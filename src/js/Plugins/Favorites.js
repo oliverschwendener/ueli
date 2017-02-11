@@ -1,21 +1,21 @@
 import fs from 'fs'
 
 import ConfigManager from './../ConfigManager'
-let configManager = new ConfigManager()
-let config = configManager.getConfig()
 
 export default class Favorites {
     constructor() {
-        this.favorites = config.favorites
+        this.favorites = new ConfigManager().getConfig().favorites
     }
 
     addFavorite(filePath) {
+        this.favorites = new ConfigManager().getConfig().favorites
+
         let itemAlreadyExists = false
 
         for (let favorite of this.favorites)
             if (favorite.path === filePath) {
-                favorite.counter++  
                 itemAlreadyExists = true
+                favorite.counter++  
             }
 
         if (!itemAlreadyExists)
@@ -24,13 +24,12 @@ export default class Favorites {
                 counter: 1
             })
 
+        let config = new ConfigManager().getConfig()
         config.favorites = this.favorites
-
         configManager.setConfig(config)
     }
 
     getFavorites() {
         return this.favorites
     }
-    
 }

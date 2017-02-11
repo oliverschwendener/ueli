@@ -19,14 +19,20 @@
             <option>osc-light-blue</option>
             <option>osc-light-green</option>
         </select>
-        <ul>
-            <li v-for="item in searchResult" :class="{ 'active': item.isActive }">
-                <span class="name">{{ item.name }}</span>
-                <span class="exec-args">{{ item.execArg }}</span>
-            </li>
-        </ul>
+        <div class="search-result">
+            <ul>
+                <li v-for="item in searchResult" :class="{ 'active': item.isActive }">
+                    <span class="name">{{ item.name }}</span>
+                    <span class="exec-args">{{ item.execArg }}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="execute-output">
+            <pre>{{ executeOutput }}</pre>
+        </div>
 
     </div>
+
     <script src="./node_modules/vue/dist/vue.min.js"></script>
     <script src="./js/app.js"></script>
 </body>

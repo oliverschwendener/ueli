@@ -1,12 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700');
 @import url('https://fonts.googleapis.com/css?family=Fira+Mono:400,500');
 
-@mixin font() {
+@mixin font-sans() {
     font-family: 'Fira Sans', sans-serif;
 }
 
+@mixin font-mono() {
+    font-family: 'Fira Mono', sans-serif;
+}
+
 body {
-    @include font();
+    @include font-sans();
     position: relative;
     padding: 0;
     margin: 0;
@@ -15,7 +19,7 @@ body {
 }
 
 input {
-    @include font();
+    @include font-sans();
     background: transparent;
     color: $text-color;
     outline: none;
@@ -33,7 +37,6 @@ ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    overflow-x: hidden;
     overflow-y: scroll;
 
     li{
@@ -75,13 +78,28 @@ ul {
 }
 
 select {
-    @include font();
+    @include font-sans();
     font-size: 1.25rem;
     background-color: $highlight-background-color;
     color: $highlight-text-color;
     border: none;
     outline: none;
     padding: 5px 15px;
+    display: none;
+}
+
+div.execute-output {
+    position: absolute;
+    top: 100px;
+    width: 100%;
+    height: calc(100vh - 100px);
+    overflow-y: scroll;
+
+    pre {
+        @include font-mono();
+        color: $text-color;
+        padding: 30px;
+    }
 }
 
 $scrollbar-size: 7px;
