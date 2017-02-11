@@ -48,7 +48,7 @@ app.on('ready', () => {
     app.quit()
   })
 
-  ipcMain.on('reload-window', (event, arg) => {
+  ipcMain.on('reload-window', () => {
     mainWindow.reload()
   })
 

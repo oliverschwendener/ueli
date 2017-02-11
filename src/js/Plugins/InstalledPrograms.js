@@ -3,12 +3,12 @@ import path from 'path'
 import { exec } from 'child_process'
 import levenshtein from 'fast-levenshtein'
 import ConfigManager from './../ConfigManager'
-import Favorites from './Favorites'
+import FavoritesManager from './../FavoritesManager'
 
 export default class InstalledPrograms {
     constructor() {
         this.folders = new ConfigManager().getConfig().folders
-        this.favorites = new Favorites().getFavorites()
+        this.favorites = new FavoritesManager().getFavorites()
 
         this.programs = []
 
@@ -66,7 +66,7 @@ export default class InstalledPrograms {
             if (err)
                 throw err
             else {
-                new Favorites().addFavorite(filePath)
+                new FavoritesManager().addFavorite(filePath)
             }
         })
     }

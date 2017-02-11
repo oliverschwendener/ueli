@@ -49,6 +49,7 @@ let vue = new Vue({
             }
         },
         selectNext() {
+            console.log(this.searchResult)
             let iterator = 0
             let maxIndex = this.searchResult.length - 1
             for (let item of this.searchResult) {

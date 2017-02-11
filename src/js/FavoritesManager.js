@@ -1,8 +1,8 @@
 import fs from 'fs'
 
-import ConfigManager from './../ConfigManager'
+import ConfigManager from './ConfigManager'
 
-export default class Favorites {
+export default class FavoritesManager {
     constructor() {
         this.favorites = new ConfigManager().getConfig().favorites
     }
