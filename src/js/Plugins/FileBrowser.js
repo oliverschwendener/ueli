@@ -43,7 +43,7 @@ function getResultFromDirectory(folderPath, userInput) {
     for (let file of files)
         result.push({
             name: path.basename(file),
-            execArg: `${folderPath}\\${file}`,
+            execArg: path.win32.normalize(`${folderPath}\\${file}`),
             weight: levenshtein.get(path.basename(file), userInput),
             isActive: false
         })
