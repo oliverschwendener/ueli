@@ -3,7 +3,7 @@ import path from 'path'
 import { exec } from 'child_process'
 import levenshtein from 'fast-levenshtein'
 
-export default class FilePath {
+export default class FileBrowser {
     isValid(filePath) {
         let regex = new RegExp(/[a-z]:[\\/]/ig)
         return regex.test(filePath) && (fs.existsSync(filePath) || fs.existsSync(path.dirname(filePath)))
@@ -43,7 +43,7 @@ function getResultFromDirectory(folderPath, userInput) {
     for (let file of files)
         result.push({
             name: path.basename(file),
-            execArg: file,
+            execArg: `${folderPath}\\${file}`,
             weight: levenshtein.get(path.basename(file), userInput),
             isActive: false
         })
