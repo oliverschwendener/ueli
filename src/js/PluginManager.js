@@ -4,6 +4,7 @@ import WebSearch from './Plugins/WebSearch'
 import CustomShortcuts from './Plugins/CustomShortcuts'
 import CommandLine from './Plugins/CommandLine'
 import EzrCommands from './Plugins/EzrCommands'
+import FilePath from './Plugins/FilePath'
 
 export default class PluginManager {
     constructor() {
@@ -13,7 +14,8 @@ export default class PluginManager {
             new WebUrl(),
             new WebSearch(),
             new CommandLine(),
-            new EzrCommands()
+            new EzrCommands(),
+            new FilePath
         ]
     }
 
