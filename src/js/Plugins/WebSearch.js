@@ -1,5 +1,6 @@
 import open from 'open'
 import ConfigManager from './../ConfigManager'
+import { ipcRenderer } from 'electron'
 
 export default class WebSearch {
     constructor() {
@@ -16,6 +17,7 @@ export default class WebSearch {
 
     execute(url) {
         open(url)
+        ipcRenderer.send('hide-main-window')
     }
 
     getSearchResult(userInput) {

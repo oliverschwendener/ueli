@@ -117,9 +117,8 @@ let vue = new Vue({
                     if (item.isActive) {
                         pluginManager.execute(this.userInput, item.execArg, this.appendExecuteOutput)
                         historyManager.addItem(this.userInput)
-                        ipcRenderer.send('hide-main-window')
                     }
-                
+
                 this.resetUserInput()
             }
         },

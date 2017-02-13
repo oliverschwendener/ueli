@@ -1,4 +1,5 @@
 import open from 'open'
+import { ipcRenderer } from 'electron'
 
 import ConfigManager from './../ConfigManager'
 let configManager = new ConfigManager()
@@ -19,8 +20,8 @@ export default class WebUrl {
 
     execute(url) {
         url = addHttpToUrl(url)
-
         open(url)
+        ipcRenderer.send('hide-main-window')
     }
 
     getSearchResult(userInput) {

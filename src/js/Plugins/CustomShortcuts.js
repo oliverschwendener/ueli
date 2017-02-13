@@ -1,5 +1,6 @@
 import path from 'path'
-import {exec} from 'child_process'
+import { exec } from 'child_process'
+import { ipcRenderer } from 'electron'
 
 import ConfigManager from './../ConfigManager'
 
@@ -21,6 +22,8 @@ export default class CustomShortcuts {
             if (err)
                 throw err
         })
+
+        ipcRenderer.send('hide-main-window')
     }
 
     getSearchResult(userInput) {

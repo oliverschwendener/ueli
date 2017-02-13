@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
+import { ipcRenderer } from 'electron'
 import levenshtein from 'fast-levenshtein'
 import ConfigManager from './../ConfigManager'
 import FavoritesManager from './../FavoritesManager'
@@ -66,8 +67,10 @@ export default class InstalledPrograms {
         exec(args, (err, stdout, sterr) => {
             if (err)
                 throw err
-            else
+            else {
                 new FavoritesManager().addFavorite(filePath)
+                ipcRenderer.send('hide-main-window')
+            }
         })
     }
 }
@@ -81,7 +84,7 @@ function stringContainsSubstring(stringToSearch, substring) {
             continue
         else if (stringToSearch.indexOf(word) === -1)
             return false
-    }   
+    }
 
     return true
 }
