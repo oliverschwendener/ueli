@@ -138,6 +138,11 @@ let vue = new Vue({
     },
     watch: {
         userInput: function (val, oldVal) {
+            if (val.replace(/\s/g, '').length === 0) {
+                this.searchResult = []
+                return
+            }
+
             this.searchResult = pluginManager.getSearchResult(val)
 
             if (this.searchResult.length > 0) {
