@@ -17,16 +17,18 @@ export default class InstalledPrograms {
             this.programs.push(file)
         }
 
+        this.searchResult = []
+
         for (let folder of this.folders)
             getFilesRecursively(folder, this.appendToPrograms)
     }
 
     isValid(userInput) {
-        let regex = new RegExp(/^([a-z0-9\ ])+$/, 'igm')
-        return regex.test(userInput)
+        this.searchResult = this.search(userInput)
+        return this.searchResult.length > 0
     }
 
-    getSearchResult(userInput) {
+    search(userInput) {
         let result = []
 
         // add programs with weight
@@ -59,6 +61,10 @@ export default class InstalledPrograms {
         })
 
         return sortedResult
+    }
+
+    getSearchResult(userInput) {
+        return this.searchResult
     }
 
     execute(filePath) {
