@@ -22,7 +22,8 @@ let vue = new Vue({
         hideConfig: true,
         config: configManager.getConfig(),
         colorThemePath: `./css/${configManager.getConfig().colorTheme}.css`,
-        newFolder: ''
+        newFolder: '',
+        newCustomShortcut: {}
     },
     methods: {
         handleKeyPress(e) {
@@ -136,19 +137,46 @@ let vue = new Vue({
                 })
         },
         addNewFolder() {
-            if (this.newFolder.replace(' ', '').length === 0)
+            if (this.newFolder.replace(' ', '').length === 0 || folderIsAlreadyInConfig(this.newFolder))
                 return
-                
+
             if (!fs.existsSync(this.newFolder))
                 alert('This file or folder does not exist')
-            else
+            else {
                 this.config.folders.push(this.newFolder)
+                this.newFolder = ''
+            }
         },
         removeFolder(folder) {
-            console.log(folder)
+            let folders = []
+
+            for (let item of this.config.folders)
+                if (item !== folder)
+                    folders.push(item)
+                
+            this.folders = folders
+        },
+        addNewCustomShortcut() {
+            if (this.newCustomShortcut.shortCut.replace(' ', '').length === 0
+            || this.newCustomShortcut.path.replace(' ', '').length === 0
+            || !fs.existsSync(this.newCustomShortcut.path))
+                return
+
+            this.config.customShortcuts.push(this.newCustomShortcut)
+            this.newCustomShortcut = {}
+        },
+        removeCustomShortcut(customShortcut) {
+            let customShortcuts = []
+
+            for (let item of this.config.customShortcuts)
+                if (item.shortCut !== customShortcut.shortCut && item.path !== customShortcut.path)
+                    customShortcuts.push(item)
+
+            this.config.customShortcuts = customShortcuts
         },
         saveConfig() {
             configManager.setConfig(this.config)
+            ipcRenderer.send('reload-window')
         }
     },
     watch: {
@@ -169,6 +197,14 @@ let vue = new Vue({
         }
     }
 })
+
+function folderIsAlreadyInConfig(folder) {
+    for (let item of vue.config.folders)
+        if(item.toLowerCase() === folder.toLowerCase())
+            return true
+
+    return false
+}
 
 function getActiveItem() {
     for (let item of vue.searchResult)

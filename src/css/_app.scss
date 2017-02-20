@@ -9,6 +9,10 @@
     font-family: 'Fira Mono', sans-serif;
 }
 
+@mixin hoverTransition() {
+    transition: all 150ms ease-in-out;
+}
+
 body {
     @include font-sans();
     position: relative;
@@ -19,8 +23,11 @@ body {
     color: $text-color;
 }
 
-input.user-input {
+input {
     @include font-sans();
+}
+
+input.user-input {
     background: transparent;
     color: $text-color;
     outline: none;
@@ -99,6 +106,23 @@ div.config {
     width: 100%;
     height: calc(100vh - 100px);
     overflow-y: scroll;
+    padding: 0 15px;
+    box-sizing: border-box;
+
+
+    div.config-item {
+        position: relative;
+        display: block;
+        margin-bottom: 30px;
+    }
+
+    i.action-button {
+        @include hoverTransition();
+        cursor: pointer;
+        &:hover{
+            color: $highlight-text-color;
+        }
+    }
 
     select {
         @include font-sans();
@@ -112,7 +136,7 @@ div.config {
 
     ul{
         list-style: none;
-        margin: 15px 0;
+        margin: 0;
         padding: 0;
 
         li {
@@ -121,6 +145,43 @@ div.config {
             color: $text-color;
             margin-bottom: 10px;
             padding: 0 15px;
+
+            i {
+                padding: 0 15px;
+            }
+        }
+    }
+
+    input.new-item {
+        background: $scrollbar-background-color;
+        color: $text-color;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        padding: 5px;
+    }
+
+    table {
+        text-align: left;
+        width: 100%;
+        
+        td {
+            padding: 5px;
+        }
+    }
+
+    button.save-config-button  {
+        @include hoverTransition();
+        cursor: pointer;
+        background: $highlight-background-color;
+        color: $highlight-text-color;
+        border: none;
+        width: 100%;
+        font-size: 1.25rem;
+        padding: 15px;
+
+        &:hover {
+            color: $text-color;            
         }
     }
 }
