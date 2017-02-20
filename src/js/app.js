@@ -140,7 +140,7 @@ let vue = new Vue({
         },
         addNewFolder() {
             if (this.newFolder.replace(' ', '').length === 0
-            || folderIsAlreadyInConfig(this.newFolder))
+                || folderIsAlreadyInConfig(this.newFolder))
                 return
 
             if (!fs.existsSync(this.newFolder))
@@ -156,13 +156,13 @@ let vue = new Vue({
             for (let item of this.config.folders)
                 if (item !== folder)
                     folders.push(item)
-                
+
             this.config.folders = folders
         },
         addNewCustomShortcut() {
             if (this.newCustomShortcut.shortCut.replace(' ', '').length === 0
-            || this.newCustomShortcut.path.replace(' ', '').length === 0
-            || !fs.existsSync(this.newCustomShortcut.path))
+                || this.newCustomShortcut.path.replace(' ', '').length === 0
+                || !fs.existsSync(this.newCustomShortcut.path))
                 return
 
             this.config.customShortcuts.push(this.newCustomShortcut)
@@ -182,16 +182,16 @@ let vue = new Vue({
 
             for (let item of this.config.webSearches)
                 if (item.name !== webSearch.name
-                && item.prefix !== webSearch.prefix
-                && item.url !== webSearch.url)
+                    && item.prefix !== webSearch.prefix
+                    && item.url !== webSearch.url)
                     webSearches.push(item)
 
             this.config.webSearches = webSearches
         },
         addNewWebSearch() {
             if (this.newWebSearch.name.replace(' ', '').length === 0
-            || this.newWebSearch.prefix.replace(' ', '').length === 0
-            || this.newWebSearch.url.replace(' ', '').length === 0)
+                || this.newWebSearch.prefix.replace(' ', '').length === 0
+                || this.newWebSearch.url.replace(' ', '').length === 0)
                 return
 
             if (webSearchAlreadyExists(this.newWebSearch))
@@ -227,11 +227,11 @@ let vue = new Vue({
 
             this.resetExecuteOutput()
         },
-        hideConfig: function(val, oldVal) {
+        hideConfig: function (val, oldVal) {
             if (!this.hideConfig)
-                this.config = new ConfigManager().getConfig()
+                this.config = configManager.getConfig()
         },
-        colorTheme: function(colorTheme, oldColortheme) {
+        colorTheme: function (colorTheme, oldColortheme) {
             this.config.colorTheme = colorTheme
             this.colorThemePath = `./css/${colorTheme}.css`
         }
@@ -241,8 +241,8 @@ let vue = new Vue({
 function webSearchAlreadyExists(webSearch) {
     for (let item of vue.config.webSearches)
         if (item.name.toLowerCase() === webSearch.name.toLowerCase()
-        && item.prefix === webSearch.prefix.toLowerCase()
-        && item.url.toLowerCase() === webSearch.url.toLowerCase())
+            && item.prefix === webSearch.prefix.toLowerCase()
+            && item.url.toLowerCase() === webSearch.url.toLowerCase())
             return true
 
     return false
@@ -250,7 +250,7 @@ function webSearchAlreadyExists(webSearch) {
 
 function folderIsAlreadyInConfig(folder) {
     for (let item of vue.config.folders)
-        if(item.toLowerCase() === folder.toLowerCase())
+        if (item.toLowerCase() === folder.toLowerCase())
             return true
 
     return false
