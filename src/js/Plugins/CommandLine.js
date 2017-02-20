@@ -9,16 +9,17 @@ export default class CommandLine {
 
     execute(execArg, callback, kill) {
         let items = execArg.split(' ')
+        let programName = items[0]
         let options = []
 
         for (let i = 0; i < items.length; i++) {
             if (i === 0)
                 continue
-
-            options.push(items[i])
+            else
+                options.push(items[i])
         }
 
-        let command = spawn(items[0], options)
+        let command = spawn(programName, options)
 
         command.stderr.on('data', (data) => {
             callback(data.toString())
@@ -41,11 +42,9 @@ export default class CommandLine {
     getSearchResult(userInput) {
         let command = userInput.replace(commandLinePrefix, '')
 
-        return [
-            {
+        return [{
                 name: `Execute ${command}`,
                 execArg: command
-            }
-        ]
+            }]
     }
 }
