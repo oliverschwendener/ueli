@@ -15,7 +15,7 @@ export default class FavoritesManager {
         for (let favorite of this.favorites)
             if (favorite.path === filePath) {
                 itemAlreadyExists = true
-                favorite.counter++  
+                favorite.counter++
             }
 
         if (!itemAlreadyExists)
@@ -25,11 +25,21 @@ export default class FavoritesManager {
             })
 
         let config = new ConfigManager().getConfig()
-        config.favorites = this.favorites
+        config.favorites = getSortedFavorites(this.favorites)
         configManager.setConfig(config)
     }
 
     getFavorites() {
-        return this.favorites
+        return getSortedFavorites(this.favorites)
     }
+}
+
+function getSortedFavorites(favorites) {
+    let sortedFavorites = favorites.sort((a, b) => {
+        if (a.counter < b.counter) return 1
+        if (a.counter > b.counter) return -1
+        return 0
+    })
+
+    return sortedFavorites
 }

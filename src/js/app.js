@@ -21,9 +21,11 @@ let vue = new Vue({
         hideExecuteOutput: true,
         hideConfig: true,
         config: configManager.getConfig(),
+        colorTheme: configManager.getConfig().colorTheme,
         colorThemePath: `./css/${configManager.getConfig().colorTheme}.css`,
         newFolder: '',
-        newCustomShortcut: {}
+        newCustomShortcut: {},
+        newWebSearch: {}
     },
     methods: {
         handleKeyPress(e) {
@@ -137,7 +139,8 @@ let vue = new Vue({
                 })
         },
         addNewFolder() {
-            if (this.newFolder.replace(' ', '').length === 0 || folderIsAlreadyInConfig(this.newFolder))
+            if (this.newFolder.replace(' ', '').length === 0
+            || folderIsAlreadyInConfig(this.newFolder))
                 return
 
             if (!fs.existsSync(this.newFolder))
@@ -154,7 +157,7 @@ let vue = new Vue({
                 if (item !== folder)
                     folders.push(item)
                 
-            this.folders = folders
+            this.config.folders = folders
         },
         addNewCustomShortcut() {
             if (this.newCustomShortcut.shortCut.replace(' ', '').length === 0
@@ -173,6 +176,35 @@ let vue = new Vue({
                     customShortcuts.push(item)
 
             this.config.customShortcuts = customShortcuts
+        },
+        removeWebSearch(webSearch) {
+            let webSearches = []
+
+            for (let item of this.config.webSearches)
+                if (item.name !== webSearch.name
+                && item.prefix !== webSearch.prefix
+                && item.url !== webSearch.url)
+                    webSearches.push(item)
+
+            this.config.webSearches = webSearches
+        },
+        addNewWebSearch() {
+            if (this.newWebSearch.name.replace(' ', '').length === 0
+            || this.newWebSearch.prefix.replace(' ', '').length === 0
+            || this.newWebSearch.url.replace(' ', '').length === 0)
+                return
+
+            if (webSearchAlreadyExists(this.newWebSearch))
+                return
+            else
+                this.config.webSearches.push(this.newWebSearch)
+        },
+        cleanUpFavorites() {
+            this.config.favorites = []
+        },
+        closeConfig() {
+            this.hideConfig = true
+            focusOnInput()
         },
         saveConfig() {
             configManager.setConfig(this.config)
@@ -194,9 +226,27 @@ let vue = new Vue({
             }
 
             this.resetExecuteOutput()
+        },
+        hideConfig: function(val, oldVal) {
+            if (!this.hideConfig)
+                this.config = new ConfigManager().getConfig()
+        },
+        colorTheme: function(colorTheme, oldColortheme) {
+            this.config.colorTheme = colorTheme
+            this.colorThemePath = `./css/${colorTheme}.css`
         }
     }
 })
+
+function webSearchAlreadyExists(webSearch) {
+    for (let item of vue.config.webSearches)
+        if (item.name.toLowerCase() === webSearch.name.toLowerCase()
+        && item.prefix === webSearch.prefix.toLowerCase()
+        && item.url.toLowerCase() === webSearch.url.toLowerCase())
+            return true
+
+    return false
+}
 
 function folderIsAlreadyInConfig(folder) {
     for (let item of vue.config.folders)
@@ -210,6 +260,10 @@ function getActiveItem() {
     for (let item of vue.searchResult)
         if (item.isActive)
             return item
+}
+
+function focusOnInput() {
+    document.getElementById('user-input').focus()
 }
 
 ipcRenderer.on('show-config', () => {

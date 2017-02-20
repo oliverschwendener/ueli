@@ -42,7 +42,7 @@ export default class EzrCommands {
     }
 
     isValid(userInput) {
-        return userInput.startsWith(commandPrefix)
+        return userInput.startsWith(`${commandPrefix}:`)
     }
 
     execute(execArg) {

@@ -108,17 +108,27 @@ div.config {
     overflow-y: scroll;
     padding: 0 15px;
     box-sizing: border-box;
+    padding-bottom:  30px;
 
 
     div.config-item {
         position: relative;
         display: block;
-        margin-bottom: 30px;
+    }
+
+    hr {
+        margin: 30px 0;
+        border-bottom: 1px solid transparentize($text-color, 0.99);
+    }
+
+    h3 {
+        color: $highlight-text-color;
     }
 
     i.action-button {
         @include hoverTransition();
         cursor: pointer;
+
         &:hover{
             color: $highlight-text-color;
         }
@@ -128,7 +138,7 @@ div.config {
         @include font-sans();
         font-size: 1.25rem;
         background-color: $highlight-background-color;
-        color: $highlight-text-color;
+        color: $text-color;
         border: none;
         outline: none;
         padding: 5px 15px;
@@ -164,24 +174,27 @@ div.config {
     table {
         text-align: left;
         width: 100%;
-        
+
         td {
             padding: 5px;
         }
+
+        input.new-item {
+            width: 100%;
+        }
     }
 
-    button.save-config-button  {
+    button  {
         @include hoverTransition();
         cursor: pointer;
         background: $highlight-background-color;
-        color: $highlight-text-color;
+        color: $text-color;            
         border: none;
-        width: 100%;
         font-size: 1.25rem;
         padding: 15px;
 
         &:hover {
-            color: $text-color;            
+            color: $highlight-text-color;
         }
     }
 }
