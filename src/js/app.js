@@ -126,7 +126,11 @@ let vue = new Vue({
             if (this.searchResult.length === 0)
                 return
 
-            let filePath = this.searchResult[0].execArg
+            let filePath = ''
+
+            for (let item of this.searchResult)
+                if (item.isActive)
+                    filePath = item.execArg
 
             if (filePath === undefined || !fs.existsSync(filePath))
                 return
