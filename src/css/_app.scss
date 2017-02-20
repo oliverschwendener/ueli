@@ -19,7 +19,7 @@ body {
     color: $text-color;
 }
 
-input {
+input.user-input {
     @include font-sans();
     background: transparent;
     color: $text-color;
@@ -31,7 +31,7 @@ input {
     width: 100vw;
 }
 
-ul {
+ul.search-result-list {
     position: absolute;
     top: 100px;
     width: 100%;
@@ -97,7 +97,7 @@ div.config {
     position: absolute;
     top: 100px;
     width: 100%;
-    max-height: calc(100vh - 100px);
+    height: calc(100vh - 100px);
     overflow-y: scroll;
 
     select {
@@ -108,6 +108,20 @@ div.config {
         border: none;
         outline: none;
         padding: 5px 15px;
+    }
+
+    ul{
+        list-style: none;
+        margin: 15px 0;
+        padding: 0;
+
+        li {
+            position: relative;
+            background: transparent;
+            color: $text-color;
+            margin-bottom: 10px;
+            padding: 0 15px;
+        }
     }
 }
 

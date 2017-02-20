@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css">
     <title>electronizr</title>
 </head>
 
@@ -11,10 +12,10 @@
 
         <link rel="stylesheet" :href="colorThemePath">
 
-        <input type="text" v-model="userInput" ref="input" v-on:keyDown="handleKeyPress" :autofocus="{ true: focusOnInput }">
+        <input class="user-input" type="text" v-model="userInput" ref="input" v-on:keyDown="handleKeyPress" :autofocus="{ true: focusOnInput }">
 
         <div class="search-result">
-            <ul>
+            <ul class="search-result-list">
                 <li v-for="item in searchResult" :class="{ 'active': item.isActive }">
                     <span class="name">{{ item.name }}</span>
                     <span class="exec-args">{{ item.execArg }}</span>
@@ -28,13 +29,22 @@
 
         <div class="config" :class="{ 'hidden' : hideConfig }">
             <label>Color Theme</label>
-            <select v-model="colorTheme">
+            <select v-model="config.colorTheme">
                 <option>atom-one-dark</option>
                 <option>osc-dark-blue</option>
                 <option>osc-dark-green</option>
                 <option>osc-light-blue</option>
                 <option>osc-light-green</option>
             </select>
+            <ul>
+                <li v-for="folder in config.folders">
+                    <span v-on:click="removeFolder(folder)"><i class="fa fa-minus-circle"></i></span>
+                    <span class="folder-name">{{ folder }}</span>
+                </li>
+            </ul>
+            <input type="text" v-model="newFolder">
+            <button v-on:click="addNewFolder">Add Folder</button>
+            <button v-on:click="saveConfig">Save Configuration</button>
         </div>
 
     </div>

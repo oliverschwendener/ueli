@@ -20,8 +20,9 @@ let vue = new Vue({
         executeOutput: '',
         hideExecuteOutput: true,
         hideConfig: true,
-        colorTheme: configManager.getConfig().colorTheme,
-        colorThemePath: `./css/${configManager.getConfig().colorTheme}.css`
+        config: configManager.getConfig(),
+        colorThemePath: `./css/${configManager.getConfig().colorTheme}.css`,
+        newFolder: ''
     },
     methods: {
         handleKeyPress(e) {
@@ -52,7 +53,6 @@ let vue = new Vue({
             }
         },
         selectNext() {
-            console.log(this.searchResult)
             let iterator = 0
             let maxIndex = this.searchResult.length - 1
             for (let item of this.searchResult) {
@@ -126,11 +126,7 @@ let vue = new Vue({
             if (this.searchResult.length === 0)
                 return
 
-            let filePath = ''
-
-            for (let item of this.searchResult)
-                if (item.isActive)
-                    filePath = item.execArg
+            let filePath = getActiveItem().execArg
 
             if (filePath === undefined || !fs.existsSync(filePath))
                 return
@@ -138,6 +134,21 @@ let vue = new Vue({
                 exec(`start explorer.exe /select,"${path.win32.normalize(filePath)}"`, (err, stout, sterr) => {
                     if (err) throw err
                 })
+        },
+        addNewFolder() {
+            if (this.newFolder.replace(' ', '').length === 0)
+                return
+                
+            if (!fs.existsSync(this.newFolder))
+                alert('This file or folder does not exist')
+            else
+                this.config.folders.push(this.newFolder)
+        },
+        removeFolder(folder) {
+            console.log(folder)
+        },
+        saveConfig() {
+            configManager.setConfig(this.config)
         }
     },
     watch: {
@@ -155,16 +166,15 @@ let vue = new Vue({
             }
 
             this.resetExecuteOutput()
-        },
-        colorTheme: function (val, oldVal) {
-            this.colorThemePath = `./css/${this.colorTheme}.css`
-
-            let config = configManager.getConfig()
-            config.colorTheme = this.colorTheme
-            configManager.setConfig(config)
         }
     }
 })
+
+function getActiveItem() {
+    for (let item of vue.searchResult)
+        if (item.isActive)
+            return item
+}
 
 ipcRenderer.on('show-config', () => {
     vue.hideConfig = false
