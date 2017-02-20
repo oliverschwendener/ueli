@@ -269,3 +269,9 @@ function focusOnInput() {
 ipcRenderer.on('show-config', () => {
     vue.hideConfig = false
 })
+
+// global key press 'f6' to focus on input
+document.addEventListener('keyup', (e) => {
+    if (e.key === 'F6')
+        focusOnInput()
+})
