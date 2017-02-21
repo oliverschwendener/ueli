@@ -36,6 +36,10 @@ export default class ConfigManager {
 
 function getDefaultConfig() {
     return {
+        size: {
+            width: 960,
+            height: 600
+        },
         colorTheme: 'osc-dark-blue',
         folders: [
             `C:\\ProgramData\\Microsoft\\Windows\\Start Menu`,
@@ -50,7 +54,8 @@ function getDefaultConfig() {
             }
         ],
         customShortcuts: [],
-        favorites: []
+        favorites: [],
+        hideStatusBar: false
     }
 }
 

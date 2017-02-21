@@ -23,11 +23,31 @@
             </ul>
         </div>
 
+        <div class="status-bar" :class="{ 'hidden': config.hideStatusBar }" style="-webkit-app-region: drag">
+            <span>
+                {{ dateTimeNow }}
+            </span>
+            <span>
+                <i :class="battery.icon"></i>
+                {{ battery.percentage }}%
+            </span>
+        </div>
+
         <div class="execute-output" :class="{ 'hidden' : hideExecuteOutput}">
             <pre>{{ executeOutput }}</pre>
         </div>
 
         <div class="config" :class="{ 'hidden' : hideConfig }">
+
+            <div class="config-item">
+                <h3>Window size</h3>
+                <label>Width</label>
+                <input type="number" v-model="config.size.width">
+                <label>Height</label>
+                <input type="number" v-model="config.size.height">
+            </div>
+            <hr>
+
             <div class="config-item">
                 <h3>Color Theme</h3>
                 <select v-model="colorTheme">
@@ -160,6 +180,12 @@
             <hr>
 
             <div class="config-item">
+                <label>Hide status bar</label>
+                <input type="checkbox" v-model="config.hideStatusBar">
+            </div>
+            <hr>
+
+            <div class="config-item">
                 <button v-on:click="closeConfig">
                     <i class="fa fa-arrow-left"></i>
                     Go Back
@@ -172,6 +198,7 @@
         </div>
 
     </div>
+
 
     <script src="./node_modules/vue/dist/vue.min.js"></script>
     <script src="./js/app.js"></script>

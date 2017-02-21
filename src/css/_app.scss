@@ -13,7 +13,7 @@
     transition: all 150ms ease-in-out;
 }
 
-body {
+body, html {
     @include font-sans();
     position: relative;
     padding: 0;
@@ -104,7 +104,7 @@ div.config {
     position: absolute;
     top: 100px;
     width: 100%;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 100px - 25px);
     overflow-y: scroll;
     padding: 0 15px;
     box-sizing: border-box;
@@ -137,7 +137,7 @@ div.config {
     select {
         @include font-sans();
         font-size: 1.25rem;
-        background-color: $highlight-background-color;
+        background-color: $scrollbar-background-color;
         color: $text-color;
         border: none;
         outline: none;
@@ -162,7 +162,7 @@ div.config {
         }
     }
 
-    input.new-item {
+    input {
         background: $scrollbar-background-color;
         color: $text-color;
         border: none;
@@ -188,14 +188,25 @@ div.config {
         @include hoverTransition();
         cursor: pointer;
         background: $highlight-background-color;
-        color: $text-color;            
+        color: $highlight-text-color;            
         border: none;
         font-size: 1.25rem;
         padding: 15px;
+    }
+}
 
-        &:hover {
-            color: $highlight-text-color;
-        }
+div.status-bar {
+    position: fixed;
+    bottom: 0;
+    line-height: 25px;
+    font-size: 0.8rem;
+    width: 100vw;
+    background-color: $highlight-background-color;
+    color: $highlight-text-color;
+    text-align: center;
+
+    span {
+        padding: 0 5px;
     }
 }
 

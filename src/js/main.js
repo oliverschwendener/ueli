@@ -1,15 +1,17 @@
 import electron from 'electron'
+import ConfigManager from './ConfigManager'
 
 let app = electron.app
 let BrowserWindow = electron.BrowserWindow
 let globalShortcut = electron.globalShortcut
 let ipcMain = electron.ipcMain
+let configManager = new ConfigManager()
 
 let mainWindow = null
 
 let mainWindowOptions = {
-  width: 960,
-  height: 600,
+  width: configManager.getConfig().size.width,
+  height: configManager.getConfig().size.height,
   frame: false,
   resizable: true,
   skipTaskbar: true,
@@ -49,6 +51,7 @@ app.on('ready', () => {
   })
 
   ipcMain.on('reload-window', () => {
+    setWindowSize()
     mainWindow.reload()
   })
 
@@ -59,3 +62,9 @@ app.on('ready', () => {
       mainWindow.show()
   })
 })
+
+function setWindowSize() {
+  let size = new ConfigManager().getConfig().size
+  mainWindow.setSize(size.width, size.height)
+  mainWindow.center()
+}
