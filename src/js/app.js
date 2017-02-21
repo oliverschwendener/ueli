@@ -289,8 +289,7 @@ function getBatteryIcon() {
 }
 
 function getDateTime() {
-    let date = new Date()
-    return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()} - ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+    return new Date().toLocaleString('de-CH')
 }
 
 function setDateTime() {
