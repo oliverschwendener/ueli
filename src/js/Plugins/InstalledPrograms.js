@@ -33,8 +33,8 @@ export default class InstalledPrograms {
 
         // add programs with weight
         for (let program of this.programs) {
-            if (stringContainsSubstring(program, userInput)) {
-                let programName = path.basename(program).replace('.lnk', '')
+            let programName = path.basename(program).replace('.lnk', '')
+            if (stringContainsSubstring(programName, userInput)) {
                 let weight = getWeight(programName, userInput)
                 if (weight > 0)
                     result.push({
