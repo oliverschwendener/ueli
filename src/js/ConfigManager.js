@@ -40,6 +40,7 @@ function getDefaultConfig() {
             width: 960,
             height: 600
         },
+        fullscreen: false,
         colorTheme: 'osc-dark-blue',
         folders: [
             `C:\\ProgramData\\Microsoft\\Windows\\Start Menu`,

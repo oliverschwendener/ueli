@@ -13,6 +13,7 @@ let mainWindowOptions = {
   width: configManager.getConfig().size.width,
   height: configManager.getConfig().size.height,
   frame: false,
+  kiosk: configManager.getConfig().fullscreen,
   resizable: true,
   skipTaskbar: true,
   show: false,
@@ -64,7 +65,8 @@ app.on('ready', () => {
 })
 
 function setWindowSize() {
-  let size = new ConfigManager().getConfig().size
-  mainWindow.setSize(size.width, size.height)
+  let config = new ConfigManager().getConfig()
+  mainWindow.setSize(config.size.width, config.size.height)
+  mainWindow.setKiosk(config.fullscreen)
   mainWindow.center()
 }
