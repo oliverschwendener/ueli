@@ -118,14 +118,10 @@ let vue = new Vue({
         },
         execute() {
             this.resetExecuteOutput()
-
             if (this.searchResult.length > 0) {
-                for (let item of this.searchResult)
-                    if (item.isActive) {
-                        pluginManager.execute(this.userInput, item.execArg, this.appendExecuteOutput)
-                        historyManager.addItem(this.userInput)
-                    }
-
+                let activeItem = getActiveItem()
+                pluginManager.execute(this.userInput, activeItem.execArg, this.appendExecuteOutput)
+                historyManager.addItem(this.userInput)
                 this.resetUserInput()
             }
         },
@@ -143,8 +139,7 @@ let vue = new Vue({
                 })
         },
         addNewFolder() {
-            if (this.newFolder.replace(' ', '').length === 0
-                || folderIsAlreadyInConfig(this.newFolder))
+            if (stringIsEmptyOrWhitespaces(this.newFolder) || folderIsAlreadyInConfig(this.newFolder))
                 return
 
             if (!fs.existsSync(this.newFolder))
@@ -164,8 +159,8 @@ let vue = new Vue({
             this.config.folders = folders
         },
         addNewCustomShortcut() {
-            if (this.newCustomShortcut.shortCut.replace(' ', '').length === 0
-                || this.newCustomShortcut.path.replace(' ', '').length === 0
+            if (stringIsEmptyOrWhitespaces(this.newCustomShortcut.shortCut)
+                || stringIsEmptyOrWhitespaces(this.newCustomShortcut.path)
                 || !fs.existsSync(this.newCustomShortcut.path))
                 return
 
@@ -193,9 +188,9 @@ let vue = new Vue({
             this.config.webSearches = webSearches
         },
         addNewWebSearch() {
-            if (this.newWebSearch.name.replace(' ', '').length === 0
-                || this.newWebSearch.prefix.replace(' ', '').length === 0
-                || this.newWebSearch.url.replace(' ', '').length === 0)
+            if (stringIsEmptyOrWhitespaces(this.newWebSearch.name)
+                || stringIsEmptyOrWhitespaces(this.newWebSearch.prefix)
+                || stringIsEmptyOrWhitespaces(this.newWebSearch.url))
                 return
 
             if (webSearchAlreadyExists(this.newWebSearch))
@@ -217,7 +212,7 @@ let vue = new Vue({
     },
     watch: {
         userInput: function (val, oldVal) {
-            if (val.replace(/\s/g, '').length === 0) {
+            if (stringIsEmptyOrWhitespaces(val)) {
                 this.searchResult = []
                 return
             }
@@ -300,6 +295,10 @@ function getDateTime() {
 
 function setDateTime() {
     vue.dateTimeNow = getDateTime()
+}
+
+function stringIsEmptyOrWhitespaces(string) {
+    return string === undefined || string.replace(/\s/g, '').length === 0
 }
 
 // global key press 'f6' to focus on input

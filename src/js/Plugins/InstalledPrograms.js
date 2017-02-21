@@ -123,7 +123,7 @@ function getAvg(numbers) {
 }
 
 function stringIsEmptyOrWhitespaces(string) {
-    return (/^\s+$/.test(string))
+    return string === undefined || string.replace(/\s/g, '').length === 0
 }
 
 function splitStringToArray(string) {
