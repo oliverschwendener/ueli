@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
+import { ipcRenderer } from 'electron'
 import levenshtein from 'fast-levenshtein'
 
 export default class FileBrowser {
@@ -13,6 +14,8 @@ export default class FileBrowser {
         exec(`start "" "${filePath}"`, (err, stdout, sterr) => {
             if (err)
                 throw err
+            else
+                ipcRenderer.send('hide-main-window')
         })
     }
 

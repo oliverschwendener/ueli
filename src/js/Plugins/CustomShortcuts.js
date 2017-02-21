@@ -21,9 +21,9 @@ export default class CustomShortcuts {
         exec(`start "" "${execArg}"`, (err, stout, sterr) => {
             if (err)
                 throw err
+            else
+                ipcRenderer.send('hide-main-window')
         })
-
-        ipcRenderer.send('hide-main-window')
     }
 
     getSearchResult(userInput) {
