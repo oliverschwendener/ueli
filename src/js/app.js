@@ -275,7 +275,7 @@ function setBattery() {
         if (!isNaN(level))
             vue.computerHasBattery = true
 
-        vue.battery.percentage = level * 100
+        vue.battery.percentage = Math.round(level * 100)
         vue.battery.icon = getBatteryIcon()
     });
 }
