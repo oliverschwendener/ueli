@@ -272,7 +272,7 @@ function focusOnInput() {
 
 function setBattery() {
     batteryLevel().then(level => {
-        if (!level.isNan())
+        if (!isNaN(level))
             vue.computerHasBattery = true
 
         vue.battery.percentage = level * 100
