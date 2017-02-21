@@ -27,7 +27,7 @@
             <span>
                 {{ dateTimeNow }}
             </span>
-            <span>
+            <span :class="{ 'hidden' : !computerHasBattery }">
                 <i :class="battery.icon"></i>
                 {{ battery.percentage }}%
             </span>

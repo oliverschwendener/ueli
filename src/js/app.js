@@ -28,6 +28,7 @@ let vue = new Vue({
         newCustomShortcut: {},
         newWebSearch: {},
         battery: {},
+        computerHasBattery: false,
         dateTimeNow: getDateTime()
     },
     methods: {
@@ -271,6 +272,9 @@ function focusOnInput() {
 
 function setBattery() {
     batteryLevel().then(level => {
+        if (!level.isNan())
+            vue.computerHasBattery = true
+
         vue.battery.percentage = level * 100
         vue.battery.icon = getBatteryIcon()
     });
