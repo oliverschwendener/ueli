@@ -42,11 +42,11 @@
 
                 <div class="config-item">
                     <h3>Window size</h3>
-                    <div class="form-item">
+                    <div class="form-item" :class="{ 'hidden' : config.fullscreen }">
                         <label>Width</label>
                         <input type="number" v-model="config.size.width">
                     </div>
-                    <div class="form-item">
+                    <div class="form-item" :class="{ 'hidden' : config.fullscreen }">
                         <label>Height</label>
                         <input type="number" v-model="config.size.height">
                     </div>

@@ -166,6 +166,10 @@ div.config {
         outline: none;
         font-size: 1rem;
         padding: 5px;
+
+        &:disabled{
+            cursor: not-allowed;
+        }
     }
 
     table {
