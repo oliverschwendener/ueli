@@ -52,21 +52,30 @@ app.on('ready', () => {
   })
 
   ipcMain.on('reload-window', () => {
-    setWindowSize()
+    setWindowOptions()
+    setGlobalShortcuts()
     mainWindow.reload()
   })
 
-  globalShortcut.register('alt+space', () => {
+  setGlobalShortcuts()
+})
+
+function setWindowOptions() {
+  let config = new ConfigManager().getConfig()
+
+  mainWindow.setSize(config.size.width, config.size.height)
+  mainWindow.setKiosk(config.fullscreen)
+  mainWindow.center()
+}
+
+function setGlobalShortcuts() {
+  let config = new ConfigManager().getConfig()
+
+  globalShortcut.unregisterAll()
+  globalShortcut.register(config.keyboardShortcut, () => {
     if (mainWindow.isVisible())
       mainWindow.hide()
     else
       mainWindow.show()
   })
-})
-
-function setWindowSize() {
-  let config = new ConfigManager().getConfig()
-  mainWindow.setSize(config.size.width, config.size.height)
-  mainWindow.setKiosk(config.fullscreen)
-  mainWindow.center()
 }

@@ -36,6 +36,7 @@ export default class ConfigManager {
 
 function getDefaultConfig() {
     return {
+        keyboardShortcut: 'alt+space',
         size: {
             width: 960,
             height: 600

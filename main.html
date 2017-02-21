@@ -32,6 +32,15 @@
             <div class="config" :class="{ 'hidden' : hideConfig }">
 
                 <div class="config-item">
+                    <h3>Keyboard shortcut</h3>
+                    <select v-model="config.keyboardShortcut">
+                        <option>alt+space</option>
+                        <option>ctrl+space</option>
+                        <option>shift+space</option>
+                    </select>
+                </div>
+
+                <div class="config-item">
                     <h3>Window size</h3>
                     <div class="form-item">
                         <label>Width</label>
@@ -51,12 +60,12 @@
                 <div class="config-item">
                     <h3>Color Theme</h3>
                     <select v-model="colorTheme">
-                    <option>atom-one-dark</option>
-                    <option>osc-dark-blue</option>
-                    <option>osc-dark-green</option>
-                    <option>osc-light-blue</option>
-                    <option>osc-light-green</option>
-                </select>
+                        <option>atom-one-dark</option>
+                        <option>osc-dark-blue</option>
+                        <option>osc-dark-green</option>
+                        <option>osc-light-blue</option>
+                        <option>osc-light-green</option>
+                    </select>
                 </div>
                 <hr>
 
