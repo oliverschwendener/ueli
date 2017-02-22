@@ -1,0 +1,13 @@
+$background-color: #282a36;
+
+$text-color: #f8f8f2;
+$text-color-dim: #6272a4;
+
+$highlight-background-color: #44475a;
+$highlight-text-color: #ff5555;
+$highlight-text-color-dim: #ffb86c;
+
+$scrollbar-color: $highlight-text-color;
+$scrollbar-background-color: lighten($background-color, 5);
+
+@import "app";
