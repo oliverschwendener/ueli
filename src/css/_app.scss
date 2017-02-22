@@ -188,8 +188,8 @@ div.config {
     button  {
         @include hoverTransition();
         cursor: pointer;
-        background: $highlight-background-color;
-        color: $highlight-text-color;            
+        background: $button-color;
+        color: $button-text-color;            
         border: none;
         font-size: 1.25rem;
         padding: 15px;
@@ -200,8 +200,8 @@ div.status-bar {
     line-height: $status-bar-height;
     font-size: 0.8rem;
     width: 100vw;
-    background-color: $highlight-background-color;
-    color: $highlight-text-color;
+    background-color: $button-color;
+    color: $button-text-color;
     text-align: center;
 
     span {
