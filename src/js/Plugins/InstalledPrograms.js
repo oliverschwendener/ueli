@@ -14,13 +14,31 @@ export default class InstalledPrograms {
         this.programs = []
 
         this.appendToPrograms = (file) => {
-            this.programs.push(file)
+            let programAlreadyExists = false
+            for (let program of this.programs)
+                if (program.toLowerCase() === file.toLowerCase())
+                    programAlreadyExists = true;
+
+            if (!programAlreadyExists)
+                this.programs.push(file)
         }
 
         this.searchResult = []
 
+        this.scanFolders()
+        this.initalizeFileWatchers()
+    }
+
+    scanFolders() {
         for (let folder of this.folders)
             getFilesRecursively(folder, this.appendToPrograms)
+    }
+
+    initalizeFileWatchers() {
+        for (let folder of this.folders)
+            fs.watch(folder, { encoding: 'buffer' }, (eventType, fileName) => {
+                this.scanFolders()
+            })
     }
 
     isValid(userInput) {
