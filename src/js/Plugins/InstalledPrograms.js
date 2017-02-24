@@ -10,35 +10,14 @@ export default class InstalledPrograms {
     constructor() {
         this.folders = new ConfigManager().getConfig().folders
         this.favorites = new FavoritesManager().getFavorites()
-
-        this.programs = []
-
-        this.appendToPrograms = (file) => {
-            let programAlreadyExists = false
-            for (let program of this.programs)
-                if (program.toLowerCase() === file.toLowerCase())
-                    programAlreadyExists = true;
-
-            if (!programAlreadyExists)
-                this.programs.push(file)
-        }
-
-        this.searchResult = []
-
-        this.scanFolders()
+        this.programs = getFilesFromDirectoriesRecursivelyByFileExtension(this.folders)
         this.initalizeFileWatchers()
     }
 
-    scanFolders() {
-        for (let folder of this.folders)
-            getFilesRecursively(folder, this.appendToPrograms)
-    }
-
     initalizeFileWatchers() {
-        for (let folder of this.folders)
-            fs.watch(folder, { encoding: 'buffer' }, (eventType, fileName) => {
-                this.scanFolders()
-            })
+        setInterval(() => {
+            this.programs = getFilesFromDirectoriesRecursivelyByFileExtension(this.folders)
+        }, 10000)
     }
 
     isValid(userInput) {
@@ -148,21 +127,36 @@ function splitStringToArray(string) {
     return string.split(/\s+/)
 }
 
-function getFilesRecursively(folder, success) {
-    fs.readdir(folder, (err, data) => {
-        if (err) throw err
+function getFilesFromDirectoriesRecursivelyByFileExtension(directories, fileExtension = '*') {
+    let result = [];
 
-        for (let file of data) {
-            file = `${folder}/${file}`
-
-            fs.lstat(file, (err, stats) => {
-                if (err) throw err
-
-                if (stats.isDirectory() && !stats.isSymbolicLink())
-                    getFilesRecursively(file, success)
-                else if (stats.isFile())
-                    success(file)
-            })
+    for (let directory of directories) {
+        let dir = directory;
+        try {
+            let files = fs.readdirSync(dir);
+            for (let file of files) {
+                file = `${dir}/${file}`;
+                let stat = fs.lstatSync(file);
+                if (stat && stat.isDirectory() && !stat.isSymbolicLink()) {
+                    try {
+                        result = result.concat(getFilesFromDirectoriesRecursivelyByFileExtension([file], fileExtension));
+                    }
+                    catch (err) {
+                        throw err;
+                    }
+                }
+                else {
+                    if (fileExtension === '*')
+                        result.push(file);
+                    else if (path.extname(file).toLowerCase() === fileExtension.toLowerCase())
+                        result.push(file);
+                }
+            }
         }
-    })
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+    return result;
 }
