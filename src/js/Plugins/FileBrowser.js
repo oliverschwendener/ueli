@@ -58,7 +58,7 @@ function getResultFromDirectory(folderPath, userInput) {
         result.push({
             name: fileName,
             execArg: filePath,
-            weight: levenshtein.get(path.basename(filePath), userInput),
+            weight: levenshtein.get(fileName, path.basename(userInput)),
             isActive: false
         })
     }
@@ -68,6 +68,8 @@ function getResultFromDirectory(folderPath, userInput) {
         if (a.weight < b.weight) return -1
         return 0
     })
+
+    console.log(sortedResult)
 
     return sortedResult
 }
