@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
-import levenshtein from 'fast-levenshtein'
+import leven from 'leven'
 import ConfigManager from './../ConfigManager'
 import FavoritesManager from './../FavoritesManager'
 
@@ -103,7 +103,7 @@ function getWeight(programNameWithExtension, userInput) {
 
     for (let word of stringToSearchWords)
         for (let value of valueWords) {
-            let levenshteinDistance = levenshtein.get(word, value)
+            let levenshteinDistance = leven(word, value)
             let result = word.startsWith(value)
                 ? (levenshteinDistance / 4)
                 : levenshteinDistance

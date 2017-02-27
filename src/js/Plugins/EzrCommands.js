@@ -1,4 +1,4 @@
-import levenshtein from 'fast-levenshtein'
+import leven from 'leven'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
 
@@ -55,7 +55,7 @@ export default class EzrCommands {
         let result = []
 
         for (let command of this.commands) {
-            let weight = levenshtein.get(command.command, userInput)
+            let weight = leven(command.command, userInput)
             result.push({
                 name: command.description,
                 execArg: command.command,

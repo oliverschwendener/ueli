@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
-import levenshtein from 'fast-levenshtein'
+import leven from 'leven'
 
 export default class FileBrowser {
     isValid(filePath) {
@@ -58,7 +58,7 @@ function getResultFromDirectory(folderPath, userInput) {
         result.push({
             name: fileName,
             execArg: filePath,
-            weight: levenshtein.get(fileName, path.basename(userInput)),
+            weight: leven(fileName, path.basename(userInput)),
             isActive: false
         })
     }
