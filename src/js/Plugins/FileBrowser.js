@@ -38,24 +38,36 @@ export default class FileBrowser {
             return getResultFromDirectory(path.dirname(userInput), userInput)
         }
     }
+
+    getAutoCompletion(activeItem) {
+        let folderPath = path.dirname(activeItem.execArg)
+        let fileName = path.basename(activeItem.name)
+        return path.win32.normalize(`${folderPath}\\${fileName}`)
+    }
 }
 
 function getResultFromDirectory(folderPath, userInput) {
+    folderPath = path.win32.normalize(folderPath)    
+    let folderSeparator = folderPath.endsWith('\\') ? '' : '\\'
     let files = fs.readdirSync(folderPath)
     let result = []
-    for (let file of files)
+
+    for (let file of files) {
+        let filePath = `${folderPath}${folderSeparator}${path.win32.normalize(file)}`
+        let fileName = path.basename(filePath)
         result.push({
-            name: path.basename(file),
-            execArg: path.win32.normalize(`${folderPath}\\${file}`),
-            weight: levenshtein.get(path.basename(file), userInput),
+            name: fileName,
+            execArg: filePath,
+            weight: levenshtein.get(path.basename(filePath), userInput),
             isActive: false
         })
+    }
 
     let sortedResult = result.sort((a, b) => {
         if (a.weight > b.weight) return 1
         if (a.weight < b.weight) return -1
         return 0
     })
-    
+
     return sortedResult
 }

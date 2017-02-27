@@ -76,6 +76,10 @@ export default class InstalledPrograms {
             }
         })
     }
+
+    getAutoCompletion(activeItem) {
+        return activeItem.name
+    }
 }
 
 function stringContainsSubstring(stringToSearch, substring) {

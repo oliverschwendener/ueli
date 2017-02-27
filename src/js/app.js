@@ -39,26 +39,41 @@ let vue = new Vue({
             else if (e.ctrlKey && e.key === 'o')
                 this.openFileLocation()
 
-            else if (e.shiftKey && e.key === 'Tab') {
-                e.preventDefault()
-                this.selectPrevious()
-            }
-
-            else if (e.key === 'Tab') {
-                e.preventDefault();
-                this.selectNext()
-            }
-
-            else if (e.key === 'ArrowUp') {
+            else if (e.shiftKey && e.key === 'ArrowUp') {
                 e.preventDefault()
                 this.userInput = historyManager.getPrevious()
             }
 
-            else if (e.key === 'ArrowDown') {
+            else if (e.shiftKey && e.key === 'ArrowDown') {
                 e.preventDefault()
                 this.userInput = historyManager.getNext()
             }
+
+            else if (e.key === 'ArrowUp') {
+                e.preventDefault()
+                this.selectPrevious()
+            }
+
+            else if (e.key === 'ArrowDown') {
+                e.preventDefault()
+                this.selectNext()
+            }
+
+            else if (e.key === 'Tab') {
+                e.preventDefault();
+
+                let activeItem = {}
+                for (let item of this.searchResult)
+                    if (item.isActive)
+                        activeItem = item
+
+                let autoCompletionResult = this.autoComplete(activeItem)
+                this.userInput = autoCompletionResult === undefined
+                    ? this.userInput
+                    : autoCompletionResult
+            }
         },
+        autoComplete() {},
         selectNext() {
             let iterator = 0
             let maxIndex = this.searchResult.length - 1
@@ -119,7 +134,7 @@ let vue = new Vue({
         execute() {
             this.resetExecuteOutput()
             if (this.searchResult.length > 0) {
-                let activeItem = getActiveItem()
+                let activeItem = Item()
                 pluginManager.execute(this.userInput, activeItem.execArg, this.appendExecuteOutput)
                 historyManager.addItem(this.userInput)
                 this.resetUserInput()
@@ -129,7 +144,7 @@ let vue = new Vue({
             if (this.searchResult.length === 0)
                 return
 
-            let filePath = getActiveItem().execArg
+            let filePath = Item().execArg
 
             if (filePath === undefined || !fs.existsSync(filePath))
                 return
@@ -218,6 +233,7 @@ let vue = new Vue({
             }
 
             this.searchResult = pluginManager.getSearchResult(val)
+            this.autoComplete = pluginManager.getAutoCompletion(val)
 
             if (this.searchResult.length > 0) {
                 this.searchResult[0].isActive = true
@@ -255,7 +271,7 @@ function folderIsAlreadyInConfig(folder) {
     return false
 }
 
-function getActiveItem() {
+function Item() {
     for (let item of vue.searchResult)
         if (item.isActive)
             return item

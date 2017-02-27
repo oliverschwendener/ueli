@@ -20,24 +20,30 @@ export default class PluginManager {
     }
 
     isValid(args) {
-        for (let plugin of this.plugins)
-            if (plugin.isValid(args))
-                return true
-
-        return false
+        return this.getValidPlugin(args) !== undefined
     }
 
     execute(userInput, execArg, callback) {
-        for (let plugin of this.plugins)
-            if (plugin.isValid(userInput))
-                plugin.execute(execArg, callback)
+        this.getValidPlugin(userInput).execute(execArg, callback)
     }
 
-    getSearchResult(args) {
-        for (let plugin of this.plugins)
-            if (plugin.isValid(args))
-                return plugin.getSearchResult(args)
+    getSearchResult(userInput) {
+        let validPlugin = this.getValidPlugin(userInput)
+        return validPlugin !== undefined
+            ? validPlugin.getSearchResult(userInput)
+            : []
+    }
 
-        return []
+    getAutoCompletion(userInput) {
+        let validPlugin = this.getValidPlugin(userInput)
+        return (validPlugin !== undefined && validPlugin.getAutoCompletion !== undefined)
+            ? validPlugin.getAutoCompletion
+            : () => {}
+    }
+
+    getValidPlugin(args) {
+        for (let plugin of this.plugins)
+             if (plugin.isValid(args))
+                return plugin;
     }
 }
