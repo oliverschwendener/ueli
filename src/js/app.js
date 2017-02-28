@@ -52,11 +52,13 @@ let vue = new Vue({
             else if (e.key === 'ArrowUp') {
                 e.preventDefault()
                 this.selectPrevious()
+                scrollToActiveItem()
             }
 
             else if (e.key === 'ArrowDown') {
                 e.preventDefault()
                 this.selectNext()
+                scrollToActiveItem()
             }
 
             else if (e.key === 'Tab') {
@@ -73,7 +75,7 @@ let vue = new Vue({
                     : autoCompletionResult
             }
         },
-        autoComplete() {},
+        autoComplete() { },
         selectNext() {
             let iterator = 0
             let maxIndex = this.searchResult.length - 1
@@ -236,6 +238,9 @@ let vue = new Vue({
             this.autoComplete = pluginManager.getAutoCompletion(val)
 
             if (this.searchResult.length > 0) {
+                for (let i = 0; i < this.searchResult.length; i++)
+                    this.searchResult[i].id = `search-result-${i}`
+
                 this.searchResult[0].isActive = true
                 this.hideConfig = true
             }
@@ -314,6 +319,17 @@ function setDateTime() {
 
 function stringIsEmptyOrWhitespaces(string) {
     return string === undefined || string.replace(/\s/g, '').length === 0
+}
+
+function getActiveItem() {
+    for (let item of vue.searchResult)
+        if (item.isActive)
+            return item
+}
+
+function scrollToActiveItem() {
+    let activeItem = document.getElementById(getActiveItem().id)
+    activeItem.scrollIntoView()
 }
 
 // global key press 'f6' to focus on input

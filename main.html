@@ -18,7 +18,7 @@
 
             <div class="search-result">
                 <ul class="search-result-list">
-                    <li v-for="item in searchResult" :class="{ 'active': item.isActive }">
+                    <li v-for="item in searchResult" :class="{ 'active': item.isActive }" :id="item.id">
                         <span class="name">{{ item.name }}</span>
                         <span class="exec-args">{{ item.execArg }}</span>
                     </li>
