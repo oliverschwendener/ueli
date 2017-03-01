@@ -47,6 +47,10 @@ div.output-container {
     overflow-y: scroll;
 }
 
+div.toggled {
+        height: calc(100vh - #{$user-input-height});
+}
+
 ul.search-result-list {
     list-style: none;
     padding: 0;
@@ -99,9 +103,10 @@ div.execute-output {
 }
 
 div.config {
-    padding: 0 15px;
+    padding: 15px;
     box-sizing: border-box;
     padding-bottom:  30px;
+    background-color: darken($background-color, 3);
 
 
     div.config-item {
@@ -115,7 +120,7 @@ div.config {
     }
 
     h3 {
-        color: $highlight-text-color;
+        color: $text-color;
     }
 
     div.form-item {

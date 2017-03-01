@@ -14,7 +14,7 @@
 
         <input id="user-input" class="user-input" type="text" v-model="userInput" ref="input" v-on:keyDown="handleKeyPress" :autofocus="{ true: focusOnInput }">
 
-        <div class="output-container">
+        <div class="output-container" :class="{ 'toggled' : config.hideStatusBar }">
 
             <div class="search-result">
                 <ul class="search-result-list">
@@ -44,15 +44,15 @@
                     <h3>Window size</h3>
                     <div class="form-item" :class="{ 'hidden' : config.fullscreen }">
                         <label>Width</label>
-                        <input type="number" v-model="config.size.width">
+                        <input type="number" v-model="config.size.width" class="new-item">
                     </div>
                     <div class="form-item" :class="{ 'hidden' : config.fullscreen }">
                         <label>Height</label>
-                        <input type="number" v-model="config.size.height">
+                        <input type="number" v-model="config.size.height" class="new-item">
                     </div>
                     <div class="form-item">
                         <label>Fullscreen</label>
-                        <input type="checkbox" v-model="config.fullscreen">
+                        <input type="checkbox" v-model="config.fullscreen" class="new-item">
                     </div>
                 </div>
                 <hr>
