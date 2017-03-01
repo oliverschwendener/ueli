@@ -5,11 +5,12 @@ import { ipcRenderer } from 'electron'
 export default class WebSearch {
     constructor() {
         this.webSearches = new ConfigManager().getConfig().webSearches
+        this.separator = '?'
     }
 
     isValid(userInput) {
         for (let search of this.webSearches)
-            if (userInput.startsWith(`${search.prefix}:`))
+            if (userInput.startsWith(`${search.prefix}${this.separator}`))
                 return true
 
         return false
@@ -22,8 +23,8 @@ export default class WebSearch {
 
     getSearchResult(userInput) {
         for (let search of this.webSearches)
-            if (userInput.startsWith(`${search.prefix}:`)) {
-                userInput = userInput.replace(`${search.prefix}:`, '')
+            if (userInput.startsWith(`${search.prefix}${this.separator}`)) {
+                userInput = userInput.replace(`${search.prefix}${this.separator}`, '')
                 userInput = encodeURIComponent(userInput)
                 return [{
                     name: `${search.name} search`,
