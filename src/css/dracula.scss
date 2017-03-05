@@ -1,7 +1,7 @@
 $background-color: #282a36;
 
 $text-color: #f8f8f2;
-$text-color-dim: #6272a4;
+$text-color-dim: desaturate(darken($text-color, 35), 100);
 
 $highlight-background-color: #44475a;
 $highlight-text-color: #ff5555;
