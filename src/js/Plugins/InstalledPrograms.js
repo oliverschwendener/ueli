@@ -36,7 +36,7 @@ export default class InstalledPrograms {
                 if (weight > 0)
                     result.push({
                         name: programName,
-                        execArg: program,
+                        execArg: path.win32.normalize(program),
                         weight: weight,
                         isActive: false
                     })
