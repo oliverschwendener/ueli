@@ -137,35 +137,35 @@ function splitStringToArray(string) {
 }
 
 function getFilesFromDirectoriesRecursivelyByFileExtension(directories, fileExtension = '*') {
-    let result = [];
+    let result = []
 
     for (let directory of directories) {
-        let dir = directory;
+        let dir = directory
         try {
-            let files = fs.readdirSync(dir);
+            let files = fs.readdirSync(dir)
             for (let file of files) {
-                file = `${dir}/${file}`;
-                let stat = fs.lstatSync(file);
+                file = `${dir}/${file}`
+                let stat = fs.lstatSync(file)
                 if (stat && stat.isDirectory() && !stat.isSymbolicLink()) {
                     try {
-                        result = result.concat(getFilesFromDirectoriesRecursivelyByFileExtension([file], fileExtension));
+                        result = result.concat(getFilesFromDirectoriesRecursivelyByFileExtension([file], fileExtension))
                     }
                     catch (err) {
-                        throw err;
+                        throw err
                     }
                 }
                 else {
                     if (fileExtension === '*')
-                        result.push(file);
+                        result.push(file)
                     else if (path.extname(file).toLowerCase() === fileExtension.toLowerCase())
-                        result.push(file);
+                        result.push(file)
                 }
             }
         }
         catch (err) {
-            console.log(err);
+            console.log(err)
         }
     }
 
-    return result;
+    return result
 }

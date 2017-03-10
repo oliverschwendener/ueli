@@ -63,7 +63,7 @@ let vue = new Vue({
             }
 
             else if (e.key === 'Tab') {
-                e.preventDefault();
+                e.preventDefault()
 
                 let activeItem = {}
                 for (let item of this.searchResult)
@@ -238,7 +238,7 @@ let vue = new Vue({
 
             this.searchResult = pluginManager.getSearchResult(val)
             this.autoComplete = pluginManager.getAutoCompletion(val)
-            this.searchIcon = pluginManager.getIcon(val);
+            this.searchIcon = pluginManager.getIcon(val)
 
             if (this.searchResult.length > 0) {
                 for (let i = 0; i < this.searchResult.length; i++)
@@ -296,7 +296,7 @@ function setBattery() {
 
         vue.battery.percentage = Math.round(level * 100)
         vue.battery.icon = getBatteryIcon()
-    });
+    })
 }
 
 function getBatteryIcon() {

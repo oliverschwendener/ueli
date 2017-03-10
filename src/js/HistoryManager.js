@@ -10,10 +10,10 @@ export default class HistoryManager {
 
     addItem(item) {
         if (item === '' || item === undefined)
-            return;
+            return
 
-        this.history.push(item);
-        this.index = this.history.length;
+        this.history.push(item)
+        this.index = this.history.length
     }
 
     getPrevious() {
@@ -28,11 +28,11 @@ export default class HistoryManager {
 
     getNext() {
         if (this.index < this.history.length)
-            this.index++;
+            this.index++
 
         if (this.index >= this.history.length)
             return ''
 
-        return this.history[this.index];
+        return this.history[this.index]
     }
 }
