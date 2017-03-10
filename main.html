@@ -15,7 +15,7 @@
         <input id="user-input" class="user-input" type="text" v-model="userInput" ref="input" v-on:keyDown="handleKeyPress" :autofocus="{ true: focusOnInput }">
         <i id="search-icon" :class="searchIcon" aria-hidden="true"></i>
 
-        <div class="output-container" :class="{ 'toggled' : config.hideStatusBar }" style="-webkit-app-region: drag">
+        <div class="output-container" :class="{ 'toggled' : config.hideStatusBar }">
 
             <div class="search-result">
                 <ul class="search-result-list">
@@ -215,7 +215,7 @@
             
         </div>
 
-        <div class="status-bar" :class="{ 'hidden': config.hideStatusBar }">
+        <div class="status-bar" :class="{ 'hidden': config.hideStatusBar }" style="-webkit-app-region: drag">
             <span>
                 {{ dateTimeNow }}
             </span>
