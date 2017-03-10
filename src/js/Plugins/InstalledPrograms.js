@@ -92,7 +92,7 @@ function stringContainsSubstring(stringToSearch, substring) {
     stringToSearch = stringToSearch.split(' ').join('').toLowerCase()
 
     for (let word of wordsOfSubstring) {
-        if (word.replace(' ', '') === '')
+        if (stringIsEmptyOrWhitespaces(word))
             continue
         else if (stringToSearch.indexOf(word) === -1)
             return false

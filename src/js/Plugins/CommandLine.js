@@ -9,7 +9,7 @@ export default class CommandLine {
 
     isValid(userInput) {
         return userInput.startsWith(commandLinePrefix)
-            && userInput.replace(commandLinePrefix, '').replace(' ', '').length > 0
+            && !stringIsEmptyOrWhitespaces(userInput)
     }
 
     execute(execArg, callback, kill) {
@@ -56,4 +56,8 @@ export default class CommandLine {
     getIcon() {
         return this.icon
     }
+}
+
+function stringIsEmptyOrWhitespaces(string) {
+    return string === undefined || string.replace(/\s/g, '').length === 0
 }
