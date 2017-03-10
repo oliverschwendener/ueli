@@ -19,6 +19,7 @@ let vue = new Vue({
         focusOnInput: true,
         searchResult: [],
         executeOutput: '',
+        searchIcon: 'fa fa-search',
         hideExecuteOutput: true,
         hideConfig: true,
         config: configManager.getConfig(),
@@ -231,11 +232,13 @@ let vue = new Vue({
         userInput: function (val, oldVal) {
             if (stringIsEmptyOrWhitespaces(val)) {
                 this.searchResult = []
+                this.searchIcon = 'fa fa-search'
                 return
             }
 
             this.searchResult = pluginManager.getSearchResult(val)
             this.autoComplete = pluginManager.getAutoCompletion(val)
+            this.searchIcon = pluginManager.getIcon(val);
 
             if (this.searchResult.length > 0) {
                 for (let i = 0; i < this.searchResult.length; i++)

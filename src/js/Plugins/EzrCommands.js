@@ -39,6 +39,7 @@ export default class EzrCommands {
                 }
             }
         ]
+        this.icon = 'fa fa-cogs'
     }
 
     isValid(userInput) {
@@ -71,5 +72,9 @@ export default class EzrCommands {
         })
 
         return sortedResult
+    }
+
+    getIcon() {
+        return this.icon
     }
 }

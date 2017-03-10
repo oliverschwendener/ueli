@@ -5,6 +5,10 @@ import ConfigManager from './../ConfigManager'
 let configManager = new ConfigManager()
 
 export default class WebUrl {
+    constructor() {
+        this.icon = 'fa fa-globe'
+    }
+
     isValid(url) {
         if (url.endsWith('.exe'))
             return false
@@ -29,6 +33,10 @@ export default class WebUrl {
             name: `Open default web browser`,
             execArg: addHttpToUrl(userInput)
         }]
+    }
+
+    getIcon(userInput) {
+        return this.icon
     }
 }
 

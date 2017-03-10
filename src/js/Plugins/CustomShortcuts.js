@@ -7,6 +7,7 @@ import ConfigManager from './../ConfigManager'
 export default class CustomShortcuts {
     constructor() {
         this.customShortcuts = new ConfigManager().getConfig().customShortcuts
+        this.icon = 'fa window-maximize'
     }
 
     isValid(userInput) {
@@ -33,5 +34,9 @@ export default class CustomShortcuts {
                     name: path.basename(customShortcut.path).replace('.lnk', ''),
                     execArg: customShortcut.path
                 }]
+    }
+
+    getIcon(userInput) {
+        return this.icon
     }
 }

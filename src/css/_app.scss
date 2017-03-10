@@ -30,6 +30,14 @@ input {
     @include font-sans();
 }
 
+i#search-icon {
+    position: fixed;
+    right: calc(#{$user-input-height} / 2);
+    top: calc(#{$user-input-height} / 2);
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+}
+
 input.user-input {
     background: transparent;
     color: $text-color;

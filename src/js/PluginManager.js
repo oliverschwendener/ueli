@@ -17,6 +17,8 @@ export default class PluginManager {
             new EzrCommands(),
             new FileBrowser
         ]
+
+        this.defaultIcon = 'fa fa-search'
     }
 
     isValid(args) {
@@ -38,12 +40,31 @@ export default class PluginManager {
         let validPlugin = this.getValidPlugin(userInput)
         return (validPlugin !== undefined && validPlugin.getAutoCompletion !== undefined)
             ? validPlugin.getAutoCompletion
-            : () => {}
+            : () => { }
+    }
+
+    getIcon(userInput) {
+        let validPlugin = this.getValidPlugin(userInput)
+        let result
+        try{
+            result = validPlugin.getIcon(userInput)
+        }
+        catch(exception){
+            result = this.defaultIcon
+        }
+
+        return isValidFontAwesomeIcon(result)
+            ? result
+            : this.defaultIcon
     }
 
     getValidPlugin(args) {
         for (let plugin of this.plugins)
-             if (plugin.isValid(args))
-                return plugin;
+            if (plugin.isValid(args))
+                return plugin
     }
+}
+
+function isValidFontAwesomeIcon(icon) {
+    return icon.startsWith('fa ')
 }

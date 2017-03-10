@@ -3,8 +3,13 @@ import { spawn } from 'child_process'
 let commandLinePrefix = '>'
 
 export default class CommandLine {
+    constructor() {
+        this.icon = 'fa fa-terminal'
+    }
+
     isValid(userInput) {
         return userInput.startsWith(commandLinePrefix)
+            && userInput.replace(commandLinePrefix, '').replace(' ', '').length > 0
     }
 
     execute(execArg, callback, kill) {
@@ -43,8 +48,12 @@ export default class CommandLine {
         let command = userInput.replace(commandLinePrefix, '')
 
         return [{
-                name: `Execute ${command}`,
-                execArg: command
-            }]
+            name: `Execute ${command}`,
+            execArg: command
+        }]
+    }
+
+    getIcon() {
+        return this.icon
     }
 }

@@ -12,6 +12,7 @@ export default class InstalledPrograms {
         this.favorites = new FavoritesManager().getFavorites()
         this.programs = getFilesFromDirectoriesRecursivelyByFileExtension(this.folders)
         this.initalizeFileWatchers()
+        this.icon = 'fa fa-window-maximize'
     }
 
     initalizeFileWatchers() {
@@ -79,6 +80,10 @@ export default class InstalledPrograms {
 
     getAutoCompletion(activeItem) {
         return activeItem.name
+    }
+
+    getIcon(userInput) {
+        return this.icon
     }
 }
 

@@ -5,6 +5,10 @@ import { ipcRenderer } from 'electron'
 import leven from 'leven'
 
 export default class FileBrowser {
+    constructor() {
+        this.icon = 'fa fa-file'
+    }
+
     isValid(filePath) {
         let regex = new RegExp(/[a-z]:[\\/]/ig)
         return regex.test(filePath) && (fs.existsSync(filePath) || fs.existsSync(path.dirname(filePath)))
@@ -43,6 +47,10 @@ export default class FileBrowser {
         let folderPath = path.dirname(activeItem.execArg)
         let fileName = path.basename(activeItem.name)
         return path.win32.normalize(`${folderPath}\\${fileName}`)
+    }
+
+    getIcon() {
+        return this.icon
     }
 }
 

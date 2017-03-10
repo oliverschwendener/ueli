@@ -9,11 +9,8 @@ export default class WebSearch {
     }
 
     isValid(userInput) {
-        for (let search of this.webSearches)
-            if (userInput.startsWith(`${search.prefix}${this.separator}`))
-                return true
-
-        return false
+        let webSearch = this.getValidWebSearch(userInput)
+        return webSearch !== undefined
     }
 
     execute(url) {
@@ -22,14 +19,23 @@ export default class WebSearch {
     }
 
     getSearchResult(userInput) {
+        let webSearch = this.getValidWebSearch(userInput)
+        userInput = userInput.replace(`${webSearch.prefix}${this.separator}`, '')
+        userInput = encodeURIComponent(userInput)
+        return [{
+            name: `${webSearch.name} search`,
+            execArg: `${webSearch.url}${userInput}`
+        }]
+    }
+
+    getIcon(userInput) {
+        let webSearch = this.getValidWebSearch(userInput)
+        return webSearch.icon
+    }
+
+    getValidWebSearch(userInput) {
         for (let search of this.webSearches)
-            if (userInput.startsWith(`${search.prefix}${this.separator}`)) {
-                userInput = userInput.replace(`${search.prefix}${this.separator}`, '')
-                userInput = encodeURIComponent(userInput)
-                return [{
-                    name: `${search.name} search`,
-                    execArg: `${search.url}${userInput}`
-                }]
-            }
+            if (userInput.startsWith(`${search.prefix}${this.separator}`))
+                return search
     }
 }

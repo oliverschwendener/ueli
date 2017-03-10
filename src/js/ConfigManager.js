@@ -52,7 +52,8 @@ function getDefaultConfig() {
             {
                 name: 'Google',
                 prefix: 'g',
-                url: 'https://google.com/search?q='
+                url: 'https://google.com/search?q=',
+                icon: 'fa fa-google'
             }
         ],
         customShortcuts: [],
