@@ -35,6 +35,7 @@ app.on('ready', () => {
   //mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', () => {
+    globalShortcut.unregisterAll()
     mainWindow = null
   })
 
