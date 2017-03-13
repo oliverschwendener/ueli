@@ -24,24 +24,34 @@ export default class CommandLine {
                 options.push(items[i])
         }
 
-        let command = spawn(programName, options)
+        try {
+            let command = spawn(programName, options)
 
-        command.stderr.on('data', (data) => {
-            callback(data.toString())
-        })
-
-        command.stdout.on('data', (data) => {
-            callback(data.toString())
-        })
-
-        command.on('exit', (code) => {
-            callback(`Finished.`)
-        })
-
-        document.addEventListener('keyup', (e) => {
-            if (e.ctrlKey && e.key === 'c')
+            command.on('error', (err) => {
+                callback(err)
                 command.kill('SIGINT')
-        })
+            })
+
+            command.stderr.on('data', (data) => {
+                callback(data.toString())
+            })
+
+            command.stdout.on('data', (data) => {
+                callback(data.toString())
+            })
+
+            command.on('exit', (code) => {
+                callback(`Finished.`)
+            })
+
+            document.addEventListener('keyup', (e) => {
+                if (e.ctrlKey && e.key === 'c')
+                    command.kill('SIGINT')
+            })
+        }
+        catch(ex) {
+            callback('lol')
+        }
     }
 
     getSearchResult(userInput) {
