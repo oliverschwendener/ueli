@@ -337,7 +337,12 @@ function scrollToActiveItem() {
 
 // global key press 'f6' to focus on input
 document.addEventListener('keyup', (e) => {
-    if (e.key === 'F6')
+    if (e.key === 'Escape') {
+        vue.resetUserInput()
+        ipcRenderer.send('hide-main-window')
+    }
+
+    else if (e.key === 'F6')
         focusOnInput()
 })
 
