@@ -18,6 +18,7 @@ export default class InstalledPrograms {
     initalizeFileWatchers() {
         setInterval(() => {
             this.programs = getFilesFromDirectoriesRecursivelyByFileExtension(this.folders)
+            this.favorites = new FavoritesManager().getFavorites()
         }, 10000)
     }
 
