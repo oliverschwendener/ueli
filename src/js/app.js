@@ -3,15 +3,18 @@ import path from 'path'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
 import batteryLevel from 'battery-level'
+import hljs from 'highlight.js'
 
 import ConfigManager from './js/ConfigManager'
 import PluginManager from './js/PluginManager'
 import HistoryManager from './js/HistoryManager'
+import ExecutionService from './js/ExecutionService'
 
 let configManager = new ConfigManager()
 let pluginManager = new PluginManager()
 let historyManager = new HistoryManager()
 
+// Initalize Vue
 let vue = new Vue({
     el: '#root',
     data: {
@@ -21,6 +24,8 @@ let vue = new Vue({
         executeOutput: '',
         searchIcon: 'fa fa-search',
         hideExecuteOutput: true,
+        filePreview: '',
+        hideFilePreview: true,
         hideConfig: true,
         config: configManager.getConfig(),
         colorTheme: configManager.getConfig().colorTheme,
@@ -39,6 +44,9 @@ let vue = new Vue({
 
             else if (e.ctrlKey && e.key === 'o')
                 this.openFileLocation()
+
+            else if (e.ctrlKey && e.code === 'Space')
+                this.getFilePreview()
 
             else if (e.shiftKey && e.key === 'ArrowUp') {
                 e.preventDefault()
@@ -137,7 +145,7 @@ let vue = new Vue({
         execute() {
             this.resetExecuteOutput()
             if (this.searchResult.length > 0) {
-                let activeItem = Item()
+                let activeItem = getActiveItem()
                 pluginManager.execute(this.userInput, activeItem.execArg, this.appendExecuteOutput)
                 historyManager.addItem(this.userInput)
                 this.resetUserInput()
@@ -147,14 +155,23 @@ let vue = new Vue({
             if (this.searchResult.length === 0)
                 return
 
-            let filePath = Item().execArg
+            let filePath = getActiveItem().execArg
 
-            if (filePath === undefined || !fs.existsSync(filePath))
+            new ExecutionService().openFileLocation(filePath)
+        },
+        getFilePreview() {
+            if (this.searchResult.length === 0)
                 return
-            else
-                exec(`start explorer.exe /select,"${path.win32.normalize(filePath)}"`, (err, stout, sterr) => {
-                    if (err) throw err
-                })
+
+            let filePath = getActiveItem().execArg
+            this.filePreview = new ExecutionService().getFilePreview(filePath)
+
+            this.searchResult = []
+            this.hideFilePreview = false
+        },
+        resetFilePreview() {
+            this.filePreview = ''
+            this.hideFilePreview = true
         },
         addNewFolder() {
             if (stringIsEmptyOrWhitespaces(this.newFolder) || folderIsAlreadyInConfig(this.newFolder))
@@ -249,6 +266,7 @@ let vue = new Vue({
             }
 
             this.resetExecuteOutput()
+            this.resetFilePreview()
         },
         hideConfig: function (val, oldVal) {
             if (!this.hideConfig)
@@ -279,7 +297,7 @@ function folderIsAlreadyInConfig(folder) {
     return false
 }
 
-function Item() {
+function getActiveItem() {
     for (let item of vue.searchResult)
         if (item.isActive)
             return item

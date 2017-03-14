@@ -110,6 +110,25 @@ div.execute-output {
     }
 }
 
+div.file-preview {
+    text-align: center;
+
+    img {
+        height: 100%;
+        width: auto;
+        left: 50%;
+    }
+
+    pre {
+        code {
+           @include font-mono();
+        }
+        
+        text-align: left;
+        padding: 15px;
+    }
+}
+
 div.config {
     padding: 15px;
     box-sizing: border-box;

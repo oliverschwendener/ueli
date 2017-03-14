@@ -40,7 +40,7 @@ export default class PluginManager {
         let validPlugin = this.getValidPlugin(userInput)
         return (validPlugin !== undefined && validPlugin.getAutoCompletion !== undefined)
             ? validPlugin.getAutoCompletion
-            : () => { }
+            : () => {}
     }
 
     getIcon(userInput) {

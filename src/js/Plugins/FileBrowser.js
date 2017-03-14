@@ -77,7 +77,5 @@ function getResultFromDirectory(folderPath, userInput) {
         return 0
     })
 
-    console.log(sortedResult)
-
     return sortedResult
 }

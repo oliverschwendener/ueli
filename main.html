@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./node_modules/highlight.js/styles/atom-one-dark.css">
     <title>electronizr</title>
 </head>
 
@@ -26,8 +27,11 @@
                 </ul>
             </div>
 
-            <div class="execute-output" :class="{ 'hidden' : hideExecuteOutput}">
+            <div class="execute-output" :class="{ 'hidden' : hideExecuteOutput }">
                 <pre>{{ executeOutput }}</pre>
+            </div>
+
+            <div v-html="filePreview" class="file-preview" :class="{ 'hidden' : hideFilePreview }">
             </div>
 
             <div class="config" :class="{ 'hidden' : hideConfig }">
