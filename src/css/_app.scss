@@ -116,7 +116,11 @@ div.file-preview {
     img {
         height: 100%;
         width: auto;
-        left: 50%;
+    }
+
+    video {
+        height: 100%;
+        width: auto;
     }
 
     pre {
@@ -126,6 +130,19 @@ div.file-preview {
         
         text-align: left;
         padding: 15px;
+    }
+
+    div.file-info-preview, div.folder-preview {
+        text-align: left;
+        padding: 15px;
+
+        li {
+            padding: 2px 0;
+        }
+
+        i {
+            padding-right: 5px;
+        }
     }
 }
 

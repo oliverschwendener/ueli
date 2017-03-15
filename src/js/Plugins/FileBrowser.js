@@ -46,7 +46,15 @@ export default class FileBrowser {
     getAutoCompletion(activeItem) {
         let folderPath = path.dirname(activeItem.execArg)
         let fileName = path.basename(activeItem.name)
-        return path.win32.normalize(`${folderPath}\\${fileName}`)
+        let filePath = `${folderPath}\\${fileName}`
+        let stats = fs.statSync(filePath)
+
+
+        filePath = stats.isDirectory() && !stats.isSymbolicLink()
+            ? `${filePath}\\`
+            : filePath
+
+        return path.win32.normalize(filePath)
     }
 
     getIcon() {
