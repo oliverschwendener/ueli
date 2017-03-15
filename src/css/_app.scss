@@ -123,6 +123,10 @@ div.file-preview {
         width: auto;
     }
 
+    audio {
+        width: 100%;
+    }
+
     pre {
         code {
            @include font-mono();

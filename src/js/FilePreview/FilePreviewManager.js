@@ -1,5 +1,6 @@
 import ImagePreview from './ImagePreview'
 import VideoPreview from './VideoPreview'
+import AudioPreview from './AudioPreview'
 import TextPreview from './TextPreview'
 import FolderPreview from './FolderPreview'
 import FileInfoPreview from './FileInfoPreview'
@@ -9,6 +10,7 @@ export default class FilePreviewManager {
         this.previewServices = [
             new ImagePreview(),
             new VideoPreview(),
+            new AudioPreview(),
             new TextPreview(),
             new FolderPreview()
         ]
