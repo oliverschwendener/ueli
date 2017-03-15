@@ -84,6 +84,28 @@ let vue = new Vue({
                     : autoCompletionResult
             }
         },
+        search() {
+            if (stringIsEmptyOrWhitespaces(this.userInput)) {
+                this.searchResult = []
+                this.searchIcon = 'fa fa-search'
+                return
+            }
+
+            this.searchResult = pluginManager.getSearchResult(this.userInput)
+            this.autoComplete = pluginManager.getAutoCompletion(this.userInput)
+            this.searchIcon = pluginManager.getIcon(this.userInput)
+
+            if (this.searchResult.length > 0) {
+                for (let i = 0; i < this.searchResult.length; i++)
+                    this.searchResult[i].id = `search-result-${i}`
+
+                this.searchResult[0].isActive = true
+                this.hideConfig = true
+            }
+
+            this.resetExecuteOutput()
+            this.resetFilePreview()
+        },
         autoComplete() { },
         selectNext() {
             let iterator = 0
@@ -160,11 +182,19 @@ let vue = new Vue({
             new ExecutionService().openFileLocation(filePath)
         },
         getFilePreview() {
+            if (!this.hideFilePreview) {
+                this.search()
+                return
+            }
+
             if (this.searchResult.length === 0)
                 return
 
             let filePath = getActiveItem().execArg
             this.filePreview = new ExecutionService().getFilePreview(filePath)
+
+            if (this.filePreview === undefined)
+                return
 
             this.searchResult = []
             this.hideFilePreview = false
@@ -249,26 +279,7 @@ let vue = new Vue({
     },
     watch: {
         userInput: function (val, oldVal) {
-            if (stringIsEmptyOrWhitespaces(val)) {
-                this.searchResult = []
-                this.searchIcon = 'fa fa-search'
-                return
-            }
-
-            this.searchResult = pluginManager.getSearchResult(val)
-            this.autoComplete = pluginManager.getAutoCompletion(val)
-            this.searchIcon = pluginManager.getIcon(val)
-
-            if (this.searchResult.length > 0) {
-                for (let i = 0; i < this.searchResult.length; i++)
-                    this.searchResult[i].id = `search-result-${i}`
-
-                this.searchResult[0].isActive = true
-                this.hideConfig = true
-            }
-
-            this.resetExecuteOutput()
-            this.resetFilePreview()
+            this.search(val)
         },
         hideConfig: function (val, oldVal) {
             if (!this.hideConfig)
