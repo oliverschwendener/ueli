@@ -168,6 +168,7 @@ let vue = new Vue({
         },
         execute() {
             this.resetExecuteOutput()
+            this.resetFilePreview()
             if (this.searchResult.length > 0) {
                 let activeItem = getActiveItem()
                 this.resetUserInput()
@@ -180,7 +181,6 @@ let vue = new Vue({
                 return
 
             let filePath = getActiveItem().execArg
-
             new ExecutionService().openFileLocation(filePath)
         },
         getFilePreview() {
@@ -364,8 +364,12 @@ function getActiveItem() {
 }
 
 function scrollToActiveItem() {
-    let activeItem = document.getElementById(getActiveItem().id)
-    activeItem.scrollIntoView()
+    let activeItem = getActiveItem()
+    if (activeItem !== undefined && activeItem !== null) {
+        let element = document.getElementById(activeItem.id)
+        if (element !== undefined && element !== null)
+            element.scrollIntoView()
+    }
 }
 
 // global key press 'f6' to focus on input

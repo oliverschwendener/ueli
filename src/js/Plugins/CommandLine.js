@@ -15,6 +15,9 @@ export default class CommandLine {
     execute(execArg, callback, kill) {
         let items = execArg.split(' ')
         let programName = items[0]
+        if (programName.startsWith(commandLinePrefix))
+            programName = programName.replace(commandLinePrefix, '')
+
         let options = []
 
         for (let i = 0; i < items.length; i++) {
@@ -59,7 +62,7 @@ export default class CommandLine {
 
         return [{
             name: `Execute ${command}`,
-            execArg: command
+            execArg: userInput
         }]
     }
 
