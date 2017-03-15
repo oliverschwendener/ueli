@@ -103,6 +103,8 @@ let vue = new Vue({
                 this.hideConfig = true
             }
 
+            scrollToActiveItem()
+
             this.resetExecuteOutput()
             this.resetFilePreview()
         },
