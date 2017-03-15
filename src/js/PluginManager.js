@@ -25,8 +25,8 @@ export default class PluginManager {
         return this.getValidPlugin(args) !== undefined
     }
 
-    execute(userInput, execArg, callback) {
-        this.getValidPlugin(userInput).execute(execArg, callback)
+    execute(execArg, callback) {
+        this.getValidPlugin(execArg).execute(execArg, callback)
     }
 
     getSearchResult(userInput) {

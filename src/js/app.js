@@ -169,7 +169,7 @@ let vue = new Vue({
             if (this.searchResult.length > 0) {
                 let activeItem = getActiveItem()
                 this.resetUserInput()
-                pluginManager.execute(this.userInput, activeItem.execArg, this.appendExecuteOutput)
+                pluginManager.execute(activeItem.execArg, this.appendExecuteOutput)
                 historyManager.addItem(this.userInput)
             }
         },
