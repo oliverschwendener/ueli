@@ -168,6 +168,8 @@ let vue = new Vue({
 
             this.searchResult = []
             this.hideFilePreview = false
+
+            highlight()
         },
         resetFilePreview() {
             this.filePreview = ''
@@ -368,3 +370,11 @@ setInterval(() => {
     setBattery()
     setDateTime()
 }, 1000)
+
+function highlight() {
+    setTimeout(() => {
+        let block = document.getElementById('text-file-preview')
+        if (block !== null && block !== undefined)
+            hljs.highlightBlock(block)
+    })
+}
