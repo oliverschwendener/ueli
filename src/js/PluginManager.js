@@ -66,5 +66,7 @@ export default class PluginManager {
 }
 
 function isValidFontAwesomeIcon(icon) {
-    return icon.startsWith('fa ')
+    return icon !== undefined
+        && icon !== null
+        && icon.startsWith('fa ')
 }
