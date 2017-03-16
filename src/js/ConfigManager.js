@@ -42,7 +42,7 @@ function getDefaultConfig() {
             height: 600
         },
         fullscreen: false,
-        colorTheme: 'atom-one-dark',
+        colorTheme: 'osc-dark-blue',
         folders: [
             `C:\\ProgramData\\Microsoft\\Windows\\Start Menu`,
             `${process.env.USERPROFILE}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`,
@@ -58,7 +58,7 @@ function getDefaultConfig() {
         ],
         customShortcuts: [],
         favorites: [],
-        hideStatusBar: false
+        hideStatusBar: true
     }
 }
 
