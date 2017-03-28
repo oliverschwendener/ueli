@@ -41,11 +41,11 @@ app.on('ready', () => {
 
   mainWindow.on('blur', (event, arg) => {
     if (mainWindow.isVisible())
-      mainWindow.hide()
+      hideWindow()
   })
 
   ipcMain.on('hide-main-window', (event, arg) => {
-    mainWindow.hide()
+    hideWindow()
   })
 
   ipcMain.on('close-main-window', () => {
@@ -75,8 +75,14 @@ function setGlobalShortcuts() {
   globalShortcut.unregisterAll()
   globalShortcut.register(config.keyboardShortcut, () => {
     if (mainWindow.isVisible())
-      mainWindow.hide()
+      hideWindow()
     else
       mainWindow.show()
   })
+}
+
+function hideWindow() {
+  setTimeout(() => {
+    mainWindow.hide()
+  }, 5)
 }
