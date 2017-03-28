@@ -53,7 +53,7 @@ export default class CommandLine {
             })
         }
         catch(ex) {
-            callback('lol')
+            callback('There was an error')
         }
     }
 
