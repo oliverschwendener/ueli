@@ -24,7 +24,7 @@ export default class InstalledPrograms {
 
     isValid(userInput) {
         this.searchResult = this.search(userInput)
-        return this.searchResult.length > 0
+        return this.searchResult.length > 0 || this.searchResultContainsFilePath(userInput)
     }
 
     search(userInput) {
@@ -67,13 +67,13 @@ export default class InstalledPrograms {
     }
 
     execute(filePath) {
+        new FavoritesManager().addFavorite(filePath)
         let args = `start "" "${filePath}"`
 
         exec(args, (err, stdout, sterr) => {
             if (err)
                 throw err
             else {
-                new FavoritesManager().addFavorite(filePath)
                 ipcRenderer.send('hide-main-window')
             }
         })
@@ -85,6 +85,14 @@ export default class InstalledPrograms {
 
     getIcon(userInput) {
         return this.icon
+    }
+
+    searchResultContainsFilePath(filePath) {
+        for (let item of this.programs)
+            if (path.win32.normalize(item) === path.win32.normalize(filePath))
+                return true
+
+        return false
     }
 }
 
