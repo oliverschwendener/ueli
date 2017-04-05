@@ -59,14 +59,17 @@ app.on('ready', () => {
   })
 
   setGlobalShortcuts()
+  setZoomFactor()
 })
 
 function setWindowOptions() {
   let config = new ConfigManager().getConfig()
 
-  mainWindow.setSize(config.size.width, config.size.height)
+  mainWindow.setSize(parseFloat(config.size.width), parseFloat(config.size.height))
   mainWindow.setKiosk(config.fullscreen)
   mainWindow.center()
+
+  setZoomFactor()
 }
 
 function setGlobalShortcuts() {
@@ -85,4 +88,9 @@ function hideWindow() {
   setTimeout(() => {
     mainWindow.hide()
   }, 5)
+}
+
+function setZoomFactor() {
+  let zoomFactor = parseFloat(new ConfigManager().getConfig().zoomFactor)
+  mainWindow.webContents.setZoomFactor(zoomFactor)
 }

@@ -55,6 +55,10 @@
                         <input type="number" v-model="config.size.height" class="new-item">
                     </div>
                     <div class="form-item">
+                        <label>Zoom factor</label>
+                        <input type="number" max="3" min="0.1" step="0.05" v-model="config.zoomFactor" class="new-item">
+                    </div>
+                    <div class="form-item">
                         <label>Fullscreen</label>
                         <input type="checkbox" v-model="config.fullscreen" class="new-item">
                     </div>

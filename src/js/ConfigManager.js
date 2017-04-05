@@ -41,6 +41,7 @@ function getDefaultConfig() {
             width: 960,
             height: 600
         },
+        zoomFactor: 1.0,
         fullscreen: false,
         colorTheme: 'osc-dark-blue',
         folders: [
