@@ -10,10 +10,7 @@ let configManager = new ConfigManager()
 let mainWindow = null
 
 let mainWindowOptions = {
-  width: configManager.getConfig().size.width,
-  height: configManager.getConfig().size.height,
-  frame: false,
-  kiosk: configManager.getConfig().fullscreen,
+  frame: false,  
   resizable: true,
   skipTaskbar: true,
   show: false,
@@ -59,6 +56,7 @@ app.on('ready', () => {
   })
 
   setGlobalShortcuts()
+  setWindowOptions()
   setZoomFactor()
 })
 
