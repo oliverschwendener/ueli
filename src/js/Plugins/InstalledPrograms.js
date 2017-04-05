@@ -50,7 +50,7 @@ export default class InstalledPrograms {
             for (let item of result)
                 for (let favorite of this.favorites)
                     if (favorite.path === item.execArg)
-                        item.weight = item.weight - (favorite.counter * 2)
+                        item.weight = item.weight - (favorite.counter)
 
         // sort desc result by weigth
         let sortedResult = result.sort((a, b) => {
