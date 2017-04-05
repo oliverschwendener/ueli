@@ -284,8 +284,7 @@ let vue = new Vue({
             this.search(val)
         },
         hideConfig: function (val, oldVal) {
-            if (!this.hideConfig)
-                this.config = configManager.getConfig()
+            this.config = new ConfigManager().getConfig()
         },
         colorTheme: function (colorTheme, oldColortheme) {
             this.config.colorTheme = colorTheme
