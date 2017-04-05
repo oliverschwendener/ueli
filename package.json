@@ -21,7 +21,7 @@
     "vue": "^2.1.10"
   },
   "devDependencies": {
-    "electron": "*",
+    "electron": "^1.4.14",
     "electron-builder": "^11.2.4",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
