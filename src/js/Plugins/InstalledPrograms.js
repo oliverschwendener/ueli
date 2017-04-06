@@ -10,14 +10,20 @@ export default class InstalledPrograms {
     constructor() {
         this.folders = new ConfigManager().getConfig().folders
         this.favorites = new FavoritesManager().getFavorites()
-        this.programs = getFilesFromDirectoriesRecursivelyByFileExtension(this.folders)
+        this.programs = []
+        this.setup()
         this.initalizeFileWatchers()
         this.icon = 'fa fa-window-maximize'
     }
 
+    async setup() {
+       await this.getFilesFromDirectoriesRecursivelyByFileExtension(this.folders)
+    }
+
     initalizeFileWatchers() {
-        setInterval(() => {
-            this.programs = getFilesFromDirectoriesRecursivelyByFileExtension(this.folders)
+        setInterval(async () => {
+            this.programs = []
+            await this.getFilesFromDirectoriesRecursivelyByFileExtension(this.folders)
             this.favorites = new FavoritesManager().getFavorites()
         }, 10000)
     }
@@ -94,6 +100,43 @@ export default class InstalledPrograms {
 
         return false
     }
+
+    async  getFilesFromDirectoriesRecursivelyByFileExtension(directories, fileExtension = '*') {
+
+        let result = []
+
+        let filePromises = await directories.map(async d => await this.getFilesFromDirecotry(d, fileExtension))
+        await Promise.all(filePromises).then(results => result.push(...([].concat(...results))))
+
+        this.programs.push(...result)
+    }
+
+    async  getFilesFromDirecotry(directory, fileExtension) {
+        const self = this
+        return new Promise(function (resolve, reject) {
+            fs.readdir(directory, async (error, files) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    let results = []
+                    let filesWithExpandedPath = files.map(f => `${directory}/${f}`)
+                    filesWithExpandedPath.forEach(async file => {
+                        const status = fs.statSync(file)
+                        if (status && status.isDirectory() && !status.isSymbolicLink()) {
+                            self.getFilesFromDirectoriesRecursivelyByFileExtension([file], fileExtension)
+                        }
+                        if (fileExtension === '*') {
+                            results.push(file)
+                        }
+                        else if (path.extname(file).toLowerCase() === fileExtension.toLowerCase()) {
+                            results.push(file)
+                        }
+                    })
+                    resolve(results);
+                }
+            })
+        })
+    }
 }
 
 function stringContainsSubstring(stringToSearch, substring) {
@@ -145,36 +188,3 @@ function splitStringToArray(string) {
     return string.split(/\s+/)
 }
 
-function getFilesFromDirectoriesRecursivelyByFileExtension(directories, fileExtension = '*') {
-    let result = []
-
-    for (let directory of directories) {
-        let dir = directory
-        try {
-            let files = fs.readdirSync(dir)
-            for (let file of files) {
-                file = `${dir}/${file}`
-                let stat = fs.lstatSync(file)
-                if (stat && stat.isDirectory() && !stat.isSymbolicLink()) {
-                    try {
-                        result = result.concat(getFilesFromDirectoriesRecursivelyByFileExtension([file], fileExtension))
-                    }
-                    catch (err) {
-                        throw err
-                    }
-                }
-                else {
-                    if (fileExtension === '*')
-                        result.push(file)
-                    else if (path.extname(file).toLowerCase() === fileExtension.toLowerCase())
-                        result.push(file)
-                }
-            }
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
-
-    return result
-}

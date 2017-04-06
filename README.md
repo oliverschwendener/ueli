@@ -25,7 +25,7 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 You can download the latest version [here](http://electronizr.oliverschwendener.ch)
 
 ### Manual Installation
-1. Install [Node](https://nodejs.org/en/)
+1. Install [Node](https://nodejs.org/en/) (>= 7.8.0)
 2. Clone Repo or Download ZIP
 3. Install npm packages
     * `$ npm install`
