@@ -17,7 +17,7 @@ export default class InstalledPrograms {
     }
 
     async setup() {
-       await this.getFilesFromDirectoriesRecursivelyByFileExtension(this.folders)
+        await this.getFilesFromDirectoriesRecursivelyByFileExtension(this.folders)
     }
 
     initalizeFileWatchers() {
@@ -101,7 +101,7 @@ export default class InstalledPrograms {
         return false
     }
 
-    async  getFilesFromDirectoriesRecursivelyByFileExtension(directories, fileExtension = '*') {
+    async getFilesFromDirectoriesRecursivelyByFileExtension(directories, fileExtension = '*') {
 
         let result = []
 
@@ -111,7 +111,7 @@ export default class InstalledPrograms {
         this.programs.push(...result)
     }
 
-    async  getFilesFromDirecotry(directory, fileExtension) {
+    async getFilesFromDirecotry(directory, fileExtension) {
         const self = this
         return new Promise(function (resolve, reject) {
             fs.readdir(directory, async (error, files) => {
@@ -121,15 +121,17 @@ export default class InstalledPrograms {
                     let results = []
                     let filesWithExpandedPath = files.map(f => `${directory}/${f}`)
                     filesWithExpandedPath.forEach(async file => {
-                        const status = fs.statSync(file)
-                        if (status && status.isDirectory() && !status.isSymbolicLink()) {
+                        const stat = fs.lstatSync(file)
+                        if (stat && stat.isDirectory() && !stat.isSymbolicLink()) {
                             self.getFilesFromDirectoriesRecursivelyByFileExtension([file], fileExtension)
                         }
-                        if (fileExtension === '*') {
-                            results.push(file)
-                        }
-                        else if (path.extname(file).toLowerCase() === fileExtension.toLowerCase()) {
-                            results.push(file)
+                        else {
+                            if (fileExtension === '*') {
+                                results.push(file)
+                            }
+                            else if (path.extname(file).toLowerCase() === fileExtension.toLowerCase()) {
+                                results.push(file)
+                            }
                         }
                     })
                     resolve(results);
