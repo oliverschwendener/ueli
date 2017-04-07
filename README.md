@@ -5,7 +5,7 @@
 This is an 'alt+space' launcher for Windows because I thought the default Windows 10 search function doesn't always do what I want.
 
 
-![example-image](img/example.png)
+![example-image](img/color-themes/osc-dark-blue.png)
 
 
 ## Table of Contents
