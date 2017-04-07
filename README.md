@@ -34,8 +34,7 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
 1. Install [NodeJS](https://nodejs.org/)
 2. Install [Yarn](https://yarnpkg.com/)
 3. Clone Repo or Download ZIP
-4. Run build script
-    * `$ yarn build`
+4. Run [build](#build) script
 5. Your application is now in the `dist/` folder
 6. Create a shortcut to `electronizr.exe` in the windows startup folder (`C:\Users\<your-username>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`) to run the application on windows logon 
 
@@ -158,10 +157,47 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 |ezr:config|Open config file|
 |ezr:reload|Reload electronizr|
 |ezr:reset|Resets the user history|
-|ezr:exit|Exit the application| 
+|ezr:exit|Exit the application|
 
 
 ## Planned Features
 * More color themes
 * Installer / Prebuilt Downloads
 * Access Control Panel items
+
+
+## Development
+
+### Requirements
+* [Git](https://git-scm.com/)
+* [NodeJS](https://nodejs.org/)
+* [Yarn](https://yarnpkg.com/)
+
+### Set up
+
+``` bash
+$ git clone https://github.com/oliverschwendener/electronizr?
+$ cd electronizr
+$ yarn install
+```
+
+### Run
+
+``` bash
+$ gulp watch
+$ yarn start
+```
+**Note**: the gulp task watches your Javascript and CSS files and runs the associated gulp task if there is any change.
+
+### Build
+
+```
+$ yarn build
+```
+**Note**: the default output location for the build is `dist/`.
+
+
+## License
+Copyright (c) Oliver Schwendener. All rights reserved.
+
+Licensed under the [MIT](LICENSE) License
