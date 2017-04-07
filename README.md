@@ -39,7 +39,7 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
 5. Run gulp build task
     * `$ gulp build`
 6. Run build script
-    * `$ npm run build`
+    * `$ yarn build`
 7. Your application is now in the `dist/` folder
 8. Create a shortcut to `electronizr.exe` in the windows startup folder (`C:\Users\<your-username>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`) to run the application on windows logon 
 
