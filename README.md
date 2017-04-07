@@ -154,10 +154,10 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 ## electronizr specific commands
 |Command|Description|
 |---|---|
-|ezr:config|Open config file|
+|ezr:config|Edit configuration|
 |ezr:reload|Reload electronizr|
-|ezr:reset|Resets the user history|
-|ezr:exit|Exit the application|
+|ezr:reset|Reset configuration|
+|ezr:exit|Exit electronizr|
 |ezr:docs|Read the documentation|
 
 
