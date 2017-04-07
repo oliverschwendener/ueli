@@ -32,15 +32,16 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
 
 ### Manual Installation
 1. Install [NodeJS](https://nodejs.org/)
-2. Clone Repo or Download ZIP
-3. Install npm packages
+2. Install [Yarn](https://yarnpkg.com/)
+3. Clone Repo or Download ZIP
+4. Install npm packages
     * `$ yarn`
-4. Run gulp build task
+5. Run gulp build task
     * `$ gulp build`
-5. Run build script
+6. Run build script
     * `$ npm run build`
-6. Your application is now in the `dist/` folder
-7. Create a shortcut to `electronizr.exe` in the windows startup folder (`C:\Users\<your-username>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`) to run the application on windows logon 
+7. Your application is now in the `dist/` folder
+8. Create a shortcut to `electronizr.exe` in the windows startup folder (`C:\Users\<your-username>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`) to run the application on windows logon 
 
 
 ## Features
