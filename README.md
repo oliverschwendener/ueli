@@ -126,13 +126,6 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 * `zoomFactor` Integer - Window's zoom factor, 1 represents 100%. Default is `1`.
 * `fullscreen` Boolean - Whether the window should show in fullscreen. Default is `false`.
 * `colorTheme` String - Sets the color theme to one of the [available color themes](#color-themes). Default is `osc-dark-blue`.
-    * Available color themes:
-        * `atom-one-dark`
-        * `dracula`
-        * `osc-dark-blue`
-        * `osc-dark-green`
-        * `osc-light-blue`
-        * `osc-light-green`
 * `folders` String[] - A List of the folders you want to search. It's recommended not to add a folder with a lot of files because that would slow down the search function drastically. Default are the `Start Menu` and `Desktop` folders.
 * `webSearches` Array of webSearch Objects - A List of custom web search engines. Default is the `Google` web search.
     * `webSearch` Object - Defines a custom web search engine
@@ -148,23 +141,15 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 * `hideStatusBar` Boolean - Whether to hide/show the status bar at the bottom of the window. Default is `true`.
 
 ## Color Themes
-### atom-one-dark
-![atom-one-dark](img/color-themes/atom-one-dark.png)
+![all-color-themes](img/color-themes/all-color-themes.png)
 
-### draclua
-![dracula](img/color-themes/dracula.png)
-
-### osc-dark-blue
-![osc-dark-blue](img/color-themes/osc-dark-blue.png)
-
-### osc-dark-green
-![osc-dark-green](img/color-themes/osc-dark-green.png)
-
-### osc-light-blue
-![osc-light-blue](img/color-themes/osc-light-blue.png)
-
-### osc-light-green
-![osc-light-green](img/color-themes/osc-light-green.png)
+* Available color themes:
+    * `osc-dark-blue`
+    * `osc-dark-green`
+    * `atom-one-dark`
+    * `dracula`
+    * `osc-light-blue`
+    * `osc-light-green`
 
 
 ## electronizr specific commands
