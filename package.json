@@ -30,8 +30,7 @@
   },
   "scripts": {
     "start": "electron ./js/main.js",
-    "build": "build --dir",
-    "setup": "build"
+    "build": "yarn install && gulp build && build --dir"
   },
   "build": {
     "appId": "com.electron.electronizr",
