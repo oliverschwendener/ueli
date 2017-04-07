@@ -158,6 +158,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 |ezr:reload|Reload electronizr|
 |ezr:reset|Resets the user history|
 |ezr:exit|Exit the application|
+|ezr:docs|Read the documentation|
 
 
 ## Planned Features

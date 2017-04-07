@@ -1,6 +1,7 @@
 import leven from 'leven'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
+import open from 'open'
 
 import ConfigManager from './../ConfigManager'
 
@@ -36,6 +37,13 @@ export default class EzrCommands {
                 execute() {
                     new ConfigManager().resetConfigToDefault()
                     ipcRenderer.send('reload-window')
+                }
+            },
+            {
+                command: `${commandPrefix}:docs`,
+                description: 'Read the documentation',
+                execute() {
+                    open('https://github.com/oliverschwendener/electronizr#electronizr')
                 }
             }
         ]
