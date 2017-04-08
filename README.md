@@ -16,6 +16,8 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 * [Color Themes](#color-themes)
 * [electronizr specific commands](#electronizr-specific-commands)
 * [Planned Features](#planned-features)
+* [Development](#development)
+* [License](#license)
 
 
 ## Quick Tutorial
@@ -30,7 +32,7 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 You can download the latest version [here](http://electronizr.oliverschwendener.ch)
 
 
-### Manual Installation
+### Manual installation
 1. Install [NodeJS](https://nodejs.org/)
 2. Install [Yarn](https://yarnpkg.com/)
 3. Clone Repo or Download ZIP
