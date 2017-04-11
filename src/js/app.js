@@ -171,9 +171,9 @@ let vue = new Vue({
             this.resetFilePreview()
             if (this.searchResult.length > 0) {
                 let activeItem = getActiveItem()
+                historyManager.addItem(this.userInput)
                 this.resetUserInput()
                 pluginManager.execute(activeItem.execArg, this.appendExecuteOutput)
-                historyManager.addItem(this.userInput)
             }
         },
         openFileLocation() {
