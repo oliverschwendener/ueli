@@ -10,10 +10,7 @@ export default class WebUrl {
     }
 
     isValid(url) {
-        if (url.endsWith('.exe'))
-            return false
-
-        let expression = /^[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gi
+        let expression = /^((https?:)?[/]{2})?([a-z0-9]+[.])+[a-z]+.*$/i
         let regex = new RegExp(expression)
 
         if (url.match(regex))
@@ -30,7 +27,7 @@ export default class WebUrl {
 
     getSearchResult(userInput) {
         return [{
-            name: `Open default web browser`,
+            name: `Open in browser`,
             execArg: addHttpToUrl(userInput)
         }]
     }
