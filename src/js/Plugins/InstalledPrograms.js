@@ -41,7 +41,7 @@ export default class InstalledPrograms {
             let programName = path.basename(program).replace('.lnk', '')
             if (stringContainsSubstring(programName, userInput)) {
                 let weight = getWeight(programName, userInput)
-                if (weight > 0)
+                if (weight >= 0)
                     result.push({
                         name: programName,
                         execArg: path.win32.normalize(program),
