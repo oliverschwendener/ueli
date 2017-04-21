@@ -21,9 +21,9 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 
 
 ## Quick Tutorial
-* Hit `alt + space` to show/hide the main program
+* Press `alt+space` to show/hide the main program
 * Start typing a program name you're looking for
-* Hit enter to launch the highlighted program 
+* Press `Enter` to launch the highlighted program 
 * Use the arrow keys to scroll through the search result
 
 
@@ -38,17 +38,18 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
 3. Clone Repo or Download ZIP
 4. Run [build](#build) script
 5. Your application is now in the `dist/` folder
-6. Create a shortcut to `electronizr.exe` in the windows startup folder (`C:\Users\<your-username>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`) to run the application on windows logon 
+6. Create a shortcut to `electronizr.exe` in the windows startup folder (`C:\Users\<your-username>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`) to run the application on windows logon
 
 
 ## Features
 
-### Search for programs
+### Search
 
 * Start typing a program name
 * Use arrow keys to scroll up and down
-* Hit `Enter` to open the selected program
-* Hit `Ctrl+O` to open the selected programs file location
+* Press `Enter` to open the selected program
+* Press `Ctrl+O` to open the selected programs file location
+* Press `Ctrl+space` to open preview
 
 ### Custom shortcuts
 
@@ -59,7 +60,7 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
 ### Open URLs with your default web browser
 
 * Start typing a URL
-* Hit `Enter` to open the URL in your default web browser
+* Press `Enter` to open the URL in your default web browser
 
 ### Use web search engines
 
@@ -76,9 +77,9 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
 
 * You can browse local files by entering a filepath
     * For example: `C:\Users`
-* Hit `Enter` to open file or folder
-* Hit `Tab` for autocompletion
-* Hit `Ctrl+Space` to preview a file or folder
+* Press `Enter` to open file or folder
+* Press `Tab` for autocompletion
+* Press `Ctrl+Space` to preview a file or folder
 
 
 ## Customization
@@ -179,7 +180,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 ### Set up
 
 ``` bash
-$ git clone https://github.com/oliverschwendener/electronizr?
+$ git clone https://github.com/oliverschwendener/electronizr
 $ cd electronizr
 $ yarn install
 ```
