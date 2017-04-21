@@ -49,6 +49,7 @@ function getDefaultConfig() {
             `${process.env.USERPROFILE}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`,
             `${process.env.USERPROFILE}\\Desktop`
         ],
+        rescanInterval: 30,
         webSearches: [
             {
                 name: 'Google',

@@ -8,7 +8,8 @@ import FavoritesManager from './../FavoritesManager'
 
 export default class InstalledPrograms {
     constructor() {
-        this.folders = new ConfigManager().getConfig().folders
+        this.config = new ConfigManager().getConfig()
+        this.folders = this.config.folders
         this.favorites = new FavoritesManager().getFavorites()
         this.programs = []
         this.setup()
@@ -25,7 +26,7 @@ export default class InstalledPrograms {
             this.programs = []
             await this.getFilesFromDirectoriesRecursivelyByFileExtension(this.folders)
             this.favorites = new FavoritesManager().getFavorites()
-        }, 10000)
+        }, convertSecondsToMilliSeconds(this.config.rescanInterval))
     }
 
     isValid(userInput) {
@@ -190,3 +191,6 @@ function splitStringToArray(string) {
     return string.split(/\s+/)
 }
 
+function convertSecondsToMilliSeconds(seconds) {
+    return seconds * 1000
+}

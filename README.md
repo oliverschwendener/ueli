@@ -102,6 +102,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
         "C:\\Users\\<your-username>\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu",
         "C:\\Users\\<your-username>\\Desktop"
     ],
+    "rescanInterval": 30,
     "webSearches": [
         {
             "name": "Google",
@@ -129,6 +130,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 * `fullscreen` Boolean - Whether the window should show in fullscreen. Default is `false`.
 * `colorTheme` String - Sets the color theme to one of the [available color themes](#color-themes). Default is `osc-dark-blue`.
 * `folders` String[] - A List of the folders you want to search. It's recommended not to add a folder with a lot of files because that would slow down the search function drastically. Default are the `Start Menu` and `Desktop` folders.
+* `rescanInterval` Integer - Interval to rescan the specified folders (in seconds). Min=`1`, Max=`3600`. Default is `30`
 * `webSearches` Array of webSearch Objects - A List of custom web search engines. Default is the `Google` web search.
     * `webSearch` Object - Defines a custom web search engine
         * `name` String - Represents the displayed name of your search engine.
