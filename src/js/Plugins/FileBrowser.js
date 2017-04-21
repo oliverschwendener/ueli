@@ -66,17 +66,20 @@ function getResultFromDirectory(folderPath, userInput) {
     folderPath = path.win32.normalize(folderPath)    
     let folderSeparator = folderPath.endsWith('\\') ? '' : '\\'
     let files = fs.readdirSync(folderPath)
+    let searchFileName = path.basename(userInput)
     let result = []
 
     for (let file of files) {
         let filePath = `${folderPath}${folderSeparator}${path.win32.normalize(file)}`
         let fileName = path.basename(filePath)
-        result.push({
-            name: fileName,
-            execArg: filePath,
-            weight: leven(fileName, path.basename(userInput)),
-            isActive: false
-        })
+        
+        if (userInput.endsWith('\\') || fileName.toLowerCase().indexOf(searchFileName.toLowerCase()) > -1)
+            result.push({
+                name: fileName,
+                execArg: filePath,
+                weight: leven(fileName, path.basename(userInput)),
+                isActive: false
+            })
     }
 
     let sortedResult = result.sort((a, b) => {
