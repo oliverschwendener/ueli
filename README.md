@@ -48,8 +48,6 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
 * Start typing a program name
 * Use arrow keys to scroll up and down
 * Press `Enter` to open the selected program
-* Press `Ctrl+O` to open the selected programs file location
-* Press `Ctrl+space` to open preview
 
 ### Custom shortcuts
 
@@ -80,6 +78,11 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
 * Press `Enter` to open file or folder
 * Press `Tab` for autocompletion
 * Press `Ctrl+Space` to preview a file or folder
+
+### Keyboard shortcuts
+* `Ctrl+O` to open the selected programs file location
+* `Ctrl+space` to open preview
+* `F6` to focus on the input textbox
 
 
 ## Customization
