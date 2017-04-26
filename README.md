@@ -82,6 +82,7 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
 ### Keyboard shortcuts
 * `Ctrl+O` to open the selected programs file location
 * `Ctrl+space` to open preview
+* `Shift+ArrowUp` and `Shift+ArrowDown` to browse your input history
 * `F6` to focus on the input textbox
 
 
