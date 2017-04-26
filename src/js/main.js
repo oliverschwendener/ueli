@@ -10,7 +10,7 @@ let configManager = new ConfigManager()
 let mainWindow = null
 
 let mainWindowOptions = {
-  frame: false,  
+  frame: false,
   resizable: true,
   skipTaskbar: true,
   show: false,
@@ -19,46 +19,54 @@ let mainWindowOptions = {
 
 let mainWindowHtml = `file://${__dirname}/../main.html`
 
-app.on('window-all-closed', function () {
-  if (process.platform != 'darwin') {
-    app.quit()
-  }
-})
+let shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => { })
 
-app.on('ready', () => {
-  mainWindow = new BrowserWindow(mainWindowOptions)
-
-  mainWindow.loadURL(mainWindowHtml)
-  //mainWindow.webContents.openDevTools()
-
-  mainWindow.on('closed', () => {
-    globalShortcut.unregisterAll()
-    mainWindow = null
+// quit if other instance is already running
+if (shouldQuit) {
+  app.quit()
+}
+else {
+  app.on('window-all-closed', function () {
+    if (process.platform != 'darwin') {
+      app.quit()
+    }
   })
 
-  mainWindow.on('blur', (event, arg) => {
-    if (mainWindow.isVisible())
+  app.on('ready', () => {
+    mainWindow = new BrowserWindow(mainWindowOptions)
+
+    mainWindow.loadURL(mainWindowHtml)
+    //mainWindow.webContents.openDevTools()
+
+    mainWindow.on('closed', () => {
+      globalShortcut.unregisterAll()
+      mainWindow = null
+    })
+
+    mainWindow.on('blur', (event, arg) => {
+      if (mainWindow.isVisible())
+        hideWindow()
+    })
+
+    ipcMain.on('hide-main-window', (event, arg) => {
       hideWindow()
-  })
+    })
 
-  ipcMain.on('hide-main-window', (event, arg) => {
-    hideWindow()
-  })
+    ipcMain.on('close-main-window', () => {
+      app.quit()
+    })
 
-  ipcMain.on('close-main-window', () => {
-    app.quit()
-  })
+    ipcMain.on('reload-window', () => {
+      setWindowOptions()
+      setGlobalShortcuts()
+      mainWindow.reload()
+    })
 
-  ipcMain.on('reload-window', () => {
-    setWindowOptions()
     setGlobalShortcuts()
-    mainWindow.reload()
+    setWindowOptions()
+    setZoomFactor()
   })
-
-  setGlobalShortcuts()
-  setWindowOptions()
-  setZoomFactor()
-})
+}
 
 function setWindowOptions() {
   let config = new ConfigManager().getConfig()
