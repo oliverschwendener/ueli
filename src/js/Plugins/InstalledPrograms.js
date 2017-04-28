@@ -15,6 +15,10 @@ export default class InstalledPrograms {
         this.setup()
         this.initalizeFileWatchers()
         this.icon = 'fa fa-window-maximize'
+        this.shorcutFileExtensions = [
+            '.lnk',
+            '.appref-ms'
+        ]
     }
 
     async setup() {
@@ -39,7 +43,11 @@ export default class InstalledPrograms {
 
         // add programs with weight
         for (let program of this.programs) {
-            let programName = path.basename(program).replace('.lnk', '')
+            let programName = path.basename(program)
+
+            for (let shortCutFileExtension of this.shorcutFileExtensions)
+                programName = programName.replace(shortCutFileExtension, '')
+
             if (stringContainsSubstring(programName, userInput)) {
                 let weight = getWeight(programName, userInput)
                 if (weight >= 0)
