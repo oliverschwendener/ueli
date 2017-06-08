@@ -67,13 +67,13 @@ function getResultFromDirectory(folderPath, userInput) {
     let folderSeparator = folderPath.endsWith('\\') ? '' : '\\'
     let files = fs.readdirSync(folderPath)
     let searchFileName = path.basename(userInput)
-    let result = []
+    let result = []    
 
     for (let file of files) {
         let filePath = `${folderPath}${folderSeparator}${path.win32.normalize(file)}`
         let fileName = path.basename(filePath)
-        
-        if (userInput.endsWith('\\') || fileName.toLowerCase().indexOf(searchFileName.toLowerCase()) > -1)
+
+        if (userInput.endsWith('\\') || filePath.toLowerCase().indexOf(searchFileName.toLowerCase()) > -1)
             result.push({
                 name: fileName,
                 execArg: filePath,
