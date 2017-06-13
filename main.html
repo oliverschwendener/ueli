@@ -159,10 +159,10 @@
                         <tbody>
                             <tr v-for="webSearch in config.webSearches">
                                 <td><i v-on:click="removeWebSearch(webSearch)" class="fa fa-minus-circle action-button"></i></td>
-                                <td>{{ webSearch.name }}</td>
-                                <td>{{ webSearch.prefix }}</td>
-                                <td>{{ webSearch.url }}</td>
-                                <td>{{ webSearch.icon }}</td>
+                                <td><input class="new-item" type="text" v-model="webSearch.name"></td>
+                                <td><input class="new-item" type="text" v-model="webSearch.prefix"></td>
+                                <td><input class="new-item" type="text" v-model="webSearch.url"></td>
+                                <td><input class="new-item" type="text" v-model="webSearch.icon"></td>
                             </tr>
                             <tr>
                                 <td>
