@@ -9,14 +9,6 @@ let configManager = new ConfigManager()
 
 let mainWindow = null
 
-let mainWindowOptions = {
-  frame: false,
-  resizable: true,
-  skipTaskbar: true,
-  show: false,
-  icon: 'build/icon.ico'
-}
-
 let mainWindowHtml = `file://${__dirname}/../main.html`
 
 let shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => { })
@@ -33,7 +25,13 @@ else {
   })
 
   app.on('ready', () => {
-    mainWindow = new BrowserWindow(mainWindowOptions)
+    mainWindow = new BrowserWindow({
+      frame: false,
+      resizable: true,
+      skipTaskbar: true,
+      show: false,
+      icon: 'build/icon.ico'
+    })
 
     mainWindow.loadURL(mainWindowHtml)
     //mainWindow.webContents.openDevTools()
