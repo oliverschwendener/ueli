@@ -54,7 +54,8 @@ function getDefaultConfig() {
             { name: 'Google', prefix: 'g', url: 'https://google.com/search?q=', icon: 'fa fa-google' },
             { name: 'Google Image', prefix: 'gi', url: 'https://www.google.com/search?tbm=isch&q=', icon: 'fa fa-picture-o' },
             { name: 'YouTube', prefix: 'yt', url: 'https://www.youtube.com/results?search_query=', icon: 'fa fa-youtube-play' },
-            { name: 'Linguee', prefix: 'l', url: 'http://www.linguee.de/deutsch-englisch/search?source=auto&query=', icon: 'fa fa-language' }
+            { name: 'Linguee', prefix: 'l', url: 'http://www.linguee.de/deutsch-englisch/search?source=auto&query=', icon: 'fa fa-language' },
+            { name: 'DuckDuckGo', prefix: 'd', url: 'https://duckduckgo.com/?q=', icon: 'fa fa-search'}
         ],
         customShortcuts: [],
         favorites: [],
