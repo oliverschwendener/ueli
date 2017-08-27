@@ -17,7 +17,8 @@ export default class InstalledPrograms {
         this.icon = 'fa fa-window-maximize'
         this.shorcutFileExtensions = [
             '.lnk',
-            '.appref-ms'
+            '.appref-ms',
+            '.url'
         ]
     }
 
