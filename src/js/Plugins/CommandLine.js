@@ -44,7 +44,7 @@ export default class CommandLine {
             })
 
             command.on('exit', (code) => {
-                callback(`Finished.`)
+                callback(`Exit ${code}`)
             })
 
             document.addEventListener('keyup', (e) => {
