@@ -64,6 +64,10 @@ else {
       mainWindow.reload()
     })
 
+    ipcMain.on('get-info', () => {
+      mainWindow.webContents.send('get-info')
+    })
+
     setGlobalShortcuts()
     setWindowOptions()
     setZoomFactor()

@@ -45,6 +45,13 @@ export default class EzrCommands {
                 execute() {
                     open('https://github.com/oliverschwendener/electronizr#electronizr')
                 }
+            },
+            {
+                command: `${commandPrefix}:about`,
+                description: 'About electronizr',
+                execute() {
+                    ipcRenderer.send('get-info')
+                }
             }
         ]
         this.icon = 'fa fa-cogs'
