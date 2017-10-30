@@ -28,7 +28,7 @@ else {
       show: false
     })
 
-    tray = new Tray(`${__dirname}/../build/icon.ico`)
+    tray = new Tray(`${__dirname}/../img/icon.ico`)
     let trayMenu = Menu.buildFromTemplate([
       { label: 'About', click: getInfo },
       { label: 'Show/Hide', click: toggleWindow },
