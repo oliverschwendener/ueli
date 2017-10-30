@@ -30,6 +30,7 @@ else {
 
     tray = new Tray(`${__dirname}/../build/icon.ico`)
     let trayMenu = Menu.buildFromTemplate([
+      { label: 'About', click: getInfo },
       { label: 'Show/Hide', click: toggleWindow },
       { label: 'Exit', click: app.quit }
     ])
@@ -104,4 +105,8 @@ function toggleWindow() {
 function setZoomFactor() {
   let zoomFactor = parseFloat(new ConfigManager().getConfig().zoomFactor)
   mainWindow.webContents.setZoomFactor(zoomFactor)
+}
+
+function getInfo() {
+  mainWindow.webContents.send('get-info')
 }

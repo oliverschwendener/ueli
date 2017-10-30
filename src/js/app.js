@@ -394,3 +394,12 @@ function highlight() {
             hljs.highlightBlock(block)
     })
 }
+
+ipcRenderer.on('get-info', (event, arg) => {
+    getInfo()
+})
+
+function getInfo() {
+    let versions = process.versions
+    alert(`Node: ${versions.node}\nV8: ${versions.v8}\nElectron: ${versions.electron}\nChrome: ${versions.chrome}`, 'About electronizr')
+}
