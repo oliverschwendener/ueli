@@ -1,13 +1,9 @@
-import electron from 'electron'
+import { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu } from 'electron'
 import ConfigManager from './ConfigManager'
 
-let app = electron.app
-let BrowserWindow = electron.BrowserWindow
-let globalShortcut = electron.globalShortcut
-let ipcMain = electron.ipcMain
 let configManager = new ConfigManager()
-
 let mainWindow = null
+let tray = null
 
 let mainWindowHtml = `file://${__dirname}/../main.html`
 
@@ -29,9 +25,16 @@ else {
       frame: false,
       resizable: true,
       skipTaskbar: true,
-      show: false,
-      icon: 'build/icon.ico'
+      show: false
     })
+
+    tray = new Tray(`${__dirname}/../build/icon.ico`)
+    let trayMenu = Menu.buildFromTemplate([
+      { label: 'Show/Hide', click: toggleWindow },
+      { label: 'Exit', click: app.quit }
+    ])
+    tray.setToolTip('electronizr')
+    tray.setContextMenu(trayMenu)
 
     mainWindow.loadURL(mainWindowHtml)
     //mainWindow.webContents.openDevTools()
@@ -81,10 +84,7 @@ function setGlobalShortcuts() {
 
   globalShortcut.unregisterAll()
   globalShortcut.register(config.keyboardShortcut, () => {
-    if (mainWindow.isVisible())
-      hideWindow()
-    else
-      mainWindow.show()
+    toggleWindow()
   })
 }
 
@@ -92,6 +92,13 @@ function hideWindow() {
   setTimeout(() => {
     mainWindow.hide()
   }, 5)
+}
+
+function toggleWindow() {
+  if (mainWindow.isVisible())
+    hideWindow()
+  else
+    mainWindow.show()
 }
 
 function setZoomFactor() {

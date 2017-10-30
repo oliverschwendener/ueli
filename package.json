@@ -21,23 +21,16 @@
     "vue": "^2.1.10"
   },
   "devDependencies": {
-    "electron": "^1.4.14",
-    "electron-builder": "^11.2.4",
+    "electron": "^1.7.9",
+    "electron-packager": "^9.1.0",
     "gulp": "^3.9.1",
-    "gulp-clean": "^0.3.2",
-    "gulp-minify-css": "^1.2.4",
     "gulp-sass": "^3.1.0"
   },
   "scripts": {
-    "start": "electron ./js/main.js",
-    "build": "yarn install && gulp build && build --dir"
-  },
-  "build": {
-    "appId": "com.electron.electronizr",
-    "category": "Utility",
-    "win": {
-      "icon": "build/icon"
-    }
+    "start": "./node_modules/.bin/electron ./js/main.js",
+    "build": "./node_modules/.bin/gulp build",
+    "watch": "./node_modules/.bin/gulp watch",
+    "package": "./node_modules/.bin/electron-packager . electronizr --platform=win32 --arch=x64 --icon=build/icon.ico --out=dist --overwrite"
   },
   "repository": {
     "type": "git",

@@ -185,7 +185,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 
 ### Set up
 
-``` bash
+```
 $ git clone https://github.com/oliverschwendener/electronizr
 $ cd electronizr
 $ yarn install
@@ -193,18 +193,18 @@ $ yarn install
 
 ### Run
 
-``` bash
-$ gulp watch
+```
+$ yarn watch
 $ yarn start
 ```
 **Note**: the gulp task watches your Javascript and CSS files and runs the associated gulp task if there is any change.
 
-### Build
+### Package
 
 ```
-$ yarn build
+$ yarn package
 ```
-**Note**: the default output location for the build is `dist/`.
+**Note**: the default output location for the packaging is `dist/`.
 
 
 ## License
