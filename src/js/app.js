@@ -10,6 +10,7 @@ import PluginManager from './js/PluginManager'
 import HistoryManager from './js/HistoryManager'
 import ExecutionService from './js/ExecutionService'
 
+let packageJson = require('./package.json')
 let configManager = new ConfigManager()
 let pluginManager = new PluginManager()
 let historyManager = new HistoryManager()
@@ -401,5 +402,5 @@ ipcRenderer.on('get-info', (event, arg) => {
 
 function getInfo() {
     let versions = process.versions
-    alert(`Node: ${versions.node}\nV8: ${versions.v8}\nElectron: ${versions.electron}\nChrome: ${versions.chrome}`, 'About electronizr')
+    alert(`electronizr: ${packageJson.version}\nNode: ${versions.node}\nV8: ${versions.v8}\nElectron: ${versions.electron}\nChrome: ${versions.chrome}`, 'About electronizr')
 }
