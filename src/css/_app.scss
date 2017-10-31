@@ -1,144 +1,268 @@
-// Fonts
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700');
 @import url('https://fonts.googleapis.com/css?family=Fira+Mono:400,500');
 
-$font-family-input: 'Fira Sans', 'Segoe UI', sans-serif;
-$font-family-search-result-name: 'Fira Sans', 'Segoe UI', sans-serif;
-$font-family-search-result-description: 'Fira Sans', 'Segoe UI Light', sans-serif;
-$font-family-mono: 'Fira Mono', monospace;
-
-body{
-	margin: 0;
-	padding: 0;
-	font-family: $font-family-input;
-	background: $background-color;
+@mixin font-sans() {
+    font-family: 'Fira Sans', sans-serif;
 }
 
-div.content{
-	background: $background-color;
-	width: 100vw;	
+@mixin font-mono() {
+    font-family: 'Fira Mono', sans-serif;
+}
 
-	input{
-		width: 100%;
-		padding: 0 20px;
-		border: none;
-		outline: none;
-		text-align: left;
-		background: transparent;
-		font-family: $font-family-input;
-		color: $text-color;
-		font-size: 48px;		
-		font-weight: 400;
-		line-height: 120px;
-	}
+@mixin hoverTransition() {
+    transition: all 150ms ease-in-out;
+}
 
-	#search-icon{
-		position: fixed;
-		top: 54px;
-		right: 30px;
-		transform: translateY(-50%);
-		color: $text-color;
-		font-size: 24px;
-		z-index: 10;
-	}
+$user-input-height: 100px;
+$status-bar-height: 25px;
 
-	div.search-results{
-		background: $background-color;
-		position: absolute;
-		width: 100%;
-		height: 480px;
-		top: 120px;
-		text-align: left;
-		overflow-x: hidden;
-		overflow-y: hidden;
+body, html {
+    @include font-sans();
+    position: relative;
+    padding: 0;
+    margin: 0;
+    background: $background-color;
+    font-size: 16px;
+    color: $text-color;
+}
 
-		div{
-			padding: 10px 20px;
+input {
+    @include font-sans();
+}
 
-			p{
-				margin: 0;
-				padding: 0;
-			}
+i#search-icon {
+    position: fixed;
+    right: calc(#{$user-input-height} / 2);
+    top: calc(#{$user-input-height} / 2);
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+}
 
-			p.result-name{
-				color: $text-color;
-				font-size: 24px;
-				font-weight: 400;
-				font-family: $font-family-search-result-name;
-				line-height: 46px;
+input.user-input {
+    background: transparent;
+    color: $text-color;
+    outline: none;
+    border: none;
+    font-size: 3rem;
+    padding: 0 15px;
+    line-height: $user-input-height;
+    width: 100vw;
+}
 
-				span.file-extension{
-					float: none;
-					color: $text-color;
-					opacity: 0.2;
-				}
-			}
+div.output-container {
+    width: 100vw;
+    height: calc(100vh - #{$user-input-height} - #{$status-bar-height});
+    overflow-y: scroll;
+}
 
-			p.result-description{
-				color: $text-color-dim;
-				font-size: 16px;
-				font-family: $font-family-search-result-description;
-				font-weight: lighter;
-				line-height: 30px;
+div.toggled {
+        height: calc(100vh - #{$user-input-height});
+}
 
-				overflow: hidden; 
-				text-overflow: ellipsis;
-				white-space: nowrap;
-			}
+ul.search-result-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
-			p.info-message{
-				color: $text-color;
-				font-size: 24px;
-			}
+    li{
+        max-width: 100vw;
+        padding: 15px;
+        overflow: hidden; 
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
-			&.active{
-				background-color: $highlight-background-color;
-				
-				p.result-name{
-					color: $highlight-text-color;
+        span {
+            display: block;
+            padding: 5px 0;
 
-					span.file-extension{
-						color: $highlight-text-color;
-					}
-				}
+            &.name {
+                color: $text-color;
+                font-size: 1.5rem;
+            }
 
-				p.result-description{
-					color: $highlight-text-color-dim;
-				}
-			}
-		}
+            &.exec-args {
+                color: $text-color-dim;
+                font-size: 1rem;
+            }
+        }
 
-		div.file-content{
-			color: $text-color-dim;
-			padding: 0 20px;
-			position: relative;
-			max-height: 364px;
-			overflow-y: scroll;
-			overflow-x: hidden;
+        &.active {
+            background-color: $highlight-background-color;
 
-			img, video{
-				height: 100%;
-			}
+            span {
+                &.name {
+                    color: $highlight-text-color;
+                }
 
-			ul.folder-content{
-				margin: 0;
+                &.exec-args {
+                    color: $highlight-text-color-dim;
+                }
+            }
+        }
+    }
+}
 
-				li.child-item{
-					color: $text-color-dim;
-					padding-bottom: 3px;
-				}
-			}
+div.execute-output {
+    pre {
+        @include font-mono();
+        padding: 30px;
+        color: $text-color;
+    }
+}
 
-			pre {
-				margin: 0;
+div.file-preview {
+    text-align: center;
 
-				code{
-					font-family: $font-family-mono;
-					font-size: 14px;
-				}
-			}
-		}
-	}
+    img {
+        height: 100%;
+        width: auto;
+    }
+
+    video {
+        height: 100%;
+        width: auto;
+    }
+
+    audio {
+        width: 100%;
+    }
+
+    pre {
+        text-align: left;
+        
+        code {
+            @include font-mono();
+            padding: 15px;
+        }
+    }
+
+    div.file-info-preview, div.folder-preview {
+        text-align: left;
+        padding: 15px;
+
+        li {
+            padding: 2px 0;
+        }
+
+        i {
+            padding-right: 5px;
+        }
+    }
+}
+
+div.config {
+    padding: 15px;
+    box-sizing: border-box;
+    padding-bottom:  30px;
+
+
+    div.config-item {
+        position: relative;
+        display: block;
+    }
+
+    hr {
+        margin: 30px 0;
+        border-bottom: 1px solid transparentize($text-color, 0.99);
+    }
+
+    h3 {
+        color: $text-color;
+    }
+
+    div.form-item {
+        margin-bottom: 5px;
+    }
+
+    i.action-button {
+        @include hoverTransition();
+        cursor: pointer;
+
+        &:hover{
+            color: $highlight-text-color;
+        }
+    }
+
+    select {
+        @include font-sans();
+        font-size: 1.25rem;
+        background-color: $scrollbar-background-color;
+        color: $text-color;
+        border: none;
+        outline: none;
+        padding: 5px 15px;
+    }
+
+    ul{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            position: relative;
+            background: transparent;
+            color: $text-color;
+            margin-bottom: 10px;
+            padding: 0 15px;
+
+            i {
+                padding: 0 15px;
+            }
+        }
+    }
+
+    input {
+        background: $scrollbar-background-color;
+        color: $text-color;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        padding: 5px;
+
+        &:disabled{
+            cursor: not-allowed;
+        }
+    }
+
+    table {
+        text-align: left;
+        width: 100%;
+
+        td {
+            padding: 5px;
+        }
+
+        input.new-item {
+            width: 100%;
+        }
+    }
+
+    button  {
+        @include hoverTransition();
+        cursor: pointer;
+        background: $button-color;
+        color: $button-text-color;            
+        border: none;
+        font-size: 1.25rem;
+        padding: 15px;
+    }
+}
+
+div.status-bar {
+    line-height: $status-bar-height;
+    font-size: 0.8rem;
+    width: 100vw;
+    background-color: $button-color;
+    color: $button-text-color;
+    text-align: center;
+
+    span {
+        padding: 0 5px;
+    }
+}
+
+.hidden {
+    display: none;
 }
 
 $scrollbar-size: 7px;

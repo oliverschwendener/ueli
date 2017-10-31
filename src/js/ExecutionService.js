@@ -1,29 +1,26 @@
-import ProgramExecutor from './Executors/ProgramExecutor';
-import FilePathExecutor from './Executors/FilePathExecutor';
-import WebUrlExecutor from './Executors/WebUrlExecutor';
-import CommandLineExecutor from './Executors/CommandLineExecutor';
-import EzrCommandExecutor from './Executors/EzrCommandExecutor';
-import WebSearchExecutor from './Executors/WebSearchExecutor';
+import { exec } from 'child_process'
+import path from 'path'
+import fs from 'fs'
+
+import FilePreviewManager from './FilePreview/FilePreviewManager'
 
 export default class ExecutionService {
-    constructor() {
-        this.executors = [
-            new ProgramExecutor(),
-            new FilePathExecutor(),
-            new WebUrlExecutor(),
-            new CommandLineExecutor(),
-            new EzrCommandExecutor(),
-            new WebSearchExecutor()
-        ];
+    openFileLocation(filePath) {
+        filePath = path.win32.normalize(filePath)
+        let command = `start explorer.exe /select,"${filePath}"`
+
+        if (!fs.existsSync(filePath))
+            return
+        else
+            exec(command, (err, stout, sterr) => {
+                if (err) throw err
+            })
     }
 
-    execute(executionArgument) {
-        for (let executor of this.executors)
-            if (executor.isValid(executionArgument)) {
-                executor.execute(executionArgument);
-                return true;
-            }
-
-        return false;
+    getFilePreview(filePath) {
+        if (!fs.existsSync(filePath))
+            return
+        else
+            return new FilePreviewManager().getFilePreview(filePath)
     }
 }

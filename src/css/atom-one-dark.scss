@@ -7,6 +7,9 @@ $highlight-background-color: #282c34;
 $highlight-text-color: #6494ed;
 $highlight-text-color-dim: #9da5b4;
 
+$button-color: $highlight-background-color;
+$button-text-color: $text-color;
+
 $scrollbar-color: $highlight-text-color;
 $scrollbar-background-color: lighten($background-color, 5);
 

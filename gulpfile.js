@@ -1,8 +1,6 @@
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 const sass = require('gulp-sass');
-const minifyCss = require('gulp-minify-css');
-const clean = require('gulp-clean');
 
 const sourceFiles = {
     sass: 'src/css/**/*.scss',
@@ -11,12 +9,6 @@ const sourceFiles = {
 
 const jsDestFolder = './js';
 const sassDestFolder = './css';
-
-gulp.task('clean', () => {
-    return gulp
-        .src('./dist', {read: false})
-        .pipe(clean());
-});
 
 gulp.task('js', () => {
     return gulp.src(sourceFiles.js)
@@ -30,7 +22,6 @@ gulp.task('sass', () => {
     return gulp
         .src(sourceFiles.sass)
         .pipe(sass().on('error', sass.logError))
-        .pipe(minifyCss())
         .pipe(gulp.dest(sassDestFolder));
 });
 

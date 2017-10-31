@@ -7,36 +7,30 @@
   "main": "./js/main.js",
   "dependencies": {
     "babel-preset-es2015": "^6.16.0",
+    "battery-level": "^2.0.1",
     "escape-html": "^1.0.3",
-    "fast-levenshtein": "^2.0.5",
-    "font-awesome": "4.7.0",
+    "font-awesome": "^4.7.0",
     "gulp-babel": "^6.1.2",
-    "highlight.js": "^9.9.0",
+    "highlight.js": "^9.10.0",
     "jquery": "^3.1.1",
+    "leven": "^2.1.0",
     "mime": "^1.3.4",
     "open": "0.0.5",
     "pretty-bytes": "^2.0.1",
-    "textextensions": "^2.0.1"
+    "textextensions": "^2.0.1",
+    "vue": "^2.1.10"
   },
   "devDependencies": {
-    "electron": "^1.4.14",
-    "electron-builder": "^11.2.4",
+    "electron": "^1.7.9",
+    "electron-packager": "^9.1.0",
     "gulp": "^3.9.1",
-    "gulp-clean": "^0.3.2",
-    "gulp-minify-css": "^1.2.4",
     "gulp-sass": "^3.1.0"
   },
   "scripts": {
-    "start": "electron ./js/main.js",
-    "build": "build --dir",
-    "setup": "build"
-  },
-  "build": {
-    "appId": "com.electron.electronizr",
-    "category": "Utility",
-    "win": {
-      "icon": "build/icon"
-    }
+    "start": "./node_modules/.bin/electron ./js/main.js",
+    "build": "./node_modules/.bin/gulp build",
+    "watch": "./node_modules/.bin/gulp watch",
+    "package": "./node_modules/.bin/electron-packager . electronizr --platform=win32 --arch=x64 --icon=img/icon.ico --out=dist --overwrite"
   },
   "repository": {
     "type": "git",
