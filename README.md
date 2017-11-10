@@ -157,12 +157,14 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 ![all-color-themes](img/color-themes/all-color-themes.png)
 
 * Available color themes:
-    * `osc-dark-blue`
-    * `osc-dark-green`
-    * `atom-one-dark`
-    * `dracula`
-    * `osc-light-blue`
-    * `osc-light-green`
+    * [osc-dark-blue](img/color-themes/osc-dark-blue.png)
+    * [osc-dark-green](img/color-themes/osc-dark-green.png)
+    * [osc-light-blue](img/color-themes/osc-light-blue.png)
+    * [osc-light-green](img/color-themes/osc-light-green.png)
+    * [atom-one-dark](img/color-themes/atom-one-dark.png)
+    * [dracula-dark-blue](img/color-themes/dracula-dark-blue.png)
+    * [dracula-purple](img/color-themes/dracula-purple.png)
+    * [dracula-red](img/color-themes/dracula-red.png)
 
 
 ## electronizr specific commands
