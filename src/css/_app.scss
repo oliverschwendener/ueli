@@ -1,4 +1,4 @@
-@mixin font-sans() {
+@mixin font() {
     font-family: 'Segoe UI'
 }
 
@@ -14,7 +14,7 @@ $user-input-height: 100px;
 $status-bar-height: 25px;
 
 body, html {
-    @include font-sans();
+    @include font();
     position: relative;
     padding: 0;
     margin: 0;
@@ -24,7 +24,7 @@ body, html {
 }
 
 input {
-    @include font-sans();
+    @include font();
 }
 
 i#search-icon {
@@ -184,7 +184,7 @@ div.config {
     }
 
     select {
-        @include font-sans();
+        @include font();
         font-size: 1.25rem;
         background-color: $scrollbar-background-color;
         color: $text-color;
