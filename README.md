@@ -28,9 +28,6 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 
 
 ## Installation
-### Download
-You can download the latest version [here](http://electronizr.oliverschwendener.ch)
-
 
 ### Manual installation
 1. Install [NodeJS](https://nodejs.org/)
@@ -44,6 +41,10 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
     * `$ yarn package`
 7. Your application is now in the `dist/` folder
 8. Create a shortcut to `electronizr.exe` in the windows startup folder (`C:\Users\<your-username>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`) to run the application on windows logon
+
+### Installer
+
+There are no prebuilt installers yet, I'm working on that ;)
 
 
 ## Features
@@ -67,8 +68,8 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
 
 ### Use web search engines
 
-* Type `g?<your-search>` to search something with Google's web search engine
-* You can set up your web search engines with `ezr:config`
+* Type `g?yourSearchTerm` to search something with Google's web search engine
+* You can set up custom web search engines with `ezr:config`
 
 ### Execute command line tools
 
@@ -88,7 +89,7 @@ You can download the latest version [here](http://electronizr.oliverschwendener.
 * `Ctrl+O` to open the selected programs file location
 * `Ctrl+space` to open preview
 * `Shift+ArrowUp` and `Shift+ArrowDown` to browse your input history
-* `F6` to focus on the input textbox
+* `F6` or `Ctrl+L` to focus on the input textbox
 
 
 ## Customization
@@ -101,7 +102,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
     "keyboardShortcut": "alt+space",
     "size": {
         "width": 960,
-        "height": 600
+        "height": 612
     },
     "zoomFactor": 1,
     "fullscreen": false,
@@ -134,7 +135,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
         * 'shift+space'
 * `size` Object - Defines the window size.
     * `width` Integer - Window's width in pixels. Default is `960`.
-    * `height` Integer - Window's height in pixels. Default is `600`.
+    * `height` Integer - Window's height in pixels. Default is `612`.
 * `zoomFactor` Integer - Window's zoom factor, 1 represents 100%. Default is `1`.
 * `fullscreen` Boolean - Whether the window should show in fullscreen. Default is `false`.
 * `colorTheme` String - Sets the color theme to one of the [available color themes](#color-themes). Default is `osc-dark-blue`.
@@ -172,13 +173,13 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 |---|---|
 |ezr:config|Edit configuration|
 |ezr:reload|Reload electronizr|
-|ezr:reset|Reset configuration|
 |ezr:exit|Exit electronizr|
+|ezr:reset|Reset configuration|
 |ezr:docs|Read the documentation|
+|ezr:about|About electronizr|
 
 
 ## Planned Features
-* More color themes
 * Installer / Prebuilt Downloads
 * Access Control Panel items
 
