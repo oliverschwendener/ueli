@@ -112,7 +112,6 @@ export default class InstalledPrograms {
     }
 
     async getFilesFromDirectoriesRecursivelyByFileExtension(directories, fileExtension = '*') {
-
         let result = []
 
         let filePromises = await directories.map(async d => await this.getFilesFromDirecotry(d, fileExtension))
@@ -131,6 +130,11 @@ export default class InstalledPrograms {
                     let results = []
                     let filesWithExpandedPath = files.map(f => `${directory}/${f}`)
                     filesWithExpandedPath.forEach(async file => {
+                        // Skip hidden files
+                        if(path.basename(file).startsWith('.')) {
+                            return
+                        }
+
                         const stat = fs.lstatSync(file)
                         if (stat && stat.isDirectory() && !stat.isSymbolicLink()) {
                             self.getFilesFromDirectoriesRecursivelyByFileExtension([file], fileExtension)
