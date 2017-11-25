@@ -1,12 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700');
-@import url('https://fonts.googleapis.com/css?family=Fira+Mono:400,500');
-
 @mixin font-sans() {
-    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Segoe UI'
 }
 
 @mixin font-mono() {
-    font-family: 'Fira Mono', sans-serif;
+    font-family: 'Consolas';
 }
 
 @mixin hoverTransition() {
@@ -53,10 +50,11 @@ div.output-container {
     width: 100vw;
     height: calc(100vh - #{$user-input-height} - #{$status-bar-height});
     overflow-y: scroll;
+    position: relative;
 }
 
 div.toggled {
-        height: calc(100vh - #{$user-input-height});
+    height: calc(100vh - #{$user-input-height});
 }
 
 ul.search-result-list {
@@ -106,7 +104,7 @@ div.execute-output {
     pre {
         @include font-mono();
         padding: 30px;
-        color: $text-color;
+        color: transparentize($text-color, 0.35);
     }
 }
 
@@ -114,13 +112,15 @@ div.file-preview {
     text-align: center;
 
     img {
-        height: 100%;
         width: auto;
+        max-height: calc(100vh - #{$user-input-height});
+        max-width: 100%;
     }
 
     video {
-        height: 100%;
         width: auto;
+        max-height: calc(100vh - #{$user-input-height});
+        max-width: 100%;
     }
 
     audio {
