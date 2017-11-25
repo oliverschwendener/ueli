@@ -379,7 +379,7 @@ document.addEventListener('keyup', (e) => {
         ipcRenderer.send('hide-main-window')
     }
 
-    else if (e.key === 'F6')
+    else if (e.key === 'F6' || (e.key === 'l' && e.ctrlKey))
         focusOnInput()
 })
 
