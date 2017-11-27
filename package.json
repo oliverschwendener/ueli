@@ -1,7 +1,7 @@
 {
   "name": "electronizr",
-  "version": "1.0.0",
   "productName": "electronizr",
+  "version": "1.0.0",
   "description": "An alt+space launcher for Windows",
   "author": "Oliver Schwendener",
   "license": "MIT",
@@ -31,7 +31,7 @@
     "start": "./node_modules/.bin/electron ./js/main.js",
     "build": "./node_modules/.bin/gulp build",
     "watch": "./node_modules/.bin/gulp watch",
-    "package:publish": "./node_modules/.bin/electron-builder --publish onTag",
+    "release": "./node_modules/.bin/electron-builder --publish always",
     "package": "./node_modules/.bin/electron-builder --publish never"
   },
   "repository": {

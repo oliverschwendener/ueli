@@ -13,6 +13,6 @@ install:
 
 build_script:
   - yarn build
-  - yarn package:publish && exit 0
+  - yarn release && exit 0
 
 test: off
