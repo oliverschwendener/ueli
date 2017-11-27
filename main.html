@@ -16,7 +16,7 @@
         <input id="user-input" class="user-input" type="text" v-model="userInput" ref="input" v-on:keyDown="handleKeyPress" :autofocus="{ true: focusOnInput }">
         <i id="search-icon" :class="searchIcon" aria-hidden="true"></i>
 
-        <div class="output-container" :class="{ 'toggled' : config.hideStatusBar }">
+        <div class="output-container">
 
             <div class="search-result">
                 <ul class="search-result-list">
@@ -210,13 +210,6 @@
                 <hr>
 
                 <div class="config-item">
-                    <h3>Misc</h3>
-                    <label>Hide status bar</label>
-                    <input type="checkbox" v-model="config.hideStatusBar">
-                </div>
-                <hr>
-
-                <div class="config-item">
                     <button v-on:click="closeConfig">
                     <i class="fa fa-arrow-left"></i>
                     Go Back
@@ -229,17 +222,6 @@
             </div>
 
         </div>
-
-        <div class="status-bar" :class="{ 'hidden': config.hideStatusBar }" style="-webkit-app-region: drag">
-            <span>
-                {{ dateTimeNow }}
-            </span>
-            <span :class="{ 'hidden' : !computerHasBattery }">
-                <i :class="battery.icon"></i>
-                {{ battery.percentage }}%
-            </span>
-        </div>
-
     </div>
 
     <script src="./node_modules/vue/dist/vue.min.js"></script>

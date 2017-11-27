@@ -11,7 +11,6 @@
 }
 
 $user-input-height: 100px;
-$status-bar-height: 25px;
 
 body, html {
     @include font();
@@ -48,13 +47,9 @@ input.user-input {
 
 div.output-container {
     width: 100vw;
-    height: calc(100vh - #{$user-input-height} - #{$status-bar-height});
+    height: calc(100vh - #{$user-input-height});
     overflow-y: scroll;
     position: relative;
-}
-
-div.toggled {
-    height: calc(100vh - #{$user-input-height});
 }
 
 ul.search-result-list {
@@ -245,19 +240,6 @@ div.config {
         border: none;
         font-size: 1.25rem;
         padding: 15px;
-    }
-}
-
-div.status-bar {
-    line-height: $status-bar-height;
-    font-size: 0.8rem;
-    width: 100vw;
-    background-color: $button-color;
-    color: $button-text-color;
-    text-align: center;
-
-    span {
-        padding: 0 5px;
     }
 }
 

@@ -126,8 +126,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
         }
     ],
     "customShortcuts": [],
-    "favorites": [],
-    "hideStatusBar": true
+    "favorites": []
 }
 ```
 
@@ -156,7 +155,6 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
         * `shortCut`: String - Represents the keyword for the shortcut. For example `vsc`.
         * `path`: String - Represents the path to the shortcut. For Example `C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Visual Studio Code\Visual Studio Code.lnk`
 * `favorites` String[] - This is where the applications stores your most used applications. You don't have to modify this.
-* `hideStatusBar` Boolean - Whether to hide/show the status bar at the bottom of the window. Default is `true`.
 
 ## Color Themes
 ![all-color-themes](img/color-themes/all-color-themes.png)

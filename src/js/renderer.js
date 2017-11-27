@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
-import batteryLevel from 'battery-level'
 import hljs from 'highlight.js'
 
 import ConfigManager from './js/ConfigManager'
@@ -33,10 +32,7 @@ let vue = new Vue({
         colorThemePath: `./css/${configManager.getConfig().colorTheme}.css`,
         newFolder: '',
         newCustomShortcut: {},
-        newWebSearch: {},
-        battery: {},
-        computerHasBattery: false,
-        dateTimeNow: getDateTime()
+        newWebSearch: {}
     },
     methods: {
         handleKeyPress(e) {
@@ -322,37 +318,6 @@ function focusOnInput() {
     document.getElementById('user-input').focus()
 }
 
-function setBattery() {
-    batteryLevel().then(level => {
-        if (!isNaN(level))
-            vue.computerHasBattery = true
-
-        vue.battery.percentage = Math.round(level * 100)
-        vue.battery.icon = getBatteryIcon()
-    })
-}
-
-function getBatteryIcon() {
-    if (vue.battery.percentage >= 80)
-        return 'fa fa-battery-full'
-    if (vue.battery.percentage >= 60)
-        return 'fa fa-battery-three-quarters'
-    if (vue.battery.percentage >= 40)
-        return 'fa fa-battery-half'
-    if (vue.battery.percentage >= 20)
-        return 'fa fa-battery-quarter'
-    else
-        return 'fa fa-battery-empty'
-}
-
-function getDateTime() {
-    return new Date().toLocaleString('de-CH')
-}
-
-function setDateTime() {
-    vue.dateTimeNow = getDateTime()
-}
-
 function stringIsEmptyOrWhitespaces(string) {
     return string === undefined || string.replace(/\s/g, '').length === 0
 }
@@ -382,11 +347,6 @@ document.addEventListener('keyup', (e) => {
     else if (e.key === 'F6' || (e.key === 'l' && e.ctrlKey))
         focusOnInput()
 })
-
-setInterval(() => {
-    setBattery()
-    setDateTime()
-}, 1000)
 
 function highlight() {
     setTimeout(() => {

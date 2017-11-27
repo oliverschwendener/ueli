@@ -58,8 +58,7 @@ function getDefaultConfig() {
             { name: 'DuckDuckGo', prefix: 'd', url: 'https://duckduckgo.com/?q=', icon: 'fa fa-search'}
         ],
         customShortcuts: [],
-        favorites: [],
-        hideStatusBar: true
+        favorites: []
     }
 }
 
