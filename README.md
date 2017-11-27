@@ -29,6 +29,14 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 
 ## Installation
 
+> Note: because the executables are not signed, Windows will probalby prevent you from executing the installer or the program itself. You can just click "Run anyway" to install the program.
+
+### Installer / Zip
+
+1. Download latest version here: [https://github.com/oliverschwendener/electronizr/releases](https://github.com/oliverschwendener/electronizr/releases)
+2. Run the installer / Unzip
+3. Create a shortcut in the Windows startup folder for autostart
+
 ### Manual installation
 1. Install [NodeJS](https://nodejs.org/)
 2. Install [Yarn](https://yarnpkg.com/)
@@ -41,10 +49,6 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
     * `$ yarn package`
 7. Your application is now in the `dist/` folder
 8. Create a shortcut to `electronizr.exe` in the windows startup folder (`C:\Users\<your-username>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`) to run the application on windows logon
-
-### Installer
-
-There are no prebuilt installers yet, I'm working on that ;)
 
 
 ## Features
@@ -179,7 +183,10 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 
 ## Planned Features
 * Installer / Prebuilt Downloads
-* Access Control Panel items
+* Access Windows 10 Control Panel items
+* Using Typescript
+* Unit & integration tests
+* Mac OS Support
 
 
 ## Development

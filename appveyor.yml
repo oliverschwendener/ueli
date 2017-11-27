@@ -1,0 +1,18 @@
+image: Visual Studio 2017
+
+environment:
+  nodejs_version: "8"
+
+platform:
+  - x64
+
+install:
+  - ps: Install-Product node $env:nodejs_version $env:platform
+  - node --version
+  - yarn install
+
+build_script:
+  - yarn build
+  - yarn package:publish && exit 0
+
+test: off

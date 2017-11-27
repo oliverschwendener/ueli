@@ -1,6 +1,7 @@
 {
   "name": "electronizr",
   "version": "1.3.0",
+  "productName": "electronizr",
   "description": "An alt+space launcher for Windows",
   "author": "Oliver Schwendener",
   "license": "MIT",
@@ -22,7 +23,7 @@
   },
   "devDependencies": {
     "electron": "^1.7.9",
-    "electron-packager": "^9.1.0",
+    "electron-builder": "^19.46.9",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0"
   },
@@ -30,10 +31,33 @@
     "start": "./node_modules/.bin/electron ./js/main.js",
     "build": "./node_modules/.bin/gulp build",
     "watch": "./node_modules/.bin/gulp watch",
-    "package": "./node_modules/.bin/electron-packager . electronizr --platform=win32 --arch=x64 --icon=img/icon.ico --out=dist --overwrite"
+    "package:publish": "./node_modules/.bin/electron-builder --publish onTag",
+    "package": "./node_modules/.bin/electron-builder --publish never"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/oliverschwendener/electronizr"
+  },
+  "build": {
+    "files": [
+      "js/**/*.js",
+      "css/**/*.css",
+      "./**/*.html"
+    ],
+    "win": {
+      "icon": "./img/icon.ico",
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "publish": [
+        "github"
+      ]
+    },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "perMachine": true
+    }
   }
 }
