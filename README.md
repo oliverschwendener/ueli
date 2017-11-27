@@ -183,6 +183,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 
 ## Planned Features
 * Installer / Prebuilt Downloads
+* Auto updater
 * Access Windows 10 Control Panel items
 * Using Typescript
 * Unit & integration tests
