@@ -40,9 +40,10 @@
   },
   "build": {
     "files": [
-      "js/**/*.js",
-      "css/**/*.css",
-      "./**/*.html"
+      "./js/**/*.js",
+      "./css/**/*.css",
+      "./**/*.html",
+      "./img/icon.ico"
     ],
     "win": {
       "icon": "./img/icon.ico",
