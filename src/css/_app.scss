@@ -10,7 +10,7 @@
     transition: all 150ms ease-in-out;
 }
 
-$user-input-height: 100px;
+$user-input-height: 85px;
 
 body, html {
     @include font();
@@ -39,7 +39,8 @@ input.user-input {
     color: $userinput-text-color;
     outline: none;
     border: none;
-    font-size: 3rem;
+    font-size: 2.5rem;
+    font-weight: 100;
     padding: 0 15px;
     line-height: $user-input-height;
     width: 100vw;
@@ -71,6 +72,7 @@ ul.search-result-list {
             &.name {
                 color: $text-color;
                 font-size: 1.5rem;
+                font-weight: 100;
             }
 
             &.exec-args {
@@ -85,6 +87,7 @@ ul.search-result-list {
             span {
                 &.name {
                     color: $highlight-text-color;
+                    font-weight: 600;
                 }
 
                 &.exec-args {

@@ -39,7 +39,7 @@ function getDefaultConfig() {
         keyboardShortcut: 'alt+space',
         size: {
             width: 960,
-            height: 612
+            height: 600
         },
         zoomFactor: 1.0,
         fullscreen: false,
