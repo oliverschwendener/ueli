@@ -106,7 +106,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
     "keyboardShortcut": "alt+space",
     "size": {
         "width": 960,
-        "height": 612
+        "height": 600
     },
     "zoomFactor": 1,
     "fullscreen": false,
@@ -138,7 +138,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
         * 'shift+space'
 * `size` Object - Defines the window size.
     * `width` Integer - Window's width in pixels. Default is `960`.
-    * `height` Integer - Window's height in pixels. Default is `612`.
+    * `height` Integer - Window's height in pixels. Default is `600`.
 * `zoomFactor` Integer - Window's zoom factor, 1 represents 100%. Default is `1`.
 * `fullscreen` Boolean - Whether the window should show in fullscreen. Default is `false`.
 * `colorTheme` String - Sets the color theme to one of the [available color themes](#color-themes). Default is `osc-dark-blue`.
