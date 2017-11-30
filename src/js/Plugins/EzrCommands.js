@@ -33,7 +33,7 @@ export default class EzrCommands {
             },
             {
                 command: `${commandPrefix}:reset`,
-                description: 'Reset configuration',
+                description: 'Reset configuration to default values',
                 execute() {
                     new ConfigManager().resetConfigToDefault()
                     ipcRenderer.send('reload-window')

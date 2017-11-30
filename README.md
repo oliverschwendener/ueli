@@ -174,7 +174,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 |ezr:config|Edit configuration|
 |ezr:reload|Reload electronizr|
 |ezr:exit|Exit electronizr|
-|ezr:reset|Reset configuration|
+|ezr:reset|Reset configuration to default values|
 |ezr:docs|Read the documentation|
 |ezr:about|About electronizr|
 

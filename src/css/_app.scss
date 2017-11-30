@@ -127,6 +127,7 @@ div.file-preview {
 
     pre {
         text-align: left;
+        margin: 0;
         
         code {
             @include font-mono();
