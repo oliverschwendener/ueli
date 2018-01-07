@@ -15,7 +15,7 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 * [Customization](#customization)
 * [Color Themes](#color-themes)
 * [electronizr specific commands](#electronizr-specific-commands)
-* [Planned Features](#planned-features)
+* [Roadmap](#roadmap)
 * [Development](#development)
 * [License](#license)
 
@@ -179,7 +179,8 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 |ezr:about|About electronizr|
 
 
-## Planned Features
+## Roadmap
+* New icon / logo
 * Access Windows 10 Control Panel items
 * Using Typescript
 * Unit & integration tests
