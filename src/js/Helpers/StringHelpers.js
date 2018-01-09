@@ -1,6 +1,20 @@
 import leven from 'leven'
 
 export default class StringHelpers {
+    arrayContainsString(array, string) {
+        try {
+            for (let item of array) {
+                if (item.toLowerCase() === string.toLowerCase())
+                    return true
+            }
+            return false
+        }
+        catch(err) {
+            console.log(err)
+            return false
+        }
+    }
+
     stringContainsSubstring(stringToSearch, substring) {
         let wordsOfSubstring = this.splitStringToArray(substring.toLowerCase())
         stringToSearch = stringToSearch.split(' ').join('').toLowerCase()

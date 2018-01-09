@@ -37,6 +37,14 @@
             <div class="config" :class="{ 'hidden' : hideConfig }">
 
                 <div class="config-item">
+                    <h3>Plugins</h3>
+                    <div class="form-item" v-for="plugin in config.plugins">
+                        <label>{{ plugin.name }}</label>
+                        <input type="checkbox" v-model="plugin.active">
+                    </div>
+                </div>
+
+                <div class="config-item">
                     <h3>Keyboard shortcut</h3>
                     <select v-model="config.keyboardShortcut">
                         <option>alt+space</option>
