@@ -2,9 +2,11 @@ import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
-import leven from 'leven'
 import ConfigManager from './../ConfigManager'
 import FavoritesManager from './../FavoritesManager'
+import StringHelpers from './../Helpers/StringHelpers'
+
+let stringHelpers = new StringHelpers()
 
 export default class InstalledPrograms {
     constructor() {
@@ -49,8 +51,8 @@ export default class InstalledPrograms {
             for (let shortCutFileExtension of this.shorcutFileExtensions)
                 programName = programName.replace(shortCutFileExtension, '')
 
-            if (stringContainsSubstring(programName, userInput)) {
-                let weight = getWeight(programName, userInput)
+            if (stringHelpers.stringContainsSubstring(programName, userInput)) {
+                let weight = stringHelpers.getWeight(programName, userInput)
                 if (weight >= 0)
                     result.push({
                         name: programName,
@@ -131,7 +133,7 @@ export default class InstalledPrograms {
                     let filesWithExpandedPath = files.map(f => `${directory}/${f}`)
                     filesWithExpandedPath.forEach(async file => {
                         // Skip hidden files
-                        if(path.basename(file).startsWith('.')) {
+                        if (path.basename(file).startsWith('.')) {
                             return
                         }
 
@@ -153,55 +155,6 @@ export default class InstalledPrograms {
             })
         })
     }
-}
-
-function stringContainsSubstring(stringToSearch, substring) {
-    let wordsOfSubstring = splitStringToArray(substring.toLowerCase())
-    stringToSearch = stringToSearch.split(' ').join('').toLowerCase()
-
-    for (let word of wordsOfSubstring) {
-        if (stringIsEmptyOrWhitespaces(word))
-            continue
-        else if (stringToSearch.indexOf(word) === -1)
-            return false
-    }
-
-    return true
-}
-
-function getWeight(programNameWithExtension, userInput) {
-    let results = []
-    let stringToSearchWords = splitStringToArray(programNameWithExtension)
-    let valueWords = splitStringToArray(userInput)
-
-    for (let word of stringToSearchWords)
-        for (let value of valueWords) {
-            let levenshteinDistance = leven(word, value)
-            let result = word.startsWith(value)
-                ? (levenshteinDistance / 4)
-                : levenshteinDistance
-
-            results.push(result)
-        }
-
-    return getAvg(results)
-}
-
-function getAvg(numbers) {
-    let sum = 0
-
-    for (let value of numbers)
-        sum = sum + value
-
-    return sum / numbers.length
-}
-
-function stringIsEmptyOrWhitespaces(string) {
-    return string === undefined || string.replace(/\s/g, '').length === 0
-}
-
-function splitStringToArray(string) {
-    return string.split(/\s+/)
 }
 
 function convertSecondsToMilliSeconds(seconds) {

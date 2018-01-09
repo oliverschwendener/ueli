@@ -5,12 +5,14 @@ import CustomShortcuts from './Plugins/CustomShortcuts'
 import CommandLine from './Plugins/CommandLine'
 import EzrCommands from './Plugins/EzrCommands'
 import FileBrowser from './Plugins/FileBrowser'
+import Windows10Apps from './Plugins/Windows10Apps'
 
 export default class PluginManager {
     constructor() {
         this.plugins = [
             new CustomShortcuts(),
             new InstalledPrograms(),
+            new Windows10Apps(),
             new WebUrl(),
             new WebSearch(),
             new CommandLine(),
@@ -40,16 +42,16 @@ export default class PluginManager {
         let validPlugin = this.getValidPlugin(userInput)
         return (validPlugin !== undefined && validPlugin.getAutoCompletion !== undefined)
             ? validPlugin.getAutoCompletion
-            : () => {}
+            : () => { }
     }
 
     getIcon(userInput) {
         let validPlugin = this.getValidPlugin(userInput)
         let result
-        try{
+        try {
             result = validPlugin.getIcon(userInput)
         }
-        catch(exception){
+        catch (exception) {
             result = this.defaultIcon
         }
 
