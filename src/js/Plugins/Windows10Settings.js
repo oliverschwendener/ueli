@@ -4,82 +4,11 @@ import StringHelpers from '../Helpers/StringHelpers'
 
 let stringHelpers = new StringHelpers()
 
-export default class WindowsSettings {
+export default class Windows10Settings {
     constructor() {
         this.icon = 'fa fa-windows'
         this.prefix = 'ms-settings'
         this.windowsApps = [
-            // Windows 10 Apps
-            {
-                name: 'Action Center',
-                execArg: 'ms-actioncenter:'
-            },
-            {
-                name: 'Clock',
-                execArg: 'ms-clock:'
-            },
-            {
-                name: 'Contact Support',
-                execArg: 'ms-contact-support:'
-            },
-            {
-                name: 'Cortana',
-                execArg: 'ms-cortana:'
-            },
-            {
-                name: 'Microsoft Edge',
-                execArg: 'microsoft-edge:'
-            },
-            {
-                name: 'Microsoft Edge Reading View',
-                execArg: 'read:'
-            },
-            {
-                name: 'Mail',
-                execArg: 'mailto:'
-            },
-            {
-                name: 'Maps',
-                execArg: 'maps:'
-            },
-            {
-                name: 'Maps Drive To',
-                execArg: 'ms-drive-to:'
-            },
-            {
-                name: 'Maps Walk To',
-                execArg: 'ms-walk-to:'
-            },
-            {
-                name: 'Microsoft Account Profile',
-                execArg: 'ms-cxh:'
-            },
-            {
-                name: 'OneNote',
-                execArg: 'onenote:'
-            },
-            {
-                name: 'Parental Control',
-                execArg: 'ms-wpc:'
-            },
-            {
-                name: 'People',
-                execArg: 'ms-people:'
-            },
-            {
-                name: 'Phone Companion',
-                execArg: 'ms-phone-companion:'
-            },
-            {
-                name: 'Windows Feedback',
-                execArg: 'windows-feedback:'
-            },
-            {
-                name: 'Xbox',
-                execArg: 'xbox-tcui:'
-            },
-
-            // Windows 10 Settings
             {
                 name: 'Battery Saver',
                 execArg: `ms-settings:batterysaver`

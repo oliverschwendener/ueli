@@ -5,7 +5,7 @@ import CustomShortcuts from './Plugins/CustomShortcuts'
 import CommandLine from './Plugins/CommandLine'
 import EzrCommands from './Plugins/EzrCommands'
 import FileBrowser from './Plugins/FileBrowser'
-import Windows10Apps from './Plugins/Windows10Apps'
+import Windows10Settings from './Plugins/Windows10Settings'
 import ConfigManager from './ConfigManager'
 import ConfigHelpers from './Helpers/ConfigHelpers'
 
@@ -71,7 +71,7 @@ export default class PluginManager {
             activePlugins.push(new InstalledPrograms())
 
         if (configHelpers.pluginIsActive('windowsSettings'))
-            activePlugins.push(new Windows10Apps())
+            activePlugins.push(new Windows10Settings())
 
         if (configHelpers.pluginIsActive('webUrl'))
             activePlugins.push(new WebUrl())
