@@ -103,6 +103,40 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 
 ``` json
 {
+    "plugins": [
+        {
+            "name": "Custom Shortcuts",
+            "active": true
+        },
+        {
+            "name": "Installed Programs",
+            "active": true
+        },
+        {
+            "name": "Windows 10 Settings",
+            "active": true
+        },
+        {
+            "name": "Web URL",
+            "active": true
+        },
+        {
+            "name": "Web Search",
+            "active": true
+        },
+        {
+            "name": "Command Line",
+            "active": true
+        },
+        {
+            "name": "Ezr Commands",
+            "active": true
+        },
+        {
+            "name": "File Browser",
+            "active": true
+        }
+    ],
     "keyboardShortcut": "alt+space",
     "size": {
         "width": 960,
@@ -113,8 +147,8 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
     "colorTheme": "osc-dark-blue",
     "folders": [
         "C:\\ProgramData\\Microsoft\\Windows\\Start Menu",
-        "C:\\Users\\<your-username>\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu",
-        "C:\\Users\\<your-username>\\Desktop"
+        "C:\\Users\\Oliver\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu",
+        "C:\\Users\\Oliver\\Desktop"
     ],
     "rescanInterval": 30,
     "webSearches": [
@@ -123,6 +157,30 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
             "prefix": "g",
             "url": "https://google.com/search?q=",
             "icon": "fa fa-google"
+        },
+        {
+            "name": "Google Image",
+            "prefix": "gi",
+            "url": "https://www.google.com/search?tbm=isch&q=",
+            "icon": "fa fa-picture-o"
+        },
+        {
+            "name": "YouTube",
+            "prefix": "yt",
+            "url": "https://www.youtube.com/results?search_query=",
+            "icon": "fa fa-youtube-play"
+        },
+        {
+            "name": "Linguee",
+            "prefix": "l",
+            "url": "http://www.linguee.de/deutsch-englisch/search?source=auto&query=",
+            "icon": "fa fa-language"
+        },
+        {
+            "name": "DuckDuckGo",
+            "prefix": "d",
+            "url": "https://duckduckgo.com/?q=",
+            "icon": "fa fa-search"
         }
     ],
     "customShortcuts": [],
@@ -131,7 +189,10 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 ```
 
 ### Options
-
+* `plugins` Array of plugin objects - A list of plugins
+    * `plugin` Object - Defines a plugin
+        * `name` String - Represents the name of the plugin
+        * `active` Boolean - Defines if the plugin is activated
 * `keyboardShortcut` String - Keyboard shortcut to show/hide electronizr. Default is `alt+space`.
     * Available keyboard shortcuts:
         * 'alt+space'
@@ -144,13 +205,13 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 * `colorTheme` String - Sets the color theme to one of the [available color themes](#color-themes). Default is `osc-dark-blue`.
 * `folders` String[] - A List of the folders you want to search. It's recommended not to add a folder with a lot of files because that would slow down the search function drastically. Default are the `Start Menu` and `Desktop` folders.
 * `rescanInterval` Integer - Interval to rescan the specified folders (in seconds). Min=`1`, Max=`3600`. Default is `30`
-* `webSearches` Array of webSearch Objects - A List of custom web search engines. Default is the `Google` web search.
+* `webSearches` Array of webSearch Objects - A list of custom web search engines. Default is the `Google` web search.
     * `webSearch` Object - Defines a custom web search engine
         * `name` String - Represents the displayed name of your search engine.
         * `prefix` String - Represents the prefix for your search engine. For example if the prefix is `g` you can type in `g?<your-search>` to search.
         * `url` String - Represents the url for the search engine. For example Google's url for the search engine is `https://google.com/search?q=<your-search>`.
         * `icon` String (optional) - Represents a font-awesome icon which appears for your custom search engine. For example the [Google icon](http://fontawesome.io/icon/google/) is `fa fa-google`.
-* `customShortcuts` Array of customShortcut Objects - A List of custom shortcuts.
+* `customShortcuts` Array of customShortcut Objects - A list of custom shortcuts.
     * `customShortcut` Object - Defines a custom shortcut.
         * `shortCut`: String - Represents the keyword for the shortcut. For example `vsc`.
         * `path`: String - Represents the path to the shortcut. For Example `C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Visual Studio Code\Visual Studio Code.lnk`
