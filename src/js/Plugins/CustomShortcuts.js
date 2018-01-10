@@ -8,6 +8,11 @@ export default class CustomShortcuts {
     constructor() {
         this.customShortcuts = new ConfigManager().getConfig().customShortcuts
         this.icon = 'fa fa-window-maximize'
+        this.name = 'Custom Shortcuts'
+    }
+
+    getName() {
+        return this.name
     }
 
     isValid(userInput) {

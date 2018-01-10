@@ -6,7 +6,12 @@ import leven from 'leven'
 
 export default class FileBrowser {
     constructor() {
+        this.name = 'File Browser'
         this.icon = 'fa fa-file'
+    }
+
+    getName() {
+        return this.name
     }
 
     isValid(filePath) {

@@ -11,6 +11,7 @@ let stringHelpers = new StringHelpers()
 export default class InstalledPrograms {
     constructor() {
         this.config = new ConfigManager().getConfig()
+        this.name = 'Installed Programs'
         this.folders = this.config.folders
         this.favorites = new FavoritesManager().getFavorites()
         this.programs = []
@@ -22,6 +23,10 @@ export default class InstalledPrograms {
             '.appref-ms',
             '.url'
         ]
+    }
+
+    getName() {
+        return this.name
     }
 
     async setup() {

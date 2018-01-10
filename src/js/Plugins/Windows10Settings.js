@@ -7,6 +7,7 @@ let stringHelpers = new StringHelpers()
 export default class Windows10Settings {
     constructor() {
         this.icon = 'fa fa-windows'
+        this.name = 'Windows 10 Settings'
         this.prefix = 'ms-settings'
         this.windowsApps = [
             {
@@ -258,6 +259,10 @@ export default class Windows10Settings {
                 execArg: `ms-settings:privacy`
             }
         ]
+    }
+
+    getName() {
+        return this.name
     }
 
     isValid(userInput) {

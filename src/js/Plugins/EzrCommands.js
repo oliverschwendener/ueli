@@ -9,6 +9,7 @@ let commandPrefix = 'ezr'
 
 export default class EzrCommands {
     constructor() {
+        this.name = 'Ezr Commands'
         this.commands = [
             {
                 command: `${commandPrefix}:config`,
@@ -55,6 +56,10 @@ export default class EzrCommands {
             }
         ]
         this.icon = 'fa fa-cogs'
+    }
+
+    getName() {
+        return this.name
     }
 
     isValid(userInput) {

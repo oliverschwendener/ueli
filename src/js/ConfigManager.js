@@ -38,35 +38,35 @@ function getDefaultConfig() {
     return {
         plugins: [
             {
-                name: 'customShortcuts',
+                name: 'Custom Shortcuts',
                 active: true
             },
             {
-                name: 'installedPrograms',
+                name: 'Installed Programs',
                 active: true,
             },
             {
-                name: 'windowsSettings',
+                name: 'Windows 10 Settings',
                 active: true,
             },
             {
-                name: 'webUrl',
+                name: 'Web URL',
                 active: true,
             },
             {
-                name: 'webSearch',
+                name: 'Web Search',
                 active: true,
             },
             {
-                name: 'commandLine',
+                name: 'Command Line',
                 active: true,
             },
             {
-                name: 'ezrCommands',
+                name: 'Ezr Commands',
                 active: true,
             },
             {
-                name: 'fileBrowser',
+                name: 'File Browser',
                 active: true
             }
         ],

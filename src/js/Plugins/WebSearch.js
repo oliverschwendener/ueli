@@ -4,8 +4,13 @@ import { ipcRenderer } from 'electron'
 
 export default class WebSearch {
     constructor() {
+        this.name = 'Web Search'
         this.webSearches = new ConfigManager().getConfig().webSearches
         this.separator = '?'
+    }
+
+    getName() {
+        return this.name
     }
 
     isValid(userInput) {

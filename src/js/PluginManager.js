@@ -62,31 +62,23 @@ export default class PluginManager {
     }
 
     setPluginsFromConfig() {
+        let allPlugins = [
+            new CustomShortcuts(),
+            new InstalledPrograms(),
+            new Windows10Settings(),
+            new WebUrl(),
+            new WebSearch(),
+            new CommandLine(),
+            new EzrCommands(),
+            new FileBrowser()
+        ]
+
         let activePlugins = []
 
-        if (configHelpers.pluginIsActive('customShortcuts'))
-            activePlugins.push(new CustomShortcuts())
-
-        if (configHelpers.pluginIsActive('installedPrograms'))
-            activePlugins.push(new InstalledPrograms())
-
-        if (configHelpers.pluginIsActive('windowsSettings'))
-            activePlugins.push(new Windows10Settings())
-
-        if (configHelpers.pluginIsActive('webUrl'))
-            activePlugins.push(new WebUrl())
-
-        if (configHelpers.pluginIsActive('webSearch'))
-            activePlugins.push(new WebSearch())
-
-        if (configHelpers.pluginIsActive('commandLine'))
-            activePlugins.push(new CommandLine())
-
-        if (configHelpers.pluginIsActive('ezrCommands'))
-            activePlugins.push(new EzrCommands())
-
-        if (configHelpers.pluginIsActive('fileBrowser'))
-            activePlugins.push(new FileBrowser())
+        for (let plugin of allPlugins) {
+            if (configHelpers.pluginIsActive(plugin.getName()))
+                activePlugins.push(plugin)
+        }
 
         this.plugins = activePlugins
     }

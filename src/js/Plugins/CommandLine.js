@@ -5,6 +5,11 @@ let commandLinePrefix = '>'
 export default class CommandLine {
     constructor() {
         this.icon = 'fa fa-terminal'
+        this.name = 'Command Line'
+    }
+
+    getName() {
+        return this.name
     }
 
     isValid(userInput) {

@@ -7,6 +7,11 @@ let configManager = new ConfigManager()
 export default class WebUrl {
     constructor() {
         this.icon = 'fa fa-globe'
+        this.name = 'Web URL'
+    }
+
+    getName() {
+        return this.name
     }
 
     isValid(url) {
