@@ -38,11 +38,24 @@
 
                 <div class="config-item">
                     <h3>Plugins</h3>
-                    <div class="form-item" v-for="plugin in config.plugins">
-                        <label>{{ plugin.name }}</label>
-                        <input type="checkbox" v-model="plugin.active">
-                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Plugin</th>
+                                <th>Active</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid white;" v-for="plugin in config.plugins">
+                                <td>{{ plugin.name }}</td>
+                                <td>
+                                    <input type="checkbox" v-model="plugin.active">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+                <hr>
 
                 <div class="config-item">
                     <h3>Keyboard shortcut</h3>
@@ -78,7 +91,7 @@
                     <h3>Color Theme</h3>
                     <select v-model="colorTheme">
                         <option>osc-dark-blue</option>
-                        <option>osc-light-blue</option>                        
+                        <option>osc-light-blue</option>
                         <option>atom-one-dark</option>
                         <option>dracula-dark-blue</option>
                         <option>dracula-purple</option>
@@ -98,7 +111,9 @@
                         </thead>
                         <tbody>
                             <tr v-for="folder in config.folders">
-                                <td><i v-on:click="removeFolder(folder)" class="fa fa-minus-circle action-button"></i></td>
+                                <td>
+                                    <i v-on:click="removeFolder(folder)" class="fa fa-minus-circle action-button"></i>
+                                </td>
                                 <td>{{ folder }}</td>
                             </tr>
                             <tr>
@@ -132,7 +147,9 @@
                         </thead>
                         <tbody>
                             <tr v-for="shortcut in config.customShortcuts">
-                                <td><i v-on:click="removeCustomShortcut(shortcut)" class="fa fa-minus-circle action-button"></i></td>
+                                <td>
+                                    <i v-on:click="removeCustomShortcut(shortcut)" class="fa fa-minus-circle action-button"></i>
+                                </td>
                                 <td>{{ shortcut.shortCut }}</td>
                                 <td>{{ shortcut.path }}</td>
                             </tr>
@@ -166,7 +183,9 @@
                         </thead>
                         <tbody>
                             <tr v-for="webSearch in config.webSearches">
-                                <td><i v-on:click="removeWebSearch(webSearch)" class="fa fa-minus-circle action-button"></i></td>
+                                <td>
+                                    <i v-on:click="removeWebSearch(webSearch)" class="fa fa-minus-circle action-button"></i>
+                                </td>
                                 <td>{{ webSearch.name }}</td>
                                 <td>{{ webSearch.prefix }}</td>
                                 <td>{{ webSearch.url }}</td>
@@ -211,21 +230,21 @@
                         </tbody>
                     </table>
                     <button v-on:click="cleanUpFavorites">
-                    <i class="fa fa-trash-o"></i>
-                    Clean most used programs
-                </button>
+                        <i class="fa fa-trash-o"></i>
+                        Clean most used programs
+                    </button>
                 </div>
                 <hr>
 
                 <div class="config-item">
                     <button v-on:click="closeConfig">
-                    <i class="fa fa-arrow-left"></i>
-                    Go Back
-                </button>
+                        <i class="fa fa-arrow-left"></i>
+                        Go Back
+                    </button>
                     <button v-on:click="saveConfig">
-                    <i class="fa fa-floppy-o"></i>
-                    Save
-                </button>
+                        <i class="fa fa-floppy-o"></i>
+                        Save
+                    </button>
                 </div>
             </div>
 
