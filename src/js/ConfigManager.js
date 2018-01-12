@@ -50,6 +50,10 @@ function getDefaultConfig() {
                 active: true,
             },
             {
+                name: 'Windows 10 System Commands',
+                active: true
+            },
+            {
                 name: 'Web URL',
                 active: true,
             },

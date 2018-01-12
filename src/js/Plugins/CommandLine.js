@@ -57,7 +57,7 @@ export default class CommandLine {
                     command.kill('SIGINT')
             })
         }
-        catch(ex) {
+        catch (ex) {
             callback('There was an error')
         }
     }
@@ -67,7 +67,7 @@ export default class CommandLine {
 
         return [{
             name: `Execute ${command}`,
-            execArg: userInput
+            execArg: userInput,
         }]
     }
 

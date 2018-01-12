@@ -49,7 +49,6 @@ export default class InstalledPrograms {
     search(userInput) {
         let result = []
 
-        // add programs with weight
         for (let program of this.programs) {
             let programName = path.basename(program)
 
@@ -57,32 +56,24 @@ export default class InstalledPrograms {
                 programName = programName.replace(shortCutFileExtension, '')
 
             if (stringHelpers.stringContainsSubstring(programName, userInput)) {
-                let weight = stringHelpers.getWeight(programName, userInput)
-                if (weight >= 0)
-                    result.push({
-                        name: programName,
-                        execArg: path.win32.normalize(program),
-                        weight: weight,
-                        isActive: false
-                    })
+                result.push({
+                    name: programName,
+                    execArg: path.win32.normalize(program),
+                })
             }
         }
 
         // list favorite item higher
+        // TODO!!!!
+        /*
         if (this.favorites.length > 0)
             for (let item of result)
                 for (let favorite of this.favorites)
                     if (favorite.path === item.execArg)
                         item.weight = item.weight - (favorite.counter)
+        */
 
-        // sort desc result by weigth
-        let sortedResult = result.sort((a, b) => {
-            if (a.weight > b.weight) return 1
-            if (a.weight < b.weight) return -1
-            return 0
-        })
-
-        return sortedResult
+        return result
     }
 
     getSearchResult(userInput) {

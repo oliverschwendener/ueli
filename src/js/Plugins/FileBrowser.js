@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
-import leven from 'leven'
 
 export default class FileBrowser {
     constructor() {
@@ -39,7 +38,6 @@ export default class FileBrowser {
                 return [{
                     name: path.basename(filePath),
                     execArg: filePath,
-                    isActive: false
                 }]
             }
         }
@@ -68,11 +66,11 @@ export default class FileBrowser {
 }
 
 function getResultFromDirectory(folderPath, userInput) {
-    folderPath = path.win32.normalize(folderPath)    
+    folderPath = path.win32.normalize(folderPath)
     let folderSeparator = folderPath.endsWith('\\') ? '' : '\\'
     let files = fs.readdirSync(folderPath)
     let searchFileName = path.basename(userInput)
-    let result = []    
+    let result = []
 
     for (let file of files) {
         let filePath = `${folderPath}${folderSeparator}${path.win32.normalize(file)}`
@@ -81,17 +79,9 @@ function getResultFromDirectory(folderPath, userInput) {
         if (userInput.endsWith('\\') || filePath.toLowerCase().indexOf(searchFileName.toLowerCase()) > -1)
             result.push({
                 name: fileName,
-                execArg: filePath,
-                weight: leven(fileName, path.basename(userInput)),
-                isActive: false
+                execArg: filePath
             })
     }
 
-    let sortedResult = result.sort((a, b) => {
-        if (a.weight > b.weight) return 1
-        if (a.weight < b.weight) return -1
-        return 0
-    })
-
-    return sortedResult
+    return result
 }

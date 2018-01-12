@@ -6,7 +6,7 @@ let stringHelpers = new StringHelpers()
 
 export default class Windows10Settings {
     constructor() {
-        this.icon = 'fa fa-windows'
+        this.icon = 'fa fa-cog'
         this.name = 'Windows 10 Settings'
         this.prefix = 'ms-settings'
         this.windowsApps = [
@@ -351,8 +351,7 @@ export default class Windows10Settings {
             if (this.windowsAppMatchesUserInput(windowsApp, userInput))
                 result.push({
                     name: windowsApp.name,
-                    execArg: windowsApp.execArg,
-                    isActive: false
+                    execArg: windowsApp.execArg
                 })
         }
 

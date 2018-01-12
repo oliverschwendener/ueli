@@ -1,4 +1,3 @@
-import leven from 'leven'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
 import open from 'open'
@@ -55,7 +54,7 @@ export default class EzrCommands {
                 }
             }
         ]
-        this.icon = 'fa fa-cogs'
+        this.icon = 'fa fa-angle-right'
     }
 
     getName() {
@@ -76,22 +75,13 @@ export default class EzrCommands {
         let result = []
 
         for (let command of this.commands) {
-            let weight = leven(command.command, userInput)
             result.push({
                 name: command.description,
                 execArg: command.command,
-                isActive: false,
-                weight: weight
             })
         }
 
-        let sortedResult = result.sort((a, b) => {
-            if (a.weight > b.weight) return 1
-            if (a.weight < b.weight) return -1
-            return 0
-        })
-
-        return sortedResult
+        return result
     }
 
     getIcon() {

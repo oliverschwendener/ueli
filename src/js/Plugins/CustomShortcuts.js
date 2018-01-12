@@ -34,11 +34,13 @@ export default class CustomShortcuts {
 
     getSearchResult(userInput) {
         for (let customShortcut of this.customShortcuts)
-            if (customShortcut.shortCut === userInput)
+            if (customShortcut.shortCut === userInput) {
+                let name = path.basename(customShortcut.path).replace('.lnk', '')
                 return [{
-                    name: path.basename(customShortcut.path).replace('.lnk', ''),
-                    execArg: customShortcut.path
+                    name: name,
+                    execArg: customShortcut.path,
                 }]
+            }
     }
 
     getIcon(userInput) {

@@ -6,10 +6,13 @@ import CommandLine from './Plugins/CommandLine'
 import EzrCommands from './Plugins/EzrCommands'
 import FileBrowser from './Plugins/FileBrowser'
 import Windows10Settings from './Plugins/Windows10Settings'
+import Windows10SystemCommands from './Plugins/Windows10SystemCommands'
 import ConfigManager from './ConfigManager'
 import ConfigHelpers from './Helpers/ConfigHelpers'
+import StringHelpers from './Helpers/StringHelpers'
 
 let configHelpers = new ConfigHelpers()
+let stringHelpers = new StringHelpers()
 
 export default class PluginManager {
     constructor() {
@@ -27,10 +30,27 @@ export default class PluginManager {
     }
 
     getSearchResult(userInput) {
-        let validPlugin = this.getValidPlugin(userInput)
-        return validPlugin !== undefined
-            ? validPlugin.getSearchResult(userInput)
-            : []
+        let unsortedResult = []
+
+        for (let plugin of this.plugins) {
+            if (plugin.isValid(userInput))
+                unsortedResult = unsortedResult.concat(plugin.getSearchResult(userInput))
+        }
+
+        for (let item of unsortedResult) {
+            item.weight = stringHelpers.getWeight(item.name, userInput)
+            item.isActive = false
+        }
+
+        return this.getSortedResult(unsortedResult)
+    }
+
+    getSortedResult(unsorted) {
+        return unsorted.sort((a, b) => {
+            if (a.weight > b.weight) return 1
+            if (a.weight < b.weight) return -1
+            return 0
+        })
     }
 
     getAutoCompletion(userInput) {
@@ -65,6 +85,7 @@ export default class PluginManager {
         let allPlugins = [
             new CustomShortcuts(),
             new InstalledPrograms(),
+            new Windows10SystemCommands(),
             new Windows10Settings(),
             new WebUrl(),
             new WebSearch(),
