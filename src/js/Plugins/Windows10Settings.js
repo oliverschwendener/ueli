@@ -293,7 +293,7 @@ export default class Windows10Settings {
             {
                 name: 'Sign-in options',
                 execArg: `ms-settings:signinoptions`,
-                tags: ['password', 'change', 'security', 'secret', 'account']
+                tags: ['password', 'change', 'security', 'secret', 'account', 'pin']
             },
             {
                 name: 'Storage Sense',
@@ -364,13 +364,16 @@ export default class Windows10Settings {
     }
 
     tagsMatchesUserInput(tags, userInput) {
+        let words = userInput.split(' ')
+
         if (tags.length === 0) {
             return false
         }
         else {
             for (let tag of tags) {
-                if (stringHelpers.stringContainsSubstring(tag, userInput))
-                    return true
+                for (let word of words)
+                    if (stringHelpers.stringContainsSubstring(tag, word))
+                        return true
             }
 
             return false
