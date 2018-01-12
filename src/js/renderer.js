@@ -75,10 +75,7 @@ let vue = new Vue({
                     if (item.isActive)
                         activeItem = item
 
-                let autoCompletionResult = this.autoComplete(activeItem)
-                this.userInput = autoCompletionResult === undefined
-                    ? this.userInput
-                    : autoCompletionResult
+                this.userInput = activeItem.name
             }
         },
         search() {
@@ -89,7 +86,6 @@ let vue = new Vue({
             }
 
             this.searchResult = pluginManager.getSearchResult(this.userInput)
-            this.autoComplete = pluginManager.getAutoCompletion(this.userInput)
             this.searchIcon = pluginManager.getIcon(this.userInput)
 
             if (this.searchResult.length > 0) {

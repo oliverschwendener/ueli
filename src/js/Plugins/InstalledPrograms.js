@@ -81,10 +81,6 @@ export default class InstalledPrograms {
         })
     }
 
-    getAutoCompletion(activeItem) {
-        return activeItem.name
-    }
-
     getIcon(userInput) {
         return this.icon
     }
