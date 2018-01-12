@@ -163,7 +163,6 @@ let vue = new Vue({
                 let activeItem = getActiveItem()
                 historyManager.addItem(this.userInput)
                 this.resetUserInput()
-                ipcRenderer.send('hide-main-window')
                 setTimeout(() => {
                     pluginManager.execute(activeItem.execArg, this.appendExecuteOutput)
                 }, 50)
