@@ -10,6 +10,7 @@ import Windows10SystemCommands from './Plugins/Windows10SystemCommands'
 import ConfigManager from './ConfigManager'
 import ConfigHelpers from './Helpers/ConfigHelpers'
 import StringHelpers from './Helpers/StringHelpers'
+import FavoritesManager from './FavoritesManager'
 
 let configHelpers = new ConfigHelpers()
 let stringHelpers = new StringHelpers()
@@ -19,6 +20,7 @@ export default class PluginManager {
         this.plugins = []
         this.setPluginsFromConfig()
         this.defaultIcon = 'fa fa-search'
+        this.favorites = new FavoritesManager().getFavorites()
     }
 
     isValid(args) {
@@ -42,7 +44,21 @@ export default class PluginManager {
             item.isActive = false
         }
 
-        return this.getSortedResult(unsortedResult)
+        let resultWithFavorites = this.addFavoritesToSearchResult(unsortedResult)
+
+        return this.getSortedResult(resultWithFavorites)
+    }
+
+    addFavoritesToSearchResult(searchResult) {
+        let result = searchResult
+
+        if (this.favorites.length > 0)
+            for (let item of result)
+                for (let favorite of this.favorites)
+                    if (favorite.path === item.execArg)
+                        item.weight = item.weight - (favorite.counter)
+
+        return result
     }
 
     getSortedResult(unsorted) {

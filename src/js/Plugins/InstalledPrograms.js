@@ -13,7 +13,6 @@ export default class InstalledPrograms {
         this.config = new ConfigManager().getConfig()
         this.name = 'Installed Programs'
         this.folders = this.config.folders
-        this.favorites = new FavoritesManager().getFavorites()
         this.programs = []
         this.setup()
         this.initalizeFileWatchers()
@@ -37,7 +36,6 @@ export default class InstalledPrograms {
         setInterval(async () => {
             this.programs = []
             await this.getFilesFromDirectoriesRecursivelyByFileExtension(this.folders)
-            this.favorites = new FavoritesManager().getFavorites()
         }, convertSecondsToMilliSeconds(this.config.rescanInterval))
     }
 
@@ -62,16 +60,6 @@ export default class InstalledPrograms {
                 })
             }
         }
-
-        // list favorite item higher
-        // TODO!!!!
-        /*
-        if (this.favorites.length > 0)
-            for (let item of result)
-                for (let favorite of this.favorites)
-                    if (favorite.path === item.execArg)
-                        item.weight = item.weight - (favorite.counter)
-        */
 
         return result
     }
