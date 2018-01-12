@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-let configFilePath = `${process.env.USERPROFILE}\\ezr_config.json`
+let configFilePath = `${process.env.USERPROFILE}\\electronizr.config.json`
 
 export default class ConfigManager {
     constructor() {

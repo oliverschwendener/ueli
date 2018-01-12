@@ -97,7 +97,7 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 
 
 ## Customization
-You can customize your application with 'ezr:config'. All Settings, customization and user history are stored in the `~/ezr_config.json` file. If there is no config file run the application once, then it should create one.
+You can customize your application with 'ezr:config'. All Settings, customization and user history are stored in the `~/electronizr.config.json` file. If there is no config file run the application once, then it should create one.
 
 ### Options
 * `plugins` Array of plugin objects - A list of plugins
