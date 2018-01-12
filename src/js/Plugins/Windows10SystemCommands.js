@@ -44,7 +44,8 @@ export default class WebUrl {
             if (this.commandMatchesUserInput(command, userInput))
                 result.push({
                     name: command.name,
-                    execArg: command.execArg
+                    execArg: command.execArg,
+                    icon: this.icon
                 })
 
         return result
@@ -53,9 +54,5 @@ export default class WebUrl {
     commandMatchesUserInput(command, userInput) {
         return stringHelpers.stringContainsSubstring(command.name, userInput)
             || stringHelpers.stringContainsSubstring(command.execArg, userInput)
-    }
-
-    getIcon(userInput) {
-        return this.icon
     }
 }

@@ -39,11 +39,8 @@ export default class CustomShortcuts {
                 return [{
                     name: name,
                     execArg: customShortcut.path,
+                    icon: this.icon
                 }]
             }
-    }
-
-    getIcon(userInput) {
-        return this.icon
     }
 }

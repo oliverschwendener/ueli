@@ -13,16 +13,23 @@
 
         <link rel="stylesheet" :href="colorThemePath">
 
-        <input id="user-input" class="user-input" type="text" v-model="userInput" ref="input" v-on:keyDown="handleKeyPress" :autofocus="{ true: focusOnInput }">
-        <i id="search-icon" :class="searchIcon" aria-hidden="true"></i>
+        <div class="user-input-container">
+            <input id="user-input" class="user-input" type="text" v-model="userInput" ref="input" v-on:keyDown="handleKeyPress" :autofocus="{ true: focusOnInput }">
+            <i id="search-icon" class="fa fa-search" aria-hidden="true"></i>
+        </div>
 
         <div class="output-container">
 
             <div class="search-result">
                 <ul class="search-result-list">
                     <li v-for="item in searchResult" :class="{ 'active': item.isActive }" :id="item.id">
-                        <span class="name">{{ item.name }}</span>
-                        <span class="exec-args">{{ item.execArg }}</span>
+                        <div class="icon-container">
+                            <i :class="item.icon"></i>
+                        </div>
+                        <div class="text-container">
+                            <span class="name">{{ item.name }}</span>
+                            <span class="exec-args">{{ item.execArg }}</span>
+                        </div>
                     </li>
                 </ul>
             </div>

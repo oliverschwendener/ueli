@@ -68,11 +68,8 @@ export default class CommandLine {
         return [{
             name: `Execute ${command}`,
             execArg: userInput,
+            icon: this.icon
         }]
-    }
-
-    getIcon() {
-        return this.icon
     }
 }
 

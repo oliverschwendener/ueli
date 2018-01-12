@@ -33,12 +33,9 @@ export default class WebUrl {
     getSearchResult(userInput) {
         return [{
             name: `Open in browser`,
-            execArg: addHttpToUrl(userInput)
+            execArg: addHttpToUrl(userInput),
+            icon: this.icon
         }]
-    }
-
-    getIcon(userInput) {
-        return this.icon
     }
 }
 

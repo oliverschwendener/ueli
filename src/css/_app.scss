@@ -11,6 +11,7 @@
 }
 
 $user-input-height: 85px;
+$search-result-item-height: 100px;
 
 body, html {
     @include font();
@@ -34,6 +35,13 @@ i#search-icon {
     font-size: 1.5rem;
 }
 
+div.user-input-container {
+    display: flex;
+    height: $user-input-height;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 input.user-input {
     background: transparent;
     color: $userinput-text-color;
@@ -42,8 +50,7 @@ input.user-input {
     font-size: 2.5rem;
     font-weight: 100;
     padding: 0 15px;
-    line-height: $user-input-height;
-    width: 100vw;
+    width: 100%;
 }
 
 div.output-container {
@@ -60,10 +67,23 @@ ul.search-result-list {
 
     li{
         max-width: 100vw;
-        padding: 15px;
+        height: $search-result-item-height;
+        padding: 0 10px;
         overflow: hidden; 
         text-overflow: ellipsis;
         white-space: nowrap;
+        display: flex;
+        align-items: center;
+        flex-flow: row;
+
+        div {
+            padding: 0 10px;
+
+            &.icon-container {
+                text-align: center;
+                font-size: 2rem;
+            }
+        }
 
         span {
             display: block;

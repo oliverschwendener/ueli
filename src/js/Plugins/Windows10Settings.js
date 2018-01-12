@@ -351,15 +351,12 @@ export default class Windows10Settings {
             if (this.windowsAppMatchesUserInput(windowsApp, userInput))
                 result.push({
                     name: windowsApp.name,
-                    execArg: windowsApp.execArg
+                    execArg: windowsApp.execArg,
+                    icon: this.icon
                 })
         }
 
         return result
-    }
-
-    getIcon() {
-        return this.icon
     }
 
     tagsMatchesUserInput(tags, userInput) {

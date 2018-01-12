@@ -85,14 +85,11 @@ export default class EzrCommands {
                 result.push({
                     name: command.description,
                     execArg: command.command,
+                    icon: this.icon
                 })
         }
 
         return result
-    }
-
-    getIcon() {
-        return this.icon
     }
 
     commandMatchesUserInput(command, userInput) {

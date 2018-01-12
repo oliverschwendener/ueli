@@ -3,10 +3,11 @@ import path from 'path'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
 
+let fileIcon = 'fa fa-file'
+
 export default class FileBrowser {
     constructor() {
         this.name = 'File Browser'
-        this.icon = 'fa fa-file'
     }
 
     getName() {
@@ -38,16 +39,13 @@ export default class FileBrowser {
                 return [{
                     name: path.basename(filePath),
                     execArg: filePath,
+                    icon: fileIcon
                 }]
             }
         }
         else if (fs.existsSync(path.dirname(userInput))) {
             return getResultFromDirectory(path.dirname(userInput), userInput)
         }
-    }
-
-    getIcon() {
-        return this.icon
     }
 }
 
@@ -65,7 +63,8 @@ function getResultFromDirectory(folderPath, userInput) {
         if (userInput.endsWith('\\') || filePath.toLowerCase().indexOf(searchFileName.toLowerCase()) > -1)
             result.push({
                 name: fileName,
-                execArg: filePath
+                execArg: filePath,
+                icon: fileIcon
             })
     }
 

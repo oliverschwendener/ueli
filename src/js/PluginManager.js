@@ -69,21 +69,6 @@ export default class PluginManager {
         })
     }
 
-    getIcon(userInput) {
-        let validPlugin = this.getValidPlugin(userInput)
-        let result
-        try {
-            result = validPlugin.getIcon(userInput)
-        }
-        catch (exception) {
-            result = this.defaultIcon
-        }
-
-        return isValidFontAwesomeIcon(result)
-            ? result
-            : this.defaultIcon
-    }
-
     getValidPlugin(args) {
         for (let plugin of this.plugins)
             if (plugin.isValid(args))
@@ -112,10 +97,4 @@ export default class PluginManager {
 
         this.plugins = activePlugins
     }
-}
-
-function isValidFontAwesomeIcon(icon) {
-    return icon !== undefined
-        && icon !== null
-        && icon.startsWith('fa ')
 }

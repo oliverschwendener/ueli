@@ -22,7 +22,6 @@ let vue = new Vue({
         focusOnInput: true,
         searchResult: [],
         executeOutput: '',
-        searchIcon: 'fa fa-search',
         hideExecuteOutput: true,
         filePreview: '',
         hideFilePreview: true,
@@ -75,18 +74,16 @@ let vue = new Vue({
                     if (item.isActive)
                         activeItem = item
 
-                this.userInput = activeItem.name
+                alert('autocompletion is currently in the making')
             }
         },
         search() {
             if (stringIsEmptyOrWhitespaces(this.userInput)) {
                 this.searchResult = []
-                this.searchIcon = 'fa fa-search'
                 return
             }
 
             this.searchResult = pluginManager.getSearchResult(this.userInput)
-            this.searchIcon = pluginManager.getIcon(this.userInput)
 
             if (this.searchResult.length > 0) {
                 for (let i = 0; i < this.searchResult.length; i++)

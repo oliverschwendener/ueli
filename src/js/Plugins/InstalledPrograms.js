@@ -57,6 +57,7 @@ export default class InstalledPrograms {
                 result.push({
                     name: programName,
                     execArg: path.win32.normalize(program),
+                    icon: this.icon
                 })
             }
         }
@@ -79,10 +80,6 @@ export default class InstalledPrograms {
                 ipcRenderer.send('hide-main-window')
             }
         })
-    }
-
-    getIcon(userInput) {
-        return this.icon
     }
 
     searchResultContainsFilePath(filePath) {
