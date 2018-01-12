@@ -3,8 +3,10 @@ import { ipcRenderer } from 'electron'
 import open from 'open'
 
 import ConfigManager from './../ConfigManager'
+import StringHelpers from './../Helpers/StringHelpers'
 
 let commandPrefix = 'ezr'
+let stringHelpers = new StringHelpers()
 
 export default class EzrCommands {
     constructor() {
@@ -62,7 +64,11 @@ export default class EzrCommands {
     }
 
     isValid(userInput) {
-        return userInput.toLowerCase().startsWith(`${commandPrefix}:`)
+        for (let command of this.commands)
+            if (this.commandMatchesUserInput(command, userInput))
+                return true
+
+        return false
     }
 
     execute(execArg) {
@@ -75,10 +81,11 @@ export default class EzrCommands {
         let result = []
 
         for (let command of this.commands) {
-            result.push({
-                name: command.description,
-                execArg: command.command,
-            })
+            if (this.commandMatchesUserInput(command, userInput))
+                result.push({
+                    name: command.description,
+                    execArg: command.command,
+                })
         }
 
         return result
@@ -86,5 +93,10 @@ export default class EzrCommands {
 
     getIcon() {
         return this.icon
+    }
+
+    commandMatchesUserInput(command, userInput) {
+        return stringHelpers.stringContainsSubstring(command.command, userInput)
+            || stringHelpers.stringContainsSubstring(command.description, userInput)
     }
 }
