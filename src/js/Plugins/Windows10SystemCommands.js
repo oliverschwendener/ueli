@@ -1,4 +1,4 @@
-import { spawn } from 'child_process'
+import { spawnSync } from 'child_process'
 import StringHelpers from '../Helpers/StringHelpers'
 
 let stringHelpers = new StringHelpers()
@@ -10,11 +10,21 @@ export default class WebUrl {
         this.commands = [
             {
                 name: 'Shutdown',
-                execArg: 'shutdown -s -t 0'
+                execArg: 'shutdown -s -t 0',
+                command: 'shutdown',
+                options: ['-s', '-t', '0']
             },
             {
                 name: 'Log off',
-                execArg: 'shutdown /l'
+                execArg: 'shutdown /l',
+                command: 'shutdown',
+                options: ['/l']
+            },
+            {
+                name: 'Windows Version',
+                execArg: 'winver',
+                command: 'winver',
+                options: []
             }
         ]
     }
@@ -32,9 +42,20 @@ export default class WebUrl {
     }
 
     execute(execArg) {
-        spawn(`${execArg}`, (err, stdout, sterr) => {
-            if (err) throw err
-        })
+        let command = this.getCommand(execArg)
+        if (command !== undefined) {
+            spawnSync(command.command, command.options)
+        }
+        else {
+            alert('Unknown command')
+        }
+    }
+
+    getCommand(execArg) {
+        for (let command of this.commands) {
+            if (command.execArg === execArg)
+                return command
+        }
     }
 
     getSearchResult(userInput) {

@@ -46,10 +46,8 @@ else {
     })
 
     mainWindow.on('blur', (event, arg) => {
-      /*
       if (mainWindow.isVisible())
         hideWindow()
-        */
     })
 
     ipcMain.on('hide-main-window', (event, arg) => {
