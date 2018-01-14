@@ -11,6 +11,11 @@ export default class Windows10Settings {
         this.prefix = 'ms-settings'
         this.windowsApps = [
             {
+                name: 'Windows Settings',
+                execArg: 'ms-settings:',
+                tags: ['control', 'panel']
+            },
+            {
                 name: 'Battery Saver',
                 execArg: `ms-settings:batterysaver`,
                 tags: ['power', 'energy', 'saving', 'save']
@@ -319,6 +324,16 @@ export default class Windows10Settings {
                 name: 'Privacy',
                 execArg: `ms-settings:privacy`,
                 tags: []
+            },
+            {
+                name: 'Multitasking',
+                execArg: `ms-settings:multitasking`,
+                tags: ['windows', 'window', 'manager', 'snap', 'virtual', 'desktop']
+            },
+            {
+                name: 'Remote Desktop',
+                execArg: 'ms-settings:remotedesktop',
+                tags: ['connection']
             },
 
             // other stuff
