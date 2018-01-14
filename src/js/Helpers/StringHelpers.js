@@ -36,6 +36,11 @@ export default class StringHelpers {
 
         for (let word of stringToSearchWords)
             for (let value of valueWords) {
+                if (value.length === 0 || word.length === 0)
+                    continue
+                    
+                word = word.toLowerCase()
+                value = value.toLowerCase()
                 let levenshteinDistance = leven(word, value)
                 let result = word.startsWith(value)
                     ? (levenshteinDistance / 4)

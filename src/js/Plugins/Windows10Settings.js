@@ -360,16 +360,19 @@ export default class Windows10Settings {
     }
 
     tagsMatchesUserInput(tags, userInput) {
-        let words = userInput.split(' ')        
+        let words = userInput.split(' ')
 
         if (tags.length === 0) {
             return false
         }
         else {
             for (let tag of tags) {
-                for (let word of words)
+                for (let word of words) {
+                    if (word.length === 0)
+                        continue
                     if (stringHelpers.stringContainsSubstring(tag, word))
                         return true
+                }
             }
 
             return false
