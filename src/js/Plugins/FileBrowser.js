@@ -4,8 +4,8 @@ import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
 import { lstatSync } from 'original-fs';
 
-let fileIcon = 'fa fa-file'
-let folderIcon = 'fa fa-folder-o'
+let fileIcon = 'icons8-file'
+let folderIcon = 'icons8-opened-folder'
 
 export default class FileBrowser {
     constructor() {

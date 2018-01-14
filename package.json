@@ -14,15 +14,16 @@
     "mime": "^1.3.4",
     "open": "0.0.5",
     "textextensions": "^2.0.1",
-    "vue": "^2.1.10"
+    "vue": "^2.1.10",
+    "windows-10-icons": "^1.0.1"
   },
   "devDependencies": {
+    "babel-preset-es2015": "^6.16.0",
     "electron": "^1.7.9",
     "electron-builder": "^19.46.9",
     "gulp": "^3.9.1",
-    "gulp-sass": "^3.1.0",
     "gulp-babel": "^6.1.2",
-    "babel-preset-es2015": "^6.16.0"
+    "gulp-sass": "^3.1.0"
   },
   "scripts": {
     "start": "./node_modules/.bin/electron ./js/main.js",

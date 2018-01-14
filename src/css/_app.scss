@@ -67,8 +67,7 @@ ul.search-result-list {
 
     li{
         max-width: 100vw;
-        height: $search-result-item-height;
-        padding: 0 10px;
+        height: $search-result-item-height;        
         overflow: hidden; 
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -77,11 +76,15 @@ ul.search-result-list {
         flex-flow: row;
 
         div {
-            padding: 0 10px;
-
             &.icon-container {
                 text-align: center;
                 font-size: 1.5rem;
+                width: 65px;
+            }
+
+            &.text-container {
+                width: calc(100% - 50px);
+                overflow: hidden;
             }
         }
 

@@ -3532,6 +3532,10 @@ widest-line@^1.0.0:
   dependencies:
     string-width "^1.0.1"
 
+windows-10-icons@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/windows-10-icons/-/windows-10-icons-1.0.1.tgz#564c93b779db7060cf3a77413318b0ac5297a768"
+
 wrap-ansi@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-2.1.0.tgz#d8fc3d284dd05794fe84973caecdd1cf824fdd85"
