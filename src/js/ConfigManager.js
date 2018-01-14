@@ -68,7 +68,7 @@ function getDefaultConfig() {
         ],
         keyboardShortcut: 'alt+space',
         size: {
-            width: 960,
+            width: 860,
             height: 565
         },
         zoomFactor: 1.0,
