@@ -6,7 +6,6 @@ import CommandLine from './Plugins/CommandLine'
 import EzrCommands from './Plugins/EzrCommands'
 import FileBrowser from './Plugins/FileBrowser'
 import Windows10Settings from './Plugins/Windows10Settings'
-import Windows10SystemCommands from './Plugins/Windows10SystemCommands'
 import ConfigManager from './ConfigManager'
 import ConfigHelpers from './Helpers/ConfigHelpers'
 import StringHelpers from './Helpers/StringHelpers'
@@ -79,7 +78,6 @@ export default class PluginManager {
         let allPlugins = [
             new CustomShortcuts(),
             new InstalledPrograms(),
-            new Windows10SystemCommands(),
             new Windows10Settings(),
             new WebUrl(),
             new WebSearch(),

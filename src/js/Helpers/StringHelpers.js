@@ -66,6 +66,14 @@ export default class StringHelpers {
     }
 
     splitStringToArray(string) {
-        return string.split(/\s+/)
+        let items = string.split(/\s+/)
+        let result = []
+
+        for (let item of items)
+            if (item.length !== 0)
+                result.push(item)
+
+
+        return result
     }
 }

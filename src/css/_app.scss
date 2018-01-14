@@ -11,7 +11,7 @@
 }
 
 $user-input-height: 85px;
-$search-result-item-height: 100px;
+$search-result-item-height: 60px;
 
 body, html {
     @include font();
@@ -81,28 +81,32 @@ ul.search-result-list {
 
             &.icon-container {
                 text-align: center;
-                font-size: 2rem;
+                font-size: 1.5rem;
             }
         }
 
         span {
-            display: block;
             padding: 5px 0;
 
             &.name {
                 color: $text-color;
                 font-size: 1.5rem;
                 font-weight: 100;
+                padding-right: 15px;
             }
 
             &.exec-args {
-                color: $text-color-dim;
-                font-size: 1rem;
+                color: transparentize($text-color-dim, 0.5);
+                font-size: 0.9rem;
             }
         }
 
         &.active {
             background-color: $highlight-background-color;
+
+            div.icon-container {
+                color: $highlight-text-color;
+            }
 
             span {
                 &.name {

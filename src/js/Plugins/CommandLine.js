@@ -1,5 +1,7 @@
 import { spawn } from 'child_process'
+import StringHelpers from './../Helpers/StringHelpers'
 
+let stringHelpers = new StringHelpers()
 let commandLinePrefix = '>'
 
 export default class CommandLine {
@@ -18,7 +20,7 @@ export default class CommandLine {
     }
 
     execute(execArg, callback, kill) {
-        let items = execArg.split(' ')
+        let items = stringHelpers.splitStringToArray(execArg)
         let programName = items[0]
         if (programName.startsWith(commandLinePrefix))
             programName = programName.replace(commandLinePrefix, '')

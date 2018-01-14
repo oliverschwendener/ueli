@@ -50,10 +50,6 @@ function getDefaultConfig() {
                 active: true,
             },
             {
-                name: 'Windows 10 System Commands',
-                active: true
-            },
-            {
                 name: 'Web URL',
                 active: true,
             },
@@ -77,7 +73,7 @@ function getDefaultConfig() {
         keyboardShortcut: 'alt+space',
         size: {
             width: 960,
-            height: 585
+            height: 565
         },
         zoomFactor: 1.0,
         fullscreen: false,

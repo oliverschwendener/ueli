@@ -6,7 +6,7 @@ let stringHelpers = new StringHelpers()
 
 export default class Windows10Settings {
     constructor() {
-        this.icon = 'fa fa-cog'
+        this.icon = 'fa fa-windows'
         this.name = 'Windows 10 Settings'
         this.prefix = 'ms-settings'
         this.windowsApps = [
@@ -319,6 +319,23 @@ export default class Windows10Settings {
                 name: 'Privacy',
                 execArg: `ms-settings:privacy`,
                 tags: []
+            },
+
+            // other stuff
+            {
+                name: 'Shutdown',
+                execArg: 'shutdown -s -t 0',
+                tags: ['power', 'off']
+            },
+            {
+                name: 'Log off',
+                execArg: 'shutdown /l',
+                tags: ['out', 'off', 'sign', 'user']
+            },
+            {
+                name: 'Windows Version',
+                execArg: 'winver',
+                tags: ['info']
             }
         ]
     }
@@ -360,7 +377,8 @@ export default class Windows10Settings {
     }
 
     tagsMatchesUserInput(tags, userInput) {
-        let words = userInput.split(' ')
+        let words = stringHelpers.splitStringToArray(userInput)
+        let matchCounter = 0
 
         if (tags.length === 0) {
             return false
@@ -368,14 +386,12 @@ export default class Windows10Settings {
         else {
             for (let tag of tags) {
                 for (let word of words) {
-                    if (word.length === 0)
-                        continue
                     if (stringHelpers.stringContainsSubstring(tag, word))
-                        return true
+                        matchCounter++
                 }
             }
 
-            return false
+            return matchCounter == words.length
         }
     }
 
