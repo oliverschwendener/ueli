@@ -128,14 +128,24 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 
 
 ## Color Themes
-|Name|Preview|
-|---|---|
-|osc-dark-blue|![osc-dark-blue](img/color-themes/osc-dark-blue.png)|
-|osc-light-blue|![osc-light-blue](img/color-themes/osc-light-blue.png)|
-|atom-one-dark|![atom-one-dark](img/color-themes/atom-one-dark.png)|
-|dracula-dark-blue|![dracula-dark-blue](img/color-themes/dracula-dark-blue.png)|
-|dracula-purple|![dracula-purple](img/color-themes/dracula-purple.png)|
-|dracula-red|![dracula-red](img/color-themes/dracula-red.png)|
+
+### osc-dark-blue
+![osc-dark-blue](img/color-themes/osc-dark-blue.png)
+
+### osc-light-blue
+![osc-light-blue](img/color-themes/osc-light-blue.png)
+
+### atom-one-dark
+![atom-one-dark](img/color-themes/atom-one-dark.png)
+
+### dracula-dark-blue
+![dracula-dark-blue](img/color-themes/dracula-dark-blue.png)
+
+### dracula-purple
+![dracula-purple](img/color-themes/dracula-purple.png)
+
+### dracula-red
+![dracula-red](img/color-themes/dracula-red.png)
 
 
 ## Roadmap
