@@ -9,24 +9,28 @@ export default class StringHelpers {
             }
             return false
         }
-        catch(err) {
-            console.log(err)
+        catch (err) {
             return false
         }
     }
 
     stringContainsSubstring(stringToSearch, substring) {
-        let wordsOfSubstring = this.splitStringToArray(substring.toLowerCase())
-        stringToSearch = stringToSearch.split(' ').join('').toLowerCase()
+        try {
+            let wordsOfSubstring = this.splitStringToArray(substring.toLowerCase())
+            stringToSearch = this.splitStringToArray(stringToSearch).join('').toLowerCase()
 
-        for (let word of wordsOfSubstring) {
-            if (this.stringIsEmptyOrWhitespaces(word))
-                continue
-            else if (stringToSearch.indexOf(word) === -1)
-                return false
+            for (let word of wordsOfSubstring) {
+                if (this.stringIsEmptyOrWhitespaces(word))
+                    continue
+                else if (stringToSearch.indexOf(word) === -1)
+                    return false
+            }
+
+            return true
         }
-
-        return true
+        catch (err) {
+            return false
+        }
     }
 
     getWeight(programNameWithExtension, userInput) {
@@ -38,7 +42,7 @@ export default class StringHelpers {
             for (let value of valueWords) {
                 if (value.length === 0 || word.length === 0)
                     continue
-                    
+
                 word = word.toLowerCase()
                 value = value.toLowerCase()
                 let levenshteinDistance = leven(word, value)

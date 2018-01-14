@@ -150,7 +150,6 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 
 ## Roadmap
 * New icon / logo
-* Access Windows 10 Control Panel items
 * Using Typescript
 * Unit & integration tests
 * Mac OS Support

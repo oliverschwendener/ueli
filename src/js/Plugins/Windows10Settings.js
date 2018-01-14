@@ -9,350 +9,7 @@ export default class Windows10Settings {
         this.icon = 'fa fa-windows'
         this.name = 'Windows 10 Settings'
         this.prefix = 'ms-settings'
-        this.windowsApps = [
-            {
-                name: 'Windows Settings',
-                execArg: 'ms-settings:',
-                tags: ['control', 'panel']
-            },
-            {
-                name: 'Battery Saver',
-                execArg: `ms-settings:batterysaver`,
-                tags: ['power', 'energy', 'saving', 'save']
-            },
-            {
-                name: 'Battery use',
-                execArg: `ms-settings:batterysaver-usagedetails`,
-                tags: ['power', 'energy', 'saving', 'save']
-            },
-            {
-                name: 'Battery Saver Settings',
-                execArg: `ms-settings:batterysaver-settings`,
-                tags: ['power', 'energy', 'saving', 'save']
-            },
-            {
-                name: 'Bluetooth',
-                execArg: `ms-settings:bluetooth`,
-                tags: ['wireless', 'device', 'devices']
-            },
-            {
-                name: 'Colors',
-                execArg: `ms-settings:colors`,
-                tags: ['color', 'custom', 'customization', 'creative']
-            },
-            {
-                name: 'Data Usage',
-                execArg: `ms-settings:datausage`,
-                tags: []
-            },
-            {
-                name: 'Date and Time',
-                execArg: `ms-settings:dateandtime`,
-                tags: ['clock']
-            },
-            {
-                name: 'Closed Captioning',
-                execArg: `ms-settings:easeofaccess-closedcaptioning`,
-                tags: ['cc']
-            },
-            {
-                name: 'High Contrast',
-                execArg: `ms-settings:easeofaccess-highcontrast`,
-                tags: ['ease', 'of', 'access']
-            },
-            {
-                name: 'Magnifier',
-                execArg: `ms-settings:easeofaccess-magnifier`,
-                tags: ['ease', 'of', 'access']
-            },
-            {
-                name: 'Narrator',
-                execArg: `ms-settings:easeofaccess-narrator`,
-                tags: ['ease', 'of', 'access']
-            },
-            {
-                name: 'Keyboard',
-                execArg: `ms-settings:easeofaccess-keyboard`,
-                tags: ['ease', 'of', 'access', 'input']
-            },
-            {
-                name: 'Mouse',
-                execArg: `ms-settings:easeofaccess-mouse`,
-                tags: ['ease', 'of', 'access', 'input']
-            },
-            {
-                name: 'Other Options (Ease of Access)',
-                execArg: `ms-settings:easeofaccess-otheroptions`,
-                tags: []
-            },
-            {
-                name: 'Lockscreen',
-                execArg: `ms-settings:lockscreen`,
-                tags: ['screen', 'saver']
-            },
-            {
-                name: 'Offline maps',
-                execArg: `ms-settings:maps`,
-                tags: ['earth']
-            },
-            {
-                name: 'Airplane mode',
-                execArg: `ms-settings:network-airplanemode`,
-                tags: ['offline']
-            },
-            {
-                name: 'Proxy',
-                execArg: `ms-settings:network-proxy`,
-                tags: ['network']
-            },
-            {
-                name: 'VPN',
-                execArg: `ms-settings:network-vpn`,
-                tags: ['private', 'virtual', 'network', 'privacy']
-            },
-            {
-                name: 'Notifications & actions',
-                execArg: `ms-settings:notifications`,
-                tags: ['notify', 'action']
-            },
-            {
-                name: 'Account info',
-                execArg: `ms-settings:privacy-accountinfo`,
-                tags: ['personal', 'privacy', 'user']
-            },
-            {
-                name: 'Calendar',
-                execArg: `ms-settings:privacy-calendar`,
-                tags: ['day', 'month', 'year']
-            },
-            {
-                name: 'Contacts',
-                execArg: `ms-settings:privacy-contacts`,
-                tags: ['people']
-            },
-            {
-                name: 'Other Devices',
-                execArg: `ms-settings:privacy-customdevices`,
-                tags: []
-            },
-            {
-                name: 'Feedback',
-                execArg: `ms-settings:privacy-feedback`,
-                tags: []
-            },
-            {
-                name: 'Location',
-                execArg: `ms-settings:privacy-location`,
-                tags: ['gps']
-            },
-            {
-                name: 'Messaging',
-                execArg: `ms-settings:privacy-messaging`,
-                tags: ['message']
-            },
-            {
-                name: 'Microphone',
-                execArg: `ms-settings:privacy-microphone`,
-                tags: ['audio', 'input']
-            },
-            {
-                name: 'Motion',
-                execArg: `ms-settings:privacy-motion`,
-                tags: []
-            },
-            {
-                name: 'Radios',
-                execArg: `ms-settings:privacy-radios`,
-                tags: []
-            },
-            {
-                name: 'Speech, inking, & typing',
-                execArg: `ms-settings:privacy-speechtyping`,
-                tags: []
-            },
-            {
-                name: 'Camera',
-                execArg: `ms-settings:privacy-webcam`,
-                tags: ['web cam']
-            },
-            {
-                name: 'Region & language',
-                execArg: `ms-settings:regionlanguage`,
-                tags: ['locale']
-            },
-            {
-                name: 'Speech',
-                execArg: `ms-settings:speech`,
-                tags: []
-            },
-            {
-                name: 'Windows Update',
-                execArg: `ms-settings:windowsupdate`,
-                tags: ['patch', 'upgrade', 'security']
-            },
-            {
-                name: 'Work access',
-                execArg: `ms-settings:workplace`,
-                tags: []
-            },
-            {
-                name: 'Connected devices',
-                execArg: `ms-settings:connecteddevices`,
-                tags: []
-            },
-            {
-                name: 'For developers',
-                execArg: `ms-settings:developers`,
-                tags: ['dev', 'admin']
-            },
-            {
-                name: 'Display',
-                execArg: `ms-settings:display`,
-                tags: ['screen', 'resolution', '4k', 'hd']
-            },
-            {
-                name: 'Mouse & touchpad',
-                execArg: `ms-settings:mousetouchpad`,
-                tags: ['input']
-            },
-            {
-                name: 'Cellular',
-                execArg: `ms-settings:network-cellular`,
-                tags: ['network']
-            },
-            {
-                name: 'Dial-up',
-                execArg: `ms-settings:network-dialup`,
-                tags: []
-            },
-            {
-                name: 'DirectAccess',
-                execArg: `ms-settings:network-directaccess`,
-                tags: []
-            },
-            {
-                name: 'Ethernet',
-                execArg: `ms-settings:network-ethernet`,
-                tags: ['network', 'internet']
-            },
-            {
-                name: 'Mobile hotspot',
-                execArg: `ms-settings:network-mobilehotspot`,
-                tags: ['network', 'internet']
-            },
-            {
-                name: 'Wi-Fi',
-                execArg: `ms-settings:network-wifi`,
-                tags: ['network', 'internet', 'wireless']
-            },
-            {
-                name: 'Manage Wi-Fi Settings',
-                execArg: `ms-settings:network-wifisettings`,
-                tags: ['network', 'internet', 'wireless']
-            },
-            {
-                name: 'Optional features',
-                execArg: `ms-settings:optionalfeatures`,
-                tags: ['additional']
-            },
-            {
-                name: 'Family & other users',
-                execArg: `ms-settings:otherusers`,
-                tags: []
-            },
-            {
-                name: 'Personalization',
-                execArg: `ms-settings:personalization`,
-                tags: ['custom', 'customization', 'color', 'colors']
-            },
-            {
-                name: 'Backgrounds',
-                execArg: `ms-settings:personalization-background`,
-                tags: ['custom', 'customization', 'color', 'colors', 'image', 'picture']
-            },
-            {
-                name: 'Colors',
-                execArg: `ms-settings:personalization-colors`,
-                tags: ['custom', 'customization']
-            },
-            {
-                name: 'Start',
-                execArg: `ms-settings:personalization-start`,
-                tags: ['custom', 'customization', 'search']
-            },
-            {
-                name: 'Power & sleep',
-                execArg: `ms-settings:powersleep`,
-                tags: ['energy', 'plan']
-            },
-            {
-                name: 'Proximity',
-                execArg: `ms-settings:proximity`,
-                tags: []
-            },
-            {
-                name: 'Display',
-                execArg: `ms-settings:screenrotation`,
-                tags: ['screen', 'resolution', '4k', 'hd', 'rotation']
-            },
-            {
-                name: 'Sign-in options',
-                execArg: `ms-settings:signinoptions`,
-                tags: ['password', 'change', 'security', 'secret', 'account', 'pin']
-            },
-            {
-                name: 'Storage Sense',
-                execArg: `ms-settings:storagesense`,
-                tags: ['hard', 'disk', 'ssd', 'hdd']
-            },
-            {
-                name: 'Themes',
-                execArg: `ms-settings:themes`,
-                tags: ['custom', 'customization', 'color', 'colors', 'image', 'picture']
-            },
-            {
-                name: 'Typing',
-                execArg: `ms-settings:typing`,
-                tags: ['input', 'keyboard']
-            },
-            {
-                name: 'Tablet mode',
-                execArg: `ms-settings://tabletmode/`,
-                tags: ['mobile', 'touch']
-            },
-            {
-                name: 'Privacy',
-                execArg: `ms-settings:privacy`,
-                tags: []
-            },
-            {
-                name: 'Multitasking',
-                execArg: `ms-settings:multitasking`,
-                tags: ['windows', 'window', 'manager', 'snap', 'virtual', 'desktop']
-            },
-            {
-                name: 'Remote Desktop',
-                execArg: 'ms-settings:remotedesktop',
-                tags: ['connection']
-            },
-
-            // other stuff
-            {
-                name: 'Shutdown',
-                execArg: 'shutdown -s -t 0',
-                tags: ['power', 'off']
-            },
-            {
-                name: 'Log off',
-                execArg: 'shutdown /l',
-                tags: ['out', 'off', 'sign', 'user']
-            },
-            {
-                name: 'Windows Version',
-                execArg: 'winver',
-                tags: ['info']
-            }
-        ]
+        this.windowsApps = getAllWindowsSettings()
     }
 
     getName() {
@@ -415,4 +72,544 @@ export default class Windows10Settings {
             || stringHelpers.stringContainsSubstring(windowsApp.execArg, userInput)
             || this.tagsMatchesUserInput(windowsApp.tags, userInput)
     }
+}
+
+function getAllWindowsSettings() {
+    let result = []
+
+    result = result.concat(getSystemSettings())
+    result = result.concat(getDeviceSettings())
+    result = result.concat(getNetworkSettings())
+    result = result.concat(getPersonalizationSettings())
+    result = result.concat(getAppSettings())
+    result = result.concat(getAccountSettings())
+    result = result.concat(getTimeAndLanguageSettings())
+    result = result.concat(getGamingSettings())
+    result = result.concat(getEaseOfAccessSettings())
+    result = result.concat(getPrivacySettings())
+    result = result.concat(getUpdateAndSecurityOptions())
+    result = result.concat(getCortanaSettings())
+    result = result.concat(getOtherWindowsCommands())
+
+    for (let item of result)
+        if (item.tags === undefined)
+            item.tags = []
+
+    return result
+}
+
+function getSystemSettings() {
+    return [
+        {
+            name: 'Windows Settings',
+            execArg: 'ms-settings:',
+            tags: ['control', 'panel']
+        },
+        {
+            name: 'Battery Saver',
+            execArg: `ms-settings:batterysaver`,
+            tags: ['power', 'energy', 'saving', 'save']
+        },
+        {
+            name: 'Battery',
+            execArg: `ms-settings:batterysaver`,
+            tags: ['power', 'energy', 'saving', 'save']
+        },
+        {
+            name: 'Display',
+            execArg: `ms-settings:display`,
+            tags: ['screen', 'resolution', '4k', 'hd']
+        },
+        {
+            name: 'Notifications & actions',
+            execArg: `ms-settings:notifications`,
+            tags: ['notify', 'action']
+        },
+        {
+            name: 'Power & sleep',
+            execArg: `ms-settings:powersleep`,
+            tags: ['energy', 'plan']
+        },
+        {
+            name: 'Storage',
+            execArg: `ms-settings:storagesense`,
+            tags: ['hard', 'disk', 'ssd', 'hdd']
+        },
+        {
+            name: 'Tablet mode',
+            execArg: `ms-settings://tabletmode/`,
+            tags: ['mobile', 'touch']
+        },
+        {
+            name: 'Projecting to this PC',
+            execArg: 'ms-settings:project',
+        },
+        {
+            name: 'Multitasking',
+            execArg: `ms-settings:multitasking`,
+            tags: ['windows', 'window', 'manager', 'snap', 'virtual', 'desktop']
+        },
+        {
+            name: 'Remote Desktop',
+            execArg: 'ms-settings:remotedesktop',
+            tags: ['connection']
+        },
+        {
+            name: 'About your PC',
+            execArg: 'ms-settings:about',
+            tags: ['system', 'device', 'specs', 'specifications', 'license', 'info', 'information']
+        }
+    ]
+}
+
+function getDeviceSettings() {
+    return [
+        {
+            name: 'Bluetooth',
+            execArg: `ms-settings:bluetooth`,
+            tags: ['wireless', 'device', 'devices']
+        },
+        {
+            name: 'Printers & Scanners',
+            execArg: 'ms-settings:printers',
+            tags: ['devices']
+        },
+        {
+            name: 'Touchpad',
+            execArg: `ms-settings:mousetouchpad`,
+            tags: ['input']
+        },
+        {
+            name: 'Typing',
+            execArg: `ms-settings:typing`,
+            tags: ['input', 'keyboard']
+        },
+        {
+            name: 'Pen & Windows Ink',
+            execArg: 'ms-settings:pen',
+        },
+        {
+            name: 'Autoplay',
+            execArg: 'ms-settings:autoplay',
+            tags: ['']
+        },
+        {
+            name: 'USB',
+            execArg: 'ms-settings:usb',
+            tags: ['devices']
+        }
+    ]
+}
+
+function getNetworkSettings() {
+    return [
+        {
+            name: 'Network status',
+            execArg: 'ms-settings:network',
+            tags: ['internet']
+        },
+        {
+            name: 'Wi-Fi',
+            execArg: `ms-settings:network-wifi`,
+            tags: ['network', 'internet', 'wireless']
+        },
+        {
+            name: ':privacy-',
+            execArg: `ms-settings:network-:privacy-`,
+            tags: ['network', 'internet']
+        },
+        {
+            name: 'Dial-up',
+            execArg: `ms-settings:network-dialup`,
+
+        },
+        {
+            name: 'VPN',
+            execArg: `ms-settings:network-vpn`,
+            tags: ['vate', 'virtual', 'network', 'vacy']
+        },
+        {
+            name: 'Airplane mode',
+            execArg: `ms-settings:network-airplanemode`,
+            tags: ['offline']
+        },
+        {
+            name: 'Mobile hotspot',
+            execArg: `ms-settings:network-mobilehotspot`,
+            tags: ['network', 'internet']
+        },
+        {
+            name: 'Data Usage',
+            execArg: `ms-settings:datausage`,
+        },
+        {
+            name: 'Proxy',
+            execArg: `ms-settings:network-proxy`,
+            tags: ['network']
+        }
+    ]
+}
+
+function getPersonalizationSettings() {
+    return [
+        {
+            name: 'Background',
+            execArg: `ms-settings:personalization-background`,
+            tags: ['custom', 'customization', 'color', 'colors', 'image', 'picture']
+        },
+        {
+            name: 'Colors',
+            execArg: `ms-settings:colors`,
+            tags: ['color', 'custom', 'customization', 'creative']
+        },
+        {
+            name: 'Lock screen',
+            execArg: `ms-settings:lockscreen`,
+            tags: ['screen', 'saver']
+        },
+        {
+            name: 'Themes',
+            execArg: `ms-settings:themes`,
+            tags: ['custom', 'customization', 'color', 'colors', 'image', 'picture']
+        },
+        {
+            name: 'Start',
+            execArg: `ms-settings:personalization-start`,
+            tags: ['custom', 'customization', 'search']
+        },
+        {
+            name: 'Taskbar',
+            execArg: 'ms-settings:taskbar',
+
+        }
+    ]
+}
+
+function getAppSettings() {
+    return [
+        {
+            name: 'Apps & features',
+            execArg: 'ms-settings:appsfeatures',
+            tags: ['programs']
+        },
+        {
+            name: 'Default apps',
+            execArg: 'ms-settings:defaultapps',
+        },
+        {
+            name: 'Optional features',
+            execArg: `ms-settings:optionalfeatures`,
+            tags: ['additional']
+        },
+        {
+            name: 'Offline maps',
+            execArg: `ms-settings:maps`,
+            tags: ['earth']
+        },
+        {
+            name: 'Apps for websites',
+            execArg: 'ms-settings:appsforwebsites',
+        },
+        {
+            name: 'Video playback',
+            execArg: 'ms-settings:videoplayback',
+
+        }
+    ]
+}
+
+function getAccountSettings() {
+    return [
+        {
+            name: 'Your info',
+            execArg: 'ms-settings:yourinfo',
+            tags: ['account', 'user', 'about']
+        },
+        {
+            name: 'Email & app accounts',
+            execArg: 'ms-settings:emailandaccounts',
+        },
+        {
+            name: 'Sign-in options',
+            execArg: `ms-settings:signinoptions`,
+            tags: ['password', 'change', 'security', 'secret', 'account', 'pin']
+        },
+        {
+            name: 'Access work or school',
+            execArg: 'ms-settings:workplace',
+        },
+        {
+            name: 'Family & other users',
+            execArg: `ms-settings:otherusers`,
+        },
+        {
+            name: 'Sync your settings',
+            execArg: 'ms-settings:sync',
+
+        }
+    ]
+}
+
+function getTimeAndLanguageSettings() {
+    return [
+        {
+            name: 'Date & Time',
+            execArg: `ms-settings:dateandtime`,
+            tags: ['clock']
+        },
+        {
+            name: 'Region & language',
+            execArg: `ms-settings:regionlanguage`,
+            tags: ['locale']
+        },
+        {
+            name: 'Speech',
+            execArg: `ms-settings:speech`,
+
+        }
+    ]
+}
+
+function getGamingSettings() {
+    return [
+        {
+            name: 'Broadcasting',
+            execArg: 'ms-settings:gaming-broadcasting',
+        },
+        {
+            name: 'Game bar',
+            execArg: 'ms-settings:gaming-',
+        },
+        {
+            name: 'Game DVR',
+            execArg: 'ms-settings:gaming-gamedvr',
+        },
+        {
+            name: 'Game Mode',
+            execArg: 'ms-settings:gaming-gamemode',
+        },
+        {
+            name: 'TruePlay',
+            execArg: 'ms-settings:gaming-trueplay',
+        },
+        {
+            name: 'Xbox Networking',
+            execArg: 'ms-settings:gaming-xboxnetworking',
+
+        }
+    ]
+}
+
+function getEaseOfAccessSettings() {
+    return [
+        {
+            name: 'Narrator',
+            execArg: `ms-settings:easeofaccess-narrator`,
+        },
+        {
+            name: 'Magnifier',
+            execArg: `ms-settings:easeofaccess-magnifier`,
+        },
+        {
+            name: 'Color & high Contrast',
+            execArg: `ms-settings:easeofaccess-highcontrast`,
+        },
+        {
+            name: 'Closed Captioning',
+            execArg: `ms-settings:easeofaccess-closedcaptioning`,
+            tags: ['cc']
+        },
+        {
+            name: 'Keyboard',
+            execArg: `ms-settings:easeofaccess-keyboard`,
+            tags: ['input']
+        },
+        {
+            name: 'Mouse',
+            execArg: `ms-settings:easeofaccess-mouse`,
+            tags: ['ease', 'of', 'access', 'input']
+        },
+        {
+            name: 'Other Options (Ease of Access)',
+            execArg: `ms-settings:easeofaccess-otheroptions`,
+
+        }
+    ]
+}
+
+function getPrivacySettings() {
+    return [
+        {
+            name: 'Privacy',
+            execArg: 'ms-settings:privacy-general'
+        },
+        {
+            name: 'Location',
+            execArg: `ms-settings:privacy-location`,
+            tags: ['gps']
+        },
+        {
+            name: 'Camera',
+            execArg: `ms-settings:privacy-webcam`,
+            tags: ['web cam']
+        },
+        {
+            name: 'Microphone',
+            execArg: `ms-settings:privacy-microphone`,
+            tags: ['audio', 'input']
+        },
+        {
+            name: 'Notifications',
+            execArg: 'ms-settings:privacy-notifications'
+        },
+        {
+            name: 'Speech, ing, & typing',
+            execArg: `ms-settings:privacy-speechtyping`,
+        },
+        {
+            name: 'Account info',
+            execArg: `ms-settings:privacy-accountinfo`,
+            tags: ['personal', 'vacy', 'user']
+        },
+        {
+            name: 'Contacts',
+            execArg: `ms-settings:privacy-contacts`,
+            tags: ['people']
+        },
+        {
+            name: 'Calendar',
+            execArg: `ms-settings:privacy-calendar`,
+            tags: ['day', 'month', 'year']
+        },
+        {
+            name: 'Call history',
+            execArg: 'ms-settings:privacy-callhistory',
+        },
+        {
+            name: 'Email',
+            execArg: 'ms-settings:privacy-email',
+        },
+        {
+            name: 'Tasks',
+            execArg: 'ms-settings:privacy-tasks',
+        },
+        {
+            name: 'Messaging',
+            execArg: `ms-settings:privacy-messaging`,
+            tags: ['message']
+        },
+        {
+            name: 'Radios',
+            execArg: `ms-settings:privacy-radios`,
+        },
+        {
+            name: 'Other Devices',
+            execArg: `ms-settings:privacy-customdevices`,
+        },
+        {
+            name: 'Feedback & diagnostics',
+            execArg: `ms-settings:privacy-feedback`,
+        },
+        {
+            name: 'Background apps',
+            execArg: 'ms-settings:privacy-backgroundapps',
+        },
+        {
+            name: 'App diagnostics',
+            execArg: 'ms-settings:privacy-appdiagnostics',
+        },
+        {
+            name: 'Automatic file downloads',
+            execArg: 'ms-settings:automaticfiledownloads',
+        },
+        {
+            name: 'Motion',
+            execArg: `ms-settings:privacy-motion`,
+
+        }
+    ]
+}
+
+function getUpdateAndSecurityOptions() {
+    return [
+        {
+            name: 'Windows Update',
+            execArg: `ms-settings:windowsupdate`,
+            tags: ['patch', 'upgrade', 'security']
+        },
+        {
+            name: 'Windows Defender',
+            execArg: 'ms-settings:windowsdefender',
+            tags: ['anti', 'virus', 'protection', 'security', 'scan', 'malware']
+        },
+        {
+            name: 'Backup',
+            execArg: 'ms-settings:backup',
+            tags: ['files', 'storage']
+        },
+        {
+            name: 'Troubleshoot',
+            execArg: 'ms-settings:troubleshoot',
+        },
+        {
+            name: 'Recovery',
+            execArg: 'ms-settings:recovery',
+        },
+        {
+            name: 'Activation',
+            execArg: 'ms-settings:activation',
+        },
+        {
+            name: 'Find my device',
+            execArg: 'ms-settings:findmydevice',
+        },
+        {
+            name: 'For developers',
+            execArg: `ms-settings:developers`,
+            tags: ['dev', 'admin']
+        },
+        {
+            name: 'Windows Insider Program',
+            execArg: 'ms-settings:windowsinsider',
+
+        }
+    ]
+}
+
+function getCortanaSettings() {
+    return [
+        {
+            name: 'Talk to Cortana',
+            execArg: 'ms-settings:cortana-language',
+        },
+        {
+            name: 'More details',
+            execArg: 'ms-settings:cortana-moredetails',
+        },
+        {
+            name: 'Notifications',
+            execArg: 'ms-settings:cortana-notifications',
+
+        }
+    ]
+}
+
+function getOtherWindowsCommands() {
+    return [
+        {
+            name: 'Shutdown',
+            execArg: 'shutdown -s -t 0',
+            tags: ['power', 'off']
+        },
+        {
+            name: 'Log off',
+            execArg: 'shutdown /l',
+            tags: ['out', 'off', 'sign', 'user']
+        },
+        {
+            name: 'Windows Version',
+            execArg: 'winver',
+            tags: ['info']
+        }
+    ]
 }
