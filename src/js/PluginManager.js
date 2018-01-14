@@ -45,19 +45,22 @@ export default class PluginManager {
 
         let resultWithFavorites = this.addFavoritesToSearchResult(unsortedResult)
 
-        let resultWithCustomShortCuts = this.addCustomShortcutsToSearchResult(resultWithFavorites)
+        let resultWithCustomShortCuts = this.addCustomShortcutsToSearchResult(resultWithFavorites, userInput)
 
         return this.getSortedResult(resultWithCustomShortCuts)
     }
 
-    addCustomShortcutsToSearchResult(searchResult) {
+    addCustomShortcutsToSearchResult(searchResult, userInput) {
         let customShortcuts = new ConfigManager().getConfig().customShortcuts
-        
+
         for (let customShortcut of customShortcuts) {
-            for (let item of searchResult) {
-                if (item.execArg == customShortcut.path)
-                    item.weight = 0
-            }
+            if (userInput.toLowerCase() == customShortcut.shortCut.toLowerCase())
+                searchResult.push({
+                    name: customShortcut.name,
+                    execArg: customShortcut.execArg,
+                    icon: 'fa fa-external-link',
+                    weight: 0
+                })
         }
 
         return searchResult
