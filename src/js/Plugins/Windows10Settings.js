@@ -106,11 +106,6 @@ function getSystemSettings() {
             tags: ['control', 'panel']
         },
         {
-            name: 'Battery Saver',
-            execArg: `ms-settings:batterysaver`,
-            tags: ['power', 'energy', 'saving', 'save']
-        },
-        {
             name: 'Battery',
             execArg: `ms-settings:batterysaver`,
             tags: ['power', 'energy', 'saving', 'save']
