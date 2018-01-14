@@ -2,12 +2,14 @@ import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
+import { lstatSync } from 'original-fs';
 
 let fileIcon = 'fa fa-file'
+let folderIcon = 'fa fa-folder-o'
 
 export default class FileBrowser {
     constructor() {
-        this.name = 'File Browser'
+        this.name = 'File Browser'        
     }
 
     getName() {
@@ -57,15 +59,27 @@ function getResultFromDirectory(folderPath, userInput) {
     let result = []
 
     for (let file of files) {
-        let filePath = `${folderPath}${folderSeparator}${path.win32.normalize(file)}`
-        let fileName = path.basename(filePath)
+        try {
+            let filePath = `${folderPath}${folderSeparator}${path.win32.normalize(file)}`
+            let stats = fs.lstatSync(filePath)
 
-        if (userInput.endsWith('\\') || filePath.toLowerCase().indexOf(searchFileName.toLowerCase()) > -1)
-            result.push({
-                name: fileName,
-                execArg: filePath,
-                icon: fileIcon
-            })
+            if (stats.isSymbolicLink())
+                continue
+
+            let isDirectory = stats.isDirectory()
+            let fileName = path.basename(filePath)
+
+            if (userInput.endsWith('\\') || filePath.toLowerCase().indexOf(searchFileName.toLowerCase()) > -1)
+                result.push({
+                    name: fileName,
+                    execArg: filePath,
+                    icon: isDirectory ? folderIcon : fileIcon
+                })
+        }
+        catch (err) {
+            continue
+        }
+
     }
 
     return result
