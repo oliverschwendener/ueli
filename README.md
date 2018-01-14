@@ -125,7 +125,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 * `customShortcuts` Array of customShortcut Objects - A list of custom shortcuts.
     * `customShortcut` Object - Defines a custom shortcut.
         * `shortCut`: String - Represents the keyword for the shortcut. For example `vsc`.
-        * `path`: String - Represents the path to the shortcut. For Example `C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Visual Studio Code\Visual Studio Code.lnk`
+        * `execArg`: String - Represents the execution argument for the shortcut. For Example `C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Visual Studio Code\Visual Studio Code.lnk` or `ms-settings:windowsupdate`
 * `favorites` String[] - This is where the applications stores your most used applications. You don't have to modify this.
 
 ## Color Themes

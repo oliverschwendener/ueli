@@ -149,7 +149,7 @@
                             <tr>
                                 <th>Add/Delete</th>
                                 <th>Shortcut</th>
-                                <th>File path</th>
+                                <th>Execution Argument</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -158,7 +158,7 @@
                                     <i v-on:click="removeCustomShortcut(shortcut)" class="fa fa-minus-circle action-button"></i>
                                 </td>
                                 <td>{{ shortcut.shortCut }}</td>
-                                <td>{{ shortcut.path }}</td>
+                                <td>{{ shortcut.execArg }}</td>
                             </tr>
                             <tr>
                                 <td>
@@ -168,7 +168,7 @@
                                     <input class="new-item" type="text" v-model="newCustomShortcut.shortCut" placeholder="Shortcut">
                                 </td>
                                 <td>
-                                    <input class="new-item" type="text" v-model="newCustomShortcut.path" placeholder="File path">
+                                    <input class="new-item" type="text" v-model="newCustomShortcut.execArg" placeholder="Execution Argument">
                                 </td>
                             </tr>
                         </tbody>

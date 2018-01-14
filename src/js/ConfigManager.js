@@ -38,10 +38,6 @@ function getDefaultConfig() {
     return {
         plugins: [
             {
-                name: 'Custom Shortcuts',
-                active: true
-            },
-            {
                 name: 'Installed Programs',
                 active: true,
             },

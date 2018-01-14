@@ -221,8 +221,7 @@ let vue = new Vue({
         },
         addNewCustomShortcut() {
             if (stringIsEmptyOrWhitespaces(this.newCustomShortcut.shortCut)
-                || stringIsEmptyOrWhitespaces(this.newCustomShortcut.path)
-                || !fs.existsSync(this.newCustomShortcut.path))
+                || stringIsEmptyOrWhitespaces(this.newCustomShortcut.execArg))
                 return
 
             this.config.customShortcuts.push(this.newCustomShortcut)
@@ -232,7 +231,7 @@ let vue = new Vue({
             let customShortcuts = []
 
             for (let item of this.config.customShortcuts)
-                if (item.shortCut !== customShortcut.shortCut && item.path !== customShortcut.path)
+                if (item.shortCut !== customShortcut.shortCut && item.execArg !== customShortcut.execArg)
                     customShortcuts.push(item)
 
             this.config.customShortcuts = customShortcuts

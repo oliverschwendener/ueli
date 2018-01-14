@@ -45,7 +45,22 @@ export default class PluginManager {
 
         let resultWithFavorites = this.addFavoritesToSearchResult(unsortedResult)
 
-        return this.getSortedResult(resultWithFavorites)
+        let resultWithCustomShortCuts = this.addCustomShortcutsToSearchResult(resultWithFavorites)
+
+        return this.getSortedResult(resultWithCustomShortCuts)
+    }
+
+    addCustomShortcutsToSearchResult(searchResult) {
+        let customShortcuts = new ConfigManager().getConfig().customShortcuts
+        
+        for (let customShortcut of customShortcuts) {
+            for (let item of searchResult) {
+                if (item.execArg == customShortcut.path)
+                    item.weight = 0
+            }
+        }
+
+        return searchResult
     }
 
     addFavoritesToSearchResult(searchResult) {
@@ -76,7 +91,6 @@ export default class PluginManager {
 
     setPluginsFromConfig() {
         let allPlugins = [
-            new CustomShortcuts(),
             new InstalledPrograms(),
             new Windows10Settings(),
             new WebUrl(),
