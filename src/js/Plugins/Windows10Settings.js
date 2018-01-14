@@ -401,129 +401,132 @@ function getGamingSettings() {
 }
 
 function getEaseOfAccessSettings() {
+    let moduleTitle = 'Ease of Access'
+
     return [
         {
-            name: 'Narrator',
+            name: `${moduleTitle}: Narrator`,
             execArg: `ms-settings:easeofaccess-narrator`,
         },
         {
-            name: 'Magnifier',
+            name: `${moduleTitle}: Magnifier`,
             execArg: `ms-settings:easeofaccess-magnifier`,
         },
         {
-            name: 'Color & high Contrast',
+            name: `${moduleTitle}: Color & high Contrast`,
             execArg: `ms-settings:easeofaccess-highcontrast`,
         },
         {
-            name: 'Closed Captioning',
+            name: `${moduleTitle}: Closed Captioning`,
             execArg: `ms-settings:easeofaccess-closedcaptioning`,
             tags: ['cc']
         },
         {
-            name: 'Keyboard',
+            name: `${moduleTitle}: Keyboard`,
             execArg: `ms-settings:easeofaccess-keyboard`,
             tags: ['input']
         },
         {
-            name: 'Mouse',
+            name: `${moduleTitle}: Mouse`,
             execArg: `ms-settings:easeofaccess-mouse`,
             tags: ['ease', 'of', 'access', 'input']
         },
         {
-            name: 'Other Options (Ease of Access)',
+            name: `${moduleTitle}: Other Options (Ease of Access)`,
             execArg: `ms-settings:easeofaccess-otheroptions`,
-
         }
     ]
 }
 
 function getPrivacySettings() {
+    let moduleTitle = 'Privacy'
+
     return [
         {
-            name: 'Privacy',
+            name: `${moduleTitle}: Privacy`,
             execArg: 'ms-settings:privacy-general'
         },
         {
-            name: 'Location',
+            name: `${moduleTitle}: Location`,
             execArg: `ms-settings:privacy-location`,
             tags: ['gps']
         },
         {
-            name: 'Camera',
+            name: `${moduleTitle}: Camera`,
             execArg: `ms-settings:privacy-webcam`,
             tags: ['web cam']
         },
         {
-            name: 'Microphone',
+            name: `${moduleTitle}: Microphone`,
             execArg: `ms-settings:privacy-microphone`,
             tags: ['audio', 'input']
         },
         {
-            name: 'Notifications',
+            name: `${moduleTitle}: Notifications`,
             execArg: 'ms-settings:privacy-notifications'
         },
         {
-            name: 'Speech, ing, & typing',
+            name: `${moduleTitle}: Speech, ing, & typing`,
             execArg: `ms-settings:privacy-speechtyping`,
         },
         {
-            name: 'Account info',
+            name: `${moduleTitle}: Account info`,
             execArg: `ms-settings:privacy-accountinfo`,
             tags: ['personal', 'vacy', 'user']
         },
         {
-            name: 'Contacts',
+            name: `${moduleTitle}: Contacts`,
             execArg: `ms-settings:privacy-contacts`,
             tags: ['people']
         },
         {
-            name: 'Calendar',
+            name: `${moduleTitle}: Calendar`,
             execArg: `ms-settings:privacy-calendar`,
             tags: ['day', 'month', 'year']
         },
         {
-            name: 'Call history',
+            name: `${moduleTitle}: Call history`,
             execArg: 'ms-settings:privacy-callhistory',
         },
         {
-            name: 'Email',
+            name: `${moduleTitle}: Email`,
             execArg: 'ms-settings:privacy-email',
         },
         {
-            name: 'Tasks',
+            name: `${moduleTitle}: Tasks`,
             execArg: 'ms-settings:privacy-tasks',
         },
         {
-            name: 'Messaging',
+            name: `${moduleTitle}: Messaging`,
             execArg: `ms-settings:privacy-messaging`,
             tags: ['message']
         },
         {
-            name: 'Radios',
+            name: `${moduleTitle}: Radios`,
             execArg: `ms-settings:privacy-radios`,
         },
         {
-            name: 'Other Devices',
+            name: `${moduleTitle}: Other Devices`,
             execArg: `ms-settings:privacy-customdevices`,
         },
         {
-            name: 'Feedback & diagnostics',
+            name: `${moduleTitle}: Feedback & diagnostics`,
             execArg: `ms-settings:privacy-feedback`,
         },
         {
-            name: 'Background apps',
+            name: `${moduleTitle}: Background apps`,
             execArg: 'ms-settings:privacy-backgroundapps',
         },
         {
-            name: 'App diagnostics',
+            name: `${moduleTitle}: App diagnostics`,
             execArg: 'ms-settings:privacy-appdiagnostics',
         },
         {
-            name: 'Automatic file downloads',
+            name: `${moduleTitle}: Automatic file downloads`,
             execArg: 'ms-settings:automaticfiledownloads',
         },
         {
-            name: 'Motion',
+            name: `${moduleTitle}: Motion`,
             execArg: `ms-settings:privacy-motion`,
 
         }
@@ -577,17 +580,19 @@ function getUpdateAndSecurityOptions() {
 }
 
 function getCortanaSettings() {
+    let moduleTitle = 'Cortana'
+
     return [
         {
-            name: 'Talk to Cortana',
+            name: `${moduleTitle}: Talk to Cortana`,
             execArg: 'ms-settings:cortana-language',
         },
         {
-            name: 'More details',
+            name: `${moduleTitle}: More details`,
             execArg: 'ms-settings:cortana-moredetails',
         },
         {
-            name: 'Notifications',
+            name: `${moduleTitle}: Notifications`,
             execArg: 'ms-settings:cortana-notifications',
 
         }
@@ -609,7 +614,7 @@ function getOtherWindowsCommands() {
         {
             name: 'Windows Version',
             execArg: 'winver',
-            tags: ['info']
+            tags: ['info', 'release', 'build']
         }
     ]
 }
