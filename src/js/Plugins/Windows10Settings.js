@@ -432,7 +432,7 @@ function getEaseOfAccessSettings() {
             tags: ['ease', 'of', 'access', 'input']
         },
         {
-            name: `${moduleTitle}: Other Options (Ease of Access)`,
+            name: `${moduleTitle}: Other Options`,
             execArg: `ms-settings:easeofaccess-otheroptions`,
         }
     ]
@@ -443,7 +443,7 @@ function getPrivacySettings() {
 
     return [
         {
-            name: `${moduleTitle}: Privacy`,
+            name: `${moduleTitle}: General`,
             execArg: 'ms-settings:privacy-general'
         },
         {
