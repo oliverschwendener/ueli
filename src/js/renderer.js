@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
-import hljs from 'highlight.js'
 
 import ConfigManager from './js/ConfigManager'
 import PluginManager from './js/PluginManager'
@@ -192,8 +191,6 @@ let vue = new Vue({
 
             this.searchResult = []
             this.hideFilePreview = false
-
-            highlight()
         },
         resetFilePreview() {
             this.filePreview = ''
@@ -341,14 +338,6 @@ document.addEventListener('keyup', (e) => {
     else if (e.key === 'F6' || (e.key === 'l' && e.ctrlKey))
         focusOnInput()
 })
-
-function highlight() {
-    setTimeout(() => {
-        let block = document.getElementById('text-file-preview')
-        if (block !== null && block !== undefined)
-            hljs.highlightBlock(block)
-    })
-}
 
 ipcRenderer.on('get-info', (event, arg) => {
     getInfo()

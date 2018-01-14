@@ -125,7 +125,7 @@ ul.search-result-list {
 div.execute-output {
     pre {
         @include font-mono();
-        padding: 30px;
+        padding: 15px;
         color: transparentize($text-color, 0.35);
     }
 }
@@ -150,13 +150,10 @@ div.file-preview {
     }
 
     pre {
+        @include font-mono();
         text-align: left;
-        margin: 0;
-        
-        code {
-            @include font-mono();
-            padding: 15px;
-        }
+        padding: 15px;
+        color: transparentize($text-color, 0.35);
     }
 
     div.file-info-preview, div.folder-preview {
