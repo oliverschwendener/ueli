@@ -2,15 +2,17 @@ import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
-import leven from 'leven'
 import ConfigManager from './../ConfigManager'
 import FavoritesManager from './../FavoritesManager'
+import StringHelpers from './../Helpers/StringHelpers'
+
+let stringHelpers = new StringHelpers()
 
 export default class InstalledPrograms {
     constructor() {
         this.config = new ConfigManager().getConfig()
+        this.name = 'Installed Programs'
         this.folders = this.config.folders
-        this.favorites = new FavoritesManager().getFavorites()
         this.programs = []
         this.setup()
         this.initalizeFileWatchers()
@@ -22,6 +24,10 @@ export default class InstalledPrograms {
         ]
     }
 
+    getName() {
+        return this.name
+    }
+
     async setup() {
         await this.getFilesFromDirectoriesRecursivelyByFileExtension(this.folders)
     }
@@ -30,7 +36,6 @@ export default class InstalledPrograms {
         setInterval(async () => {
             this.programs = []
             await this.getFilesFromDirectoriesRecursivelyByFileExtension(this.folders)
-            this.favorites = new FavoritesManager().getFavorites()
         }, convertSecondsToMilliSeconds(this.config.rescanInterval))
     }
 
@@ -42,40 +47,22 @@ export default class InstalledPrograms {
     search(userInput) {
         let result = []
 
-        // add programs with weight
         for (let program of this.programs) {
             let programName = path.basename(program)
 
             for (let shortCutFileExtension of this.shorcutFileExtensions)
                 programName = programName.replace(shortCutFileExtension, '')
 
-            if (stringContainsSubstring(programName, userInput)) {
-                let weight = getWeight(programName, userInput)
-                if (weight >= 0)
-                    result.push({
-                        name: programName,
-                        execArg: path.win32.normalize(program),
-                        weight: weight,
-                        isActive: false
-                    })
+            if (stringHelpers.stringContainsSubstring(programName, userInput)) {
+                result.push({
+                    name: programName,
+                    execArg: path.win32.normalize(program),
+                    icon: this.icon
+                })
             }
         }
 
-        // list favorite item higher
-        if (this.favorites.length > 0)
-            for (let item of result)
-                for (let favorite of this.favorites)
-                    if (favorite.path === item.execArg)
-                        item.weight = item.weight - (favorite.counter)
-
-        // sort desc result by weigth
-        let sortedResult = result.sort((a, b) => {
-            if (a.weight > b.weight) return 1
-            if (a.weight < b.weight) return -1
-            return 0
-        })
-
-        return sortedResult
+        return result
     }
 
     getSearchResult(userInput) {
@@ -93,14 +80,6 @@ export default class InstalledPrograms {
                 ipcRenderer.send('hide-main-window')
             }
         })
-    }
-
-    getAutoCompletion(activeItem) {
-        return activeItem.name
-    }
-
-    getIcon(userInput) {
-        return this.icon
     }
 
     searchResultContainsFilePath(filePath) {
@@ -131,7 +110,7 @@ export default class InstalledPrograms {
                     let filesWithExpandedPath = files.map(f => `${directory}/${f}`)
                     filesWithExpandedPath.forEach(async file => {
                         // Skip hidden files
-                        if(path.basename(file).startsWith('.')) {
+                        if (path.basename(file).startsWith('.')) {
                             return
                         }
 
@@ -153,55 +132,6 @@ export default class InstalledPrograms {
             })
         })
     }
-}
-
-function stringContainsSubstring(stringToSearch, substring) {
-    let wordsOfSubstring = splitStringToArray(substring.toLowerCase())
-    stringToSearch = stringToSearch.split(' ').join('').toLowerCase()
-
-    for (let word of wordsOfSubstring) {
-        if (stringIsEmptyOrWhitespaces(word))
-            continue
-        else if (stringToSearch.indexOf(word) === -1)
-            return false
-    }
-
-    return true
-}
-
-function getWeight(programNameWithExtension, userInput) {
-    let results = []
-    let stringToSearchWords = splitStringToArray(programNameWithExtension)
-    let valueWords = splitStringToArray(userInput)
-
-    for (let word of stringToSearchWords)
-        for (let value of valueWords) {
-            let levenshteinDistance = leven(word, value)
-            let result = word.startsWith(value)
-                ? (levenshteinDistance / 4)
-                : levenshteinDistance
-
-            results.push(result)
-        }
-
-    return getAvg(results)
-}
-
-function getAvg(numbers) {
-    let sum = 0
-
-    for (let value of numbers)
-        sum = sum + value
-
-    return sum / numbers.length
-}
-
-function stringIsEmptyOrWhitespaces(string) {
-    return string === undefined || string.replace(/\s/g, '').length === 0
-}
-
-function splitStringToArray(string) {
-    return string.split(/\s+/)
 }
 
 function convertSecondsToMilliSeconds(seconds) {

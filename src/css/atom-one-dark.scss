@@ -44,7 +44,7 @@ $highlight-text-color-dim: #fff;
 $button-color: $highlight-background-color;
 $button-text-color: $highlight-text-color;
 
-$scrollbar-color: darken($background-color, 3);
+$scrollbar-color: $highlight-background-color;
 $scrollbar-background-color: lighten($background-color, 5);
 
 @import "app";

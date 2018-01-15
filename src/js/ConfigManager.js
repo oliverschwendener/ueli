@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-let configFilePath = `${process.env.USERPROFILE}\\ezr_config.json`
+let configFilePath = `${process.env.USERPROFILE}\\electronizr.config.json`
 
 export default class ConfigManager {
     constructor() {
@@ -36,10 +36,40 @@ export default class ConfigManager {
 
 function getDefaultConfig() {
     return {
+        plugins: [
+            {
+                name: 'Installed Programs',
+                active: true,
+            },
+            {
+                name: 'Windows 10 Settings',
+                active: true,
+            },
+            {
+                name: 'Web URL',
+                active: true,
+            },
+            {
+                name: 'Web Search',
+                active: true,
+            },
+            {
+                name: 'Command Line',
+                active: true,
+            },
+            {
+                name: 'Ezr Commands',
+                active: true,
+            },
+            {
+                name: 'File Browser',
+                active: true
+            }
+        ],
         keyboardShortcut: 'alt+space',
         size: {
-            width: 960,
-            height: 600
+            width: 860,
+            height: 565
         },
         zoomFactor: 1.0,
         fullscreen: false,
@@ -55,7 +85,7 @@ function getDefaultConfig() {
             { name: 'Google Image', prefix: 'gi', url: 'https://www.google.com/search?tbm=isch&q=', icon: 'fa fa-picture-o' },
             { name: 'YouTube', prefix: 'yt', url: 'https://www.youtube.com/results?search_query=', icon: 'fa fa-youtube-play' },
             { name: 'Linguee', prefix: 'l', url: 'http://www.linguee.de/deutsch-englisch/search?source=auto&query=', icon: 'fa fa-language' },
-            { name: 'DuckDuckGo', prefix: 'd', url: 'https://duckduckgo.com/?q=', icon: 'fa fa-search'}
+            { name: 'DuckDuckGo', prefix: 'd', url: 'https://duckduckgo.com/?q=', icon: 'fa fa-search' }
         ],
         customShortcuts: [],
         favorites: []

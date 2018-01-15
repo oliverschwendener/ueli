@@ -11,6 +11,7 @@
 }
 
 $user-input-height: 85px;
+$search-result-item-height: 60px;
 
 body, html {
     @include font();
@@ -34,6 +35,13 @@ i#search-icon {
     font-size: 1.5rem;
 }
 
+div.user-input-container {
+    display: flex;
+    height: $user-input-height;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 input.user-input {
     background: transparent;
     color: $userinput-text-color;
@@ -42,8 +50,7 @@ input.user-input {
     font-size: 2.5rem;
     font-weight: 100;
     padding: 0 15px;
-    line-height: $user-input-height;
-    width: 100vw;
+    width: 100%;
 }
 
 div.output-container {
@@ -60,29 +67,49 @@ ul.search-result-list {
 
     li{
         max-width: 100vw;
-        padding: 15px;
+        height: $search-result-item-height;        
         overflow: hidden; 
         text-overflow: ellipsis;
         white-space: nowrap;
+        display: flex;
+        align-items: center;
+        flex-flow: row;
+
+        div {
+            &.icon-container {
+                text-align: center;
+                font-size: 1.5rem;
+                width: 65px;
+            }
+
+            &.text-container {
+                width: calc(100% - 50px);
+                overflow: hidden;
+            }
+        }
 
         span {
-            display: block;
             padding: 5px 0;
 
             &.name {
                 color: $text-color;
                 font-size: 1.5rem;
                 font-weight: 100;
+                padding-right: 15px;
             }
 
             &.exec-args {
-                color: $text-color-dim;
-                font-size: 1rem;
+                color: transparentize($text-color-dim, 0.5);
+                font-size: 0.9rem;
             }
         }
 
         &.active {
             background-color: $highlight-background-color;
+
+            div.icon-container {
+                color: $highlight-text-color;
+            }
 
             span {
                 &.name {
@@ -101,7 +128,7 @@ ul.search-result-list {
 div.execute-output {
     pre {
         @include font-mono();
-        padding: 30px;
+        padding: 15px;
         color: transparentize($text-color, 0.35);
     }
 }
@@ -126,12 +153,10 @@ div.file-preview {
     }
 
     pre {
+        @include font-mono();
         text-align: left;
-        
-        code {
-            @include font-mono();
-            padding: 15px;
-        }
+        padding: 15px;
+        color: transparentize($text-color, 0.35);
     }
 
     div.file-info-preview, div.folder-preview {

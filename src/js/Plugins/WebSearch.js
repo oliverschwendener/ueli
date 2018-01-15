@@ -4,8 +4,13 @@ import { ipcRenderer } from 'electron'
 
 export default class WebSearch {
     constructor() {
+        this.name = 'Web Search'
         this.webSearches = new ConfigManager().getConfig().webSearches
         this.separator = '?'
+    }
+
+    getName() {
+        return this.name
     }
 
     isValid(userInput) {
@@ -24,13 +29,9 @@ export default class WebSearch {
         userInput = encodeURIComponent(userInput)
         return [{
             name: `${webSearch.name} search`,
-            execArg: `${webSearch.url}${userInput}`
+            execArg: `${webSearch.url}${userInput}`,
+            icon: webSearch.icon
         }]
-    }
-
-    getIcon(userInput) {
-        let webSearch = this.getValidWebSearch(userInput)
-        return webSearch.icon
     }
 
     getValidWebSearch(userInput) {

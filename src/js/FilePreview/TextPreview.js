@@ -26,6 +26,6 @@ export default class TextPreview {
 
         fileContent = escape(fileContent)
 
-        return `<pre><code id="text-file-preview" class="">${fileContent}</code></pre>`
+        return `<pre>${fileContent}</pre>`
     }
 }

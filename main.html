@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="./node_modules/highlight.js/styles/atom-one-dark.css">
+    <link rel="stylesheet" href="./node_modules/windows-10-icons/font/styles.min.css">
     <title>electronizr</title>
 </head>
 
@@ -13,16 +13,23 @@
 
         <link rel="stylesheet" :href="colorThemePath">
 
-        <input id="user-input" class="user-input" type="text" v-model="userInput" ref="input" v-on:keyDown="handleKeyPress" :autofocus="{ true: focusOnInput }">
-        <i id="search-icon" :class="searchIcon" aria-hidden="true"></i>
+        <div class="user-input-container">
+            <input id="user-input" class="user-input" type="text" v-model="userInput" ref="input" v-on:keyDown="handleKeyPress" :autofocus="{ true: focusOnInput }">
+            <i id="search-icon" class="fa fa-search" aria-hidden="true"></i>
+        </div>
 
         <div class="output-container">
 
             <div class="search-result">
                 <ul class="search-result-list">
                     <li v-for="item in searchResult" :class="{ 'active': item.isActive }" :id="item.id">
-                        <span class="name">{{ item.name }}</span>
-                        <span class="exec-args">{{ item.execArg }}</span>
+                        <div class="icon-container">
+                            <i :class="item.icon"></i>
+                        </div>
+                        <div class="text-container">
+                            <span class="name">{{ item.name }}</span>
+                            <span class="exec-args">{{ item.execArg }}</span>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -35,6 +42,27 @@
             </div>
 
             <div class="config" :class="{ 'hidden' : hideConfig }">
+
+                <div class="config-item">
+                    <h3>Plugins</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Plugin</th>
+                                <th>Active</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid white;" v-for="plugin in config.plugins">
+                                <td>{{ plugin.name }}</td>
+                                <td>
+                                    <input type="checkbox" v-model="plugin.active">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
 
                 <div class="config-item">
                     <h3>Keyboard shortcut</h3>
@@ -70,7 +98,7 @@
                     <h3>Color Theme</h3>
                     <select v-model="colorTheme">
                         <option>osc-dark-blue</option>
-                        <option>osc-light-blue</option>                        
+                        <option>osc-light-blue</option>
                         <option>atom-one-dark</option>
                         <option>dracula-dark-blue</option>
                         <option>dracula-purple</option>
@@ -90,7 +118,9 @@
                         </thead>
                         <tbody>
                             <tr v-for="folder in config.folders">
-                                <td><i v-on:click="removeFolder(folder)" class="fa fa-minus-circle action-button"></i></td>
+                                <td>
+                                    <i v-on:click="removeFolder(folder)" class="fa fa-minus-circle action-button"></i>
+                                </td>
                                 <td>{{ folder }}</td>
                             </tr>
                             <tr>
@@ -118,25 +148,32 @@
                         <thead>
                             <tr>
                                 <th>Add/Delete</th>
+                                <th>Name</th>
                                 <th>Shortcut</th>
-                                <th>File path</th>
+                                <th>Execution Argument</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="shortcut in config.customShortcuts">
-                                <td><i v-on:click="removeCustomShortcut(shortcut)" class="fa fa-minus-circle action-button"></i></td>
+                                <td>
+                                    <i v-on:click="removeCustomShortcut(shortcut)" class="fa fa-minus-circle action-button"></i>
+                                </td>
+                                <td>{{ shortcut.name }}</td>
                                 <td>{{ shortcut.shortCut }}</td>
-                                <td>{{ shortcut.path }}</td>
+                                <td>{{ shortcut.execArg }}</td>
                             </tr>
                             <tr>
                                 <td>
                                     <i v-on:click="addNewCustomShortcut" class="fa fa-plus-circle action-button"></i>
                                 </td>
                                 <td>
+                                    <input type="new-item" type="text" v-model="newCustomShortcut.name" placeholder="Name">
+                                </td>
+                                <td>
                                     <input class="new-item" type="text" v-model="newCustomShortcut.shortCut" placeholder="Shortcut">
                                 </td>
                                 <td>
-                                    <input class="new-item" type="text" v-model="newCustomShortcut.path" placeholder="File path">
+                                    <input class="new-item" type="text" v-model="newCustomShortcut.execArg" placeholder="Execution Argument">
                                 </td>
                             </tr>
                         </tbody>
@@ -158,7 +195,9 @@
                         </thead>
                         <tbody>
                             <tr v-for="webSearch in config.webSearches">
-                                <td><i v-on:click="removeWebSearch(webSearch)" class="fa fa-minus-circle action-button"></i></td>
+                                <td>
+                                    <i v-on:click="removeWebSearch(webSearch)" class="fa fa-minus-circle action-button"></i>
+                                </td>
                                 <td>{{ webSearch.name }}</td>
                                 <td>{{ webSearch.prefix }}</td>
                                 <td>{{ webSearch.url }}</td>
@@ -203,21 +242,21 @@
                         </tbody>
                     </table>
                     <button v-on:click="cleanUpFavorites">
-                    <i class="fa fa-trash-o"></i>
-                    Clean most used programs
-                </button>
+                        <i class="fa fa-trash-o"></i>
+                        Clean most used programs
+                    </button>
                 </div>
                 <hr>
 
                 <div class="config-item">
                     <button v-on:click="closeConfig">
-                    <i class="fa fa-arrow-left"></i>
-                    Go Back
-                </button>
+                        <i class="fa fa-arrow-left"></i>
+                        Go Back
+                    </button>
                     <button v-on:click="saveConfig">
-                    <i class="fa fa-floppy-o"></i>
-                    Save
-                </button>
+                        <i class="fa fa-floppy-o"></i>
+                        Save
+                    </button>
                 </div>
             </div>
 

@@ -2,11 +2,18 @@ import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
-import leven from 'leven'
+import { lstatSync } from 'original-fs';
+
+let fileIcon = 'icons8-file'
+let folderIcon = 'icons8-opened-folder'
 
 export default class FileBrowser {
     constructor() {
-        this.icon = 'fa fa-file'
+        this.name = 'File Browser'        
+    }
+
+    getName() {
+        return this.name
     }
 
     isValid(filePath) {
@@ -34,7 +41,7 @@ export default class FileBrowser {
                 return [{
                     name: path.basename(filePath),
                     execArg: filePath,
-                    isActive: false
+                    icon: fileIcon
                 }]
             }
         }
@@ -42,51 +49,38 @@ export default class FileBrowser {
             return getResultFromDirectory(path.dirname(userInput), userInput)
         }
     }
-
-    getAutoCompletion(activeItem) {
-        let folderPath = path.dirname(activeItem.execArg)
-        let fileName = path.basename(activeItem.name)
-        let filePath = `${folderPath}\\${fileName}`
-        let stats = fs.statSync(filePath)
-
-
-        filePath = stats.isDirectory() && !stats.isSymbolicLink()
-            ? `${filePath}\\`
-            : filePath
-
-        return path.win32.normalize(filePath)
-    }
-
-    getIcon() {
-        return this.icon
-    }
 }
 
 function getResultFromDirectory(folderPath, userInput) {
-    folderPath = path.win32.normalize(folderPath)    
+    folderPath = path.win32.normalize(folderPath)
     let folderSeparator = folderPath.endsWith('\\') ? '' : '\\'
     let files = fs.readdirSync(folderPath)
     let searchFileName = path.basename(userInput)
-    let result = []    
+    let result = []
 
     for (let file of files) {
-        let filePath = `${folderPath}${folderSeparator}${path.win32.normalize(file)}`
-        let fileName = path.basename(filePath)
+        try {
+            let filePath = `${folderPath}${folderSeparator}${path.win32.normalize(file)}`
+            let stats = fs.lstatSync(filePath)
 
-        if (userInput.endsWith('\\') || filePath.toLowerCase().indexOf(searchFileName.toLowerCase()) > -1)
-            result.push({
-                name: fileName,
-                execArg: filePath,
-                weight: leven(fileName, path.basename(userInput)),
-                isActive: false
-            })
+            if (stats.isSymbolicLink())
+                continue
+
+            let isDirectory = stats.isDirectory()
+            let fileName = path.basename(filePath)
+
+            if (userInput.endsWith('\\') || filePath.toLowerCase().indexOf(searchFileName.toLowerCase()) > -1)
+                result.push({
+                    name: fileName,
+                    execArg: filePath,
+                    icon: isDirectory ? folderIcon : fileIcon
+                })
+        }
+        catch (err) {
+            continue
+        }
+
     }
 
-    let sortedResult = result.sort((a, b) => {
-        if (a.weight > b.weight) return 1
-        if (a.weight < b.weight) return -1
-        return 0
-    })
-
-    return sortedResult
+    return result
 }

@@ -7,6 +7,11 @@ let configManager = new ConfigManager()
 export default class WebUrl {
     constructor() {
         this.icon = 'fa fa-globe'
+        this.name = 'Web URL'
+    }
+
+    getName() {
+        return this.name
     }
 
     isValid(url) {
@@ -28,12 +33,9 @@ export default class WebUrl {
     getSearchResult(userInput) {
         return [{
             name: `Open in browser`,
-            execArg: addHttpToUrl(userInput)
+            execArg: addHttpToUrl(userInput),
+            icon: this.icon
         }]
-    }
-
-    getIcon(userInput) {
-        return this.icon
     }
 }
 

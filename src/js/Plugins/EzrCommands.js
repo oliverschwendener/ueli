@@ -1,14 +1,16 @@
-import leven from 'leven'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
 import open from 'open'
 
 import ConfigManager from './../ConfigManager'
+import StringHelpers from './../Helpers/StringHelpers'
 
 let commandPrefix = 'ezr'
+let stringHelpers = new StringHelpers()
 
 export default class EzrCommands {
     constructor() {
+        this.name = 'Ezr Commands'
         this.commands = [
             {
                 command: `${commandPrefix}:config`,
@@ -33,7 +35,7 @@ export default class EzrCommands {
             },
             {
                 command: `${commandPrefix}:reset`,
-                description: 'Reset configuration',
+                description: 'Reset configuration to default values',
                 execute() {
                     new ConfigManager().resetConfigToDefault()
                     ipcRenderer.send('reload-window')
@@ -54,11 +56,19 @@ export default class EzrCommands {
                 }
             }
         ]
-        this.icon = 'fa fa-cogs'
+        this.icon = 'fa fa-angle-right'
+    }
+
+    getName() {
+        return this.name
     }
 
     isValid(userInput) {
-        return userInput.toLowerCase().startsWith(`${commandPrefix}:`)
+        for (let command of this.commands)
+            if (this.commandMatchesUserInput(command, userInput))
+                return true
+
+        return false
     }
 
     execute(execArg) {
@@ -71,25 +81,19 @@ export default class EzrCommands {
         let result = []
 
         for (let command of this.commands) {
-            let weight = leven(command.command, userInput)
-            result.push({
-                name: command.description,
-                execArg: command.command,
-                isActive: false,
-                weight: weight
-            })
+            if (this.commandMatchesUserInput(command, userInput))
+                result.push({
+                    name: command.description,
+                    execArg: command.command,
+                    icon: this.icon
+                })
         }
 
-        let sortedResult = result.sort((a, b) => {
-            if (a.weight > b.weight) return 1
-            if (a.weight < b.weight) return -1
-            return 0
-        })
-
-        return sortedResult
+        return result
     }
 
-    getIcon() {
-        return this.icon
+    commandMatchesUserInput(command, userInput) {
+        return stringHelpers.stringContainsSubstring(command.command, userInput)
+            || stringHelpers.stringContainsSubstring(command.description, userInput)
     }
 }

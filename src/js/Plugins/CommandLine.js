@@ -1,10 +1,17 @@
 import { spawn } from 'child_process'
+import StringHelpers from './../Helpers/StringHelpers'
 
+let stringHelpers = new StringHelpers()
 let commandLinePrefix = '>'
 
 export default class CommandLine {
     constructor() {
         this.icon = 'fa fa-terminal'
+        this.name = 'Command Line'
+    }
+
+    getName() {
+        return this.name
     }
 
     isValid(userInput) {
@@ -13,7 +20,7 @@ export default class CommandLine {
     }
 
     execute(execArg, callback, kill) {
-        let items = execArg.split(' ')
+        let items = stringHelpers.splitStringToArray(execArg)
         let programName = items[0]
         if (programName.startsWith(commandLinePrefix))
             programName = programName.replace(commandLinePrefix, '')
@@ -52,7 +59,7 @@ export default class CommandLine {
                     command.kill('SIGINT')
             })
         }
-        catch(ex) {
+        catch (ex) {
             callback('There was an error')
         }
     }
@@ -62,12 +69,9 @@ export default class CommandLine {
 
         return [{
             name: `Execute ${command}`,
-            execArg: userInput
+            execArg: userInput,
+            icon: this.icon
         }]
-    }
-
-    getIcon() {
-        return this.icon
     }
 }
 

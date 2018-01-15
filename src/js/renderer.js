@@ -1,13 +1,19 @@
 import fs from 'fs'
 import path from 'path'
-import { exec } from 'child_process'
-import { ipcRenderer } from 'electron'
-import hljs from 'highlight.js'
+import {
+    exec
+} from 'child_process'
+import {
+    ipcRenderer
+} from 'electron'
 
 import ConfigManager from './js/ConfigManager'
 import PluginManager from './js/PluginManager'
 import HistoryManager from './js/HistoryManager'
 import ExecutionService from './js/ExecutionService'
+import {
+    version
+} from 'punycode';
 
 let packageJson = require('./package.json')
 let configManager = new ConfigManager()
@@ -22,7 +28,6 @@ let vue = new Vue({
         focusOnInput: true,
         searchResult: [],
         executeOutput: '',
-        searchIcon: 'fa fa-search',
         hideExecuteOutput: true,
         filePreview: '',
         hideFilePreview: true,
@@ -48,49 +53,37 @@ let vue = new Vue({
             else if (e.shiftKey && e.key === 'ArrowUp') {
                 e.preventDefault()
                 this.userInput = historyManager.getPrevious()
-            }
-
-            else if (e.shiftKey && e.key === 'ArrowDown') {
+            } else if (e.shiftKey && e.key === 'ArrowDown') {
                 e.preventDefault()
                 this.userInput = historyManager.getNext()
-            }
-
-            else if (e.key === 'ArrowUp') {
+            } else if (e.key === 'ArrowUp') {
                 e.preventDefault()
                 this.selectPrevious()
                 scrollToActiveItem()
-            }
-
-            else if (e.key === 'ArrowDown') {
+            } else if (e.key === 'ArrowDown') {
                 e.preventDefault()
                 this.selectNext()
                 scrollToActiveItem()
-            }
-
-            else if (e.key === 'Tab') {
+            } else if (e.key === 'Tab') {
                 e.preventDefault()
-
-                let activeItem = {}
-                for (let item of this.searchResult)
-                    if (item.isActive)
-                        activeItem = item
-
-                let autoCompletionResult = this.autoComplete(activeItem)
-                this.userInput = autoCompletionResult === undefined
-                    ? this.userInput
-                    : autoCompletionResult
+                this.autoComplete()
             }
+        },
+        autoComplete() {
+            let activeItem = {}
+            for (let item of this.searchResult)
+                if (item.isActive)
+                    activeItem = item
+
+            this.userInput = pluginManager.getAutoCompletionResult(activeItem)
         },
         search() {
             if (stringIsEmptyOrWhitespaces(this.userInput)) {
                 this.searchResult = []
-                this.searchIcon = 'fa fa-search'
                 return
             }
 
             this.searchResult = pluginManager.getSearchResult(this.userInput)
-            this.autoComplete = pluginManager.getAutoCompletion(this.userInput)
-            this.searchIcon = pluginManager.getIcon(this.userInput)
 
             if (this.searchResult.length > 0) {
                 for (let i = 0; i < this.searchResult.length; i++)
@@ -105,7 +98,6 @@ let vue = new Vue({
             this.resetExecuteOutput()
             this.resetFilePreview()
         },
-        autoComplete() { },
         selectNext() {
             let iterator = 0
             let maxIndex = this.searchResult.length - 1
@@ -170,7 +162,9 @@ let vue = new Vue({
                 let activeItem = getActiveItem()
                 historyManager.addItem(this.userInput)
                 this.resetUserInput()
-                pluginManager.execute(activeItem.execArg, this.appendExecuteOutput)
+                setTimeout(() => {
+                    pluginManager.execute(activeItem.execArg, this.appendExecuteOutput)
+                }, 20)
             }
         },
         openFileLocation() {
@@ -197,8 +191,6 @@ let vue = new Vue({
 
             this.searchResult = []
             this.hideFilePreview = false
-
-            highlight()
         },
         resetFilePreview() {
             this.filePreview = ''
@@ -225,9 +217,8 @@ let vue = new Vue({
             this.config.folders = folders
         },
         addNewCustomShortcut() {
-            if (stringIsEmptyOrWhitespaces(this.newCustomShortcut.shortCut)
-                || stringIsEmptyOrWhitespaces(this.newCustomShortcut.path)
-                || !fs.existsSync(this.newCustomShortcut.path))
+            if (stringIsEmptyOrWhitespaces(this.newCustomShortcut.shortCut) ||
+                stringIsEmptyOrWhitespaces(this.newCustomShortcut.execArg))
                 return
 
             this.config.customShortcuts.push(this.newCustomShortcut)
@@ -237,7 +228,7 @@ let vue = new Vue({
             let customShortcuts = []
 
             for (let item of this.config.customShortcuts)
-                if (item.shortCut !== customShortcut.shortCut && item.path !== customShortcut.path)
+                if (item.shortCut !== customShortcut.shortCut && item.execArg !== customShortcut.execArg)
                     customShortcuts.push(item)
 
             this.config.customShortcuts = customShortcuts
@@ -246,17 +237,17 @@ let vue = new Vue({
             let webSearches = []
 
             for (let item of this.config.webSearches)
-                if (item.name !== webSearch.name
-                    && item.prefix !== webSearch.prefix
-                    && item.url !== webSearch.url)
+                if (item.name !== webSearch.name &&
+                    item.prefix !== webSearch.prefix &&
+                    item.url !== webSearch.url)
                     webSearches.push(item)
 
             this.config.webSearches = webSearches
         },
         addNewWebSearch() {
-            if (stringIsEmptyOrWhitespaces(this.newWebSearch.name)
-                || stringIsEmptyOrWhitespaces(this.newWebSearch.prefix)
-                || stringIsEmptyOrWhitespaces(this.newWebSearch.url))
+            if (stringIsEmptyOrWhitespaces(this.newWebSearch.name) ||
+                stringIsEmptyOrWhitespaces(this.newWebSearch.prefix) ||
+                stringIsEmptyOrWhitespaces(this.newWebSearch.url))
                 return
 
             if (webSearchAlreadyExists(this.newWebSearch))
@@ -274,6 +265,10 @@ let vue = new Vue({
         saveConfig() {
             configManager.setConfig(this.config)
             ipcRenderer.send('reload-window')
+        },
+        showInfo(info) {
+            this.filePreview = `<pre>electornizr: ${info.electronizr}<br>node: ${info.node}<br>electron: ${info.electron}<br>v8: ${info.v8}<br>chrome: ${info.chrome}</pre>`
+            this.hideFilePreview = false
         }
     },
     watch: {
@@ -292,9 +287,9 @@ let vue = new Vue({
 
 function webSearchAlreadyExists(webSearch) {
     for (let item of vue.config.webSearches)
-        if (item.name.toLowerCase() === webSearch.name.toLowerCase()
-            && item.prefix === webSearch.prefix.toLowerCase()
-            && item.url.toLowerCase() === webSearch.url.toLowerCase())
+        if (item.name.toLowerCase() === webSearch.name.toLowerCase() &&
+            item.prefix === webSearch.prefix.toLowerCase() &&
+            item.url.toLowerCase() === webSearch.url.toLowerCase())
             return true
 
     return false
@@ -342,25 +337,16 @@ document.addEventListener('keyup', (e) => {
     if (e.key === 'Escape') {
         vue.resetUserInput()
         ipcRenderer.send('hide-main-window')
-    }
-
-    else if (e.key === 'F6' || (e.key === 'l' && e.ctrlKey))
+    } else if (e.key === 'F6' || (e.key === 'l' && e.ctrlKey))
         focusOnInput()
 })
 
-function highlight() {
-    setTimeout(() => {
-        let block = document.getElementById('text-file-preview')
-        if (block !== null && block !== undefined)
-            hljs.highlightBlock(block)
-    })
-}
-
 ipcRenderer.on('get-info', (event, arg) => {
-    getInfo()
+    vue.showInfo({
+        electronizr: packageJson.version,
+        node: process.versions.node,
+        v8: process.versions.v8,
+        electron: process.versions.electron,
+        chrome: process.versions.chrome
+    })
 })
-
-function getInfo() {
-    let versions = process.versions
-    alert(`electronizr: ${packageJson.version}\nNode: ${versions.node}\nV8: ${versions.v8}\nElectron: ${versions.electron}\nChrome: ${versions.chrome}`, 'About electronizr')
-}
