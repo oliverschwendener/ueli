@@ -1,4 +1,11 @@
-import { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu } from 'electron'
+import {
+  app,
+  BrowserWindow,
+  globalShortcut,
+  ipcMain,
+  Tray,
+  Menu
+} from 'electron'
 import ConfigManager from './ConfigManager'
 
 let configManager = new ConfigManager()
@@ -7,13 +14,12 @@ let tray = null
 
 let mainWindowHtml = `file://${__dirname}/../main.html`
 
-let shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => { })
+let shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {})
 
 // quit if other instance is already running
 if (shouldQuit) {
   app.quit()
-}
-else {
+} else {
   app.on('window-all-closed', function () {
     if (process.platform != 'darwin') {
       app.quit()
@@ -29,10 +35,18 @@ else {
     })
 
     tray = new Tray(`${__dirname}/../img/icon.ico`)
-    let trayMenu = Menu.buildFromTemplate([
-      { label: 'About', click: getInfo },
-      { label: 'Show/Hide', click: toggleWindow },
-      { label: 'Exit', click: app.quit }
+    let trayMenu = Menu.buildFromTemplate([{
+        label: 'About',
+        click: getInfo
+      },
+      {
+        label: 'Show/Hide',
+        click: toggleWindow
+      },
+      {
+        label: 'Exit',
+        click: app.quit
+      }
     ])
     tray.setToolTip('electronizr')
     tray.setContextMenu(trayMenu)
@@ -94,9 +108,7 @@ function setGlobalShortcuts() {
 }
 
 function hideWindow() {
-  setTimeout(() => {
-    mainWindow.hide()
-  }, 5)
+  mainWindow.hide()
 }
 
 function toggleWindow() {
