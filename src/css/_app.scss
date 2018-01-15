@@ -56,7 +56,7 @@ input.user-input {
 div.output-container {
     width: 100vw;
     height: calc(100vh - #{$user-input-height});
-    overflow-y: scroll;
+    overflow-y: auto;
     position: relative;
 }
 
