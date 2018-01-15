@@ -1,5 +1,9 @@
-import { exec } from 'child_process'
-import { ipcRenderer } from 'electron'
+import {
+    exec
+} from 'child_process'
+import {
+    ipcRenderer
+} from 'electron'
 import StringHelpers from '../Helpers/StringHelpers'
 
 let stringHelpers = new StringHelpers()
@@ -54,8 +58,7 @@ export default class Windows10Settings {
 
         if (tags.length === 0) {
             return false
-        }
-        else {
+        } else {
             for (let tag of tags) {
                 for (let word of words) {
                     if (stringHelpers.stringContainsSubstring(tag, word))
@@ -68,9 +71,9 @@ export default class Windows10Settings {
     }
 
     windowsAppMatchesUserInput(windowsApp, userInput) {
-        return stringHelpers.stringContainsSubstring(windowsApp.name, userInput)
-            || stringHelpers.stringContainsSubstring(windowsApp.execArg, userInput)
-            || this.tagsMatchesUserInput(windowsApp.tags, userInput)
+        return stringHelpers.stringContainsSubstring(windowsApp.name, userInput) ||
+            stringHelpers.stringContainsSubstring(windowsApp.execArg, userInput) ||
+            this.tagsMatchesUserInput(windowsApp.tags, userInput)
     }
 }
 
@@ -99,8 +102,7 @@ function getAllWindowsSettings() {
 }
 
 function getSystemSettings() {
-    return [
-        {
+    return [{
             name: 'Windows Settings',
             execArg: 'ms-settings:',
             tags: ['control', 'panel']
@@ -167,8 +169,7 @@ function getSystemSettings() {
 }
 
 function getDeviceSettings() {
-    return [
-        {
+    return [{
             name: 'Bluetooth',
             execArg: `ms-settings:bluetooth`,
             tags: ['wireless', 'device', 'devices'],
@@ -199,7 +200,7 @@ function getDeviceSettings() {
         },
         {
             name: 'Autoplay',
-            execArg: 'ms-settings:autoplay',            
+            execArg: 'ms-settings:autoplay',
             icon: 'fa fa-play'
         },
         {
@@ -212,8 +213,7 @@ function getDeviceSettings() {
 }
 
 function getNetworkSettings() {
-    return [
-        {
+    return [{
             name: 'Network status',
             execArg: 'ms-settings:network',
             tags: ['internet'],
@@ -263,8 +263,7 @@ function getNetworkSettings() {
 }
 
 function getPersonalizationSettings() {
-    return [
-        {
+    return [{
             name: 'Background',
             execArg: `ms-settings:personalization-background`,
             tags: ['custom', 'customization', 'color', 'colors', 'image', 'picture'],
@@ -303,8 +302,7 @@ function getPersonalizationSettings() {
 }
 
 function getAppSettings() {
-    return [
-        {
+    return [{
             name: 'Apps & features',
             execArg: 'ms-settings:appsfeatures',
             tags: ['programs'],
@@ -341,8 +339,7 @@ function getAppSettings() {
 }
 
 function getAccountSettings() {
-    return [
-        {
+    return [{
             name: 'Your info',
             execArg: 'ms-settings:yourinfo',
             tags: ['account', 'user', 'about'],
@@ -357,7 +354,7 @@ function getAccountSettings() {
             name: 'Sign-in options',
             execArg: `ms-settings:signinoptions`,
             tags: ['password', 'change', 'security', 'secret', 'account', 'pin'],
-            icon: 'icons8-lock-2'
+            icon: 'icons8-key'
         },
         {
             name: 'Access work or school',
@@ -378,8 +375,7 @@ function getAccountSettings() {
 }
 
 function getTimeAndLanguageSettings() {
-    return [
-        {
+    return [{
             name: 'Date & Time',
             execArg: `ms-settings:dateandtime`,
             tags: ['clock'],
@@ -402,8 +398,7 @@ function getTimeAndLanguageSettings() {
 function getGamingSettings() {
     let icon = 'icons8-controller'
 
-    return [
-        {
+    return [{
             name: 'Broadcasting',
             execArg: 'ms-settings:gaming-broadcasting',
             icon: icon
@@ -439,8 +434,7 @@ function getGamingSettings() {
 function getEaseOfAccessSettings() {
     let moduleTitle = 'Ease of Access'
 
-    return [
-        {
+    return [{
             name: `${moduleTitle}: Narrator`,
             execArg: `ms-settings:easeofaccess-narrator`,
             icon: 'fa fa-comment-o'
@@ -484,8 +478,7 @@ function getPrivacySettings() {
     let moduleTitle = 'Privacy'
     let icon = 'icons8-lock'
 
-    return [
-        {
+    return [{
             name: `${moduleTitle}: General`,
             execArg: 'ms-settings:privacy-general',
             icon: icon
@@ -596,8 +589,7 @@ function getPrivacySettings() {
 }
 
 function getUpdateAndSecurityOptions() {
-    return [
-        {
+    return [{
             name: 'Windows Update',
             execArg: `ms-settings:windowsupdate`,
             tags: ['patch', 'upgrade', 'security'],
@@ -652,8 +644,7 @@ function getCortanaSettings() {
     let moduleTitle = 'Cortana'
     let icon = 'icons8-search'
 
-    return [
-        {
+    return [{
             name: `${moduleTitle}: Talk to Cortana`,
             execArg: 'ms-settings:cortana-language',
             icon: icon
@@ -672,8 +663,7 @@ function getCortanaSettings() {
 }
 
 function getOtherWindowsCommands() {
-    return [
-        {
+    return [{
             name: 'Shutdown',
             execArg: 'shutdown -s -t 0',
             tags: ['power', 'off'],
