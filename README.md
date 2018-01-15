@@ -187,7 +187,9 @@ $ yarn start
 
 ### Package
 
-```$ yarn package```
+```
+$ yarn package
+```
 
 **Note**: the default output location for the packaging is `dist/win-unpacked`.
 
