@@ -1,7 +1,11 @@
 import fs from 'fs'
 import path from 'path'
-import { exec } from 'child_process'
-import { ipcRenderer } from 'electron'
+import {
+    exec
+} from 'child_process'
+import {
+    ipcRenderer
+} from 'electron'
 
 import ConfigManager from './js/ConfigManager'
 import PluginManager from './js/PluginManager'
@@ -46,26 +50,18 @@ let vue = new Vue({
             else if (e.shiftKey && e.key === 'ArrowUp') {
                 e.preventDefault()
                 this.userInput = historyManager.getPrevious()
-            }
-
-            else if (e.shiftKey && e.key === 'ArrowDown') {
+            } else if (e.shiftKey && e.key === 'ArrowDown') {
                 e.preventDefault()
                 this.userInput = historyManager.getNext()
-            }
-
-            else if (e.key === 'ArrowUp') {
+            } else if (e.key === 'ArrowUp') {
                 e.preventDefault()
                 this.selectPrevious()
                 scrollToActiveItem()
-            }
-
-            else if (e.key === 'ArrowDown') {
+            } else if (e.key === 'ArrowDown') {
                 e.preventDefault()
                 this.selectNext()
                 scrollToActiveItem()
-            }
-
-            else if (e.key === 'Tab') {
+            } else if (e.key === 'Tab') {
                 e.preventDefault()
 
                 let activeItem = {}
@@ -97,7 +93,7 @@ let vue = new Vue({
             this.resetExecuteOutput()
             this.resetFilePreview()
         },
-        autoComplete() { },
+        autoComplete() {},
         selectNext() {
             let iterator = 0
             let maxIndex = this.searchResult.length - 1
@@ -164,7 +160,7 @@ let vue = new Vue({
                 this.resetUserInput()
                 setTimeout(() => {
                     pluginManager.execute(activeItem.execArg, this.appendExecuteOutput)
-                }, 50)
+                }, 20)
             }
         },
         openFileLocation() {
@@ -217,8 +213,8 @@ let vue = new Vue({
             this.config.folders = folders
         },
         addNewCustomShortcut() {
-            if (stringIsEmptyOrWhitespaces(this.newCustomShortcut.shortCut)
-                || stringIsEmptyOrWhitespaces(this.newCustomShortcut.execArg))
+            if (stringIsEmptyOrWhitespaces(this.newCustomShortcut.shortCut) ||
+                stringIsEmptyOrWhitespaces(this.newCustomShortcut.execArg))
                 return
 
             this.config.customShortcuts.push(this.newCustomShortcut)
@@ -237,17 +233,17 @@ let vue = new Vue({
             let webSearches = []
 
             for (let item of this.config.webSearches)
-                if (item.name !== webSearch.name
-                    && item.prefix !== webSearch.prefix
-                    && item.url !== webSearch.url)
+                if (item.name !== webSearch.name &&
+                    item.prefix !== webSearch.prefix &&
+                    item.url !== webSearch.url)
                     webSearches.push(item)
 
             this.config.webSearches = webSearches
         },
         addNewWebSearch() {
-            if (stringIsEmptyOrWhitespaces(this.newWebSearch.name)
-                || stringIsEmptyOrWhitespaces(this.newWebSearch.prefix)
-                || stringIsEmptyOrWhitespaces(this.newWebSearch.url))
+            if (stringIsEmptyOrWhitespaces(this.newWebSearch.name) ||
+                stringIsEmptyOrWhitespaces(this.newWebSearch.prefix) ||
+                stringIsEmptyOrWhitespaces(this.newWebSearch.url))
                 return
 
             if (webSearchAlreadyExists(this.newWebSearch))
@@ -283,9 +279,9 @@ let vue = new Vue({
 
 function webSearchAlreadyExists(webSearch) {
     for (let item of vue.config.webSearches)
-        if (item.name.toLowerCase() === webSearch.name.toLowerCase()
-            && item.prefix === webSearch.prefix.toLowerCase()
-            && item.url.toLowerCase() === webSearch.url.toLowerCase())
+        if (item.name.toLowerCase() === webSearch.name.toLowerCase() &&
+            item.prefix === webSearch.prefix.toLowerCase() &&
+            item.url.toLowerCase() === webSearch.url.toLowerCase())
             return true
 
     return false
@@ -333,9 +329,7 @@ document.addEventListener('keyup', (e) => {
     if (e.key === 'Escape') {
         vue.resetUserInput()
         ipcRenderer.send('hide-main-window')
-    }
-
-    else if (e.key === 'F6' || (e.key === 'l' && e.ctrlKey))
+    } else if (e.key === 'F6' || (e.key === 'l' && e.ctrlKey))
         focusOnInput()
 })
 
