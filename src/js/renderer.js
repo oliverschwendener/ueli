@@ -11,6 +11,9 @@ import ConfigManager from './js/ConfigManager'
 import PluginManager from './js/PluginManager'
 import HistoryManager from './js/HistoryManager'
 import ExecutionService from './js/ExecutionService'
+import {
+    version
+} from 'punycode';
 
 let packageJson = require('./package.json')
 let configManager = new ConfigManager()
@@ -69,7 +72,7 @@ let vue = new Vue({
                     if (item.isActive)
                         activeItem = item
 
-                alert('autocompletion is currently in the making')
+                console.log('autocompletion is available in this release')
             }
         },
         search() {
@@ -261,6 +264,10 @@ let vue = new Vue({
         saveConfig() {
             configManager.setConfig(this.config)
             ipcRenderer.send('reload-window')
+        },
+        showInfo(info) {
+            this.filePreview = `<pre>electornizr: ${info.electronizr}<br>node: ${info.node}<br>electron: ${info.electron}<br>v8: ${info.v8}<br>chrome: ${info.chrome}</pre>`
+            this.hideFilePreview = false
         }
     },
     watch: {
@@ -334,10 +341,11 @@ document.addEventListener('keyup', (e) => {
 })
 
 ipcRenderer.on('get-info', (event, arg) => {
-    getInfo()
+    vue.showInfo({
+        electronizr: packageJson.version,
+        node: process.versions.node,
+        v8: process.versions.v8,
+        electron: process.versions.electron,
+        chrome: process.versions.chrome
+    })
 })
-
-function getInfo() {
-    let versions = process.versions
-    alert(`electronizr: ${packageJson.version}\nNode: ${versions.node}\nV8: ${versions.v8}\nElectron: ${versions.electron}\nChrome: ${versions.chrome}`, 'About electronizr')
-}

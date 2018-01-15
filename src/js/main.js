@@ -79,7 +79,7 @@ if (shouldQuit) {
     })
 
     ipcMain.on('get-info', () => {
-      mainWindow.webContents.send('get-info')
+      getInfo()
     })
 
     setGlobalShortcuts()
@@ -124,5 +124,6 @@ function setZoomFactor() {
 }
 
 function getInfo() {
+  mainWindow.show()
   mainWindow.webContents.send('get-info')
 }
