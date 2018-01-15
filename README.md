@@ -1,14 +1,13 @@
 # electronizr
 
-
 ## An 'alt+space' launcher for Windows
-This is an 'alt+space' launcher for Windows because I thought the default Windows 10 search function doesn't always do what I want.
 
+This is an 'alt+space' launcher for Windows because I thought the default Windows 10 search function doesn't always do what I want.
 
 ![example-image](img/color-themes/osc-dark-blue.png)
 
-
 ## Table of Contents
+
 * [Quick Tutorial](#quick-tutorial)
 * [Installation](#installation)
 * [Features](#features)
@@ -18,13 +17,12 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 * [Development](#development)
 * [License](#license)
 
-
 ## Quick Tutorial
+
 * Press `alt+space` to show/hide the main program
 * Start typing a program name you're looking for
 * Press `Enter` to launch the highlighted program 
 * Use the arrow keys to scroll through the search result
-
 
 ## Installation
 
@@ -37,18 +35,18 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 3. Create a shortcut in the Windows startup folder for autostart
 
 ### Manual installation
-1. Install [NodeJS](https://nodejs.org/)
-2. Install [Yarn](https://yarnpkg.com/)
-3. Clone Repo or Download ZIP
-4. Install npm packages:
-    * `$ yarn`
-5. Transpile JS and SCSS files:
-    * `$ yarn build`
-6. Package app:
-    * `$ yarn package`
-7. Your application is now in the `dist/` folder
-8. Create a shortcut to `electronizr.exe` in the windows startup folder (`C:\Users\<your-username>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`) to run the application on windows logon
 
+* Install [NodeJS](https://nodejs.org/)
+* Install [Yarn](https://yarnpkg.com/)
+* Clone Repo or Download ZIP
+* Install npm packages:
+    * `$ yarn`
+* Transpile JS and SCSS files:
+    * `$ yarn build`
+* Package app:
+    * `$ yarn package`
+* Your application is now in the `dist/` folder
+* Create a shortcut to `electronizr.exe` in the windows startup folder (`C:\Users\<your-username>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`) to run the application on windows logon
 
 ## Features
 
@@ -89,6 +87,7 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 * Press `Ctrl+Space` to preview a file or folder
 
 ### Keyboard shortcuts
+
 * `Ctrl+O` to open the selected programs file location
 * `Ctrl+space` to open preview
 * `Shift+ArrowUp` and `Shift+ArrowDown` to browse your input history
@@ -96,9 +95,11 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 
 
 ## Customization
+
 You can customize your application with 'ezr:config'. All Settings, customization and user history are stored in the `~/electronizr.config.json` file. If there is no config file run the application once, then it should create one.
 
 ### Options
+
 * `plugins` Array of plugin objects - A list of plugins.
     * `plugin` Object - Defines a plugin.
         * `name` String - Represents the name of the plugin.
@@ -126,38 +127,43 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
         * `execArg`: String - Represents the execution argument for the shortcut. For Example `C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Visual Studio Code\Visual Studio Code.lnk`.
 * `favorites` String[] - This is where the applications stores your most used applications. You should not modify this.
 
-
 ## Color Themes
 
 ### osc-dark-blue
+
 ![osc-dark-blue](img/color-themes/osc-dark-blue.png)
 
 ### osc-light-blue
+
 ![osc-light-blue](img/color-themes/osc-light-blue.png)
 
 ### atom-one-dark
+
 ![atom-one-dark](img/color-themes/atom-one-dark.png)
 
 ### dracula-dark-blue
+
 ![dracula-dark-blue](img/color-themes/dracula-dark-blue.png)
 
 ### dracula-purple
+
 ![dracula-purple](img/color-themes/dracula-purple.png)
 
 ### dracula-red
+
 ![dracula-red](img/color-themes/dracula-red.png)
 
-
 ## Roadmap
+
 * New icon / logo
 * Using Typescript
 * Unit & integration tests
 * Mac OS Support
 
-
 ## Development
 
 ### Requirements
+
 * [Git](https://git-scm.com/)
 * [NodeJS](https://nodejs.org/)
 * [Yarn](https://yarnpkg.com/)
@@ -176,17 +182,17 @@ $ yarn install
 $ yarn watch
 $ yarn start
 ```
+
 **Note**: the gulp task watches your Javascript and CSS files and runs the associated gulp task if there is any change.
 
 ### Package
 
-```
-$ yarn package
-```
+```$ yarn package```
+
 **Note**: the default output location for the packaging is `dist/win-unpacked`.
 
-
 ## License
+
 Copyright (c) Oliver Schwendener. All rights reserved.
 
 Licensed under the [MIT](LICENSE) License
