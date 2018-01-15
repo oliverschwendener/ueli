@@ -1,4 +1,3 @@
-import path from 'path'
 import InstalledPrograms from './Plugins/InstalledPrograms'
 import WebUrl from './Plugins/WebUrl'
 import WebSearch from './Plugins/WebSearch'
@@ -10,6 +9,7 @@ import ConfigManager from './ConfigManager'
 import ConfigHelpers from './Helpers/ConfigHelpers'
 import StringHelpers from './Helpers/StringHelpers'
 import FavoritesManager from './FavoritesManager'
+import { setTimeout } from 'timers';
 
 let configHelpers = new ConfigHelpers()
 let stringHelpers = new StringHelpers()
@@ -20,6 +20,14 @@ export default class PluginManager {
         this.setPluginsFromConfig()
         this.defaultIcon = 'fa fa-search'
         this.favorites = new FavoritesManager().getFavorites()
+        this.reloadFavorites(30)
+    }
+
+    reloadFavorites(timeOutInSeconds) {
+        setInterval(() => {
+            this.favorites = new FavoritesManager().getFavorites()
+            console.log('favorites updated')
+        }, timeOutInSeconds * 1000)
     }
 
     isValid(args) {
@@ -27,6 +35,7 @@ export default class PluginManager {
     }
 
     execute(execArg, callback) {
+        new FavoritesManager().addFavorite(execArg)
         this.getValidPlugin(execArg).execute(execArg, callback)
     }
 
@@ -72,8 +81,8 @@ export default class PluginManager {
         if (this.favorites.length > 0)
             for (let item of result)
                 for (let favorite of this.favorites)
-                    if (favorite.path === item.execArg)
-                        item.weight = item.weight - (favorite.counter)
+                    if (favorite.execArg === item.execArg)
+                        item.weight = item.weight - favorite.counter
 
         return result
     }

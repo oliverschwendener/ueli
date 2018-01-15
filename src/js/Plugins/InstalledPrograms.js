@@ -3,7 +3,6 @@ import path from 'path'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
 import ConfigManager from './../ConfigManager'
-import FavoritesManager from './../FavoritesManager'
 import StringHelpers from './../Helpers/StringHelpers'
 
 let stringHelpers = new StringHelpers()
@@ -70,7 +69,6 @@ export default class InstalledPrograms {
     }
 
     execute(filePath) {
-        new FavoritesManager().addFavorite(filePath)
         let args = `start "" "${filePath}"`
 
         exec(args, (err, stdout, sterr) => {

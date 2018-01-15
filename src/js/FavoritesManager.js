@@ -7,20 +7,20 @@ export default class FavoritesManager {
         this.favorites = new ConfigManager().getConfig().favorites
     }
 
-    addFavorite(filePath) {
+    addFavorite(execArg) {
         this.favorites = new ConfigManager().getConfig().favorites
 
         let itemAlreadyExists = false
 
         for (let favorite of this.favorites)
-            if (favorite.path === filePath) {
+            if (favorite.execArg === execArg) {
                 itemAlreadyExists = true
                 favorite.counter++
             }
 
         if (!itemAlreadyExists)
             this.favorites.push({
-                path: filePath,
+                execArg: execArg,
                 counter: 1
             })
 
