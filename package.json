@@ -1,7 +1,7 @@
 {
   "name": "electronizr",
   "productName": "electronizr",
-  "version": "2.1.0",
+  "version": "2.1.1-beta",
   "description": "An alt+space launcher for Windows",
   "author": "Oliver Schwendener",
   "license": "MIT",
