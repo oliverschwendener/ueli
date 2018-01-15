@@ -1,3 +1,4 @@
+import path from 'path'
 import InstalledPrograms from './Plugins/InstalledPrograms'
 import WebUrl from './Plugins/WebUrl'
 import WebSearch from './Plugins/WebSearch'
@@ -110,5 +111,18 @@ export default class PluginManager {
         }
 
         this.plugins = activePlugins
+    }
+
+    getAutoCompletionResult(searchResultItem) {
+        for (let plugin of this.plugins) {
+            if (plugin.isValid(searchResultItem.execArg)) {
+                if (plugin.getName() === 'File Browser') {
+                    return `${searchResultItem.execArg}\\`
+                }
+                else {
+                    return searchResultItem.name
+                }
+            }
+        }
     }
 }

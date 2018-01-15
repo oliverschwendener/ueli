@@ -66,14 +66,16 @@ let vue = new Vue({
                 scrollToActiveItem()
             } else if (e.key === 'Tab') {
                 e.preventDefault()
-
-                let activeItem = {}
-                for (let item of this.searchResult)
-                    if (item.isActive)
-                        activeItem = item
-
-                console.log('autocompletion is available in this release')
+                this.autoComplete()
             }
+        },
+        autoComplete() {
+            let activeItem = {}
+            for (let item of this.searchResult)
+                if (item.isActive)
+                    activeItem = item
+
+            this.userInput = pluginManager.getAutoCompletionResult(activeItem)
         },
         search() {
             if (stringIsEmptyOrWhitespaces(this.userInput)) {
@@ -96,7 +98,6 @@ let vue = new Vue({
             this.resetExecuteOutput()
             this.resetFilePreview()
         },
-        autoComplete() {},
         selectNext() {
             let iterator = 0
             let maxIndex = this.searchResult.length - 1
