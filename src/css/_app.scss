@@ -211,9 +211,10 @@ div.config {
     i.action-button {
         @include hoverTransition();
         cursor: pointer;
+        font-size: 1.25rem;
 
         &:hover{
-            color: $highlight-text-color;
+            color: $highlight-background-color;
         }
     }
 
@@ -262,8 +263,17 @@ div.config {
         text-align: left;
         width: 100%;
 
-        td {
+        td, th {
             padding: 5px;
+
+            &.icon {
+                text-align: center;
+
+                svg {
+                    width: $icon-width;
+                    fill: $text-color;
+                }
+            }
         }
 
         input.new-item {
