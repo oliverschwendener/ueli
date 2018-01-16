@@ -12,6 +12,8 @@
 
 $user-input-height: 80px;
 $search-result-item-height: 60px;
+$search-icon-width: 70px;
+$icon-width: 30px;
 
 body, html {
     @include font();
@@ -27,30 +29,32 @@ input {
     @include font();
 }
 
-i#search-icon {
-    position: fixed;
-    right: calc(#{$user-input-height} / 2);
-    top: calc(#{$user-input-height} / 2);
-    transform: translateY(-50%);
-    font-size: 1.5rem;
-}
-
 div.user-input-container {
     display: flex;
     height: $user-input-height;
     justify-content: flex-start;
     align-items: center;
-}
 
-input.user-input {
-    background: transparent;
-    color: $userinput-text-color;
-    outline: none;
-    border: none;
-    font-size: 2.5rem;
-    font-weight: 100;
-    padding: 0 15px;
-    width: 100%;
+    input.user-input {
+        background: transparent;
+        color: $userinput-text-color;
+        outline: none;
+        border: none;
+        font-size: 2.5rem;
+        font-weight: 100;
+        padding-left: 15px;
+        width: calc(100% - #{$search-icon-width});
+    }
+
+    div#search-icon {    
+        width: $search-icon-width;
+        text-align: center;
+
+        svg {
+            width: $icon-width;
+            fill: #fff;
+        }
+    }
 }
 
 div.output-container {
@@ -77,9 +81,13 @@ ul.search-result-list {
 
         div {
             &.icon-container {
-                text-align: center;
-                font-size: 1.75rem;
                 width: 65px;
+                text-align: center;
+
+                svg {
+                    width: $icon-width;
+                    fill: $text-color;
+                }
             }
 
             &.text-container {
@@ -169,11 +177,7 @@ div.file-preview {
         padding: 15px;
 
         li {
-            padding: 2px 0;
-        }
-
-        i {
-            padding-right: 5px;
+            padding: 0;
         }
     }
 }

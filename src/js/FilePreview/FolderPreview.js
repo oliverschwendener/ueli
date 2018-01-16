@@ -1,9 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 
-let fileIcon = 'fa fa-file-o'
-let folderIcon = 'fa fa-folder'
-
 export default class FolderPreview {
     isValid(filePath) {
         let stats = fs.statSync(filePath)
@@ -11,23 +8,42 @@ export default class FolderPreview {
     }
 
     getFilePreview(filePath) {
+        let folders = []
+        let files = []
+
         let children = fs.readdirSync(filePath)
         let childrenHtml = ''
 
         for (let child of children) {
             let fileStats = fs.statSync(`${filePath}/${child}`)
-            let icon = fileStats.isDirectory() && !fileStats.isSymbolicLink()
-                ? folderIcon
-                : fileIcon
+            if (fileStats.isSymbolicLink())
+                continue
 
-            childrenHtml += `<li><i class="${icon}"></i>${child}</li>`
+            if (fileStats.isDirectory())
+                folders.push(child)
+            else
+                files.push(child)
         }
 
-        return `<div class="folder-preview">
-                    <h1>${filePath}</h1>
-                    <ul>
-                        ${childrenHtml}
-                    </ul>
+        let foldersInnerHtml = ''
+        for (let folder of folders)
+            foldersInnerHtml += `<li>${folder}</li>`
+
+        let foldersOuterHtml = folders.length > 0
+            ? `<h3>Folders:</h3><ul>${foldersInnerHtml}</ul>`
+            : ''
+
+        let filesInnerHtml = ''
+        for (let file of files)
+            filesInnerHtml += `<li>${file}</li>`
+
+        let filesOuterHtml = files.lenght > 0
+            ? `<h3>Files</h3><ul>${filesInnerHtml}</ul>`
+            : ''
+
+        return `<div class="folder-preview">    
+                    ${foldersOuterHtml}
+                    ${filesOuterHtml}
                 </div>`
     }
 }
