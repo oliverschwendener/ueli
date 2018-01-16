@@ -140,7 +140,7 @@ function getSystemSettings() {
         },
         {
             name: 'Tablet mode',
-            execArg: `ms-settings://tabletmode/`,
+            execArg: `ms-settings:tabletmode`,
             tags: ['mobile', 'touch'],
             icon: 'icons8-ipad'
         },
