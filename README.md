@@ -159,7 +159,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 
 ## Roadmap
 
-* Project Renaming + wew icon/logo
+* Project Renaming + new icon/logo
 * Using Typescript
 * Unit & integration tests
 * Mac OS Support
