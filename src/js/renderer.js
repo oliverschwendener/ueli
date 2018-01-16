@@ -254,6 +254,8 @@ let vue = new Vue({
                 return
             else
                 this.config.webSearches.push(this.newWebSearch)
+
+            this.newWebSearch = {}
         },
         cleanUpFavorites() {
             this.config.favorites = []
