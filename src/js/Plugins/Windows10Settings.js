@@ -405,7 +405,7 @@ function getGamingSettings() {
     },
     {
         name: 'Game bar',
-        execArg: 'ms-settings:gaming-',
+        execArg: 'ms-settings:gaming-gamebar',
         icon: icon
     },
     {
