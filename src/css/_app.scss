@@ -149,17 +149,20 @@ div.execute-output {
 }
 
 div.file-preview {
-    text-align: center;
+    height: calc(100vh - #{$user-input-height});
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 
     img {
         width: auto;
-        max-height: calc(100vh - #{$user-input-height});
+        max-height: 100%;
         max-width: 100%;
     }
 
     video {
         width: auto;
-        max-height: calc(100vh - #{$user-input-height});
+        max-height: 100%;
         max-width: 100%;
     }
 
