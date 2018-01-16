@@ -28,8 +28,7 @@ This is an 'alt+space' launcher for Windows 10 because I thought the default Win
 
 ### Requirements
 
-* Windows 10
-* older Versions than Windows 10 might work but are not tested
+* Windows 10 (older Versions than Windows 10 might work but are not tested)
 
 ### Installer / Zip
 
@@ -124,7 +123,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
         * `name` String - Represents the displayed name of your search engine.
         * `prefix` String - Represents the prefix for your search engine. For example if the prefix is `g` you can type in `g?<your-search>` to search.
         * `url` String - Represents the url for the search engine. For example Google's url for the search engine is `https://google.com/search?q=<your-search>`.
-        * `icon` String (optional) - Represents a font-awesome icon which appears for your custom search engine. For example the [Google icon](http://fontawesome.io/icon/google/) is `fa fa-google`.
+        * `icon` String (optional) - Represents an svg icon. Here are awesome svg icons: [https://icons8.com/](https://icons8.com/).
 * `customShortcuts` Array of customShortcut Objects - A list of custom shortcuts.
     * `customShortcut` Object - Defines a custom shortcut.
         * `name`: String - Represents the name for the shortcut. For example `Code`.
