@@ -1,8 +1,10 @@
-import open from 'open'
 import { ipcRenderer } from 'electron'
 
+import ExecutionService from './../ExecutionService'
 import ConfigManager from './../ConfigManager'
+
 let configManager = new ConfigManager()
+let executionService = new ExecutionService()
 
 export default class WebUrl {
     constructor() {
@@ -31,7 +33,7 @@ export default class WebUrl {
 
     execute(url) {
         url = addHttpToUrl(url)
-        open(url)
+        executionService.openDefaultBrowser(url)
         ipcRenderer.send('hide-main-window')
     }
 

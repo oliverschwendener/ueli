@@ -23,4 +23,12 @@ export default class ExecutionService {
         else
             return new FilePreviewManager().getFilePreview(filePath)
     }
+
+    openDefaultBrowser(url) {
+        var command = `start "" "${url}"`
+        exec(command, (err, stout, sterr) => {
+            if (err)
+                throw err
+        })
+    }
 }

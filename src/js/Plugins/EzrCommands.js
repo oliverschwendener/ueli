@@ -1,12 +1,13 @@
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
-import open from 'open'
 
 import ConfigManager from './../ConfigManager'
 import StringHelpers from './../Helpers/StringHelpers'
+import ExecutionService from './../ExecutionService'
 
 let commandPrefix = 'ezr'
 let stringHelpers = new StringHelpers()
+let executionService = new ExecutionService()
 
 export default class EzrCommands {
     constructor() {
@@ -45,7 +46,7 @@ export default class EzrCommands {
                 command: `${commandPrefix}:docs`,
                 description: 'Read the documentation',
                 execute() {
-                    open('https://github.com/oliverschwendener/electronizr#electronizr')
+                    executionService.openDefaultBrowser('https://github.com/oliverschwendener/electronizr#electronizr')
                 }
             },
             {

@@ -1,6 +1,8 @@
-import open from 'open'
 import ConfigManager from './../ConfigManager'
 import { ipcRenderer } from 'electron'
+import ExecutionService from './../ExecutionService'
+
+let executionService = new ExecutionService()
 
 export default class WebSearch {
     constructor() {
@@ -19,7 +21,7 @@ export default class WebSearch {
     }
 
     execute(url) {
-        open(url)
+        executionService.openDefaultBrowser(url)
         ipcRenderer.send('hide-main-window')
     }
 
