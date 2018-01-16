@@ -175,6 +175,7 @@ div.file-preview {
         text-align: left;
         padding: 15px;
         color: transparentize($text-color, 0.35);
+        width: 100%;
     }
 
     div.file-info-preview, div.folder-preview {
