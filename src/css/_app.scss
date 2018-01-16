@@ -297,7 +297,7 @@ div.config {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 $scrollbar-size: 7px;
