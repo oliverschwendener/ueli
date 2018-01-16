@@ -52,7 +52,7 @@ div.user-input-container {
 
         svg {
             width: $icon-width;
-            fill: #fff;
+            fill: $text-color;
         }
     }
 }
@@ -120,7 +120,9 @@ ul.search-result-list {
             background-color: $highlight-background-color;
 
             div.icon-container {
-                color: $highlight-text-color;
+                svg {
+                    fill: $highlight-text-color;
+                }
             }
 
             span {
