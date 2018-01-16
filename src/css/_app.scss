@@ -10,7 +10,7 @@
     transition: all 150ms ease-in-out;
 }
 
-$user-input-height: 85px;
+$user-input-height: 80px;
 $search-result-item-height: 60px;
 
 body, html {
@@ -78,7 +78,7 @@ ul.search-result-list {
         div {
             &.icon-container {
                 text-align: center;
-                font-size: 1.5rem;
+                font-size: 1.75rem;
                 width: 65px;
             }
 
@@ -89,7 +89,9 @@ ul.search-result-list {
         }
 
         span {
-            padding: 5px 0;
+            @include hoverTransition();
+            padding: 0;
+            display: block;
 
             &.name {
                 color: $text-color;
@@ -100,7 +102,9 @@ ul.search-result-list {
 
             &.exec-args {
                 color: transparentize($text-color-dim, 0.5);
-                font-size: 0.9rem;
+                font-weight: 400;
+                font-size: 0.8rem;
+                height: 0;
             }
         }
 
@@ -119,6 +123,7 @@ ul.search-result-list {
 
                 &.exec-args {
                     color: $highlight-text-color-dim;
+                    height: auto;
                 }
             }
         }
