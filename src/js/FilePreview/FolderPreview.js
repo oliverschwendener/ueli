@@ -37,7 +37,7 @@ export default class FolderPreview {
         for (let file of files)
             filesInnerHtml += `<li>${file}</li>`
 
-        let filesOuterHtml = files.lenght > 0
+        let filesOuterHtml = files.length > 0
             ? `<h3>Files</h3><ul>${filesInnerHtml}</ul>`
             : ''
 
