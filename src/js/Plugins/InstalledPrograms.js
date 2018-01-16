@@ -120,6 +120,11 @@ export default class InstalledPrograms {
                             return
                         }
 
+                        // Skip desktop.ini files
+                        if (path.basename(file).toLowerCase() === 'desktop.ini') {
+                            return
+                        }
+
                         const stat = fs.lstatSync(file)
                         if (stat && stat.isDirectory() && !stat.isSymbolicLink()) {
                             self.getFilesFromDirectoriesRecursivelyByFileExtension([file], fileExtension)
