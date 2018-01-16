@@ -2,7 +2,7 @@
 
 ## An 'alt+space' launcher for Windows
 
-This is an 'alt+space' launcher for Windows because I thought the default Windows 10 search function doesn't always do what I want.
+This is an 'alt+space' launcher for Windows 10 because I thought the default Windows 10 search function doesn't always do what I want.
 
 ![example-image](img/color-themes/osc-dark-blue.png)
 
@@ -26,9 +26,14 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 
 ## Installation
 
-> Note: because the executables are not signed, Windows will probalby prevent you from executing the installer or the program itself. You can just click "Run anyway" to install the program.
+### Requirements
+
+* Windows 10
+* older Versions than Windows 10 might work but are not tested
 
 ### Installer / Zip
+
+> Note: because the executables are not signed, Windows will probalby prevent you from executing the installer or the program itself. You can just click "Run anyway" to install the program.
 
 1. Download latest version here: [https://github.com/oliverschwendener/electronizr/releases](https://github.com/oliverschwendener/electronizr/releases)
 2. Run the installer / Unzip
@@ -52,7 +57,7 @@ This is an 'alt+space' launcher for Windows because I thought the default Window
 
 ### Search
 
-* Start typing a program name
+* Start typing a program name or windows setting
 * Use arrow keys to scroll up and down
 * Press `Enter` to open the selected program
 
