@@ -42,7 +42,7 @@ function getDefaultConfig() {
                 active: true,
             },
             {
-                name: 'Windows 10 Settings',
+                name: 'Windows 10 Settings & Apps',
                 active: true,
             },
             {

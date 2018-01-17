@@ -10,9 +10,9 @@ let defaultIcon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://w
                         </g>
                     </svg>`
 
-export default class Windows10Settings {
+export default class Windows10SettingsAndApps {
     constructor() {
-        this.name = 'Windows 10 Settings'
+        this.name = 'Windows 10 Settings & Apps'
         this.prefix = 'ms-settings'
         this.windowsApps = getAllWindowsSettings()
     }

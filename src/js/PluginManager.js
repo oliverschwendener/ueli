@@ -4,7 +4,7 @@ import WebSearch from './Plugins/WebSearch'
 import CommandLine from './Plugins/CommandLine'
 import EzrCommands from './Plugins/EzrCommands'
 import FileBrowser from './Plugins/FileBrowser'
-import Windows10Settings from './Plugins/Windows10Settings'
+import Windows10SettingsAndApps from './Plugins/Windows10SettingsAndApps'
 import ConfigManager from './ConfigManager'
 import ConfigHelpers from './Helpers/ConfigHelpers'
 import StringHelpers from './Helpers/StringHelpers'
@@ -117,7 +117,7 @@ export default class PluginManager {
     setPluginsFromConfig() {
         let allPlugins = [
             new InstalledPrograms(),
-            new Windows10Settings(),
+            new Windows10SettingsAndApps(),
             new WebUrl(),
             new WebSearch(),
             new CommandLine(),
