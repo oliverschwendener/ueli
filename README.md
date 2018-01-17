@@ -148,7 +148,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 
 * Using Typescript
 * Unit & integration tests
-* Project Renaming + new icon/logo
+* Project Renaming
 * Mac OS Support
 
 ## Development
