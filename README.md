@@ -115,7 +115,7 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
     * `height` Integer - Window's height in pixels. Default is `585`.
 * `zoomFactor` Integer - Window's zoom factor, 1 represents 100%. Default is `1`.
 * `fullscreen` Boolean - Whether the window should show in fullscreen. Default is `false`.
-* `colorTheme` String - Sets the color theme to one of the [available color themes](#color-themes). Default is `osc-dark-blue`.
+* `colorTheme` String - Sets the color theme to one of the [available color themes](#all-available-color-themes). Default is `osc-dark-blue`.
 * `folders` String[] - A List of the folders you want to search. It's recommended not to add a folder with a lot of files because that would slow down the search function drastically. Default are the `Start Menu` and `Desktop` folders.
 * `rescanInterval` Integer - Interval to rescan the specified folders (in seconds). Min=`1`, Max=`3600`. Default is `30`.
 * `webSearches` Array of webSearch Objects - A list of custom web search engines. Default is the `Google` web search.
@@ -133,35 +133,22 @@ You can customize your application with 'ezr:config'. All Settings, customizatio
 
 ## Color Themes
 
-### osc-dark-blue
+![All Color Themes](img/color-themes/all-color-themes.png)
 
-![osc-dark-blue](img/color-themes/osc-dark-blue.png)
+### All available color themes
 
-### osc-light-blue
-
-![osc-light-blue](img/color-themes/osc-light-blue.png)
-
-### atom-one-dark
-
-![atom-one-dark](img/color-themes/atom-one-dark.png)
-
-### dracula-dark-blue
-
-![dracula-dark-blue](img/color-themes/dracula-dark-blue.png)
-
-### dracula-purple
-
-![dracula-purple](img/color-themes/dracula-purple.png)
-
-### dracula-red
-
-![dracula-red](img/color-themes/dracula-red.png)
+* [osc-dark-blue](img/color-themes/osc-dark-blue.png)
+* [osc-light-blue](img/color-themes/osc-light-blue.png)
+* [atom-one-dark](img/color-themes/atom-one-dark.png)
+* [dracula-dark-blue](img/color-themes/dracula-dark-blue.png)
+* [dracula-purple](img/color-themes/dracula-purple.png)
+* [dracula-red](img/color-themes/dracula-red.png)
 
 ## Roadmap
 
-* Project Renaming + new icon/logo
 * Using Typescript
 * Unit & integration tests
+* Project Renaming + new icon/logo
 * Mac OS Support
 
 ## Development
