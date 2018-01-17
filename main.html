@@ -115,20 +115,24 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Add/Delete</th>
+                                <th>Action</th>
                                 <th>Folder path</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="folder in config.folders">
                                 <td>
-                                    <i v-on:click="removeFolder(folder)" class="fa fa-minus-circle action-button"></i>
+                                    <button v-on:click="removeFolder(folder)" class="full-width">
+                                        Remove
+                                    </button>
                                 </td>
                                 <td>{{ folder }}</td>
                             </tr>
                             <tr>
                                 <td>
-                                    <i v-on:click="addNewFolder" class="fa fa-plus-circle action-button"></i>
+                                    <button v-on:click="addNewFolder" class="full-width">
+                                        Add
+                                    </button>
                                 </td>
                                 <td>
                                     <input class="new-item" type="text" v-model="newFolder" placeholder="Folder path">
@@ -150,7 +154,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Add/Delete</th>
+                                <th>Action</th>
                                 <th>Name</th>
                                 <th>Shortcut</th>
                                 <th>Execution Argument</th>
@@ -159,7 +163,9 @@
                         <tbody>
                             <tr v-for="shortcut in config.customShortcuts">
                                 <td>
-                                    <i v-on:click="removeCustomShortcut(shortcut)" class="fa fa-minus-circle action-button"></i>
+                                    <button v-on:click="removeCustomShortcut(shortcut)" class="full-width">
+                                        Remove
+                                    </button>
                                 </td>
                                 <td>{{ shortcut.name }}</td>
                                 <td>{{ shortcut.shortCut }}</td>
@@ -167,7 +173,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <i v-on:click="addNewCustomShortcut" class="fa fa-plus-circle action-button"></i>
+                                    <button v-on:click="addNewCustomShortcut" class="full-width">
+                                        Add
+                                    </button>
                                 </td>
                                 <td>
                                     <input type="new-item" type="text" v-model="newCustomShortcut.name" placeholder="Name">
@@ -189,7 +197,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Add/Delete</th>
+                                <th>Action</th>
                                 <th>Name</th>
                                 <th>Prefix</th>
                                 <th>Url</th>
@@ -199,7 +207,9 @@
                         <tbody>
                             <tr v-for="webSearch in config.webSearches">
                                 <td>
-                                    <i v-on:click="removeWebSearch(webSearch)" class="fa fa-minus-circle action-button"></i>
+                                    <button v-on:click="removeWebSearch(webSearch)" class="ful-width">
+                                        Remove
+                                    </button>
                                 </td>
                                 <td>{{ webSearch.name }}</td>
                                 <td>{{ webSearch.prefix }}</td>
@@ -208,7 +218,9 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <i v-on:click="addNewWebSearch" class="fa fa-plus-circle action-button"></i>
+                                    <button v-on:click="addNewWebSearch" class="full-width">
+                                        Add
+                                    </button>
                                 </td>
                                 <td>
                                     <input class="new-item" type="text" v-model="newWebSearch.name">
@@ -245,7 +257,6 @@
                         </tbody>
                     </table>
                     <button v-on:click="cleanUpFavorites">
-                        <i class="fa fa-trash-o"></i>
                         Clean most used programs
                     </button>
                 </div>
@@ -253,11 +264,9 @@
 
                 <div class="config-item">
                     <button v-on:click="closeConfig">
-                        <i class="fa fa-arrow-left"></i>
                         Go Back
                     </button>
                     <button v-on:click="saveConfig">
-                        <i class="fa fa-floppy-o"></i>
                         Save
                     </button>
                 </div>

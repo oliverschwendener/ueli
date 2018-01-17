@@ -213,16 +213,6 @@ div.config {
         margin-bottom: 5px;
     }
 
-    i.action-button {
-        @include hoverTransition();
-        cursor: pointer;
-        font-size: 1.25rem;
-
-        &:hover{
-            color: $highlight-background-color;
-        }
-    }
-
     select {
         @include font();
         font-size: 1.25rem;
@@ -289,11 +279,20 @@ div.config {
     button  {
         @include hoverTransition();
         cursor: pointer;
-        background: $button-color;
-        color: $button-text-color;            
-        border: none;
+        color: $button-text-color;
+        padding: 10px 15px;
         font-size: 1.25rem;
-        padding: 15px;
+        background: transparentize($button-color, 1);
+        border: 1.5px solid transparentize($text-color, 0.75);
+
+        &:hover {
+            background: $button-color;
+            border: 1.5px solid transparentize($button-color, 1);
+        }
+
+        &.full-width {
+            width: 100%;
+        }
     }
 }
 
