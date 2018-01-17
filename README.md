@@ -36,7 +36,7 @@ This is an 'alt+space' launcher for Windows 10 because I thought the default Win
 
 1. Download latest version here: [https://github.com/oliverschwendener/electronizr/releases](https://github.com/oliverschwendener/electronizr/releases)
 2. Run the installer / Unzip
-3. Create a shortcut in the Windows startup folder for autostart
+3. Run application
 
 ### Manual installation
 
@@ -50,7 +50,7 @@ This is an 'alt+space' launcher for Windows 10 because I thought the default Win
 * Package app:
     * `$ yarn package`
 * Your application is now in the `dist/` folder
-* Create a shortcut to `electronizr.exe` in the windows startup folder (`C:\Users\<your-username>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`) to run the application on windows logon
+* Start `electronizr.exe`
 
 ## Features
 
