@@ -1,5 +1,6 @@
 import { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu } from 'electron'
 import ConfigManager from './ConfigManager'
+import path from 'path'
 
 let configManager = new ConfigManager()
 let mainWindow = null
@@ -43,7 +44,7 @@ if (shouldQuit) {
         click: app.quit
       }
     ])
-    
+
     tray.setToolTip('electronizr')
     tray.setContextMenu(trayMenu)
 
@@ -82,6 +83,18 @@ if (shouldQuit) {
     setWindowOptions()
     setZoomFactor()
   })
+
+  let execPath = process.execPath
+  if (!execPath.endsWith('electron.exe')) {
+    app.setLoginItemSettings({
+      openAtLogin: true,
+      path: execPath,
+      args: [
+        '--processStart', path.basename(execPath),
+        '--process-start-args', '--hidden'
+      ]
+    })
+  }
 }
 
 function setWindowOptions() {
