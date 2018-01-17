@@ -1,5 +1,3 @@
-import path from 'path'
-
 export default class VideoPreview {
     isValid(filePath) {
         filePath = filePath.toLowerCase()

@@ -1,11 +1,4 @@
-import {
-  app,
-  BrowserWindow,
-  globalShortcut,
-  ipcMain,
-  Tray,
-  Menu
-} from 'electron'
+import { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu } from 'electron'
 import ConfigManager from './ConfigManager'
 
 let configManager = new ConfigManager()
@@ -14,7 +7,7 @@ let tray = null
 
 let mainWindowHtml = `file://${__dirname}/../main.html`
 
-let shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {})
+let shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => { })
 
 // quit if other instance is already running
 if (shouldQuit) {
@@ -35,7 +28,9 @@ if (shouldQuit) {
     })
 
     tray = new Tray(`${__dirname}/../img/icon.ico`)
-    let trayMenu = Menu.buildFromTemplate([{
+
+    let trayMenu = Menu.buildFromTemplate([
+      {
         label: 'About',
         click: getInfo
       },
@@ -48,6 +43,7 @@ if (shouldQuit) {
         click: app.quit
       }
     ])
+    
     tray.setToolTip('electronizr')
     tray.setContextMenu(trayMenu)
 

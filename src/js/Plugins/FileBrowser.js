@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
 import { ipcRenderer } from 'electron'
-import { lstatSync } from 'original-fs';
 
 let fileIcon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
                     <g id="surface1">

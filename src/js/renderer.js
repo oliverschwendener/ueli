@@ -1,26 +1,18 @@
 import fs from 'fs'
 import path from 'path'
-import {
-    exec
-} from 'child_process'
-import {
-    ipcRenderer
-} from 'electron'
+import { exec } from 'child_process'
+import { ipcRenderer } from 'electron'
 
 import ConfigManager from './js/ConfigManager'
 import PluginManager from './js/PluginManager'
 import HistoryManager from './js/HistoryManager'
 import ExecutionService from './js/ExecutionService'
-import {
-    version
-} from 'punycode';
 
 let packageJson = require('./package.json')
 let configManager = new ConfigManager()
 let pluginManager = new PluginManager()
 let historyManager = new HistoryManager()
 
-// Initalize Vue
 let vue = new Vue({
     el: '#root',
     data: {
@@ -334,7 +326,6 @@ function scrollToActiveItem() {
     }
 }
 
-// global key press 'f6' to focus on input
 document.addEventListener('keyup', (e) => {
     if (e.key === 'Escape') {
         vue.resetUserInput()

@@ -1,5 +1,3 @@
-import fs from 'fs'
-
 export default class Audiopreview {
     constructor() {
         this.validAudioExtensions = [

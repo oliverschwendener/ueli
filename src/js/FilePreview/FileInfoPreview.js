@@ -4,7 +4,7 @@ import mime from 'mime'
 
 export default class FileInfoPreview {
     getFilePreview(filePath) {
-        let stats = fs.statSync(filePath)
+        let stats = fs.lstatSync(filePath)
         let fileName = path.basename(filePath)
         let mimeType = mime.lookup(filePath)
 

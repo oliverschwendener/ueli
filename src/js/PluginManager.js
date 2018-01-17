@@ -31,7 +31,6 @@ export default class PluginManager {
     reloadFavorites(timeOutInSeconds) {
         setInterval(() => {
             this.favorites = new FavoritesManager().getFavorites()
-            console.log('favorites updated')
         }, timeOutInSeconds * 1000)
     }
 
