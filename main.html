@@ -76,6 +76,15 @@
                 <hr>
 
                 <div class="config-item">
+                    <h3>Autostart</h3>
+                    <div class="form-item">
+                        <label>If app should launch at windows startup</label>
+                        <input type="checkbox" v-model="config.autoStart">
+                    </div>
+                </div>
+                <hr>
+
+                <div class="config-item">
                     <h3>Window size</h3>
                     <div class="form-item" :class="{ 'hidden' : config.fullscreen }">
                         <label>Width</label>

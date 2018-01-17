@@ -67,6 +67,7 @@ function getDefaultConfig() {
             }
         ],
         keyboardShortcut: 'alt+space',
+        autoStart: true,
         size: {
             width: 860,
             height: 560

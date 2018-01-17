@@ -2,7 +2,7 @@ import { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu } from 'electro
 import ConfigManager from './ConfigManager'
 import path from 'path'
 
-let configManager = new ConfigManager()
+let config = new ConfigManager().getConfig()
 let mainWindow = null
 let tray = null
 
@@ -82,21 +82,19 @@ if (shouldQuit) {
     setGlobalShortcuts()
     setWindowOptions()
     setZoomFactor()
-  })
 
-  let execPath = process.execPath
-  if (!execPath.endsWith('electron.exe')) {
-    app.setLoginItemSettings({
-      openAtLogin: true,
-      path: execPath,
-      args: []
-    })
-  }
+    let execPath = process.execPath
+    if (!execPath.endsWith('electron.exe')) {
+      app.setLoginItemSettings({
+        openAtLogin: config.autoStart,
+        path: execPath,
+        args: []
+      })
+    }
+  })
 }
 
 function setWindowOptions() {
-  let config = new ConfigManager().getConfig()
-
   mainWindow.setSize(parseFloat(config.size.width), parseFloat(config.size.height))
   mainWindow.setKiosk(config.fullscreen)
   mainWindow.center()
@@ -105,8 +103,6 @@ function setWindowOptions() {
 }
 
 function setGlobalShortcuts() {
-  let config = new ConfigManager().getConfig()
-
   globalShortcut.unregisterAll()
   globalShortcut.register(config.keyboardShortcut, () => {
     toggleWindow()
@@ -125,7 +121,7 @@ function toggleWindow() {
 }
 
 function setZoomFactor() {
-  let zoomFactor = parseFloat(new ConfigManager().getConfig().zoomFactor)
+  let zoomFactor = parseFloat(config.zoomFactor)
   mainWindow.webContents.setZoomFactor(zoomFactor)
 }
 
