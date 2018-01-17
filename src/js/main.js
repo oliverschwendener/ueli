@@ -89,10 +89,7 @@ if (shouldQuit) {
     app.setLoginItemSettings({
       openAtLogin: true,
       path: execPath,
-      args: [
-        '--processStart', path.basename(execPath),
-        '--process-start-args', '--hidden'
-      ]
+      args: []
     })
   }
 }
