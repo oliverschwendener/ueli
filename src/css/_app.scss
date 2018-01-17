@@ -286,6 +286,7 @@ div.config {
         border: 1.5px solid transparentize($text-color, 0.75);
 
         &:hover {
+            color: $button-hover-text-color;
             background: $button-color;
             border: 1.5px solid transparentize($button-color, 1);
         }

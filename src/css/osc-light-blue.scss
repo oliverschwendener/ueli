@@ -9,7 +9,8 @@ $highlight-text-color: #fff;
 $highlight-text-color-dim: #a0d9ff;
 
 $button-color: $highlight-background-color;
-$button-text-color: $highlight-text-color;
+$button-text-color: $text-color;
+$button-hover-text-color: $background-color;
 
 $scrollbar-color: $highlight-background-color;
 $scrollbar-background-color: darken($background-color, 10);
