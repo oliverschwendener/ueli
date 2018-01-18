@@ -1,4 +1,5 @@
 import { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu } from 'electron'
+import { autoUpdater } from 'electron-updater'
 import ConfigManager from './ConfigManager'
 import path from 'path'
 
@@ -79,9 +80,16 @@ if (shouldQuit) {
       getInfo()
     })
 
+    ipcMain.on('download-update', () => {
+      autoUpdater.downloadUpdate()
+    })
+
     setGlobalShortcuts()
     setWindowOptions()
     setZoomFactor()
+
+    autoUpdater.autoDownload = false
+    autoUpdater.checkForUpdates()
 
     let execPath = process.execPath
     if (!execPath.endsWith('electron.exe')) {
@@ -93,6 +101,31 @@ if (shouldQuit) {
     }
   })
 }
+
+autoUpdater.on('update-available', (info) => {
+  console.log('Update available')
+  mainWindow.webContents.send('update-update-status', 'Download Update')
+})
+
+autoUpdater.on('update-not-available', (info) => {
+  console.log('Up to date')
+  mainWindow.webContents.send('update-update-status', 'Up to date')
+})
+
+autoUpdater.on('error', (err) => {
+  console.log('Error')
+  mainWindow.webContents.send('update-update-status', 'Error')
+})
+
+autoUpdater.on('download-progress', (progressObj) => {
+  console.log('Downloading')
+  mainWindow.webContents.send('update-update-status', 'Downloading')
+})
+
+autoUpdater.on('update-downloaded', (info) => {
+  console.log('donwload finished')
+  autoUpdater.quitAndInstall();
+})
 
 function setWindowOptions() {
   mainWindow.setSize(parseFloat(config.size.width), parseFloat(config.size.height))

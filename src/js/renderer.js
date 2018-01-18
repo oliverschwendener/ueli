@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { exec } from 'child_process'
-import { ipcRenderer } from 'electron'
+import { ipcRenderer, ipcMain } from 'electron'
 
 import ConfigManager from './js/ConfigManager'
 import PluginManager from './js/PluginManager'
@@ -29,7 +29,8 @@ let vue = new Vue({
         colorThemePath: `./css/${configManager.getConfig().colorTheme}.css`,
         newFolder: '',
         newCustomShortcut: {},
-        newWebSearch: {}
+        newWebSearch: {},
+        updateStatus: 'Checking for Updates'
     },
     methods: {
         handleKeyPress(e) {
@@ -60,6 +61,9 @@ let vue = new Vue({
                 e.preventDefault()
                 this.autoComplete()
             }
+        },
+        handleUpdateButtonPress() {
+            ipcRenderer.send('download-update')
         },
         autoComplete() {
             let activeItem = {}
@@ -342,4 +346,8 @@ ipcRenderer.on('get-info', (event, arg) => {
         electron: process.versions.electron,
         chrome: process.versions.chrome
     })
+})
+
+ipcRenderer.on('update-update-status', (event, arg) => {
+    vue.updateStatus = `${arg}`
 })
