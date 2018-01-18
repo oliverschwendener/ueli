@@ -378,9 +378,11 @@ function getNetworkSettings() {
 }
 
 function getPersonalizationSettings() {
+    let moduleTitle = 'Personalization'
+
     return [
         {
-            name: 'Background',
+            name: `${moduleTitle}: Background`,
             execArg: `ms-settings:personalization-background`,
             tags: ['custom', 'customization', 'color', 'colors', 'image', 'picture'],
             icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -390,7 +392,7 @@ function getPersonalizationSettings() {
             </svg>`
         },
         {
-            name: 'Colors',
+            name: `${moduleTitle}: Colors`,
             execArg: `ms-settings:colors`,
             tags: ['color', 'custom', 'customization', 'creative'],
             icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -400,7 +402,7 @@ function getPersonalizationSettings() {
             </svg>`
         },
         {
-            name: 'Lock screen',
+            name: `${moduleTitle}: Lock screen`,
             execArg: `ms-settings:lockscreen`,
             tags: ['screen', 'saver'],
             icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -410,7 +412,7 @@ function getPersonalizationSettings() {
             </svg>`
         },
         {
-            name: 'Themes',
+            name: `${moduleTitle}: Themes`,
             execArg: `ms-settings:themes`,
             tags: ['custom', 'customization', 'color', 'colors', 'image', 'picture'],
             icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -420,7 +422,7 @@ function getPersonalizationSettings() {
             </svg>`
         },
         {
-            name: 'Start',
+            name: `${moduleTitle}: Start`,
             execArg: `ms-settings:personalization-start`,
             tags: ['custom', 'customization', 'search'],
             icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -430,11 +432,11 @@ function getPersonalizationSettings() {
             </svg>`
         },
         {
-            name: 'Taskbar',
+            name: `${moduleTitle}: Taskbar`,
             execArg: 'ms-settings:taskbar',
             icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
             <g id="surface1">
-            <path style=" " d="M 4 4 L 4 28.03125 L 28.03125 28.03125 L 28.03125 22 L 23 22 L 23 4 Z M 6 6 L 15 6 L 15 22 L 6 22 Z M 17 6 L 21 6 L 21 22 L 17 22 Z M 8 8 L 8 10 L 13 10 L 13 8 Z M 8 12 L 8 14 L 13 14 L 13 12 Z M 17.875 19 L 17.875 21 L 20 21 L 20 19 Z M 6 24 L 26.03125 24 L 26.03125 26.03125 L 6 26.03125 Z "></path>
+            <path style=" " d="M 1 10 L 1 22 L 31 22 L 31 10 Z M 3 12 L 29 12 L 29 20 L 3 20 Z M 5 14 L 5 18 L 9 18 L 9 14 Z M 11 14 L 11 18 L 15 18 L 15 14 Z M 19 14 C 17.894531 14 17 14.894531 17 16 C 17 17.105469 17.894531 18 19 18 C 20.105469 18 21 17.105469 21 16 C 21 14.894531 20.105469 14 19 14 Z M 23 14 L 23 18 L 27 18 L 27 14 Z "></path>
             </g>
             </svg>`
         }
