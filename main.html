@@ -272,7 +272,7 @@
                 <hr>
 
                 <div class="config-item">
-                    <button v-on:click="handleUpdateButtonPress">
+                    <button v-on:click="handleUpdateButtonPress" :class="{ 'hidden' : updateStatus === '' }">
                         {{ updateStatus }}
                     </button>
                     <button v-on:click="closeConfig">

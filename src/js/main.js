@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu } from 'electron'
+import { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu, ipcRenderer } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import ConfigManager from './ConfigManager'
 import path from 'path'
@@ -9,12 +9,15 @@ let tray = null
 
 let mainWindowHtml = `file://${__dirname}/../main.html`
 
-let shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => { })
+let otherInstanceIsAlreadyRunning = app.makeSingleInstance((commandLine, workingDirectory) => { })
 
-// quit if other instance is already running
-if (shouldQuit) {
-  app.quit()
+if (otherInstanceIsAlreadyRunning) {
+  quitApp()
 } else {
+  startApp()
+}
+
+function startApp() {
   app.on('window-all-closed', function () {
     if (process.platform != 'darwin') {
       app.quit()
@@ -80,8 +83,8 @@ if (shouldQuit) {
       getInfo()
     })
 
-    ipcMain.on('download-update', () => {
-      autoUpdater.downloadUpdate()
+    ipcMain.on('install-update', () => {
+      autoUpdater.quitAndInstall()
     })
 
     setGlobalShortcuts()
@@ -90,6 +93,23 @@ if (shouldQuit) {
 
     autoUpdater.autoDownload = false
     autoUpdater.checkForUpdates()
+
+    autoUpdater.on('update-available', (info) => {
+      autoUpdater.downloadUpdate()
+    })
+
+    autoUpdater.on('error', (err) => {
+      console.log('Error while checking for updates')
+    })
+
+    autoUpdater.on('download-progress', (progressObj) => {
+      console.log('Downloading')
+    })
+
+    autoUpdater.on('update-downloaded', (info) => {
+      console.log('donwload finished')
+      mainWindow.webContents.send('update-available')
+    })
 
     let execPath = process.execPath
     if (!execPath.endsWith('electron.exe')) {
@@ -102,30 +122,9 @@ if (shouldQuit) {
   })
 }
 
-autoUpdater.on('update-available', (info) => {
-  console.log('Update available')
-  mainWindow.webContents.send('update-update-status', 'Download Update')
-})
-
-autoUpdater.on('update-not-available', (info) => {
-  console.log('Up to date')
-  mainWindow.webContents.send('update-update-status', 'Up to date')
-})
-
-autoUpdater.on('error', (err) => {
-  console.log('Error')
-  mainWindow.webContents.send('update-update-status', 'Error')
-})
-
-autoUpdater.on('download-progress', (progressObj) => {
-  console.log('Downloading')
-  mainWindow.webContents.send('update-update-status', 'Downloading')
-})
-
-autoUpdater.on('update-downloaded', (info) => {
-  console.log('donwload finished')
-  autoUpdater.quitAndInstall();
-})
+function quitApp() {
+  app.quit()
+}
 
 function setWindowOptions() {
   mainWindow.setSize(parseFloat(config.size.width), parseFloat(config.size.height))

@@ -30,7 +30,7 @@ let vue = new Vue({
         newFolder: '',
         newCustomShortcut: {},
         newWebSearch: {},
-        updateStatus: 'Checking for Updates'
+        updateStatus: ''
     },
     methods: {
         handleKeyPress(e) {
@@ -63,7 +63,7 @@ let vue = new Vue({
             }
         },
         handleUpdateButtonPress() {
-            ipcRenderer.send('download-update')
+            ipcRenderer.send('install-update')
         },
         autoComplete() {
             let activeItem = {}
@@ -348,6 +348,6 @@ ipcRenderer.on('get-info', (event, arg) => {
     })
 })
 
-ipcRenderer.on('update-update-status', (event, arg) => {
-    vue.updateStatus = `${arg}`
+ipcRenderer.on('update-available', (event, arg) => {
+    vue.updateStatus = `Install Update`
 })
