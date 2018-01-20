@@ -53,7 +53,7 @@ function startApp() {
     tray.setContextMenu(trayMenu)
 
     mainWindow.loadURL(mainWindowHtml)
-    //mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
 
     mainWindow.on('closed', () => {
       globalShortcut.unregisterAll()
@@ -96,6 +96,11 @@ function startApp() {
 
     autoUpdater.on('update-available', (info) => {
       autoUpdater.downloadUpdate()
+    })
+
+    autoUpdater.on('update-not-available', (info) => {
+      console.log('Up to date')
+      mainWindow.webContents.send('up-to-date')
     })
 
     autoUpdater.on('error', (err) => {
