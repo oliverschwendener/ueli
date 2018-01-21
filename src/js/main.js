@@ -53,7 +53,7 @@ function startApp() {
     tray.setContextMenu(trayMenu)
 
     mainWindow.loadURL(mainWindowHtml)
-    mainWindow.webContents.openDevTools()
+    //mainWindow.webContents.openDevTools()
 
     mainWindow.on('closed', () => {
       globalShortcut.unregisterAll()
