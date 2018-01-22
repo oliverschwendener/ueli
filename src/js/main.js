@@ -2,8 +2,8 @@ import { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu, ipcRenderer } 
 import { autoUpdater } from 'electron-updater'
 import ConfigManager from './ConfigManager'
 import path from 'path'
+import isDev from 'electron-is-dev'
 
-let config = new ConfigManager().getConfig()
 let mainWindow = null
 let tray = null
 
@@ -92,30 +92,33 @@ function startApp() {
     setZoomFactor()
 
     autoUpdater.autoDownload = false
-    autoUpdater.checkForUpdates()
 
-    autoUpdater.on('update-available', (info) => {
-      autoUpdater.downloadUpdate()
-    })
+    if (!isDev) {
+      autoUpdater.checkForUpdates()
 
-    autoUpdater.on('error', (err) => {
-      console.log('Error while checking for updates')
-    })
+      autoUpdater.on('update-available', (info) => {
+        autoUpdater.downloadUpdate()
+      })
 
-    autoUpdater.on('download-progress', (progressObj) => {
-      console.log('Downloading')
-    })
+      autoUpdater.on('error', (err) => {
+        console.log('Error while checking for updates')
+      })
 
-    autoUpdater.on('update-downloaded', (info) => {
-      console.log('donwload finished')
-      mainWindow.webContents.send('update-available')
-    })
+      autoUpdater.on('download-progress', (progressObj) => {
+        console.log('Downloading')
+      })
 
-    let execPath = process.execPath
-    if (!execPath.endsWith('electron.exe')) {
+      autoUpdater.on('update-downloaded', (info) => {
+        console.log('donwload finished')
+        mainWindow.webContents.send('update-available')
+      })
+    }
+
+    if (!isDev) {
+      let config = new ConfigManager().getConfig()
       app.setLoginItemSettings({
         openAtLogin: config.autoStart,
-        path: execPath,
+        path: process.execPath,
         args: []
       })
     }
@@ -127,6 +130,7 @@ function quitApp() {
 }
 
 function setWindowOptions() {
+  let config = new ConfigManager().getConfig()
   mainWindow.setSize(parseFloat(config.size.width), parseFloat(config.size.height))
   mainWindow.setKiosk(config.fullscreen)
   mainWindow.center()
@@ -135,10 +139,9 @@ function setWindowOptions() {
 }
 
 function setGlobalShortcuts() {
+  let config = new ConfigManager().getConfig()
   globalShortcut.unregisterAll()
-  globalShortcut.register(config.keyboardShortcut, () => {
-    toggleWindow()
-  })
+  globalShortcut.register(config.keyboardShortcut, toggleWindow)
 }
 
 function hideWindow() {
@@ -153,6 +156,7 @@ function toggleWindow() {
 }
 
 function setZoomFactor() {
+  let config = new ConfigManager().getConfig()
   let zoomFactor = parseFloat(config.zoomFactor)
   mainWindow.webContents.setZoomFactor(zoomFactor)
 }

@@ -7,6 +7,7 @@
   "license": "MIT",
   "main": "./js/main.js",
   "dependencies": {
+    "electron-is-dev": "^0.3.0",
     "electron-updater": "^2.19.1",
     "escape-html": "^1.0.3",
     "leven": "^2.1.0",
