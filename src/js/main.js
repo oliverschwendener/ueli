@@ -4,6 +4,7 @@ import ConfigManager from './ConfigManager'
 import path from 'path'
 import isDev from 'electron-is-dev'
 
+let packageJson = require('./../package.json')
 let mainWindow = null
 let tray = null
 
@@ -49,7 +50,7 @@ function startApp() {
       }
     ])
 
-    tray.setToolTip('electronizr')
+    tray.setToolTip(packageJson.productName)
     tray.setContextMenu(trayMenu)
 
     mainWindow.loadURL(mainWindowHtml)
@@ -94,34 +95,44 @@ function startApp() {
     autoUpdater.autoDownload = false
 
     if (!isDev) {
-      autoUpdater.checkForUpdates()
-
-      autoUpdater.on('update-available', (info) => {
-        autoUpdater.downloadUpdate()
-      })
-
-      autoUpdater.on('error', (err) => {
-        console.log('Error while checking for updates')
-      })
-
-      autoUpdater.on('download-progress', (progressObj) => {
-        console.log('Downloading')
-      })
-
-      autoUpdater.on('update-downloaded', (info) => {
-        console.log('donwload finished')
-        mainWindow.webContents.send('update-available')
-      })
+      setUpAutoUpdater()
+      setAutostartSettings()
     }
+  })
+}
 
-    if (!isDev) {
-      let config = new ConfigManager().getConfig()
-      app.setLoginItemSettings({
-        openAtLogin: config.autoStart,
-        path: process.execPath,
-        args: []
-      })
-    }
+function setUpAutoUpdater() {
+  autoUpdater.checkForUpdates()
+
+  autoUpdater.on('update-available', (info) => {
+    autoUpdater.downloadUpdate()
+  })
+
+  autoUpdater.on('update-not-available', (info) => {
+    console.log('Up to date')
+    mainWindow.webContents.send('up-to-date')
+  })
+
+  autoUpdater.on('error', (err) => {
+    console.log('Error while checking for updates')
+  })
+
+  autoUpdater.on('download-progress', (progressObj) => {
+    console.log('Downloading')
+  })
+
+  autoUpdater.on('update-downloaded', (info) => {
+    console.log('donwload finished')
+    mainWindow.webContents.send('update-available')
+  })
+}
+
+function setAutostartSettings() {
+  let config = new ConfigManager().getConfig()
+  app.setLoginItemSettings({
+    openAtLogin: config.autoStart,
+    path: process.execPath,
+    args: []
   })
 }
 
