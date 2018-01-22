@@ -280,8 +280,8 @@ div.config {
         @include hoverTransition();
         cursor: pointer;
         color: $button-text-color;
-        padding: 10px 15px;
-        font-size: 1.25rem;
+        padding: 5px 10px;
+        font-size: 1rem;
         background: transparentize($button-color, 1);
         border: 1.5px solid transparentize($text-color, 0.75);
 
