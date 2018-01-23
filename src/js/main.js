@@ -5,6 +5,7 @@ import path from 'path'
 import isDev from 'electron-is-dev'
 
 let packageJson = require('./../package.json')
+let appName = packageJson.productName
 let mainWindow = null
 let tray = null
 
@@ -19,12 +20,6 @@ if (otherInstanceIsAlreadyRunning) {
 }
 
 function startApp() {
-  app.on('window-all-closed', function () {
-    if (process.platform != 'darwin') {
-      app.quit()
-    }
-  })
-
   app.on('ready', () => {
     mainWindow = new BrowserWindow({
       frame: false,
@@ -41,6 +36,10 @@ function startApp() {
         click: getInfo
       },
       {
+        label: 'Configuration',
+        click: showConfig
+      },
+      {
         label: 'Show/Hide',
         click: toggleWindow
       },
@@ -50,7 +49,7 @@ function startApp() {
       }
     ])
 
-    tray.setToolTip(packageJson.productName)
+    tray.setToolTip(appName)
     tray.setContextMenu(trayMenu)
 
     mainWindow.loadURL(mainWindowHtml)
@@ -175,4 +174,9 @@ function setZoomFactor() {
 function getInfo() {
   mainWindow.show()
   mainWindow.webContents.send('get-info')
+}
+
+function showConfig() {
+  mainWindow.show()
+  mainWindow.webContents.send('show-config')
 }
