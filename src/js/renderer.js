@@ -349,6 +349,10 @@ ipcRenderer.on('get-info', (event, arg) => {
     })
 })
 
+ipcRenderer.on('show-config', (event, arg) => {
+    vue.hideConfig = false
+})
+
 ipcRenderer.on('update-available', (event, arg) => {
     vue.updateStatus = `Install Update`
 })
