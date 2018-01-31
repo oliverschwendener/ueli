@@ -63,8 +63,10 @@ let vue = new Vue({
             }
         },
         handleUpdateButtonPress() {
-            if (vue.updateStatus === 'Install Update')
+            if (vue.updateStatus === 'Install update') {
                 ipcRenderer.send('install-update')
+                this.updateStatus = 'Downloading update'
+            }
         },
         autoComplete() {
             let activeItem = {}
@@ -354,7 +356,7 @@ ipcRenderer.on('show-config', (event, arg) => {
 })
 
 ipcRenderer.on('update-available', (event, arg) => {
-    vue.updateStatus = `Install Update`
+    vue.updateStatus = `Install update`
 })
 
 ipcRenderer.on('up-to-date', (event, arg) => {

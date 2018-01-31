@@ -84,7 +84,7 @@ function startApp() {
     })
 
     ipcMain.on('install-update', () => {
-      autoUpdater.quitAndInstall()
+      autoUpdater.downloadUpdate()
     })
 
     setGlobalShortcuts()
@@ -104,7 +104,7 @@ function setUpAutoUpdater() {
   autoUpdater.checkForUpdates()
 
   autoUpdater.on('update-available', (info) => {
-    autoUpdater.downloadUpdate()
+    mainWindow.webContents.send('update-available')
   })
 
   autoUpdater.on('update-not-available', (info) => {
@@ -122,7 +122,7 @@ function setUpAutoUpdater() {
 
   autoUpdater.on('update-downloaded', (info) => {
     console.log('donwload finished')
-    mainWindow.webContents.send('update-available')
+    autoUpdater.quitAndInstall();
   })
 }
 
