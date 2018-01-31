@@ -46,6 +46,10 @@ function getDefaultConfig() {
                 active: true,
             },
             {
+                name: 'Home Folder',
+                active: true
+            },
+            {
                 name: 'Web URL',
                 active: true,
             },

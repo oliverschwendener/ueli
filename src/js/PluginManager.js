@@ -5,6 +5,7 @@ import CommandLine from './Plugins/CommandLine'
 import EzrCommands from './Plugins/EzrCommands'
 import FileBrowser from './Plugins/FileBrowser'
 import Windows10SettingsAndApps from './Plugins/Windows10SettingsAndApps'
+import HomeFolderPlugin from './Plugins/HomeFolderPlugin'
 import ConfigManager from './ConfigManager'
 import ConfigHelpers from './Helpers/ConfigHelpers'
 import StringHelpers from './Helpers/StringHelpers'
@@ -118,6 +119,7 @@ export default class PluginManager {
         let allPlugins = [
             new InstalledPrograms(),
             new Windows10SettingsAndApps(),
+            new HomeFolderPlugin(),
             new WebUrl(),
             new WebSearch(),
             new CommandLine(),
