@@ -83,6 +83,10 @@ function startApp() {
       getInfo()
     })
 
+    ipcMain.on('check-for-update', () => {
+      autoUpdater.checkForUpdates()
+    })
+
     ipcMain.on('install-update', () => {
       autoUpdater.downloadUpdate()
     })

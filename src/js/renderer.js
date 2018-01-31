@@ -67,6 +67,9 @@ let vue = new Vue({
                 ipcRenderer.send('install-update')
                 this.updateStatus = 'Downloading update'
             }
+            else if (vue.updateStatus === 'Up to date') {
+                ipcRenderer.send('check-for-updates')
+            }
         },
         autoComplete() {
             let activeItem = {}

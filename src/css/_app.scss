@@ -294,6 +294,10 @@ div.config {
         &.full-width {
             width: 100%;
         }
+
+        &.pulsate {
+            animation: pulsate 1s ease-in-out infinite;
+        }
     }
 }
 
@@ -316,4 +320,16 @@ $scrollbar-background-color: $scrollbar-background-color;
 
 ::-webkit-scrollbar-track {
     background: $scrollbar-background-color;
+}
+
+@keyframes pulsate {
+    0%  {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
 }
