@@ -1,60 +1,42 @@
 {
   "name": "electronizr",
   "productName": "electronizr",
-  "version": "2.4.1",
-  "description": "An alt+space launcher for Windows",
-  "author": "Oliver Schwendener",
-  "license": "MIT",
-  "main": "./js/main.js",
-  "dependencies": {
-    "electron-is-dev": "^0.3.0",
-    "electron-updater": "^2.20.0",
-    "escape-html": "^1.0.3",
-    "leven": "^2.1.0",
-    "mime": "^1.6.0",
-    "textextensions": "^2.0.1",
-    "vue": "^2.5.13"
+  "version": "3.0.0",
+  "author": {
+    "name": "Oliver Schwendener",
+    "email": "oliver.schwendener@hotmail.com",
+    "url": "https://github.com/oliverschwendener"
+  },
+  "description": "A cross-platform alt+space launcher",
+  "main": "src/js/main.js",
+  "scripts": {
+    "scss:watch": "./node_modules/.bin/gulp --watch",
+    "tsc:watch": "./node_modules/.bin/tsc --watch",
+    "build": "./node_modules/.bin/tsc && ./node_modules/.bin/gulp build",
+    "start": "./node_modules/.bin/electron .",
+    "dev": "./node_modules/.bin/electron . --enable-logging",
+    "test": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register ./tests/**/*.test.ts",
+    "package:publish": "./node_modules/.bin/electron-builder --config build-config.yml --publish onTag",
+    "package": "./node_modules/.bin/electron-builder --config build-config.yml --publish never"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.16.0",
-    "electron": "^1.7.11",
-    "electron-builder": "^19.55.1",
+    "@types/chai": "^4.1.2",
+    "@types/mocha": "^2.2.48",
+    "chai": "^4.1.2",
+    "electron": "^1.7.12",
+    "electron-builder": "^19.55.3",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-sass": "^3.1.0"
+    "gulp-sass": "^3.1.0",
+    "mocha": "^5.0.0",
+    "ts-node": "^4.1.0",
+    "typescript": "^2.7.1"
   },
-  "scripts": {
-    "start": "./node_modules/.bin/electron ./js/main.js",
-    "build": "./node_modules/.bin/gulp build",
-    "watch": "./node_modules/.bin/gulp watch",
-    "release": "./node_modules/.bin/electron-builder --publish onTag",
-    "package": "./node_modules/.bin/electron-builder --publish never"
+  "license": "MIT",
+  "dependencies": {
+    "fuse.js": "^3.2.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/oliverschwendener/electronizr"
-  },
-  "build": {
-    "files": [
-      "./js/**/*.js",
-      "./css/**/*.css",
-      "./**/*.html",
-      "./img/icon.ico"
-    ],
-    "win": {
-      "icon": "./img/icon.ico",
-      "target": [
-        "nsis",
-        "zip"
-      ],
-      "publish": [
-        "github"
-      ]
-    },
-    "nsis": {
-      "allowToChangeInstallationDirectory": true,
-      "oneClick": false,
-      "perMachine": true
-    }
   }
 }

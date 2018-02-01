@@ -1,0 +1,39 @@
+directories:
+  output: dist
+  buildResources: build
+
+files:
+  - src/**/*.js
+  - src/**/*.css
+  - src/**/*.html
+
+win:
+  icon: ./img/icons/win/icon.ico
+  target:
+    - nsis
+    - zip
+  publish:
+    - github
+
+mac:
+  icon: ./img/icons/mac/icon.icns
+  category: public.app-category.utility
+  target:
+    - dmg
+    - zip
+  publish:
+    - github
+
+linux:
+  icon: ./img/icons/png
+  category: Utility
+  target:
+    - deb
+    - zip
+  publish:
+    - github
+
+nsis:
+  allowToChangeInstallationDirectory: true
+  oneClick: false
+  perMachine: true

@@ -1,35 +1,25 @@
-const gulp = require('gulp');
-const babel = require('gulp-babel');
-const sass = require('gulp-sass');
+const gulp = require('gulp')
+const sass = require('gulp-sass')
 
 const sourceFiles = {
-    sass: 'src/css/**/*.scss',
-    js: 'src/js/**/*.js'
-};
+    scss: './src/styles/scss/**/*.scss',
+}
 
-const jsDestFolder = './js';
-const sassDestFolder = './css';
+const outputFolders = {
+    css: './src/styles/css',
+}
 
-gulp.task('js', () => {
-    return gulp.src(sourceFiles.js)
-        .pipe(babel({
-            presets: ['es2015']
-        }))
-        .pipe(gulp.dest(jsDestFolder));
-});
-
-gulp.task('sass', () => {
+gulp.task('styles', () => {
     return gulp
-        .src(sourceFiles.sass)
+        .src(sourceFiles.scss)
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest(sassDestFolder));
-});
+        .pipe(gulp.dest(outputFolders.css))
+})
 
-gulp.task('build', ['js', 'sass']);
+gulp.task('build', ['styles'])
 
 gulp.task('watch', ['build'], () => {
-    gulp.watch(sourceFiles.sass, ['sass']);
-    gulp.watch(sourceFiles.js, ['js']);
-});
+    gulp.watch(sourceFiles.scss, ['styles'])
+})
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['watch'])
