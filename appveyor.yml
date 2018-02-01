@@ -12,7 +12,7 @@ install:
   - yarn install
 
 build_script:
-  - yarn test
+  - yarn test:all
   - yarn build
   - yarn package:publish
 

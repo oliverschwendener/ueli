@@ -10,6 +10,6 @@ install:
   - yarn install
 
 script:
-  - yarn test
+  - yarn test:all
   - yarn build
   - yarn package:publish
