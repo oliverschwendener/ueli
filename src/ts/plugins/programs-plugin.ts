@@ -1,0 +1,71 @@
+import * as path from "path";
+import { SearchPlugin } from "./search-plugin";
+import { SearchResultItem } from "../search-engine";
+import { FileHelpers } from "../helpers/file-helpers";
+
+export class ProgramsPlugin implements SearchPlugin {
+    private programs: Program[];
+
+    constructor(programRepository: ProgramRepository) {
+        this.programs = programRepository.getPrograms();
+    }
+
+    public getAllItems(): SearchResultItem[] {
+        let result = [] as SearchResultItem[];
+
+        for (let program of this.programs) {
+            result.push(<SearchResultItem>{
+                name: program.name,
+                executionArgument: program.filePath,
+                tags: []
+            });
+        }
+
+        return result;
+    }
+}
+
+export class Program {
+    public name: string;
+    public filePath: string;
+}
+
+export interface ProgramRepository {
+    getPrograms(): Program[];
+}
+
+export class WindowsProgramRepository implements ProgramRepository {
+    private programs: Program[];
+    private folders = [
+        "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs",
+        `${process.env.USERPROFILE}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs`
+    ];
+    private shortcutFileExtensions = [".lnk"];
+
+    constructor() {
+        this.programs = this.loadPrograms();
+    }
+
+    public getPrograms(): Program[] {
+        return this.programs;
+    }
+
+    private loadPrograms(): Program[] {
+        let result = [] as Program[];
+
+        let files = FileHelpers.getFilesFromFoldersRecursively(this.folders);
+
+        for (let file of files) {
+            for (let shortcutFileExtension of this.shortcutFileExtensions) {
+                if (file.endsWith(shortcutFileExtension)) {
+                    result.push(<Program>{
+                        filePath: file,
+                        name: path.basename(file).replace(shortcutFileExtension, "")
+                    });
+                }
+            }
+        }
+
+        return result;
+    }
+}

@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import { SearchEngine, SearchResultItem } from "../src/ts/search-engine";
-import { FakePlugin } from "../src/ts/plugins/fake-plugin";
+import { SearchEngine, SearchResultItem } from "./../../src/ts/search-engine";
+import { FakePlugin } from "./../../src/ts/plugins/fake-plugin";
 
 function getFakeItems(items: string[]): SearchResultItem[] {
     return items.map((i) => {
@@ -41,11 +41,11 @@ describe("Search engine", () => {
             let fakePlugins = [new FakePlugin(fakeItems)];
             let searchEngine = new SearchEngine(fakePlugins);
             let userInput = "han";
-            
+
             let actual = searchEngine.search(userInput);
 
             expect(actual.length).to.be.greaterThan(0);
             expect(actual[0].name).to.equal("hans");
-        });
+        });        
     });
 });

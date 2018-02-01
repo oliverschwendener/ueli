@@ -35,7 +35,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Mocha Tests",
+            "name": "Mocha Unit Tests",
             "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
             "args": [
                 "-u",
@@ -45,7 +45,25 @@
                 "--colors",
                 "-r",
                 "ts-node/register",
-                "${workspaceRoot}/tests/**/*.test.ts"
+                "${workspaceRoot}/tests/unit/**/*.test.ts"
+            ],
+            "protocol": "inspector",
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha Integration Tests",
+            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "-u",
+                "tdd",
+                "--timeout",
+                "999999",
+                "--colors",
+                "-r",
+                "ts-node/register",
+                "${workspaceRoot}/tests/integration/**/*.test.ts"
             ],
             "protocol": "inspector",
             "internalConsoleOptions": "openOnSessionStart"
