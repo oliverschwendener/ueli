@@ -1,5 +1,5 @@
 import * as os from "os";
-import { ProgramRepository, WindowsProgramRepository } from "./plugins/programs-plugin";
+import { ProgramRepository, WindowsProgramRepository, LinuxProgramRepository } from "./plugins/programs-plugin";
 
 export class Config {
     public static getCurrentOperatingSystem(): OperatingSystem {
@@ -23,6 +23,9 @@ export class Config {
         switch (Config.getCurrentOperatingSystem()) {
             case OperatingSystem.Windows: {
                 return new WindowsProgramRepository();
+            }
+            case OperatingSystem.Linux: {
+                return new LinuxProgramRepository();
             }
         }
     }

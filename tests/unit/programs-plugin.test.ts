@@ -5,8 +5,8 @@ function getTestPrograms(programNames: string[]) {
     return programNames.map((p) => {
         return <Program>{
             name: p,
-            filePath: `C:\\Some\\Dummy\\FilePath\\${p}`
-        }
+            executionArgument: `C:\\Some\\Dummy\\FilePath\\${p}`
+        };
     });
 }
 
@@ -34,7 +34,7 @@ describe("programs-plugin", () => {
 
                 expect(filtered.length).to.eql(1);
                 expect(filtered[0].name).to.equal(fakeProgram.name);
-                expect(filtered[0].executionArgument).to.equal(fakeProgram.filePath);
+                expect(filtered[0].executionArgument).to.equal(fakeProgram.executionArgument);
                 expect(filtered[0].tags.length).to.eql(0);
             }
         });

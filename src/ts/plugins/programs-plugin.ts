@@ -1,4 +1,6 @@
+import * as fs from "fs";
 import * as path from "path";
+import * as os from "os";
 import { SearchPlugin } from "./search-plugin";
 import { SearchResultItem } from "../search-engine";
 import { FileHelpers } from "../helpers/file-helpers";
@@ -21,7 +23,7 @@ export class ProgramsPlugin implements SearchPlugin {
         for (let program of this.programs) {
             result.push(<SearchResultItem>{
                 name: program.name,
-                executionArgument: program.filePath,
+                executionArgument: program.executionArgument,
                 tags: []
             });
         }
@@ -32,7 +34,7 @@ export class ProgramsPlugin implements SearchPlugin {
 
 export class Program {
     public name: string;
-    public filePath: string;
+    public executionArgument: string;
 }
 
 export interface ProgramRepository {
@@ -76,11 +78,41 @@ export class WindowsProgramRepository implements ProgramRepository {
             for (let shortcutFileExtension of this.shortcutFileExtensions) {
                 if (file.endsWith(shortcutFileExtension)) {
                     result.push(<Program>{
-                        filePath: file,
+                        executionArgument: file,
                         name: path.basename(file).replace(shortcutFileExtension, "")
                     });
                 }
             }
+        }
+
+        return result;
+    }
+}
+
+export class LinuxProgramRepository implements ProgramRepository {
+    private folders = [
+        "/usr/share/applications",
+        `${os.homedir()}/.local/share/applications`
+    ];
+
+    public getPrograms(): Program[] {
+        let result = [] as Program[];
+
+        let files = FileHelpers.getFilesFromFoldersRecursively(this.folders);
+
+        for (let file of files) {
+            let fileContent = fs.readFileSync(file).toString('utf-8');
+            let lines = fileContent.split('\n');
+            let programNames = lines.filter((l) => { return l.startsWith("Name=")});
+            let executionArguments = lines.filter((l) => { return l.startsWith("Exec=")});
+
+            if (programNames.length === 0 || executionArguments.length === 0)
+                continue;
+
+            result.push(<Program> {
+                name: programNames[0].replace("Name=", ""),
+                executionArgument: executionArguments[0].replace("Exec=", "")
+            });
         }
 
         return result;
