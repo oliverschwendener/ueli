@@ -1,5 +1,5 @@
 import * as os from "os";
-import { ProgramRepository, WindowsProgramRepository, LinuxProgramRepository } from "./plugins/programs-plugin";
+import { ProgramRepository, WindowsProgramRepository, LinuxProgramRepository, MacOsProgramRepository } from "./plugins/programs-plugin";
 
 export class Config {
     public static getCurrentOperatingSystem(): OperatingSystem {
@@ -26,6 +26,9 @@ export class Config {
             }
             case OperatingSystem.Linux: {
                 return new LinuxProgramRepository();
+            }
+            case OperatingSystem.macOS: {
+                return new MacOsProgramRepository();
             }
         }
     }

@@ -90,12 +90,21 @@ export class WindowsProgramRepository implements ProgramRepository {
 }
 
 export class LinuxProgramRepository implements ProgramRepository {
+    private programs: Program[];
     private folders = [
         "/usr/share/applications",
         `${os.homedir()}/.local/share/applications`
     ];
 
+    constructor() {
+        this.programs = this.loadPrograms();
+    }    
+
     public getPrograms(): Program[] {
+        return this.programs;
+    }
+
+    private loadPrograms(): Program[] {
         let result = [] as Program[];
 
         let files = FileHelpers.getFilesFromFoldersRecursively(this.folders);
@@ -112,6 +121,39 @@ export class LinuxProgramRepository implements ProgramRepository {
             result.push(<Program> {
                 name: programNames[0].replace("Name=", ""),
                 executionArgument: executionArguments[0].replace("Exec=", "")
+            });
+        }
+
+        return result;
+    }
+}
+
+export class MacOsProgramRepository implements ProgramRepository {
+    private folder = "/Applications";
+    private applicationFileExtension = ".app";
+    private programs: Program[];
+
+    constructor() {
+        this.programs = this.loadPrograms();
+    }
+
+    public getPrograms(): Program[] {
+        return this.programs;
+    }
+
+    private loadPrograms(): Program[] {
+        let result = [] as Program[];
+
+        let files = FileHelpers.getFilesFromFolder(this.folder);
+
+        for (let file of files) {
+            if (!file.endsWith(this.applicationFileExtension))
+                continue;
+
+            let filePath = path.join(this.folder, file);
+            result.push(<Program>{
+                name: file.replace(this.applicationFileExtension, ""),
+                executionArgument: filePath
             });
         }
 

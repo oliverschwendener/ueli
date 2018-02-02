@@ -27,6 +27,10 @@ export class FileHelpers {
         return result;
     }
 
+    public static getFilesFromFolder(folderPath: string) {
+        return fs.readdirSync(folderPath);
+    }
+
     public static getFilesFromFoldersRecursively(folderPaths: string[]): string[] {
         let result = [] as string[];
 
