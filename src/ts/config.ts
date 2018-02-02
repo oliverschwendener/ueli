@@ -13,6 +13,9 @@ export class Config {
             case "linux": {
                 return OperatingSystem.Linux;
             }
+            default: {
+                throw new Error("This operating system is not supported");
+            }
         }
     }
 
