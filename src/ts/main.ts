@@ -6,8 +6,7 @@ let mainWindow;
 function createMainWindow() {
     mainWindow = new BrowserWindow({
         center: true,
-        autoHideMenuBar: true,
-        vibrancy: "dark"
+        autoHideMenuBar: true
     });
 
     mainWindow.loadURL(`file://${__dirname}/../main.html`);
