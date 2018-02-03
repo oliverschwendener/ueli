@@ -10,8 +10,28 @@
 
 <body>
 
-    <h1>Welcome!</h1>
+    <div id="vue-root">
+        <div class="container">
 
+            <div class="user-input-container">
+                <input class="user-input" type="text" v-model="userInput" :autofocus="{ 'autofocus' : autoFocus }">
+            </div>
+
+            <div class="search-results-container">
+                <div class="search-result" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
+                    <span class="search-result-name">
+                        {{ searchResult.name }}
+                    </span>
+                    <span class="search-result-execution-argument">
+                        {{ searchResult.executionArgument }}
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="./../node_modules/vue/dist/vue.min.js"></script>
     <script src="./renderer.js"></script>
 
 </body>

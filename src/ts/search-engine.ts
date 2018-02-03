@@ -48,4 +48,5 @@ export class SearchResultItem {
     public name: string;
     public executionArgument: string;
     public tags: string[];
+    public active = false;
 }
