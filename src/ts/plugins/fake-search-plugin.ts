@@ -1,7 +1,7 @@
 import { SearchPlugin } from "./search-plugin";
 import { SearchResultItem } from "../search-engine";
 
-export class FakePlugin implements SearchPlugin {
+export class FakeSearchPlugin implements SearchPlugin {
     private items: SearchResultItem[];
 
     constructor(items: SearchResultItem[]) {
