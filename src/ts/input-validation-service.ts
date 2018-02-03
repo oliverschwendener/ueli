@@ -5,9 +5,7 @@ export class InputValidationService {
     private searchEngine: SearchEngine;
 
     constructor() {
-        let searchPluginManager = new SearchPluginManager();
-        let searchPlugins = searchPluginManager.getPlugins();
-        this.searchEngine = new SearchEngine(searchPlugins);
+        this.searchEngine = new SearchEngine(new SearchPluginManager().getPlugins());
     }
 
     public getSearchResult(userInput: string): SearchResultItem[] {
