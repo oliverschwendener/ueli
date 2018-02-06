@@ -7,8 +7,7 @@ $scrollbar-size: 8px;
     transition: all 250ms ease-in-out;
 }
 
-body {
-    @include font-normal();
+body {    
     margin: 0;
     padding: 0;
     background-color: $background-color;
@@ -28,7 +27,7 @@ div.user-input-container {
 }
 
 input.user-input {
-    @include font-light();
+    @include font-user-input();
     width: 100%;
     box-sizing: border-box;
     border: none;
@@ -50,7 +49,7 @@ div.search-results-container {
 }   
 
 div.search-result {
-    @include font-light();
+    @include font-search-result();
     padding: 0 $side-padding;
     display: flex;
     flex-direction: column;
@@ -70,13 +69,12 @@ div.search-result {
             font-size: 1.25rem;
 
             &.active {
-                @include font-normal();
-                font-weight: 600;            
+                @include font-search-result-name-active();   
             }
         }
     
         &.search-result-execution-argument {
-            @include font-light();
+            @include font-search-result-execution-argument();
             @include transitions();
             font-size: 0.85rem;
             display: none;  

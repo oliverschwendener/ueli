@@ -6,13 +6,20 @@ $accent-text-color: #fff;
 $scrollbar-foreground-color: #858585;
 $scrollbar-background-color: #353536;
 
-@mixin font-normal() {
-    font-family: "Helvetica";
+@mixin font-user-input() {
+
 }
 
-@mixin font-light() {
-    font-family: "Helvetica";
-    font-weight: 200;
+@mixin font-search-result() {
+
+}
+
+@mixin font-search-result-name-active() {
+
+}
+
+@mixin font-search-result-execution-argument() {
+
 }
 
 @import "app";

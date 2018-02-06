@@ -6,12 +6,23 @@ $accent-text-color: #fff;
 $scrollbar-foreground-color: #858585;
 $scrollbar-background-color: #353536;
 
-@mixin font-normal() {
+@mixin font-user-input() {
     font-family: "Segoe UI";
+    font-weight: 200;
 }
 
-@mixin font-light() {
-    font-family: "Segoe UI Light";
+@mixin font-search-result() {
+    font-family: "Segoe UI";
+    font-weight: 400;
+}
+
+@mixin font-search-result-name-active() {
+    font-family: "Segoe UI";
+    font-weight: 600;
+}
+
+@mixin font-search-result-execution-argument() {
+    font-weight: 200;
 }
 
 @import "app";
