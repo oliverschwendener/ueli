@@ -112,7 +112,7 @@ export class MacOsProgramRepository implements ProgramRepository {
                 continue;
 
             result.push(<Program>{
-                name: file.replace(this.applicationFileExtension, ""),
+                name: path.basename(file).replace(this.applicationFileExtension, ""),
                 executionArgument: file
             });
         }
