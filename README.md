@@ -1,6 +1,6 @@
 # electronizr
 
-This is a cross-platform alt+space launcher.
+This is an alt+space launcher for Windows and macOS.
 
 Currently in development
 
