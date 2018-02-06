@@ -5,6 +5,10 @@ $text-color: #fff;
 $background-color: #000;
 $accent-color: #0078d7;
 
+@mixin transitions() {
+    transition: all 250ms ease-in-out;
+}
+
 html {
     width: 100vw;
     height: 100vh;
@@ -57,25 +61,38 @@ div.search-results-container {
     overflow-y: auto;
 }   
 
-div.search-result {
-    padding: 10px $side-padding;
+div.search-result {    
+    padding: 0 $side-padding;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    height: 60px;
 
     &.active {
         background: $accent-color;
         color: $text-color;
     }
 
-    span.search-result-name, span.search-result-execution-argument {
+    span {        
         display: block;
-    }
 
-    span.search-result-name {
-        font-size: 1.25rem;
-    }
+        &.search-result-name {
+            font-size: 1.25rem;
 
-    span.search-result-execution-argument {
-        font-size: 0.85rem;
+            &.active {
+                font-weight: 600;
+            }
+        }
+    
+        &.search-result-execution-argument {
+            @include transitions();
+            font-size: 0.85rem;
+            display: none;  
+            white-space: nowrap;
+
+            &.active {
+                display: block;
+            }
+        }
     }
 }

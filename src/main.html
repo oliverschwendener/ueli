@@ -19,10 +19,10 @@
 
             <div class="search-results-container">
                 <div class="search-result" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
-                    <span class="search-result-name">
+                    <span class="search-result-name" :class="{ 'active' : searchResult.active }">
                         {{ searchResult.name }}
                     </span>
-                    <span class="search-result-execution-argument">
+                    <span class=" search-result-execution-argument " :class="{ 'active' : searchResult.active } ">
                         {{ searchResult.executionArgument }}
                     </span>
                 </div>
@@ -31,8 +31,8 @@
         </div>
     </div>
 
-    <script src="./../node_modules/vue/dist/vue.min.js"></script>
-    <script src="./renderer.js"></script>
+    <script src="./../node_modules/vue/dist/vue.min.js "></script>
+    <script src="./renderer.js "></script>
 
 </body>
 
