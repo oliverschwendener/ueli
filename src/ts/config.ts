@@ -1,5 +1,6 @@
 import * as os from "os";
 import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } from "./plugins/programs-plugin";
+import { ExecutionService, WindowsExecutionService, MacOsExecutionService } from "./execution-service";
 
 export class Config {
     public static getCurrentOperatingSystem(): OperatingSystem {
@@ -23,6 +24,17 @@ export class Config {
             }
             case OperatingSystem.macOS: {
                 return new MacOsProgramRepository();
+            }
+        }
+    }
+
+    public static getExecutionService(): ExecutionService {
+        switch (Config.getCurrentOperatingSystem()) {
+            case OperatingSystem.Windows: {
+                return new WindowsExecutionService();
+            }
+            case OperatingSystem.macOS: {
+                return new MacOsExecutionService();
             }
         }
     }
