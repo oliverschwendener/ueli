@@ -24,6 +24,10 @@ function createMainWindow() {
         mainWindow = null;
     });
 
+    mainWindow.on("blur", () => {
+        mainWindow.hide();
+    });
+
     registerGlobalShortCuts();
 };
 
