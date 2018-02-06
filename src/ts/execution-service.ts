@@ -12,7 +12,7 @@ export class WindowsExecutionService implements ExecutionService {
 
 export class MacOsExecutionService implements ExecutionService {
     public execute(executionArgument: string): void {
-        childProcess.exec(`open ${executionArgument}`, (err, stdout, sterr) => {
+        childProcess.exec(`open "${executionArgument}"`, (err, stdout, sterr) => {
             if (err) {
                 throw err;
             }
