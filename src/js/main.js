@@ -10,7 +10,8 @@ function createMainWindow() {
     mainWindow = new electron_1.BrowserWindow({
         center: true,
         autoHideMenuBar: true,
-        frame: false
+        frame: false,
+        show: false
     });
     mainWindow.loadURL(`file://${__dirname}/../main.html`);
     mainWindow.on("close", () => {

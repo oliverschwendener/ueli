@@ -24,13 +24,15 @@ export class SearchEngine {
 
         let fuseResult = fuse.search(searchTerm) as any[];
 
-        return fuseResult.map((f) => {
+        let result = fuseResult.map((f) => {
             return <SearchResultItem>{
                 name: f.item.name,
                 executionArgument: f.item.executionArgument,
                 tags: f.item.tags
             };
-        })
+        });
+
+        return result;
     }
 
     private getAllSearchResultItems(): SearchResultItem[] {
@@ -48,5 +50,4 @@ export class SearchResultItem {
     public name: string;
     public executionArgument: string;
     public tags: string[];
-    public active = false;
 }

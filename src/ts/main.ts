@@ -12,7 +12,8 @@ function createMainWindow() {
     mainWindow = new BrowserWindow({
         center: true,
         autoHideMenuBar: true,
-        frame: false
+        frame: false,
+        show: false
     });
 
     mainWindow.loadURL(`file://${__dirname}/../main.html`);
