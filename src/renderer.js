@@ -1,3 +1,4 @@
+let os = require('os');
 let ipcRenderer = require('electron').ipcRenderer;
 let delayOnExecution = 50; // in milliseconds
 
@@ -6,7 +7,8 @@ let vue = new Vue({
     data: {
         userInput: '',
         searchResults: [],
-        autoFocus: true
+        autoFocus: true,
+        stylesheetPath: os.platform() === 'win32' ? './styles/css/windows.css' : './styles/css/mac.css'
     },
     methods: {
         handleKeyPress: (event) => {

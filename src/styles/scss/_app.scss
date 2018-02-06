@@ -1,9 +1,6 @@
 $user-input-height: 65px;
 $search-results-container-height: calc(100% - #{$user-input-height});
 $side-padding: 15px;
-$text-color: #fff;
-$background-color: #000;
-$accent-color: #0078d7;
 
 @mixin transitions() {
     transition: all 250ms ease-in-out;
@@ -70,11 +67,12 @@ div.search-result {
 
     &.active {
         background: $accent-color;
-        color: $text-color;
+        color: $accent-text-color;
     }
 
     span {        
         display: block;
+        white-space: nowrap;
 
         &.search-result-name {
             font-size: 1.25rem;
@@ -88,7 +86,6 @@ div.search-result {
             @include transitions();
             font-size: 0.85rem;
             display: none;  
-            white-space: nowrap;
 
             &.active {
                 display: block;
