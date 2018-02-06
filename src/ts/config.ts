@@ -1,5 +1,5 @@
 import * as os from "os";
-import { ProgramRepository, WindowsProgramRepository, LinuxProgramRepository, MacOsProgramRepository } from "./plugins/programs-plugin";
+import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } from "./plugins/programs-plugin";
 
 export class Config {
     public static getCurrentOperatingSystem(): OperatingSystem {
@@ -9,9 +9,6 @@ export class Config {
             }
             case "darwin": {
                 return OperatingSystem.macOS;
-            }
-            case "linux": {
-                return OperatingSystem.Linux;
             }
             default: {
                 throw new Error("This operating system is not supported");
@@ -24,9 +21,6 @@ export class Config {
             case OperatingSystem.Windows: {
                 return new WindowsProgramRepository();
             }
-            case OperatingSystem.Linux: {
-                return new LinuxProgramRepository();
-            }
             case OperatingSystem.macOS: {
                 return new MacOsProgramRepository();
             }
@@ -36,6 +30,5 @@ export class Config {
 
 export enum OperatingSystem {
     Windows,
-    macOS,
-    Linux
+    macOS
 }

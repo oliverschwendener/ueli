@@ -89,45 +89,6 @@ export class WindowsProgramRepository implements ProgramRepository {
     }
 }
 
-export class LinuxProgramRepository implements ProgramRepository {
-    private programs: Program[];
-    private folders = [
-        "/usr/share/applications",
-        `${os.homedir()}/.local/share/applications`
-    ];
-
-    constructor() {
-        this.programs = this.loadPrograms();
-    }    
-
-    public getPrograms(): Program[] {
-        return this.programs;
-    }
-
-    private loadPrograms(): Program[] {
-        let result = [] as Program[];
-
-        let files = FileHelpers.getFilesFromFoldersRecursively(this.folders);
-
-        for (let file of files) {
-            let fileContent = fs.readFileSync(file).toString('utf-8');
-            let lines = fileContent.split('\n');
-            let programNames = lines.filter((l) => { return l.startsWith("Name=")});
-            let executionArguments = lines.filter((l) => { return l.startsWith("Exec=")});
-
-            if (programNames.length === 0 || executionArguments.length === 0)
-                continue;
-
-            result.push(<Program> {
-                name: programNames[0].replace("Name=", ""),
-                executionArgument: executionArguments[0].replace("Exec=", "")
-            });
-        }
-
-        return result;
-    }
-}
-
 export class MacOsProgramRepository implements ProgramRepository {
     private folder = "/Applications";
     private applicationFileExtension = ".app";
