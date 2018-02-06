@@ -3,4 +3,16 @@ $text-color: #000;
 $accent-color: #1976D2;
 $accent-text-color: #fff;
 
+$scrollbar-foreground-color: #858585;
+$scrollbar-background-color: #353536;
+
+@mixin font-normal() {
+    font-family: "Helvetica";
+}
+
+@mixin font-light() {
+    font-family: "Helvetica";
+    font-weight: 200;
+}
+
 @import "app";

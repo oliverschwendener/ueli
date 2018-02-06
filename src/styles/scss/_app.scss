@@ -1,33 +1,21 @@
 $user-input-height: 65px;
-$search-results-container-height: calc(100% - #{$user-input-height});
+$search-results-container-height: calc(100vh - #{$user-input-height});
 $side-padding: 15px;
+$scrollbar-size: 8px;
 
 @mixin transitions() {
     transition: all 250ms ease-in-out;
 }
 
-html {
-    width: 100vw;
-    height: 100vh;
-}
-
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";  
-    width: 100%;
-    height: 100%;
+    @include font-normal();
     margin: 0;
     padding: 0;
     background-color: $background-color;
     color: $text-color;
 }
 
-div#vue-root {
-    height: 100%;
-}
-
 div.container {
-    width: 100%;    
-    height: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -40,6 +28,7 @@ div.user-input-container {
 }
 
 input.user-input {
+    @include font-light();
     width: 100%;
     box-sizing: border-box;
     border: none;
@@ -54,11 +43,14 @@ input.user-input {
 }
 
 div.search-results-container {    
+    width: 100%;
     height: $search-results-container-height;
     overflow-y: auto;
+    overflow-x: hidden;
 }   
 
-div.search-result {    
+div.search-result {
+    @include font-light();
     padding: 0 $side-padding;
     display: flex;
     flex-direction: column;
@@ -78,11 +70,13 @@ div.search-result {
             font-size: 1.25rem;
 
             &.active {
-                font-weight: 600;
+                @include font-normal();
+                font-weight: 600;            
             }
         }
     
         &.search-result-execution-argument {
+            @include font-light();
             @include transitions();
             font-size: 0.85rem;
             display: none;  
@@ -92,4 +86,17 @@ div.search-result {
             }
         }
     }
+}
+
+::-webkit-scrollbar {
+    width: $scrollbar-size;
+    height: $scrollbar-size;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $scrollbar-foreground-color;
+}
+
+::-webkit-scrollbar-track {
+    background: $scrollbar-background-color;
 }
