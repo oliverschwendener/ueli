@@ -105,16 +105,15 @@ export class MacOsProgramRepository implements ProgramRepository {
     private loadPrograms(): Program[] {
         let result = [] as Program[];
 
-        let files = FileHelpers.getFilesFromFolder(this.folder);
+        let files = FileHelpers.getFilesFromFolderRecursively(this.folder);
 
         for (let file of files) {
             if (!file.endsWith(this.applicationFileExtension))
                 continue;
 
-            let filePath = path.join(this.folder, file);
             result.push(<Program>{
                 name: file.replace(this.applicationFileExtension, ""),
-                executionArgument: filePath
+                executionArgument: file
             });
         }
 

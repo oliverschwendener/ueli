@@ -17,7 +17,12 @@ export class FileHelpers {
             let stats = fs.lstatSync(filePath);
 
             if (stats.isDirectory()) {
-                result = result.concat(FileHelpers.getFilesFromFolderRecursively(filePath));
+                if (filePath.endsWith(".app")) {
+                    result.push(filePath);
+                }   
+                else {
+                    result = result.concat(FileHelpers.getFilesFromFolderRecursively(filePath));
+                }                 
             }
             else if (stats.isFile()) {
                 result.push(filePath);
