@@ -13,12 +13,14 @@ function createMainWindow() {
         center: true,
         autoHideMenuBar: true,
         frame: false,
-        show: false
+        show: false,
+        skipTaskbar: true
     });
 
     mainWindow.loadURL(`file://${__dirname}/../main.html`);
 
     mainWindow.on("close", () => {
+        globalShortcut.unregisterAll();
         mainWindow = null;
     });
 
