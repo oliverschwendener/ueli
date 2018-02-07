@@ -2,6 +2,8 @@ let os = require('os');
 let ipcRenderer = require('electron').ipcRenderer;
 let delayOnExecution = 50; // in milliseconds
 
+document.addEventListener('keyup', handleGlobalKeyPress);
+
 let vue = new Vue({
     el: '#vue-root',
     data: {
@@ -94,4 +96,15 @@ function execute(executionArgument) {
 
 function resetUserInput() {
     vue.userInput = '';
+}
+
+function handleGlobalKeyPress(event) {
+    console.log(event);
+    if (event.key === 'F6' || (event.key === 'l' && event.ctrlKey)) {
+        focusOnInput();
+    }
+}
+
+function focusOnInput() {
+    document.getElementById('user-input').focus();
 }
