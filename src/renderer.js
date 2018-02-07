@@ -99,7 +99,6 @@ function resetUserInput() {
 }
 
 function handleGlobalKeyPress(event) {
-    console.log(event);
     if (event.key === 'F6' || (event.key === 'l' && event.ctrlKey)) {
         focusOnInput();
     }
