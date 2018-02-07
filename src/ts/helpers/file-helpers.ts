@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 export class FileHelpers {
-    public static getFilesFromFolderRecursively(folderPath: string): string[] {
+    public static getFilesFromFolderRecursively(folderPath: string, directoryNameExtension?: string): string[] {
         let result = [] as string[];
 
         let fileNames = fs.readdirSync(folderPath);
@@ -17,12 +17,14 @@ export class FileHelpers {
             let stats = fs.lstatSync(filePath);
 
             if (stats.isDirectory()) {
-                if (filePath.endsWith(".app")) {
-                    result.push(filePath);
-                }   
+                if (directoryNameExtension !== undefined) {
+                    if (filePath.endsWith(".app")) {
+                        result.push(filePath);
+                    }
+                }
                 else {
                     result = result.concat(FileHelpers.getFilesFromFolderRecursively(filePath));
-                }                 
+                }
             }
             else if (stats.isFile()) {
                 result.push(filePath);
@@ -34,7 +36,7 @@ export class FileHelpers {
 
     public static getFilesFromFolder(folderPath: string) {
         let fileNames = fs.readdirSync(folderPath);
-        
+
         return fileNames.map((f) => {
             return path.join(folderPath, f);
         });

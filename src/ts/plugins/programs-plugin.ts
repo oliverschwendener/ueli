@@ -57,7 +57,8 @@ export class WindowsProgramRepository implements ProgramRepository {
     private programs: Program[];
     private folders = [
         "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs",
-        `${process.env.USERPROFILE}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs`
+        `${os.homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs`,
+        `${os.homedir()}\\Desktop`
     ];
     private shortcutFileExtensions = [".lnk", ".appref-ms", ".url"];
 
@@ -105,7 +106,7 @@ export class MacOsProgramRepository implements ProgramRepository {
     private loadPrograms(): Program[] {
         let result = [] as Program[];
 
-        let files = FileHelpers.getFilesFromFolderRecursively(this.folder);
+        let files = FileHelpers.getFilesFromFolderRecursively(this.folder, this.applicationFileExtension);
 
         for (let file of files) {
             if (!file.endsWith(this.applicationFileExtension))
