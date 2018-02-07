@@ -32,7 +32,10 @@ let vue = new Vue({
 });
 
 ipcRenderer.on('get-search-response', (event, arg) => {
-    let searchResults = arg;
+    updateSearchResults(arg);
+});
+
+function updateSearchResults(searchResults) {
     let idIndex = 0;
 
     searchResults.forEach((s) => {
@@ -44,9 +47,13 @@ ipcRenderer.on('get-search-response', (event, arg) => {
     if (searchResults.length > 0) {
         searchResults[0].active = true;
     }
-
+    
     vue.searchResults = searchResults;
-});
+
+    if (vue.searchResults.length > 0) {
+        scrollIntoView(vue.searchResults[0]);
+    }
+}
 
 function handleChangeActive(direction) {
     let next;
