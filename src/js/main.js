@@ -55,10 +55,7 @@ function startApp() {
     mainWindow.loadURL(mainWindowHtml)
     //mainWindow.webContents.openDevTools()
 
-    mainWindow.on('closed', () => {
-      globalShortcut.unregisterAll()
-      mainWindow = null
-    })
+    mainWindow.on('closed', quitApp)
 
     mainWindow.on('blur', (event, arg) => {
       if (mainWindow.isVisible())
@@ -69,9 +66,7 @@ function startApp() {
       hideWindow()
     })
 
-    ipcMain.on('close-main-window', () => {
-      app.quit()
-    })
+    ipcMain.on('close-main-window', quitApp)
 
     ipcMain.on('reload-window', () => {
       setWindowOptions()
@@ -140,6 +135,8 @@ function setAutostartSettings() {
 }
 
 function quitApp() {
+  globalShortcut.unregisterAll()
+  mainWindow = null
   app.quit()
 }
 
