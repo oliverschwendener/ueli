@@ -27,34 +27,11 @@
     "start": "./node_modules/.bin/electron ./js/main.js",
     "build": "./node_modules/.bin/gulp build",
     "watch": "./node_modules/.bin/gulp watch",
-    "release": "./node_modules/.bin/electron-builder --publish onTag",
-    "package": "./node_modules/.bin/electron-builder --publish never"
+    "release": "./node_modules/.bin/electron-builder --config electron-builder.yml --publish onTag",
+    "package": "./node_modules/.bin/electron-builder --config electron-builder.yml --publish never"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/oliverschwendener/electronizr"
-  },
-  "build": {
-    "files": [
-      "./js/**/*.js",
-      "./css/**/*.css",
-      "./**/*.html",
-      "./img/icon.ico"
-    ],
-    "win": {
-      "icon": "./img/icon.ico",
-      "target": [
-        "nsis",
-        "zip"
-      ],
-      "publish": [
-        "github"
-      ]
-    },
-    "nsis": {
-      "allowToChangeInstallationDirectory": true,
-      "oneClick": false,
-      "perMachine": true
-    }
   }
 }
