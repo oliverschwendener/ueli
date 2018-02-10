@@ -3,7 +3,7 @@ import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } f
 import { ExecutionService, WindowsExecutionService, MacOsExecutionService } from "./execution-service";
 import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
 
-export class Config {
+export class Injector {
     public static getCurrentOperatingSystem(): OperatingSystem {
         switch (os.platform()) {
             case "win32": {
@@ -19,7 +19,7 @@ export class Config {
     }
 
     public static getProgramRepository(): ProgramRepository {
-        switch (Config.getCurrentOperatingSystem()) {
+        switch (Injector.getCurrentOperatingSystem()) {
             case OperatingSystem.Windows: {
                 return new WindowsProgramRepository();
             }
@@ -30,7 +30,7 @@ export class Config {
     }
 
     public static getExecutionService(): ExecutionService {
-        switch (Config.getCurrentOperatingSystem()) {
+        switch (Injector.getCurrentOperatingSystem()) {
             case OperatingSystem.Windows: {
                 return new WindowsExecutionService();
             }
@@ -41,7 +41,7 @@ export class Config {
     }
 
     public static getIconManager(): IconManager {
-        switch (Config.getCurrentOperatingSystem()) {
+        switch (Injector.getCurrentOperatingSystem()) {
             case OperatingSystem.Windows: {
                 return new WindowsIconManager();
             }

@@ -4,7 +4,7 @@ import * as fs from "fs";
 import { SearchPlugin } from "./search-plugin";
 import { SearchResultItem } from "../search-engine";
 import { FileHelpers } from "../helpers/file-helpers";
-import { Config } from "../config";
+import { Injector } from "../injector";
 import { IconManager } from "../icon-manager";
 
 export class HomeFolderSearchPlugin implements SearchPlugin {
@@ -13,7 +13,7 @@ export class HomeFolderSearchPlugin implements SearchPlugin {
     private iconManager: IconManager;
 
     constructor() {
-        this.iconManager = Config.getIconManager();
+        this.iconManager = Injector.getIconManager();
         this.filesAndFolders = this.getFilesAndFolders();
     }
 

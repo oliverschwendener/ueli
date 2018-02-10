@@ -4,7 +4,7 @@ import * as os from "os";
 import { SearchPlugin } from "./search-plugin";
 import { SearchResultItem } from "../search-engine";
 import { FileHelpers } from "../helpers/file-helpers";
-import { Config } from "../config";
+import { Injector } from "../injector";
 import { IconManager } from "../icon-manager";
 
 export class ProgramsPlugin implements SearchPlugin {
@@ -12,10 +12,10 @@ export class ProgramsPlugin implements SearchPlugin {
     private iconManager: IconManager;
 
     constructor(programRepository?: ProgramRepository) {
-        this.iconManager = Config.getIconManager();
+        this.iconManager = Injector.getIconManager();
 
         if (programRepository === undefined) {
-            programRepository = Config.getProgramRepository();
+            programRepository = Injector.getProgramRepository();
         }
 
         this.programs = programRepository.getPrograms();

@@ -2,11 +2,11 @@ import * as path from "path";
 import { app, BrowserWindow, ipcMain, globalShortcut } from "electron";
 import { SearchEngine } from "./search-engine";
 import { InputValidationService } from "./input-validation-service";
-import { Config } from "./config";
+import { Injector } from "./injector";
 
 let mainWindow;
 let inputValidationService = new InputValidationService();
-let executionService = Config.getExecutionService();
+let executionService = Injector.getExecutionService();
 
 const userInputHeigth = 80;
 const searchResultHeight = 60;
@@ -84,6 +84,6 @@ ipcMain.on("execute", (event, arg) => {
 });
 
 ipcMain.on("get-search-icon", (event, arg) => {
-    let iconManager = Config.getIconManager();
+    let iconManager = Injector.getIconManager();
     event.sender.send("get-search-icon-response", iconManager.getSearchIcon());
 });
