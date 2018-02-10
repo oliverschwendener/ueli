@@ -3,21 +3,17 @@ import { app, BrowserWindow, ipcMain, globalShortcut } from "electron";
 import { SearchEngine } from "./search-engine";
 import { InputValidationService } from "./input-validation-service";
 import { Injector } from "./injector";
+import { Config } from "./config";
 
 let mainWindow;
 let inputValidationService = new InputValidationService();
 let executionService = Injector.getExecutionService();
-
-const userInputHeigth = 80;
-const searchResultHeight = 60;
-const maxSearchResultCount = 8;
-const windowWidth = 860;
-const maxWindowHeight = userInputHeigth + (maxSearchResultCount * searchResultHeight);
+let config = new Config();
 
 function createMainWindow() {
     mainWindow = new BrowserWindow({
-        width: windowWidth,
-        height: maxWindowHeight,
+        width: config.windowWith,
+        height: config.maxWindowHeight,
         center: true,
         autoHideMenuBar: true,
         frame: false,
@@ -28,7 +24,7 @@ function createMainWindow() {
     });
 
     mainWindow.loadURL(`file://${__dirname}/../main.html`);
-    mainWindow.setSize(windowWidth, userInputHeigth);
+    mainWindow.setSize(config.windowWith, config.minWindowHeight);
 
     mainWindow.on("close", () => {
         globalShortcut.unregisterAll();
@@ -56,8 +52,8 @@ function toggleWindow(): void {
 }
 
 function updateWindowSize(searchResultCount: number): void {
-    let newWindowHeight = searchResultCount >= maxSearchResultCount ? maxWindowHeight : (userInputHeigth + (searchResultCount * searchResultHeight));
-    mainWindow.setSize(windowWidth, newWindowHeight);
+    let newWindowHeight = config.calculateWindowHeight(searchResultCount);
+    mainWindow.setSize(config.windowWith, newWindowHeight);
 }
 
 app.on("ready", createMainWindow);
