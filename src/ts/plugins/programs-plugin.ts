@@ -111,7 +111,7 @@ export class MacOsProgramRepository implements ProgramRepository {
     private loadPrograms(): Program[] {
         let result = [] as Program[];
 
-        let files = FileHelpers.getFilesFromFolderRecursively(this.folder, this.applicationFileExtension);
+        let files = FileHelpers.getFilesFromFolderRecursively(this.folder);
 
         for (let file of files) {
             if (!file.endsWith(this.applicationFileExtension))
