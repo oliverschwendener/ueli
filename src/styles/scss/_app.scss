@@ -3,6 +3,7 @@ $search-result-height: 60px;
 $search-results-container-height: calc(100vh - #{$user-input-height});
 $side-padding: 15px;
 $scrollbar-size: 8px;
+$icon-size: 55%;
 
 @mixin transitions() {
     transition: all 250ms ease-in-out;
@@ -23,7 +24,6 @@ div.container {
 div.user-input-container {
     height: $user-input-height;
     display: flex;
-    align-items: center;
     padding: 0 $side-padding;
 }
 
@@ -39,6 +39,18 @@ input.user-input {
 
     &:focus {
         outline: none;
+    }
+}
+
+div.search-icon-container {
+    width: $search-result-height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        width: $icon-size;
+        fill: $text-color;
     }
 }
 
@@ -75,7 +87,7 @@ div.search-result-icon-container {
     align-items: center;
 
     svg {
-        width: 55%;
+        width: $icon-size;
         fill: $text-color;
     }
 

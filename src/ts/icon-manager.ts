@@ -2,6 +2,7 @@ export interface IconManager {
     getFolderIcon(): string;
     getFileIcon(): string;
     getProgramIcon(): string;
+    getSearchIcon(): string;
 }
 
 export class WindowsIconManager implements IconManager {
@@ -23,6 +24,12 @@ export class WindowsIconManager implements IconManager {
                                 </g>
                             </svg>`;
 
+    private searchIcon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
+                                <g id="surface1">
+                                    <path style=" " d="M 19 3 C 13.488281 3 9 7.488281 9 13 C 9 15.394531 9.839844 17.589844 11.25 19.3125 L 3.28125 27.28125 L 4.71875 28.71875 L 12.6875 20.75 C 14.410156 22.160156 16.605469 23 19 23 C 24.511719 23 29 18.511719 29 13 C 29 7.488281 24.511719 3 19 3 Z M 19 5 C 23.429688 5 27 8.570313 27 13 C 27 17.429688 23.429688 21 19 21 C 14.570313 21 11 17.429688 11 13 C 11 8.570313 14.570313 5 19 5 Z "></path>
+                                </g>
+                            </svg>`;
+
     public getFolderIcon(): string {
         return this.folderIcon;
     }
@@ -33,6 +40,10 @@ export class WindowsIconManager implements IconManager {
 
     public getProgramIcon(): string {
         return this.programIcon;
+    }
+
+    public getSearchIcon(): string {
+        return this.searchIcon;
     }
 }
 
@@ -51,6 +62,12 @@ export class MacOsIconManager implements IconManager {
                                 <path style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal" d="M 7 7 C 5.3550302 7 4 8.3550302 4 10 L 4 40 C 4 41.64497 5.3550302 43 7 43 L 43 43 C 44.64497 43 46 41.64497 46 40 L 46 10 C 46 8.3550302 44.64497 7 43 7 L 7 7 z M 7 9 L 43 9 C 43.56503 9 44 9.4349698 44 10 L 44 13 L 6 13 L 6 10 C 6 9.4349698 6.4349698 9 7 9 z M 8 10 A 1 1 0 0 0 7 11 A 1 1 0 0 0 8 12 A 1 1 0 0 0 9 11 A 1 1 0 0 0 8 10 z M 11 10 A 1 1 0 0 0 10 11 A 1 1 0 0 0 11 12 A 1 1 0 0 0 12 11 A 1 1 0 0 0 11 10 z M 14 10 A 1 1 0 0 0 13 11 A 1 1 0 0 0 14 12 A 1 1 0 0 0 15 11 A 1 1 0 0 0 14 10 z M 6 15 L 44 15 L 44 40 C 44 40.56503 43.56503 41 43 41 L 7 41 C 6.4349698 41 6 40.56503 6 40 L 6 15 z" font-weight="400" font-family="sans-serif" white-space="normal" overflow="visible"></path>
                             </svg>`;
 
+    private searchIcon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" version="1.1">
+                                <g id="surface1">
+                                    <path style=" " d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z "></path>
+                                </g>
+                            </svg>`;
+
     public getFileIcon(): string {
         return this.fileIcon;
     }
@@ -61,5 +78,9 @@ export class MacOsIconManager implements IconManager {
 
     public getProgramIcon(): string {
         return this.programIcon;
+    }
+
+    public getSearchIcon(): string {
+        return this.searchIcon;
     }
 }

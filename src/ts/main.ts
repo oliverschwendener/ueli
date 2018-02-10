@@ -83,3 +83,8 @@ ipcMain.on("execute", (event, arg) => {
     executionService.execute(executionArgument);
     mainWindow.hide();
 });
+
+ipcMain.on("get-search-icon", (event, arg) => {
+    let iconManager = Config.getIconManager();
+    event.sender.send("get-search-icon-response", iconManager.getSearchIcon());
+});

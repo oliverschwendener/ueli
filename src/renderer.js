@@ -10,7 +10,8 @@ let vue = new Vue({
         userInput: '',
         searchResults: [],
         autoFocus: true,
-        stylesheetPath: os.platform() === 'win32' ? './styles/css/windows.css' : './styles/css/mac.css'
+        stylesheetPath: os.platform() === 'win32' ? './styles/css/windows.css' : './styles/css/mac.css',
+        searchIcon: ''
     },
     methods: {
         handleKeyPress: (event) => {
@@ -33,6 +34,12 @@ let vue = new Vue({
 
 ipcRenderer.on('get-search-response', (event, arg) => {
     updateSearchResults(arg);
+});
+
+ipcRenderer.send('get-search-icon');
+
+ipcRenderer.on('get-search-icon-response', (event, arg) => {
+    vue.searchIcon = arg;
 });
 
 function updateSearchResults(searchResults) {
