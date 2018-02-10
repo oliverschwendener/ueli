@@ -20,7 +20,7 @@
             <div class="search-results-container">
                 <div :id="searchResult.id" class="search-result" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
                     <div class="search-result-icon">
-                        <div class="search-result-icon-container" v-html="searchResult.icon"></div>
+                        <div class="search-result-icon-container" :class="{ 'active' : searchResult.active }" v-html="searchResult.icon"></div>
                     </div>
                     <div class="search-result-information">
                         <span class="search-result-name" :class="{ 'active' : searchResult.active }">

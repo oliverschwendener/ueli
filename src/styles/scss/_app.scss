@@ -76,7 +76,13 @@ div.search-result-icon-container {
 
     svg {
         width: 55%;
-        fill: $text-color;     
+        fill: $text-color;
+    }
+
+    &.active {
+        svg {
+            fill: $accent-text-color;
+        }
     }
 }
 
