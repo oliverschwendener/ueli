@@ -5,11 +5,15 @@ import { SearchPlugin } from "./search-plugin";
 import { SearchResultItem } from "../search-engine";
 import { FileHelpers } from "../helpers/file-helpers";
 import { Config } from "../config";
+import { IconManager } from "../icon-manager";
 
 export class ProgramsPlugin implements SearchPlugin {
     private programs: Program[];
+    private iconManager: IconManager;
 
     constructor(programRepository?: ProgramRepository) {
+        this.iconManager = Config.getIconManager();
+
         if (programRepository === undefined) {
             programRepository = Config.getProgramRepository();
         }
@@ -24,6 +28,7 @@ export class ProgramsPlugin implements SearchPlugin {
             result.push(<SearchResultItem>{
                 name: program.name,
                 executionArgument: program.executionArgument,
+                icon: this.iconManager.getProgramIcon(),
                 tags: []
             });
         }
@@ -80,7 +85,7 @@ export class WindowsProgramRepository implements ProgramRepository {
                 if (file.endsWith(shortcutFileExtension)) {
                     result.push(<Program>{
                         executionArgument: file,
-                        name: path.basename(file).replace(shortcutFileExtension, "")
+                        name: path.basename(file).replace(shortcutFileExtension, ""),
                     });
                 }
             }
@@ -114,7 +119,7 @@ export class MacOsProgramRepository implements ProgramRepository {
 
             result.push(<Program>{
                 name: path.basename(file).replace(this.applicationFileExtension, ""),
-                executionArgument: file
+                executionArgument: file,
             });
         }
 

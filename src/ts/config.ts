@@ -1,6 +1,7 @@
 import * as os from "os";
 import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } from "./plugins/programs-plugin";
 import { ExecutionService, WindowsExecutionService, MacOsExecutionService } from "./execution-service";
+import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
 
 export class Config {
     public static getCurrentOperatingSystem(): OperatingSystem {
@@ -35,6 +36,17 @@ export class Config {
             }
             case OperatingSystem.macOS: {
                 return new MacOsExecutionService();
+            }
+        }
+    }
+
+    public static getIconManager(): IconManager {
+        switch (Config.getCurrentOperatingSystem()) {
+            case OperatingSystem.Windows: {
+                return new WindowsIconManager();
+            }
+            case OperatingSystem.macOS: {
+                return new MacOsIconManager();
             }
         }
     }

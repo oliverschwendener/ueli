@@ -1,14 +1,19 @@
 import * as os from "os";
 import * as path from "path";
+import * as fs from "fs";
 import { SearchPlugin } from "./search-plugin";
 import { SearchResultItem } from "../search-engine";
 import { FileHelpers } from "../helpers/file-helpers";
+import { Config } from "../config";
+import { IconManager } from "../icon-manager";
 
 export class HomeFolderSearchPlugin implements SearchPlugin {
     private homeFolderPath = os.homedir();
     private filesAndFolders: SearchResultItem[];
+    private iconManager: IconManager;
 
     constructor() {
+        this.iconManager = Config.getIconManager();
         this.filesAndFolders = this.getFilesAndFolders();
     }
 
@@ -22,10 +27,15 @@ export class HomeFolderSearchPlugin implements SearchPlugin {
         let files = FileHelpers.getFilesFromFolder(this.homeFolderPath);
 
         files.map((f) => {
+            let stats = fs.lstatSync(f);
+
             result.push(<SearchResultItem>{
                 name: path.basename(f),
                 executionArgument: f,
-                tags: []
+                tags: [],
+                icon: stats.isDirectory()
+                    ? this.iconManager.getFolderIcon()
+                    : this.iconManager.getFileIcon()
             });
         });
 

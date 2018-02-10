@@ -47,7 +47,7 @@ function updateSearchResults(searchResults) {
     if (searchResults.length > 0) {
         searchResults[0].active = true;
     }
-    
+
     vue.searchResults = searchResults;
 
     if (vue.searchResults.length > 0) {
@@ -81,7 +81,9 @@ function handleChangeActive(direction) {
 
 function scrollIntoView(searchResult) {
     el = document.getElementById(searchResult.id);
-    el.scrollIntoView();
+    if (el !== undefined && el !== null) {
+        el.scrollIntoView();
+    }
 }
 
 function handleEnterPress() {

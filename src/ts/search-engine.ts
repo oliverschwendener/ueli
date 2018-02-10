@@ -28,6 +28,7 @@ export class SearchEngine {
             return <SearchResultItem>{
                 name: f.item.name,
                 executionArgument: f.item.executionArgument,
+                icon: f.item.icon,
                 tags: f.item.tags
             };
         });
@@ -49,5 +50,6 @@ export class SearchEngine {
 export class SearchResultItem {
     public name: string;
     public executionArgument: string;
+    public icon: string;
     public tags: string[];
 }

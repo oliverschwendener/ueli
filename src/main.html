@@ -19,12 +19,17 @@
 
             <div class="search-results-container">
                 <div :id="searchResult.id" class="search-result" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
-                    <span class="search-result-name" :class="{ 'active' : searchResult.active }">
-                        {{ searchResult.name }}
-                    </span>
-                    <span class=" search-result-execution-argument " :class="{ 'active' : searchResult.active } ">
-                        {{ searchResult.executionArgument }}
-                    </span>
+                    <div class="search-result-icon">
+                        <div class="search-result-icon-container" v-html="searchResult.icon"></div>
+                    </div>
+                    <div class="search-result-information">
+                        <span class="search-result-name" :class="{ 'active' : searchResult.active }">
+                            {{ searchResult.name }}
+                        </span>
+                        <span class=" search-result-execution-argument " :class="{ 'active' : searchResult.active } ">
+                            {{ searchResult.executionArgument }}
+                        </span>
+                    </div>
                 </div>
             </div>
 

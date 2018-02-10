@@ -20,6 +20,7 @@ describe("programs-plugin", () => {
                 expect(program).not.to.be.undefined;
                 expect(program.name).not.to.be.undefined;
                 expect(program.executionArgument).not.to.be.undefined;
+                expect(program.icon).not.to.be.undefined;
                 expect(program.tags).not.to.be.undefined;
             }
         });

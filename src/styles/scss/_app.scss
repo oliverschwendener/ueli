@@ -51,38 +51,61 @@ div.search-results-container {
 
 div.search-result {
     @include font-search-result();
-    padding: 0 $side-padding;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
     height: $search-result-height;
 
     &.active {
         background: $accent-color;
         color: $accent-text-color;
     }
+}
 
-    span {        
-        display: block;
-        white-space: nowrap;
+div.search-result-icon {
+    width: $search-result-height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        &.search-result-name {
-            font-size: 1.25rem;
+div.search-result-icon-container {
+    display: flex;
+    width: $search-result-height;
+    justify-content: center;
+    align-items: center;
 
-            &.active {
-                @include font-search-result-name-active();   
-            }
+    svg {
+        width: 55%;
+        fill: $text-color;     
+    }
+}
+
+div.search-result-information {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+span {        
+    display: block;
+    white-space: nowrap;
+
+    &.search-result-name {
+        font-size: 1.25rem;
+
+        &.active {
+            @include font-search-result-name-active();   
         }
-    
-        &.search-result-execution-argument {
-            @include font-search-result-execution-argument();
-            @include transitions();
-            font-size: 0.85rem;
-            display: none;  
+    }
 
-            &.active {
-                display: block;
-            }
+    &.search-result-execution-argument {
+        @include font-search-result-execution-argument();
+        @include transitions();
+        font-size: 0.85rem;
+        display: none;  
+
+        &.active {
+            display: block;
         }
     }
 }
