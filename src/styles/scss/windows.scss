@@ -3,8 +3,8 @@ $text-color: #fff;
 $accent-color: #0078d7;
 $accent-text-color: #fff;
 
-$scrollbar-foreground-color: #858585;
-$scrollbar-background-color: #353536;
+$scrollbar-foreground-color: #444;
+$scrollbar-background-color: #222;
 
 @mixin font-user-input() {
     font-family: "Segoe UI";
