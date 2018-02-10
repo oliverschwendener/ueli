@@ -8,16 +8,28 @@ let mainWindow;
 let inputValidationService = new InputValidationService();
 let executionService = Config.getExecutionService();
 
+const userInputHeigth = 80;
+const searchResultHeight = 60;
+const maxSearchResultCount = 8;
+const windowWidth = 860;
+const maxWindowHeight = userInputHeigth + (maxSearchResultCount * searchResultHeight);
+
 function createMainWindow() {
     mainWindow = new BrowserWindow({
+        width: windowWidth,
+        height: maxWindowHeight,
         center: true,
         autoHideMenuBar: true,
         frame: false,
         show: false,
-        skipTaskbar: true
+        skipTaskbar: true,
+        resizable: false,
+        movable: false,
+        backgroundColor: '#00000000'
     });
 
     mainWindow.loadURL(`file://${__dirname}/../main.html`);
+    mainWindow.setSize(windowWidth, userInputHeigth);
 
     mainWindow.on("close", () => {
         globalShortcut.unregisterAll();
@@ -31,17 +43,22 @@ function createMainWindow() {
     registerGlobalShortCuts();
 };
 
-function registerGlobalShortCuts() {
+function registerGlobalShortCuts(): void {
     globalShortcut.register("alt+space", toggleWindow);
 }
 
-function toggleWindow() {
+function toggleWindow(): void {
     if (mainWindow.isVisible()) {
         mainWindow.hide();
     }
     else {
         mainWindow.show();
     }
+}
+
+function updateWindowSize(searchResultCount: number): void {
+    let newWindowHeight = searchResultCount >= maxSearchResultCount ? maxWindowHeight : (userInputHeigth + (searchResultCount * searchResultHeight));
+    mainWindow.setSize(windowWidth, newWindowHeight);
 }
 
 app.on("ready", createMainWindow);
@@ -57,6 +74,7 @@ ipcMain.on("hide-window", (event, arg) => {
 ipcMain.on("get-search", (event, arg) => {
     let userInput = arg;
     let result = inputValidationService.getSearchResult(userInput);
+    updateWindowSize(result.length);
     event.sender.send("get-search-response", result);
 });
 

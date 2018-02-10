@@ -1,4 +1,5 @@
-$user-input-height: 65px;
+$user-input-height: 80px;
+$search-result-height: 60px;
 $search-results-container-height: calc(100vh - #{$user-input-height});
 $side-padding: 15px;
 $scrollbar-size: 8px;
@@ -54,7 +55,7 @@ div.search-result {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 60px;
+    height: $search-result-height;
 
     &.active {
         background: $accent-color;
