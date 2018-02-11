@@ -1,13 +1,18 @@
 import * as childProcess from "child_process";
 import { Executor } from "./executor";
 
-export class WindowsFilePathExecutor implements Executor {
+function handleExecution(command: string): void {
+    childProcess.exec(command, (err, stoud, sterr) => {
+        if (err) {
+            throw err;
+        }
+    });
+}
+
+export class WindowsFilePathExecutor implements Executor, FileLocationExecutor {
     public execute(filePath: string): void {
-        childProcess.exec(`start "" "${filePath}"`, (err, stout, sterr) => {
-            if (err) {
-                throw err;
-            }
-        });
+        let command = `start "" "${filePath}"`;
+        handleExecution(command);
     }
 
     public isValidForExecution(filePath: string): boolean {
@@ -15,15 +20,17 @@ export class WindowsFilePathExecutor implements Executor {
         let regex = new RegExp(/^[a-zA-Z]:\\[\\\S|*\S]?.*$/, "gi");
         return regex.test(filePath);
     }
+
+    public openFileLocation(filePath: string): void {
+        let command = `start explorer.exe /select,"${filePath}"`;
+        handleExecution(command);
+    }
 }
 
-export class MacOsFilePathExecutor implements Executor {
+export class MacOsFilePathExecutor implements Executor, FileLocationExecutor {
     public execute(filePath: string): void {
-        childProcess.exec(`open "${filePath}"`, (err, stdout, sterr) => {
-            if (err) {
-                throw err;
-            }
-        });
+        let command = `open "${filePath}"`;
+        handleExecution(command);
     }
 
     public isValidForExecution(filePath: string): boolean {
@@ -31,4 +38,13 @@ export class MacOsFilePathExecutor implements Executor {
         let regex = new RegExp(/^\/$|(^(?=\/)|^\.|^\.\.)(\/(?=[^/\0])[^/\0]+)*\/?$/, "gi");
         return regex.test(filePath);
     }
+
+    public openFileLocation(filePath: string): void {
+        let command = `open -R "${filePath}"`;
+        handleExecution(command);
+    }
+}
+
+export interface FileLocationExecutor {
+    openFileLocation(filePath: string): void;
 }

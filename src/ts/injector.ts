@@ -2,7 +2,7 @@ import * as os from "os";
 import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } from "./plugins/programs-plugin";
 import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
 import { Executor } from "./executors/executor";
-import { WindowsFilePathExecutor, MacOsFilePathExecutor } from "./executors/file-path-executor";
+import { WindowsFilePathExecutor, MacOsFilePathExecutor, FileLocationExecutor } from "./executors/file-path-executor";
 import { UrlExecutor, WindowsUrlExecutor, MacOsUrlExecutor } from "./executors/web-url-executor";
 
 export class Injector {
@@ -43,6 +43,17 @@ export class Injector {
     }
 
     public static getFilePathExecutor(): Executor {
+        switch (Injector.getCurrentOperatingSystem()) {
+            case OperatingSystem.Windows: {
+                return new WindowsFilePathExecutor();
+            }
+            case OperatingSystem.macOS: {
+                return new MacOsFilePathExecutor();
+            }
+        }
+    }
+
+    public static getFileLocationExecutor(): FileLocationExecutor {
         switch (Injector.getCurrentOperatingSystem()) {
             case OperatingSystem.Windows: {
                 return new WindowsFilePathExecutor();

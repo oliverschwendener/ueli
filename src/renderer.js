@@ -18,6 +18,9 @@ let vue = new Vue({
             if (event.key === 'Enter') {
                 handleEnterPress();
             }
+            else if (event.ctrlKey && event.key === 'o') {
+                handleOpenFileLocation();
+            }
             else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
                 event.preventDefault();
                 let direction = event.key === 'ArrowDown' ? 'next' : 'prev';
@@ -116,6 +119,14 @@ function handleEnterPress() {
         setTimeout(() => {
             execute(activeItem.executionArgument)
         }, delayOnExecution);
+    }
+}
+
+function handleOpenFileLocation() {
+    let activeItem = getActiveItem();
+
+    if (activeItem !== undefined) {
+        ipcRenderer.send("open-file-location", activeItem.executionArgument);
     }
 }
 

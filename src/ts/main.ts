@@ -9,6 +9,7 @@ import { ExecutionService } from "./execution-service";
 
 let mainWindow;
 let filePathExecutor = Injector.getFilePathExecutor();
+let fileLocationExecutor = Injector.getFileLocationExecutor();
 let inputValidationService = new InputValidationService();
 let executionService = new ExecutionService();
 let config = new Config();
@@ -86,6 +87,13 @@ ipcMain.on("execute", (event, arg) => {
     let executionArgument = arg;
     executionService.execute(executionArgument);
     hideMainWindow();
+});
+
+ipcMain.on("open-file-location", (event, arg) => {
+    let filePath = arg;
+    if (filePathExecutor.isValidForExecution(filePath)) {
+        fileLocationExecutor.openFileLocation(filePath);
+    }
 });
 
 ipcMain.on("auto-complete", (event, arg) => {
