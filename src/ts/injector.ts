@@ -1,6 +1,6 @@
 import * as os from "os";
 import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } from "./plugins/programs-plugin";
-import { ExecutionService, WindowsExecutionService, MacOsExecutionService } from "./execution-service";
+import { FilePathExecutor, WindowsFilePathExecutor, MacOsFilePathExecutor, FilePathValidator, WindowsFilePathValidator, MacOsFilePathValidator } from "./execution-service";
 import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
 
 export class Injector {
@@ -29,17 +29,6 @@ export class Injector {
         }
     }
 
-    public static getExecutionService(): ExecutionService {
-        switch (Injector.getCurrentOperatingSystem()) {
-            case OperatingSystem.Windows: {
-                return new WindowsExecutionService();
-            }
-            case OperatingSystem.macOS: {
-                return new MacOsExecutionService();
-            }
-        }
-    }
-
     public static getIconManager(): IconManager {
         switch (Injector.getCurrentOperatingSystem()) {
             case OperatingSystem.Windows: {
@@ -47,6 +36,28 @@ export class Injector {
             }
             case OperatingSystem.macOS: {
                 return new MacOsIconManager();
+            }
+        }
+    }
+
+    public static getFilePathExecutor(): FilePathExecutor {
+        switch (Injector.getCurrentOperatingSystem()) {
+            case OperatingSystem.Windows: {
+                return new WindowsFilePathExecutor();
+            }
+            case OperatingSystem.macOS: {
+                return new MacOsFilePathExecutor();
+            }
+        }
+    }
+
+    public static getFilePathValidator(): FilePathValidator {
+        switch (Injector.getCurrentOperatingSystem()) {
+            case OperatingSystem.Windows: {
+                return new WindowsFilePathValidator();
+            }
+            case OperatingSystem.macOS: {
+                return new MacOsFilePathValidator();
             }
         }
     }

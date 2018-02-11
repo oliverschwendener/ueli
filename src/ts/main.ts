@@ -4,10 +4,11 @@ import { SearchEngine } from "./search-engine";
 import { InputValidationService } from "./input-validation-service";
 import { Injector } from "./injector";
 import { Config } from "./config";
+import { ExecutionService } from "./execution-service";
 
 let mainWindow;
 let inputValidationService = new InputValidationService();
-let executionService = Injector.getExecutionService();
+let executionService = new ExecutionService();
 let config = new Config();
 
 function createMainWindow() {
@@ -26,14 +27,9 @@ function createMainWindow() {
     mainWindow.loadURL(`file://${__dirname}/../main.html`);
     mainWindow.setSize(config.windowWith, config.minWindowHeight);
 
-    mainWindow.on("close", () => {
-        globalShortcut.unregisterAll();
-        mainWindow = null;
-    });
+    mainWindow.on("close", quitApp);
 
-    mainWindow.on("blur", () => {
-        mainWindow.hide();
-    });
+    mainWindow.on("blur", hideMainWindow);
 
     registerGlobalShortCuts();
 };
@@ -56,15 +52,29 @@ function updateWindowSize(searchResultCount: number): void {
     mainWindow.setSize(config.windowWith, newWindowHeight);
 }
 
+function hideMainWindow() {
+    if (mainWindow !== null && mainWindow !== undefined) {
+        mainWindow.hide();
+    }
+}
+
+function reloadApp() {
+    mainWindow.reload();
+}
+
+function quitApp() {
+    mainWindow = null;
+    globalShortcut.unregisterAll();
+    app.quit();
+}
+
 app.on("ready", createMainWindow);
 
 app.on("window-all-closed", () => {
     app.quit();
 });
 
-ipcMain.on("hide-window", (event, arg) => {
-    mainWindow.hide();
-});
+ipcMain.on("hide-window", hideMainWindow);
 
 ipcMain.on("get-search", (event, arg) => {
     let userInput = arg;
@@ -76,10 +86,14 @@ ipcMain.on("get-search", (event, arg) => {
 ipcMain.on("execute", (event, arg) => {
     let executionArgument = arg;
     executionService.execute(executionArgument);
-    mainWindow.hide();
+    hideMainWindow();
 });
 
 ipcMain.on("get-search-icon", (event, arg) => {
     let iconManager = Injector.getIconManager();
     event.sender.send("get-search-icon-response", iconManager.getSearchIcon());
 });
+
+ipcMain.on("ezr:reload", reloadApp);
+
+ipcMain.on("ezr:exit", quitApp);
