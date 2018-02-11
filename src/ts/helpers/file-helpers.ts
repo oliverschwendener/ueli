@@ -37,9 +37,23 @@ export class FileHelpers {
     public static getFilesFromFolder(folderPath: string) {
         let fileNames = fs.readdirSync(folderPath);
 
-        return fileNames.map((f) => {
+        let filePaths = fileNames.map((f) => {
             return path.join(folderPath, f);
         });
+
+        let accessibleFiles = [];
+
+        for (let filePath of filePaths) {
+            try {
+                fs.lstatSync(filePath);
+                accessibleFiles.push(filePath);
+            }
+            catch (err) {
+                // do nothing
+            }
+        }
+
+        return accessibleFiles;
     }
 
     public static getFilesFromFoldersRecursively(folderPaths: string[]): string[] {

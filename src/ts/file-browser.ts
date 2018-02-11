@@ -38,7 +38,9 @@ export class FileBrowser {
             result.push(<SearchResultItem>{
                 name: path.basename(file),
                 executionArgument: file,
-                icon: this.iconManager.getFileIcon(),
+                icon: fs.lstatSync(file).isDirectory()
+                    ? this.iconManager.getFolderIcon()
+                    : this.iconManager.getFileIcon(),
                 tags: []
             });
         }
