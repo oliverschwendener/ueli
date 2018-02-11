@@ -1,9 +1,11 @@
 import { expect } from "chai";
-import { WindowsFilePathValidator, MacOsFilePathValidator } from "./../../src/ts/execution-service";
+import { WindowsFilePathValidator, MacOsFilePathValidator } from "./../../src/ts/validators/file-path-validator";
 
 describe("execution-service", () => {
     describe("windows file path validator", () => {
         describe("isFilePath", () => {
+            let validator = new WindowsFilePathValidator();
+
             it("should return true when passing in a valid file path", () => {
                 let validFilePaths = [
                     "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\SomeDumb\\Shit.lnk",
@@ -11,8 +13,6 @@ describe("execution-service", () => {
                     "Z:\\spaces are allowed in windows file paths",
                     "x:\\CaseIs Ignored.\\abc"
                 ];
-
-                let validator = new WindowsFilePathValidator();
 
                 for (let validFilePath of validFilePaths) {
                     let actual = validator.isFilePath(validFilePath);
@@ -30,8 +30,6 @@ describe("execution-service", () => {
                     "www.google.com"
                 ];
 
-                let validator = new WindowsFilePathValidator();
-
                 for (let validFilePath of validFilePaths) {
                     let actual = validator.isFilePath(validFilePath);
                     expect(actual).to.be.false;
@@ -42,6 +40,8 @@ describe("execution-service", () => {
 
     describe("macos file path validator", () => {
         describe("isFilePath", () => {
+            let validator = new MacOsFilePathValidator();
+
             it("should return true when passing in a valid file path", () => {
                 let validFilePaths = [
                     "/Applications",
@@ -50,8 +50,6 @@ describe("execution-service", () => {
                     "/some-shit/",
                     "/spaces are allowed/arent they"
                 ];
-
-                let validator = new MacOsFilePathValidator();
 
                 for (let validFilePath of validFilePaths) {
                     let actual = validator.isFilePath(validFilePath);
@@ -68,8 +66,6 @@ describe("execution-service", () => {
                     "http://github.com/some-shit",
                     "www.google.com"
                 ];
-
-                let validator = new MacOsFilePathValidator();
 
                 for (let validFilePath of validFilePaths) {
                     let actual = validator.isFilePath(validFilePath);

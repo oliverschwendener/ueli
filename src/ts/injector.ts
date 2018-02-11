@@ -1,7 +1,8 @@
 import * as os from "os";
 import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } from "./plugins/programs-plugin";
-import { FilePathExecutor, WindowsFilePathExecutor, MacOsFilePathExecutor, FilePathValidator, WindowsFilePathValidator, MacOsFilePathValidator } from "./execution-service";
+import { FilePathExecutor, WindowsFilePathExecutor, MacOsFilePathExecutor } from "./execution-service";
 import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
+import { FilePathValidator, WindowsFilePathValidator, MacOsFilePathValidator } from "./validators/file-path-validator";
 
 export class Injector {
     public static getCurrentOperatingSystem(): OperatingSystem {

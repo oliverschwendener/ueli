@@ -34,12 +34,6 @@ export class ElectronizrCommandsSearchPlugin implements SearchPlugin {
     }
 }
 
-export class ElectronizrCommandValidator {
-    public isElectronizrCommand(command: string): boolean {
-        return command.startsWith("ezr:");
-    }
-}
-
 class ElectronizrCommand {
     public name: string;
     public executionArgument: string;
