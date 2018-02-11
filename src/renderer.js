@@ -21,7 +21,7 @@ let vue = new Vue({
             if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
                 event.preventDefault();
                 let direction = event.key === 'ArrowDown' ? 'next' : 'prev';
-                handleChangeActive(direction);
+                changeActiveItem(direction);
             }
         }
     },
@@ -62,7 +62,7 @@ function updateSearchResults(searchResults) {
     }
 }
 
-function handleChangeActive(direction) {
+function changeActiveItem(direction) {
     let next;
 
     for (let i = 0; i < vue.searchResults.length; i++) {
