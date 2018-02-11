@@ -27,6 +27,9 @@ let vue = new Vue({
                 event.preventDefault();
                 handleAutoCompletion();
             }
+            else if (event.key === "Escape") {
+                ipcRenderer.send('hide-window');
+            }
         }
     },
     watch: {

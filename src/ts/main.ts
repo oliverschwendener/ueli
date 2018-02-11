@@ -30,7 +30,6 @@ function createMainWindow() {
     mainWindow.setSize(config.windowWith, config.minWindowHeight);
 
     mainWindow.on("close", quitApp);
-
     mainWindow.on("blur", hideMainWindow);
 
     registerGlobalShortCuts();
@@ -71,12 +70,10 @@ function quitApp() {
 }
 
 app.on("ready", createMainWindow);
-
-app.on("window-all-closed", () => {
-    app.quit();
-});
-
+app.on("window-all-closed", quitApp);
 ipcMain.on("hide-window", hideMainWindow);
+ipcMain.on("ezr:reload", reloadApp);
+ipcMain.on("ezr:exit", quitApp);
 
 ipcMain.on("get-search", (event, arg) => {
     let userInput = arg;
@@ -109,7 +106,3 @@ ipcMain.on("get-search-icon", (event, arg) => {
     let iconManager = Injector.getIconManager();
     event.sender.send("get-search-icon-response", iconManager.getSearchIcon());
 });
-
-ipcMain.on("ezr:reload", reloadApp);
-
-ipcMain.on("ezr:exit", quitApp);
