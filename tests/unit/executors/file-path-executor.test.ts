@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { WindowsFilePathExecutor, MacOsFilePathExecutor } from "./../../src/ts/executors/file-path-executor";
+import { WindowsFilePathExecutor, MacOsFilePathExecutor } from "./../../../src/ts/executors/file-path-executor";
 
 describe("windows file path executor", () => {
     describe("is valid for execution", () => {
@@ -20,7 +20,7 @@ describe("windows file path executor", () => {
         });
 
         it("should return false when passing in an invalid file path", () => {
-            let validFilePaths = [
+            let invalidFilePaths = [
                 "this is not a filepath",
                 "C\\:gugus",
                 "\\this is shit",
@@ -29,8 +29,8 @@ describe("windows file path executor", () => {
                 "www.google.com"
             ];
 
-            for (let validFilePath of validFilePaths) {
-                let actual = executor.isValidForExecution(validFilePath);
+            for (let invalidFilePath of invalidFilePaths) {
+                let actual = executor.isValidForExecution(invalidFilePath);
                 expect(actual).to.be.false;
             }
         });
@@ -57,7 +57,7 @@ describe("macos file path executor", () => {
         });
 
         it("should return false when passing in an invalid file path", () => {
-            let validFilePaths = [
+            let invalidFilePaths = [
                 "this is not a filepath",
                 "this/is/shit",
                 "//bla bla",
@@ -66,8 +66,8 @@ describe("macos file path executor", () => {
                 "www.google.com"
             ];
 
-            for (let validFilePath of validFilePaths) {
-                let actual = validator.isValidForExecution(validFilePath);
+            for (let invalidFilePath of invalidFilePaths) {
+                let actual = validator.isValidForExecution(invalidFilePath);
                 expect(actual).to.be.false;
             }
         });

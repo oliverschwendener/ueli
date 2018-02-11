@@ -3,6 +3,7 @@ import { Injector } from "./injector";
 import { ipcMain } from "electron";
 import { Executor } from "./executors/executor";
 import { ElectronizrCommandExecutor } from "./executors/electronizr-command-executor";
+import { WebUrlExecutor } from "./executors/web-url-executor";
 
 export class ExecutionService {
     private executors: Executor[];
@@ -10,7 +11,8 @@ export class ExecutionService {
     constructor() {
         this.executors = [
             Injector.getFilePathExecutor(),
-            new ElectronizrCommandExecutor()
+            new ElectronizrCommandExecutor(),
+            new WebUrlExecutor()
         ];
     }
 

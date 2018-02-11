@@ -3,6 +3,7 @@ import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } f
 import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
 import { Executor } from "./executors/executor";
 import { WindowsFilePathExecutor, MacOsFilePathExecutor } from "./executors/file-path-executor";
+import { UrlExecutor, WindowsUrlExecutor, MacOsUrlExecutor } from "./executors/web-url-executor";
 
 export class Injector {
     public static getCurrentOperatingSystem(): OperatingSystem {
@@ -48,6 +49,17 @@ export class Injector {
             }
             case OperatingSystem.macOS: {
                 return new MacOsFilePathExecutor();
+            }
+        }
+    }
+
+    public static getUrlExecutor(): UrlExecutor {
+        switch (Injector.getCurrentOperatingSystem()) {
+            case OperatingSystem.Windows: {
+                return new WindowsUrlExecutor();
+            }
+            case OperatingSystem.macOS: {
+                return new MacOsUrlExecutor();
             }
         }
     }
