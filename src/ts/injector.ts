@@ -1,8 +1,8 @@
 import * as os from "os";
 import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } from "./plugins/programs-plugin";
-import { FilePathExecutor, WindowsFilePathExecutor, MacOsFilePathExecutor } from "./execution-service";
 import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
-import { FilePathValidator, WindowsFilePathValidator, MacOsFilePathValidator } from "./validators/file-path-validator";
+import { Executor } from "./executors/executor";
+import { WindowsFilePathExecutor, MacOsFilePathExecutor } from "./executors/file-path-executor";
 
 export class Injector {
     public static getCurrentOperatingSystem(): OperatingSystem {
@@ -41,24 +41,13 @@ export class Injector {
         }
     }
 
-    public static getFilePathExecutor(): FilePathExecutor {
+    public static getFilePathExecutor(): Executor {
         switch (Injector.getCurrentOperatingSystem()) {
             case OperatingSystem.Windows: {
                 return new WindowsFilePathExecutor();
             }
             case OperatingSystem.macOS: {
                 return new MacOsFilePathExecutor();
-            }
-        }
-    }
-
-    public static getFilePathValidator(): FilePathValidator {
-        switch (Injector.getCurrentOperatingSystem()) {
-            case OperatingSystem.Windows: {
-                return new WindowsFilePathValidator();
-            }
-            case OperatingSystem.macOS: {
-                return new MacOsFilePathValidator();
             }
         }
     }
