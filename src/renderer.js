@@ -18,10 +18,14 @@ let vue = new Vue({
             if (event.key === 'Enter') {
                 handleEnterPress();
             }
-            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
                 event.preventDefault();
                 let direction = event.key === 'ArrowDown' ? 'next' : 'prev';
                 changeActiveItem(direction);
+            }
+            else if (event.key === 'Tab') {
+                event.preventDefault();
+                handleAutoCompletion();
             }
         }
     },
@@ -40,6 +44,10 @@ ipcRenderer.send('get-search-icon');
 
 ipcRenderer.on('get-search-icon-response', (event, arg) => {
     vue.searchIcon = arg;
+});
+
+ipcRenderer.on("auto-complete-response", (event, arg) => {
+    vue.userInput = arg;
 });
 
 function updateSearchResults(searchResults) {
@@ -63,6 +71,10 @@ function updateSearchResults(searchResults) {
 }
 
 function changeActiveItem(direction) {
+    if (vue.searchResults.length === 0) {
+        return;
+    }
+
     let next;
 
     for (let i = 0; i < vue.searchResults.length; i++) {
@@ -94,15 +106,31 @@ function scrollIntoView(searchResult) {
 }
 
 function handleEnterPress() {
+    let activeItem = getActiveItem();
+
+    if (activeItem !== undefined) {
+        resetUserInput();
+        setTimeout(() => {
+            execute(activeItem.executionArgument)
+        }, delayOnExecution);
+    }
+}
+
+function handleAutoCompletion() {
+    let activeItem = getActiveItem();
+
+    if (activeItem !== undefined) {
+        ipcRenderer.send("auto-complete", [vue.userInput, activeItem.executionArgument]);
+    }
+}
+
+function getActiveItem() {
     let activeSearchResults = vue.searchResults.filter((s) => {
         return s.active;
     });
 
     if (activeSearchResults.length > 0) {
-        resetUserInput();
-        setTimeout(() => {
-            execute(activeSearchResults[0].executionArgument)
-        }, delayOnExecution);
+        return activeSearchResults[0];
     }
 }
 

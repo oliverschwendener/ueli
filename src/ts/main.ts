@@ -1,4 +1,5 @@
 import * as path from "path";
+import * as fs from "fs";
 import { app, BrowserWindow, ipcMain, globalShortcut } from "electron";
 import { SearchEngine } from "./search-engine";
 import { InputValidationService } from "./input-validation-service";
@@ -7,6 +8,7 @@ import { Config } from "./config";
 import { ExecutionService } from "./execution-service";
 
 let mainWindow;
+let filePathExecutor = Injector.getFilePathExecutor();
 let inputValidationService = new InputValidationService();
 let executionService = new ExecutionService();
 let config = new Config();
@@ -87,6 +89,20 @@ ipcMain.on("execute", (event, arg) => {
     let executionArgument = arg;
     executionService.execute(executionArgument);
     hideMainWindow();
+});
+
+ipcMain.on("auto-complete", (event, arg) => {
+    let userInput = arg[0];
+    let executionArgument = arg[1];
+    let dirSeparator = Injector.getDirectorySeparator();
+
+    if (filePathExecutor.isValidForExecution(userInput)) {
+        if (!executionArgument.endsWith(dirSeparator) && fs.lstatSync(executionArgument).isDirectory()) {
+            executionArgument = `${executionArgument}${dirSeparator}`;
+        }
+
+        event.sender.send("auto-complete-response", executionArgument);
+    }
 });
 
 ipcMain.on("get-search-icon", (event, arg) => {

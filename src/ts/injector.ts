@@ -63,6 +63,17 @@ export class Injector {
             }
         }
     }
+
+    public static getDirectorySeparator(): string {
+        switch (Injector.getCurrentOperatingSystem()) {
+            case OperatingSystem.Windows: {
+                return "\\";
+            }
+            case OperatingSystem.macOS: {
+                return "/";
+            }
+        }
+    }
 }
 
 export enum OperatingSystem {

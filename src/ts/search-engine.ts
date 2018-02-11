@@ -2,16 +2,14 @@ import * as Fuse from "fuse.js";
 import { SearchPlugin } from "./plugins/search-plugin";
 
 export class SearchEngine {
-    private plugins: SearchPlugin[];
+    private unsortedSearchResults: SearchResultItem[];
 
-    constructor(plugins: SearchPlugin[]) {
-        this.plugins = plugins;
+    constructor(unsortedSearchResults: SearchResultItem[]) {
+        this.unsortedSearchResults = unsortedSearchResults;
     }
 
     public search(searchTerm: string): SearchResultItem[] {
-        let allItems = this.getAllSearchResultItems();
-
-        let fuse = new Fuse(allItems, {
+        let fuse = new Fuse(this.unsortedSearchResults, {
             shouldSort: true,
             includeScore: true,
             keys: ["name", "tags"],
@@ -32,16 +30,6 @@ export class SearchEngine {
                 tags: f.item.tags
             };
         });
-
-        return result;
-    }
-
-    private getAllSearchResultItems(): SearchResultItem[] {
-        let result = [] as SearchResultItem[];
-
-        for (let plugin of this.plugins) {
-            result = result.concat(plugin.getAllItems())
-        }
 
         return result;
     }

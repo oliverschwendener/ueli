@@ -1,6 +1,5 @@
 import { expect } from "chai";
 import { SearchEngine, SearchResultItem } from "./../../src/ts/search-engine";
-import { FakeSearchPlugin } from "./../../src/ts/plugins/fake-search-plugin";
 
 function getFakeItems(items: string[]): SearchResultItem[] {
     return items.map((i) => {
@@ -16,8 +15,7 @@ describe("Search engine", () => {
     describe("search", () => {
         it("should return more than 0 search result items", () => {
             let fakeItems = getFakeItems(["abc", "abcd", "abcde"]);
-            let fakePlugins = [new FakeSearchPlugin(fakeItems)];
-            let searchEngine = new SearchEngine(fakePlugins);
+            let searchEngine = new SearchEngine(fakeItems);
             let userInput = "abc";
 
             let actual = searchEngine.search(userInput);
@@ -27,8 +25,7 @@ describe("Search engine", () => {
 
         it("should return empty array when user input doesnt match any of the plugin items", () => {
             let fakeItems = getFakeItems(["abc", "abcd", "abcde"]);
-            let fakePlugins = [new FakeSearchPlugin(fakeItems)];
-            let searchEngine = new SearchEngine(fakePlugins);
+            let searchEngine = new SearchEngine(fakeItems);
             let userInput = "xyz";
 
             let actual = searchEngine.search(userInput);
@@ -38,8 +35,7 @@ describe("Search engine", () => {
 
         it("should return the search result ordered by score", () => {
             let fakeItems = getFakeItems(["hans", "nhas", "hasn"]);
-            let fakePlugins = [new FakeSearchPlugin(fakeItems)];
-            let searchEngine = new SearchEngine(fakePlugins);
+            let searchEngine = new SearchEngine(fakeItems);
             let userInput = "han";
 
             let actual = searchEngine.search(userInput);
