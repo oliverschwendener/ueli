@@ -2,7 +2,6 @@ import * as os from "os";
 import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } from "./plugins/programs-plugin";
 import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
 import { Executor } from "./executors/executor";
-import { WindowsFilePathExecutor, MacOsFilePathExecutor, FileLocationExecutor } from "./executors/file-path-executor";
 import { UrlExecutor, WindowsUrlExecutor, MacOsUrlExecutor } from "./executors/web-url-executor";
 
 export class Injector {
@@ -42,24 +41,35 @@ export class Injector {
         }
     }
 
-    public static getFilePathExecutor(): Executor {
+    public static getFileExecutionCommand(filePath: string): string {
         switch (Injector.getCurrentOperatingSystem()) {
             case OperatingSystem.Windows: {
-                return new WindowsFilePathExecutor();
+                return `start "" "${filePath}"`;
             }
             case OperatingSystem.macOS: {
-                return new MacOsFilePathExecutor();
+                return `open "${filePath}"`;
             }
         }
     }
 
-    public static getFileLocationExecutor(): FileLocationExecutor {
+    public static getFileLocationExecutionCommand(filePath: string): string {
         switch (Injector.getCurrentOperatingSystem()) {
             case OperatingSystem.Windows: {
-                return new WindowsFilePathExecutor();
+                return `start explorer.exe /select,"${filePath}"`;
             }
             case OperatingSystem.macOS: {
-                return new MacOsFilePathExecutor();
+                return `open -R "${filePath}"`;
+            }
+        }
+    }
+
+    public static getFilePathRegExp(): RegExp {
+        switch (Injector.getCurrentOperatingSystem()) {
+            case OperatingSystem.Windows: {
+                return new RegExp(/^[a-zA-Z]:\\[\\\S|*\S]?.*$/, "gi");
+            }
+            case OperatingSystem.macOS: {
+                return new RegExp(/^\/$|(^(?=\/)|^\.|^\.\.)(\/(?=[^/\0])[^/\0]+)*\/?$/, "gi");
             }
         }
     }

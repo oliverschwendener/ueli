@@ -6,10 +6,10 @@ import { InputValidationService } from "./input-validation-service";
 import { Injector } from "./injector";
 import { Config } from "./config";
 import { ExecutionService } from "./execution-service";
+import { FilePathExecutor } from "./executors/file-path-executor";
 
 let mainWindow;
-let filePathExecutor = Injector.getFilePathExecutor();
-let fileLocationExecutor = Injector.getFileLocationExecutor();
+let filePathExecutor = new FilePathExecutor();
 let inputValidationService = new InputValidationService();
 let executionService = new ExecutionService();
 let config = new Config();
@@ -92,7 +92,7 @@ ipcMain.on("execute", (event, arg) => {
 ipcMain.on("open-file-location", (event, arg) => {
     let filePath = arg;
     if (filePathExecutor.isValidForExecution(filePath)) {
-        fileLocationExecutor.openFileLocation(filePath);
+        filePathExecutor.openFileLocation(filePath);
     }
 });
 

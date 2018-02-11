@@ -4,6 +4,7 @@ import { WebUrlExecutor } from "./executors/web-url-executor";
 import { Executor } from "./executors/executor";
 import { Injector } from "./injector";
 import { FileBrowser } from "./file-browser";
+import { FilePathExecutor } from "./executors/file-path-executor";
 
 export class InputValidationService {
     private webUrlExecutor: WebUrlExecutor;
@@ -12,7 +13,7 @@ export class InputValidationService {
 
     constructor() {
         this.webUrlExecutor = new WebUrlExecutor();
-        this.filePathExecutor = Injector.getFilePathExecutor();
+        this.filePathExecutor = new FilePathExecutor();
     }
 
     public getSearchResult(userInput: string): SearchResultItem[] {
