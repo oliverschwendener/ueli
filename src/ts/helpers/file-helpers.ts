@@ -17,6 +17,8 @@ export class FileHelpers {
             let stats = fs.lstatSync(filePath);
 
             if (stats.isDirectory()) {
+                // treat .app folder as a file
+                // because going recursively through the app folder (on macOS) would cause longer scan time
                 if (filePath.endsWith(".app")) {
                     result.push(filePath);
                 }
