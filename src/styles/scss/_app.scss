@@ -62,7 +62,7 @@ div.output-container {
 }
 
 div.command-line-output-container {
-    padding: 0 $side-padding;
+    padding: $side-padding;
     
     pre {
         @include font-mono();
