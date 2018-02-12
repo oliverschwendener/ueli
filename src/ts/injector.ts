@@ -2,7 +2,6 @@ import * as os from "os";
 import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } from "./plugins/programs-plugin";
 import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
 import { Executor } from "./executors/executor";
-import { UrlExecutor, WindowsUrlExecutor, MacOsUrlExecutor } from "./executors/web-url-executor";
 
 export class Injector {
     public static getCurrentOperatingSystem(): OperatingSystem {
@@ -41,6 +40,17 @@ export class Injector {
         }
     }
 
+    public static getOpenUrlWithDefaultBrowserCommand(url: string): string {
+        switch (Injector.getCurrentOperatingSystem()) {
+            case OperatingSystem.Windows: {
+                return `start "" "${url}"`;
+            }
+            case OperatingSystem.macOS: {
+                return `open "${url}"`;
+            }
+        }
+    }
+
     public static getFileExecutionCommand(filePath: string): string {
         switch (Injector.getCurrentOperatingSystem()) {
             case OperatingSystem.Windows: {
@@ -70,17 +80,6 @@ export class Injector {
             }
             case OperatingSystem.macOS: {
                 return new RegExp(/^\/$|(^(?=\/)|^\.|^\.\.)(\/(?=[^/\0])[^/\0]+)*\/?$/, "gi");
-            }
-        }
-    }
-
-    public static getUrlExecutor(): UrlExecutor {
-        switch (Injector.getCurrentOperatingSystem()) {
-            case OperatingSystem.Windows: {
-                return new WindowsUrlExecutor();
-            }
-            case OperatingSystem.macOS: {
-                return new MacOsUrlExecutor();
             }
         }
     }
