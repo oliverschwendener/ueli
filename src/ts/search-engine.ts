@@ -1,5 +1,5 @@
 import * as Fuse from "fuse.js";
-import { SearchPlugin } from "./plugins/search-plugin";
+import { SearchPlugin } from "./search-plugins/search-plugin";
 
 export class SearchEngine {
     private unsortedSearchResults: SearchResultItem[];

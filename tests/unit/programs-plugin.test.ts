@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { ProgramsPlugin, WindowsProgramRepository, Program, FakeProgramRepository } from "./../../src/ts/plugins/programs-plugin";
+import { ProgramsPlugin, WindowsProgramRepository, Program, FakeProgramRepository } from "./../../src/ts/search-plugins/programs-plugin";
 
 function getTestPrograms(programNames: string[]) {
     return programNames.map((p) => {

@@ -1,7 +1,7 @@
-import { SearchPlugin } from "./plugins/search-plugin";
-import { ProgramsPlugin } from "./plugins/programs-plugin";
-import { HomeFolderSearchPlugin } from "./plugins/home-folder-plugin";
-import { ElectronizrCommandsSearchPlugin } from "./plugins/electronizr-commands-plugin";
+import { SearchPlugin } from "./search-plugins/search-plugin";
+import { ProgramsPlugin } from "./search-plugins/programs-plugin";
+import { HomeFolderSearchPlugin } from "./search-plugins/home-folder-plugin";
+import { ElectronizrCommandsSearchPlugin } from "./search-plugins/electronizr-commands-plugin";
 
 export class SearchPluginManager {
     private plugins: SearchPlugin[];

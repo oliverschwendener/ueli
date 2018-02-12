@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { ProgramsPlugin, WindowsProgramRepository } from "./../../src/ts/plugins/programs-plugin";
+import { ProgramsPlugin, WindowsProgramRepository } from "./../../src/ts/search-plugins/programs-plugin";
 
 describe("programs-plugin", () => {
     describe("getAllItems", () => {

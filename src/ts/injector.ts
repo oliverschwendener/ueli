@@ -1,5 +1,5 @@
 import * as os from "os";
-import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } from "./plugins/programs-plugin";
+import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } from "./search-plugins/programs-plugin";
 import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
 import { Executor } from "./executors/executor";
 
