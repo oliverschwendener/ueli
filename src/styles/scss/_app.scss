@@ -54,11 +54,25 @@ div.search-icon-container {
     }
 }
 
-div.search-results-container {    
+div.output-container {
     width: 100%;
-    height: $search-results-container-height;
     overflow-y: auto;
     overflow-x: hidden;
+    height: $search-results-container-height;
+}
+
+div.command-line-output-container {
+    padding: 0 $side-padding;
+    
+    pre {
+        @include font-mono();
+        margin: 0;
+    }
+}
+
+div.search-results-container {    
+    width: 100%;
+    height: 100%;
 }   
 
 div.search-result {
@@ -102,6 +116,10 @@ div.search-result-information {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+div.hidden {
+    display: none;
 }
 
 span {        

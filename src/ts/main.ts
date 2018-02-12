@@ -86,7 +86,6 @@ ipcMain.on("get-search", (event, arg) => {
 ipcMain.on("execute", (event, arg) => {
     let executionArgument = arg;
     executionService.execute(executionArgument);
-    hideMainWindow();
 });
 
 ipcMain.on("open-file-location", (event, arg) => {
@@ -113,4 +112,9 @@ ipcMain.on("auto-complete", (event, arg) => {
 ipcMain.on("get-search-icon", (event, arg) => {
     let iconManager = Injector.getIconManager();
     event.sender.send("get-search-icon-response", iconManager.getSearchIcon());
+});
+
+ipcMain.on("command-line-execution", (arg) => {
+    mainWindow.webContents.send("command-line-output", arg);
+    updateWindowSize(config.maxSearchResultCount);
 });

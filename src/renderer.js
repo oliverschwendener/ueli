@@ -7,11 +7,12 @@ document.addEventListener('keyup', handleGlobalKeyPress);
 let vue = new Vue({
     el: '#vue-root',
     data: {
-        userInput: '',
-        searchResults: [],
-        autoFocus: true,
         stylesheetPath: os.platform() === 'win32' ? './styles/css/windows.css' : './styles/css/mac.css',
-        searchIcon: ''
+        userInput: '',
+        autoFocus: true,
+        searchIcon: '',
+        searchResults: [],
+        commandLineOutput: []
     },
     methods: {
         handleKeyPress: (event) => {
@@ -33,10 +34,14 @@ let vue = new Vue({
             else if (event.key === "Escape") {
                 ipcRenderer.send('hide-window');
             }
+            else if (event.ctrlKey && event.key === 'c') {
+                ipcRenderer.send('exit-command-line-tool');
+            }
         }
     },
     watch: {
         userInput: (val) => {
+            vue.commandLineOutput = [];
             ipcRenderer.send('get-search', val);
         }
     }
@@ -54,6 +59,10 @@ ipcRenderer.on('get-search-icon-response', (event, arg) => {
 
 ipcRenderer.on("auto-complete-response", (event, arg) => {
     vue.userInput = arg;
+});
+
+ipcRenderer.on('command-line-output', (event, arg) => {
+    vue.commandLineOutput.push(arg);
 });
 
 function updateSearchResults(searchResults) {

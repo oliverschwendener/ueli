@@ -18,20 +18,28 @@
                 <div class="search-icon-container" style="-webkit-app-region: drag" v-html="searchIcon"></div>
             </div>
 
-            <div class="search-results-container">
-                <div :id="searchResult.id" class="search-result" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
-                    <div class="search-result-icon">
-                        <div class="search-result-icon-container" :class="{ 'active' : searchResult.active }" v-html="searchResult.icon"></div>
-                    </div>
-                    <div class="search-result-information">
-                        <span class="search-result-name" :class="{ 'active' : searchResult.active }">
-                            {{ searchResult.name }}
-                        </span>
-                        <span class=" search-result-execution-argument " :class="{ 'active' : searchResult.active } ">
-                            {{ searchResult.executionArgument }}
-                        </span>
+            <div class="output-container">
+
+                <div class="command-line-output-container" :class="{ 'hidden' : commandLineOutput.length === 0 }">
+                    <pre v-for="line in commandLineOutput">{{ line }}</pre>
+                </div>
+
+                <div class="search-results-container" :class="{ 'hidden' : searchResults.length === 0}">
+                    <div :id="searchResult.id" class="search-result" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
+                        <div class="search-result-icon">
+                            <div class="search-result-icon-container" :class="{ 'active' : searchResult.active }" v-html="searchResult.icon"></div>
+                        </div>
+                        <div class="search-result-information">
+                            <span class="search-result-name" :class="{ 'active' : searchResult.active }">
+                                {{ searchResult.name }}
+                            </span>
+                            <span class=" search-result-execution-argument " :class="{ 'active' : searchResult.active } ">
+                                {{ searchResult.executionArgument }}
+                            </span>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
         </div>

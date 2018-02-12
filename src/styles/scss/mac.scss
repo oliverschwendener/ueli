@@ -2,12 +2,18 @@ $background-color: #fff;
 $text-color: #000;
 $accent-color: #1976D2;
 $accent-text-color: #fff;
+$mono-font-color: #ccc;
 
 $scrollbar-foreground-color: #858585;
 $scrollbar-background-color: #ccc;
 
 @mixin font-user-input() {
     font-family: "Helvetica";
+}
+
+@mixin font-mono() {
+    font-family: "Courier", monospace;
+    color: $mono-font-color;
 }
 
 @mixin font-search-result() {

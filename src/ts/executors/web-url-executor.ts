@@ -28,6 +28,10 @@ export class WebUrlExecutor implements Executor {
         return regex.test(url);
     }
 
+    public hideAfterExecution(): boolean {
+        return true;
+    }
+
     public getSearchResult(userInput: string): SearchResultItem[] {
         let url = userInput.startsWith("http://") || userInput.startsWith("https://")
             ? userInput

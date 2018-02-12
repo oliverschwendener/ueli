@@ -1,14 +1,14 @@
 import { expect } from "chai";
-import { ElectronizrCommandExecutor } from "./../../../src/ts/executors/electronizr-command-executor";
+import { CommandLineExecutor } from "./../../../src/ts/executors/command-line-executor";
 
-describe("electronizr command executor", () => {
+describe("command line executor", () => {
     describe("is valid for execution", () => {
-        let executor = new ElectronizrCommandExecutor();
+        let executor = new CommandLineExecutor();
 
-        it("should return true when passing in a valid electronizr command", () => {
+        it("should return true when passing in a valid command line execution argument", () => {
             let validElectronizrCommands = [
-                "ezr:exit",
-                "ezr:reload"
+                ">ipconfig",
+                ">ipconfig /all"
             ];
 
             for (let validElectronizrCommand of validElectronizrCommands) {
@@ -17,14 +17,11 @@ describe("electronizr command executor", () => {
             }
         });
 
-        it("should return false when passing in an invalid electronizr command", () => {
+        it("should return false when passing in an invalid command line execution argument", () => {
             let invalidElectronizrCommands = [
+                ">",
                 "this is some shit",
-                "ezr-start",
-                "ezr.start",
-                "ezr",
-                "ezr:",
-                "/asdfky"
+                "<this is some shit"
             ];
 
             for (let invalidElectronizrCommmand of invalidElectronizrCommands) {

@@ -25,4 +25,8 @@ export class FilePathExecutor implements Executor {
             }
         });
     }
+
+    public hideAfterExecution(): boolean {
+        return true;
+    }
 }

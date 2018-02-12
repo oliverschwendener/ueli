@@ -12,4 +12,8 @@ export class ElectronizrCommandExecutor implements Executor {
         return command.startsWith(this.prefix)
             && command.length > this.prefix.length;
     }
+
+    public hideAfterExecution(): boolean {
+        return false;
+    }
 }
