@@ -1,4 +1,5 @@
 import * as os from "os";
+import * as path from "path";
 import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } from "./search-plugins/programs-plugin";
 import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
 import { Executor } from "./executors/executor";
@@ -91,6 +92,17 @@ export class Injector {
             }
             case OperatingSystem.macOS: {
                 return "/";
+            }
+        }
+    }
+
+    public static getIconPath(): string {
+        switch (Injector.getCurrentOperatingSystem()) {
+            case OperatingSystem.Windows: {
+                return "win/icon.ico"
+            }
+            case OperatingSystem.macOS: {
+                return "mac/icon.icns"
             }
         }
     }

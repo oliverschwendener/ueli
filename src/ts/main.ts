@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as fs from "fs";
-import { app, BrowserWindow, ipcMain, globalShortcut } from "electron";
+import { app, BrowserWindow, ipcMain, globalShortcut, Menu, Tray } from "electron";
 import { SearchEngine } from "./search-engine";
 import { InputValidationService } from "./input-validation-service";
 import { Injector } from "./injector";
@@ -9,6 +9,8 @@ import { ExecutionService } from "./execution-service";
 import { FilePathExecutor } from "./executors/file-path-executor";
 
 let mainWindow;
+let trayIcon;
+let iconPath = path.join(__dirname, `../../img/icons/${Injector.getIconPath()}`);
 let filePathExecutor = new FilePathExecutor();
 let inputValidationService = new InputValidationService();
 let executionService = new ExecutionService();
@@ -24,7 +26,8 @@ function createMainWindow() {
         show: false,
         skipTaskbar: true,
         resizable: false,
-        backgroundColor: '#00000000'
+        backgroundColor: '#00000000',
+        icon: iconPath
     });
 
     mainWindow.loadURL(`file://${__dirname}/../main.html`);
@@ -33,8 +36,24 @@ function createMainWindow() {
     mainWindow.on("close", quitApp);
     mainWindow.on("blur", hideMainWindow);
 
+    createTrayIcon();
     registerGlobalShortCuts();
 };
+
+function createTrayIcon() {
+    trayIcon = new Tray(iconPath);
+    trayIcon.setToolTip("electronizr");
+    trayIcon.setContextMenu(Menu.buildFromTemplate([
+        {
+            label: 'Show/Hide',
+            click: toggleWindow
+        },
+        {
+            label: 'Exit',
+            click: quitApp
+        }
+    ]));
+}
 
 function registerGlobalShortCuts(): void {
     globalShortcut.register("alt+space", toggleWindow);
@@ -65,7 +84,6 @@ function reloadApp() {
 }
 
 function quitApp() {
-    mainWindow = null;
     globalShortcut.unregisterAll();
     app.quit();
 }
