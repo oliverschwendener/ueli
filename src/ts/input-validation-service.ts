@@ -5,15 +5,18 @@ import { Injector } from "./injector";
 import { FileBrowser } from "./file-browser";
 import { FilePathExecutor } from "./executors/file-path-executor";
 import { CommandLineExecutor } from "./executors/command-line-executor";
+import { WebSearchExecutor } from "./executors/web-search-executor";
 
 export class InputValidationService {
     private webUrlExecutor: WebUrlExecutor;
+    private webSearchExecutor: WebSearchExecutor;
     private filePathExecutor: FilePathExecutor;
     private commandLineExecutor: CommandLineExecutor;
     private searchPluginItems = this.loadSearchPluginItems();
 
     constructor() {
         this.webUrlExecutor = new WebUrlExecutor();
+        this.webSearchExecutor = new WebSearchExecutor();
         this.filePathExecutor = new FilePathExecutor();
         this.commandLineExecutor = new CommandLineExecutor();
     }
@@ -21,6 +24,9 @@ export class InputValidationService {
     public getSearchResult(userInput: string): SearchResultItem[] {
         if (this.webUrlExecutor.isValidForExecution(userInput)) {
             return this.handleUrlSearchResult(userInput);
+        }
+        else if (this.webSearchExecutor.isValidForExecution(userInput)) {
+            return this.handleWebSearchSearchResult(userInput);
         }
         else if (this.filePathExecutor.isValidForExecution(userInput)) {
             return this.handleFileBrowserSearchResult(userInput);
@@ -38,8 +44,12 @@ export class InputValidationService {
         return fileBrowser.getSearchResult(userInput);
     }
 
-    private handleUrlSearchResult(userInput): SearchResultItem[] {
+    private handleUrlSearchResult(userInput: string): SearchResultItem[] {
         return this.webUrlExecutor.getSearchResult(userInput);
+    }
+
+    private handleWebSearchSearchResult(userInput: string): SearchResultItem[] {
+        return this.webSearchExecutor.getSearchResult(userInput);
     }
 
     private handleCommandLineSearchResult(userInput: string): SearchResultItem[] {
