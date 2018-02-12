@@ -32,6 +32,6 @@ export class ExecutionService {
             }
         }
 
-        throw new Error(`This argument (${executionArgument}) is not supported`);
+        throw new Error(`This argument (${executionArgument}) is not supported by the execution service`);
     }
 }
