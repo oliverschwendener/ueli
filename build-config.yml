@@ -6,6 +6,7 @@ files:
   - src/**/*.js
   - src/**/*.css
   - src/**/*.html
+  - img/icons/**/*
 
 win:
   icon: ./img/icons/win/icon.ico
