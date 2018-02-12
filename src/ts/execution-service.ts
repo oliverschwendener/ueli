@@ -23,6 +23,7 @@ export class ExecutionService {
         for (let executor of this.executors) {
             if (executor.isValidForExecution(executionArgument)) {
                 executor.execute(executionArgument);
+
                 if (executor.hideAfterExecution()) {
                     ipcMain.emit("hide-window");
                 }

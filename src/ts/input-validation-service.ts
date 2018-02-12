@@ -40,8 +40,7 @@ export class InputValidationService {
     }
 
     private handleFileBrowserSearchResult(userInput: string): SearchResultItem[] {
-        let fileBrowser = new FileBrowser();
-        return fileBrowser.getSearchResult(userInput);
+        return new FileBrowser().getSearchResult(userInput);
     }
 
     private handleUrlSearchResult(userInput: string): SearchResultItem[] {
