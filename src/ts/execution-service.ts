@@ -10,7 +10,7 @@ import { CommandLineExecutor } from "./executors/command-line-executor";
 export class ExecutionService {
     private executors: Executor[];
 
-    constructor() {
+    public constructor() {
         this.executors = [
             new FilePathExecutor(),
             new ElectronizrCommandExecutor(),

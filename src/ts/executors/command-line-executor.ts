@@ -29,7 +29,7 @@ export class CommandLineExecutor implements Executor {
         });
 
         commandLineTool.on("exit", (code) => {
-            this.sendCommandLineOutputToRenderer(`Exit ${code}`);
+            console.log(`Exit ${code}`);
         });
 
         ipcMain.on("exit-command-line-tool", (event, arg) => {

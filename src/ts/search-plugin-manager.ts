@@ -7,7 +7,7 @@ import { OsSettinsPlugin } from "./search-plugins/os-settings-plugin";
 export class SearchPluginManager {
     private plugins: SearchPlugin[];
 
-    constructor() {
+    public constructor() {
         this.plugins = [
             new ProgramsPlugin(),
             new HomeFolderSearchPlugin(),

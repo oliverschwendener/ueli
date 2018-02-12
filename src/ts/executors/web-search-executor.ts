@@ -5,7 +5,7 @@ export class WebSearchExecutor {
     private separator = "?";
     private webSearches: WebSearch[];
 
-    constructor() {
+    public constructor() {
         this.webSearches = [
             <WebSearch>{
                 name: "Google",

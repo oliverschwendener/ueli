@@ -5,7 +5,7 @@ import { Injector } from "../injector";
 export class OsSettinsPlugin implements SearchPlugin {
     private items: SearchResultItem[];
 
-    constructor() {
+    public constructor() {
         this.items = Injector.getOsSettings();
     }
 
@@ -17,7 +17,7 @@ export class OsSettinsPlugin implements SearchPlugin {
 export class WindowsSettings {
     private items: SearchResultItem[];
 
-    constructor() {
+    public constructor() {
         this.items = [
             <SearchResultItem>{
                 name: "Shutdown",
@@ -70,7 +70,7 @@ export class WindowsSettings {
 export class MacOsSettings {
     private items: SearchResultItem[];
 
-    constructor() {
+    public constructor() {
         this.items = [];
     }
 

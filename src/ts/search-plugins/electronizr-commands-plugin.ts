@@ -9,7 +9,7 @@ export class ElectronizrCommandsSearchPlugin implements SearchPlugin {
                         </g>
                     </svg>`;
 
-    constructor() {
+    public constructor() {
         this.items = [
             <ElectronizrCommand>{
                 name: "Reload electronizr",

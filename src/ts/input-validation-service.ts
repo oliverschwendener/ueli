@@ -14,7 +14,7 @@ export class InputValidationService {
     private commandLineExecutor: CommandLineExecutor;
     private searchPluginItems = this.loadSearchPluginItems();
 
-    constructor() {
+    public constructor() {
         this.webUrlExecutor = new WebUrlExecutor();
         this.webSearchExecutor = new WebSearchExecutor();
         this.filePathExecutor = new FilePathExecutor();

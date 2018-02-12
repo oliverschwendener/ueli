@@ -4,7 +4,7 @@ import { SearchPlugin } from "./search-plugins/search-plugin";
 export class SearchEngine {
     private unsortedSearchResults: SearchResultItem[];
 
-    constructor(unsortedSearchResults: SearchResultItem[]) {
+    public constructor(unsortedSearchResults: SearchResultItem[]) {
         this.unsortedSearchResults = unsortedSearchResults;
     }
 

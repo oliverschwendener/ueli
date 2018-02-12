@@ -11,7 +11,7 @@ export class ProgramsPlugin implements SearchPlugin {
     private programs: Program[];
     private iconManager: IconManager;
 
-    constructor(programRepository?: ProgramRepository) {
+    public constructor(programRepository?: ProgramRepository) {
         this.iconManager = Injector.getIconManager();
 
         if (programRepository === undefined) {
@@ -49,7 +49,7 @@ export interface ProgramRepository {
 export class FakeProgramRepository implements ProgramRepository {
     private programs: Program[];
 
-    constructor(programs: Program[]) {
+    public constructor(programs: Program[]) {
         this.programs = programs;
     }
 
@@ -67,7 +67,7 @@ export class WindowsProgramRepository implements ProgramRepository {
     ];
     private shortcutFileExtensions = [".lnk", ".appref-ms", ".url"];
 
-    constructor() {
+    public constructor() {
         this.programs = this.loadPrograms();
     }
 
@@ -100,7 +100,7 @@ export class MacOsProgramRepository implements ProgramRepository {
     private applicationFileExtension = ".app";
     private programs: Program[];
 
-    constructor() {
+    public constructor() {
         this.programs = this.loadPrograms();
     }
 
