@@ -3,6 +3,8 @@ import * as path from "path";
 import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } from "./search-plugins/programs-plugin";
 import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
 import { Executor } from "./executors/executor";
+import { SearchResultItem } from "./search-engine";
+import { WindowsSettings, MacOsSettings } from "./search-plugins/os-settings-plugin";
 
 export class Injector {
     public static getCurrentOperatingSystem(): OperatingSystem {
@@ -103,6 +105,17 @@ export class Injector {
             }
             case OperatingSystem.macOS: {
                 return path.join(pathToProjectRoot, "img/icons/png/16x16.png");
+            }
+        }
+    }
+
+    public static getOsSettings(): SearchResultItem[] {
+        switch (Injector.getCurrentOperatingSystem()) {
+            case OperatingSystem.Windows: {
+                return new WindowsSettings().getAllItems();
+            }
+            case OperatingSystem.macOS: {
+                return new MacOsSettings().getAllItems();
             }
         }
     }
