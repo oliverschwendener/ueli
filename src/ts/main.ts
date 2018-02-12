@@ -10,7 +10,6 @@ import { FilePathExecutor } from "./executors/file-path-executor";
 
 let mainWindow;
 let trayIcon;
-let iconPath = path.join(__dirname, `../../img/icons/${Injector.getIconPath()}`);
 let filePathExecutor = new FilePathExecutor();
 let inputValidationService = new InputValidationService();
 let executionService = new ExecutionService();
@@ -27,7 +26,6 @@ function createMainWindow() {
         skipTaskbar: true,
         resizable: false,
         backgroundColor: '#00000000',
-        icon: iconPath
     });
 
     mainWindow.loadURL(`file://${__dirname}/../main.html`);
@@ -41,7 +39,7 @@ function createMainWindow() {
 };
 
 function createTrayIcon() {
-    trayIcon = new Tray(iconPath);
+    trayIcon = new Tray(Injector.getTrayIconPath(path.join(__dirname, "../../")));
     trayIcon.setToolTip("electronizr");
     trayIcon.setContextMenu(Menu.buildFromTemplate([
         {

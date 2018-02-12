@@ -96,13 +96,13 @@ export class Injector {
         }
     }
 
-    public static getIconPath(): string {
+    public static getTrayIconPath(pathToProjectRoot: string): string {
         switch (Injector.getCurrentOperatingSystem()) {
             case OperatingSystem.Windows: {
-                return "win/icon.ico"
+                return path.join(pathToProjectRoot, "img/icons/win/icon.ico");
             }
             case OperatingSystem.macOS: {
-                return "mac/icon.icns"
+                return path.join(pathToProjectRoot, "img/icons/png/16x16.png");
             }
         }
     }
