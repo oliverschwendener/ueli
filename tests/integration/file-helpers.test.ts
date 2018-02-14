@@ -35,9 +35,9 @@ function deleteTestFolders(folderPaths: string[]): void {
     }
 }
 
-describe("File Helpers", () => {
-    describe("getFilesFromFolderRecursively", () => {
-        it("should return some files", () => {
+describe("File Helpers", (): void => {
+    describe("getFilesFromFolderRecursively", (): void => {
+        it("should return some files", (): void => {
             let testFolder = testFolderPaths[0];
             createTestFolders([testFolder]);
 
@@ -49,8 +49,8 @@ describe("File Helpers", () => {
         });
     });
 
-    describe("getFilesFromFoldersRecursivley", () => {
-        it("should return some files", () => {
+    describe("getFilesFromFoldersRecursivley", (): void => {
+        it("should return some files", (): void => {
             let testFolders = testFolderPaths;
             createTestFolders(testFolders);
 

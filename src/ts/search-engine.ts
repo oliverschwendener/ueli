@@ -22,7 +22,7 @@ export class SearchEngine {
 
         let fuseResult = fuse.search(searchTerm) as any[];
 
-        let result = fuseResult.map((f) => {
+        let result = fuseResult.map((f): SearchResultItem => {
             return <SearchResultItem>{
                 name: f.item.name,
                 executionArgument: f.item.executionArgument,

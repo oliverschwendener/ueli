@@ -34,10 +34,10 @@ export class FileHelpers {
         return result;
     }
 
-    public static getFilesFromFolder(folderPath: string) {
+    public static getFilesFromFolder(folderPath: string): string[] {
         let fileNames = fs.readdirSync(folderPath);
 
-        let filePaths = fileNames.map((f) => {
+        let filePaths = fileNames.map((f): string => {
             return path.join(folderPath, f);
         });
 

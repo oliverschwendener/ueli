@@ -24,7 +24,7 @@ export class ElectronizrCommandsSearchPlugin implements SearchPlugin {
     }
 
     public getAllItems(): SearchResultItem[] {
-        return this.items.map((i) => {
+        return this.items.map((i): SearchResultItem => {
             return <SearchResultItem>{
                 name: i.name,
                 executionArgument: `${Config.electronizrCommandPrefix}${i.command}`,

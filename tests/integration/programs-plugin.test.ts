@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import { ProgramsPlugin, WindowsProgramRepository } from "./../../src/ts/search-plugins/programs-plugin";
 
-describe("programs-plugin", () => {
-    describe("getAllItems", () => {
-        it("should return some programs", () => {
+describe("programs-plugin", (): void => {
+    describe("getAllItems", (): void => {
+        it("should return some programs", (): void => {
             let programsPlugin = new ProgramsPlugin();
 
             let programs = programsPlugin.getAllItems();
@@ -11,7 +11,7 @@ describe("programs-plugin", () => {
             expect(programs.length).to.be.greaterThan(0);
         });
 
-        it("all returned items should have set a name, execution argument and tags", () => {
+        it("all returned items should have set a name, execution argument and tags", (): void => {
             let programsPlugin = new ProgramsPlugin();
 
             let programs = programsPlugin.getAllItems();

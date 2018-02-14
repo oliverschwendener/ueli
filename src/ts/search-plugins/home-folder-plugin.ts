@@ -26,7 +26,7 @@ export class HomeFolderSearchPlugin implements SearchPlugin {
 
         let files = FileHelpers.getFilesFromFolder(this.homeFolderPath);
 
-        files.map((f) => {
+        files.map((f): void => {
             let stats = fs.lstatSync(f);
 
             result.push(<SearchResultItem>{

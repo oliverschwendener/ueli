@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ProgramsPlugin, WindowsProgramRepository, Program, FakeProgramRepository } from "./../../src/ts/search-plugins/programs-plugin";
 
 function getTestPrograms(programNames: string[]) {
-    return programNames.map((p) => {
+    return programNames.map((p): Program => {
         return <Program>{
             name: p,
             executionArgument: `C:\\Some\\Dummy\\FilePath\\${p}`
@@ -10,9 +10,9 @@ function getTestPrograms(programNames: string[]) {
     });
 }
 
-describe("programs-plugin", () => {
-    describe("getAllItems", () => {
-        it("should return all programs", () => {
+describe("programs-plugin", (): void => {
+    describe("getAllItems", (): void => {
+        it("should return all programs", (): void => {
             let fakePrograms = getTestPrograms([
                 "Git Bash",
                 "Adobe Premiere Pro",
@@ -28,7 +28,7 @@ describe("programs-plugin", () => {
             expect(actual.length).to.be.greaterThan(0);
 
             for (let fakeProgram of fakePrograms) {
-                let filtered = actual.filter((a) => {
+                let filtered = actual.filter((a): boolean => {
                     return a.name === fakeProgram.name;
                 });
 

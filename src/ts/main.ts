@@ -9,7 +9,7 @@ import { Config } from "./config";
 import { ExecutionService } from "./execution-service";
 import { FilePathExecutor } from "./executors/file-path-executor";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
-const isDev = require("electron-is-dev")
+const isDev = require("electron-is-dev");
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -17,7 +17,7 @@ let filePathExecutor = new FilePathExecutor();
 let inputValidationService = new InputValidationService();
 let executionService = new ExecutionService();
 
-function createMainWindow() {
+function createMainWindow(): void {
     mainWindow = new BrowserWindow({
         width: Config.windowWith,
         height: Config.maxWindowHeight,
@@ -73,23 +73,23 @@ function downloadUpdate(): void {
     addUpdateStatusToTrayIcon("Downloading update...");
 }
 
-autoUpdater.on("update-available", () => {
+autoUpdater.on("update-available", (): void => {
     addUpdateStatusToTrayIcon("Download & install update", downloadUpdate);
 });
 
-autoUpdater.on("error", () => {
+autoUpdater.on("error", (): void => {
     addUpdateStatusToTrayIcon("Update check failed");
 });
 
-autoUpdater.on("update-not-available", () => {
+autoUpdater.on("update-not-available", (): void => {
     addUpdateStatusToTrayIcon("electronizr is up to date");
 });
 
-autoUpdater.on("update-downloaded", () => {
+autoUpdater.on("update-downloaded", (): void => {
     autoUpdater.quitAndInstall();
 });
 
-function addUpdateStatusToTrayIcon(label: string, clickHandler?: Function) {
+function addUpdateStatusToTrayIcon(label: string, clickHandler?: Function): void {
     let updateItem = clickHandler === undefined
         ? { label: label }
         : { label: label, click: clickHandler } as MenuItem;
@@ -142,26 +142,26 @@ ipcMain.on("hide-window", hideMainWindow);
 ipcMain.on("ezr:reload", reloadApp);
 ipcMain.on("ezr:exit", quitApp);
 
-ipcMain.on("get-search", (event: any, arg: string) => {
+ipcMain.on("get-search", (event: any, arg: string): void => {
     let userInput = arg;
     let result = inputValidationService.getSearchResult(userInput);
     updateWindowSize(result.length);
     event.sender.send("get-search-response", result);
 });
 
-ipcMain.on("execute", (event: any, arg: string) => {
+ipcMain.on("execute", (event: any, arg: string): void => {
     let executionArgument = arg;
     executionService.execute(executionArgument);
 });
 
-ipcMain.on("open-file-location", (event: any, arg: string) => {
+ipcMain.on("open-file-location", (event: any, arg: string): void => {
     let filePath = arg;
     if (new FilePathExecutionArgumentValidator().isValidForExecution(filePath)) {
         filePathExecutor.openFileLocation(filePath);
     }
 });
 
-ipcMain.on("auto-complete", (event: any, arg: string[]) => {
+ipcMain.on("auto-complete", (event: any, arg: string[]): void => {
     let userInput = arg[0];
     let executionArgument = arg[1];
     let dirSeparator = Injector.getDirectorySeparator();
@@ -175,12 +175,12 @@ ipcMain.on("auto-complete", (event: any, arg: string[]) => {
     }
 });
 
-ipcMain.on("get-search-icon", (event: any) => {
+ipcMain.on("get-search-icon", (event: any): void => {
     let iconManager = Injector.getIconManager();
     event.sender.send("get-search-icon-response", iconManager.getSearchIcon());
 });
 
-ipcMain.on("command-line-execution", (arg: string) => {
+ipcMain.on("command-line-execution", (arg: string): void => {
     mainWindow.webContents.send("command-line-output", arg);
     updateWindowSize(Config.maxSearchResultCount);
 });
