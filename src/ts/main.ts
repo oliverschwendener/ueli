@@ -41,6 +41,7 @@ function createMainWindow(): void {
 
     if (!isDev) {
         checkForUpdates();
+        setAutostartSettings();
     }
 };
 
@@ -88,6 +89,14 @@ autoUpdater.on("update-not-available", (): void => {
 autoUpdater.on("update-downloaded", (): void => {
     autoUpdater.quitAndInstall();
 });
+
+function setAutostartSettings() {
+    app.setLoginItemSettings({
+        openAtLogin: true,
+        path: process.execPath,
+        args: []
+    });
+}
 
 function addUpdateStatusToTrayIcon(label: string, clickHandler?: Function): void {
     let updateItem = clickHandler === undefined
