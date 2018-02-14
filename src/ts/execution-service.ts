@@ -6,6 +6,7 @@ import { ElectronizrCommandExecutor } from "./executors/electronizr-command-exec
 import { WebUrlExecutor } from "./executors/web-url-executor";
 import { FilePathExecutor } from "./executors/file-path-executor";
 import { CommandLineExecutor } from "./executors/command-line-executor";
+import { OsSettingsExecutor } from "./executors/os-settings-executor";
 
 export class ExecutionService {
     private executors: Executor[];
@@ -15,7 +16,8 @@ export class ExecutionService {
             new FilePathExecutor(),
             new ElectronizrCommandExecutor(),
             new WebUrlExecutor(),
-            new CommandLineExecutor()
+            new CommandLineExecutor(),
+            new OsSettingsExecutor()
         ];
     }
 

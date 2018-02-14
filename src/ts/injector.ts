@@ -5,6 +5,7 @@ import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manage
 import { Executor } from "./executors/executor";
 import { SearchResultItem } from "./search-engine";
 import { WindowsSettings, MacOsSettings } from "./search-plugins/os-settings-plugin";
+import { ExecuteWindowsSetting, IsValidWindowsSettingExecutionArgument, ExecuteMacOsSetting, IsValidMacOsSettingExecutionArgument } from "./executors/os-settings-executor";
 
 export class Injector {
     public static getCurrentOperatingSystem(): OperatingSystem {
@@ -116,6 +117,28 @@ export class Injector {
             }
             case OperatingSystem.macOS: {
                 return new MacOsSettings().getAllItems();
+            }
+        }
+    }
+
+    public static getOsSettingExecution(): Function {
+        switch (Injector.getCurrentOperatingSystem()) {
+            case OperatingSystem.Windows: {
+                return ExecuteWindowsSetting;
+            }
+            case OperatingSystem.macOS: {
+                return ExecuteMacOsSetting;
+            }
+        }
+    }
+
+    public static getOsSettingValidation(): Function {
+        switch (Injector.getCurrentOperatingSystem()) {
+            case OperatingSystem.Windows: {
+                return IsValidWindowsSettingExecutionArgument;
+            }
+            case OperatingSystem.macOS: {
+                return IsValidMacOsSettingExecutionArgument;
             }
         }
     }
