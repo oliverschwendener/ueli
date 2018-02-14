@@ -2,57 +2,50 @@ import { SearchEngine, SearchResultItem } from "./search-engine";
 import { SearchPluginManager } from "./search-plugin-manager";
 import { WebUrlExecutor } from "./executors/web-url-executor";
 import { Injector } from "./injector";
-import { FileBrowser } from "./file-browser";
 import { FilePathExecutor } from "./executors/file-path-executor";
 import { CommandLineExecutor } from "./executors/command-line-executor";
 import { WebSearchExecutor } from "./executors/web-search-executor";
+import { InputValidator } from "./input-validators.ts/input-validator";
+import { Searcher } from "./searcher/searcher";
+import { FilePathInputValidator } from "./input-validators.ts/file-path-input-validator";
+import { FilePathSearcher } from "./searcher/file-path-searcher";
+import { CommandLineInputValidator } from "./input-validators.ts/command-line-input-validator";
+import { CommandLineSearcher } from "./searcher/command-line-searcher";
+import { WebSearchInputValidator } from "./input-validators.ts/web-search-input-validator";
+import { WebSearchSearcher } from "./searcher/web-search-searcher";
+import { WebUrlInputValidator } from "./input-validators.ts/web-url-input-validator";
+import { WebUrlSearcher } from "./searcher/web-url-searcher";
 
 export class InputValidationService {
-    private webUrlExecutor: WebUrlExecutor;
-    private webSearchExecutor: WebSearchExecutor;
-    private filePathExecutor: FilePathExecutor;
-    private commandLineExecutor: CommandLineExecutor;
+    private validatorSearcherCombinations = [
+        <ValidatorSearcherCombination>{
+            validator: new FilePathInputValidator(),
+            searcher: new FilePathSearcher()
+        },
+        <ValidatorSearcherCombination>{
+            validator: new CommandLineInputValidator(),
+            searcher: new CommandLineSearcher()
+        },
+        <ValidatorSearcherCombination>{
+            validator: new WebSearchInputValidator(),
+            searcher: new WebSearchSearcher()
+        },
+        <ValidatorSearcherCombination>{
+            validator: new WebUrlInputValidator(),
+            searcher: new WebUrlSearcher()
+        }
+    ];
+
     private searchPluginItems = this.loadSearchPluginItems();
 
-    public constructor() {
-        this.webUrlExecutor = new WebUrlExecutor();
-        this.webSearchExecutor = new WebSearchExecutor();
-        this.filePathExecutor = new FilePathExecutor();
-        this.commandLineExecutor = new CommandLineExecutor();
-    }
-
     public getSearchResult(userInput: string): SearchResultItem[] {
-        if (this.webUrlExecutor.isValidForExecution(userInput)) {
-            return this.handleUrlSearchResult(userInput);
+        for (let combi of this.validatorSearcherCombinations) {
+            if (combi.validator.isValidForSearchResults(userInput)) {
+                return combi.searcher.getSearchResult(userInput);
+            }
         }
-        else if (this.webSearchExecutor.isValidForExecution(userInput)) {
-            return this.handleWebSearchSearchResult(userInput);
-        }
-        else if (this.filePathExecutor.isValidForExecution(userInput)) {
-            return this.handleFileBrowserSearchResult(userInput);
-        }
-        else if (this.commandLineExecutor.isValidForExecution(userInput)) {
-            return this.handleCommandLineSearchResult(userInput);
-        }
-        else {
-            return this.handleSearchEngineResult(userInput);
-        }
-    }
 
-    private handleFileBrowserSearchResult(userInput: string): SearchResultItem[] {
-        return new FileBrowser().getSearchResult(userInput);
-    }
-
-    private handleUrlSearchResult(userInput: string): SearchResultItem[] {
-        return this.webUrlExecutor.getSearchResult(userInput);
-    }
-
-    private handleWebSearchSearchResult(userInput: string): SearchResultItem[] {
-        return this.webSearchExecutor.getSearchResult(userInput);
-    }
-
-    private handleCommandLineSearchResult(userInput: string): SearchResultItem[] {
-        return this.commandLineExecutor.getSearchResult(userInput);
+        return this.handleSearchEngineResult(userInput);
     }
 
     private handleSearchEngineResult(userInput: string): SearchResultItem[] {
@@ -71,4 +64,9 @@ export class InputValidationService {
 
         return result;
     }
+}
+
+class ValidatorSearcherCombination {
+    public validator: InputValidator;
+    public searcher: Searcher;
 }

@@ -4,8 +4,6 @@ import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } f
 import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
 import { Executor } from "./executors/executor";
 import { SearchResultItem } from "./search-engine";
-import { WindowsSettings, MacOsSettings } from "./search-plugins/os-settings-plugin";
-import { ExecuteWindowsSetting, IsValidWindowsSettingExecutionArgument, ExecuteMacOsSetting, IsValidMacOsSettingExecutionArgument } from "./executors/os-settings-executor";
 
 export class Injector {
     public static getCurrentOperatingSystem(): OperatingSystem {
@@ -20,6 +18,10 @@ export class Injector {
                 throw new Error("This operating system is not supported");
             }
         }
+    }
+
+    public static getWebUrlRegExp(): RegExp {
+        return new RegExp(/^((https?:)?[/]{2})?([a-z0-9]+[.])+[a-z]+.*$/i, 'gi');
     }
 
     public static getProgramRepository(): ProgramRepository {
@@ -106,39 +108,6 @@ export class Injector {
             }
             case OperatingSystem.macOS: {
                 return path.join(pathToProjectRoot, "img/icons/png/16x16.png");
-            }
-        }
-    }
-
-    public static getOsSettings(): SearchResultItem[] {
-        switch (Injector.getCurrentOperatingSystem()) {
-            case OperatingSystem.Windows: {
-                return new WindowsSettings().getAllItems();
-            }
-            case OperatingSystem.macOS: {
-                return new MacOsSettings().getAllItems();
-            }
-        }
-    }
-
-    public static getOsSettingExecution(): Function {
-        switch (Injector.getCurrentOperatingSystem()) {
-            case OperatingSystem.Windows: {
-                return ExecuteWindowsSetting;
-            }
-            case OperatingSystem.macOS: {
-                return ExecuteMacOsSetting;
-            }
-        }
-    }
-
-    public static getOsSettingValidation(): Function {
-        switch (Injector.getCurrentOperatingSystem()) {
-            case OperatingSystem.Windows: {
-                return IsValidWindowsSettingExecutionArgument;
-            }
-            case OperatingSystem.macOS: {
-                return IsValidMacOsSettingExecutionArgument;
             }
         }
     }

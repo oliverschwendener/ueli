@@ -1,10 +1,11 @@
 import * as fs from "fs";
 import * as path from "path";
-import { SearchResultItem, SearchEngine } from "./search-engine";
-import { FileHelpers } from "./helpers/file-helpers";
-import { Injector } from "./injector";
+import { Searcher } from "./searcher";
+import { SearchResultItem, SearchEngine } from "../search-engine";
+import { FileHelpers } from "../helpers/file-helpers";
+import { Injector } from "../injector";
 
-export class FileBrowser {
+export class FilePathSearcher implements Searcher {
     private iconManager = Injector.getIconManager();
 
     public getSearchResult(userInput: string): SearchResultItem[] {

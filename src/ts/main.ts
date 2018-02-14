@@ -7,18 +7,18 @@ import { Injector } from "./injector";
 import { Config } from "./config";
 import { ExecutionService } from "./execution-service";
 import { FilePathExecutor } from "./executors/file-path-executor";
+import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
 
 let mainWindow: BrowserWindow;
 let trayIcon;
 let filePathExecutor = new FilePathExecutor();
 let inputValidationService = new InputValidationService();
 let executionService = new ExecutionService();
-let config = new Config();
 
 function createMainWindow() {
     mainWindow = new BrowserWindow({
-        width: config.windowWith,
-        height: config.maxWindowHeight,
+        width: Config.windowWith,
+        height: Config.maxWindowHeight,
         center: true,
         autoHideMenuBar: true,
         frame: false,
@@ -29,7 +29,7 @@ function createMainWindow() {
     });
 
     mainWindow.loadURL(`file://${__dirname}/../main.html`);
-    mainWindow.setSize(config.windowWith, config.minWindowHeight);
+    mainWindow.setSize(Config.windowWith, Config.minWindowHeight);
 
     mainWindow.on("close", quitApp);
     mainWindow.on("blur", hideMainWindow);
@@ -67,8 +67,8 @@ function toggleWindow(): void {
 }
 
 function updateWindowSize(searchResultCount: number): void {
-    let newWindowHeight = config.calculateWindowHeight(searchResultCount);
-    mainWindow.setSize(config.windowWith, newWindowHeight);
+    let newWindowHeight = Config.calculateWindowHeight(searchResultCount);
+    mainWindow.setSize(Config.windowWith, newWindowHeight);
 }
 
 function hideMainWindow() {
@@ -106,7 +106,7 @@ ipcMain.on("execute", (event: any, arg: string) => {
 
 ipcMain.on("open-file-location", (event: any, arg: string) => {
     let filePath = arg;
-    if (filePathExecutor.isValidForExecution(filePath)) {
+    if (new FilePathExecutionArgumentValidator().isValidForExecution(filePath)) {
         filePathExecutor.openFileLocation(filePath);
     }
 });
@@ -116,7 +116,7 @@ ipcMain.on("auto-complete", (event: any, arg: string[]) => {
     let executionArgument = arg[1];
     let dirSeparator = Injector.getDirectorySeparator();
 
-    if (filePathExecutor.isValidForExecution(userInput)) {
+    if (new FilePathExecutionArgumentValidator().isValidForExecution(userInput)) {
         if (!executionArgument.endsWith(dirSeparator) && fs.lstatSync(executionArgument).isDirectory()) {
             executionArgument = `${executionArgument}${dirSeparator}`;
         }
@@ -132,5 +132,5 @@ ipcMain.on("get-search-icon", (event: any) => {
 
 ipcMain.on("command-line-execution", (arg: string) => {
     mainWindow.webContents.send("command-line-output", arg);
-    updateWindowSize(config.maxSearchResultCount);
+    updateWindowSize(Config.maxSearchResultCount);
 });

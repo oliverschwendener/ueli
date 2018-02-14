@@ -1,5 +1,6 @@
 import { SearchPlugin } from "./search-plugin";
 import { SearchResultItem } from "../search-engine";
+import { Config } from "../config";
 
 export class ElectronizrCommandsSearchPlugin implements SearchPlugin {
     private items: ElectronizrCommand[];
@@ -13,11 +14,11 @@ export class ElectronizrCommandsSearchPlugin implements SearchPlugin {
         this.items = [
             <ElectronizrCommand>{
                 name: "Reload electronizr",
-                executionArgument: "ezr:reload"
+                command: "reload"
             },
             <ElectronizrCommand>{
                 name: "Exit electronizr",
-                executionArgument: "ezr:exit"
+                command: "exit"
             }
         ];
     }
@@ -26,7 +27,7 @@ export class ElectronizrCommandsSearchPlugin implements SearchPlugin {
         return this.items.map((i) => {
             return <SearchResultItem>{
                 name: i.name,
-                executionArgument: i.executionArgument,
+                executionArgument: `${Config.electronizrCommandPrefix}${i.command}`,
                 icon: this.icon,
                 tags: []
             };
@@ -36,5 +37,5 @@ export class ElectronizrCommandsSearchPlugin implements SearchPlugin {
 
 class ElectronizrCommand {
     public name: string;
-    public executionArgument: string;
+    public command: string;
 }

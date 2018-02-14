@@ -8,9 +8,8 @@ export class FilePathExecutor implements Executor {
         this.handleExecution(command);
     }
 
-    public isValidForExecution(filePath: string): boolean {
-        let regex = Injector.getFilePathRegExp();
-        return regex.test(filePath);
+    public hideAfterExecution(): boolean {
+        return true;
     }
 
     public openFileLocation(filePath: string): void {
@@ -24,9 +23,5 @@ export class FilePathExecutor implements Executor {
                 throw err;
             }
         });
-    }
-
-    public hideAfterExecution(): boolean {
-        return true;
     }
 }
