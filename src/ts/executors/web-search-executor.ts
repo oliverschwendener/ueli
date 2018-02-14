@@ -70,6 +70,10 @@ export class WebSearchExecutor {
 
     public getSearchResult(userInput: string): SearchResultItem[] {
         let validWebSearch = this.getValidWebSearch(userInput);
+        if (validWebSearch === undefined) {
+            return [];
+        }
+
         let searchTerm = this.createSearchTerm(userInput, validWebSearch);
         let searchResultItemName = searchTerm.length > 0
             ? `Search ${validWebSearch.name} for '${searchTerm}'`
@@ -85,11 +89,13 @@ export class WebSearchExecutor {
         ]
     }
 
-    private getValidWebSearch(userInput: string): WebSearch {
+    private getValidWebSearch(userInput: string): WebSearch|undefined {
         for (let webSearch of this.webSearches) {
             if (userInput.startsWith(`${webSearch.prefix}${this.separator}`))
                 return webSearch;
         }
+
+        return undefined;
     }
 
     private createSearchTerm(userInput: string, webSearch: WebSearch): string {
