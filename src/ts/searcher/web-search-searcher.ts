@@ -8,25 +8,28 @@ export class WebSearchSearcher implements Searcher {
 
     public getSearchResult(userInput: string): SearchResultItem[] {
         for (let webSearch of this.webSearches) {
-            let searchTerm = this.createSearchTerm(userInput, webSearch);
-            let searchResultItemName = searchTerm.length > 0
-                ? `Search ${webSearch.name} for '${searchTerm}'`
-                : `Search ${webSearch.name}`;
+            let prefix = `${webSearch.prefix}${Config.webSearchSeparator}`
+            if (userInput.startsWith(prefix)) {
+                let searchTerm = this.createSearchTerm(userInput, webSearch);
+                let searchResultItemName = searchTerm.length > 0
+                    ? `Search ${webSearch.name} for '${searchTerm}'`
+                    : `Search ${webSearch.name}`;
 
-            return [
-                <SearchResultItem>{
-                    name: searchResultItemName,
-                    executionArgument: this.createExecutionUrl(userInput, webSearch),
-                    icon: webSearch.icon,
-                    tags: []
-                }
-            ]
+                return [
+                    <SearchResultItem>{
+                        name: searchResultItemName,
+                        executionArgument: this.createExecutionUrl(userInput, webSearch),
+                        icon: webSearch.icon,
+                        tags: []
+                    }
+                ]
+            }
         }
 
         throw new Error(`No valid web search found for ${userInput}`);
     }
 
-    
+
     private createSearchTerm(userInput: string, webSearch: WebSearch): string {
         return userInput.replace(`${webSearch.prefix}${Config.webSearchSeparator}`, "");
     }
