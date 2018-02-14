@@ -22,7 +22,7 @@ export class OsSettingsExecutor implements Executor {
 export function ExecuteWindowsSetting(executionArgument: string): void {
     let prefix = "win:"
     let command = executionArgument.replace(prefix, "");
-    exec(`start "" "${command}"`, (err, stout, sterr) => {
+    exec(`start ${command}`, (err, stout, sterr) => {
         if (err) {
             throw err;
         }

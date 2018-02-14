@@ -21,7 +21,7 @@ export class WindowsSettings {
         this.items = [
             <SearchResultItem>{
                 name: "Shutdown",
-                executionArgument: ">shutdown -s -t 0",
+                executionArgument: "win:shutdown -s -t 0",
                 tags: ["power", "off"],
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
                             <g id="surface1">
@@ -31,7 +31,7 @@ export class WindowsSettings {
             },
             <SearchResultItem>{
                 name: "Restart",
-                executionArgument: ">shutdown -r -t 0",
+                executionArgument: "win:shutdown -r -t 0",
                 tags: ["reboot"],
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
                             <g id="surface1">
@@ -41,7 +41,7 @@ export class WindowsSettings {
             },
             <SearchResultItem>{
                 name: "Sign out",
-                executionArgument: ">shutdown /l",
+                executionArgument: "win:shutdown /l",
                 tags: ["out", "off", "sign", "user"],
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
                             <g id="surface1">
