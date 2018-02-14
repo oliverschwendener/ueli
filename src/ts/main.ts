@@ -1,6 +1,7 @@
 import * as path from "path";
 import * as fs from "fs";
-import { app, BrowserWindow, ipcMain, globalShortcut, Menu, Tray } from "electron";
+import { app, BrowserWindow, ipcMain, globalShortcut, Menu, Tray, MenuItem } from "electron";
+import { autoUpdater } from "electron-updater";
 import { SearchEngine } from "./search-engine";
 import { InputValidationService } from "./input-validation-service";
 import { Injector } from "./injector";
@@ -8,9 +9,10 @@ import { Config } from "./config";
 import { ExecutionService } from "./execution-service";
 import { FilePathExecutor } from "./executors/file-path-executor";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
+const isDev = require("electron-is-dev")
 
 let mainWindow: BrowserWindow;
-let trayIcon;
+let trayIcon: Tray;
 let filePathExecutor = new FilePathExecutor();
 let inputValidationService = new InputValidationService();
 let executionService = new ExecutionService();
@@ -36,18 +38,22 @@ function createMainWindow() {
 
     createTrayIcon();
     registerGlobalShortCuts();
+
+    if (!isDev) {
+        checkForUpdates();
+    }
 };
 
-function createTrayIcon() {
+function createTrayIcon(): void {
     trayIcon = new Tray(Injector.getTrayIconPath(path.join(__dirname, "../../")));
     trayIcon.setToolTip("electronizr");
     trayIcon.setContextMenu(Menu.buildFromTemplate([
         {
-            label: 'Show/Hide',
+            label: "Show/Hide",
             click: toggleWindow
         },
         {
-            label: 'Exit',
+            label: "Exit",
             click: quitApp
         }
     ]));
@@ -55,6 +61,50 @@ function createTrayIcon() {
 
 function registerGlobalShortCuts(): void {
     globalShortcut.register("alt+space", toggleWindow);
+}
+
+function checkForUpdates(): void {
+    autoUpdater.autoDownload = false;
+    autoUpdater.checkForUpdates();
+}
+
+function downloadUpdate(): void {
+    autoUpdater.downloadUpdate();
+    addUpdateStatusToTrayIcon("Downloading update...");
+}
+
+autoUpdater.on("update-available", () => {
+    addUpdateStatusToTrayIcon("Download & install update", downloadUpdate);
+});
+
+autoUpdater.on("error", () => {
+    addUpdateStatusToTrayIcon("Update check failed");
+});
+
+autoUpdater.on("update-not-available", () => {
+    addUpdateStatusToTrayIcon("electronizr is up to date");
+});
+
+autoUpdater.on("update-downloaded", () => {
+    autoUpdater.quitAndInstall();
+});
+
+function addUpdateStatusToTrayIcon(label: string, clickHandler?: Function) {
+    let updateItem = clickHandler === undefined
+        ? { label: label }
+        : { label: label, click: clickHandler } as MenuItem;
+
+    trayIcon.setContextMenu(Menu.buildFromTemplate([
+        updateItem,
+        {
+            label: "Show/Hide",
+            click: toggleWindow
+        },
+        {
+            label: "Exit",
+            click: quitApp
+        }
+    ]));
 }
 
 function toggleWindow(): void {
@@ -71,17 +121,17 @@ function updateWindowSize(searchResultCount: number): void {
     mainWindow.setSize(Config.windowWith, newWindowHeight);
 }
 
-function hideMainWindow() {
+function hideMainWindow(): void {
     if (mainWindow !== null && mainWindow !== undefined) {
         mainWindow.hide();
     }
 }
 
-function reloadApp() {
+function reloadApp(): void {
     mainWindow.reload();
 }
 
-function quitApp() {
+function quitApp(): void {
     globalShortcut.unregisterAll();
     app.quit();
 }
@@ -92,7 +142,7 @@ ipcMain.on("hide-window", hideMainWindow);
 ipcMain.on("ezr:reload", reloadApp);
 ipcMain.on("ezr:exit", quitApp);
 
-ipcMain.on("get-search", (event:any, arg: string) => {
+ipcMain.on("get-search", (event: any, arg: string) => {
     let userInput = arg;
     let result = inputValidationService.getSearchResult(userInput);
     updateWindowSize(result.length);
