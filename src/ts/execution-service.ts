@@ -7,7 +7,6 @@ import { WebUrlExecutor } from "./executors/web-url-executor";
 import { FilePathExecutor } from "./executors/file-path-executor";
 import { CommandLineExecutor } from "./executors/command-line-executor";
 import { Config } from "./config";
-import { InputExecutionDictionaryItem } from "./helpers/input-execution-dictionary";
 import { CommandLineExecutionArgumentValidator } from "./execution-argument-validators/command-line-execution-argument-validator";
 import { ElectronizrCommandExecutionArgumentValidator } from "./execution-argument-validators/electronizr-command-execution-argument-validator";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
