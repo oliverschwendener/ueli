@@ -8,7 +8,7 @@ import { Config } from "./config";
 import { ExecutionService } from "./execution-service";
 import { FilePathExecutor } from "./executors/file-path-executor";
 
-let mainWindow;
+let mainWindow: BrowserWindow;
 let trayIcon;
 let filePathExecutor = new FilePathExecutor();
 let inputValidationService = new InputValidationService();
@@ -92,26 +92,26 @@ ipcMain.on("hide-window", hideMainWindow);
 ipcMain.on("ezr:reload", reloadApp);
 ipcMain.on("ezr:exit", quitApp);
 
-ipcMain.on("get-search", (event, arg) => {
+ipcMain.on("get-search", (event:any, arg: string) => {
     let userInput = arg;
     let result = inputValidationService.getSearchResult(userInput);
     updateWindowSize(result.length);
     event.sender.send("get-search-response", result);
 });
 
-ipcMain.on("execute", (event, arg) => {
+ipcMain.on("execute", (event: any, arg: string) => {
     let executionArgument = arg;
     executionService.execute(executionArgument);
 });
 
-ipcMain.on("open-file-location", (event, arg) => {
+ipcMain.on("open-file-location", (event: any, arg: string) => {
     let filePath = arg;
     if (filePathExecutor.isValidForExecution(filePath)) {
         filePathExecutor.openFileLocation(filePath);
     }
 });
 
-ipcMain.on("auto-complete", (event, arg) => {
+ipcMain.on("auto-complete", (event: any, arg: string[]) => {
     let userInput = arg[0];
     let executionArgument = arg[1];
     let dirSeparator = Injector.getDirectorySeparator();
@@ -125,12 +125,12 @@ ipcMain.on("auto-complete", (event, arg) => {
     }
 });
 
-ipcMain.on("get-search-icon", (event, arg) => {
+ipcMain.on("get-search-icon", (event: any) => {
     let iconManager = Injector.getIconManager();
     event.sender.send("get-search-icon-response", iconManager.getSearchIcon());
 });
 
-ipcMain.on("command-line-execution", (arg) => {
+ipcMain.on("command-line-execution", (arg: string) => {
     mainWindow.webContents.send("command-line-output", arg);
     updateWindowSize(config.maxSearchResultCount);
 });

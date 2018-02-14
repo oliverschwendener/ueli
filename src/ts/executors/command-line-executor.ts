@@ -32,7 +32,7 @@ export class CommandLineExecutor implements Executor {
             console.log(`Exit ${code}`);
         });
 
-        ipcMain.on("exit-command-line-tool", (event, arg) => {
+        ipcMain.on("exit-command-line-tool", () => {
             commandLineTool.kill();
         });
     }

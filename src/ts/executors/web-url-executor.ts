@@ -15,7 +15,7 @@ export class WebUrlExecutor implements Executor {
         this.handleCommandExecution(command);
     }
 
-    private handleCommandExecution(command): void {
+    private handleCommandExecution(command: string): void {
         childProcess.exec(command, (err, stout, sterr) => {
             if (err) {
                 throw err;
