@@ -3,9 +3,12 @@ import { ProgramsPlugin } from "./search-plugins/programs-plugin";
 import { HomeFolderSearchPlugin } from "./search-plugins/home-folder-plugin";
 import { ElectronizrCommandsSearchPlugin } from "./search-plugins/electronizr-commands-plugin";
 import { Injector, OperatingSystem } from "./injector";
-import { WindowsSettingsPlugin } from "./search-plugins/windows-settings-plugin";
+import { WindowsSettingsSearchPlugin } from "./search-plugins/windows-settings-plugin";
+import { Config } from "./config";
+import { Windows10AppsSearchPlugin } from "./search-plugins/windows-apps-plugin";
 
 export class SearchPluginManager {
+    private os = Injector.getCurrentOperatingSystem();
     private plugins: SearchPlugin[];
 
     public constructor() {
@@ -15,8 +18,12 @@ export class SearchPluginManager {
             new ElectronizrCommandsSearchPlugin()
         ];
 
-        if (Injector.getCurrentOperatingSystem() === OperatingSystem.Windows) {
-            this.plugins.push(new WindowsSettingsPlugin());
+        if (this.os === OperatingSystem.Windows && Config.searchOperatinSystemSettings) {
+            this.plugins.push(new WindowsSettingsSearchPlugin());
+        }
+
+        if (this.os === OperatingSystem.Windows && Config.searchWindows10Apps) {
+            this.plugins.push(new Windows10AppsSearchPlugin());
         }
     }
 

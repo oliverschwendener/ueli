@@ -26,10 +26,14 @@ export class Config {
 
     public static readonly autoStartApp = true;
 
+    public static readonly searchOperatinSystemSettings = true;
+    public static readonly searchWindows10Apps = true;
+
     public static readonly commandLinePrefix = ">";
     public static readonly electronizrCommandPrefix = "ezr:";
     public static readonly windowsSettingsPrefix = "win:"
     public static readonly webSearchSeparator = "?";
+
     public static readonly webSearches = [
         <WebSearch>{
             name: "Google",
