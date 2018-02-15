@@ -13,9 +13,22 @@ import { WebUrlExecutor } from "./executors/web-url-executor";
 export class Config {
     public static readonly userInputHeight = 80;
     public static readonly searchResultHeight = 60;
+    public static readonly windowWith = 860;
+    public static readonly maxSearchResultCount = 8;
+    public static readonly minWindowHeight = Config.userInputHeight;
+    public static readonly maxWindowHeight = Config.userInputHeight + (Config.maxSearchResultCount * Config.searchResultHeight);
+
+    public static calculateWindowHeight(searchResultCount: number): number {
+        return searchResultCount >= Config.maxSearchResultCount
+            ? Config.maxWindowHeight
+            : Config.minWindowHeight + (searchResultCount * Config.searchResultHeight);
+    }
+
+    public static readonly autoStartApp = true;
 
     public static readonly commandLinePrefix = ">";
     public static readonly electronizrCommandPrefix = "ezr:";
+    public static readonly windowsSettingsPrefix = "win:"
     public static readonly webSearchSeparator = "?";
     public static readonly webSearches = [
         <WebSearch>{
@@ -69,15 +82,4 @@ export class Config {
                     </svg>`
         }
     ];
-
-    public static readonly windowWith = 860;
-    public static readonly maxSearchResultCount = 8;
-    public static readonly minWindowHeight = Config.userInputHeight;
-    public static readonly maxWindowHeight = Config.userInputHeight + (Config.maxSearchResultCount * Config.searchResultHeight);
-
-    public static calculateWindowHeight(searchResultCount: number): number {
-        return searchResultCount >= Config.maxSearchResultCount
-            ? Config.maxWindowHeight
-            : Config.minWindowHeight + (searchResultCount * Config.searchResultHeight);
-    }
 }

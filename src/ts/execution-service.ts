@@ -1,5 +1,5 @@
 import * as childProcess from "child_process";
-import { Injector } from "./injector";
+import { Injector, OperatingSystem } from "./injector";
 import { ipcMain } from "electron";
 import { Executor } from "./executors/executor";
 import { ElectronizrCommandExecutor } from "./executors/electronizr-command-executor";
@@ -14,6 +14,8 @@ import { WebSearchExecutionArgumentValidator } from "./execution-argument-valida
 import { WebSearchExecutor } from "./executors/web-search-executor";
 import { WebUrlExecutionArgumentValidator } from "./execution-argument-validators/web-url-execution-argument-validator";
 import { ExecutionArgumentValidator } from "./execution-argument-validators/execution-argument-validator";
+import { WindowsSettingsExecutionArgumentValidator } from "./execution-argument-validators/windows-settings-execution-argument-validator";
+import { WindowsSettingsExecutor } from "./executors/windows-settings-executor";
 
 export class ExecutionService {
     private validatorExecutorCombinations = [
@@ -38,6 +40,17 @@ export class ExecutionService {
             executor: new WebUrlExecutor()
         }
     ];
+
+    constructor() {
+        if (Injector.getCurrentOperatingSystem() === OperatingSystem.Windows) {
+            this.validatorExecutorCombinations.push(
+                <ValidatorExecutorCombination>{
+                    validator: new WindowsSettingsExecutionArgumentValidator(),
+                    executor: new WindowsSettingsExecutor()
+                }
+            )
+        }
+    }
 
     public execute(executionArgument: string): void {
         for (let combi of this.validatorExecutorCombinations) {

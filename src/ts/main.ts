@@ -92,7 +92,7 @@ autoUpdater.on("update-downloaded", (): void => {
 
 function setAutostartSettings() {
     app.setLoginItemSettings({
-        openAtLogin: true,
+        openAtLogin: Config.autoStartApp,
         path: process.execPath,
         args: []
     });
