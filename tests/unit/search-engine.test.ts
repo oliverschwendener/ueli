@@ -11,7 +11,7 @@ function getFakeItems(items: string[]): SearchResultItem[] {
     })
 }
 
-describe("Search engine", (): void => {
+describe("SearchEngine", (): void => {
     describe("search", (): void => {
         it("should return more than 0 search result items", (): void => {
             let fakeItems = getFakeItems(["abc", "abcd", "abcde"]);

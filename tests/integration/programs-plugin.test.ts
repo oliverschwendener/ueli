@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ProgramsPlugin, WindowsProgramRepository } from "./../../src/ts/search-plugins/programs-plugin";
 
-describe("programs-plugin", (): void => {
+describe("ProgramsPlugin", (): void => {
     describe("getAllItems", (): void => {
         it("should return some programs", (): void => {
             let programsPlugin = new ProgramsPlugin();

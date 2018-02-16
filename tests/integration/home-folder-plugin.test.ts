@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { HomeFolderSearchPlugin } from "./../../src/ts/search-plugins/home-folder-plugin";
 
-describe("HomeFolderPlugin", (): void => {
-    describe("get search result", (): void => {
+describe("HomeFolderSearchPlugin", (): void => {
+    describe("get all items", (): void => {
         it("should return more than zero search result items", (): void => {
             let homeFolderPlugin = new HomeFolderSearchPlugin();
             let actual = homeFolderPlugin.getAllItems();

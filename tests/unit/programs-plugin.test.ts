@@ -10,7 +10,7 @@ function getTestPrograms(programNames: string[]) {
     });
 }
 
-describe("programs-plugin", (): void => {
+describe("ProgramsPlugin", (): void => {
     describe("getAllItems", (): void => {
         it("should return all programs", (): void => {
             let fakePrograms = getTestPrograms([
@@ -20,6 +20,7 @@ describe("programs-plugin", (): void => {
                 "Native Instruments Maschine 2",
                 "Visual Studio Code"
             ]);
+
             let fakeProgramRepository = new FakeProgramRepository(fakePrograms);
             let programsPlugin = new ProgramsPlugin(fakeProgramRepository);
 
