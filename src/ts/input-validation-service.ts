@@ -15,6 +15,7 @@ import { WebSearchInputValidator } from "./input-validators.ts/web-search-input-
 import { WebSearchSearcher } from "./searcher/web-search-searcher";
 import { WebUrlInputValidator } from "./input-validators.ts/web-url-input-validator";
 import { WebUrlSearcher } from "./searcher/web-url-searcher";
+import { StringHelpers } from "./helpers/string-helpers";
 
 export class InputValidationService {
     private validatorSearcherCombinations = [
@@ -39,6 +40,12 @@ export class InputValidationService {
     private searchPluginItems = this.loadSearchPluginItems();
 
     public getSearchResult(userInput: string): SearchResultItem[] {
+        userInput = StringHelpers.trimAndReplaceMultipleWhiteSpacesWithOne(userInput);
+
+        if (StringHelpers.stringIsWhiteSpace(userInput)) {
+            return this.handleEmptyUserInput();
+        }
+
         for (let combi of this.validatorSearcherCombinations) {
             if (combi.validator.isValidForSearchResults(userInput)) {
                 return combi.searcher.getSearchResult(userInput);
@@ -51,6 +58,10 @@ export class InputValidationService {
     private handleSearchEngineResult(userInput: string): SearchResultItem[] {
         let searchEngine = new SearchEngine(this.searchPluginItems);
         return searchEngine.search(userInput);
+    }
+
+    private handleEmptyUserInput(): SearchResultItem[] {
+        return [];
     }
 
     private loadSearchPluginItems(): SearchResultItem[] {
