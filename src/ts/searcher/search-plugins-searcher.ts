@@ -1,12 +1,13 @@
 import { Searcher } from "./searcher";
-import { SearchResultItem } from "../search-engine";
+import { SearchResultItem, SearchEngine } from "../search-engine";
 import { SearchPluginManager } from "../search-plugin-manager";
 
 export class SearchPluginsSearcher implements Searcher {
     private items = this.loadSearchPluginItems();
 
     public getSearchResult(userInput: string): SearchResultItem[] {
-        return this.items;
+        let searchEngine = new SearchEngine(this.items);
+        return searchEngine.search(userInput);
     }
 
     private loadSearchPluginItems(): SearchResultItem[] {
