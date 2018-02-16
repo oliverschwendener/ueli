@@ -35,8 +35,21 @@ function deleteTestFolders(folderPaths: string[]): void {
     }
 }
 
-describe("File Helpers", (): void => {
-    describe("getFilesFromFolderRecursively", (): void => {
+describe(FileHelpers.name, (): void => {
+    describe(FileHelpers.getFilesFromFolder.name, (): void => {
+        it("should return some files", (): void => {
+            let testFolder = testFolderPaths[0];
+            createTestFolders([testFolder]);
+
+            let actual = FileHelpers.getFilesFromFolder(testFolder);
+
+            expect(actual.length).to.be.greaterThan(0);
+
+            deleteTestFolders([testFolder]);
+        });
+    });
+
+    describe(FileHelpers.getFilesFromFolderRecursively.name, (): void => {
         it("should return some files", (): void => {
             let testFolder = testFolderPaths[0];
             createTestFolders([testFolder]);
@@ -49,7 +62,7 @@ describe("File Helpers", (): void => {
         });
     });
 
-    describe("getFilesFromFoldersRecursivley", (): void => {
+    describe(FileHelpers.getFilesFromFoldersRecursively.name, (): void => {
         it("should return some files", (): void => {
             let testFolders = testFolderPaths;
             createTestFolders(testFolders);

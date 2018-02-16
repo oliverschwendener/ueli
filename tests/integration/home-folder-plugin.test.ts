@@ -1,17 +1,17 @@
 import { expect } from "chai";
 import { HomeFolderSearchPlugin } from "./../../src/ts/search-plugins/home-folder-plugin";
 
-describe("HomeFolderSearchPlugin", (): void => {
-    describe("get all items", (): void => {
+describe(HomeFolderSearchPlugin.name, (): void => {
+    let plugin = new HomeFolderSearchPlugin();
+
+    describe(plugin.getAllItems.name, (): void => {
         it("should return more than zero search result items", (): void => {
-            let homeFolderPlugin = new HomeFolderSearchPlugin();
-            let actual = homeFolderPlugin.getAllItems();
+            let actual = plugin.getAllItems();
             expect(actual.length).to.be.above(0);
         });
 
         it("all returned items should have name, execution argument and tags set", (): void => {
-            let homeFolderPlugin = new HomeFolderSearchPlugin();
-            let actual = homeFolderPlugin.getAllItems();
+            let actual = plugin.getAllItems();
 
             for (let item of actual) {
                 expect(item.name.length).to.be.above(0);
