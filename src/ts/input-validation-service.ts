@@ -16,6 +16,8 @@ import { WebSearchSearcher } from "./searcher/web-search-searcher";
 import { WebUrlInputValidator } from "./input-validators/web-url-input-validator";
 import { WebUrlSearcher } from "./searcher/web-url-searcher";
 import { StringHelpers } from "./helpers/string-helpers";
+import { SearchPluginsInputValidator } from "./input-validators/search-plugins-input-validator";
+import { SearchPluginsSearcher } from "./searcher/search-plugins-searcher";
 
 export class InputValidationService {
     private validatorSearcherCombinations = [
@@ -34,16 +36,18 @@ export class InputValidationService {
         <ValidatorSearcherCombination>{
             validator: new WebUrlInputValidator(),
             searcher: new WebUrlSearcher()
+        },
+        <ValidatorSearcherCombination>{
+            validator: new SearchPluginsInputValidator(),
+            searcher: new SearchPluginsSearcher()
         }
     ];
-
-    private searchPluginItems = this.loadSearchPluginItems();
 
     public getSearchResult(userInput: string): SearchResultItem[] {
         userInput = StringHelpers.trimAndReplaceMultipleWhiteSpacesWithOne(userInput);
 
         if (StringHelpers.stringIsWhiteSpace(userInput)) {
-            return this.handleEmptyUserInput();
+            return [];
         }
 
         for (let combi of this.validatorSearcherCombinations) {
@@ -52,28 +56,7 @@ export class InputValidationService {
             }
         }
 
-        return this.handleSearchEngineResult(userInput);
-    }
-
-    private handleSearchEngineResult(userInput: string): SearchResultItem[] {
-        let searchEngine = new SearchEngine(this.searchPluginItems);
-        return searchEngine.search(userInput);
-    }
-
-    private handleEmptyUserInput(): SearchResultItem[] {
-        return [];
-    }
-
-    private loadSearchPluginItems(): SearchResultItem[] {
-        let result = [] as SearchResultItem[];
-
-        let plugins = new SearchPluginManager().getPlugins();
-
-        for (let plugin of plugins) {
-            result = result.concat(plugin.getAllItems());
-        }
-
-        return result;
+        throw new Error(`No search results found for ${userInput}`);
     }
 }
 
