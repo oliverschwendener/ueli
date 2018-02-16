@@ -1,3 +1,6 @@
+import * as fs from "fs";
+import * as os from "os";
+import * as path from "path";
 import { WebSearch, WebSearchExecutor } from "./executors/web-search-executor";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
 import { FilePathExecutor } from "./executors/file-path-executor";
@@ -10,11 +13,50 @@ import { InputValidationService } from "./input-validation-service";
 import { WebUrlExecutionArgumentValidator } from "./execution-argument-validators/web-url-execution-argument-validator";
 import { WebUrlExecutor } from "./executors/web-url-executor";
 
+const pkg = require("../../package.json");
+const version = pkg.version;
+const appName = pkg.productName;
+const defaultConfig = {
+    version: version,
+    windowWith: 860,
+    maxSearchResultCount: 8,
+    autoStartApp: true,
+    searchOperatinSystemSettings: true,
+    searchWindows10Apps: true
+};
+
+let configFilePath = path.join(os.homedir(), "electronizr.config.json");
+let config = loadConigFromConfigFile();
+
+function loadConigFromConfigFile(): any {
+    try {
+        let fileContent = fs.readFileSync(configFilePath, "utf-8");
+        let parsed = JSON.parse(fileContent);
+        if (parsed.version === undefined || !parsed.version.startsWith("3")) {
+            writeDefaultConfigToConfigFile();
+            return defaultConfig;
+        }
+        else {
+            return parsed;
+        }
+    }
+    catch (err) {
+        writeDefaultConfigToConfigFile();
+        return defaultConfig;
+    }
+}
+
+function writeDefaultConfigToConfigFile(): void {
+    var stringifiedConfig = JSON.stringify(defaultConfig);
+    fs.writeFileSync(configFilePath, stringifiedConfig, "utf-8");
+}
+
 export class Config {
     public static readonly userInputHeight = 80;
     public static readonly searchResultHeight = 60;
-    public static readonly windowWith = 860;
-    public static readonly maxSearchResultCount = 8;
+    public static readonly windowWith = config.windowWith;
+    public static readonly maxSearchResultCount = config.maxSearchResultCount;
+
     public static readonly minWindowHeight = Config.userInputHeight;
     public static readonly maxWindowHeight = Config.userInputHeight + (Config.maxSearchResultCount * Config.searchResultHeight);
 
@@ -24,14 +66,14 @@ export class Config {
             : Config.minWindowHeight + (searchResultCount * Config.searchResultHeight);
     }
 
-    public static readonly autoStartApp = true;
+    public static readonly autoStartApp = config.autoStartApp;
 
-    public static readonly searchOperatinSystemSettings = true;
-    public static readonly searchWindows10Apps = true;
+    public static readonly searchOperatinSystemSettings = config.searchOperatinSystemSettings;
+    public static readonly searchWindows10Apps = config.searchWindows10Apps;
 
     public static readonly commandLinePrefix = ">";
     public static readonly electronizrCommandPrefix = "ezr:";
-    public static readonly windowsSettingsPrefix = "win:"
+    public static readonly windowsSettingsPrefix = "win:";
     public static readonly webSearchSeparator = "?";
 
     public static readonly webSearches = [
@@ -86,4 +128,8 @@ export class Config {
                     </svg>`
         }
     ];
+
+    public static getConfig(): any {
+        return config;
+    }
 }
