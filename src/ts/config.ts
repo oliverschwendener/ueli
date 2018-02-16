@@ -52,6 +52,7 @@ function writeDefaultConfigToConfigFile(): void {
 }
 
 export class Config {
+    public static readonly configFilePath = configFilePath;
     public static readonly userInputHeight = 80;
     public static readonly searchResultHeight = 60;
     public static readonly windowWith = config.windowWith;
