@@ -21,8 +21,7 @@ const defaultConfig = {
     windowWith: 860,
     maxSearchResultCount: 8,
     autoStartApp: true,
-    searchOperatinSystemSettings: true,
-    searchWindows10Apps: true
+    searchOperatinSystemSettings: true
 };
 
 let configFilePath = path.join(os.homedir(), "electronizr.config.json");

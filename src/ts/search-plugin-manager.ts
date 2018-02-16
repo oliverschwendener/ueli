@@ -5,7 +5,6 @@ import { ElectronizrCommandsSearchPlugin } from "./search-plugins/electronizr-co
 import { Injector, OperatingSystem } from "./injector";
 import { Windows10SettingsSearchPlugin } from "./search-plugins/windows-10-settings-plugin";
 import { Config } from "./config";
-import { Windows10AppsSearchPlugin } from "./search-plugins/windows-10-apps-plugin";
 
 export class SearchPluginManager {
     private os = Injector.getCurrentOperatingSystem();
@@ -19,11 +18,7 @@ export class SearchPluginManager {
         ];
 
         if (this.os === OperatingSystem.Windows && Config.searchOperatinSystemSettings) {
-            this.plugins.push(new Windows10SettingsSearchPlugin());
-        }
-
-        if (this.os === OperatingSystem.Windows && Config.searchWindows10Apps) {
-            this.plugins.push(new Windows10AppsSearchPlugin());
+            this.plugins.push(Injector.getOperatingSystemSettingsPlugin());
         }
     }
 

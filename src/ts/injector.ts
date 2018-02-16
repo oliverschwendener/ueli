@@ -4,6 +4,9 @@ import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } f
 import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
 import { Executor } from "./executors/executor";
 import { SearchResultItem } from "./search-engine";
+import { Windows10SettingsSearchPlugin } from "./search-plugins/windows-10-settings-plugin";
+import { SearchPlugin } from "./search-plugins/search-plugin";
+import { MacOsSettingsPlugin } from "./search-plugins/mac-os-settings-plugin";
 
 export class Injector {
     public static getCurrentOperatingSystem(): OperatingSystem {
@@ -108,6 +111,17 @@ export class Injector {
             }
             case OperatingSystem.macOS: {
                 return path.join(pathToProjectRoot, "img/icons/png/16x16.png");
+            }
+        }
+    }
+
+    public static getOperatingSystemSettingsPlugin(): SearchPlugin {
+        switch (Injector.getCurrentOperatingSystem()) {
+            case OperatingSystem.Windows: {
+                return new Windows10SettingsSearchPlugin();
+            }
+            case OperatingSystem.macOS: {
+                return new MacOsSettingsPlugin();
             }
         }
     }
