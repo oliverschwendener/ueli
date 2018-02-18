@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { ProgramsPlugin, WindowsProgramRepository } from "./../../src/ts/search-plugins/programs-plugin";
+import { ProgramsPlugin, WindowsProgramRepository } from "../../../src/ts/search-plugins/programs-plugin";
 
 describe(ProgramsPlugin.name, (): void => {
     let plugin = new ProgramsPlugin();

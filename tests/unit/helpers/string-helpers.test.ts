@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { StringHelpers } from "../../../src/ts/helpers/string-helpers";
+import { InputOutputCombination } from "../test-helpers";
 
 describe(StringHelpers.name, (): void => {
     describe(StringHelpers.removeWhiteSpace.name, (): void => {
@@ -70,9 +71,31 @@ describe(StringHelpers.name, (): void => {
             }
         });
     });
-});
 
-class InputOutputCombination {
-    public input: any;
-    public output: any;
-}
+    describe(StringHelpers.stringToWords.name, (): void => {
+        it("should convert a string to an array of its words", (): void => {
+            let combinations = [
+                <InputOutputCombination>{
+                    input: "this is a string",
+                    output: ["this", "is", "a", "string"]
+                },
+                <InputOutputCombination>{
+                    input: "  this    is    a             string      ",
+                    output: ["this", "is", "a", "string"]
+                },
+                <InputOutputCombination>{
+                    input: "this              is a string",
+                    output: ["this", "is", "a", "string"]
+                }
+            ];
+    
+            for (let combination of combinations){
+                let acutal = StringHelpers.stringToWords(combination.input);
+                
+                for (let i = 0; i < acutal.length; i++){
+                    expect(acutal[i]).to.equal(combination.output[i]);
+                }
+            }
+        });
+    });
+});

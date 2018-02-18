@@ -3,12 +3,13 @@ import { ipcMain } from "electron";
 import { SearchResultItem } from "../search-engine";
 import { spawn } from "child_process";
 import { Config } from "../config";
+import { CommandLineHelpers } from "../helpers/command-line-helpers";
 
 export class CommandLineExecutor implements Executor {
     public execute(executionArgument: string): void {
-        let command = this.buildCommand(executionArgument);
+        let command = CommandLineHelpers.buildCommand(executionArgument);
 
-        let commandLineTool = spawn(command.command, command.args);
+        let commandLineTool = spawn(command.name, command.args);
 
         commandLineTool.on("error", (err) => {
             this.sendCommandLineOutputToRenderer(err.message);
@@ -23,7 +24,7 @@ export class CommandLineExecutor implements Executor {
         });
 
         commandLineTool.on("exit", (code) => {
-            console.log(`Exit ${code}`);
+            this.sendCommandLineOutputToRenderer(`Exit ${code}`);
         });
 
         ipcMain.on("exit-command-line-tool", () => {
@@ -38,28 +39,4 @@ export class CommandLineExecutor implements Executor {
     public hideAfterExecution(): boolean {
         return false;
     }
-
-    private buildCommand(executionArgument: string): Command {
-        let words = executionArgument.split(/\s+/g);
-        let command = words[0].replace(Config.commandLinePrefix, "");
-        let args = [] as string[];
-
-        for (let i = 0; i < words.length; i++) {
-            if (i === 0) {
-                continue;
-            }
-
-            args.push(words[i]);
-        }
-
-        return <Command>{
-            command: command,
-            args: args
-        };
-    }
-}
-
-class Command {
-    public command: string;
-    public args: string[];
 }

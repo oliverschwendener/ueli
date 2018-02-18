@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { HomeFolderSearchPlugin } from "./../../src/ts/search-plugins/home-folder-plugin";
+import { HomeFolderSearchPlugin } from "../../../src/ts/search-plugins/home-folder-plugin";
 
 describe(HomeFolderSearchPlugin.name, (): void => {
     let plugin = new HomeFolderSearchPlugin();

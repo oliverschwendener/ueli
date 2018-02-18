@@ -2,7 +2,7 @@ import * as path from "path";
 import * as os from "os";
 import * as fs from "fs";
 import { expect } from "chai";
-import { FileHelpers } from "./../../src/ts/helpers/file-helpers";
+import { FileHelpers } from "../../../src/ts/helpers/file-helpers";
 
 const testFolderPaths = [
     path.join(os.homedir(), "test-folder"),
