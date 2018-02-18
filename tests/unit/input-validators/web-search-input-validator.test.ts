@@ -8,7 +8,7 @@ describe(WebSearchInputValidator.name, (): void => {
     let webSearches = Config.webSearches;
 
     for (let webSearch of webSearches) {
-        it("should return true when passing in a valid argument", (): void => {
+        it(`${webSearch.name} web search should return true when passing in a valid argument`, (): void => {
             let validInputs = [
                 `${webSearch.prefix}${Config.webSearchSeparator}search something`,
                 `${webSearch.prefix}${Config.webSearchSeparator} search some thing`,
@@ -21,7 +21,7 @@ describe(WebSearchInputValidator.name, (): void => {
             }
         });
 
-        it("should return false when passing in an invalid argument", (): void => {
+        it(`${webSearch.name} web search should return false when passing in an invalid argument`, (): void => {
             let invalidInputs = [
                 `${webSearch.prefix}`,
                 "google something",
