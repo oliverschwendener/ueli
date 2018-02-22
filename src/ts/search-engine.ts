@@ -41,3 +41,8 @@ export class SearchResultItem {
     public icon: string;
     public tags: string[];
 }
+
+export class SearchResultItemViewModel extends SearchResultItem {
+    public id: string;
+    public active: boolean;
+}
