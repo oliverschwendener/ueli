@@ -4,7 +4,6 @@ const ipcRenderer = require("electron").ipcRenderer
 const delayOnExecution = 50; // in milliseconds
 
 document.addEventListener('keyup', handleGlobalKeyPress);
-console.log(__dirname)
 
 const vue = new Vue({
     el: '#vue-root',
