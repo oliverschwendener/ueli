@@ -26,11 +26,11 @@ function createMainWindow(): void {
         frame: false,
         show: false,
         skipTaskbar: true,
-        resizable: false,
+        resizable: true,
         backgroundColor: '#00000000',
     });
 
-    mainWindow.loadURL(`file://${__dirname}/../main.html`);
+    mainWindow.loadURL(`file://${__dirname}/../../main.html`);
     mainWindow.setSize(Config.windowWith, Config.minWindowHeight);
 
     mainWindow.on("close", quitApp);

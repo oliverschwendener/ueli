@@ -6,7 +6,7 @@ const sourceFiles = {
 }
 
 const outputFolders = {
-    css: './src/styles/css',
+    css: './dist/styles/css',
 }
 
 gulp.task('styles', () => {

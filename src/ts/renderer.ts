@@ -1,21 +1,23 @@
-let os = require('os');
-let ipcRenderer = require('electron').ipcRenderer;
-let delayOnExecution = 50; // in milliseconds
+const Vue = require("vue/dist/vue.min.js")
+const os = require("os")
+const ipcRenderer = require("electron").ipcRenderer
+const delayOnExecution = 50; // in milliseconds
 
 document.addEventListener('keyup', handleGlobalKeyPress);
+console.log(__dirname)
 
-let vue = new Vue({
+const vue = new Vue({
     el: '#vue-root',
     data: {
-        stylesheetPath: os.platform() === 'win32' ? './styles/css/windows.css' : './styles/css/mac.css',
+        stylesheetPath: os.platform() === 'win32' ? __dirname + '/dist/styles/css/windows.css' : __dirname + '/dist/styles/css/mac.css',
         userInput: '',
         autoFocus: true,
         searchIcon: '',
-        searchResults: [],
-        commandLineOutput: []
+        searchResults: Array<any>(),
+        commandLineOutput: Array<any>()
     },
     methods: {
-        handleKeyPress: (event) => {
+        handleKeyPress: (event: KeyboardEvent) => {
             if (event.key === 'Enter') {
                 handleEnterPress();
             }
@@ -40,35 +42,35 @@ let vue = new Vue({
         }
     },
     watch: {
-        userInput: (val) => {
+        userInput: (val:any) => {
             vue.commandLineOutput = [];
             ipcRenderer.send('get-search', val);
         }
     }
 });
 
-ipcRenderer.on('get-search-response', (event, arg) => {
+ipcRenderer.on('get-search-response', (event: Electron.Event, arg: any) => {
     updateSearchResults(arg);
 });
 
 ipcRenderer.send('get-search-icon');
 
-ipcRenderer.on('get-search-icon-response', (event, arg) => {
+ipcRenderer.on('get-search-icon-response', (event: Electron.Event, arg: any) => {
     vue.searchIcon = arg;
 });
 
-ipcRenderer.on("auto-complete-response", (event, arg) => {
+ipcRenderer.on("auto-complete-response", (event: Electron.Event, arg: any) => {
     vue.userInput = arg;
 });
 
-ipcRenderer.on('command-line-output', (event, arg) => {
+ipcRenderer.on('command-line-output', (event: Electron.Event, arg: any) => {
     vue.commandLineOutput.push(arg);
 });
 
-function updateSearchResults(searchResults) {
+function updateSearchResults(searchResults: any) {
     let idIndex = 0;
 
-    searchResults.forEach((s) => {
+    searchResults.forEach((s: any) => {
         s.id = `search-result-item-${idIndex}`;
         s.active = false;
         idIndex++;
@@ -85,7 +87,7 @@ function updateSearchResults(searchResults) {
     }
 }
 
-function changeActiveItem(direction) {
+function changeActiveItem(direction: any) {
     if (vue.searchResults.length === 0) {
         return;
     }
@@ -98,10 +100,11 @@ function changeActiveItem(direction) {
         }
     }
 
-    vue.searchResults.forEach((s) => {
+    vue.searchResults.forEach((s:any) => {
         s.active = false;
     });
 
+    if (next == undefined) return
     if (next < 0) {
         next = vue.searchResults.length - 1;
     }
@@ -113,8 +116,8 @@ function changeActiveItem(direction) {
     scrollIntoView(vue.searchResults[next]);
 }
 
-function scrollIntoView(searchResult) {
-    el = document.getElementById(searchResult.id);
+function scrollIntoView(searchResult: any) {
+    const el = document.getElementById(searchResult.id);
     if (el !== undefined && el !== null) {
         el.scrollIntoView();
     }
@@ -148,7 +151,7 @@ function handleAutoCompletion() {
 }
 
 function getActiveItem() {
-    let activeSearchResults = vue.searchResults.filter((s) => {
+    let activeSearchResults = vue.searchResults.filter((s: any) => {
         return s.active;
     });
 
@@ -157,7 +160,7 @@ function getActiveItem() {
     }
 }
 
-function execute(executionArgument) {
+function execute(executionArgument: any) {
     ipcRenderer.send('execute', executionArgument);
 }
 
@@ -165,12 +168,15 @@ function resetUserInput() {
     vue.userInput = '';
 }
 
-function handleGlobalKeyPress(event) {
+function handleGlobalKeyPress(event: any) {
     if (event.key === 'F6' || (event.key === 'l' && event.ctrlKey)) {
         focusOnInput();
     }
 }
 
 function focusOnInput() {
-    document.getElementById('user-input').focus();
+    const userInput = document.getElementById('user-input')
+    if (userInput != null) {
+        userInput.focus()
+    }
 }
