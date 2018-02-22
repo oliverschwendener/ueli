@@ -1,10 +1,11 @@
-import { SearchPlugin } from "./search-plugins/search-plugin";
-import { ProgramsPlugin } from "./search-plugins/programs-plugin";
-import { HomeFolderSearchPlugin } from "./search-plugins/home-folder-plugin";
-import { ElectronizrCommandsSearchPlugin } from "./search-plugins/electronizr-commands-plugin";
-import { Injector, OperatingSystem } from "./injector";
-import { Windows10SettingsSearchPlugin } from "./search-plugins/windows-10-settings-plugin";
 import { Config } from "./config";
+import { Injector } from "./injector";
+import { OperatingSystem } from "./operating-system";
+import { ElectronizrCommandsSearchPlugin } from "./search-plugins/electronizr-commands-plugin";
+import { HomeFolderSearchPlugin } from "./search-plugins/home-folder-plugin";
+import { ProgramsPlugin } from "./search-plugins/programs-plugin";
+import { SearchPlugin } from "./search-plugins/search-plugin";
+import { Windows10SettingsSearchPlugin } from "./search-plugins/windows-10-settings-plugin";
 
 export class SearchPluginManager {
     private os = Injector.getCurrentOperatingSystem();
@@ -14,7 +15,7 @@ export class SearchPluginManager {
         this.plugins = [
             new ProgramsPlugin(),
             new HomeFolderSearchPlugin(),
-            new ElectronizrCommandsSearchPlugin()
+            new ElectronizrCommandsSearchPlugin(),
         ];
 
         if (this.os === OperatingSystem.Windows && Config.searchOperatinSystemSettings) {

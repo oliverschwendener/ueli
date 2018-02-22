@@ -1,9 +1,10 @@
 import * as fs from "fs";
 import * as path from "path";
-import { Searcher } from "./searcher";
-import { SearchResultItem, SearchEngine } from "../search-engine";
 import { FileHelpers } from "../helpers/file-helpers";
 import { Injector } from "../injector";
+import { SearchEngine } from "../search-engine";
+import { SearchResultItem } from "../search-result-item";
+import { Searcher } from "./searcher";
 
 export class FilePathSearcher implements Searcher {
     private iconManager = Injector.getIconManager();
@@ -13,17 +14,15 @@ export class FilePathSearcher implements Searcher {
 
         if (fs.existsSync(userInput)) {
             filePath = userInput;
-            let stats = fs.lstatSync(filePath);
+            const stats = fs.lstatSync(filePath);
             if (stats.isDirectory()) {
                 return this.getFolderSearchResult(filePath);
-            }
-            else {
+            } else {
                 return this.getFileSearchResult(filePath);
             }
-        }
-        else if (fs.existsSync(path.dirname(userInput))) {
+        } else if (fs.existsSync(path.dirname(userInput))) {
             filePath = path.dirname(userInput);
-            let searchTerm = path.basename(userInput);
+            const searchTerm = path.basename(userInput);
             return this.getFolderSearchResult(filePath, searchTerm);
         }
 
@@ -31,19 +30,19 @@ export class FilePathSearcher implements Searcher {
     }
 
     private getFolderSearchResult(folderPath: string, searchTerm?: string): SearchResultItem[] {
-        let result = [] as SearchResultItem[];
+        const result = [] as SearchResultItem[];
 
-        let files = FileHelpers.getFilesFromFolder(folderPath);
+        const files = FileHelpers.getFilesFromFolder(folderPath);
 
-        for (let file of files) {
-            result.push(<SearchResultItem>{
-                name: path.basename(file),
+        for (const file of files) {
+            result.push({
                 executionArgument: file,
                 icon: fs.lstatSync(file).isDirectory()
                     ? this.iconManager.getFolderIcon()
                     : this.iconManager.getFileIcon(),
-                tags: []
-            });
+                name: path.basename(file),
+                tags: [],
+            } as SearchResultItem);
         }
 
         return searchTerm === undefined
@@ -52,18 +51,18 @@ export class FilePathSearcher implements Searcher {
     }
 
     private sortSearchResult(searchResultItems: SearchResultItem[], searchTerm: string): SearchResultItem[] {
-        let searchEngine = new SearchEngine(searchResultItems);
+        const searchEngine = new SearchEngine(searchResultItems);
         return searchEngine.search(searchTerm);
     }
 
     private getFileSearchResult(filePath: string): SearchResultItem[] {
         return [
-            <SearchResultItem>{
-                name: path.basename(filePath),
+            {
                 executionArgument: filePath,
                 icon: this.iconManager.getFileIcon(),
-                tags: []
-            }
+                name: path.basename(filePath),
+                tags: [],
+            } as SearchResultItem,
         ];
     }
 }

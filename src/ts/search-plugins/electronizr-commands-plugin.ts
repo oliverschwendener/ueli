@@ -1,7 +1,7 @@
 import * as path from "path";
-import { SearchPlugin } from "./search-plugin";
-import { SearchResultItem } from "../search-engine";
 import { Config } from "../config";
+import { SearchResultItem } from "../search-result-item";
+import { SearchPlugin } from "./search-plugin";
 
 export class ElectronizrCommandsSearchPlugin implements SearchPlugin {
     private items: ElectronizrCommand[];
@@ -13,34 +13,29 @@ export class ElectronizrCommandsSearchPlugin implements SearchPlugin {
 
     public constructor() {
         this.items = [
-            <ElectronizrCommand>{
+            {
+                executionArgument: `${Config.electronizrCommandPrefix}reload`,
                 name: "Reload electronizr",
-                executionArgument: `${Config.electronizrCommandPrefix}reload`
-            },
-            <ElectronizrCommand>{
+            } as ElectronizrCommand,
+            {
+                executionArgument: `${Config.electronizrCommandPrefix}exit`,
                 name: "Exit electronizr",
-                executionArgument: `${Config.electronizrCommandPrefix}exit`
-            },
-            <ElectronizrCommand>{
+            } as ElectronizrCommand,
+            {
+                executionArgument: Config.configFilePath,
                 name: "Edit configuration file",
-                executionArgument: Config.configFilePath
-            }
+            } as ElectronizrCommand,
         ];
     }
 
     public getAllItems(): SearchResultItem[] {
         return this.items.map((i): SearchResultItem => {
-            return <SearchResultItem>{
-                name: i.name,
+            return {
                 executionArgument: i.executionArgument,
                 icon: this.icon,
-                tags: []
-            };
+                name: i.name,
+                tags: [],
+            } as SearchResultItem;
         });
     }
-}
-
-class ElectronizrCommand {
-    public name: string;
-    public executionArgument: string;
 }

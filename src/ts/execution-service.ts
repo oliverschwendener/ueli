@@ -1,59 +1,61 @@
 import * as childProcess from "child_process";
-import { Injector, OperatingSystem } from "./injector";
 import { ipcMain } from "electron";
-import { Executor } from "./executors/executor";
-import { ElectronizrCommandExecutor } from "./executors/electronizr-command-executor";
-import { WebUrlExecutor } from "./executors/web-url-executor";
-import { FilePathExecutor } from "./executors/file-path-executor";
-import { CommandLineExecutor } from "./executors/command-line-executor";
 import { Config } from "./config";
 import { CommandLineExecutionArgumentValidator } from "./execution-argument-validators/command-line-execution-argument-validator";
 import { ElectronizrCommandExecutionArgumentValidator } from "./execution-argument-validators/electronizr-command-execution-argument-validator";
+import { ExecutionArgumentValidator } from "./execution-argument-validators/execution-argument-validator";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
 import { WebSearchExecutionArgumentValidator } from "./execution-argument-validators/web-search-execution-argument-validator";
-import { WebSearchExecutor } from "./executors/web-search-executor";
 import { WebUrlExecutionArgumentValidator } from "./execution-argument-validators/web-url-execution-argument-validator";
-import { ExecutionArgumentValidator } from "./execution-argument-validators/execution-argument-validator";
 import { WindowsSettingsExecutionArgumentValidator } from "./execution-argument-validators/windows-settings-execution-argument-validator";
+import { CommandLineExecutor } from "./executors/command-line-executor";
+import { ElectronizrCommandExecutor } from "./executors/electronizr-command-executor";
+import { Executor } from "./executors/executor";
+import { FilePathExecutor } from "./executors/file-path-executor";
+import { WebSearchExecutor } from "./executors/web-search-executor";
+import { WebUrlExecutor } from "./executors/web-url-executor";
 import { WindowsSettingsExecutor } from "./executors/windows-settings-executor";
+import { Injector } from "./injector";
+import { OperatingSystem } from "./operating-system";
+import { ValidatorExecutorCombination } from "./validator-executor-combination";
 
 export class ExecutionService {
     private validatorExecutorCombinations = [
-        <ValidatorExecutorCombination>{
+        {
+            executor: new CommandLineExecutor(),
             validator: new CommandLineExecutionArgumentValidator(),
-            executor: new CommandLineExecutor()
         },
-        <ValidatorExecutorCombination>{
+        {
+            executor: new ElectronizrCommandExecutor(),
             validator: new ElectronizrCommandExecutionArgumentValidator(),
-            executor: new ElectronizrCommandExecutor()
         },
-        <ValidatorExecutorCombination>{
+        {
+            executor: new FilePathExecutor(),
             validator: new FilePathExecutionArgumentValidator(),
-            executor: new FilePathExecutor()
         },
-        <ValidatorExecutorCombination>{
+        {
+            executor: new WebSearchExecutor(),
             validator: new WebSearchExecutionArgumentValidator(),
-            executor: new WebSearchExecutor()
         },
-        <ValidatorExecutorCombination>{
+        {
+            executor: new WebUrlExecutor(),
             validator: new WebUrlExecutionArgumentValidator(),
-            executor: new WebUrlExecutor()
-        }
-    ];
+        },
+    ] as ValidatorExecutorCombination[];
 
     constructor() {
         if (Injector.getCurrentOperatingSystem() === OperatingSystem.Windows) {
             this.validatorExecutorCombinations.push(
-                <ValidatorExecutorCombination>{
+                {
+                    executor: new WindowsSettingsExecutor(),
                     validator: new WindowsSettingsExecutionArgumentValidator(),
-                    executor: new WindowsSettingsExecutor()
-                }
-            )
+                } as ValidatorExecutorCombination,
+            );
         }
     }
 
     public execute(executionArgument: string): void {
-        for (let combi of this.validatorExecutorCombinations) {
+        for (const combi of this.validatorExecutorCombinations) {
             if (combi.validator.isValidForExecution(executionArgument)) {
                 combi.executor.execute(executionArgument);
 
@@ -67,9 +69,4 @@ export class ExecutionService {
 
         throw new Error(`This argument (${executionArgument}) is not supported by the execution service`);
     }
-}
-
-class ValidatorExecutorCombination {
-    public validator: ExecutionArgumentValidator;
-    public executor: Executor;
 }

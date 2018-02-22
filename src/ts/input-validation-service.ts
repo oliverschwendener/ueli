@@ -1,46 +1,39 @@
-import { SearchEngine, SearchResultItem } from "./search-engine";
-import { SearchPluginManager } from "./search-plugin-manager";
-import { WebUrlExecutor } from "./executors/web-url-executor";
-import { Injector } from "./injector";
-import { FilePathExecutor } from "./executors/file-path-executor";
-import { CommandLineExecutor } from "./executors/command-line-executor";
-import { WebSearchExecutor } from "./executors/web-search-executor";
-import { InputValidator } from "./input-validators/input-validator";
-import { Searcher } from "./searcher/searcher";
-import { FilePathInputValidator } from "./input-validators/file-path-input-validator";
-import { FilePathSearcher } from "./searcher/file-path-searcher";
-import { CommandLineInputValidator } from "./input-validators/command-line-input-validator";
-import { CommandLineSearcher } from "./searcher/command-line-searcher";
-import { WebSearchInputValidator } from "./input-validators/web-search-input-validator";
-import { WebSearchSearcher } from "./searcher/web-search-searcher";
-import { WebUrlInputValidator } from "./input-validators/web-url-input-validator";
-import { WebUrlSearcher } from "./searcher/web-url-searcher";
 import { StringHelpers } from "./helpers/string-helpers";
+import { CommandLineInputValidator } from "./input-validators/command-line-input-validator";
+import { FilePathInputValidator } from "./input-validators/file-path-input-validator";
 import { SearchPluginsInputValidator } from "./input-validators/search-plugins-input-validator";
+import { WebSearchInputValidator } from "./input-validators/web-search-input-validator";
+import { WebUrlInputValidator } from "./input-validators/web-url-input-validator";
+import { SearchResultItem } from "./search-result-item";
+import { CommandLineSearcher } from "./searcher/command-line-searcher";
+import { FilePathSearcher } from "./searcher/file-path-searcher";
 import { SearchPluginsSearcher } from "./searcher/search-plugins-searcher";
+import { WebSearchSearcher } from "./searcher/web-search-searcher";
+import { WebUrlSearcher } from "./searcher/web-url-searcher";
+import { ValidatorSearcherCombination } from "./validator-searcher-combination";
 
 export class InputValidationService {
     private validatorSearcherCombinations = [
-        <ValidatorSearcherCombination>{
+        {
+            searcher: new FilePathSearcher(),
             validator: new FilePathInputValidator(),
-            searcher: new FilePathSearcher()
-        },
-        <ValidatorSearcherCombination>{
+        } as ValidatorSearcherCombination,
+        {
+            searcher: new CommandLineSearcher(),
             validator: new CommandLineInputValidator(),
-            searcher: new CommandLineSearcher()
-        },
-        <ValidatorSearcherCombination>{
+        } as ValidatorSearcherCombination,
+        {
+            searcher: new WebSearchSearcher(),
             validator: new WebSearchInputValidator(),
-            searcher: new WebSearchSearcher()
-        },
-        <ValidatorSearcherCombination>{
+        } as ValidatorSearcherCombination,
+        {
+            searcher: new WebUrlSearcher(),
             validator: new WebUrlInputValidator(),
-            searcher: new WebUrlSearcher()
-        },
-        <ValidatorSearcherCombination>{
+        } as ValidatorSearcherCombination,
+        {
+            searcher: new SearchPluginsSearcher(),
             validator: new SearchPluginsInputValidator(),
-            searcher: new SearchPluginsSearcher()
-        }
+        } as ValidatorSearcherCombination,
     ];
 
     public getSearchResult(userInput: string): SearchResultItem[] {
@@ -50,17 +43,12 @@ export class InputValidationService {
             return [];
         }
 
-        for (let combi of this.validatorSearcherCombinations) {
-            if (combi.validator.isValidForSearchResults(userInput)) {
-                return combi.searcher.getSearchResult(userInput);
+        for (const combination of this.validatorSearcherCombinations) {
+            if (combination.validator.isValidForSearchResults(userInput)) {
+                return combination.searcher.getSearchResult(userInput);
             }
         }
 
         throw new Error(`No search results found for ${userInput}`);
     }
-}
-
-class ValidatorSearcherCombination {
-    public validator: InputValidator;
-    public searcher: Searcher;
 }

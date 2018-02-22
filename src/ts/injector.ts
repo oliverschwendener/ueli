@@ -1,12 +1,16 @@
 import * as os from "os";
 import * as path from "path";
-import { ProgramRepository, WindowsProgramRepository, MacOsProgramRepository } from "./search-plugins/programs-plugin";
-import { IconManager, WindowsIconManager, MacOsIconManager } from "./icon-manager";
 import { Executor } from "./executors/executor";
-import { SearchResultItem } from "./search-engine";
-import { Windows10SettingsSearchPlugin } from "./search-plugins/windows-10-settings-plugin";
-import { SearchPlugin } from "./search-plugins/search-plugin";
+import { IconManager } from "./icon-manager/icon-manager";
+import { MacOsIconManager } from "./icon-manager/mac-os-icon-manager";
+import { WindowsIconManager } from "./icon-manager/windows-icon-manager";
+import { OperatingSystem } from "./operating-system";
+import { MacOsProgramRepository } from "./programs-plugin/macos-program-repository";
+import { ProgramRepository } from "./programs-plugin/program-repository";
+import { WindowsProgramRepository } from "./programs-plugin/windows-program-repository";
 import { MacOsSettingsPlugin } from "./search-plugins/mac-os-settings-plugin";
+import { SearchPlugin } from "./search-plugins/search-plugin";
+import { Windows10SettingsSearchPlugin } from "./search-plugins/windows-10-settings-plugin";
 
 export class Injector {
     public static getCurrentOperatingSystem(): OperatingSystem {
@@ -24,7 +28,7 @@ export class Injector {
     }
 
     public static getWebUrlRegExp(): RegExp {
-        return new RegExp(/^((https?:)?[/]{2})?([a-z0-9]+[.])+[a-z]+.*$/i, 'gi');
+        return new RegExp(/^((https?:)?[/]{2})?([a-z0-9]+[.])+[a-z]+.*$/i, "gi");
     }
 
     public static getProgramRepository(): ProgramRepository {
@@ -125,9 +129,4 @@ export class Injector {
             }
         }
     }
-}
-
-export enum OperatingSystem {
-    Windows,
-    macOS
 }

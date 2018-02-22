@@ -1,5 +1,5 @@
+import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
-import { SearchResultItem } from "../search-engine";
 
 export class WebUrlSearcher implements Searcher {
     private icon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" version="1.1">
@@ -9,17 +9,17 @@ export class WebUrlSearcher implements Searcher {
                     </svg>`;
 
     public getSearchResult(userInput: string): SearchResultItem[] {
-        let url = userInput.startsWith("http://") || userInput.startsWith("https://")
+        const url = userInput.startsWith("http://") || userInput.startsWith("https://")
             ? userInput
             : `http://${userInput}`;
 
         return [
-            <SearchResultItem>{
-                name: "Open default browser",
+            {
                 executionArgument: url,
                 icon: this.icon,
-                tags: []
-            }
-        ]
+                name: "Open default browser",
+                tags: [],
+            } as SearchResultItem,
+        ];
     }
 }

@@ -1,10 +1,10 @@
-import { ExecutionArgumentValidator } from "./execution-argument-validator";
 import { Config } from "../config";
+import { ExecutionArgumentValidator } from "./execution-argument-validator";
 
 export class ElectronizrCommandExecutionArgumentValidator implements ExecutionArgumentValidator {
     public isValidForExecution(executionArgument: string): boolean {
-        let prefix = Config.electronizrCommandPrefix;
-        
+        const prefix = Config.electronizrCommandPrefix;
+
         return executionArgument.startsWith(prefix)
             && executionArgument.length > prefix.length;
     }

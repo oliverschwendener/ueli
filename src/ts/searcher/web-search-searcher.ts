@@ -1,41 +1,40 @@
-import { Searcher } from "./searcher";
-import { SearchResultItem } from "../search-engine";
 import { Config } from "../config";
-import { WebSearch } from "../executors/web-search-executor";
+import { SearchResultItem } from "../search-result-item";
+import { WebSearch } from "../web-search";
+import { Searcher } from "./searcher";
 
 export class WebSearchSearcher implements Searcher {
     private webSearches = Config.webSearches;
 
     public getSearchResult(userInput: string): SearchResultItem[] {
-        for (let webSearch of this.webSearches) {
-            let prefix = `${webSearch.prefix}${Config.webSearchSeparator}`
+        for (const webSearch of this.webSearches) {
+            const prefix = `${webSearch.prefix}${Config.webSearchSeparator}`;
             if (userInput.startsWith(prefix)) {
-                let searchTerm = this.createSearchTerm(userInput, webSearch);
-                let searchResultItemName = searchTerm.length > 0
+                const searchTerm = this.createSearchTerm(userInput, webSearch);
+                const searchResultItemName = searchTerm.length > 0
                     ? `Search ${webSearch.name} for '${searchTerm}'`
                     : `Search ${webSearch.name}`;
 
                 return [
-                    <SearchResultItem>{
-                        name: searchResultItemName,
+                    {
                         executionArgument: this.createExecutionUrl(userInput, webSearch),
                         icon: webSearch.icon,
-                        tags: []
-                    }
-                ]
+                        name: searchResultItemName,
+                        tags: [],
+                    } as SearchResultItem,
+                ];
             }
         }
 
         throw new Error(`No valid web search found for ${userInput}`);
     }
 
-
     private createSearchTerm(userInput: string, webSearch: WebSearch): string {
         return userInput.replace(`${webSearch.prefix}${Config.webSearchSeparator}`, "");
     }
 
     private createExecutionUrl(userInput: string, webSearch: WebSearch): string {
-        let searchTerm = this.createSearchTerm(userInput, webSearch);
+        const searchTerm = this.createSearchTerm(userInput, webSearch);
         return `${webSearch.url}${searchTerm}`;
     }
 }

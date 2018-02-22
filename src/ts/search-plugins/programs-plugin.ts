@@ -1,11 +1,13 @@
 import * as fs from "fs";
-import * as path from "path";
 import * as os from "os";
-import { SearchPlugin } from "./search-plugin";
-import { SearchResultItem } from "../search-engine";
+import * as path from "path";
 import { FileHelpers } from "../helpers/file-helpers";
+import { IconManager } from "../icon-manager/icon-manager";
 import { Injector } from "../injector";
-import { IconManager } from "../icon-manager";
+import { Program } from "../programs-plugin/program";
+import { ProgramRepository } from "../programs-plugin/program-repository";
+import { SearchResultItem } from "../search-result-item";
+import { SearchPlugin } from "./search-plugin";
 
 export class ProgramsPlugin implements SearchPlugin {
     private programs: Program[];
@@ -18,109 +20,21 @@ export class ProgramsPlugin implements SearchPlugin {
             programRepository = Injector.getProgramRepository();
         }
 
-        this.programs = programRepository.getPrograms();
+        if (programRepository !== undefined) {
+            this.programs = programRepository.getPrograms();
+        }
     }
 
     public getAllItems(): SearchResultItem[] {
-        let result = [] as SearchResultItem[];
+        const result = [] as SearchResultItem[];
 
-        for (let program of this.programs) {
-            result.push(<SearchResultItem>{
-                name: program.name,
+        for (const program of this.programs) {
+            result.push({
                 executionArgument: program.executionArgument,
                 icon: this.iconManager.getProgramIcon(),
-                tags: []
-            });
-        }
-
-        return result;
-    }
-}
-
-export class Program {
-    public name: string;
-    public executionArgument: string;
-}
-
-export interface ProgramRepository {
-    getPrograms(): Program[];
-}
-
-export class FakeProgramRepository implements ProgramRepository {
-    private programs: Program[];
-
-    public constructor(programs: Program[]) {
-        this.programs = programs;
-    }
-
-    public getPrograms(): Program[] {
-        return this.programs;
-    }
-}
-
-export class WindowsProgramRepository implements ProgramRepository {
-    private programs: Program[];
-    private folders = [
-        "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs",
-        `${os.homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`,
-        `${os.homedir()}\\Desktop`
-    ];
-    private shortcutFileExtensions = [".lnk", ".appref-ms", ".url"];
-
-    public constructor() {
-        this.programs = this.loadPrograms();
-    }
-
-    public getPrograms(): Program[] {
-        return this.programs;
-    }
-
-    private loadPrograms(): Program[] {
-        let result = [] as Program[];
-
-        let files = FileHelpers.getFilesFromFoldersRecursively(this.folders);
-
-        for (let file of files) {
-            for (let shortcutFileExtension of this.shortcutFileExtensions) {
-                if (file.endsWith(shortcutFileExtension)) {
-                    result.push(<Program>{
-                        executionArgument: file,
-                        name: path.basename(file).replace(shortcutFileExtension, ""),
-                    });
-                }
-            }
-        }
-
-        return result;
-    }
-}
-
-export class MacOsProgramRepository implements ProgramRepository {
-    private folder = "/Applications";
-    private applicationFileExtension = ".app";
-    private programs: Program[];
-
-    public constructor() {
-        this.programs = this.loadPrograms();
-    }
-
-    public getPrograms(): Program[] {
-        return this.programs;
-    }
-
-    private loadPrograms(): Program[] {
-        let result = [] as Program[];
-
-        let files = FileHelpers.getFilesFromFolderRecursively(this.folder);
-
-        for (let file of files) {
-            if (!file.endsWith(this.applicationFileExtension))
-                continue;
-
-            result.push(<Program>{
-                name: path.basename(file).replace(this.applicationFileExtension, ""),
-                executionArgument: file,
-            });
+                name: program.name,
+                tags: [],
+            } as SearchResultItem);
         }
 
         return result;

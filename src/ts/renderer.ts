@@ -1,64 +1,64 @@
-import { SearchResultItemViewModel } from "./search-engine";
+import { SearchResultItemViewModel } from "./search-result-item-view-model";
 
-const Vue = require("vue/dist/vue.min.js")
-const os = require("os")
-const ipcRenderer = require("electron").ipcRenderer
+// tslint:disable-next-line:no-var-requires
+const Vue = require("vue/dist/vue.min.js");
+
+// tslint:disable-next-line:no-var-requires
+const os = require("os");
+
+// tslint:disable-next-line:no-var-requires
+const ipcRenderer = require("electron").ipcRenderer;
 const delayOnExecution = 50; // in milliseconds
 
-document.addEventListener('keyup', handleGlobalKeyPress);
+document.addEventListener("keyup", handleGlobalKeyPress);
 
 const vue = new Vue({
-    el: '#vue-root',
     data: {
-        stylesheetPath: os.platform() === 'win32'
-            ? './build/css/windows.css'
-            : './build/css/mac.css',
-        userInput: '',
         autoFocus: true,
-        searchIcon: '',
+        commandLineOutput: [] as string[],
+        searchIcon: "",
         searchResults: [] as SearchResultItemViewModel[],
-        commandLineOutput: [] as string[]
+        stylesheetPath: os.platform() === "win32"
+            ? "./build/css/windows.css"
+            : "./build/css/mac.css",
+        userInput: "",
     },
+    el: "#vue-root",
     methods: {
         handleKeyPress: (event: KeyboardEvent): void => {
-            if (event.key === 'Enter') {
+            if (event.key === "Enter") {
                 handleEnterPress();
-            }
-            else if (event.ctrlKey && event.key === 'o') {
+            } else if (event.ctrlKey && event.key === "o") {
                 handleOpenFileLocation();
-            }
-            else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
                 event.preventDefault();
-                let direction = event.key === 'ArrowDown' ? 'next' : 'prev';
+                const direction = event.key === "ArrowDown" ? "next" : "prev";
                 changeActiveItem(direction);
-            }
-            else if (event.key === 'Tab') {
+            } else if (event.key === "Tab") {
                 event.preventDefault();
                 handleAutoCompletion();
+            } else if (event.key === "Escape") {
+                ipcRenderer.send("hide-window");
+            } else if (event.ctrlKey && event.key === "c") {
+                ipcRenderer.send("exit-command-line-tool");
             }
-            else if (event.key === "Escape") {
-                ipcRenderer.send('hide-window');
-            }
-            else if (event.ctrlKey && event.key === 'c') {
-                ipcRenderer.send('exit-command-line-tool');
-            }
-        }
+        },
     },
     watch: {
         userInput: (val: string): void => {
             vue.commandLineOutput = [] as string[];
-            ipcRenderer.send('get-search', val);
-        }
-    }
+            ipcRenderer.send("get-search", val);
+        },
+    },
 });
 
-ipcRenderer.on('get-search-response', (event: Electron.Event, arg: SearchResultItemViewModel[]): void => {
+ipcRenderer.on("get-search-response", (event: Electron.Event, arg: SearchResultItemViewModel[]): void => {
     updateSearchResults(arg);
 });
 
-ipcRenderer.send('get-search-icon');
+ipcRenderer.send("get-search-icon");
 
-ipcRenderer.on('get-search-icon-response', (event: Electron.Event, arg: string): void => {
+ipcRenderer.on("get-search-icon-response", (event: Electron.Event, arg: string): void => {
     vue.searchIcon = arg;
 });
 
@@ -66,7 +66,7 @@ ipcRenderer.on("auto-complete-response", (event: Electron.Event, arg: string): v
     vue.userInput = arg;
 });
 
-ipcRenderer.on('command-line-output', (event: Electron.Event, arg: string): void => {
+ipcRenderer.on("command-line-output", (event: Electron.Event, arg: string): void => {
     vue.commandLineOutput.push(arg);
 });
 
@@ -99,7 +99,7 @@ function changeActiveItem(direction: string): void {
 
     for (let i = 0; i < vue.searchResults.length; i++) {
         if (vue.searchResults[i].active) {
-            next = direction === 'next'
+            next = direction === "next"
                 ? i + 1
                 : i - 1;
         }
@@ -109,11 +109,13 @@ function changeActiveItem(direction: string): void {
         s.active = false;
     });
 
-    if (next == undefined) return
+    if (next === undefined) {
+        return;
+    }
+
     if (next < 0) {
         next = vue.searchResults.length - 1;
-    }
-    else if (next >= vue.searchResults.length) {
+    } else if (next >= vue.searchResults.length) {
         next = 0;
     }
 
@@ -129,20 +131,20 @@ function scrollIntoView(searchResult: SearchResultItemViewModel): void {
 }
 
 function handleEnterPress(): void {
-    let activeItem = getActiveItem();
+    const activeItem = getActiveItem();
 
     if (activeItem !== undefined) {
         resetUserInput();
         setTimeout(() => {
             if (activeItem !== undefined) {
-                execute(activeItem.executionArgument)
+                execute(activeItem.executionArgument);
             }
         }, delayOnExecution);
     }
 }
 
 function handleOpenFileLocation(): void {
-    let activeItem = getActiveItem();
+    const activeItem = getActiveItem();
 
     if (activeItem !== undefined) {
         ipcRenderer.send("open-file-location", activeItem.executionArgument);
@@ -150,7 +152,7 @@ function handleOpenFileLocation(): void {
 }
 
 function handleAutoCompletion(): void {
-    let activeItem = getActiveItem();
+    const activeItem = getActiveItem();
 
     if (activeItem !== undefined) {
         ipcRenderer.send("auto-complete", [vue.userInput, activeItem.executionArgument]);
@@ -158,7 +160,7 @@ function handleAutoCompletion(): void {
 }
 
 function getActiveItem(): SearchResultItemViewModel | undefined {
-    let activeSearchResults = vue.searchResults.filter((s: any) => {
+    const activeSearchResults = vue.searchResults.filter((s: any) => {
         return s.active;
     }) as SearchResultItemViewModel[];
 
@@ -168,22 +170,22 @@ function getActiveItem(): SearchResultItemViewModel | undefined {
 }
 
 function execute(executionArgument: string): void {
-    ipcRenderer.send('execute', executionArgument);
+    ipcRenderer.send("execute", executionArgument);
 }
 
 function resetUserInput(): void {
-    vue.userInput = '';
+    vue.userInput = "";
 }
 
 function handleGlobalKeyPress(event: KeyboardEvent): void {
-    if (event.key === 'F6' || (event.key === 'l' && event.ctrlKey)) {
+    if (event.key === "F6" || (event.key === "l" && event.ctrlKey)) {
         focusOnInput();
     }
 }
 
 function focusOnInput(): void {
-    const userInput = document.getElementById('user-input')
+    const userInput = document.getElementById("user-input");
     if (userInput != null) {
-        userInput.focus()
+        userInput.focus();
     }
 }

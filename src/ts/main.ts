@@ -1,33 +1,35 @@
-import * as path from "path";
-import * as fs from "fs";
-import { app, BrowserWindow, ipcMain, globalShortcut, Menu, Tray, MenuItem } from "electron";
+import { app, BrowserWindow, globalShortcut, ipcMain, Menu, MenuItem, Tray } from "electron";
 import { autoUpdater } from "electron-updater";
-import { SearchEngine } from "./search-engine";
-import { InputValidationService } from "./input-validation-service";
-import { Injector } from "./injector";
+import * as fs from "fs";
+import * as path from "path";
 import { Config } from "./config";
+import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
 import { ExecutionService } from "./execution-service";
 import { FilePathExecutor } from "./executors/file-path-executor";
-import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
+import { Injector } from "./injector";
+import { InputValidationService } from "./input-validation-service";
+import { SearchEngine } from "./search-engine";
+
+// tslint:disable-next-line:no-var-requires
 const isDev = require("electron-is-dev");
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
-let filePathExecutor = new FilePathExecutor();
-let inputValidationService = new InputValidationService();
-let executionService = new ExecutionService();
+const filePathExecutor = new FilePathExecutor();
+const inputValidationService = new InputValidationService();
+const executionService = new ExecutionService();
 
 function createMainWindow(): void {
     mainWindow = new BrowserWindow({
-        width: Config.windowWith,
-        height: Config.maxWindowHeight,
-        center: true,
         autoHideMenuBar: true,
+        backgroundColor: "#00000000",
+        center: true,
         frame: false,
+        height: Config.maxWindowHeight,
+        resizable: false,
         show: false,
         skipTaskbar: true,
-        resizable: false,
-        backgroundColor: '#00000000',
+        width: Config.windowWith,
     });
 
     mainWindow.loadURL(`file://${__dirname}/../../main.html`);
@@ -43,20 +45,20 @@ function createMainWindow(): void {
         checkForUpdates();
         setAutostartSettings();
     }
-};
+}
 
 function createTrayIcon(): void {
     trayIcon = new Tray(Injector.getTrayIconPath(path.join(__dirname, "../../")));
     trayIcon.setToolTip("electronizr");
     trayIcon.setContextMenu(Menu.buildFromTemplate([
         {
+            click: toggleWindow,
             label: "Show/Hide",
-            click: toggleWindow
         },
         {
+            click: quitApp,
             label: "Exit",
-            click: quitApp
-        }
+        },
     ]));
 }
 
@@ -92,41 +94,40 @@ autoUpdater.on("update-downloaded", (): void => {
 
 function setAutostartSettings() {
     app.setLoginItemSettings({
+        args: [],
         openAtLogin: Config.autoStartApp,
         path: process.execPath,
-        args: []
     });
 }
 
-function addUpdateStatusToTrayIcon(label: string, clickHandler?: Function): void {
-    let updateItem = clickHandler === undefined
-        ? { label: label }
-        : { label: label, click: clickHandler } as MenuItem;
+function addUpdateStatusToTrayIcon(label: string, clickHandler?: any): void {
+    const updateItem = clickHandler === undefined
+        ? { label }
+        : { label, click: clickHandler } as MenuItem;
 
     trayIcon.setContextMenu(Menu.buildFromTemplate([
         updateItem,
         {
+            click: toggleWindow,
             label: "Show/Hide",
-            click: toggleWindow
         },
         {
+            click: quitApp,
             label: "Exit",
-            click: quitApp
-        }
+        },
     ]));
 }
 
 function toggleWindow(): void {
     if (mainWindow.isVisible()) {
         mainWindow.hide();
-    }
-    else {
+    } else {
         mainWindow.show();
     }
 }
 
 function updateWindowSize(searchResultCount: number): void {
-    let newWindowHeight = Config.calculateWindowHeight(searchResultCount);
+    const newWindowHeight = Config.calculateWindowHeight(searchResultCount);
     mainWindow.setSize(Config.windowWith, newWindowHeight);
 }
 
@@ -152,28 +153,28 @@ ipcMain.on("ezr:reload", reloadApp);
 ipcMain.on("ezr:exit", quitApp);
 
 ipcMain.on("get-search", (event: any, arg: string): void => {
-    let userInput = arg;
-    let result = inputValidationService.getSearchResult(userInput);
+    const userInput = arg;
+    const result = inputValidationService.getSearchResult(userInput);
     updateWindowSize(result.length);
     event.sender.send("get-search-response", result);
 });
 
 ipcMain.on("execute", (event: any, arg: string): void => {
-    let executionArgument = arg;
+    const executionArgument = arg;
     executionService.execute(executionArgument);
 });
 
 ipcMain.on("open-file-location", (event: any, arg: string): void => {
-    let filePath = arg;
+    const filePath = arg;
     if (new FilePathExecutionArgumentValidator().isValidForExecution(filePath)) {
         filePathExecutor.openFileLocation(filePath);
     }
 });
 
 ipcMain.on("auto-complete", (event: any, arg: string[]): void => {
-    let userInput = arg[0];
+    const userInput = arg[0];
     let executionArgument = arg[1];
-    let dirSeparator = Injector.getDirectorySeparator();
+    const dirSeparator = Injector.getDirectorySeparator();
 
     if (new FilePathExecutionArgumentValidator().isValidForExecution(userInput)) {
         if (!executionArgument.endsWith(dirSeparator) && fs.lstatSync(executionArgument).isDirectory()) {
@@ -185,7 +186,7 @@ ipcMain.on("auto-complete", (event: any, arg: string[]): void => {
 });
 
 ipcMain.on("get-search-icon", (event: any): void => {
-    let iconManager = Injector.getIconManager();
+    const iconManager = Injector.getIconManager();
     event.sender.send("get-search-icon-response", iconManager.getSearchIcon());
 });
 

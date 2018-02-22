@@ -1,5 +1,6 @@
 import * as Fuse from "fuse.js";
 import { SearchPlugin } from "./search-plugins/search-plugin";
+import { SearchResultItem } from "./search-result-item";
 
 export class SearchEngine {
     private unsortedSearchResults: SearchResultItem[];
@@ -9,40 +10,28 @@ export class SearchEngine {
     }
 
     public search(searchTerm: string): SearchResultItem[] {
-        let fuse = new Fuse(this.unsortedSearchResults, {
-            shouldSort: true,
+        const fuse = new Fuse(this.unsortedSearchResults, {
+            distance: 100,
             includeScore: true,
             keys: ["name", "tags"],
-            distance: 100,
-            threshold: 0.6,
             location: 0,
             maxPatternLength: 32,
             minMatchCharLength: 1,
+            shouldSort: true,
+            threshold: 0.6,
         });
 
-        let fuseResult = fuse.search(searchTerm) as any[];
+        const fuseResult = fuse.search(searchTerm) as any[];
 
-        let result = fuseResult.map((f): SearchResultItem => {
-            return <SearchResultItem>{
-                name: f.item.name,
+        const result = fuseResult.map((f): SearchResultItem => {
+            return {
                 executionArgument: f.item.executionArgument,
                 icon: f.item.icon,
-                tags: f.item.tags
-            };
+                name: f.item.name,
+                tags: f.item.tags,
+            } as SearchResultItem;
         });
 
         return result;
     }
-}
-
-export class SearchResultItem {
-    public name: string;
-    public executionArgument: string;
-    public icon: string;
-    public tags: string[];
-}
-
-export class SearchResultItemViewModel extends SearchResultItem {
-    public id: string;
-    public active: boolean;
 }

@@ -1,11 +1,11 @@
+import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import * as fs from "fs";
-import { SearchPlugin } from "./search-plugin";
-import { SearchResultItem } from "../search-engine";
 import { FileHelpers } from "../helpers/file-helpers";
+import { IconManager } from "../icon-manager/icon-manager";
 import { Injector } from "../injector";
-import { IconManager } from "../icon-manager";
+import { SearchResultItem } from "../search-result-item";
+import { SearchPlugin } from "./search-plugin";
 
 export class HomeFolderSearchPlugin implements SearchPlugin {
     private homeFolderPath = os.homedir();
@@ -22,21 +22,21 @@ export class HomeFolderSearchPlugin implements SearchPlugin {
     }
 
     private getFilesAndFolders(): SearchResultItem[] {
-        let result = [] as SearchResultItem[];
+        const result = [] as SearchResultItem[];
 
-        let files = FileHelpers.getFilesFromFolder(this.homeFolderPath);
+        const files = FileHelpers.getFilesFromFolder(this.homeFolderPath);
 
         files.map((f): void => {
-            let stats = fs.lstatSync(f);
+            const stats = fs.lstatSync(f);
 
-            result.push(<SearchResultItem>{
-                name: path.basename(f),
+            result.push({
                 executionArgument: f,
-                tags: [],
                 icon: stats.isDirectory()
                     ? this.iconManager.getFolderIcon()
-                    : this.iconManager.getFileIcon()
-            });
+                    : this.iconManager.getFileIcon(),
+                name: path.basename(f),
+                tags: [],
+            } as SearchResultItem);
         });
 
         return result;

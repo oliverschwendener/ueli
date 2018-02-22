@@ -1,9 +1,9 @@
-import { ExecutionArgumentValidator } from "./execution-argument-validator";
 import { Injector } from "../injector";
+import { ExecutionArgumentValidator } from "./execution-argument-validator";
 
 export class FilePathExecutionArgumentValidator implements ExecutionArgumentValidator {
     public isValidForExecution(executionArgument: string): boolean {
-        let regex = Injector.getFilePathRegExp();
+        const regex = Injector.getFilePathRegExp();
         return regex.test(executionArgument);
     }
 }

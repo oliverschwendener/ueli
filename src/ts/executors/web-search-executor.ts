@@ -1,8 +1,7 @@
-import { Executor } from "./executor";
-import { SearchResultItem } from "../search-engine";
+import { exec } from "child_process";
 import { Config } from "../config";
 import { Injector } from "../injector";
-import { exec } from "child_process";
+import { Executor } from "./executor";
 
 export class WebSearchExecutor implements Executor {
     private webSearches = Config.webSearches;
@@ -12,9 +11,9 @@ export class WebSearchExecutor implements Executor {
     }
 
     public execute(executionArgument: string): void {
-        for (let webSearch of this.webSearches) {
+        for (const webSearch of this.webSearches) {
             if (executionArgument.startsWith(`${webSearch.prefix}${Config.webSearchSeparator}`)) {
-                let command = Injector.getOpenUrlWithDefaultBrowserCommand(executionArgument);
+                const command = Injector.getOpenUrlWithDefaultBrowserCommand(executionArgument);
                 exec(command, (err, stout, sterr) => {
                     if (err) {
                         throw err;
@@ -23,11 +22,4 @@ export class WebSearchExecutor implements Executor {
             }
         }
     }
-}
-
-export class WebSearch {
-    public name: string;
-    public prefix: string;
-    public url: string;
-    public icon: string;
 }

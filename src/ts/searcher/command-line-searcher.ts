@@ -1,6 +1,6 @@
-import { Searcher } from "./searcher";
 import { Config } from "../config";
-import { SearchResultItem } from "../search-engine";
+import { SearchResultItem } from "../search-result-item";
+import { Searcher } from "./searcher";
 
 export class CommandLineSearcher implements Searcher {
     private icon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -10,15 +10,15 @@ export class CommandLineSearcher implements Searcher {
                     </svg>`;
 
     public getSearchResult(userInput: string): SearchResultItem[] {
-        let command = userInput.replace(Config.commandLinePrefix, "");
+        const command = userInput.replace(Config.commandLinePrefix, "");
 
         return [
-            <SearchResultItem>{
-                name: `Execute ${command}`,
+            {
                 executionArgument: userInput,
                 icon: this.icon,
-                tags: []
-            }
+                name: `Execute ${command}`,
+                tags: [],
+            } as SearchResultItem,
         ];
     }
 }

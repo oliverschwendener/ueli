@@ -1,10 +1,10 @@
 import { exec } from "child_process";
-import { Executor } from "./executor";
 import { Config } from "../config";
+import { Executor } from "./executor";
 
 export class WindowsSettingsExecutor implements Executor {
     public execute(executionArgument: string): void {
-        let command = this.replacePrefix(executionArgument);
+        const command = this.replacePrefix(executionArgument);
 
         exec(`start ${command}`, (err, stdout, sterr): void => {
             if (err) {

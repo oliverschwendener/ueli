@@ -1,7 +1,6 @@
 import { ipcMain } from "electron";
-import { Executor } from "./executor";
-import { SearchResultItem } from "../search-engine";
 import { Config } from "../config";
+import { Executor } from "./executor";
 
 export class ElectronizrCommandExecutor implements Executor {
     public execute(command: string): void {

@@ -12,7 +12,7 @@ export class StringHelpers {
     }
 
     public static stringToWords(value: string): string[] {
-        let words = value.split(/\s/g);
+        const words = value.split(/\s/g);
         return words.filter((w) => {
             return !StringHelpers.stringIsWhiteSpace(w);
         });
