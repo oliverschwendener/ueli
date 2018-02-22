@@ -52,12 +52,21 @@ function writeDefaultConfigToConfigFile(): void {
 }
 
 export class Config {
-    public static readonly configFilePath = configFilePath;
     public static readonly userInputHeight = 80;
     public static readonly searchResultHeight = 60;
-    public static readonly windowWith = config.windowWith;
-    public static readonly maxSearchResultCount = config.maxSearchResultCount;
-    public static readonly rescanInterval = config.rescanInterval;
+    public static readonly configFilePath = configFilePath;
+
+    public static readonly windowWith = config.windowWith === undefined
+        ? defaultConfig.windowWith
+        : config.windowWith;
+
+    public static readonly maxSearchResultCount = config.maxSearchResultCount === undefined
+        ? defaultConfig.maxSearchResultCount
+        : config.maxSearchResultCount;
+
+    public static readonly rescanInterval = config.rescanInterval === undefined
+        ? defaultConfig.rescanInterval
+        : config.rescanInterval;
 
     public static readonly minWindowHeight = Config.userInputHeight;
     public static readonly maxWindowHeight = Config.userInputHeight + (Config.maxSearchResultCount * Config.searchResultHeight);
