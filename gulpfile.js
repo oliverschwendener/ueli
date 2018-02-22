@@ -2,11 +2,11 @@ const gulp = require('gulp')
 const sass = require('gulp-sass')
 
 const sourceFiles = {
-    scss: './src/styles/scss/**/*.scss',
+    scss: './src/scss/**/*.scss',
 }
 
 const outputFolders = {
-    css: './build/styles/css',
+    css: './build/css',
 }
 
 gulp.task('styles', () => {
