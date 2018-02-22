@@ -26,7 +26,7 @@ function createMainWindow(): void {
         frame: false,
         show: false,
         skipTaskbar: true,
-        resizable: true,
+        resizable: false,
         backgroundColor: '#00000000',
     });
 
