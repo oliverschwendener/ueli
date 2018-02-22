@@ -8,7 +8,7 @@ document.addEventListener('keyup', handleGlobalKeyPress);
 const vue = new Vue({
     el: '#vue-root',
     data: {
-        stylesheetPath: os.platform() === 'win32' ? __dirname + '/dist/styles/css/windows.css' : __dirname + '/dist/styles/css/mac.css',
+        stylesheetPath: os.platform() === 'win32' ? __dirname + '/build/styles/css/windows.css' : __dirname + '/build/styles/css/mac.css',
         userInput: '',
         autoFocus: true,
         searchIcon: '',

@@ -8,7 +8,7 @@
     "url": "https://github.com/oliverschwendener"
   },
   "description": "A cross-platform alt+space launcher",
-  "main": "dist/js/main.js",
+  "main": "./build/js/main.js",
   "scripts": {
     "scss:watch": "./node_modules/.bin/gulp --watch",
     "tsc:watch": "./node_modules/.bin/tsc --watch",
