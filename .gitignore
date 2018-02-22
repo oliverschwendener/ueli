@@ -1,8 +1,5 @@
-#Transpiled js files
-src/js
-
-#Compiled css files
-src/styles/css
+#Compiled files
+build/
 
 #Packaged apps
 dist/

@@ -8,12 +8,13 @@
     "url": "https://github.com/oliverschwendener"
   },
   "description": "A cross-platform alt+space launcher",
-  "main": "src/js/main.js",
+  "main": "./build/js/main.js",
   "scripts": {
     "scss:watch": "./node_modules/.bin/gulp --watch",
     "tsc:watch": "./node_modules/.bin/tsc --watch",
     "build": "./node_modules/.bin/tsc && ./node_modules/.bin/gulp build",
     "start": "./node_modules/.bin/electron .",
+    "start:dev": "yarn build && yarn start",
     "dev": "./node_modules/.bin/electron . --enable-logging",
     "test:unit": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register ./tests/unit/**/*.test.ts",
     "test:integration": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register ./tests/integration/**/*.test.ts",

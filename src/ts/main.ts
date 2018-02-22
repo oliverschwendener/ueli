@@ -30,7 +30,7 @@ function createMainWindow(): void {
         backgroundColor: '#00000000',
     });
 
-    mainWindow.loadURL(`file://${__dirname}/../main.html`);
+    mainWindow.loadURL(`file://${__dirname}/../../main.html`);
     mainWindow.setSize(Config.windowWith, Config.minWindowHeight);
 
     mainWindow.on("close", quitApp);
