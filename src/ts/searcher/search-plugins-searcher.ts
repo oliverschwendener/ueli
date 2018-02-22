@@ -6,14 +6,15 @@ import { TimeHelpers } from "../helpers/time-helpers";
 
 export class SearchPluginsSearcher implements Searcher {
     private items: SearchResultItem[];
+    private rescanIntervalinMilliseconds = TimeHelpers.convertSecondsToMilliseconds(Config.rescanInterval);
 
     constructor() {
         this.items = this.loadSearchPluginItems();
 
         setInterval((): void => {
-            console.log("updating");
+            console.log("updating search plugin items");
             this.items = this.loadSearchPluginItems();
-        }, TimeHelpers.convertSecondsToMilliseconds(Config.rescanInterval));
+        }, this.rescanIntervalinMilliseconds);
     }
 
     public getSearchResult(userInput: string): SearchResultItem[] {
