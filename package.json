@@ -16,7 +16,7 @@
     "start": "./node_modules/.bin/electron .",
     "start:dev": "yarn build && yarn start",
     "dev": "./node_modules/.bin/electron . --enable-logging",
-    "lint": "./node_modules/.bin/tslint src/ts/*.ts",
+    "lint": "./node_modules/.bin/tslint src/ts/**/*.ts",
     "test:unit": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register ./tests/unit/**/*.test.ts",
     "test:integration": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register ./tests/integration/**/*.test.ts",
     "package:publish": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish onTag",
