@@ -62,7 +62,7 @@ export class WindowsProgramRepository implements ProgramRepository {
     private programs: Program[];
     private folders = [
         "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs",
-        `${os.homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs`,
+        `${os.homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`,
         `${os.homedir()}\\Desktop`
     ];
     private shortcutFileExtensions = [".lnk", ".appref-ms", ".url"];

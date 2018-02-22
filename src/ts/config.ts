@@ -21,7 +21,8 @@ const defaultConfig = {
     windowWith: 860,
     maxSearchResultCount: 8,
     autoStartApp: true,
-    searchOperatinSystemSettings: true
+    searchOperatinSystemSettings: true,
+    rescanInterval: 30
 };
 
 let configFilePath = path.join(os.homedir(), "electronizr.config.json");
@@ -56,6 +57,7 @@ export class Config {
     public static readonly searchResultHeight = 60;
     public static readonly windowWith = config.windowWith;
     public static readonly maxSearchResultCount = config.maxSearchResultCount;
+    public static readonly rescanInterval = config.rescanInterval;
 
     public static readonly minWindowHeight = Config.userInputHeight;
     public static readonly maxWindowHeight = Config.userInputHeight + (Config.maxSearchResultCount * Config.searchResultHeight);
