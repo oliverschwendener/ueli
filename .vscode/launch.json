@@ -12,9 +12,9 @@
             "program": "${workspaceRoot}/src/ts/main.ts",
             "protocol": "inspector",
             "sourceMaps": true,
-            "cwd": "${workspaceRoot}/src/js",
+            "cwd": "${workspaceRoot}/build/js",
             "outFiles": [
-                "${workspaceRoot}/src/js/**/*.js"
+                "${workspaceRoot}/build/js/**/*.js"
             ]
         },
         {
@@ -26,11 +26,11 @@
                 "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
             },
             "runtimeArgs": [
-                "${workspaceRoot}/src/js/main.js",
+                "${workspaceRoot}/build/js/main.js",
                 "--remote-debugging-port=9222"
             ],
             "port": 9222,
-            "webRoot": "${workspaceRoot}/src"
+            "webRoot": "${workspaceRoot}"
         },
         {
             "type": "node",
@@ -45,7 +45,7 @@
                 "--colors",
                 "-r",
                 "ts-node/register",
-                "${workspaceRoot}/tests/unit/**/*.test.ts"
+                "${workspaceRoot}/src/tests/unit/**/*.test.ts"
             ],
             "protocol": "inspector",
             "internalConsoleOptions": "openOnSessionStart"
@@ -63,7 +63,7 @@
                 "--colors",
                 "-r",
                 "ts-node/register",
-                "${workspaceRoot}/tests/integration/**/*.test.ts"
+                "${workspaceRoot}/src/tests/integration/**/*.test.ts"
             ],
             "protocol": "inspector",
             "internalConsoleOptions": "openOnSessionStart"
