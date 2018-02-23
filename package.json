@@ -22,6 +22,12 @@
     "package:publish": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish onTag",
     "package": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish never"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint test && yarn test:unit",
+      "pre-push": "yarn test:integration"
+    }
+  },
   "devDependencies": {
     "@types/chai": "^4.1.2",
     "@types/mocha": "^2.2.48",
@@ -30,6 +36,7 @@
     "electron-builder": "^19.55.3",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
+    "husky": "^0.15.0-rc.8",
     "mocha": "^5.0.0",
     "ts-node": "^4.1.0",
     "tslint": "^5.9.1",
