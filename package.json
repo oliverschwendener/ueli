@@ -17,8 +17,8 @@
     "start:dev": "yarn build && yarn start",
     "dev": "./node_modules/.bin/electron . --enable-logging",
     "lint": "./node_modules/.bin/tslint src/**/*.ts",
-    "test:unit": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register ./src/tests/unit/**/*.test.ts",
-    "test:integration": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register ./src/tests/integration/**/*.test.ts",
+    "test:unit": "./node_modules/.bin/jest --silent ./src/tests/unit/**/*.test.ts",
+    "test:integration": "./node_modules/.bin/jest --silent ./src/tests/integration/**/*.test.ts",
     "package:publish": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish onTag",
     "package": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish never"
   },
@@ -27,6 +27,13 @@
       "pre-commit": "yarn lint test && yarn test:unit",
       "pre-push": "yarn test:integration"
     }
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
   },
   "devDependencies": {
     "@types/chai": "^4.1.2",
@@ -47,6 +54,8 @@
     "electron-is-dev": "^0.3.0",
     "electron-updater": "^2.20.1",
     "fuse.js": "^3.2.0",
+    "jest": "^22.4.2",
+    "ts-jest": "^22.4.0",
     "vue": "^2.5.13"
   },
   "repository": {
