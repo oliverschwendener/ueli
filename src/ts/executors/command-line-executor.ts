@@ -3,6 +3,7 @@ import { ipcMain } from "electron";
 import { Config } from "./../config";
 import { CommandLineHelpers } from "./../helpers/command-line-helpers";
 import { Executor } from "./executor";
+import { IpcChannels } from "../ipc-channels";
 
 export class CommandLineExecutor implements Executor {
     public execute(executionArgument: string): void {
@@ -26,7 +27,7 @@ export class CommandLineExecutor implements Executor {
             this.sendCommandLineOutputToRenderer(`Exit ${code}`);
         });
 
-        ipcMain.on("exit-command-line-tool", () => {
+        ipcMain.on(IpcChannels.exitCommandLineTool, () => {
             commandLineTool.kill();
         });
     }
@@ -36,6 +37,6 @@ export class CommandLineExecutor implements Executor {
     }
 
     private sendCommandLineOutputToRenderer(data: string): void {
-        ipcMain.emit("command-line-execution", data);
+        ipcMain.emit(IpcChannels.commandLineExecution, data);
     }
 }

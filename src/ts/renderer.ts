@@ -1,4 +1,5 @@
 import { SearchResultItemViewModel } from "./search-result-item-view-model";
+import { IpcChannels } from "./ipc-channels";
 
 // tslint:disable-next-line:no-var-requires
 const Vue = require("vue/dist/vue.min.js");
@@ -38,35 +39,35 @@ const vue = new Vue({
                 event.preventDefault();
                 handleAutoCompletion();
             } else if (event.key === "Escape") {
-                ipcRenderer.send("hide-window");
+                ipcRenderer.send(IpcChannels.hideWindow);
             } else if (event.ctrlKey && event.key === "c") {
-                ipcRenderer.send("exit-command-line-tool");
+                ipcRenderer.send(IpcChannels.exitCommandLineTool);
             }
         },
     },
     watch: {
         userInput: (val: string): void => {
             vue.commandLineOutput = [] as string[];
-            ipcRenderer.send("get-search", val);
+            ipcRenderer.send(IpcChannels.getSearch, val);
         },
     },
 });
 
-ipcRenderer.on("get-search-response", (event: Electron.Event, arg: SearchResultItemViewModel[]): void => {
+ipcRenderer.on(IpcChannels.getSearchResponse, (event: Electron.Event, arg: SearchResultItemViewModel[]): void => {
     updateSearchResults(arg);
 });
 
-ipcRenderer.send("get-search-icon");
+ipcRenderer.send(IpcChannels.getSearchIcon);
 
-ipcRenderer.on("get-search-icon-response", (event: Electron.Event, arg: string): void => {
+ipcRenderer.on(IpcChannels.getSearchIconResponse, (event: Electron.Event, arg: string): void => {
     vue.searchIcon = arg;
 });
 
-ipcRenderer.on("auto-complete-response", (event: Electron.Event, arg: string): void => {
+ipcRenderer.on(IpcChannels.autoCompleteResponse, (event: Electron.Event, arg: string): void => {
     vue.userInput = arg;
 });
 
-ipcRenderer.on("command-line-output", (event: Electron.Event, arg: string): void => {
+ipcRenderer.on(IpcChannels.commandLineOutput, (event: Electron.Event, arg: string): void => {
     vue.commandLineOutput.push(arg);
 });
 
@@ -147,7 +148,7 @@ function handleOpenFileLocation(): void {
     const activeItem = getActiveItem();
 
     if (activeItem !== undefined) {
-        ipcRenderer.send("open-file-location", activeItem.executionArgument);
+        ipcRenderer.send(IpcChannels.openFileLocation, activeItem.executionArgument);
     }
 }
 
@@ -155,7 +156,7 @@ function handleAutoCompletion(): void {
     const activeItem = getActiveItem();
 
     if (activeItem !== undefined) {
-        ipcRenderer.send("auto-complete", [vue.userInput, activeItem.executionArgument]);
+        ipcRenderer.send(IpcChannels.autoComplete, [vue.userInput, activeItem.executionArgument]);
     }
 }
 
@@ -170,7 +171,7 @@ function getActiveItem(): SearchResultItemViewModel | undefined {
 }
 
 function execute(executionArgument: string): void {
-    ipcRenderer.send("execute", executionArgument);
+    ipcRenderer.send(IpcChannels.execute, executionArgument);
 }
 
 function resetUserInput(): void {
