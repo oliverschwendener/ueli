@@ -9,6 +9,7 @@ import { FilePathExecutor } from "./executors/file-path-executor";
 import { Injector } from "./injector";
 import { InputValidationService } from "./input-validation-service";
 import { SearchEngine } from "./search-engine";
+import { IpcChannels } from "./ipc-channels";
 
 // tslint:disable-next-line:no-var-requires
 const isDev = require("electron-is-dev");
@@ -148,30 +149,30 @@ function quitApp(): void {
 
 app.on("ready", createMainWindow);
 app.on("window-all-closed", quitApp);
-ipcMain.on("hide-window", hideMainWindow);
-ipcMain.on("ezr:reload", reloadApp);
-ipcMain.on("ezr:exit", quitApp);
+ipcMain.on(IpcChannels.hideWindow, hideMainWindow);
+ipcMain.on(IpcChannels.ezrReload, reloadApp);
+ipcMain.on(IpcChannels.ezrExit, quitApp);
 
-ipcMain.on("get-search", (event: any, arg: string): void => {
+ipcMain.on(IpcChannels.getSearch, (event: any, arg: string): void => {
     const userInput = arg;
     const result = inputValidationService.getSearchResult(userInput);
     updateWindowSize(result.length);
-    event.sender.send("get-search-response", result);
+    event.sender.send(IpcChannels.getSearchResponse, result);
 });
 
-ipcMain.on("execute", (event: any, arg: string): void => {
+ipcMain.on(IpcChannels.execute, (event: any, arg: string): void => {
     const executionArgument = arg;
     executionService.execute(executionArgument);
 });
 
-ipcMain.on("open-file-location", (event: any, arg: string): void => {
+ipcMain.on(IpcChannels.openFileLocation, (event: any, arg: string): void => {
     const filePath = arg;
     if (new FilePathExecutionArgumentValidator().isValidForExecution(filePath)) {
         filePathExecutor.openFileLocation(filePath);
     }
 });
 
-ipcMain.on("auto-complete", (event: any, arg: string[]): void => {
+ipcMain.on(IpcChannels.autoComplete, (event: any, arg: string[]): void => {
     const userInput = arg[0];
     let executionArgument = arg[1];
     const dirSeparator = Injector.getDirectorySeparator();
@@ -181,16 +182,16 @@ ipcMain.on("auto-complete", (event: any, arg: string[]): void => {
             executionArgument = `${executionArgument}${dirSeparator}`;
         }
 
-        event.sender.send("auto-complete-response", executionArgument);
+        event.sender.send(IpcChannels.autoCompleteResponse, executionArgument);
     }
 });
 
-ipcMain.on("get-search-icon", (event: any): void => {
+ipcMain.on(IpcChannels.getSearchIcon, (event: any): void => {
     const iconManager = Injector.getIconManager();
-    event.sender.send("get-search-icon-response", iconManager.getSearchIcon());
+    event.sender.send(IpcChannels.getSearchIconResponse, iconManager.getSearchIcon());
 });
 
-ipcMain.on("command-line-execution", (arg: string): void => {
-    mainWindow.webContents.send("command-line-output", arg);
+ipcMain.on(IpcChannels.commandLineExecution, (arg: string): void => {
+    mainWindow.webContents.send(IpcChannels.commandLineOutput, arg);
     updateWindowSize(Config.maxSearchResultCount);
 });

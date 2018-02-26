@@ -18,6 +18,7 @@ import { WindowsSettingsExecutor } from "./executors/windows-settings-executor";
 import { Injector } from "./injector";
 import { OperatingSystem } from "./operating-system";
 import { ValidatorExecutorCombination } from "./validator-executor-combination";
+import { IpcChannels } from "./ipc-channels";
 
 export class ExecutionService {
     private validatorExecutorCombinations = [
@@ -60,7 +61,7 @@ export class ExecutionService {
                 combi.executor.execute(executionArgument);
 
                 if (combi.executor.hideAfterExecution()) {
-                    ipcMain.emit("hide-window");
+                    ipcMain.emit(IpcChannels.hideWindow);
                 }
 
                 return;

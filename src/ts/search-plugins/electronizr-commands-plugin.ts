@@ -2,6 +2,7 @@ import * as path from "path";
 import { Config } from "../config";
 import { SearchResultItem } from "../search-result-item";
 import { SearchPlugin } from "./search-plugin";
+import { IpcChannels } from "../ipc-channels";
 
 export class ElectronizrCommandsSearchPlugin implements SearchPlugin {
     private items: ElectronizrCommand[];
@@ -14,11 +15,11 @@ export class ElectronizrCommandsSearchPlugin implements SearchPlugin {
     public constructor() {
         this.items = [
             {
-                executionArgument: `${Config.electronizrCommandPrefix}reload`,
+                executionArgument: IpcChannels.ezrReload,
                 name: "Reload electronizr",
             } as ElectronizrCommand,
             {
-                executionArgument: `${Config.electronizrCommandPrefix}exit`,
+                executionArgument: IpcChannels.ezrExit,
                 name: "Exit electronizr",
             } as ElectronizrCommand,
             {
