@@ -17,8 +17,10 @@ import { WebUrlExecutor } from "./executors/web-url-executor";
 import { WindowsSettingsExecutor } from "./executors/windows-settings-executor";
 import { Injector } from "./injector";
 import { OperatingSystem } from "./operating-system";
-import { ValidatorExecutorCombination } from "./validator-executor-combination";
+import { ExecutionArgumentValidatorExecutorCombination } from "./execution-argument-validator-executor-combination";
 import { IpcChannels } from "./ipc-channels";
+import { EmailAddressInputValidator } from "./input-validators/email-address-input-validator";
+import { EmailAddressExecutionArgumentValidator } from "./execution-argument-validators/email-address-execution-argument-validator";
 
 export class ExecutionService {
     private validatorExecutorCombinations = [
@@ -39,10 +41,14 @@ export class ExecutionService {
             validator: new WebSearchExecutionArgumentValidator(),
         },
         {
+            executor: new FilePathExecutor(),
+            validator: new EmailAddressExecutionArgumentValidator(),
+        },
+        {
             executor: new WebUrlExecutor(),
             validator: new WebUrlExecutionArgumentValidator(),
         },
-    ] as ValidatorExecutorCombination[];
+    ] as ExecutionArgumentValidatorExecutorCombination[];
 
     constructor() {
         if (Injector.getCurrentOperatingSystem() === OperatingSystem.Windows) {
@@ -50,7 +56,7 @@ export class ExecutionService {
                 {
                     executor: new WindowsSettingsExecutor(),
                     validator: new WindowsSettingsExecutionArgumentValidator(),
-                } as ValidatorExecutorCombination,
+                } as ExecutionArgumentValidatorExecutorCombination,
             );
         }
     }

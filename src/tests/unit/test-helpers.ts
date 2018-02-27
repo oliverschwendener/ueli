@@ -28,3 +28,22 @@ export const invalidMacOsFilePaths = [
     "Applications/Gugus",
     "-/Gugus",
 ];
+
+export const validEmailAddresses = [
+    "darth.vader@empire.com",
+    "jabba-the-hutt@hutts.com",
+    "lukeskywalker@rebels.com",
+];
+
+export const invalidEmailAddresses = [
+    null,
+    undefined,
+    "",
+    "  ",
+    "darth.vader@",
+    "darthvader",
+    "darth.vader",
+    "darth.vader@empire",
+    "darth.vader@empire.",
+    "darth.vader@mepire.c",
+];

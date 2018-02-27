@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import { StringHelpers } from "../../../ts/helpers/string-helpers";
 import { InputOutputCombination } from "../test-helpers";
+import { validEmailAddresses, invalidEmailAddresses } from "./../test-helpers";
 
 describe(StringHelpers.name, (): void => {
     describe(StringHelpers.removeWhiteSpace.name, (): void => {
@@ -95,6 +96,24 @@ describe(StringHelpers.name, (): void => {
                 for (let i = 0; i < acutal.length; i++) {
                     expect(acutal[i]).to.equal(combination.output[i]);
                 }
+            }
+        });
+    });
+
+    describe(StringHelpers.isValidEmailAddress.name, (): void => {
+        it("should return true if email address is valid", (): void => {
+            for (const validEmail of validEmailAddresses) {
+                const actual = StringHelpers.isValidEmailAddress(validEmail);
+                expect(actual).to.be.true;
+            }
+        });
+    });
+
+    describe(StringHelpers.isValidEmailAddress.name, (): void => {
+        it("should return false if email address is invalid", (): void => {
+            for (const invalidEmail of invalidEmailAddresses) {
+                const actual = StringHelpers.isValidEmailAddress(invalidEmail);
+                expect(actual).to.be.false;
             }
         });
     });
