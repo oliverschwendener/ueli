@@ -8,7 +8,12 @@
         "ordered-imports": false,
         "max-line-length": false,
         "interface-name": false,
-        "no-unused-expression": false
+        "no-unused-expression": false,
+        "indent": [
+            true,
+            "spaces",
+            4
+        ]
     },
     "rulesDirectory": []
 }

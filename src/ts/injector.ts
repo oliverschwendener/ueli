@@ -94,7 +94,7 @@ export class Injector {
       case OperatingSystem.macOS: {
         return new RegExp(
           /^\/$|(^(?=\/)|^\.|^\.\.)(\/(?=[^/\0])[^/\0]+)*\/?$/,
-          "gi"
+          "gi",
         );
       }
     }
