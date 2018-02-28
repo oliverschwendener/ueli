@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { Config } from "../../../ts/config";
 import { SearchResultItem } from "../../../ts/search-result-item";
 import { WebSearchSearcher } from "../../../ts/searcher/web-search-searcher";
@@ -30,9 +29,9 @@ describe(WebSearchSearcher.name, (): void => {
 
                 for (const combination of combinations) {
                     const actual = searcher.getSearchResult(combination.input);
-                    expect(actual.filter.length).to.equal(1);
-                    expect(actual[0].name).to.equal(combination.output.name);
-                    expect(actual[0].executionArgument).to.equal(combination.output.executionArgument);
+                    expect(actual.filter.length).toBe(1);
+                    expect(actual[0].name).toBe(combination.output.name);
+                    expect(actual[0].executionArgument).toBe(combination.output.executionArgument);
                 }
             });
         }

@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { StringHelpers } from "../../../ts/helpers/string-helpers";
 import { InputOutputCombination } from "../test-helpers";
 import { validEmailAddresses, invalidEmailAddresses } from "./../test-helpers";
@@ -15,7 +14,7 @@ describe(StringHelpers.name, (): void => {
 
             for (const combination of combinations) {
                 const actual = StringHelpers.removeWhiteSpace(combination.input);
-                expect(actual).to.eql(combination.output);
+                expect(actual).toBe(combination.output);
             }
         });
     });
@@ -30,7 +29,7 @@ describe(StringHelpers.name, (): void => {
 
             for (const whiteSpaceString of whitspaceStrings) {
                 const actual = StringHelpers.stringIsWhiteSpace(whiteSpaceString);
-                expect(actual).to.be.true;
+                expect(actual).toBe(true);
             }
         });
 
@@ -44,7 +43,7 @@ describe(StringHelpers.name, (): void => {
 
             for (const notWhiteSpaceString of notWhiteSpaceStrings) {
                 const actual = StringHelpers.stringIsWhiteSpace(notWhiteSpaceString);
-                expect(actual).to.be.false;
+                expect(actual).toBe(false);
             }
         });
     });
@@ -68,7 +67,7 @@ describe(StringHelpers.name, (): void => {
 
             for (const combination of combinations) {
                 const actual = StringHelpers.trimAndReplaceMultipleWhiteSpacesWithOne(combination.input);
-                expect(actual).to.equal(combination.output);
+                expect(actual).toBe(combination.output);
             }
         });
     });
@@ -94,7 +93,7 @@ describe(StringHelpers.name, (): void => {
                 const acutal = StringHelpers.stringToWords(combination.input);
 
                 for (let i = 0; i < acutal.length; i++) {
-                    expect(acutal[i]).to.equal(combination.output[i]);
+                    expect(acutal[i]).toBe(combination.output[i]);
                 }
             }
         });
@@ -104,7 +103,7 @@ describe(StringHelpers.name, (): void => {
         it("should return true if email address is valid", (): void => {
             for (const validEmail of validEmailAddresses) {
                 const actual = StringHelpers.isValidEmailAddress(validEmail);
-                expect(actual).to.be.true;
+                expect(actual).toBe(true);
             }
         });
     });
@@ -113,7 +112,7 @@ describe(StringHelpers.name, (): void => {
         it("should return false if email address is invalid", (): void => {
             for (const invalidEmail of invalidEmailAddresses) {
                 const actual = StringHelpers.isValidEmailAddress(invalidEmail);
-                expect(actual).to.be.false;
+                expect(actual).toBe(false);
             }
         });
     });

@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { ProgramsPlugin } from "../../../ts/search-plugins/programs-plugin";
 
 describe(ProgramsPlugin.name, (): void => {
@@ -8,18 +7,18 @@ describe(ProgramsPlugin.name, (): void => {
         it("should return some programs", (): void => {
             const programs = plugin.getAllItems();
 
-            expect(programs.length).to.be.greaterThan(0);
+            expect(programs.length).toBeGreaterThan(0);
         });
 
         it("all returned items should have set a name, execution argument and tags", (): void => {
             const programs = plugin.getAllItems();
 
             for (const program of programs) {
-                expect(program).not.to.be.undefined;
-                expect(program.name).not.to.be.undefined;
-                expect(program.executionArgument).not.to.be.undefined;
-                expect(program.icon).not.to.be.undefined;
-                expect(program.tags).not.to.be.undefined;
+                expect(program).not.toBeUndefined();
+                expect(program.name).not.toBeUndefined();
+                expect(program.executionArgument).not.toBeUndefined();
+                expect(program.icon).not.toBeUndefined();
+                expect(program.tags).not.toBeUndefined();
             }
         });
     });

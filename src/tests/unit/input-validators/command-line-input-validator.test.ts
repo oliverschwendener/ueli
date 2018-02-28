@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { CommandLineInputValidator } from "../../../ts/input-validators/command-line-input-validator";
 
 describe(CommandLineInputValidator.name, (): void => {
@@ -14,7 +13,7 @@ describe(CommandLineInputValidator.name, (): void => {
 
             for (const validInput of validInputs) {
                 const actual = validator.isValidForSearchResults(validInput);
-                expect(actual).to.be.true;
+                expect(actual).toBe(true);
             }
         });
 
@@ -27,7 +26,7 @@ describe(CommandLineInputValidator.name, (): void => {
 
             for (const invalidInput of invalidInputs) {
                 const actual = validator.isValidForSearchResults(invalidInput);
-                expect(actual).to.be.false;
+                expect(actual).toBe(false);
             }
         });
     });

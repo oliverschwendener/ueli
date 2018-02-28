@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { WindowsSettingsExecutionArgumentValidator } from "../../../ts/execution-argument-validators/windows-settings-execution-argument-validator";
 
 describe(WindowsSettingsExecutionArgumentValidator.name, (): void => {
@@ -15,7 +14,7 @@ describe(WindowsSettingsExecutionArgumentValidator.name, (): void => {
 
             for (const validInput of validInputs) {
                 const actual = validator.isValidForExecution(validInput);
-                expect(actual).to.be.true;
+                expect(actual).toBe(true);
             }
         });
 
@@ -30,7 +29,7 @@ describe(WindowsSettingsExecutionArgumentValidator.name, (): void => {
 
             for (const invalidInput of invalidInputs) {
                 const actual = validator.isValidForExecution(invalidInput);
-                expect(actual).to.be.false;
+                expect(actual).toBe(false);
             }
         });
     });

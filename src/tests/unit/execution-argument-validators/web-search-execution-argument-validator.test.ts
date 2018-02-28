@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { Config } from "../../../ts/config";
 import { WebSearchExecutionArgumentValidator } from "../../../ts/execution-argument-validators/web-search-execution-argument-validator";
 
@@ -18,7 +17,7 @@ describe(WebSearchExecutionArgumentValidator.name, (): void => {
 
                 for (const validInput of validInputs) {
                     const actual = validator.isValidForExecution(validInput);
-                    expect(actual).to.be.true;
+                    expect(actual).toBe(true);
                 }
             });
 
@@ -31,7 +30,7 @@ describe(WebSearchExecutionArgumentValidator.name, (): void => {
 
                 for (const invalidInput of invalidInputs) {
                     const actual = validator.isValidForExecution(invalidInput);
-                    expect(actual).to.be.false;
+                    expect(actual).toBe(false);
                 }
             });
         }

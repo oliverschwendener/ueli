@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { SearchResultItem } from "../../ts/search-result-item";
 import { SearchEngine } from "./../../ts/search-engine";
 
@@ -21,7 +20,7 @@ describe("SearchEngine", (): void => {
 
             const actual = searchEngine.search(userInput);
 
-            expect(actual.length).to.be.greaterThan(0);
+            expect(actual.length).toBeGreaterThan(0);
         });
 
         it("should return empty array when user input doesnt match any of the plugin items", (): void => {
@@ -31,7 +30,7 @@ describe("SearchEngine", (): void => {
 
             const actual = searchEngine.search(userInput);
 
-            expect(actual.length).to.eql(0);
+            expect(actual.length).toBe(0);
         });
 
         it("should return the search result ordered by score", (): void => {
@@ -41,8 +40,8 @@ describe("SearchEngine", (): void => {
 
             const actual = searchEngine.search(userInput);
 
-            expect(actual.length).to.be.greaterThan(0);
-            expect(actual[0].name).to.equal("hans");
+            expect(actual.length).toBeGreaterThan(0);
+            expect(actual[0].name).toBe("hans");
         });
     });
 });

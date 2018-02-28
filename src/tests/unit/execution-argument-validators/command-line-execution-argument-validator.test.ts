@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { CommandLineExecutionArgumentValidator } from "../../../ts/execution-argument-validators/command-line-execution-argument-validator";
 
 describe(CommandLineExecutionArgumentValidator.name, (): void => {
@@ -14,7 +13,7 @@ describe(CommandLineExecutionArgumentValidator.name, (): void => {
 
             for (const validInput of validInputs) {
                 const actual = validator.isValidForExecution(validInput);
-                expect(actual).to.be.true;
+                expect(actual).toBe(true);
             }
         });
 
@@ -27,7 +26,7 @@ describe(CommandLineExecutionArgumentValidator.name, (): void => {
 
             for (const invalidInput of invalidInputs) {
                 const actual = validator.isValidForExecution(invalidInput);
-                expect(actual).to.be.false;
+                expect(actual).toBe(false);
             }
         });
     });

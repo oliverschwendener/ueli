@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { EmailAddressExecutionArgumentValidator } from "./../../../ts/execution-argument-validators/email-address-execution-argument-validator";
 import { validEmailAddresses, invalidEmailAddresses } from "../test-helpers";
 
@@ -10,7 +9,7 @@ describe(EmailAddressExecutionArgumentValidator.name, (): void => {
             for (const validEmail of validEmailAddresses) {
                 const executionArgument = `mailto:${validEmail}`;
                 const actual = validator.isValidForExecution(executionArgument);
-                expect(actual).to.be.true;
+                expect(actual).toBe(true);
             }
         });
 
@@ -18,7 +17,7 @@ describe(EmailAddressExecutionArgumentValidator.name, (): void => {
             for (const invalidEmail of invalidEmailAddresses) {
                 const executionArgument = `mailto:${invalidEmail}`;
                 const actual = validator.isValidForExecution(executionArgument);
-                expect(actual).to.be.false;
+                expect(actual).toBe(false);
             }
         });
     });
