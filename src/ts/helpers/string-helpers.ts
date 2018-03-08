@@ -1,3 +1,5 @@
+import { Injector } from "../injector";
+
 export class StringHelpers {
     public static removeWhiteSpace(value: string): string {
         return value.replace(/\s/g, "");
@@ -16,5 +18,10 @@ export class StringHelpers {
         return words.filter((w) => {
             return !StringHelpers.stringIsWhiteSpace(w);
         });
+    }
+
+    public static isValidEmailAddress(emailAddress: string) {
+        const regex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        return regex.test(emailAddress);
     }
 }

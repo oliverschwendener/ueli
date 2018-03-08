@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { Injector } from "../../../ts/injector";
 import { WebUrlInputValidator } from "../../../ts/input-validators/web-url-input-validator";
 
@@ -18,7 +17,7 @@ describe(WebUrlInputValidator.name, (): void => {
 
             for (const validInput of validInputs) {
                 const actual = validator.isValidForSearchResults(validInput);
-                expect(actual).to.be.true;
+                expect(actual).toBe(true);
             }
         });
 
@@ -33,7 +32,7 @@ describe(WebUrlInputValidator.name, (): void => {
 
             for (const invalidInput of invalidInputs) {
                 const actual = validator.isValidForSearchResults(invalidInput);
-                expect(actual).to.be.false;
+                expect(actual).toBe(false);
             }
         });
     });

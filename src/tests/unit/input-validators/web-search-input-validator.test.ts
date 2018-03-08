@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { Config } from "../../../ts/config";
 import { Injector } from "../../../ts/injector";
 import { WebSearchInputValidator } from "../../../ts/input-validators/web-search-input-validator";
@@ -17,7 +16,7 @@ describe(WebSearchInputValidator.name, (): void => {
 
             for (const validInput of validInputs) {
                 const actual = validator.isValidForSearchResults(validInput);
-                expect(actual).to.be.true;
+                expect(actual).toBe(true);
             }
         });
 
@@ -30,7 +29,7 @@ describe(WebSearchInputValidator.name, (): void => {
 
             for (const invalidInput of invalidInputs) {
                 const actual = validator.isValidForSearchResults(invalidInput);
-                expect(actual).to.be.false;
+                expect(actual).toBe(false);
             }
         });
     }

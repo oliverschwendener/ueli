@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
@@ -43,7 +42,7 @@ describe(FileHelpers.name, (): void => {
 
             const actual = FileHelpers.getFilesFromFolder(testFolder);
 
-            expect(actual.length).to.be.greaterThan(0);
+            expect(actual.length).toBeGreaterThan(0);
 
             deleteTestFolders([testFolder]);
         });
@@ -56,7 +55,7 @@ describe(FileHelpers.name, (): void => {
 
             const actual = FileHelpers.getFilesFromFolderRecursively(testFolder);
 
-            expect(actual.length).to.be.greaterThan(0);
+            expect(actual.length).toBeGreaterThan(0);
 
             deleteTestFolders([testFolder]);
         });
@@ -69,7 +68,7 @@ describe(FileHelpers.name, (): void => {
 
             const actual = FileHelpers.getFilesFromFoldersRecursively(testFolders);
 
-            expect(actual.length).to.be.greaterThan(0);
+            expect(actual.length).toBeGreaterThan(0);
 
             deleteTestFolders(testFolders);
         });

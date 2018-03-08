@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { Injector } from "../../../ts/injector";
 import { FilePathInputValidator } from "../../../ts/input-validators/file-path-input-validator";
 import { OperatingSystem } from "../../../ts/operating-system";
@@ -39,14 +38,14 @@ describe(FilePathInputValidator.name, (): void => {
         it("should return true when passing in a valid argument", (): void => {
             for (const validInput of validInputs) {
                 const actual = validator.isValidForSearchResults(validInput);
-                expect(actual).to.be.true;
+                expect(actual).toBe(true);
             }
         });
 
         it("should return false when passing in an invalid argument", (): void => {
             for (const invalidInput of invalidInputs) {
                 const actual = validator.isValidForSearchResults(invalidInput);
-                expect(actual).to.be.false;
+                expect(actual).toBe(false);
             }
         });
     });

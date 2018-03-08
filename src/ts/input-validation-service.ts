@@ -10,31 +10,37 @@ import { FilePathSearcher } from "./searcher/file-path-searcher";
 import { SearchPluginsSearcher } from "./searcher/search-plugins-searcher";
 import { WebSearchSearcher } from "./searcher/web-search-searcher";
 import { WebUrlSearcher } from "./searcher/web-url-searcher";
-import { ValidatorSearcherCombination } from "./validator-searcher-combination";
+import { InputValidatorSearcherCombination } from "./input-validator-searcher-combination";
+import { EmailAddressSearcher } from "./searcher/email-address-searcher";
+import { EmailAddressInputValidator } from "./input-validators/email-address-input-validator";
 
 export class InputValidationService {
     private validatorSearcherCombinations = [
         {
             searcher: new FilePathSearcher(),
             validator: new FilePathInputValidator(),
-        } as ValidatorSearcherCombination,
+        },
         {
             searcher: new CommandLineSearcher(),
             validator: new CommandLineInputValidator(),
-        } as ValidatorSearcherCombination,
+        },
         {
             searcher: new WebSearchSearcher(),
             validator: new WebSearchInputValidator(),
-        } as ValidatorSearcherCombination,
+        },
+        {
+            searcher: new EmailAddressSearcher(),
+            validator: new EmailAddressInputValidator(),
+        },
         {
             searcher: new WebUrlSearcher(),
             validator: new WebUrlInputValidator(),
-        } as ValidatorSearcherCombination,
+        },
         {
             searcher: new SearchPluginsSearcher(),
             validator: new SearchPluginsInputValidator(),
-        } as ValidatorSearcherCombination,
-    ];
+        },
+    ] as InputValidatorSearcherCombination[];
 
     public getSearchResult(userInput: string): SearchResultItem[] {
         userInput = StringHelpers.trimAndReplaceMultipleWhiteSpacesWithOne(userInput);

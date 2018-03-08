@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { CommandLineProgram } from "../../../ts/command-line-program";
 import { CommandLineHelpers } from "../../../ts/helpers/command-line-helpers";
 import { InputOutputCombination } from "../test-helpers";
@@ -32,10 +31,10 @@ describe(CommandLineHelpers.name, (): void => {
 
             for (const combination of combinations) {
                 const actual = CommandLineHelpers.buildCommand(combination.input);
-                expect(actual.name).to.equal(combination.output.name);
-                expect(actual.args.length).to.equal(combination.output.args.length);
+                expect(actual.name).toBe(combination.output.name);
+                expect(actual.args.length).toBe(combination.output.args.length);
                 for (let i = 0; i < actual.args.length; i++) {
-                    expect(actual.args[i]).to.equal(combination.output.args[i]);
+                    expect(actual.args[i]).toBe(combination.output.args[i]);
                 }
             }
         });

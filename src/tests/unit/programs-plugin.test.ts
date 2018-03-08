@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { Program } from "../../ts/programs-plugin/program";
 import { FakeProgramRepository } from "./../../ts/programs-plugin/fake-program-repository";
 import { ProgramsPlugin } from "./../../ts/search-plugins/programs-plugin";
@@ -28,17 +27,17 @@ describe("ProgramsPlugin", (): void => {
 
             const actual = programsPlugin.getAllItems();
 
-            expect(actual.length).to.be.greaterThan(0);
+            expect(actual.length).toBeGreaterThan(0);
 
             for (const fakeProgram of fakePrograms) {
                 const filtered = actual.filter((a): boolean => {
                     return a.name === fakeProgram.name;
                 });
 
-                expect(filtered.length).to.eql(1);
-                expect(filtered[0].name).to.equal(fakeProgram.name);
-                expect(filtered[0].executionArgument).to.equal(fakeProgram.executionArgument);
-                expect(filtered[0].tags.length).to.eql(0);
+                expect(filtered.length).toBe(1);
+                expect(filtered[0].name).toBe(fakeProgram.name);
+                expect(filtered[0].executionArgument).toBe(fakeProgram.executionArgument);
+                expect(filtered[0].tags.length).toBe(0);
             }
         });
     });

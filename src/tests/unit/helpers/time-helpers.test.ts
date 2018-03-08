@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { TimeHelpers } from "../../../ts/helpers/time-helpers";
 
 describe(TimeHelpers.name, (): void => {
@@ -8,7 +7,7 @@ describe(TimeHelpers.name, (): void => {
             const expectedMilliseconds = 30000;
 
             const actual = TimeHelpers.convertSecondsToMilliseconds(seconds);
-            expect(actual).to.equal(expectedMilliseconds);
+            expect(actual).toBe(expectedMilliseconds);
         });
     });
 });
