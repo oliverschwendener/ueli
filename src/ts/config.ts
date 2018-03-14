@@ -23,6 +23,7 @@ const defaultConfig = {
     maxSearchResultCount: 8,
     rescanInterval: 30,
     searchOperatinSystemSettings: true,
+    showHiddenFiles: false,
     version,
     windowWith: 860,
 };
@@ -72,6 +73,7 @@ export class Config {
     public static readonly maxWindowHeight = Config.userInputHeight + (Config.maxSearchResultCount * Config.searchResultHeight);
 
     public static readonly autoStartApp = config.autoStartApp;
+    public static readonly showHiddenFiles = config.showHiddenFiles;
 
     public static readonly searchOperatinSystemSettings = config.searchOperatinSystemSettings;
     public static readonly searchWindows10Apps = config.searchWindows10Apps;
