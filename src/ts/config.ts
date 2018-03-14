@@ -14,7 +14,7 @@ import { WebUrlExecutor } from "./executors/web-url-executor";
 import { InputValidationService } from "./input-validation-service";
 import { WebSearch } from "./web-search";
 
-// tslint:disable-next-line:no-var-requires
+// tslint:disable-next-line:no-var-requires because there is no other way to get package.json, or is there?
 const pkg = require("../../package.json");
 const version = pkg.version;
 const appName = pkg.productName;
