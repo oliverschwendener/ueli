@@ -18,7 +18,7 @@ export class SearchEngine {
             maxPatternLength: 32,
             minMatchCharLength: 1,
             shouldSort: true,
-            threshold: 0.6,
+            threshold: 0.4,
         });
 
         const fuseResult = fuse.search(searchTerm) as any[];
