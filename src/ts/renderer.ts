@@ -1,14 +1,11 @@
 import { SearchResultItemViewModel } from "./search-result-item-view-model";
 import { IpcChannels } from "./ipc-channels";
+import { platform } from "os";
+import { ipcRenderer } from "electron";
 
-// tslint:disable-next-line:no-var-requires
+// tslint:disable-next-line:no-var-requires because vue won't work otherwise
 const Vue = require("vue/dist/vue.min.js");
 
-// tslint:disable-next-line:no-var-requires
-const os = require("os");
-
-// tslint:disable-next-line:no-var-requires
-const ipcRenderer = require("electron").ipcRenderer;
 const delayOnExecution = 50; // in milliseconds
 
 document.addEventListener("keyup", handleGlobalKeyPress);
@@ -19,7 +16,7 @@ const vue = new Vue({
         commandLineOutput: [] as string[],
         searchIcon: "",
         searchResults: [] as SearchResultItemViewModel[],
-        stylesheetPath: os.platform() === "win32"
+        stylesheetPath: platform() === "win32"
             ? "./build/css/windows.css"
             : "./build/css/mac.css",
         userInput: "",
