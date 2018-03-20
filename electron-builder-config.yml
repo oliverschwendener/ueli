@@ -6,7 +6,7 @@ files:
   - build/js/**/*.js
   - build/css/**/*.css
   - ./main.html
-  - img/**/**
+  - img/**/*
 
 win:
   icon: ./img/icons/win/icon.ico

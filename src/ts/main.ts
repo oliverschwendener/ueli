@@ -10,6 +10,7 @@ import { Injector } from "./injector";
 import { InputValidationService } from "./input-validation-service";
 import { SearchEngine } from "./search-engine";
 import { IpcChannels } from "./ipc-channels";
+import { OperatingSystem } from "./operating-system";
 
 // tslint:disable-next-line:no-var-requires
 const isDev = require("electron-is-dev");
@@ -20,7 +21,12 @@ const filePathExecutor = new FilePathExecutor();
 const inputValidationService = new InputValidationService();
 const executionService = new ExecutionService();
 
+app.on("ready", createMainWindow);
+app.on("window-all-closed", quitApp);
+
 function createMainWindow(): void {
+    hideAppInDock();
+
     mainWindow = new BrowserWindow({
         autoHideMenuBar: true,
         backgroundColor: "#00000000",
@@ -65,6 +71,12 @@ function createTrayIcon(): void {
 
 function registerGlobalShortCuts(): void {
     globalShortcut.register("alt+space", toggleWindow);
+}
+
+function hideAppInDock(): void {
+    if (Injector.getCurrentOperatingSystem() === OperatingSystem.macOS) {
+        app.dock.hide();
+    }
 }
 
 function checkForUpdates(): void {
@@ -147,8 +159,6 @@ function quitApp(): void {
     app.quit();
 }
 
-app.on("ready", createMainWindow);
-app.on("window-all-closed", quitApp);
 ipcMain.on(IpcChannels.hideWindow, hideMainWindow);
 ipcMain.on(IpcChannels.ezrReload, reloadApp);
 ipcMain.on(IpcChannels.ezrExit, quitApp);
