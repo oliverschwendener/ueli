@@ -77,7 +77,7 @@ export class Injector {
   public static getTrayIconPath(pathToProjectRoot: string): string {
     switch (Injector.getCurrentOperatingSystem()) {
       case OperatingSystem.Windows: return path.join(pathToProjectRoot, "img/icons/win/icon.ico");
-      case OperatingSystem.macOS: return path.join(pathToProjectRoot, "img/icons/mac/icon_16x16.png");
+      case OperatingSystem.macOS: return path.join(pathToProjectRoot, "img/icons/png/16x16.png");
     }
   }
 
