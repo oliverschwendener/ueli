@@ -69,12 +69,12 @@ ipcRenderer.on(IpcChannels.commandLineOutput, (event: Electron.Event, arg: strin
 });
 
 function updateSearchResults(searchResults: SearchResultItemViewModel[]): void {
-    let idIndex = 0;
+    let index = 0;
 
-    searchResults.forEach((s: SearchResultItemViewModel): void => {
-        s.id = `search-result-item-${idIndex}`;
-        s.active = false;
-        idIndex++;
+    searchResults.forEach((searchResultItem: SearchResultItemViewModel): void => {
+        searchResultItem.id = `search-result-item-${index}`;
+        searchResultItem.active = false;
+        index++;
     });
 
     if (searchResults.length > 0) {
@@ -93,38 +93,38 @@ function changeActiveItem(direction: string): void {
         return;
     }
 
-    let next;
+    let nextIndex;
 
     for (let i = 0; i < vue.searchResults.length; i++) {
         if (vue.searchResults[i].active) {
-            next = direction === "next"
+            nextIndex = direction === "next"
                 ? i + 1
                 : i - 1;
         }
     }
 
-    vue.searchResults.forEach((s: SearchResultItemViewModel) => {
-        s.active = false;
+    vue.searchResults.forEach((searchResultItem: SearchResultItemViewModel) => {
+        searchResultItem.active = false;
     });
 
-    if (next === undefined) {
+    if (nextIndex === undefined) {
         return;
     }
 
-    if (next < 0) {
-        next = vue.searchResults.length - 1;
-    } else if (next >= vue.searchResults.length) {
-        next = 0;
+    if (nextIndex < 0) {
+        nextIndex = vue.searchResults.length - 1;
+    } else if (nextIndex >= vue.searchResults.length) {
+        nextIndex = 0;
     }
 
-    vue.searchResults[next].active = true;
-    scrollIntoView(vue.searchResults[next]);
+    vue.searchResults[nextIndex].active = true;
+    scrollIntoView(vue.searchResults[nextIndex]);
 }
 
 function scrollIntoView(searchResult: SearchResultItemViewModel): void {
-    const el = document.getElementById(searchResult.id);
-    if (el !== undefined && el !== null) {
-        el.scrollIntoView();
+    const htmlElement = document.getElementById(searchResult.id);
+    if (htmlElement !== undefined && htmlElement !== null) {
+        htmlElement.scrollIntoView();
     }
 }
 
