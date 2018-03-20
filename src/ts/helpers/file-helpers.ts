@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
+import { Config } from "../config";
 
 export class FileHelpers {
     public static getFilesFromFolderRecursively(folderPath: string): string[] {
@@ -7,7 +8,11 @@ export class FileHelpers {
 
         const fileNames = fs.readdirSync(folderPath);
 
-        for (const fileName of fileNames) {
+        const validFileNames = fileNames.filter((fileName) => {
+            return this.isValidFile(fileName);
+        });
+
+        for (const fileName of validFileNames) {
             const filePath = path.join(folderPath, fileName);
 
             if (!fs.existsSync(filePath)) {
@@ -35,7 +40,11 @@ export class FileHelpers {
     public static getFilesFromFolder(folderPath: string): string[] {
         const fileNames = fs.readdirSync(folderPath);
 
-        const filePaths = fileNames.map((f): string => {
+        const validFileNames = fileNames.filter((fileName) => {
+            return this.isValidFile(fileName);
+        });
+
+        const filePaths = validFileNames.map((f): string => {
             return path.join(folderPath, f);
         });
 
@@ -61,5 +70,13 @@ export class FileHelpers {
         }
 
         return result;
+    }
+
+    private static isValidFile(fileName: string): boolean {
+        if (Config.showHiddenFiles) {
+            return true;
+        } else {
+            return !fileName.startsWith(".");
+        }
     }
 }
