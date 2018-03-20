@@ -21,14 +21,14 @@ export class SearchEngine {
             threshold: 0.4,
         });
 
-        const fuseResult = fuse.search(searchTerm) as any[];
+        const fuseResults = fuse.search(searchTerm) as any[];
 
-        const result = fuseResult.map((f): SearchResultItem => {
+        const result = fuseResults.map((fuseResult): SearchResultItem => {
             return {
-                executionArgument: f.item.executionArgument,
-                icon: f.item.icon,
-                name: f.item.name,
-                tags: f.item.tags,
+                executionArgument: fuseResult.item.executionArgument,
+                icon: fuseResult.item.icon,
+                name: fuseResult.item.name,
+                tags: fuseResult.item.tags,
             } as SearchResultItem;
         });
 
