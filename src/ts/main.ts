@@ -56,7 +56,7 @@ function createMainWindow(): void {
 
 function createTrayIcon(): void {
     trayIcon = new Tray(Injector.getTrayIconPath(path.join(__dirname, "../../")));
-    trayIcon.setToolTip("electronizr");
+    trayIcon.setToolTip(Config.productName);
     trayIcon.setContextMenu(Menu.buildFromTemplate([
         {
             click: toggleWindow,
@@ -98,7 +98,7 @@ autoUpdater.on("error", (): void => {
 });
 
 autoUpdater.on("update-not-available", (): void => {
-    addUpdateStatusToTrayIcon("electronizr is up to date");
+    addUpdateStatusToTrayIcon(`${Config.productName} is up to date`);
 });
 
 autoUpdater.on("update-downloaded", (): void => {
@@ -160,8 +160,8 @@ function quitApp(): void {
 }
 
 ipcMain.on(IpcChannels.hideWindow, hideMainWindow);
-ipcMain.on(IpcChannels.ezrReload, reloadApp);
-ipcMain.on(IpcChannels.ezrExit, quitApp);
+ipcMain.on(IpcChannels.ueliReload, reloadApp);
+ipcMain.on(IpcChannels.ueliExit, quitApp);
 
 ipcMain.on(IpcChannels.getSearch, (event: any, arg: string): void => {
     const userInput = arg;

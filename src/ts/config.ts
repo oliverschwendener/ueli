@@ -2,12 +2,12 @@ import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 import { CommandLineExecutionArgumentValidator } from "./execution-argument-validators/command-line-execution-argument-validator";
-import { ElectronizrCommandExecutionArgumentValidator } from "./execution-argument-validators/electronizr-command-execution-argument-validator";
+import { UeliCommandExecutionArgumentValidator } from "./execution-argument-validators/ueli-command-execution-argument-validator";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
 import { WebSearchExecutionArgumentValidator } from "./execution-argument-validators/web-search-execution-argument-validator";
 import { WebUrlExecutionArgumentValidator } from "./execution-argument-validators/web-url-execution-argument-validator";
 import { CommandLineExecutor } from "./executors/command-line-executor";
-import { ElectronizrCommandExecutor } from "./executors/electronizr-command-executor";
+import { UeliCommandExecutor } from "./executors/ueli-command-executor";
 import { FilePathExecutor } from "./executors/file-path-executor";
 import { WebSearchExecutor } from "./executors/web-search-executor";
 import { WebUrlExecutor } from "./executors/web-url-executor";
@@ -16,6 +16,7 @@ import { WebSearch } from "./web-search";
 
 // tslint:disable-next-line:no-var-requires because there is no other way to get package.json, or is there?
 const pkg = require("../../package.json");
+const productName = pkg.productName;
 const version = pkg.version;
 const appName = pkg.productName;
 const defaultConfig = {
@@ -80,7 +81,7 @@ const defaultConfig = {
     windowWith: 860,
 };
 
-const configFilePath = path.join(os.homedir(), "electronizr.config.json");
+const configFilePath = path.join(os.homedir(), "ueli.config.json");
 const config = loadConigFromConfigFile();
 
 function loadConigFromConfigFile(): any {
@@ -105,6 +106,7 @@ function writeDefaultConfigToConfigFile(): void {
 }
 
 export class Config {
+    public static readonly productName = productName;
     public static readonly userInputHeight = 80;
     public static readonly searchResultHeight = 60;
     public static readonly configFilePath = configFilePath;
@@ -131,7 +133,7 @@ export class Config {
     public static readonly searchWindows10Apps = config.searchWindows10Apps;
 
     public static readonly commandLinePrefix = ">";
-    public static readonly electronizrCommandPrefix = "ezr:";
+    public static readonly ueliCommandPrefix = "ueli:";
     public static readonly windowsSettingsPrefix = "win:";
     public static readonly webSearchSeparator = "?";
 

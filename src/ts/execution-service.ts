@@ -2,14 +2,14 @@ import * as childProcess from "child_process";
 import { ipcMain } from "electron";
 import { Config } from "./config";
 import { CommandLineExecutionArgumentValidator } from "./execution-argument-validators/command-line-execution-argument-validator";
-import { ElectronizrCommandExecutionArgumentValidator } from "./execution-argument-validators/electronizr-command-execution-argument-validator";
+import { UeliCommandExecutionArgumentValidator } from "./execution-argument-validators/ueli-command-execution-argument-validator";
 import { ExecutionArgumentValidator } from "./execution-argument-validators/execution-argument-validator";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
 import { WebSearchExecutionArgumentValidator } from "./execution-argument-validators/web-search-execution-argument-validator";
 import { WebUrlExecutionArgumentValidator } from "./execution-argument-validators/web-url-execution-argument-validator";
 import { WindowsSettingsExecutionArgumentValidator } from "./execution-argument-validators/windows-settings-execution-argument-validator";
 import { CommandLineExecutor } from "./executors/command-line-executor";
-import { ElectronizrCommandExecutor } from "./executors/electronizr-command-executor";
+import { UeliCommandExecutor } from "./executors/ueli-command-executor";
 import { Executor } from "./executors/executor";
 import { FilePathExecutor } from "./executors/file-path-executor";
 import { WebSearchExecutor } from "./executors/web-search-executor";
@@ -29,8 +29,8 @@ export class ExecutionService {
             validator: new CommandLineExecutionArgumentValidator(),
         },
         {
-            executor: new ElectronizrCommandExecutor(),
-            validator: new ElectronizrCommandExecutionArgumentValidator(),
+            executor: new UeliCommandExecutor(),
+            validator: new UeliCommandExecutionArgumentValidator(),
         },
         {
             executor: new FilePathExecutor(),

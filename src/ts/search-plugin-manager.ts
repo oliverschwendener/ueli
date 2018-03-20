@@ -1,7 +1,7 @@
 import { Config } from "./config";
 import { Injector } from "./injector";
 import { OperatingSystem } from "./operating-system";
-import { ElectronizrCommandsSearchPlugin } from "./search-plugins/electronizr-commands-plugin";
+import { UeliCommandsSearchPlugin } from "./search-plugins/ueli-commands-plugin";
 import { HomeFolderSearchPlugin } from "./search-plugins/home-folder-plugin";
 import { ProgramsPlugin } from "./search-plugins/programs-plugin";
 import { SearchPlugin } from "./search-plugins/search-plugin";
@@ -15,7 +15,7 @@ export class SearchPluginManager {
         this.plugins = [
             new ProgramsPlugin(),
             new HomeFolderSearchPlugin(),
-            new ElectronizrCommandsSearchPlugin(),
+            new UeliCommandsSearchPlugin(),
         ];
 
         if (this.os === OperatingSystem.Windows && Config.searchOperatinSystemSettings) {

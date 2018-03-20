@@ -1,14 +1,14 @@
-import { ElectronizrCommandExecutionArgumentValidator } from "../../../ts/execution-argument-validators/electronizr-command-execution-argument-validator";
+import { UeliCommandExecutionArgumentValidator } from "../../../ts/execution-argument-validators/ueli-command-execution-argument-validator";
 
-describe(ElectronizrCommandExecutionArgumentValidator.name, (): void => {
-    const validator = new ElectronizrCommandExecutionArgumentValidator();
+describe(UeliCommandExecutionArgumentValidator.name, (): void => {
+    const validator = new UeliCommandExecutionArgumentValidator();
 
     describe(validator.isValidForExecution.name, (): void => {
         it("should return true when passing in a valid argument", (): void => {
             const validInputs = [
-                "ezr:reload",
-                "ezr:exit",
-                "ezr:do-something",
+                "ueli:reload",
+                "ueli:exit",
+                "ueli:do-something",
             ];
 
             for (const validInput of validInputs) {
@@ -19,8 +19,8 @@ describe(ElectronizrCommandExecutionArgumentValidator.name, (): void => {
 
         it("should return false when passing in an invalid argument", (): void => {
             const invalidInputs = [
-                "ezr",
-                "ezr:",
+                "ueli",
+                "ueli:",
                 "er:do-something",
                 "bla bla",
             ];

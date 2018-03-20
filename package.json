@@ -1,6 +1,6 @@
 {
-  "name": "electronizr",
-  "productName": "electronizr",
+  "name": "ueli",
+  "productName": "ueli",
   "version": "3.0.0",
   "author": {
     "name": "Oliver Schwendener",
@@ -61,6 +61,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/oliverschwendener/electronizr"
+    "url": "https://github.com/oliverschwendener/ueli"
   }
 }
