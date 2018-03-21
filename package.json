@@ -10,7 +10,8 @@
   "description": "A cross-platform alt+space launcher",
   "main": "./build/main.js",
   "scripts": {
-    "build": "webpack --watch",
+    "build": "webpack",
+    "build:watch": "webpack --watch",
     "start": "./node_modules/.bin/electron .",
     "start:dev": "yarn build && yarn start",
     "dev": "./node_modules/.bin/electron . --enable-logging",
