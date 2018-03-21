@@ -1,6 +1,7 @@
 const path = require("path");
 
 module.exports = {
+  devtool: "cheap-source-map",
   node: false,
   mode: "development",
   output: {
