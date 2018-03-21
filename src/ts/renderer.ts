@@ -2,6 +2,8 @@ import { SearchResultItemViewModel } from "./search-result-item-view-model";
 import { IpcChannels } from "./ipc-channels";
 import { platform } from "os";
 import { ipcRenderer } from "electron";
+import * as macStyles from "../scss/mac.scss";
+import * as windowsStyles from "../scss/windows.scss";
 
 // tslint:disable-next-line:no-var-requires because vue won't work otherwise
 const Vue = require("vue/dist/vue.min.js");
@@ -17,8 +19,8 @@ const vue = new Vue({
         searchIcon: "",
         searchResults: [] as SearchResultItemViewModel[],
         stylesheetPath: platform() === "win32"
-            ? "./build/css/windows.css"
-            : "./build/css/mac.css",
+            ? "./build/" + windowsStyles
+            : "./build/" + macStyles,
         userInput: "",
     },
     el: "#vue-root",
