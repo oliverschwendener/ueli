@@ -35,38 +35,20 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Mocha Unit Tests",
-            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+            "name": "Jest Tests",
+            "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
             "args": [
-                "-u",
-                "tdd",
-                "--timeout",
-                "999999",
-                "--colors",
-                "-r",
-                "ts-node/register",
-                "${workspaceRoot}/src/tests/unit/**/*.test.ts"
+                "--config",
+                "package.json",
+                "--runInBand"
             ],
-            "protocol": "inspector",
-            "internalConsoleOptions": "openOnSessionStart"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Mocha Integration Tests",
-            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-            "args": [
-                "-u",
-                "tdd",
-                "--timeout",
-                "999999",
-                "--colors",
-                "-r",
-                "ts-node/register",
-                "${workspaceRoot}/src/tests/integration/**/*.test.ts"
+            "runtimeArgs": [
+                "--nolazy"
             ],
-            "protocol": "inspector",
-            "internalConsoleOptions": "openOnSessionStart"
+            "console": "internalConsole",
+            "env": {
+                "NODE_ENV": "test"
+            }
         }
     ]
 }
