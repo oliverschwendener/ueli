@@ -39,7 +39,7 @@ function createMainWindow(): void {
         width: Config.windowWith,
     });
 
-    mainWindow.loadURL(`file://${__dirname}/../../main.html`);
+    mainWindow.loadURL(`file://${__dirname}/../main.html`);
     mainWindow.setSize(Config.windowWith, Config.minWindowHeight);
 
     mainWindow.on("close", quitApp);
@@ -55,7 +55,7 @@ function createMainWindow(): void {
 }
 
 function createTrayIcon(): void {
-    trayIcon = new Tray(Injector.getTrayIconPath(path.join(__dirname, "../../")));
+    trayIcon = new Tray(Injector.getTrayIconPath(path.join(__dirname, "../")));
     trayIcon.setToolTip(Config.productName);
     trayIcon.setContextMenu(Menu.buildFromTemplate([
         {

@@ -1,54 +1,46 @@
 {
-    // Use IntelliSense to learn about possible Node.js debug attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Electron Main",
-            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
-            "program": "${workspaceRoot}/src/ts/main.ts",
-            "protocol": "inspector",
-            "sourceMaps": true,
-            "cwd": "${workspaceRoot}/build/js",
-            "outFiles": [
-                "${workspaceRoot}/build/js/**/*.js"
-            ]
-        },
-        {
-            "name": "Electron Renderer",
-            "type": "chrome",
-            "request": "launch",
-            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
-            "windows": {
-                "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
-            },
-            "runtimeArgs": [
-                "${workspaceRoot}/build/js/main.js",
-                "--remote-debugging-port=9222"
-            ],
-            "port": 9222,
-            "webRoot": "${workspaceRoot}"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Jest Tests",
-            "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
-            "args": [
-                "--config",
-                "package.json",
-                "--runInBand"
-            ],
-            "runtimeArgs": [
-                "--nolazy"
-            ],
-            "console": "internalConsole",
-            "env": {
-                "NODE_ENV": "test"
-            }
-        }
-    ]
+  // Use IntelliSense to learn about possible Node.js debug attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Electron Main",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "program": "${workspaceRoot}/src/ts/main.ts",
+      "protocol": "inspector",
+      "sourceMaps": true,
+      "cwd": "${workspaceRoot}",
+      "outFiles": ["${workspaceRoot}/build/main.js"]
+    },
+    {
+      "name": "Electron Renderer",
+      "type": "chrome",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+      },
+      "runtimeArgs": [
+        "${workspaceRoot}/build/js/main.js",
+        "--remote-debugging-port=9222"
+      ],
+      "port": 9222,
+      "webRoot": "${workspaceRoot}"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Jest Tests",
+      "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
+      "args": ["--config", "package.json", "--runInBand"],
+      "runtimeArgs": ["--nolazy"],
+      "console": "internalConsole",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    }
+  ]
 }
