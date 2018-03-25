@@ -13,7 +13,9 @@
       "protocol": "inspector",
       "sourceMaps": true,
       "cwd": "${workspaceRoot}",
-      "outFiles": ["${workspaceRoot}/build/main.js"]
+      "outFiles": [
+        "${workspaceRoot}/build/main.js"
+      ]
     },
     {
       "name": "Electron Renderer",
@@ -24,7 +26,7 @@
         "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
       },
       "runtimeArgs": [
-        "${workspaceRoot}/build/js/main.js",
+        "${workspaceRoot}/build/main.js",
         "--remote-debugging-port=9222"
       ],
       "port": 9222,
@@ -35,8 +37,14 @@
       "request": "launch",
       "name": "Jest Tests",
       "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
-      "args": ["--config", "package.json", "--runInBand"],
-      "runtimeArgs": ["--nolazy"],
+      "args": [
+        "--config",
+        "package.json",
+        "--runInBand"
+      ],
+      "runtimeArgs": [
+        "--nolazy"
+      ],
       "console": "internalConsole",
       "env": {
         "NODE_ENV": "test"
