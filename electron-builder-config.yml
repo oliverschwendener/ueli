@@ -3,9 +3,9 @@ directories:
   buildResources: build
 
 files:
-  - build/js/**/*.js
-  - build/css/**/*.css
-  - ./main.html
+  - build/**/*.js
+  - build/**/*.css
+  - main.html
   - img/**/*
 
 win:
