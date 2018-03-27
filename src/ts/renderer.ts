@@ -8,8 +8,6 @@ import * as windowsStyles from "../scss/windows.scss";
 // tslint:disable-next-line:no-var-requires because vue won't work otherwise
 const Vue = require("vue/dist/vue.min.js");
 
-const delayOnExecution = 50; // in milliseconds
-
 document.addEventListener("keyup", handleGlobalKeyPress);
 
 const vue = new Vue({
@@ -139,7 +137,7 @@ function handleEnterPress(): void {
             if (activeItem !== undefined) {
                 execute(activeItem.executionArgument);
             }
-        }, delayOnExecution);
+        }, 50); // wait 50ms because otherwise userinput wont be reset correctly
     }
 }
 
