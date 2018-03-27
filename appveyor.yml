@@ -16,6 +16,6 @@ build_script:
   - yarn test:unit
   - yarn test:integration
   - yarn build
-  #- yarn package:publish
+  - yarn package:publish
 
 test: off
