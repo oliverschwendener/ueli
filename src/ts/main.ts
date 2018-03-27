@@ -155,6 +155,7 @@ function reloadApp(): void {
 }
 
 function quitApp(): void {
+    trayIcon.destroy();
     globalShortcut.unregisterAll();
     app.quit();
 }
