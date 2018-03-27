@@ -1,3 +1,5 @@
+![ueli logo](img/doc/readme-header.png)
+
 # ueli
 
 |Build|Status|
