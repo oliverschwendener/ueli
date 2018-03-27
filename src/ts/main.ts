@@ -11,9 +11,7 @@ import { InputValidationService } from "./input-validation-service";
 import { SearchEngine } from "./search-engine";
 import { IpcChannels } from "./ipc-channels";
 import { OperatingSystem } from "./operating-system";
-
-// tslint:disable-next-line:no-var-requires
-const isDev = require("electron-is-dev");
+import * as isInDevelopment from "electron-is-dev";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -48,7 +46,7 @@ function createMainWindow(): void {
     createTrayIcon();
     registerGlobalShortCuts();
 
-    if (!isDev) {
+    if (!isInDevelopment) {
         checkForUpdates();
         setAutostartSettings();
     }
