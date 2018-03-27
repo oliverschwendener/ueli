@@ -1,37 +1,72 @@
 {
-  "name": "electronizr",
-  "productName": "electronizr",
-  "version": "2.4.2",
-  "description": "An alt+space launcher for Windows",
-  "author": "Oliver Schwendener",
-  "license": "MIT",
-  "main": "./js/main.js",
-  "dependencies": {
-    "electron-is-dev": "^0.3.0",
-    "electron-updater": "^2.20.0",
-    "escape-html": "^1.0.3",
-    "leven": "^2.1.0",
-    "mime": "^1.6.0",
-    "textextensions": "^2.0.1",
-    "vue": "^2.5.13"
+  "name": "ueli",
+  "productName": "ueli",
+  "version": "3.0.0",
+  "author": {
+    "name": "Oliver Schwendener",
+    "email": "oliver.schwendener@hotmail.com",
+    "url": "https://github.com/oliverschwendener"
+  },
+  "description": "A cross-platform alt+space launcher",
+  "main": "./build/main.js",
+  "scripts": {
+    "build": "webpack",
+    "build:watch": "webpack --watch",
+    "start": "./node_modules/.bin/electron .",
+    "start:dev": "yarn build && yarn start",
+    "dev": "./node_modules/.bin/electron . --enable-logging",
+    "lint": "./node_modules/.bin/tslint src/**/*.ts",
+    "test:unit": "./node_modules/.bin/jest --silent ./src/tests/unit",
+    "test:integration":
+      "./node_modules/.bin/jest --silent ./src/tests/integration",
+    "package:publish":
+      "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish onTag",
+    "package":
+      "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish never"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint && yarn test:unit",
+      "pre-push": "yarn test:integration"
+    }
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "((test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": ["ts", "js", "json"]
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.16.0",
-    "electron": "^1.7.11",
-    "electron-builder": "^19.55.1",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-sass": "^3.1.0"
+    "@types/jest": "^22.1.3",
+    "css-loader": "^0.28.11",
+    "electron": "^1.7.12",
+    "electron-builder": "^19.55.3",
+    "extract-loader": "^2.0.1",
+    "file-loader": "^1.1.11",
+    "husky": "^0.15.0-rc.8",
+    "jest": "^22.4.2",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
+    "ts-jest": "^22.4.0",
+    "ts-loader": "^4.0.1",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.1",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.11",
+    "webpack-merge": "^4.1.2"
   },
-  "scripts": {
-    "start": "./node_modules/.bin/electron ./js/main.js",
-    "build": "./node_modules/.bin/gulp build",
-    "watch": "./node_modules/.bin/gulp watch",
-    "release": "./node_modules/.bin/electron-builder --config electron-builder.yml --publish onTag",
-    "package": "./node_modules/.bin/electron-builder --config electron-builder.yml --publish never"
+  "license": "MIT",
+  "dependencies": {
+    "electron-is-dev": "^0.3.0",
+    "electron-updater": "^2.20.1",
+    "fuse.js": "^3.2.0",
+    "vue": "^2.5.13"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/oliverschwendener/electronizr"
+    "url": "https://github.com/oliverschwendener/ueli"
   }
 }

@@ -1,294 +1,53 @@
-<html>
+<!DOCTYPE html>
+<html lang="de">
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>electronizr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ueli</title>
 </head>
 
 <body>
-    <div id="root">
 
-        <link rel="stylesheet" :href="colorThemePath">
+    <div id="vue-root">
+        <link rel="stylesheet" :href="stylesheetPath">
+        <div class="container">
 
-        <div class="user-input-container">
-            <input id="user-input" class="user-input" type="text" v-model="userInput" ref="input" v-on:keyDown="handleKeyPress" :autofocus="{ true: focusOnInput }">
-            <div id="search-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
-                    <g id="surface1">
-                        <path d="M 19 3 C 13.488281 3 9 7.488281 9 13 C 9 15.394531 9.839844 17.589844 11.25 19.3125 L 3.28125 27.28125 L 4.71875 28.71875 L 12.6875 20.75 C 14.410156 22.160156 16.605469 23 19 23 C 24.511719 23 29 18.511719 29 13 C 29 7.488281 24.511719 3 19 3 Z M 19 5 C 23.429688 5 27 8.570313 27 13 C 27 17.429688 23.429688 21 19 21 C 14.570313 21 11 17.429688 11 13 C 11 8.570313 14.570313 5 19 5 Z "></path>
-                    </g>
-                </svg>
+            <div class="user-input-container">
+                <input id="user-input" class="user-input" type="text" v-model="userInput" :autofocus="{ 'autofocus' : autoFocus }" v-on:keyDown="handleKeyPress">
+                <div class="search-icon-container" style="-webkit-app-region: drag" v-html="searchIcon"></div>
             </div>
-        </div>
 
-        <div class="output-container">
+            <div class="output-container">
 
-            <div class="search-result">
-                <ul class="search-result-list">
-                    <li v-for="item in searchResult" :class="{ 'active': item.isActive }" :id="item.id">
-                        <div class="icon-container" v-html="item.icon"></div>
-                        <div class="text-container">
-                            <span class="name">{{ item.name }}</span>
-                            <span class="exec-args">{{ item.execArg }}</span>
+                <div class="command-line-output-container" :class="{ 'hidden' : commandLineOutput.length === 0 }">
+                    <pre v-for="line in commandLineOutput">{{ line }}</pre>
+                </div>
+
+                <div class="search-results-container" :class="{ 'hidden' : searchResults.length === 0}">
+                    <div :id="searchResult.id" class="search-result" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
+                        <div class="search-result-icon">
+                            <div class="search-result-icon-container" :class="{ 'active' : searchResult.active }" v-html="searchResult.icon"></div>
                         </div>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="execute-output" :class="{ 'hidden' : hideExecuteOutput }">
-                <pre>{{ executeOutput }}</pre>
-            </div>
-
-            <div v-html="filePreview" class="file-preview" :class="{ 'hidden' : hideFilePreview }">
-            </div>
-
-            <div class="config" :class="{ 'hidden' : hideConfig }">
-
-                <div class="config-item">
-                    <h3>Plugins</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Plugin</th>
-                                <th>Active</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="border-bottom: 1px solid white;" v-for="plugin in config.plugins">
-                                <td>{{ plugin.name }}</td>
-                                <td>
-                                    <input type="checkbox" v-model="plugin.active">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <hr>
-
-                <div class="config-item">
-                    <h3>Keyboard shortcut</h3>
-                    <select v-model="config.keyboardShortcut">
-                        <option>alt+space</option>
-                        <option>shift+space</option>
-                    </select>
-                </div>
-                <hr>
-
-                <div class="config-item">
-                    <h3>Autostart</h3>
-                    <div class="form-item">
-                        <label>If app should launch at windows startup</label>
-                        <input type="checkbox" v-model="config.autoStart">
+                        <div class="search-result-information">
+                            <span class="search-result-name" :class="{ 'active' : searchResult.active }">
+                                {{ searchResult.name }}
+                            </span>
+                            <span class=" search-result-execution-argument " :class="{ 'active' : searchResult.active } ">
+                                {{ searchResult.executionArgument }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <hr>
 
-                <div class="config-item">
-                    <h3>Window size</h3>
-                    <div class="form-item" :class="{ 'hidden' : config.fullscreen }">
-                        <label>Width</label>
-                        <input type="number" v-model="config.size.width" class="new-item">
-                    </div>
-                    <div class="form-item" :class="{ 'hidden' : config.fullscreen }">
-                        <label>Height</label>
-                        <input type="number" v-model="config.size.height" class="new-item">
-                    </div>
-                    <div class="form-item">
-                        <label>Zoom factor</label>
-                        <input type="number" max="3" min="0.1" step="0.05" v-model="config.zoomFactor" class="new-item">
-                    </div>
-                    <div class="form-item">
-                        <label>Fullscreen</label>
-                        <input type="checkbox" v-model="config.fullscreen" class="new-item">
-                    </div>
-                </div>
-                <hr>
-
-                <div class="config-item">
-                    <h3>Color Theme</h3>
-                    <select v-model="colorTheme">
-                        <option>osc-dark-blue</option>
-                        <option>osc-light-blue</option>
-                        <option>atom-one-dark</option>
-                        <option>dracula-dark-blue</option>
-                        <option>dracula-purple</option>
-                        <option>dracula-red</option>
-                    </select>
-                </div>
-                <hr>
-
-                <div class="config-item">
-                    <h3>Folders</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Action</th>
-                                <th>Folder path</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="folder in config.folders">
-                                <td>
-                                    <button v-on:click="removeFolder(folder)" class="full-width">
-                                        Remove
-                                    </button>
-                                </td>
-                                <td>{{ folder }}</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <button v-on:click="addNewFolder" class="full-width">
-                                        Add
-                                    </button>
-                                </td>
-                                <td>
-                                    <input class="new-item" type="text" v-model="newFolder" placeholder="Folder path">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <hr>
-
-                <div class="config-item">
-                    <h3>Rescan Interval</h3>
-                    <label>Interval to rescan folders (in seconds):</label>
-                    <input type="number" step="1" min="1" max="3600" v-model="config.rescanInterval">
-                </div>
-                <hr>
-
-                <div class="config-item">
-                    <h3>Shortcuts</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Action</th>
-                                <th>Name</th>
-                                <th>Shortcut</th>
-                                <th>Execution Argument</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="shortcut in config.customShortcuts">
-                                <td>
-                                    <button v-on:click="removeCustomShortcut(shortcut)" class="full-width">
-                                        Remove
-                                    </button>
-                                </td>
-                                <td>{{ shortcut.name }}</td>
-                                <td>{{ shortcut.shortCut }}</td>
-                                <td>{{ shortcut.execArg }}</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <button v-on:click="addNewCustomShortcut" class="full-width">
-                                        Add
-                                    </button>
-                                </td>
-                                <td>
-                                    <input type="new-item" type="text" v-model="newCustomShortcut.name" placeholder="Name">
-                                </td>
-                                <td>
-                                    <input class="new-item" type="text" v-model="newCustomShortcut.shortCut" placeholder="Shortcut">
-                                </td>
-                                <td>
-                                    <input class="new-item" type="text" v-model="newCustomShortcut.execArg" placeholder="Execution Argument">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <hr>
-
-                <div class="config-item">
-                    <h3>Search engines</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Action</th>
-                                <th>Name</th>
-                                <th>Prefix</th>
-                                <th>Url</th>
-                                <th class="icon">SVG icon</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="webSearch in config.webSearches">
-                                <td>
-                                    <button v-on:click="removeWebSearch(webSearch)" class="ful-width">
-                                        Remove
-                                    </button>
-                                </td>
-                                <td>{{ webSearch.name }}</td>
-                                <td>{{ webSearch.prefix }}</td>
-                                <td>{{ webSearch.url }}</td>
-                                <td class="icon" v-html="webSearch.icon"></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <button v-on:click="addNewWebSearch" class="full-width">
-                                        Add
-                                    </button>
-                                </td>
-                                <td>
-                                    <input class="new-item" type="text" v-model="newWebSearch.name">
-                                </td>
-                                <td>
-                                    <input class="new-item" type="text" v-model="newWebSearch.prefix">
-                                </td>
-                                <td>
-                                    <input class="new-item" type="text" v-model="newWebSearch.url">
-                                </td>
-                                <td>
-                                    <input class="new-item" type="text" v-model="newWebSearch.icon">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <hr>
-
-                <div class="config-item">
-                    <h3>Most used</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Count</th>
-                                <th>Execution Argument</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="favorite in config.favorites">
-                                <td>{{ favorite.counter }}</td>
-                                <td>{{ favorite.execArg }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button v-on:click="cleanUpFavorites">
-                        Clean most used programs
-                    </button>
-                </div>
-                <hr>
-
-                <div class="config-item">
-                    <button v-on:click="handleUpdateButtonPress" :class="{ 'hidden' : updateStatus === '', 'pulsate' : updateStatus === 'Downloading update' }">
-                        {{ updateStatus }}
-                    </button>
-                    <button v-on:click="closeConfig">
-                        Cancel
-                    </button>
-                    <button v-on:click="saveConfig">
-                        Save
-                    </button>
-                </div>
             </div>
 
         </div>
     </div>
 
-    <script src="./node_modules/vue/dist/vue.min.js"></script>
-    <script src="./js/renderer.js"></script>
+    <script>
+        require('./build/renderer.js');
+    </script>
 </body>
 
 </html>

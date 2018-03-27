@@ -12,7 +12,10 @@ install:
   - yarn install
 
 build_script:
+  - yarn lint
+  - yarn test:unit
+  - yarn test:integration
   - yarn build
-  - yarn release && exit 0
+  #- yarn package:publish
 
 test: off
