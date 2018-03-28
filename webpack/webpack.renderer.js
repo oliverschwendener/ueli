@@ -7,4 +7,9 @@ module.exports = merge(common, {
   output: {
     filename: "renderer.js"
   },
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js' 
+    }
+  }
 });

@@ -4,9 +4,7 @@ import { platform } from "os";
 import { ipcRenderer } from "electron";
 import * as macStyles from "../scss/mac.scss";
 import * as windowsStyles from "../scss/windows.scss";
-
-// tslint:disable-next-line:no-var-requires because vue won't work otherwise
-const Vue = require("vue/dist/vue.min.js");
+import Vue from "vue";
 
 document.addEventListener("keyup", handleGlobalKeyPress);
 
