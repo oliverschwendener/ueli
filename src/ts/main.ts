@@ -19,8 +19,20 @@ const filePathExecutor = new FilePathExecutor();
 const inputValidationService = new InputValidationService();
 const executionService = new ExecutionService();
 
-app.on("ready", createMainWindow);
-app.on("window-all-closed", quitApp);
+const otherInstanceIsAlreadyRunning = app.makeSingleInstance(() => {
+    // do nothing
+});
+
+if (otherInstanceIsAlreadyRunning) {
+    app.quit();
+} else {
+    startApp();
+}
+
+function startApp(): void {
+    app.on("ready", createMainWindow);
+    app.on("window-all-closed", quitApp);
+}
 
 function createMainWindow(): void {
     hideAppInDock();
