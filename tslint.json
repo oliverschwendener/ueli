@@ -6,7 +6,7 @@
     "jsRules": {},
     "rules": {
         "ordered-imports": false,
-        "max-line-length": false,
+        "max-line-length": false, // due to hardcoded svg icons
         "interface-name": [
             true,
             "never-prefix"
