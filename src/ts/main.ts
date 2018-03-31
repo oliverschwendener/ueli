@@ -150,6 +150,13 @@ function hideMainWindow(): void {
 
 function reloadApp(): void {
     mainWindow.reload();
+    resetWindowToDefaultSizeAndPosition();
+}
+
+function resetWindowToDefaultSizeAndPosition(): void {
+    mainWindow.setSize(Config.windowWith, Config.maxWindowHeight);
+    mainWindow.center();
+    updateWindowSize(0);
 }
 
 function quitApp(): void {
