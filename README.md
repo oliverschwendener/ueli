@@ -2,11 +2,6 @@
 
 # ueli
 
-|Build|Status|
-|---|---|
-|Windows|[![Build status](https://ci.appveyor.com/api/projects/status/c208tgdb97rrx9i3?svg=true)](https://ci.appveyor.com/project/oliverschwendener/ueli)|
-|macOS|![Build status](https://travis-ci.org/oliverschwendener/ueli.svg?branch=migration-to-typescript)|
-
 This is an alt+space launcher for Windows and macOS.
 
 ![ueli screenshot](img/ueli-example.png)
@@ -90,6 +85,13 @@ All settings are stored in `~/ueli.config.json`.
         * `prefix` string - Represents the prefix for your web search engine. For example if the prefix is `g` you can type in `g?{your search term}` to search
         * `url` string - Represents the url for the search engine to which the search term is appended to. For example `https://google.com/search?q=`
 * `windowWith`: Number - Represents the width of the main window
+
+## Build status
+
+|Platform|Build status|
+|---|---|
+|Windows|[![Build status](https://ci.appveyor.com/api/projects/status/c208tgdb97rrx9i3?svg=true)](https://ci.appveyor.com/project/oliverschwendener/ueli)|
+|macOS|![Build status](https://travis-ci.org/oliverschwendener/ueli.svg?branch=migration-to-typescript)|
 
 ## Roadmap
 
