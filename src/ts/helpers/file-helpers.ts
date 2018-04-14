@@ -40,35 +40,27 @@ export class FileHelpers {
     public static getFilesFromFolder(folderPath: string): string[] {
         const fileNames = fs.readdirSync(folderPath);
 
-        const validFileNames = fileNames.filter((fileName) => {
-            return this.isValidFile(fileName);
-        });
+        const validFileNames = fileNames.filter((fileName) => this.isValidFile(fileName));
 
         const filePaths = validFileNames.map((f): string => {
             return path.join(folderPath, f);
         });
 
-        const accessibleFiles = [];
-
-        for (const filePath of filePaths) {
+        const accessibleFiles = filePaths.map((filePath) => {
             try {
                 fs.lstatSync(filePath);
-                accessibleFiles.push(filePath);
+                return filePath;
             } catch (err) {
                 // do nothing
             }
-        }
-
+        }).filter((maybe) => maybe !== undefined) as string[];
         return accessibleFiles;
     }
 
     public static getFilesFromFoldersRecursively(folderPaths: string[]): string[] {
-        let result = [] as string[];
-
-        for (const folderPath of folderPaths) {
-            result = result.concat(FileHelpers.getFilesFromFolderRecursively(folderPath));
-        }
-
+        const result = folderPaths.map((folderPath) => {
+            return FileHelpers.getFilesFromFolderRecursively(folderPath);
+        }).reduce((acc, files) => acc.concat(files));
         return result;
     }
 
