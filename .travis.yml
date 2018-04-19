@@ -10,7 +10,7 @@ install:
 
 script:
   - yarn lint
-  - yarn test:unit
-  - yarn test:integration
+  - yarn test:all --coverage
+  - ./node_modules/.bin/coveralls < ./coverage/lcov.info
   - yarn build
   - yarn package:publish
