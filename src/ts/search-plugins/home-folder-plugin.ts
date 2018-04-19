@@ -22,21 +22,20 @@ export class HomeFolderSearchPlugin implements SearchPlugin {
     }
 
     private getFilesAndFolders(): SearchResultItem[] {
-        const result = [] as SearchResultItem[];
 
         const files = FileHelpers.getFilesFromFolder(this.homeFolderPath);
 
-        files.map((f): void => {
+        const result = files.map((f): SearchResultItem => {
             const stats = fs.lstatSync(f);
 
-            result.push({
+            return {
                 executionArgument: f,
                 icon: stats.isDirectory()
                     ? this.iconManager.getFolderIcon()
                     : this.iconManager.getFileIcon(),
                 name: path.basename(f),
                 tags: [],
-            } as SearchResultItem);
+            } as SearchResultItem;
         });
 
         return result;
