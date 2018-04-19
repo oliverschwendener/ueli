@@ -23,13 +23,11 @@ export class SearchPluginsSearcher implements Searcher {
     }
 
     private loadSearchPluginItems(): SearchResultItem[] {
-        let result = [] as SearchResultItem[];
 
         const plugins = new SearchPluginManager().getPlugins();
 
-        for (const plugin of plugins) {
-            result = result.concat(plugin.getAllItems());
-        }
+        const result = plugins.map((plugin) => plugin.getAllItems())
+            .reduce((acc, pluginItems) => acc.concat(pluginItems));
 
         return result;
     }
