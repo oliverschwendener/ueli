@@ -93,6 +93,10 @@ All settings are stored in `~/ueli.config.json`.
 |Windows|[![Build status](https://ci.appveyor.com/api/projects/status/c208tgdb97rrx9i3?svg=true)](https://ci.appveyor.com/project/oliverschwendener/ueli)|
 |macOS|![Build status](https://travis-ci.org/oliverschwendener/ueli.svg?branch=migration-to-typescript)|
 
+## Code coverage
+
+[![Coverage Status](https://coveralls.io/repos/github/oliverschwendener/ueli/badge.svg?branch=dev)](https://coveralls.io/github/oliverschwendener/ueli?branch=dev)
+
 ## Roadmap
 
 * Add input history browsing
