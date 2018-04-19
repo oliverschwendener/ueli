@@ -1,6 +1,6 @@
-import { Program } from "../../ts/programs-plugin/program";
-import { FakeProgramRepository } from "./../../ts/programs-plugin/fake-program-repository";
-import { ProgramsPlugin } from "./../../ts/search-plugins/programs-plugin";
+import { Program } from "../../../ts/programs-plugin/program";
+import { FakeProgramRepository } from "./../../../ts/programs-plugin/fake-program-repository";
+import { ProgramsPlugin } from "./../../../ts/search-plugins/programs-plugin";
 
 function getTestPrograms(programNames: string[]) {
     return programNames.map((p): Program => {
