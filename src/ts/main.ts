@@ -18,6 +18,7 @@ let trayIcon: Tray;
 const filePathExecutor = new FilePathExecutor();
 const inputValidationService = new InputValidationService();
 const executionService = new ExecutionService();
+const delayWhenHidingCommandlineOutputInMs = 25;
 
 app.on("ready", createMainWindow);
 app.on("window-all-closed", quitApp);
@@ -131,7 +132,7 @@ function addUpdateStatusToTrayIcon(label: string, clickHandler?: any): void {
 
 function toggleWindow(): void {
     if (mainWindow.isVisible()) {
-        mainWindow.hide();
+        hideMainWindow();
     } else {
         mainWindow.show();
     }
@@ -143,9 +144,14 @@ function updateWindowSize(searchResultCount: number): void {
 }
 
 function hideMainWindow(): void {
-    if (mainWindow !== null && mainWindow !== undefined) {
-        mainWindow.hide();
-    }
+    mainWindow.webContents.send(IpcChannels.resetCommandlineOutput);
+
+    setTimeout(() => {
+        if (mainWindow !== null && mainWindow !== undefined) {
+            updateWindowSize(0);
+            mainWindow.hide();
+        }
+    }, delayWhenHidingCommandlineOutputInMs);
 }
 
 function reloadApp(): void {
