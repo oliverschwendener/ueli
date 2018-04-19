@@ -18,6 +18,7 @@
     "lint": "./node_modules/.bin/tslint src/**/*.ts",
     "test:unit": "./node_modules/.bin/jest --silent ./src/tests/unit",
     "test:integration": "./node_modules/.bin/jest --silent ./src/tests/integration",
+    "test:all": "./node_modules/.bin/jest --silent ./src/tests",
     "package:publish": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish onTag",
     "package": "./node_modules/.bin/electron-builder --dir --config electron-builder-config.yml --publish never"
   },

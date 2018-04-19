@@ -55,6 +55,6 @@ export class InputValidationService {
             }
         }
 
-        throw new Error(`No search results found for ${userInput}`);
+        return [];
     }
 }

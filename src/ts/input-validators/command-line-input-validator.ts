@@ -3,7 +3,24 @@ import { InputValidator } from "./input-validator";
 
 export class CommandLineInputValidator implements InputValidator {
     public isValidForSearchResults(userInput: string): boolean {
-        return userInput.startsWith(Config.commandLinePrefix)
-            && userInput.length > Config.commandLinePrefix.length;
+        return this.userInputStartsWithPrefix(userInput)
+            && this.userInputLengthIsMoreThanOnlyPrefix(userInput)
+            && this.prefixIsFollowedByCommand(userInput);
+    }
+
+    private userInputStartsWithPrefix(userInput: string): boolean {
+        return userInput.startsWith(Config.commandLinePrefix);
+    }
+
+    private userInputLengthIsMoreThanOnlyPrefix(userInput: string): boolean {
+        return userInput.length > Config.commandLinePrefix.length;
+    }
+
+    private prefixIsFollowedByCommand(userInput: string): boolean {
+        if (userInput.length >= 2) {
+            return userInput[1] !== " ";
+        } else {
+            return false;
+        }
     }
 }
