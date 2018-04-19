@@ -34,6 +34,27 @@ describe(WebSearchSearcher.name, (): void => {
                     expect(actual[0].executionArgument).toBe(combination.output.executionArgument);
                 }
             });
+
+            it("should throw an error if user input does not match any search engine", () => {
+                const invalidUserInputs = [
+                    "",
+                    "   ",
+                    "x?",
+                    "gugus",
+                ];
+
+                let errorCounter = 0;
+
+                for (const invalidUserInput of invalidUserInputs) {
+                    try {
+                        searcher.getSearchResult(invalidUserInput);
+                    } catch (error) {
+                        errorCounter++;
+                    }
+                }
+
+                expect(errorCounter).toBe(invalidUserInputs.length);
+            });
         }
     });
 });
