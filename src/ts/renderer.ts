@@ -66,6 +66,8 @@ ipcRenderer.on(IpcChannels.commandLineOutput, (event: Electron.Event, arg: strin
     vue.commandLineOutput.push(arg);
 });
 
+ipcRenderer.on(IpcChannels.resetCommandlineOutput, resetCommandLineOutput);
+
 function updateSearchResults(searchResults: SearchResultItemViewModel[]): void {
     let index = 0;
 
@@ -184,4 +186,8 @@ function focusOnInput(): void {
     if (userInput != null) {
         userInput.focus();
     }
+}
+
+function resetCommandLineOutput(): void {
+    vue.commandLineOutput = [];
 }
