@@ -54,6 +54,7 @@ export class FileHelpers {
                 // do nothing
             }
         }).filter((maybe) => maybe !== undefined) as string[];
+
         return accessibleFiles;
     }
 
@@ -61,6 +62,7 @@ export class FileHelpers {
         const result = folderPaths.map((folderPath) => {
             return FileHelpers.getFilesFromFolderRecursively(folderPath);
         }).reduce((acc, files) => acc.concat(files));
+
         return result;
     }
 

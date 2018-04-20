@@ -6,9 +6,9 @@ import { HomeFolderSearchPlugin } from "./search-plugins/home-folder-plugin";
 import { ProgramsPlugin } from "./search-plugins/programs-plugin";
 import { SearchPlugin } from "./search-plugins/search-plugin";
 import { Windows10SettingsSearchPlugin } from "./search-plugins/windows-10-settings-plugin";
+import { platform } from "os";
 
 export class SearchPluginManager {
-    private os = Injector.getCurrentOperatingSystem();
     private plugins: SearchPlugin[];
 
     public constructor() {
@@ -16,11 +16,8 @@ export class SearchPluginManager {
             new ProgramsPlugin(),
             new HomeFolderSearchPlugin(),
             new UeliCommandsSearchPlugin(),
+            Injector.getOperatingSystemSettingsPlugin(platform()),
         ];
-
-        if (this.os === OperatingSystem.Windows && Config.searchOperatinSystemSettings) {
-            this.plugins.push(Injector.getOperatingSystemSettingsPlugin());
-        }
     }
 
     public getPlugins(): SearchPlugin[] {

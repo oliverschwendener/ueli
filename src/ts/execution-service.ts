@@ -21,6 +21,11 @@ import { ExecutionArgumentValidatorExecutorCombination } from "./execution-argum
 import { IpcChannels } from "./ipc-channels";
 import { EmailAddressInputValidator } from "./input-validators/email-address-input-validator";
 import { EmailAddressExecutionArgumentValidator } from "./execution-argument-validators/email-address-execution-argument-validator";
+import { platform } from "os";
+
+const currentOperatingSystem = platform() === "win32"
+    ? OperatingSystem.Windows
+    : OperatingSystem.macOS;
 
 export class ExecutionService {
     private validatorExecutorCombinations = [
@@ -51,7 +56,7 @@ export class ExecutionService {
     ] as ExecutionArgumentValidatorExecutorCombination[];
 
     constructor() {
-        if (Injector.getCurrentOperatingSystem() === OperatingSystem.Windows) {
+        if (currentOperatingSystem === OperatingSystem.Windows) {
             this.validatorExecutorCombinations.push(
                 {
                     executor: new WindowsSettingsExecutor(),

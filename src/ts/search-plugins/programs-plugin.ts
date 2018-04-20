@@ -14,10 +14,10 @@ export class ProgramsPlugin implements SearchPlugin {
     private iconManager: IconManager;
 
     public constructor(programRepository?: ProgramRepository) {
-        this.iconManager = Injector.getIconManager();
+        this.iconManager = Injector.getIconManager(os.platform());
 
         if (programRepository === undefined) {
-            programRepository = Injector.getProgramRepository();
+            programRepository = Injector.getProgramRepository(os.platform());
         }
 
         if (programRepository !== undefined) {

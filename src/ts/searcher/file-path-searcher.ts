@@ -5,9 +5,10 @@ import { Injector } from "../injector";
 import { SearchEngine } from "../search-engine";
 import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
+import { platform } from "os";
 
 export class FilePathSearcher implements Searcher {
-    private iconManager = Injector.getIconManager();
+    private iconManager = Injector.getIconManager(platform());
 
     public getSearchResult(userInput: string): SearchResultItem[] {
         let filePath;

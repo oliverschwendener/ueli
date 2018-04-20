@@ -1,6 +1,7 @@
 import { Injector } from "../../../ts/injector";
 import { FilePathInputValidator } from "../../../ts/input-validators/file-path-input-validator";
 import { OperatingSystem } from "../../../ts/operating-system";
+import { platform } from "os";
 
 describe(FilePathInputValidator.name, (): void => {
     const validator = new FilePathInputValidator();
@@ -32,8 +33,13 @@ describe(FilePathInputValidator.name, (): void => {
     ];
 
     describe(validator.isValidForSearchResults.name, (): void => {
-        const validInputs = Injector.getCurrentOperatingSystem() === OperatingSystem.Windows ? validWindowsFilePaths : validMacOsFilePaths;
-        const invalidInputs = Injector.getCurrentOperatingSystem() === OperatingSystem.Windows ? invalidWindowsFilePaths : invalidMacOsFilePaths;
+        const validInputs = platform() === "win32"
+            ? validWindowsFilePaths
+            : validMacOsFilePaths;
+
+        const invalidInputs = platform() === "win32"
+            ? invalidWindowsFilePaths
+            : invalidMacOsFilePaths;
 
         it("should return true when passing in a valid argument", (): void => {
             for (const validInput of validInputs) {

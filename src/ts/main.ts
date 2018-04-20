@@ -12,6 +12,7 @@ import { SearchEngine } from "./search-engine";
 import { IpcChannels } from "./ipc-channels";
 import { OperatingSystem } from "./operating-system";
 import * as isInDevelopment from "electron-is-dev";
+import { platform } from "os";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -66,7 +67,7 @@ function createMainWindow(): void {
 }
 
 function createTrayIcon(): void {
-    trayIcon = new Tray(Injector.getTrayIconPath(path.join(__dirname, "../")));
+    trayIcon = new Tray(Injector.getTrayIconPath(platform(), path.join(__dirname, "../")));
     trayIcon.setToolTip(Config.productName);
     trayIcon.setContextMenu(Menu.buildFromTemplate([
         {
@@ -85,7 +86,7 @@ function registerGlobalShortCuts(): void {
 }
 
 function hideAppInDock(): void {
-    if (Injector.getCurrentOperatingSystem() === OperatingSystem.macOS) {
+    if (platform() === "darwin") {
         app.dock.hide();
     }
 }
@@ -209,7 +210,7 @@ ipcMain.on(IpcChannels.openFileLocation, (event: any, arg: string): void => {
 ipcMain.on(IpcChannels.autoComplete, (event: any, arg: string[]): void => {
     const userInput = arg[0];
     let executionArgument = arg[1];
-    const dirSeparator = Injector.getDirectorySeparator();
+    const dirSeparator = Injector.getDirectorySeparator(platform());
 
     if (new FilePathExecutionArgumentValidator().isValidForExecution(userInput)) {
         if (!executionArgument.endsWith(dirSeparator) && fs.lstatSync(executionArgument).isDirectory()) {
@@ -221,7 +222,7 @@ ipcMain.on(IpcChannels.autoComplete, (event: any, arg: string[]): void => {
 });
 
 ipcMain.on(IpcChannels.getSearchIcon, (event: any): void => {
-    const iconManager = Injector.getIconManager();
+    const iconManager = Injector.getIconManager(platform());
     event.sender.send(IpcChannels.getSearchIconResponse, iconManager.getSearchIcon());
 });
 

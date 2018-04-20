@@ -13,7 +13,7 @@ export class HomeFolderSearchPlugin implements SearchPlugin {
     private iconManager: IconManager;
 
     public constructor() {
-        this.iconManager = Injector.getIconManager();
+        this.iconManager = Injector.getIconManager(os.platform());
         this.filesAndFolders = this.getFilesAndFolders();
     }
 

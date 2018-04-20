@@ -1,10 +1,11 @@
 import * as childProcess from "child_process";
 import { Injector } from "../injector";
 import { Executor } from "./executor";
+import { platform } from "os";
 
 export class FilePathExecutor implements Executor {
     public execute(filePath: string): void {
-        const command = Injector.getFileExecutionCommand(filePath);
+        const command = Injector.getFileExecutionCommand(platform(), filePath);
         this.handleExecution(command);
     }
 
@@ -13,7 +14,7 @@ export class FilePathExecutor implements Executor {
     }
 
     public openFileLocation(filePath: string): void {
-        const command = Injector.getFileLocationExecutionCommand(filePath);
+        const command = Injector.getFileLocationExecutionCommand(platform(), filePath);
         this.handleExecution(command);
     }
 

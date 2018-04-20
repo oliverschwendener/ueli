@@ -8,22 +8,17 @@ import { MacOsSettingsPlugin } from "../../ts/search-plugins/mac-os-settings-plu
 import { WindowsProgramRepository } from "../../ts/programs-plugin/windows-program-repository";
 import { MacOsProgramRepository } from "../../ts/programs-plugin/macos-program-repository";
 
+const winPlatformString = "win32";
+const macOsPlatformString = "darwin";
+
 describe(Injector.name, () => {
-    describe(Injector.getCurrentOperatingSystem.name, () => {
-        it("should return the current operating system", () => {
-            const actual = Injector.getCurrentOperatingSystem();
-            const expected = platform() === "win32"
-                ? OperatingSystem.Windows
-                : OperatingSystem.macOS;
-
-            expect(actual).toBe(expected);
-        });
-    });
-
     describe(Injector.getDirectorySeparator.name, () => {
         it("should return the correct directory separator", () => {
-            const actual = Injector.getDirectorySeparator();
-            const expected = platform() === "win32" ? "\\" : "/";
+            const actual = Injector.getDirectorySeparator(platform());
+
+            const expected = platform() === "win32"
+                ? "\\"
+                : "/";
 
             expect(actual).toBe(expected);
         });
@@ -31,7 +26,7 @@ describe(Injector.name, () => {
 
     describe(Injector.getFileExecutionCommand.name, () => {
         it("should return a file execution command", () => {
-            const actual = Injector.getFileExecutionCommand("");
+            const actual = Injector.getFileExecutionCommand(platform(), "");
             expect(actual).not.toBe(undefined);
             expect(actual).not.toBe(null);
         });
@@ -39,7 +34,7 @@ describe(Injector.name, () => {
 
     describe(Injector.getFileLocationExecutionCommand.name, () => {
         it("should return a file location execution command", () => {
-            const actual = Injector.getFileLocationExecutionCommand("");
+            const actual = Injector.getFileLocationExecutionCommand(platform(), "");
             expect(actual).not.toBe(undefined);
             expect(actual).not.toBe(null);
         });
@@ -47,7 +42,7 @@ describe(Injector.name, () => {
 
     describe(Injector.getFilePathRegExp.name, () => {
         it("should return a valid file path regexp", () => {
-            const filePathRegexp = Injector.getFilePathRegExp();
+            const filePathRegexp = Injector.getFilePathRegExp(platform());
 
             expect(filePathRegexp).not.toBe(undefined);
             expect(filePathRegexp).not.toBe(null);
@@ -66,7 +61,8 @@ describe(Injector.name, () => {
 
     describe(Injector.getIconManager.name, () => {
         it("should return an icon manager for the current OS", () => {
-            const iconManager = Injector.getIconManager();
+            const iconManager = Injector.getIconManager(platform());
+
             const actual = platform() === "win32"
                 ? iconManager instanceof WindowsIconManager
                 : iconManager instanceof MacOsIconManager;
@@ -79,7 +75,7 @@ describe(Injector.name, () => {
 
     describe(Injector.getOpenUrlWithDefaultBrowserCommand.name, () => {
         it("should return an command to open up default browser with URL", () => {
-            const actual = Injector.getOpenUrlWithDefaultBrowserCommand("");
+            const actual = Injector.getOpenUrlWithDefaultBrowserCommand(platform(), "");
             expect(actual).not.toBe(undefined);
             expect(actual).not.toBe(null);
         });
@@ -87,7 +83,8 @@ describe(Injector.name, () => {
 
     describe(Injector.getOperatingSystemSettingsPlugin.name, () => {
         it("should return an operating system settings plugin for the current OS", () => {
-            const osSystemSettingsPlugin = Injector.getOperatingSystemSettingsPlugin();
+            const osSystemSettingsPlugin = Injector.getOperatingSystemSettingsPlugin(platform());
+
             const actual = platform() === "win32"
                 ? osSystemSettingsPlugin instanceof Windows10SettingsSearchPlugin
                 : osSystemSettingsPlugin instanceof MacOsSettingsPlugin;
@@ -100,7 +97,8 @@ describe(Injector.name, () => {
 
     describe(Injector.getProgramRepository.name, () => {
         it("should return a program repository for the current OS", () => {
-            const programRepository = Injector.getProgramRepository();
+            const programRepository = Injector.getProgramRepository(platform());
+
             const actual = platform() === "win32"
                 ? programRepository instanceof WindowsProgramRepository
                 : programRepository instanceof MacOsProgramRepository;
@@ -113,7 +111,8 @@ describe(Injector.name, () => {
 
     describe(Injector.getStyleSheetPath.name, () => {
         it("should return a stylesheet path", () => {
-            const styleSheetPath = Injector.getStyleSheetPath();
+            const styleSheetPath = Injector.getStyleSheetPath(platform());
+
             expect(styleSheetPath).not.toBe(undefined);
             expect(styleSheetPath).not.toBe(null);
         });
@@ -121,7 +120,7 @@ describe(Injector.name, () => {
 
     describe(Injector.getTrayIconPath.name, () => {
         it("should return a tray icon path", () => {
-            const trayIconPath = Injector.getTrayIconPath("");
+            const trayIconPath = Injector.getTrayIconPath(platform(), "");
             expect(trayIconPath).not.toBe(undefined);
             expect(trayIconPath).not.toBe(null);
         });
