@@ -124,7 +124,7 @@ $ yarn
 
 ```
 $ yarn build
-$ yarn dev
+$ yarn start
 ```
 
 > Note: there is also a watch task `$ yarn build:watch` which watches the stylesheets and typescript files and transpiles them automatically if there are any changes.
@@ -140,7 +140,7 @@ Choose one of these debug configurations:
 ### Run tests
 
 ```
-$ yarn test:all
+$ yarn test
 ```
 
 ### Package

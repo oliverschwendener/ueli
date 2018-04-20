@@ -12,21 +12,17 @@
   "scripts": {
     "build": "webpack",
     "build:watch": "webpack --watch",
-    "start": "./node_modules/.bin/electron .",
-    "start:dev": "yarn build && yarn start",
-    "dev": "./node_modules/.bin/electron . --enable-logging",
+    "start": "./node_modules/.bin/electron . --enable-logging",
     "lint": "./node_modules/.bin/tslint src/**/*.ts",
-    "test:unit": "./node_modules/.bin/jest --silent ./src/tests/unit",
-    "test:integration": "./node_modules/.bin/jest --silent ./src/tests/integration",
-    "test:all": "./node_modules/.bin/jest --silent ./src/tests",
+    "test": "./node_modules/.bin/jest --silent ./src/tests",
     "coverage": "./node_modules/.bin/coveralls < ./coverage/lcov.info",
     "package:publish": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish onTag",
     "package": "./node_modules/.bin/electron-builder --dir --config electron-builder-config.yml --publish never"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn test:unit",
-      "pre-push": "yarn test:integration"
+      "pre-commit": "yarn lint && yarn test",
+      "pre-push": "yarn test"
     }
   },
   "jest": {
