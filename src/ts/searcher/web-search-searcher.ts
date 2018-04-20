@@ -2,6 +2,7 @@ import { Config } from "../config";
 import { SearchResultItem } from "../search-result-item";
 import { WebSearch } from "../web-search";
 import { Searcher } from "./searcher";
+import { NoWebSearchErrorFoundError } from "../errors/no-websearch-found-error";
 
 export class WebSearchSearcher implements Searcher {
     private webSearches = Config.webSearches;
@@ -26,7 +27,7 @@ export class WebSearchSearcher implements Searcher {
             }
         }
 
-        throw new Error(`No valid web search found for ${userInput}`);
+        throw new NoWebSearchErrorFoundError(userInput);
     }
 
     private createSearchTerm(userInput: string, webSearch: WebSearch): string {

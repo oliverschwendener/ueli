@@ -22,6 +22,7 @@ import { IpcChannels } from "./ipc-channels";
 import { EmailAddressInputValidator } from "./input-validators/email-address-input-validator";
 import { EmailAddressExecutionArgumentValidator } from "./execution-argument-validators/email-address-execution-argument-validator";
 import { platform } from "os";
+import { ExecutionArgumentNotSupportedError } from "./errors/execution-argument-not-supported-error";
 
 const currentOperatingSystem = platform() === "win32"
     ? OperatingSystem.Windows
@@ -79,6 +80,6 @@ export class ExecutionService {
             }
         }
 
-        throw new Error(`This argument (${executionArgument}) is not supported by the execution service`);
+        throw new ExecutionArgumentNotSupportedError(executionArgument);
     }
 }
