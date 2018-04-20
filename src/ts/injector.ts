@@ -11,17 +11,18 @@ import { WindowsProgramRepository } from "./programs-plugin/windows-program-repo
 import { MacOsSettingsPlugin } from "./search-plugins/mac-os-settings-plugin";
 import { SearchPlugin } from "./search-plugins/search-plugin";
 import { Windows10SettingsSearchPlugin } from "./search-plugins/windows-10-settings-plugin";
+import { DirectorySeparator } from "./directory-separator";
+import { OperatingSystemNotSupportedError } from "./errors/operatingsystem-not-supported-error";
+import { FileExecutionCommandBuilder } from "./builders/file-execution-command-builder";
+import { FileLocationExecutionCommandBuilder } from "./builders/file-location-execution-command-builder";
+import { FilePathRegex } from "./file-path-regex";
+import { OpenUrlWithDefaultBrowserCommandBuilder } from "./builders/open-url-with-default-browser-command-builder";
+import { StylesheetPath } from "./builders/stylesheet-path-builder";
+import { TrayIconPathBuilder } from "./builders/tray-icon-path-builder";
 
 export class Injector {
   public static getWebUrlRegExp(): RegExp {
     return new RegExp(/^((https?:)?[/]{2})?([a-z0-9]+[.])+[a-z]+.*$/i, "gi");
-  }
-
-  public static getProgramRepository(platform: string): ProgramRepository {
-    switch (Injector.getOperatingSystem(platform)) {
-      case OperatingSystem.Windows: return new WindowsProgramRepository();
-      case OperatingSystem.macOS: return new MacOsProgramRepository();
-    }
   }
 
   public static getIconManager(platform: string): IconManager {
@@ -33,43 +34,51 @@ export class Injector {
 
   public static getOpenUrlWithDefaultBrowserCommand(platform: string, url: string): string {
     switch (Injector.getOperatingSystem(platform)) {
-      case OperatingSystem.Windows: return `start "" "${url}"`;
-      case OperatingSystem.macOS: return `open "${url}"`;
+      case OperatingSystem.Windows:
+        return OpenUrlWithDefaultBrowserCommandBuilder.buildWindowsCommand(url);
+      case OperatingSystem.macOS:
+        return OpenUrlWithDefaultBrowserCommandBuilder.buildMacCommand(url);
     }
   }
 
   public static getFileExecutionCommand(platform: string, filePath: string): string {
     switch (Injector.getOperatingSystem(platform)) {
-      case OperatingSystem.Windows: return `start "" "${filePath}"`;
-      case OperatingSystem.macOS: return `open "${filePath}"`;
+      case OperatingSystem.Windows:
+        return FileExecutionCommandBuilder.buildWindowsFileExecutionCommand(filePath);
+      case OperatingSystem.macOS:
+        return FileExecutionCommandBuilder.buildMacOsFileExecutionCommand(filePath);
     }
   }
 
   public static getFileLocationExecutionCommand(platform: string, filePath: string): string {
     switch (Injector.getOperatingSystem(platform)) {
-      case OperatingSystem.Windows: return `start explorer.exe /select,"${filePath}"`;
-      case OperatingSystem.macOS: return `open -R "${filePath}"`;
+      case OperatingSystem.Windows:
+        return FileLocationExecutionCommandBuilder.buildWindowsLocationExecutionCommand(filePath);
+      case OperatingSystem.macOS:
+        return FileLocationExecutionCommandBuilder.buildMacOsLocationExecutionCommand(filePath);
     }
   }
 
   public static getFilePathRegExp(platform: string): RegExp {
     switch (Injector.getOperatingSystem(platform)) {
-      case OperatingSystem.Windows: return new RegExp(/^[a-zA-Z]:\\[\\\S|*\S]?.*$/, "gi");
-      case OperatingSystem.macOS: return new RegExp(/^\/$|(^(?=\/)|^\.|^\.\.)(\/(?=[^/\0])[^/\0]+)*\/?$/, "gi");
+      case OperatingSystem.Windows: return new RegExp(FilePathRegex.windowsFilePathRegExp, "gi");
+      case OperatingSystem.macOS: return new RegExp(FilePathRegex.macOsFilePathRegexp, "gi");
     }
   }
 
-  public static getDirectorySeparator(platform: string): string {
+  public static getDirectorySeparator(platform: string): DirectorySeparator {
     switch (Injector.getOperatingSystem(platform)) {
-      case OperatingSystem.Windows: return "\\";
-      case OperatingSystem.macOS: return "/";
+      case OperatingSystem.Windows: return DirectorySeparator.WindowsDirectorySeparator;
+      case OperatingSystem.macOS: return DirectorySeparator.macOsDirectorySeparator;
     }
   }
 
   public static getTrayIconPath(platform: string, pathToProjectRoot: string): string {
     switch (Injector.getOperatingSystem(platform)) {
-      case OperatingSystem.Windows: return path.join(pathToProjectRoot, "img/icons/win/icon.ico");
-      case OperatingSystem.macOS: return path.join(pathToProjectRoot, "img/icons/mac/ueliTemplate.png");
+      case OperatingSystem.Windows:
+        return TrayIconPathBuilder.buildWindowsTrayIconPath(pathToProjectRoot);
+      case OperatingSystem.macOS:
+        return TrayIconPathBuilder.buildMacOsTrayIconPath(pathToProjectRoot);
     }
   }
 
@@ -82,8 +91,8 @@ export class Injector {
 
   public static getStyleSheetPath(platform: string): string {
     switch (Injector.getOperatingSystem(platform)) {
-      case OperatingSystem.Windows: return "./build/css/windows.css";
-      case OperatingSystem.macOS: return "./build/css/mac.css";
+      case OperatingSystem.Windows: return StylesheetPath.Windows;
+      case OperatingSystem.macOS: return StylesheetPath.MacOs;
     }
   }
 
@@ -93,6 +102,6 @@ export class Injector {
       case "darwin": return OperatingSystem.macOS;
     }
 
-    throw new Error("This operating system is not supported");
+    throw new OperatingSystemNotSupportedError();
   }
 }

@@ -13,16 +13,9 @@ export class ProgramsPlugin implements SearchPlugin {
     private programs: Program[];
     private iconManager: IconManager;
 
-    public constructor(programRepository?: ProgramRepository) {
+    public constructor(programRepository: ProgramRepository) {
         this.iconManager = Injector.getIconManager(os.platform());
-
-        if (programRepository === undefined) {
-            programRepository = Injector.getProgramRepository(os.platform());
-        }
-
-        if (programRepository !== undefined) {
-            this.programs = programRepository.getPrograms();
-        }
+        this.programs = programRepository.getPrograms();
     }
 
     public getAllItems(): SearchResultItem[] {

@@ -1,7 +1,14 @@
 import { ProgramsPlugin } from "../../../ts/search-plugins/programs-plugin";
+import { platform } from "os";
+import { WindowsProgramRepository } from "../../../ts/programs-plugin/windows-program-repository";
+import { MacOsProgramRepository } from "../../../ts/programs-plugin/macos-program-repository";
 
 describe(ProgramsPlugin.name, (): void => {
-    const plugin = new ProgramsPlugin();
+    const programRepo = platform() === "win32"
+        ? new WindowsProgramRepository()
+        : new MacOsProgramRepository();
+
+    const plugin = new ProgramsPlugin(programRepo);
 
     describe(plugin.getAllItems.name, (): void => {
         it("should return some programs", (): void => {
