@@ -19,17 +19,13 @@ export class ProgramsPlugin implements SearchPlugin {
     }
 
     public getAllItems(): SearchResultItem[] {
-        const result = [] as SearchResultItem[];
-
-        for (const program of this.programs) {
-            result.push({
+        return this.programs.map((program): SearchResultItem => {
+            return {
                 executionArgument: program.executionArgument,
                 icon: this.iconManager.getProgramIcon(),
                 name: program.name,
                 tags: [],
-            } as SearchResultItem);
-        }
-
-        return result;
+            } as SearchResultItem;
+        });
     }
 }
