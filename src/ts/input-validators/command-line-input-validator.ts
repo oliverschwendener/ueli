@@ -17,10 +17,6 @@ export class CommandLineInputValidator implements InputValidator {
     }
 
     private prefixIsFollowedByCommand(userInput: string): boolean {
-        if (userInput.length >= 2) {
-            return userInput[1] !== " ";
-        } else {
-            return false;
-        }
+        return userInput[1] !== " ";
     }
 }

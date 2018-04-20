@@ -24,6 +24,8 @@ describe(CommandLineInputValidator.name, (): void => {
                 "<ipconfig",
                 "> ipconfig",
                 ">     ipconfig",
+                "",
+                " ",
             ];
 
             for (const invalidInput of invalidInputs) {
