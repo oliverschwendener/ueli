@@ -137,6 +137,12 @@ Choose one of these debug configurations:
 
 ![Debug configurations](img/doc/debug-configurations.png)
 
+### Run tests
+
+```
+$ yarn test:all
+```
+
 ### Package
 
 ```
