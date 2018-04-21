@@ -13,24 +13,23 @@ export class FileHelpers {
         });
 
         for (const fileName of validFileNames) {
-            const filePath = path.join(folderPath, fileName);
+            try {
+                const filePath = path.join(folderPath, fileName);
+                const stats = fs.lstatSync(filePath);
 
-            if (!fs.existsSync(filePath)) {
-                continue;
-            }
-
-            const stats = fs.lstatSync(filePath);
-
-            if (stats.isDirectory()) {
-                // treat .app folder as a file
-                // because going recursively through the app folder (on macOS) would cause longer scan time
-                if (filePath.endsWith(".app")) {
+                if (stats.isDirectory()) {
+                    // treat .app folder as a file
+                    // because going recursively through the app folder on macOS would cause longer scan times
+                    if (filePath.endsWith(".app")) {
+                        result.push(filePath);
+                    } else {
+                        result = result.concat(FileHelpers.getFilesFromFolderRecursively(filePath));
+                    }
+                } else if (stats.isFile()) {
                     result.push(filePath);
-                } else {
-                    result = result.concat(FileHelpers.getFilesFromFolderRecursively(filePath));
                 }
-            } else if (stats.isFile()) {
-                result.push(filePath);
+            } catch (error) {
+                continue;
             }
         }
 
