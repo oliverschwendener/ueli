@@ -102,7 +102,7 @@ function downloadUpdate(): void {
 }
 
 autoUpdater.on("update-available", (): void => {
-    addUpdateStatusToTrayIcon("Download & install update", downloadUpdate);
+    addUpdateStatusToTrayIcon("Download and install update", downloadUpdate);
 });
 
 autoUpdater.on("error", (): void => {
