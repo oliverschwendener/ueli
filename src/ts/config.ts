@@ -146,8 +146,4 @@ export class Config {
             ? Config.maxWindowHeight
             : Config.minWindowHeight + (searchResultCount * Config.searchResultHeight);
     }
-
-    public static getConfig(): any {
-        return config;
-    }
 }
