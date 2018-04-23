@@ -140,7 +140,14 @@ Choose one of these debug configurations:
 ### Run tests
 
 ```
-$ yarn test
+$ yarn test:unit
+$ yarn test:integration
+```
+
+### Code coverage
+
+```
+$ yarn test:unit --coverage
 ```
 
 ### Package

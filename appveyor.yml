@@ -13,7 +13,8 @@ install:
 
 build_script:
   - yarn lint
-  - yarn test --coverage
+  - yarn test:all
+  - yarn test:unit --coverage
   - yarn build
   - yarn package:publish
 

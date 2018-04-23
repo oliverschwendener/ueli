@@ -14,15 +14,17 @@
     "build:watch": "webpack --watch",
     "start": "./node_modules/.bin/electron . --enable-logging",
     "lint": "./node_modules/.bin/tslint src/**/*.ts",
-    "test": "./node_modules/.bin/jest --silent ./src/tests",
+    "test:unit": "./node_modules/.bin/jest --silent ./src/tests/unit",
+    "test:integration": "./node_modules/.bin/jest --silent ./src/tests/integration",
+    "test:all": "./node_modules/.bin/jest --silent ./src/tests",
     "coverage": "./node_modules/.bin/coveralls < ./coverage/lcov.info",
     "package:publish": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish onTag",
     "package": "./node_modules/.bin/electron-builder --dir --config electron-builder-config.yml --publish never"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn test",
-      "pre-push": "yarn test"
+      "pre-commit": "yarn lint && yarn test:all",
+      "pre-push": "yarn lint && yarn test:all"
     }
   },
   "jest": {
