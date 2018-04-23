@@ -25,15 +25,6 @@ mac:
   publish:
     - github
 
-linux:
-  icon: ./img/icons/png
-  category: Utility
-  target:
-    - deb
-    - zip
-  publish:
-    - github
-
 nsis:
   allowToChangeInstallationDirectory: true
   oneClick: false
