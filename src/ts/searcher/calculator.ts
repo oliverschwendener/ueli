@@ -1,8 +1,7 @@
 import { Config } from "../config";
 import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
-// const math = require("mathjs").create();
-import * as math from "mathjs"
+import * as math from "mathjs";
 
 export class Calculator implements Searcher {
     private icon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
