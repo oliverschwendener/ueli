@@ -71,7 +71,7 @@ export class ExecutionService {
         if (!executionArgument) {
             return;
         }
-        
+
         for (const combi of this.validatorExecutorCombinations) {
             if (combi.validator.isValidForExecution(executionArgument)) {
                 combi.executor.execute(executionArgument);
