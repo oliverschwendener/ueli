@@ -13,9 +13,15 @@ import { WebUrlSearcher } from "./searcher/web-url-searcher";
 import { InputValidatorSearcherCombination } from "./input-validator-searcher-combination";
 import { EmailAddressSearcher } from "./searcher/email-address-searcher";
 import { EmailAddressInputValidator } from "./input-validators/email-address-input-validator";
+import { CalculatorInputValidator } from "./input-validators/calculator-input-validator";
+import { Calculator } from "./searcher/calculator";
 
 export class InputValidationService {
     private validatorSearcherCombinations = [
+        {
+            searcher: new Calculator(),
+            validator: new CalculatorInputValidator(),
+        },
         {
             searcher: new FilePathSearcher(),
             validator: new FilePathInputValidator(),
