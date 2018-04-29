@@ -8,8 +8,8 @@ export class CalculatorInputValidator implements InputValidator {
             // Mathjs throws an error when input cannot be evaluate
             math.eval(userInput);
         } catch (e) {
-            return false
+            return false;
         }
-        return true
+        return true;
     }
 }
