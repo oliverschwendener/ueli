@@ -13,7 +13,7 @@ describe(CalculatorInputValidator.name, (): void => {
                 "sqrt(pi * 2) / sin(e)",
                 "[[1,2,3] * 2, [4,5,6]] + [[6,7,8],[9,10,11]]",
                 "a = 2; b = 3; c = a / b; [a, b, c]",
-                "pow(2,6) == 2^(re(10i + 6))"
+                "pow(2,6) == 2^(re(10i + 6))",
             ];
 
             for (const validInput of validInputs) {
@@ -27,7 +27,7 @@ describe(CalculatorInputValidator.name, (): void => {
                 "s",
                 "kg",
                 "log()",
-                "1 blackhole to mg"
+                "1 blackhole to mg",
             ];
 
             for (const invalidInput of invalidInputs) {
