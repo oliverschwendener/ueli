@@ -60,6 +60,14 @@ This is an alt+space launcher for Windows and macOS.
 * Press `Enter` to open the file or folder
 * Press `Tab` for autocompletion
 
+### Calculator
+
+* Calculate simple math, matrix, symbolic function, convert unit and a lot more.
+   * Example: 
+      * `23 * 24 / 2 + (6 * 7) ^ 2`
+      * `1 km/h to mile/h`
+      * `a = [1, 2, 3]; a * 2`
+
 ### Keyboard shortcuts
 
 * `Ctrl+o` to open the selected program or file at it's location
