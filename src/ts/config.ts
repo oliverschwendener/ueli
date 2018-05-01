@@ -13,13 +13,26 @@ import { WebSearchExecutor } from "./executors/web-search-executor";
 import { WebUrlExecutor } from "./executors/web-url-executor";
 import { InputValidationService } from "./input-validation-service";
 import { WebSearch } from "./web-search";
+import { ConfigLoader } from "./config-loader";
 
 // tslint:disable-next-line:no-var-requires because there is no other way to get package.json, or is there?
 const pkg = require("../../package.json");
 const productName = pkg.productName;
 const version = pkg.version;
 const appName = pkg.productName;
-const defaultConfig = {
+export interface ConfigOptions {
+    autoStartApp: boolean;
+    maxSearchResultCount: number;
+    rescanInterval: number;
+    searchOperatinSystemSettings: boolean;
+    showHiddenFiles: boolean;
+    version: string;
+    webSearches: WebSearch[];
+    windowWith: number;
+    searchWindows10Apps?: boolean;
+}
+
+const defaultConfig: ConfigOptions = {
     autoStartApp: true,
     maxSearchResultCount: 8,
     rescanInterval: 30,
@@ -82,28 +95,8 @@ const defaultConfig = {
 };
 
 const configFilePath = path.join(os.homedir(), "ueli.config.json");
-const config = loadConigFromConfigFile();
-
-function loadConigFromConfigFile(): any {
-    try {
-        const fileContent = fs.readFileSync(configFilePath, "utf-8");
-        const parsed = JSON.parse(fileContent);
-        if (parsed.version === undefined || !parsed.version.startsWith("3")) {
-            writeDefaultConfigToConfigFile();
-            return defaultConfig;
-        } else {
-            return parsed;
-        }
-    } catch (err) {
-        writeDefaultConfigToConfigFile();
-        return defaultConfig;
-    }
-}
-
-function writeDefaultConfigToConfigFile(): void {
-    const stringifiedConfig = JSON.stringify(defaultConfig);
-    fs.writeFileSync(configFilePath, stringifiedConfig, "utf-8");
-}
+const configLoader = new ConfigLoader(defaultConfig, configFilePath);
+const config = configLoader.loadConigFromConfigFile();
 
 export class Config {
     public static readonly productName = productName;
