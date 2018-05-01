@@ -164,6 +164,15 @@ $ yarn test:unit --coverage
 $ yarn package
 ```
 
+## Alternatives
+
+* [Launchy](https://www.launchy.net/)
+* [Wox](https://github.com/Wox-launcher/Wox)
+* [Alfred](https://www.alfredapp.com/)
+* [Hain](https://github.com/hainproject/hain)
+* [Zazu App](http://zazuapp.org/)
+* [Cerebro](https://cerebroapp.com/)
+
 ## License
 
 Copyright (c) Oliver Schwendener. All rights reserved.
