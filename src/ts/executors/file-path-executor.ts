@@ -13,6 +13,10 @@ export class FilePathExecutor implements Executor {
         return true;
     }
 
+    public resetUserInputAfterExecution(): boolean {
+        return true;
+    }
+
     public openFileLocation(filePath: string): void {
         const command = Injector.getFileLocationExecutionCommand(platform(), filePath);
         this.handleExecution(command);

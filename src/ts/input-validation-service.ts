@@ -14,12 +14,12 @@ import { InputValidatorSearcherCombination } from "./input-validator-searcher-co
 import { EmailAddressSearcher } from "./searcher/email-address-searcher";
 import { EmailAddressInputValidator } from "./input-validators/email-address-input-validator";
 import { CalculatorInputValidator } from "./input-validators/calculator-input-validator";
-import { Calculator } from "./searcher/calculator";
+import { CalculatorSearcher } from "./searcher/calculator-searcher";
 
 export class InputValidationService {
     private validatorSearcherCombinations = [
         {
-            searcher: new Calculator(),
+            searcher: new CalculatorSearcher(),
             validator: new CalculatorInputValidator(),
         },
         {

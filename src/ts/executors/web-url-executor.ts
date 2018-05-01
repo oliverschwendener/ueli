@@ -13,6 +13,10 @@ export class WebUrlExecutor implements Executor {
         return true;
     }
 
+    public resetUserInputAfterExecution(): boolean {
+        return true;
+    }
+
     private handleCommandExecution(command: string): void {
         childProcess.exec(command, (err, stout, sterr) => {
             if (err) {

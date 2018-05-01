@@ -22,7 +22,6 @@ import { IpcChannels } from "./ipc-channels";
 import { EmailAddressInputValidator } from "./input-validators/email-address-input-validator";
 import { EmailAddressExecutionArgumentValidator } from "./execution-argument-validators/email-address-execution-argument-validator";
 import { platform } from "os";
-import { ExecutionArgumentNotSupportedError } from "./errors/execution-argument-not-supported-error";
 
 const currentOperatingSystem = platform() === "win32"
     ? OperatingSystem.Windows
@@ -68,22 +67,22 @@ export class ExecutionService {
     }
 
     public execute(executionArgument: string): void {
-        if (!executionArgument) {
-            return;
-        }
-
         for (const combi of this.validatorExecutorCombinations) {
             if (combi.validator.isValidForExecution(executionArgument)) {
-                combi.executor.execute(executionArgument);
-
-                if (combi.executor.hideAfterExecution()) {
-                    ipcMain.emit(IpcChannels.hideWindow);
+                if (combi.executor.resetUserInputAfterExecution()) {
+                    ipcMain.emit(IpcChannels.resetUserInput);
                 }
+
+                setTimeout(() => {
+                    if (combi.executor.hideAfterExecution()) {
+                        ipcMain.emit(IpcChannels.hideWindow);
+                    }
+
+                    combi.executor.execute(executionArgument);
+                }, 50); // set delay for execution to 50ms otherwise user input reset does not work properly
 
                 return;
             }
         }
-
-        throw new ExecutionArgumentNotSupportedError(executionArgument);
     }
 }

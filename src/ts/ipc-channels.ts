@@ -16,4 +16,5 @@ export class IpcChannels {
     public static readonly ueliExit = `${Config.ueliCommandPrefix}exit`;
     public static readonly exitCommandLineTool = "exit-command-line-tool";
     public static readonly resetCommandlineOutput = "reset-commandline-output";
+    public static readonly resetUserInput = "reset-user-input";
 }

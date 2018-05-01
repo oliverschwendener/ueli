@@ -67,6 +67,7 @@ ipcRenderer.on(IpcChannels.commandLineOutput, (event: Electron.Event, arg: strin
 });
 
 ipcRenderer.on(IpcChannels.resetCommandlineOutput, resetCommandLineOutput);
+ipcRenderer.on(IpcChannels.resetUserInput, resetUserInput);
 
 function updateSearchResults(searchResults: SearchResultItemViewModel[]): void {
     let index = 0;
@@ -132,12 +133,7 @@ function handleEnterPress(): void {
     const activeItem = getActiveItem();
 
     if (activeItem !== undefined) {
-        resetUserInput();
-        setTimeout(() => {
-            if (activeItem !== undefined) {
-                execute(activeItem.executionArgument);
-            }
-        }, 50); // wait 50ms because otherwise userinput wont be reset correctly
+        execute(activeItem.executionArgument);
     }
 }
 

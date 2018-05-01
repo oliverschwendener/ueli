@@ -1,10 +1,10 @@
 import { Config } from "../../../ts/config";
 import { SearchResultItem } from "../../../ts/search-result-item";
-import { Calculator } from "../../../ts/searcher/calculator";
+import { CalculatorSearcher } from "../../../ts/searcher/calculator-searcher";
 import { InputOutputCombination } from "../test-helpers";
 
-describe(Calculator.name, (): void => {
-    const searcher = new Calculator();
+describe(CalculatorSearcher.name, (): void => {
+    const searcher = new CalculatorSearcher();
 
     describe(searcher.getSearchResult.name, (): void => {
         it("should return a correct search result", (): void => {

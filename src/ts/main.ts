@@ -230,3 +230,7 @@ ipcMain.on(IpcChannels.commandLineExecution, (arg: string): void => {
     mainWindow.webContents.send(IpcChannels.commandLineOutput, arg);
     updateWindowSize(Config.maxSearchResultCount);
 });
+
+ipcMain.on(IpcChannels.resetUserInput, (): void => {
+    mainWindow.webContents.send(IpcChannels.resetUserInput);
+});

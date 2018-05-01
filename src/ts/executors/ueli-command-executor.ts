@@ -10,4 +10,8 @@ export class UeliCommandExecutor implements Executor {
     public hideAfterExecution(): boolean {
         return false;
     }
+
+    public resetUserInputAfterExecution(): boolean {
+        return true;
+    }
 }

@@ -36,6 +36,10 @@ export class CommandLineExecutor implements Executor {
         return false;
     }
 
+    public resetUserInputAfterExecution(): boolean {
+        return true;
+    }
+
     private sendCommandLineOutputToRenderer(data: string): void {
         ipcMain.emit(IpcChannels.commandLineExecution, data);
     }

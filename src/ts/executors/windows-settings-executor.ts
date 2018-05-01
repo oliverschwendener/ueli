@@ -17,6 +17,10 @@ export class WindowsSettingsExecutor implements Executor {
         return true;
     }
 
+    public resetUserInputAfterExecution(): boolean {
+        return true;
+    }
+
     private replacePrefix(executionArgument: string): string {
         return executionArgument.replace(Config.windowsSettingsPrefix, "");
     }
