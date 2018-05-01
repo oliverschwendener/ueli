@@ -11,17 +11,14 @@ export class CalculatorInputValidator implements InputValidator {
         } catch (e) {
             return false;
         }
-        return !isNaN(result) || this.isValidObject(result) || false;
+        return !isNaN(result) || this.isValidMathType(result) || false;
     }
 
-    private isValidObject(input: any): boolean {
-        if (typeof(input) !== "object") {
-            return false;
-        }
-
+    private isValidMathType(input: any): boolean {
         const mathType = math.typeof(input);
 
-        if (mathType === "Unit" && input.value === null) {
+        if ((mathType === "Unit" && input.value === null)
+         || (mathType === "Function")) {
             return false;
         }
 
