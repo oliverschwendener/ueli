@@ -68,6 +68,10 @@ export class ExecutionService {
     }
 
     public execute(executionArgument: string): void {
+        if (!executionArgument) {
+            return;
+        }
+
         for (const combi of this.validatorExecutorCombinations) {
             if (combi.validator.isValidForExecution(executionArgument)) {
                 combi.executor.execute(executionArgument);
