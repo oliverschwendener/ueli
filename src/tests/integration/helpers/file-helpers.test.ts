@@ -72,5 +72,13 @@ describe(FileHelpers.name, (): void => {
 
             deleteTestFolders(testFolders);
         });
+
+        it("should return an empty list when folder does not exist", (): void => {
+            const testFolder = `${os.homedir()}/hopefully-this-folder-does-not-exist`;
+
+            const actual = FileHelpers.getFilesFromFoldersRecursively([testFolder]);
+
+            expect(actual.length).toBe(0);
+        });
     });
 });

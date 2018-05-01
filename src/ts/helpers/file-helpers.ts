@@ -4,57 +4,65 @@ import { Config } from "../config";
 
 export class FileHelpers {
     public static getFilesFromFolderRecursively(folderPath: string): string[] {
-        let result = [] as string[];
+        try {
+            let result = [] as string[];
+            const fileNames = fs.readdirSync(folderPath);
 
-        const fileNames = fs.readdirSync(folderPath);
+            const validFileNames = fileNames.filter((fileName) => {
+                return this.isValidFile(fileName);
+            });
 
-        const validFileNames = fileNames.filter((fileName) => {
-            return this.isValidFile(fileName);
-        });
+            for (const fileName of validFileNames) {
+                try {
+                    const filePath = path.join(folderPath, fileName);
+                    const stats = fs.lstatSync(filePath);
 
-        for (const fileName of validFileNames) {
-            try {
-                const filePath = path.join(folderPath, fileName);
-                const stats = fs.lstatSync(filePath);
-
-                if (stats.isDirectory()) {
-                    // treat .app folder as a file
-                    // because going recursively through the app folder on macOS would cause longer scan times
-                    if (filePath.endsWith(".app")) {
+                    if (stats.isDirectory()) {
+                        // treat .app folder as a file
+                        // because going recursively through the app folder on macOS would cause longer scan times
+                        if (filePath.endsWith(".app")) {
+                            result.push(filePath);
+                        } else {
+                            result = result.concat(FileHelpers.getFilesFromFolderRecursively(filePath));
+                        }
+                    } else if (stats.isFile()) {
                         result.push(filePath);
-                    } else {
-                        result = result.concat(FileHelpers.getFilesFromFolderRecursively(filePath));
                     }
-                } else if (stats.isFile()) {
-                    result.push(filePath);
+                } catch (error) {
+                    continue;
                 }
-            } catch (error) {
-                continue;
             }
-        }
 
-        return result;
+            return result;
+
+        } catch (error) {
+            return [];
+        }
     }
 
     public static getFilesFromFolder(folderPath: string): string[] {
-        const fileNames = fs.readdirSync(folderPath);
+        try {
+            const fileNames = fs.readdirSync(folderPath);
 
-        const validFileNames = fileNames.filter((fileName) => this.isValidFile(fileName));
+            const validFileNames = fileNames.filter((fileName) => this.isValidFile(fileName));
 
-        const filePaths = validFileNames.map((f): string => {
-            return path.join(folderPath, f);
-        });
+            const filePaths = validFileNames.map((f): string => {
+                return path.join(folderPath, f);
+            });
 
-        const accessibleFiles = filePaths.map((filePath) => {
-            try {
-                fs.lstatSync(filePath);
-                return filePath;
-            } catch (err) {
-                // do nothing
-            }
-        }).filter((maybe) => maybe !== undefined) as string[];
+            const accessibleFiles = filePaths.map((filePath) => {
+                try {
+                    fs.lstatSync(filePath);
+                    return filePath;
+                } catch (err) {
+                    // do nothing
+                }
+            }).filter((maybe) => maybe !== undefined) as string[];
 
-        return accessibleFiles;
+            return accessibleFiles;
+        } catch (error) {
+            return [];
+        }
     }
 
     public static getFilesFromFoldersRecursively(folderPaths: string[]): string[] {
