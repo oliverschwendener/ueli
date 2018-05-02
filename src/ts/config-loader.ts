@@ -18,7 +18,7 @@ export class ConfigLoader {
         try {
             const fileContent = fs.readFileSync(this.configFilePath, "utf-8");
             const parsed = JSON.parse(fileContent) as ConfigOptions;
-            if (parsed.version === undefined || !parsed.version.startsWith("3")) {
+            if (!parsed.version.startsWith("3")) {
                 this.writeDefaultConfigToConfigFile();
                 return this.defaultConfig;
             } else {
