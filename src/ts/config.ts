@@ -18,7 +18,6 @@ import { ConfigLoader } from "./config-loader";
 // tslint:disable-next-line:no-var-requires because there is no other way to get package.json, or is there?
 const pkg = require("../../package.json");
 const productName = pkg.productName;
-const version = pkg.version;
 const appName = pkg.productName;
 export interface ConfigOptions {
     autoStartApp: boolean;
@@ -26,10 +25,8 @@ export interface ConfigOptions {
     rescanInterval: number;
     searchOperatinSystemSettings: boolean;
     showHiddenFiles: boolean;
-    version: string;
     webSearches: WebSearch[];
     windowWith: number;
-    searchWindows10Apps?: boolean;
 }
 
 const defaultConfig: ConfigOptions = {
@@ -38,7 +35,6 @@ const defaultConfig: ConfigOptions = {
     rescanInterval: 30,
     searchOperatinSystemSettings: true,
     showHiddenFiles: false,
-    version,
     webSearches: [
         {
             icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -123,7 +119,6 @@ export class Config {
     public static readonly showHiddenFiles = config.showHiddenFiles;
 
     public static readonly searchOperatinSystemSettings = config.searchOperatinSystemSettings;
-    public static readonly searchWindows10Apps = config.searchWindows10Apps;
 
     public static readonly commandLinePrefix = ">";
     public static readonly ueliCommandPrefix = "ueli:";
