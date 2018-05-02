@@ -159,13 +159,14 @@ function updateWindowSize(searchResultCount: number): void {
 
 function hideMainWindow(): void {
     mainWindow.webContents.send(IpcChannels.resetCommandlineOutput);
+    mainWindow.webContents.send(IpcChannels.resetUserInput);
 
     setTimeout(() => {
         if (mainWindow !== null && mainWindow !== undefined) {
             updateWindowSize(0);
             mainWindow.hide();
         }
-    }, delayWhenHidingCommandlineOutputInMs);
+    }, delayWhenHidingCommandlineOutputInMs); // to give user input and command line output time to reset properly delay hiding window
 }
 
 function reloadApp(): void {
