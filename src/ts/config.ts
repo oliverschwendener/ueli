@@ -112,9 +112,6 @@ export class Config {
         ? defaultConfig.rescanInterval
         : config.rescanInterval;
 
-    public static readonly minWindowHeight = Config.userInputHeight;
-    public static readonly maxWindowHeight = Config.userInputHeight + (Config.maxSearchResultCount * Config.searchResultHeight);
-
     public static readonly autoStartApp = config.autoStartApp;
     public static readonly showHiddenFiles = config.showHiddenFiles;
 
@@ -128,10 +125,4 @@ export class Config {
     public static readonly webSearches = config.webSearches === undefined
         ? defaultConfig.webSearches
         : config.webSearches;
-
-    public static calculateWindowHeight(searchResultCount: number): number {
-        return searchResultCount >= Config.maxSearchResultCount
-            ? Config.maxWindowHeight
-            : Config.minWindowHeight + (searchResultCount * Config.searchResultHeight);
-    }
 }
