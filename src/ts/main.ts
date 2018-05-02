@@ -13,6 +13,7 @@ import { IpcChannels } from "./ipc-channels";
 import { OperatingSystem } from "./operating-system";
 import * as isInDevelopment from "electron-is-dev";
 import { platform } from "os";
+import { WindowHelpers } from "./helpers/winow-helpers";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -44,7 +45,7 @@ function createMainWindow(): void {
         backgroundColor: "#00000000",
         center: true,
         frame: false,
-        height: Config.maxWindowHeight,
+        height: WindowHelpers.calculateMaxWindowHeight(Config.userInputHeight, Config.maxSearchResultCount, Config.searchResultHeight),
         resizable: false,
         show: false,
         skipTaskbar: true,
@@ -52,7 +53,7 @@ function createMainWindow(): void {
     });
 
     mainWindow.loadURL(`file://${__dirname}/../main.html`);
-    mainWindow.setSize(Config.windowWith, Config.minWindowHeight);
+    mainWindow.setSize(Config.windowWith, Config.userInputHeight);
 
     mainWindow.on("close", quitApp);
     mainWindow.on("blur", hideMainWindow);
@@ -152,7 +153,7 @@ function toggleWindow(): void {
 }
 
 function updateWindowSize(searchResultCount: number): void {
-    const newWindowHeight = Config.calculateWindowHeight(searchResultCount);
+    const newWindowHeight = WindowHelpers.calculateWindowHeight(searchResultCount, Config.maxSearchResultCount, Config.userInputHeight, Config.searchResultHeight);
     mainWindow.setSize(Config.windowWith, newWindowHeight);
 }
 
@@ -173,7 +174,7 @@ function reloadApp(): void {
 }
 
 function resetWindowToDefaultSizeAndPosition(): void {
-    mainWindow.setSize(Config.windowWith, Config.maxWindowHeight);
+    mainWindow.setSize(Config.windowWith, WindowHelpers.calculateMaxWindowHeight(Config.userInputHeight, Config.maxSearchResultCount, Config.searchResultHeight));
     mainWindow.center();
     updateWindowSize(0);
 }
