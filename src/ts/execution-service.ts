@@ -23,10 +23,6 @@ import { EmailAddressInputValidator } from "./input-validators/email-address-inp
 import { EmailAddressExecutionArgumentValidator } from "./execution-argument-validators/email-address-execution-argument-validator";
 import { platform } from "os";
 
-const currentOperatingSystem = platform() === "win32"
-    ? OperatingSystem.Windows
-    : OperatingSystem.macOS;
-
 export class ExecutionService {
     private validatorExecutorCombinations = [
         {
@@ -53,18 +49,11 @@ export class ExecutionService {
             executor: new WebUrlExecutor(),
             validator: new WebUrlExecutionArgumentValidator(),
         },
+        {
+            executor: Injector.getOperatingSystemSpecificExecutor(platform()),
+            validator: Injector.getOperatingSystemSpecificExecutionArgumentValidator(platform()),
+        },
     ] as ExecutionArgumentValidatorExecutorCombination[];
-
-    constructor() {
-        if (currentOperatingSystem === OperatingSystem.Windows) {
-            this.validatorExecutorCombinations.push(
-                {
-                    executor: new WindowsSettingsExecutor(),
-                    validator: new WindowsSettingsExecutionArgumentValidator(),
-                } as ExecutionArgumentValidatorExecutorCombination,
-            );
-        }
-    }
 
     public execute(executionArgument: string): void {
         for (const combi of this.validatorExecutorCombinations) {

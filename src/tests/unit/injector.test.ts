@@ -17,6 +17,8 @@ import { SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG } from "constants";
 import { StylesheetPath } from "../../ts/builders/stylesheet-path-builder";
 import { TrayIconPathBuilder } from "../../ts/builders/tray-icon-path-builder";
 import { OperatingSystemNotSupportedError } from "../../ts/errors/operatingsystem-not-supported-error";
+import { WindowsSettingsExecutor } from "../../ts/executors/windows-settings-executor";
+import { MacOsSettingsExecutor } from "../../ts/executors/mac-os-settings-executor";
 
 const win = "win32";
 const mac = "darwin";
@@ -130,6 +132,16 @@ describe(Injector.name, () => {
             }
 
             expect(regexIsValid).toBe(true);
+        });
+    });
+
+    describe(Injector.getOperatingSystemSpecificExecutor.name, () => {
+        it("should return an operating system specific settings executor", () => {
+            const actualWin = Injector.getOperatingSystemSpecificExecutor(win);
+            const actualMac = Injector.getOperatingSystemSpecificExecutor(mac);
+
+            expect(actualWin instanceof WindowsSettingsExecutor).toBe(true);
+            expect(actualMac instanceof MacOsSettingsExecutor).toBe(true);
         });
     });
 
