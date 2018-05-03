@@ -14,12 +14,14 @@ import { OperatingSystem } from "./operating-system";
 import * as isInDevelopment from "electron-is-dev";
 import { platform } from "os";
 import { WindowHelpers } from "./helpers/winow-helpers";
+import { ExecutionArgumentValidatorExecutorCombinationManager } from "./execution-argument-validator-executor-combination-manager";
+import { ValidatorSearcherCombinationManager } from "./validator-searcher-combination-manager";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
 const filePathExecutor = new FilePathExecutor();
-const inputValidationService = new InputValidationService();
-const executionService = new ExecutionService();
+const inputValidationService = new InputValidationService(ValidatorSearcherCombinationManager.combinations);
+const executionService = new ExecutionService(ExecutionArgumentValidatorExecutorCombinationManager.combinations);
 const delayWhenHidingCommandlineOutputInMs = 25;
 
 const otherInstanceIsAlreadyRunning = app.makeSingleInstance(() => {

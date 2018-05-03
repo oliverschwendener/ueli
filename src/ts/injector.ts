@@ -19,12 +19,12 @@ import { FilePathRegex } from "./file-path-regex";
 import { OpenUrlWithDefaultBrowserCommandBuilder } from "./builders/open-url-with-default-browser-command-builder";
 import { StylesheetPath } from "./builders/stylesheet-path-builder";
 import { TrayIconPathBuilder } from "./builders/tray-icon-path-builder";
+import { ExecutionArgumentValidator } from "./execution-argument-validators/execution-argument-validator";
+import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
 import { WindowsSettingsExecutor } from "./executors/windows-settings-executor";
 import { MacOsSettingsExecutor } from "./executors/mac-os-settings-executor";
-import { ExecutionArgumentValidator } from "./execution-argument-validators/execution-argument-validator";
 import { WindowsSettingsExecutionArgumentValidator } from "./execution-argument-validators/windows-settings-execution-argument-validator";
 import { MacOsSettingsExecutionArgumentValidator } from "./execution-argument-validators/mac-os-execution-argument-validator";
-import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
 
 export class Injector {
   public static getWebUrlRegExp(): RegExp {
@@ -99,20 +99,6 @@ export class Injector {
     switch (OperatingSystemHelpers.getOperatingSystemFromString(platform)) {
       case OperatingSystem.Windows: return StylesheetPath.Windows;
       case OperatingSystem.macOS: return StylesheetPath.MacOs;
-    }
-  }
-
-  public static getOperatingSystemSpecificExecutor(platform: string): Executor {
-    switch (OperatingSystemHelpers.getOperatingSystemFromString(platform)) {
-      case OperatingSystem.Windows: return new WindowsSettingsExecutor();
-      case OperatingSystem.macOS: return new MacOsSettingsExecutor();
-    }
-  }
-
-  public static getOperatingSystemSpecificExecutionArgumentValidator(platform: string): ExecutionArgumentValidator {
-    switch (OperatingSystemHelpers.getOperatingSystemFromString(platform)) {
-      case OperatingSystem.Windows: return new WindowsSettingsExecutionArgumentValidator();
-      case OperatingSystem.macOS: return new MacOsSettingsExecutionArgumentValidator();
     }
   }
 }

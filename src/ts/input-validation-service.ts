@@ -17,50 +17,26 @@ import { CalculatorInputValidator } from "./input-validators/calculator-input-va
 import { CalculatorSearcher } from "./searcher/calculator-searcher";
 
 export class InputValidationService {
-    private validatorSearcherCombinations = [
-        {
-            searcher: new CalculatorSearcher(),
-            validator: new CalculatorInputValidator(),
-        },
-        {
-            searcher: new FilePathSearcher(),
-            validator: new FilePathInputValidator(),
-        },
-        {
-            searcher: new CommandLineSearcher(),
-            validator: new CommandLineInputValidator(),
-        },
-        {
-            searcher: new WebSearchSearcher(),
-            validator: new WebSearchInputValidator(),
-        },
-        {
-            searcher: new EmailAddressSearcher(),
-            validator: new EmailAddressInputValidator(),
-        },
-        {
-            searcher: new WebUrlSearcher(),
-            validator: new WebUrlInputValidator(),
-        },
-        {
-            searcher: new SearchPluginsSearcher(),
-            validator: new SearchPluginsInputValidator(),
-        },
-    ] as InputValidatorSearcherCombination[];
+    private validatorSearcherCombinations: InputValidatorSearcherCombination[];
+
+    public constructor(validatorSearcherCombinations: InputValidatorSearcherCombination[]) {
+        this.validatorSearcherCombinations = validatorSearcherCombinations;
+    }
 
     public getSearchResult(userInput: string): SearchResultItem[] {
+        let result = [] as SearchResultItem[];
         userInput = StringHelpers.trimAndReplaceMultipleWhiteSpacesWithOne(userInput);
 
         if (StringHelpers.stringIsWhiteSpace(userInput)) {
-            return [];
+            return result;
         }
 
         for (const combination of this.validatorSearcherCombinations) {
             if (combination.validator.isValidForSearchResults(userInput)) {
-                return combination.searcher.getSearchResult(userInput);
+                result = result.concat(combination.searcher.getSearchResult(userInput));
             }
         }
 
-        return [];
+        return result;
     }
 }

@@ -46,4 +46,24 @@ export const invalidEmailAddresses = [
     "darth.vader@empire",
     "darth.vader@empire.",
     "darth.vader@mepire.c",
+    "google.com",
+    "https://google.com",
+];
+
+export const validUrls = [
+    "google.com",
+    "http://google.com",
+    "https://google.com",
+    "google.com/search/?query=google-something&param=value",
+    "https://www.google.com/search/?query=google-something&param=value",
+    "www.google.com/search/?query=google-something&param=value",
+];
+
+export const invalidUrls = [
+    "",
+    "google . com",
+    "http://",
+    "some-bullshit",
+    "12340.12",
+    "darth.vader@empire.cc",
 ];
