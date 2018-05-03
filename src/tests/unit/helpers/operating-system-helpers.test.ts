@@ -23,8 +23,10 @@ describe(OperatingSystemHelpers.name, () => {
         it("should throw an error when passing in an unsupported operating system", (): void => {
             const unsupportedPlatforms = [
                 "linux",
+                "win",
                 "windows",
                 "macos",
+                "mac",
             ];
 
             let errorCounter = 0;
