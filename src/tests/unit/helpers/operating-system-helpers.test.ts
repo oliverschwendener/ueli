@@ -1,5 +1,6 @@
 import { OperatingSystemHelpers } from "../../../ts/helpers/operating-system-helpers";
 import { OperatingSystem } from "../../../ts/operating-system";
+import { OperatingSystemNotSupportedError } from "../../../ts/errors/operatingsystem-not-supported-error";
 
 describe(OperatingSystemHelpers.name, () => {
     describe(OperatingSystemHelpers.getOperatingSystemFromString.name, () => {
@@ -17,6 +18,27 @@ describe(OperatingSystemHelpers.name, () => {
             const actual = OperatingSystemHelpers.getOperatingSystemFromString(platform);
 
             expect(actual).toBe(OperatingSystem.macOS);
+        });
+
+        it("should throw an error when passing in an unsupported operating system", (): void => {
+            const unsupportedPlatforms = [
+                "linux",
+                "windows",
+                "macos",
+            ];
+
+            let errorCounter = 0;
+
+            for (const unsupportedPlatform of unsupportedPlatforms) {
+                try {
+                    const actual = OperatingSystemHelpers.getOperatingSystemFromString(unsupportedPlatform);
+                } catch (error) {
+                    expect(error instanceof OperatingSystemNotSupportedError).toBe(true);
+                    errorCounter++;
+                }
+            }
+
+            expect(errorCounter).toBe(unsupportedPlatforms.length);
         });
     });
 });
