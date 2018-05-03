@@ -11,7 +11,7 @@ describe(ExecutionArgumentValidatorExecutorCombinationManager.name, (): void => 
     it("should return the correct execution argument valiator executor combinations", (): void => {
         let counter = 0;
 
-        const actual = ExecutionArgumentValidatorExecutorCombinationManager.ValidatorExecutorCombinations;
+        const actual = ExecutionArgumentValidatorExecutorCombinationManager.combinations;
 
         const currentOperatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
 

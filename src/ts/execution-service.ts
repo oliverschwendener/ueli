@@ -7,14 +7,12 @@ import { ExecutionArgumentValidator } from "./execution-argument-validators/exec
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
 import { WebSearchExecutionArgumentValidator } from "./execution-argument-validators/web-search-execution-argument-validator";
 import { WebUrlExecutionArgumentValidator } from "./execution-argument-validators/web-url-execution-argument-validator";
-import { WindowsSettingsExecutionArgumentValidator } from "./execution-argument-validators/windows-settings-execution-argument-validator";
 import { CommandLineExecutor } from "./executors/command-line-executor";
 import { UeliCommandExecutor } from "./executors/ueli-command-executor";
 import { Executor } from "./executors/executor";
 import { FilePathExecutor } from "./executors/file-path-executor";
 import { WebSearchExecutor } from "./executors/web-search-executor";
 import { WebUrlExecutor } from "./executors/web-url-executor";
-import { WindowsSettingsExecutor } from "./executors/windows-settings-executor";
 import { Injector } from "./injector";
 import { OperatingSystem } from "./operating-system";
 import { ExecutionArgumentValidatorExecutorCombination } from "./execution-argument-validator-executor-combination";
@@ -24,36 +22,11 @@ import { EmailAddressExecutionArgumentValidator } from "./execution-argument-val
 import { platform } from "os";
 
 export class ExecutionService {
-    private validatorExecutorCombinations = [
-        {
-            executor: new CommandLineExecutor(),
-            validator: new CommandLineExecutionArgumentValidator(),
-        },
-        {
-            executor: new UeliCommandExecutor(),
-            validator: new UeliCommandExecutionArgumentValidator(),
-        },
-        {
-            executor: new FilePathExecutor(),
-            validator: new FilePathExecutionArgumentValidator(),
-        },
-        {
-            executor: new WebSearchExecutor(),
-            validator: new WebSearchExecutionArgumentValidator(),
-        },
-        {
-            executor: new FilePathExecutor(),
-            validator: new EmailAddressExecutionArgumentValidator(),
-        },
-        {
-            executor: new WebUrlExecutor(),
-            validator: new WebUrlExecutionArgumentValidator(),
-        },
-        {
-            executor: Injector.getOperatingSystemSpecificExecutor(platform()),
-            validator: Injector.getOperatingSystemSpecificExecutionArgumentValidator(platform()),
-        },
-    ] as ExecutionArgumentValidatorExecutorCombination[];
+    private validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[];
+
+    public constructor(validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[]) {
+        this.validatorExecutorCombinations = validatorExecutorCombinations;
+    }
 
     public execute(executionArgument: string): void {
         for (const combi of this.validatorExecutorCombinations) {
