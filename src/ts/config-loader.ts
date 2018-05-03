@@ -18,7 +18,9 @@ export class ConfigLoader {
         try {
             const fileContent = fs.readFileSync(this.configFilePath, "utf-8");
             const parsed = JSON.parse(fileContent) as ConfigOptions;
-            return parsed;
+            // Apply defaults if some settings are not set
+            const mergedConfig = Object.assign(this.defaultConfig, parsed);
+            return mergedConfig;
         } catch (err) {
             this.writeDefaultConfigToConfigFile();
             return this.defaultConfig;

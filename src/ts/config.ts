@@ -17,8 +17,6 @@ import { ConfigLoader } from "./config-loader";
 
 // tslint:disable-next-line:no-var-requires because there is no other way to get package.json, or is there?
 const pkg = require("../../package.json");
-const productName = pkg.productName;
-const appName = pkg.productName;
 export interface ConfigOptions {
     autoStartApp: boolean;
     maxSearchResultCount: number;
@@ -95,22 +93,15 @@ const configLoader = new ConfigLoader(defaultConfig, configFilePath);
 const config = configLoader.loadConigFromConfigFile();
 
 export class Config {
-    public static readonly productName = productName;
+    public static readonly productName = pkg.productName;
     public static readonly userInputHeight = 80;
     public static readonly searchResultHeight = 60;
     public static readonly configFilePath = configFilePath;
 
-    public static readonly windowWith = config.windowWith === undefined
-        ? defaultConfig.windowWith
-        : config.windowWith;
+    public static readonly windowWith = config.windowWith;
 
-    public static readonly maxSearchResultCount = config.maxSearchResultCount === undefined
-        ? defaultConfig.maxSearchResultCount
-        : config.maxSearchResultCount;
-
-    public static readonly rescanInterval = config.rescanInterval === undefined
-        ? defaultConfig.rescanInterval
-        : config.rescanInterval;
+    public static readonly maxSearchResultCount = config.maxSearchResultCount;
+    public static readonly rescanInterval = config.rescanInterval;
 
     public static readonly autoStartApp = config.autoStartApp;
     public static readonly showHiddenFiles = config.showHiddenFiles;
@@ -122,7 +113,5 @@ export class Config {
     public static readonly windowsSettingsPrefix = "win:";
     public static readonly webSearchSeparator = "?";
 
-    public static readonly webSearches = config.webSearches === undefined
-        ? defaultConfig.webSearches
-        : config.webSearches;
+    public static readonly webSearches = config.webSearches;
 }
