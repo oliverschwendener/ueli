@@ -13,19 +13,26 @@ import { WebSearchExecutor } from "./executors/web-search-executor";
 import { WebUrlExecutor } from "./executors/web-url-executor";
 import { InputValidationService } from "./input-validation-service";
 import { WebSearch } from "./web-search";
+import { ConfigLoader } from "./config-loader";
 
 // tslint:disable-next-line:no-var-requires because there is no other way to get package.json, or is there?
 const pkg = require("../../package.json");
-const productName = pkg.productName;
-const version = pkg.version;
-const appName = pkg.productName;
-const defaultConfig = {
+export interface ConfigOptions {
+    autoStartApp: boolean;
+    maxSearchResultCount: number;
+    rescanInterval: number;
+    searchOperatinSystemSettings: boolean;
+    showHiddenFiles: boolean;
+    webSearches: WebSearch[];
+    windowWith: number;
+}
+
+const defaultConfig: ConfigOptions = {
     autoStartApp: true,
     maxSearchResultCount: 8,
     rescanInterval: 30,
     searchOperatinSystemSettings: true,
     showHiddenFiles: false,
-    version,
     webSearches: [
         {
             icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -82,59 +89,29 @@ const defaultConfig = {
 };
 
 const configFilePath = path.join(os.homedir(), "ueli.config.json");
-const config = loadConigFromConfigFile();
-
-function loadConigFromConfigFile(): any {
-    try {
-        const fileContent = fs.readFileSync(configFilePath, "utf-8");
-        const parsed = JSON.parse(fileContent);
-        if (parsed.version === undefined || !parsed.version.startsWith("3")) {
-            writeDefaultConfigToConfigFile();
-            return defaultConfig;
-        } else {
-            return parsed;
-        }
-    } catch (err) {
-        writeDefaultConfigToConfigFile();
-        return defaultConfig;
-    }
-}
-
-function writeDefaultConfigToConfigFile(): void {
-    const stringifiedConfig = JSON.stringify(defaultConfig);
-    fs.writeFileSync(configFilePath, stringifiedConfig, "utf-8");
-}
+const configLoader = new ConfigLoader(defaultConfig, configFilePath);
+const config = configLoader.loadConigFromConfigFile();
 
 export class Config {
-    public static readonly productName = productName;
+    public static readonly productName = pkg.productName;
     public static readonly userInputHeight = 80;
     public static readonly searchResultHeight = 60;
     public static readonly configFilePath = configFilePath;
 
-    public static readonly windowWith = config.windowWith === undefined
-        ? defaultConfig.windowWith
-        : config.windowWith;
+    public static readonly windowWith = config.windowWith;
 
-    public static readonly maxSearchResultCount = config.maxSearchResultCount === undefined
-        ? defaultConfig.maxSearchResultCount
-        : config.maxSearchResultCount;
-
-    public static readonly rescanInterval = config.rescanInterval === undefined
-        ? defaultConfig.rescanInterval
-        : config.rescanInterval;
+    public static readonly maxSearchResultCount = config.maxSearchResultCount;
+    public static readonly rescanInterval = config.rescanInterval;
 
     public static readonly autoStartApp = config.autoStartApp;
     public static readonly showHiddenFiles = config.showHiddenFiles;
 
     public static readonly searchOperatinSystemSettings = config.searchOperatinSystemSettings;
-    public static readonly searchWindows10Apps = config.searchWindows10Apps;
 
     public static readonly commandLinePrefix = ">";
     public static readonly ueliCommandPrefix = "ueli:";
     public static readonly windowsSettingsPrefix = "win:";
     public static readonly webSearchSeparator = "?";
 
-    public static readonly webSearches = config.webSearches === undefined
-        ? defaultConfig.webSearches
-        : config.webSearches;
+    public static readonly webSearches = config.webSearches;
 }
