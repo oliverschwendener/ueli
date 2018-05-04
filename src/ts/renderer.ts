@@ -12,6 +12,7 @@ const vue = new Vue({
     data: {
         autoFocus: true,
         commandLineOutput: [] as string[],
+        isMouseMoving: false,
         searchIcon: "",
         searchResults: [] as SearchResultItemViewModel[],
         stylesheetPath: platform() === "win32"
@@ -21,6 +22,10 @@ const vue = new Vue({
     },
     el: "#vue-root",
     methods: {
+        handleClick: (index: number): void => {
+            handleEnterPress();
+            focusOnInput();
+        },
         handleKeyPress: (event: KeyboardEvent): void => {
             if (event.key === "Enter") {
                 handleEnterPress();
@@ -28,6 +33,7 @@ const vue = new Vue({
                 handleOpenFileLocation();
             } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
                 event.preventDefault();
+                vue.isMouseMoving = false;
                 const direction = event.key === "ArrowDown" ? "next" : "prev";
                 changeActiveItem(direction);
             } else if (event.key === "Tab") {
@@ -37,6 +43,23 @@ const vue = new Vue({
                 ipcRenderer.send(IpcChannels.hideWindow);
             } else if (event.ctrlKey && event.key === "c") {
                 ipcRenderer.send(IpcChannels.exitCommandLineTool);
+            }
+        },
+        handleMouseMove: (event: MouseEvent): void => {
+            // Prevent Chromium bug that it triggers mousemove event when DOM
+            // scrolls.
+            // https://stackoverflow.com/questions/16529807/mousemove-event-is-triggered-onscroll-even-when-mouse-was-not-moved-on-chrome
+            if (event.movementX !== 0 || event.movementY !== 0) {
+                vue.isMouseMoving = true;
+            }
+        },
+        handleMouseOver: (index: number): void => {
+            if (vue.isMouseMoving) {
+                vue.isMouseMoving = false;
+                vue.searchResults.forEach((searchResultItem: SearchResultItemViewModel) => {
+                    searchResultItem.active = false;
+                });
+                vue.searchResults[index].active = true;
             }
         },
     },
@@ -91,6 +114,7 @@ function updateSearchResults(searchResults: SearchResultItemViewModel[]): void {
 
 function changeActiveItem(direction: string): void {
     if (vue.searchResults.length === 0) {
+        vue.isMouseMoving = false;
         return;
     }
 
