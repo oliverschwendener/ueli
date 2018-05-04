@@ -120,6 +120,7 @@ All settings are stored in `~/ueli.config.json`.
 * Add nice GUI to modifiy configuration
 * Add option to add custom shortcuts
 * Add option to change folders which are being scanned for programs and files
+* Use vue components
 
 ## Development
 
