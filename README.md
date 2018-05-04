@@ -75,6 +75,10 @@ This is an alt+space launcher for Windows and macOS.
 * `ArrowDown`to scroll down
 * `F6` or `Ctrl+l` to set focus on user input
 
+### Updater
+
+To check if a new version is available right click on the tray icon. The first item in the context menu shows you if there is an update available or if you are running the latest version. If there is an update available click on "Download and install update".
+
 ## Customization
 
 All settings are stored in `~/ueli.config.json`.
@@ -103,7 +107,7 @@ All settings are stored in `~/ueli.config.json`.
 
 ## Code coverage
 
-[![Coverage Status](https://coveralls.io/repos/github/oliverschwendener/ueli/badge.svg?branch=dev)](https://coveralls.io/github/oliverschwendener/ueli?branch=dev)
+[![Coverage Status](https://coveralls.io/repos/github/oliverschwendener/ueli/badge.svg?branch=master)](https://coveralls.io/github/oliverschwendener/ueli?branch=master)
 
 ## Roadmap
 
