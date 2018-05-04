@@ -13,27 +13,29 @@
         <link rel="stylesheet" :href="stylesheetPath">
         <div class="container">
 
-            <div class="user-input-container">
-                <input id="user-input" class="user-input" type="text" v-model="userInput" :autofocus="{ 'autofocus' : autoFocus }" v-on:keyDown="handleKeyPress">
-                <div class="search-icon-container" style="-webkit-app-region: drag" v-html="searchIcon"></div>
+            <div class="user-input-container" :style="userInputContainerStyle()">
+                <input id="user-input" class="user-input" :style="userInputStyle()" type="text" v-model="userInput" :autofocus="{ 'autofocus' : autoFocus }"
+                    v-on:keyDown="handleKeyPress">
+                <div class="search-icon-container" style="-webkit-app-region: drag;" :style="searchResultWidth()" v-html="searchIcon"></div>
             </div>
 
-            <div class="output-container">
+            <div class="output-container" :style="outputContainerHeight()">
 
                 <div class="command-line-output-container" :class="{ 'hidden' : commandLineOutput.length === 0 }">
                     <pre v-for="line in commandLineOutput">{{ line }}</pre>
                 </div>
 
                 <div class="search-results-container" :class="{ 'hidden' : searchResults.length === 0}">
-                    <div :id="searchResult.id" class="search-result" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
-                        <div class="search-result-icon">
-                            <div class="search-result-icon-container" :class="{ 'active' : searchResult.active }" v-html="searchResult.icon"></div>
+                    <div :id="searchResult.id" class="search-result" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults"
+                        :style="searchResultHeight()">
+                        <div class="search-result-icon" :style="searchResultWidth()">
+                            <div class="search-result-icon-container" :class="{ 'active' : searchResult.active }" v-html="searchResult.icon" :style="searchResultWidth()"></div>
                         </div>
                         <div class="search-result-information">
-                            <span class="search-result-name" :class="{ 'active' : searchResult.active }">
+                            <span class="search-result-name" :style="searchResultNameStyle()" :class="{ 'active' : searchResult.active }">
                                 {{ searchResult.name }}
                             </span>
-                            <span class=" search-result-execution-argument " :class="{ 'active' : searchResult.active } ">
+                            <span class="search-result-execution-argument" :style="searchResultExecutionArgumentStyle()" :class="{ 'active' : searchResult.active } ">
                                 {{ searchResult.executionArgument }}
                             </span>
                         </div>

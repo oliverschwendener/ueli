@@ -8,7 +8,7 @@ const defaultConfigMock = {
     rescanInterval: 30,
     searchOperatinSystemSettings: false,
     showHiddenFiles: true,
-    webSearches: new Array<WebSearch>(),
+    webSearches: [] as WebSearch[],
     windowWith: 860,
 };
 
@@ -22,24 +22,24 @@ const buggyFilePath = "./buggy";
 describe(ConfigLoader.name, (): void => {
     it("loads config form file", () => {
         const configLoader = new ConfigLoader(defaultConfigMock, "./fakeFile");
-        const configOptions = configLoader.loadConigFromConfigFile();
+        const configOptions = configLoader.loadConfigFromConfigFile();
         expect(configOptions.webSearches.length).toBe(0);
     });
 
-    it("loads default config when error is thrown", () => {
+    it("loads default config when error is thrown", (): void => {
         fs.writeFileSync("./buggy", buggyConfig);
         const configLoader = new ConfigLoader(defaultConfigMock, "./buggy");
-        const configOptions = configLoader.loadConigFromConfigFile();
+        const configOptions = configLoader.loadConfigFromConfigFile();
         expect(configOptions.webSearches.length).toBe(0);
     });
 
-    it("loads default path when not passed", () => {
+    it("loads default path when not passed", (): void => {
         const configLoader = new ConfigLoader(defaultConfigMock);
-        const configOptions = configLoader.loadConigFromConfigFile();
+        const configOptions = configLoader.loadConfigFromConfigFile();
         expect(configOptions.webSearches.length).toBeGreaterThan(0);
     });
 
-    afterAll(() => {
+    afterAll((): void => {
         fs.unlink(fakeFilePath);
         fs.unlink(buggyFilePath);
     });

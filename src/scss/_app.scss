@@ -1,6 +1,3 @@
-$user-input-height: 80px;
-$search-result-height: 60px;
-$search-results-container-height: calc(100vh - #{$user-input-height});
 $side-padding: 15px;
 $scrollbar-size: 8px;
 $icon-size: 55%;
@@ -22,7 +19,6 @@ div.container {
 }
 
 div.user-input-container {
-    height: $user-input-height;
     display: flex;
     padding: 0 $side-padding;
 }
@@ -33,7 +29,6 @@ input.user-input {
     box-sizing: border-box;
     border: none;
     background: transparent;
-    font-size: 2rem;
     font-weight: 100;
     color: $text-color;
 
@@ -43,7 +38,6 @@ input.user-input {
 }
 
 div.search-icon-container {
-    width: $search-result-height;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,7 +52,6 @@ div.output-container {
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    height: $search-results-container-height;
 }
 
 div.command-line-output-container {
@@ -79,7 +72,7 @@ div.search-result {
     @include font-search-result();
     display: flex;
     flex-direction: row;
-    height: $search-result-height;
+    cursor: pointer;
 
     &.active {
         background: $accent-color;
@@ -88,7 +81,6 @@ div.search-result {
 }
 
 div.search-result-icon {
-    width: $search-result-height;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,7 +88,6 @@ div.search-result-icon {
 
 div.search-result-icon-container {
     display: flex;
-    width: $search-result-height;
     justify-content: center;
     align-items: center;
 
@@ -127,8 +118,6 @@ span {
     white-space: nowrap;
 
     &.search-result-name {
-        font-size: 1.25rem;
-
         &.active {
             @include font-search-result-name-active();   
         }
@@ -137,7 +126,6 @@ span {
     &.search-result-execution-argument {
         @include font-search-result-execution-argument();
         @include transitions();
-        font-size: 0.85rem;
         display: none;  
 
         &.active {

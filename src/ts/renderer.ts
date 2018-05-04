@@ -5,6 +5,7 @@ import { ipcRenderer } from "electron";
 import * as macStyles from "../scss/mac.scss";
 import * as windowsStyles from "../scss/windows.scss";
 import Vue from "vue";
+import { Config } from "./config";
 
 document.addEventListener("keyup", handleGlobalKeyPress);
 
@@ -38,6 +39,27 @@ const vue = new Vue({
             } else if (event.ctrlKey && event.key === "c") {
                 ipcRenderer.send(IpcChannels.exitCommandLineTool);
             }
+        },
+        outputContainerHeight: (): string => {
+            return `height: calc(100vh - ${Config.userInputHeight}px);`;
+        },
+        searchResultExecutionArgumentStyle: (): string => {
+            return `font-size: ${Config.searchResultExecutionArgumentFontSize}px;`;
+        },
+        searchResultHeight: (): string => {
+            return `height: ${Config.searchResultHeight}px`;
+        },
+        searchResultNameStyle: (): string => {
+            return `font-size: ${Config.searchResultNameFontSize}px;`;
+        },
+        searchResultWidth: (): string => {
+            return `width: ${Config.searchResultHeight}px;`;
+        },
+        userInputContainerStyle: (): string => {
+            return `height: ${Config.userInputHeight}px;`;
+        },
+        userInputStyle: (): string => {
+            return `font-size: ${Config.userInputFontSize}px;`;
         },
     },
     watch: {

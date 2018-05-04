@@ -89,14 +89,19 @@ All settings are stored in `~/ueli.config.json`.
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed.
 * `rescanInterval` Number - Interval in seconds to rescan for installed programs.
 * `searchOperatinSystemSettings` Boolean - If operting system settings should appear in the search results. (Works only on Windows at the moment)
+* `searchResultExecutionArgumentFontSize` Number - Represents the font size of the search result execution argument in pixels
+* `searchResultHeight` Number - Represents the height of a search result box in pixels
+* `searchResultNameFontSize` Number - Represents the font size of the search result name in pixels
 * `showHiddenFiles` Boolean - If hidden files should appear in the search results
+* `userInputFontSize` Number - Represents the font size of the user input in pixels
+* `userInputHeight` Number - Represents the height of the user input box in pixels
 * `webSearches` Array of webSearch Objects - A list of web search engines
     * `webSearch` Object - Defines a web search engine
         * `icon` string - Represents the svg icon for the specific web search engine
         * `name` string - Represents the name of the web search engine
         * `prefix` string - Represents the prefix for your web search engine. For example if the prefix is `g` you can type in `g?{your search term}` to search
         * `url` string - Represents the url for the search engine to which the search term is appended to. For example `https://google.com/search?q=`
-* `windowWith`: Number - Represents the width of the main window
+* `windowWith`: Number - Represents the width of the main window in pixels
 
 ## Build status
 

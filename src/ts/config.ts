@@ -17,12 +17,18 @@ import { ConfigLoader } from "./config-loader";
 
 // tslint:disable-next-line:no-var-requires because there is no other way to get package.json, or is there?
 const pkg = require("../../package.json");
+
 export interface ConfigOptions {
     autoStartApp: boolean;
     maxSearchResultCount: number;
     rescanInterval: number;
     searchOperatinSystemSettings: boolean;
+    searchResultExecutionArgumentFontSize: number;
+    searchResultHeight: number;
+    searchResultNameFontSize: number;
     showHiddenFiles: boolean;
+    userInputHeight: number;
+    userInputFontSize: number;
     webSearches: WebSearch[];
     windowWith: number;
 }
@@ -32,7 +38,12 @@ const defaultConfig: ConfigOptions = {
     maxSearchResultCount: 8,
     rescanInterval: 30,
     searchOperatinSystemSettings: true,
+    searchResultExecutionArgumentFontSize: 14,
+    searchResultHeight: 60,
+    searchResultNameFontSize: 20,
     showHiddenFiles: false,
+    userInputFontSize: 36,
+    userInputHeight: 80,
     webSearches: [
         {
             icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -90,12 +101,18 @@ const defaultConfig: ConfigOptions = {
 
 const configFilePath = path.join(os.homedir(), "ueli.config.json");
 const configLoader = new ConfigLoader(defaultConfig, configFilePath);
-const config = configLoader.loadConigFromConfigFile();
+const config = configLoader.loadConfigFromConfigFile();
 
 export class Config {
     public static readonly productName = pkg.productName;
-    public static readonly userInputHeight = 80;
-    public static readonly searchResultHeight = 60;
+
+    public static readonly userInputHeight = config.userInputHeight;
+    public static readonly userInputFontSize = config.userInputFontSize;
+
+    public static readonly searchResultExecutionArgumentFontSize = config.searchResultExecutionArgumentFontSize;
+    public static readonly searchResultNameFontSize = config.searchResultNameFontSize;
+    public static readonly searchResultHeight = config.searchResultHeight;
+
     public static readonly configFilePath = configFilePath;
 
     public static readonly windowWith = config.windowWith;
