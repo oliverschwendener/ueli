@@ -14,7 +14,7 @@ export class ConfigLoader {
         this.defaultConfig = defaultConfig;
     }
 
-    public loadConigFromConfigFile(): ConfigOptions {
+    public loadConfigFromConfigFile(): ConfigOptions {
         try {
             const fileContent = fs.readFileSync(this.configFilePath, "utf-8");
             const parsed = JSON.parse(fileContent) as ConfigOptions;
