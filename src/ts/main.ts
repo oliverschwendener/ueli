@@ -15,12 +15,12 @@ import * as isInDevelopment from "electron-is-dev";
 import { platform } from "os";
 import { WindowHelpers } from "./helpers/winow-helpers";
 import { ExecutionArgumentValidatorExecutorCombinationManager } from "./execution-argument-validator-executor-combination-manager";
-import { ValidatorSearcherCombinationManager } from "./validator-searcher-combination-manager";
+import { InputValidatorSearcherCombinationManager } from "./input-validator-searcher-combination-manager";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
 const filePathExecutor = new FilePathExecutor();
-const inputValidationService = new InputValidationService(ValidatorSearcherCombinationManager.combinations);
+const inputValidationService = new InputValidationService(InputValidatorSearcherCombinationManager.combinations);
 const executionService = new ExecutionService(ExecutionArgumentValidatorExecutorCombinationManager.combinations);
 const delayWhenHidingCommandlineOutputInMs = 25;
 

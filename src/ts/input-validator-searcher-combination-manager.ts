@@ -14,7 +14,7 @@ import { SearchPluginsSearcher } from "./searcher/search-plugins-searcher";
 import { SearchPluginsInputValidator } from "./input-validators/search-plugins-input-validator";
 import { InputValidatorSearcherCombination } from "./input-validator-searcher-combination";
 
-export class ValidatorSearcherCombinationManager {
+export class InputValidatorSearcherCombinationManager {
     public static readonly combinations = [
         {
             searcher: new CalculatorSearcher(),
