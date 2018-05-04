@@ -46,9 +46,6 @@ const vue = new Vue({
             }
         },
         handleMouseMove: (event: MouseEvent): void => {
-            // Prevent Chromium bug that it triggers mousemove event when DOM
-            // scrolls.
-            // https://stackoverflow.com/questions/16529807/mousemove-event-is-triggered-onscroll-even-when-mouse-was-not-moved-on-chrome
             if (event.movementX !== 0 || event.movementY !== 0) {
                 vue.isMouseMoving = true;
             }
