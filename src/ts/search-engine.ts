@@ -1,6 +1,7 @@
 import * as Fuse from "fuse.js";
 import { SearchPlugin } from "./search-plugins/search-plugin";
 import { SearchResultItem } from "./search-result-item";
+import { WeightManager } from "./weight-manager";
 
 export class SearchEngine {
     private unsortedSearchResults: SearchResultItem[];
@@ -22,6 +23,15 @@ export class SearchEngine {
         });
 
         const fuseResults = fuse.search(searchTerm) as any[];
+
+        fuseResults.sort((a: any, b: any): number => {
+            let weightA = WeightManager.weightStorage[a.item.executionArgument] || 0;
+            let weightB = WeightManager.weightStorage[b.item.executionArgument] || 0;
+            const weightSum = weightA + weightB;
+            weightA /= weightSum;
+            weightB /= weightSum;
+            return weightB * (1 - b.score) - weightA * (1 - a.score);
+        });
 
         const result = fuseResults.map((fuseResult): SearchResultItem => {
             return {
