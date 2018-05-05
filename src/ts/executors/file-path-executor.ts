@@ -2,9 +2,11 @@ import * as childProcess from "child_process";
 import { Injector } from "../injector";
 import { Executor } from "./executor";
 import { platform } from "os";
+import { WeightManager } from "../weight-manager";
 
 export class FilePathExecutor implements Executor {
     public execute(filePath: string): void {
+        WeightManager.addWeightScore(filePath);
         const command = Injector.getFileExecutionCommand(platform(), filePath);
         this.handleExecution(command);
     }

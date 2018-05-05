@@ -1,9 +1,11 @@
 import { exec } from "child_process";
 import { Config } from "../config";
 import { Executor } from "./executor";
+import { WeightManager } from "../weight-manager";
 
 export class WindowsSettingsExecutor implements Executor {
     public execute(executionArgument: string): void {
+        WeightManager.addWeightScore(executionArgument);
         const command = this.replacePrefix(executionArgument);
 
         exec(`start ${command}`, (err, stdout, sterr): void => {
