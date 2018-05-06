@@ -6,7 +6,7 @@ export interface Weight {
     [key: string]: number;
 }
 
-const weightFilePath = path.join(os.homedir(), "ueli.weightstorage.json");
+const weightFilePath = path.join(process.cwd(), "ueli.weightstorage.json");
 
 function writeWeightFile(filePath: string): void {
     const stringifiedWeight = JSON.stringify(WeightManager.weightStorage);
