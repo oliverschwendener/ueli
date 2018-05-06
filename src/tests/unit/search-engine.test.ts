@@ -1,5 +1,6 @@
 import { SearchResultItem } from "../../ts/search-result-item";
 import { SearchEngine } from "./../../ts/search-engine";
+import { WeightManager } from "./../../ts/weight-manager";
 
 function getFakeItems(items: string[]): SearchResultItem[] {
     return items.map((i): SearchResultItem => {
@@ -38,10 +39,17 @@ describe("SearchEngine", (): void => {
             const searchEngine = new SearchEngine(fakeItems);
             const userInput = "han";
 
+            WeightManager.addWeightScore("hasn");
+            WeightManager.addWeightScore("hasn");
+            WeightManager.addWeightScore("hasn");
+            WeightManager.addWeightScore("hasn");
+
             const actual = searchEngine.search(userInput);
 
             expect(actual.length).toBeGreaterThan(0);
-            expect(actual[0].name).toBe("hans");
+            expect(actual[0].name).toBe("hasn");
+
+            WeightManager.removeWeightKey("hasn");
         });
     });
 });
