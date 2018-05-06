@@ -11,7 +11,7 @@ describe("WeightManager", (): void => {
         expect(WeightManager.weightStorage[testWeightKey]).toBe(1);
     });
 
-    it("Should reset increase score of path to 2", (): void => {
+    it("Should increase score of path to 2", (): void => {
         WeightManager.addWeightScore(testWeightKey);
         expect(WeightManager.weightStorage[testWeightKey]).toBe(2);
     });
