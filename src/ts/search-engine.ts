@@ -28,6 +28,9 @@ export class SearchEngine {
             let weightA = WeightManager.weightStorage[a.item.executionArgument] || 0;
             let weightB = WeightManager.weightStorage[b.item.executionArgument] || 0;
             const weightSum = weightA + weightB;
+            if (weightSum === 0) {
+                return 0;
+            }
             weightA /= weightSum;
             weightB /= weightSum;
             return weightB * (1 - b.score) - weightA * (1 - a.score);
