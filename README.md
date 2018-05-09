@@ -122,6 +122,7 @@ All settings are stored in `~/ueli.config.json`.
 * Add option to add custom shortcuts
 * Add input history browsing
 * Add nice GUI to modifiy configuration
+* Notify user when update is available
 * Use vue components
 
 ## Development
