@@ -74,6 +74,7 @@ This is an alt+space launcher for Windows and macOS.
 * `ArrowUp` to scroll up
 * `ArrowDown`to scroll down
 * `F6` or `Ctrl+l` to set focus on user input
+* `F1` to get help
 
 ### Updater
 

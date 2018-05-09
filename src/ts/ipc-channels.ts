@@ -17,4 +17,5 @@ export class IpcChannels {
     public static readonly exitCommandLineTool = "exit-command-line-tool";
     public static readonly resetCommandlineOutput = "reset-commandline-output";
     public static readonly resetUserInput = "reset-user-input";
+    public static readonly showHelp = "show-help";
 }
