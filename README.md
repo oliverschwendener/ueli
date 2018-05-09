@@ -117,9 +117,10 @@ All settings are stored in `~/ueli.config.json`.
 
 ## Roadmap
 
+* Add more color themes
+* Add option to add custom shortcuts
 * Add input history browsing
 * Add nice GUI to modifiy configuration
-* Add option to add custom shortcuts
 * Use vue components
 
 ## Development
