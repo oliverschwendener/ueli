@@ -1,16 +1,17 @@
 import * as fs from "fs";
 import { ConfigLoader } from "../../ts/config-loader";
 import { WebSearch } from "../../ts/web-search";
+import { ConfigOptions } from "../../ts/config";
 
 const defaultConfigMock = {
     autoStartApp: true,
     maxSearchResultCount: 10,
     rescanInterval: 30,
-    searchOperatinSystemSettings: false,
+    searchOperatingSystemSettings: false,
     showHiddenFiles: true,
     webSearches: [] as WebSearch[],
     windowWith: 860,
-};
+} as ConfigOptions;
 
 const buggyConfig = {
     nothing: null,

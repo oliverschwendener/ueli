@@ -85,10 +85,11 @@ All settings are stored in `~/ueli.config.json`.
 
 ### Options
 
+* `applicationFolders` Array of string - Represents the folders which are scanned for applications
 * `autoStartApp` Boolean - If the app should be started automatically when user logs in.
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed.
 * `rescanInterval` Number - Interval in seconds to rescan for installed programs.
-* `searchOperatinSystemSettings` Boolean - If operting system settings should appear in the search results. (Works only on Windows at the moment)
+* `searchOperatingSystemSettings` Boolean - If operting system settings should appear in the search results. (Works only on Windows at the moment)
 * `searchResultExecutionArgumentFontSize` Number - Represents the font size of the search result execution argument in pixels
 * `searchResultHeight` Number - Represents the height of a search result box in pixels
 * `searchResultNameFontSize` Number - Represents the font size of the search result name in pixels

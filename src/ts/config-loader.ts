@@ -7,6 +7,7 @@ export class ConfigLoader {
 
     private configFilePath = path.join(os.homedir(), "ueli.config.json");
     private defaultConfig: ConfigOptions;
+
     public constructor(defaultConfig: ConfigOptions, configFilePath?: string) {
         if (configFilePath !== undefined) {
             this.configFilePath = configFilePath;
