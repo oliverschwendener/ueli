@@ -63,4 +63,4 @@ typings/
 # dotenv environment variables file
 .env
 
-ueli.weightstorage.json
+ueli.countstorage.json
