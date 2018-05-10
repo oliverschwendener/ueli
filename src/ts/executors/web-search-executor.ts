@@ -15,6 +15,10 @@ export class WebSearchExecutor implements Executor {
         return true;
     }
 
+    public logExecute(): boolean {
+        return false;
+    }
+
     public execute(executionArgument: string): void {
         for (const webSearch of this.webSearches) {
             if (executionArgument.startsWith(`${webSearch.prefix}${Config.webSearchSeparator}`)) {
