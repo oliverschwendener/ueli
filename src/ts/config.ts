@@ -14,15 +14,18 @@ import { WebUrlExecutor } from "./executors/web-url-executor";
 import { InputValidationService } from "./input-validation-service";
 import { WebSearch } from "./web-search";
 import { ConfigLoader } from "./config-loader";
+import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
+import { OperatingSystem } from "./operating-system";
 
 // tslint:disable-next-line:no-var-requires because there is no other way to get package.json, or is there?
 const pkg = require("../../package.json");
 
 export interface ConfigOptions {
+    applicationFolders: string[];
     autoStartApp: boolean;
     maxSearchResultCount: number;
     rescanInterval: number;
-    searchOperatinSystemSettings: boolean;
+    searchOperatingSystemSettings: boolean;
     searchResultExecutionArgumentFontSize: number;
     searchResultHeight: number;
     searchResultNameFontSize: number;
@@ -34,10 +37,17 @@ export interface ConfigOptions {
 }
 
 const defaultConfig: ConfigOptions = {
+    applicationFolders: OperatingSystemHelpers.getOperatingSystemFromString(os.platform()) === OperatingSystem.Windows
+        ? [
+            "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs",
+            `${os.homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`,
+            `${os.homedir()}\\Desktop`,
+        ]
+        : ["/Applications"],
     autoStartApp: true,
     maxSearchResultCount: 8,
     rescanInterval: 30,
-    searchOperatinSystemSettings: true,
+    searchOperatingSystemSettings: true,
     searchResultExecutionArgumentFontSize: 14,
     searchResultHeight: 60,
     searchResultNameFontSize: 20,
@@ -106,6 +116,8 @@ const config = configLoader.loadConfigFromConfigFile();
 export class Config {
     public static readonly productName = pkg.productName;
 
+    public static readonly applicationFolders = config.applicationFolders;
+
     public static readonly userInputHeight = config.userInputHeight;
     public static readonly userInputFontSize = config.userInputFontSize;
 
@@ -123,7 +135,7 @@ export class Config {
     public static readonly autoStartApp = config.autoStartApp;
     public static readonly showHiddenFiles = config.showHiddenFiles;
 
-    public static readonly searchOperatinSystemSettings = config.searchOperatinSystemSettings;
+    public static readonly searchOperatingSystemSettings = config.searchOperatingSystemSettings;
 
     public static readonly commandLinePrefix = ">";
     public static readonly ueliCommandPrefix = "ueli:";

@@ -44,6 +44,8 @@ const vue = new Vue({
                 ipcRenderer.send(IpcChannels.hideWindow);
             } else if (event.ctrlKey && event.key === "c") {
                 ipcRenderer.send(IpcChannels.exitCommandLineTool);
+            } else if (event.key === "F1") {
+                ipcRenderer.send(IpcChannels.showHelp);
             }
         },
         handleMouseMove: (event: MouseEvent): void => {
@@ -68,6 +70,9 @@ const vue = new Vue({
         },
         searchResultHeight: (): string => {
             return `height: ${Config.searchResultHeight}px`;
+        },
+        searchResultIconStyle: (): string => {
+            return `height: ${Config.searchResultHeight}px; width: ${Config.searchResultHeight}px;`;
         },
         searchResultNameStyle: (): string => {
             return `font-size: ${Config.searchResultNameFontSize}px;`;

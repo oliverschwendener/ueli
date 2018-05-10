@@ -16,6 +16,7 @@ import { platform } from "os";
 import { WindowHelpers } from "./helpers/winow-helpers";
 import { ExecutionArgumentValidatorExecutorCombinationManager } from "./execution-argument-validator-executor-combination-manager";
 import { InputValidatorSearcherCombinationManager } from "./input-validator-searcher-combination-manager";
+import { UeliHelpers } from "./helpers/ueli-helpers";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -238,3 +239,5 @@ ipcMain.on(IpcChannels.commandLineExecution, (arg: string): void => {
 ipcMain.on(IpcChannels.resetUserInput, (): void => {
     mainWindow.webContents.send(IpcChannels.resetUserInput);
 });
+
+ipcMain.on(IpcChannels.showHelp, UeliHelpers.openHelp);

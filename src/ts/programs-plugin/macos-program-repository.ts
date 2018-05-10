@@ -2,9 +2,9 @@ import * as path from "path";
 import { FileHelpers } from "../helpers/file-helpers";
 import { Program } from "./program";
 import { ProgramRepository } from "./program-repository";
+import { Config } from "../config";
 
 export class MacOsProgramRepository implements ProgramRepository {
-    private folder = "/Applications";
     private applicationFileExtension = ".app";
     private programs: Program[];
 
@@ -19,7 +19,7 @@ export class MacOsProgramRepository implements ProgramRepository {
     private loadPrograms(): Program[] {
         const result = [] as Program[];
 
-        const files = FileHelpers.getFilesFromFolderRecursively(this.folder);
+        const files = FileHelpers.getFilesFromFoldersRecursively(Config.applicationFolders);
 
         for (const file of files) {
             if (!file.endsWith(this.applicationFileExtension)) {
