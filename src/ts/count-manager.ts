@@ -1,24 +1,18 @@
-import * as fs from "fs";
-import * as os from "os";
 import * as path from "path";
+import { CountLoader, Count } from "./count-loader";
 
-interface Count {
-    [key: string]: number;
-}
-
-const countFilePath = path.join(process.cwd(), "ueli.countstorage.json");
+let countLoader = new CountLoader();
+let countStorage = countLoader.loadCountFromCountFile();
 
 export class CountManager {
-    private storage: Count;
-    private storageFilePath: string;
-
     public constructor(filePath?: string) {
-        this.storageFilePath = filePath || countFilePath;
-        this.storage = this.loadCountFromCountFile();
+        const customLoader = new CountLoader(filePath);
+        countLoader = customLoader;
+        countStorage = customLoader.loadCountFromCountFile();
     }
 
     public getCount(key: string): number {
-        const score = this.getStorage()[key];
+        const score = countStorage[key];
         if (isNaN(score)) {
             return 0;
         } else {
@@ -30,38 +24,22 @@ export class CountManager {
         let score = this.getCount(key);
         score++;
         if (score <= 40) {
-            this.storage[key] = score;
-            this.writeCountFile();
+            countStorage[key] = score;
+            countLoader.writeCountFile(countStorage);
         }
     }
 
     public removeCountKey(key: string): void {
-        delete this.storage[key];
-        this.writeCountFile();
+        delete countStorage[key];
+        countLoader.writeCountFile(countStorage);
     }
 
     public getStorage(): Count {
-        return this.storage;
+        return countStorage;
     }
 
     public clearStorage(): void {
-        this.storage = {};
-        this.writeCountFile();
-    }
-
-    private loadCountFromCountFile(): Count {
-        try {
-            const fileContent = fs.readFileSync(this.storageFilePath, "utf-8");
-            const parsed = JSON.parse(fileContent) as Count;
-            return parsed;
-        } catch (err) {
-            fs.writeFileSync(this.storageFilePath, "{}", "utf-8");
-            return {};
-        }
-    }
-
-    private writeCountFile(): void {
-        const stringifiedStorage = JSON.stringify(this.storage);
-        fs.writeFileSync(this.storageFilePath, stringifiedStorage, "utf-8");
+        countStorage = {};
+        countLoader.writeCountFile(countStorage);
     }
 }
