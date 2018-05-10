@@ -20,6 +20,7 @@ import { IpcChannels } from "./ipc-channels";
 import { EmailAddressInputValidator } from "./input-validators/email-address-input-validator";
 import { EmailAddressExecutionArgumentValidator } from "./execution-argument-validators/email-address-execution-argument-validator";
 import { platform } from "os";
+import { CountManager } from "./count-manager";
 
 export class ExecutionService {
     private validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[];
@@ -41,10 +42,19 @@ export class ExecutionService {
                     }
 
                     combi.executor.execute(executionArgument);
+                    const executorName = combi.executor.constructor.name;
+                    if (executorName.match(/FilePathExecutor|WindowsSettingsExecutor|MacOsSettingsExecutor/)) {
+                        this.logExecute(executionArgument);
+                    }
                 }, 50); // set delay for execution to 50ms otherwise user input reset does not work properly
 
                 return;
             }
         }
+    }
+
+    private logExecute(executionArgument: string): void {
+        const count = new CountManager();
+        count.addCount(executionArgument);
     }
 }
