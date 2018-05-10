@@ -29,7 +29,7 @@ export class ConfigLoader {
     }
 
     private writeDefaultConfigToConfigFile(): void {
-        const stringifiedConfig = JSON.stringify(this.defaultConfig);
+        const stringifiedConfig = JSON.stringify(this.defaultConfig, null, 2);
         fs.writeFileSync(this.configFilePath, stringifiedConfig, "utf-8");
     }
 }
