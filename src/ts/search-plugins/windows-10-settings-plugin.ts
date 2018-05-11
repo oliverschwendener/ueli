@@ -42,7 +42,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:`,
                 icon: this.defaultIcon,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:batterysaver`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -54,7 +54,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Battery",
                 tags: ["power", "energy", "saving", "save"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:display`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -64,7 +64,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Display",
                 tags: ["screen", "resolution", "4k", "hd"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:notifications`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -74,7 +74,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Notifications & actions",
                 tags: ["notify", "action"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:powersleep`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -84,7 +84,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Power & sleep",
                 tags: ["energy", "plan"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:storagesense`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -94,7 +94,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Storage",
                 tags: ["hard", "disk", "ssd", "hdd"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:tabletmode`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -104,7 +104,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Tablet mode",
                 tags: ["mobile", "touch"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:project`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -113,7 +113,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Projecting to this PC",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:multitasking`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -123,7 +123,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Multitasking",
                 tags: ["windows", "window", "manager", "snap", "virtual", "desktop"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:remotedesktop`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -133,7 +133,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Remote Desktop",
                 tags: ["connection"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:about`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -143,8 +143,8 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "About your PC",
                 tags: ["system", "device", "specs", "specifications", "license", "info", "information"],
-            } as SearchResultItem,
-        ];
+            },
+        ] as SearchResultItem[];
     }
 
     private getDeviceSettings(): SearchResultItem[] {
@@ -158,7 +158,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Bluetooth",
                 tags: ["wireless", "device", "devices"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:printers`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -168,7 +168,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Printers & Scanners",
                 tags: ["devices"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:mousetouchpad`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -178,7 +178,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Touchpad",
                 tags: ["input"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:typing`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -188,7 +188,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Typing",
                 tags: ["input", "keyboard"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:pen`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -197,7 +197,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Pen & Windows Ink",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:autoplay`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -206,7 +206,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Autoplay",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:usb`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -216,8 +216,8 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "USB",
                 tags: ["devices"],
-            } as SearchResultItem,
-        ];
+            },
+        ] as SearchResultItem[];
     }
 
     private getNetworkSettings(): SearchResultItem[] {
@@ -231,7 +231,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Network status",
                 tags: ["internet"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:network-ethernet`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
@@ -239,7 +239,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Ethernet",
                 tags: ["network", "internet", "wireless"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:network-wifi`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -249,7 +249,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Wi-Fi",
                 tags: ["network", "internet", "wireless"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:network-dialup`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -258,7 +258,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Dial-up",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:network-vpn`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -268,7 +268,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "VPN",
                 tags: ["vate", "virtual", "network", "vacy"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:network-airplanemode`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -278,7 +278,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Airplane mode",
                 tags: ["offline"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:network-mobilehotspot`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -288,7 +288,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Mobile hotspot",
                 tags: ["network", "internet"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:datausage`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -297,7 +297,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Data Usage",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:network-proxy`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -307,8 +307,8 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Proxy",
                 tags: ["network"],
-            } as SearchResultItem,
-        ];
+            },
+        ] as SearchResultItem[];
     }
 
     private getPersonalizationSettings(): SearchResultItem[] {
@@ -324,7 +324,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: `${moduleTitle}: Background`,
                 tags: ["custom", "customization", "colors", "images", "pictures", "wallpapers"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:colors`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -334,7 +334,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: `${moduleTitle}: Colors`,
                 tags: ["color", "custom", "customization", "creative"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:lockscreen`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -344,7 +344,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: `${moduleTitle}: Lock screen`,
                 tags: ["screen", "saver"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:themes`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -354,7 +354,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: `${moduleTitle}: Themes`,
                 tags: ["custom", "customization", "color", "colors", "image", "picture"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:personalization-start`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -364,7 +364,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: `${moduleTitle}: Start`,
                 tags: ["custom", "customization", "search"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:taskbar`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -373,8 +373,8 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: `${moduleTitle}: Taskbar`,
-            } as SearchResultItem,
-        ];
+            },
+        ] as SearchResultItem[];
     }
 
     private getAppSettings(): SearchResultItem[] {
@@ -388,7 +388,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Apps & features",
                 tags: ["programs"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:defaultapps`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -397,7 +397,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Default apps",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:optionalfeatures`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -407,7 +407,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Optional features",
                 tags: ["additional"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:maps`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -417,7 +417,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Offline maps",
                 tags: ["earth"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:appsforwebsites`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -426,7 +426,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Apps for websites",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:videoplayback`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -435,8 +435,8 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Video playback",
-            } as SearchResultItem,
-        ];
+            },
+        ] as SearchResultItem[];
     }
 
     private getAccountSettings(): SearchResultItem[] {
@@ -450,7 +450,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Your info",
                 tags: ["account", "user", "about"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:emailandaccounts`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -459,7 +459,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Email & app accounts",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:signinoptions`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -469,7 +469,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Sign-in options",
                 tags: ["password", "change", "security", "secret", "account", "pin"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:workplace`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -478,7 +478,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Access work or school",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:otherusers`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -487,7 +487,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Family & other users",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:sync`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -496,8 +496,8 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Sync your settings",
-            } as SearchResultItem,
-        ];
+            },
+        ] as SearchResultItem[];
     }
 
     private getTimeAndLanguageSettings(): SearchResultItem[] {
@@ -511,7 +511,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Date & Time",
                 tags: ["clock"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:regionlanguage`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -521,7 +521,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Region & language",
                 tags: ["locale"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:speech`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -530,8 +530,8 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Speech",
-            } as SearchResultItem,
-        ];
+            },
+        ] as SearchResultItem[];
     }
 
     private getGamingSettings(): SearchResultItem[] {
@@ -546,17 +546,17 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:gaming-broadcasting`,
                 icon: gamingIcon,
                 name: "Broadcasting",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:gaming-gamebar`,
                 icon: gamingIcon,
                 name: "Game bar",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:gaming-gamedvr`,
                 icon: gamingIcon,
                 name: "Game DVR",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:gaming-gamemode`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -565,12 +565,12 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Game Mode",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:gaming-trueplay`,
                 icon: gamingIcon,
                 name: "TruePlay",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:gaming-xboxnetworking`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -579,8 +579,8 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Xbox Networking",
-            } as SearchResultItem,
-        ];
+            },
+        ] as SearchResultItem[];
     }
 
     private getEaseOfAccessSettings(): SearchResultItem[] {
@@ -595,7 +595,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: `${moduleTitle}: Narrator`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:easeofaccess-magnifier`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -604,7 +604,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: `${moduleTitle}: Magnifier`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:easeofaccess-highcontrast`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -613,7 +613,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: `${moduleTitle}: Color & high Contrast`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:easeofaccess-closedcaptioning`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -623,7 +623,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: `${moduleTitle}: Closed Captioning`,
                 tags: ["cc"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:easeofaccess-keyboard`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -633,7 +633,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: `${moduleTitle}: Keyboard`,
                 tags: ["input"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:easeofaccess-mouse`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -643,13 +643,13 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: `${moduleTitle}: Mouse`,
                 tags: ["ease", "of", "access", "input"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:easeofaccess-otheroptions`,
                 icon: this.defaultIcon,
                 name: `${moduleTitle}: Other Options`,
-            } as SearchResultItem,
-        ];
+            },
+        ] as SearchResultItem[];
     }
 
     private getPrivacySettings(): SearchResultItem[] {
@@ -665,110 +665,110 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-general`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: General`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-location`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Location`,
                 tags: ["gps"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-webcam`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Camera`,
                 tags: ["web cam"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-microphone`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Microphone`,
                 tags: ["audio", "input"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-notifications`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Notifications`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-speechtyping`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Speech, ing, & typing`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-accountinfo`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Account info`,
                 tags: ["personal", "vacy", "user"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-contacts`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Contacts`,
                 tags: ["people"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-calendar`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Calendar`,
                 tags: ["day", "month", "year"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-callhistory`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Call history`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-email`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Email`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-tasks`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Tasks`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-messaging`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Messaging`,
                 tags: ["message"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-radios`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Radios`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-customdevices`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Other Devices`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-feedback`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Feedback & diagnostics`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-backgroundapps`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Background apps`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-appdiagnostics`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: App diagnostics`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:automaticfiledownloads`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Automatic file downloads`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-motion`,
                 icon: privacyIcon,
                 name: `${moduleTitle}: Motion`,
-            } as SearchResultItem,
-        ];
+            },
+        ] as SearchResultItem[];
     }
 
     private getUpdateAndSecuritySettings(): SearchResultItem[] {
@@ -782,7 +782,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Windows Update",
                 tags: ["patch", "upgrade", "security"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:windowsdefender`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -792,7 +792,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Windows Defender",
                 tags: ["anti", "virus", "protection", "security", "scan", "malware"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:backup`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -802,7 +802,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Backup",
                 tags: ["files", "storage"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:troubleshoot`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -811,7 +811,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Troubleshoot",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:recovery`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -820,7 +820,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Recovery",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:activation`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -829,7 +829,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Activation",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:findmydevice`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -838,7 +838,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Find my device",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:developers`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -848,13 +848,13 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "For developers",
                 tags: ["dev", "admin"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:windowsinsider`,
                 icon: this.defaultIcon,
                 name: "Windows Insider Program",
-            } as SearchResultItem,
-        ];
+            },
+        ] as SearchResultItem[];
     }
 
     private getCortanaSettings(): SearchResultItem[] {
@@ -868,18 +868,18 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:cortana-language`,
                 icon: cortanaIcon,
                 name: `${moduleTitle}: Talk to Cortana`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:cortana-moredetails`,
                 icon: cortanaIcon,
                 name: `${moduleTitle}: More details`,
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:cortana-notifications`,
                 icon: cortanaIcon,
                 name: `${moduleTitle}: Notifications`,
-            } as SearchResultItem,
-        ];
+            },
+        ] as SearchResultItem[];
     }
 
     private getSystemCommands(): SearchResultItem[] {
@@ -893,7 +893,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Shutdown",
                 tags: ["power", "off"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shutdown -r -t 0`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -903,7 +903,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Restart",
                 tags: ["reboot"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shutdown /l`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -913,7 +913,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                         </svg>`,
                 name: "Sign out",
                 tags: ["out", "off", "sign", "user"],
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}winver`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -923,8 +923,8 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </svg>`,
                 name: "Windows Version",
                 tags: ["about", "info", "build", "os", "operating", "system", "release"],
-            } as SearchResultItem,
-        ];
+            },
+        ] as SearchResultItem[];
     }
 
     private getWindows10Apps(): SearchResultItem[] {
@@ -937,7 +937,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "3D Builder",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-actioncenter:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -946,7 +946,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Action Center",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-clock:alarm`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -955,7 +955,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Alarms & Clock",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-availablenetworks:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -964,7 +964,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Available Networks",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}calculator:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -973,7 +973,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Calculator",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}outlookcal:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -982,7 +982,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Calendar",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}microsoft.windows.camera:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -991,7 +991,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Camera",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-projection:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1000,14 +1000,14 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Connect",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-cortana:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                 <path style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal" d="M 16 3 A 1 1 0 0 0 15 4 A 1 1 0 0 0 16 5 A 1 1 0 0 0 17 4 A 1 1 0 0 0 16 3 z M 11.847656 3.7246094 A 1 1 0 0 0 11.554688 3.7851562 A 1 1 0 0 0 10.957031 5.0664062 A 1 1 0 0 0 12.238281 5.6640625 A 1 1 0 0 0 12.835938 4.3828125 A 1 1 0 0 0 11.847656 3.7246094 z M 20.082031 3.7246094 A 1 1 0 0 0 19.164062 4.3828125 A 1 1 0 0 0 19.761719 5.6640625 A 1 1 0 0 0 21.042969 5.0664062 A 1 1 0 0 0 20.445312 3.7851562 A 1 1 0 0 0 20.082031 3.7246094 z M 8.2890625 5.8066406 A 1 1 0 0 0 7.6445312 6.0410156 A 1 1 0 0 0 7.5214844 7.4492188 A 1 1 0 0 0 8.9296875 7.5722656 A 1 1 0 0 0 9.0527344 6.1640625 A 1 1 0 0 0 8.2890625 5.8066406 z M 23.740234 5.8085938 A 1 1 0 0 0 22.947266 6.1660156 A 1 1 0 0 0 23.070312 7.5742188 A 1 1 0 0 0 24.478516 7.4511719 A 1 1 0 0 0 24.355469 6.0429688 A 1 1 0 0 0 23.740234 5.8085938 z M 16 6 C 10.488997 6 6 10.488997 6 16 C 6 21.511003 10.488997 26 16 26 C 21.511003 26 26 21.511003 26 16 C 26 10.488997 21.511003 6 16 6 z M 16 8 C 20.430123 8 24 11.569877 24 16 C 24 20.430123 20.430123 24 16 24 C 11.569877 24 8 20.430123 8 16 C 8 11.569877 11.569877 8 16 8 z M 26.367188 9 A 1 1 0 0 0 25.890625 9.1328125 A 1 1 0 0 0 25.525391 10.5 A 1 1 0 0 0 26.890625 10.865234 A 1 1 0 0 0 27.257812 9.5 A 1 1 0 0 0 26.367188 9 z M 5.5605469 9.0019531 A 1 1 0 0 0 4.7421875 9.5 A 1 1 0 0 0 5.1074219 10.865234 A 1 1 0 0 0 6.4746094 10.5 A 1 1 0 0 0 6.1074219 9.1347656 A 1 1 0 0 0 5.5605469 9.0019531 z M 4.1855469 12.916016 A 1 1 0 0 0 3.1972656 13.742188 A 1 1 0 0 0 4.0078125 14.900391 A 1 1 0 0 0 5.1660156 14.089844 A 1 1 0 0 0 4.3554688 12.931641 A 1 1 0 0 0 4.1855469 12.916016 z M 27.841797 12.917969 A 1 1 0 0 0 27.642578 12.931641 A 1 1 0 0 0 26.832031 14.091797 A 1 1 0 0 0 27.990234 14.902344 A 1 1 0 0 0 28.802734 13.744141 A 1 1 0 0 0 27.841797 12.917969 z M 4.2070312 17.083984 A 1 1 0 0 0 4.0078125 17.099609 A 1 1 0 0 0 3.1953125 18.257812 A 1 1 0 0 0 4.3554688 19.068359 A 1 1 0 0 0 5.1660156 17.910156 A 1 1 0 0 0 4.2070312 17.083984 z M 27.820312 17.083984 A 1 1 0 0 0 26.832031 17.910156 A 1 1 0 0 0 27.644531 19.068359 A 1 1 0 0 0 28.802734 18.255859 A 1 1 0 0 0 27.990234 17.097656 A 1 1 0 0 0 27.820312 17.083984 z M 5.5839844 21 A 1 1 0 0 0 5.1074219 21.132812 A 1 1 0 0 0 4.7421875 22.5 A 1 1 0 0 0 6.1074219 22.865234 A 1 1 0 0 0 6.4746094 21.5 A 1 1 0 0 0 5.5839844 21 z M 26.345703 21.001953 A 1 1 0 0 0 25.527344 21.5 A 1 1 0 0 0 25.892578 22.867188 A 1 1 0 0 0 27.257812 22.5 A 1 1 0 0 0 26.892578 21.134766 A 1 1 0 0 0 26.345703 21.001953 z M 23.714844 24.191406 A 1 1 0 0 0 23.070312 24.425781 A 1 1 0 0 0 22.947266 25.833984 A 1 1 0 0 0 24.355469 25.958984 A 1 1 0 0 0 24.478516 24.548828 A 1 1 0 0 0 23.714844 24.191406 z M 8.3144531 24.195312 A 1 1 0 0 0 7.5214844 24.550781 A 1 1 0 0 0 7.6445312 25.960938 A 1 1 0 0 0 9.0527344 25.837891 A 1 1 0 0 0 8.9296875 24.427734 A 1 1 0 0 0 8.3144531 24.195312 z M 11.873047 26.275391 A 1 1 0 0 0 10.955078 26.933594 A 1 1 0 0 0 11.552734 28.214844 A 1 1 0 0 0 12.835938 27.617188 A 1 1 0 0 0 12.238281 26.335938 A 1 1 0 0 0 11.873047 26.275391 z M 20.054688 26.277344 A 1 1 0 0 0 19.761719 26.337891 A 1 1 0 0 0 19.164062 27.619141 A 1 1 0 0 0 20.445312 28.216797 A 1 1 0 0 0 21.042969 26.935547 A 1 1 0 0 0 20.054688 26.277344 z M 16 27 A 1 1 0 0 0 15 28 A 1 1 0 0 0 16 29 A 1 1 0 0 0 17 28 A 1 1 0 0 0 16 27 z"></path>
                 </svg>`,
                 name: "Cortana",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings-connectabledevices:devicediscovery`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1016,7 +1016,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Device Discovery",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-contact-support:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1025,7 +1025,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Get Help",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}mswindowsmusic:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1034,7 +1034,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Groove Music",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}outlookmail:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1043,7 +1043,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Mail",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}bingmaps:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1052,7 +1052,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Maps",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}microsoft-edge:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1061,7 +1061,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Microsoft Edge",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-windows-store:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1070,7 +1070,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Microsoft Store",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-holocamera:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1079,7 +1079,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Mixed Reality Camera",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-holographicfirstrun:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1088,7 +1088,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Mixed Reality Portal",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}mswindowsvideo:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1097,7 +1097,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Movies & TV",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}bingnews:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1106,7 +1106,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "News",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}onenote:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1115,7 +1115,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "OneNote",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-paint:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1124,7 +1124,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Paint 3D",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-people:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1133,7 +1133,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "People",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-get-started:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1142,7 +1142,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Tips",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}com.microsoft.3dviewer:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1151,7 +1151,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "View 3D Preview",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-callrecording:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1160,7 +1160,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Voice Recorder",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}bingweather:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1169,7 +1169,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Weather",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}windowsdefender:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1178,7 +1178,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Windows Defender Security Center",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-wpc:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1187,7 +1187,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                 </g>
                 </svg>`,
                 name: "Windows Parental Controls",
-            } as SearchResultItem,
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}xbox:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -1196,7 +1196,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                         </g>
                     </svg>`,
                 name: "Xbox",
-            } as SearchResultItem,
-        ];
+            },
+        ] as SearchResultItem[];
     }
 }
