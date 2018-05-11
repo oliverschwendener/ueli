@@ -72,7 +72,7 @@ function createMainWindow(): void {
 
 function createTrayIcon(): void {
     trayIcon = new Tray(Injector.getTrayIconPath(platform(), path.join(__dirname, "../")));
-    trayIcon.setToolTip(Config.productName);
+    trayIcon.setToolTip(UeliHelpers.productName);
     trayIcon.setContextMenu(Menu.buildFromTemplate([
         {
             click: toggleWindow,
@@ -114,7 +114,7 @@ autoUpdater.on("error", (): void => {
 });
 
 autoUpdater.on("update-not-available", (): void => {
-    addUpdateStatusToTrayIcon(`${Config.productName} is up to date`);
+    addUpdateStatusToTrayIcon(`${UeliHelpers.productName} is up to date`);
 });
 
 autoUpdater.on("update-downloaded", (): void => {
