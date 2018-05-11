@@ -2,6 +2,7 @@ import { Config } from "../../../ts/config";
 import { SearchResultItem } from "../../../ts/search-result-item";
 import { WebSearchSearcher } from "../../../ts/searcher/web-search-searcher";
 import { InputOutputCombination } from "../test-helpers";
+import { WebSearchHelpers } from "../../../ts/helpers/web-search-helper";
 
 describe(WebSearchSearcher.name, (): void => {
     const searcher = new WebSearchSearcher();
@@ -12,14 +13,14 @@ describe(WebSearchSearcher.name, (): void => {
             it(`${webSearch.name} web search should return a correct search result`, (): void => {
                 const combinations = [
                     {
-                        input: `${webSearch.prefix}${Config.webSearchSeparator}google-some-thing`,
+                        input: `${webSearch.prefix}${WebSearchHelpers.webSearchSeparator}google-some-thing`,
                         output: {
                             executionArgument: `${webSearch.url}google-some-thing`,
                             name: `Search ${webSearch.name} for 'google-some-thing'`,
                         } as SearchResultItem,
                     } as InputOutputCombination,
                     {
-                        input: `${webSearch.prefix}${Config.webSearchSeparator}`,
+                        input: `${webSearch.prefix}${WebSearchHelpers.webSearchSeparator}`,
                         output: {
                             executionArgument: `${webSearch.url}`,
                             name: `Search ${webSearch.name}`,

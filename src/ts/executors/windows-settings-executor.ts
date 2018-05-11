@@ -1,6 +1,6 @@
 import { exec } from "child_process";
-import { Config } from "../config";
 import { Executor } from "./executor";
+import { WindowsSettingsHelpers } from "../helpers/windows-settings-helpers";
 
 export class WindowsSettingsExecutor implements Executor {
     public execute(executionArgument: string): void {
@@ -22,6 +22,6 @@ export class WindowsSettingsExecutor implements Executor {
     }
 
     private replacePrefix(executionArgument: string): string {
-        return executionArgument.replace(Config.windowsSettingsPrefix, "");
+        return executionArgument.replace(WindowsSettingsHelpers.windowsSettingsPrefix, "");
     }
 }

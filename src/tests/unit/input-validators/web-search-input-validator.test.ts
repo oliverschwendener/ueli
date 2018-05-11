@@ -1,4 +1,5 @@
 import { Config } from "../../../ts/config";
+import { WebSearchHelpers } from "../../../ts/helpers/web-search-helper";
 import { Injector } from "../../../ts/injector";
 import { WebSearchInputValidator } from "../../../ts/input-validators/web-search-input-validator";
 
@@ -9,9 +10,9 @@ describe(WebSearchInputValidator.name, (): void => {
     for (const webSearch of webSearches) {
         it(`${webSearch.name} web search should return true when passing in a valid argument`, (): void => {
             const validInputs = [
-                `${webSearch.prefix}${Config.webSearchSeparator}search something`,
-                `${webSearch.prefix}${Config.webSearchSeparator} search some thing`,
-                `${webSearch.prefix}${Config.webSearchSeparator}s`,
+                `${webSearch.prefix}${WebSearchHelpers.webSearchSeparator}search something`,
+                `${webSearch.prefix}${WebSearchHelpers.webSearchSeparator} search some thing`,
+                `${webSearch.prefix}${WebSearchHelpers.webSearchSeparator}s`,
             ];
 
             for (const validInput of validInputs) {

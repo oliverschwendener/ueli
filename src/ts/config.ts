@@ -137,10 +137,5 @@ export class Config {
 
     public static readonly searchOperatingSystemSettings = config.searchOperatingSystemSettings;
 
-    public static readonly commandLinePrefix = ">";
-    public static readonly ueliCommandPrefix = "ueli:";
-    public static readonly windowsSettingsPrefix = "win:";
-    public static readonly webSearchSeparator = "?";
-
     public static readonly webSearches = config.webSearches;
 }
