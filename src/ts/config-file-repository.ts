@@ -25,7 +25,6 @@ export class ConfigFileRepository implements ConfigRepository {
             const mergedConfig = Object.assign(this.defaultConfig, parsed);
             return mergedConfig;
         } catch (err) {
-            this.saveConfig();
             return this.defaultConfig;
         }
     }
