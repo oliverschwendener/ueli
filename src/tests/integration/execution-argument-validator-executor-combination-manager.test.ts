@@ -6,16 +6,17 @@ import { MacOsSettingsExecutionArgumentValidator } from "../../ts/execution-argu
 import { MacOsSettingsExecutor } from "../../ts/executors/mac-os-settings-executor";
 import { OperatingSystemHelpers } from "../../ts/helpers/operating-system-helpers";
 import { OperatingSystem } from "../../ts/operating-system";
+import { defaultConfig } from "../../ts/default-config";
 
 describe(ExecutionArgumentValidatorExecutorCombinationManager.name, (): void => {
     it("should return the correct execution argument valiator executor combinations", (): void => {
         let counter = 0;
 
-        const actual = ExecutionArgumentValidatorExecutorCombinationManager.combinations;
+        const combinations = new ExecutionArgumentValidatorExecutorCombinationManager(defaultConfig).getCombinations();
 
         const currentOperatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
 
-        for (const combination of actual) {
+        for (const combination of combinations) {
             if (currentOperatingSystem === OperatingSystem.Windows) {
                 if (combination.validator instanceof WindowsSettingsExecutionArgumentValidator
                     && combination.executor instanceof WindowsSettingsExecutor) {

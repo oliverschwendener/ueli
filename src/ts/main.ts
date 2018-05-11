@@ -17,17 +17,19 @@ import { ExecutionArgumentValidatorExecutorCombinationManager } from "./executio
 import { InputValidatorSearcherCombinationManager } from "./input-validator-searcher-combination-manager";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { WebUrlExecutor } from "./executors/web-url-executor";
-import { ConfigFileRepository } from "./config-file-repository";
 import { defaultConfig } from "./default-config";
+import { ConfigFileRepository } from "./config-file-repository";
 
 const config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
-const filePathExecutor = new FilePathExecutor();
-const inputValidationService = new InputValidationService(InputValidatorSearcherCombinationManager.combinations);
-const executionService = new ExecutionService(ExecutionArgumentValidatorExecutorCombinationManager.combinations);
 const delayWhenHidingCommandlineOutputInMs = 25;
+
+const filePathExecutor = new FilePathExecutor();
+
+const inputValidationService = new InputValidationService(new InputValidatorSearcherCombinationManager(config).getCombinations());
+const executionService = new ExecutionService(new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations());
 
 const otherInstanceIsAlreadyRunning = app.makeSingleInstance(() => {
     // do nothing

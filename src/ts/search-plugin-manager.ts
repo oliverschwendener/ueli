@@ -8,21 +8,17 @@ import { Windows10SettingsSearchPlugin } from "./search-plugins/windows-10-setti
 import { platform } from "os";
 import { WindowsProgramRepository } from "./programs-plugin/windows-program-repository";
 import { MacOsProgramRepository } from "./programs-plugin/macos-program-repository";
-import { ConfigFileRepository } from "./config-file-repository";
 import { defaultConfig } from "./default-config";
 import { UeliHelpers } from "./helpers/ueli-helpers";
+import { ConfigOptions } from "./config-options";
 
 export class SearchPluginManager {
     private plugins: SearchPlugin[];
 
-    public constructor() {
-        const applicationFolders = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath)
-            .getConfig()
-            .applicationFolders;
-
+    public constructor(config: ConfigOptions) {
         const programRepo = platform() === "win32"
-            ? new WindowsProgramRepository(applicationFolders)
-            : new MacOsProgramRepository(applicationFolders);
+            ? new WindowsProgramRepository(config.applicationFolders)
+            : new MacOsProgramRepository(config.applicationFolders);
 
         this.plugins = [
             new ProgramsPlugin(programRepo),

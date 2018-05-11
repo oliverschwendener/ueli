@@ -4,16 +4,17 @@ import { SearchPluginManager } from "../search-plugin-manager";
 import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
 import { defaultConfig } from "../default-config";
+import { ConfigOptions } from "../config-options";
 
 export class SearchPluginsSearcher implements Searcher {
     private items: SearchResultItem[];
     private rescanIntervalinMilliseconds = TimeHelpers.convertSecondsToMilliseconds(defaultConfig.rescanInterval);
 
-    constructor() {
-        this.items = this.loadSearchPluginItems();
+    constructor(config: ConfigOptions) {
+        this.items = this.loadSearchPluginItems(config);
 
         setInterval((): void => {
-            this.items = this.loadSearchPluginItems();
+            this.items = this.loadSearchPluginItems(config);
         }, this.rescanIntervalinMilliseconds);
     }
 
@@ -22,9 +23,8 @@ export class SearchPluginsSearcher implements Searcher {
         return searchEngine.search(userInput);
     }
 
-    private loadSearchPluginItems(): SearchResultItem[] {
-
-        const plugins = new SearchPluginManager().getPlugins();
+    private loadSearchPluginItems(config: ConfigOptions): SearchResultItem[] {
+        const plugins = new SearchPluginManager(config).getPlugins();
 
         const result = plugins.map((plugin) => plugin.getAllItems())
             .reduce((acc, pluginItems) => acc.concat(pluginItems));

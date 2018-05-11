@@ -13,41 +13,47 @@ import { WebUrlInputValidator } from "./input-validators/web-url-input-validator
 import { SearchPluginsSearcher } from "./searcher/search-plugins-searcher";
 import { SearchPluginsInputValidator } from "./input-validators/search-plugins-input-validator";
 import { InputValidatorSearcherCombination } from "./input-validator-searcher-combination";
-import { ConfigFileRepository } from "./config-file-repository";
 import { defaultConfig } from "./default-config";
 import { UeliHelpers } from "./helpers/ueli-helpers";
-
-const config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
+import { ConfigOptions } from "./config-options";
 
 export class InputValidatorSearcherCombinationManager {
-    public static readonly combinations = [
-        {
-            searcher: new CalculatorSearcher(),
-            validator: new CalculatorInputValidator(),
-        },
-        {
-            searcher: new FilePathSearcher(),
-            validator: new FilePathInputValidator(),
-        },
-        {
-            searcher: new CommandLineSearcher(),
-            validator: new CommandLineInputValidator(),
-        },
-        {
-            searcher: new WebSearchSearcher(config.webSearches),
-            validator: new WebSearchInputValidator(config.webSearches),
-        },
-        {
-            searcher: new EmailAddressSearcher(),
-            validator: new EmailAddressInputValidator(),
-        },
-        {
-            searcher: new WebUrlSearcher(),
-            validator: new WebUrlInputValidator(),
-        },
-        {
-            searcher: new SearchPluginsSearcher(),
-            validator: new SearchPluginsInputValidator(),
-        },
-    ] as InputValidatorSearcherCombination[];
+    private combinations: InputValidatorSearcherCombination[];
+
+    constructor(config: ConfigOptions) {
+        this.combinations = [
+            {
+                searcher: new CalculatorSearcher(),
+                validator: new CalculatorInputValidator(),
+            },
+            {
+                searcher: new FilePathSearcher(),
+                validator: new FilePathInputValidator(),
+            },
+            {
+                searcher: new CommandLineSearcher(),
+                validator: new CommandLineInputValidator(),
+            },
+            {
+                searcher: new WebSearchSearcher(config.webSearches),
+                validator: new WebSearchInputValidator(config.webSearches),
+            },
+            {
+                searcher: new EmailAddressSearcher(),
+                validator: new EmailAddressInputValidator(),
+            },
+            {
+                searcher: new WebUrlSearcher(),
+                validator: new WebUrlInputValidator(),
+            },
+            {
+                searcher: new SearchPluginsSearcher(config),
+                validator: new SearchPluginsInputValidator(),
+            },
+        ];
+    }
+
+    public getCombinations(): InputValidatorSearcherCombination[] {
+        return this.combinations;
+    }
 }
