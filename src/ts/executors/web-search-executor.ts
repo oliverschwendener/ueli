@@ -1,12 +1,16 @@
 import { exec } from "child_process";
-import { Config } from "../config";
 import { Injector } from "../injector";
 import { Executor } from "./executor";
 import { platform } from "os";
 import { WebSearchHelpers } from "../helpers/web-search-helper";
+import { WebSearch } from "../web-search";
 
 export class WebSearchExecutor implements Executor {
-    private webSearches = Config.webSearches;
+    private webSearches: WebSearch[];
+
+    constructor(webSearches: WebSearch[]) {
+        this.webSearches = webSearches;
+    }
 
     public hideAfterExecution(): boolean {
         return true;

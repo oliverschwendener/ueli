@@ -1,13 +1,12 @@
-import { Config } from "../../../ts/config";
 import { WebSearchExecutionArgumentValidator } from "../../../ts/execution-argument-validators/web-search-execution-argument-validator";
 import { WebSearchHelpers } from "../../../ts/helpers/web-search-helper";
+import { dummyWebSearches } from "../test-helpers";
 
 describe(WebSearchExecutionArgumentValidator.name, (): void => {
-    const validator = new WebSearchExecutionArgumentValidator();
+    const webSearches = dummyWebSearches;
+    const validator = new WebSearchExecutionArgumentValidator(webSearches);
 
     describe(validator.isValidForExecution.name, (): void => {
-        const webSearches = Config.webSearches;
-
         for (const webSearch of webSearches) {
             it("should return true when passing in a valid argument", (): void => {
                 const validInputs = [

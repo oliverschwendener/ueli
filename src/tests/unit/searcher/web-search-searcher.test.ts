@@ -1,12 +1,11 @@
-import { Config } from "../../../ts/config";
 import { SearchResultItem } from "../../../ts/search-result-item";
 import { WebSearchSearcher } from "../../../ts/searcher/web-search-searcher";
-import { InputOutputCombination } from "../test-helpers";
+import { InputOutputCombination, dummyWebSearches } from "../test-helpers";
 import { WebSearchHelpers } from "../../../ts/helpers/web-search-helper";
 
 describe(WebSearchSearcher.name, (): void => {
-    const searcher = new WebSearchSearcher();
-    const webSearches = Config.webSearches;
+    const webSearches = dummyWebSearches;
+    const searcher = new WebSearchSearcher(webSearches);
 
     describe(searcher.getSearchResult.name, (): void => {
         for (const webSearch of webSearches) {

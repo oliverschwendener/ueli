@@ -1,13 +1,13 @@
-import { Config } from "../config";
 import { TimeHelpers } from "../helpers/time-helpers";
 import { SearchEngine } from "../search-engine";
 import { SearchPluginManager } from "../search-plugin-manager";
 import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
+import { defaultConfig } from "../default-config";
 
 export class SearchPluginsSearcher implements Searcher {
     private items: SearchResultItem[];
-    private rescanIntervalinMilliseconds = TimeHelpers.convertSecondsToMilliseconds(Config.rescanInterval);
+    private rescanIntervalinMilliseconds = TimeHelpers.convertSecondsToMilliseconds(defaultConfig.rescanInterval);
 
     constructor() {
         this.items = this.loadSearchPluginItems();

@@ -17,6 +17,11 @@ import { WindowsSettingsExecutionArgumentValidator } from "./execution-argument-
 import { WindowsSettingsExecutor } from "./executors/windows-settings-executor";
 import { MacOsSettingsExecutor } from "./executors/mac-os-settings-executor";
 import { MacOsSettingsExecutionArgumentValidator } from "./execution-argument-validators/mac-os-execution-argument-validator";
+import { ConfigFileRepository } from "./config-file-repository";
+import { defaultConfig } from "./default-config";
+import { UeliHelpers } from "./helpers/ueli-helpers";
+
+const config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
 
 const common = [
     {
@@ -32,8 +37,8 @@ const common = [
         validator: new FilePathExecutionArgumentValidator(),
     },
     {
-        executor: new WebSearchExecutor(),
-        validator: new WebSearchExecutionArgumentValidator(),
+        executor: new WebSearchExecutor(config.webSearches),
+        validator: new WebSearchExecutionArgumentValidator(config.webSearches),
     },
     {
         executor: new FilePathExecutor(),

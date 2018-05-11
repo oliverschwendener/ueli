@@ -1,11 +1,11 @@
-import { Config } from "../../../ts/config";
 import { WebSearchHelpers } from "../../../ts/helpers/web-search-helper";
 import { Injector } from "../../../ts/injector";
 import { WebSearchInputValidator } from "../../../ts/input-validators/web-search-input-validator";
+import { dummyWebSearches } from "../test-helpers";
 
 describe(WebSearchInputValidator.name, (): void => {
-    const validator = new WebSearchInputValidator();
-    const webSearches = Config.webSearches;
+    const webSearches = dummyWebSearches;
+    const validator = new WebSearchInputValidator(webSearches);
 
     for (const webSearch of webSearches) {
         it(`${webSearch.name} web search should return true when passing in a valid argument`, (): void => {

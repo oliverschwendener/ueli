@@ -2,20 +2,22 @@ import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 import { ConfigOptions } from "./config-options";
+import { ConfigRepository } from "./config-repository";
+import { UeliHelpers } from "./helpers/ueli-helpers";
 
-export class ConfigLoader {
-
-    private configFilePath = path.join(os.homedir(), "ueli.config.json");
+export class ConfigFileRepository implements ConfigRepository {
+    private configFilePath = UeliHelpers.configFilePath;
     private defaultConfig: ConfigOptions;
 
     public constructor(defaultConfig: ConfigOptions, configFilePath?: string) {
         if (configFilePath !== undefined) {
             this.configFilePath = configFilePath;
         }
+
         this.defaultConfig = defaultConfig;
     }
 
-    public loadConfigFromConfigFile(): ConfigOptions {
+    public getConfig(): ConfigOptions {
         try {
             const fileContent = fs.readFileSync(this.configFilePath, "utf-8");
             const parsed = JSON.parse(fileContent) as ConfigOptions;
@@ -23,12 +25,12 @@ export class ConfigLoader {
             const mergedConfig = Object.assign(this.defaultConfig, parsed);
             return mergedConfig;
         } catch (err) {
-            this.writeDefaultConfigToConfigFile();
+            this.saveConfig();
             return this.defaultConfig;
         }
     }
 
-    private writeDefaultConfigToConfigFile(): void {
+    public saveConfig(): void {
         const stringifiedConfig = JSON.stringify(this.defaultConfig, null, 2);
         fs.writeFileSync(this.configFilePath, stringifiedConfig, "utf-8");
     }

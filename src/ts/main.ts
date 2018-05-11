@@ -2,7 +2,6 @@ import { app, BrowserWindow, globalShortcut, ipcMain, Menu, MenuItem, Tray } fro
 import { autoUpdater } from "electron-updater";
 import * as fs from "fs";
 import * as path from "path";
-import { Config } from "./config";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
 import { ExecutionService } from "./execution-service";
 import { FilePathExecutor } from "./executors/file-path-executor";
@@ -18,6 +17,10 @@ import { ExecutionArgumentValidatorExecutorCombinationManager } from "./executio
 import { InputValidatorSearcherCombinationManager } from "./input-validator-searcher-combination-manager";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { WebUrlExecutor } from "./executors/web-url-executor";
+import { ConfigFileRepository } from "./config-file-repository";
+import { defaultConfig } from "./default-config";
+
+const config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -49,15 +52,15 @@ function createMainWindow(): void {
         backgroundColor: "#00000000",
         center: true,
         frame: false,
-        height: WindowHelpers.calculateMaxWindowHeight(Config.userInputHeight, Config.maxSearchResultCount, Config.searchResultHeight),
+        height: WindowHelpers.calculateMaxWindowHeight(config.userInputHeight, config.maxSearchResultCount, config.searchResultHeight),
         resizable: false,
         show: false,
         skipTaskbar: true,
-        width: Config.windowWith,
+        width: config.windowWith,
     });
 
     mainWindow.loadURL(`file://${__dirname}/../main.html`);
-    mainWindow.setSize(Config.windowWith, Config.userInputHeight);
+    mainWindow.setSize(config.windowWith, config.userInputHeight);
 
     mainWindow.on("close", quitApp);
     mainWindow.on("blur", hideMainWindow);
@@ -125,7 +128,7 @@ autoUpdater.on("update-downloaded", (): void => {
 function setAutostartSettings() {
     app.setLoginItemSettings({
         args: [],
-        openAtLogin: Config.autoStartApp,
+        openAtLogin: config.autoStartApp,
         path: process.execPath,
     });
 }
@@ -157,8 +160,8 @@ function toggleWindow(): void {
 }
 
 function updateWindowSize(searchResultCount: number): void {
-    const newWindowHeight = WindowHelpers.calculateWindowHeight(searchResultCount, Config.maxSearchResultCount, Config.userInputHeight, Config.searchResultHeight);
-    mainWindow.setSize(Config.windowWith, newWindowHeight);
+    const newWindowHeight = WindowHelpers.calculateWindowHeight(searchResultCount, config.maxSearchResultCount, config.userInputHeight, config.searchResultHeight);
+    mainWindow.setSize(config.windowWith, newWindowHeight);
 }
 
 function hideMainWindow(): void {
@@ -179,7 +182,7 @@ function reloadApp(): void {
 }
 
 function resetWindowToDefaultSizeAndPosition(): void {
-    mainWindow.setSize(Config.windowWith, WindowHelpers.calculateMaxWindowHeight(Config.userInputHeight, Config.maxSearchResultCount, Config.searchResultHeight));
+    mainWindow.setSize(config.windowWith, WindowHelpers.calculateMaxWindowHeight(config.userInputHeight, config.maxSearchResultCount, config.searchResultHeight));
     mainWindow.center();
     updateWindowSize(0);
 }
@@ -234,7 +237,7 @@ ipcMain.on(IpcChannels.getSearchIcon, (event: any): void => {
 
 ipcMain.on(IpcChannels.commandLineExecution, (arg: string): void => {
     mainWindow.webContents.send(IpcChannels.commandLineOutput, arg);
-    updateWindowSize(Config.maxSearchResultCount);
+    updateWindowSize(config.maxSearchResultCount);
 });
 
 ipcMain.on(IpcChannels.resetUserInput, (): void => {

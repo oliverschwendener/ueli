@@ -1,8 +1,8 @@
 import * as path from "path";
-import { Config } from "../config";
 import { SearchResultItem } from "../search-result-item";
 import { SearchPlugin } from "./search-plugin";
 import { IpcChannels } from "../ipc-channels";
+import { UeliHelpers } from "../helpers/ueli-helpers";
 
 export class UeliCommandsSearchPlugin implements SearchPlugin {
     private items: UeliCommand[];
@@ -24,7 +24,7 @@ export class UeliCommandsSearchPlugin implements SearchPlugin {
                 name: "Exit ueli",
             } as UeliCommand,
             {
-                executionArgument: Config.configFilePath,
+                executionArgument: UeliHelpers.configFilePath,
                 name: "Edit configuration file",
             } as UeliCommand,
         ];

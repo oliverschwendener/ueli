@@ -13,6 +13,11 @@ import { WebUrlInputValidator } from "./input-validators/web-url-input-validator
 import { SearchPluginsSearcher } from "./searcher/search-plugins-searcher";
 import { SearchPluginsInputValidator } from "./input-validators/search-plugins-input-validator";
 import { InputValidatorSearcherCombination } from "./input-validator-searcher-combination";
+import { ConfigFileRepository } from "./config-file-repository";
+import { defaultConfig } from "./default-config";
+import { UeliHelpers } from "./helpers/ueli-helpers";
+
+const config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
 
 export class InputValidatorSearcherCombinationManager {
     public static readonly combinations = [
@@ -29,8 +34,8 @@ export class InputValidatorSearcherCombinationManager {
             validator: new CommandLineInputValidator(),
         },
         {
-            searcher: new WebSearchSearcher(),
-            validator: new WebSearchInputValidator(),
+            searcher: new WebSearchSearcher(config.webSearches),
+            validator: new WebSearchInputValidator(config.webSearches),
         },
         {
             searcher: new EmailAddressSearcher(),

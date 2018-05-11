@@ -1,3 +1,5 @@
+import { WebSearch } from "../../ts/web-search";
+
 export class InputOutputCombination {
     public input: any;
     public output: any;
@@ -67,3 +69,18 @@ export const invalidUrls = [
     "12340.12",
     "darth.vader@empire.cc",
 ];
+
+export const dummyWebSearches = [
+    {
+        icon: "",
+        name: "Google",
+        prefix: "g",
+        url: "https://google.com/query=",
+    },
+    {
+        icon: "",
+        name: "DuckDuckGo",
+        prefix: "d",
+        url: "https://duckduckgo.com/query=",
+    },
+] as WebSearch[];

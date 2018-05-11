@@ -2,11 +2,14 @@ import { ProgramsPlugin } from "../../../ts/search-plugins/programs-plugin";
 import { platform } from "os";
 import { WindowsProgramRepository } from "../../../ts/programs-plugin/windows-program-repository";
 import { MacOsProgramRepository } from "../../../ts/programs-plugin/macos-program-repository";
+import { defaultConfig } from "../../../ts/default-config";
 
 describe(ProgramsPlugin.name, (): void => {
+    const applicationFolders = defaultConfig.applicationFolders;
+
     const programRepo = platform() === "win32"
-        ? new WindowsProgramRepository()
-        : new MacOsProgramRepository();
+        ? new WindowsProgramRepository(applicationFolders)
+        : new MacOsProgramRepository(applicationFolders);
 
     const plugin = new ProgramsPlugin(programRepo);
 

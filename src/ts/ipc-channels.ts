@@ -1,4 +1,3 @@
-import { Config } from "./config";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 
 export class IpcChannels {
