@@ -5,7 +5,7 @@ export class FileHelpers {
     public static getFilesFromFolderRecursively(folderPath: string): string[] {
         try {
             let result = [] as string[];
-            const fileNames = fs.readdirSync(folderPath);
+            const fileNames = FileHelpers.getFileNamesFromFolder(folderPath);
 
             for (const fileName of fileNames) {
                 try {
@@ -37,7 +37,7 @@ export class FileHelpers {
 
     public static getFilesFromFolder(folderPath: string): string[] {
         try {
-            const fileNames = fs.readdirSync(folderPath);
+            const fileNames = FileHelpers.getFileNamesFromFolder(folderPath);
 
             const filePaths = fileNames.map((f): string => {
                 return path.join(folderPath, f);
@@ -64,5 +64,15 @@ export class FileHelpers {
         }).reduce((acc, files) => acc.concat(files));
 
         return result;
+    }
+
+    private static getFileNamesFromFolder(folderPath: string): string[] {
+        const allFiles = fs.readdirSync(folderPath);
+
+        const visibleFiles = allFiles.filter((fileName) => {
+            return !fileName.startsWith(".");
+        });
+
+        return visibleFiles;
     }
 }
