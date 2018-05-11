@@ -17,6 +17,7 @@ import { WindowHelpers } from "./helpers/winow-helpers";
 import { ExecutionArgumentValidatorExecutorCombinationManager } from "./execution-argument-validator-executor-combination-manager";
 import { InputValidatorSearcherCombinationManager } from "./input-validator-searcher-combination-manager";
 import { UeliHelpers } from "./helpers/ueli-helpers";
+import { WebUrlExecutor } from "./executors/web-url-executor";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -240,4 +241,6 @@ ipcMain.on(IpcChannels.resetUserInput, (): void => {
     mainWindow.webContents.send(IpcChannels.resetUserInput);
 });
 
-ipcMain.on(IpcChannels.showHelp, UeliHelpers.openHelp);
+ipcMain.on(IpcChannels.showHelp, (): void => {
+    new WebUrlExecutor().execute("https://github.com/oliverschwendener/ueli#ueli");
+});
