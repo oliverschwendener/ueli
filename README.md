@@ -94,7 +94,6 @@ All settings are stored in `~/ueli.config.json`.
 * `searchResultExecutionArgumentFontSize` Number - Represents the font size of the search result execution argument in pixels
 * `searchResultHeight` Number - Represents the height of a search result box in pixels
 * `searchResultNameFontSize` Number - Represents the font size of the search result name in pixels
-* `showHiddenFiles` Boolean - If hidden files should appear in the search results
 * `userInputFontSize` Number - Represents the font size of the user input in pixels
 * `userInputHeight` Number - Represents the height of the user input box in pixels
 * `webSearches` Array of webSearch Objects - A list of web search engines
