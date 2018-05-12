@@ -82,11 +82,11 @@ To check if a new version is available right click on the tray icon. The first i
 
 ## Customization
 
-All settings are stored in `~/ueli.config.json`.
+All settings are stored in `~/ueli.config.json`. You can modify this file to change the default values.
 
 ### Options
 
-* `applicationFolders` Array of string - Represents the folders which are scanned for applications
+* `applicationFolders` Array of string - Represents the folders which are scanned for applications.
 * `autoStartApp` Boolean - If the app should be started automatically when user logs in.
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed.
 * `rescanInterval` Number - Interval in seconds to rescan for installed programs.
