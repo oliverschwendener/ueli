@@ -24,8 +24,11 @@ export class SearchPluginManager {
             new ProgramsPlugin(programRepo),
             new HomeFolderSearchPlugin(),
             new UeliCommandsSearchPlugin(),
-            Injector.getOperatingSystemSettingsPlugin(platform()),
         ];
+
+        if (config.searchOperatingSystemSettings) {
+            this.plugins.push(Injector.getOperatingSystemSettingsPlugin(platform()));
+        }
     }
 
     public getPlugins(): SearchPlugin[] {

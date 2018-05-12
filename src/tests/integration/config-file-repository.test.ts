@@ -36,61 +36,66 @@ const fakeUserConfigFilePath = "./fake-user-config.json";
 const notExistingConfigFile = "./does-not-exist";
 
 describe(ConfigFileRepository.name, (): void => {
-    it("loads default config when there is no config file", () => {
-        const actual = new ConfigFileRepository(defaultConfigMock).getConfig();
+    describe("getConfig", (): void => {
+        it("loads default config and creates default config file when user config file does not exist", (): void => {
+            const actual = new ConfigFileRepository(defaultConfigMock, notExistingConfigFile).getConfig();
 
-        expect(actual.webSearches.length).toBe(defaultConfigMock.webSearches.length);
+            expect(actual.webSearches.length).toBe(defaultConfigMock.webSearches.length);
 
-        for (const webSearch of actual.webSearches) {
-            const defaultWebSearch = defaultConfigMock.webSearches.filter((w: WebSearch): boolean => {
-                return w.name === webSearch.name;
-            })[0];
+            for (const webSearch of actual.webSearches) {
+                const defaultWebSearch = defaultConfigMock.webSearches.filter((w: WebSearch): boolean => {
+                    return w.name === webSearch.name;
+                })[0];
 
-            expect(webSearch.icon).toBe(defaultWebSearch.icon);
-            expect(webSearch.name).toBe(defaultWebSearch.name);
-            expect(webSearch.prefix).toBe(defaultWebSearch.prefix);
-            expect(webSearch.url).toBe(defaultWebSearch.url);
-        }
+                expect(webSearch.icon).toBe(defaultWebSearch.icon);
+                expect(webSearch.name).toBe(defaultWebSearch.name);
+                expect(webSearch.prefix).toBe(defaultWebSearch.prefix);
+                expect(webSearch.url).toBe(defaultWebSearch.url);
+            }
+
+            const configFileContent = fs.readFileSync(notExistingConfigFile, "utf-8");
+            const configFromFile = JSON.parse(configFileContent) as ConfigOptions;
+
+            for (const webSearch of configFromFile.webSearches) {
+                const defaultWebSearch = defaultConfigMock.webSearches.filter((w: WebSearch): boolean => {
+                    return w.name === webSearch.name;
+                })[0];
+
+                expect(webSearch.icon).toBe(defaultWebSearch.icon);
+                expect(webSearch.name).toBe(defaultWebSearch.name);
+                expect(webSearch.prefix).toBe(defaultWebSearch.prefix);
+                expect(webSearch.url).toBe(defaultWebSearch.url);
+            }
+        });
+
+        afterAll((): void => {
+            fs.unlinkSync(notExistingConfigFile);
+        });
     });
 
-    it("loads default config when user config file does not exist", (): void => {
-        const actual = new ConfigFileRepository(defaultConfigMock, notExistingConfigFile).getConfig();
+    describe("getConfig", (): void => {
+        it("loads user config when user config is available", (): void => {
+            const actual = new ConfigFileRepository(defaultConfigMock, fakeUserConfigFilePath).getConfig();
+            expect(actual.webSearches.length).toBe(fakeUserConfig.webSearches.length);
 
-        expect(actual.webSearches.length).toBe(defaultConfigMock.webSearches.length);
+            for (const webSearch of actual.webSearches) {
+                const fakeUserWebSearch = fakeUserConfig.webSearches.filter((w: WebSearch): boolean => {
+                    return w.name === webSearch.name;
+                })[0];
 
-        for (const webSearch of actual.webSearches) {
-            const defaultWebSearch = defaultConfigMock.webSearches.filter((w: WebSearch): boolean => {
-                return w.name === webSearch.name;
-            })[0];
+                expect(webSearch.icon).toBe(fakeUserWebSearch.icon);
+                expect(webSearch.name).toBe(fakeUserWebSearch.name);
+                expect(webSearch.prefix).toBe(fakeUserWebSearch.prefix);
+                expect(webSearch.url).toBe(fakeUserWebSearch.url);
+            }
+        });
 
-            expect(webSearch.icon).toBe(defaultWebSearch.icon);
-            expect(webSearch.name).toBe(defaultWebSearch.name);
-            expect(webSearch.prefix).toBe(defaultWebSearch.prefix);
-            expect(webSearch.url).toBe(defaultWebSearch.url);
-        }
-    });
+        beforeAll((): void => {
+            fs.writeFileSync(fakeUserConfigFilePath, JSON.stringify(fakeUserConfig), "utf-8");
+        });
 
-    it("loads user config when user config is available", (): void => {
-        const actual = new ConfigFileRepository(defaultConfigMock, fakeUserConfigFilePath).getConfig();
-        expect(actual.webSearches.length).toBe(fakeUserConfig.webSearches.length);
-
-        for (const webSearch of actual.webSearches) {
-            const fakeUserWebSearch = fakeUserConfig.webSearches.filter((w: WebSearch): boolean => {
-                return w.name === webSearch.name;
-            })[0];
-
-            expect(webSearch.icon).toBe(fakeUserWebSearch.icon);
-            expect(webSearch.name).toBe(fakeUserWebSearch.name);
-            expect(webSearch.prefix).toBe(fakeUserWebSearch.prefix);
-            expect(webSearch.url).toBe(fakeUserWebSearch.url);
-        }
-    });
-
-    beforeAll((): void => {
-        fs.writeFileSync(fakeUserConfigFilePath, JSON.stringify(fakeUserConfig), "utf-8");
-    });
-
-    afterAll((): void => {
-        fs.unlinkSync(fakeUserConfigFilePath);
+        afterAll((): void => {
+            fs.unlinkSync(fakeUserConfigFilePath);
+        });
     });
 });
