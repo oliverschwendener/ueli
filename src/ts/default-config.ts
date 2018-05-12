@@ -13,6 +13,7 @@ export const defaultConfig: ConfigOptions = {
         ]
         : ["/Applications"],
     autoStartApp: true,
+    colorTheme: "dark",
     maxSearchResultCount: 8,
     rescanInterval: 30,
     searchOperatingSystemSettings: true,

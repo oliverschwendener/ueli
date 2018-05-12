@@ -88,6 +88,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 
 * `applicationFolders` Array of string - Represents the folders which are scanned for applications.
 * `autoStartApp` Boolean - If the app should be started automatically when user logs in.
+* `colorTheme` String - Defines the color theme. Available color themes: `dark`, `light`.
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed.
 * `rescanInterval` Number - Interval in seconds to rescan for installed programs.
 * `searchOperatingSystemSettings` Boolean - If operting system settings should appear in the search results. (Works only on Windows at the moment)
@@ -98,10 +99,10 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `userInputHeight` Number - Represents the height of the user input box in pixels
 * `webSearches` Array of webSearch Objects - A list of web search engines
     * `webSearch` Object - Defines a web search engine
-        * `icon` string - Represents the svg icon for the specific web search engine
-        * `name` string - Represents the name of the web search engine
-        * `prefix` string - Represents the prefix for your web search engine. For example if the prefix is `g` you can type in `g?{your search term}` to search
-        * `url` string - Represents the url for the search engine to which the search term is appended to. For example `https://google.com/search?q=`
+        * `icon` String - Represents the svg icon for the specific web search engine
+        * `name` String - Represents the name of the web search engine
+        * `prefix` String - Represents the prefix for your web search engine. For example if the prefix is `g` you can type in `g?{your search term}` to search
+        * `url` String - Represents the url for the search engine to which the search term is appended to. For example `https://google.com/search?q=`
 * `windowWith`: Number - Represents the width of the main window in pixels
 
 ## Build status

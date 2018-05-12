@@ -8,7 +8,9 @@ import Vue from "vue";
 import { ConfigFileRepository } from "./config-file-repository";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { defaultConfig } from "./default-config";
+import { ColorThemeLoader } from "./color-theme-loader";
 
+const colorThemeLoader = new ColorThemeLoader();
 const config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
 
 document.addEventListener("keyup", handleGlobalKeyPress);
@@ -20,9 +22,7 @@ const vue = new Vue({
         isMouseMoving: false,
         searchIcon: "",
         searchResults: [] as SearchResultItemViewModel[],
-        stylesheetPath: platform() === "win32"
-            ? "./build/" + windowsStyles
-            : "./build/" + macStyles,
+        stylesheetPath: `./build/${config.colorTheme}.css`,
         userInput: "",
     },
     el: "#vue-root",

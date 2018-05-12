@@ -2,6 +2,9 @@ $side-padding: 15px;
 $scrollbar-size: 8px;
 $icon-size: 55%;
 
+$font-family: "Segoe UI", "Helvetica";
+$font-family-mono: "Consolas", "Courier", monospace;
+
 @mixin transitions() {
     transition: all 250ms ease-in-out;
 }
@@ -24,12 +27,12 @@ div.user-input-container {
 }
 
 input.user-input {
-    @include font-user-input();
+    font-family: $font-family;
+    font-weight: 200;
     width: 100%;
     box-sizing: border-box;
     border: none;
     background: transparent;
-    font-weight: 100;
     color: $text-color;
 
     &:focus {
@@ -58,7 +61,8 @@ div.command-line-output-container {
     padding: $side-padding;
     
     pre {
-        @include font-mono();
+        font-family: $font-family-mono;
+        color: $mono-font-color;
         margin: 0;
     }
 }
@@ -69,7 +73,7 @@ div.search-results-container {
 }   
 
 div.search-result {
-    @include font-search-result();
+    font-family: $font-family;
     display: flex;
     flex-direction: row;
     cursor: pointer;
@@ -119,13 +123,14 @@ span {
 
     &.search-result-name {
         &.active {
-            @include font-search-result-name-active();   
+            font-family: $font-family;
+            font-weight: 600;
         }
     }
 
     &.search-result-execution-argument {
-        @include font-search-result-execution-argument();
         @include transitions();
+        font-weight: 200;
         display: none;  
 
         &.active {
