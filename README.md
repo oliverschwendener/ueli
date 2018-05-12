@@ -119,7 +119,6 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 ## Roadmap
 
 * List frequently executed programs/files/settings higher
-* Add more color themes
 * Add option to add custom shortcuts
 * Add input history browsing
 * Add nice GUI to modifiy configuration
