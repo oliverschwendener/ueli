@@ -39,7 +39,12 @@ export class CommandLineExecutor implements Executor {
         return true;
     }
 
+    public logExecution(): boolean {
+        return false;
+    }
+
     private sendCommandLineOutputToRenderer(data: string): void {
         ipcMain.emit(IpcChannels.commandLineExecution, data);
     }
+
 }

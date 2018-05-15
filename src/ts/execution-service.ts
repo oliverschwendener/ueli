@@ -19,12 +19,18 @@ import { IpcChannels } from "./ipc-channels";
 import { EmailAddressInputValidator } from "./input-validators/email-address-input-validator";
 import { EmailAddressExecutionArgumentValidator } from "./execution-argument-validators/email-address-execution-argument-validator";
 import { platform } from "os";
+import { CountManager } from "./count-manager";
 
 export class ExecutionService {
     private validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[];
+    private countManager: CountManager;
 
-    public constructor(validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[]) {
+    public constructor(validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[], countManager: CountManager) {
         this.validatorExecutorCombinations = validatorExecutorCombinations;
+
+        if (countManager !== undefined) {
+            this.countManager = countManager;
+        }
     }
 
     public execute(executionArgument: string): void {
@@ -32,6 +38,10 @@ export class ExecutionService {
             if (combi.validator.isValidForExecution(executionArgument)) {
                 if (combi.executor.resetUserInputAfterExecution()) {
                     ipcMain.emit(IpcChannels.resetUserInput);
+                }
+
+                if (combi.executor.logExecution()) {
+                    this.countManager.increaseCount(executionArgument);
                 }
 
                 setTimeout(() => {

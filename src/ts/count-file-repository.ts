@@ -1,21 +1,20 @@
 import { CountRepository } from "./count-repository";
 import { Count } from "./count";
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync, existsSync } from "fs";
 
 export class CountFileRepository implements CountRepository {
     private countFilePath: string;
 
     constructor(countFilePath: string) {
         this.countFilePath = countFilePath;
+
+        if (!existsSync(this.countFilePath)) {
+            this.writeCountToFile({});
+        }
     }
 
     public getCount(): Count {
         return this.getCountFromFile();
-    }
-
-    public getScore(key: string): number {
-        const count = this.getCountFromFile();
-        return count[key];
     }
 
     public updateCount(count: Count): void {
@@ -23,9 +22,13 @@ export class CountFileRepository implements CountRepository {
     }
 
     private getCountFromFile(): Count {
-        const fileContent = readFileSync(this.countFilePath, "utf-8");
-        const count = JSON.parse(fileContent) as Count;
-        return count;
+        try {
+            const fileContent = readFileSync(this.countFilePath, "utf-8");
+            const count = JSON.parse(fileContent) as Count;
+            return count;
+        } catch (error) {
+            return {};
+        }
     }
 
     private writeCountToFile(count: Count): void {

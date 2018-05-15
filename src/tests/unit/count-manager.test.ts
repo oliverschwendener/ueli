@@ -30,16 +30,16 @@ describe("CountManager", (): void => {
         });
     });
 
-    describe("getScore", (): void => {
-        it("should return 0 if execution argument is not in count repo", (): void => {
+    describe("getCount", (): void => {
+        it("should return undefined if execution argument is not in count repo", (): void => {
             const executionArgument = "some-exec-arg";
             const fakeCount: Count = {};
             const fakeRepo = new FakeCountRepository(fakeCount);
             const countManager = new CountManager(fakeRepo);
 
-            const actual = countManager.getScore(executionArgument);
+            const actual = countManager.getCount()[executionArgument];
 
-            expect(actual).toBe(0);
+            expect(actual).toBe(undefined);
         });
 
         it("should return the correct score of execution argument if execution argument is in count repo", (): void => {
@@ -48,7 +48,7 @@ describe("CountManager", (): void => {
             const fakeRepo = new FakeCountRepository(fakeCount);
             const countManager = new CountManager(fakeRepo);
 
-            const actual = countManager.getScore("some-exec-arg");
+            const actual = countManager.getCount()["some-exec-arg"];
 
             expect(actual).toBe(score);
         });

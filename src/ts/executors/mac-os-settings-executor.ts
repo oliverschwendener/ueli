@@ -19,6 +19,10 @@ export class MacOsSettingsExecutor implements Executor {
         return true;
     }
 
+    public logExecution(): boolean {
+        return true;
+    }
+
     private replacePrefix(executionArgument: string): string {
         return executionArgument.replace(MacOsSettingsHelpers.macOsSettingsPrefix, "");
     }

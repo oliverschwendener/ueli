@@ -5,12 +5,18 @@ import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
 import { defaultConfig } from "../default-config";
 import { ConfigOptions } from "../config-options";
+import { CountManager } from "../count-manager";
 
 export class SearchPluginsSearcher implements Searcher {
     private items: SearchResultItem[];
+    private countManager: CountManager;
     private rescanIntervalinMilliseconds = TimeHelpers.convertSecondsToMilliseconds(defaultConfig.rescanInterval);
 
-    constructor(config: ConfigOptions) {
+    constructor(config: ConfigOptions, countManager: CountManager) {
+        if (countManager !== undefined) {
+            this.countManager = countManager;
+        }
+
         this.items = this.loadSearchPluginItems(config);
 
         setInterval((): void => {
@@ -20,7 +26,7 @@ export class SearchPluginsSearcher implements Searcher {
 
     public getSearchResult(userInput: string): SearchResultItem[] {
         const searchEngine = new SearchEngine(this.items);
-        return searchEngine.search(userInput);
+        return searchEngine.search(userInput, this.countManager);
     }
 
     private loadSearchPluginItems(config: ConfigOptions): SearchResultItem[] {

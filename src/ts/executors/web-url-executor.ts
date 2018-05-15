@@ -17,6 +17,10 @@ export class WebUrlExecutor implements Executor {
         return true;
     }
 
+    public logExecution(): boolean {
+        return false;
+    }
+
     private handleCommandExecution(command: string): void {
         childProcess.exec(command, (err, stout, sterr) => {
             if (err) {

@@ -12,10 +12,6 @@ export class FakeCountRepository implements CountRepository {
         return this.count;
     }
 
-    public getScore(key: string): number {
-        return this.count[key];
-    }
-
     public updateCount(count: Count): void {
         this.count = count;
     }

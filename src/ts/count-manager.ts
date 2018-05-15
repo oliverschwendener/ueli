@@ -1,4 +1,5 @@
 import { CountRepository } from "./count-repository";
+import { Count } from "./count";
 
 export class CountManager {
     private countRepository: CountRepository;
@@ -8,7 +9,7 @@ export class CountManager {
     }
 
     public increaseCount(key: string): void {
-        let score = this.countRepository.getScore(key);
+        let score = this.countRepository.getCount()[key];
 
         if (isNaN(score)) {
             score = 0;
@@ -23,13 +24,7 @@ export class CountManager {
         this.countRepository.updateCount(count);
     }
 
-    public getScore(key: string): number {
-        let score = this.countRepository.getScore(key);
-
-        if (isNaN(score)) {
-            score = 0;
-        }
-
-        return score;
+    public getCount(): Count {
+        return this.countRepository.getCount();
     }
 }

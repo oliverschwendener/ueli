@@ -30,17 +30,6 @@ describe("CountFileRepository", (): void => {
         });
     });
 
-    describe("getScore", (): void => {
-        it("should get the score of an execution argument from the count file", (): void => {
-            const countFileRepository = new CountFileRepository(countFilePath);
-
-            for (const key of ["a", "b", "c"]) {
-                const acutal = countFileRepository.getScore(key);
-                expect(acutal).toBe(expectedCount[key]);
-            }
-        });
-    });
-
     describe("updateCount", (): void => {
         it("should update the count file with a specified count", (): void => {
             const newCount: Count = {
@@ -54,7 +43,7 @@ describe("CountFileRepository", (): void => {
             countRepository.updateCount(newCount);
 
             for (const key of ["a", "b", "c"]) {
-                const actual = countRepository.getScore(key);
+                const actual = countRepository.getCount()[key];
                 expect(actual).toBe(newCount[key]);
             }
         });

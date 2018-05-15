@@ -16,6 +16,8 @@ import { InputValidatorSearcherCombination } from "./input-validator-searcher-co
 import { defaultConfig } from "./default-config";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { ConfigOptions } from "./config-options";
+import { CountManager } from "./count-manager";
+import { CountFileRepository } from "./count-file-repository";
 
 export class InputValidatorSearcherCombinationManager {
     private combinations: InputValidatorSearcherCombination[];
@@ -47,7 +49,7 @@ export class InputValidatorSearcherCombinationManager {
                 validator: new WebUrlInputValidator(),
             },
             {
-                searcher: new SearchPluginsSearcher(config),
+                searcher: new SearchPluginsSearcher(config, new CountManager(new CountFileRepository(UeliHelpers.countFilePath))),
                 validator: new SearchPluginsInputValidator(),
             },
         ];

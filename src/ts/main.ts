@@ -19,6 +19,8 @@ import { UeliHelpers } from "./helpers/ueli-helpers";
 import { WebUrlExecutor } from "./executors/web-url-executor";
 import { defaultConfig } from "./default-config";
 import { ConfigFileRepository } from "./config-file-repository";
+import { CountManager } from "./count-manager";
+import { CountFileRepository } from "./count-file-repository";
 
 const config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
 
@@ -29,7 +31,9 @@ const delayWhenHidingCommandlineOutputInMs = 25;
 const filePathExecutor = new FilePathExecutor();
 
 const inputValidationService = new InputValidationService(new InputValidatorSearcherCombinationManager(config).getCombinations());
-const executionService = new ExecutionService(new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations());
+const executionService = new ExecutionService(
+    new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations(),
+    new CountManager(new CountFileRepository(UeliHelpers.countFilePath)));
 
 const otherInstanceIsAlreadyRunning = app.makeSingleInstance(() => {
     // do nothing

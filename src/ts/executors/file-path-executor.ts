@@ -22,6 +22,10 @@ export class FilePathExecutor implements Executor {
         this.handleExecution(command);
     }
 
+    public logExecution(): boolean {
+        return true;
+    }
+
     private handleExecution(command: string): void {
         childProcess.exec(command, (err, stoud, sterr) => {
             if (err) {

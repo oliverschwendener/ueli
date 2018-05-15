@@ -7,7 +7,6 @@ import { WebUrlInputValidator } from "./input-validators/web-url-input-validator
 import { SearchResultItem } from "./search-result-item";
 import { CommandLineSearcher } from "./searcher/command-line-searcher";
 import { FilePathSearcher } from "./searcher/file-path-searcher";
-import { SearchPluginsSearcher } from "./searcher/search-plugins-searcher";
 import { WebSearchSearcher } from "./searcher/web-search-searcher";
 import { WebUrlSearcher } from "./searcher/web-url-searcher";
 import { InputValidatorSearcherCombination } from "./input-validator-searcher-combination";
