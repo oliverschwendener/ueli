@@ -19,6 +19,7 @@ import { IpcChannels } from "./ipc-channels";
 import { EmailAddressInputValidator } from "./input-validators/email-address-input-validator";
 import { EmailAddressExecutionArgumentValidator } from "./execution-argument-validators/email-address-execution-argument-validator";
 import { platform } from "os";
+import { CountManager } from "./count-manager";
 
 export class ExecutionService {
     private validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[];
@@ -40,6 +41,10 @@ export class ExecutionService {
                     }
 
                     combi.executor.execute(executionArgument);
+                    if (combi.executor.logExecute()) {
+                        const count = new CountManager();
+                        count.addCount(executionArgument);
+                    }
                 }, 50); // set delay for execution to 50ms otherwise user input reset does not work properly
 
                 return;

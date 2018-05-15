@@ -15,6 +15,11 @@ export class MacOsSettingsExecutor implements Executor {
     public hideAfterExecution(): boolean {
         return true;
     }
+
+    public logExecute(): boolean {
+        return true;
+    }
+
     public resetUserInputAfterExecution(): boolean {
         return true;
     }

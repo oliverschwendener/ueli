@@ -1,5 +1,6 @@
 import { SearchResultItem } from "../../ts/search-result-item";
 import { SearchEngine } from "./../../ts/search-engine";
+import { CountManager } from "./../../ts/count-manager";
 
 function getFakeItems(items: string[]): SearchResultItem[] {
     return items.map((i): SearchResultItem => {
@@ -42,6 +43,23 @@ describe("SearchEngine", (): void => {
 
             expect(actual.length).toBeGreaterThan(0);
             expect(actual[0].name).toBe("hans");
+        });
+
+        it("should return frequently used result", (): void => {
+            const count = new CountManager();
+            const fakeItems = getFakeItems(["file explorer", "firefox", "find device"]);
+            const searchEngine = new SearchEngine(fakeItems);
+            const userInput = "fi";
+
+            count.addCount("firefox");
+            count.addCount("firefox");
+            count.addCount("firefox");
+
+            const actual = searchEngine.search(userInput);
+
+            expect(actual[0].name).toBe("firefox");
+
+            count.removeCountKey("firefox");
         });
     });
 });

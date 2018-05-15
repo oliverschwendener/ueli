@@ -63,3 +63,4 @@ typings/
 # dotenv environment variables file
 .env
 
+ueli.countstorage.json

@@ -10,6 +10,10 @@ export class UeliCommandExecutor implements Executor {
         return false;
     }
 
+    public logExecute(): boolean {
+        return false;
+    }
+
     public resetUserInputAfterExecution(): boolean {
         return true;
     }
