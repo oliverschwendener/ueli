@@ -22,4 +22,14 @@ export class CountManager {
 
         this.countRepository.updateCount(count);
     }
+
+    public getScore(key: string): number {
+        let score = this.countRepository.getScore(key);
+
+        if (isNaN(score)) {
+            score = 0;
+        }
+
+        return score;
+    }
 }
