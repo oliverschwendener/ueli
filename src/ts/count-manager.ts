@@ -5,10 +5,11 @@ let countLoader = new CountLoader();
 let countStorage = countLoader.loadCountFromCountFile();
 
 export class CountManager {
-    public constructor(filePath?: string) {
-        const customLoader = new CountLoader(filePath);
-        countLoader = customLoader;
-        countStorage = customLoader.loadCountFromCountFile();
+    public constructor(loader?: CountLoader) {
+        if (loader !== undefined) {
+            countLoader = loader;
+            countStorage = loader.loadCountFromCountFile();
+        }
     }
 
     public getCount(key: string): number {
@@ -39,7 +40,7 @@ export class CountManager {
     }
 
     public clearStorage(): void {
-        countStorage = {};
+        countStorage = {} as Count;
         countLoader.writeCountFile(countStorage);
     }
 }
