@@ -1,6 +1,5 @@
 import * as childProcess from "child_process";
 import { ipcMain } from "electron";
-import { Config } from "./config";
 import { CommandLineExecutionArgumentValidator } from "./execution-argument-validators/command-line-execution-argument-validator";
 import { UeliCommandExecutionArgumentValidator } from "./execution-argument-validators/ueli-command-execution-argument-validator";
 import { ExecutionArgumentValidator } from "./execution-argument-validators/execution-argument-validator";

@@ -5,7 +5,13 @@ import { ipcRenderer } from "electron";
 import * as macStyles from "../scss/mac.scss";
 import * as windowsStyles from "../scss/windows.scss";
 import Vue from "vue";
-import { Config } from "./config";
+import { ConfigFileRepository } from "./config-file-repository";
+import { UeliHelpers } from "./helpers/ueli-helpers";
+import { defaultConfig } from "./default-config";
+import { ColorThemeLoader } from "./color-theme-loader";
+
+const colorThemeLoader = new ColorThemeLoader();
+const config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
 
 document.addEventListener("keyup", handleGlobalKeyPress);
 
@@ -16,9 +22,7 @@ const vue = new Vue({
         isMouseMoving: false,
         searchIcon: "",
         searchResults: [] as SearchResultItemViewModel[],
-        stylesheetPath: platform() === "win32"
-            ? "./build/" + windowsStyles
-            : "./build/" + macStyles,
+        stylesheetPath: `./build/${config.colorTheme}.css`,
         userInput: "",
     },
     el: "#vue-root",
@@ -63,28 +67,28 @@ const vue = new Vue({
             }
         },
         outputContainerHeight: (): string => {
-            return `height: calc(100vh - ${Config.userInputHeight}px);`;
+            return `height: calc(100vh - ${config.userInputHeight}px);`;
         },
         searchResultExecutionArgumentStyle: (): string => {
-            return `font-size: ${Config.searchResultExecutionArgumentFontSize}px;`;
+            return `font-size: ${config.searchResultExecutionArgumentFontSize}px;`;
         },
         searchResultHeight: (): string => {
-            return `height: ${Config.searchResultHeight}px`;
+            return `height: ${config.searchResultHeight}px`;
         },
         searchResultIconStyle: (): string => {
-            return `height: ${Config.searchResultHeight}px; width: ${Config.searchResultHeight}px;`;
+            return `height: ${config.searchResultHeight}px; width: ${config.searchResultHeight}px;`;
         },
         searchResultNameStyle: (): string => {
-            return `font-size: ${Config.searchResultNameFontSize}px;`;
+            return `font-size: ${config.searchResultNameFontSize}px;`;
         },
         searchResultWidth: (): string => {
-            return `width: ${Config.searchResultHeight}px;`;
+            return `width: ${config.searchResultHeight}px;`;
         },
         userInputContainerStyle: (): string => {
-            return `height: ${Config.userInputHeight}px;`;
+            return `height: ${config.userInputHeight}px;`;
         },
         userInputStyle: (): string => {
-            return `font-size: ${Config.userInputFontSize}px;`;
+            return `font-size: ${config.userInputFontSize}px;`;
         },
     },
     watch: {

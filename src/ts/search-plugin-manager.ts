@@ -1,4 +1,3 @@
-import { Config } from "./config";
 import { Injector } from "./injector";
 import { OperatingSystem } from "./operating-system";
 import { UeliCommandsSearchPlugin } from "./search-plugins/ueli-commands-plugin";
@@ -9,21 +8,27 @@ import { Windows10SettingsSearchPlugin } from "./search-plugins/windows-10-setti
 import { platform } from "os";
 import { WindowsProgramRepository } from "./programs-plugin/windows-program-repository";
 import { MacOsProgramRepository } from "./programs-plugin/macos-program-repository";
+import { defaultConfig } from "./default-config";
+import { UeliHelpers } from "./helpers/ueli-helpers";
+import { ConfigOptions } from "./config-options";
 
 export class SearchPluginManager {
     private plugins: SearchPlugin[];
 
-    public constructor() {
+    public constructor(config: ConfigOptions) {
         const programRepo = platform() === "win32"
-            ? new WindowsProgramRepository()
-            : new MacOsProgramRepository();
+            ? new WindowsProgramRepository(config.applicationFolders)
+            : new MacOsProgramRepository(config.applicationFolders);
 
         this.plugins = [
             new ProgramsPlugin(programRepo),
             new HomeFolderSearchPlugin(),
             new UeliCommandsSearchPlugin(),
-            Injector.getOperatingSystemSettingsPlugin(platform()),
         ];
+
+        if (config.searchOperatingSystemSettings) {
+            this.plugins.push(Injector.getOperatingSystemSettingsPlugin(platform()));
+        }
     }
 
     public getPlugins(): SearchPlugin[] {

@@ -1,18 +1,13 @@
 import * as fs from "fs";
 import * as path from "path";
-import { Config } from "../config";
 
 export class FileHelpers {
     public static getFilesFromFolderRecursively(folderPath: string): string[] {
         try {
             let result = [] as string[];
-            const fileNames = fs.readdirSync(folderPath);
+            const fileNames = FileHelpers.getFileNamesFromFolder(folderPath);
 
-            const validFileNames = fileNames.filter((fileName) => {
-                return this.isValidFile(fileName);
-            });
-
-            for (const fileName of validFileNames) {
+            for (const fileName of fileNames) {
                 try {
                     const filePath = path.join(folderPath, fileName);
                     const stats = fs.lstatSync(filePath);
@@ -42,11 +37,9 @@ export class FileHelpers {
 
     public static getFilesFromFolder(folderPath: string): string[] {
         try {
-            const fileNames = fs.readdirSync(folderPath);
+            const fileNames = FileHelpers.getFileNamesFromFolder(folderPath);
 
-            const validFileNames = fileNames.filter((fileName) => this.isValidFile(fileName));
-
-            const filePaths = validFileNames.map((f): string => {
+            const filePaths = fileNames.map((f): string => {
                 return path.join(folderPath, f);
             });
 
@@ -73,11 +66,13 @@ export class FileHelpers {
         return result;
     }
 
-    private static isValidFile(fileName: string): boolean {
-        if (Config.showHiddenFiles) {
-            return true;
-        } else {
+    private static getFileNamesFromFolder(folderPath: string): string[] {
+        const allFiles = fs.readdirSync(folderPath);
+
+        const visibleFiles = allFiles.filter((fileName) => {
             return !fileName.startsWith(".");
-        }
+        });
+
+        return visibleFiles;
     }
 }

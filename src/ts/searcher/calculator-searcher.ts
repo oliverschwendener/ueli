@@ -1,4 +1,3 @@
-import { Config } from "../config";
 import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
 import * as math from "mathjs";

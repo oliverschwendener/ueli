@@ -17,46 +17,60 @@ import { WindowsSettingsExecutionArgumentValidator } from "./execution-argument-
 import { WindowsSettingsExecutor } from "./executors/windows-settings-executor";
 import { MacOsSettingsExecutor } from "./executors/mac-os-settings-executor";
 import { MacOsSettingsExecutionArgumentValidator } from "./execution-argument-validators/mac-os-execution-argument-validator";
-
-const common = [
-    {
-        executor: new CommandLineExecutor(),
-        validator: new CommandLineExecutionArgumentValidator(),
-    },
-    {
-        executor: new UeliCommandExecutor(),
-        validator: new UeliCommandExecutionArgumentValidator(),
-    },
-    {
-        executor: new FilePathExecutor(),
-        validator: new FilePathExecutionArgumentValidator(),
-    },
-    {
-        executor: new WebSearchExecutor(),
-        validator: new WebSearchExecutionArgumentValidator(),
-    },
-    {
-        executor: new FilePathExecutor(),
-        validator: new EmailAddressExecutionArgumentValidator(),
-    },
-    {
-        executor: new WebUrlExecutor(),
-        validator: new WebUrlExecutionArgumentValidator(),
-    },
-];
+import { defaultConfig } from "./default-config";
+import { UeliHelpers } from "./helpers/ueli-helpers";
+import { ConfigOptions } from "./config-options";
+import { WebSearch } from "./web-search";
 
 export class ExecutionArgumentValidatorExecutorCombinationManager {
-    public static readonly combinations = OperatingSystemHelpers.getOperatingSystemFromString(platform()) === OperatingSystem.Windows
-        ? common.concat([
+    private webSearches: WebSearch[];
+    private combinations: ExecutionArgumentValidatorExecutorCombination[];
+
+    constructor(config: ConfigOptions) {
+        this.combinations = [
             {
-                executor: new WindowsSettingsExecutor(),
-                validator: new WindowsSettingsExecutionArgumentValidator(),
+                executor: new CommandLineExecutor(),
+                validator: new CommandLineExecutionArgumentValidator(),
             },
-        ])
-        : common.concat([
             {
-                executor: new MacOsSettingsExecutor(),
-                validator: new MacOsSettingsExecutionArgumentValidator(),
+                executor: new UeliCommandExecutor(),
+                validator: new UeliCommandExecutionArgumentValidator(),
             },
-        ]);
+            {
+                executor: new FilePathExecutor(),
+                validator: new FilePathExecutionArgumentValidator(),
+            },
+            {
+                executor: new WebSearchExecutor(config.webSearches),
+                validator: new WebSearchExecutionArgumentValidator(config.webSearches),
+            },
+            {
+                executor: new FilePathExecutor(),
+                validator: new EmailAddressExecutionArgumentValidator(),
+            },
+            {
+                executor: new WebUrlExecutor(),
+                validator: new WebUrlExecutionArgumentValidator(),
+            },
+        ];
+
+        switch (OperatingSystemHelpers.getOperatingSystemFromString(platform())) {
+            case OperatingSystem.Windows: {
+                this.combinations.push({
+                    executor: new WindowsSettingsExecutor(),
+                    validator: new WindowsSettingsExecutionArgumentValidator(),
+                });
+            }
+            case OperatingSystem.macOS: {
+                this.combinations.push({
+                    executor: new MacOsSettingsExecutor(),
+                    validator: new MacOsSettingsExecutionArgumentValidator(),
+                });
+            }
+        }
+    }
+
+    public getCombinations(): ExecutionArgumentValidatorExecutorCombination[] {
+        return this.combinations;
+    }
 }

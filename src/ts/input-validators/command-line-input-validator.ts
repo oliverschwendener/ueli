@@ -1,5 +1,5 @@
-import { Config } from "../config";
 import { InputValidator } from "./input-validator";
+import { CommandLineHelpers } from "../helpers/command-line-helpers";
 
 export class CommandLineInputValidator implements InputValidator {
     public isValidForSearchResults(userInput: string): boolean {
@@ -9,11 +9,11 @@ export class CommandLineInputValidator implements InputValidator {
     }
 
     private userInputStartsWithPrefix(userInput: string): boolean {
-        return userInput.startsWith(Config.commandLinePrefix);
+        return userInput.startsWith(CommandLineHelpers.commandLinePrefix);
     }
 
     private userInputLengthIsMoreThanOnlyPrefix(userInput: string): boolean {
-        return userInput.length > Config.commandLinePrefix.length;
+        return userInput.length > CommandLineHelpers.commandLinePrefix.length;
     }
 
     private prefixIsFollowedByCommand(userInput: string): boolean {

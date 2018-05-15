@@ -1,4 +1,3 @@
-import { Config } from "../config";
 import { InputValidator } from "./input-validator";
 import * as math from "mathjs";
 
@@ -18,7 +17,7 @@ export class CalculatorInputValidator implements InputValidator {
         const mathType = math.typeof(input);
 
         if ((mathType === "Unit" && input.value === null)
-         || (mathType === "Function")) {
+            || (mathType === "Function")) {
             return false;
         }
 

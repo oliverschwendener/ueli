@@ -34,51 +34,75 @@ function deleteTestFolders(folderPaths: string[]): void {
     }
 }
 
+function createFile(filePath: string, data: string): void {
+    fs.writeFileSync(filePath, data);
+}
+
+function deleteFile(filePath: string): void {
+    fs.unlinkSync(filePath);
+}
+
 describe(FileHelpers.name, (): void => {
     describe(FileHelpers.getFilesFromFolder.name, (): void => {
-        it("should return some files", (): void => {
-            const testFolder = testFolderPaths[0];
-            createTestFolders([testFolder]);
+        const testFolder = testFolderPaths[0];
+        const hiddenFilePath = path.join(testFolder, ".hidden-file-name");
 
+        createTestFolders([testFolder]);
+        createFile(hiddenFilePath, "some-text");
+
+        it("should return only visible files", (): void => {
             const actual = FileHelpers.getFilesFromFolder(testFolder);
+            expect(actual.length).toBe(testFiles.length);
+        });
 
-            expect(actual.length).toBeGreaterThan(0);
-
+        afterAll((): void => {
+            deleteFile(hiddenFilePath);
             deleteTestFolders([testFolder]);
         });
     });
 
     describe(FileHelpers.getFilesFromFolderRecursively.name, (): void => {
-        it("should return some files", (): void => {
-            const testFolder = testFolderPaths[0];
+        const testFolder = testFolderPaths[0];
+        const hiddenFilePath = path.join(testFolder, ".hidden-file-name");
+
+        beforeAll((): void => {
             createTestFolders([testFolder]);
+            createFile(hiddenFilePath, "some-data");
+        });
 
+        it("should return only visible files", (): void => {
             const actual = FileHelpers.getFilesFromFolderRecursively(testFolder);
-
             expect(actual.length).toBeGreaterThan(0);
+        });
 
+        afterAll((): void => {
+            deleteFile(hiddenFilePath);
             deleteTestFolders([testFolder]);
         });
     });
 
     describe(FileHelpers.getFilesFromFoldersRecursively.name, (): void => {
-        it("should return some files", (): void => {
-            const testFolders = testFolderPaths;
+        const testFolders = testFolderPaths;
+
+        beforeAll((): void => {
             createTestFolders(testFolders);
+        });
 
+        it("should return some files", (): void => {
             const actual = FileHelpers.getFilesFromFoldersRecursively(testFolders);
-
             expect(actual.length).toBeGreaterThan(0);
-
-            deleteTestFolders(testFolders);
         });
 
         it("should return an empty list when folder does not exist", (): void => {
-            const testFolder = `${os.homedir()}/hopefully-this-folder-does-not-exist`;
+            const testFolder = path.join(os.homedir(), "hopefully-this-folder-does-not-exist");
 
             const actual = FileHelpers.getFilesFromFoldersRecursively([testFolder]);
 
             expect(actual.length).toBe(0);
+        });
+
+        afterAll((): void => {
+            deleteTestFolders(testFolders);
         });
     });
 });

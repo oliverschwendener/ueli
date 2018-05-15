@@ -4,11 +4,11 @@ describe(MacOsSettingsPlugin.name, () => {
     const searchPlugin = new MacOsSettingsPlugin();
 
     describe(searchPlugin.getAllItems.name, () => {
-        it("returns exactly zero items because it is not implemented yet", () => {
+        it("should return more than zero items", () => {
             const actual = searchPlugin.getAllItems();
             expect(actual).not.toBe(undefined);
             expect(actual).not.toBe(null);
-            expect(actual.length).toBe(0);
+            expect(actual.length).toBeGreaterThan(0);
         });
     });
 });
