@@ -4,7 +4,7 @@
 
 This is an alt+space launcher for Windows and macOS.
 
-![ueli screenshot](img/doc/ueli-example.png)
+![ueli screenshot](img/doc/ueli-example.jpg)
 
 ## Installation
 
@@ -107,13 +107,13 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 
 ### Color themes
 
-|Name|Example|
-|---|---|
-|`atom-one-dark`|![atom-one-dark color theme](/img/doc/color-themes/atom-one-dark.png)|
-|`dark`|![dark color theme](/img/doc/color-themes/dark.png)|
-|`dark-mono`|![dark-mono color theme](/img/doc/color-themes/dark-mono.png)|
-|`light`|![light color theme](/img/doc/color-themes/light.png)|
-|`light-mono`|![light-mono color theme](/img/doc/color-themes/light-mono.png)|
+![Color themes](/img/doc/color-themes.png)
+
+* `atom-one-dark`
+* `dark`
+* `dark-mono`
+* `light`
+* `light-mono`
 
 ## Build status
 
