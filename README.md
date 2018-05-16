@@ -4,7 +4,7 @@
 
 This is an alt+space launcher for Windows and macOS.
 
-![ueli screenshot](img/ueli-example.png)
+![ueli screenshot](img/doc/ueli-example.png)
 
 ## Installation
 
@@ -88,7 +88,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 
 * `applicationFolders` Array of string - Represents the folders which are scanned for applications
 * `autoStartApp` Boolean - If the app should be started automatically when you log in
-* `colorTheme` String - Defines the color theme. Available color themes: `dark`, `dark-mono`, `light`, `light-mono`, `atom-one-dark`.
+* `colorTheme` String - Defines the [color theme](#color-themes).
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed
 * `rescanInterval` Number - Interval in seconds to rescan the application folders
 * `searchOperatingSystemSettings` Boolean - If operting system settings and commands should appear in the search results
@@ -104,6 +104,16 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
         * `prefix` String - Represents the prefix for your web search engine. For example if the prefix is `g` you can type in `g?{your search term}` to search
         * `url` String - Represents the url for the search engine to which the search term is appended to. For example `https://google.com/search?q=`
 * `windowWith`: Number - Represents the width of the main window in pixels
+
+### Color themes
+
+|Name|Example|
+|---|---|
+|`atom-one-dark`|![atom-one-dark color theme](/img/doc/color-themes/atom-one-dark.png)|
+|`dark`|![dark color theme](/img/doc/color-themes/dark.png)|
+|`dark-mono`|![dark-mono color theme](/img/doc/color-themes/dark-mono.png)|
+|`light`|![light color theme](/img/doc/color-themes/light.png)|
+|`light-mono`|![light-mono color theme](/img/doc/color-themes/light-mono.png)|
 
 ## Build status
 
