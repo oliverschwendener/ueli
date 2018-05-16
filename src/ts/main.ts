@@ -22,16 +22,15 @@ import { ConfigFileRepository } from "./config-file-repository";
 import { CountManager } from "./count-manager";
 import { CountFileRepository } from "./count-file-repository";
 
-const config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
-
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
 const delayWhenHidingCommandlineOutputInMs = 25;
 
 const filePathExecutor = new FilePathExecutor();
 
-const inputValidationService = new InputValidationService(new InputValidatorSearcherCombinationManager(config).getCombinations());
-const executionService = new ExecutionService(
+let config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
+let inputValidationService = new InputValidationService(new InputValidatorSearcherCombinationManager(config).getCombinations());
+let executionService = new ExecutionService(
     new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations(),
     new CountManager(new CountFileRepository(UeliHelpers.countFilePath)));
 
@@ -183,6 +182,12 @@ function hideMainWindow(): void {
 }
 
 function reloadApp(): void {
+    config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
+    inputValidationService = new InputValidationService(new InputValidatorSearcherCombinationManager(config).getCombinations());
+    executionService = new ExecutionService(
+        new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations(),
+        new CountManager(new CountFileRepository(UeliHelpers.countFilePath)));
+
     mainWindow.reload();
     resetWindowToDefaultSizeAndPosition();
 }
