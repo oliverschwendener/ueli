@@ -6,6 +6,7 @@ export interface ConfigOptions {
     colorTheme: string;
     maxSearchResultCount: number;
     rescanInterval: number;
+    searchEngineThreshold: number;
     searchOperatingSystemSettings: boolean;
     searchResultExecutionArgumentFontSize: number;
     searchResultHeight: number;

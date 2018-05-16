@@ -2,12 +2,15 @@ import * as Fuse from "fuse.js";
 import { SearchPlugin } from "./search-plugins/search-plugin";
 import { SearchResultItem } from "./search-result-item";
 import { CountManager } from "./count-manager";
+import { ConfigOptions } from "./config-options";
 
 export class SearchEngine {
     private unsortedSearchResults: SearchResultItem[];
+    private configOptions: ConfigOptions;
 
-    public constructor(unsortedSearchResults: SearchResultItem[]) {
+    public constructor(unsortedSearchResults: SearchResultItem[], configOptions: ConfigOptions) {
         this.unsortedSearchResults = unsortedSearchResults;
+        this.configOptions = configOptions;
     }
 
     public search(searchTerm: string, countManager?: CountManager): SearchResultItem[] {
@@ -19,7 +22,7 @@ export class SearchEngine {
             maxPatternLength: 32,
             minMatchCharLength: 1,
             shouldSort: true,
-            threshold: 0.4,
+            threshold: this.configOptions.searchEngineThreshold,
         });
 
         let fuseResults = fuse.search(searchTerm) as any[];

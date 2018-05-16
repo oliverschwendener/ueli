@@ -6,9 +6,15 @@ import { SearchEngine } from "../search-engine";
 import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
 import { platform } from "os";
+import { ConfigOptions } from "../config-options";
 
 export class FilePathSearcher implements Searcher {
     private iconManager = Injector.getIconManager(platform());
+    private config: ConfigOptions;
+
+    constructor(config: ConfigOptions) {
+        this.config = config;
+    }
 
     public getSearchResult(userInput: string): SearchResultItem[] {
         let filePath;
@@ -52,7 +58,7 @@ export class FilePathSearcher implements Searcher {
     }
 
     private sortSearchResult(searchResultItems: SearchResultItem[], searchTerm: string): SearchResultItem[] {
-        const searchEngine = new SearchEngine(searchResultItems);
+        const searchEngine = new SearchEngine(searchResultItems, this.config);
         return searchEngine.search(searchTerm);
     }
 

@@ -29,7 +29,7 @@ export class InputValidatorSearcherCombinationManager {
                 validator: new CalculatorInputValidator(),
             },
             {
-                searcher: new FilePathSearcher(),
+                searcher: new FilePathSearcher(config),
                 validator: new FilePathInputValidator(),
             },
             {

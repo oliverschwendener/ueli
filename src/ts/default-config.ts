@@ -16,6 +16,7 @@ export const defaultConfig: ConfigOptions = {
     colorTheme: "dark",
     maxSearchResultCount: 8,
     rescanInterval: 30,
+    searchEngineThreshold: 0.4,
     searchOperatingSystemSettings: true,
     searchResultExecutionArgumentFontSize: 14,
     searchResultHeight: 60,

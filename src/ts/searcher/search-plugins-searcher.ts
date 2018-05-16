@@ -10,12 +10,12 @@ import { CountManager } from "../count-manager";
 export class SearchPluginsSearcher implements Searcher {
     private items: SearchResultItem[];
     private countManager: CountManager;
+    private config: ConfigOptions;
     private rescanIntervalinMilliseconds = TimeHelpers.convertSecondsToMilliseconds(defaultConfig.rescanInterval);
 
     constructor(config: ConfigOptions, countManager: CountManager) {
-        if (countManager !== undefined) {
-            this.countManager = countManager;
-        }
+        this.config = config;
+        this.countManager = countManager;
 
         this.items = this.loadSearchPluginItems(config);
 
@@ -25,7 +25,7 @@ export class SearchPluginsSearcher implements Searcher {
     }
 
     public getSearchResult(userInput: string): SearchResultItem[] {
-        const searchEngine = new SearchEngine(this.items);
+        const searchEngine = new SearchEngine(this.items, this.config);
         return searchEngine.search(userInput, this.countManager);
     }
 
