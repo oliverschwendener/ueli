@@ -88,7 +88,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 
 * `applicationFolders` Array of string - Represents the folders which are scanned for applications
 * `autoStartApp` Boolean - If the app should be started automatically when you log in
-* `colorTheme` String - Defines the color theme. Available color themes: `dark`, `light`, `atom-one-dark`
+* `colorTheme` String - Defines the color theme. Available color themes: `dark`, `dark-mono`, `light`, `light-mono`, `atom-one-dark`.
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed
 * `rescanInterval` Number - Interval in seconds to rescan the application folders
 * `searchOperatingSystemSettings` Boolean - If operting system settings and commands should appear in the search results
