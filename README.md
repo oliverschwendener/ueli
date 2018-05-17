@@ -86,6 +86,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 
 ### Options
 
+* `applicationFileExtensions` Array of string - Represents the file extensions which are used to find applications in the specified folders
 * `applicationFolders` Array of string - Represents the folders which are scanned for applications
 * `autoStartApp` Boolean - If the app should be started automatically when you log in
 * `colorTheme` String - Defines the [color theme](#color-themes).

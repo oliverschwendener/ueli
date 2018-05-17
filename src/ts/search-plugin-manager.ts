@@ -17,8 +17,8 @@ export class SearchPluginManager {
 
     public constructor(config: ConfigOptions) {
         const programRepo = platform() === "win32"
-            ? new WindowsProgramRepository(config.applicationFolders)
-            : new MacOsProgramRepository(config.applicationFolders);
+            ? new WindowsProgramRepository(config.applicationFolders, config.applicationFileExtensions)
+            : new MacOsProgramRepository(config.applicationFolders, config.applicationFileExtensions);
 
         this.plugins = [
             new ProgramsPlugin(programRepo),

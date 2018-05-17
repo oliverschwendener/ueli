@@ -1,6 +1,7 @@
 import { WebSearch } from "./web-search";
 
 export interface ConfigOptions {
+    applicationFileExtensions: string[];
     applicationFolders: string[];
     autoStartApp: boolean;
     colorTheme: string;

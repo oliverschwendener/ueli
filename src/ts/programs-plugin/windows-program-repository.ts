@@ -1,14 +1,14 @@
-import * as os from "os";
 import * as path from "path";
-import { FileHelpers } from "./../helpers/file-helpers";
+import { FileHelpers } from "../helpers/file-helpers";
 import { Program } from "./program";
 import { ProgramRepository } from "./program-repository";
 
 export class WindowsProgramRepository implements ProgramRepository {
+    private applicationFileExtensions: string[];
     private programs: Program[];
-    private shortcutFileExtensions = [".lnk", ".appref-ms", ".url"];
 
-    public constructor(applicationFolders: string[]) {
+    public constructor(applicationFolders: string[], applicationFileExtensions: string[]) {
+        this.applicationFileExtensions = applicationFileExtensions;
         this.programs = this.loadPrograms(applicationFolders);
     }
 
@@ -22,11 +22,11 @@ export class WindowsProgramRepository implements ProgramRepository {
         const files = FileHelpers.getFilesFromFoldersRecursively(applicationFolders);
 
         for (const file of files) {
-            for (const shortcutFileExtension of this.shortcutFileExtensions) {
-                if (file.endsWith(shortcutFileExtension)) {
+            for (const applicationFileExtension of this.applicationFileExtensions) {
+                if (file.endsWith(applicationFileExtension)) {
                     result.push({
                         executionArgument: file,
-                        name: path.basename(file).replace(shortcutFileExtension, ""),
+                        name: path.basename(file).replace(applicationFileExtension, ""),
                     } as Program);
                 }
             }

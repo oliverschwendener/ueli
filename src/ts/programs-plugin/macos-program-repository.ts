@@ -4,10 +4,11 @@ import { Program } from "./program";
 import { ProgramRepository } from "./program-repository";
 
 export class MacOsProgramRepository implements ProgramRepository {
-    private applicationFileExtension = ".app";
+    private applicationFileExtensions: string[];
     private programs: Program[];
 
-    public constructor(applicationFolders: string[]) {
+    public constructor(applicationFolders: string[], applicationFileExtensions: string[]) {
+        this.applicationFileExtensions = applicationFileExtensions;
         this.programs = this.loadPrograms(applicationFolders);
     }
 
@@ -21,14 +22,14 @@ export class MacOsProgramRepository implements ProgramRepository {
         const files = FileHelpers.getFilesFromFoldersRecursively(applicationFolders);
 
         for (const file of files) {
-            if (!file.endsWith(this.applicationFileExtension)) {
-                continue;
+            for (const applicationFileExtension of this.applicationFileExtensions) {
+                if (file.endsWith(applicationFileExtension)) {
+                    result.push({
+                        executionArgument: file,
+                        name: path.basename(file).replace(applicationFileExtension, ""),
+                    } as Program);
+                }
             }
-
-            result.push({
-                executionArgument: file,
-                name: path.basename(file).replace(this.applicationFileExtension, ""),
-            } as Program);
         }
 
         return result;

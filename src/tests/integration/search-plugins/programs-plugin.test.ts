@@ -5,11 +5,9 @@ import { MacOsProgramRepository } from "../../../ts/programs-plugin/macos-progra
 import { defaultConfig } from "../../../ts/default-config";
 
 describe(ProgramsPlugin.name, (): void => {
-    const applicationFolders = defaultConfig.applicationFolders;
-
     const programRepo = platform() === "win32"
-        ? new WindowsProgramRepository(applicationFolders)
-        : new MacOsProgramRepository(applicationFolders);
+        ? new WindowsProgramRepository(defaultConfig.applicationFolders, defaultConfig.applicationFileExtensions)
+        : new MacOsProgramRepository(defaultConfig.applicationFolders, defaultConfig.applicationFileExtensions);
 
     const plugin = new ProgramsPlugin(programRepo);
 

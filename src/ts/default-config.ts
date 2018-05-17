@@ -5,6 +5,9 @@ import { OperatingSystem } from "./operating-system";
 import { WebSearch } from "./web-search";
 
 export const defaultConfig: ConfigOptions = {
+    applicationFileExtensions: OperatingSystemHelpers.getOperatingSystemFromString(platform()) === OperatingSystem.Windows
+        ? [".lnk", ".appref-ms", ".url", ".exe"]
+        : [".app"],
     applicationFolders: OperatingSystemHelpers.getOperatingSystemFromString(platform()) === OperatingSystem.Windows
         ? [
             "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs",
