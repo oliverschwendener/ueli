@@ -39,11 +39,12 @@ This is an alt+space launcher for Windows and macOS.
 
 * Type in `g?{your search term}` to search something on Google
 * Default web search engines:
+    * `d`: DuckDuckGo
     * `g`: Google
     * `gi`: Google Images
-    * `d`: DuckDuckGo
-    * `yt`: YouTube
     * `l`: Linguee
+    * `w`: Wikipedia
+    * `yt`: YouTube
 
 ### Execute commandline tools
 
