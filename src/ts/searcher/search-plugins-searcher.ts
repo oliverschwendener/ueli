@@ -25,7 +25,7 @@ export class SearchPluginsSearcher implements Searcher {
     }
 
     public getSearchResult(userInput: string): SearchResultItem[] {
-        const searchEngine = new SearchEngine(this.items, this.config);
+        const searchEngine = new SearchEngine(this.items, this.config.searchEngineThreshold);
         return searchEngine.search(userInput, this.countManager);
     }
 

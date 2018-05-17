@@ -58,7 +58,7 @@ export class FilePathSearcher implements Searcher {
     }
 
     private sortSearchResult(searchResultItems: SearchResultItem[], searchTerm: string): SearchResultItem[] {
-        const searchEngine = new SearchEngine(searchResultItems, this.config);
+        const searchEngine = new SearchEngine(searchResultItems, this.config.searchEngineThreshold);
         return searchEngine.search(searchTerm);
     }
 

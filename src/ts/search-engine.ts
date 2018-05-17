@@ -6,11 +6,11 @@ import { ConfigOptions } from "./config-options";
 
 export class SearchEngine {
     private unsortedSearchResults: SearchResultItem[];
-    private configOptions: ConfigOptions;
+    private threshold: number;
 
-    public constructor(unsortedSearchResults: SearchResultItem[], configOptions: ConfigOptions) {
+    public constructor(unsortedSearchResults: SearchResultItem[], threshold: number) {
         this.unsortedSearchResults = unsortedSearchResults;
-        this.configOptions = configOptions;
+        this.threshold = threshold;
     }
 
     public search(searchTerm: string, countManager?: CountManager): SearchResultItem[] {
@@ -22,7 +22,7 @@ export class SearchEngine {
             maxPatternLength: 32,
             minMatchCharLength: 1,
             shouldSort: true,
-            threshold: this.configOptions.searchEngineThreshold,
+            threshold: this.threshold,
         });
 
         let fuseResults = fuse.search(searchTerm) as any[];
@@ -46,7 +46,7 @@ export class SearchEngine {
     private sortItemsByCount(searchResults: any[], countManager: CountManager): any[] {
         const count = countManager.getCount();
 
-        // tslint:disable-next-line:prefer-for-of
+        // tslint:disable-next-line:prefer-for-of because we need to change the array itself
         for (let i = 0; i < searchResults.length; i++) {
             const score = count[searchResults[i].item.executionArgument];
 
@@ -56,13 +56,7 @@ export class SearchEngine {
         }
 
         searchResults = searchResults.sort((a, b) => {
-            if (a.score > b.score) {
-                return 1;
-            } else if (a.score < b.score) {
-                return -1;
-            } else {
-                return 0;
-            }
+            return a.score - b.score;
         });
 
         return searchResults;

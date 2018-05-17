@@ -1,9 +1,8 @@
 import { SearchResultItem } from "../../ts/search-result-item";
 import { SearchEngine } from "./../../ts/search-engine";
 import { CountManager } from "../../ts/count-manager";
-import {FakeCountRepository} from "./fake-count-repository";
+import { FakeCountRepository } from "./fake-count-repository";
 import { Count } from "../../ts/count";
-import { defaultConfig } from "../../ts/default-config";
 
 function getFakeItems(items: string[]): SearchResultItem[] {
     return items.map((i): SearchResultItem => {
@@ -16,10 +15,12 @@ function getFakeItems(items: string[]): SearchResultItem[] {
 }
 
 describe("SearchEngine", (): void => {
+    const threshold = 0.4; // use same threshold as default config
+
     describe("search", (): void => {
         it("should return more than 0 search result items", (): void => {
             const fakeItems = getFakeItems(["abc", "abcd", "abcde"]);
-            const searchEngine = new SearchEngine(fakeItems, defaultConfig);
+            const searchEngine = new SearchEngine(fakeItems, threshold);
             const userInput = "abc";
 
             const actual = searchEngine.search(userInput);
@@ -29,7 +30,7 @@ describe("SearchEngine", (): void => {
 
         it("should return empty array when user input doesnt match any of the plugin items", (): void => {
             const fakeItems = getFakeItems(["abc", "abcd", "abcde"]);
-            const searchEngine = new SearchEngine(fakeItems, defaultConfig);
+            const searchEngine = new SearchEngine(fakeItems, threshold);
             const userInput = "xyz";
 
             const actual = searchEngine.search(userInput);
@@ -39,7 +40,7 @@ describe("SearchEngine", (): void => {
 
         it("should return the search result ordered by score", (): void => {
             const fakeItems = getFakeItems(["hans", "nhas", "hasn"]);
-            const searchEngine = new SearchEngine(fakeItems, defaultConfig);
+            const searchEngine = new SearchEngine(fakeItems, threshold);
             const userInput = "han";
 
             const actual = searchEngine.search(userInput);
@@ -57,7 +58,7 @@ describe("SearchEngine", (): void => {
             const fakeCountRepo = new FakeCountRepository(fakeCount);
             const countManager = new CountManager(fakeCountRepo);
             const fakeItems = getFakeItems(["abc", "abcd", "abcde"]);
-            const searchEngine = new SearchEngine(fakeItems, defaultConfig);
+            const searchEngine = new SearchEngine(fakeItems, threshold);
             const userInput = "ab";
 
             const result = searchEngine.search(userInput, countManager);
@@ -77,7 +78,7 @@ describe("SearchEngine", (): void => {
             const fakeCountRepo = new FakeCountRepository(fakeCount);
             const countManager = new CountManager(fakeCountRepo);
             const fakeItems = getFakeItems(["abc", "abcd", "abcde"]);
-            const searchEngine = new SearchEngine(fakeItems, defaultConfig);
+            const searchEngine = new SearchEngine(fakeItems, threshold);
             const userInput = "ab";
 
             const result = searchEngine.search(userInput, countManager);
