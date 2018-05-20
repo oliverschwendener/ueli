@@ -96,23 +96,23 @@ Default web search engines:
 
 ### Custom commands
 
-* You can [customize](#customization) custom commands like this:
+* You can [customize](#customization) custom commands to
+    * Start command line tools
+    * Open files/folders
+    * Launch programs
 
 ``` json
 "customCommands": [
     {
-        // execute command line tools
         "name": "ping",
         "executionArgument": "start ping 8.8.8.8 -t",
-        "icon": "<svg>...</svg>" // svg icon is optional
+        "icon": "<svg>...</svg>"
     },
     {
-        // open folders/files
         "name": "Data",
-        "executionArgument": "start \"\" \"C:\\Data\"" // Make sure to escape double quotes
+        "executionArgument": "start \"\" \"C:\\Data\""
     },
     {
-        // launch programs
         "name": "code",
         "executionArgument": "start \"\" \"C:\\My-Programs\\Visual Studio Code\\Visual Studio Code.lnk\""
     },
