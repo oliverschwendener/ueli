@@ -1,33 +1,49 @@
-import { ProgramsPlugin } from "../../../ts/search-plugins/programs-plugin";
-import { platform } from "os";
-import { WindowsProgramRepository } from "../../../ts/programs-plugin/windows-program-repository";
-import { MacOsProgramRepository } from "../../../ts/programs-plugin/macos-program-repository";
-import { defaultConfig } from "../../../ts/default-config";
+import { ProgramFileRepository } from "../../../ts/programs-plugin/program-file-repository";
+import { mkdirSync, writeFileSync, unlinkSync, rmdirSync } from "fs";
+import { join } from "path";
 
-describe(ProgramsPlugin.name, (): void => {
-    const programRepo = platform() === "win32"
-        ? new WindowsProgramRepository(defaultConfig.applicationFolders, defaultConfig.applicationFileExtensions)
-        : new MacOsProgramRepository(defaultConfig.applicationFolders, defaultConfig.applicationFileExtensions);
+describe(ProgramFileRepository.name, (): void => {
+    const applicationFileExtension = ".lnk";
+    const applicationFolder = "test-folder";
+    const applications = ["test-1", "test-2", "test-3"];
 
-    const plugin = new ProgramsPlugin(programRepo);
+    describe("getPrograms", (): void => {
+        beforeAll((): void => {
+            mkdirSync(applicationFolder);
 
-    describe(plugin.getAllItems.name, (): void => {
-        it("should return some programs", (): void => {
-            const programs = plugin.getAllItems();
-
-            expect(programs.length).toBeGreaterThan(0);
+            for (const application of applications) {
+                const filePath = getFilePath(applicationFolder, application, applicationFileExtension);
+                writeFileSync(filePath, "", "utf-8");
+            }
         });
 
-        it("all returned items should have set a name, execution argument and tags", (): void => {
-            const programs = plugin.getAllItems();
+        afterAll((): void => {
+            for (const application of applications) {
+                const filePath = getFilePath(applicationFolder, application, applicationFileExtension);
+                unlinkSync(filePath);
+            }
+
+            rmdirSync(applicationFolder);
+        });
+
+        it("should return programs correctly", (): void => {
+            const repo = new ProgramFileRepository([applicationFolder], [applicationFileExtension]);
+            const programs = repo.getPrograms();
+            expect(programs.length).toBe(applications.length);
 
             for (const program of programs) {
-                expect(program).not.toBeUndefined();
-                expect(program.name).not.toBeUndefined();
-                expect(program.executionArgument).not.toBeUndefined();
-                expect(program.icon).not.toBeUndefined();
-                expect(program.tags).not.toBeUndefined();
+                const application = applications.filter((a) => {
+                    return a === program.name;
+                })[0];
+
+                expect(application).not.toBe(undefined);
+                expect(program.name).toBe(application);
+                expect(program.executionArgument).toBe(getFilePath(applicationFolder, application, applicationFileExtension));
             }
         });
     });
 });
+
+function getFilePath(folder: string, file: string, fileExtension: string): string {
+    return `${join(folder, file)}${fileExtension}`;
+}

@@ -18,6 +18,8 @@ import { UeliHelpers } from "./helpers/ueli-helpers";
 import { ConfigOptions } from "./config-options";
 import { CountManager } from "./count-manager";
 import { CountFileRepository } from "./count-file-repository";
+import { Injector } from "./injector";
+import { platform } from "os";
 
 export class InputValidatorSearcherCombinationManager {
     private combinations: InputValidatorSearcherCombination[];
@@ -49,7 +51,9 @@ export class InputValidatorSearcherCombinationManager {
                 validator: new WebUrlInputValidator(),
             },
             {
-                searcher: new SearchPluginsSearcher(config, new CountManager(new CountFileRepository(UeliHelpers.countFilePath))),
+                searcher: new SearchPluginsSearcher(config,
+                    new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
+                    Injector.getIconManager(platform())),
                 validator: new SearchPluginsInputValidator(),
             },
         ];

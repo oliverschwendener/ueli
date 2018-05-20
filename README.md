@@ -6,6 +6,17 @@ This is an alt+space launcher for Windows and macOS.
 
 ![ueli screenshot](img/doc/ueli-example.jpg)
 
+## Table of contents
+
+* [Installation](#installation)
+* [Quick tutorial](#quick-tutorial)
+* [Features](#features)
+* [Customization](#customization)
+* [Roadmap](#roadmap)
+* [Development](#development)
+* [Alternatives](#alternatives)
+* [License](#license)
+
 ## Installation
 
 ### Installer / Zip
@@ -24,29 +35,68 @@ This is an alt+space launcher for Windows and macOS.
 
 ## Features
 
-### Search
+### Program search
 
-* You can search for programs, files or folders in your home folder and system settings
+![Feature Program search](img/doc/features/ueli-feature-program-search.png)
+
+* You can search for installed programs
 * Use the arrow keys to scroll up and down
-* Presss Enter to open the selected program/file/setting
+* Presss Enter to launch the selected program
+
+### Files and folder search
+
+![Feature home folder](img/doc/features/ueli-feature-home-folder.png)
+
+* You can search files and folders in your home folder
+* Press Enter to open the selected file/folder
 
 ### Open URLs with your default web browser
+
+![Feature URL](img/doc/features/ueli-feature-url.png)
 
 * Type in a URL
 * Press enter to open the URL with your default web browser
 
-### Use web search engines
+### Open default mail program
 
-* Type in `g?{your search term}` to search something on Google
-* Default web search engines:
-    * `d`: DuckDuckGo
-    * `g`: Google
-    * `gi`: Google Images
-    * `l`: Linguee
-    * `w`: Wikipedia
-    * `yt`: YouTube
+* Type in a email address
+* Press enter to open your default mail program with an empty email to the specified email address
+
+![Feature email](img/doc/features/ueli-feature-email.png)
+
+### Web search engines
+
+![Feature web search engines](img/doc/features/ueli-feature-web-search.png)
+
+* You can [customize](#customization) web search engines like this:
+
+``` json
+"webSearches": [
+    {
+        "icon": "<svg>...</svg>",
+        "name": "Google",
+        "prefix": "g",
+        "url": "https://google.com/search?q="
+    }
+]
+```
+
+Now you can type in `g?{your search term}` to launch the web search engine in your default browser.
+
+Default web search engines:
+
+|Prefix|Web Search Engine|
+|---|---|
+|`d`|[DuckDuckGo](https://duckduckgo.com)|
+|`g`|[Google](https://google.com)|
+|`gi`|[Google Images](https://images.google.com)|
+|`l`|[Linguee](https://www.linguee.de)|
+|`w`|[Wikipedia](https://wikipedia.org)|
+|`yt`|[YouTube](https://youtube.com)|
 
 ### Execute commandline tools
+
+![Feature commandline](img/doc/features/ueli-feature-commandline.png)
 
 * Start a commandline tool with the `>` prefix
     * Example: `>ipconfig /all`
@@ -54,14 +104,18 @@ This is an alt+space launcher for Windows and macOS.
 
 > Note: you can **not** interact with the commandline tool. You only see the output.
 
-### Browse local files
+### Browse file system
 
-* You can browse local files by typing in a filepath
+![Feature file browser](img/doc/features/ueli-feature-file-browser.png)
+
+* You can browse your file system by typing in a filepath
     * Example: `C:\Users` or `/Applications`
 * Press `Enter` to open the file or folder
 * Press `Tab` for autocompletion
 
 ### Calculator
+
+![Feature calculator](img/doc/features/ueli-feature-calculator.png)
 
 * Calculate simple math, matrix, symbolic function, convert unit and a lot more.
    * Example: 
@@ -69,17 +123,48 @@ This is an alt+space launcher for Windows and macOS.
       * `1 km/h to mile/h`
       * `a = [1, 2, 3]; a * 2`
 
+### Custom commands
+
+![Feature custom commands](img/doc/features/ueli-feature-custom-commands.png)
+
+* You can [customize](#customization) custom commands to
+    * Start command line tools
+    * Open files/folders
+    * Launch programs
+
+``` json
+"customCommands": [
+    {
+        "name": "ping",
+        "executionArgument": "start ping 8.8.8.8 -t",
+        "icon": "<svg>...</svg>"
+    },
+    {
+        "name": "Data",
+        "executionArgument": "start \"\" \"C:\\Data\""
+    },
+    {
+        "name": "code",
+        "executionArgument": "start \"\" \"C:\\My-Programs\\Visual Studio Code\\Visual Studio Code.lnk\""
+    },
+]
+```
+
 ### Keyboard shortcuts
 
-* `Ctrl+o` to open the selected program or file at it's location
-* `ArrowUp` to scroll up
-* `ArrowDown`to scroll down
-* `F6` or `Ctrl+l` to set focus on user input
-* `F1` to get help
+|Keyboard shortcut|Description|
+|---|---|
+|`Ctrl+o`|Open the selected program or file at it's location|
+|`ArrowUp`|Scroll up|
+|`ArrowDown`|Scroll down|
+|`F6`, `Ctrl+l`|Set focus on user input|
+|`F1`|Get help|
 
 ### Updater
 
 To check if a new version is available right click on the tray icon. The first item in the context menu shows you if there is an update available or if you are running the latest version. If there is an update available click on "Download and install update".
+
+![Updater](img/doc/ueli-updater.png)
 
 ## Customization
 
@@ -91,6 +176,10 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `applicationFolders` Array of string - Represents the folders which are scanned for applications
 * `autoStartApp` Boolean - If the app should be started automatically when you log in
 * `colorTheme` String - Defines the [color theme](#color-themes).
+* `customCommands` Arraay of customCommand objects - A list of [custom commands](#custom-commands)
+    * `executionArgument` String - Represents the execution argument for the custom command
+    * `name` String - Represents the displayed name for the custom command
+    * `icon` String - (Optional) Represents the svg icon for the custom command. If no icon is set default icon is used.
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed
 * `rescanInterval` Number - Interval in seconds to rescan the application folders
 * `searchOperatingSystemSettings` Boolean - If operting system settings and commands should appear in the search results
@@ -99,7 +188,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `searchResultNameFontSize` Number - Represents the font size of the search result name in pixels
 * `userInputFontSize` Number - Represents the font size of the user input in pixels
 * `userInputHeight` Number - Represents the height of the user input box in pixels
-* `webSearches` Array of webSearch Objects - A list of web search engines
+* `webSearches` Array of webSearch Objects - A list of [web search engines](#web-search-engines)
     * `webSearch` Object - Defines a web search engine
         * `icon` String - Represents the svg icon for the specific web search engine
         * `name` String - Represents the name of the web search engine
@@ -117,17 +206,6 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `light`
 * `light-mono`
 
-## Build status
-
-|Platform|Build status|
-|---|---|
-|Windows|[![Build status](https://ci.appveyor.com/api/projects/status/c208tgdb97rrx9i3?svg=true)](https://ci.appveyor.com/project/oliverschwendener/ueli)|
-|macOS|![Build status](https://travis-ci.org/oliverschwendener/ueli.svg?branch=migration-to-typescript)|
-
-## Code coverage
-
-[![Coverage Status](https://coveralls.io/repos/github/oliverschwendener/ueli/badge.svg?branch=master)](https://coveralls.io/github/oliverschwendener/ueli?branch=master)
-
 ## Roadmap
 
 * List frequently executed programs/files/settings higher
@@ -138,6 +216,17 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * Use vue components
 
 ## Development
+
+### Build status
+
+|Platform|Build status|
+|---|---|
+|Windows|[![Build status](https://ci.appveyor.com/api/projects/status/c208tgdb97rrx9i3?svg=true)](https://ci.appveyor.com/project/oliverschwendener/ueli)|
+|macOS|![Build status](https://travis-ci.org/oliverschwendener/ueli.svg?branch=migration-to-typescript)|
+
+### Code coverage
+
+[![Coverage Status](https://coveralls.io/repos/github/oliverschwendener/ueli/badge.svg?branch=master)](https://coveralls.io/github/oliverschwendener/ueli?branch=master)
 
 ### Requirements
 

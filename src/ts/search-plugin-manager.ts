@@ -6,24 +6,22 @@ import { ProgramsPlugin } from "./search-plugins/programs-plugin";
 import { SearchPlugin } from "./search-plugins/search-plugin";
 import { Windows10SettingsSearchPlugin } from "./search-plugins/windows-10-settings-plugin";
 import { platform } from "os";
-import { WindowsProgramRepository } from "./programs-plugin/windows-program-repository";
-import { MacOsProgramRepository } from "./programs-plugin/macos-program-repository";
+import { ProgramFileRepository } from "./programs-plugin/program-file-repository";
 import { defaultConfig } from "./default-config";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { ConfigOptions } from "./config-options";
+import { CustomCommandsPlugin } from "./search-plugins/custom-commands-plugin";
+import { IconManager } from "./icon-manager/icon-manager";
 
 export class SearchPluginManager {
     private plugins: SearchPlugin[];
 
-    public constructor(config: ConfigOptions) {
-        const programRepo = platform() === "win32"
-            ? new WindowsProgramRepository(config.applicationFolders, config.applicationFileExtensions)
-            : new MacOsProgramRepository(config.applicationFolders, config.applicationFileExtensions);
-
+    public constructor(config: ConfigOptions, iconManager: IconManager) {
         this.plugins = [
-            new ProgramsPlugin(programRepo),
+            new ProgramsPlugin(new ProgramFileRepository(config.applicationFolders, config.applicationFileExtensions)),
             new HomeFolderSearchPlugin(),
             new UeliCommandsSearchPlugin(),
+            new CustomCommandsPlugin(config.customCommands, iconManager.getCustomShortCutIcon()),
         ];
 
         if (config.searchOperatingSystemSettings) {

@@ -3,7 +3,7 @@ import { FileHelpers } from "../helpers/file-helpers";
 import { Program } from "./program";
 import { ProgramRepository } from "./program-repository";
 
-export class MacOsProgramRepository implements ProgramRepository {
+export class ProgramFileRepository implements ProgramRepository {
     private applicationFileExtensions: string[];
     private programs: Program[];
 

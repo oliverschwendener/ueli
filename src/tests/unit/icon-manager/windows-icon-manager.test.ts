@@ -42,4 +42,12 @@ describe(WindowsIconManager.name, () => {
             expect(actual).not.toBe(null);
         });
     });
+
+    describe(iconManager.getCustomShortCutIcon.name, () => {
+        it("should return a valid svg icon", () => {
+            const actual = iconManager.getCustomShortCutIcon();
+            expect(actual).not.toBe(undefined);
+            expect(actual).not.toBe(null);
+        });
+    });
 });

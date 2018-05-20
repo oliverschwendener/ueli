@@ -6,6 +6,10 @@ export class StringHelpers {
     }
 
     public static stringIsWhiteSpace(value: string): boolean {
+        if (value === undefined) {
+            return true;
+        }
+
         return StringHelpers.removeWhiteSpace(value).length === 0;
     }
 

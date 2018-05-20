@@ -21,6 +21,8 @@ import { defaultConfig } from "./default-config";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { ConfigOptions } from "./config-options";
 import { WebSearch } from "./web-search";
+import { CustomCommandExecutor } from "./executors/custom-command-executor";
+import { CustomCommandExecutionArgumentValidator } from "./execution-argument-validators/custom-command-exeuction-argument-validator";
 
 export class ExecutionArgumentValidatorExecutorCombinationManager {
     private webSearches: WebSearch[];
@@ -51,6 +53,10 @@ export class ExecutionArgumentValidatorExecutorCombinationManager {
             {
                 executor: new WebUrlExecutor(),
                 validator: new WebUrlExecutionArgumentValidator(),
+            },
+            {
+                executor: new CustomCommandExecutor(),
+                validator: new CustomCommandExecutionArgumentValidator(),
             },
         ];
 
