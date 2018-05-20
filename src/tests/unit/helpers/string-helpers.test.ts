@@ -25,6 +25,7 @@ describe(StringHelpers.name, (): void => {
                 "",
                 " ",
                 "     ",
+                undefined,
             ];
 
             for (const whiteSpaceString of whitspaceStrings) {

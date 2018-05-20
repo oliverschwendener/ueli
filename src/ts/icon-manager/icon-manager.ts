@@ -4,4 +4,5 @@ export interface IconManager {
     getProgramIcon(): string;
     getSearchIcon(): string;
     getEmailIcon(): string;
+    getCustomShortCutIcon(): string;
 }

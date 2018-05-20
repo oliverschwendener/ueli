@@ -35,16 +35,33 @@ This is an alt+space launcher for Windows and macOS.
 * Type in a URL
 * Press enter to open the URL with your default web browser
 
-### Use web search engines
+### Web search engines
 
-* Type in `g?{your search term}` to search something on Google
-* Default web search engines:
-    * `d`: DuckDuckGo
-    * `g`: Google
-    * `gi`: Google Images
-    * `l`: Linguee
-    * `w`: Wikipedia
-    * `yt`: YouTube
+* You can [customize](#customization) web search engines like this:
+
+``` json
+"webSearches": [
+    {
+        "icon": "<svg>...</svg>",
+        "name": "Google",
+        "prefix": "g",
+        "url": "https://google.com/search?q="
+    }
+]
+```
+
+Now you can type in `g?{your search term}` to launch the web search engine in your default browser.
+
+Default web search engines:
+
+|Prefix|Web Search Engine|
+|---|---|
+|`d`|[DuckDuckGo](https://duckduckgo.com)|
+|`g`|[Google](https://google.com)|
+|`gi`|[Google Images](https://images.google.com)|
+|`l`|[Linguee](https://www.linguee.de)|
+|`w`|[Wikipedia](https://wikipedia.org)|
+|`yt`|[YouTube](https://youtube.com)|
 
 ### Execute commandline tools
 
@@ -77,6 +94,31 @@ This is an alt+space launcher for Windows and macOS.
 * `F6` or `Ctrl+l` to set focus on user input
 * `F1` to get help
 
+### Custom commands
+
+* You can [customize](#customization) custom commands like this:
+
+``` json
+"customCommands": [
+    {
+        // execute command line tools
+        "name": "ping",
+        "executionArgument": "start ping 8.8.8.8 -t",
+        "icon": "<svg>...</svg>" // svg icon is optional
+    },
+    {
+        // open folders/files
+        "name": "Data",
+        "executionArgument": "start \"\" \"C:\\Data\"" // Make sure to escape double quotes
+    },
+    {
+        // launch programs
+        "name": "code",
+        "executionArgument": "start \"\" \"C:\\My-Programs\\Visual Studio Code\\Visual Studio Code.lnk\""
+    },
+]
+```
+
 ### Updater
 
 To check if a new version is available right click on the tray icon. The first item in the context menu shows you if there is an update available or if you are running the latest version. If there is an update available click on "Download and install update".
@@ -91,6 +133,10 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `applicationFolders` Array of string - Represents the folders which are scanned for applications
 * `autoStartApp` Boolean - If the app should be started automatically when you log in
 * `colorTheme` String - Defines the [color theme](#color-themes).
+* `customCommands` Arraay of customCommand objects - A list of [custom commands](#custom-commands)
+    * `executionArgument` String - Represents the execution argument for the custom command
+    * `name` String - Represents the displayed name for the custom command
+    * `icon` String - (Optional) Represents the svg icon for the custom command. If no icon is set default icon is used.
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed
 * `rescanInterval` Number - Interval in seconds to rescan the application folders
 * `searchOperatingSystemSettings` Boolean - If operting system settings and commands should appear in the search results
@@ -99,7 +145,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `searchResultNameFontSize` Number - Represents the font size of the search result name in pixels
 * `userInputFontSize` Number - Represents the font size of the user input in pixels
 * `userInputHeight` Number - Represents the height of the user input box in pixels
-* `webSearches` Array of webSearch Objects - A list of web search engines
+* `webSearches` Array of webSearch Objects - A list of [web search engines](#web-search-engines)
     * `webSearch` Object - Defines a web search engine
         * `icon` String - Represents the svg icon for the specific web search engine
         * `name` String - Represents the name of the web search engine
