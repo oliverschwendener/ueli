@@ -24,18 +24,38 @@ This is an alt+space launcher for Windows and macOS.
 
 ## Features
 
-### Search
+### Program search
 
-* You can search for programs, files or folders in your home folder and system settings
+![Feature Program search](img/doc/features/ueli-feature-program-search.png)
+
+* You can search for installed programs
 * Use the arrow keys to scroll up and down
-* Presss Enter to open the selected program/file/setting
+* Presss Enter to launch the selected program
+
+### Files and folder search
+
+![Feature home folder](img/doc/features/ueli-feature-home-folder.png)
+
+* You can search files and folders in your home folder
+* Press Enter to open the selected file/folder
 
 ### Open URLs with your default web browser
+
+![Feature URL](img/doc/features/ueli-feature-url.png)
 
 * Type in a URL
 * Press enter to open the URL with your default web browser
 
+### Open default mail program
+
+* Type in a email address
+* Press enter to open your default mail program with an empty email to the specified email address
+
+![Feature email](img/doc/features/ueli-feature-email.png)
+
 ### Web search engines
+
+![Feature web search engines](img/doc/features/ueli-feature-web-search.png)
 
 * You can [customize](#customization) web search engines like this:
 
@@ -65,20 +85,26 @@ Default web search engines:
 
 ### Execute commandline tools
 
+![Feature commandline](img/doc/features/ueli-feature-commandline.png)
+
 * Start a commandline tool with the `>` prefix
     * Example: `>ipconfig /all`
 * Stop an executing commandline tool with `Ctrl+c`
 
 > Note: you can **not** interact with the commandline tool. You only see the output.
 
-### Browse local files
+### Browse file system
 
-* You can browse local files by typing in a filepath
+![Feature file browser](img/doc/features/ueli-feature-file-browser.png)
+
+* You can browse your file system by typing in a filepath
     * Example: `C:\Users` or `/Applications`
 * Press `Enter` to open the file or folder
 * Press `Tab` for autocompletion
 
 ### Calculator
+
+![Feature calculator](img/doc/features/ueli-feature-calculator.png)
 
 * Calculate simple math, matrix, symbolic function, convert unit and a lot more.
    * Example: 
@@ -86,15 +112,9 @@ Default web search engines:
       * `1 km/h to mile/h`
       * `a = [1, 2, 3]; a * 2`
 
-### Keyboard shortcuts
-
-* `Ctrl+o` to open the selected program or file at it's location
-* `ArrowUp` to scroll up
-* `ArrowDown`to scroll down
-* `F6` or `Ctrl+l` to set focus on user input
-* `F1` to get help
-
 ### Custom commands
+
+![Feature custom commands](img/doc/features/ueli-feature-custom-commands.png)
 
 * You can [customize](#customization) custom commands to
     * Start command line tools
@@ -119,9 +139,21 @@ Default web search engines:
 ]
 ```
 
+### Keyboard shortcuts
+
+|Keyboard shortcut|Description|
+|---|---|
+|`Ctrl+o`|Open the selected program or file at it's location|
+|`ArrowUp`|Scroll up|
+|`ArrowDown`|Scroll down|
+|`F6`, `Ctrl+l`|Set focus on user input|
+|`F1`|Get help|
+
 ### Updater
 
 To check if a new version is available right click on the tray icon. The first item in the context menu shows you if there is an update available or if you are running the latest version. If there is an update available click on "Download and install update".
+
+![Updater](img/doc/ueli-updater.png)
 
 ## Customization
 
