@@ -7,6 +7,7 @@ export interface ConfigOptions {
     autoStartApp: boolean;
     colorTheme: string;
     customCommands: CustomCommand[];
+    hotKey: string;
     maxSearchResultCount: number;
     rescanInterval: number;
     searchEngineThreshold: number;

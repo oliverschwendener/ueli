@@ -18,6 +18,7 @@ export const defaultConfig: ConfigOptions = {
     autoStartApp: true,
     colorTheme: "dark",
     customCommands: [],
+    hotKey: "alt+space",
     maxSearchResultCount: 8,
     rescanInterval: 30,
     searchEngineThreshold: 0.4,

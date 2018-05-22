@@ -71,7 +71,7 @@ function createMainWindow(): void {
     mainWindow.on("blur", hideMainWindow);
 
     createTrayIcon();
-    registerGlobalShortCuts();
+    registerGlobalShortcuts();
 
     if (!isInDevelopment) {
         checkForUpdates();
@@ -94,8 +94,12 @@ function createTrayIcon(): void {
     ]));
 }
 
-function registerGlobalShortCuts(): void {
-    globalShortcut.register("alt+space", toggleWindow);
+function registerGlobalShortcuts(): void {
+    globalShortcut.register(config.hotKey, toggleWindow);
+}
+
+function unregisterGlobalShortcuts(): void {
+    globalShortcut.unregisterAll();
 }
 
 function hideAppInDock(): void {
@@ -182,6 +186,8 @@ function hideMainWindow(): void {
 }
 
 function reloadApp(): void {
+    unregisterGlobalShortcuts();
+
     config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
     inputValidationService = new InputValidationService(new InputValidatorSearcherCombinationManager(config).getCombinations());
     executionService = new ExecutionService(
@@ -190,6 +196,7 @@ function reloadApp(): void {
 
     mainWindow.reload();
     resetWindowToDefaultSizeAndPosition();
+    registerGlobalShortcuts();
 }
 
 function resetWindowToDefaultSizeAndPosition(): void {
@@ -200,7 +207,7 @@ function resetWindowToDefaultSizeAndPosition(): void {
 
 function quitApp(): void {
     trayIcon.destroy();
-    globalShortcut.unregisterAll();
+    unregisterGlobalShortcuts();
     app.quit();
 }
 
