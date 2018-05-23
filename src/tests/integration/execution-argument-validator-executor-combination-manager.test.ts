@@ -6,13 +6,15 @@ import { MacOsSettingsExecutionArgumentValidator } from "../../ts/execution-argu
 import { MacOsSettingsExecutor } from "../../ts/executors/mac-os-settings-executor";
 import { OperatingSystemHelpers } from "../../ts/helpers/operating-system-helpers";
 import { OperatingSystem } from "../../ts/operating-system";
-import { defaultConfig } from "../../ts/default-config";
+import { ConfigOptions } from "../../ts/config-options";
 
 describe(ExecutionArgumentValidatorExecutorCombinationManager.name, (): void => {
     it("should return the correct execution argument valiator executor combinations", (): void => {
         let counter = 0;
 
-        const combinations = new ExecutionArgumentValidatorExecutorCombinationManager(defaultConfig).getCombinations();
+        const testConfig = {} as ConfigOptions;
+
+        const combinations = new ExecutionArgumentValidatorExecutorCombinationManager(testConfig).getCombinations();
 
         const currentOperatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
 
