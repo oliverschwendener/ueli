@@ -42,6 +42,8 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:`,
                 icon: this.defaultIcon,
+                name: "Windows Settings",
+                tags: ["control", "panel", "options"],
             },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:batterysaver`,
