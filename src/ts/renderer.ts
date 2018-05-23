@@ -38,14 +38,18 @@ const vue = new Vue({
                 handleEnterPress();
             } else if (event.ctrlKey && event.key === "o") {
                 handleOpenFileLocation();
-            } else if ((event.key === "ArrowDown" || event.key === "ArrowUp") && event.shiftKey) {
-                const direction = event.key === "ArrowUp" ? "prev" : "next";
-                handleInputHistoryBrowsing(direction);
             } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
                 event.preventDefault();
-                vue.isMouseMoving = false;
-                const direction = event.key === "ArrowDown" ? "next" : "prev";
-                changeActiveItem(direction);
+
+                if (event.shiftKey) {
+                    event.preventDefault();
+                    const direction = event.key === "ArrowUp" ? "prev" : "next";
+                    handleInputHistoryBrowsing(direction);
+                } else {
+                    vue.isMouseMoving = false;
+                    const direction = event.key === "ArrowDown" ? "next" : "prev";
+                    changeActiveItem(direction);
+                }
             } else if (event.key === "Tab") {
                 event.preventDefault();
                 handleAutoCompletion();
