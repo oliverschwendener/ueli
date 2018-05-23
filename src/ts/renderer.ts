@@ -9,9 +9,11 @@ import { ConfigFileRepository } from "./config-file-repository";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { defaultConfig } from "./default-config";
 import { ColorThemeLoader } from "./color-theme-loader";
+import { UserInputHistoryManager } from "./user-input-history-manager";
 
 const colorThemeLoader = new ColorThemeLoader();
 const config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
+const userInputHistoryManager = new UserInputHistoryManager();
 
 document.addEventListener("keyup", handleGlobalKeyPress);
 
@@ -36,6 +38,9 @@ const vue = new Vue({
                 handleEnterPress();
             } else if (event.ctrlKey && event.key === "o") {
                 handleOpenFileLocation();
+            } else if ((event.key === "ArrowDown" || event.key === "ArrowUp") && event.shiftKey) {
+                const direction = event.key === "ArrowUp" ? "prev" : "next";
+                handleInputHistoryBrowsing(direction);
             } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
                 event.preventDefault();
                 vue.isMouseMoving = false;
@@ -120,6 +125,14 @@ ipcRenderer.on(IpcChannels.commandLineOutput, (event: Electron.Event, arg: strin
 ipcRenderer.on(IpcChannels.resetCommandlineOutput, resetCommandLineOutput);
 ipcRenderer.on(IpcChannels.resetUserInput, resetUserInput);
 
+function handleInputHistoryBrowsing(direction: string): void {
+    const newUserInput = direction === "prev"
+        ? userInputHistoryManager.getPrevious()
+        : userInputHistoryManager.getNext();
+
+    vue.userInput = newUserInput;
+}
+
 function updateSearchResults(searchResults: SearchResultItemViewModel[]): void {
     let index = 0;
 
@@ -185,7 +198,7 @@ function handleEnterPress(): void {
     const activeItem = getActiveItem();
 
     if (activeItem !== undefined) {
-        execute(activeItem.executionArgument);
+        execute(activeItem.executionArgument, vue.userInput);
     }
 }
 
@@ -215,7 +228,8 @@ function getActiveItem(): SearchResultItemViewModel | undefined {
     }
 }
 
-function execute(executionArgument: string): void {
+function execute(executionArgument: string, userInput: string): void {
+    userInputHistoryManager.addItem(userInput);
     ipcRenderer.send(IpcChannels.execute, executionArgument);
 }
 
