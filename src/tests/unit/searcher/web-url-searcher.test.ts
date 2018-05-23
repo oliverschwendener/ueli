@@ -1,4 +1,3 @@
-import { Config } from "../../../ts/config";
 import { SearchResultItem } from "../../../ts/search-result-item";
 import { WebUrlSearcher } from "../../../ts/searcher/web-url-searcher";
 import { InputOutputCombination } from "../test-helpers";
