@@ -36,19 +36,15 @@
       "type": "node",
       "request": "launch",
       "name": "Jest Tests",
-      "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
+      "program": "${workspaceRoot}/node_modules/jest/bin/jest",
       "args": [
+        "--runInBand",
         "--config",
-        "package.json",
-        "--runInBand"
-      ],
-      "runtimeArgs": [
-        "--nolazy"
+        "jest.json",
+        "src/tests"
       ],
       "console": "internalConsole",
-      "env": {
-        "NODE_ENV": "test"
-      }
+      "internalConsoleOptions": "neverOpen",
     }
   ]
 }
