@@ -4,12 +4,12 @@ import * as path from "path";
 import { ConfigOptions } from "./config-options";
 
 export class ConfigFileRepository {
-    private configFilePath: string;
     private defaultConfig: ConfigOptions;
+    private configFilePath: string;
 
     public constructor(defaultConfig: ConfigOptions, configFilePath: string) {
-        this.configFilePath = configFilePath;
         this.defaultConfig = defaultConfig;
+        this.configFilePath = configFilePath;
 
         if (!fs.existsSync(this.configFilePath)) {
             this.saveConfig(this.defaultConfig);
