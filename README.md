@@ -2,7 +2,7 @@
 
 # ueli
 
-This is an alt+space launcher for Windows and macOS.
+This is a keystroke launcher for Windows and macOS.
 
 ![ueli screenshot](img/doc/ueli-example.jpg)
 
@@ -29,7 +29,7 @@ This is an alt+space launcher for Windows and macOS.
 
 ## Quick tutorial
 
-* Press `alt+space` to show/hide the window
+* Press the global hot key to show/hide the window (default is `alt+space`)
 * Start typing a program name
 * Press Enter to launch the program
 
