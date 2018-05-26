@@ -157,6 +157,8 @@ Default web search engines:
 |`Ctrl+o`|Open the selected program or file at it's location|
 |`ArrowUp`|Scroll up|
 |`ArrowDown`|Scroll down|
+|`Shift+ArrowUp`|Browse user input history up|
+|`Shift+ArrowDown`|Browse user input history down|
 |`F6`, `Ctrl+l`|Set focus on user input|
 |`F1`|Get help|
 
