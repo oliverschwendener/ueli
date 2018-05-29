@@ -14,6 +14,7 @@ export class IpcChannels {
     public static readonly commandLineOutput = "command-line-output";
     public static readonly ueliReload = `${UeliHelpers.ueliCommandPrefix}reload`;
     public static readonly ueliExit = `${UeliHelpers.ueliCommandPrefix}exit`;
+    public static readonly ueliCheckForUpdates = `${UeliHelpers.ueliCommandPrefix}check-for-updates`;
     public static readonly exitCommandLineTool = "exit-command-line-tool";
     public static readonly resetCommandlineOutput = "reset-commandline-output";
     public static readonly resetUserInput = "reset-user-input";
