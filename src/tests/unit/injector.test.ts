@@ -121,10 +121,11 @@ describe(Injector.name, () => {
             expect(webUrlRegexp).not.toBe(undefined);
             expect(webUrlRegexp).not.toBe(null);
 
-            let regexIsValid = true;
+            let regexIsValid: boolean;
 
             try {
                 const regexp = new RegExp(webUrlRegexp);
+                regexIsValid = true;
             } catch (error) {
                 regexIsValid = false;
             }
