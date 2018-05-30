@@ -1,4 +1,5 @@
 import { TestableUserInputHistoryManager } from "./testable-user-input-history-manager";
+import { UserInputHistoryManager } from "../../ts/user-input-history-manager";
 
 describe(TestableUserInputHistoryManager.name, (): void => {
     describe("addItem", (): void => {
@@ -52,6 +53,16 @@ describe(TestableUserInputHistoryManager.name, (): void => {
 
             expect(actual).toBe(history[0]);
         });
+
+        it("should return an empty string if history is empty", (): void => {
+            const history = [];
+            const manager = new TestableUserInputHistoryManager();
+            manager.setHistory(history);
+
+            const actual = manager.getPrevious();
+
+            expect(actual).toBe("");
+        });
     });
 
     describe("getNext", (): void => {
@@ -91,6 +102,16 @@ describe(TestableUserInputHistoryManager.name, (): void => {
             const acutal = manager.getNext();
 
             expect(acutal).toBe("");
+        });
+
+        it("should return an ampty string if history is empty", (): void => {
+            const history = [];
+            const manager = new TestableUserInputHistoryManager();
+            manager.setHistory(history);
+
+            const actual = manager.getNext();
+
+            expect(actual).toBe("");
         });
     });
 });

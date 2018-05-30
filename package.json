@@ -1,13 +1,20 @@
 {
   "name": "ueli",
   "productName": "ueli",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "author": {
     "name": "Oliver Schwendener",
     "email": "oliver.schwendener@hotmail.com",
     "url": "https://github.com/oliverschwendener"
   },
-  "description": "A cross-platform alt+space launcher",
+  "description": "A keystroke launcher for Windows and macOS",
+  "keywords": [
+    "keystroke",
+    "launcher",
+    "search",
+    "Windows",
+    "macOS"
+  ],
   "main": "./build/main.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack",

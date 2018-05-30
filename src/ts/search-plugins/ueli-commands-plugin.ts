@@ -27,6 +27,10 @@ export class UeliCommandsSearchPlugin implements SearchPlugin {
                 executionArgument: UeliHelpers.configFilePath,
                 name: "Edit configuration file",
             } as UeliCommand,
+            {
+                executionArgument: IpcChannels.ueliCheckForUpdates,
+                name: "Check for updates",
+            },
         ];
     }
 

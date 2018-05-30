@@ -2,7 +2,7 @@
 
 # ueli
 
-This is an alt+space launcher for Windows and macOS.
+This is a keystroke launcher for Windows and macOS.
 
 ![ueli screenshot](img/doc/ueli-example.jpg)
 
@@ -29,7 +29,7 @@ This is an alt+space launcher for Windows and macOS.
 
 ## Quick tutorial
 
-* Press `alt+space` to show/hide the window
+* Press the global hot key to show/hide the window (default is `alt+space`)
 * Start typing a program name
 * Press Enter to launch the program
 
@@ -37,25 +37,25 @@ This is an alt+space launcher for Windows and macOS.
 
 ### Program search
 
-![Feature Program search](img/doc/features/ueli-feature-program-search.png)
-
 * You can search for installed programs
 * Use the arrow keys to scroll up and down
 * Presss Enter to launch the selected program
 
-### Files and folder search
+![Feature Program search](img/doc/features/ueli-feature-program-search.png)
 
-![Feature home folder](img/doc/features/ueli-feature-home-folder.png)
+### Files and folder search
 
 * You can search files and folders in your home folder
 * Press Enter to open the selected file/folder
 
-### Open URLs with your default web browser
+![Feature home folder](img/doc/features/ueli-feature-home-folder.png)
 
-![Feature URL](img/doc/features/ueli-feature-url.png)
+### Open URLs with your default web browser
 
 * Type in a URL
 * Press enter to open the URL with your default web browser
+
+![Feature URL](img/doc/features/ueli-feature-url.png)
 
 ### Open default mail program
 
@@ -66,22 +66,10 @@ This is an alt+space launcher for Windows and macOS.
 
 ### Web search engines
 
+* You can use web search engines with a prefix and `?`. 
+    * Example: `g?{your search term}`
+
 ![Feature web search engines](img/doc/features/ueli-feature-web-search.png)
-
-* You can [customize](#customization) web search engines like this:
-
-``` json
-"webSearches": [
-    {
-        "icon": "<svg>...</svg>",
-        "name": "Google",
-        "prefix": "g",
-        "url": "https://google.com/search?q="
-    }
-]
-```
-
-Now you can type in `g?{your search term}` to launch the web search engine in your default browser.
 
 Default web search engines:
 
@@ -94,9 +82,20 @@ Default web search engines:
 |`w`|[Wikipedia](https://wikipedia.org)|
 |`yt`|[YouTube](https://youtube.com)|
 
-### Execute commandline tools
+* You can [customize](#customization) web search engines like this:
 
-![Feature commandline](img/doc/features/ueli-feature-commandline.png)
+``` json
+"webSearches": [
+    {
+        "icon": "<svg>...</svg>",
+        "name": "My Search Engine",
+        "prefix": "m",
+        "url": "https://my-search-engine.com/search?q="
+    }
+]
+```
+
+### Execute commandline tools
 
 * Start a commandline tool with the `>` prefix
     * Example: `>ipconfig /all`
@@ -104,18 +103,18 @@ Default web search engines:
 
 > Note: you can **not** interact with the commandline tool. You only see the output.
 
-### Browse file system
+![Feature commandline](img/doc/features/ueli-feature-commandline.png)
 
-![Feature file browser](img/doc/features/ueli-feature-file-browser.png)
+### Browse file system
 
 * You can browse your file system by typing in a filepath
     * Example: `C:\Users` or `/Applications`
 * Press `Enter` to open the file or folder
 * Press `Tab` for autocompletion
 
-### Calculator
+![Feature file browser](img/doc/features/ueli-feature-file-browser.png)
 
-![Feature calculator](img/doc/features/ueli-feature-calculator.png)
+### Calculator
 
 * Calculate simple math, matrix, symbolic function, convert unit and a lot more.
    * Example: 
@@ -123,9 +122,9 @@ Default web search engines:
       * `1 km/h to mile/h`
       * `a = [1, 2, 3]; a * 2`
 
-### Custom commands
+![Feature calculator](img/doc/features/ueli-feature-calculator.png)
 
-![Feature custom commands](img/doc/features/ueli-feature-custom-commands.png)
+### Custom commands
 
 * You can [customize](#customization) custom commands to
     * Start command line tools
@@ -138,17 +137,11 @@ Default web search engines:
         "name": "ping",
         "executionArgument": "start ping 8.8.8.8 -t",
         "icon": "<svg>...</svg>"
-    },
-    {
-        "name": "Data",
-        "executionArgument": "start \"\" \"C:\\Data\""
-    },
-    {
-        "name": "code",
-        "executionArgument": "start \"\" \"C:\\My-Programs\\Visual Studio Code\\Visual Studio Code.lnk\""
-    },
+    }
 ]
 ```
+
+![Feature custom commands](img/doc/features/ueli-feature-custom-commands.png)
 
 ### Keyboard shortcuts
 
@@ -157,6 +150,8 @@ Default web search engines:
 |`Ctrl+o`|Open the selected program or file at it's location|
 |`ArrowUp`|Scroll up|
 |`ArrowDown`|Scroll down|
+|`Shift+ArrowUp`|Browse user input history up|
+|`Shift+ArrowDown`|Browse user input history down|
 |`F6`, `Ctrl+l`|Set focus on user input|
 |`F1`|Get help|
 
@@ -209,9 +204,6 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 
 ## Roadmap
 
-* List frequently executed programs/files/settings higher
-* Add option to add custom shortcuts
-* Add input history browsing
 * Add nice GUI to modifiy configuration
 * Notify user when update is available
 * Use vue components
