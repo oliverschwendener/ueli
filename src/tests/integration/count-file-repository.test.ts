@@ -1,6 +1,7 @@
-import { writeFileSync, unlinkSync, existsSync } from "fs";
+import { writeFileSync, unlinkSync, existsSync, writeSync } from "fs";
 import { Count } from "../../ts/count";
 import { CountFileRepository } from "../../ts/count-file-repository";
+import { join } from "path";
 
 describe("CountFileRepository", (): void => {
     const countFilePath = "./count-file.json";
@@ -28,6 +29,13 @@ describe("CountFileRepository", (): void => {
             expect(actual.b).toBe(expectedCount.b);
             expect(actual.c).toBe(expectedCount.c);
         });
+
+        it("should return an empty count if there is an error while reading the count file", (): void => {
+            writeFileSync(countFilePath, "this is invalid json", "utf-8");
+            const repo = new CountFileRepository(countFilePath);
+            const actual = repo.getCount();
+            expect(actual).toEqual({});
+        });
     });
 
     describe("updateCount", (): void => {
@@ -46,6 +54,20 @@ describe("CountFileRepository", (): void => {
                 const actual = countRepository.getCount()[key];
                 expect(actual).toBe(newCount[key]);
             }
+        });
+    });
+
+    describe("constructor", (): void => {
+        const filePath = join(__dirname, "this-file-does-not-exist");
+
+        it("should create the count file if it does not exist yet", (): void => {
+            const countRepository = new CountFileRepository(filePath);
+            const fileExists = existsSync(filePath);
+            expect(fileExists).toBe(true);
+        });
+
+        afterAll((): void => {
+            unlinkSync(filePath);
         });
     });
 });
