@@ -45,8 +45,9 @@ This is a keystroke launcher for Windows and macOS.
 
 ### Files and folder search
 
-* You can search files and folders in your home folder
+* You can search files and folders
 * Press Enter to open the selected file/folder
+* You can [customize](#customization) the folders which are scanned for files and folders
 
 ![Feature home folder](img/doc/features/ueli-feature-home-folder.png)
 
@@ -175,6 +176,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
     * `executionArgument` String - Represents the execution argument for the custom command
     * `name` String - Represents the displayed name for the custom command
     * `icon` String - (Optional) Represents the svg icon for the custom command. If no icon is set default icon is used.
+* `fileSearchFolders` Array of string - Represents the folders which are scanned for files and folders (not recursively). 
 * `hotKey` String - Represents the hotkey to show/hide the window. [Available hot keys](https://github.com/electron/electron/blob/master/docs/api/accelerator.md).
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed
 * `rescanInterval` Number - Interval in seconds to rescan the application folders
