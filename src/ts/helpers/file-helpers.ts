@@ -1,5 +1,5 @@
-import * as fs from "fs";
-import * as path from "path";
+import { lstatSync, readdirSync } from "fs";
+import { join } from "path";
 
 export class FileHelpers {
     public static getFilesFromFolderRecursively(folderPath: string): string[] {
@@ -9,12 +9,11 @@ export class FileHelpers {
 
             for (const fileName of fileNames) {
                 try {
-                    const filePath = path.join(folderPath, fileName);
-                    const stats = fs.lstatSync(filePath);
+                    const filePath = join(folderPath, fileName);
+                    const stats = lstatSync(filePath);
 
                     if (stats.isDirectory()) {
-                        // treat .app folder as a file
-                        // because going recursively through the app folder on macOS would cause longer scan times
+                        // treat .app folder as a file because going recursively through the app folder on macOS would cause the scan to take insanely long
                         if (filePath.endsWith(".app")) {
                             result.push(filePath);
                         } else {
@@ -40,12 +39,12 @@ export class FileHelpers {
             const fileNames = FileHelpers.getFileNamesFromFolder(folderPath);
 
             const filePaths = fileNames.map((f): string => {
-                return path.join(folderPath, f);
+                return join(folderPath, f);
             });
 
             const accessibleFiles = filePaths.map((filePath) => {
                 try {
-                    fs.lstatSync(filePath);
+                    lstatSync(filePath);
                     return filePath;
                 } catch (err) {
                     // do nothing
@@ -69,7 +68,7 @@ export class FileHelpers {
     }
 
     private static getFileNamesFromFolder(folderPath: string): string[] {
-        const allFiles = fs.readdirSync(folderPath);
+        const allFiles = readdirSync(folderPath);
 
         const visibleFiles = allFiles.filter((fileName) => {
             return !fileName.startsWith(".");
