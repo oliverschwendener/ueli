@@ -59,9 +59,11 @@ export class FileHelpers {
     }
 
     public static getFilesFromFoldersRecursively(folderPaths: string[]): string[] {
-        const result = folderPaths.map((folderPath) => {
-            return FileHelpers.getFilesFromFolderRecursively(folderPath);
-        }).reduce((acc, files) => acc.concat(files));
+        let result = [] as string[];
+
+        for (const folderPath of folderPaths) {
+            result = result.concat(FileHelpers.getFilesFromFolderRecursively(folderPath));
+        }
 
         return result;
     }
