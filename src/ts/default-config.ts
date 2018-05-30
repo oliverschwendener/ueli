@@ -18,6 +18,7 @@ export const defaultConfig: ConfigOptions = {
     autoStartApp: true,
     colorTheme: "dark",
     customCommands: [],
+    fileSearchFolders: [homedir()],
     hotKey: "alt+space",
     maxSearchResultCount: 8,
     rescanInterval: 30,

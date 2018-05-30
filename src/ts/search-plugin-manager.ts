@@ -1,7 +1,7 @@
 import { Injector } from "./injector";
 import { OperatingSystem } from "./operating-system";
 import { UeliCommandsSearchPlugin } from "./search-plugins/ueli-commands-plugin";
-import { HomeFolderSearchPlugin } from "./search-plugins/home-folder-plugin";
+import { FileSearchPlugin } from "./search-plugins/file-search-plugin";
 import { ProgramsPlugin } from "./search-plugins/programs-plugin";
 import { SearchPlugin } from "./search-plugins/search-plugin";
 import { Windows10SettingsSearchPlugin } from "./search-plugins/windows-10-settings-plugin";
@@ -19,7 +19,7 @@ export class SearchPluginManager {
     public constructor(config: ConfigOptions, iconManager: IconManager) {
         this.plugins = [
             new ProgramsPlugin(new ProgramFileRepository(config.applicationFolders, config.applicationFileExtensions)),
-            new HomeFolderSearchPlugin(),
+            new FileSearchPlugin(config.fileSearchFolders),
             new UeliCommandsSearchPlugin(),
             new CustomCommandsPlugin(config.customCommands, iconManager.getCustomShortCutIcon()),
         ];
