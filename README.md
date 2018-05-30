@@ -175,11 +175,12 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `customCommands` Arraay of customCommand objects - A list of [custom commands](#custom-commands)
     * `executionArgument` String - Represents the execution argument for the custom command
     * `name` String - Represents the displayed name for the custom command
-    * `icon` String - (Optional) Represents the svg icon for the custom command. If no icon is set default icon is used.
-* `fileSearchFolders` Array of string - Represents the folders which are scanned for files and folders (not recursively). 
-* `hotKey` String - Represents the hotkey to show/hide the window. [Available hot keys](https://github.com/electron/electron/blob/master/docs/api/accelerator.md).
+    * `icon` String - (Optional) Represents the svg icon for the custom command. If no icon is set default icon is used
+* `fileSearchFolders` Array of string - Represents the folders which are scanned for files and folders (not recursively)
+* `hotKey` String - Represents the hotkey to show/hide the window. [Available hot keys](https://github.com/electron/electron/blob/master/docs/api/accelerator.md)
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed
 * `rescanInterval` Number - Interval in seconds to rescan the application folders
+* `searchEngineThreshold` Number - Represents the threshold for fuzzy matching (min = 0, max = 1, lower means you have to be more precise with the user input)
 * `searchOperatingSystemSettings` Boolean - If operting system settings and commands should appear in the search results
 * `searchResultExecutionArgumentFontSize` Number - Represents the font size of the search result execution argument in pixels
 * `searchResultHeight` Number - Represents the height of a search result box in pixels
