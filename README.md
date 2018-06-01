@@ -12,6 +12,7 @@ This is a keystroke launcher for Windows and macOS.
 * [Quick tutorial](#quick-tutorial)
 * [Features](#features)
 * [Customization](#customization)
+* [Privacy](#privacy)
 * [Roadmap](#roadmap)
 * [Development](#development)
 * [Alternatives](#alternatives)
@@ -178,6 +179,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
     * `icon` String - (Optional) Represents the svg icon for the custom command. If no icon is set default icon is used
 * `fileSearchFolders` Array of string - Represents the folders which are scanned for files and folders (not recursively)
 * `hotKey` String - Represents the hotkey to show/hide the window. [Available hot keys](https://github.com/electron/electron/blob/master/docs/api/accelerator.md)
+* `logExecution` Boolean - If ueli should log the execution of applications, files and folders for better search results. Set to `false` if you want to disable logging.
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed
 * `rescanInterval` Number - Interval in seconds to rescan the application folders
 * `searchEngineThreshold` Number - Represents the threshold for fuzzy matching (min = 0, max = 1, lower means you have to be more precise with the user input)
@@ -204,6 +206,10 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `dark-mono`
 * `light`
 * `light-mono`
+
+## Privacy
+
+For better search results ueli is keeping track of the applications, files and folders you are accessing. All information is stored in `~/ueli.count.json`. If you don't want ueli to track your executions simply delete that file's content and disable logging via the [customization](#customization).
 
 ## Roadmap
 

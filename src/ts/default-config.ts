@@ -20,6 +20,7 @@ export const defaultConfig: ConfigOptions = {
     customCommands: [],
     fileSearchFolders: [homedir()],
     hotKey: "alt+space",
+    logExecution: true,
     maxSearchResultCount: 8,
     rescanInterval: 30,
     searchEngineThreshold: 0.4,

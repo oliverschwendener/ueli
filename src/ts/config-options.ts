@@ -9,6 +9,7 @@ export interface ConfigOptions {
     customCommands: CustomCommand[];
     fileSearchFolders: string[];
     hotKey: string;
+    logExecution: boolean;
     maxSearchResultCount: number;
     rescanInterval: number;
     searchEngineThreshold: number;

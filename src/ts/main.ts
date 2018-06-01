@@ -32,7 +32,8 @@ let config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath)
 let inputValidationService = new InputValidationService(new InputValidatorSearcherCombinationManager(config).getCombinations());
 let executionService = new ExecutionService(
     new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations(),
-    new CountManager(new CountFileRepository(UeliHelpers.countFilePath)));
+    new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
+    config);
 
 const otherInstanceIsAlreadyRunning = app.makeSingleInstance(() => {
     // do nothing
@@ -192,7 +193,8 @@ function reloadApp(): void {
     inputValidationService = new InputValidationService(new InputValidatorSearcherCombinationManager(config).getCombinations());
     executionService = new ExecutionService(
         new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations(),
-        new CountManager(new CountFileRepository(UeliHelpers.countFilePath)));
+        new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
+        config);
 
     mainWindow.reload();
     resetWindowToDefaultSizeAndPosition();
