@@ -6,7 +6,7 @@ export class StringHelpers {
     }
 
     public static stringIsWhiteSpace(value: string): boolean {
-        if (value === undefined) {
+        if (value === undefined || value === null) {
             return true;
         }
 

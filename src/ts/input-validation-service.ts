@@ -24,15 +24,16 @@ export class InputValidationService {
 
     public getSearchResult(userInput: string): SearchResultItem[] {
         let result = [] as SearchResultItem[];
-        userInput = StringHelpers.trimAndReplaceMultipleWhiteSpacesWithOne(userInput);
 
-        if (StringHelpers.stringIsWhiteSpace(userInput)) {
+        if (userInput === undefined || userInput === null || StringHelpers.stringIsWhiteSpace(userInput)) {
             return result;
         }
 
+        const trimmedUserInput = StringHelpers.trimAndReplaceMultipleWhiteSpacesWithOne(userInput);
+
         for (const combination of this.validatorSearcherCombinations) {
-            if (combination.validator.isValidForSearchResults(userInput)) {
-                result = result.concat(combination.searcher.getSearchResult(userInput));
+            if (combination.validator.isValidForSearchResults(trimmedUserInput)) {
+                result = result.concat(combination.searcher.getSearchResult(trimmedUserInput));
             }
         }
 
