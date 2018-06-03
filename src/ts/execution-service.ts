@@ -1,5 +1,3 @@
-import * as childProcess from "child_process";
-import { ipcMain } from "electron";
 import { CommandLineExecutionArgumentValidator } from "./execution-argument-validators/command-line-execution-argument-validator";
 import { UeliCommandExecutionArgumentValidator } from "./execution-argument-validators/ueli-command-execution-argument-validator";
 import { ExecutionArgumentValidator } from "./execution-argument-validators/execution-argument-validator";
@@ -21,36 +19,37 @@ import { EmailAddressExecutionArgumentValidator } from "./execution-argument-val
 import { platform } from "os";
 import { CountManager } from "./count-manager";
 import { ConfigOptions } from "./config-options";
+import { IpcEmitter } from "./ipc-emitter";
 
 export class ExecutionService {
     private validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[];
     private countManager: CountManager;
     private config: ConfigOptions;
+    private ipcEmitter: IpcEmitter;
 
-    public constructor(validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[], countManager: CountManager, config: ConfigOptions) {
+    public constructor(validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[], countManager: CountManager, config: ConfigOptions, ipcEmitter: IpcEmitter) {
         this.config = config;
         this.validatorExecutorCombinations = validatorExecutorCombinations;
         this.countManager = countManager;
+        this.ipcEmitter = ipcEmitter;
     }
 
     public execute(executionArgument: string): void {
         for (const combi of this.validatorExecutorCombinations) {
             if (combi.validator.isValidForExecution(executionArgument)) {
                 if (combi.executor.resetUserInputAfterExecution()) {
-                    ipcMain.emit(IpcChannels.resetUserInput);
+                    this.ipcEmitter.emitResetUserInput();
                 }
 
                 if (combi.executor.logExecution() && this.config.logExecution) {
                     this.countManager.increaseCount(executionArgument);
                 }
 
-                setTimeout(() => {
-                    if (combi.executor.hideAfterExecution()) {
-                        ipcMain.emit(IpcChannels.hideWindow);
-                    }
+                if (combi.executor.hideAfterExecution()) {
+                    this.ipcEmitter.emitHideWindow();
+                }
 
-                    combi.executor.execute(executionArgument);
-                }, 50); // set delay for execution to 50ms otherwise user input reset does not work properly
+                combi.executor.execute(executionArgument);
 
                 return;
             }

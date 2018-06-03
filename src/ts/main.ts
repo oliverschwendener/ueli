@@ -21,6 +21,7 @@ import { defaultConfig } from "./default-config";
 import { ConfigFileRepository } from "./config-file-repository";
 import { CountManager } from "./count-manager";
 import { CountFileRepository } from "./count-file-repository";
+import { ProductionIpcEmitter } from "./production-ipc-emitter";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -30,10 +31,12 @@ const filePathExecutor = new FilePathExecutor();
 
 let config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
 let inputValidationService = new InputValidationService(new InputValidatorSearcherCombinationManager(config).getCombinations());
+const ipcEmitter = new ProductionIpcEmitter();
 let executionService = new ExecutionService(
     new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations(),
     new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
-    config);
+    config,
+    ipcEmitter);
 
 const otherInstanceIsAlreadyRunning = app.makeSingleInstance(() => {
     // do nothing
@@ -194,7 +197,8 @@ function reloadApp(): void {
     executionService = new ExecutionService(
         new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations(),
         new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
-        config);
+        config,
+        ipcEmitter);
 
     mainWindow.reload();
     resetWindowToDefaultSizeAndPosition();
