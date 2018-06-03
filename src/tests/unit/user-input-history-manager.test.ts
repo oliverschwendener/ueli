@@ -55,7 +55,7 @@ describe(TestableUserInputHistoryManager.name, (): void => {
         });
 
         it("should return an empty string if history is empty", (): void => {
-            const history = [];
+            const history = [] as string[];
             const manager = new TestableUserInputHistoryManager();
             manager.setHistory(history);
 
@@ -105,7 +105,7 @@ describe(TestableUserInputHistoryManager.name, (): void => {
         });
 
         it("should return an ampty string if history is empty", (): void => {
-            const history = [];
+            const history = [] as string[];
             const manager = new TestableUserInputHistoryManager();
             manager.setHistory(history);
 

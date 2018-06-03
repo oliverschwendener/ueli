@@ -133,7 +133,7 @@ describe(FileHelpers.name, (): void => {
         });
     });
 
-    describe(FileHelpers.getFilesFromFoldersRecursively, (): void => {
+    describe(FileHelpers.getFilesFromFoldersRecursively.name, (): void => {
         const testFolders = [
             "test-folder-1",
             "test-folder-2",

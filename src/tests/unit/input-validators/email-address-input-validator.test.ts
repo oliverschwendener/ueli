@@ -14,7 +14,7 @@ describe(EmailAddressInputValidator.name, (): void => {
 
         it("should return false when user input is not an email address", (): void => {
             for (const invalidEmail of invalidEmailAddresses) {
-                const actual = validator.isValidForSearchResults(invalidEmail);
+                const actual = validator.isValidForSearchResults(invalidEmail as string);
                 expect(actual).toBe(false);
             }
         });

@@ -5,8 +5,6 @@ import { WindowsIconManager } from "../../ts/icon-manager/windows-icon-manager";
 import { MacOsIconManager } from "../../ts/icon-manager/mac-os-icon-manager";
 import { Windows10SettingsSearchPlugin } from "../../ts/search-plugins/windows-10-settings-plugin";
 import { MacOsSettingsPlugin } from "../../ts/search-plugins/mac-os-settings-plugin";
-import { WindowsProgramRepository } from "../../ts/programs-plugin/windows-program-repository";
-import { MacOsProgramRepository } from "../../ts/programs-plugin/macos-program-repository";
 import { DirectorySeparator } from "../../ts/directory-separator";
 import { join } from "path";
 import { FileExecutionCommandBuilder } from "../../ts/builders/file-execution-command-builder";

@@ -29,7 +29,7 @@ describe(StringHelpers.name, (): void => {
             ];
 
             for (const whiteSpaceString of whitspaceStrings) {
-                const actual = StringHelpers.stringIsWhiteSpace(whiteSpaceString);
+                const actual = StringHelpers.stringIsWhiteSpace(whiteSpaceString as string);
                 expect(actual).toBe(true);
             }
         });
@@ -112,7 +112,7 @@ describe(StringHelpers.name, (): void => {
     describe(StringHelpers.isValidEmailAddress.name, (): void => {
         it("should return false if email address is invalid", (): void => {
             for (const invalidEmail of invalidEmailAddresses) {
-                const actual = StringHelpers.isValidEmailAddress(invalidEmail);
+                const actual = StringHelpers.isValidEmailAddress(invalidEmail as string);
                 expect(actual).toBe(false);
             }
         });
