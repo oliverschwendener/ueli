@@ -1,8 +1,8 @@
 import { Injector } from "../../ts/injector";
 import { platform } from "os";
 import { OperatingSystem } from "../../ts/operating-system";
-import { WindowsIconManager } from "../../ts/icon-manager/windows-icon-manager";
-import { MacOsIconManager } from "../../ts/icon-manager/mac-os-icon-manager";
+import { WindowsIconSet } from "../../ts/icon-sets/windows-icon-set";
+import { MacOsIconSet } from "../../ts/icon-sets/mac-os-icon-set";
 import { Windows10SettingsSearchPlugin } from "../../ts/search-plugins/windows-10-settings-plugin";
 import { MacOsSettingsPlugin } from "../../ts/search-plugins/mac-os-settings-plugin";
 import { DirectorySeparator } from "../../ts/directory-separator";
@@ -62,13 +62,13 @@ describe(Injector.name, () => {
         });
     });
 
-    describe(Injector.getIconManager.name, () => {
+    describe(Injector.getIconSet.name, () => {
         it("should return an icon manager", () => {
-            const actualWin = Injector.getIconManager(win);
-            const acutalMac = Injector.getIconManager(mac);
+            const actualWin = Injector.getIconSet(win);
+            const acutalMac = Injector.getIconSet(mac);
 
-            expect(actualWin instanceof WindowsIconManager).toBe(true);
-            expect(acutalMac instanceof MacOsIconManager).toBe(true);
+            expect(actualWin instanceof WindowsIconSet).toBe(true);
+            expect(acutalMac instanceof MacOsIconSet).toBe(true);
         });
     });
 

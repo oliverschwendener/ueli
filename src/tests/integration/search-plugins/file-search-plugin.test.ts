@@ -58,7 +58,7 @@ describe(FileSearchPlugin.name, (): void => {
             const plugin = new FileSearchPlugin(parentFolders);
             const actual = plugin.getAllItems();
             const actualLength = actual.length;
-            const expectedLength = (testFiles.length  + subFolders.length) * parentFolders.length;
+            const expectedLength = (testFiles.length + subFolders.length) * parentFolders.length;
 
             expect(actualLength).toBe(expectedLength);
         });
@@ -76,16 +76,16 @@ describe(FileSearchPlugin.name, (): void => {
         });
 
         it("should set the right icon", (): void => {
-            const iconManager = Injector.getIconManager(platform());
+            const iconSet = Injector.getIconSet(platform());
             const plugin = new FileSearchPlugin(parentFolders);
             const actual = plugin.getAllItems();
 
             const actualFiles = actual.filter((a) => {
-                return a.icon === iconManager.getFileIcon();
+                return a.icon === iconSet.fileIcon;
             });
 
             const actualFolders = actual.filter((a) => {
-                return a.icon === iconManager.getFolderIcon();
+                return a.icon === iconSet.folderIcon;
             });
 
             expect(actualFiles.length).toBe(testFiles.length * parentFolders.length);

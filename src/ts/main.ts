@@ -254,11 +254,6 @@ ipcMain.on(IpcChannels.autoComplete, (event: any, arg: string[]): void => {
     }
 });
 
-ipcMain.on(IpcChannels.getSearchIcon, (event: any): void => {
-    const iconManager = Injector.getIconManager(platform());
-    event.sender.send(IpcChannels.getSearchIconResponse, iconManager.getSearchIcon());
-});
-
 ipcMain.on(IpcChannels.commandLineExecution, (arg: string): void => {
     mainWindow.webContents.send(IpcChannels.commandLineOutput, arg);
     updateWindowSize(config.maxSearchResultCount);

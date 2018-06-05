@@ -1,9 +1,9 @@
 import * as os from "os";
 import * as path from "path";
 import { Executor } from "./executors/executor";
-import { IconManager } from "./icon-manager/icon-manager";
-import { MacOsIconManager } from "./icon-manager/mac-os-icon-manager";
-import { WindowsIconManager } from "./icon-manager/windows-icon-manager";
+import { IconSet } from "./icon-sets/icon-set";
+import { MacOsIconSet } from "./icon-sets/mac-os-icon-set";
+import { WindowsIconSet } from "./icon-sets/windows-icon-set";
 import { OperatingSystem } from "./operating-system";
 import { ProgramRepository } from "./programs-plugin/program-repository";
 import { MacOsSettingsPlugin } from "./search-plugins/mac-os-settings-plugin";
@@ -29,10 +29,10 @@ export class Injector {
     return new RegExp(/^((https?:)?[/]{2})?([a-z0-9]+[.])+[a-z]+.*$/i, "gi");
   }
 
-  public static getIconManager(platform: string): IconManager {
+  public static getIconSet(platform: string): IconSet {
     switch (OperatingSystemHelpers.getOperatingSystemFromString(platform)) {
-      case OperatingSystem.Windows: return new WindowsIconManager();
-      case OperatingSystem.macOS: return new MacOsIconManager();
+      case OperatingSystem.Windows: return new WindowsIconSet();
+      case OperatingSystem.macOS: return new MacOsIconSet();
     }
   }
 

@@ -9,7 +9,7 @@ import { platform } from "os";
 import { ConfigOptions } from "../config-options";
 
 export class FilePathSearcher implements Searcher {
-    private iconManager = Injector.getIconManager(platform());
+    private iconSet = Injector.getIconSet(platform());
     private config: ConfigOptions;
 
     constructor(config: ConfigOptions) {
@@ -45,8 +45,8 @@ export class FilePathSearcher implements Searcher {
             result.push({
                 executionArgument: file,
                 icon: fs.lstatSync(file).isDirectory()
-                    ? this.iconManager.getFolderIcon()
-                    : this.iconManager.getFileIcon(),
+                    ? this.iconSet.folderIcon
+                    : this.iconSet.fileIcon,
                 name: path.basename(file),
                 tags: [],
             } as SearchResultItem);
@@ -66,7 +66,7 @@ export class FilePathSearcher implements Searcher {
         return [
             {
                 executionArgument: filePath,
-                icon: this.iconManager.getFileIcon(),
+                icon: this.iconSet.fileIcon,
                 name: path.basename(filePath),
                 tags: [],
             } as SearchResultItem,

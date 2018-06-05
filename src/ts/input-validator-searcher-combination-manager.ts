@@ -53,7 +53,7 @@ export class InputValidatorSearcherCombinationManager {
             {
                 searcher: new SearchPluginsSearcher(config,
                     new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
-                    Injector.getIconManager(platform())),
+                    Injector.getIconSet(platform())),
                 validator: new SearchPluginsInputValidator(),
             },
         ];

@@ -11,17 +11,17 @@ import { defaultConfig } from "./default-config";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { ConfigOptions } from "./config-options";
 import { CustomCommandsPlugin } from "./search-plugins/custom-commands-plugin";
-import { IconManager } from "./icon-manager/icon-manager";
+import { IconSet } from "./icon-sets/icon-set";
 
 export class SearchPluginManager {
     private plugins: SearchPlugin[];
 
-    public constructor(config: ConfigOptions, iconManager: IconManager) {
+    public constructor(config: ConfigOptions, iconSet: IconSet) {
         this.plugins = [
             new ProgramsPlugin(new ProgramFileRepository(config.applicationFolders, config.applicationFileExtensions)),
             new FileSearchPlugin(config.fileSearchFolders),
             new UeliCommandsSearchPlugin(),
-            new CustomCommandsPlugin(config.customCommands, iconManager.getCustomShortCutIcon()),
+            new CustomCommandsPlugin(config.customCommands, iconSet.customShortCutIcon),
         ];
 
         if (config.searchOperatingSystemSettings) {
