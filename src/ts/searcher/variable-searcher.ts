@@ -10,11 +10,11 @@ export class VariableSearcher implements Searcher {
     private config: ConfigOptions;
     private collection: SearchResultItem[];
 
-    constructor(config: ConfigOptions, environmentVariables: { [key: string]: string }) {
+    constructor(config: ConfigOptions, pathValidator: FilePathInputValidator, environmentVariables: { [key: string]: string }) {
         this.config = config;
         this.collection = [];
 
-        const validator = new FilePathInputValidator();
+        const validator = pathValidator;
         const icon = Injector.getIconSet(platform()).variableIcon;
         for (const variableName of Object.keys(environmentVariables)) {
             const value = environmentVariables[variableName];

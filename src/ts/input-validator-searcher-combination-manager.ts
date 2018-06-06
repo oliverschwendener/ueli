@@ -37,7 +37,7 @@ export class InputValidatorSearcherCombinationManager {
                 validator: new FilePathInputValidator(),
             },
             {
-                searcher: new VariableSearcher(config, process.env),
+                searcher: new VariableSearcher(config, new FilePathInputValidator(), process.env),
                 validator: new VariableInputValidator(),
             },
             {

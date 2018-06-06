@@ -1,5 +1,7 @@
 import { VariableSearcher } from "../../../ts/searcher/variable-searcher";
 import { ConfigOptions } from "../../../ts/config-options";
+import { Injector } from "../../../ts/injector";
+import { InputValidator } from "../../../ts/input-validators/input-validator";
 
 const defaultConfig = {
     directoryVariables: [
@@ -10,13 +12,20 @@ const defaultConfig = {
     ],
 } as ConfigOptions;
 
+class FilePathInputValidator implements InputValidator {
+    public isValidForSearchResults(userInput: string): boolean {
+        const regex = Injector.getFilePathRegExp("win32");
+        return regex.test(userInput);
+    }
+}
+
 describe(VariableSearcher.name, (): void => {
     const fakeVariables = {
         Gallery: "E:\\Camera\\DCIM",
         notAPath: "420",
         topsecretfolder: "D:\\Softwares\\Installers\\temp\\LoliPic",
     };
-    const searcher = new VariableSearcher(defaultConfig, fakeVariables);
+    const searcher = new VariableSearcher(defaultConfig, new FilePathInputValidator(), fakeVariables);
 
     describe(searcher.getSearchResult.name, (): void => {
         it("Should return directory path as execution argument", (): void => {
