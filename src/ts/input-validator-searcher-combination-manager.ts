@@ -13,6 +13,8 @@ import { WebUrlInputValidator } from "./input-validators/web-url-input-validator
 import { SearchPluginsSearcher } from "./searcher/search-plugins-searcher";
 import { SearchPluginsInputValidator } from "./input-validators/search-plugins-input-validator";
 import { InputValidatorSearcherCombination } from "./input-validator-searcher-combination";
+import { VariableSearcher } from "./searcher/variable-searcher";
+import { VariableInputValidator } from "./input-validators/variable-input-validator";
 import { defaultConfig } from "./default-config";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { ConfigOptions } from "./config-options";
@@ -33,6 +35,10 @@ export class InputValidatorSearcherCombinationManager {
             {
                 searcher: new FilePathSearcher(config),
                 validator: new FilePathInputValidator(),
+            },
+            {
+                searcher: new VariableSearcher(config, process.env),
+                validator: new VariableInputValidator(),
             },
             {
                 searcher: new CommandLineSearcher(),
