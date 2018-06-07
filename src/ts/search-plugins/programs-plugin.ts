@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 import { FileHelpers } from "../helpers/file-helpers";
-import { IconManager } from "../icon-manager/icon-manager";
+import { IconSet } from "../icon-sets/icon-set";
 import { Injector } from "../injector";
 import { Program } from "../programs-plugin/program";
 import { ProgramRepository } from "../programs-plugin/program-repository";
@@ -11,10 +11,10 @@ import { SearchPlugin } from "./search-plugin";
 
 export class ProgramsPlugin implements SearchPlugin {
     private programs: Program[];
-    private iconManager: IconManager;
+    private iconSet: IconSet;
 
     public constructor(programRepository: ProgramRepository) {
-        this.iconManager = Injector.getIconManager(os.platform());
+        this.iconSet = Injector.getIconSet(os.platform());
         this.programs = programRepository.getPrograms();
     }
 
@@ -22,7 +22,7 @@ export class ProgramsPlugin implements SearchPlugin {
         return this.programs.map((program): SearchResultItem => {
             return {
                 executionArgument: program.executionArgument,
-                icon: this.iconManager.getProgramIcon(),
+                icon: this.iconSet.programIcon,
                 name: program.name,
                 tags: [],
             } as SearchResultItem;

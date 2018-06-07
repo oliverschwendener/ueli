@@ -10,10 +10,12 @@ import { UeliHelpers } from "./helpers/ueli-helpers";
 import { defaultConfig } from "./default-config";
 import { ColorThemeLoader } from "./color-theme-loader";
 import { UserInputHistoryManager } from "./user-input-history-manager";
+import { Injector } from "./injector";
 
 const colorThemeLoader = new ColorThemeLoader();
 const config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
 const userInputHistoryManager = new UserInputHistoryManager();
+const iconSet = Injector.getIconSet(platform());
 
 document.addEventListener("keyup", handleGlobalKeyPress);
 
@@ -22,7 +24,7 @@ const vue = new Vue({
         autoFocus: true,
         commandLineOutput: [] as string[],
         isMouseMoving: false,
-        searchIcon: "",
+        searchIcon: iconSet.searchIcon,
         searchResults: [] as SearchResultItemViewModel[],
         stylesheetPath: `./build/${config.colorTheme}.css`,
         userInput: "",
@@ -110,12 +112,6 @@ const vue = new Vue({
 
 ipcRenderer.on(IpcChannels.getSearchResponse, (event: Electron.Event, arg: SearchResultItemViewModel[]): void => {
     updateSearchResults(arg);
-});
-
-ipcRenderer.send(IpcChannels.getSearchIcon);
-
-ipcRenderer.on(IpcChannels.getSearchIconResponse, (event: Electron.Event, arg: string): void => {
-    vue.searchIcon = arg;
 });
 
 ipcRenderer.on(IpcChannels.autoCompleteResponse, (event: Electron.Event, arg: string): void => {
