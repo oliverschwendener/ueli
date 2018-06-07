@@ -12,6 +12,8 @@ import { UeliHelpers } from "./helpers/ueli-helpers";
 import { ConfigOptions } from "./config-options";
 import { CustomCommandsPlugin } from "./search-plugins/custom-commands-plugin";
 import { IconSet } from "./icon-sets/icon-set";
+import { VariableSearchPlugin } from "./search-plugins/variable-plugin";
+import { FilePathInputValidator } from "./input-validators/file-path-input-validator";
 
 export class SearchPluginManager {
     private plugins: SearchPlugin[];
@@ -22,6 +24,7 @@ export class SearchPluginManager {
             new FileSearchPlugin(config.fileSearchFolders),
             new UeliCommandsSearchPlugin(),
             new CustomCommandsPlugin(config.customCommands, iconSet.customShortCutIcon),
+            new VariableSearchPlugin(new FilePathInputValidator(), process.env),
         ];
 
         if (config.searchOperatingSystemSettings) {

@@ -18,6 +18,12 @@ export const defaultConfig: ConfigOptions = {
     autoStartApp: true,
     colorTheme: "dark",
     customCommands: [],
+    directoryVariables: [
+        {
+            name: "home",
+            path: homedir(),
+        },
+    ],
     fileSearchFolders: [homedir()],
     hotKey: "alt+space",
     logExecution: true,

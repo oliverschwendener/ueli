@@ -1,5 +1,6 @@
 import { WebSearch } from "./web-search";
 import { CustomCommand } from "./custom-command";
+import { Variable } from "./variable";
 
 export interface ConfigOptions {
     applicationFileExtensions: string[];
@@ -19,6 +20,7 @@ export interface ConfigOptions {
     searchResultNameFontSize: number;
     userInputHeight: number;
     userInputFontSize: number;
+    directoryVariables: Variable[];
     webSearches: WebSearch[];
     windowWith: number;
 }
