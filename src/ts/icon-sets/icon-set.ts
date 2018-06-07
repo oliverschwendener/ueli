@@ -5,5 +5,4 @@ export interface IconSet {
     searchIcon: string;
     emailIcon: string;
     customShortCutIcon: string;
-    variableIcon: string;
 }
