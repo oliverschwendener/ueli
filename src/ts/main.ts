@@ -22,7 +22,6 @@ import { ConfigFileRepository } from "./config-file-repository";
 import { CountManager } from "./count-manager";
 import { CountFileRepository } from "./count-file-repository";
 import { ProductionIpcEmitter } from "./production-ipc-emitter";
-import { VariableInputValidator } from "./input-validators/variable-input-validator";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -241,13 +240,11 @@ ipcMain.on(IpcChannels.openFileLocation, (event: any, arg: string): void => {
     }
 });
 
-ipcMain.on(IpcChannels.autoComplete, (event: any, arg: string[]): void => {
-    const userInput = arg[0];
-    let executionArgument = arg[1];
+ipcMain.on(IpcChannels.autoComplete, (event: any, executionArgument: string): void => {
     const dirSeparator = Injector.getDirectorySeparator(platform());
+    const validator = new FilePathExecutionArgumentValidator();
 
-    if (new FilePathExecutionArgumentValidator().isValidForExecution(userInput)
-     || new VariableInputValidator().isValidForSearchResults(userInput)) {
+    if (validator.isValidForExecution(executionArgument)) {
         if (!executionArgument.endsWith(dirSeparator) && fs.lstatSync(executionArgument).isDirectory()) {
             executionArgument = `${executionArgument}${dirSeparator}`;
         }
