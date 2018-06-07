@@ -214,7 +214,7 @@ function handleAutoCompletion(): void {
     const activeItem = getActiveItem();
 
     if (activeItem !== undefined) {
-        ipcRenderer.send(IpcChannels.autoComplete, [vue.userInput, activeItem.executionArgument]);
+        ipcRenderer.send(IpcChannels.autoComplete, activeItem.executionArgument);
     }
 }
 
