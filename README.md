@@ -159,10 +159,21 @@ Default web search engines:
 
 ![Feature custom commands](img/doc/features/ueli-feature-custom-commands.png)
 
+### Environment Variables
+
+> This feature is deactivated by default. You have to activate this via [customization](#customization).
+
+* Search for environment variables
+* Use `Tab` to autocomplete if it shows a valid file path
+
+![Feature environment variables](img/doc/features/ueli-feature-environment-variables.png)
+
 ### Keyboard shortcuts
 
 |Keyboard shortcut|Description|
 |---|---|
+|`Enter`|Execute selected search result|
+|`Tab`|Autocomplete file path|
 |`Ctrl+o`|Open the selected program or file at it's location|
 |`ArrowUp`|Scroll up|
 |`ArrowDown`|Scroll down|
@@ -197,6 +208,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed
 * `rescanInterval` Number - Interval in seconds to rescan the application folders
 * `searchEngineThreshold` Number - Represents the threshold for fuzzy matching (min = 0, max = 1, lower means you have to be more precise with the user input)
+* `searchEnvironmentVariables` Boolean - If environment variables should appear in the search results
 * `searchOperatingSystemSettings` Boolean - If operting system settings and commands should appear in the search results
 * `searchResultExecutionArgumentFontSize` Number - Represents the font size of the search result execution argument in pixels
 * `searchResultHeight` Number - Represents the height of a search result box in pixels
