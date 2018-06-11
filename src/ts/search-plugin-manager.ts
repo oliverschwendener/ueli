@@ -12,11 +12,12 @@ import { UeliHelpers } from "./helpers/ueli-helpers";
 import { ConfigOptions } from "./config-options";
 import { CustomCommandsPlugin } from "./search-plugins/custom-commands-plugin";
 import { IconSet } from "./icon-sets/icon-set";
+import { EnvironmentVariablePlugin } from "./search-plugins/environment-variable-plugin";
 
 export class SearchPluginManager {
     private plugins: SearchPlugin[];
 
-    public constructor(config: ConfigOptions, iconSet: IconSet) {
+    public constructor(config: ConfigOptions, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }) {
         this.plugins = [
             new ProgramsPlugin(new ProgramFileRepository(config.applicationFolders, config.applicationFileExtensions)),
             new FileSearchPlugin(config.fileSearchFolders),
@@ -26,6 +27,10 @@ export class SearchPluginManager {
 
         if (config.searchOperatingSystemSettings) {
             this.plugins.push(Injector.getOperatingSystemSettingsPlugin(platform()));
+        }
+
+        if (config.searchEnvironmentVariables) {
+            this.plugins.push(new EnvironmentVariablePlugin(environmentVariableCollection));
         }
     }
 

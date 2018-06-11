@@ -13,6 +13,7 @@ export interface ConfigOptions {
     maxSearchResultCount: number;
     rescanInterval: number;
     searchEngineThreshold: number;
+    searchEnvironmentVariables: boolean;
     searchOperatingSystemSettings: boolean;
     searchResultExecutionArgumentFontSize: number;
     searchResultHeight: number;

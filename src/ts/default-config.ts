@@ -24,6 +24,7 @@ export const defaultConfig: ConfigOptions = {
     maxSearchResultCount: 8,
     rescanInterval: 30,
     searchEngineThreshold: 0.4,
+    searchEnvironmentVariables: false,
     searchOperatingSystemSettings: true,
     searchResultExecutionArgumentFontSize: 14,
     searchResultHeight: 60,
