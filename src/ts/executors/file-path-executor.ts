@@ -27,7 +27,7 @@ export class FilePathExecutor implements Executor {
     }
 
     private handleExecution(command: string): void {
-        childProcess.exec(command, (err, stoud, sterr) => {
+        childProcess.exec(command, (err) => {
             if (err) {
                 throw err;
             }
