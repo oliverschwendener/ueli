@@ -21,6 +21,6 @@ export class CustomCommandExecutor implements Executor {
     }
 
     public logExecution(): boolean {
-        return false;
+        return true;
     }
 }
