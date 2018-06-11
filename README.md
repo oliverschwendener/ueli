@@ -130,6 +130,7 @@ Default web search engines:
 
 * You can [customize](#customization) custom commands to
     * Start command line tools
+    * Open websites
     * Open files/folders
     * Launch programs
 
@@ -137,8 +138,21 @@ Default web search engines:
 "customCommands": [
     {
         "name": "ping",
-        "executionArgument": "start ping 8.8.8.8 -t",
+        "executionArgument": ">ping 8.8.8.8 -t",
         "icon": "<svg>...</svg>"
+    },
+    {
+        "name": "Whatsapp",
+        "executionArgument": "https://web.whatsapp.com",
+        "icon": "<svg>...</svg"
+    },
+    {
+        "name": "Data",
+        "executionArgument": "C:\\Data"
+    },
+    {
+        "name": "my-project",
+        "executionArgument": "!code C:\\my-project"
     }
 ]
 ```

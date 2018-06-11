@@ -4,7 +4,7 @@ import { UeliHelpers } from "../../../ts/helpers/ueli-helpers";
 
 describe(CustomCommandsPlugin.name, (): void => {
     describe("getAllItems", (): void => {
-        it("should prefix the execution argument ", (): void => {
+        it("should set the execution argument correctly", (): void => {
             const customCommands = [
                 {
                     executionArgument: "execution-argument",
@@ -26,7 +26,7 @@ describe(CustomCommandsPlugin.name, (): void => {
                 })[0];
 
                 expect(customCommand).not.toBe(undefined);
-                expect(item.executionArgument).toBe(`${UeliHelpers.customCommandPrefix}${customCommand.executionArgument}`);
+                expect(item.executionArgument).toBe(customCommand.executionArgument);
             }
         });
 

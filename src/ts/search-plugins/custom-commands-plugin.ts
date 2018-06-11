@@ -22,7 +22,7 @@ export class CustomCommandsPlugin implements SearchPlugin {
 
         for (const customCommand of customCommands) {
             result.push({
-                executionArgument: `${UeliHelpers.customCommandPrefix}${customCommand.executionArgument}`,
+                executionArgument: customCommand.executionArgument,
                 icon: StringHelpers.stringIsWhiteSpace(customCommand.icon)
                     ? this.defaultIcon
                     : customCommand.icon,
