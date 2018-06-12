@@ -84,7 +84,7 @@ Default web search engines:
 |`w`|[Wikipedia](https://wikipedia.org)|
 |`yt`|[YouTube](https://youtube.com)|
 
-* You can [customize](#customization) web search engines like this:
+You can [customize](#customization) web search engines like this:
 
 ``` json
 "webSearches": [
@@ -93,6 +93,28 @@ Default web search engines:
         "name": "My Search Engine",
         "prefix": "m",
         "url": "https://my-search-engine.com/search?q="
+    }
+]
+```
+
+#### Fallback web search engines
+
+You can customize multiple fallback web search engines which are used if ueli does not find any other search results.
+
+``` json
+"fallbackWebSearches": ["Google"],
+"webSearches": [
+    {
+        "icon": "<svg>...</svg>",
+        "name": "Google",
+        "prefix": "g",
+        "url": "https://google.com/search?q="
+    },
+    {
+        "icon": "<svg>...</svg>",
+        "name": "DuckDuckGo",
+        "prefix": "d",
+        "url": "https://duckduckgo.com/search?q="
     }
 ]
 ```
