@@ -30,7 +30,7 @@ const delayWhenHidingCommandlineOutputInMs = 25;
 const filePathExecutor = new FilePathExecutor();
 
 let config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
-let inputValidationService = new InputValidationService(new InputValidatorSearcherCombinationManager(config).getCombinations());
+let inputValidationService = new InputValidationService(config, new InputValidatorSearcherCombinationManager(config).getCombinations());
 const ipcEmitter = new ProductionIpcEmitter();
 let executionService = new ExecutionService(
     new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations(),
@@ -193,7 +193,7 @@ function reloadApp(): void {
     unregisterGlobalShortcuts();
 
     config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
-    inputValidationService = new InputValidationService(new InputValidatorSearcherCombinationManager(config).getCombinations());
+    inputValidationService = new InputValidationService(config, new InputValidatorSearcherCombinationManager(config).getCombinations());
     executionService = new ExecutionService(
         new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations(),
         new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),

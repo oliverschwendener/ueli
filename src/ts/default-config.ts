@@ -18,6 +18,7 @@ export const defaultConfig: ConfigOptions = {
     autoStartApp: true,
     colorTheme: "dark",
     customCommands: [],
+    fallbackWebSearches: [],
     fileSearchFolders: [homedir()],
     hotKey: "alt+space",
     logExecution: true,

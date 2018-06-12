@@ -7,6 +7,7 @@ export interface ConfigOptions {
     autoStartApp: boolean;
     colorTheme: string;
     customCommands: CustomCommand[];
+    fallbackWebSearches: string[];
     fileSearchFolders: string[];
     hotKey: string;
     logExecution: boolean;

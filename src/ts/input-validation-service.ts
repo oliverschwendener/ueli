@@ -14,11 +14,15 @@ import { EmailAddressSearcher } from "./searcher/email-address-searcher";
 import { EmailAddressInputValidator } from "./input-validators/email-address-input-validator";
 import { CalculatorInputValidator } from "./input-validators/calculator-input-validator";
 import { CalculatorSearcher } from "./searcher/calculator-searcher";
+import { FallbackWebSearchSercher } from "./searcher/fallback-web-search-searcher";
+import { ConfigOptions } from "./config-options";
 
 export class InputValidationService {
+    private configOptions: ConfigOptions;
     private validatorSearcherCombinations: InputValidatorSearcherCombination[];
 
-    public constructor(validatorSearcherCombinations: InputValidatorSearcherCombination[]) {
+    public constructor(configOptions: ConfigOptions, validatorSearcherCombinations: InputValidatorSearcherCombination[]) {
+        this.configOptions = configOptions;
         this.validatorSearcherCombinations = validatorSearcherCombinations;
     }
 
@@ -35,6 +39,10 @@ export class InputValidationService {
             if (combination.validator.isValidForSearchResults(trimmedUserInput)) {
                 result = result.concat(combination.searcher.getSearchResult(trimmedUserInput));
             }
+        }
+
+        if (result.length === 0 && this.configOptions.fallbackWebSearches.length > 0) {
+            result = new FallbackWebSearchSercher(this.configOptions.fallbackWebSearches, this.configOptions.webSearches).getSearchResult(userInput);
         }
 
         return result;
