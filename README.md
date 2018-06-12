@@ -202,6 +202,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
     * `executionArgument` String - Represents the execution argument for the custom command
     * `name` String - Represents the displayed name for the custom command
     * `icon` String - (Optional) Represents the svg icon for the custom command. If no icon is set default icon is used
+* `fallbackWebSearches` Array of string - Represents the names of [web search engines](#web-search-engines) used when ueli does not find any search results
 * `fileSearchFolders` Array of string - Represents the folders which are scanned for files and folders (not recursively)
 * `hotKey` String - Represents the hotkey to show/hide the window. [Available hot keys](https://github.com/electron/electron/blob/master/docs/api/accelerator.md)
 * `logExecution` Boolean - If ueli should log the execution of applications, files and folders for better search results. Set to `false` if you want to disable logging.
