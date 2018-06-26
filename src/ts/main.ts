@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, ipcMain, Menu, MenuItem, Tray } from "electron";
+import { app, BrowserWindow, globalShortcut, ipcMain, Menu, MenuItem, Tray, screen } from "electron";
 import { autoUpdater } from "electron-updater";
 import * as fs from "fs";
 import * as path from "path";
@@ -7,9 +7,7 @@ import { ExecutionService } from "./execution-service";
 import { FilePathExecutor } from "./executors/file-path-executor";
 import { Injector } from "./injector";
 import { InputValidationService } from "./input-validation-service";
-import { SearchEngine } from "./search-engine";
 import { IpcChannels } from "./ipc-channels";
-import { OperatingSystem } from "./operating-system";
 import * as isInDevelopment from "electron-is-dev";
 import { platform } from "os";
 import { WindowHelpers } from "./helpers/winow-helpers";
@@ -168,13 +166,23 @@ function toggleWindow(): void {
     if (mainWindow.isVisible()) {
         hideMainWindow();
     } else {
-        mainWindow.show();
+        showWindow();
     }
 }
 
 function updateWindowSize(searchResultCount: number): void {
     const newWindowHeight = WindowHelpers.calculateWindowHeight(searchResultCount, config.maxSearchResultCount, config.userInputHeight, config.searchResultHeight);
     mainWindow.setSize(config.windowWith, newWindowHeight);
+}
+
+function showWindow() {
+    if (!config.alwaysShowOnPrimaryDisplay) {
+        const mousePosition = screen.getCursorScreenPoint();
+        const nearestDisplay = screen.getDisplayNearestPoint(mousePosition);
+        mainWindow.setBounds(nearestDisplay.bounds);
+    }
+    resetWindowToDefaultSizeAndPosition();
+    mainWindow.show();
 }
 
 function hideMainWindow(): void {
