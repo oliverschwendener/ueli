@@ -2,6 +2,7 @@ import { WebSearch } from "./web-search";
 import { CustomCommand } from "./custom-command";
 
 export interface ConfigOptions {
+    alwaysShowOnPrimaryDisplay: boolean;
     applicationFileExtensions: string[];
     applicationFolders: string[];
     autoStartApp: boolean;
