@@ -36,9 +36,7 @@ let executionService = new ExecutionService(
     config,
     ipcEmitter);
 
-const otherInstanceIsAlreadyRunning = app.makeSingleInstance(() => {
-    // do nothing
-});
+const otherInstanceIsAlreadyRunning = app.makeSingleInstance(() => { /* do nothing */ });
 
 if (otherInstanceIsAlreadyRunning) {
     app.quit();
@@ -72,8 +70,11 @@ function createMainWindow(): void {
     mainWindow.on("close", quitApp);
     mainWindow.on("blur", hideMainWindow);
 
-    createTrayIcon();
-    registerGlobalShortcuts();
+    if (config.showTrayIcon) {
+        createTrayIcon();
+    }
+
+    registerGlobalHotKey();
 
     if (!isInDevelopment) {
         checkForUpdates();
@@ -85,22 +86,16 @@ function createTrayIcon(): void {
     trayIcon = new Tray(Injector.getTrayIconPath(platform(), path.join(__dirname, "../")));
     trayIcon.setToolTip(UeliHelpers.productName);
     trayIcon.setContextMenu(Menu.buildFromTemplate([
-        {
-            click: toggleWindow,
-            label: "Show/Hide",
-        },
-        {
-            click: quitApp,
-            label: "Exit",
-        },
+        { click: toggleWindow, label: "Show/Hide" },
+        { click: quitApp, label: "Exit" },
     ]));
 }
 
-function registerGlobalShortcuts(): void {
+function registerGlobalHotKey(): void {
     globalShortcut.register(config.hotKey, toggleWindow);
 }
 
-function unregisterGlobalShortcuts(): void {
+function unregisterAllGlobalShortcuts(): void {
     globalShortcut.unregisterAll();
 }
 
@@ -149,17 +144,13 @@ function addUpdateStatusToTrayIcon(label: string, clickHandler?: any): void {
         ? { label }
         : { label, click: clickHandler } as MenuItem;
 
-    trayIcon.setContextMenu(Menu.buildFromTemplate([
-        updateItem,
-        {
-            click: toggleWindow,
-            label: "Show/Hide",
-        },
-        {
-            click: quitApp,
-            label: "Exit",
-        },
-    ]));
+    if (trayIcon !== undefined) {
+        trayIcon.setContextMenu(Menu.buildFromTemplate([
+            updateItem,
+            { click: toggleWindow, label: "Show/Hide" },
+            { click: quitApp, label: "Exit" },
+        ]));
+    }
 }
 
 function toggleWindow(): void {
@@ -198,8 +189,6 @@ function hideMainWindow(): void {
 }
 
 function reloadApp(): void {
-    unregisterGlobalShortcuts();
-
     config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
     inputValidationService = new InputValidationService(config, new InputValidatorSearcherCombinationManager(config).getCombinations());
     executionService = new ExecutionService(
@@ -210,7 +199,20 @@ function reloadApp(): void {
 
     mainWindow.reload();
     resetWindowToDefaultSizeAndPosition();
-    registerGlobalShortcuts();
+    unregisterAllGlobalShortcuts();
+    registerGlobalHotKey();
+
+    if (config.showTrayIcon) {
+        createTrayIcon();
+    } else {
+        destroyTrayIcon();
+    }
+}
+
+function destroyTrayIcon(): void {
+    if (trayIcon !== undefined) {
+        trayIcon.destroy();
+    }
 }
 
 function resetWindowToDefaultSizeAndPosition(): void {
@@ -220,8 +222,8 @@ function resetWindowToDefaultSizeAndPosition(): void {
 }
 
 function quitApp(): void {
-    trayIcon.destroy();
-    unregisterGlobalShortcuts();
+    destroyTrayIcon();
+    unregisterAllGlobalShortcuts();
     app.quit();
 }
 

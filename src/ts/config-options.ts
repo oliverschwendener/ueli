@@ -20,6 +20,7 @@ export interface ConfigOptions {
     searchResultExecutionArgumentFontSize: number;
     searchResultHeight: number;
     searchResultNameFontSize: number;
+    showTrayIcon: boolean;
     userInputHeight: number;
     userInputFontSize: number;
     webSearches: WebSearch[];

@@ -31,6 +31,7 @@ export const defaultConfig: ConfigOptions = {
     searchResultExecutionArgumentFontSize: 14,
     searchResultHeight: 60,
     searchResultNameFontSize: 20,
+    showTrayIcon: true,
     userInputFontSize: 36,
     userInputHeight: 80,
     webSearches: [
