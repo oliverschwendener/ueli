@@ -20,7 +20,12 @@ export const defaultConfig: ConfigOptions = {
     colorTheme: "dark",
     customCommands: [],
     fallbackWebSearches: [],
-    fileSearchFolders: [homedir()],
+    fileSearchOptions: [
+        {
+            folderPath: homedir(),
+            recursive: false,
+        },
+    ],
     hotKey: "alt+space",
     logExecution: true,
     maxSearchResultCount: 8,

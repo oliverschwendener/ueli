@@ -20,7 +20,7 @@ export class SearchPluginManager {
     public constructor(config: ConfigOptions, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }) {
         this.plugins = [
             new ProgramsPlugin(new ProgramFileRepository(config.applicationFolders, config.applicationFileExtensions)),
-            new FileSearchPlugin(config.fileSearchFolders),
+            new FileSearchPlugin(config.fileSearchOptions),
             new UeliCommandsSearchPlugin(),
             new CustomCommandsPlugin(config.customCommands, iconSet.customShortCutIcon),
         ];

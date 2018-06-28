@@ -1,5 +1,6 @@
 import { WebSearch } from "./web-search";
 import { CustomCommand } from "./custom-command";
+import { FileSearchOption } from "./file-search-option";
 
 export interface ConfigOptions {
     alwaysShowOnPrimaryDisplay: boolean;
@@ -9,7 +10,7 @@ export interface ConfigOptions {
     colorTheme: string;
     customCommands: CustomCommand[];
     fallbackWebSearches: string[];
-    fileSearchFolders: string[];
+    fileSearchOptions: FileSearchOption[];
     hotKey: string;
     logExecution: boolean;
     maxSearchResultCount: number;

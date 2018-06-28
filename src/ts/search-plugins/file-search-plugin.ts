@@ -6,14 +6,15 @@ import { IconSet } from "../icon-sets/icon-set";
 import { Injector } from "../injector";
 import { SearchResultItem } from "../search-result-item";
 import { SearchPlugin } from "./search-plugin";
+import { FileSearchOption } from "../file-search-option";
 
 export class FileSearchPlugin implements SearchPlugin {
-    private folders: string[];
+    private fileSearchOptions: FileSearchOption[];
     private items: SearchResultItem[];
     private iconSet: IconSet;
 
-    public constructor(folders: string[]) {
-        this.folders = folders;
+    public constructor(fileSearchOptions: FileSearchOption[]) {
+        this.fileSearchOptions = fileSearchOptions;
         this.iconSet = Injector.getIconSet(os.platform());
         this.items = this.loadFilesAndFolders();
     }
@@ -25,9 +26,11 @@ export class FileSearchPlugin implements SearchPlugin {
     private loadFilesAndFolders(): SearchResultItem[] {
         const result = [];
 
-        if (this.folders.length > 0) {
-            for (const folder of this.folders) {
-                const files = FileHelpers.getFilesFromFolder(folder);
+        if (this.fileSearchOptions.length > 0) {
+            for (const option of this.fileSearchOptions) {
+                const files = option.recursive
+                    ? FileHelpers.getFilesFromFolderRecursively(option.folderPath)
+                    : FileHelpers.getFilesFromFolder(option.folderPath);
 
                 for (const file of files) {
                     const stats = fs.lstatSync(file);

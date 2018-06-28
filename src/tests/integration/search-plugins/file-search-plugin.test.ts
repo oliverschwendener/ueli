@@ -3,6 +3,7 @@ import { mkdirSync, writeFileSync, unlinkSync, rmdirSync } from "fs";
 import { join } from "path";
 import { Injector } from "../../../ts/injector";
 import { platform } from "os";
+import { FileSearchOption } from "../../../ts/file-search-option";
 
 describe(FileSearchPlugin.name, (): void => {
     const parentFolders = [
@@ -30,6 +31,11 @@ describe(FileSearchPlugin.name, (): void => {
 
                 for (const subFolder of subFolders) {
                     mkdirSync(join(parentFolder, subFolder));
+
+                    for (const testFile of testFiles) {
+                        const filePath = join(parentFolder, subFolder, testFile);
+                        writeFileSync(filePath, "", "utf-8");
+                    }
                 }
 
                 for (const testFile of testFiles) {
@@ -47,6 +53,11 @@ describe(FileSearchPlugin.name, (): void => {
                 }
 
                 for (const subFolder of subFolders) {
+                    for (const testFile of testFiles) {
+                        const filePath = join(parentFolder, subFolder, testFile);
+                        unlinkSync(filePath);
+                    }
+
                     rmdirSync(join(parentFolder, subFolder));
                 }
 
@@ -54,8 +65,15 @@ describe(FileSearchPlugin.name, (): void => {
             }
         });
 
-        it("should return more than zero search result items", (): void => {
-            const plugin = new FileSearchPlugin(parentFolders);
+        it("should return only top level files and folders if recursive search is set to false", (): void => {
+            const recursiveSearch = false;
+            const options = parentFolders.map((folder: string): FileSearchOption => {
+                return {
+                    folderPath: folder,
+                    recursive: recursiveSearch,
+                };
+            });
+            const plugin = new FileSearchPlugin(options);
             const actual = plugin.getAllItems();
             const actualLength = actual.length;
             const expectedLength = (testFiles.length + subFolders.length) * parentFolders.length;
@@ -63,8 +81,30 @@ describe(FileSearchPlugin.name, (): void => {
             expect(actualLength).toBe(expectedLength);
         });
 
+        it("should return all files and folders (recursively) if recursive search is set to true", (): void => {
+            const recursiveSearch = true;
+            const options = parentFolders.map((folder: string): FileSearchOption => {
+                return {
+                    folderPath: folder,
+                    recursive: recursiveSearch,
+                };
+            });
+            const plugin = new FileSearchPlugin(options);
+            const actual = plugin.getAllItems();
+            const actualLength = actual.length;
+            const expectedLength = (parentFolders.length * subFolders.length * testFiles.length) + (parentFolders.length * testFiles.length);
+
+            expect(actualLength).toBe(expectedLength);
+        });
+
         it("all returned items should have name, execution argument and tags set", (): void => {
-            const plugin = new FileSearchPlugin(parentFolders);
+            const options = parentFolders.map((folder: string): FileSearchOption => {
+                return {
+                    folderPath: folder,
+                    recursive: false,
+                };
+            });
+            const plugin = new FileSearchPlugin(options);
             const actual = plugin.getAllItems();
 
             for (const item of actual) {
@@ -76,8 +116,14 @@ describe(FileSearchPlugin.name, (): void => {
         });
 
         it("should set the right icon", (): void => {
+            const options = parentFolders.map((folder: string): FileSearchOption => {
+                return {
+                    folderPath: folder,
+                    recursive: false,
+                };
+            });
             const iconSet = Injector.getIconSet(platform());
-            const plugin = new FileSearchPlugin(parentFolders);
+            const plugin = new FileSearchPlugin(options);
             const actual = plugin.getAllItems();
 
             const actualFiles = actual.filter((a) => {
