@@ -2,12 +2,22 @@
   "name": "ueli",
   "productName": "ueli",
   "version": "4.7.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oliverschwendener/ueli"
+  },
+  "homepage": "https://ueli.oliverschwendener.ch",
   "author": {
     "name": "Oliver Schwendener",
     "email": "oliver.schwendener@hotmail.com",
     "url": "https://github.com/oliverschwendener"
   },
   "description": "A keystroke launcher for Windows and macOS",
+  "os": [
+    "win32",
+    "darwin"
+  ],
   "keywords": [
     "keystroke",
     "launcher",
@@ -59,15 +69,10 @@
     "webpack-cli": "^2.0.11",
     "webpack-merge": "^4.1.2"
   },
-  "license": "MIT",
   "dependencies": {
     "electron-is-dev": "^0.3.0",
     "electron-updater": "^2.20.1",
     "fuse.js": "^3.2.0",
     "vue": "^2.5.13"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/oliverschwendener/ueli"
   }
 }
