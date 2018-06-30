@@ -2,7 +2,7 @@ import { lstatSync, readdirSync } from "fs";
 import { join } from "path";
 
 export class FileHelpers {
-    public static getFilesFromFolderRecursively(folderPath: string): string[] {
+    public static getFilesFromFolderRecursively(folderPath: string, includeFolders?: boolean): string[] {
         try {
             let result = [] as string[];
             const fileNames = FileHelpers.getFileNamesFromFolder(folderPath);
@@ -17,6 +17,9 @@ export class FileHelpers {
                         if (filePath.endsWith(".app")) {
                             result.push(filePath);
                         } else {
+                            if (includeFolders !== undefined && includeFolders) {
+                                result.push(filePath);
+                            }
                             result = result.concat(FileHelpers.getFilesFromFolderRecursively(filePath));
                         }
                     } else if (stats.isFile()) {

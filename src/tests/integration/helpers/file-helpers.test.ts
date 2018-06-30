@@ -46,35 +46,46 @@ describe(FileHelpers.name, (): void => {
 
     describe(FileHelpers.getFilesFromFolderRecursively.name, (): void => {
         const parentFolder = "parent-folder";
-        const subFolder = join(parentFolder, "sub-folder");
+
+        const subFolders = [
+            "sub-folder-1",
+            "sub-folder-2",
+        ];
+
         const subFolderFiles = [
-            join(subFolder, "sub-folder-file-1"),
-            join(subFolder, "sub-folder-file-2"),
-            join(subFolder, "sub-folder-file-3"),
+            "sub-folder-file-1",
+            "sub-folder-file-2",
+            "sub-folder-file-3",
         ];
 
         beforeEach((): void => {
             mkdirSync(parentFolder);
-            mkdirSync(subFolder);
 
-            for (const testFile of subFolderFiles) {
-                writeFileSync(testFile, "", "utf-8");
+            for (const subFolder of subFolders) {
+                mkdirSync(join(parentFolder, subFolder));
+
+                for (const testFile of subFolderFiles) {
+                    writeFileSync(join(parentFolder, subFolder, testFile), "", "utf-8");
+                }
             }
         });
 
         afterEach((): void => {
-            for (const testFile of subFolderFiles) {
-                unlinkSync(testFile);
+            for (const subFolder of subFolders) {
+                for (const testFile of subFolderFiles) {
+                    unlinkSync(join(parentFolder, subFolder, testFile));
+                }
+
+                rmdirSync(join(parentFolder, subFolder));
             }
 
-            rmdirSync(subFolder);
             rmdirSync(parentFolder);
         });
 
         it("should get all files recursively", (): void => {
             const files = FileHelpers.getFilesFromFolderRecursively(parentFolder);
             const actualLength = files.length;
-            const expectedLength = subFolderFiles.length;
+            const expectedLength = subFolderFiles.length + subFolderFiles.length;
 
             expect(actualLength).toBe(expectedLength);
         });
@@ -83,6 +94,15 @@ describe(FileHelpers.name, (): void => {
             const files = FileHelpers.getFilesFromFolderRecursively("this-folder-does-not-exist");
             const actualLength = files.length;
             const expectedLength = 0;
+
+            expect(actualLength).toBe(expectedLength);
+        });
+
+        it("should include subfolders when includeFolders is set to true", (): void => {
+            const includeFolders = true;
+            const files = FileHelpers.getFilesFromFolderRecursively(parentFolder, includeFolders);
+            const actualLength = files.length;
+            const expectedLength = subFolders.length + (subFolders.length * subFolderFiles.length);
 
             expect(actualLength).toBe(expectedLength);
         });
@@ -127,9 +147,9 @@ describe(FileHelpers.name, (): void => {
         it("should treat folders that end with '.app' like files", (): void => {
             const files = FileHelpers.getFilesFromFolderRecursively(parentFolder);
             const actualLength = files.length;
-            const expectedLength = subFolderFiles.length + 1;
+            const expectedLength = ((subFolders.length - 1) * subFolderFiles.length) + (subFolders.length - 1);
 
-            expect(actualLength).toBe(actualLength);
+            expect(actualLength).toBe(expectedLength);
         });
     });
 
