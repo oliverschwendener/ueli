@@ -75,6 +75,7 @@ function createMainWindow(): void {
     }
 
     registerGlobalHotKey();
+    watchConfigFile();
 
     if (!isInDevelopment) {
         checkForUpdates();
@@ -86,7 +87,7 @@ function createTrayIcon(): void {
     trayIcon = new Tray(Injector.getTrayIconPath(platform(), path.join(__dirname, "../")));
     trayIcon.setToolTip(UeliHelpers.productName);
     trayIcon.setContextMenu(Menu.buildFromTemplate([
-        { click: toggleWindow, label: "Show/Hide" },
+        { click: showWindow, label: "Show" },
         { click: quitApp, label: "Exit" },
     ]));
 }
@@ -112,32 +113,24 @@ function checkForUpdates(): void {
 
 function downloadUpdate(): void {
     autoUpdater.downloadUpdate();
-    addUpdateStatusToTrayIcon("Downloading update...");
 }
 
 autoUpdater.on("update-available", (): void => {
-    addUpdateStatusToTrayIcon("Download and install update", downloadUpdate);
-});
-
-autoUpdater.on("error", (): void => {
-    addUpdateStatusToTrayIcon("Update check failed");
+    addUpdateStatusToTrayIcon("Update is available");
+    ipcMain.emit(IpcChannels.ueliUpdateWasFound);
 });
 
 autoUpdater.on("update-not-available", (): void => {
     addUpdateStatusToTrayIcon(`${UeliHelpers.productName} is up to date`);
 });
 
+autoUpdater.on("error", (): void => {
+    addUpdateStatusToTrayIcon("Update check failed");
+});
+
 autoUpdater.on("update-downloaded", (): void => {
     autoUpdater.quitAndInstall();
 });
-
-function setAutostartSettings() {
-    app.setLoginItemSettings({
-        args: [],
-        openAtLogin: config.autoStartApp,
-        path: process.execPath,
-    });
-}
 
 function addUpdateStatusToTrayIcon(label: string, clickHandler?: any): void {
     const updateItem = clickHandler === undefined
@@ -151,6 +144,14 @@ function addUpdateStatusToTrayIcon(label: string, clickHandler?: any): void {
             { click: quitApp, label: "Exit" },
         ]));
     }
+}
+
+function setAutostartSettings() {
+    app.setLoginItemSettings({
+        args: [],
+        openAtLogin: config.autoStartApp,
+        path: process.execPath,
+    });
 }
 
 function toggleWindow(): void {
@@ -221,7 +222,16 @@ function resetWindowToDefaultSizeAndPosition(): void {
     updateWindowSize(0);
 }
 
+function watchConfigFile(): void {
+    fs.watchFile(UeliHelpers.configFilePath, reloadApp);
+}
+
+function unwatchConfigFile(): void {
+    fs.unwatchFile(UeliHelpers.configFilePath);
+}
+
 function quitApp(): void {
+    unwatchConfigFile();
     destroyTrayIcon();
     unregisterAllGlobalShortcuts();
     app.quit();
@@ -230,6 +240,7 @@ function quitApp(): void {
 ipcMain.on(IpcChannels.hideWindow, hideMainWindow);
 ipcMain.on(IpcChannels.ueliReload, reloadApp);
 ipcMain.on(IpcChannels.ueliExit, quitApp);
+ipcMain.on(IpcChannels.ueliUpdateUeli, downloadUpdate);
 
 ipcMain.on(IpcChannels.getSearch, (event: any, arg: string): void => {
     const userInput = arg;
