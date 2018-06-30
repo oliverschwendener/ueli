@@ -50,7 +50,7 @@ This is a keystroke launcher for Windows and macOS.
 * Press Enter to open the selected file/folder
 * You can [customize](#customization) the folders which are scanned for files and folders
 
-![Feature home folder](img/doc/features/ueli-feature-home-folder.png)
+![Feature file search](img/doc/features/ueli-feature-file-search.png)
 
 ### Open URLs with your default web browser
 
@@ -226,7 +226,9 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
     * `name` String - Represents the displayed name for the custom command
     * `icon` String - (Optional) Represents the svg icon for the custom command. If no icon is set default icon is used
 * `fallbackWebSearches` Array of string - Represents the names of [web search engines](#web-search-engines) used when ueli does not find any search results
-* `fileSearchFolders` Array of string - Represents the folders which are scanned for files and folders (not recursively)
+* `fileSearchOptions` Array of FileSearchOption objects
+    * `folderPath` String - Represents a folder which should be searched for files and folders
+    * `recursive` Boolean - If the specified folder should be searched recursively
 * `hotKey` String - Represents the hotkey to show/hide the window. [Available hot keys](https://github.com/electron/electron/blob/master/docs/api/accelerator.md)
 * `logExecution` Boolean - If ueli should log the execution of applications, files and folders for better search results. Set to `false` if you want to disable logging.
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed
