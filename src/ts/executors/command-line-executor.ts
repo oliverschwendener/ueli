@@ -5,10 +5,15 @@ import { Executor } from "./executor";
 import { IpcChannels } from "../ipc-channels";
 
 export class CommandLineExecutor implements Executor {
+    private encoding = "utf-8";
+
     public execute(executionArgument: string): void {
         const command = CommandLineHelpers.buildCommand(executionArgument);
 
         const commandLineTool = spawn(command.name, command.args);
+
+        commandLineTool.stderr.setEncoding(this.encoding);
+        commandLineTool.stdout.setEncoding(this.encoding);
 
         commandLineTool.on("error", (err) => {
             this.sendCommandLineOutputToRenderer(err.message);
