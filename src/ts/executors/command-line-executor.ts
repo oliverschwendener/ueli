@@ -12,6 +12,8 @@ export class CommandLineExecutor implements Executor {
 
         const commandLineTool = spawn(command.name, command.args);
 
+        this.sendCommandLineOutputToRenderer(`Started "${command.name}" with parameters: ${command.args.map((c) => `"${c}"`).join(", ")}`);
+
         commandLineTool.stderr.setEncoding(this.encoding);
         commandLineTool.stdout.setEncoding(this.encoding);
 
@@ -28,7 +30,7 @@ export class CommandLineExecutor implements Executor {
         });
 
         commandLineTool.on("exit", (code) => {
-            this.sendCommandLineOutputToRenderer(`Exit ${code}`);
+            this.sendCommandLineOutputToRenderer(`Exit ${code} `);
         });
 
         ipcMain.on(IpcChannels.exitCommandLineTool, () => {
