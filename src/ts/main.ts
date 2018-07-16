@@ -163,8 +163,10 @@ function toggleWindow(): void {
 }
 
 function updateWindowSize(searchResultCount: number): void {
-    const newWindowHeight = WindowHelpers.calculateWindowHeight(searchResultCount, config.maxSearchResultCount, config.userInputHeight, config.searchResultHeight);
-    mainWindow.setSize(config.windowWith, newWindowHeight);
+    if (mainWindow !== undefined && !mainWindow.isDestroyed) {
+        const newWindowHeight = WindowHelpers.calculateWindowHeight(searchResultCount, config.maxSearchResultCount, config.userInputHeight, config.searchResultHeight);
+        mainWindow.setSize(config.windowWith, newWindowHeight);
+    }
 }
 
 function showWindow() {
