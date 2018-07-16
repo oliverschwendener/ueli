@@ -5,15 +5,16 @@ import { Executor } from "./executor";
 import { IpcChannels } from "../ipc-channels";
 
 export class CommandLineExecutor implements Executor {
-    private encoding = "utf-8";
-
     public execute(executionArgument: string): void {
         const command = CommandLineHelpers.buildCommand(executionArgument);
 
         const commandLineTool = spawn(command.name, command.args);
 
-        commandLineTool.stderr.setEncoding(this.encoding);
-        commandLineTool.stdout.setEncoding(this.encoding);
+        const commandLineToolStartedMessage = (command.args !== undefined && command.args.length > 0)
+            ? `Started "${command.name}" with parameters: ${command.args.map((c) => `"${c}"`).join(", ")}`
+            : `Started "${command.name}"`;
+
+        this.sendCommandLineOutputToRenderer(commandLineToolStartedMessage);
 
         commandLineTool.on("error", (err) => {
             this.sendCommandLineOutputToRenderer(err.message);
@@ -28,7 +29,7 @@ export class CommandLineExecutor implements Executor {
         });
 
         commandLineTool.on("exit", (code) => {
-            this.sendCommandLineOutputToRenderer(`Exit ${code}`);
+            this.sendCommandLineOutputToRenderer(`Exit ${code} `);
         });
 
         ipcMain.on(IpcChannels.exitCommandLineTool, () => {
