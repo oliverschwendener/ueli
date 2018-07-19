@@ -84,6 +84,10 @@ function createMainWindow(): void {
 }
 
 function createTrayIcon(): void {
+    if (trayIcon !== undefined && !trayIcon.isDestroyed()) {
+        trayIcon.destroy();
+    }
+
     trayIcon = new Tray(Injector.getTrayIconPath(platform(), path.join(__dirname, "../")));
     trayIcon.setToolTip(UeliHelpers.productName);
     trayIcon.setContextMenu(Menu.buildFromTemplate([
