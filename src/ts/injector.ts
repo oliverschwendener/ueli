@@ -64,9 +64,11 @@ export class Injector {
   }
 
   public static getFilePathRegExp(platform: string): RegExp {
+    const globalAndIgnoreCaseRegexOption = "gi";
+
     switch (OperatingSystemHelpers.getOperatingSystemFromString(platform)) {
-      case OperatingSystem.Windows: return new RegExp(FilePathRegex.windowsFilePathRegExp, "gi");
-      case OperatingSystem.macOS: return new RegExp(FilePathRegex.macOsFilePathRegexp, "gi");
+      case OperatingSystem.Windows: return new RegExp(FilePathRegex.windowsFilePathRegExp, globalAndIgnoreCaseRegexOption);
+      case OperatingSystem.macOS: return new RegExp(FilePathRegex.macOsFilePathRegexp, globalAndIgnoreCaseRegexOption);
     }
   }
 
