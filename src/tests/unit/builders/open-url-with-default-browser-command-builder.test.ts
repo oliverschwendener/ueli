@@ -14,7 +14,7 @@ describe(OpenUrlWithDefaultBrowserCommandBuilder.name, (): void => {
 
     describe(OpenUrlWithDefaultBrowserCommandBuilder.buildWindowsCommand.name, (): void => {
         const url = "https://github.com";
-        const expected = `start "" "${url}"`;
+        const expected = `start explorer "${url}"`;
 
         const actual = OpenUrlWithDefaultBrowserCommandBuilder.buildWindowsCommand(url);
 

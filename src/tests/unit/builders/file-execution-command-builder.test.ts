@@ -15,7 +15,7 @@ describe(FileExecutionCommandBuilder.name, (): void => {
     describe(FileExecutionCommandBuilder.buildWindowsFileExecutionCommand.name, (): void => {
         it("should build the file execution command correctly for windows", (): void => {
             const filePath = "C:\\Users\\darth.vader\\file";
-            const expected = `start "" "${filePath}"`;
+            const expected = `start explorer "${filePath}"`;
 
             const actual = FileExecutionCommandBuilder.buildWindowsFileExecutionCommand(filePath);
 
