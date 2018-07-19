@@ -163,7 +163,7 @@ function toggleWindow(): void {
 }
 
 function updateWindowSize(searchResultCount: number): void {
-    if (mainWindow !== undefined && !mainWindow.isDestroyed) {
+    if (mainWindow !== undefined && !mainWindow.isDestroyed()) {
         const newWindowHeight = WindowHelpers.calculateWindowHeight(searchResultCount, config.maxSearchResultCount, config.userInputHeight, config.searchResultHeight);
         mainWindow.setSize(config.windowWith, newWindowHeight);
     }
