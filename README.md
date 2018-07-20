@@ -228,7 +228,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `fallbackWebSearches` Array of string - Represents the names of [web search engines](#web-search-engines) used when ueli does not find any search results
 * `fileSearchOptions` Array of FileSearchOption objects
     * `folderPath` String - Represents a folder which should be searched for files and folders
-    * `recursive` Boolean - If the specified folder should be searched recursively
+    * `recursive` Boolean - If the specified folder should be searched recursively. **Be cautious with this option because it can slow down the application drastically.**
 * `hotKey` String - Represents the hotkey to show/hide the window. [Available hot keys](https://github.com/electron/electron/blob/master/docs/api/accelerator.md)
 * `logExecution` Boolean - If ueli should log the execution of applications, files and folders for better search results. Set to `false` if you want to disable logging.
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed
