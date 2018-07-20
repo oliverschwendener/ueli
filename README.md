@@ -206,9 +206,13 @@ You can customize multiple fallback web search engines which are used if ueli do
 
 ### Updater
 
-To check if a new version is available right click on the tray icon. The first item in the context menu shows you if there is an update available or if you are running the latest version. If there is an update available click on "Download and install update".
+To check if a new version is available right click on the tray icon. The first item in the context menu shows you if there is an update available or if you are running the latest version.
 
-![Updater](img/doc/ueli-updater.png)
+![Update available](img/doc/ueli-update-is-available.png)
+
+If there is an update available search for "Download and install update" and hit enter:
+
+![Download and install update](img/doc/ueli-download-and-install-update.png)
 
 ## Customization
 
