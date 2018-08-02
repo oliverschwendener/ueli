@@ -220,6 +220,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 
 ### Options
 
+* `allowMouseInteraction` Boolean - If mouse interaction should be allowed.
 * `alwaysShowOnPrimaryDisplay` Boolean - If ueli should always show up your the primary display. If set to false ueli will show up on the display your cursor is currently on.
 * `applicationFileExtensions` Array of string - Represents the file extensions which are used to find applications in the specified folders
 * `applicationFolders` Array of string - Represents the folders which are scanned for applications
