@@ -1,7 +1,4 @@
-import * as fs from "fs";
 import * as os from "os";
-import * as path from "path";
-import { FileHelpers } from "../helpers/file-helpers";
 import { IconSet } from "../icon-sets/icon-set";
 import { Injector } from "../injector";
 import { Program } from "../programs-plugin/program";

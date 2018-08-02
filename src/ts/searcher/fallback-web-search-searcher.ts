@@ -1,6 +1,5 @@
 import { Searcher } from "./searcher";
 import { SearchResultItem } from "../search-result-item";
-import { ConfigOptions } from "../config-options";
 import { WebSearch } from "../web-search";
 import { WebSearchBuilder } from "../builders/web-search-builder";
 

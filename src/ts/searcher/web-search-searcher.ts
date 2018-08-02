@@ -3,7 +3,6 @@ import { WebSearch } from "../web-search";
 import { Searcher } from "./searcher";
 import { NoWebSearchErrorFoundError } from "../errors/no-websearch-found-error";
 import { WebSearchHelpers } from "../helpers/web-search-helper";
-import { defaultConfig } from "../default-config";
 import { WebSearchBuilder } from "../builders/web-search-builder";
 
 export class WebSearchSearcher implements Searcher {

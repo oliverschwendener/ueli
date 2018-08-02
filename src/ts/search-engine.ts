@@ -1,8 +1,6 @@
 import * as Fuse from "fuse.js";
-import { SearchPlugin } from "./search-plugins/search-plugin";
 import { SearchResultItem } from "./search-result-item";
 import { CountManager } from "./count-manager";
-import { ConfigOptions } from "./config-options";
 
 export class SearchEngine {
     private unsortedSearchResults: SearchResultItem[];

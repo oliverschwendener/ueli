@@ -1,4 +1,3 @@
-import { WebUrlExecutor } from "../executors/web-url-executor";
 import { join } from "path";
 import { homedir } from "os";
 

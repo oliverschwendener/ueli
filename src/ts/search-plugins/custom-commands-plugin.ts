@@ -2,7 +2,6 @@ import { SearchPlugin } from "./search-plugin";
 import { SearchResultItem } from "../search-result-item";
 import { CustomCommand } from "../custom-command";
 import { StringHelpers } from "../helpers/string-helpers";
-import { UeliHelpers } from "../helpers/ueli-helpers";
 
 export class CustomCommandsPlugin implements SearchPlugin {
     private items: SearchResultItem[];

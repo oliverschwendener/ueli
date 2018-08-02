@@ -1,5 +1,3 @@
-import { Injector } from "../injector";
-
 export class StringHelpers {
     public static removeWhiteSpace(value: string): string {
         return value.replace(/\s/g, "");

@@ -28,7 +28,7 @@ export class WebSearchExecutor implements Executor {
         for (const webSearch of this.webSearches) {
             if (executionArgument.startsWith(`${webSearch.prefix}${WebSearchHelpers.webSearchSeparator}`)) {
                 const command = Injector.getOpenUrlWithDefaultBrowserCommand(platform(), executionArgument);
-                exec(command, (err, stout, sterr) => {
+                exec(command, (err) => {
                     if (err) {
                         throw err;
                     }

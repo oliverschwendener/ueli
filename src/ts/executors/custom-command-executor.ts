@@ -5,7 +5,7 @@ import { UeliHelpers } from "../helpers/ueli-helpers";
 export class CustomCommandExecutor implements Executor {
     public execute(executionArgument: string): void {
         executionArgument = executionArgument.replace(UeliHelpers.customCommandPrefix, "");
-        exec(executionArgument, (err: Error, stout: string, sterr: string): void => {
+        exec(executionArgument, (err): void => {
             if (err) {
                 throw err;
             }

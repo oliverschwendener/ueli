@@ -6,7 +6,7 @@ export class WindowsSettingsExecutor implements Executor {
     public execute(executionArgument: string): void {
         const command = this.replacePrefix(executionArgument);
 
-        exec(`start ${command}`, (err, stdout, sterr): void => {
+        exec(`start ${command}`, (err): void => {
             if (err) {
                 throw err;
             }

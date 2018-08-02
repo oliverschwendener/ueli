@@ -1,6 +1,4 @@
 import * as fs from "fs";
-import * as os from "os";
-import * as path from "path";
 import { ConfigOptions } from "./config-options";
 
 export class ConfigFileRepository {
@@ -21,8 +19,7 @@ export class ConfigFileRepository {
             const fileContent = fs.readFileSync(this.configFilePath, "utf-8");
             const parsed = JSON.parse(fileContent) as ConfigOptions;
 
-            // Apply defaults if some settings are not set
-            const mergedConfig = Object.assign(this.defaultConfig, parsed);
+            const mergedConfig = Object.assign(this.defaultConfig, parsed); // Apply defaults if some settings are not set
 
             return mergedConfig;
         } catch (err) {

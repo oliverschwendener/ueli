@@ -13,7 +13,6 @@ import { WebUrlInputValidator } from "./input-validators/web-url-input-validator
 import { SearchPluginsSearcher } from "./searcher/search-plugins-searcher";
 import { SearchPluginsInputValidator } from "./input-validators/search-plugins-input-validator";
 import { InputValidatorSearcherCombination } from "./input-validator-searcher-combination";
-import { defaultConfig } from "./default-config";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { ConfigOptions } from "./config-options";
 import { CountManager } from "./count-manager";

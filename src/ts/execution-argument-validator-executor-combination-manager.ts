@@ -17,8 +17,6 @@ import { WindowsSettingsExecutionArgumentValidator } from "./execution-argument-
 import { WindowsSettingsExecutor } from "./executors/windows-settings-executor";
 import { MacOsSettingsExecutor } from "./executors/mac-os-settings-executor";
 import { MacOsSettingsExecutionArgumentValidator } from "./execution-argument-validators/mac-os-execution-argument-validator";
-import { defaultConfig } from "./default-config";
-import { UeliHelpers } from "./helpers/ueli-helpers";
 import { ConfigOptions } from "./config-options";
 import { WebSearch } from "./web-search";
 import { CustomCommandExecutor } from "./executors/custom-command-executor";
