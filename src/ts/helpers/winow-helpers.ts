@@ -1,8 +1,5 @@
 export class WindowHelpers {
-    public static calculateWindowHeight(searchResultCount: number,
-                                        maxSearchResultCount: number,
-                                        userInputHeight: number,
-                                        searchResultHeight: number): number {
+    public static calculateWindowHeight(searchResultCount: number, maxSearchResultCount: number, userInputHeight: number, searchResultHeight: number): number {
         return searchResultCount >= maxSearchResultCount
             ? WindowHelpers.calculateMaxWindowHeight(userInputHeight, maxSearchResultCount, searchResultHeight)
             : userInputHeight + (searchResultCount * searchResultHeight);
