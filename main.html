@@ -25,9 +25,9 @@
                     <pre v-for="line in commandLineOutput">{{ line }}</pre>
                 </div>
 
-                <div class="search-results-container" :class="{ 'hidden' : searchResults.length === 0}" v-on:mousemove="handleMouseMove">
+                <div class="search-results-container" :class="{ 'hidden' : searchResults.length === 0}">
                     <div :id="searchResult.id" class="search-result" :style="searchResultHeight()" :class="{ 'active' : searchResult.active }"
-                        v-for="(searchResult, searchIndex) in searchResults" v-on:mouseover="handleMouseOver(searchIndex)" v-on:click="handleClick(searchIndex)">
+                        v-for="(searchResult, searchIndex) in searchResults" v-on:click="handleClick" v-on:mouseenter="handleMouseEnter(searchIndex)">
                         <div class="search-result-icon">
                             <div class="search-result-icon-container" :style="searchResultIconStyle()" :class="{ 'active' : searchResult.active }" v-html="searchResult.icon"></div>
                         </div>

@@ -23,7 +23,6 @@ const vue = new Vue({
     data: {
         autoFocus: true,
         commandLineOutput: [] as string[],
-        isMouseMoving: false,
         searchIcon: iconSet.searchIcon,
         searchResults: [] as SearchResultItemViewModel[],
         stylesheetPath: `./build/${config.colorTheme}.css`,
@@ -31,9 +30,11 @@ const vue = new Vue({
     },
     el: "#vue-root",
     methods: {
-        handleClick: (index: number): void => {
-            handleEnterPress();
-            focusOnInput();
+        handleClick: (): void => {
+            if (config.allowMouseInteraction) {
+                handleEnterPress();
+                focusOnInput();
+            }
         },
         handleKeyPress: (event: KeyboardEvent): void => {
             if (event.key === "Enter") {
@@ -42,13 +43,11 @@ const vue = new Vue({
                 handleOpenFileLocation();
             } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
                 event.preventDefault();
-
                 if (event.shiftKey) {
                     event.preventDefault();
                     const direction = event.key === "ArrowUp" ? "prev" : "next";
                     handleInputHistoryBrowsing(direction);
                 } else {
-                    vue.isMouseMoving = false;
                     const direction = event.key === "ArrowDown" ? "next" : "prev";
                     changeActiveItem(direction);
                 }
@@ -63,18 +62,9 @@ const vue = new Vue({
                 ipcRenderer.send(IpcChannels.showHelp);
             }
         },
-        handleMouseMove: (event: MouseEvent): void => {
-            if (event.movementX !== 0 || event.movementY !== 0) {
-                vue.isMouseMoving = true;
-            }
-        },
-        handleMouseOver: (index: number): void => {
-            if (vue.isMouseMoving) {
-                vue.isMouseMoving = false;
-                vue.searchResults.forEach((searchResultItem: SearchResultItemViewModel) => {
-                    searchResultItem.active = false;
-                });
-                vue.searchResults[index].active = true;
+        handleMouseEnter: (index: number): void => {
+            if (config.allowMouseInteraction) {
+                changeActiveItemByIndex(index);
             }
         },
         outputContainerHeight: (): string => {
@@ -155,7 +145,6 @@ function updateSearchResults(searchResults: SearchResultItemViewModel[]): void {
 
 function changeActiveItem(direction: string): void {
     if (vue.searchResults.length === 0) {
-        vue.isMouseMoving = false;
         return;
     }
 
@@ -169,10 +158,6 @@ function changeActiveItem(direction: string): void {
         }
     }
 
-    vue.searchResults.forEach((searchResultItem: SearchResultItemViewModel) => {
-        searchResultItem.active = false;
-    });
-
     if (nextIndex === undefined) {
         return;
     }
@@ -183,8 +168,16 @@ function changeActiveItem(direction: string): void {
         nextIndex = 0;
     }
 
-    vue.searchResults[nextIndex].active = true;
+    changeActiveItemByIndex(nextIndex);
     scrollIntoView(vue.searchResults[nextIndex]);
+}
+
+function changeActiveItemByIndex(index: number): void {
+    vue.searchResults.forEach((searchResultItem: SearchResultItemViewModel) => {
+        searchResultItem.active = false;
+    });
+
+    vue.searchResults[index].active = true;
 }
 
 function scrollIntoView(searchResult: SearchResultItemViewModel): void {

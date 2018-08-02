@@ -3,6 +3,7 @@ import { CustomCommand } from "./custom-command";
 import { FileSearchOption } from "./file-search-option";
 
 export interface ConfigOptions {
+    allowMouseInteraction: boolean;
     alwaysShowOnPrimaryDisplay: boolean;
     applicationFileExtensions: string[];
     applicationFolders: string[];

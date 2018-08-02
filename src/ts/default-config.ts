@@ -5,6 +5,7 @@ import { OperatingSystem } from "./operating-system";
 import { WebSearch } from "./web-search";
 
 export const defaultConfig: ConfigOptions = {
+    allowMouseInteraction: true,
     alwaysShowOnPrimaryDisplay: false,
     applicationFileExtensions: OperatingSystemHelpers.getOperatingSystemFromString(platform()) === OperatingSystem.Windows
         ? [".lnk", ".appref-ms", ".url", ".exe"]
