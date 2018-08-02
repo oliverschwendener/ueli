@@ -40,6 +40,7 @@ export const defaultConfig: ConfigOptions = {
     showTrayIcon: true,
     userInputFontSize: 36,
     userInputHeight: 80,
+    userStylesheet: "",
     webSearches: [
         {
             icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">

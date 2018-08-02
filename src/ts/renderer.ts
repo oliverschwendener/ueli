@@ -2,12 +2,12 @@ import { SearchResultItemViewModel } from "./search-result-item-view-model";
 import { IpcChannels } from "./ipc-channels";
 import { platform } from "os";
 import { ipcRenderer } from "electron";
-import Vue from "vue";
 import { ConfigFileRepository } from "./config-file-repository";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { defaultConfig } from "./default-config";
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { Injector } from "./injector";
+import Vue from "vue";
 
 const config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
 const userInputHistoryManager = new UserInputHistoryManager();
@@ -18,11 +18,13 @@ document.addEventListener("keyup", handleGlobalKeyPress);
 const vue = new Vue({
     data: {
         autoFocus: true,
+        colorTheme: `./styles/${config.colorTheme}.css`,
         commandLineOutput: [] as string[],
         searchIcon: iconSet.searchIcon,
         searchResults: [] as SearchResultItemViewModel[],
-        stylesheetPath: `./styles/${config.colorTheme}.css`,
         userInput: "",
+        userStylesheet: `file:///${config.userStylesheet}`,
+        userStylesheetIsAvailable: config.userStylesheet !== undefined && config.userStylesheet.length > 0,
     },
     el: "#vue-root",
     methods: {

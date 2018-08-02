@@ -10,8 +10,9 @@
 <body>
 
     <div id="vue-root">
-        <link rel="stylesheet" :href="stylesheetPath">
         <link rel="stylesheet" href="./styles/app.css">
+        <link rel="stylesheet" :href="colorTheme">
+        <link rel="stylesheet" v-if="userStylesheetIsAvailable" :href="userStylesheet">
 
         <div class="container">
 

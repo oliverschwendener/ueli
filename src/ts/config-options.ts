@@ -25,6 +25,7 @@ export interface ConfigOptions {
     showTrayIcon: boolean;
     userInputHeight: number;
     userInputFontSize: number;
+    userStylesheet: string;
     webSearches: WebSearch[];
     windowWith: number;
 }

@@ -246,6 +246,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `searchResultNameFontSize` Number - Represents the font size of the search result name in pixels
 * `userInputFontSize` Number - Represents the font size of the user input in pixels
 * `userInputHeight` Number - Represents the height of the user input box in pixels
+* `userStylesheet` String - Represents a path to a local stylesheet to modify the appearance of the window.
 * `webSearches` Array of webSearch Objects - A list of [web search engines](#web-search-engines)
     * `webSearch` Object - Defines a web search engine
         * `icon` String - Represents the svg icon for the specific web search engine
@@ -263,6 +264,31 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `dark-mono`
 * `light`
 * `light-mono`
+
+#### Custom color themes
+
+You can customize your own color theme with a CSS file on your computer!
+
+1. Create a CSS file on your computer.
+2. Add CSS variables in the `:root` section. For example:
+
+    ``` CSS
+    :root {
+        --background-color: #21252b;
+        --text-color: #ccc;
+        --accent-color: #333842;
+        --accent-text-color: #fff;
+        --mono-font-color: #ccc;
+        --scrollbar-foreground-color: #3d444f;
+        --scrollbar-background-color: #1f2328;
+    }
+    ```
+
+3. In the [customization](#customization) set `userStylesheet` to the CSS file you just created.
+
+4. Reload ueli.
+
+> You can completly overwrite uelis behaviour with your CSS file! See the [base stylesheet](https://github.com/oliverschwendener/ueli/tree/master/styles/app.css) of ueli.
 
 ## Privacy
 
