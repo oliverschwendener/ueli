@@ -52,5 +52,4 @@ export class CommandLineExecutor implements Executor {
     private sendCommandLineOutputToRenderer(data: string): void {
         ipcMain.emit(IpcChannels.commandLineExecution, data);
     }
-
 }
