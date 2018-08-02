@@ -1,0 +1,147 @@
+:root {
+    --side-padding: 15px;
+    --scrollbar-size: 8px;
+    --icon-size: 55%;
+
+    --font-family: "Segoe UI", "Helvetica";
+    --font-family-mono: "Consolas", "Courier", monospace;
+}
+
+body {    
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+div.container {
+    display: flex;
+    flex-direction: column;
+}
+
+div.user-input-container {
+    display: flex;
+    padding: 0 var(--side-padding);
+}
+
+input.user-input {
+    font-family: var(--font-family);
+    font-weight: 200;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    background: transparent;
+    color: var(--text-color);
+}
+
+input.user-input:focus {
+    outline: none;
+}
+
+div.search-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.search-icon-container > svg {
+    width: var(--icon-size);
+    fill: var(--text-color);
+}
+
+div.output-container {
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+div.command-line-output-container {
+    padding: var(--side-padding);
+}
+
+div.command-line-output-container > pre {
+    font-family: var(--font-family-mono);
+    color: var(--mono-font-color);
+    margin: 0;
+}
+
+div.search-results-container {    
+    width: 100%;
+    height: 100%;
+}   
+
+div.search-result {
+    font-family: var(--font-family);
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+}
+
+div.search-result.active {
+    background: var(--accent-color);
+    color: var(--accent-text-color);
+}
+
+div.search-result-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.search-result-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.search-result-icon-container > svg {
+    width: var(--icon-size);
+    fill: var(--text-color);
+}
+
+div.search-result-icon-container.active > svg {
+    fill: var(--accent-text-color);
+}
+
+div.search-result-information {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+div.hidden {
+    display: none;
+}
+
+span {        
+    display: block;
+    white-space: nowrap;
+}
+
+span.search-result-name.active {
+    font-family: var(--font-family);
+    font-weight: 600;
+}
+
+span.search-result-execution-argument {
+    transition: all 250ms ease-in-out;
+    font-weight: 200;
+    display: none;  
+}
+
+span.search-result-execution-argument.active {
+    display: block;
+}
+
+::-webkit-scrollbar {
+    width: var(--scrollbar-size);
+    height: var(--scrollbar-size);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-foreground-color);
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-background-color);
+}

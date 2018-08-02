@@ -1,6 +1,4 @@
 import { Injector } from "../../ts/injector";
-import { platform } from "os";
-import { OperatingSystem } from "../../ts/operating-system";
 import { WindowsIconSet } from "../../ts/icon-sets/windows-icon-set";
 import { MacOsIconSet } from "../../ts/icon-sets/mac-os-icon-set";
 import { Windows10SettingsSearchPlugin } from "../../ts/search-plugins/windows-10-settings-plugin";
@@ -11,10 +9,7 @@ import { FileExecutionCommandBuilder } from "../../ts/builders/file-execution-co
 import { FileLocationExecutionCommandBuilder } from "../../ts/builders/file-location-execution-command-builder";
 import { FilePathRegex } from "../../ts/file-path-regex";
 import { OpenUrlWithDefaultBrowserCommandBuilder } from "../../ts/builders/open-url-with-default-browser-command-builder";
-import { SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG } from "constants";
-import { StylesheetPath } from "../../ts/builders/stylesheet-path-builder";
 import { TrayIconPathBuilder } from "../../ts/builders/tray-icon-path-builder";
-import { OperatingSystemNotSupportedError } from "../../ts/errors/operatingsystem-not-supported-error";
 
 const win = "win32";
 const mac = "darwin";
@@ -89,16 +84,6 @@ describe(Injector.name, () => {
 
             expect(actualWin instanceof Windows10SettingsSearchPlugin).toBe(true);
             expect(actualMac instanceof MacOsSettingsPlugin).toBe(true);
-        });
-    });
-
-    describe(Injector.getStyleSheetPath.name, () => {
-        it("should return a stylesheet path", () => {
-            const actualWin = Injector.getStyleSheetPath(win);
-            const actualMac = Injector.getStyleSheetPath(mac);
-
-            expect(actualWin).toBe(StylesheetPath.Windows);
-            expect(actualMac).toBe(StylesheetPath.MacOs);
         });
     });
 

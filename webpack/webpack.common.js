@@ -24,26 +24,6 @@ module.exports = {
             loader: "file-loader"
           }
         ]
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: "file-loader",
-            options: {
-              name: "[name].css"
-            }
-          },
-          {
-            loader: "extract-loader"
-          },
-          {
-            loader: "css-loader"
-          },
-          {
-            loader: "sass-loader"
-          }
-        ]
       }
     ]
   }

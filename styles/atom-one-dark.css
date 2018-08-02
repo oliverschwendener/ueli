@@ -1,0 +1,9 @@
+:root {
+    --background-color: #21252b;
+    --text-color: #ccc;
+    --accent-color: #333842;
+    --accent-text-color: #fff;
+    --mono-font-color: #ccc;
+    --scrollbar-foreground-color: #3d444f;
+    --scrollbar-background-color: #1f2328;
+}

@@ -2,17 +2,13 @@ import { SearchResultItemViewModel } from "./search-result-item-view-model";
 import { IpcChannels } from "./ipc-channels";
 import { platform } from "os";
 import { ipcRenderer } from "electron";
-import * as macStyles from "../scss/mac.scss";
-import * as windowsStyles from "../scss/windows.scss";
 import Vue from "vue";
 import { ConfigFileRepository } from "./config-file-repository";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { defaultConfig } from "./default-config";
-import { ColorThemeLoader } from "./color-theme-loader";
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { Injector } from "./injector";
 
-const colorThemeLoader = new ColorThemeLoader();
 const config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
 const userInputHistoryManager = new UserInputHistoryManager();
 const iconSet = Injector.getIconSet(platform());
@@ -25,7 +21,7 @@ const vue = new Vue({
         commandLineOutput: [] as string[],
         searchIcon: iconSet.searchIcon,
         searchResults: [] as SearchResultItemViewModel[],
-        stylesheetPath: `./build/${config.colorTheme}.css`,
+        stylesheetPath: `./styles/${config.colorTheme}.css`,
         userInput: "",
     },
     el: "#vue-root",
