@@ -25,7 +25,7 @@ This is a keystroke launcher for Windows and macOS.
 > Note: because the executables are not signed Windows will probably prevent you from executing the installer or the program itself. You can click "Run anyway" to install/run the program.
 
 * Download the latest version [here](https://github.com/oliverschwendener/ueli/releases)
-* Run the installer or unzip
+* Run the installer or unzip or choco install ueli
 * Run the application
 
 ## Quick tutorial
