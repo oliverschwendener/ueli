@@ -42,12 +42,15 @@ export class FilePathSearcher implements Searcher {
         const files = FileHelpers.getFilesFromFolder(folderPath);
 
         for (const file of files) {
+            const fileName = path.basename(file);
+
             result.push({
                 executionArgument: file,
                 icon: fs.lstatSync(file).isDirectory()
                     ? this.iconSet.folderIcon
                     : this.iconSet.fileIcon,
-                name: path.basename(file),
+                name: fileName,
+                searchable: [fileName],
                 tags: [],
             } as SearchResultItem);
         }
@@ -63,11 +66,14 @@ export class FilePathSearcher implements Searcher {
     }
 
     private getFileSearchResult(filePath: string): SearchResultItem[] {
+        const fileName = path.basename(filePath);
+
         return [
             {
                 executionArgument: filePath,
                 icon: this.iconSet.fileIcon,
-                name: path.basename(filePath),
+                name: fileName,
+                searchable: [fileName],
                 tags: [],
             } as SearchResultItem,
         ];

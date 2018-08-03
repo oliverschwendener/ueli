@@ -14,6 +14,7 @@ export class CalculatorSearcher implements Searcher {
                 executionArgument: "",
                 icon: this.icon,
                 name: `= ${result}`,
+                searchable: [],
                 tags: [],
             } as SearchResultItem,
         ];

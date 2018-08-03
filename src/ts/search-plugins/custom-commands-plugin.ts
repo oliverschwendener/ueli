@@ -26,6 +26,7 @@ export class CustomCommandsPlugin implements SearchPlugin {
                     ? this.defaultIcon
                     : customCommand.icon,
                 name: customCommand.name,
+                searchable: [customCommand.name],
                 tags: [],
             });
         }

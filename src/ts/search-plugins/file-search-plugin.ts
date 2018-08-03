@@ -24,7 +24,7 @@ export class FileSearchPlugin implements SearchPlugin {
     }
 
     private loadFilesAndFolders(): SearchResultItem[] {
-        const result = [];
+        const result = [] as SearchResultItem[];
 
         if (this.fileSearchOptions.length > 0) {
             for (const option of this.fileSearchOptions) {
@@ -34,13 +34,15 @@ export class FileSearchPlugin implements SearchPlugin {
 
                 for (const file of files) {
                     const stats = fs.lstatSync(file);
+                    const fileName = path.basename(file);
 
                     result.push({
                         executionArgument: file,
                         icon: stats.isDirectory()
                             ? this.iconSet.folderIcon
                             : this.iconSet.fileIcon,
-                        name: path.basename(file),
+                        name: fileName,
+                        searchable: [fileName],
                         tags: [],
                     });
                 }

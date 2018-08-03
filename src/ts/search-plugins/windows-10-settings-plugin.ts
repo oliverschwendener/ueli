@@ -9,7 +9,7 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                                 </g>
                             </svg>`;
 
-    private items = [] as SearchResultItem[];
+    private items: SearchResultItem[] = [];
 
     constructor() {
         this.addToItems(this.getSystemSettings());
@@ -30,7 +30,15 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
     }
 
     public getAllItems(): SearchResultItem[] {
-        return this.items;
+        return this.items.map((item: SearchResultItem): SearchResultItem => {
+            return {
+                executionArgument: item.executionArgument,
+                icon: item.icon,
+                name: item.name,
+                searchable: [item.name],
+                tags: item.tags,
+            };
+        });
     }
 
     private addToItems(items: SearchResultItem[]) {

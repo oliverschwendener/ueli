@@ -21,6 +21,7 @@ export class EnvironmentVariablePlugin implements SearchPlugin {
                 executionArgument: this.variableCollection[variableName],
                 icon: this.icon,
                 name: variableName,
+                searchable: [variableName],
                 tags: [],
             });
         }

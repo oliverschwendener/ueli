@@ -17,6 +17,7 @@ export class EmailAddressSearcher implements Searcher {
                 executionArgument: `mailto:${userInput}`,
                 icon: this.iconSet.emailIcon,
                 name: `Send an email to ${userInput}`,
+                searchable: [],
                 tags: [],
             } as SearchResultItem,
         ];

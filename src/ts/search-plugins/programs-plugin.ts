@@ -21,6 +21,7 @@ export class ProgramsPlugin implements SearchPlugin {
                 executionArgument: program.executionArgument,
                 icon: this.iconSet.programIcon,
                 name: program.name,
+                searchable: [program.name],
                 tags: [],
             } as SearchResultItem;
         });

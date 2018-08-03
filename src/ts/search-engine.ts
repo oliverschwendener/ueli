@@ -15,7 +15,7 @@ export class SearchEngine {
         const fuse = new Fuse(this.unsortedSearchResults, {
             distance: 100,
             includeScore: true,
-            keys: ["name", "tags"],
+            keys: ["searchable", "tags"],
             location: 0,
             maxPatternLength: 32,
             minMatchCharLength: 1,
@@ -34,6 +34,7 @@ export class SearchEngine {
                 executionArgument: fuseResult.item.executionArgument,
                 icon: fuseResult.item.icon,
                 name: fuseResult.item.name,
+                searchable: fuseResult.item.searchable,
                 tags: fuseResult.item.tags,
             } as SearchResultItem;
         });

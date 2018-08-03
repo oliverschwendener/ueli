@@ -6,7 +6,7 @@ export class MacOsSettingsPlugin implements SearchPlugin {
     private items: SearchResultItem[];
 
     constructor() {
-        this.items = [
+        const items = [
             {
                 executionArgument: `${MacOsSettingsHelpers.macOsSettingsPrefix}osascript -e \'tell app "System Events" to shut down\'`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" version="1.1">
@@ -46,6 +46,16 @@ export class MacOsSettingsPlugin implements SearchPlugin {
                 tags: [],
             },
         ];
+
+        this.items = items.map((item): SearchResultItem => {
+            return {
+                executionArgument: item.executionArgument,
+                icon: item.icon,
+                name: item.name,
+                searchable: [item.name],
+                tags: item.tags,
+            };
+        });
     }
 
     public getAllItems(): SearchResultItem[] {

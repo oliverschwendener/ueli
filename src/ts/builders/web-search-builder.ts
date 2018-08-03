@@ -23,6 +23,7 @@ export class WebSearchBuilder {
             executionArgument: WebSearchBuilder.buildExecutionUrl(userInput, webSearch),
             icon: webSearch.icon,
             name: searchResultItemName,
+            searchable: [],
             tags: [],
         } as SearchResultItem;
     }

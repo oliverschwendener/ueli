@@ -55,6 +55,7 @@ export class UeliCommandsSearchPlugin implements SearchPlugin {
                 executionArgument: i.executionArgument,
                 icon: this.icon,
                 name: i.name,
+                searchable: [i.name],
                 tags: [],
             } as SearchResultItem;
         });
