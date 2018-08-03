@@ -11,6 +11,7 @@ export class CalculatorSearcher implements Searcher {
         const result = math.eval(userInput);
         return [
             {
+                description: "",
                 executionArgument: "",
                 icon: this.icon,
                 name: `= ${result}`,

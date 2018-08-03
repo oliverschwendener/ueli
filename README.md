@@ -222,38 +222,38 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 
 * `allowMouseInteraction` Boolean - If mouse interaction should be allowed.
 * `alwaysShowOnPrimaryDisplay` Boolean - If ueli should always show up your the primary display. If set to false ueli will show up on the display your cursor is currently on.
-* `applicationFileExtensions` Array of string - Represents the file extensions which are used to find applications in the specified folders
-* `applicationFolders` Array of string - Represents the folders which are scanned for applications
-* `autoStartApp` Boolean - If the app should be started automatically when you log in
+* `applicationFileExtensions` Array of string - Represents the file extensions which are used to find applications in the specified folders.
+* `applicationFolders` Array of string - Represents the folders which are scanned for applications.
+* `autoStartApp` Boolean - If the app should be started automatically when you log in.
 * `colorTheme` String - Defines the [color theme](#color-themes).
-* `customCommands` Arraay of customCommand objects - A list of [custom commands](#custom-commands)
-    * `executionArgument` String - Represents the execution argument for the custom command
-    * `name` String - Represents the displayed name for the custom command
-    * `icon` String - (Optional) Represents the svg icon for the custom command. If no icon is set default icon is used
-* `fallbackWebSearches` Array of string - Represents the names of [web search engines](#web-search-engines) used when ueli does not find any search results
-* `fileSearchOptions` Array of FileSearchOption objects
-    * `folderPath` String - Represents a folder which should be searched for files and folders
+* `customCommands` Arraay of customCommand objects - A list of [custom commands](#custom-commands).
+    * `executionArgument` String - Represents the execution argument for the custom command.
+    * `name` String - Represents the displayed name for the custom command.
+    * `icon` String - (Optional) Represents the svg icon for the custom command. If no icon is set default icon is used.
+* `fallbackWebSearches` Array of string - Represents the names of [web search engines](#web-search-engines) used when ueli does not find any search results.
+* `fileSearchOptions` Array of FileSearchOption objects.
+    * `folderPath` String - Represents a folder which should be searched for files and folders.
     * `recursive` Boolean - If the specified folder should be searched recursively. **Be cautious with this option because it can slow down the application drastically.**
-* `hotKey` String - Represents the hotkey to show/hide the window. [Available hot keys](https://github.com/electron/electron/blob/master/docs/api/accelerator.md)
+* `hotKey` String - Represents the hotkey to show/hide the window ([Available hot keys](https://github.com/electron/electron/blob/master/docs/api/accelerator.md)=.
 * `logExecution` Boolean - If ueli should log the execution of applications, files and folders for better search results. Set to `false` if you want to disable logging.
-* `maxSearchResultCount` Number - Maximum number of search results to be displayed
-* `rescanInterval` Number - Interval in seconds to rescan the application folders
-* `searchEngineThreshold` Number - Represents the threshold for fuzzy matching (min = 0, max = 1, lower means you have to be more precise with the user input)
-* `searchEnvironmentVariables` Boolean - If environment variables should appear in the search results
-* `searchOperatingSystemSettings` Boolean - If operting system settings and commands should appear in the search results
-* `searchResultExecutionArgumentFontSize` Number - Represents the font size of the search result execution argument in pixels
-* `searchResultHeight` Number - Represents the height of a search result box in pixels
-* `searchResultNameFontSize` Number - Represents the font size of the search result name in pixels
-* `userInputFontSize` Number - Represents the font size of the user input in pixels
-* `userInputHeight` Number - Represents the height of the user input box in pixels
+* `maxSearchResultCount` Number - Maximum number of search results to be displayed.
+* `rescanInterval` Number - Interval in seconds to rescan the application folders.
+* `searchEngineThreshold` Number - Represents the threshold for fuzzy matching (min = 0, max = 1, lower means you have to be more precise with the user input).
+* `searchEnvironmentVariables` Boolean - If environment variables should appear in the search results.
+* `searchOperatingSystemSettings` Boolean - If operting system settings and commands should appear in the search results.
+* `searchResultDescriptionFontSize` Number - Represents the font size of the search result description in pixels.
+* `searchResultHeight` Number - Represents the height of a search result box in pixels.
+* `searchResultNameFontSize` Number - Represents the font size of the search result name in pixels.
+* `userInputFontSize` Number - Represents the font size of the user input in pixels.
+* `userInputHeight` Number - Represents the height of the user input box in pixels.
 * `userStylesheet` String - Represents a path to a local stylesheet to modify the appearance of the window.
-* `webSearches` Array of webSearch Objects - A list of [web search engines](#web-search-engines)
-    * `webSearch` Object - Defines a web search engine
-        * `icon` String - Represents the svg icon for the specific web search engine
-        * `name` String - Represents the name of the web search engine
-        * `prefix` String - Represents the prefix for your web search engine. For example if the prefix is `g` you can type in `g?{your search term}` to search
-        * `url` String - Represents the url for the search engine to which the search term is appended to. For example `https://google.com/search?q=`
-* `windowWith`: Number - Represents the width of the main window in pixels
+* `webSearches` Array of webSearch Objects - A list of [web search engines](#web-search-engines):
+    * `webSearch` Object - Defines a web search engine.
+        * `icon` String - Represents the svg icon for the specific web search engine.
+        * `name` String - Represents the name of the web search engine.
+        * `prefix` String - Represents the prefix for your web search engine. For example if the prefix is `g` you can type in `g?{your search term}` to search.
+        * `url` String - Represents the url for the search engine to which the search term is appended to. For example `https://google.com/search?q=`.
+* `windowWith`: Number - Represents the width of the main window in pixels.
 
 ### Color themes
 
@@ -365,6 +365,7 @@ $ yarn package
 
 ## Alternatives
 
+* [khanhas/ueli](https://github.com/khanhas/ueli)
 * [Launchy](https://www.launchy.net/)
 * [Wox](https://github.com/Wox-launcher/Wox)
 * [Alfred](https://www.alfredapp.com/)

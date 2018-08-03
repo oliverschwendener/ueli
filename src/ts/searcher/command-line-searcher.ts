@@ -14,9 +14,10 @@ export class CommandLineSearcher implements Searcher {
 
         return [
             {
+                description: `Execute ${command}`,
                 executionArgument: userInput,
                 icon: this.icon,
-                name: `Execute ${command}`,
+                name: command,
                 searchable: [],
                 tags: [],
             } as SearchResultItem,

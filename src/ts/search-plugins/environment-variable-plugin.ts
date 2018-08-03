@@ -18,6 +18,7 @@ export class EnvironmentVariablePlugin implements SearchPlugin {
 
         for (const variableName of Object.keys(this.variableCollection)) {
             result.push({
+                description: this.variableCollection[variableName],
                 executionArgument: this.variableCollection[variableName],
                 icon: this.icon,
                 name: variableName,

@@ -123,13 +123,13 @@ span.search-result-name.active {
     font-weight: 600;
 }
 
-span.search-result-execution-argument {
+span.search-result-description {
     transition: all 250ms ease-in-out;
     font-weight: 200;
     display: none;  
 }
 
-span.search-result-execution-argument.active {
+span.search-result-description.active {
     display: block;
 }
 

@@ -21,6 +21,7 @@ export class CustomCommandsPlugin implements SearchPlugin {
 
         for (const customCommand of customCommands) {
             result.push({
+                description: customCommand.executionArgument,
                 executionArgument: customCommand.executionArgument,
                 icon: StringHelpers.stringIsWhiteSpace(customCommand.icon)
                     ? this.defaultIcon

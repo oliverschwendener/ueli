@@ -12,14 +12,14 @@ describe(CommandLineSearcher.name, (): void => {
                     input: ">ipconfig /flushdns",
                     output: {
                         executionArgument: ">ipconfig /flushdns",
-                        name: "Execute ipconfig /flushdns",
+                        name: "ipconfig /flushdns",
                     } as SearchResultItem,
                 } as InputOutputCombination,
                 {
                     input: ">ls -la .",
                     output: {
                         executionArgument: ">ls -la .",
-                        name: "Execute ls -la .",
+                        name: "ls -la .",
                     } as SearchResultItem,
                 } as InputOutputCombination,
             ];

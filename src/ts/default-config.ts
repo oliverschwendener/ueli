@@ -34,7 +34,7 @@ export const defaultConfig: ConfigOptions = {
     searchEngineThreshold: 0.4,
     searchEnvironmentVariables: false,
     searchOperatingSystemSettings: true,
-    searchResultExecutionArgumentFontSize: 14,
+    searchResultDescriptionFontSize: 14,
     searchResultHeight: 60,
     searchResultNameFontSize: 20,
     showTrayIcon: true,

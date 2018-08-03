@@ -14,9 +14,10 @@ export class EmailAddressSearcher implements Searcher {
     public getSearchResult(userInput: string): SearchResultItem[] {
         return [
             {
+                description: `Send an email to ${userInput}`,
                 executionArgument: `mailto:${userInput}`,
                 icon: this.iconSet.emailIcon,
-                name: `Send an email to ${userInput}`,
+                name: userInput,
                 searchable: [],
                 tags: [],
             } as SearchResultItem,

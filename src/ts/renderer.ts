@@ -68,8 +68,8 @@ const vue = new Vue({
         outputContainerHeight: (): string => {
             return `height: calc(100vh - ${config.userInputHeight}px);`;
         },
-        searchResultExecutionArgumentStyle: (): string => {
-            return `font-size: ${config.searchResultExecutionArgumentFontSize}px;`;
+        searchResultDescriptionStyle: (): string => {
+            return `font-size: ${config.searchResultDescriptionFontSize}px;`;
         },
         searchResultHeight: (): string => {
             return `height: ${config.searchResultHeight}px`;
@@ -98,8 +98,8 @@ const vue = new Vue({
     },
 });
 
-ipcRenderer.on(IpcChannels.getSearchResponse, (event: Electron.Event, arg: SearchResultItemViewModel[]): void => {
-    updateSearchResults(arg);
+ipcRenderer.on(IpcChannels.getSearchResponse, (event: Electron.Event, searchResults: SearchResultItemViewModel[]): void => {
+    updateSearchResults(searchResults);
 });
 
 ipcRenderer.on(IpcChannels.autoCompleteResponse, (event: Electron.Event, arg: string): void => {

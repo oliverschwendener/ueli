@@ -20,6 +20,7 @@ export class WebSearchBuilder {
             : `Search ${webSearch.name}`;
 
         return {
+            description: WebSearchBuilder.buildExecutionUrl(userInput, webSearch),
             executionArgument: WebSearchBuilder.buildExecutionUrl(userInput, webSearch),
             icon: webSearch.icon,
             name: searchResultItemName,

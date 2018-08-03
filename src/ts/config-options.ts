@@ -19,7 +19,7 @@ export interface ConfigOptions {
     searchEngineThreshold: number;
     searchEnvironmentVariables: boolean;
     searchOperatingSystemSettings: boolean;
-    searchResultExecutionArgumentFontSize: number;
+    searchResultDescriptionFontSize: number;
     searchResultHeight: number;
     searchResultNameFontSize: number;
     showTrayIcon: boolean;

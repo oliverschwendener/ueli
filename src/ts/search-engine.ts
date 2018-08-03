@@ -31,6 +31,7 @@ export class SearchEngine {
 
         const sortedResult = fuseResults.map((fuseResult): SearchResultItem => {
             return {
+                description: fuseResult.item.description,
                 executionArgument: fuseResult.item.executionArgument,
                 icon: fuseResult.item.icon,
                 name: fuseResult.item.name,

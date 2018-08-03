@@ -15,9 +15,10 @@ export class WebUrlSearcher implements Searcher {
 
         return [
             {
+                description: "Open default web browser",
                 executionArgument: url,
                 icon: this.icon,
-                name: "Open default browser",
+                name: url,
                 searchable: [],
                 tags: [],
             } as SearchResultItem,

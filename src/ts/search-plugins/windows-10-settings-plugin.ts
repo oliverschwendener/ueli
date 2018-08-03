@@ -1,6 +1,7 @@
 import { SearchResultItem } from "../search-result-item";
 import { SearchPlugin } from "./search-plugin";
 import { WindowsSettingsHelpers } from "../helpers/windows-settings-helpers";
+import { UeliHelpers } from "../helpers/ueli-helpers";
 
 export class Windows10SettingsSearchPlugin implements SearchPlugin {
     private defaultIcon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -9,50 +10,73 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
                                 </g>
                             </svg>`;
 
-    private items: SearchResultItem[] = [];
+    private settings: SearchResultItem[] = [];
+    private systemCommands: SearchResultItem[] = [];
+    private apps: SearchResultItem[] = [];
 
     constructor() {
-        this.addToItems(this.getSystemSettings());
-        this.addToItems(this.getDeviceSettings());
-        this.addToItems(this.getNetworkSettings());
-        this.addToItems(this.getPersonalizationSettings());
-        this.addToItems(this.getAppSettings());
-        this.addToItems(this.getAccountSettings());
-        this.addToItems(this.getCortanaSettings());
-        this.addToItems(this.getTimeAndLanguageSettings());
-        this.addToItems(this.getGamingSettings());
-        this.addToItems(this.getEaseOfAccessSettings());
-        this.addToItems(this.getPrivacySettings());
-        this.addToItems(this.getUpdateAndSecuritySettings());
-        this.addToItems(this.getCortanaSettings());
-        this.addToItems(this.getSystemCommands());
-        this.addToItems(this.getWindows10Apps());
+        this.addToSettings(this.getSystemSettings());
+        this.addToSettings(this.getDeviceSettings());
+        this.addToSettings(this.getNetworkSettings());
+        this.addToSettings(this.getPersonalizationSettings());
+        this.addToSettings(this.getAppSettings());
+        this.addToSettings(this.getAccountSettings());
+        this.addToSettings(this.getCortanaSettings());
+        this.addToSettings(this.getTimeAndLanguageSettings());
+        this.addToSettings(this.getGamingSettings());
+        this.addToSettings(this.getEaseOfAccessSettings());
+        this.addToSettings(this.getPrivacySettings());
+        this.addToSettings(this.getUpdateAndSecuritySettings());
+        this.addToSettings(this.getCortanaSettings());
+        this.addToSystemCommands(this.getSystemCommands());
+        this.addToApps(this.getWindows10Apps());
     }
 
     public getAllItems(): SearchResultItem[] {
-        return this.items.map((item: SearchResultItem): SearchResultItem => {
+        return this.settings.map((setting: SearchResultItem): SearchResultItem => {
             return {
-                executionArgument: item.executionArgument,
-                icon: item.icon,
-                name: item.name,
-                searchable: [item.name],
-                tags: item.tags,
+                description: `Windows Settings ${UeliHelpers.searchResultDescriptionSeparator} ${setting.name}`,
+                executionArgument: setting.executionArgument,
+                icon: setting.icon,
+                name: setting.name,
+                searchable: [setting.name],
+                tags: setting.tags,
             };
-        });
+        }).concat(this.systemCommands.map((systemCommand: SearchResultItem): SearchResultItem => {
+            return {
+                description: `Windows ${UeliHelpers.searchResultDescriptionSeparator} ${systemCommand.name}`,
+                executionArgument: systemCommand.executionArgument,
+                icon: systemCommand.icon,
+                name: systemCommand.name,
+                searchable: [systemCommand.name],
+                tags: systemCommand.tags,
+            };
+        }).concat(this.apps.map((app: SearchResultItem): SearchResultItem => {
+            return {
+                description: `Windows UWP App`,
+                executionArgument: app.executionArgument,
+                icon: app.icon,
+                name: app.name,
+                searchable: [app.name],
+                tags: app.tags,
+            };
+        })));
     }
 
-    private addToItems(items: SearchResultItem[]) {
-        this.items = this.items.concat(items);
+    private addToSettings(settings: SearchResultItem[]): void {
+        this.settings = this.settings.concat(settings);
+    }
+
+    private addToApps(apps: SearchResultItem[]): void {
+        this.apps = this.apps.concat(apps);
+    }
+
+    private addToSystemCommands(systemCommands: SearchResultItem[]): void {
+        this.systemCommands = this.systemCommands.concat(systemCommands);
     }
 
     private getSystemSettings(): SearchResultItem[] {
         return [
-            {
-                executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:`,
-                icon: this.defaultIcon,
-                name: "Windows Settings",
-                tags: ["control", "panel", "options"],
-            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:batterysaver`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -959,6 +983,12 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
 
     private getWindows10Apps(): SearchResultItem[] {
         return [
+            {
+                executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:`,
+                icon: this.defaultIcon,
+                name: "Windows Settings",
+                tags: ["control", "panel", "options"],
+            },
             {
                 executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-photos:`,
                 icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">

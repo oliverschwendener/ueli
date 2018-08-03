@@ -7,6 +7,7 @@ import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
 import { platform } from "os";
 import { ConfigOptions } from "../config-options";
+import { FilePathDescriptionBuilder } from "../builders/file-path-description-builder";
 
 export class FilePathSearcher implements Searcher {
     private iconSet = Injector.getIconSet(platform());
@@ -39,14 +40,15 @@ export class FilePathSearcher implements Searcher {
     private getFolderSearchResult(folderPath: string, searchTerm?: string): SearchResultItem[] {
         const result = [] as SearchResultItem[];
 
-        const files = FileHelpers.getFilesFromFolder(folderPath);
+        const filePaths = FileHelpers.getFilesFromFolder(folderPath);
 
-        for (const file of files) {
-            const fileName = path.basename(file);
+        for (const filePath of filePaths) {
+            const fileName = path.basename(filePath);
 
             result.push({
-                executionArgument: file,
-                icon: fs.lstatSync(file).isDirectory()
+                description: FilePathDescriptionBuilder.buildFilePathDescription(filePath),
+                executionArgument: filePath,
+                icon: fs.lstatSync(filePath).isDirectory()
                     ? this.iconSet.folderIcon
                     : this.iconSet.fileIcon,
                 name: fileName,
@@ -70,6 +72,7 @@ export class FilePathSearcher implements Searcher {
 
         return [
             {
+                description: FilePathDescriptionBuilder.buildFilePathDescription(filePath),
                 executionArgument: filePath,
                 icon: this.iconSet.fileIcon,
                 name: fileName,

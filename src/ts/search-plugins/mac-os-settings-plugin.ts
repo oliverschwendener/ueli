@@ -49,6 +49,7 @@ export class MacOsSettingsPlugin implements SearchPlugin {
 
         this.items = items.map((item): SearchResultItem => {
             return {
+                description: "macOS Setting",
                 executionArgument: item.executionArgument,
                 icon: item.icon,
                 name: item.name,

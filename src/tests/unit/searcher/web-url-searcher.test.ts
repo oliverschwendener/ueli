@@ -9,17 +9,17 @@ describe(WebUrlSearcher.name, (): void => {
         it("should return a correct search result", (): void => {
             const combinations = [
                 {
-                    input: `google.com`,
+                    input: "google.com",
                     output: {
                         executionArgument: "http://google.com",
-                        name: "Open default browser",
+                        name: "http://google.com",
                     } as SearchResultItem,
                 } as InputOutputCombination,
                 {
                     input: "https://google.com",
                     output: {
                         executionArgument: "https://google.com",
-                        name: "Open default browser",
+                        name: "https://google.com",
                     } as SearchResultItem,
                 } as InputOutputCombination,
             ];

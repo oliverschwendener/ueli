@@ -52,6 +52,7 @@ export class UeliCommandsSearchPlugin implements SearchPlugin {
 
         return ueliCommands.map((i): SearchResultItem => {
             return {
+                description: "Ueli command",
                 executionArgument: i.executionArgument,
                 icon: this.icon,
                 name: i.name,
