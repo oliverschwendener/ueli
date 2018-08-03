@@ -9,7 +9,7 @@ const windowsFilePathWithNoParentDirectory = "C:\\ProgramData";
 const windowsResultWithNoParentDirectory = "ProgramData";
 
 const macOsFilePath = "/Applications/Adobe/Adobe Lightroom.app";
-const macOsResult = `Adobe ${UeliHelpers.searchResultDescriptionSeparator} Adobe Lightroom.lnk`;
+const macOsResult = `Adobe ${UeliHelpers.searchResultDescriptionSeparator} Adobe Lightroom.app`;
 
 const macOsFilePathWithNoParentDirectory = "/Applications";
 const macOsResultWithNoParentDirectory = "Applications";
