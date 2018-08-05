@@ -28,7 +28,7 @@ This is a keystroke launcher for Windows and macOS.
 * Run the installer or unzip
 * Run the application
 
-## Installing via chocolatey repository
+### Installing via chocolatey repository
 
 > Chocolatey is a package manager for Windows and ueli is in the official repository! Please see https://chocolatey.org on how to set choco up!
 
