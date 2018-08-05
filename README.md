@@ -25,7 +25,16 @@ This is a keystroke launcher for Windows and macOS.
 > Note: because the executables are not signed Windows will probably prevent you from executing the installer or the program itself. You can click "Run anyway" to install/run the program.
 
 * Download the latest version [here](https://github.com/oliverschwendener/ueli/releases)
-* Run the installer or unzip or choco install ueli
+* Run the installer or unzip
+* Run the application
+
+## Installing via chocolatey repository
+
+> Chocolatey is a package manager for Windows and ueli is in the official repository! Please see https://chocolatey.org on how to set choco up!
+
+* Open a powershell with administration rights (Right click on your start button and click 'Windows PowerShell (Admin)'
+* Type 'choco install ueli'
+* Accept the upcoming prompt by entering 'y' or run above command with '-y' switch
 * Run the application
 
 ## Quick tutorial
