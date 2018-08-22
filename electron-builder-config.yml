@@ -4,7 +4,7 @@ directories:
 
 files:
   - bundle/**/*.js
-  - bundle/**/*.css
+  - styles/**/*.css
   - main.html
   - img/**/*
 
