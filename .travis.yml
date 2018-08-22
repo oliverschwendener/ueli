@@ -13,5 +13,5 @@ script:
   - yarn test:all
   - yarn test:unit --coverage
   - yarn coverage
-  - yarn build
+  - yarn bundle
   - yarn package:publish

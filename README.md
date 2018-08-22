@@ -339,11 +339,11 @@ $ yarn
 ### Run
 
 ```
-$ yarn build
+$ yarn bundle
 $ yarn start
 ```
 
-> Note: there is also a watch task `$ yarn build:watch` which watches the stylesheets and typescript files and transpiles them automatically if there are any changes.
+> Note: there is also a watch task `$ yarn bundle:watch` which watches the typescript files and bundles them automatically if there are any changes.
 
 ### Debug
 

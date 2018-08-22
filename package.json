@@ -25,10 +25,10 @@
     "Windows",
     "macOS"
   ],
-  "main": "./build/main.js",
+  "main": "./bundle/main.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack",
-    "build:watch": "./node_modules/.bin/webpack --watch",
+    "bundle": "./node_modules/.bin/webpack",
+    "bundle:watch": "./node_modules/.bin/webpack --watch",
     "start": "./node_modules/.bin/electron . --enable-logging",
     "lint": "./node_modules/.bin/tslint src/**/*.ts",
     "test:unit": "./node_modules/.bin/jest --config jest.json --silent ./src/tests/unit",
@@ -40,8 +40,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn test:all && yarn build",
-      "pre-push": "yarn lint && yarn test:all && yarn build"
+      "pre-commit": "yarn lint && yarn test:all && yarn bundle",
+      "pre-push": "yarn lint && yarn test:all && yarn bundle"
     }
   },
   "devDependencies": {

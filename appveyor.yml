@@ -15,7 +15,7 @@ build_script:
   - yarn lint
   - yarn test:all
   - yarn test:unit --coverage
-  - yarn build
+  - yarn bundle
   - yarn package:publish
 
 test: off

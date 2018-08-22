@@ -6,7 +6,7 @@ module.exports = {
   mode: "development",
   output: {
     filename: "renderer.js",
-    path: path.resolve(__dirname, "../build")
+    path: path.resolve(__dirname, "../bundle")
   },
   resolve: {
     extensions: [".ts", ".js"]

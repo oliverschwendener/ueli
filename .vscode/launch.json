@@ -14,7 +14,7 @@
       "sourceMaps": true,
       "cwd": "${workspaceRoot}",
       "outFiles": [
-        "${workspaceRoot}/build/main.js"
+        "${workspaceRoot}/bundle/main.js"
       ]
     },
     {
@@ -26,7 +26,7 @@
         "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
       },
       "runtimeArgs": [
-        "${workspaceRoot}/build/main.js",
+        "${workspaceRoot}/bundle/main.js",
         "--remote-debugging-port=9222"
       ],
       "port": 9222,

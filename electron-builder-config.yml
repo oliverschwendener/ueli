@@ -1,10 +1,10 @@
 directories:
   output: dist
-  buildResources: build
+  buildResources: bundle
 
 files:
-  - build/**/*.js
-  - build/**/*.css
+  - bundle/**/*.js
+  - bundle/**/*.css
   - main.html
   - img/**/*
 
