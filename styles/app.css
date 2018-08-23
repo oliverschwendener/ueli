@@ -42,6 +42,7 @@ div.search-icon-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    -webkit-app-region: drag;
 }
 
 div.search-icon-container > svg {

@@ -19,7 +19,7 @@
             <div class="user-input-container" :style="userInputContainerStyle()">
                 <input id="user-input" class="user-input" :style="userInputStyle()" type="text" v-model="userInput" :autofocus="{ 'autofocus' : autoFocus }"
                     v-on:keyDown="handleKeyPress">
-                <div class="search-icon-container" style="-webkit-app-region: drag;" :style="searchResultWidth()" v-html="searchIcon"></div>
+                <div class="search-icon-container" :style="searchResultWidth()" v-html="searchIcon"></div>
             </div>
 
             <div class="output-container" :style="outputContainerHeight()">
