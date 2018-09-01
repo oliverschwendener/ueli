@@ -8,4 +8,5 @@ export class UeliHelpers {
     public static readonly countFilePath = join(homedir(), "ueli.count.json");
     public static readonly shortcutPrefix = "!";
     public static readonly searchResultDescriptionSeparator = "⯈";
+    public static readonly customCommandDescription = "Custom command";
 }

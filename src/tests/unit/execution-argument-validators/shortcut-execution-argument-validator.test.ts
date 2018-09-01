@@ -1,4 +1,4 @@
-import { ShortcutExecutionArgumentValidator } from "../../../ts/execution-argument-validators/shortcut-exeuction-argument-validator";
+import { ShortcutExecutionArgumentValidator } from "../../../ts/execution-argument-validators/shortcut-execution-argument-validator";
 import { UeliHelpers } from "../../../ts/helpers/ueli-helpers";
 
 describe(ShortcutExecutionArgumentValidator.name, (): void => {

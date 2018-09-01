@@ -1,10 +1,12 @@
 import { Executor } from "./executor";
-import { exec } from "child_process";
+import { exec, execFile, spawn } from "child_process";
 import { UeliHelpers } from "../helpers/ueli-helpers";
+import { CommandLineHelpers } from "../helpers/command-line-helpers";
 
 export class ShortcutExecutor implements Executor {
     public execute(executionArgument: string): void {
         executionArgument = executionArgument.replace(UeliHelpers.shortcutPrefix, "");
+
         exec(executionArgument, (err): void => {
             if (err) {
                 throw err;

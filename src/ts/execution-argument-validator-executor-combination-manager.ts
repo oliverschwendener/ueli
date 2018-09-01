@@ -20,7 +20,7 @@ import { MacOsSettingsExecutionArgumentValidator } from "./execution-argument-va
 import { ConfigOptions } from "./config-options";
 import { WebSearch } from "./web-search";
 import { ShortcutExecutor } from "./executors/shortcut-executor";
-import { ShortcutExecutionArgumentValidator } from "./execution-argument-validators/shortcut-exeuction-argument-validator";
+import { ShortcutExecutionArgumentValidator } from "./execution-argument-validators/shortcut-execution-argument-validator";
 
 export class ExecutionArgumentValidatorExecutorCombinationManager {
     private webSearches: WebSearch[];

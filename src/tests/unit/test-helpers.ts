@@ -84,3 +84,5 @@ export const dummyWebSearches = [
         url: "https://duckduckgo.com/query=",
     },
 ] as WebSearch[];
+
+export const defaultShortcutIcon = "<svg>default icon</svg>";

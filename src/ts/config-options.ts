@@ -1,6 +1,7 @@
 import { WebSearch } from "./web-search";
 import { Shortcut } from "./shortcut";
 import { FileSearchOption } from "./file-search-option";
+import { CustomCommand } from "./custom-shortcut";
 
 export interface ConfigOptions {
     allowMouseInteraction: boolean;
@@ -9,6 +10,7 @@ export interface ConfigOptions {
     applicationFolders: string[];
     autoStartApp: boolean;
     colorTheme: string;
+    customCommands: CustomCommand[];
     shortcuts: Shortcut[];
     fallbackWebSearches: string[];
     fileSearchOptions: FileSearchOption[];

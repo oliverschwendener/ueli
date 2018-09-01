@@ -19,11 +19,17 @@ import { CountManager } from "./count-manager";
 import { CountFileRepository } from "./count-file-repository";
 import { Injector } from "./injector";
 import { platform } from "os";
+import { CustomCommandSearcher } from "./searcher/custom-command-searcher";
+import { CustomCommandInputValidator } from "./input-validators/custom-command-input-validator";
 
 export class InputValidatorSearcherCombinationManager {
     private combinations: InputValidatorSearcherCombination[];
 
     constructor(config: ConfigOptions) {
+        const iconSet = Injector.getIconSet(platform());
+        const countManager = new CountManager(new CountFileRepository(UeliHelpers.countFilePath));
+        const environmentVariableCollection = process.env as { [key: string]: string };
+
         this.combinations = [
             {
                 searcher: new CalculatorSearcher(),
@@ -50,10 +56,11 @@ export class InputValidatorSearcherCombinationManager {
                 validator: new WebUrlInputValidator(),
             },
             {
-                searcher: new SearchPluginsSearcher(config,
-                    new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
-                    Injector.getIconSet(platform()),
-                    process.env as { [key: string]: string }),
+                searcher: new CustomCommandSearcher(config.customCommands, iconSet.searchIcon),
+                validator: new CustomCommandInputValidator(config.customCommands),
+            },
+            {
+                searcher: new SearchPluginsSearcher(config, countManager, iconSet, environmentVariableCollection),
                 validator: new SearchPluginsInputValidator(),
             },
         ];

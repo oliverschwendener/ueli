@@ -19,6 +19,7 @@ export const defaultConfig: ConfigOptions = {
         : ["/Applications"],
     autoStartApp: true,
     colorTheme: "dark",
+    customCommands: [],
     fallbackWebSearches: [],
     fileSearchOptions: [
         {

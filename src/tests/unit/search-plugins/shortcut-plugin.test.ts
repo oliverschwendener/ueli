@@ -1,6 +1,5 @@
 import { ShortcutsPlugin } from "../../../ts/search-plugins/shortcuts-plugin";
 import { Shortcut } from "../../../ts/shortcut";
-import { UeliHelpers } from "../../../ts/helpers/ueli-helpers";
 
 describe(ShortcutsPlugin.name, (): void => {
     describe("getAllItems", (): void => {

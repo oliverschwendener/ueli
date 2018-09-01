@@ -3,6 +3,10 @@ export class StringHelpers {
         return value.replace(/\s/g, "");
     }
 
+    public static splitIntoWords(value: string): string[] {
+        return value.split(/\s/g);
+    }
+
     public static stringIsWhiteSpace(value: string): boolean {
         if (value === undefined || value === null) {
             return true;
