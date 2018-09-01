@@ -1,11 +1,11 @@
-import { CustomCommandsPlugin } from "../../../ts/search-plugins/custom-commands-plugin";
-import { CustomCommand } from "../../../ts/custom-command";
+import { ShortcutsPlugin } from "../../../ts/search-plugins/shortcuts-plugin";
+import { Shortcut } from "../../../ts/shortcut";
 import { UeliHelpers } from "../../../ts/helpers/ueli-helpers";
 
-describe(CustomCommandsPlugin.name, (): void => {
+describe(ShortcutsPlugin.name, (): void => {
     describe("getAllItems", (): void => {
         it("should set the execution argument correctly", (): void => {
-            const customCommands = [
+            const shortcuts = [
                 {
                     executionArgument: "execution-argument",
                     name: "Custom Shortcut 1",
@@ -14,26 +14,26 @@ describe(CustomCommandsPlugin.name, (): void => {
                     executionArgument: "execution-argument-2",
                     name: "Custom Shortcut 2",
                 },
-            ] as CustomCommand[];
+            ] as Shortcut[];
 
-            const plugin = new CustomCommandsPlugin(customCommands, "");
+            const plugin = new ShortcutsPlugin(shortcuts, "");
 
             const actual = plugin.getAllItems();
 
             for (const item of actual) {
-                const customCommand = customCommands.filter((c: CustomCommand): boolean => {
+                const shortcut = shortcuts.filter((c: Shortcut): boolean => {
                     return c.name === item.name;
                 })[0];
 
-                expect(customCommand).not.toBe(undefined);
-                expect(item.executionArgument).toBe(customCommand.executionArgument);
+                expect(shortcut).not.toBe(undefined);
+                expect(item.executionArgument).toBe(shortcut.executionArgument);
             }
         });
 
         it("should set the deafult icon if no icon is specified", (): void => {
             const defaultIcon = "this is the default icon";
 
-            const customCommands = [
+            const shortcuts = [
                 {
                     executionArgument: "execution-argument",
                     name: "Custom Shortcut 1",
@@ -42,18 +42,18 @@ describe(CustomCommandsPlugin.name, (): void => {
                     executionArgument: "execution-argument-2",
                     name: "Custom Shortcut 2",
                 },
-            ] as CustomCommand[];
+            ] as Shortcut[];
 
-            const plugin = new CustomCommandsPlugin(customCommands, defaultIcon);
+            const plugin = new ShortcutsPlugin(shortcuts, defaultIcon);
 
             const actual = plugin.getAllItems();
 
             for (const item of actual) {
-                const customCommand = customCommands.filter((c: CustomCommand): boolean => {
+                const shortcut = shortcuts.filter((c: Shortcut): boolean => {
                     return c.name === item.name;
                 })[0];
 
-                expect(customCommand).not.toBe(undefined);
+                expect(shortcut).not.toBe(undefined);
                 expect(item.icon).toBe(defaultIcon);
             }
         });
@@ -61,7 +61,7 @@ describe(CustomCommandsPlugin.name, (): void => {
         it("should set the given icon if it is specified", (): void => {
             const defaultIcon = "this is the default icon";
 
-            const customCommands = [
+            const shortcuts = [
                 {
                     executionArgument: "execution-argument",
                     icon: "another icon",
@@ -72,19 +72,19 @@ describe(CustomCommandsPlugin.name, (): void => {
                     icon: "another icon 2",
                     name: "Custom Shortcut 2",
                 },
-            ] as CustomCommand[];
+            ] as Shortcut[];
 
-            const plugin = new CustomCommandsPlugin(customCommands, defaultIcon);
+            const plugin = new ShortcutsPlugin(shortcuts, defaultIcon);
 
             const actual = plugin.getAllItems();
 
             for (const item of actual) {
-                const customCommand = customCommands.filter((c: CustomCommand): boolean => {
+                const shortcut = shortcuts.filter((c: Shortcut): boolean => {
                     return c.name === item.name;
                 })[0];
 
-                expect(customCommand).not.toBe(undefined);
-                expect(item.icon).toBe(customCommand.icon);
+                expect(shortcut).not.toBe(undefined);
+                expect(item.icon).toBe(shortcut.icon);
             }
         });
     });

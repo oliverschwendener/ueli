@@ -19,7 +19,6 @@ export const defaultConfig: ConfigOptions = {
         : ["/Applications"],
     autoStartApp: true,
     colorTheme: "dark",
-    customCommands: [],
     fallbackWebSearches: [],
     fileSearchOptions: [
         {
@@ -37,6 +36,7 @@ export const defaultConfig: ConfigOptions = {
     searchResultDescriptionFontSize: 14,
     searchResultHeight: 60,
     searchResultNameFontSize: 20,
+    shortcuts: [],
     showTrayIcon: true,
     userInputFontSize: 36,
     userInputHeight: 80,

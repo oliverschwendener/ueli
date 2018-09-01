@@ -4,5 +4,5 @@ export interface IconSet {
     programIcon: string;
     searchIcon: string;
     emailIcon: string;
-    customShortCutIcon: string;
+    shortcutIcon: string;
 }

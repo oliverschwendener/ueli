@@ -1,14 +1,14 @@
-import { CustomCommandExecutionArgumentValidator } from "../../../ts/execution-argument-validators/custom-command-exeuction-argument-validator";
+import { ShortcutExecutionArgumentValidator } from "../../../ts/execution-argument-validators/shortcut-exeuction-argument-validator";
 import { UeliHelpers } from "../../../ts/helpers/ueli-helpers";
 
-describe(CustomCommandExecutionArgumentValidator.name, (): void => {
-    const validator = new CustomCommandExecutionArgumentValidator();
+describe(ShortcutExecutionArgumentValidator.name, (): void => {
+    const validator = new ShortcutExecutionArgumentValidator();
 
     describe(validator.isValidForExecution.name, (): void => {
         it("should return true when passing in a valid execution argument", (): void => {
             const validInputs = [
-                `${UeliHelpers.customCommandPrefix}do something`,
-                `${UeliHelpers.customCommandPrefix}start \"\" \"C:\\my-folder\"`,
+                `${UeliHelpers.shortcutPrefix}do something`,
+                `${UeliHelpers.shortcutPrefix}start \"\" \"C:\\my-folder\"`,
             ];
 
             for (const validInput of validInputs) {
@@ -20,7 +20,7 @@ describe(CustomCommandExecutionArgumentValidator.name, (): void => {
         it("should return false when passing in an invalid execution argument", (): void => {
             const invalidInputs = [
                 "",
-                UeliHelpers.customCommandPrefix,
+                UeliHelpers.shortcutPrefix,
                 "something",
                 "https://google.com",
                 "132498",

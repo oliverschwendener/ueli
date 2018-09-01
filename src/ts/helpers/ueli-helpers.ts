@@ -6,6 +6,6 @@ export class UeliHelpers {
     public static readonly ueliCommandPrefix = "ueli:";
     public static readonly configFilePath = join(homedir(), "ueli.config.json");
     public static readonly countFilePath = join(homedir(), "ueli.count.json");
-    public static readonly customCommandPrefix = "!";
+    public static readonly shortcutPrefix = "!";
     public static readonly searchResultDescriptionSeparator = "⯈";
 }

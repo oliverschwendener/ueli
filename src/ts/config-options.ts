@@ -1,5 +1,5 @@
 import { WebSearch } from "./web-search";
-import { CustomCommand } from "./custom-command";
+import { Shortcut } from "./shortcut";
 import { FileSearchOption } from "./file-search-option";
 
 export interface ConfigOptions {
@@ -9,7 +9,7 @@ export interface ConfigOptions {
     applicationFolders: string[];
     autoStartApp: boolean;
     colorTheme: string;
-    customCommands: CustomCommand[];
+    shortcuts: Shortcut[];
     fallbackWebSearches: string[];
     fileSearchOptions: FileSearchOption[];
     hotKey: string;

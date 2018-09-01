@@ -19,8 +19,8 @@ import { MacOsSettingsExecutor } from "./executors/mac-os-settings-executor";
 import { MacOsSettingsExecutionArgumentValidator } from "./execution-argument-validators/mac-os-execution-argument-validator";
 import { ConfigOptions } from "./config-options";
 import { WebSearch } from "./web-search";
-import { CustomCommandExecutor } from "./executors/custom-command-executor";
-import { CustomCommandExecutionArgumentValidator } from "./execution-argument-validators/custom-command-exeuction-argument-validator";
+import { ShortcutExecutor } from "./executors/shortcut-executor";
+import { ShortcutExecutionArgumentValidator } from "./execution-argument-validators/shortcut-exeuction-argument-validator";
 
 export class ExecutionArgumentValidatorExecutorCombinationManager {
     private webSearches: WebSearch[];
@@ -53,8 +53,8 @@ export class ExecutionArgumentValidatorExecutorCombinationManager {
                 validator: new WebUrlExecutionArgumentValidator(),
             },
             {
-                executor: new CustomCommandExecutor(),
-                validator: new CustomCommandExecutionArgumentValidator(),
+                executor: new ShortcutExecutor(),
+                validator: new ShortcutExecutionArgumentValidator(),
             },
         ];
 

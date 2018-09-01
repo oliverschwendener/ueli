@@ -158,16 +158,16 @@ You can customize multiple fallback web search engines which are used if ueli do
 
 ![Feature calculator](img/doc/features/ueli-feature-calculator.png)
 
-### Custom commands
+### Shortcuts
 
-* You can [customize](#customization) custom commands to
+* You can [customize](#customization) shortcuts to
     * Start command line tools
     * Open websites
     * Open files/folders
     * Launch programs
 
 ``` json
-"customCommands": [
+"shortcuts": [
     {
         "name": "ping",
         "executionArgument": ">ping 8.8.8.8 -t",
@@ -189,7 +189,7 @@ You can customize multiple fallback web search engines which are used if ueli do
 ]
 ```
 
-![Feature custom commands](img/doc/features/ueli-feature-custom-commands.png)
+![Feature shortcuts](img/doc/features/ueli-feature-shortcuts.png)
 
 ### Environment Variables
 
@@ -236,10 +236,10 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `applicationFolders` Array of string - Represents the folders which are scanned for applications.
 * `autoStartApp` Boolean - If the app should be started automatically when you log in.
 * `colorTheme` String - Defines the [color theme](#color-themes).
-* `customCommands` Arraay of customCommand objects - A list of [custom commands](#custom-commands).
-    * `executionArgument` String - Represents the execution argument for the custom command.
-    * `name` String - Represents the displayed name for the custom command.
-    * `icon` String - (Optional) Represents the svg icon for the custom command. If no icon is set default icon is used.
+* `shortcuts` Arraay of shortcut objects - A list of [shortcuts](#shortcuts).
+    * `executionArgument` String - Represents the execution argument for the shortcut.
+    * `name` String - Represents the displayed name for the shortcut.
+    * `icon` String - (Optional) Represents the svg icon for the shortcut. If no icon is set default icon is used.
 * `fallbackWebSearches` Array of string - Represents the names of [web search engines](#web-search-engines) used when ueli does not find any search results.
 * `fileSearchOptions` Array of FileSearchOption objects.
     * `folderPath` String - Represents a folder which should be searched for files and folders.

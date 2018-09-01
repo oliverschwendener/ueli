@@ -6,7 +6,7 @@ import { SearchPlugin } from "./search-plugins/search-plugin";
 import { platform } from "os";
 import { ProgramFileRepository } from "./programs-plugin/program-file-repository";
 import { ConfigOptions } from "./config-options";
-import { CustomCommandsPlugin } from "./search-plugins/custom-commands-plugin";
+import { ShortcutsPlugin } from "./search-plugins/shortcuts-plugin";
 import { IconSet } from "./icon-sets/icon-set";
 import { EnvironmentVariablePlugin } from "./search-plugins/environment-variable-plugin";
 
@@ -18,7 +18,7 @@ export class SearchPluginManager {
             new ProgramsPlugin(new ProgramFileRepository(config.applicationFolders, config.applicationFileExtensions)),
             new FileSearchPlugin(config.fileSearchOptions),
             new UeliCommandsSearchPlugin(),
-            new CustomCommandsPlugin(config.customCommands, iconSet.customShortCutIcon),
+            new ShortcutsPlugin(config.shortcuts, iconSet.shortcutIcon),
         ];
 
         if (config.searchOperatingSystemSettings) {

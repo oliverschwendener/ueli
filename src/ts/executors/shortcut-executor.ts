@@ -2,9 +2,9 @@ import { Executor } from "./executor";
 import { exec } from "child_process";
 import { UeliHelpers } from "../helpers/ueli-helpers";
 
-export class CustomCommandExecutor implements Executor {
+export class ShortcutExecutor implements Executor {
     public execute(executionArgument: string): void {
-        executionArgument = executionArgument.replace(UeliHelpers.customCommandPrefix, "");
+        executionArgument = executionArgument.replace(UeliHelpers.shortcutPrefix, "");
         exec(executionArgument, (err): void => {
             if (err) {
                 throw err;
