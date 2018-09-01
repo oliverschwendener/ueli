@@ -309,6 +309,10 @@ For better search results ueli is keeping track of the applications, files and f
 * Notify user when update is available
 * Use vue components
 
+## Known bugs
+
+* ([#37](https://github.com/oliverschwendener/ueli/issues/37)) Window starts to move while typing when custom scaling in Windows is set.
+
 ## Development
 
 ### Build status
