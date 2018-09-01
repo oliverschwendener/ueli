@@ -14,6 +14,7 @@ This is a keystroke launcher for Windows and macOS.
 * [Customization](#customization)
 * [Privacy](#privacy)
 * [Roadmap](#roadmap)
+* [Known bugs](#known-bugs)
 * [Development](#development)
 * [Alternatives](#alternatives)
 * [License](#license)
@@ -308,6 +309,10 @@ For better search results ueli is keeping track of the applications, files and f
 * Add nice GUI to modifiy configuration
 * Notify user when update is available
 * Use vue components
+
+## Known bugs
+
+* ([#37](https://github.com/oliverschwendener/ueli/issues/37)) Window starts to move while typing when custom scaling in Windows is set.
 
 ## Development
 
