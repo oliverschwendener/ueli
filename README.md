@@ -14,6 +14,7 @@ This is a keystroke launcher for Windows and macOS.
 * [Customization](#customization)
 * [Privacy](#privacy)
 * [Roadmap](#roadmap)
+* [Known bugs](#known-bugs)
 * [Development](#development)
 * [Alternatives](#alternatives)
 * [License](#license)
