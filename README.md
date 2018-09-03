@@ -263,7 +263,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
         * `name` String - Represents the name of the web search engine.
         * `prefix` String - Represents the prefix for your web search engine. For example if the prefix is `g` you can type in `g?{your search term}` to search.
         * `url` String - Represents the url for the search engine to which the search term is appended to. For example `https://google.com/search?q=`.
-* `windowWith`: Number - Represents the width of the main window in pixels.
+* `windowWidth`: Number - Represents the width of the main window in pixels.
 
 ### Color themes
 
