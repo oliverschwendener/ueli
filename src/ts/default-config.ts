@@ -4,13 +4,15 @@ import { homedir, platform } from "os";
 import { OperatingSystem } from "./operating-system";
 import { WebSearch } from "./web-search";
 
+const currentOperatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
+
 export const defaultConfig: ConfigOptions = {
     allowMouseInteraction: true,
     alwaysShowOnPrimaryDisplay: false,
-    applicationFileExtensions: OperatingSystemHelpers.getOperatingSystemFromString(platform()) === OperatingSystem.Windows
+    applicationFileExtensions: currentOperatingSystem === OperatingSystem.Windows
         ? [".lnk", ".appref-ms", ".url", ".exe"]
         : [".app"],
-    applicationFolders: OperatingSystemHelpers.getOperatingSystemFromString(platform()) === OperatingSystem.Windows
+    applicationFolders: currentOperatingSystem === OperatingSystem.Windows
         ? [
             "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs",
             `${homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`,
@@ -104,5 +106,5 @@ export const defaultConfig: ConfigOptions = {
             url: "https://www.youtube.com/results?search_query=",
         },
     ] as WebSearch[],
-    windowWith: 860,
+    windowWidth: 860,
 };

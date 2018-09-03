@@ -29,5 +29,5 @@ export interface ConfigOptions {
     userInputFontSize: number;
     userStylesheet: string;
     webSearches: WebSearch[];
-    windowWith: number;
+    windowWidth: number;
 }

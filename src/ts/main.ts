@@ -61,11 +61,11 @@ function createMainWindow(): void {
         resizable: false,
         show: false,
         skipTaskbar: true,
-        width: config.windowWith,
+        width: config.windowWidth,
     });
 
     mainWindow.loadURL(`file://${__dirname}/../main.html`);
-    mainWindow.setSize(config.windowWith, config.userInputHeight);
+    mainWindow.setSize(config.windowWidth, config.userInputHeight);
 
     mainWindow.on("close", quitApp);
     mainWindow.on("blur", hideMainWindow);
@@ -169,7 +169,7 @@ function toggleWindow(): void {
 function updateWindowSize(searchResultCount: number): void {
     if (mainWindow !== undefined && !mainWindow.isDestroyed()) {
         const newWindowHeight = WindowHelpers.calculateWindowHeight(searchResultCount, config.maxSearchResultCount, config.userInputHeight, config.searchResultHeight);
-        mainWindow.setSize(config.windowWith, newWindowHeight);
+        mainWindow.setSize(config.windowWidth, newWindowHeight);
     }
 }
 
@@ -223,7 +223,7 @@ function destroyTrayIcon(): void {
 }
 
 function resetWindowToDefaultSizeAndPosition(): void {
-    mainWindow.setSize(config.windowWith, WindowHelpers.calculateMaxWindowHeight(config.userInputHeight, config.maxSearchResultCount, config.searchResultHeight));
+    mainWindow.setSize(config.windowWidth, WindowHelpers.calculateMaxWindowHeight(config.userInputHeight, config.maxSearchResultCount, config.searchResultHeight));
     mainWindow.center();
     updateWindowSize(0);
 }
