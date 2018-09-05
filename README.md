@@ -18,6 +18,7 @@ This is a keystroke launcher for Windows and macOS.
 * [Development](#development)
 * [Alternatives](#alternatives)
 * [License](#license)
+* [Release Notes](https://github.com/oliverschwendener/ueli/releases)
 
 ## Installation
 
