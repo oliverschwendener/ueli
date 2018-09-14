@@ -1,5 +1,6 @@
 import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
+import { CalculatorHelper } from "../helpers/calculator-helper";
 import * as math from "mathjs";
 
 export class CalculatorSearcher implements Searcher {
@@ -9,10 +10,11 @@ export class CalculatorSearcher implements Searcher {
 
     public getSearchResult(userInput: string): SearchResultItem[] {
         const result = math.eval(userInput);
+
         return [
             {
-                description: "",
-                executionArgument: "",
+                description: "Press enter to copy to clipboard",
+                executionArgument: CalculatorHelper.getExecutionArgument(result),
                 icon: this.icon,
                 name: `= ${result}`,
                 searchable: [],

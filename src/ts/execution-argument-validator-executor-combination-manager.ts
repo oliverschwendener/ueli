@@ -18,12 +18,12 @@ import { WindowsSettingsExecutor } from "./executors/windows-settings-executor";
 import { MacOsSettingsExecutor } from "./executors/mac-os-settings-executor";
 import { MacOsSettingsExecutionArgumentValidator } from "./execution-argument-validators/mac-os-execution-argument-validator";
 import { ConfigOptions } from "./config-options";
-import { WebSearch } from "./web-search";
 import { ShortcutExecutor } from "./executors/shortcut-executor";
 import { ShortcutExecutionArgumentValidator } from "./execution-argument-validators/shortcut-execution-argument-validator";
+import { CalculatorExecutor } from "./executors/calculator-executor";
+import { CalculatorExecutionArgumentValidator } from "./execution-argument-validators/calculator-execution-argument-validator";
 
 export class ExecutionArgumentValidatorExecutorCombinationManager {
-    private webSearches: WebSearch[];
     private combinations: ExecutionArgumentValidatorExecutorCombination[];
 
     constructor(config: ConfigOptions) {
@@ -55,6 +55,10 @@ export class ExecutionArgumentValidatorExecutorCombinationManager {
             {
                 executor: new ShortcutExecutor(),
                 validator: new ShortcutExecutionArgumentValidator(),
+            },
+            {
+                executor: new CalculatorExecutor(),
+                validator: new CalculatorExecutionArgumentValidator(),
             },
         ];
 
