@@ -201,7 +201,8 @@ You can customize multiple fallback web search engines which are used if ueli do
     {
         "name": "Open with Visual Studio Code:",
         "executionArgument": "!code",
-        "prefix": "openwithcode"
+        "prefix": "openwithcode",
+        "icon": "<svg>...</svg"
     }
 ]
 ```
