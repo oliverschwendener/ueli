@@ -1,13 +1,13 @@
 import { Executor } from "./executor";
 import { CalculatorHelper } from "../helpers/calculator-helper";
 import { StringHelpers } from "../helpers/string-helpers";
-import { writeSync } from "clipboardy";
+import { clipboard } from "electron";
 
 export class CalculatorExecutor implements Executor {
     public execute(executionArgument: string): void {
         const prefix = CalculatorHelper.getExecutionArgumentPrefix;
         const result = StringHelpers.removeWhiteSpace(executionArgument.replace(prefix, ""));
-        writeSync(result);
+        clipboard.writeText(result);
     }
 
     public hideAfterExecution(): boolean {

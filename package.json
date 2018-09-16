@@ -48,7 +48,6 @@
     "@types/electron-is-dev": "^0.3.0",
     "@types/jest": "^23.3.1",
     "@types/mathjs": "^4.4.1",
-    "@types/clipboardy": "^1.1.0",
     "coveralls": "^3.0.2",
     "electron": "^2.0.8",
     "electron-builder": "^20.28.3",
@@ -66,7 +65,6 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
-    "clipboardy": "^1.2.3",
     "electron-is-dev": "^0.3.0",
     "electron-updater": "^3.1.2",
     "fuse.js": "^3.2.1",
