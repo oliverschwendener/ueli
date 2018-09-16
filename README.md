@@ -192,6 +192,22 @@ You can customize multiple fallback web search engines which are used if ueli do
 
 ![Feature shortcuts](img/doc/features/ueli-feature-shortcuts.png)
 
+### Custom commands
+
+* You can set up custom commands with parameters
+
+``` json
+"customCommands": [
+    {
+        "name": "Open with Visual Studio Code:",
+        "executionArgument": "!code",
+        "prefix": "openwithcode"
+    }
+]
+```
+
+With the example above you should be able to open Visual Studio Code at a specified path. For example `openwithcode C:/file.txt` is similar to the command line command `code C:/file.txt`.
+
 ### Environment Variables
 
 > This feature is deactivated by default. You have to activate this via [customization](#customization).
