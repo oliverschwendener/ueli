@@ -100,10 +100,6 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
-"@types/clipboardy@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@types/clipboardy/-/clipboardy-1.1.0.tgz#316fe1a3ed71b1a51becb925e7e0497986c6a85c"
-
 "@types/electron-is-dev@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@types/electron-is-dev/-/electron-is-dev-0.3.0.tgz#28dc6aa4c9493869a8c5da29ebd586648f5ffb70"
