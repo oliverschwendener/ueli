@@ -254,10 +254,11 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `applicationFolders` Array of string - Represents the folders which are scanned for applications.
 * `autoStartApp` Boolean - If the app should be started automatically when you log in.
 * `colorTheme` String - Defines the [color theme](#color-themes).
-* `shortcuts` Arraay of shortcut objects - A list of [shortcuts](#shortcuts).
-    * `executionArgument` String - Represents the execution argument for the shortcut.
-    * `name` String - Represents the displayed name for the shortcut.
-    * `icon` String - (Optional) Represents the svg icon for the shortcut. If no icon is set default icon is used.
+* `customCommands` Array of customCommand objects - A list of [custom commands](#custom-commands)
+    * `name` String - Represents the displayed name of the custom command.
+    * `executionArgument` String - Represents the execution argument for the custom command.
+    * `prefix` String - Represents the prefix for the custom command.
+    * `icon` String - Represents the svg icon for the custom command.
 * `fallbackWebSearches` Array of string - Represents the names of [web search engines](#web-search-engines) used when ueli does not find any search results.
 * `fileSearchOptions` Array of FileSearchOption objects.
     * `folderPath` String - Represents a folder which should be searched for files and folders.
@@ -272,6 +273,10 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `searchResultDescriptionFontSize` Number - Represents the font size of the search result description in pixels.
 * `searchResultHeight` Number - Represents the height of a search result box in pixels.
 * `searchResultNameFontSize` Number - Represents the font size of the search result name in pixels.
+* `shortcuts` Arraay of shortcut objects - A list of [shortcuts](#shortcuts).
+    * `executionArgument` String - Represents the execution argument for the shortcut.
+    * `name` String - Represents the displayed name for the shortcut.
+    * `icon` String - (Optional) Represents the svg icon for the shortcut. If no icon is set default icon is used.
 * `userInputFontSize` Number - Represents the font size of the user input in pixels.
 * `userInputHeight` Number - Represents the height of the user input box in pixels.
 * `userStylesheet` String - Represents a path to a local stylesheet to modify the appearance of the window.
