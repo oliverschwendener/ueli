@@ -20,6 +20,8 @@ import { ConfigFileRepository } from "./config-file-repository";
 import { CountManager } from "./count-manager";
 import { CountFileRepository } from "./count-file-repository";
 import { ProductionIpcEmitter } from "./production-ipc-emitter";
+import { AutoCompletionService } from "./auto-completion/autocompletion-service";
+import { FilePathAutoCompletionValidator } from "./auto-completion/file-path-autocompletion-validator";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -268,15 +270,12 @@ ipcMain.on(IpcChannels.openFileLocation, (event: any, arg: string): void => {
 });
 
 ipcMain.on(IpcChannels.autoComplete, (event: any, executionArgument: string): void => {
-    const dirSeparator = Injector.getDirectorySeparator(platform());
-    const validator = new FilePathExecutionArgumentValidator();
+    const autoCompletionResult = new AutoCompletionService([
+        new FilePathAutoCompletionValidator(),
+    ]).getAutocompletionResult(executionArgument);
 
-    if (validator.isValidForExecution(executionArgument)) {
-        if (!executionArgument.endsWith(dirSeparator) && fs.lstatSync(executionArgument).isDirectory()) {
-            executionArgument = `${executionArgument}${dirSeparator}`;
-        }
-
-        event.sender.send(IpcChannels.autoCompleteResponse, executionArgument);
+    if (autoCompletionResult !== undefined) {
+        event.sender.send(IpcChannels.autoCompleteResponse, autoCompletionResult);
     }
 });
 
