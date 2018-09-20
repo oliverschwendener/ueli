@@ -1,9 +1,8 @@
 import { Executor } from "./executor";
-import { exec, execFile, spawn } from "child_process";
+import { exec } from "child_process";
 import { UeliHelpers } from "../helpers/ueli-helpers";
-import { CommandLineHelpers } from "../helpers/command-line-helpers";
 
-export class ShortcutExecutor implements Executor {
+export class CustomCommandExecutor implements Executor {
     public execute(executionArgument: string): void {
         executionArgument = executionArgument.replace(UeliHelpers.shortcutPrefix, "");
 

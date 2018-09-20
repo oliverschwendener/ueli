@@ -18,7 +18,7 @@ import { WindowsSettingsExecutor } from "./executors/windows-settings-executor";
 import { MacOsSettingsExecutor } from "./executors/mac-os-settings-executor";
 import { MacOsSettingsExecutionArgumentValidator } from "./execution-argument-validators/mac-os-execution-argument-validator";
 import { ConfigOptions } from "./config-options";
-import { ShortcutExecutor } from "./executors/shortcut-executor";
+import { CustomCommandExecutor } from "./executors/custom-command-executor";
 import { ShortcutExecutionArgumentValidator } from "./execution-argument-validators/shortcut-execution-argument-validator";
 import { CalculatorExecutor } from "./executors/calculator-executor";
 import { CalculatorExecutionArgumentValidator } from "./execution-argument-validators/calculator-execution-argument-validator";
@@ -53,7 +53,7 @@ export class ExecutionArgumentValidatorExecutorCombinationManager {
                 validator: new WebUrlExecutionArgumentValidator(),
             },
             {
-                executor: new ShortcutExecutor(),
+                executor: new CustomCommandExecutor(),
                 validator: new ShortcutExecutionArgumentValidator(),
             },
             {
