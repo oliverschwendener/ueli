@@ -56,7 +56,7 @@ export class InputValidatorSearcherCombinationManager {
                 validator: new WebUrlInputValidator(),
             },
             {
-                searcher: new CustomCommandSearcher(config.customCommands, iconSet.searchIcon),
+                searcher: new CustomCommandSearcher(config.customCommands, iconSet.shortcutIcon),
                 validator: new CustomCommandInputValidator(config.customCommands),
             },
             {
