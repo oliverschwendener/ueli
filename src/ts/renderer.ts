@@ -73,8 +73,6 @@ const vue = new Vue({
                 ipcRenderer.send(IpcChannels.hideWindow);
             } else if (event.ctrlKey && event.key === "c") {
                 ipcRenderer.send(IpcChannels.exitCommandLineTool);
-            } else if (event.key === "F1") {
-                ipcRenderer.send(IpcChannels.showHelp);
             } else if (event.ctrlKey && event.key === "i") {
                 toggleSettings();
             }

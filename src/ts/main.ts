@@ -283,10 +283,6 @@ ipcMain.on(IpcChannels.resetUserInput, (): void => {
     mainWindow.webContents.send(IpcChannels.resetUserInput);
 });
 
-ipcMain.on(IpcChannels.showHelp, (): void => {
-    new WebUrlExecutor().execute("https://github.com/oliverschwendener/ueli#ueli");
-});
-
 ipcMain.on(IpcChannels.ueliCheckForUpdates, (): void => {
     autoUpdater.checkForUpdates();
 });
