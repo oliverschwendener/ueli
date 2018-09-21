@@ -138,9 +138,10 @@ div.settings-container {
 }
 
 div.setting-group {
-    padding: var(--side-padding) 0;
+    padding: calc(2* var(--side-padding)) 0;
     display: flex;
     flex-direction: row;
+    border-bottom: 1px solid var(--text-color);
 }
 
 div.setting-title {
@@ -158,6 +159,7 @@ div.setting {
 div.sub-setting {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 input.setting-text-input {
@@ -167,11 +169,24 @@ input.setting-text-input {
     color: var(--text-color);
     width: 100%;
     font-size: 1rem;
-    padding: 5px 3px;
+    padding: 5px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+}
+
+input.setting-text-input:last-child {
+    margin-bottom: 0;
 }
 
 input.setting-text-input:focus {
     border: 1px solid var(--accent-color);
+}
+
+svg.setting-action-icon {
+    width: 20px;
+    height: 20px;
+    fill: var(--text-color);
+    padding-left: 10px;
 }
 
 ::-webkit-scrollbar {

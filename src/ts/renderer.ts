@@ -96,6 +96,42 @@ const vue = new Vue({
         searchResultWidth: (): string => {
             return `width: ${config.searchResultHeight}px;`;
         },
+        settingsActionAddApplicationFileExtension: (event: KeyboardEvent): void => {
+            if (event.key !== "Enter") {
+                return;
+            }
+
+            const elem = event.target as HTMLInputElement;
+            const newApplicationFileExtension = elem.value;
+            if (newApplicationFileExtension !== undefined && newApplicationFileExtension.length > 0) {
+                config.applicationFileExtensions.push(newApplicationFileExtension);
+                vue.updateUserConfig();
+                elem.value = "";
+            }
+        },
+        settingsActionAddApplicationFolder: (event: KeyboardEvent): void => {
+            if (event.key !== "Enter") {
+                return;
+            }
+
+            const elem = event.target as HTMLInputElement;
+            const newApplicationFolder = elem.value;
+            if (newApplicationFolder !== undefined && newApplicationFolder.length > 0) {
+                config.applicationFolders.push(newApplicationFolder);
+                vue.updateUserConfig();
+                elem.value = "";
+            }
+        },
+        settingsActionRemoveApplicationFileExtension: (applicationFileExtension: string): void => {
+            const indexToRemove = config.applicationFileExtensions.indexOf(applicationFileExtension);
+            config.applicationFileExtensions.splice(indexToRemove, 1);
+            vue.updateUserConfig();
+        },
+        settingsActionRemoveApplicationFolder: (applicationFolder: string): void => {
+            const indexToRemove = config.applicationFolders.indexOf(applicationFolder);
+            config.applicationFolders.splice(indexToRemove, 1);
+            vue.updateUserConfig();
+        },
         updateAppConfig: (): void => {
             ipcRenderer.send(IpcChannels.updateAppConfig, appConfig);
         },

@@ -72,6 +72,14 @@
                         <div class="setting">
                             <div class="sub-setting" v-for="applicationFileExtension in config.applicationFileExtensions">
                                 <input disabled class="setting-text-input" type="text" v-model="applicationFileExtension">
+                                <svg v-on:click="settingsActionRemoveApplicationFileExtension(applicationFileExtension)" class="setting-action-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
+                                    <g id="surface1">
+                                        <path d="M 13.5 3.1875 C 7.804688 3.1875 3.1875 7.804688 3.1875 13.5 C 3.1875 19.195313 7.804688 23.8125 13.5 23.8125 C 19.195313 23.8125 23.8125 19.195313 23.8125 13.5 C 23.8125 7.804688 19.195313 3.1875 13.5 3.1875 Z M 19 15 L 8 15 L 8 12 L 19 12 Z "></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="sub-setting">
+                                <input class="setting-text-input" type="text" v-on:keypress="settingsActionAddApplicationFileExtension" placeholder="Add here">
                             </div>
                         </div>
                     </div>
@@ -80,6 +88,14 @@
                         <div class="setting">
                             <div class="sub-setting" v-for="applicationFolder in config.applicationFolders">
                                 <input disabled class="setting-text-input" type="text" v-model="applicationFolder">
+                                <svg v-on:click="settingsActionRemoveApplicationFolder(applicationFolder)" class="setting-action-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
+                                    <g id="surface1">
+                                        <path d="M 13.5 3.1875 C 7.804688 3.1875 3.1875 7.804688 3.1875 13.5 C 3.1875 19.195313 7.804688 23.8125 13.5 23.8125 C 19.195313 23.8125 23.8125 19.195313 23.8125 13.5 C 23.8125 7.804688 19.195313 3.1875 13.5 3.1875 Z M 19 15 L 8 15 L 8 12 L 19 12 Z "></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="sub-setting">
+                                <input class="setting-text-input" type="text" v-on:keypress="settingsActionAddApplicationFolder" placeholder="Add here">
                             </div>
                         </div>
                     </div>
