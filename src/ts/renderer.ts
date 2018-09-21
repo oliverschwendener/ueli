@@ -22,8 +22,8 @@ const vue = new Vue({
     data: {
         appConfig,
         autoFocus: true,
-        colorTheme: `./styles/${config.colorTheme}.css`,
         commandLineOutput: [] as string[],
+        config,
         searchIcon: iconSet.searchIcon,
         searchResults: [] as SearchResultItemViewModel[],
         settingsVisible: false,
@@ -33,6 +33,9 @@ const vue = new Vue({
     },
     el: "#vue-root",
     methods: {
+        colorTheme: (): string => {
+            return `./styles/${config.colorTheme}.css`;
+        },
         handleClick: (): void => {
             if (config.allowMouseInteraction) {
                 handleEnterPress();
@@ -92,6 +95,12 @@ const vue = new Vue({
         },
         searchResultWidth: (): string => {
             return `width: ${config.searchResultHeight}px;`;
+        },
+        updateAppConfig: (): void => {
+            ipcRenderer.send(IpcChannels.updateAppConfig, appConfig);
+        },
+        updateUserConfig: (): void => {
+            ipcRenderer.send(IpcChannels.updateUserConfig, config);
         },
         userInputContainerStyle: (): string => {
             return `height: ${config.userInputHeight}px;`;

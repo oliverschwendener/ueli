@@ -23,4 +23,6 @@ export class IpcChannels {
     public static readonly showHelp = "show-help";
     public static readonly showSettings = "show-settings";
     public static readonly hideSettings = "hide-settings";
+    public static readonly updateAppConfig = "update-app-config";
+    public static readonly updateUserConfig = "update-user-config";
 }

@@ -23,6 +23,8 @@ import { ProductionIpcEmitter } from "./production-ipc-emitter";
 import { AutoCompletionService } from "./auto-completion/autocompletion-service";
 import { FilePathAutoCompletionValidator } from "./auto-completion/file-path-autocompletion-validator";
 import { ElectronStoreAppConfigRepository } from "./app-config/electorn-store-app-config-repository";
+import { AppConfig } from "./app-config/app-config";
+import { ConfigOptions } from "./config-options";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -30,7 +32,8 @@ let trayIcon: Tray;
 const delayWhenHidingCommandlineOutputInMs = 25;
 const filePathExecutor = new FilePathExecutor();
 const appConfigRepository = new ElectronStoreAppConfigRepository();
-let config = new ConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
+const userConfigRepository = new ConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath);
+let config = userConfigRepository.getConfig();
 let inputValidationService = new InputValidationService(config, new InputValidatorSearcherCombinationManager(config).getCombinations());
 const ipcEmitter = new ProductionIpcEmitter();
 let executionService = new ExecutionService(
@@ -78,7 +81,6 @@ function createMainWindow(): void {
     }
 
     registerGlobalHotKey();
-    watchConfigFile();
 
     if (!isInDevelopment) {
         checkForUpdates();
@@ -231,16 +233,7 @@ function resetWindowToDefaultSizeAndPosition(): void {
     updateWindowSize(0);
 }
 
-function watchConfigFile(): void {
-    watchFile(appConfigRepository.getAppConfig().userSettingsFilePath, reloadApp);
-}
-
-function unwatchConfigFile(): void {
-    unwatchFile(appConfigRepository.getAppConfig().userSettingsFilePath);
-}
-
 function quitApp(): void {
-    unwatchConfigFile();
     destroyTrayIcon();
     unregisterAllGlobalShortcuts();
     app.quit();
@@ -303,4 +296,13 @@ ipcMain.on(IpcChannels.showSettings, (): void => {
 
 ipcMain.on(IpcChannels.hideSettings, (): void => {
     updateWindowSize(0);
+});
+
+ipcMain.on(IpcChannels.updateAppConfig, (event: Electron.Event, updatedAppConfig: AppConfig) => {
+    appConfigRepository.setAppConfig(updatedAppConfig);
+});
+
+ipcMain.on(IpcChannels.updateUserConfig, (event: Electron.Event, updatedUserConfig: ConfigOptions) => {
+    config = updatedUserConfig;
+    userConfigRepository.saveConfig(updatedUserConfig);
 });

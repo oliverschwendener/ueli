@@ -137,6 +137,43 @@ div.settings-container {
     padding: 0 var(--side-padding);
 }
 
+div.setting-group {
+    padding: var(--side-padding) 0;
+    display: flex;
+    flex-direction: row;
+}
+
+div.setting-title {
+    font-size: 1rem;
+    padding-right: var(--side-padding);
+    display: flex;
+    align-items: center;
+    width: 35%;
+}
+
+div.setting {
+    width: 65%;
+}
+
+div.sub-setting {
+    display: flex;
+    flex-direction: row;
+}
+
+input.setting-text-input {
+    background: transparent;
+    border: 1px solid var(--text-color);
+    outline: none;
+    color: var(--text-color);
+    width: 100%;
+    font-size: 1rem;
+    padding: 5px 3px;
+}
+
+input.setting-text-input:focus {
+    border: 1px solid var(--accent-color);
+}
+
 ::-webkit-scrollbar {
     width: var(--scrollbar-size);
     height: var(--scrollbar-size);
