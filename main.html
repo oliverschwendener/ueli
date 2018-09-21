@@ -18,7 +18,7 @@
 
             <div class="user-input-container" :style="userInputContainerStyle()">
                 <input id="user-input" class="user-input" :style="userInputStyle()" type="text" v-model="userInput" :autofocus="{ 'autofocus' : autoFocus }"
-                    v-on:keyDown="handleKeyPress">
+                    v-on:keyDown="handleUserInputKeyPress">
                 <div class="search-icon-container" :style="searchResultWidth()" v-html="searchIcon"></div>                
             </div>
 
@@ -80,6 +80,9 @@
                             </div>
                             <div class="sub-setting">
                                 <input class="setting-text-input" type="text" v-on:keypress="settingsActionAddApplicationFileExtension" placeholder="Add here">
+                                <svg class="setting-action-icon" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
+                                    <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
+                                </svg>
                             </div>
                         </div>
                     </div>
@@ -96,6 +99,9 @@
                             </div>
                             <div class="sub-setting">
                                 <input class="setting-text-input" type="text" v-on:keypress="settingsActionAddApplicationFolder" placeholder="Add here">
+                                <svg class="setting-action-icon" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
+                                    <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
+                                </svg>
                             </div>
                         </div>
                     </div>
@@ -108,17 +114,19 @@
                     <div class="setting-group">
                         <div class="setting-title">colorTheme</div>
                         <div class="setting">
-                            <input class="setting-text-input" type="text" v-model="config.colorTheme" v-on:blur="updateUserConfig">
+                            <select class="setting-select" v-model="config.colorTheme" v-on:change="updateUserConfig">
+                                <option v-for="availableColorTheme in availableColorThemes" :value="availableColorTheme">{{ availableColorTheme }}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="setting-group">
                         <div class="setting-title">customCommands</div>
                         <div class="setting">
                             <div class="sub-setting" v-for="customCommand in config.customCommands">
-                                <input class="setting-text-input" type="text" v-model="customCommand.name">
-                                <input class="setting-text-input" type="text" v-model="customCommand.executionArgument">
-                                <input class="setting-text-input" type="text" v-model="customCommand.prefix">
-                                <input class="setting-text-input" type="text" v-model="customCommand.icon">
+                                <input disabled class="setting-text-input" type="text" v-model="customCommand.name">
+                                <input disabled class="setting-text-input" type="text" v-model="customCommand.executionArgument">
+                                <input disabled class="setting-text-input" type="text" v-model="customCommand.prefix">
+                                <input disabled class="setting-text-input" type="text" v-model="customCommand.icon">
                             </div>
                         </div>
                     </div>

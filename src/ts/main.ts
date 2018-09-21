@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, ipcMain, Menu, MenuItem, Tray, screen } from "electron";
+import { app, BrowserWindow, globalShortcut, ipcMain, Menu, MenuItem, Tray, screen, ipcRenderer } from "electron";
 import { autoUpdater } from "electron-updater";
 import { watchFile, unwatchFile } from "fs";
 import { join } from "path";
@@ -191,6 +191,7 @@ function showWindow() {
 function hideMainWindow(): void {
     mainWindow.webContents.send(IpcChannels.resetCommandlineOutput);
     mainWindow.webContents.send(IpcChannels.resetUserInput);
+    mainWindow.webContents.send(IpcChannels.hideSettings);
 
     setTimeout(() => {
         if (mainWindow !== null && mainWindow !== undefined) {

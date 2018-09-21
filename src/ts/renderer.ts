@@ -3,11 +3,11 @@ import { IpcChannels } from "./ipc-channels";
 import { platform } from "os";
 import { ipcRenderer } from "electron";
 import { ConfigFileRepository } from "./config-file-repository";
-import { UeliHelpers } from "./helpers/ueli-helpers";
 import { defaultConfig } from "./default-config";
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { Injector } from "./injector";
 import { ElectronStoreAppConfigRepository } from "./app-config/electorn-store-app-config-repository";
+import { availableColorThemes } from "./available-color-themes";
 import Vue from "vue";
 
 const appConfigRepository = new ElectronStoreAppConfigRepository();
@@ -22,6 +22,7 @@ const vue = new Vue({
     data: {
         appConfig,
         autoFocus: true,
+        availableColorThemes,
         commandLineOutput: [] as string[],
         config,
         searchIcon: iconSet.searchIcon,
@@ -42,7 +43,15 @@ const vue = new Vue({
                 focusOnInput();
             }
         },
-        handleKeyPress: (event: KeyboardEvent): void => {
+        handleMouseEnter: (index: number): void => {
+            if (config.allowMouseInteraction) {
+                changeActiveItemByIndex(index);
+            }
+        },
+        handleSettingsIconClick: (): void => {
+            toggleSettings();
+        },
+        handleUserInputKeyPress: (event: KeyboardEvent): void => {
             if (event.key === "Enter") {
                 handleEnterPress();
             } else if (event.ctrlKey && event.key === "o") {
@@ -69,14 +78,6 @@ const vue = new Vue({
             } else if (event.ctrlKey && event.key === "i") {
                 toggleSettings();
             }
-        },
-        handleMouseEnter: (index: number): void => {
-            if (config.allowMouseInteraction) {
-                changeActiveItemByIndex(index);
-            }
-        },
-        handleSettingsIconClick: (): void => {
-            toggleSettings();
         },
         outputContainerHeight: (): string => {
             return `height: calc(100vh - ${config.userInputHeight}px);`;
@@ -167,6 +168,7 @@ ipcRenderer.on(IpcChannels.commandLineOutput, (event: Electron.Event, arg: strin
 
 ipcRenderer.on(IpcChannels.resetCommandlineOutput, resetCommandLineOutput);
 ipcRenderer.on(IpcChannels.resetUserInput, resetUserInput);
+ipcRenderer.on(IpcChannels.hideSettings, hideSettings);
 
 function handleSearch(searchTerm: string): void {
     vue.settingsVisible = false;
@@ -174,8 +176,8 @@ function handleSearch(searchTerm: string): void {
 }
 
 function handleCommandLineOutput(data: string): void {
-    vue.searchResults = [];
     vue.settingsVisible = false;
+    vue.searchResults = [];
     vue.commandLineOutput.push(data);
 }
 
@@ -317,15 +319,16 @@ function toggleSettings(): void {
     } else {
         showSettings();
     }
-    vue.settingsVisible = !vue.settingsVisible;
 }
 
 function hideSettings(): void {
     ipcRenderer.send(IpcChannels.hideSettings);
+    vue.settingsVisible = false;
 }
 
 function showSettings(): void {
     vue.searchResults = [];
     resetCommandLineOutput();
     ipcRenderer.send(IpcChannels.showSettings);
+    vue.settingsVisible = true;
 }

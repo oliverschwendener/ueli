@@ -2,6 +2,7 @@
     --side-padding: 15px;
     --scrollbar-size: 8px;
     --icon-size: 55%;
+    --transition-speed: 150ms;
 
     --font-family: "Segoe UI", "Helvetica";
     --font-family-mono: "Consolas", "Courier", monospace;
@@ -141,7 +142,11 @@ div.setting-group {
     padding: calc(2* var(--side-padding)) 0;
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--scrollbar-foreground-color);
+}
+
+div.setting-group:last-child {
+    border-bottom: none;
 }
 
 div.setting-title {
@@ -150,6 +155,7 @@ div.setting-title {
     display: flex;
     align-items: center;
     width: 35%;
+    font-family: var(--font-family-mono);
 }
 
 div.setting {
@@ -162,9 +168,13 @@ div.sub-setting {
     align-items: center;
 }
 
+div.sub-setting > input.setting-text-input:last-child {
+    margin-bottom: 5px;
+}
+
 input.setting-text-input {
-    background: transparent;
-    border: 1px solid var(--text-color);
+    background-color: var(--scrollbar-background-color);
+    border: 1px solid var(--scrollbar-foreground-color);
     outline: none;
     color: var(--text-color);
     width: 100%;
@@ -172,6 +182,10 @@ input.setting-text-input {
     padding: 5px;
     margin-bottom: 5px;
     box-sizing: border-box;
+}
+
+input.setting-text-input:disabled {
+    border: none;
 }
 
 input.setting-text-input:last-child {
@@ -182,11 +196,26 @@ input.setting-text-input:focus {
     border: 1px solid var(--accent-color);
 }
 
+select.setting-select {
+    background-color: var(--scrollbar-background-color);
+    border: 1px solid var(--scrollbar-foreground-color);
+    padding: 5px;
+    color: var(--text-color);
+    font-size: 1rem;
+    outline: none;
+}
+
 svg.setting-action-icon {
+    cursor: pointer;
+    transition: all var(--transition-speed) ease-in-out;
     width: 20px;
     height: 20px;
     fill: var(--text-color);
     padding-left: 10px;
+}
+
+svg.setting-action-icon:hover {
+    fill: var(--accent-color);
 }
 
 ::-webkit-scrollbar {
