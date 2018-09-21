@@ -21,4 +21,6 @@ export class IpcChannels {
     public static readonly resetCommandlineOutput = "reset-commandline-output";
     public static readonly resetUserInput = "reset-user-input";
     public static readonly showHelp = "show-help";
+    public static readonly showSettings = "show-settings";
+    public static readonly hideSettings = "hide-settings";
 }

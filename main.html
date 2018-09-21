@@ -19,16 +19,16 @@
             <div class="user-input-container" :style="userInputContainerStyle()">
                 <input id="user-input" class="user-input" :style="userInputStyle()" type="text" v-model="userInput" :autofocus="{ 'autofocus' : autoFocus }"
                     v-on:keyDown="handleKeyPress">
-                <div class="search-icon-container" :style="searchResultWidth()" v-html="searchIcon"></div>
+                <div class="search-icon-container" :style="searchResultWidth()" v-html="searchIcon"></div>                
             </div>
 
             <div class="output-container" :style="outputContainerHeight()">
 
-                <div class="command-line-output-container" :class="{ 'hidden' : commandLineOutput.length === 0 }">
+                <div class="command-line-output-container" v-if="commandLineOutput.length > 0">
                     <pre v-for="line in commandLineOutput">{{ line }}</pre>
                 </div>
 
-                <div class="search-results-container" :class="{ 'hidden' : searchResults.length === 0}">
+                <div class="search-results-container" v-if="searchResults.length > 0">
                     <div :id="searchResult.id" class="search-result" :style="searchResultHeight()" :class="{ 'active' : searchResult.active }"
                         v-for="(searchResult, searchIndex) in searchResults" v-on:click="handleClick" v-on:mouseenter="handleMouseEnter(searchIndex)">
                         <div class="search-result-icon">
@@ -41,6 +41,16 @@
                             <span class="search-result-description" :style="searchResultDescriptionStyle()" :class="{ 'active' : searchResult.active } ">
                                 {{ searchResult.description }}
                             </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-container" v-if="settingsVisible">
+                    <h1>Settings</h1>
+                    <div class="setting-group">
+                        <div class="setting-title">Config file path</div>
+                        <div class="setting">
+                            <input type="text" v-model="appConfig.userSettingsFilePath">
                         </div>
                     </div>
                 </div>

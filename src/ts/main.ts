@@ -1,7 +1,7 @@
 import { app, BrowserWindow, globalShortcut, ipcMain, Menu, MenuItem, Tray, screen } from "electron";
 import { autoUpdater } from "electron-updater";
-import * as fs from "fs";
-import * as path from "path";
+import { watchFile, unwatchFile } from "fs";
+import { join } from "path";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
 import { ExecutionService } from "./execution-service";
 import { FilePathExecutor } from "./executors/file-path-executor";
@@ -22,14 +22,15 @@ import { CountFileRepository } from "./count-file-repository";
 import { ProductionIpcEmitter } from "./production-ipc-emitter";
 import { AutoCompletionService } from "./auto-completion/autocompletion-service";
 import { FilePathAutoCompletionValidator } from "./auto-completion/file-path-autocompletion-validator";
+import { ElectronStoreAppConfigRepository } from "./app-config/electorn-store-app-config-repository";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
+
 const delayWhenHidingCommandlineOutputInMs = 25;
-
 const filePathExecutor = new FilePathExecutor();
-
-let config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
+const appConfigRepository = new ElectronStoreAppConfigRepository();
+let config = new ConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
 let inputValidationService = new InputValidationService(config, new InputValidatorSearcherCombinationManager(config).getCombinations());
 const ipcEmitter = new ProductionIpcEmitter();
 let executionService = new ExecutionService(
@@ -90,7 +91,7 @@ function createTrayIcon(): void {
         trayIcon.destroy();
     }
 
-    trayIcon = new Tray(Injector.getTrayIconPath(platform(), path.join(__dirname, "../")));
+    trayIcon = new Tray(Injector.getTrayIconPath(platform(), join(__dirname, "../")));
     trayIcon.setToolTip(UeliHelpers.productName);
     trayIcon.setContextMenu(Menu.buildFromTemplate([
         { click: showWindow, label: "Show" },
@@ -198,7 +199,7 @@ function hideMainWindow(): void {
 }
 
 function reloadApp(): void {
-    config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
+    config = new ConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
     inputValidationService = new InputValidationService(config, new InputValidatorSearcherCombinationManager(config).getCombinations());
     executionService = new ExecutionService(
         new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations(),
@@ -231,11 +232,11 @@ function resetWindowToDefaultSizeAndPosition(): void {
 }
 
 function watchConfigFile(): void {
-    fs.watchFile(UeliHelpers.configFilePath, reloadApp);
+    watchFile(appConfigRepository.getAppConfig().userSettingsFilePath, reloadApp);
 }
 
 function unwatchConfigFile(): void {
-    fs.unwatchFile(UeliHelpers.configFilePath);
+    unwatchFile(appConfigRepository.getAppConfig().userSettingsFilePath);
 }
 
 function quitApp(): void {
@@ -294,4 +295,12 @@ ipcMain.on(IpcChannels.showHelp, (): void => {
 
 ipcMain.on(IpcChannels.ueliCheckForUpdates, (): void => {
     autoUpdater.checkForUpdates();
+});
+
+ipcMain.on(IpcChannels.showSettings, (): void => {
+    updateWindowSize(config.maxSearchResultCount);
+});
+
+ipcMain.on(IpcChannels.hideSettings, (): void => {
+    updateWindowSize(0);
 });

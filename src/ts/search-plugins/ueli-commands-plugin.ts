@@ -1,7 +1,6 @@
 import { SearchResultItem } from "../search-result-item";
 import { SearchPlugin } from "./search-plugin";
 import { IpcChannels } from "../ipc-channels";
-import { UeliHelpers } from "../helpers/ueli-helpers";
 import { ipcMain } from "electron";
 
 const ueliCommands: UeliCommand[] = [
@@ -12,10 +11,6 @@ const ueliCommands: UeliCommand[] = [
     {
         executionArgument: IpcChannels.ueliExit,
         name: "Exit ueli",
-    } as UeliCommand,
-    {
-        executionArgument: UeliHelpers.configFilePath,
-        name: "Edit configuration file",
     } as UeliCommand,
     {
         executionArgument: IpcChannels.ueliCheckForUpdates,

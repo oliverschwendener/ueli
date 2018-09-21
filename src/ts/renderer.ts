@@ -7,9 +7,12 @@ import { UeliHelpers } from "./helpers/ueli-helpers";
 import { defaultConfig } from "./default-config";
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { Injector } from "./injector";
+import { ElectronStoreAppConfigRepository } from "./app-config/electorn-store-app-config-repository";
 import Vue from "vue";
 
-const config = new ConfigFileRepository(defaultConfig, UeliHelpers.configFilePath).getConfig();
+const appConfigRepository = new ElectronStoreAppConfigRepository();
+const config = new ConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
+const appConfig = new ElectronStoreAppConfigRepository().getAppConfig();
 const userInputHistoryManager = new UserInputHistoryManager();
 const iconSet = Injector.getIconSet(platform());
 
@@ -17,11 +20,13 @@ document.addEventListener("keyup", handleGlobalKeyPress);
 
 const vue = new Vue({
     data: {
+        appConfig,
         autoFocus: true,
         colorTheme: `./styles/${config.colorTheme}.css`,
         commandLineOutput: [] as string[],
         searchIcon: iconSet.searchIcon,
         searchResults: [] as SearchResultItemViewModel[],
+        settingsVisible: false,
         userInput: "",
         userStylesheet: `file:///${config.userStylesheet}`,
         userStylesheetIsAvailable: config.userStylesheet !== undefined && config.userStylesheet.length > 0,
@@ -58,12 +63,17 @@ const vue = new Vue({
                 ipcRenderer.send(IpcChannels.exitCommandLineTool);
             } else if (event.key === "F1") {
                 ipcRenderer.send(IpcChannels.showHelp);
+            } else if (event.ctrlKey && event.key === "i") {
+                toggleSettings();
             }
         },
         handleMouseEnter: (index: number): void => {
             if (config.allowMouseInteraction) {
                 changeActiveItemByIndex(index);
             }
+        },
+        handleSettingsIconClick: (): void => {
+            toggleSettings();
         },
         outputContainerHeight: (): string => {
             return `height: calc(100vh - ${config.userInputHeight}px);`;
@@ -93,7 +103,7 @@ const vue = new Vue({
     watch: {
         userInput: (val: string): void => {
             vue.commandLineOutput = [] as string[];
-            ipcRenderer.send(IpcChannels.getSearch, val);
+            handleSearch(val);
         },
     },
 });
@@ -107,11 +117,22 @@ ipcRenderer.on(IpcChannels.autoCompleteResponse, (event: Electron.Event, arg: st
 });
 
 ipcRenderer.on(IpcChannels.commandLineOutput, (event: Electron.Event, arg: string): void => {
-    vue.commandLineOutput.push(arg);
+    handleCommandLineOutput(arg);
 });
 
 ipcRenderer.on(IpcChannels.resetCommandlineOutput, resetCommandLineOutput);
 ipcRenderer.on(IpcChannels.resetUserInput, resetUserInput);
+
+function handleSearch(searchTerm: string): void {
+    vue.settingsVisible = false;
+    ipcRenderer.send(IpcChannels.getSearch, searchTerm);
+}
+
+function handleCommandLineOutput(data: string): void {
+    vue.searchResults = [];
+    vue.settingsVisible = false;
+    vue.commandLineOutput.push(data);
+}
 
 function handleInputHistoryBrowsing(direction: string): void {
     const newUserInput = direction === "prev"
@@ -243,4 +264,23 @@ function focusOnInput(): void {
 
 function resetCommandLineOutput(): void {
     vue.commandLineOutput = [];
+}
+
+function toggleSettings(): void {
+    if (vue.settingsVisible) {
+        hideSettings();
+    } else {
+        showSettings();
+    }
+    vue.settingsVisible = !vue.settingsVisible;
+}
+
+function hideSettings(): void {
+    ipcRenderer.send(IpcChannels.hideSettings);
+}
+
+function showSettings(): void {
+    vue.searchResults = [];
+    resetCommandLineOutput();
+    ipcRenderer.send(IpcChannels.showSettings);
 }

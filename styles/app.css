@@ -12,6 +12,7 @@ body {
     padding: 0;
     background-color: var(--background-color);
     color: var(--text-color);
+    font-family: var(--font-family);
 }
 
 div.container {
@@ -72,7 +73,6 @@ div.search-results-container {
 }   
 
 div.search-result {
-    font-family: var(--font-family);
     display: flex;
     flex-direction: row;
     cursor: pointer;
@@ -120,7 +120,6 @@ span {
 }
 
 span.search-result-name.active {
-    font-family: var(--font-family);
     font-weight: 600;
 }
 
@@ -132,6 +131,10 @@ span.search-result-description {
 
 span.search-result-description.active {
     display: block;
+}
+
+div.settings-container {
+    padding: 0 var(--side-padding);
 }
 
 ::-webkit-scrollbar {

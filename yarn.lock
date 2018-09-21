@@ -104,6 +104,12 @@
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@types/electron-is-dev/-/electron-is-dev-0.3.0.tgz#28dc6aa4c9493869a8c5da29ebd586648f5ffb70"
 
+"@types/electron-store@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@types/electron-store/-/electron-store-1.3.0.tgz#340f780952bc98043e24ac8c7903e78665495091"
+  dependencies:
+    "@types/node" "*"
+
 "@types/jest@^23.3.1":
   version "23.3.1"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.1.tgz#a4319aedb071d478e6f407d1c4578ec8156829cf"
@@ -113,6 +119,10 @@
   resolved "https://registry.yarnpkg.com/@types/mathjs/-/mathjs-4.4.1.tgz#ce876a823848486f3675f8573e93f2d282feba19"
   dependencies:
     decimal.js "^10.0.0"
+
+"@types/node@*":
+  version "10.10.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.10.1.tgz#d5c96ca246a418404914d180b7fdd625ad18eca6"
 
 "@types/node@^8.0.24":
   version "8.10.23"
@@ -1266,6 +1276,16 @@ concat-stream@^1.5.0:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
+conf@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/conf/-/conf-2.0.0.tgz#43f7e282b32faca31f4d18bf279d6841ad657d5a"
+  dependencies:
+    dot-prop "^4.1.0"
+    env-paths "^1.0.0"
+    make-dir "^1.0.0"
+    pkg-up "^2.0.0"
+    write-file-atomic "^2.3.0"
+
 configstore@^3.0.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/configstore/-/configstore-3.1.1.tgz#094ee662ab83fad9917678de114faaea8fcdca90"
@@ -1689,6 +1709,12 @@ electron-publish@20.28.3:
     lazy-val "^1.0.3"
     mime "^2.3.1"
 
+electron-store@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/electron-store/-/electron-store-2.0.0.tgz#1035cca2a95409d1f54c7466606345852450d64a"
+  dependencies:
+    conf "^2.0.0"
+
 electron-updater@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-3.1.2.tgz#30d9790d5b16048e4afc74a31748790348b153bf"
@@ -1748,6 +1774,10 @@ enhanced-resolve@^4.1.0:
     graceful-fs "^4.1.2"
     memory-fs "^0.4.0"
     tapable "^1.0.0"
+
+env-paths@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/env-paths/-/env-paths-1.0.0.tgz#4168133b42bb05c38a35b1ae4397c8298ab369e0"
 
 errno@^0.1.3, errno@~0.1.7:
   version "0.1.7"
@@ -4271,6 +4301,12 @@ pkg-dir@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
+pkg-up@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/pkg-up/-/pkg-up-2.0.0.tgz#c819ac728059a461cab1c3889a2be3c49a004d7f"
+  dependencies:
+    find-up "^2.1.0"
+
 plist@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/plist/-/plist-2.1.0.tgz#57ccdb7a0821df21831217a3cad54e3e146a1025"
@@ -5825,7 +5861,7 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-write-file-atomic@^2.0.0, write-file-atomic@^2.1.0:
+write-file-atomic@^2.0.0, write-file-atomic@^2.1.0, write-file-atomic@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/write-file-atomic/-/write-file-atomic-2.3.0.tgz#1ff61575c2e2a4e8e510d6fa4e243cce183999ab"
   dependencies:
