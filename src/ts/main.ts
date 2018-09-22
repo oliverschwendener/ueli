@@ -1,6 +1,5 @@
 import { app, BrowserWindow, globalShortcut, ipcMain, Menu, MenuItem, Tray, screen, ipcRenderer } from "electron";
 import { autoUpdater } from "electron-updater";
-import { watchFile, unwatchFile } from "fs";
 import { join } from "path";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
 import { ExecutionService } from "./execution-service";
@@ -14,7 +13,6 @@ import { WindowHelpers } from "./helpers/winow-helpers";
 import { ExecutionArgumentValidatorExecutorCombinationManager } from "./execution-argument-validator-executor-combination-manager";
 import { InputValidatorSearcherCombinationManager } from "./input-validator-searcher-combination-manager";
 import { UeliHelpers } from "./helpers/ueli-helpers";
-import { WebUrlExecutor } from "./executors/web-url-executor";
 import { defaultConfig } from "./default-config";
 import { ConfigFileRepository } from "./config-file-repository";
 import { CountManager } from "./count-manager";
