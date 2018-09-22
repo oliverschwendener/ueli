@@ -156,7 +156,9 @@
                                 </svg>
                             </div>
                             <div class="sub-setting">
-                                <input class="setting-text-input" v-model="configEdit.newFallbackWebSearch" type="text">
+                                <select class="setting-select" v-model="configEdit.newFallbackWebSearch">
+                                    <option v-for="webSearch in config.webSearches" :value="webSearch.name">{{ webSearch.name }}</option>
+                                </select>
                                 <svg class="setting-action-icon" v-on:click="settingsActionAddFallbackWebSearch(configEdit.newFallbackWebSearch)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
                                     <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
                                 </svg>
