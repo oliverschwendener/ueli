@@ -9,9 +9,22 @@ import { Injector } from "./injector";
 import { ElectronStoreAppConfigRepository } from "./app-config/electorn-store-app-config-repository";
 import { availableColorThemes } from "./available-color-themes";
 import Vue from "vue";
+import { CustomCommand } from "./custom-shortcut";
+import { FileSearchOption } from "./file-search-option";
+import { Shortcut } from "./shortcut";
+import { WebSearch } from "./web-search";
 
 const appConfigRepository = new ElectronStoreAppConfigRepository();
 const config = new ConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
+const configEdit = {
+    newApplicationFileExtension: "",
+    newApplicationFolder: "",
+    newCustomCommand: {},
+    newFallbackWebSearch: "",
+    newFileSearchOption: {},
+    newShortcut: {},
+    newWebSearch: {},
+};
 const appConfig = new ElectronStoreAppConfigRepository().getAppConfig();
 const userInputHistoryManager = new UserInputHistoryManager();
 const iconSet = Injector.getIconSet(platform());
@@ -25,6 +38,7 @@ const vue = new Vue({
         availableColorThemes,
         commandLineOutput: [] as string[],
         config,
+        configEdit,
         searchIcon: iconSet.searchIcon,
         searchResults: [] as SearchResultItemViewModel[],
         settingsVisible: false,
@@ -73,8 +87,6 @@ const vue = new Vue({
                 ipcRenderer.send(IpcChannels.hideWindow);
             } else if (event.ctrlKey && event.key === "c") {
                 ipcRenderer.send(IpcChannels.exitCommandLineTool);
-            } else if (event.ctrlKey && event.key === "i") {
-                toggleSettings();
             }
         },
         outputContainerHeight: (): string => {
@@ -95,31 +107,40 @@ const vue = new Vue({
         searchResultWidth: (): string => {
             return `width: ${config.searchResultHeight}px;`;
         },
-        settingsActionAddApplicationFileExtension: (event: KeyboardEvent): void => {
-            if (event.key !== "Enter") {
-                return;
-            }
-
-            const elem = event.target as HTMLInputElement;
-            const newApplicationFileExtension = elem.value;
-            if (newApplicationFileExtension !== undefined && newApplicationFileExtension.length > 0) {
-                config.applicationFileExtensions.push(newApplicationFileExtension);
-                vue.updateUserConfig();
-                elem.value = "";
-            }
+        settingsActionAddApplicationFileExtension: (newApplicationFileExtension: string): void => {
+            config.applicationFileExtensions.push(newApplicationFileExtension);
+            vue.updateUserConfig();
+            configEdit.newApplicationFileExtension = "";
         },
-        settingsActionAddApplicationFolder: (event: KeyboardEvent): void => {
-            if (event.key !== "Enter") {
-                return;
-            }
-
-            const elem = event.target as HTMLInputElement;
-            const newApplicationFolder = elem.value;
-            if (newApplicationFolder !== undefined && newApplicationFolder.length > 0) {
-                config.applicationFolders.push(newApplicationFolder);
-                vue.updateUserConfig();
-                elem.value = "";
-            }
+        settingsActionAddApplicationFolder: (newApplicationFolder: string): void => {
+            config.applicationFolders.push(newApplicationFolder);
+            vue.updateUserConfig();
+            configEdit.newApplicationFolder = "";
+        },
+        settingsActionAddCustomCommand: (customCommand: CustomCommand): void => {
+            config.customCommands.push(customCommand);
+            vue.updateUserConfig();
+            configEdit.newCustomCommand = {};
+        },
+        settingsActionAddFallbackWebSearch: (newFallbackWebSearch: string): void => {
+            config.fallbackWebSearches.push(newFallbackWebSearch);
+            vue.updateUserConfig();
+            configEdit.newFallbackWebSearch = "";
+        },
+        settingsActionAddFileSearchOption: (newFileSearchOption: FileSearchOption): void => {
+            config.fileSearchOptions.push(newFileSearchOption);
+            vue.updateUserConfig();
+            configEdit.newFileSearchOption = {};
+        },
+        settingsActionAddShortcut: (newShortcut: Shortcut): void => {
+            config.shortcuts.push(newShortcut);
+            vue.updateUserConfig();
+            configEdit.newShortcut = {};
+        },
+        settingsActionAddWebSearch: (newWebSearch: WebSearch): void => {
+            config.webSearches.push(newWebSearch);
+            vue.updateUserConfig();
+            configEdit.newWebSearch = {};
         },
         settingsActionRemoveApplicationFileExtension: (applicationFileExtension: string): void => {
             const indexToRemove = config.applicationFileExtensions.indexOf(applicationFileExtension);
@@ -129,6 +150,31 @@ const vue = new Vue({
         settingsActionRemoveApplicationFolder: (applicationFolder: string): void => {
             const indexToRemove = config.applicationFolders.indexOf(applicationFolder);
             config.applicationFolders.splice(indexToRemove, 1);
+            vue.updateUserConfig();
+        },
+        settingsActionRemoveCustomCommand: (customCommand: CustomCommand): void => {
+            const indexToRemove = config.customCommands.indexOf(customCommand);
+            config.customCommands.splice(indexToRemove, 1);
+            vue.updateUserConfig();
+        },
+        settingsActionRemoveFallbackWebSearch: (fallbackWebSearch: string): void => {
+            const indexToRemove = config.fallbackWebSearches.indexOf(fallbackWebSearch);
+            config.fallbackWebSearches.splice(indexToRemove, 1);
+            vue.updateUserConfig();
+        },
+        settingsActionRemoveFileSearchOption: (fileSearchOption: FileSearchOption): void => {
+            const indexToRemove = config.fileSearchOptions.indexOf(fileSearchOption);
+            config.fileSearchOptions.splice(indexToRemove, 1);
+            vue.updateUserConfig();
+        },
+        settingsActionRemoveShortcut: (shortcut: Shortcut): void => {
+            const indexToRemove = config.shortcuts.indexOf(shortcut);
+            config.shortcuts.splice(indexToRemove, 1);
+            vue.updateUserConfig();
+        },
+        settingsActionRemoveWebSearch: (webSearch: WebSearch): void => {
+            const indexToRemove = config.webSearches.indexOf(webSearch);
+            config.webSearches.splice(indexToRemove, 1);
             vue.updateUserConfig();
         },
         updateAppConfig: (): void => {
@@ -297,6 +343,8 @@ function resetUserInput(): void {
 function handleGlobalKeyPress(event: KeyboardEvent): void {
     if (event.key === "F6" || (event.key === "l" && event.ctrlKey)) {
         focusOnInput();
+    } else if (event.key === "i" && event.ctrlKey) {
+        toggleSettings();
     }
 }
 
@@ -320,6 +368,7 @@ function toggleSettings(): void {
 }
 
 function hideSettings(): void {
+    focusOnInput();
     ipcRenderer.send(IpcChannels.hideSettings);
     vue.settingsVisible = false;
 }

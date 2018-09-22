@@ -196,6 +196,14 @@ input.setting-text-input:focus {
     border: 1px solid var(--accent-color);
 }
 
+input.setting-text-input.small {
+    width: 25%;
+}
+
+input.setting-text-input.medium {
+    width: 33%;
+}
+
 select.setting-select {
     background-color: var(--scrollbar-background-color);
     border: 1px solid var(--scrollbar-foreground-color);
