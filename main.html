@@ -87,13 +87,13 @@
                     <div class="setting-group">
                         <div class="setting-title">Allow mouse interaction</div>
                         <div class="setting">
-                            <input type="checkbox" v-model="config.allowMouseInteraction" v-on:blur="updateUserConfig">
+                            <input type="checkbox" v-model="config.allowMouseInteraction" v-on:change="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
                         <div class="setting-title">Always show on primary display</div>
                         <div class="setting">
-                            <input type="checkbox" v-model="config.alwaysShowOnPrimaryDisplay" v-on:blur="updateUserConfig">
+                            <input type="checkbox" v-model="config.alwaysShowOnPrimaryDisplay" v-on:change="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
@@ -137,7 +137,7 @@
                     <div class="setting-group">
                         <div class="setting-title">Autostart app</div>
                         <div class="setting">
-                            <input type="checkbox" v-model="config.autoStartApp" v-on:blur="updateUserConfig">
+                            <input type="checkbox" v-model="config.autoStartApp" v-on:change="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
@@ -256,7 +256,7 @@
                     <div class="setting-group">
                         <div class="setting-title">Log execution</div>
                         <div class="setting">
-                            <input type="checkbox" v-model="config.logExecution" v-on:blur="updateUserConfig">
+                            <input type="checkbox" v-model="config.logExecution" v-on:change="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
@@ -286,13 +286,13 @@
                     <div class="setting-group">
                         <div class="setting-title">Search environment variables</div>
                         <div class="setting">
-                            <input type="checkbox" v-model="config.searchEnvironmentVariables" v-on:blur="updateUserConfig">
+                            <input type="checkbox" v-model="config.searchEnvironmentVariables" v-on:change="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
                         <div class="setting-title">Search operating system settings</div>
                         <div class="setting">
-                            <input type="checkbox" v-model="config.searchOperatingSystemSettings" v-on:blur="updateUserConfig">
+                            <input type="checkbox" v-model="config.searchOperatingSystemSettings" v-on:change="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
@@ -355,7 +355,7 @@
                     <div class="setting-group">
                         <div class="setting-title">Show tray icon</div>
                         <div class="setting">
-                            <input type="checkbox" v-model="config.showTrayIcon" v-on:blur="updateUserConfig">
+                            <input type="checkbox" v-model="config.showTrayIcon" v-on:change="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
