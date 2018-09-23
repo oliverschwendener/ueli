@@ -1,7 +1,7 @@
 import * as fs from "fs";
-import { ConfigFileRepository } from "../../ts/config-file-repository";
+import { UserConfigFileRepository } from "../../ts/user-config/config-file-repository";
 import { WebSearch } from "../../ts/web-search";
-import { ConfigOptions } from "../../ts/config-options";
+import { UserConfigOptions } from "../../ts/user-config/config-options";
 
 const defaultConfig = {
     webSearches: [
@@ -18,7 +18,7 @@ const defaultConfig = {
             url: "https://dummy-search-2.com/query=",
         },
     ],
-} as ConfigOptions;
+} as UserConfigOptions;
 
 const fakeUserConfig = {
     webSearches: [
@@ -29,14 +29,14 @@ const fakeUserConfig = {
             url: "https://custom-user-search.com/query=",
         },
     ],
-} as ConfigOptions;
+} as UserConfigOptions;
 
-describe(ConfigFileRepository.name, (): void => {
+describe(UserConfigFileRepository.name, (): void => {
     const notExistingConfigFile = "./does-not-exist";
 
     describe("getConfig", (): void => {
         it("loads default config and creates default config file when user config file does not exist", (): void => {
-            const actual = new ConfigFileRepository(defaultConfig, notExistingConfigFile).getConfig();
+            const actual = new UserConfigFileRepository(defaultConfig, notExistingConfigFile).getConfig();
 
             expect(actual.webSearches.length).toBe(defaultConfig.webSearches.length);
 
@@ -52,7 +52,7 @@ describe(ConfigFileRepository.name, (): void => {
             }
 
             const configFileContent = fs.readFileSync(notExistingConfigFile, "utf-8");
-            const configFromFile = JSON.parse(configFileContent) as ConfigOptions;
+            const configFromFile = JSON.parse(configFileContent) as UserConfigOptions;
 
             for (const webSearch of configFromFile.webSearches) {
                 const defaultWebSearch = defaultConfig.webSearches.filter((w: WebSearch): boolean => {
@@ -75,7 +75,7 @@ describe(ConfigFileRepository.name, (): void => {
         const fakeUserConfigFilePath = "./fake-user-config.json";
 
         it("loads user config when user config is available", (): void => {
-            const actual = new ConfigFileRepository(defaultConfig, fakeUserConfigFilePath).getConfig();
+            const actual = new UserConfigFileRepository(defaultConfig, fakeUserConfigFilePath).getConfig();
             expect(actual.webSearches.length).toBe(fakeUserConfig.webSearches.length);
 
             for (const webSearch of actual.webSearches) {
@@ -104,7 +104,7 @@ describe(ConfigFileRepository.name, (): void => {
         const config = "<html>This is invalid json</hmtl>";
 
         it("should return default config if an error occurs when reading config file", (): void => {
-            const actual = new ConfigFileRepository(defaultConfig, configFilePath).getConfig();
+            const actual = new UserConfigFileRepository(defaultConfig, configFilePath).getConfig();
 
             expect(actual.webSearches.length).toBe(defaultConfig.webSearches.length);
 

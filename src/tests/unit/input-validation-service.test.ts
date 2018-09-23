@@ -2,14 +2,14 @@ import { InputValidationService } from "../../ts/input-validation-service";
 import { FakeSearcher } from "./fake-searcher";
 import { FakeInputValidator } from "./fake-input-validator";
 import { SearchResultItem } from "../../ts/search-result-item";
-import { ConfigOptions } from "../../ts/config-options";
+import { UserConfigOptions } from "../../ts/user-config/config-options";
 import { WebSearch } from "../../ts/web-search";
 import { WebSearchBuilder } from "../../ts/builders/web-search-builder";
 
 describe(InputValidationService.name, (): void => {
     const config = {
         fallbackWebSearches: [] as string[],
-    } as ConfigOptions;
+    } as UserConfigOptions;
 
     describe("getSearchResults", () => {
         it("should return an empty array if user input is an empty string, undefined or null", (): void => {

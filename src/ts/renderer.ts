@@ -2,7 +2,7 @@ import { SearchResultItemViewModel } from "./search-result-item-view-model";
 import { IpcChannels } from "./ipc-channels";
 import { platform } from "os";
 import { ipcRenderer } from "electron";
-import { ConfigFileRepository } from "./config-file-repository";
+import { UserConfigFileRepository } from "./user-config/config-file-repository";
 import { defaultConfig } from "./default-config";
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { Injector } from "./injector";
@@ -16,7 +16,7 @@ import { WebSearch } from "./web-search";
 import * as packageJson from "../../package.json";
 
 const appConfigRepository = new ElectronStoreAppConfigRepository();
-const config = new ConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
+const config = new UserConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
 const configEdit = {
     newApplicationFileExtension: "",
     newApplicationFolder: "",

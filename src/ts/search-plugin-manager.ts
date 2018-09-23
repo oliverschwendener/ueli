@@ -5,7 +5,7 @@ import { ProgramsPlugin } from "./search-plugins/programs-plugin";
 import { SearchPlugin } from "./search-plugins/search-plugin";
 import { platform } from "os";
 import { ProgramFileRepository } from "./programs-plugin/program-file-repository";
-import { ConfigOptions } from "./config-options";
+import { UserConfigOptions } from "./user-config/config-options";
 import { ShortcutsPlugin } from "./search-plugins/shortcuts-plugin";
 import { IconSet } from "./icon-sets/icon-set";
 import { EnvironmentVariablePlugin } from "./search-plugins/environment-variable-plugin";
@@ -13,7 +13,7 @@ import { EnvironmentVariablePlugin } from "./search-plugins/environment-variable
 export class SearchPluginManager {
     private plugins: SearchPlugin[];
 
-    public constructor(config: ConfigOptions, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }) {
+    public constructor(config: UserConfigOptions, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }) {
         this.plugins = [
             new ProgramsPlugin(new ProgramFileRepository(config.applicationFolders, config.applicationFileExtensions)),
             new FileSearchPlugin(config.fileSearchOptions),

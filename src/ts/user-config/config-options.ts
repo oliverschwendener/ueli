@@ -1,9 +1,9 @@
-import { WebSearch } from "./web-search";
-import { Shortcut } from "./shortcut";
-import { FileSearchOption } from "./file-search-option";
-import { CustomCommand } from "./custom-shortcut";
+import { WebSearch } from "./../web-search";
+import { Shortcut } from "./../shortcut";
+import { FileSearchOption } from "./../file-search-option";
+import { CustomCommand } from "./../custom-shortcut";
 
-export interface ConfigOptions {
+export interface UserConfigOptions {
     allowMouseInteraction: boolean;
     alwaysShowOnPrimaryDisplay: boolean;
     applicationFileExtensions: string[];

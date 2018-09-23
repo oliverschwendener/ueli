@@ -14,7 +14,7 @@ import { SearchPluginsSearcher } from "./searcher/search-plugins-searcher";
 import { SearchPluginsInputValidator } from "./input-validators/search-plugins-input-validator";
 import { InputValidatorSearcherCombination } from "./input-validator-searcher-combination";
 import { UeliHelpers } from "./helpers/ueli-helpers";
-import { ConfigOptions } from "./config-options";
+import { UserConfigOptions } from "./user-config/config-options";
 import { CountManager } from "./count-manager";
 import { CountFileRepository } from "./count-file-repository";
 import { Injector } from "./injector";
@@ -25,7 +25,7 @@ import { CustomCommandInputValidator } from "./input-validators/custom-command-i
 export class InputValidatorSearcherCombinationManager {
     private combinations: InputValidatorSearcherCombination[];
 
-    constructor(config: ConfigOptions) {
+    constructor(config: UserConfigOptions) {
         const iconSet = Injector.getIconSet(platform());
         const countManager = new CountManager(new CountFileRepository(UeliHelpers.countFilePath));
         const environmentVariableCollection = process.env as { [key: string]: string };

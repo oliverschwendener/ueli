@@ -2,13 +2,13 @@ import { StringHelpers } from "./helpers/string-helpers";
 import { SearchResultItem } from "./search-result-item";
 import { InputValidatorSearcherCombination } from "./input-validator-searcher-combination";
 import { FallbackWebSearchSercher } from "./searcher/fallback-web-search-searcher";
-import { ConfigOptions } from "./config-options";
+import { UserConfigOptions } from "./user-config/config-options";
 
 export class InputValidationService {
-    private configOptions: ConfigOptions;
+    private configOptions: UserConfigOptions;
     private validatorSearcherCombinations: InputValidatorSearcherCombination[];
 
-    public constructor(configOptions: ConfigOptions, validatorSearcherCombinations: InputValidatorSearcherCombination[]) {
+    public constructor(configOptions: UserConfigOptions, validatorSearcherCombinations: InputValidatorSearcherCombination[]) {
         this.configOptions = configOptions;
         this.validatorSearcherCombinations = validatorSearcherCombinations;
     }

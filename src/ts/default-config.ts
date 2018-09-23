@@ -1,4 +1,4 @@
-import { ConfigOptions } from "./config-options";
+import { UserConfigOptions } from "./user-config/config-options";
 import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
 import { homedir, platform } from "os";
 import { OperatingSystem } from "./operating-system";
@@ -6,7 +6,7 @@ import { WebSearch } from "./web-search";
 
 const currentOperatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
 
-export const defaultConfig: ConfigOptions = {
+export const defaultConfig: UserConfigOptions = {
     allowMouseInteraction: true,
     alwaysShowOnPrimaryDisplay: false,
     applicationFileExtensions: currentOperatingSystem === OperatingSystem.Windows

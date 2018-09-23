@@ -14,7 +14,7 @@ import { ExecutionArgumentValidatorExecutorCombinationManager } from "./executio
 import { InputValidatorSearcherCombinationManager } from "./input-validator-searcher-combination-manager";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { defaultConfig } from "./default-config";
-import { ConfigFileRepository } from "./config-file-repository";
+import { UserConfigFileRepository } from "./user-config/config-file-repository";
 import { CountManager } from "./count-manager";
 import { CountFileRepository } from "./count-file-repository";
 import { ProductionIpcEmitter } from "./production-ipc-emitter";
@@ -22,7 +22,7 @@ import { AutoCompletionService } from "./auto-completion/autocompletion-service"
 import { FilePathAutoCompletionValidator } from "./auto-completion/file-path-autocompletion-validator";
 import { ElectronStoreAppConfigRepository } from "./app-config/electorn-store-app-config-repository";
 import { AppConfig } from "./app-config/app-config";
-import { ConfigOptions } from "./config-options";
+import { UserConfigOptions } from "./user-config/config-options";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -30,7 +30,7 @@ let trayIcon: Tray;
 const delayWhenHidingCommandlineOutputInMs = 25;
 const filePathExecutor = new FilePathExecutor();
 const appConfigRepository = new ElectronStoreAppConfigRepository();
-const userConfigRepository = new ConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath);
+const userConfigRepository = new UserConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath);
 let config = userConfigRepository.getConfig();
 let inputValidationService = new InputValidationService(config, new InputValidatorSearcherCombinationManager(config).getCombinations());
 const ipcEmitter = new ProductionIpcEmitter();
@@ -181,7 +181,7 @@ function hideMainWindow(): void {
 }
 
 function reloadApp(preventMainWindowReload?: boolean): void {
-    config = new ConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
+    config = new UserConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
     inputValidationService = new InputValidationService(config, new InputValidatorSearcherCombinationManager(config).getCombinations());
     executionService = new ExecutionService(
         new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations(),
@@ -279,7 +279,7 @@ ipcMain.on(IpcChannels.updateAppConfig, (event: Electron.Event, updatedAppConfig
     appConfigRepository.setAppConfig(updatedAppConfig);
 });
 
-ipcMain.on(IpcChannels.updateUserConfig, (event: Electron.Event, updatedUserConfig: ConfigOptions) => {
+ipcMain.on(IpcChannels.updateUserConfig, (event: Electron.Event, updatedUserConfig: UserConfigOptions) => {
     config = updatedUserConfig;
     userConfigRepository.saveConfig(updatedUserConfig);
     reloadApp(true);

@@ -1,15 +1,15 @@
 import { ExecutionArgumentValidatorExecutorCombination } from "./execution-argument-validator-executor-combination";
 import { CountManager } from "./count-manager";
-import { ConfigOptions } from "./config-options";
+import { UserConfigOptions } from "./user-config/config-options";
 import { IpcEmitter } from "./ipc-emitter";
 
 export class ExecutionService {
     private validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[];
     private countManager: CountManager;
-    private config: ConfigOptions;
+    private config: UserConfigOptions;
     private ipcEmitter: IpcEmitter;
 
-    public constructor(validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[], countManager: CountManager, config: ConfigOptions, ipcEmitter: IpcEmitter) {
+    public constructor(validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[], countManager: CountManager, config: UserConfigOptions, ipcEmitter: IpcEmitter) {
         this.config = config;
         this.validatorExecutorCombinations = validatorExecutorCombinations;
         this.countManager = countManager;

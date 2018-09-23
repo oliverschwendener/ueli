@@ -4,17 +4,17 @@ import { SearchPluginManager } from "../search-plugin-manager";
 import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
 import { defaultConfig } from "../default-config";
-import { ConfigOptions } from "../config-options";
+import { UserConfigOptions } from "../user-config/config-options";
 import { CountManager } from "../count-manager";
 import { IconSet } from "../icon-sets/icon-set";
 
 export class SearchPluginsSearcher implements Searcher {
     private items: SearchResultItem[];
     private countManager: CountManager;
-    private config: ConfigOptions;
+    private config: UserConfigOptions;
     private rescanIntervalinMilliseconds = TimeHelpers.convertSecondsToMilliseconds(defaultConfig.rescanInterval);
 
-    constructor(config: ConfigOptions, countManager: CountManager, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }) {
+    constructor(config: UserConfigOptions, countManager: CountManager, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }) {
         this.config = config;
         this.countManager = countManager;
 
@@ -30,7 +30,7 @@ export class SearchPluginsSearcher implements Searcher {
         return searchEngine.search(userInput, this.countManager);
     }
 
-    private loadSearchPluginItems(config: ConfigOptions, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }): SearchResultItem[] {
+    private loadSearchPluginItems(config: UserConfigOptions, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }): SearchResultItem[] {
         const plugins = new SearchPluginManager(config, iconSet, environmentVariableCollection).getPlugins();
 
         const result = plugins.map((plugin) => plugin.getAllItems())

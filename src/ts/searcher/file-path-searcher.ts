@@ -6,14 +6,14 @@ import { SearchEngine } from "../search-engine";
 import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
 import { platform } from "os";
-import { ConfigOptions } from "../config-options";
+import { UserConfigOptions } from "../user-config/config-options";
 import { FilePathDescriptionBuilder } from "../builders/file-path-description-builder";
 
 export class FilePathSearcher implements Searcher {
     private iconSet = Injector.getIconSet(platform());
-    private config: ConfigOptions;
+    private config: UserConfigOptions;
 
-    constructor(config: ConfigOptions) {
+    constructor(config: UserConfigOptions) {
         this.config = config;
     }
 

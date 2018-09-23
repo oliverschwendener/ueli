@@ -1,11 +1,11 @@
-import { ConfigOptions } from "./config-options";
+import { UserConfigOptions } from "./config-options";
 import { readFileSync, existsSync, writeFileSync } from "fs";
 
-export class ConfigFileRepository {
-    private defaultConfig: ConfigOptions;
+export class UserConfigFileRepository {
+    private defaultConfig: UserConfigOptions;
     private configFilePath: string;
 
-    public constructor(defaultConfig: ConfigOptions, configFilePath: string) {
+    public constructor(defaultConfig: UserConfigOptions, configFilePath: string) {
         this.defaultConfig = defaultConfig;
         this.configFilePath = configFilePath;
 
@@ -14,10 +14,10 @@ export class ConfigFileRepository {
         }
     }
 
-    public getConfig(): ConfigOptions {
+    public getConfig(): UserConfigOptions {
         try {
             const fileContent = readFileSync(this.configFilePath, "utf-8");
-            const parsed = JSON.parse(fileContent) as ConfigOptions;
+            const parsed = JSON.parse(fileContent) as UserConfigOptions;
             const mergedConfig = Object.assign(this.defaultConfig, parsed); // Apply defaults if some settings are not set
             return this.enforceDataTypes(mergedConfig);
         } catch (err) {
@@ -25,12 +25,12 @@ export class ConfigFileRepository {
         }
     }
 
-    public saveConfig(config: ConfigOptions): void {
+    public saveConfig(config: UserConfigOptions): void {
         config = this.enforceDataTypes(config);
         writeFileSync(this.configFilePath, JSON.stringify(config, null, 2), "utf-8");
     }
 
-    private enforceDataTypes(config: ConfigOptions): ConfigOptions {
+    private enforceDataTypes(config: UserConfigOptions): UserConfigOptions {
         config.maxSearchResultCount = Number(config.maxSearchResultCount);
         config.rescanInterval = Number(config.rescanInterval);
         config.searchEngineThreshold = Number(config.searchEngineThreshold);

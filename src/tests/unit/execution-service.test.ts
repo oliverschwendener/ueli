@@ -2,7 +2,7 @@ import { ExecutionService } from "../../ts/execution-service";
 import { ExecutionArgumentValidatorExecutorCombination } from "../../ts/execution-argument-validator-executor-combination";
 import { CountManager } from "../../ts/count-manager";
 import { FakeCountRepository } from "./fake-count-repository";
-import { ConfigOptions } from "../../ts/config-options";
+import { UserConfigOptions } from "../../ts/user-config/config-options";
 import { FakeExecutor } from "./fake-executor";
 import { FakeExecutionArgumentValidator } from "./fake-execution-argument-validator";
 import { FakeIpcEmitter } from "./fake-ipc-emitter";
@@ -29,7 +29,7 @@ describe(ExecutionService.name, (): void => {
             ] as ExecutionArgumentValidatorExecutorCombination[];
 
             const countManager = new CountManager(new FakeCountRepository({}));
-            const config = { logExecution } as ConfigOptions;
+            const config = { logExecution } as UserConfigOptions;
             const ipcEmitter = new FakeIpcEmitter();
             const executionService = new ExecutionService(combinations, countManager, config, ipcEmitter);
 
@@ -59,7 +59,7 @@ describe(ExecutionService.name, (): void => {
             ] as ExecutionArgumentValidatorExecutorCombination[];
 
             const countManager = new CountManager(new FakeCountRepository({}));
-            const config = { logExecution } as ConfigOptions;
+            const config = { logExecution } as UserConfigOptions;
             const ipcEmitter = new FakeIpcEmitter();
             const executionService = new ExecutionService(combinations, countManager, config, ipcEmitter);
 
@@ -84,7 +84,7 @@ describe(ExecutionService.name, (): void => {
             ] as ExecutionArgumentValidatorExecutorCombination[];
 
             const countManager = new CountManager(new FakeCountRepository({}));
-            const config = { logExecution } as ConfigOptions;
+            const config = { logExecution } as UserConfigOptions;
             const ipcEmitter = new FakeIpcEmitter();
             const executionService = new ExecutionService(combinations, countManager, config, ipcEmitter);
 
@@ -108,7 +108,7 @@ describe(ExecutionService.name, (): void => {
             ] as ExecutionArgumentValidatorExecutorCombination[];
 
             const countManager = new CountManager(new FakeCountRepository({}));
-            const config = { logExecution } as ConfigOptions;
+            const config = { logExecution } as UserConfigOptions;
             const ipcEmitter = new FakeIpcEmitter();
             const executionService = new ExecutionService(combinations, countManager, config, ipcEmitter);
 
@@ -132,7 +132,7 @@ describe(ExecutionService.name, (): void => {
             ] as ExecutionArgumentValidatorExecutorCombination[];
 
             const countManager = new CountManager(new FakeCountRepository({}));
-            const config = { logExecution } as ConfigOptions;
+            const config = { logExecution } as UserConfigOptions;
             const ipcEmitter = new FakeIpcEmitter();
             const executionService = new ExecutionService(combinations, countManager, config, ipcEmitter);
 
