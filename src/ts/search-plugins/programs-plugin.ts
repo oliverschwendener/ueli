@@ -21,7 +21,7 @@ export class ProgramsPlugin implements SearchPlugin {
             return {
                 description: FilePathDescriptionBuilder.buildFilePathDescription(program.executionArgument),
                 executionArgument: program.executionArgument,
-                icon: this.iconSet.programIcon,
+                icon: this.iconSet.appIcon,
                 name: program.name,
                 searchable: [program.name],
                 tags: [],

@@ -1,7 +1,7 @@
 export interface IconSet {
     folderIcon: string;
     fileIcon: string;
-    programIcon: string;
+    appIcon: string;
     searchIcon: string;
     emailIcon: string;
     shortcutIcon: string;

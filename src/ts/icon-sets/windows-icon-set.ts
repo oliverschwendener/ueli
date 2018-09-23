@@ -13,7 +13,7 @@ export class WindowsIconSet implements IconSet {
                             </g>
                         </svg>`;
 
-    public programIcon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
+    public appIcon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
                             <g id="surface1">
                                 <path d="M 4 4 L 4 28 L 28 28 L 28 4 Z M 6 6 L 26 6 L 26 10 L 6 10 Z M 7 7 L 7 9 L 9 9 L 9 7 Z M 10 7 L 10 9 L 12 9 L 12 7 Z M 13 7 L 13 9 L 15 9 L 15 7 Z M 6 12 L 26 12 L 26 26 L 6 26 Z "></path>
                             </g>
