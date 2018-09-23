@@ -216,6 +216,8 @@ ipcRenderer.on(IpcChannels.commandLineOutput, (event: Electron.Event, arg: strin
 ipcRenderer.on(IpcChannels.resetCommandlineOutput, resetCommandLineOutput);
 ipcRenderer.on(IpcChannels.resetUserInput, resetUserInput);
 ipcRenderer.on(IpcChannels.hideSettings, hideSettings);
+ipcRenderer.on(IpcChannels.showSettingsFromRenderer, showSettings);
+ipcRenderer.on(IpcChannels.showSettingsFromMain, showSettings);
 
 function handleSearch(searchTerm: string): void {
     vue.settingsVisible = false;
@@ -379,6 +381,6 @@ function hideSettings(): void {
 function showSettings(): void {
     vue.searchResults = [];
     resetCommandLineOutput();
-    ipcRenderer.send(IpcChannels.showSettings);
+    ipcRenderer.send(IpcChannels.showSettingsFromRenderer);
     vue.settingsVisible = true;
 }

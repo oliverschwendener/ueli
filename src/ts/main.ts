@@ -243,6 +243,10 @@ ipcMain.on(IpcChannels.ueliReload, reloadApp);
 ipcMain.on(IpcChannels.ueliExit, quitApp);
 ipcMain.on(IpcChannels.ueliUpdateUeli, downloadUpdate);
 
+ipcMain.on(IpcChannels.showSettingsFromMain, (): void => {
+    mainWindow.webContents.send(IpcChannels.showSettingsFromMain);
+});
+
 ipcMain.on(IpcChannels.getSearch, (event: any, arg: string): void => {
     const userInput = arg;
     const result = inputValidationService.getSearchResult(userInput);
@@ -285,7 +289,7 @@ ipcMain.on(IpcChannels.ueliCheckForUpdates, (): void => {
     autoUpdater.checkForUpdates();
 });
 
-ipcMain.on(IpcChannels.showSettings, (): void => {
+ipcMain.on(IpcChannels.showSettingsFromRenderer, (): void => {
     updateWindowSize(config.maxSearchResultCount);
 });
 
