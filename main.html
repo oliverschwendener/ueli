@@ -155,7 +155,7 @@
                                         <th>Name</th>
                                         <th>ExecutionArgument</th>
                                         <th>Prefix</th>
-                                        <th>Icon</th>
+                                        <th class="text-center">Icon</th>
                                         <th class="text-center">+/-</th>
                                     </tr>
                                 </thead>
@@ -164,7 +164,7 @@
                                         <td><input disabled class="setting-text-input" type="text" v-model="customCommand.name"></td>
                                         <td><input disabled class="setting-text-input" type="text" v-model="customCommand.executionArgument"></td>
                                         <td><input disabled class="setting-text-input" type="text" v-model="customCommand.prefix"></td>
-                                        <td><input disabled class="setting-text-input" type="text" v-model="customCommand.icon"></td>
+                                        <td class="text-center" v-html="customCommand.icon"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionRemoveCustomCommand(customCommand)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
                                                 <g id="surface1">
@@ -177,7 +177,7 @@
                                         <td><input class="setting-text-input" v-model="configEdit.newCustomCommand.name" type="text"></td>
                                         <td><input class="setting-text-input" v-model="configEdit.newCustomCommand.executionArgument" type="text"></td>
                                         <td><input class="setting-text-input" v-model="configEdit.newCustomCommand.prefix" type="text"></td>
-                                        <td><input class="setting-text-input" v-model="configEdit.newCustomCommand.icon" type="text"></td>
+                                        <td class="slim"><input class="setting-text-input" v-model="configEdit.newCustomCommand.icon" type="text"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionAddCustomCommand(configEdit.newCustomCommand)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
                                                 <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
@@ -223,7 +223,7 @@
                                 <tbody>
                                     <tr v-for="fileSearchOption in config.fileSearchOptions">
                                         <td><input disabled class="setting-text-input" type="text" v-model="fileSearchOption.folderPath"></td>
-                                        <td class="text-center"><input disabled type="checkbox" v-model="fileSearchOption.recursive"></td>
+                                        <td class="text-center slim"><input disabled type="checkbox" v-model="fileSearchOption.recursive"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionRemoveFileSearchOption(fileSearchOption)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
                                                 <g id="surface1">
@@ -313,7 +313,7 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Execution argument</th>
-                                        <th>Icon</th>
+                                        <th class="text-center">Icon</th>
                                         <th class="text-center">+/-</th>
                                     </tr>
                                 </thead>
@@ -321,7 +321,7 @@
                                     <tr v-for="shortcut in config.shortcuts">
                                         <td><input disabled class="setting-text-input" type="text" v-model="shortcut.name"></td>
                                         <td><input disabled class="setting-text-input" type="text" v-model="shortcut.executionArgument"></td>
-                                        <td><input disabled class="setting-text-input" type="text" v-model="shortcut.icon"></td>
+                                        <td class="text-center" v-html="shortcut.icon"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionRemoveShortcut(shortcut)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
                                                 <g id="surface1">
@@ -333,7 +333,7 @@
                                     <tr>
                                         <td><input class="setting-text-input" type="text" v-model="configEdit.newShortcut.name"></td>
                                         <td><input class="setting-text-input" type="text" v-model="configEdit.newShortcut.executionArgument"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="configEdit.newShortcut.icon"></td>
+                                        <td class="slim"><input class="setting-text-input" type="text" v-model="configEdit.newShortcut.icon"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionAddShortcut(configEdit.newShortcut)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
                                                 <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
@@ -371,16 +371,16 @@
                                         <th>Name</th>
                                         <th>Prefix</th>
                                         <th>Url</th>
-                                        <th>Icon</th>
+                                        <th class="text-center">Icon</th>
                                         <th class="text-center">+/-</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="webSearch in config.webSearches">
-                                        <td><input disabled class="setting-text-input small" type="text" v-model="webSearch.name"></td>
-                                        <td><input disabled class="setting-text-input small" type="text" v-model="webSearch.prefix"></td>
-                                        <td><input disabled class="setting-text-input small" type="text" v-model="webSearch.url"></td>
-                                        <td><input disabled class="setting-text-input small" type="text" v-model="webSearch.icon"></td>
+                                        <td><input disabled class="setting-text-input" type="text" v-model="webSearch.name"></td>
+                                        <td><input disabled class="setting-text-input" type="text" v-model="webSearch.prefix"></td>
+                                        <td><input disabled class="setting-text-input" type="text" v-model="webSearch.url"></td>
+                                        <td class="text-center" v-html="webSearch.icon"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionRemoveWebSearch(webSearch)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
                                                 <g id="surface1">
@@ -390,10 +390,10 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" class="setting-text-input small" v-model="configEdit.newWebSearch.name"></td>
-                                        <td><input type="text" class="setting-text-input small" v-model="configEdit.newWebSearch.prefix"></td>
-                                        <td><input type="text" class="setting-text-input small" v-model="configEdit.newWebSearch.url"></td>
-                                        <td><input type="text" class="setting-text-input small" v-model="configEdit.newWebSearch.icon"></td>
+                                        <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.name"></td>
+                                        <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.prefix"></td>
+                                        <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.url"></td>
+                                        <td class="slim"><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.icon"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionAddWebSearch(configEdit.newWebSearch)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
                                                 <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>

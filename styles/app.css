@@ -221,6 +221,16 @@ table.setting-table {
     width: 100%;
 }
 
+td.slim {
+    width: 50px;
+}
+
+td > svg {
+    fill: var(--text-color);
+    height: 25px;
+    width: 25px;
+}
+
 .text-center {
     text-align: center;
 }
