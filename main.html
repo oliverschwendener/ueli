@@ -83,19 +83,19 @@
 
                     <h1>User Settings</h1>
                     <div class="setting-group">
-                        <div class="setting-title">allowMouseInteraction</div>
+                        <div class="setting-title">Allow mouse interaction</div>
                         <div class="setting">
                             <input type="checkbox" v-model="config.allowMouseInteraction" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">alwaysShowOnPrimaryDisplay</div>
+                        <div class="setting-title">Always show on primary display</div>
                         <div class="setting">
                             <input type="checkbox" v-model="config.alwaysShowOnPrimaryDisplay" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">applicationFileExtensions</div>
+                        <div class="setting-title">Application file extensions</div>
                         <div class="setting">
                             <div class="sub-setting" v-for="applicationFileExtension in config.applicationFileExtensions">
                                 <input disabled class="setting-text-input" type="text" v-model="applicationFileExtension">
@@ -114,7 +114,7 @@
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">applicationFolders</div>
+                        <div class="setting-title">Application folders</div>
                         <div class="setting">
                             <div class="sub-setting" v-for="applicationFolder in config.applicationFolders">
                                 <input disabled class="setting-text-input" type="text" v-model="applicationFolder">
@@ -133,13 +133,13 @@
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">autoStartApp</div>
+                        <div class="setting-title">Autostart app</div>
                         <div class="setting">
                             <input type="checkbox" v-model="config.autoStartApp" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">colorTheme</div>
+                        <div class="setting-title">Color theme</div>
                         <div class="setting">
                             <select class="setting-select" v-model="config.colorTheme" v-on:change="updateUserConfig">
                                 <option v-for="availableColorTheme in availableColorThemes" :value="availableColorTheme">{{ availableColorTheme }}</option>
@@ -147,7 +147,7 @@
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">customCommands</div>
+                        <div class="setting-title">Custom commands</div>
                         <div class="setting">
                             <table class="setting-table">
                                 <thead>
@@ -189,7 +189,7 @@
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">fallbackWebSearches</div>
+                        <div class="setting-title">Fallback web searches</div>
                         <div class="setting">
                             <div class="sub-setting" v-for="fallbackWebSearch in config.fallbackWebSearches">
                                 <input disabled class="setting-text-input" type="text" v-model="fallbackWebSearch">
@@ -210,7 +210,7 @@
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">fileSearchOptions</div>
+                        <div class="setting-title">File search options</div>
                         <div class="setting">
                             <table class="setting-table">
                                 <thead>
@@ -246,67 +246,67 @@
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">hotKey</div>
+                        <div class="setting-title">Hotkey</div>
                         <div class="setting">
                             <input class="setting-text-input" type="text" v-model="config.hotKey" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">logExecution</div>
+                        <div class="setting-title">Log execution</div>
                         <div class="setting">
                             <input type="checkbox" v-model="config.logExecution" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">maxSearchResultCount</div>
+                        <div class="setting-title">Maximum search result count</div>
                         <div class="setting">
                             <input class="setting-text-input" type="number" v-model="config.maxSearchResultCount" min="0" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">rescanInterval</div>
+                        <div class="setting-title">Rescan interval (in seconds)</div>
                         <div class="setting">
                             <input class="setting-text-input" type="number" v-model="config.rescanInterval" min="5" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">searchEngineThreshold</div>
+                        <div class="setting-title">Search engine threshold</div>
                         <div class="setting">
                             <input class="setting-text-input" type="number" v-model="config.searchEngineThreshold" min="0" max="1" step="0.1" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">searchEnvironmentVariables</div>
+                        <div class="setting-title">Search environment variables</div>
                         <div class="setting">
                             <input type="checkbox" v-model="config.searchEnvironmentVariables" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">searchOperatingSystemSettings</div>
+                        <div class="setting-title">Search operating system settings</div>
                         <div class="setting">
                             <input type="checkbox" v-model="config.searchOperatingSystemSettings" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">searchResultDescriptionFontSize</div>
+                        <div class="setting-title">Search result description font size</div>
                         <div class="setting">
                             <input class="setting-text-input" type="number" v-model="config.searchResultDescriptionFontSize" min="0" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">searchResultHeight</div>
+                        <div class="setting-title">Search result height</div>
                         <div class="setting">
                             <input class="setting-text-input" type="number" v-model="config.searchResultHeight" min="0" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">searchResultNameFontSize</div>
+                        <div class="setting-title">Search result name font size</div>
                         <div class="setting">
                             <input class="setting-text-input" type="number" v-model="config.searchResultNameFontSize" min="0" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">shortcuts</div>
+                        <div class="setting-title">Shortcuts</div>
                         <div class="setting">
                             <table class="setting-table">
                                 <thead>
@@ -345,25 +345,25 @@
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">userInputFontSize</div>
+                        <div class="setting-title">User input font size</div>
                         <div class="setting">
                             <input class="setting-text-input" type="nubmer" v-model="config.userInputFontSize" min="0" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">userInputHeight</div>
+                        <div class="setting-title">User input height</div>
                         <div class="setting">
                             <input class="setting-text-input" type="number" v-model="config.userInputHeight" min="0" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">userStylesheet</div>
+                        <div class="setting-title">User stylesheet</div>
                         <div class="setting">
                             <input class="setting-text-input" type="text" v-model="config.userStylesheet" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">webSearches</div>
+                        <div class="setting-title">Web search engines</div>
                         <div class="setting">
                             <table class="setting-table">
                                 <thead>
@@ -405,7 +405,7 @@
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">windowWidth</div>
+                        <div class="setting-title">Window width</div>
                         <div class="setting">
                             <input class="setting-text-input" type="number" v-model="config.windowWidth" v-on:blur="updateUserConfig">
                         </div>
