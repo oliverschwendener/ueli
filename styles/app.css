@@ -1,7 +1,7 @@
 :root {
     --side-padding: 15px;
     --scrollbar-size: 8px;
-    --icon-size: 55%;
+    --icon-size: 35px;
     --transition-speed: 150ms;
 
     --font-family: "Segoe UI", "Helvetica";
@@ -136,6 +136,7 @@ span.search-result-description.active {
 
 div.settings-container {
     padding: 0 var(--side-padding);
+    position: relative;
 }
 
 div.setting-group {
@@ -150,16 +151,15 @@ div.setting-group:last-child {
 }
 
 div.setting-title {
-    font-size: 1rem;
+    font-size: 0.85rem;
     padding-right: var(--side-padding);
     display: flex;
     align-items: center;
-    width: 35%;
-    font-family: var(--font-family-mono);
+    width: 28%;
 }
 
 div.setting {
-    width: 65%;
+    width: 72%;
 }
 
 div.sub-setting {
@@ -168,24 +168,20 @@ div.sub-setting {
     align-items: center;
 }
 
-div.sub-setting > input.setting-text-input:last-child {
-    margin-bottom: 5px;
-}
-
 input.setting-text-input {
     background-color: var(--scrollbar-background-color);
     border: 1px solid var(--scrollbar-foreground-color);
     outline: none;
     color: var(--text-color);
     width: 100%;
-    font-size: 1rem;
+    font-size: 0.85rem;
     padding: 5px;
     margin-bottom: 5px;
     box-sizing: border-box;
 }
 
 input.setting-text-input:disabled {
-    border: none;
+    border: 1px solid var(--scrollbar-background-color);
 }
 
 input.setting-text-input:last-child {
@@ -194,14 +190,6 @@ input.setting-text-input:last-child {
 
 input.setting-text-input:focus {
     border: 1px solid var(--accent-color);
-}
-
-input.setting-text-input.small {
-    width: 25%;
-}
-
-input.setting-text-input.medium {
-    width: 33%;
 }
 
 select.setting-select {
@@ -219,11 +207,34 @@ svg.setting-action-icon {
     width: 20px;
     height: 20px;
     fill: var(--text-color);
-    padding-left: 10px;
 }
 
 svg.setting-action-icon:hover {
     fill: var(--accent-color);
+}
+
+table.setting-table {
+    font-size: 0.85rem;
+    text-align: left;
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+svg.close-settings-icon {
+    cursor: pointer;
+    transition: all var(--transition-speed) ease-in-out;
+    fill: var(--text-color);
+    height: var(--icon-size);
+    width: var(--icon-size);
+    position: absolute;
+    right: var(--side-padding);
+}
+
+svg.close-settings-icon:hover {
+    opacity: 0.5;
 }
 
 ::-webkit-scrollbar {

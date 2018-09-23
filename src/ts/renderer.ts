@@ -57,6 +57,9 @@ const vue = new Vue({
                 focusOnInput();
             }
         },
+        handleCloseSettingsIconClick: (): void => {
+            hideSettings();
+        },
         handleMouseEnter: (index: number): void => {
             if (config.allowMouseInteraction) {
                 changeActiveItemByIndex(index);
