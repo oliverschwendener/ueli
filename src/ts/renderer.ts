@@ -57,6 +57,13 @@ const vue = new Vue({
         colorTheme: (): string => {
             return `./styles/${config.colorTheme}.css`;
         },
+        getUnusedFallbackWebSearches: (): WebSearch[] => {
+            return config.webSearches.filter((w) => {
+                return config.fallbackWebSearches.filter((f) => {
+                    return f === w.name;
+                }).length === 0;
+            });
+        },
         handleCheckForUpdateButtonClick: (): void => {
             ipcRenderer.send(IpcChannels.ueliCheckForUpdates);
             vue.downloadingUpdate = true;

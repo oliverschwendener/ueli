@@ -17,6 +17,7 @@ export interface UserConfigOptions {
     hotKey: string;
     logExecution: boolean;
     maxSearchResultCount: number;
+    maxWindowHeight: number;
     rescanInterval: number;
     searchEngineThreshold: number;
     searchEnvironmentVariables: boolean;

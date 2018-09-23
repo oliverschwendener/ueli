@@ -31,6 +31,7 @@ export class UserConfigFileRepository {
     }
 
     private enforceDataTypes(config: UserConfigOptions): UserConfigOptions {
+        config.maxWindowHeight = Number(config.maxWindowHeight);
         config.maxSearchResultCount = Number(config.maxSearchResultCount);
         config.rescanInterval = Number(config.rescanInterval);
         config.searchEngineThreshold = Number(config.searchEngineThreshold);

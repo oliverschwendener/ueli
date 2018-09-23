@@ -51,7 +51,7 @@
                             <path d="M 7.21875 5.78125 L 5.78125 7.21875 L 14.5625 16 L 5.78125 24.78125 L 7.21875 26.21875 L 16 17.4375 L 24.78125 26.21875 L 26.21875 24.78125 L 17.4375 16 L 26.21875 7.21875 L 24.78125 5.78125 L 16 14.5625 Z "></path>
                         </g>
                     </svg>
-                    <h1>App Settings</h1>
+                    <h1 class="setting-section-title">App Settings</h1>
                     <div class="setting-group">
                         <div class="setting-title">Info</div>
                         <div class="setting">
@@ -65,13 +65,15 @@
                     <div class="setting-group">
                         <div class="setting-title">Update</div>
                         <div class="setting">
-                            <button v-if="(updateAvailable || noUpdateFound) === false" v-on:click="handleCheckForUpdateButtonClick" class="setting-button">Check for update</button>
-                            <div v-if="updateAvailable">
+                            <div v-if="(updateAvailable || noUpdateFound) === false" class="sub-setting">
+                                <button v-on:click="handleCheckForUpdateButtonClick" class="setting-button">Check for update</button>
+                                <span v-if="errorOnUpdateCheck" class="message text-error">There was an error while checking for updates :(</span>
+                            </div>
+                            <div v-if="updateAvailable" class="sub-setting">
                                 <button v-if="updateAvailable && !downloadingUpdate" v-on:click="handleDownloadUpdateButtonClick" class="setting-button">Download & install update</button>
                                 <button v-if="updateAvailable && downloadingUpdate" class="setting-button">Downloading...</button>
                             </div>
                             <div v-if="noUpdateFound">Your are running the latest version</div>
-                            <div v-if="errorOnUpdateCheck">There was an error while checking for updates</div>
                         </div>
                     </div>
                     <div class="setting-group">
@@ -81,7 +83,7 @@
                         </div>
                     </div>
 
-                    <h1>User Settings</h1>
+                    <h1 class="setting-section-title">User Settings</h1>
                     <div class="setting-group">
                         <div class="setting-title">Allow mouse interaction</div>
                         <div class="setting">
@@ -199,9 +201,9 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="sub-setting">
+                            <div v-if="config.fallbackWebSearches.length !== config.webSearches.length" class="sub-setting">
                                 <select class="setting-select" v-model="configEdit.newFallbackWebSearch">
-                                    <option v-for="webSearch in config.webSearches" :value="webSearch.name">{{ webSearch.name }}</option>
+                                    <option v-for="webSearch in getUnusedFallbackWebSearches()" :value="webSearch.name">{{ webSearch.name }}</option>
                                 </select>
                                 <svg class="setting-action-icon" v-on:click="settingsActionAddFallbackWebSearch(configEdit.newFallbackWebSearch)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
                                     <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
@@ -261,6 +263,12 @@
                         <div class="setting-title">Maximum search result count</div>
                         <div class="setting">
                             <input class="setting-text-input" type="number" v-model="config.maxSearchResultCount" min="0" v-on:blur="updateUserConfig">
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <div class="setting-title">Maximum window height</div>
+                        <div class="setting">
+                            <input class="setting-text-input" type="number" v-model="config.maxWindowHeight" min="config.userInputHeight" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">

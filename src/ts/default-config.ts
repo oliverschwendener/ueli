@@ -32,6 +32,7 @@ export const defaultConfig: UserConfigOptions = {
     hotKey: "alt+space",
     logExecution: true,
     maxSearchResultCount: 8,
+    maxWindowHeight: 560,
     rescanInterval: 30,
     searchEngineThreshold: 0.4,
     searchEnvironmentVariables: false,

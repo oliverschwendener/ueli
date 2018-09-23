@@ -3,7 +3,7 @@
     --scrollbar-size: 8px;
     --icon-size: 35px;
     --transition-speed: 150ms;
-
+    --error-color: #e74c3c;
     --font-family: "Segoe UI", "Helvetica";
     --font-family-mono: "Consolas", "Courier", monospace;
     --settings-font-size: 0.85rem;
@@ -141,6 +141,14 @@ div.settings-container {
     font-size: var(--settings-font-size);
 }
 
+h1.setting-section-title {
+    margin-top: 75px;
+}
+
+h1.setting-section-title:first-of-type {
+    margin-top: 15px;
+}
+
 div.setting-group {
     padding: calc(2* var(--side-padding)) 0;
     display: flex;
@@ -153,7 +161,7 @@ div.setting-group:last-child {
 }
 
 div.setting-title {
-    font-size: var(--settings-font-size):
+    font-size: var(--settings-font-size);
     padding-right: var(--side-padding);
     display: flex;
     align-items: center;
@@ -171,6 +179,7 @@ div.sub-setting {
 }
 
 input.setting-text-input {
+    transition: all var(--transition-speed) ease-in-out;
     background-color: var(--scrollbar-background-color);
     border: 1px solid var(--scrollbar-foreground-color);
     outline: none;
@@ -231,10 +240,6 @@ td > svg {
     width: 25px;
 }
 
-.text-center {
-    text-align: center;
-}
-
 svg.close-settings-icon {
     cursor: pointer;
     transition: all var(--transition-speed) ease-in-out;
@@ -264,6 +269,18 @@ button.setting-button:hover {
 
 button.setting-button:focus {
     outline: none;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-error {
+    color: var(--error-color);
+}
+
+.message {
+    padding: 0 5px;
 }
 
 ::-webkit-scrollbar {

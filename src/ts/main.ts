@@ -1,6 +1,7 @@
+import { join } from "path";
+import { platform } from "os";
 import { app, BrowserWindow, globalShortcut, ipcMain, Menu, Tray, screen } from "electron";
 import { autoUpdater } from "electron-updater";
-import { join } from "path";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
 import { ExecutionService } from "./execution-service";
 import { FilePathExecutor } from "./executors/file-path-executor";
@@ -8,7 +9,6 @@ import { Injector } from "./injector";
 import { InputValidationService } from "./input-validation-service";
 import { IpcChannels } from "./ipc-channels";
 import * as isInDevelopment from "electron-is-dev";
-import { platform } from "os";
 import { WindowHelpers } from "./helpers/winow-helpers";
 import { ExecutionArgumentValidatorExecutorCombinationManager } from "./execution-argument-validator-executor-combination-manager";
 import { InputValidatorSearcherCombinationManager } from "./input-validator-searcher-combination-manager";
@@ -69,7 +69,7 @@ function createMainWindow(): void {
     });
 
     mainWindow.loadURL(`file://${__dirname}/../main.html`);
-    mainWindow.setSize(config.windowWidth, config.userInputHeight);
+    setWindowHeightToMax();
 
     mainWindow.on("close", quitApp);
     mainWindow.on("blur", hideMainWindow);
@@ -157,12 +157,17 @@ function updateWindowSize(searchResultCount: number): void {
     }
 }
 
+function setWindowHeightToMax(): void {
+    mainWindow.setSize(config.windowWidth, config.maxWindowHeight);
+}
+
 function showWindow() {
     if (!config.alwaysShowOnPrimaryDisplay) {
         const mousePosition = screen.getCursorScreenPoint();
         const nearestDisplay = screen.getDisplayNearestPoint(mousePosition);
         mainWindow.setBounds(nearestDisplay.bounds);
     }
+
     resetWindowToDefaultSizeAndPosition();
     mainWindow.show();
 }
@@ -205,7 +210,7 @@ function destroyTrayIcon(): void {
 }
 
 function resetWindowToDefaultSizeAndPosition(): void {
-    mainWindow.setSize(config.windowWidth, WindowHelpers.calculateMaxWindowHeight(config.userInputHeight, config.maxSearchResultCount, config.searchResultHeight));
+    setWindowHeightToMax();
     mainWindow.center();
     updateWindowSize(0);
 }
@@ -256,7 +261,7 @@ ipcMain.on(IpcChannels.autoComplete, (event: any, executionArgument: string): vo
 
 ipcMain.on(IpcChannels.commandLineExecution, (arg: string): void => {
     mainWindow.webContents.send(IpcChannels.commandLineOutput, arg);
-    updateWindowSize(config.maxSearchResultCount);
+    setWindowHeightToMax();
 });
 
 ipcMain.on(IpcChannels.resetUserInput, (): void => {
@@ -268,7 +273,7 @@ ipcMain.on(IpcChannels.ueliCheckForUpdates, (): void => {
 });
 
 ipcMain.on(IpcChannels.showSettingsFromRenderer, (): void => {
-    updateWindowSize(config.maxSearchResultCount);
+    setWindowHeightToMax();
 });
 
 ipcMain.on(IpcChannels.hideSettings, (): void => {
