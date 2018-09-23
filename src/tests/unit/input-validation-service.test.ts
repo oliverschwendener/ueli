@@ -1,5 +1,4 @@
 import { InputValidationService } from "../../ts/input-validation-service";
-import { InputValidatorSearcherCombination } from "../../ts/input-validator-searcher-combination";
 import { FakeSearcher } from "./fake-searcher";
 import { FakeInputValidator } from "./fake-input-validator";
 import { SearchResultItem } from "../../ts/search-result-item";

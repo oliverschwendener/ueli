@@ -2,7 +2,6 @@ import * as fs from "fs";
 import { ConfigFileRepository } from "../../ts/config-file-repository";
 import { WebSearch } from "../../ts/web-search";
 import { ConfigOptions } from "../../ts/config-options";
-import { dummyWebSearches } from "../unit/test-helpers";
 
 const defaultConfig = {
     webSearches: [

@@ -1,4 +1,3 @@
-import { Injector } from "../../../ts/injector";
 import { WebUrlInputValidator } from "../../../ts/input-validators/web-url-input-validator";
 import { validUrls, invalidUrls } from "../test-helpers";
 

@@ -1,4 +1,3 @@
-import { Injector } from "../../../ts/injector";
 import { SearchPluginsInputValidator } from "../../../ts/input-validators/search-plugins-input-validator";
 
 describe(SearchPluginsInputValidator.name, (): void => {

@@ -1,5 +1,4 @@
 import { TestableUserInputHistoryManager } from "./testable-user-input-history-manager";
-import { UserInputHistoryManager } from "../../ts/user-input-history-manager";
 
 describe(TestableUserInputHistoryManager.name, (): void => {
     describe("addItem", (): void => {
@@ -45,9 +44,9 @@ describe(TestableUserInputHistoryManager.name, (): void => {
             const manager = new TestableUserInputHistoryManager();
             manager.setHistory(history);
 
-            for (const historyItem of history) {
+            history.forEach(() => {
                 manager.getPrevious();
-            }
+            });
 
             const actual = manager.getPrevious();
 
@@ -95,9 +94,9 @@ describe(TestableUserInputHistoryManager.name, (): void => {
             manager.setHistory(history);
             manager.setIndex(-1);
 
-            for (const historyItem of history) {
+            history.forEach(() => {
                 manager.getNext();
-            }
+            });
 
             const acutal = manager.getNext();
 

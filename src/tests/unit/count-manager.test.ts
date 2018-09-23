@@ -1,6 +1,5 @@
 import { CountManager } from "../../ts/count-manager";
 import { FakeCountRepository } from "./fake-count-repository";
-import { exec } from "child_process";
 import { Count } from "../../ts/count";
 
 describe("CountManager", (): void => {

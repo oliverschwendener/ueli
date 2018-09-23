@@ -1,6 +1,4 @@
-import { Injector } from "../../../ts/injector";
 import { FilePathInputValidator } from "../../../ts/input-validators/file-path-input-validator";
-import { OperatingSystem } from "../../../ts/operating-system";
 import { platform } from "os";
 
 describe(FilePathInputValidator.name, (): void => {

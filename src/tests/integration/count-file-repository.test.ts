@@ -1,4 +1,4 @@
-import { writeFileSync, unlinkSync, existsSync, writeSync } from "fs";
+import { writeFileSync, unlinkSync, existsSync } from "fs";
 import { Count } from "../../ts/count";
 import { CountFileRepository } from "../../ts/count-file-repository";
 import { join } from "path";

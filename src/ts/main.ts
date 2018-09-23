@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, ipcMain, Menu, MenuItem, Tray, screen } from "electron";
+import { app, BrowserWindow, globalShortcut, ipcMain, Menu, Tray, screen } from "electron";
 import { autoUpdater } from "electron-updater";
 import { join } from "path";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";

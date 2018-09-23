@@ -1,9 +1,6 @@
-import * as fs from "fs";
-import * as os from "os";
-import * as path from "path";
 import { FileHelpers } from "../../../ts/helpers/file-helpers";
 import { join } from "path";
-import { mkdirSync, writeFileSync, unlinkSync, rmdirSync, chmodSync } from "fs";
+import { mkdirSync, writeFileSync, unlinkSync, rmdirSync } from "fs";
 
 describe(FileHelpers.name, (): void => {
     describe(FileHelpers.getFilesFromFolder.name, (): void => {

@@ -33,7 +33,7 @@ describe(OperatingSystemHelpers.name, () => {
 
             for (const unsupportedPlatform of unsupportedPlatforms) {
                 try {
-                    const actual = OperatingSystemHelpers.getOperatingSystemFromString(unsupportedPlatform);
+                    OperatingSystemHelpers.getOperatingSystemFromString(unsupportedPlatform);
                 } catch (error) {
                     expect(error instanceof OperatingSystemNotSupportedError).toBe(true);
                     errorCounter++;

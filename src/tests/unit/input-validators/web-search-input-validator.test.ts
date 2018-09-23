@@ -1,5 +1,4 @@
 import { WebSearchHelpers } from "../../../ts/helpers/web-search-helper";
-import { Injector } from "../../../ts/injector";
 import { WebSearchInputValidator } from "../../../ts/input-validators/web-search-input-validator";
 import { dummyWebSearches } from "../test-helpers";
 

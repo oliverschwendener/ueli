@@ -1,4 +1,3 @@
-import { Injector } from "../../../ts/injector";
 import { CalculatorInputValidator } from "../../../ts/input-validators/calculator-input-validator";
 
 describe(CalculatorInputValidator.name, (): void => {

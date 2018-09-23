@@ -75,7 +75,6 @@ describe(ExecutionService.name, (): void => {
             const logExecution = false;
 
             const executor1 = new FakeExecutor(hideAfterExecution, resetUserInputAfterExecution, logExecution);
-            const executor2 = new FakeExecutor(hideAfterExecution, resetUserInputAfterExecution, logExecution);
 
             const combinations = [
                 {
@@ -100,7 +99,6 @@ describe(ExecutionService.name, (): void => {
             const logExecution = false;
 
             const executor1 = new FakeExecutor(hideAfterExecution, resetUserInputAfterExecution, logExecution);
-            const executor2 = new FakeExecutor(hideAfterExecution, resetUserInputAfterExecution, logExecution);
 
             const combinations = [
                 {
@@ -125,7 +123,6 @@ describe(ExecutionService.name, (): void => {
             const logExecution = true;
 
             const executor1 = new FakeExecutor(hideAfterExecution, resetUserInputAfterExecution, logExecution);
-            const executor2 = new FakeExecutor(hideAfterExecution, resetUserInputAfterExecution, logExecution);
 
             const combinations = [
                 {

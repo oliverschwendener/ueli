@@ -3,7 +3,6 @@ import { SearchEngine } from "./../../ts/search-engine";
 import { CountManager } from "../../ts/count-manager";
 import { FakeCountRepository } from "./fake-count-repository";
 import { Count } from "../../ts/count";
-import { defaultConfig } from "../../ts/default-config";
 
 describe("SearchEngine", (): void => {
     const threshold = 4; // same as default config

@@ -1,6 +1,4 @@
 import { FilePathExecutionArgumentValidator } from "../../../ts/execution-argument-validators/file-path-execution-argument-validator";
-import { Injector } from "../../../ts/injector";
-import { OperatingSystem } from "../../../ts/operating-system";
 import { invalidMacOsFilePaths, invalidWindowsFilePaths, validMacOsFilePaths, validWindowsFilePaths } from "../test-helpers";
 import { platform } from "os";
 
