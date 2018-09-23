@@ -3,7 +3,7 @@ import { SearchEngine } from "../search-engine";
 import { SearchPluginManager } from "../search-plugin-manager";
 import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
-import { defaultConfig } from "../default-config";
+import { defaultConfig } from "../user-config/default-config";
 import { UserConfigOptions } from "../user-config/user-config-options";
 import { CountManager } from "../count/count-manager";
 import { IconSet } from "../icon-sets/icon-set";

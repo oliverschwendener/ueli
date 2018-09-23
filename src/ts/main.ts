@@ -13,7 +13,7 @@ import { WindowHelpers } from "./helpers/winow-helpers";
 import { ProductionExecutors } from "./production/production-executors";
 import { ProductionSearchers } from "./production/production-searchers";
 import { UeliHelpers } from "./helpers/ueli-helpers";
-import { defaultConfig } from "./default-config";
+import { defaultConfig } from "./user-config/default-config";
 import { UserConfigFileRepository } from "./user-config/user-config-file-repository";
 import { CountManager } from "./count/count-manager";
 import { CountFileRepository } from "./count/count-file-repository";

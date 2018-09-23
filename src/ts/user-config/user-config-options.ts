@@ -2,6 +2,7 @@ import { WebSearch } from "./../web-search";
 import { Shortcut } from "./../shortcut";
 import { FileSearchOption } from "./../file-search-option";
 import { CustomCommand } from "./../custom-shortcut";
+import { IconSet } from "../icon-sets/icon-set";
 
 export interface UserConfigOptions {
     allowMouseInteraction: boolean;
@@ -11,10 +12,10 @@ export interface UserConfigOptions {
     autoStartApp: boolean;
     colorTheme: string;
     customCommands: CustomCommand[];
-    shortcuts: Shortcut[];
     fallbackWebSearches: string[];
     fileSearchOptions: FileSearchOption[];
     hotKey: string;
+    iconSet: IconSet;
     logExecution: boolean;
     maxSearchResultCount: number;
     maxWindowHeight: number;
@@ -25,6 +26,7 @@ export interface UserConfigOptions {
     searchResultDescriptionFontSize: number;
     searchResultHeight: number;
     searchResultNameFontSize: number;
+    shortcuts: Shortcut[];
     showTrayIcon: boolean;
     userInputHeight: number;
     userInputFontSize: number;
