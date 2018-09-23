@@ -201,6 +201,20 @@ function reloadApp(preventMainWindowReload?: boolean): void {
 
     unregisterAllGlobalShortcuts();
     registerGlobalHotKey();
+
+    if (config.showTrayIcon) {
+        if (trayIcon === undefined || trayIcon.isDestroyed()) {
+            createTrayIcon();
+        }
+    } else {
+        if (trayIcon !== undefined && !trayIcon.isDestroyed()) {
+            destroyTrayIcon();
+        }
+    }
+
+    if (!isInDevelopment) {
+        setAutostartSettings();
+    }
 }
 
 function destroyTrayIcon(): void {
