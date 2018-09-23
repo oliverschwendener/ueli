@@ -2,7 +2,7 @@ import { StringHelpers } from "./helpers/string-helpers";
 import { SearchResultItem } from "./search-result-item";
 import { InputValidatorSearcherCombination } from "./input-validator-searcher-combination";
 import { FallbackWebSearchSercher } from "./searcher/fallback-web-search-searcher";
-import { UserConfigOptions } from "./user-config/config-options";
+import { UserConfigOptions } from "./user-config/user-config-options";
 
 export class InputValidationService {
     private configOptions: UserConfigOptions;

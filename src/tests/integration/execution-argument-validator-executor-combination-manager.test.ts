@@ -6,7 +6,7 @@ import { MacOsSettingsExecutionArgumentValidator } from "../../ts/execution-argu
 import { MacOsSettingsExecutor } from "../../ts/executors/mac-os-settings-executor";
 import { OperatingSystemHelpers } from "../../ts/helpers/operating-system-helpers";
 import { OperatingSystem } from "../../ts/operating-system";
-import { UserConfigOptions } from "../../ts/user-config/config-options";
+import { UserConfigOptions } from "../../ts/user-config/user-config-options";
 
 describe(ExecutionArgumentValidatorExecutorCombinationManager.name, (): void => {
     it("should return the correct execution argument valiator executor combinations", (): void => {

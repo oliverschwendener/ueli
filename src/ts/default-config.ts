@@ -1,4 +1,4 @@
-import { UserConfigOptions } from "./user-config/config-options";
+import { UserConfigOptions } from "./user-config/user-config-options";
 import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
 import { homedir, platform } from "os";
 import { OperatingSystem } from "./operating-system";

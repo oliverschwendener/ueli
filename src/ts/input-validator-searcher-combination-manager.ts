@@ -14,7 +14,7 @@ import { SearchPluginsSearcher } from "./searcher/search-plugins-searcher";
 import { SearchPluginsInputValidator } from "./input-validators/search-plugins-input-validator";
 import { InputValidatorSearcherCombination } from "./input-validator-searcher-combination";
 import { UeliHelpers } from "./helpers/ueli-helpers";
-import { UserConfigOptions } from "./user-config/config-options";
+import { UserConfigOptions } from "./user-config/user-config-options";
 import { CountManager } from "./count/count-manager";
 import { CountFileRepository } from "./count/count-file-repository";
 import { Injector } from "./injector";

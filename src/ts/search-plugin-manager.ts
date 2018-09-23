@@ -5,7 +5,7 @@ import { ProgramsPlugin } from "./search-plugins/programs-plugin";
 import { SearchPlugin } from "./search-plugins/search-plugin";
 import { platform } from "os";
 import { ProgramFileRepository } from "./programs-plugin/program-file-repository";
-import { UserConfigOptions } from "./user-config/config-options";
+import { UserConfigOptions } from "./user-config/user-config-options";
 import { ShortcutsPlugin } from "./search-plugins/shortcuts-plugin";
 import { IconSet } from "./icon-sets/icon-set";
 import { EnvironmentVariablePlugin } from "./search-plugins/environment-variable-plugin";

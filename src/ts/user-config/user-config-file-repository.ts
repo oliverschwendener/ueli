@@ -1,4 +1,4 @@
-import { UserConfigOptions } from "./config-options";
+import { UserConfigOptions } from "./user-config-options";
 import { readFileSync, existsSync, writeFileSync } from "fs";
 
 export class UserConfigFileRepository {

@@ -2,7 +2,7 @@ import { SearchResultItemViewModel } from "./search-result-item-view-model";
 import { IpcChannels } from "./ipc-channels";
 import { platform } from "os";
 import { ipcRenderer } from "electron";
-import { UserConfigFileRepository } from "./user-config/config-file-repository";
+import { UserConfigFileRepository } from "./user-config/user-config-file-repository";
 import { defaultConfig } from "./default-config";
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { Injector } from "./injector";

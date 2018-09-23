@@ -14,7 +14,7 @@ import { ExecutionArgumentValidatorExecutorCombinationManager } from "./executio
 import { InputValidatorSearcherCombinationManager } from "./input-validator-searcher-combination-manager";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { defaultConfig } from "./default-config";
-import { UserConfigFileRepository } from "./user-config/config-file-repository";
+import { UserConfigFileRepository } from "./user-config/user-config-file-repository";
 import { CountManager } from "./count/count-manager";
 import { CountFileRepository } from "./count/count-file-repository";
 import { ProductionIpcEmitter } from "./production-ipc-emitter";
@@ -22,7 +22,7 @@ import { AutoCompletionService } from "./auto-completion/autocompletion-service"
 import { FilePathAutoCompletionValidator } from "./auto-completion/file-path-autocompletion-validator";
 import { ElectronStoreAppConfigRepository } from "./app-config/electorn-store-app-config-repository";
 import { AppConfig } from "./app-config/app-config";
-import { UserConfigOptions } from "./user-config/config-options";
+import { UserConfigOptions } from "./user-config/user-config-options";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;

@@ -17,7 +17,7 @@ import { WindowsSettingsExecutionArgumentValidator } from "./execution-argument-
 import { WindowsSettingsExecutor } from "./executors/windows-settings-executor";
 import { MacOsSettingsExecutor } from "./executors/mac-os-settings-executor";
 import { MacOsSettingsExecutionArgumentValidator } from "./execution-argument-validators/mac-os-execution-argument-validator";
-import { UserConfigOptions } from "./user-config/config-options";
+import { UserConfigOptions } from "./user-config/user-config-options";
 import { CustomCommandExecutor } from "./executors/custom-command-executor";
 import { ShortcutExecutionArgumentValidator } from "./execution-argument-validators/shortcut-execution-argument-validator";
 import { CalculatorExecutor } from "./executors/calculator-executor";

@@ -1,6 +1,6 @@
 import { ExecutionArgumentValidatorExecutorCombination } from "./execution-argument-validator-executor-combination";
 import { CountManager } from "./count/count-manager";
-import { UserConfigOptions } from "./user-config/config-options";
+import { UserConfigOptions } from "./user-config/user-config-options";
 import { IpcEmitter } from "./ipc-emitter";
 
 export class ExecutionService {

@@ -2,7 +2,7 @@ import { ExecutionService } from "../../ts/execution-service";
 import { ExecutionArgumentValidatorExecutorCombination } from "../../ts/execution-argument-validator-executor-combination";
 import { CountManager } from "../../ts/count/count-manager";
 import { FakeCountRepository } from "./fake-count-repository";
-import { UserConfigOptions } from "../../ts/user-config/config-options";
+import { UserConfigOptions } from "../../ts/user-config/user-config-options";
 import { FakeExecutor } from "./fake-executor";
 import { FakeExecutionArgumentValidator } from "./fake-execution-argument-validator";
 import { FakeIpcEmitter } from "./fake-ipc-emitter";

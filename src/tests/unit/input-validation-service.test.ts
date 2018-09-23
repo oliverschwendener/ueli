@@ -2,7 +2,7 @@ import { InputValidationService } from "../../ts/input-validation-service";
 import { FakeSearcher } from "./fake-searcher";
 import { FakeInputValidator } from "./fake-input-validator";
 import { SearchResultItem } from "../../ts/search-result-item";
-import { UserConfigOptions } from "../../ts/user-config/config-options";
+import { UserConfigOptions } from "../../ts/user-config/user-config-options";
 import { WebSearch } from "../../ts/web-search";
 import { WebSearchBuilder } from "../../ts/builders/web-search-builder";
 

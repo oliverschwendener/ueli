@@ -1,7 +1,7 @@
 import * as fs from "fs";
-import { UserConfigFileRepository } from "../../ts/user-config/config-file-repository";
+import { UserConfigFileRepository } from "../../ts/user-config/user-config-file-repository";
 import { WebSearch } from "../../ts/web-search";
-import { UserConfigOptions } from "../../ts/user-config/config-options";
+import { UserConfigOptions } from "../../ts/user-config/user-config-options";
 
 const defaultConfig = {
     webSearches: [

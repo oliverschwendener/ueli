@@ -6,7 +6,7 @@ import { SearchEngine } from "../search-engine";
 import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
 import { platform } from "os";
-import { UserConfigOptions } from "../user-config/config-options";
+import { UserConfigOptions } from "../user-config/user-config-options";
 import { FilePathDescriptionBuilder } from "../builders/file-path-description-builder";
 
 export class FilePathSearcher implements Searcher {
