@@ -1,4 +1,4 @@
-import * as path from "path";
+import { basename } from "path";
 import { FileHelpers } from "../helpers/file-helpers";
 import { Program } from "./program";
 import { ProgramRepository } from "./program-repository";
@@ -26,7 +26,7 @@ export class ProgramFileRepository implements ProgramRepository {
                 if (file.endsWith(applicationFileExtension)) {
                     result.push({
                         executionArgument: file,
-                        name: path.basename(file).replace(applicationFileExtension, ""),
+                        name: basename(file).replace(applicationFileExtension, ""),
                     } as Program);
                 }
             }

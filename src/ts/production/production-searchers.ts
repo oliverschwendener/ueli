@@ -1,4 +1,3 @@
-import { platform } from "os";
 import { CalculatorSearcher } from "./../searcher/calculator-searcher";
 import { CalculatorInputValidator } from "./../input-validators/calculator-input-validator";
 import { FilePathSearcher } from "./../searcher/file-path-searcher";
@@ -18,13 +17,11 @@ import { UeliHelpers } from "./../helpers/ueli-helpers";
 import { UserConfigOptions } from "./../user-config/user-config-options";
 import { CountManager } from "./../count/count-manager";
 import { CountFileRepository } from "./../count/count-file-repository";
-import { Injector } from "./../injector";
 import { CustomCommandSearcher } from "./../searcher/custom-command-searcher";
 import { CustomCommandInputValidator } from "./../input-validators/custom-command-input-validator";
 
 export class ProductionSearchers {
     public static getCombinations(config: UserConfigOptions): InputValidatorSearcherCombination[] {
-        const iconSet = Injector.getIconSet(platform());
         const countManager = new CountManager(new CountFileRepository(UeliHelpers.countFilePath));
         const environmentVariableCollection = process.env as { [key: string]: string };
 
@@ -34,7 +31,7 @@ export class ProductionSearchers {
                 validator: new CalculatorInputValidator(),
             },
             {
-                searcher: new FilePathSearcher(config),
+                searcher: new FilePathSearcher(config.searchEngineThreshold, config.iconSet),
                 validator: new FilePathInputValidator(),
             },
             {
@@ -46,7 +43,7 @@ export class ProductionSearchers {
                 validator: new WebSearchInputValidator(config.webSearches),
             },
             {
-                searcher: new EmailAddressSearcher(),
+                searcher: new EmailAddressSearcher(config.iconSet),
                 validator: new EmailAddressInputValidator(),
             },
             {
@@ -54,11 +51,11 @@ export class ProductionSearchers {
                 validator: new WebUrlInputValidator(),
             },
             {
-                searcher: new CustomCommandSearcher(config.customCommands, iconSet.shortcutIcon),
+                searcher: new CustomCommandSearcher(config.customCommands, config.iconSet.shortcutIcon),
                 validator: new CustomCommandInputValidator(config.customCommands),
             },
             {
-                searcher: new SearchPluginsSearcher(config, countManager, iconSet, environmentVariableCollection),
+                searcher: new SearchPluginsSearcher(config, countManager, config.iconSet, environmentVariableCollection),
                 validator: new SearchPluginsInputValidator(),
             },
         ];

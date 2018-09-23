@@ -1,9 +1,7 @@
-import * as fs from "fs";
-import * as os from "os";
-import * as path from "path";
+import { lstatSync } from "fs";
+import { basename } from "path";
 import { FileHelpers } from "../helpers/file-helpers";
 import { IconSet } from "../icon-sets/icon-set";
-import { Injector } from "../injector";
 import { SearchResultItem } from "../search-result-item";
 import { SearchPlugin } from "./search-plugin";
 import { FileSearchOption } from "../file-search-option";
@@ -14,9 +12,9 @@ export class FileSearchPlugin implements SearchPlugin {
     private items: SearchResultItem[];
     private iconSet: IconSet;
 
-    public constructor(fileSearchOptions: FileSearchOption[]) {
+    public constructor(fileSearchOptions: FileSearchOption[], iconSet: IconSet) {
         this.fileSearchOptions = fileSearchOptions;
-        this.iconSet = Injector.getIconSet(os.platform());
+        this.iconSet = iconSet;
         this.items = this.loadFilesAndFolders();
     }
 
@@ -34,8 +32,8 @@ export class FileSearchPlugin implements SearchPlugin {
                     : FileHelpers.getFilesFromFolder(option.folderPath);
 
                 for (const filePath of filePaths) {
-                    const stats = fs.lstatSync(filePath);
-                    const fileName = path.basename(filePath);
+                    const stats = lstatSync(filePath);
+                    const fileName = basename(filePath);
 
                     result.push({
                         description: FilePathDescriptionBuilder.buildFilePathDescription(filePath),

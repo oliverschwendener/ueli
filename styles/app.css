@@ -224,6 +224,11 @@ svg.setting-action-icon:hover {
     fill: var(--accent-color);
 }
 
+svg.sub-setting-icon {
+    margin-bottom: 5px;
+    padding-left: 5px;
+}
+
 table.setting-table {
     font-size: var(--settings-font-size);
     text-align: left;

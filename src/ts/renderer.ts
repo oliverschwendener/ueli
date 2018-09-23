@@ -1,11 +1,9 @@
 import { SearchResultItemViewModel } from "./search-result-item-view-model";
 import { IpcChannels } from "./ipc-channels";
-import { platform } from "os";
 import { ipcRenderer } from "electron";
 import { UserConfigFileRepository } from "./user-config/user-config-file-repository";
 import { defaultConfig } from "./user-config/default-config";
 import { UserInputHistoryManager } from "./user-input-history-manager";
-import { Injector } from "./injector";
 import { ElectronStoreAppConfigRepository } from "./app-config/electorn-store-app-config-repository";
 import { availableColorThemes } from "./available-color-themes";
 import Vue from "vue";
@@ -13,7 +11,7 @@ import { CustomCommand } from "./custom-shortcut";
 import { FileSearchOption } from "./file-search-option";
 import { Shortcut } from "./shortcut";
 import { WebSearch } from "./web-search";
-import * as packageJson from "../../package.json";
+import { version } from "../../package.json";
 
 const appConfigRepository = new ElectronStoreAppConfigRepository();
 const config = new UserConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
@@ -28,7 +26,6 @@ const configEdit = {
 };
 const appConfig = new ElectronStoreAppConfigRepository().getAppConfig();
 const userInputHistoryManager = new UserInputHistoryManager();
-const iconSet = Injector.getIconSet(platform());
 
 document.addEventListener("keyup", handleGlobalKeyPress);
 
@@ -43,14 +40,13 @@ const vue = new Vue({
         downloadingUpdate: false,
         errorOnUpdateCheck: false,
         noUpdateFound: false,
-        searchIcon: iconSet.searchIcon,
         searchResults: [] as SearchResultItemViewModel[],
         settingsVisible: false,
         updateAvailable: false,
         userInput: "",
         userStylesheet: `file:///${config.userStylesheet}`,
         userStylesheetIsAvailable: config.userStylesheet !== undefined && config.userStylesheet.length > 0,
-        version: packageJson.version,
+        version,
     },
     el: "#vue-root",
     methods: {
@@ -200,6 +196,9 @@ const vue = new Vue({
         settingsActionRemoveWebSearch: (webSearch: WebSearch): void => {
             const indexToRemove = config.webSearches.indexOf(webSearch);
             config.webSearches.splice(indexToRemove, 1);
+            vue.updateUserConfig();
+        },
+        settingsActionUpdateIconSet: (): void => {
             vue.updateUserConfig();
         },
         updateAppConfig: (): void => {

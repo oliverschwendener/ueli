@@ -1,6 +1,7 @@
 import { Program } from "../../../ts/programs-plugin/program";
 import { FakeProgramRepository } from "./../../../ts/programs-plugin/fake-program-repository";
 import { ProgramsPlugin } from "./../../../ts/search-plugins/programs-plugin";
+import { testIconSet } from "../../../ts/icon-sets/test-icon-set";
 
 function getTestPrograms(programNames: string[]) {
     return programNames.map((p): Program => {
@@ -23,7 +24,7 @@ describe("ProgramsPlugin", (): void => {
             ]);
 
             const fakeProgramRepository = new FakeProgramRepository(fakePrograms);
-            const programsPlugin = new ProgramsPlugin(fakeProgramRepository);
+            const programsPlugin = new ProgramsPlugin(fakeProgramRepository, testIconSet);
 
             const actual = programsPlugin.getAllItems();
 

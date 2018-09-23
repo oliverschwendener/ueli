@@ -1,9 +1,8 @@
 import { FileSearchPlugin } from "../../../ts/search-plugins/file-search-plugin";
 import { mkdirSync, writeFileSync, unlinkSync, rmdirSync } from "fs";
 import { join } from "path";
-import { Injector } from "../../../ts/injector";
-import { platform } from "os";
 import { FileSearchOption } from "../../../ts/file-search-option";
+import { testIconSet } from "../../../ts/icon-sets/test-icon-set";
 
 describe(FileSearchPlugin.name, (): void => {
     const parentFolders = [
@@ -73,7 +72,7 @@ describe(FileSearchPlugin.name, (): void => {
                     recursive: recursiveSearch,
                 };
             });
-            const plugin = new FileSearchPlugin(options);
+            const plugin = new FileSearchPlugin(options, testIconSet);
             const actual = plugin.getAllItems();
             const actualLength = actual.length;
             const expectedLength = (testFiles.length + subFolders.length) * parentFolders.length;
@@ -89,7 +88,7 @@ describe(FileSearchPlugin.name, (): void => {
                     recursive: recursiveSearch,
                 };
             });
-            const plugin = new FileSearchPlugin(options);
+            const plugin = new FileSearchPlugin(options, testIconSet);
             const actual = plugin.getAllItems();
             const actualLength = actual.length;
             const expectedLength = (parentFolders.length * subFolders.length * testFiles.length) + (parentFolders.length * testFiles.length);
@@ -104,7 +103,7 @@ describe(FileSearchPlugin.name, (): void => {
                     recursive: false,
                 };
             });
-            const plugin = new FileSearchPlugin(options);
+            const plugin = new FileSearchPlugin(options, testIconSet);
             const actual = plugin.getAllItems();
 
             for (const item of actual) {
@@ -122,16 +121,15 @@ describe(FileSearchPlugin.name, (): void => {
                     recursive: false,
                 };
             });
-            const iconSet = Injector.getIconSet(platform());
-            const plugin = new FileSearchPlugin(options);
+            const plugin = new FileSearchPlugin(options, testIconSet);
             const actual = plugin.getAllItems();
 
             const actualFiles = actual.filter((a) => {
-                return a.icon === iconSet.fileIcon;
+                return a.icon === testIconSet.fileIcon;
             });
 
             const actualFolders = actual.filter((a) => {
-                return a.icon === iconSet.folderIcon;
+                return a.icon === testIconSet.folderIcon;
             });
 
             expect(actualFiles.length).toBe(testFiles.length * parentFolders.length);
@@ -139,7 +137,7 @@ describe(FileSearchPlugin.name, (): void => {
         });
 
         it("should return an empty array if no folders are specified", (): void => {
-            const plugin = new FileSearchPlugin([]);
+            const plugin = new FileSearchPlugin([], testIconSet);
             const acutal = plugin.getAllItems();
 
             expect(acutal.length).toBe(0);

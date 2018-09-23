@@ -1,14 +1,12 @@
 import { Searcher } from "./searcher";
 import { SearchResultItem } from "../search-result-item";
-import { Injector } from "../injector";
 import { IconSet } from "../icon-sets/icon-set";
-import { platform } from "os";
 
 export class EmailAddressSearcher implements Searcher {
     private iconSet: IconSet;
 
-    constructor() {
-        this.iconSet = Injector.getIconSet(platform());
+    constructor(iconSet: IconSet) {
+        this.iconSet = iconSet;
     }
 
     public getSearchResult(userInput: string): SearchResultItem[] {

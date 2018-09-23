@@ -1,4 +1,4 @@
-import * as childProcess from "child_process";
+import { exec } from "child_process";
 import { Injector } from "../injector";
 import { Executor } from "./executor";
 import { platform } from "os";
@@ -22,7 +22,7 @@ export class WebUrlExecutor implements Executor {
     }
 
     private handleCommandExecution(command: string): void {
-        childProcess.exec(command, (err) => {
+        exec(command, (err) => {
             if (err) {
                 throw err;
             }

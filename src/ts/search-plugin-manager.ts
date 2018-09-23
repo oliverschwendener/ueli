@@ -15,8 +15,8 @@ export class SearchPluginManager {
 
     public constructor(config: UserConfigOptions, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }) {
         this.plugins = [
-            new ProgramsPlugin(new ProgramFileRepository(config.applicationFolders, config.applicationFileExtensions)),
-            new FileSearchPlugin(config.fileSearchOptions),
+            new ProgramsPlugin(new ProgramFileRepository(config.applicationFolders, config.applicationFileExtensions), config.iconSet),
+            new FileSearchPlugin(config.fileSearchOptions, config.iconSet),
             new UeliCommandsSearchPlugin(),
             new ShortcutsPlugin(config.shortcuts, iconSet.shortcutIcon),
         ];

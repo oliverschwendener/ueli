@@ -1,6 +1,4 @@
 import { Injector } from "../../ts/injector";
-import { WindowsIconSet } from "../../ts/icon-sets/windows-icon-set";
-import { MacOsIconSet } from "../../ts/icon-sets/mac-os-icon-set";
 import { Windows10SettingsSearchPlugin } from "../../ts/search-plugins/windows-10-settings-plugin";
 import { MacOsSettingsPlugin } from "../../ts/search-plugins/mac-os-settings-plugin";
 import { DirectorySeparator } from "../../ts/directory-separator";
@@ -54,16 +52,6 @@ describe(Injector.name, () => {
 
             expect(actualWin.source).toBe(FilePathRegex.windowsFilePathRegExp.source);
             expect(actualMac.source).toBe(FilePathRegex.macOsFilePathRegexp.source);
-        });
-    });
-
-    describe(Injector.getIconSet.name, () => {
-        it("should return an icon manager", () => {
-            const actualWin = Injector.getIconSet(win);
-            const acutalMac = Injector.getIconSet(mac);
-
-            expect(actualWin instanceof WindowsIconSet).toBe(true);
-            expect(acutalMac instanceof MacOsIconSet).toBe(true);
         });
     });
 

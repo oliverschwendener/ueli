@@ -1,6 +1,3 @@
-import { IconSet } from "./icon-sets/icon-set";
-import { MacOsIconSet } from "./icon-sets/mac-os-icon-set";
-import { WindowsIconSet } from "./icon-sets/windows-icon-set";
 import { OperatingSystem } from "./operating-system";
 import { MacOsSettingsPlugin } from "./search-plugins/mac-os-settings-plugin";
 import { SearchPlugin } from "./search-plugins/search-plugin";
@@ -16,13 +13,6 @@ import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
 export class Injector {
   public static getWebUrlRegExp(): RegExp {
     return new RegExp(/^((https?:)?[/]{2})?([a-z0-9]+[.])+[a-z]+.*$/i, "gi");
-  }
-
-  public static getIconSet(platform: string): IconSet {
-    switch (OperatingSystemHelpers.getOperatingSystemFromString(platform)) {
-      case OperatingSystem.Windows: return new WindowsIconSet();
-      case OperatingSystem.macOS: return new MacOsIconSet();
-    }
   }
 
   public static getOpenUrlWithDefaultBrowserCommand(platform: string, url: string): string {

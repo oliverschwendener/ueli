@@ -1,4 +1,4 @@
-import * as childProcess from "child_process";
+import { exec } from "child_process";
 import { Injector } from "../injector";
 import { Executor } from "./executor";
 import { platform } from "os";
@@ -27,7 +27,7 @@ export class FilePathExecutor implements Executor {
     }
 
     private handleExecution(command: string): void {
-        childProcess.exec(command, (err) => {
+        exec(command, (err) => {
             if (err) {
                 throw err;
             }
