@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, ipcMain, Menu, MenuItem, Tray, screen, ipcRenderer } from "electron";
+import { app, BrowserWindow, globalShortcut, ipcMain, Menu, MenuItem, Tray, screen } from "electron";
 import { autoUpdater } from "electron-updater";
 import { join } from "path";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
@@ -87,10 +87,6 @@ function createMainWindow(): void {
 }
 
 function createTrayIcon(): void {
-    if (trayIcon !== undefined && !trayIcon.isDestroyed()) {
-        trayIcon.destroy();
-    }
-
     trayIcon = new Tray(Injector.getTrayIconPath(platform(), join(__dirname, "../")));
     trayIcon.setToolTip(UeliHelpers.productName);
     trayIcon.setContextMenu(Menu.buildFromTemplate([
@@ -123,35 +119,20 @@ function downloadUpdate(): void {
 }
 
 autoUpdater.on("update-available", (): void => {
-    addUpdateStatusToTrayIcon("Update is available");
-    ipcMain.emit(IpcChannels.ueliUpdateWasFound);
+    mainWindow.webContents.send(IpcChannels.ueliUpdateWasFound);
 });
 
 autoUpdater.on("update-not-available", (): void => {
-    addUpdateStatusToTrayIcon(`${UeliHelpers.productName} is up to date`);
+    mainWindow.webContents.send(IpcChannels.ueliNoUpdateWasFound);
 });
 
 autoUpdater.on("error", (): void => {
-    addUpdateStatusToTrayIcon("Update check failed");
+    mainWindow.webContents.send(IpcChannels.ueliUpdateCheckError);
 });
 
 autoUpdater.on("update-downloaded", (): void => {
     autoUpdater.quitAndInstall();
 });
-
-function addUpdateStatusToTrayIcon(label: string, clickHandler?: any): void {
-    const updateItem = clickHandler === undefined
-        ? { label }
-        : { label, click: clickHandler } as MenuItem;
-
-    if (trayIcon !== undefined) {
-        trayIcon.setContextMenu(Menu.buildFromTemplate([
-            updateItem,
-            { click: toggleWindow, label: "Show/Hide" },
-            { click: quitApp, label: "Exit" },
-        ]));
-    }
-}
 
 function setAutostartSettings() {
     app.setLoginItemSettings({
@@ -199,7 +180,7 @@ function hideMainWindow(): void {
     }, delayWhenHidingCommandlineOutputInMs); // to give user input and command line output time to reset properly delay hiding window
 }
 
-function reloadApp(): void {
+function reloadApp(preventMainWindowReload?: boolean): void {
     config = new ConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
     inputValidationService = new InputValidationService(config, new InputValidatorSearcherCombinationManager(config).getCombinations());
     executionService = new ExecutionService(
@@ -208,16 +189,13 @@ function reloadApp(): void {
         config,
         ipcEmitter);
 
-    mainWindow.reload();
-    resetWindowToDefaultSizeAndPosition();
+    if (!preventMainWindowReload) {
+        mainWindow.reload();
+        resetWindowToDefaultSizeAndPosition();
+    }
+
     unregisterAllGlobalShortcuts();
     registerGlobalHotKey();
-
-    if (config.showTrayIcon) {
-        createTrayIcon();
-    } else {
-        destroyTrayIcon();
-    }
 }
 
 function destroyTrayIcon(): void {
@@ -304,4 +282,5 @@ ipcMain.on(IpcChannels.updateAppConfig, (event: Electron.Event, updatedAppConfig
 ipcMain.on(IpcChannels.updateUserConfig, (event: Electron.Event, updatedUserConfig: ConfigOptions) => {
     config = updatedUserConfig;
     userConfigRepository.saveConfig(updatedUserConfig);
+    reloadApp(true);
 });

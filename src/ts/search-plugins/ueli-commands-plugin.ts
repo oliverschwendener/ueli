@@ -23,10 +23,6 @@ export class UeliCommandsSearchPlugin implements SearchPlugin {
             executionArgument: IpcChannels.showSettingsFromMain,
             name: "Edit configuration",
         },
-        {
-            executionArgument: IpcChannels.ueliCheckForUpdates,
-            name: "Check for updates",
-        },
     ];
 
     public getAllItems(): SearchResultItem[] {

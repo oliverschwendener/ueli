@@ -13,6 +13,7 @@ import { CustomCommand } from "./custom-shortcut";
 import { FileSearchOption } from "./file-search-option";
 import { Shortcut } from "./shortcut";
 import { WebSearch } from "./web-search";
+import * as packageJson from "../../package.json";
 
 const appConfigRepository = new ElectronStoreAppConfigRepository();
 const config = new ConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
@@ -39,17 +40,26 @@ const vue = new Vue({
         commandLineOutput: [] as string[],
         config,
         configEdit,
+        downloadingUpdate: false,
+        errorOnUpdateCheck: false,
+        noUpdateFound: false,
         searchIcon: iconSet.searchIcon,
         searchResults: [] as SearchResultItemViewModel[],
         settingsVisible: false,
+        updateAvailable: false,
         userInput: "",
         userStylesheet: `file:///${config.userStylesheet}`,
         userStylesheetIsAvailable: config.userStylesheet !== undefined && config.userStylesheet.length > 0,
+        version: packageJson.version,
     },
     el: "#vue-root",
     methods: {
         colorTheme: (): string => {
             return `./styles/${config.colorTheme}.css`;
+        },
+        handleCheckForUpdateButtonClick: (): void => {
+            ipcRenderer.send(IpcChannels.ueliCheckForUpdates);
+            vue.downloadingUpdate = true;
         },
         handleClick: (): void => {
             if (config.allowMouseInteraction) {
@@ -59,6 +69,9 @@ const vue = new Vue({
         },
         handleCloseSettingsIconClick: (): void => {
             hideSettings();
+        },
+        handleDownloadUpdateButtonClick: (): void => {
+            ipcRenderer.send(IpcChannels.ueliUpdateUeli);
         },
         handleMouseEnter: (index: number): void => {
             if (config.allowMouseInteraction) {
@@ -126,9 +139,11 @@ const vue = new Vue({
             configEdit.newCustomCommand = {};
         },
         settingsActionAddFallbackWebSearch: (newFallbackWebSearch: string): void => {
-            config.fallbackWebSearches.push(newFallbackWebSearch);
-            vue.updateUserConfig();
-            configEdit.newFallbackWebSearch = "";
+            if (newFallbackWebSearch.length > 0) {
+                config.fallbackWebSearches.push(newFallbackWebSearch);
+                vue.updateUserConfig();
+                configEdit.newFallbackWebSearch = "";
+            }
         },
         settingsActionAddFileSearchOption: (newFileSearchOption: FileSearchOption): void => {
             config.fileSearchOptions.push(newFileSearchOption);
@@ -211,6 +226,24 @@ ipcRenderer.on(IpcChannels.autoCompleteResponse, (event: Electron.Event, arg: st
 
 ipcRenderer.on(IpcChannels.commandLineOutput, (event: Electron.Event, arg: string): void => {
     handleCommandLineOutput(arg);
+});
+
+ipcRenderer.on(IpcChannels.ueliUpdateWasFound, () => {
+    vue.updateAvailable = true;
+    vue.noUpdateFound = false;
+    vue.errorOnUpdateCheck = false;
+});
+
+ipcRenderer.on(IpcChannels.ueliNoUpdateWasFound, (): void => {
+    vue.updateAvailable = false;
+    vue.noUpdateFound = true;
+    vue.errorOnUpdateCheck = false;
+});
+
+ipcRenderer.on(IpcChannels.ueliUpdateCheckError, (): void => {
+    vue.updateAvailable = false;
+    vue.noUpdateFound = false;
+    vue.errorOnUpdateCheck = true;
 });
 
 ipcRenderer.on(IpcChannels.resetCommandlineOutput, resetCommandLineOutput);

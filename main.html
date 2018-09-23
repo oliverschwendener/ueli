@@ -53,6 +53,28 @@
                     </svg>
                     <h1>App Settings</h1>
                     <div class="setting-group">
+                        <div class="setting-title">Info</div>
+                        <div class="setting">
+                            <div>ueli: {{ version }}</div>
+                            <div>Electron: {{ process.versions.electron }}</div>
+                            <div>Chrome: {{ process.versions.chrome }}</div>
+                            <div>Node: {{ process.versions.node }}</div>
+                            <div>V8: {{ process.versions.v8 }}</div>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <div class="setting-title">Update</div>
+                        <div class="setting">
+                            <button v-if="(updateAvailable || noUpdateFound) === false" v-on:click="handleCheckForUpdateButtonClick" class="setting-button">Check for update</button>
+                            <div v-if="updateAvailable">
+                                <button v-if="updateAvailable && !downloadingUpdate" v-on:click="handleDownloadUpdateButtonClick" class="setting-button">Download & install update</button>
+                                <button v-if="updateAvailable && downloadingUpdate" class="setting-button">Downloading...</button>
+                            </div>
+                            <div v-if="noUpdateFound">Your are running the latest version</div>
+                            <div v-if="errorOnUpdateCheck">There was an error while checking for updates</div>
+                        </div>
+                    </div>
+                    <div class="setting-group">
                         <div class="setting-title">Config file path</div>
                         <div class="setting">
                             <input class="setting-text-input" type="text" v-model="appConfig.userSettingsFilePath" v-on:blur="updateAppConfig">

@@ -6,6 +6,7 @@
 
     --font-family: "Segoe UI", "Helvetica";
     --font-family-mono: "Consolas", "Courier", monospace;
+    --settings-font-size: 0.85rem;
 }
 
 body {    
@@ -137,6 +138,7 @@ span.search-result-description.active {
 div.settings-container {
     padding: 0 var(--side-padding);
     position: relative;
+    font-size: var(--settings-font-size);
 }
 
 div.setting-group {
@@ -151,7 +153,7 @@ div.setting-group:last-child {
 }
 
 div.setting-title {
-    font-size: 0.85rem;
+    font-size: var(--settings-font-size):
     padding-right: var(--side-padding);
     display: flex;
     align-items: center;
@@ -174,7 +176,7 @@ input.setting-text-input {
     outline: none;
     color: var(--text-color);
     width: 100%;
-    font-size: 0.85rem;
+    font-size: var(--settings-font-size);
     padding: 5px;
     margin-bottom: 5px;
     box-sizing: border-box;
@@ -197,7 +199,7 @@ select.setting-select {
     border: 1px solid var(--scrollbar-foreground-color);
     padding: 5px;
     color: var(--text-color);
-    font-size: 1rem;
+    font-size: var(--settings-font-size);
     outline: none;
 }
 
@@ -214,7 +216,7 @@ svg.setting-action-icon:hover {
 }
 
 table.setting-table {
-    font-size: 0.85rem;
+    font-size: var(--settings-font-size);
     text-align: left;
     width: 100%;
 }
@@ -235,6 +237,23 @@ svg.close-settings-icon {
 
 svg.close-settings-icon:hover {
     opacity: 0.5;
+}
+
+button.setting-button {
+    cursor: pointer;
+    transition: all var(--transition-speed) ease-in-out;
+    padding: 5px 15px;
+    background-color: var(--scrollbar-background-color);
+    color: var(--text-color);
+    border: 1px solid var(--scrollbar-foreground-color);
+}
+
+button.setting-button:hover {
+    background-color: var(--scrollbar-foreground-color);
+}
+
+button.setting-button:focus {
+    outline: none;
 }
 
 ::-webkit-scrollbar {

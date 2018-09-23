@@ -17,6 +17,8 @@ export class IpcChannels {
     public static readonly ueliCheckForUpdates = `${UeliHelpers.ueliCommandPrefix}check-for-updates`;
     public static readonly ueliUpdateUeli = `${UeliHelpers.ueliCommandPrefix}update`;
     public static readonly ueliUpdateWasFound = "update-was-found";
+    public static readonly ueliNoUpdateWasFound = "no-update-was-found";
+    public static readonly ueliUpdateCheckError = "ueli-update-check-error";
     public static readonly exitCommandLineTool = "exit-command-line-tool";
     public static readonly resetCommandlineOutput = "reset-commandline-output";
     public static readonly resetUserInput = "reset-user-input";
