@@ -10,8 +10,8 @@ import { InputValidationService } from "./input-validation-service";
 import { IpcChannels } from "./ipc-channels";
 import * as isInDevelopment from "electron-is-dev";
 import { WindowHelpers } from "./helpers/winow-helpers";
-import { ExecutionArgumentValidatorExecutorCombinationManager } from "./execution-argument-validator-executor-combination-manager";
-import { InputValidatorSearcherCombinationManager } from "./input-validator-searcher-combination-manager";
+import { ProductionExecutors } from "./production/production-executors";
+import { ProductionSearchers } from "./production/production-searchers";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { defaultConfig } from "./default-config";
 import { UserConfigFileRepository } from "./user-config/user-config-file-repository";
@@ -32,10 +32,10 @@ const filePathExecutor = new FilePathExecutor();
 const appConfigRepository = new ElectronStoreAppConfigRepository();
 const userConfigRepository = new UserConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath);
 let config = userConfigRepository.getConfig();
-let inputValidationService = new InputValidationService(config, InputValidatorSearcherCombinationManager.getCombinations(config));
+let inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config));
 const ipcEmitter = new ProductionIpcEmitter();
 let executionService = new ExecutionService(
-    ExecutionArgumentValidatorExecutorCombinationManager.getCombinations(config),
+    ProductionExecutors.getCombinations(config),
     new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
     config,
     ipcEmitter);
@@ -187,9 +187,9 @@ function hideMainWindow(): void {
 
 function reloadApp(preventMainWindowReload?: boolean): void {
     config = new UserConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
-    inputValidationService = new InputValidationService(config, InputValidatorSearcherCombinationManager.getCombinations(config));
+    inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config));
     executionService = new ExecutionService(
-        ExecutionArgumentValidatorExecutorCombinationManager.getCombinations(config),
+        ProductionExecutors.getCombinations(config),
         new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
         config,
         ipcEmitter);
