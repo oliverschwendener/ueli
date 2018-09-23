@@ -15,8 +15,8 @@ import { InputValidatorSearcherCombinationManager } from "./input-validator-sear
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { defaultConfig } from "./default-config";
 import { UserConfigFileRepository } from "./user-config/config-file-repository";
-import { CountManager } from "./count-manager";
-import { CountFileRepository } from "./count-file-repository";
+import { CountManager } from "./count/count-manager";
+import { CountFileRepository } from "./count/count-file-repository";
 import { ProductionIpcEmitter } from "./production-ipc-emitter";
 import { AutoCompletionService } from "./auto-completion/autocompletion-service";
 import { FilePathAutoCompletionValidator } from "./auto-completion/file-path-autocompletion-validator";
@@ -32,10 +32,10 @@ const filePathExecutor = new FilePathExecutor();
 const appConfigRepository = new ElectronStoreAppConfigRepository();
 const userConfigRepository = new UserConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath);
 let config = userConfigRepository.getConfig();
-let inputValidationService = new InputValidationService(config, new InputValidatorSearcherCombinationManager(config).getCombinations());
+let inputValidationService = new InputValidationService(config, InputValidatorSearcherCombinationManager.getCombinations(config));
 const ipcEmitter = new ProductionIpcEmitter();
 let executionService = new ExecutionService(
-    new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations(),
+    ExecutionArgumentValidatorExecutorCombinationManager.getCombinations(config),
     new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
     config,
     ipcEmitter);
@@ -182,9 +182,9 @@ function hideMainWindow(): void {
 
 function reloadApp(preventMainWindowReload?: boolean): void {
     config = new UserConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
-    inputValidationService = new InputValidationService(config, new InputValidatorSearcherCombinationManager(config).getCombinations());
+    inputValidationService = new InputValidationService(config, InputValidatorSearcherCombinationManager.getCombinations(config));
     executionService = new ExecutionService(
-        new ExecutionArgumentValidatorExecutorCombinationManager(config).getCombinations(),
+        ExecutionArgumentValidatorExecutorCombinationManager.getCombinations(config),
         new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
         config,
         ipcEmitter);

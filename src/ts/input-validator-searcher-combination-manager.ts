@@ -15,22 +15,20 @@ import { SearchPluginsInputValidator } from "./input-validators/search-plugins-i
 import { InputValidatorSearcherCombination } from "./input-validator-searcher-combination";
 import { UeliHelpers } from "./helpers/ueli-helpers";
 import { UserConfigOptions } from "./user-config/config-options";
-import { CountManager } from "./count-manager";
-import { CountFileRepository } from "./count-file-repository";
+import { CountManager } from "./count/count-manager";
+import { CountFileRepository } from "./count/count-file-repository";
 import { Injector } from "./injector";
 import { platform } from "os";
 import { CustomCommandSearcher } from "./searcher/custom-command-searcher";
 import { CustomCommandInputValidator } from "./input-validators/custom-command-input-validator";
 
 export class InputValidatorSearcherCombinationManager {
-    private combinations: InputValidatorSearcherCombination[];
-
-    constructor(config: UserConfigOptions) {
+    public static getCombinations(config: UserConfigOptions): InputValidatorSearcherCombination[] {
         const iconSet = Injector.getIconSet(platform());
         const countManager = new CountManager(new CountFileRepository(UeliHelpers.countFilePath));
         const environmentVariableCollection = process.env as { [key: string]: string };
 
-        this.combinations = [
+        return [
             {
                 searcher: new CalculatorSearcher(),
                 validator: new CalculatorInputValidator(),
@@ -64,9 +62,5 @@ export class InputValidatorSearcherCombinationManager {
                 validator: new SearchPluginsInputValidator(),
             },
         ];
-    }
-
-    public getCombinations(): InputValidatorSearcherCombination[] {
-        return this.combinations;
     }
 }

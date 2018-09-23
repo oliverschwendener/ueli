@@ -1,6 +1,6 @@
 import { ExecutionService } from "../../ts/execution-service";
 import { ExecutionArgumentValidatorExecutorCombination } from "../../ts/execution-argument-validator-executor-combination";
-import { CountManager } from "../../ts/count-manager";
+import { CountManager } from "../../ts/count/count-manager";
 import { FakeCountRepository } from "./fake-count-repository";
 import { UserConfigOptions } from "../../ts/user-config/config-options";
 import { FakeExecutor } from "./fake-executor";

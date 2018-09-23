@@ -5,7 +5,7 @@ import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
 import { defaultConfig } from "../default-config";
 import { UserConfigOptions } from "../user-config/config-options";
-import { CountManager } from "../count-manager";
+import { CountManager } from "../count/count-manager";
 import { IconSet } from "../icon-sets/icon-set";
 
 export class SearchPluginsSearcher implements Searcher {

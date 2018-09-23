@@ -24,10 +24,8 @@ import { CalculatorExecutor } from "./executors/calculator-executor";
 import { CalculatorExecutionArgumentValidator } from "./execution-argument-validators/calculator-execution-argument-validator";
 
 export class ExecutionArgumentValidatorExecutorCombinationManager {
-    private combinations: ExecutionArgumentValidatorExecutorCombination[];
-
-    constructor(config: UserConfigOptions) {
-        this.combinations = [
+    public static getCombinations(config: UserConfigOptions): ExecutionArgumentValidatorExecutorCombination[] {
+        const result = [
             {
                 executor: new CommandLineExecutor(),
                 validator: new CommandLineExecutionArgumentValidator(),
@@ -64,21 +62,19 @@ export class ExecutionArgumentValidatorExecutorCombinationManager {
 
         switch (OperatingSystemHelpers.getOperatingSystemFromString(platform())) {
             case OperatingSystem.Windows: {
-                this.combinations.push({
+                result.push({
                     executor: new WindowsSettingsExecutor(),
                     validator: new WindowsSettingsExecutionArgumentValidator(),
                 });
             }
             case OperatingSystem.macOS: {
-                this.combinations.push({
+                result.push({
                     executor: new MacOsSettingsExecutor(),
                     validator: new MacOsSettingsExecutionArgumentValidator(),
                 });
             }
         }
-    }
 
-    public getCombinations(): ExecutionArgumentValidatorExecutorCombination[] {
-        return this.combinations;
+        return result;
     }
 }

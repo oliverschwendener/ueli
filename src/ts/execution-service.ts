@@ -1,5 +1,5 @@
 import { ExecutionArgumentValidatorExecutorCombination } from "./execution-argument-validator-executor-combination";
-import { CountManager } from "./count-manager";
+import { CountManager } from "./count/count-manager";
 import { UserConfigOptions } from "./user-config/config-options";
 import { IpcEmitter } from "./ipc-emitter";
 

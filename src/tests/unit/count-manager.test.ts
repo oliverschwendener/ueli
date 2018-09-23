@@ -1,6 +1,6 @@
-import { CountManager } from "../../ts/count-manager";
+import { CountManager } from "../../ts/count/count-manager";
 import { FakeCountRepository } from "./fake-count-repository";
-import { Count } from "../../ts/count";
+import { Count } from "../../ts/count/count";
 
 describe("CountManager", (): void => {
     describe("increaseCount", (): void => {

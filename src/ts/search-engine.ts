@@ -1,6 +1,6 @@
 import * as Fuse from "fuse.js";
 import { SearchResultItem } from "./search-result-item";
-import { CountManager } from "./count-manager";
+import { CountManager } from "./count/count-manager";
 
 export class SearchEngine {
     private unsortedSearchResults: SearchResultItem[];

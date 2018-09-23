@@ -1,6 +1,6 @@
 import { writeFileSync, unlinkSync, existsSync } from "fs";
-import { Count } from "../../ts/count";
-import { CountFileRepository } from "../../ts/count-file-repository";
+import { Count } from "../../ts/count/count";
+import { CountFileRepository } from "../../ts/count/count-file-repository";
 import { join } from "path";
 
 describe("CountFileRepository", (): void => {

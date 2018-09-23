@@ -1,5 +1,5 @@
-import { ExecutionArgumentValidatorExecutorCombinationManager } from "../../ts/execution-argument-validator-executor-combination-manager";
 import { platform } from "os";
+import { ExecutionArgumentValidatorExecutorCombinationManager } from "../../ts/execution-argument-validator-executor-combination-manager";
 import { WindowsSettingsExecutor } from "../../ts/executors/windows-settings-executor";
 import { WindowsSettingsExecutionArgumentValidator } from "../../ts/execution-argument-validators/windows-settings-execution-argument-validator";
 import { MacOsSettingsExecutionArgumentValidator } from "../../ts/execution-argument-validators/mac-os-execution-argument-validator";
@@ -14,7 +14,7 @@ describe(ExecutionArgumentValidatorExecutorCombinationManager.name, (): void => 
 
         const testConfig = {} as UserConfigOptions;
 
-        const combinations = new ExecutionArgumentValidatorExecutorCombinationManager(testConfig).getCombinations();
+        const combinations = ExecutionArgumentValidatorExecutorCombinationManager.getCombinations(testConfig);
 
         const currentOperatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
 

@@ -1,5 +1,5 @@
-import { CountRepository } from "../../ts/count-repository";
-import { Count } from "../../ts/count";
+import { CountRepository } from "../../ts/count/count-repository";
+import { Count } from "../../ts/count/count";
 
 export class FakeCountRepository implements CountRepository {
     private count: Count;
