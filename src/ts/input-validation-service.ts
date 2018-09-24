@@ -29,7 +29,8 @@ export class InputValidationService {
         }
 
         if (result.length === 0 && this.configOptions.fallbackWebSearches.length > 0) {
-            result = new FallbackWebSearchSercher(this.configOptions.fallbackWebSearches, this.configOptions.webSearches).getSearchResult(userInput);
+            const fallBackWebSearchSearcher = new FallbackWebSearchSercher(this.configOptions.fallbackWebSearches, this.configOptions.webSearches);
+            result = fallBackWebSearchSearcher.getSearchResult(userInput);
         }
 
         return result;

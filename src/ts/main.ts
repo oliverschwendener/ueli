@@ -23,6 +23,7 @@ import { FilePathAutoCompletionValidator } from "./auto-completion/file-path-aut
 import { ElectronStoreAppConfigRepository } from "./app-config/electorn-store-app-config-repository";
 import { AppConfig } from "./app-config/app-config";
 import { UserConfigOptions } from "./user-config/user-config-options";
+import { TimeHelpers } from "./helpers/time-helpers";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -41,6 +42,7 @@ let executionService = new ExecutionService(
     ipcEmitter);
 
 const otherInstanceIsAlreadyRunning = app.makeSingleInstance(() => { /* do nothing */ });
+let rescanInterval = setInterval(initializeInputValidationService, TimeHelpers.convertSecondsToMilliseconds(config.rescanInterval));
 
 if (otherInstanceIsAlreadyRunning) {
     app.quit();
@@ -185,7 +187,7 @@ function hideMainWindow(): void {
     }, delayWhenHidingCommandlineOutputInMs); // to give user input and command line output time to reset properly delay hiding window
 }
 
-function reloadApp(preventMainWindowReload?: boolean): void {
+function reloadApp(preventMainWindowReload?: boolean, preventWindowSizeReset?: boolean): void {
     config = new UserConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
     inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config));
     executionService = new ExecutionService(
@@ -196,7 +198,13 @@ function reloadApp(preventMainWindowReload?: boolean): void {
 
     if (!preventMainWindowReload) {
         mainWindow.reload();
+    }
+
+    if (!preventWindowSizeReset) {
         resetWindowToDefaultSizeAndPosition();
+    } else {
+        mainWindow.setSize(config.windowWidth, config.maxWindowHeight);
+        mainWindow.center();
     }
 
     unregisterAllGlobalShortcuts();
@@ -233,6 +241,15 @@ function quitApp(): void {
     destroyTrayIcon();
     unregisterAllGlobalShortcuts();
     app.quit();
+}
+
+function initializeInputValidationService(): void {
+    inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config));
+}
+
+function setUpNewRescanInterval(): void {
+    clearInterval(rescanInterval);
+    rescanInterval = setInterval(initializeInputValidationService, TimeHelpers.convertSecondsToMilliseconds(config.rescanInterval));
 }
 
 ipcMain.on(IpcChannels.hideWindow, hideMainWindow);
@@ -300,6 +317,7 @@ ipcMain.on(IpcChannels.updateAppConfig, (event: Electron.Event, updatedAppConfig
 
 ipcMain.on(IpcChannels.updateUserConfig, (event: Electron.Event, updatedUserConfig: UserConfigOptions) => {
     config = updatedUserConfig;
+    setUpNewRescanInterval();
     userConfigRepository.saveConfig(updatedUserConfig);
-    reloadApp(true);
+    reloadApp(true, true);
 });
