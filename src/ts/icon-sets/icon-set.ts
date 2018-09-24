@@ -5,4 +5,5 @@ export interface IconSet {
     folderIcon: string;
     searchIcon: string;
     shortcutIcon: string;
+    urlIcon: string;
 }

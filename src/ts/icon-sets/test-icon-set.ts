@@ -7,4 +7,5 @@ export const testIconSet: IconSet = {
     folderIcon: "folder-icon",
     searchIcon: "search-icon",
     shortcutIcon: "shortcut-icon",
+    urlIcon: "url-icon",
 };

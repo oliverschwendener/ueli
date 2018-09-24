@@ -1,9 +1,10 @@
 import { SearchResultItem } from "../../../ts/search-result-item";
 import { WebUrlSearcher } from "../../../ts/searcher/web-url-searcher";
 import { InputOutputCombination } from "../test-helpers";
+import { testIconSet } from "../../../ts/icon-sets/test-icon-set";
 
 describe(WebUrlSearcher.name, (): void => {
-    const searcher = new WebUrlSearcher();
+    const searcher = new WebUrlSearcher(testIconSet);
 
     describe(searcher.getSearchResult.name, (): void => {
         it("should return a correct search result", (): void => {

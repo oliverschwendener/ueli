@@ -258,40 +258,45 @@
                                 <thead>
                                     <tr>
                                         <th>Description</th>
-                                        <th>Preview</th>
+                                        <th class="text-center">Preview</th>
                                         <th>HTML</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>App icon</td>
-                                        <td v-html="config.iconSet.appIcon"></td>
+                                        <td class="text-center" v-html="config.iconSet.appIcon"></td>
                                         <td><input class="setting-text-input" type="text" v-model="config.iconSet.appIcon" v-on:blur="updateUserConfig"></td>
                                     </tr>
                                     <tr>
                                         <td>Email icon</td>
-                                        <td v-html="config.iconSet.emailIcon"></td>
+                                        <td class="text-center" v-html="config.iconSet.emailIcon"></td>
                                         <td><input class="setting-text-input" type="text" v-model="config.iconSet.emailIcon" v-on:blur="updateUserConfig"></td>
                                     </tr>
                                     <tr>
                                         <td>File icon</td>
-                                        <td v-html="config.iconSet.fileIcon"></td>
+                                        <td class="text-center" v-html="config.iconSet.fileIcon"></td>
                                         <td><input class="setting-text-input" type="text" v-model="config.iconSet.fileIcon" v-on:blur="updateUserConfig"></td>
                                     </tr>
                                     <tr>
                                         <td>Folder icon</td>
-                                        <td v-html="config.iconSet.folderIcon"></td>
+                                        <td class="text-center" v-html="config.iconSet.folderIcon"></td>
                                         <td><input class="setting-text-input" type="text" v-model="config.iconSet.folderIcon" v-on:blur="updateUserConfig"></td>
                                     </tr>
                                     <tr>
                                         <td>Search icon</td>
-                                        <td v-html="config.iconSet.searchIcon"></td>
+                                        <td class="text-center" v-html="config.iconSet.searchIcon"></td>
                                         <td><input class="setting-text-input" type="text" v-model="config.iconSet.searchIcon" v-on:blur="updateUserConfig"></td>
                                     </tr>
                                     <tr>
                                         <td>Shortcut icon</td>
-                                        <td v-html="config.iconSet.shortcutIcon"></td>
+                                        <td class="text-center" v-html="config.iconSet.shortcutIcon"></td>
                                         <td><input class="setting-text-input" type="text" v-model="config.iconSet.shortcutIcon" v-on:blur="updateUserConfig"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>URL icon</td>
+                                        <td class="text-center" v-html="config.iconSet.urlIcon"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.urlIcon" v-on:blur="updateUserConfig"></td>
                                     </tr>
                                 </tbody>
                             </table>

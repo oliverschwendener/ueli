@@ -47,7 +47,7 @@ export class ProductionSearchers {
                 validator: new EmailAddressInputValidator(),
             },
             {
-                searcher: new WebUrlSearcher(),
+                searcher: new WebUrlSearcher(config.iconSet),
                 validator: new WebUrlInputValidator(),
             },
             {
