@@ -43,7 +43,7 @@ This is a keystroke launcher for Windows and macOS.
 
 * Press the global hot key to show/hide the window (default is `alt+space`)
 * Start typing a program name
-* Press Enter to launch the program
+* Press `Enter` to launch the program
 
 ## Features
 
@@ -51,14 +51,14 @@ This is a keystroke launcher for Windows and macOS.
 
 * You can search for installed programs
 * Use the arrow keys to scroll up and down
-* Presss Enter to launch the selected program
+* Presss `Enter` to launch the selected program
 
 ![Feature Program search](img/doc/features/ueli-feature-program-search.png)
 
 ### Files and folder search
 
 * You can search files and folders
-* Press Enter to open the selected file/folder
+* Press `Enter` to open the selected file/folder
 * You can [customize](#customization) the folders which are scanned for files and folders
 
 ![Feature file search](img/doc/features/ueli-feature-file-search.png)
@@ -66,14 +66,14 @@ This is a keystroke launcher for Windows and macOS.
 ### Open URLs with your default web browser
 
 * Type in a URL
-* Press enter to open the URL with your default web browser
+* Press `Enter` to open the URL with your default web browser
 
 ![Feature URL](img/doc/features/ueli-feature-url.png)
 
 ### Open default mail program
 
-* Type in a email address
-* Press enter to open your default mail program with an empty email to the specified email address
+* Type in an email address
+* Press `Enter` to open your default mail program with an empty email to the specified email address
 
 ![Feature email](img/doc/features/ueli-feature-email.png)
 
@@ -143,7 +143,7 @@ You can customize multiple fallback web search engines which are used if ueli do
 ### Browse file system
 
 * You can browse your file system by typing in a filepath
-    * Example: `C:\Users` or `/Applications`
+    * Example: `C:\Users` (Windows) or `/Users` (macOS)
 * Press `Enter` to open the file or folder
 * Press `Tab` for autocompletion
 
@@ -151,11 +151,12 @@ You can customize multiple fallback web search engines which are used if ueli do
 
 ### Calculator
 
-* Calculate simple math, matrix, symbolic function, convert unit and a lot more.
+* Calculate simple math, matrix, symbolic function, convert units and a lot more.
    * Example: 
       * `23 * 24 / 2 + (6 * 7) ^ 2`
       * `1 km/h to mile/h`
       * `a = [1, 2, 3]; a * 2`
+* Press `Enter` to copy the result to the clipboard
 
 ![Feature calculator](img/doc/features/ueli-feature-calculator.png)
 
@@ -214,7 +215,8 @@ With the example above you should be able to open Visual Studio Code at a specif
 > This feature is deactivated by default. You have to activate this via [customization](#customization).
 
 * Search for environment variables
-* Use `Tab` to autocomplete if it shows a valid file path
+* Press `Enter` to open the current file/folder
+* Press `Tab` to autocomplete if it shows a valid file path
 
 ![Feature environment variables](img/doc/features/ueli-feature-environment-variables.png)
 
@@ -238,7 +240,7 @@ To check if a new version is available right click on the tray icon. The first i
 
 ![Update available](img/doc/ueli-update-is-available.png)
 
-If there is an update available search for "Download and install update" and hit enter:
+If there is an update available search for "Download and install update" and hit `Enter`:
 
 ![Download and install update](img/doc/ueli-download-and-install-update.png)
 
@@ -265,6 +267,14 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
     * `recursive` Boolean - If the specified folder should be searched recursively. **Be cautious with this option because it can slow down the application drastically.**
 * `hotKey` String - Represents the hotkey to show/hide the window ([Available hot keys](https://github.com/electron/electron/blob/master/docs/api/accelerator.md)=.
 * `logExecution` Boolean - If ueli should log the execution of applications, files and folders for better search results. Set to `false` if you want to disable logging.
+* `iconSet` IconSet - Represents the default icon set
+    * `appIcon` String - Represents the svg icon for applications
+    * `emailIcon` String - Represents the svg icon when typing in an email address
+    * `fileIcon` String - Represents the svg icon for files
+    * `folderIcon` String - Represents the svg icon for folders
+    * `searchIcon` String - Represents the svg icon for the search icon on the top right
+    * `shortcutIcon` String - Represents the default svg icon for shortcuts and custom commands
+    * `urlIcon` String - Represents the svg icon when typing in an email address
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed.
 * `rescanInterval` Number - Interval in seconds to rescan the application folders.
 * `searchEngineThreshold` Number - Represents the threshold for fuzzy matching (min = 0, max = 1, lower means you have to be more precise with the user input).
