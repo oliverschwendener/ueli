@@ -93,6 +93,10 @@ function createTrayIcon(): void {
     trayIcon.setToolTip(UeliHelpers.productName);
     trayIcon.setContextMenu(Menu.buildFromTemplate([
         { click: showWindow, label: "Show" },
+        { click: (): void => {
+            showWindow();
+            mainWindow.webContents.send(IpcChannels.showSettingsFromMain);
+        }, label: "Settings" },
         { click: quitApp, label: "Exit" },
     ]));
 }

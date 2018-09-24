@@ -21,7 +21,7 @@ export class UeliCommandsSearchPlugin implements SearchPlugin {
         } as UeliCommand,
         {
             executionArgument: IpcChannels.showSettingsFromMain,
-            name: "Edit configuration",
+            name: "Ueli settings",
         },
     ];
 
