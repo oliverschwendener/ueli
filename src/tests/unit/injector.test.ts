@@ -8,6 +8,7 @@ import { FileLocationExecutionCommandBuilder } from "../../ts/builders/file-loca
 import { FilePathRegex } from "../../ts/file-path-regex";
 import { OpenUrlWithDefaultBrowserCommandBuilder } from "../../ts/builders/open-url-with-default-browser-command-builder";
 import { TrayIconPathBuilder } from "../../ts/builders/tray-icon-path-builder";
+import { testIconSet } from "../../ts/icon-sets/test-icon-set";
 
 const win = "win32";
 const mac = "darwin";
@@ -67,8 +68,8 @@ describe(Injector.name, () => {
 
     describe(Injector.getOperatingSystemSettingsPlugin.name, () => {
         it("should return an operating system settings search plugin", () => {
-            const actualWin = Injector.getOperatingSystemSettingsPlugin(win);
-            const actualMac = Injector.getOperatingSystemSettingsPlugin(mac);
+            const actualWin = Injector.getOperatingSystemSettingsPlugin(win, testIconSet);
+            const actualMac = Injector.getOperatingSystemSettingsPlugin(mac, testIconSet);
 
             expect(actualWin instanceof Windows10SettingsSearchPlugin).toBe(true);
             expect(actualMac instanceof MacOsSettingsPlugin).toBe(true);

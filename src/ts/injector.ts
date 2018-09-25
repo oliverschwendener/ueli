@@ -9,6 +9,7 @@ import { FilePathRegex } from "./file-path-regex";
 import { OpenUrlWithDefaultBrowserCommandBuilder } from "./builders/open-url-with-default-browser-command-builder";
 import { TrayIconPathBuilder } from "./builders/tray-icon-path-builder";
 import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
+import { IconSet } from "./icon-sets/icon-set";
 
 export class Injector {
   public static getWebUrlRegExp(): RegExp {
@@ -67,10 +68,10 @@ export class Injector {
     }
   }
 
-  public static getOperatingSystemSettingsPlugin(platform: string): SearchPlugin {
+  public static getOperatingSystemSettingsPlugin(platform: string, iconSet: IconSet): SearchPlugin {
     switch (OperatingSystemHelpers.getOperatingSystemFromString(platform)) {
       case OperatingSystem.Windows: return new Windows10SettingsSearchPlugin();
-      case OperatingSystem.macOS: return new MacOsSettingsPlugin();
+      case OperatingSystem.macOS: return new MacOsSettingsPlugin(iconSet);
     }
   }
 }

@@ -22,7 +22,7 @@ export class SearchPluginManager {
         ];
 
         if (config.searchOperatingSystemSettings) {
-            this.plugins.push(Injector.getOperatingSystemSettingsPlugin(platform()));
+            this.plugins.push(Injector.getOperatingSystemSettingsPlugin(platform(), config.iconSet));
         }
 
         if (config.searchEnvironmentVariables) {
