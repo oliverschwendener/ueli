@@ -1,17 +1,14 @@
 import { AppConfigRepository } from "./app-config-repository";
 import Store = require("electron-store");
 import { AppConfig } from "./app-config";
-import { join } from "path";
-import { homedir } from "os";
 
 export class ElectronStoreAppConfigRepository implements AppConfigRepository {
     private store: Store;
     private configKey = "app-config";
-    private defaultAppConfig: AppConfig = {
-        userSettingsFilePath: join(homedir(), "ueli.config.json"),
-    };
+    private defaultAppConfig: AppConfig;
 
-    constructor() {
+    constructor(defaultAppConfig: AppConfig) {
+        this.defaultAppConfig = defaultAppConfig;
         this.store = new Store();
     }
 

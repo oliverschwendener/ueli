@@ -2,7 +2,6 @@ import { SearchResultItemViewModel } from "./search-result-item-view-model";
 import { IpcChannels } from "./ipc-channels";
 import { ipcRenderer } from "electron";
 import { UserConfigFileRepository } from "./user-config/user-config-file-repository";
-import { defaultConfig } from "./user-config/default-config";
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { ElectronStoreAppConfigRepository } from "./app-config/electorn-store-app-config-repository";
 import { availableColorThemes } from "./available-color-themes";
@@ -12,9 +11,13 @@ import { FileSearchOption } from "./file-search-option";
 import { Shortcut } from "./shortcut";
 import { WebSearch } from "./web-search";
 import { version } from "../../package.json";
+import { DefaultAppConfigManager } from "./app-config/default-app-config";
+import { DefaultUserConfigManager } from "./user-config/default-config";
 
-const appConfigRepository = new ElectronStoreAppConfigRepository();
-const config = new UserConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
+const appConfigRepository = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.getDefaultAppConfig());
+let config = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
+let appConfig = appConfigRepository.getAppConfig();
+
 const configEdit = {
     newApplicationFileExtension: "",
     newApplicationFolder: "",
@@ -24,7 +27,7 @@ const configEdit = {
     newShortcut: {},
     newWebSearch: {},
 };
-const appConfig = new ElectronStoreAppConfigRepository().getAppConfig();
+
 const userInputHistoryManager = new UserInputHistoryManager();
 
 document.addEventListener("keyup", handleGlobalKeyPress);
@@ -110,6 +113,18 @@ const vue = new Vue({
         },
         outputContainerHeight: (): string => {
             return `height: calc(100vh - ${config.userInputHeight}px);`;
+        },
+        resetAppConfigToDefault: (): void => {
+            const defaultAppConfig = DefaultAppConfigManager.getDefaultAppConfig();
+            appConfig = defaultAppConfig;
+            vue.appConfig = defaultAppConfig;
+            ipcRenderer.send(IpcChannels.updateAppConfig, defaultAppConfig);
+        },
+        resetUserConfigToDefault: (): void => {
+            const defaultConfig = DefaultUserConfigManager.getDefaultUserConfig();
+            config = defaultConfig;
+            vue.config = defaultConfig;
+            ipcRenderer.send(IpcChannels.updateUserConfig, defaultConfig);
         },
         searchResultDescriptionStyle: (): string => {
             return `font-size: ${config.searchResultDescriptionFontSize}px;`;

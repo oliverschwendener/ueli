@@ -13,7 +13,7 @@ import { WindowHelpers } from "./helpers/winow-helpers";
 import { ProductionExecutors } from "./production/production-executors";
 import { ProductionSearchers } from "./production/production-searchers";
 import { UeliHelpers } from "./helpers/ueli-helpers";
-import { defaultConfig } from "./user-config/default-config";
+import { DefaultUserConfigManager } from "./user-config/default-config";
 import { UserConfigFileRepository } from "./user-config/user-config-file-repository";
 import { CountManager } from "./count/count-manager";
 import { CountFileRepository } from "./count/count-file-repository";
@@ -24,14 +24,15 @@ import { ElectronStoreAppConfigRepository } from "./app-config/electorn-store-ap
 import { AppConfig } from "./app-config/app-config";
 import { UserConfigOptions } from "./user-config/user-config-options";
 import { TimeHelpers } from "./helpers/time-helpers";
+import { DefaultAppConfigManager } from "./app-config/default-app-config";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
 
 const delayWhenHidingCommandlineOutputInMs = 25;
 const filePathExecutor = new FilePathExecutor();
-const appConfigRepository = new ElectronStoreAppConfigRepository();
-const userConfigRepository = new UserConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath);
+const appConfigRepository = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.getDefaultAppConfig());
+const userConfigRepository = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfigRepository.getAppConfig().userSettingsFilePath);
 let config = userConfigRepository.getConfig();
 let inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config));
 const ipcEmitter = new ProductionIpcEmitter();
@@ -192,7 +193,7 @@ function hideMainWindow(): void {
 }
 
 function reloadApp(preventMainWindowReload?: boolean, preventWindowSizeReset?: boolean): void {
-    config = new UserConfigFileRepository(defaultConfig, appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
+    config = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
     inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config));
     executionService = new ExecutionService(
         ProductionExecutors.getCombinations(config),

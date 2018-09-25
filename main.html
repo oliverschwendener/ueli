@@ -82,6 +82,12 @@
                             <input class="setting-text-input" type="text" v-model="appConfig.userSettingsFilePath" v-on:blur="updateAppConfig">
                         </div>
                     </div>
+                    <div class="setting-group">
+                        <div class="setting-title">Reset app config to default</div>
+                        <div class="setting">
+                            <button class="setting-button" v-on:click="resetAppConfigToDefault">Reset</button>
+                        </div>
+                    </div>
 
                     <h1 class="setting-section-title">User Settings</h1>
                     <div class="setting-group">
@@ -471,6 +477,12 @@
                         <div class="setting-title">Window width</div>
                         <div class="setting">
                             <input class="setting-text-input" type="number" v-model="config.windowWidth" v-on:blur="updateUserConfig">
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <div class="setting-title">Reset user config to default</div>
+                        <div class="setting">
+                            <button class="setting-button" v-on:click="resetUserConfigToDefault">Reset</button>
                         </div>
                     </div>
                 </div>

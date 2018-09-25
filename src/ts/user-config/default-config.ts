@@ -9,35 +9,39 @@ import { defaultWindowsApplicationFileExtensions, defaultMacOsApplicationFileExt
 import { defaultFileSearchOptions } from "./default-file-search-options";
 import { defaultWebSearches } from "./default-web-searches";
 
-const currentOperatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
+export class DefaultUserConfigManager {
+    public static getDefaultUserConfig(): UserConfigOptions {
+        const currentOperatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
 
-export const defaultConfig: UserConfigOptions = {
-    allowMouseInteraction: true,
-    alwaysShowOnPrimaryDisplay: false,
-    applicationFileExtensions: currentOperatingSystem === OperatingSystem.Windows ? defaultWindowsApplicationFileExtensions : defaultMacOsApplicationFileExtensions,
-    applicationFolders: currentOperatingSystem === OperatingSystem.Windows ? defaultWindowsApplicationFolders : defaultMacOsApplicationFolders,
-    autoStartApp: true,
-    colorTheme: "dark",
-    customCommands: [],
-    fallbackWebSearches: [],
-    fileSearchOptions: defaultFileSearchOptions,
-    hotKey: "alt+space",
-    iconSet: currentOperatingSystem === OperatingSystem.Windows ? new WindowsIconSet() : new MacOsIconSet(),
-    logExecution: true,
-    maxSearchResultCount: 8,
-    maxWindowHeight: 560,
-    rescanInterval: 30,
-    searchEngineThreshold: 0.4,
-    searchEnvironmentVariables: false,
-    searchOperatingSystemSettings: true,
-    searchResultDescriptionFontSize: 14,
-    searchResultHeight: 60,
-    searchResultNameFontSize: 20,
-    shortcuts: [],
-    showTrayIcon: true,
-    userInputFontSize: 36,
-    userInputHeight: 80,
-    userStylesheet: "",
-    webSearches:  defaultWebSearches,
-    windowWidth: 860,
-};
+        return {
+            allowMouseInteraction: true,
+            alwaysShowOnPrimaryDisplay: false,
+            applicationFileExtensions: currentOperatingSystem === OperatingSystem.Windows ? defaultWindowsApplicationFileExtensions : defaultMacOsApplicationFileExtensions,
+            applicationFolders: currentOperatingSystem === OperatingSystem.Windows ? defaultWindowsApplicationFolders : defaultMacOsApplicationFolders,
+            autoStartApp: true,
+            colorTheme: "dark",
+            customCommands: [],
+            fallbackWebSearches: [],
+            fileSearchOptions: defaultFileSearchOptions,
+            hotKey: "alt+space",
+            iconSet: currentOperatingSystem === OperatingSystem.Windows ? new WindowsIconSet() : new MacOsIconSet(),
+            logExecution: true,
+            maxSearchResultCount: 8,
+            maxWindowHeight: 560,
+            rescanInterval: 30,
+            searchEngineThreshold: 0.4,
+            searchEnvironmentVariables: false,
+            searchOperatingSystemSettings: true,
+            searchResultDescriptionFontSize: 14,
+            searchResultHeight: 60,
+            searchResultNameFontSize: 20,
+            shortcuts: [],
+            showTrayIcon: true,
+            userInputFontSize: 36,
+            userInputHeight: 80,
+            userStylesheet: "",
+            webSearches:  defaultWebSearches,
+            windowWidth: 860,
+        };
+    }
+}
