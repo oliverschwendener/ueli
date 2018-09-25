@@ -28,7 +28,7 @@ export class DefaultUserConfigManager {
             logExecution: true,
             maxSearchResultCount: 8,
             maxWindowHeight: 560,
-            rescanInterval: 30,
+            rescanInterval: 60,
             searchEngineThreshold: 0.4,
             searchEnvironmentVariables: false,
             searchOperatingSystemSettings: true,
