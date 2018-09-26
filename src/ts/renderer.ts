@@ -115,16 +115,14 @@ const vue = new Vue({
             return `height: calc(100vh - ${config.userInputHeight}px);`;
         },
         resetAppConfigToDefault: (): void => {
-            const defaultAppConfig = DefaultAppConfigManager.getDefaultAppConfig();
-            appConfig = defaultAppConfig;
-            vue.appConfig = defaultAppConfig;
-            ipcRenderer.send(IpcChannels.updateAppConfig, defaultAppConfig);
+            appConfig = DefaultAppConfigManager.getDefaultAppConfig();
+            vue.appConfig = appConfig;
+            vue.updateAppConfig();
         },
         resetUserConfigToDefault: (): void => {
-            const defaultConfig = DefaultUserConfigManager.getDefaultUserConfig();
-            config = defaultConfig;
-            vue.config = defaultConfig;
-            ipcRenderer.send(IpcChannels.updateUserConfig, defaultConfig);
+            config = DefaultUserConfigManager.getDefaultUserConfig();
+            vue.config = config;
+            vue.updateUserConfig();
         },
         searchResultDescriptionStyle: (): string => {
             return `font-size: ${config.searchResultDescriptionFontSize}px;`;
