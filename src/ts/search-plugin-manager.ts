@@ -9,7 +9,7 @@ import { UserConfigOptions } from "./user-config/user-config-options";
 import { ShortcutsPlugin } from "./search-plugins/shortcuts-plugin";
 import { IconSet } from "./icon-sets/icon-set";
 import { EnvironmentVariablePlugin } from "./search-plugins/environment-variable-plugin";
-import { OperatingSystemSystemCommandsPlugin } from "./search-plugins/operating-system-system-commands-plugin";
+import { OperatingSystemCommandsPlugin } from "./search-plugins/operating-system-commands-plugin";
 import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
 import { OperatingSystem } from "./operating-system";
 import { windowsSystemCommands } from "./operating-system-settings/windows/windows-system-commands";
@@ -37,7 +37,7 @@ export class SearchPluginManager {
                 ? windowsSystemCommands
                 : macOsSystemCommands;
 
-            this.plugins.push(new OperatingSystemSystemCommandsPlugin(systemComands, operatingSystem));
+            this.plugins.push(new OperatingSystemCommandsPlugin(systemComands, operatingSystem));
         }
 
         if (config.searchEnvironmentVariables) {

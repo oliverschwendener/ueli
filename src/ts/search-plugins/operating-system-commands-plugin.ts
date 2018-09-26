@@ -4,7 +4,7 @@ import { OperatingSystemCommand } from "../operating-system-settings/operating-s
 import { UeliHelpers } from "../helpers/ueli-helpers";
 import { OperatingSystem } from "../operating-system";
 
-export class OperatingSystemSystemCommandsPlugin implements SearchPlugin {
+export class OperatingSystemCommandsPlugin implements SearchPlugin {
     private systemCommands: OperatingSystemCommand[];
     private descriptionPrefix: string;
 

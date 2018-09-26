@@ -10,8 +10,6 @@ import { OpenUrlWithDefaultBrowserCommandBuilder } from "./builders/open-url-wit
 import { TrayIconPathBuilder } from "./builders/tray-icon-path-builder";
 import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
 import { IconSet } from "./icon-sets/icon-set";
-import { OperatingSystemSystemCommandsPlugin } from "./search-plugins/operating-system-system-commands-plugin";
-import { windowsSystemCommands } from "./operating-system-settings/windows/windows-system-commands";
 
 export class Injector {
   public static getWebUrlRegExp(): RegExp {
