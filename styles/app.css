@@ -97,7 +97,8 @@ div.search-result-icon-container {
     align-items: center;
 }
 
-div.search-result-icon-container > svg {
+div.search-result-icon-container > svg,
+div.search-result-icon-container >img {
     width: var(--icon-size);
     fill: var(--text-color);
 }
@@ -243,6 +244,11 @@ td > svg {
     fill: var(--text-color);
     height: 25px;
     width: 25px;
+}
+
+td > img {
+    width: 25px;
+    height: 25px;
 }
 
 svg.close-settings-icon {

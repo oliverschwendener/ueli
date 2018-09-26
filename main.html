@@ -359,6 +359,12 @@
                         </div>
                     </div>
                     <div class="setting-group">
+                        <div class="setting-title">Search operating system commands</div>
+                        <div class="setting">
+                            <input type="checkbox" v-model="config.searchOperatingSystemCommands" v-on:change="updateUserConfig">
+                        </div>
+                    </div>
+                    <div class="setting-group">
                         <div class="setting-title">Search result description font size</div>
                         <div class="setting">
                             <input class="setting-text-input" type="number" v-model="config.searchResultDescriptionFontSize" min="0" v-on:blur="updateUserConfig">
