@@ -22,6 +22,7 @@ export interface UserConfigOptions {
     rescanInterval: number;
     searchEngineThreshold: number;
     searchEnvironmentVariables: boolean;
+    searchOperatingSystemCommands: boolean;
     searchOperatingSystemSettings: boolean;
     searchResultDescriptionFontSize: number;
     searchResultHeight: number;

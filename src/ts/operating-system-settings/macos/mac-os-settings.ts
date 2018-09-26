@@ -1,31 +1,6 @@
 import { MacOsSetting } from "./mac-os-setting";
-import { MacOsSettingsHelpers } from "../../helpers/mac-os-settings.helpers";
-import { SearchResultItem } from "../../search-result-item";
 
 const basePath = "/System/Library/PreferencePanes";
-
-export const systemCommands = [
-    {
-        executionArgument: `${MacOsSettingsHelpers.macOsSettingsPrefix}osascript -e \'tell app "System Events" to shut down\'`,
-        name: "Shutdown",
-        tags: ["power", "off"],
-    },
-    {
-        executionArgument: `${MacOsSettingsHelpers.macOsSettingsPrefix}osascript -e \'tell application "System Events" to log out\'`,
-        name: "Log out",
-        tags: ["sign", "off"],
-    },
-    {
-        executionArgument: `${MacOsSettingsHelpers.macOsSettingsPrefix}osascript -e \'tell app "System Events" to restart\'`,
-        name: "Restart",
-        tags: ["reboot"],
-    },
-    {
-        executionArgument: `${MacOsSettingsHelpers.macOsSettingsPrefix}/System/Library/CoreServices/Menu\\ Extras/User.menu/Contents/Resources/CGSession -suspend`,
-        name: "Lock",
-        tags: [],
-    },
-] as SearchResultItem[];
 
 export const allMacOsSettings: MacOsSetting[] = [
     {

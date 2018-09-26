@@ -14,7 +14,7 @@ export class DefaultUserConfigManager {
         const currentOperatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
 
         return {
-            allowMouseInteraction: true,
+            allowMouseInteraction: false,
             alwaysShowOnPrimaryDisplay: false,
             applicationFileExtensions: currentOperatingSystem === OperatingSystem.Windows ? defaultWindowsApplicationFileExtensions : defaultMacOsApplicationFileExtensions,
             applicationFolders: currentOperatingSystem === OperatingSystem.Windows ? defaultWindowsApplicationFolders : defaultMacOsApplicationFolders,
@@ -31,6 +31,7 @@ export class DefaultUserConfigManager {
             rescanInterval: 60,
             searchEngineThreshold: 0.4,
             searchEnvironmentVariables: false,
+            searchOperatingSystemCommands: true,
             searchOperatingSystemSettings: true,
             searchResultDescriptionFontSize: 14,
             searchResultHeight: 60,

@@ -513,34 +513,6 @@ export const windowsCortanaSettings: WindowsSetting[] = [
     },
 ];
 
-export const windowsSystemCommands = [
-    {
-        executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shutdown -s -t 0`,
-        name: "Shutdown",
-        tags: ["power", "off"],
-    },
-    {
-        executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shutdown -r -t 0`,
-        name: "Restart",
-        tags: ["reboot"],
-    },
-    {
-        executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shutdown /l`,
-        name: "Sign out",
-        tags: ["out", "off", "sign", "user", "log"],
-    },
-    {
-        executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}rundll32 user32.dll,LockWorkStation`,
-        name: "Lock computer",
-        tags: [],
-    },
-    {
-        executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}winver`,
-        name: "Windows Version",
-        tags: ["about", "info", "build", "os", "operating", "system", "release"],
-    },
-] as SearchResultItem[];
-
 export const windows10Apps = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-photos:`,

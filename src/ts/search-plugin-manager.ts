@@ -9,6 +9,11 @@ import { UserConfigOptions } from "./user-config/user-config-options";
 import { ShortcutsPlugin } from "./search-plugins/shortcuts-plugin";
 import { IconSet } from "./icon-sets/icon-set";
 import { EnvironmentVariablePlugin } from "./search-plugins/environment-variable-plugin";
+import { OperatingSystemSystemCommandsPlugin } from "./search-plugins/operating-system-system-commands-plugin";
+import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
+import { OperatingSystem } from "./operating-system";
+import { windowsSystemCommands } from "./operating-system-settings/windows/windows-system-commands";
+import { macOsSystemCommands } from "./operating-system-settings/macos/mac-os-system-commands";
 
 export class SearchPluginManager {
     private plugins: SearchPlugin[];
@@ -23,6 +28,16 @@ export class SearchPluginManager {
 
         if (config.searchOperatingSystemSettings) {
             this.plugins.push(Injector.getOperatingSystemSettingsPlugin(platform(), config.iconSet));
+        }
+
+        if (config.searchOperatingSystemCommands) {
+            const operatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
+
+            const systemComands = operatingSystem === OperatingSystem.Windows
+                ? windowsSystemCommands
+                : macOsSystemCommands;
+
+            this.plugins.push(new OperatingSystemSystemCommandsPlugin(systemComands, operatingSystem));
         }
 
         if (config.searchEnvironmentVariables) {
