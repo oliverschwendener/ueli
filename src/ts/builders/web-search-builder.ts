@@ -16,7 +16,7 @@ export class WebSearchBuilder {
         const searchTerm = WebSearchBuilder.buildSearchTerm(userInput, webSearch);
 
         const searchResultItemName = searchTerm.length > 0
-            ? `Search ${webSearch.name} for '${searchTerm}'`
+            ? `Search ${webSearch.name} for '${searchTerm.trim()}'`
             : `Search ${webSearch.name}`;
 
         return {
