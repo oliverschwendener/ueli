@@ -106,7 +106,7 @@
                         <div class="setting-title">Application file extensions</div>
                         <div class="setting">
                             <div class="sub-setting" v-for="applicationFileExtension in config.applicationFileExtensions">
-                                <input disabled class="setting-text-input" type="text" v-model="applicationFileExtension">
+                                <input class="setting-text-input" type="text" v-model="applicationFileExtension" v-on:blur="updateUserConfig">
                                 <svg v-on:click="settingsActionRemoveApplicationFileExtension(applicationFileExtension)" class="setting-action-icon sub-setting-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
                                     <g id="surface1">
                                         <path d="M 13.5 3.1875 C 7.804688 3.1875 3.1875 7.804688 3.1875 13.5 C 3.1875 19.195313 7.804688 23.8125 13.5 23.8125 C 19.195313 23.8125 23.8125 19.195313 23.8125 13.5 C 23.8125 7.804688 19.195313 3.1875 13.5 3.1875 Z M 19 15 L 8 15 L 8 12 L 19 12 Z "></path>
@@ -125,7 +125,7 @@
                         <div class="setting-title">Application folders</div>
                         <div class="setting">
                             <div class="sub-setting" v-for="applicationFolder in config.applicationFolders">
-                                <input disabled class="setting-text-input" type="text" v-model="applicationFolder">
+                                <input class="setting-text-input" type="text" v-model="applicationFolder" v-on:blur="updateUserConfig">
                                 <svg v-on:click="settingsActionRemoveApplicationFolder(applicationFolder)" class="setting-action-icon sub-setting-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
                                     <g id="surface1">
                                         <path d="M 13.5 3.1875 C 7.804688 3.1875 3.1875 7.804688 3.1875 13.5 C 3.1875 19.195313 7.804688 23.8125 13.5 23.8125 C 19.195313 23.8125 23.8125 19.195313 23.8125 13.5 C 23.8125 7.804688 19.195313 3.1875 13.5 3.1875 Z M 19 15 L 8 15 L 8 12 L 19 12 Z "></path>
@@ -163,15 +163,17 @@
                                         <th>Name</th>
                                         <th>ExecutionArgument</th>
                                         <th>Prefix</th>
-                                        <th class="text-center">Icon</th>
+                                        <th>Icon</th>
+                                        <th class="text-center">Preview</th>
                                         <th class="text-center">+/-</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="customCommand in config.customCommands">
-                                        <td><input disabled class="setting-text-input" type="text" v-model="customCommand.name"></td>
-                                        <td><input disabled class="setting-text-input" type="text" v-model="customCommand.executionArgument"></td>
-                                        <td><input disabled class="setting-text-input" type="text" v-model="customCommand.prefix"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="customCommand.name" v-on:blur="updateUserConfig"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="customCommand.executionArgument" v-on:blur="updateUserConfig"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="customCommand.prefix" v-on:blur="updateUserConfig"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="customCommand.icon" v-on:blur="updateUserConfig"></td>
                                         <td class="text-center" v-html="customCommand.icon"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionRemoveCustomCommand(customCommand)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
@@ -186,6 +188,7 @@
                                         <td><input class="setting-text-input" v-model="configEdit.newCustomCommand.executionArgument" type="text" placeholder="Execution argument"></td>
                                         <td><input class="setting-text-input" v-model="configEdit.newCustomCommand.prefix" type="text" placeholder="Prefix"></td>
                                         <td class="slim"><input class="setting-text-input" v-model="configEdit.newCustomCommand.icon" type="text" placeholder="Icon"></td>
+                                        <td class="text-center" v-html="configEdit.newCustomCommand.icon"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionAddCustomCommand(configEdit.newCustomCommand)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
                                                 <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
@@ -201,7 +204,7 @@
                         <div class="setting">
                             <div class="sub-setting" v-for="fallbackWebSearch in config.fallbackWebSearches">
                                 <input disabled class="setting-text-input" type="text" v-model="fallbackWebSearch">
-                                <svg class="setting-action-icon" v-on:click="settingsActionRemoveFallbackWebSearch(fallbackWebSearch)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
+                                <svg class="setting-action-icon sub-setting-icon" v-on:click="settingsActionRemoveFallbackWebSearch(fallbackWebSearch)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
                                     <g id="surface1">
                                         <path d="M 13.5 3.1875 C 7.804688 3.1875 3.1875 7.804688 3.1875 13.5 C 3.1875 19.195313 7.804688 23.8125 13.5 23.8125 C 19.195313 23.8125 23.8125 19.195313 23.8125 13.5 C 23.8125 7.804688 19.195313 3.1875 13.5 3.1875 Z M 19 15 L 8 15 L 8 12 L 19 12 Z "></path>
                                     </g>
@@ -228,8 +231,8 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="fileSearchOption in config.fileSearchOptions">
-                                        <td><input disabled class="setting-text-input" type="text" v-model="fileSearchOption.folderPath"></td>
-                                        <td class="text-center slim"><input disabled type="checkbox" v-model="fileSearchOption.recursive"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="fileSearchOption.folderPath" v-on:blur="updateUserConfig"></td>
+                                        <td class="text-center slim"><input type="checkbox" v-model="fileSearchOption.recursive" v-on:change="updateUserConfig"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionRemoveFileSearchOption(fileSearchOption)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
                                                 <g id="surface1">
@@ -381,14 +384,16 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Execution argument</th>
-                                        <th class="text-center">Icon</th>
+                                        <th>Icon</th>
+                                        <th class="text-center">Preview</th>
                                         <th class="text-center">+/-</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="shortcut in config.shortcuts">
-                                        <td><input disabled class="setting-text-input" type="text" v-model="shortcut.name"></td>
-                                        <td><input disabled class="setting-text-input" type="text" v-model="shortcut.executionArgument"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="shortcut.name" v-on:blur="updateUserConfig"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="shortcut.executionArgument" v-on:blur="updateUserConfig"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="shortcut.icon"></td>
                                         <td class="text-center" v-html="shortcut.icon"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionRemoveShortcut(shortcut)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
@@ -401,7 +406,8 @@
                                     <tr>
                                         <td><input class="setting-text-input" type="text" v-model="configEdit.newShortcut.name" placeholder="Name"></td>
                                         <td><input class="setting-text-input" type="text" v-model="configEdit.newShortcut.executionArgument" placeholder="Execution argument"></td>
-                                        <td class="slim"><input class="setting-text-input" type="text" v-model="configEdit.newShortcut.icon" placeholder="Icon"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="configEdit.newShortcut.icon" placeholder="Icon"></td>
+                                        <td class="text-center" v-html="configEdit.newShortcut.icon"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionAddShortcut(configEdit.newShortcut)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
                                                 <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
@@ -445,15 +451,17 @@
                                         <th>Name</th>
                                         <th>Prefix</th>
                                         <th>Url</th>
-                                        <th class="text-center">Icon</th>
+                                        <th>Icon</th>
+                                        <th class="text-center">Preview</th>
                                         <th class="text-center">+/-</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="webSearch in config.webSearches">
-                                        <td><input disabled class="setting-text-input" type="text" v-model="webSearch.name"></td>
-                                        <td><input disabled class="setting-text-input" type="text" v-model="webSearch.prefix"></td>
-                                        <td><input disabled class="setting-text-input" type="text" v-model="webSearch.url"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="webSearch.name" v-on:blur="updateUserConfig"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="webSearch.prefix" v-on:blur="updateUserConfig"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="webSearch.url" v-on:blur="updateUserConfig"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="webSearch.icon" v-on:blur="updateUserConfig"></td>
                                         <td class="text-center" v-html="webSearch.icon"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionRemoveWebSearch(webSearch)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
@@ -467,7 +475,8 @@
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.name" placeholder="Name"></td>
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.prefix" placeholder="Prefix"></td>
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.url" placeholder="URL"></td>
-                                        <td class="slim"><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.icon" placeholder="Icon"></td>
+                                        <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.icon" placeholder="Icon"></td>
+                                        <td class="text-center" v-html="configEdit.newWebSearch.icon"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionAddWebSearch(configEdit.newWebSearch)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
                                                 <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
