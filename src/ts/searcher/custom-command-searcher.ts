@@ -24,7 +24,6 @@ export class CustomCommandSearcher implements Searcher {
                     icon: CustomCommandBuilder.buildIcon(this.defaultIcon, customCommand),
                     name: CustomCommandBuilder.buildCustomCommandName(userInput, customCommand),
                     searchable: [],
-                    tags: [],
                 });
             }
         }

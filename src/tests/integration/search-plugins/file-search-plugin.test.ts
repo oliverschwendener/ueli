@@ -109,8 +109,6 @@ describe(FileSearchPlugin.name, (): void => {
             for (const item of actual) {
                 expect(item.name.length).toBeGreaterThan(0);
                 expect(item.executionArgument.length).toBeGreaterThan(0);
-                expect(item.tags).not.toBeUndefined();
-                expect(item.tags.length).toBe(0);
             }
         });
 

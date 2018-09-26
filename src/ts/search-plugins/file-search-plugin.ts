@@ -43,7 +43,6 @@ export class FileSearchPlugin implements SearchPlugin {
                             : this.iconSet.fileIcon,
                         name: fileName,
                         searchable: [fileName],
-                        tags: [],
                     });
                 }
             }

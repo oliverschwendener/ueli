@@ -28,7 +28,6 @@ export class ShortcutsPlugin implements SearchPlugin {
                     : shortcut.icon,
                 name: shortcut.name,
                 searchable: [shortcut.name],
-                tags: [],
             });
         }
 

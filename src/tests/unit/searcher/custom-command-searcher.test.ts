@@ -61,7 +61,6 @@ describe(CustomCommandSearcher.name, (): void => {
                 expect(actual[0].name).toBe(`Open with command prompt: ipconfig /all`);
                 expect(actual[0].description).toBe(UeliHelpers.customCommandDescription);
                 expect(actual[0].searchable.length).toBe(0);
-                expect(actual[0].tags.length).toBe(0);
             }
         });
     });

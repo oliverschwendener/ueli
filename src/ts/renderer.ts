@@ -127,14 +127,18 @@ const vue = new Vue({
         searchResultDescriptionStyle: (): string => {
             return `font-size: ${config.searchResultDescriptionFontSize}px;`;
         },
-        searchResultHeight: (): string => {
-            return `height: ${config.searchResultHeight}px`;
-        },
         searchResultIconStyle: (): string => {
             return `height: ${config.searchResultHeight}px; width: ${config.searchResultHeight}px;`;
         },
         searchResultNameStyle: (): string => {
             return `font-size: ${config.searchResultNameFontSize}px;`;
+        },
+        searchResultStyle: (): string => {
+            const cursorStyle = config.allowMouseInteraction
+                ? "cursor: pointer;"
+                : "";
+
+            return `height: ${config.searchResultHeight}px;${cursorStyle}`;
         },
         searchResultWidth: (): string => {
             return `width: ${config.searchResultHeight}px;`;

@@ -3,6 +3,7 @@ import { SearchPlugin } from "./search-plugin";
 import { IconSet } from "../icon-sets/icon-set";
 import { WindowsSetting } from "../operating-system-settings/windows/windows-setting";
 import * as windowsSettings from "../operating-system-settings/windows/windows-settings";
+import { UeliHelpers } from "../helpers/ueli-helpers";
 
 export class Windows10SettingsSearchPlugin implements SearchPlugin {
     private iconSet: IconSet;
@@ -13,7 +14,6 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
         this.settings = [];
 
         this.settings = this.settings
-            .concat(windowsSettings.windows10Apps)
             .concat(windowsSettings.windowsAccountSettings)
             .concat(windowsSettings.windowsAppSettings)
             .concat(windowsSettings.windowsCortanaSettings)
@@ -29,15 +29,26 @@ export class Windows10SettingsSearchPlugin implements SearchPlugin {
     }
 
     public getAllItems(): SearchResultItem[] {
-        return this.settings.map((setting: WindowsSetting): SearchResultItem => {
+        const settings = this.settings.map((setting: WindowsSetting): SearchResultItem => {
             return {
-                description: setting.name,
+                description: `Windows Settings ${UeliHelpers.searchResultDescriptionSeparator} ${setting.name}`,
                 executionArgument: setting.executionArgument,
                 icon: this.iconSet.operatingSystemSettingsIcon,
                 name: setting.name,
-                searchable: setting.tags,
-                tags: setting.tags,
+                searchable: [setting.name].concat(setting.tags),
             };
         });
+
+        const apps = windowsSettings.windows10Apps.map((app: SearchResultItem): SearchResultItem => {
+            return {
+                description: "Windows 10 UWP App",
+                executionArgument: app.executionArgument,
+                icon: app.icon,
+                name: app.name,
+                searchable: [app.name],
+            };
+        });
+
+        return settings.concat(apps);
     }
 }

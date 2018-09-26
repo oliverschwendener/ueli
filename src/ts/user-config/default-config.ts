@@ -24,7 +24,7 @@ export class DefaultUserConfigManager {
             fallbackWebSearches: [],
             fileSearchOptions: defaultFileSearchOptions,
             hotKey: "alt+space",
-            iconSet: currentOperatingSystem === OperatingSystem.Windows ? new WindowsIconSet() : new MacOsIconSet(),
+            iconSet: currentOperatingSystem === OperatingSystem.Windows ? WindowsIconSet : MacOsIconSet,
             logExecution: true,
             maxSearchResultCount: 8,
             maxWindowHeight: 560,

@@ -77,7 +77,6 @@ div.search-results-container {
 div.search-result {
     display: flex;
     flex-direction: row;
-    cursor: pointer;
 }
 
 div.search-result.active {

@@ -38,7 +38,6 @@ describe("ProgramsPlugin", (): void => {
                 expect(filtered.length).toBe(1);
                 expect(filtered[0].name).toBe(fakeProgram.name);
                 expect(filtered[0].executionArgument).toBe(fakeProgram.executionArgument);
-                expect(filtered[0].tags.length).toBe(0);
             }
         });
     });

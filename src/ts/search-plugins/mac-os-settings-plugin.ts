@@ -26,7 +26,6 @@ export class MacOsSettingsPlugin implements SearchPlugin {
                 icon: this.iconSet.operatingSystemSettingsIcon,
                 name: setting.name,
                 searchable: [setting.name].concat(setting.tags),
-                tags: setting.tags,
             };
         });
     }

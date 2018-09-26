@@ -23,21 +23,6 @@ describe("SearchEngine", (): void => {
             expect(actual.length).toBeGreaterThan(0);
         });
 
-        it("should find items with their tags", (): void => {
-            const fakeItems = [
-                { searchable: ["x"], tags: ["abc"] },
-                { searchable: ["xy"], tags: ["abcd"] },
-                { searchable: ["xyz"], tags: ["abcde"] },
-            ] as SearchResultItem[];
-
-            const searchEngine = new SearchEngine(fakeItems, threshold);
-            const userInput = "abc";
-
-            const actual = searchEngine.search(userInput);
-
-            expect(actual.length).toBeGreaterThan(0);
-        });
-
         it("should return empty array when user input doesnt match any of the plugin items", (): void => {
             const fakeItems = [
                 { searchable: ["abc"] },

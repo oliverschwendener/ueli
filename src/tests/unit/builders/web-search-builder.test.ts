@@ -30,7 +30,6 @@ describe(WebSearchBuilder.name, (): void => {
             expect(actual.executionArgument).toBe(WebSearchBuilder.buildExecutionUrl(userInput, webSearch));
             expect(actual.icon).toBe(webSearch.icon);
             expect(actual.name).toBe(`Search ${webSearch.name} for '${userInput}'`);
-            expect(actual.tags.length).toBe(0);
         });
 
         it("should build the search result item correctly if userinput is an empty string", (): void => {
@@ -48,7 +47,6 @@ describe(WebSearchBuilder.name, (): void => {
             expect(actual.executionArgument).toBe(WebSearchBuilder.buildExecutionUrl(userInput, webSearch));
             expect(actual.icon).toBe(webSearch.icon);
             expect(actual.name).toBe(`Search ${webSearch.name}`);
-            expect(actual.tags.length).toBe(0);
         });
     });
 

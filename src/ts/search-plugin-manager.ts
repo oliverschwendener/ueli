@@ -41,7 +41,7 @@ export class SearchPluginManager {
         }
 
         if (config.searchEnvironmentVariables) {
-            this.plugins.push(new EnvironmentVariablePlugin(environmentVariableCollection));
+            this.plugins.push(new EnvironmentVariablePlugin(environmentVariableCollection, config.iconSet));
         }
     }
 

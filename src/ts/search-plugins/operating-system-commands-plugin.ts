@@ -24,7 +24,6 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
                 icon: setting.icon,
                 name: setting.name,
                 searchable: [setting.name].concat(setting.tags),
-                tags: setting.tags,
             };
         });
     }
