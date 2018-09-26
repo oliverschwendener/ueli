@@ -17,7 +17,6 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
 
     public getAllItems(): SearchResultItem[] {
 
-
         return this.systemCommands.map((setting: OperatingSystemCommand): SearchResultItem => {
             return {
                 description: `${this.descriptionPrefix} ${UeliHelpers.searchResultDescriptionSeparator} ${setting.name}`,
