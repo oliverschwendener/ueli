@@ -70,7 +70,7 @@ export class Injector {
 
   public static getOperatingSystemSettingsPlugin(platform: string, iconSet: IconSet): SearchPlugin {
     switch (OperatingSystemHelpers.getOperatingSystemFromString(platform)) {
-      case OperatingSystem.Windows: return new Windows10SettingsSearchPlugin();
+      case OperatingSystem.Windows: return new Windows10SettingsSearchPlugin(iconSet);
       case OperatingSystem.macOS: return new MacOsSettingsPlugin(iconSet);
     }
   }
