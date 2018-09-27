@@ -9,7 +9,7 @@ export class WebSearchBuilder {
 
     public static buildExecutionUrl(userInput: string, webSearch: WebSearch): string {
         const searchTerm = this.buildSearchTerm(userInput, webSearch);
-        return `${webSearch.url}${searchTerm}`;
+        return `${webSearch.url}${searchTerm.trim()}`;
     }
 
     public static buildSearchResultItem(userInput: string, webSearch: WebSearch): SearchResultItem {
@@ -19,9 +19,11 @@ export class WebSearchBuilder {
             ? `Search ${webSearch.name} for '${searchTerm.trim()}'`
             : `Search ${webSearch.name}`;
 
+        const executionArgument = WebSearchBuilder.buildExecutionUrl(userInput, webSearch);
+
         return {
-            description: WebSearchBuilder.buildExecutionUrl(userInput, webSearch),
-            executionArgument: WebSearchBuilder.buildExecutionUrl(userInput, webSearch),
+            description: executionArgument,
+            executionArgument,
             icon: webSearch.icon,
             name: searchResultItemName,
             searchable: [],

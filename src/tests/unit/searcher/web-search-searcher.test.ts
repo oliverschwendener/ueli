@@ -35,7 +35,7 @@ describe(WebSearchSearcher.name, (): void => {
                 }
             });
 
-            it("should throw an error if user input does not match any search engine", () => {
+            it("should throw an error if user input does not match any search engine", (): void => {
                 const invalidUserInputs = [
                     "",
                     "   ",
@@ -54,6 +54,27 @@ describe(WebSearchSearcher.name, (): void => {
                 }
 
                 expect(errorCounter).toBe(invalidUserInputs.length);
+            });
+
+            it("should trim the user's search term", (): void => {
+                const userSearchTerms = [
+                    "hallo",
+                    " hallo ",
+                    "      hallo",
+                    "hallo     ",
+                ];
+
+                const trimmedUserInput = "hallo";
+
+                for (const dummyWebSearch of dummyWebSearches) {
+                    for (const userSearchTerm of userSearchTerms) {
+                        const userInput = `${dummyWebSearch.prefix}${WebSearchHelpers.webSearchSeparator}${userSearchTerm}`;
+                        const actual = searcher.getSearchResult(userInput);
+
+                        expect(actual.length).toBe(1);
+                        expect(actual[0].executionArgument).toBe(`${dummyWebSearch.url}${trimmedUserInput}`);
+                    }
+                }
             });
         }
     });
