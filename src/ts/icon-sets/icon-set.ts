@@ -1,7 +1,7 @@
 export interface IconSet {
     appIcon: string;
-    environmentVariableIcon: string;
     emailIcon: string;
+    environmentVariableIcon: string;
     fileIcon: string;
     folderIcon: string;
     operatingSystemSettingsIcon: string;

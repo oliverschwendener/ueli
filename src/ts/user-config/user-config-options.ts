@@ -29,8 +29,8 @@ export interface UserConfigOptions {
     searchResultNameFontSize: number;
     shortcuts: Shortcut[];
     showTrayIcon: boolean;
-    userInputHeight: number;
     userInputFontSize: number;
+    userInputHeight: number;
     userStylesheet: string;
     webSearches: WebSearch[];
     windowWidth: number;
