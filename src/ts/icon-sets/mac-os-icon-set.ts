@@ -11,6 +11,34 @@ export const MacOsIconSet: IconSet = {
                             <rect x="27" y="8" style="fill:#ecf0f1;" width="3" height="3"></rect>
                         </svg>`,
 
+    commandLineIcon: `<svg width="456px" height="402px" viewBox="0 0 456 402" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+        <desc>Created with Sketch.</desc>
+        <defs>
+            <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+                <stop stop-color="#D2E8EF" offset="0%"></stop>
+                <stop stop-color="#757473" offset="100%"></stop>
+            </linearGradient>
+            <rect id="path-2" x="0" y="0" width="432" height="378" rx="16"></rect>
+            <filter x="-6.0%" y="-5.3%" width="112.0%" height="113.8%" filterUnits="objectBoundingBox" id="filter-3">
+                <feOffset dx="0" dy="6" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+                <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+                <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+                <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.604562953 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+            </filter>
+        </defs>
+        <g id="icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="terminal" transform="translate(12.000000, 6.000000)">
+                <g id="Rectangle-17">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                    <rect stroke="#000000" stroke-width="32" stroke-linejoin="square" fill="#262626" fill-rule="evenodd" x="16" y="16" width="400" height="346" rx="16"></rect>
+                    <rect stroke="url(#linearGradient-1)" stroke-width="5" x="-2.5" y="-2.5" width="437" height="383" rx="16"></rect>
+                </g>
+                <path d="M127,137 L127,124 L191,124 L191,137 L127,137 Z M63,118 L63,101.726864 L108.357853,85.8562444 L63,70.1581312 L63,54 L128,79.0134771 L128,92.8140162 L63,118 Z" id="&gt;_" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </svg>`,
+
     emailIcon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" version="1.1">
     <g id="surface1">
     <path d="M 0 7 L 0 9.875 L 25 29.71875 L 50 10.125 L 50 7 Z M 0 12.40625 L 0 43 L 50 43 L 50 12.65625 L 25.625 31.78125 C 25.445313 31.921875 25.21875 32 25 32 C 24.78125 32 24.558594 31.925781 24.375 31.78125 Z "></path>

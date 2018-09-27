@@ -35,7 +35,7 @@ export class ProductionSearchers {
                 validator: new FilePathInputValidator(),
             },
             {
-                searcher: new CommandLineSearcher(),
+                searcher: new CommandLineSearcher(config.iconSet),
                 validator: new CommandLineInputValidator(),
             },
             {

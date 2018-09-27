@@ -1,9 +1,10 @@
 import { SearchResultItem } from "../../../ts/search-result-item";
 import { CommandLineSearcher } from "../../../ts/searcher/command-line-searcher";
 import { InputOutputCombination } from "../test-helpers";
+import { testIconSet } from "../../../ts/icon-sets/test-icon-set";
 
 describe(CommandLineSearcher.name, (): void => {
-    const searcher = new CommandLineSearcher();
+    const searcher = new CommandLineSearcher(testIconSet);
 
     describe(searcher.getSearchResult.name, (): void => {
         it("should return a correct search result", (): void => {
