@@ -17,7 +17,7 @@ describe(ExecutionService.name, (): void => {
             const executor1 = new FakeExecutor(hideAfterExecution, resetUserInputAfterExecution, logExecution);
             const executor2 = new FakeExecutor(hideAfterExecution, resetUserInputAfterExecution, logExecution);
 
-            const combinations = [
+            const combinations: ExecutionArgumentValidatorExecutorCombination[] = [
                 {
                     executor: executor1,
                     validator: new FakeExecutionArgumentValidator(true),
@@ -26,7 +26,7 @@ describe(ExecutionService.name, (): void => {
                     executor: executor2,
                     validator: new FakeExecutionArgumentValidator(true),
                 },
-            ] as ExecutionArgumentValidatorExecutorCombination[];
+            ];
 
             const countManager = new CountManager(new FakeCountRepository({}));
             const config = { logExecution } as UserConfigOptions;
@@ -47,7 +47,7 @@ describe(ExecutionService.name, (): void => {
             const executor1 = new FakeExecutor(hideAfterExecution, resetUserInputAfterExecution, logExecution);
             const executor2 = new FakeExecutor(hideAfterExecution, resetUserInputAfterExecution, logExecution);
 
-            const combinations = [
+            const combinations: ExecutionArgumentValidatorExecutorCombination[] = [
                 {
                     executor: executor1,
                     validator: new FakeExecutionArgumentValidator(false),
@@ -56,7 +56,7 @@ describe(ExecutionService.name, (): void => {
                     executor: executor2,
                     validator: new FakeExecutionArgumentValidator(false),
                 },
-            ] as ExecutionArgumentValidatorExecutorCombination[];
+            ];
 
             const countManager = new CountManager(new FakeCountRepository({}));
             const config = { logExecution } as UserConfigOptions;
@@ -76,12 +76,12 @@ describe(ExecutionService.name, (): void => {
 
             const executor1 = new FakeExecutor(hideAfterExecution, resetUserInputAfterExecution, logExecution);
 
-            const combinations = [
+            const combinations: ExecutionArgumentValidatorExecutorCombination[] = [
                 {
                     executor: executor1,
                     validator: new FakeExecutionArgumentValidator(true),
                 },
-            ] as ExecutionArgumentValidatorExecutorCombination[];
+            ];
 
             const countManager = new CountManager(new FakeCountRepository({}));
             const config = { logExecution } as UserConfigOptions;
@@ -100,12 +100,12 @@ describe(ExecutionService.name, (): void => {
 
             const executor1 = new FakeExecutor(hideAfterExecution, resetUserInputAfterExecution, logExecution);
 
-            const combinations = [
+            const combinations: ExecutionArgumentValidatorExecutorCombination[] = [
                 {
                     executor: executor1,
                     validator: new FakeExecutionArgumentValidator(true),
                 },
-            ] as ExecutionArgumentValidatorExecutorCombination[];
+            ];
 
             const countManager = new CountManager(new FakeCountRepository({}));
             const config = { logExecution } as UserConfigOptions;
@@ -124,12 +124,12 @@ describe(ExecutionService.name, (): void => {
 
             const executor1 = new FakeExecutor(hideAfterExecution, resetUserInputAfterExecution, logExecution);
 
-            const combinations = [
+            const combinations: ExecutionArgumentValidatorExecutorCombination[] = [
                 {
                     executor: executor1,
                     validator: new FakeExecutionArgumentValidator(true),
                 },
-            ] as ExecutionArgumentValidatorExecutorCombination[];
+            ];
 
             const countManager = new CountManager(new FakeCountRepository({}));
             const config = { logExecution } as UserConfigOptions;
