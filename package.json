@@ -36,7 +36,7 @@
     "test:all": "./node_modules/.bin/jest --config jest.json --silent ./src/tests",
     "coverage": "./node_modules/.bin/coveralls < ./coverage/lcov.info",
     "package:publish": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish onTag",
-    "package": "./node_modules/.bin/electron-builder --dir --config electron-builder-config.yml --publish never"
+    "package:dir": "./node_modules/.bin/electron-builder --dir --config electron-builder-config.yml --publish never"
   },
   "husky": {
     "hooks": {
