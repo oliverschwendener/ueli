@@ -278,6 +278,11 @@
                                         <td><input class="setting-text-input" type="text" v-model="config.iconSet.appIcon" v-on:blur="updateUserConfig"></td>
                                     </tr>
                                     <tr>
+                                        <td>Commandline icon</td>
+                                        <td class="text-center" v-html="config.iconSet.commandLineIcon"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.commandLineIcon" v-on:blur="updateUserConfig"></td>
+                                    </tr>
+                                    <tr>
                                         <td>Email icon</td>
                                         <td class="text-center" v-html="config.iconSet.emailIcon"></td>
                                         <td><input class="setting-text-input" type="text" v-model="config.iconSet.emailIcon" v-on:blur="updateUserConfig"></td>
