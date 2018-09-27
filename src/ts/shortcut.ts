@@ -1,5 +1,5 @@
-export class Shortcut {
-    public name: string;
-    public executionArgument: string;
-    public icon: string;
+export interface Shortcut {
+    name: string;
+    executionArgument: string;
+    icon: string;
 }

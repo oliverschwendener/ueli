@@ -4,16 +4,18 @@ import { Shortcut } from "../../../ts/shortcut";
 describe(ShortcutsPlugin.name, (): void => {
     describe("getAllItems", (): void => {
         it("should set the execution argument correctly", (): void => {
-            const shortcuts = [
+            const shortcuts: Shortcut[] = [
                 {
                     executionArgument: "execution-argument",
+                    icon: "icon",
                     name: "Custom Shortcut 1",
                 },
                 {
                     executionArgument: "execution-argument-2",
+                    icon: "icon",
                     name: "Custom Shortcut 2",
                 },
-            ] as Shortcut[];
+            ];
 
             const plugin = new ShortcutsPlugin(shortcuts, "");
 
@@ -60,7 +62,7 @@ describe(ShortcutsPlugin.name, (): void => {
         it("should set the given icon if it is specified", (): void => {
             const defaultIcon = "this is the default icon";
 
-            const shortcuts = [
+            const shortcuts: Shortcut[] = [
                 {
                     executionArgument: "execution-argument",
                     icon: "another icon",
@@ -71,7 +73,7 @@ describe(ShortcutsPlugin.name, (): void => {
                     icon: "another icon 2",
                     name: "Custom Shortcut 2",
                 },
-            ] as Shortcut[];
+            ];
 
             const plugin = new ShortcutsPlugin(shortcuts, defaultIcon);
 
