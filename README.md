@@ -265,21 +265,25 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `fileSearchOptions` Array of FileSearchOption objects.
     * `folderPath` String - Represents a folder which should be searched for files and folders.
     * `recursive` Boolean - If the specified folder should be searched recursively. **Be cautious with this option because it can slow down the application drastically.**
-* `hotKey` String - Represents the hotkey to show/hide the window ([Available hot keys](https://github.com/electron/electron/blob/master/docs/api/accelerator.md)=.
+* `hotKey` String - Represents the hotkey to show/hide the window ([Available hot keys](https://github.com/electron/electron/blob/master/docs/api/accelerator.md)).
 * `logExecution` Boolean - If ueli should log the execution of applications, files and folders for better search results. Set to `false` if you want to disable logging.
-* `iconSet` IconSet - Represents the default icon set
-    * `appIcon` String - Represents the svg icon for applications
-    * `emailIcon` String - Represents the svg icon when typing in an email address
-    * `fileIcon` String - Represents the svg icon for files
-    * `folderIcon` String - Represents the svg icon for folders
-    * `searchIcon` String - Represents the svg icon for the search icon on the top right
-    * `shortcutIcon` String - Represents the default svg icon for shortcuts and custom commands
-    * `urlIcon` String - Represents the svg icon when typing in an email address
+* `iconSet` IconSet - Represents the default icon set.
+    * `appIcon` String - Represents the svg icon for applications.
+    * `emailIcon` String - Represents the svg icon when typing in an email address.
+    * `environmentVariableIcon` String - Represents the svg icon for environment variables.
+    * `fileIcon` String - Represents the svg icon for files.
+    * `folderIcon` String - Represents the svg icon for folders.
+    * `operatingSystemSettingsIcon` String - Represents the svg icon for operating system settings.
+    * `searchIcon` String - Represents the svg icon for the search icon on the top right.
+    * `shortcutIcon` String - Represents the default svg icon for shortcuts and custom commands.
+    * `urlIcon` String - Represents the svg icon when typing in an email address.
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed.
+* `maxWindowHeight` Number - Represents the maximum window height. Only used for command line output and settings view.
 * `rescanInterval` Number - Interval in seconds to rescan the application folders.
 * `searchEngineThreshold` Number - Represents the threshold for fuzzy matching (min = 0, max = 1, lower means you have to be more precise with the user input).
 * `searchEnvironmentVariables` Boolean - If environment variables should appear in the search results.
-* `searchOperatingSystemSettings` Boolean - If operting system settings and commands should appear in the search results.
+* `searchOperatingSystemCommands` Boolean - If operating system commands such as "Shutdown", etc. should appear in the search results.
+* `searchOperatingSystemSettings` Boolean - If operting system settings should appear in the search results.
 * `searchResultDescriptionFontSize` Number - Represents the font size of the search result description in pixels.
 * `searchResultHeight` Number - Represents the height of a search result box in pixels.
 * `searchResultNameFontSize` Number - Represents the font size of the search result name in pixels.
@@ -287,6 +291,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
     * `executionArgument` String - Represents the execution argument for the shortcut.
     * `name` String - Represents the displayed name for the shortcut.
     * `icon` String - (Optional) Represents the svg icon for the shortcut. If no icon is set default icon is used.
+* `showTrayIcon` Boolean - If the icon should appear in the system tray.
 * `userInputFontSize` Number - Represents the font size of the user input in pixels.
 * `userInputHeight` Number - Represents the height of the user input box in pixels.
 * `userStylesheet` String - Represents a path to a local stylesheet to modify the appearance of the window.
