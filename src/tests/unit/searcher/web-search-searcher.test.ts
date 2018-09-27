@@ -10,21 +10,21 @@ describe(WebSearchSearcher.name, (): void => {
     describe(searcher.getSearchResult.name, (): void => {
         for (const webSearch of webSearches) {
             it(`${webSearch.name} web search should return a correct search result`, (): void => {
-                const combinations = [
+                const combinations: InputOutputCombination[] = [
                     {
                         input: `${webSearch.prefix}${WebSearchHelpers.webSearchSeparator}google-some-thing`,
                         output: {
                             executionArgument: `${webSearch.url}google-some-thing`,
                             name: `Search ${webSearch.name} for 'google-some-thing'`,
                         } as SearchResultItem,
-                    } as InputOutputCombination,
+                    },
                     {
                         input: `${webSearch.prefix}${WebSearchHelpers.webSearchSeparator}`,
                         output: {
                             executionArgument: `${webSearch.url}`,
                             name: `Search ${webSearch.name}`,
                         } as SearchResultItem,
-                    } as InputOutputCombination,
+                    },
                 ];
 
                 for (const combination of combinations) {

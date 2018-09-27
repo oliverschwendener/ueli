@@ -5,11 +5,11 @@ import { validEmailAddresses, invalidEmailAddresses } from "./../test-helpers";
 describe(StringHelpers.name, (): void => {
     describe(StringHelpers.removeWhiteSpace.name, (): void => {
         it("should replace all whitespace", (): void => {
-            const combinations = [
+            const combinations: InputOutputCombination[] = [
                 {
                     input: " r e      m ove all w    h i t e sp ace",
                     output: "removeallwhitespace",
-                } as InputOutputCombination,
+                },
             ];
 
             for (const combination of combinations) {
@@ -51,19 +51,19 @@ describe(StringHelpers.name, (): void => {
 
     describe(StringHelpers.trimAndReplaceMultipleWhiteSpacesWithOne.name, (): void => {
         it("should trim and replace all white spaces with one white space", (): void => {
-            const combinations = [
+            const combinations: InputOutputCombination[] = [
                 {
                     input: "  this is      a    test string",
                     output: "this is a test string",
-                } as InputOutputCombination,
+                },
                 {
                     input: "this             is          a           test         string",
                     output: "this is a test string",
-                } as InputOutputCombination,
+                },
                 {
                     input: "this is a test                 string                   ",
                     output: "this is a test string",
-                } as InputOutputCombination,
+                },
             ];
 
             for (const combination of combinations) {
@@ -75,19 +75,19 @@ describe(StringHelpers.name, (): void => {
 
     describe(StringHelpers.stringToWords.name, (): void => {
         it("should convert a string to an array of its words", (): void => {
-            const combinations = [
+            const combinations: InputOutputCombination[] = [
                 {
                     input: "this is a string",
                     output: ["this", "is", "a", "string"],
-                } as InputOutputCombination,
+                },
                 {
                     input: "  this    is    a             string      ",
                     output: ["this", "is", "a", "string"],
-                } as InputOutputCombination,
+                },
                 {
                     input: "this              is a string",
                     output: ["this", "is", "a", "string"],
-                } as InputOutputCombination,
+                },
             ];
 
             for (const combination of combinations) {

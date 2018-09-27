@@ -8,21 +8,21 @@ describe(WebUrlSearcher.name, (): void => {
 
     describe(searcher.getSearchResult.name, (): void => {
         it("should return a correct search result", (): void => {
-            const combinations = [
+            const combinations: InputOutputCombination[] = [
                 {
                     input: "google.com",
                     output: {
                         executionArgument: "http://google.com",
                         name: "http://google.com",
                     } as SearchResultItem,
-                } as InputOutputCombination,
+                },
                 {
                     input: "https://google.com",
                     output: {
                         executionArgument: "https://google.com",
                         name: "https://google.com",
                     } as SearchResultItem,
-                } as InputOutputCombination,
+                },
             ];
 
             for (const combination of combinations) {

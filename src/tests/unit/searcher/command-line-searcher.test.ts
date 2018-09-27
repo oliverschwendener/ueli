@@ -7,21 +7,21 @@ describe(CommandLineSearcher.name, (): void => {
 
     describe(searcher.getSearchResult.name, (): void => {
         it("should return a correct search result", (): void => {
-            const combinations = [
+            const combinations: InputOutputCombination[] = [
                 {
                     input: ">ipconfig /flushdns",
                     output: {
                         executionArgument: ">ipconfig /flushdns",
                         name: "ipconfig /flushdns",
                     } as SearchResultItem,
-                } as InputOutputCombination,
+                },
                 {
                     input: ">ls -la .",
                     output: {
                         executionArgument: ">ls -la .",
                         name: "ls -la .",
                     } as SearchResultItem,
-                } as InputOutputCombination,
+                },
             ];
 
             for (const combination of combinations) {

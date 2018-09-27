@@ -44,7 +44,7 @@ describe(CustomCommandSearcher.name, (): void => {
         it("should return the correct search result if the user input matches a custom command", (): void => {
             const searcher = new CustomCommandSearcher(customCommands, defaultShortcutIcon);
 
-            const combinations = [
+            const combinations: InputOutputCombination[] = [
                 {
                     input: "openwithcmd ipconfig /all",
                     output: {
@@ -52,7 +52,7 @@ describe(CustomCommandSearcher.name, (): void => {
                         name: "Open with command prompt:",
                     } as SearchResultItem,
                 },
-            ] as InputOutputCombination[];
+            ];
 
             for (const combination of combinations) {
                 const actual = searcher.getSearchResult(combination.input);

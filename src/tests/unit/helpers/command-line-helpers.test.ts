@@ -5,28 +5,28 @@ import { InputOutputCombination } from "../test-helpers";
 describe(CommandLineHelpers.name, (): void => {
     describe(CommandLineHelpers.buildCommand.name, (): void => {
         it("should build command correctly", (): void => {
-            const combinations = [
+            const combinations: InputOutputCombination[] = [
                 {
                     input: ">ipconfig /flushdns",
                     output: {
                         args: ["/flushdns"],
                         name: "ipconfig",
                     } as CommandLineProgram,
-                } as InputOutputCombination,
+                },
                 {
                     input: ">ls -la .",
                     output: {
                         args: ["-la", "."],
                         name: "ls",
                     } as CommandLineProgram,
-                } as InputOutputCombination,
+                },
                 {
                     input: "df -h",
                     output: {
                         args: ["-h"],
                         name: "df",
                     } as CommandLineProgram,
-                } as InputOutputCombination,
+                },
             ];
 
             for (const combination of combinations) {

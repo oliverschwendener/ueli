@@ -1,8 +1,8 @@
 import { WebSearch } from "../../ts/web-search";
 
-export class InputOutputCombination {
-    public input: any;
-    public output: any;
+export interface InputOutputCombination {
+    input: any;
+    output: any;
 }
 
 export const validWindowsFilePaths = [
