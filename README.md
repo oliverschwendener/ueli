@@ -4,16 +4,15 @@
 
 This is a keystroke launcher for Windows and macOS.
 
-![ueli screenshot](img/doc/ueli-example.jpg)
+![ueli screenshot](img/doc/features/ueli-feature-programs.png)
 
 ## Table of contents
 
 * [Installation](#installation)
 * [Quick tutorial](#quick-tutorial)
 * [Features](#features)
-* [Customization](#customization)
+* [Settings](#settings)
 * [Privacy](#privacy)
-* [Roadmap](#roadmap)
 * [Known bugs](#known-bugs)
 * [Development](#development)
 * [Alternatives](#alternatives)
@@ -53,15 +52,15 @@ This is a keystroke launcher for Windows and macOS.
 * Use the arrow keys to scroll up and down
 * Presss `Enter` to launch the selected program
 
-![Feature Program search](img/doc/features/ueli-feature-program-search.png)
+![Feature Program search](img/doc/features/ueli-feature-programs.png)
 
 ### Files and folder search
 
 * You can search files and folders
 * Press `Enter` to open the selected file/folder
-* You can [customize](#customization) the folders which are scanned for files and folders
+* You can [customize](#settings) the folders which are scanned for files and folders
 
-![Feature file search](img/doc/features/ueli-feature-file-search.png)
+![Feature file search](img/doc/features/ueli-feature-files-and-folders.png)
 
 ### Open URLs with your default web browser
 
@@ -75,7 +74,7 @@ This is a keystroke launcher for Windows and macOS.
 * Type in an email address
 * Press `Enter` to open your default mail program with an empty email to the specified email address
 
-![Feature email](img/doc/features/ueli-feature-email.png)
+![Feature email](img/doc/features/ueli-feature-mail.png)
 
 ### Web search engines
 
@@ -95,55 +94,26 @@ Default web search engines:
 |`w`|[Wikipedia](https://wikipedia.org)|
 |`yt`|[YouTube](https://youtube.com)|
 
-You can [customize](#customization) web search engines like this:
-
-``` json
-"webSearches": [
-    {
-        "icon": "<svg>...</svg>",
-        "name": "My Search Engine",
-        "prefix": "m",
-        "url": "https://my-search-engine.com/search?q="
-    }
-]
-```
+You can [customize](#settings) web search engines like this:
 
 #### Fallback web search engines
 
 You can customize multiple fallback web search engines which are used if ueli does not find any other search results.
 
-``` json
-"fallbackWebSearches": ["Google"],
-"webSearches": [
-    {
-        "icon": "<svg>...</svg>",
-        "name": "Google",
-        "prefix": "g",
-        "url": "https://google.com/search?q="
-    },
-    {
-        "icon": "<svg>...</svg>",
-        "name": "DuckDuckGo",
-        "prefix": "d",
-        "url": "https://duckduckgo.com/search?q="
-    }
-]
-```
+![Feature fallback web search](img/doc/features/ueli-feature-fallback-websearch.png)
 
 ### Execute commandline tools
 
 * Start a commandline tool with the `>` prefix
-    * Example: `>ipconfig /all`
 * Stop an executing commandline tool with `Ctrl+c`
 
 > Note: you can **not** interact with the commandline tool. You only see the output.
 
-![Feature commandline](img/doc/features/ueli-feature-commandline.png)
+![Feature commandline](img/doc/features/ueli-feature-command-line.png)
 
 ### Browse file system
 
 * You can browse your file system by typing in a filepath
-    * Example: `C:\Users` (Windows) or `/Users` (macOS)
 * Press `Enter` to open the file or folder
 * Press `Tab` for autocompletion
 
@@ -152,44 +122,17 @@ You can customize multiple fallback web search engines which are used if ueli do
 ### Calculator
 
 * Calculate simple math, matrix, symbolic function, convert units and a lot more.
-   * Example: 
-      * `23 * 24 / 2 + (6 * 7) ^ 2`
-      * `1 km/h to mile/h`
-      * `a = [1, 2, 3]; a * 2`
 * Press `Enter` to copy the result to the clipboard
 
 ![Feature calculator](img/doc/features/ueli-feature-calculator.png)
 
 ### Shortcuts
 
-* You can [customize](#customization) shortcuts to
+* You can [customize](#settings) shortcuts to
     * Start command line tools
     * Open websites
     * Open files/folders
     * Launch programs
-
-``` json
-"shortcuts": [
-    {
-        "name": "ping",
-        "executionArgument": ">ping 8.8.8.8 -t",
-        "icon": "<svg>...</svg>"
-    },
-    {
-        "name": "Whatsapp",
-        "executionArgument": "https://web.whatsapp.com",
-        "icon": "<svg>...</svg"
-    },
-    {
-        "name": "Data",
-        "executionArgument": "C:\\Data"
-    },
-    {
-        "name": "my-project",
-        "executionArgument": "!code C:\\my-project"
-    }
-]
-```
 
 ![Feature shortcuts](img/doc/features/ueli-feature-shortcuts.png)
 
@@ -197,22 +140,9 @@ You can customize multiple fallback web search engines which are used if ueli do
 
 * You can set up custom commands with parameters
 
-``` json
-"customCommands": [
-    {
-        "name": "Open with Visual Studio Code:",
-        "executionArgument": "!code",
-        "prefix": "openwithcode",
-        "icon": "<svg>...</svg"
-    }
-]
-```
-
-With the example above you should be able to open Visual Studio Code at a specified path. For example `openwithcode C:/file.txt` is similar to the command line command `code C:/file.txt`.
+![Feature custom commands](img/doc/features/ueli-feature-custom-commands.png)
 
 ### Environment Variables
-
-> This feature is deactivated by default. You have to activate this via [customization](#customization).
 
 * Search for environment variables
 * Press `Enter` to open the current file/folder
@@ -234,17 +164,10 @@ With the example above you should be able to open Visual Studio Code at a specif
 |`F6`, `Ctrl+l`|Set focus on user input|
 |`F1`|Get help|
 
-### Updater
 
-To check if a new version is available right click on the tray icon. The first item in the context menu shows you if there is an update available or if you are running the latest version.
+## Settings
 
-![Update available](img/doc/ueli-update-is-available.png)
-
-If there is an update available search for "Download and install update" and hit `Enter`:
-
-![Download and install update](img/doc/ueli-download-and-install-update.png)
-
-## Customization
+To open the settings press `Ctrl+i` or search for `Ueli settings`.
 
 All settings are stored in `~/ueli.config.json`. You can modify this file to change the default values.
 
@@ -269,6 +192,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 * `logExecution` Boolean - If ueli should log the execution of applications, files and folders for better search results. Set to `false` if you want to disable logging.
 * `iconSet` IconSet - Represents the default icon set.
     * `appIcon` String - Represents the svg icon for applications.
+    * `commandLineIcon` String - Represents the svg icon when typing in a command line command. 
     * `emailIcon` String - Represents the svg icon when typing in an email address.
     * `environmentVariableIcon` String - Represents the svg icon for environment variables.
     * `fileIcon` String - Represents the svg icon for files.
@@ -305,7 +229,7 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 
 ### Color themes
 
-![Color themes](/img/doc/color-themes.png)
+![Color themes](/img/doc/ueli-color-themes.png)
 
 * `atom-one-dark`
 * `dark`
@@ -332,7 +256,7 @@ You can customize your own color theme with a CSS file on your computer!
     }
     ```
 
-3. In the [customization](#customization) set `userStylesheet` to the CSS file you just created.
+3. In the [settings](#settings) set `userStylesheet` to the CSS file you just created.
 
 4. Reload ueli.
 
@@ -340,13 +264,7 @@ You can customize your own color theme with a CSS file on your computer!
 
 ## Privacy
 
-For better search results ueli is keeping track of the applications, files and folders you are accessing. All information is stored in `~/ueli.count.json`. If you don't want ueli to track your executions simply delete that file's content and disable logging via the [customization](#customization).
-
-## Roadmap
-
-* Add nice GUI to modifiy configuration
-* Notify user when update is available
-* Use vue components
+For better search results ueli is keeping track of the applications, files and folders you are accessing. All information is stored in `~/ueli.count.json`. If you don't want ueli to track your executions simply delete that file's content and disable logging via the [settings](#settings).
 
 ## Known bugs
 
@@ -412,7 +330,7 @@ $ yarn test:unit --coverage
 ### Package
 
 ```
-$ yarn package
+$ yarn package:dir
 ```
 
 ## Alternatives
