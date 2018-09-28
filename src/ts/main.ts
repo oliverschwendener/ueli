@@ -127,6 +127,7 @@ function setUpKeyBindings(): void {
                 label: UeliHelpers.productName,
                 submenu: [
                     { label: "Quit", accelerator: "Command+Q", click: quitApp },
+                    { label: "Reload", accelerator: "Command+R", click: reloadApp },
                 ],
             },
             {
