@@ -160,6 +160,8 @@ You can [customize](#settings) multiple fallback web search engines which are us
 
 To open the settings press `Ctrl+i` or search for `Ueli settings`.
 
+![Settings view](img/doc/ueli-settings.png)
+
 ### Options
 
 > All settings are stored in `~/ueli.config.json`.
