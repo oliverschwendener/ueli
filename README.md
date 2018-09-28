@@ -23,34 +23,25 @@ This is a keystroke launcher for Windows and macOS.
 
 ### Installer / Zip
 
-> Note: because the executables are not signed Windows will probably prevent you from executing the installer or the program itself. You can click "Run anyway" to install/run the program.
-
 * Download the latest version [here](https://github.com/oliverschwendener/ueli/releases)
 * Run the installer or unzip
 * Run the application
 
-### Installing via chocolatey repository
+> Note: because the executables are not signed Windows will probably prevent you from executing the installer or the program itself. You can click "Run anyway" to install/run the program.
 
-> Chocolatey is a package manager for Windows and ueli is in the official repository! Please see https://chocolatey.org on how to set choco up!
+### Installing via chocolatey repository
 
 * Open a powershell with administration rights (Right click on your start button and click `Windows PowerShell (Admin)`
 * Type `choco install ueli`
 * Accept the upcoming prompt by entering `y` or run above command with `-y` switch
 * Run the application
 
-## Quick tutorial
-
-* Press the global hot key to show/hide the window (default is `alt+space`)
-* Start typing a program name
-* Press `Enter` to launch the program
-
 ## Features
 
 ### Program search
 
 * You can search for installed programs
-* Use the arrow keys to scroll up and down
-* Presss `Enter` to launch the selected program
+* Press `Enter` to launch the selected program
 
 ![Feature Program search](img/doc/features/ueli-feature-programs.png)
 
@@ -78,8 +69,7 @@ This is a keystroke launcher for Windows and macOS.
 
 ### Web search engines
 
-* You can use web search engines with a prefix and `?`. 
-    * Example: `g?{your search term}`
+* You can use web search engines with a prefix and `?`
 
 ![Feature web search engines](img/doc/features/ueli-feature-web-search.png)
 
@@ -94,11 +84,11 @@ Default web search engines:
 |`w`|[Wikipedia](https://wikipedia.org)|
 |`yt`|[YouTube](https://youtube.com)|
 
-You can [customize](#settings) web search engines like this:
+You can [customize](#settings) your own web search engines
 
 #### Fallback web search engines
 
-You can customize multiple fallback web search engines which are used if ueli does not find any other search results.
+You can [customize](#settings) multiple fallback web search engines which are used if ueli does not find any other search results.
 
 ![Feature fallback web search](img/doc/features/ueli-feature-fallback-websearch.png)
 
@@ -113,7 +103,7 @@ You can customize multiple fallback web search engines which are used if ueli do
 
 ### Browse file system
 
-* You can browse your file system by typing in a filepath
+* You can browse your file system by typing in a file path
 * Press `Enter` to open the file or folder
 * Press `Tab` for autocompletion
 
@@ -121,7 +111,7 @@ You can customize multiple fallback web search engines which are used if ueli do
 
 ### Calculator
 
-* Calculate simple math, matrix, symbolic function, convert units and a lot more.
+* Calculate simple math, matrix, symbolic function, convert units and a lot more
 * Press `Enter` to copy the result to the clipboard
 
 ![Feature calculator](img/doc/features/ueli-feature-calculator.png)
@@ -129,16 +119,16 @@ You can customize multiple fallback web search engines which are used if ueli do
 ### Shortcuts
 
 * You can [customize](#settings) shortcuts to
-    * Start command line tools
-    * Open websites
-    * Open files/folders
-    * Launch programs
+    * start command line tools
+    * open websites
+    * open files/folders
+    * launch programs
 
 ![Feature shortcuts](img/doc/features/ueli-feature-shortcuts.png)
 
 ### Custom commands
 
-* You can set up custom commands with parameters
+* You can [customize](#settings) custom commands with parameters
 
 ![Feature custom commands](img/doc/features/ueli-feature-custom-commands.png)
 
@@ -159,6 +149,7 @@ You can customize multiple fallback web search engines which are used if ueli do
 |`Ctrl+o`|Open the selected program or file at it's location|
 |`ArrowUp`|Scroll up|
 |`ArrowDown`|Scroll down|
+|`Ctrl+i`|Open settings|
 |`Shift+ArrowUp`|Browse user input history up|
 |`Shift+ArrowDown`|Browse user input history down|
 |`F6`, `Ctrl+l`|Set focus on user input|
@@ -169,9 +160,9 @@ You can customize multiple fallback web search engines which are used if ueli do
 
 To open the settings press `Ctrl+i` or search for `Ueli settings`.
 
-All settings are stored in `~/ueli.config.json`. You can modify this file to change the default values.
-
 ### Options
+
+> All settings are stored in `~/ueli.config.json`.
 
 * `allowMouseInteraction` Boolean - If mouse interaction should be allowed.
 * `alwaysShowOnPrimaryDisplay` Boolean - If ueli should always show up your the primary display. If set to false ueli will show up on the display your cursor is currently on.
@@ -239,9 +230,9 @@ All settings are stored in `~/ueli.config.json`. You can modify this file to cha
 
 #### Custom color themes
 
-You can customize your own color theme with a CSS file on your computer!
+You can customize your own color theme with a CSS file on your computer.
 
-1. Create a CSS file on your computer.
+1. Create a CSS file on your computer
 2. Add CSS variables in the `:root` section. For example:
 
     ``` CSS
@@ -256,15 +247,15 @@ You can customize your own color theme with a CSS file on your computer!
     }
     ```
 
-3. In the [settings](#settings) set `userStylesheet` to the CSS file you just created.
+3. In the [settings](#settings) set `userStylesheet` to the CSS file you just created
 
-4. Reload ueli.
+4. Reload ueli
 
 > You can completly overwrite uelis behaviour with your CSS file! See the [base stylesheet](https://github.com/oliverschwendener/ueli/tree/master/styles/app.css) of ueli.
 
 ## Privacy
 
-For better search results ueli is keeping track of the applications, files and folders you are accessing. All information is stored in `~/ueli.count.json`. If you don't want ueli to track your executions simply delete that file's content and disable logging via the [settings](#settings).
+For better search results ueli is keeping track of the applications, files and folders you are executing. All information is stored in `~/ueli.count.json`. If you don't want ueli to track your executions simply delete that file's content and disable logging via the [settings](#settings).
 
 ## Known bugs
 
