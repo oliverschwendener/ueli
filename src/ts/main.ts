@@ -1,6 +1,6 @@
 import { join } from "path";
 import { platform } from "os";
-import { app, BrowserWindow, globalShortcut, ipcMain, Menu, Tray, screen } from "electron";
+import { app, BrowserWindow, globalShortcut, ipcMain, Menu, Tray, screen, MenuItem, MenuItemConstructorOptions } from "electron";
 import { autoUpdater } from "electron-updater";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
 import { ExecutionService } from "./execution-service";
@@ -58,6 +58,7 @@ function startApp(): void {
 
 function createMainWindow(): void {
     hideAppInDock();
+    setUpKeyBindings();
 
     mainWindow = new BrowserWindow({
         autoHideMenuBar: true,
@@ -94,10 +95,13 @@ function createTrayIcon(): void {
     trayIcon.setToolTip(UeliHelpers.productName);
     trayIcon.setContextMenu(Menu.buildFromTemplate([
         { click: showWindow, label: "Show" },
-        { click: (): void => {
-            showWindow();
-            mainWindow.webContents.send(IpcChannels.showSettingsFromMain);
-        }, label: "Settings" },
+        {
+            click: (): void => {
+                showWindow();
+                mainWindow.webContents.send(IpcChannels.showSettingsFromMain);
+            },
+            label: "Settings",
+        },
         { click: quitApp, label: "Exit" },
     ]));
 }
@@ -113,6 +117,33 @@ function unregisterAllGlobalShortcuts(): void {
 function hideAppInDock(): void {
     if (platform() === "darwin") {
         app.dock.hide();
+    }
+}
+
+function setUpKeyBindings(): void {
+    if (platform() === "darwin") {
+        const template = [
+            {
+                label: UeliHelpers.productName,
+                submenu: [
+                    { label: "Quit", accelerator: "Command+Q", click: quitApp },
+                ],
+            },
+            {
+                label: "Edit",
+                submenu: [
+                    { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+                    { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+                    { type: "separator" },
+                    { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+                    { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+                    { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+                    { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" },
+                ],
+            },
+        ] as MenuItemConstructorOptions[];
+
+        Menu.setApplicationMenu(Menu.buildFromTemplate(template));
     }
 }
 
