@@ -199,8 +199,10 @@ To open the settings press `Ctrl+i` or search for `Ueli settings`.
 * `rescanInterval` Number - Interval in seconds to rescan the application folders.
 * `searchEngineThreshold` Number - Represents the threshold for fuzzy matching (min = 0, max = 1, lower means you have to be more precise with the user input).
 * `searchEnvironmentVariables` Boolean - If environment variables should appear in the search results.
+* `searchFiles` Boolean - If files should appear in the search results.
 * `searchOperatingSystemCommands` Boolean - If operating system commands such as "Shutdown", etc. should appear in the search results.
 * `searchOperatingSystemSettings` Boolean - If operting system settings should appear in the search results.
+* `searchPrograms` Boolean - If programs should appear in the search results.
 * `searchResultDescriptionFontSize` Number - Represents the font size of the search result description in pixels.
 * `searchResultHeight` Number - Represents the height of a search result box in pixels.
 * `searchResultNameFontSize` Number - Represents the font size of the search result name in pixels.
