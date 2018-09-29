@@ -218,7 +218,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="setting-group">
+                    <div class="setting-group" v-if="config.searchFiles">
                         <div class="setting-title">File search options</div>
                         <div class="setting">
                             <table class="setting-table">
@@ -363,6 +363,12 @@
                         </div>
                     </div>
                     <div class="setting-group">
+                        <div class="setting-title">Search files</div>
+                        <div class="setting">
+                            <input type="checkbox" v-model="config.searchFiles" v-on:change="updateUserConfig">
+                        </div>
+                    </div>
+                    <div class="setting-group">
                         <div class="setting-title">Search operating system settings</div>
                         <div class="setting">
                             <input type="checkbox" v-model="config.searchOperatingSystemSettings" v-on:change="updateUserConfig">
@@ -372,6 +378,12 @@
                         <div class="setting-title">Search operating system commands</div>
                         <div class="setting">
                             <input type="checkbox" v-model="config.searchOperatingSystemCommands" v-on:change="updateUserConfig">
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <div class="setting-title">Search programs</div>
+                        <div class="setting">
+                            <input type="checkbox" v-model="config.searchPrograms" v-on:change="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">

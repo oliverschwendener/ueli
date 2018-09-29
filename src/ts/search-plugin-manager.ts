@@ -20,11 +20,17 @@ export class SearchPluginManager {
 
     public constructor(config: UserConfigOptions, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }) {
         this.plugins = [
-            new ProgramsPlugin(new ProgramFileRepository(config.applicationFolders, config.applicationFileExtensions), config.iconSet),
-            new FileSearchPlugin(config.fileSearchOptions, config.iconSet),
             new UeliCommandsSearchPlugin(),
             new ShortcutsPlugin(config.shortcuts, iconSet.shortcutIcon),
         ];
+
+        if (config.searchPrograms) {
+            this.plugins.push(new ProgramsPlugin(new ProgramFileRepository(config.applicationFolders, config.applicationFileExtensions), config.iconSet));
+        }
+
+        if (config.searchFiles) {
+            this.plugins.push(new FileSearchPlugin(config.fileSearchOptions, config.iconSet));
+        }
 
         if (config.searchOperatingSystemSettings) {
             this.plugins.push(Injector.getOperatingSystemSettingsPlugin(platform(), config.iconSet));
