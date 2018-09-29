@@ -178,7 +178,7 @@ To open the settings press `Ctrl+i` or search for `Ueli settings`.
     * `prefix` String - Represents the prefix for the custom command.
     * `icon` String - Represents the svg icon for the custom command.
 * `fallbackWebSearches` Array of string - Represents the names of [web search engines](#web-search-engines) used when ueli does not find any search results.
-* `fileSearchOptions` Array of FileSearchOption objects.
+* `fileSearchOptions` Array of FileSearchOption objects (**only effective if `searchFiles` is set to `true`**).
     * `folderPath` String - Represents a folder which should be searched for files and folders.
     * `recursive` Boolean - If the specified folder should be searched recursively. **Be cautious with this option because it can slow down the application drastically.**
 * `hotKey` String - Represents the hotkey to show/hide the window ([Available hot keys](https://github.com/electron/electron/blob/master/docs/api/accelerator.md)).
