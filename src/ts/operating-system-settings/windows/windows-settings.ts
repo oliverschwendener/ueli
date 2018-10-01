@@ -16,27 +16,27 @@ export const windowsGeneralSettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:batterysaver`,
         name: "Battery",
-        tags: ["power", "energy", "saving", "save"],
+        tags: ["power", "energy"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:display`,
         name: "Display",
-        tags: ["screen", "resolution", "4k", "hd"],
+        tags: ["screen", "monitor"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:notifications`,
         name: "Notifications & actions",
-        tags: ["notify", "action"],
+        tags: ["notify"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:powersleep`,
         name: "Power & sleep",
-        tags: ["energy", "plan"],
+        tags: ["energy"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:storagesense`,
         name: "Storage",
-        tags: ["hard", "disk", "ssd", "hdd"],
+        tags: ["disk"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:tabletmode`,
@@ -51,7 +51,7 @@ export const windowsGeneralSettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:multitasking`,
         name: "Multitasking",
-        tags: ["windows", "window", "manager", "snap", "virtual", "desktop"],
+        tags: [""],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:remotedesktop`,
@@ -61,7 +61,7 @@ export const windowsGeneralSettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:about`,
         name: "About your PC",
-        tags: ["system", "device", "specs", "specifications", "license", "info", "information"],
+        tags: ["system", "device", "specifications", "information"],
     },
 ];
 
@@ -69,7 +69,7 @@ export const windowsDeviceSettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:bluetooth`,
         name: "Bluetooth",
-        tags: ["wireless", "device", "devices"],
+        tags: ["wireless", "devices"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:printers`,
@@ -112,12 +112,12 @@ export const windowsNetworkSettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:network-ethernet`,
         name: "Ethernet",
-        tags: ["network", "internet", "wireless"],
+        tags: ["network", "internet"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:network-wifi`,
         name: "Wi-Fi",
-        tags: ["network", "internet", "wireless"],
+        tags: ["network", "internet", "wireless", "wlan"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:network-dialup`,
@@ -127,7 +127,7 @@ export const windowsNetworkSettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:network-vpn`,
         name: "VPN",
-        tags: ["vate", "virtual", "network", "vacy"],
+        tags: ["virtual", "network"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:network-airplanemode`,
@@ -155,12 +155,12 @@ export const windowsPersonalizationSettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:personalization-background`,
         name: `${personalizationModuleTitle}: Background`,
-        tags: ["custom", "customization", "colors", "images", "pictures", "wallpapers"],
+        tags: ["customization", "colors", "images", "pictures", "wallpapers"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:colors`,
         name: `${personalizationModuleTitle}: Colors`,
-        tags: ["color", "custom", "customization", "creative"],
+        tags: ["color", "customization", "creative"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:lockscreen`,
@@ -170,12 +170,12 @@ export const windowsPersonalizationSettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:themes`,
         name: `${personalizationModuleTitle}: Themes`,
-        tags: ["custom", "customization", "color", "colors", "image", "picture"],
+        tags: ["customization", "colors", "images", "pictures"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:personalization-start`,
         name: `${personalizationModuleTitle}: Start`,
-        tags: ["custom", "customization", "search"],
+        tags: ["customization", "search"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:taskbar`,
@@ -188,7 +188,7 @@ export const windowsAppSettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:appsfeatures`,
         name: "Apps & features",
-        tags: ["programs"],
+        tags: ["programs", "uninstall"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:defaultapps`,
@@ -203,7 +203,7 @@ export const windowsAppSettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:maps`,
         name: "Offline maps",
-        tags: ["earth"],
+        tags: [],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:appsforwebsites`,
@@ -330,7 +330,7 @@ export const windowsEaseOfAccessSettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:easeofaccess-mouse`,
         name: `${easeOfAccesModuleTitle}: Mouse`,
-        tags: ["ease", "of", "access", "input"],
+        tags: ["input"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:easeofaccess-otheroptions`,
@@ -373,7 +373,7 @@ export const windowsPrivacySettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-accountinfo`,
         name: `${privacyModuleTitle}: Account info`,
-        tags: ["personal", "vacy", "user"],
+        tags: ["personal", "user"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-contacts`,
@@ -403,7 +403,7 @@ export const windowsPrivacySettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-messaging`,
         name: `${privacyModuleTitle}: Messaging`,
-        tags: ["message"],
+        tags: [],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:privacy-radios`,
@@ -451,7 +451,7 @@ export const windowsUpdateAndSecuritySettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:windowsdefender`,
         name: "Windows Defender",
-        tags: ["anti", "virus", "protection", "security", "scan", "malware"],
+        tags: ["antivirus", "protection", "security", "scan", "malware"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:backup`,
@@ -481,7 +481,7 @@ export const windowsUpdateAndSecuritySettings: WindowsSetting[] = [
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:developers`,
         name: "For developers",
-        tags: ["dev", "admin"],
+        tags: [],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}ms-settings:windowsinsider`,

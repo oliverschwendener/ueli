@@ -7,7 +7,7 @@ export const windowsSystemCommands: OperatingSystemCommand[] = [
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shutdown -s -t 0`,
         icon: shutDownIcon,
         name: "Shutdown",
-        tags: ["power", "off"],
+        tags: ["poweroff"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shutdown -r -t 0`,
@@ -19,7 +19,7 @@ export const windowsSystemCommands: OperatingSystemCommand[] = [
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shutdown /l`,
         icon: logOutIcon,
         name: "Sign out",
-        tags: ["out", "off", "sign", "user", "log"],
+        tags: ["signout"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}rundll32 user32.dll,LockWorkStation`,
