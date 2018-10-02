@@ -453,6 +453,12 @@
                         </div>
                     </div>
                     <div class="setting-group">
+                        <div class="setting-title">Smooth scrolling</div>
+                        <div class="setting">
+                            <input type="checkbox" v-model="config.smoothScrolling" v-on:change="updateUserConfig">
+                        </div>
+                    </div>
+                    <div class="setting-group">
                         <div class="setting-title">User input font size</div>
                         <div class="setting">
                             <input class="setting-text-input" type="nubmer" v-model="config.userInputFontSize" min="0" v-on:blur="updateUserConfig">

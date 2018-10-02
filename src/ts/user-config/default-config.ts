@@ -40,6 +40,7 @@ export class DefaultUserConfigManager {
             searchResultNameFontSize: 20,
             shortcuts: [],
             showTrayIcon: true,
+            smoothScrolling: false,
             userInputFontSize: 36,
             userInputHeight: 80,
             userStylesheet: "",
