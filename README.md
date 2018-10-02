@@ -211,6 +211,7 @@ To open the settings press `Ctrl+i` or search for `Ueli settings`.
     * `name` String - Represents the displayed name for the shortcut.
     * `icon` String - (Optional) Represents the svg icon for the shortcut. If no icon is set default icon is used.
 * `showTrayIcon` Boolean - If the icon should appear in the system tray.
+* `smoothScrolling` Boolean - If page scrolling for search results should be smooth or instant.
 * `userInputFontSize` Number - Represents the font size of the user input in pixels.
 * `userInputHeight` Number - Represents the height of the user input box in pixels.
 * `userStylesheet` String - Represents a path to a local stylesheet to modify the appearance of the window.
@@ -256,6 +257,10 @@ You can customize your own color theme with a CSS file on your computer.
 4. Reload ueli
 
 > You can completly overwrite uelis behaviour with your CSS file! See the [base stylesheet](https://github.com/oliverschwendener/ueli/tree/master/styles/app.css) of ueli.
+
+### Icons
+
+On [https://icons8.com](https://icons8.com/) you can find svg icons for almost everything!
 
 ## Privacy
 
