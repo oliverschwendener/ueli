@@ -58,7 +58,6 @@ function startApp(): void {
 
 function createMainWindow(): void {
     hideAppInDock();
-    setUpKeyBindings();
 
     mainWindow = new BrowserWindow({
         autoHideMenuBar: true,
@@ -85,6 +84,7 @@ function createMainWindow(): void {
     registerGlobalHotKey();
 
     if (!isInDevelopment) {
+        setUpKeyBindings();
         checkForUpdates();
         setAutostartSettings();
     }
