@@ -13,6 +13,7 @@ import { WebSearch } from "./web-search";
 import { version } from "../../package.json";
 import { DefaultAppConfigManager } from "./app-config/default-app-config";
 import { DefaultUserConfigManager } from "./user-config/default-config";
+import { WindowHelpers } from "./helpers/winow-helpers";
 
 const appConfigRepository = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.getDefaultAppConfig());
 let config = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
@@ -354,7 +355,25 @@ function changeActiveItemByIndex(index: number): void {
 function scrollIntoView(searchResult: SearchResultItemViewModel): void {
     const htmlElement = document.getElementById(searchResult.id);
     if (htmlElement !== undefined && htmlElement !== null) {
-        htmlElement.scrollIntoView();
+        const outputContainer = document.getElementById("output-container");
+        if (outputContainer !== undefined && outputContainer !== null) {
+            const outputContainerMaxHeight = WindowHelpers.calculateWindowHeight(vue.searchResults.length, config.maxSearchResultCount, config.userInputHeight, config.searchResultHeight);
+            const elementIsOutOfViewBottom = (htmlElement.offsetTop > (outputContainer.scrollTop + outputContainerMaxHeight - config.searchResultHeight));
+            const elementIsOutOfViewTop = htmlElement.offsetTop - config.userInputHeight < outputContainer.scrollTop;
+
+            if (elementIsOutOfViewBottom) {
+                const scrollTo = htmlElement.offsetTop - config.userInputHeight ;
+
+                outputContainer.scrollTo({ top: scrollTo });
+            } else if (elementIsOutOfViewTop) {
+                let scrollTo = htmlElement.offsetTop - outputContainer.clientHeight - 20; // I have no idea why 20
+                if (scrollTo < 0) {
+                    scrollTo = 0;
+                }
+
+                outputContainer.scrollTo({ top: scrollTo });
+            }
+        }
     }
 }
 

@@ -22,7 +22,7 @@
                 <div class="search-icon-container" :style="searchResultWidth()" v-html="config.iconSet.searchIcon"></div>                
             </div>
 
-            <div class="output-container" :style="outputContainerHeight()">
+            <div class="output-container" id="output-container" :style="outputContainerHeight()">
 
                 <div class="command-line-output-container" v-if="commandLineOutput.length > 0">
                     <pre v-for="line in commandLineOutput">{{ line }}</pre>
