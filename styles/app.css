@@ -6,6 +6,9 @@
     --error-color: #e74c3c;
     --font-family: "Segoe UI", "Helvetica";
     --font-family-mono: "Consolas", "Courier", monospace;
+    --user-input-font-weight: 200;
+    --search-result-name-active-font-weight: 600;
+    --search-result-description-font-weight: 200;
     --settings-font-size: 0.85rem;
 }
 
@@ -29,7 +32,7 @@ div.user-input-container {
 
 input.user-input {
     font-family: var(--font-family);
-    font-weight: 200;
+    font-weight: var(--user-input-font-weight);
     width: 100%;
     box-sizing: border-box;
     border: none;
@@ -122,12 +125,12 @@ span {
 }
 
 span.search-result-name.active {
-    font-weight: 600;
+    font-weight: var(--search-result-name-active-font-weight);
 }
 
 span.search-result-description {
     transition: all 250ms ease-in-out;
-    font-weight: 200;
+    font-weight: var(--search-result-description-font-weight);
     display: none;  
 }
 
