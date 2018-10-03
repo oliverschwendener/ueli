@@ -2,12 +2,14 @@ import { lstatSync, readdirSync } from "fs";
 import { join } from "path";
 
 export class FileHelpers {
-    public static getFilesFromFolderRecursively(folderPath: string, includeFolders?: boolean): string[] {
+    public static getFilesFromFolderRecursively(folderPath: string, blackList: string[], includeFolders?: boolean): string[] {
         try {
             let result = [] as string[];
             const fileNames = FileHelpers.getFileNamesFromFolder(folderPath);
 
-            for (const fileName of fileNames) {
+            const filteredFileNames = FileHelpers.filterBlackList(fileNames, blackList);
+
+            for (const fileName of filteredFileNames) {
                 try {
                     const filePath = join(folderPath, fileName);
                     const stats = lstatSync(filePath);
@@ -20,7 +22,7 @@ export class FileHelpers {
                             if (includeFolders !== undefined && includeFolders) {
                                 result.push(filePath);
                             }
-                            result = result.concat(FileHelpers.getFilesFromFolderRecursively(filePath));
+                            result = result.concat(FileHelpers.getFilesFromFolderRecursively(filePath, blackList));
                         }
                     } else if (stats.isFile()) {
                         result.push(filePath);
@@ -60,11 +62,11 @@ export class FileHelpers {
         }
     }
 
-    public static getFilesFromFoldersRecursively(folderPaths: string[]): string[] {
+    public static getFilesFromFoldersRecursively(folderPaths: string[], blackList: string[]): string[] {
         let result = [] as string[];
 
         for (const folderPath of folderPaths) {
-            result = result.concat(FileHelpers.getFilesFromFolderRecursively(folderPath));
+            result = result.concat(FileHelpers.getFilesFromFolderRecursively(folderPath, blackList));
         }
 
         return result;
@@ -78,5 +80,13 @@ export class FileHelpers {
         });
 
         return visibleFiles;
+    }
+
+    private static filterBlackList(fileNames: string[], blackList: string[]): string[] {
+        return fileNames.filter((fileName: string): boolean => {
+            return blackList.filter((blackListEntry: string): boolean => {
+                return blackListEntry === fileName;
+            }).length === 0;
+        });
     }
 }

@@ -13,6 +13,7 @@ export interface UserConfigOptions {
     colorTheme: string;
     customCommands: CustomCommand[];
     fallbackWebSearches: string[];
+    fileSearchBlackList: string[];
     fileSearchOptions: FileSearchOption[];
     hotKey: string;
     iconSet: IconSet;

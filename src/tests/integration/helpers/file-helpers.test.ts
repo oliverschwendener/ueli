@@ -2,6 +2,8 @@ import { FileHelpers } from "../../../ts/helpers/file-helpers";
 import { join } from "path";
 import { mkdirSync, writeFileSync, unlinkSync, rmdirSync } from "fs";
 
+const emptyBlackList: string[] = [];
+
 describe(FileHelpers.name, (): void => {
     describe(FileHelpers.getFilesFromFolder.name, (): void => {
         const testFolder = "test-folder";
@@ -80,7 +82,7 @@ describe(FileHelpers.name, (): void => {
         });
 
         it("should get all files recursively", (): void => {
-            const files = FileHelpers.getFilesFromFolderRecursively(parentFolder);
+            const files = FileHelpers.getFilesFromFolderRecursively(parentFolder, emptyBlackList);
             const actualLength = files.length;
             const expectedLength = subFolderFiles.length + subFolderFiles.length;
 
@@ -88,7 +90,7 @@ describe(FileHelpers.name, (): void => {
         });
 
         it("should return an empty array if folder does not exist", (): void => {
-            const files = FileHelpers.getFilesFromFolderRecursively("this-folder-does-not-exist");
+            const files = FileHelpers.getFilesFromFolderRecursively("this-folder-does-not-exist", emptyBlackList);
             const actualLength = files.length;
             const expectedLength = 0;
 
@@ -97,7 +99,7 @@ describe(FileHelpers.name, (): void => {
 
         it("should include subfolders when includeFolders is set to true", (): void => {
             const includeFolders = true;
-            const files = FileHelpers.getFilesFromFolderRecursively(parentFolder, includeFolders);
+            const files = FileHelpers.getFilesFromFolderRecursively(parentFolder, emptyBlackList, includeFolders);
             const actualLength = files.length;
             const expectedLength = subFolders.length + (subFolders.length * subFolderFiles.length);
 
@@ -142,7 +144,7 @@ describe(FileHelpers.name, (): void => {
         });
 
         it("should treat folders that end with '.app' like files", (): void => {
-            const files = FileHelpers.getFilesFromFolderRecursively(parentFolder);
+            const files = FileHelpers.getFilesFromFolderRecursively(parentFolder, emptyBlackList);
             const actualLength = files.length;
             const expectedLength = ((subFolders.length - 1) * subFolderFiles.length) + (subFolders.length - 1);
 
@@ -183,7 +185,7 @@ describe(FileHelpers.name, (): void => {
         });
 
         it("should return all files from all folders recursively", (): void => {
-            const files = FileHelpers.getFilesFromFoldersRecursively(testFolders);
+            const files = FileHelpers.getFilesFromFoldersRecursively(testFolders, emptyBlackList);
             const actualLength = files.length;
             const expectedLength = testFiles.length * testFolders.length;
 

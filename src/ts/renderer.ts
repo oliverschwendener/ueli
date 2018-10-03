@@ -24,6 +24,7 @@ const configEdit = {
     newApplicationFolder: "",
     newCustomCommand: {},
     newFallbackWebSearch: "",
+    newFileSearchBlackListEntry: "",
     newFileSearchOption: {},
     newShortcut: {},
     newWebSearch: {},
@@ -166,6 +167,11 @@ const vue = new Vue({
                 configEdit.newFallbackWebSearch = "";
             }
         },
+        settingsActionAddFileSearchBlackListEntry: (newFileSearchBlackListEntry: string): void => {
+            config.fileSearchBlackList.push(newFileSearchBlackListEntry);
+            vue.updateUserConfig();
+            configEdit.newFileSearchBlackListEntry = "";
+        },
         settingsActionAddFileSearchOption: (newFileSearchOption: FileSearchOption): void => {
             config.fileSearchOptions.push(newFileSearchOption);
             vue.updateUserConfig();
@@ -199,6 +205,11 @@ const vue = new Vue({
         settingsActionRemoveFallbackWebSearch: (fallbackWebSearch: string): void => {
             const indexToRemove = config.fallbackWebSearches.indexOf(fallbackWebSearch);
             config.fallbackWebSearches.splice(indexToRemove, 1);
+            vue.updateUserConfig();
+        },
+        settingsActionRemoveFileSearchBlackListEntry: (blackListEntry: string): void => {
+            const indexToRemove = config.fileSearchBlackList.indexOf(blackListEntry);
+            config.fileSearchBlackList.splice(indexToRemove, 1);
             vue.updateUserConfig();
         },
         settingsActionRemoveFileSearchOption: (fileSearchOption: FileSearchOption): void => {

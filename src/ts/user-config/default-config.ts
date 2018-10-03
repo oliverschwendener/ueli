@@ -22,6 +22,12 @@ export class DefaultUserConfigManager {
             colorTheme: "dark",
             customCommands: [],
             fallbackWebSearches: [],
+            fileSearchBlackList: [
+                "vendor",
+                "node_modules",
+                "jspm_packages",
+                "bower_components",
+            ],
             fileSearchOptions: defaultFileSearchOptions,
             hotKey: "alt+space",
             iconSet: currentOperatingSystem === OperatingSystem.Windows ? WindowsIconSet : MacOsIconSet,

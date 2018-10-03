@@ -25,11 +25,11 @@ export class SearchPluginManager {
         ];
 
         if (config.searchPrograms) {
-            this.plugins.push(new ProgramsPlugin(new ProgramFileRepository(config.applicationFolders, config.applicationFileExtensions), config.iconSet));
+            this.plugins.push(new ProgramsPlugin(new ProgramFileRepository(config.applicationFolders, config.applicationFileExtensions, config.fileSearchBlackList), config.iconSet));
         }
 
         if (config.searchFiles) {
-            this.plugins.push(new FileSearchPlugin(config.fileSearchOptions, config.iconSet));
+            this.plugins.push(new FileSearchPlugin(config.fileSearchOptions, config.iconSet, config.fileSearchBlackList));
         }
 
         if (config.searchOperatingSystemSettings) {

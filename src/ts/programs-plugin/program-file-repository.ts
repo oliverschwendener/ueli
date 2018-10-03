@@ -7,19 +7,19 @@ export class ProgramFileRepository implements ProgramRepository {
     private applicationFileExtensions: string[];
     private programs: Program[];
 
-    public constructor(applicationFolders: string[], applicationFileExtensions: string[]) {
+    public constructor(applicationFolders: string[], applicationFileExtensions: string[], fileSearchBlackList: string[]) {
         this.applicationFileExtensions = applicationFileExtensions;
-        this.programs = this.loadPrograms(applicationFolders);
+        this.programs = this.loadPrograms(applicationFolders, fileSearchBlackList);
     }
 
     public getPrograms(): Program[] {
         return this.programs;
     }
 
-    private loadPrograms(applicationFolders: string[]): Program[] {
+    private loadPrograms(applicationFolders: string[], fileSearchBlackList: string[]): Program[] {
         const result = [] as Program[];
 
-        const files = FileHelpers.getFilesFromFoldersRecursively(applicationFolders);
+        const files = FileHelpers.getFilesFromFoldersRecursively(applicationFolders, fileSearchBlackList);
 
         for (const file of files) {
             for (const applicationFileExtension of this.applicationFileExtensions) {

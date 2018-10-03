@@ -11,10 +11,12 @@ export class FileSearchPlugin implements SearchPlugin {
     private fileSearchOptions: FileSearchOption[];
     private items: SearchResultItem[];
     private iconSet: IconSet;
+    private blackList: string[];
 
-    public constructor(fileSearchOptions: FileSearchOption[], iconSet: IconSet) {
+    public constructor(fileSearchOptions: FileSearchOption[], iconSet: IconSet, blackList: string[]) {
         this.fileSearchOptions = fileSearchOptions;
         this.iconSet = iconSet;
+        this.blackList = blackList;
         this.items = this.loadFilesAndFolders();
     }
 
@@ -28,8 +30,11 @@ export class FileSearchPlugin implements SearchPlugin {
         if (this.fileSearchOptions.length > 0) {
             for (const option of this.fileSearchOptions) {
                 const filePaths = option.recursive
-                    ? FileHelpers.getFilesFromFolderRecursively(option.folderPath)
+                    ? FileHelpers.getFilesFromFolderRecursively(option.folderPath, this.blackList)
                     : FileHelpers.getFilesFromFolder(option.folderPath);
+
+                // tslint:disable-next-line:no-console
+                console.log(filePaths.length);
 
                 for (const filePath of filePaths) {
                     const stats = lstatSync(filePath);

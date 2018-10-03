@@ -2,6 +2,8 @@ import { ProgramFileRepository } from "../../ts/programs-plugin/program-file-rep
 import { mkdirSync, writeFileSync, unlinkSync, rmdirSync } from "fs";
 import { join } from "path";
 
+const emptyBlackList: string[] = [];
+
 describe(ProgramFileRepository.name, (): void => {
     describe("getPrograms", (): void => {
         const applicationFileExtension = ".app";
@@ -47,7 +49,7 @@ describe(ProgramFileRepository.name, (): void => {
         });
 
         it("should return all programs correctly", (): void => {
-            const repo = new ProgramFileRepository(applicationFolders, [applicationFileExtension]);
+            const repo = new ProgramFileRepository(applicationFolders, [applicationFileExtension], emptyBlackList);
             const programs = repo.getPrograms();
 
             expect(programs.length).toBe(applicationFiles.length * applicationFolders.length);

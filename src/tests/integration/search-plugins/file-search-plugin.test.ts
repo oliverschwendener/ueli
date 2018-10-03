@@ -4,6 +4,8 @@ import { join } from "path";
 import { FileSearchOption } from "../../../ts/file-search-option";
 import { testIconSet } from "../../../ts/icon-sets/test-icon-set";
 
+const emptyBlackList: string[] = [];
+
 describe(FileSearchPlugin.name, (): void => {
     const parentFolders = [
         join(__dirname, "test-folder-1"),
@@ -72,7 +74,7 @@ describe(FileSearchPlugin.name, (): void => {
                     recursive: recursiveSearch,
                 };
             });
-            const plugin = new FileSearchPlugin(options, testIconSet);
+            const plugin = new FileSearchPlugin(options, testIconSet, emptyBlackList);
             const actual = plugin.getAllItems();
             const actualLength = actual.length;
             const expectedLength = (testFiles.length + subFolders.length) * parentFolders.length;
@@ -88,7 +90,7 @@ describe(FileSearchPlugin.name, (): void => {
                     recursive: recursiveSearch,
                 };
             });
-            const plugin = new FileSearchPlugin(options, testIconSet);
+            const plugin = new FileSearchPlugin(options, testIconSet, emptyBlackList);
             const actual = plugin.getAllItems();
             const actualLength = actual.length;
             const expectedLength = (parentFolders.length * subFolders.length * testFiles.length) + (parentFolders.length * testFiles.length);
@@ -103,7 +105,7 @@ describe(FileSearchPlugin.name, (): void => {
                     recursive: false,
                 };
             });
-            const plugin = new FileSearchPlugin(options, testIconSet);
+            const plugin = new FileSearchPlugin(options, testIconSet, emptyBlackList);
             const actual = plugin.getAllItems();
 
             for (const item of actual) {
@@ -119,7 +121,7 @@ describe(FileSearchPlugin.name, (): void => {
                     recursive: false,
                 };
             });
-            const plugin = new FileSearchPlugin(options, testIconSet);
+            const plugin = new FileSearchPlugin(options, testIconSet, emptyBlackList);
             const actual = plugin.getAllItems();
 
             const actualFiles = actual.filter((a) => {
@@ -135,7 +137,7 @@ describe(FileSearchPlugin.name, (): void => {
         });
 
         it("should return an empty array if no folders are specified", (): void => {
-            const plugin = new FileSearchPlugin([], testIconSet);
+            const plugin = new FileSearchPlugin([], testIconSet, emptyBlackList);
             const acutal = plugin.getAllItems();
 
             expect(acutal.length).toBe(0);
