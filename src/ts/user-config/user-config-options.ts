@@ -21,7 +21,6 @@ export interface UserConfigOptions {
     iconSet: IconSet;
     logExecution: boolean;
     maxSearchResultCount: number;
-    maxWindowHeight: number;
     rescanInterval: number;
     searchEngineThreshold: number;
     searchResultDescriptionFontSize: number;
@@ -34,5 +33,6 @@ export interface UserConfigOptions {
     userInputHeight: number;
     userStylesheet: string;
     webSearches: WebSearch[];
+    windowMaxHeight: number;
     windowWidth: number;
 }

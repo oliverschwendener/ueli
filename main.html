@@ -222,7 +222,7 @@
                         <div class="setting-title">Features</div>
                         <div class="setting">
                             <div class="sub-setting">
-                                <table class="setting-table">
+                                <table class="setting-table setting-table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Feature</th>
@@ -431,12 +431,6 @@
                         </div>
                     </div>
                     <div class="setting-group">
-                        <div class="setting-title">Maximum window height</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="number" v-model="config.maxWindowHeight" min="config.userInputHeight" v-on:blur="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
                         <div class="setting-title">Rescan interval (in seconds)</div>
                         <div class="setting">
                             <input class="setting-text-input" type="number" v-model="config.rescanInterval" min="5" v-on:blur="updateUserConfig">
@@ -581,6 +575,12 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <div class="setting-title">Window max height</div>
+                        <div class="setting">
+                            <input class="setting-text-input" type="number" v-model="config.windowMaxHeight" min="config.userInputHeight" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">

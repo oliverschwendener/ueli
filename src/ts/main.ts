@@ -197,7 +197,7 @@ function updateWindowSize(searchResultCount: number): void {
 }
 
 function setWindowHeightToMax(): void {
-    mainWindow.setSize(config.windowWidth, config.maxWindowHeight);
+    mainWindow.setSize(config.windowWidth, config.windowMaxHeight);
 }
 
 function showWindow() {
@@ -240,7 +240,7 @@ function reloadApp(preventMainWindowReload?: boolean, preventWindowSizeReset?: b
     if (!preventWindowSizeReset) {
         resetWindowToDefaultSizeAndPosition();
     } else {
-        mainWindow.setSize(config.windowWidth, config.maxWindowHeight);
+        mainWindow.setSize(config.windowWidth, config.windowMaxHeight);
         mainWindow.center();
     }
 

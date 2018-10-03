@@ -31,7 +31,6 @@ export class UserConfigFileRepository {
     }
 
     private enforceDataTypes(config: UserConfigOptions): UserConfigOptions {
-        config.maxWindowHeight = Number(config.maxWindowHeight);
         config.maxSearchResultCount = Number(config.maxSearchResultCount);
         config.rescanInterval = Number(config.rescanInterval);
         config.searchEngineThreshold = Number(config.searchEngineThreshold);
@@ -40,6 +39,7 @@ export class UserConfigFileRepository {
         config.searchResultNameFontSize = Number(config.searchResultNameFontSize);
         config.userInputHeight = Number(config.userInputHeight);
         config.userInputFontSize = Number(config.userInputFontSize);
+        config.windowMaxHeight = Number(config.windowMaxHeight);
         config.windowWidth = Number(config.windowWidth);
         return config;
     }

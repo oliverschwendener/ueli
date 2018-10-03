@@ -212,7 +212,6 @@ To open the settings press `Ctrl+i` or search for `Ueli settings`.
     * `shortcutIcon` String - Represents the default svg icon for shortcuts and custom commands.
     * `urlIcon` String - Represents the svg icon when typing in an email address.
 * `maxSearchResultCount` Number - Maximum number of search results to be displayed.
-* `maxWindowHeight` Number - Represents the maximum window height. Only used for command line output and settings view.
 * `rescanInterval` Number - Interval in seconds to rescan the application folders.
 * `searchEngineThreshold` Number - Represents the threshold for fuzzy matching (min = 0, max = 1, lower means you have to be more precise with the user input).
 * `searchResultDescriptionFontSize` Number - Represents the font size of the search result description in pixels.
@@ -233,6 +232,7 @@ To open the settings press `Ctrl+i` or search for `Ueli settings`.
         * `name` String - Represents the name of the web search engine.
         * `prefix` String - Represents the prefix for your web search engine. For example if the prefix is `g` you can type in `g?{your search term}` to search.
         * `url` String - Represents the url for the search engine to which the search term is appended to. For example `https://google.com/search?q=`.
+* `windowMaxHeight` Number - Represents the maximum window height. Only used for command line output and settings view.
 * `windowWidth`: Number - Represents the width of the main window in pixels.
 
 ### Color themes

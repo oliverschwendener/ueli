@@ -35,7 +35,6 @@ export class DefaultUserConfigManager {
             iconSet: currentOperatingSystem === OperatingSystem.Windows ? WindowsIconSet : MacOsIconSet,
             logExecution: true,
             maxSearchResultCount: 8,
-            maxWindowHeight: 560,
             rescanInterval: 60,
             searchEngineThreshold: 0.4,
             searchResultDescriptionFontSize: 14,
@@ -48,6 +47,7 @@ export class DefaultUserConfigManager {
             userInputHeight: 80,
             userStylesheet: "",
             webSearches:  defaultWebSearches,
+            windowMaxHeight: 560,
             windowWidth: 860,
         };
     }

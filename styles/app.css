@@ -238,6 +238,17 @@ table.setting-table {
     width: 100%;
 }
 
+table.setting-table-bordered {
+    border-collapse: collapse;
+}
+
+table.setting-table-bordered th,
+table.setting-table-bordered td {
+    background-color: var(--scrollbar-background-color);
+    border: 1px solid var(--scrollbar-foreground-color);
+    padding: 7px;
+}
+
 td.slim {
     width: 50px;
 }
@@ -286,6 +297,14 @@ button.setting-button:focus {
 
 .text-center {
     text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
 }
 
 .text-error {
