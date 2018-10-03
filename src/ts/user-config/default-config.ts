@@ -8,6 +8,7 @@ import { defaultWindowsApplicationFolders, defaultMacOsApplicationFolders } from
 import { defaultWindowsApplicationFileExtensions, defaultMacOsApplicationFileExtensions } from "./default-application-file-extensions";
 import { defaultFileSearchOptions } from "./default-file-search-options";
 import { defaultWebSearches } from "./default-web-searches";
+import { defaultFeatures } from "./default-features";
 
 export class DefaultUserConfigManager {
     public static getDefaultUserConfig(): UserConfigOptions {
@@ -22,22 +23,7 @@ export class DefaultUserConfigManager {
             colorTheme: "dark",
             customCommands: [],
             fallbackWebSearches: [],
-            features: {
-                calculator: true,
-                commandLine: true,
-                customCommands: true,
-                email: true,
-                environmentVariables: false,
-                fileBrowser: true,
-                fileSearch: true,
-                operatingSystemCommands: true,
-                operatingSystemSettings: false,
-                programs: true,
-                shortcuts: true,
-                ueliCommands: true,
-                webSearch: true,
-                webUrl: true,
-            },
+            features: defaultFeatures,
             fileSearchBlackList: [
                 "vendor",
                 "node_modules",

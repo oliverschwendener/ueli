@@ -3,7 +3,7 @@ import { Shortcut } from "./../shortcut";
 import { FileSearchOption } from "./../file-search-option";
 import { CustomCommand } from "./../custom-shortcut";
 import { IconSet } from "../icon-sets/icon-set";
-import { FeatureOptions } from "./plugin-options";
+import { FeatureOptions } from "./feature-options";
 
 export interface UserConfigOptions {
     allowMouseInteraction: boolean;
