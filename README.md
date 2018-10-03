@@ -12,6 +12,7 @@ This is a keystroke launcher for Windows and macOS.
 * [Quick tutorial](#quick-tutorial)
 * [Features](#features)
 * [Settings](#settings)
+* [Updating](#updating)
 * [Privacy](#privacy)
 * [Known bugs](#known-bugs)
 * [Development](#development)
@@ -261,6 +262,12 @@ You can customize your own color theme with a CSS file on your computer.
 ### Icons
 
 On [https://icons8.com](https://icons8.com/) you can find svg icons for almost everything!
+
+## Updating
+
+To check if you are running the latest version open the [settings](#settings). If there is an update available you can press the button to download and install the newer version.
+
+![Ueli updating](img/doc/ueli-updating.png)
 
 ## Privacy
 
