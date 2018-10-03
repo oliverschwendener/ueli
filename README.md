@@ -326,11 +326,14 @@ $ yarn start
 
 ### Debug
 
-> Note: for debugging you need Visual Studio Code
+> For debugging you need Visual Studio Code
 
-Choose one of these debug configurations:
+Run the app in one of these debug modes:
 
-![Debug configurations](img/doc/debug-configurations.png)
+* Electron Main
+* Electron Renderer
+* Jest tests
+
 
 ### Run tests
 
