@@ -84,7 +84,7 @@ function createMainWindow(): void {
     registerGlobalHotKey();
 
     if (!isInDevelopment) {
-        setUpKeyBindings();
+        setupMacOsKeyboardShortcuts();
         checkForUpdates();
         setAutostartSettings();
     }
@@ -120,7 +120,7 @@ function hideAppInDock(): void {
     }
 }
 
-function setUpKeyBindings(): void {
+function setupMacOsKeyboardShortcuts(): void {
     if (platform() === "darwin") {
         const template = [
             {
