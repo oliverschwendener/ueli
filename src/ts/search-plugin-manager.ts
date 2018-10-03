@@ -19,24 +19,29 @@ export class SearchPluginManager {
     private plugins: SearchPlugin[];
 
     public constructor(config: UserConfigOptions, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }) {
-        this.plugins = [
-            new UeliCommandsSearchPlugin(),
-            new ShortcutsPlugin(config.shortcuts, iconSet.shortcutIcon),
-        ];
+        this.plugins = [];
 
-        if (config.searchPrograms) {
+        if (config.features.ueliCommands) {
+            this.plugins.push(new UeliCommandsSearchPlugin());
+        }
+
+        if (config.features.shortcuts) {
+            this.plugins.push(new ShortcutsPlugin(config.shortcuts, iconSet.shortcutIcon));
+        }
+
+        if (config.features.programs) {
             this.plugins.push(new ProgramsPlugin(new ProgramFileRepository(config.applicationFolders, config.applicationFileExtensions, config.fileSearchBlackList), config.iconSet));
         }
 
-        if (config.searchFiles) {
+        if (config.features.fileSearch) {
             this.plugins.push(new FileSearchPlugin(config.fileSearchOptions, config.iconSet, config.fileSearchBlackList));
         }
 
-        if (config.searchOperatingSystemSettings) {
+        if (config.features.operatingSystemSettings) {
             this.plugins.push(Injector.getOperatingSystemSettingsPlugin(platform(), config.iconSet));
         }
 
-        if (config.searchOperatingSystemCommands) {
+        if (config.features.operatingSystemCommands) {
             const operatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
 
             const systemComands = operatingSystem === OperatingSystem.Windows
@@ -46,7 +51,7 @@ export class SearchPluginManager {
             this.plugins.push(new OperatingSystemCommandsPlugin(systemComands, operatingSystem));
         }
 
-        if (config.searchEnvironmentVariables) {
+        if (config.features.environmentVariables) {
             this.plugins.push(new EnvironmentVariablePlugin(environmentVariableCollection, config.iconSet));
         }
     }

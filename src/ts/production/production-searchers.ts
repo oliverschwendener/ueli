@@ -25,39 +25,62 @@ export class ProductionSearchers {
         const countManager = new CountManager(new CountFileRepository(UeliHelpers.countFilePath));
         const environmentVariableCollection = process.env as { [key: string]: string };
 
-        return [
-            {
-                searcher: new CalculatorSearcher(),
-                validator: new CalculatorInputValidator(),
-            },
-            {
-                searcher: new FilePathSearcher(config.searchEngineThreshold, config.iconSet),
-                validator: new FilePathInputValidator(),
-            },
-            {
-                searcher: new CommandLineSearcher(config.iconSet),
-                validator: new CommandLineInputValidator(),
-            },
-            {
-                searcher: new WebSearchSearcher(config.webSearches),
-                validator: new WebSearchInputValidator(config.webSearches),
-            },
-            {
-                searcher: new EmailAddressSearcher(config.iconSet),
-                validator: new EmailAddressInputValidator(),
-            },
-            {
-                searcher: new WebUrlSearcher(config.iconSet),
-                validator: new WebUrlInputValidator(),
-            },
-            {
-                searcher: new CustomCommandSearcher(config.customCommands, config.iconSet.shortcutIcon),
-                validator: new CustomCommandInputValidator(config.customCommands),
-            },
+        const result: InputValidatorSearcherCombination[] = [
             {
                 searcher: new SearchPluginsSearcher(config, countManager, config.iconSet, environmentVariableCollection),
                 validator: new SearchPluginsInputValidator(),
             },
         ];
+
+        if (config.features.calculator) {
+            result.push({
+                searcher: new CalculatorSearcher(),
+                validator: new CalculatorInputValidator(),
+            });
+        }
+
+        if (config.features.fileBrowser) {
+            result.push({
+                searcher: new FilePathSearcher(config.searchEngineThreshold, config.iconSet),
+                validator: new FilePathInputValidator(),
+            });
+        }
+
+        if (config.features.commandLine) {
+            result.push({
+                searcher: new CommandLineSearcher(config.iconSet),
+                validator: new CommandLineInputValidator(),
+            });
+        }
+
+        if (config.features.webSearch) {
+            result.push({
+                searcher: new WebSearchSearcher(config.webSearches),
+                validator: new WebSearchInputValidator(config.webSearches),
+            });
+        }
+
+        if (config.features.email) {
+            result.push({
+                searcher: new EmailAddressSearcher(config.iconSet),
+                validator: new EmailAddressInputValidator(),
+            });
+        }
+
+        if (config.features.webUrl) {
+            result.push({
+                searcher: new WebUrlSearcher(config.iconSet),
+                validator: new WebUrlInputValidator(),
+            });
+        }
+
+        if (config.features.customCommands) {
+            result.push({
+                searcher: new CustomCommandSearcher(config.customCommands, config.iconSet.shortcutIcon),
+                validator: new CustomCommandInputValidator(config.customCommands),
+            });
+        }
+
+        return result;
     }
 }

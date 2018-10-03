@@ -219,6 +219,79 @@
                         </div>
                     </div>
                     <div class="setting-group">
+                        <div class="setting-title">Features</div>
+                        <div class="setting">
+                            <div class="sub-setting">
+                                <table class="setting-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Feature</th>
+                                            <th class="text-center">Enabled</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Calculator</td>
+                                            <td class="text-center"><input type="checkbox" v-model="config.features.calculator" v-on:change="updateUserConfig"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Command line</td>
+                                            <td class="text-center"><input type="checkbox" v-model="config.features.commandLine" v-on:change="updateUserConfig"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Custom commands</td>
+                                            <td class="text-center"><input type="checkbox" v-model="config.features.customCommands" v-on:change="updateUserConfig"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td class="text-center"><input type="checkbox" v-model="config.features.email" v-on:change="updateUserConfig"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Environment variables</td>
+                                            <td class="text-center"><input type="checkbox" v-model="config.features.environmentVariables" v-on:change="updateUserConfig"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>File browser</td>
+                                            <td class="text-center"><input type="checkbox" v-model="config.features.fileBrowser" v-on:change="updateUserConfig"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>File search</td>
+                                            <td class="text-center"><input type="checkbox" v-model="config.features.fileSearch" v-on:change="updateUserConfig"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Programs</td>
+                                            <td class="text-center"><input type="checkbox" v-model="config.features.programs" v-on:change="updateUserConfig"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Operating system commands</td>
+                                            <td class="text-center"><input type="checkbox" v-model="config.features.operatingSystemCommands" v-on:change="updateUserConfig"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Operating system settings</td>
+                                            <td class="text-center"><input type="checkbox" v-model="config.features.operatingSystemSettings" v-on:change="updateUserConfig"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Shortcuts</td>
+                                            <td class="text-center"><input type="checkbox" v-model="config.features.shortcuts" v-on:change="updateUserConfig"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ueli commands</td>
+                                            <td class="text-center"><input type="checkbox" v-model="config.features.ueliCommands" v-on:change="updateUserConfig"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Web search</td>
+                                            <td class="text-center"><input type="checkbox" v-model="config.features.webSearch" v-on:change="updateUserConfig"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Web URL</td>
+                                            <td class="text-center"><input type="checkbox" v-model="config.features.webUrl" v-on:change="updateUserConfig"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-group">
                         <div class="setting-title">File search black list</div>
                         <div class="setting">
                             <div class="sub-setting" v-for="(blackListEntry, index) in config.fileSearchBlackList">
@@ -373,36 +446,6 @@
                         <div class="setting-title">Search engine threshold</div>
                         <div class="setting">
                             <input class="setting-text-input" type="number" v-model="config.searchEngineThreshold" min="0" max="1" step="0.1" v-on:blur="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Search environment variables</div>
-                        <div class="setting">
-                            <input type="checkbox" v-model="config.searchEnvironmentVariables" v-on:change="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Search files</div>
-                        <div class="setting">
-                            <input type="checkbox" v-model="config.searchFiles" v-on:change="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Search operating system settings</div>
-                        <div class="setting">
-                            <input type="checkbox" v-model="config.searchOperatingSystemSettings" v-on:change="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Search operating system commands</div>
-                        <div class="setting">
-                            <input type="checkbox" v-model="config.searchOperatingSystemCommands" v-on:change="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Search programs</div>
-                        <div class="setting">
-                            <input type="checkbox" v-model="config.searchPrograms" v-on:change="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">

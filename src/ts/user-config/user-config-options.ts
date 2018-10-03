@@ -3,6 +3,7 @@ import { Shortcut } from "./../shortcut";
 import { FileSearchOption } from "./../file-search-option";
 import { CustomCommand } from "./../custom-shortcut";
 import { IconSet } from "../icon-sets/icon-set";
+import { FeatureOptions } from "./plugin-options";
 
 export interface UserConfigOptions {
     allowMouseInteraction: boolean;
@@ -13,6 +14,7 @@ export interface UserConfigOptions {
     colorTheme: string;
     customCommands: CustomCommand[];
     fallbackWebSearches: string[];
+    features: FeatureOptions;
     fileSearchBlackList: string[];
     fileSearchOptions: FileSearchOption[];
     hotKey: string;
@@ -22,11 +24,6 @@ export interface UserConfigOptions {
     maxWindowHeight: number;
     rescanInterval: number;
     searchEngineThreshold: number;
-    searchEnvironmentVariables: boolean;
-    searchFiles: boolean;
-    searchOperatingSystemCommands: boolean;
-    searchOperatingSystemSettings: boolean;
-    searchPrograms: boolean;
     searchResultDescriptionFontSize: number;
     searchResultHeight: number;
     searchResultNameFontSize: number;
