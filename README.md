@@ -179,6 +179,21 @@ To open the settings press `Ctrl+i` or search for `Ueli settings`.
     * `prefix` String - Represents the prefix for the custom command.
     * `icon` String - Represents the svg icon for the custom command.
 * `fallbackWebSearches` Array of string - Represents the names of [web search engines](#web-search-engines) used when ueli does not find any search results.
+* `features` FeatureOptions
+    * `calculator` Boolean - If the calculator feature is enabled.
+    * `commandLine` Boolean - If the command line feature is enabled.
+    * `customCommands` Boolean - If the custom command feature is enabled.
+    * `email` Boolean - If the email feature is enabled.
+    * `environmentVariables` Boolean - If the environment variables feature is enabled.
+    * `fileBrowser` Boolean - If the file browser feature is enabled.
+    * `fileSearch` Boolean - If the file search feature is enabled.
+    * `programs` Boolean - If the programs feature is enabled.
+    * `operatingSystemCommands` Boolean - If the operating system commands feature is enabled.
+    * `operatingSystemSettings` Boolean - If the operating system settings feature is enabled.
+    * `shortcuts` Boolean - If the shortcuts feature is enabled.
+    * `ueliCommands` Boolean - If the ueli commands feature is enabled.
+    * `webSearch` Boolean - If the web search feature is enabled.
+    * `webUrl` Boolean - If the web url feature is enabled.
 * `fileSearchBlackList`: Array of string - Represents a black list when files are searched. This has a small improvement on the performance when scanning a folder with a lot of files.
 * `fileSearchOptions` Array of FileSearchOption objects (**only effective if `searchFiles` is set to `true`**).
     * `folderPath` String - Represents a folder which should be searched for files and folders.
@@ -200,11 +215,6 @@ To open the settings press `Ctrl+i` or search for `Ueli settings`.
 * `maxWindowHeight` Number - Represents the maximum window height. Only used for command line output and settings view.
 * `rescanInterval` Number - Interval in seconds to rescan the application folders.
 * `searchEngineThreshold` Number - Represents the threshold for fuzzy matching (min = 0, max = 1, lower means you have to be more precise with the user input).
-* `searchEnvironmentVariables` Boolean - If environment variables should appear in the search results.
-* `searchFiles` Boolean - If files should appear in the search results.
-* `searchOperatingSystemCommands` Boolean - If operating system commands such as "Shutdown", etc. should appear in the search results.
-* `searchOperatingSystemSettings` Boolean - If operting system settings should appear in the search results.
-* `searchPrograms` Boolean - If programs should appear in the search results.
 * `searchResultDescriptionFontSize` Number - Represents the font size of the search result description in pixels.
 * `searchResultHeight` Number - Represents the height of a search result box in pixels.
 * `searchResultNameFontSize` Number - Represents the font size of the search result name in pixels.
