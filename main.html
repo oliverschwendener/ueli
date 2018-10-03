@@ -102,7 +102,7 @@
                             <input type="checkbox" v-model="config.alwaysShowOnPrimaryDisplay" v-on:change="updateUserConfig">
                         </div>
                     </div>
-                    <div class="setting-group">
+                    <div class="setting-group" v-if="config.features.programs">
                         <div class="setting-title">Application file extensions</div>
                         <div class="setting">
                             <div class="sub-setting" v-for="(applicationFileExtension, index) in config.applicationFileExtensions">
@@ -121,7 +121,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="setting-group">
+                    <div class="setting-group" v-if="config.features.programs">
                         <div class="setting-title">Application folders</div>
                         <div class="setting">
                             <div class="sub-setting" v-for="(applicationFolder, index) in config.applicationFolders">
@@ -154,7 +154,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="setting-group">
+                    <div class="setting-group" v-if="config.features.customCommands">
                         <div class="setting-title">Custom commands</div>
                         <div class="setting">
                             <table class="setting-table">
@@ -199,7 +199,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="setting-group">
+                    <div class="setting-group" v-if="config.features.webSearch">
                         <div class="setting-title">Fallback web searches</div>
                         <div class="setting">
                             <div class="sub-setting" v-for="fallbackWebSearch in config.fallbackWebSearches">
@@ -291,7 +291,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="setting-group">
+                    <div class="setting-group" v-if="config.features.fileSearch">
                         <div class="setting-title">File search black list</div>
                         <div class="setting">
                             <div class="sub-setting" v-for="(blackListEntry, index) in config.fileSearchBlackList">
@@ -310,7 +310,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="setting-group" v-if="config.searchFiles">
+                    <div class="setting-group" v-if="config.features.fileSearch">
                         <div class="setting-title">File search options</div>
                         <div class="setting">
                             <table class="setting-table">
@@ -466,7 +466,7 @@
                             <input class="setting-text-input" type="number" v-model="config.searchResultNameFontSize" min="0" v-on:blur="updateUserConfig">
                         </div>
                     </div>
-                    <div class="setting-group">
+                    <div class="setting-group" v-if="config.features.shortcuts">
                         <div class="setting-title">Shortcuts</div>
                         <div class="setting">
                             <table class="setting-table">
@@ -538,7 +538,7 @@
                             <input class="setting-text-input" type="text" v-model="config.userStylesheet" placeholder="Add a file path to your custom stylesheet" v-on:blur="updateUserConfig">
                         </div>
                     </div>
-                    <div class="setting-group">
+                    <div class="setting-group" v-if="config.features.webSearch">
                         <div class="setting-title">Web search engines</div>
                         <div class="setting">
                             <table class="setting-table">

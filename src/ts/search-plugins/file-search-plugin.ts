@@ -33,9 +33,6 @@ export class FileSearchPlugin implements SearchPlugin {
                     ? FileHelpers.getFilesFromFolderRecursively(option.folderPath, this.blackList)
                     : FileHelpers.getFilesFromFolder(option.folderPath);
 
-                // tslint:disable-next-line:no-console
-                console.log(filePaths.length);
-
                 for (const filePath of filePaths) {
                     const stats = lstatSync(filePath);
                     const fileName = basename(filePath);
