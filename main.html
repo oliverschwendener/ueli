@@ -12,7 +12,7 @@
     <div id="vue-root">
         <link rel="stylesheet" href="./styles/app.css">
         <link rel="stylesheet" :href="colorTheme()">
-        <link rel="stylesheet" v-if="userStylesheetIsAvailable" :href="userStylesheet">
+        <link rel="stylesheet" v-if="userStylesheetIsAvailable()" :href="userStylesheet">
 
         <div class="container">
 
@@ -79,7 +79,7 @@
                     <div class="setting-group">
                         <div class="setting-title">Config file path</div>
                         <div class="setting">
-                            <input class="setting-text-input" type="text" v-model="appConfig.userSettingsFilePath" v-on:blur="updateAppConfig">
+                            <input class="setting-text-input" type="text" v-model="appConfig.userSettingsFilePath" v-on:click="showChangeUserConfigFilePathDialog" v-on:blur="updateAppConfig">
                         </div>
                     </div>
                     <div class="setting-group">
@@ -133,7 +133,7 @@
                                 </svg>
                             </div>
                             <div class="sub-setting">
-                                <input class="setting-text-input" v-model="configEdit.newApplicationFolder" type="text" placeholder="Add more application folders">
+                                <input class="setting-text-input" v-model="configEdit.newApplicationFolder" type="text" placeholder="Add more application folders" v-on:click="showAddApplicationFolderFileDialog">
                                 <svg class="setting-action-icon sub-setting-icon" v-on:click="settingsActionAddApplicationFolder(configEdit.newApplicationFolder)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
                                     <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
                                 </svg>
@@ -334,7 +334,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><input class="setting-text-input" type="text" v-model="configEdit.newFileSearchOption.folderPath" placeholder="Add a folder path"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="configEdit.newFileSearchOption.folderPath" placeholder="Add a folder path" v-on:click="showAddFileSearchOptionFileDialog"></td>
                                         <td class="text-center"><input type="checkbox" v-model="configEdit.newFileSearchOption.recursive"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionAddFileSearchOption(configEdit.newFileSearchOption)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
@@ -529,7 +529,7 @@
                     <div class="setting-group">
                         <div class="setting-title">User stylesheet</div>
                         <div class="setting">
-                            <input class="setting-text-input" type="text" v-model="config.userStylesheet" placeholder="Add a file path to your custom stylesheet" v-on:blur="updateUserConfig">
+                            <input class="setting-text-input" type="text" v-model="config.userStylesheet" placeholder="Add a file path to your custom stylesheet" v-on:click="showChangeUserStyleSheetFileDialog" v-on:blur="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group" v-if="config.features.webSearch">

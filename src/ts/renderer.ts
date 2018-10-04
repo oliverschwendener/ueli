@@ -1,11 +1,12 @@
+import { dirname } from "path";
+import { homedir } from "os";
 import { SearchResultItemViewModel } from "./search-result-item-view-model";
 import { IpcChannels } from "./ipc-channels";
-import { ipcRenderer } from "electron";
+import { ipcRenderer, remote } from "electron";
 import { UserConfigFileRepository } from "./user-config/user-config-file-repository";
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { ElectronStoreAppConfigRepository } from "./app-config/electorn-store-app-config-repository";
 import { availableColorThemes } from "./available-color-themes";
-import Vue from "vue";
 import { CustomCommand } from "./custom-shortcut";
 import { FileSearchOption } from "./file-search-option";
 import { Shortcut } from "./shortcut";
@@ -14,6 +15,7 @@ import { version } from "../../package.json";
 import { DefaultAppConfigManager } from "./app-config/default-app-config";
 import { DefaultUserConfigManager } from "./user-config/default-config";
 import { WindowHelpers } from "./helpers/winow-helpers";
+import Vue from "vue";
 
 const appConfigRepository = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.getDefaultAppConfig());
 let config = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
@@ -25,9 +27,9 @@ const configEdit = {
     newCustomCommand: {},
     newFallbackWebSearch: "",
     newFileSearchBlackListEntry: "",
-    newFileSearchOption: {},
-    newShortcut: {},
-    newWebSearch: {},
+    newFileSearchOption: {} as FileSearchOption,
+    newShortcut: {} as Shortcut,
+    newWebSearch: {} as WebSearch,
 };
 
 const userInputHistoryManager = new UserInputHistoryManager();
@@ -50,7 +52,6 @@ const vue = new Vue({
         updateAvailable: false,
         userInput: "",
         userStylesheet: `file:///${config.userStylesheet}`,
-        userStylesheetIsAvailable: config.userStylesheet !== undefined && config.userStylesheet.length > 0,
         version,
     },
     el: "#vue-root",
@@ -175,17 +176,17 @@ const vue = new Vue({
         settingsActionAddFileSearchOption: (newFileSearchOption: FileSearchOption): void => {
             config.fileSearchOptions.push(newFileSearchOption);
             vue.updateUserConfig();
-            configEdit.newFileSearchOption = {};
+            configEdit.newFileSearchOption = {} as FileSearchOption;
         },
         settingsActionAddShortcut: (newShortcut: Shortcut): void => {
             config.shortcuts.push(newShortcut);
             vue.updateUserConfig();
-            configEdit.newShortcut = {};
+            configEdit.newShortcut = {} as Shortcut;
         },
         settingsActionAddWebSearch: (newWebSearch: WebSearch): void => {
             config.webSearches.push(newWebSearch);
             vue.updateUserConfig();
-            configEdit.newWebSearch = {};
+            configEdit.newWebSearch = {} as WebSearch;
         },
         settingsActionRemoveApplicationFileExtension: (applicationFileExtension: string): void => {
             const indexToRemove = config.applicationFileExtensions.indexOf(applicationFileExtension);
@@ -230,6 +231,67 @@ const vue = new Vue({
         settingsActionUpdateIconSet: (): void => {
             vue.updateUserConfig();
         },
+        showAddApplicationFolderFileDialog: (): void => {
+            remote.dialog.showOpenDialog({
+                buttonLabel: "Open",
+                defaultPath: homedir(),
+                message: "This is a message",
+                properties: ["openDirectory"],
+                title: "This is a title",
+            }, (filePaths: string[]) => {
+                if (filePaths !== undefined && filePaths.length === 1) {
+                    configEdit.newApplicationFolder = filePaths[0];
+                }
+            });
+        },
+        showAddFileSearchOptionFileDialog: (): void => {
+            remote.dialog.showOpenDialog({
+                buttonLabel: "Open",
+                defaultPath: homedir(),
+                message: "This is a message",
+                properties: ["openDirectory"],
+                title: "This is a title",
+            }, (filePaths: string[]) => {
+                if (filePaths !== undefined && filePaths.length === 1) {
+                    configEdit.newFileSearchOption = {
+                        folderPath: filePaths[0],
+                        recursive: configEdit.newFileSearchOption.recursive,
+                    } as FileSearchOption;
+                }
+            });
+        },
+        showChangeUserConfigFilePathDialog: (): void => {
+            remote.dialog.showOpenDialog({
+                buttonLabel: "Open",
+                defaultPath: dirname(appConfig.userSettingsFilePath),
+                filters: [{ name: "JSON files", extensions: ["json"] }],
+                message: "This is a message",
+                properties: ["openFile"],
+                title: "This is a title",
+            }, (filePaths: string[]) => {
+                if (filePaths !== undefined && filePaths.length === 1) {
+                    appConfig.userSettingsFilePath = filePaths[0];
+                    vue.appConfig = appConfig;
+                }
+            });
+        },
+        showChangeUserStyleSheetFileDialog: (): void => {
+            remote.dialog.showOpenDialog({
+                buttonLabel: "Open",
+                defaultPath: config.userStylesheet === undefined || config.userStylesheet.length === 0
+                    ? homedir()
+                    : dirname(config.userStylesheet),
+                filters: [{ name: "CSS files", extensions: ["css"] }],
+                message: "This is a message",
+                properties: ["openFile"],
+                title: "This is a title",
+            }, (filePaths: string[]) => {
+                if (filePaths !== undefined && filePaths.length === 1) {
+                    config.userStylesheet = filePaths[0];
+                    vue.config = config;
+                }
+            });
+        },
         updateAppConfig: (): void => {
             ipcRenderer.send(IpcChannels.updateAppConfig, appConfig);
         },
@@ -241,6 +303,10 @@ const vue = new Vue({
         },
         userInputStyle: (): string => {
             return `font-size: ${config.userInputFontSize}px;`;
+        },
+        userStylesheetIsAvailable: (): boolean => {
+            return config.userStylesheet !== undefined
+                && config.userStylesheet.length > 0;
         },
     },
     watch: {
