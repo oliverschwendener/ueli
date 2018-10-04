@@ -1,8 +1,6 @@
-import { dirname } from "path";
-import { homedir } from "os";
 import { SearchResultItemViewModel } from "./search-result-item-view-model";
 import { IpcChannels } from "./ipc-channels";
-import { ipcRenderer, remote } from "electron";
+import { ipcRenderer } from "electron";
 import { UserConfigFileRepository } from "./user-config/user-config-file-repository";
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { ElectronStoreAppConfigRepository } from "./app-config/electorn-store-app-config-repository";
@@ -230,67 +228,6 @@ const vue = new Vue({
         },
         settingsActionUpdateIconSet: (): void => {
             vue.updateUserConfig();
-        },
-        showAddApplicationFolderFileDialog: (): void => {
-            remote.dialog.showOpenDialog({
-                buttonLabel: "Open",
-                defaultPath: homedir(),
-                message: "This is a message",
-                properties: ["openDirectory"],
-                title: "This is a title",
-            }, (filePaths: string[]) => {
-                if (filePaths !== undefined && filePaths.length === 1) {
-                    configEdit.newApplicationFolder = filePaths[0];
-                }
-            });
-        },
-        showAddFileSearchOptionFileDialog: (): void => {
-            remote.dialog.showOpenDialog({
-                buttonLabel: "Open",
-                defaultPath: homedir(),
-                message: "This is a message",
-                properties: ["openDirectory"],
-                title: "This is a title",
-            }, (filePaths: string[]) => {
-                if (filePaths !== undefined && filePaths.length === 1) {
-                    configEdit.newFileSearchOption = {
-                        folderPath: filePaths[0],
-                        recursive: configEdit.newFileSearchOption.recursive,
-                    } as FileSearchOption;
-                }
-            });
-        },
-        showChangeUserConfigFilePathDialog: (): void => {
-            remote.dialog.showOpenDialog({
-                buttonLabel: "Open",
-                defaultPath: dirname(appConfig.userSettingsFilePath),
-                filters: [{ name: "JSON files", extensions: ["json"] }],
-                message: "This is a message",
-                properties: ["openFile"],
-                title: "This is a title",
-            }, (filePaths: string[]) => {
-                if (filePaths !== undefined && filePaths.length === 1) {
-                    appConfig.userSettingsFilePath = filePaths[0];
-                    vue.appConfig = appConfig;
-                }
-            });
-        },
-        showChangeUserStyleSheetFileDialog: (): void => {
-            remote.dialog.showOpenDialog({
-                buttonLabel: "Open",
-                defaultPath: config.userStylesheet === undefined || config.userStylesheet.length === 0
-                    ? homedir()
-                    : dirname(config.userStylesheet),
-                filters: [{ name: "CSS files", extensions: ["css"] }],
-                message: "This is a message",
-                properties: ["openFile"],
-                title: "This is a title",
-            }, (filePaths: string[]) => {
-                if (filePaths !== undefined && filePaths.length === 1) {
-                    config.userStylesheet = filePaths[0];
-                    vue.config = config;
-                }
-            });
         },
         updateAppConfig: (): void => {
             ipcRenderer.send(IpcChannels.updateAppConfig, appConfig);
