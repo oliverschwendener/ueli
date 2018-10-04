@@ -202,6 +202,7 @@ To open the settings press `Ctrl+i` or search for `Ueli settings`.
 * `logExecution` Boolean - If ueli should log the execution of applications, files and folders for better search results. Set to `false` if you want to disable logging.
 * `iconSet` IconSet - Represents the default icon set.
     * `appIcon` String - Represents the svg icon for applications.
+    * `calculatorIcon` String - Represents the svg icon for the calculator.
     * `commandLineIcon` String - Represents the svg icon when typing in a command line command. 
     * `emailIcon` String - Represents the svg icon when typing in an email address.
     * `environmentVariableIcon` String - Represents the svg icon for environment variables.
@@ -278,8 +279,6 @@ On [https://icons8.com](https://icons8.com/) you can find svg icons for almost e
 ## Updating
 
 To check if you are running the latest version open the [settings](#settings). If there is an update available you can press the button to download and install the newer version.
-
-![Ueli updating](img/doc/ueli-updating.png)
 
 ## Privacy
 

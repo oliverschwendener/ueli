@@ -2,6 +2,7 @@ import { IconSet } from "./icon-set";
 
 export const testIconSet: IconSet = {
     appIcon: "app-icon",
+    calculatorIcon: "calculator-icon",
     commandLineIcon: "command-line-icon",
     emailIcon: "email-icon",
     environmentVariableIcon: "environment-variable-icon",

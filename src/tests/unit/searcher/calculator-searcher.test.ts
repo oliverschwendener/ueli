@@ -2,9 +2,10 @@ import { SearchResultItem } from "../../../ts/search-result-item";
 import { CalculatorSearcher } from "../../../ts/searcher/calculator-searcher";
 import { InputOutputCombination } from "../test-helpers";
 import { CalculatorHelper } from "../../../ts/helpers/calculator-helper";
+import { testIconSet } from "../../../ts/icon-sets/test-icon-set";
 
 describe(CalculatorSearcher.name, (): void => {
-    const searcher = new CalculatorSearcher();
+    const searcher = new CalculatorSearcher(testIconSet);
 
     describe(searcher.getSearchResult.name, (): void => {
         it("should return a correct search result", (): void => {

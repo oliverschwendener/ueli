@@ -11,6 +11,75 @@ export const WindowsIconSet: IconSet = {
                             <rect x="27" y="8" style="fill:#ecf0f1;" width="3" height="3"></rect>
                         </svg>`,
 
+    calculatorIcon: `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <g>
+        <path style="fill:#B0C1D4;" d="M9,38.5c-1.379,0-2.5-1.122-2.5-2.5V4c0-1.378,1.121-2.5,2.5-2.5h22c1.379,0,2.5,1.122,2.5,2.5v32
+            c0,1.378-1.121,2.5-2.5,2.5H9z"></path>
+        <g>
+            <path style="fill:#66798F;" d="M31,2c1.103,0,2,0.897,2,2v32c0,1.103-0.897,2-2,2H9c-1.103,0-2-0.897-2-2V4c0-1.103,0.897-2,2-2
+                H31 M31,1H9C7.343,1,6,2.343,6,4v32c0,1.657,1.343,3,3,3h22c1.657,0,3-1.343,3-3V4C34,2.343,32.657,1,31,1L31,1z"></path>
+        </g>
+    </g>
+    <g>
+        <path style="fill:#D6DFEB;" d="M7,14V4c0-1.105,0.895-2,2-2h22c1.105,0,2,0.895,2,2v10H7z"></path>
+    </g>
+    <g>
+        <rect x="10.5" y="5.5" style="fill:#BAE0BD;" width="19" height="5"></rect>
+        <path style="fill:#5E9C76;" d="M29,6v4H11V6H29 M30,5H10v6h20V5L30,5z"></path>
+    </g>
+    <g>
+        <rect x="15" y="17" style="fill:#FFFFFF;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="10" y="17" style="fill:#FFFFFF;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="20" y="17" style="fill:#FFFFFF;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="27" y="17" style="fill:#FFEEA3;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="15" y="22" style="fill:#FFFFFF;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="10" y="22" style="fill:#FFFFFF;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="20" y="22" style="fill:#FFFFFF;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="27" y="22" style="fill:#FFEEA3;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="15" y="27" style="fill:#FFFFFF;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="10" y="27" style="fill:#FFFFFF;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="20" y="27" style="fill:#FFFFFF;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="27" y="27" style="fill:#FFEEA3;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="15" y="32" style="fill:#FFFFFF;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="10" y="32" style="fill:#FFFFFF;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="20" y="32" style="fill:#FFFFFF;" width="3" height="3"></rect>
+    </g>
+    <g>
+        <rect x="27" y="32" style="fill:#F78F8F;" width="3" height="3"></rect>
+    </g>
+    <rect x="27" y="8" style="fill:#5E9C76;" width="1" height="1"></rect>
+    <rect x="25" y="8" style="fill:#5E9C76;" width="1" height="1"></rect>
+    <rect x="23" y="8" style="fill:#5E9C76;" width="1" height="1"></rect>
+    </svg>`,
+
     commandLineIcon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1">
     <g id="surface1">
     <path style=" fill:#CFD8DC;" d="M 41 6 L 7 6 C 6.398438 6 6 6.398438 6 7 L 6 42 L 42 42 L 42 7 C 42 6.398438 41.601563 6 41 6 Z "></path>

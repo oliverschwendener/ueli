@@ -34,7 +34,7 @@ export class ProductionSearchers {
 
         if (config.features.calculator) {
             result.push({
-                searcher: new CalculatorSearcher(),
+                searcher: new CalculatorSearcher(config.iconSet),
                 validator: new CalculatorInputValidator(),
             });
         }
