@@ -13,7 +13,7 @@ import { IconSet } from "./icon-sets/icon-set";
 
 export class Injector {
   public static getWebUrlRegExp(): RegExp {
-    return new RegExp(/^((https?:)?[/]{2})?([a-z0-9]+[.])+[a-z]+.*$/i, "gi");
+    return new RegExp(/^((https?:)?[/]{2})?([a-z0-9]+[.])+[a-z]{2,}.*$/i, "gi");
   }
 
   public static getOpenUrlWithDefaultBrowserCommand(platform: string, url: string): string {

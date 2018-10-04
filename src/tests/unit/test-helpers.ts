@@ -59,6 +59,14 @@ export const validUrls = [
     "google.com/search/?query=google-something&param=value",
     "https://www.google.com/search/?query=google-something&param=value",
     "www.google.com/search/?query=google-something&param=value",
+    "google.com",
+    "https://google.com",
+    "http://google.com",
+    "//google.com",
+    "google.com?query=sdf",
+    "google.com?query=asdf&shit=true",
+    "mail.google.com",
+    "https://www.example.com:8080/index.html?p1=A&p2=B#ressource",
 ];
 
 export const invalidUrls = [
@@ -68,6 +76,16 @@ export const invalidUrls = [
     "some-bullshit",
     "12340.12",
     "darth.vader@empire.cc",
+    "invalid",
+    "bullshit",
+    "gooogle.",
+    "google.c",
+    "http:/google.com",
+    "http//google.com",
+    "http://goooglecom",
+    "someone@mail.com",
+    "http://.com",
+    "ftp://google.com",
 ];
 
 export const dummyWebSearches = [
