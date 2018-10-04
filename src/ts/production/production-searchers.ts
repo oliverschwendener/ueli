@@ -41,7 +41,7 @@ export class ProductionSearchers {
 
         if (config.features.fileBrowser) {
             result.push({
-                searcher: new FilePathSearcher(config.searchEngineThreshold, config.iconSet),
+                searcher: new FilePathSearcher(config.searchEngineThreshold, config.searchEngineLimit, config.iconSet),
                 validator: new FilePathInputValidator(),
             });
         }

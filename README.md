@@ -211,8 +211,9 @@ To open the settings press `Ctrl+i` or search for `Ueli settings`.
     * `searchIcon` String - Represents the svg icon for the search icon on the top right.
     * `shortcutIcon` String - Represents the default svg icon for shortcuts and custom commands.
     * `urlIcon` String - Represents the svg icon when typing in an email address.
-* `maxSearchResultCount` Number - Maximum number of search results to be displayed.
+* `maxSearchResultCount` Number - Maximum number of search results to be displayed on one page.
 * `rescanInterval` Number - Interval in seconds to rescan the application folders.
+* `searchEngineLimit` Number - Represents the maximum of items that the search engine shows in the search results. The lower the better is the rendering performance.
 * `searchEngineThreshold` Number - Represents the threshold for fuzzy matching (min = 0, max = 1, lower means you have to be more precise with the user input).
 * `searchResultDescriptionFontSize` Number - Represents the font size of the search result description in pixels.
 * `searchResultHeight` Number - Represents the height of a search result box in pixels.

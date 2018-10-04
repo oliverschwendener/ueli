@@ -6,6 +6,7 @@ import { Count } from "../../ts/count/count";
 
 describe("SearchEngine", (): void => {
     const threshold = 4; // same as default config
+    const limit = 24; // same as default config
 
     describe("search", (): void => {
         it("should return all items if user input matches all items", (): void => {
@@ -15,7 +16,7 @@ describe("SearchEngine", (): void => {
                 { searchable: ["abcde"] },
             ] as SearchResultItem[];
 
-            const searchEngine = new SearchEngine(fakeItems, threshold);
+            const searchEngine = new SearchEngine(fakeItems, threshold, limit);
             const userInput = "abc";
 
             const actual = searchEngine.search(userInput);
@@ -30,7 +31,7 @@ describe("SearchEngine", (): void => {
                 { searchable: ["abcde"] },
             ] as SearchResultItem[];
 
-            const searchEngine = new SearchEngine(fakeItems, threshold);
+            const searchEngine = new SearchEngine(fakeItems, threshold, limit);
             const userInput = "xyz";
 
             const actual = searchEngine.search(userInput);
@@ -45,7 +46,7 @@ describe("SearchEngine", (): void => {
                 { name: "3", searchable: ["hasn"] },
             ] as SearchResultItem[];
 
-            const searchEngine = new SearchEngine(fakeItems, threshold);
+            const searchEngine = new SearchEngine(fakeItems, threshold, limit);
             const userInput = "han";
 
             const actual = searchEngine.search(userInput);
@@ -69,7 +70,7 @@ describe("SearchEngine", (): void => {
                 { name: "3", searchable: ["abcde"] },
             ] as SearchResultItem[];
 
-            const searchEngine = new SearchEngine(fakeItems, threshold);
+            const searchEngine = new SearchEngine(fakeItems, threshold, limit);
             const userInput = "ab";
 
             const result = searchEngine.search(userInput, countManager);
@@ -95,7 +96,7 @@ describe("SearchEngine", (): void => {
                 { name: "3", searchable: ["abcde"], executionArgument: "abcde" },
             ] as SearchResultItem[];
 
-            const searchEngine = new SearchEngine(fakeItems, threshold);
+            const searchEngine = new SearchEngine(fakeItems, threshold, limit);
             const userInput = "a";
 
             const result = searchEngine.search(userInput, countManager);
@@ -123,7 +124,7 @@ describe("SearchEngine", (): void => {
                 { name: "3", searchable: ["thisisjustanotherrandomweirdtext"], executionArgument: "thisisjustanotherrandomweirdtext" },
             ] as SearchResultItem[];
 
-            const searchEngine = new SearchEngine(fakeItems, threshold);
+            const searchEngine = new SearchEngine(fakeItems, threshold, limit);
             const userInput = "Th";
 
             const result = searchEngine.search(userInput, countManager);

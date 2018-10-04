@@ -33,6 +33,7 @@ export class UserConfigFileRepository {
     private enforceDataTypes(config: UserConfigOptions): UserConfigOptions {
         config.maxSearchResultCount = Number(config.maxSearchResultCount);
         config.rescanInterval = Number(config.rescanInterval);
+        config.searchEngineLimit = Number(config.searchEngineLimit);
         config.searchEngineThreshold = Number(config.searchEngineThreshold);
         config.searchResultDescriptionFontSize = Number(config.searchResultDescriptionFontSize);
         config.searchResultHeight = Number(config.searchResultHeight);

@@ -22,6 +22,7 @@ export interface UserConfigOptions {
     logExecution: boolean;
     maxSearchResultCount: number;
     rescanInterval: number;
+    searchEngineLimit: number;
     searchEngineThreshold: number;
     searchResultDescriptionFontSize: number;
     searchResultHeight: number;

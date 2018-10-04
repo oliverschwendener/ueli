@@ -437,6 +437,12 @@
                         </div>
                     </div>
                     <div class="setting-group">
+                        <div class="setting-title">Search engine limit</div>
+                        <div class="setting">
+                            <input class="setting-text-input" type="number" v-model="config.searchEngineLimit" min="0" v-on:blur="updateUserConfig">
+                        </div>
+                    </div>
+                    <div class="setting-group">
                         <div class="setting-title">Search engine threshold</div>
                         <div class="setting">
                             <input class="setting-text-input" type="number" v-model="config.searchEngineThreshold" min="0" max="1" step="0.1" v-on:blur="updateUserConfig">

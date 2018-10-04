@@ -5,10 +5,12 @@ import { CountManager } from "./count/count-manager";
 export class SearchEngine {
     private unsortedSearchResults: SearchResultItem[];
     private threshold: number;
+    private searchEngineLimit: number;
 
-    public constructor(unsortedSearchResults: SearchResultItem[], threshold: number) {
+    public constructor(unsortedSearchResults: SearchResultItem[], threshold: number, searchEngineLimit: number) {
         this.unsortedSearchResults = unsortedSearchResults;
         this.threshold = threshold;
+        this.searchEngineLimit = searchEngineLimit;
     }
 
     public search(searchTerm: string, countManager?: CountManager): SearchResultItem[] {
@@ -40,7 +42,7 @@ export class SearchEngine {
             } as SearchResultItem;
         });
 
-        return sortedResult;
+        return sortedResult.slice(0, this.searchEngineLimit);
     }
 
     private sortItemsByCount(searchResults: any[], countManager: CountManager): any[] {

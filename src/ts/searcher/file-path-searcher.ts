@@ -10,9 +10,11 @@ import { IconSet } from "../icon-sets/icon-set";
 export class FilePathSearcher implements Searcher {
     private iconSet: IconSet;
     private searchEngineThreshold: number;
+    private searchEngineLimit: number;
 
-    constructor(searchEngineThreshold: number, iconSet: IconSet) {
+    constructor(searchEngineThreshold: number, searchEngineLimit: number, iconSet: IconSet) {
         this.searchEngineThreshold = searchEngineThreshold;
+        this.searchEngineLimit = searchEngineLimit;
         this.iconSet = iconSet;
     }
 
@@ -62,7 +64,7 @@ export class FilePathSearcher implements Searcher {
     }
 
     private sortSearchResult(searchResultItems: SearchResultItem[], searchTerm: string): SearchResultItem[] {
-        const searchEngine = new SearchEngine(searchResultItems, this.searchEngineThreshold);
+        const searchEngine = new SearchEngine(searchResultItems, this.searchEngineThreshold, this.searchEngineLimit);
         return searchEngine.search(searchTerm);
     }
 

@@ -36,6 +36,7 @@ export class DefaultUserConfigManager {
             logExecution: true,
             maxSearchResultCount: 8,
             rescanInterval: 60,
+            searchEngineLimit: 16,
             searchEngineThreshold: 0.4,
             searchResultDescriptionFontSize: 14,
             searchResultHeight: 60,
