@@ -192,4 +192,45 @@ describe(FileHelpers.name, (): void => {
             expect(actualLength).toBe(expectedLength);
         });
     });
+
+    describe(FileHelpers.getFilesFromFolderRecursively, (): void => {
+        const parentFolder = "test-folder";
+
+        const whiteListFiles = [
+            "whitelist-1",
+            "whitelist-2",
+            "whitelist-3",
+            "whitelist-4",
+            "whitelist-5",
+        ];
+
+        const blackListFiles = [
+            "blacklist-1",
+            "blacklist-2",
+            "blacklist-3",
+        ];
+
+        const allFiles = whiteListFiles.concat(blackListFiles);
+
+        beforeEach((): void => {
+            mkdirSync(parentFolder);
+
+            for (const file of allFiles) {
+                writeFileSync(join(parentFolder, file), "");
+            }
+        });
+
+        afterEach((): void => {
+            for (const file of allFiles) {
+                unlinkSync(join(parentFolder, file));
+            }
+
+            rmdirSync(parentFolder);
+        });
+
+        it("should skip all files from blacklist", (): void => {
+            const result = FileHelpers.getFilesFromFolderRecursively(parentFolder, blackListFiles);
+            expect(result.length).toBe(whiteListFiles.length);
+        });
+    });
 });
