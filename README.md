@@ -91,7 +91,7 @@ You can [customize](#settings) your own web search engines
 
 You can [customize](#settings) multiple fallback web search engines which are used if ueli does not find any other search results.
 
-![Feature fallback web search](img/doc/features/ueli-feature-fallback-websearch.png)
+![Feature fallback web search](img/doc/features/ueli-feature-fallback-web-search.png)
 
 ### Execute commandline tools
 
