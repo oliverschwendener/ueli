@@ -52,8 +52,8 @@ export class SearchEngine {
         for (let i = 0; i < searchResults.length; i++) {
             const score = count[searchResults[i].item.executionArgument];
 
-            if (score !== undefined && score > 4) {
-                searchResults[i].score /= (score * 0.25);
+            if (score !== undefined && score > 3) {
+                searchResults[i].score /= (score * 3);
             }
         }
 

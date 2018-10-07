@@ -107,7 +107,7 @@ describe("SearchEngine", (): void => {
             expect(result[2].name).toBe("3");
         });
 
-        it("should list frequently used items higher if their count is higher than 4", (): void => {
+        it("should list frequently used items higher if their count is 3 or higher", (): void => {
             const fakeCount: Count = {
                 thisisjustrandomtext: 1,
                 // tslint:disable-next-line:object-literal-sort-keys for better readability
