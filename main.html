@@ -488,7 +488,7 @@
                                     <tr v-for="shortcut in config.shortcuts">
                                         <td><input class="setting-text-input" type="text" v-model="shortcut.name" v-on:blur="updateUserConfig"></td>
                                         <td><input class="setting-text-input" type="text" v-model="shortcut.executionArgument" v-on:blur="updateUserConfig"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="shortcut.icon"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="shortcut.icon" v-on:blur="updateUserConfig"></td>
                                         <td class="text-center" v-html="shortcut.icon"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionRemoveShortcut(shortcut)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
