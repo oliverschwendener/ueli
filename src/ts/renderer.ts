@@ -115,6 +115,11 @@ const vue = new Vue({
                 ipcRenderer.send(IpcChannels.hideWindow);
             } else if (event.ctrlKey && event.key === "c") {
                 ipcRenderer.send(IpcChannels.exitCommandLineTool);
+            } else if (event.ctrlKey) {
+                const index = Number(event.key);
+                if (!isNaN(index)) {
+                    handleExecuteIndex(index);
+                }
             }
         },
         outputContainerHeight: (): string => {
@@ -319,6 +324,7 @@ function updateSearchResults(searchResults: SearchResultItemViewModel[]): void {
 
     searchResults.forEach((searchResultItem: SearchResultItemViewModel): void => {
         searchResultItem.id = `${searchResultItemIndexPrefix}${index}`;
+        searchResultItem.index = index + 1;
         searchResultItem.active = false;
         index++;
     });
@@ -431,7 +437,10 @@ function getActiveItem(): SearchResultItemViewModel | undefined {
 }
 
 function execute(executionArgument: string, userInput: string): void {
-    userInputHistoryManager.addItem(userInput);
+    if (userInput !== undefined && userInput.length > 0) {
+        userInputHistoryManager.addItem(userInput);
+    }
+
     ipcRenderer.send(IpcChannels.execute, executionArgument);
 }
 
@@ -477,4 +486,14 @@ function showSettings(): void {
     resetCommandLineOutput();
     ipcRenderer.send(IpcChannels.showSettingsFromRenderer);
     vue.settingsVisible = true;
+}
+
+function handleExecuteIndex(index: number): void {
+    const searchResultItem = vue.searchResults.find((s: SearchResultItemViewModel): boolean => {
+        return s.index === index;
+    });
+
+    if (searchResultItem !== undefined) {
+        execute(searchResultItem.executionArgument, vue.userInput);
+    }
 }

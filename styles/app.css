@@ -110,9 +110,18 @@ div.search-result-icon-container.active > svg {
 }
 
 div.search-result-information {
+    width: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+div.search-result-number-container {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.5;
 }
 
 div.hidden {

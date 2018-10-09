@@ -42,6 +42,9 @@
                                 {{ searchResult.description }}
                             </span>
                         </div>
+                        <div v-if="config.showSearchResultNumber" class="search-result-number-container">
+                            #{{ searchResult.index }}
+                        </div>
                     </div>
                 </div>
 
@@ -511,6 +514,12 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <div class="setting-title">Show search result number</div>
+                        <div class="setting">
+                            <input type="checkbox" v-model="config.showSearchResultNumber" v-on:change="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
