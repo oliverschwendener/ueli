@@ -15,6 +15,7 @@ import { DefaultUserConfigManager } from "./user-config/default-config";
 import { WindowHelpers } from "./helpers/winow-helpers";
 import Vue from "vue";
 
+const searchResultItemIndexPrefix = "search-result-item-";
 const appConfigRepository = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.getDefaultAppConfig());
 let config = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
 let appConfig = appConfigRepository.getAppConfig();
@@ -80,9 +81,13 @@ const vue = new Vue({
         handleDownloadUpdateButtonClick: (): void => {
             ipcRenderer.send(IpcChannels.ueliUpdateUeli);
         },
-        handleMouseEnter: (index: number): void => {
-            if (config.allowMouseInteraction) {
-                changeActiveItemByIndex(index);
+        handleMouseMove: (event: MouseEvent): void => {
+            const target = event.currentTarget as HTMLElement;
+            const index = target.id.replace(searchResultItemIndexPrefix, "");
+            const mouseIsMoving = event.movementY || event.movementX;
+
+            if (config.allowMouseInteraction && mouseIsMoving) {
+                changeActiveItemByIndex(Number(index));
             }
         },
         handleSettingsIconClick: (): void => {
@@ -313,7 +318,7 @@ function updateSearchResults(searchResults: SearchResultItemViewModel[]): void {
     let index = 0;
 
     searchResults.forEach((searchResultItem: SearchResultItemViewModel): void => {
-        searchResultItem.id = `search-result-item-${index}`;
+        searchResultItem.id = `${searchResultItemIndexPrefix}${index}`;
         searchResultItem.active = false;
         index++;
     });
@@ -376,7 +381,7 @@ function scrollIntoView(searchResult: SearchResultItemViewModel): void {
             const elementIsOutOfViewTop = htmlElement.offsetTop - config.userInputHeight < outputContainer.scrollTop;
 
             if (elementIsOutOfViewBottom) {
-                const scrollTo = htmlElement.offsetTop - config.userInputHeight ;
+                const scrollTo = htmlElement.offsetTop - config.userInputHeight;
 
                 outputContainer.scrollTo({ top: scrollTo, behavior: config.smoothScrolling ? "smooth" : "instant" });
             } else if (elementIsOutOfViewTop) {
