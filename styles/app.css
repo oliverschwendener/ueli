@@ -12,7 +12,7 @@
     --settings-font-size: 0.85rem;
 }
 
-body {    
+body {
     margin: 0;
     padding: 0;
     background-color: var(--background-color);
@@ -72,10 +72,10 @@ div.command-line-output-container > pre {
     margin: 0;
 }
 
-div.search-results-container {    
+div.search-results-container {
     width: 100%;
     height: 100%;
-}   
+}
 
 div.search-result {
     display: flex;
@@ -128,7 +128,7 @@ div.hidden {
     display: none;
 }
 
-span {        
+span {
     display: block;
     white-space: nowrap;
 }
