@@ -18,6 +18,8 @@ describe(CustomCommandInputValidator.name, (): void => {
             const validInputs = [
                 "openwithcode C:\\projects\\ueli",
                 "openwithcode second-argument",
+                "open C:\\projects\\ueli",
+                "o C:\\projects\\ueli",
             ];
 
             for (const validInput of validInputs) {
@@ -29,8 +31,8 @@ describe(CustomCommandInputValidator.name, (): void => {
         it("should return false if user input does no match any custom command", (): void => {
             const invalidInputs = [
                 "openwithcode",
-                "openwithcod",
-                "open",
+                "openwithcmd",
+                "opn",
                 "asdf",
                 "",
                 "      ",
