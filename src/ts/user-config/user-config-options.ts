@@ -1,7 +1,7 @@
-import { WebSearch } from "./../web-search";
-import { Shortcut } from "./../shortcut";
-import { FileSearchOption } from "./../file-search-option";
-import { CustomCommand } from "./../custom-shortcut";
+import { WebSearch } from "../web-search";
+import { Shortcut } from "../shortcut";
+import { FileSearchOption } from "../file-search-option";
+import { CustomCommand } from "../custom-shortcut";
 import { IconSet } from "../icon-sets/icon-set";
 import { FeatureOptions } from "./feature-options";
 

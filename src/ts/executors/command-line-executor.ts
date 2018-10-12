@@ -1,6 +1,6 @@
 import { spawn } from "child_process";
 import { ipcMain } from "electron";
-import { CommandLineHelpers } from "./../helpers/command-line-helpers";
+import { CommandLineHelpers } from "../helpers/command-line-helpers";
 import { Executor } from "./executor";
 import { IpcChannels } from "../ipc-channels";
 

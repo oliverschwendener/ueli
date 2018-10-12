@@ -70,7 +70,9 @@
     "electron-store": "^2.0.0",
     "electron-updater": "^3.1.2",
     "fuse.js": "^3.2.1",
+    "immutable": "^3.8.2",
     "mathjs": "^5.1.1",
+    "ts-translate": "^4.2.1",
     "vue": "^2.5.17"
   }
 }

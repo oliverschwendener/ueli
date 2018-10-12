@@ -4,8 +4,8 @@ import { Shortcut } from "../shortcut";
 import { StringHelpers } from "../helpers/string-helpers";
 
 export class ShortcutsPlugin implements SearchPlugin {
-    private items: SearchResultItem[];
-    private defaultIcon: string;
+    private readonly items: SearchResultItem[];
+    private readonly defaultIcon: string;
 
     constructor(shortcuts: Shortcut[], defaultIcon: string) {
         this.defaultIcon = defaultIcon;

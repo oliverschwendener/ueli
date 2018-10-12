@@ -1,9 +1,9 @@
 import { platform } from "os";
-import { UserConfigOptions } from "./../user-config/user-config-options";
-import { OperatingSystemHelpers } from "./../helpers/operating-system-helpers";
-import { OperatingSystem } from "./../operating-system";
-import { WindowsIconSet } from "./../icon-sets/windows-icon-set";
-import { MacOsIconSet } from "./../icon-sets/mac-os-icon-set";
+import { UserConfigOptions } from "./user-config-options";
+import { OperatingSystemHelpers } from "../helpers/operating-system-helpers";
+import { OperatingSystem } from "../operating-system";
+import { WindowsIconSet } from "../icon-sets/windows-icon-set";
+import { MacOsIconSet } from "../icon-sets/mac-os-icon-set";
 import { defaultWindowsApplicationFolders, defaultMacOsApplicationFolders } from "./default-application-folders";
 import { defaultWindowsApplicationFileExtensions, defaultMacOsApplicationFileExtensions } from "./default-application-file-extensions";
 import { defaultFileSearchOptions } from "./default-file-search-options";

@@ -16,11 +16,6 @@ export class CalculatorInputValidator implements InputValidator {
     private isValidMathType(input: any): boolean {
         const mathType = math.typeof(input);
 
-        if ((mathType === "Unit" && input.value === null)
-            || (mathType === "Function")) {
-            return false;
-        }
-
-        return true;
+        return !((mathType === "Unit" && input.value === null) || (mathType === "Function"));
     }
 }

@@ -3,9 +3,9 @@ import { SearchResultItem } from "./search-result-item";
 import { CountManager } from "./count/count-manager";
 
 export class SearchEngine {
-    private unsortedSearchResults: SearchResultItem[];
-    private threshold: number;
-    private searchEngineLimit: number;
+    private readonly unsortedSearchResults: SearchResultItem[];
+    private readonly threshold: number;
+    private readonly searchEngineLimit: number;
 
     public constructor(unsortedSearchResults: SearchResultItem[], threshold: number, searchEngineLimit: number) {
         this.unsortedSearchResults = unsortedSearchResults;

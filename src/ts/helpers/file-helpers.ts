@@ -28,7 +28,7 @@ export class FileHelpers {
                         result.push(filePath);
                     }
                 } catch (error) {
-                    continue;
+                    // continue;
                 }
             }
 

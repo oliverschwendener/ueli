@@ -13,19 +13,19 @@ export const windowsSystemCommands: OperatingSystemCommand[] = [
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shutdown -r -t 0`,
         icon: restartIcon,
         name: "Restart",
-        tags: ["reboot"],
+        tags: ["reboot", "neu starten"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shutdown /l`,
         icon: logOutIcon,
         name: "Sign out",
-        tags: ["signout"],
+        tags: ["signout", "abmelden"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}rundll32 user32.dll,LockWorkStation`,
         icon: lockIcon,
         name: "Lock computer",
-        tags: [],
+        tags: ["lock", "sperren"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shell:RecycleBinFolder`,

@@ -2,8 +2,8 @@ import { UserConfigOptions } from "./user-config-options";
 import { readFileSync, existsSync, writeFileSync } from "fs";
 
 export class UserConfigFileRepository {
-    private defaultConfig: UserConfigOptions;
-    private configFilePath: string;
+    private readonly defaultConfig: UserConfigOptions;
+    private readonly configFilePath: string;
 
     public constructor(defaultConfig: UserConfigOptions, configFilePath: string) {
         this.defaultConfig = defaultConfig;

@@ -7,8 +7,8 @@ import { CountManager } from "../count/count-manager";
 import { IconSet } from "../icon-sets/icon-set";
 
 export class SearchPluginsSearcher implements Searcher {
-    private items: SearchResultItem[];
-    private countManager: CountManager;
+    private readonly items: SearchResultItem[];
+    private readonly countManager: CountManager;
     private config: UserConfigOptions;
 
     constructor(config: UserConfigOptions, countManager: CountManager, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }) {

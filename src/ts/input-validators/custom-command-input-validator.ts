@@ -2,7 +2,7 @@ import { InputValidator } from "./input-validator";
 import { CustomCommand } from "../custom-shortcut";
 
 export class CustomCommandInputValidator implements InputValidator {
-    private customCommands: CustomCommand[];
+    private readonly customCommands: CustomCommand[];
 
     constructor(customCommands: CustomCommand[]) {
         this.customCommands = customCommands;

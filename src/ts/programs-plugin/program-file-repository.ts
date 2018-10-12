@@ -4,8 +4,8 @@ import { Program } from "./program";
 import { ProgramRepository } from "./program-repository";
 
 export class ProgramFileRepository implements ProgramRepository {
-    private applicationFileExtensions: string[];
-    private programs: Program[];
+    private readonly applicationFileExtensions: string[];
+    private readonly programs: Program[];
 
     public constructor(applicationFolders: string[], applicationFileExtensions: string[], fileSearchBlackList: string[]) {
         this.applicationFileExtensions = applicationFileExtensions;
