@@ -19,6 +19,7 @@ export interface UserConfigOptions {
     fileSearchOptions: FileSearchOption[];
     hotKey: string;
     iconSet: IconSet;
+    language: string;
     logExecution: boolean;
     maxSearchResultCount: number;
     rescanInterval: number;

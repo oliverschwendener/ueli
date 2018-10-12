@@ -1,4 +1,4 @@
-import { platform } from "os";
+import { platform, release } from "os";
 import { UserConfigOptions } from "./user-config-options";
 import { OperatingSystemHelpers } from "../helpers/operating-system-helpers";
 import { OperatingSystem } from "../operating-system";
@@ -9,11 +9,13 @@ import { defaultWindowsApplicationFileExtensions, defaultMacOsApplicationFileExt
 import { defaultFileSearchOptions } from "./default-file-search-options";
 import { defaultWebSearches } from "./default-web-searches";
 import { defaultFeatures } from "./default-features";
+import { sync as getLanguage } from "os-locale";
 
 export class DefaultUserConfigManager {
     public static getDefaultUserConfig(): UserConfigOptions {
         const currentOperatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
-
+        const currentSystemWindows10 = (currentOperatingSystem === OperatingSystem.Windows) ? `${release()}` : "";
+        const language = getLanguage();
         return {
             allowMouseInteraction: false,
             alwaysShowOnPrimaryDisplay: false,
@@ -33,6 +35,7 @@ export class DefaultUserConfigManager {
             fileSearchOptions: defaultFileSearchOptions,
             hotKey: "alt+space",
             iconSet: currentOperatingSystem === OperatingSystem.Windows ? WindowsIconSet : MacOsIconSet,
+            language: `${language}`,
             logExecution: true,
             maxSearchResultCount: 8,
             rescanInterval: 60,
