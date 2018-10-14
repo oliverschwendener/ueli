@@ -67,7 +67,6 @@ const vue = new Vue({
         },
         handleCheckForUpdateButtonClick: (): void => {
             ipcRenderer.send(IpcChannels.ueliCheckForUpdates);
-            vue.downloadingUpdate = true;
         },
         handleClick: (): void => {
             if (config.allowMouseInteraction) {
@@ -80,6 +79,7 @@ const vue = new Vue({
         },
         handleDownloadUpdateButtonClick: (): void => {
             ipcRenderer.send(IpcChannels.ueliUpdateUeli);
+            vue.downloadingUpdate = true;
         },
         handleMouseMove: (event: MouseEvent): void => {
             const target = event.currentTarget as HTMLElement;
