@@ -1,6 +1,12 @@
 .DS_Store
+.idea
+.vscode
 
 ueli.count.json
+ueli.config.json
+
+#resources
+_resources/
 
 #Bundled files
 bundle/
