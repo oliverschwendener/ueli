@@ -29,6 +29,7 @@ export interface UserConfigOptions {
     searchResultHeight: number;
     searchResultNameFontSize: number;
     shortcuts: Shortcut[];
+    showSearchResultNumber: boolean;
     showTrayIcon: boolean;
     smoothScrolling: boolean;
     userInputFontSize: number;

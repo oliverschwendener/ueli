@@ -15,6 +15,7 @@ import { DefaultUserConfigManager } from "./user-config/default-config";
 import { WindowHelpers } from "./helpers/winow-helpers";
 import Vue from "vue";
 
+const searchResultItemIndexPrefix = "search-result-item-";
 const appConfigRepository = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.getDefaultAppConfig());
 let config = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
 let appConfig = appConfigRepository.getAppConfig();
@@ -66,7 +67,6 @@ const vue = new Vue({
         },
         handleCheckForUpdateButtonClick: (): void => {
             ipcRenderer.send(IpcChannels.ueliCheckForUpdates);
-            vue.downloadingUpdate = true;
         },
         handleClick: (): void => {
             if (config.allowMouseInteraction) {
@@ -79,10 +79,15 @@ const vue = new Vue({
         },
         handleDownloadUpdateButtonClick: (): void => {
             ipcRenderer.send(IpcChannels.ueliUpdateUeli);
+            vue.downloadingUpdate = true;
         },
-        handleMouseEnter: (index: number): void => {
-            if (config.allowMouseInteraction) {
-                changeActiveItemByIndex(index);
+        handleMouseMove: (event: MouseEvent): void => {
+            const target = event.currentTarget as HTMLElement;
+            const index = target.id.replace(searchResultItemIndexPrefix, "");
+            const mouseIsMoving = event.movementY || event.movementX;
+
+            if (config.allowMouseInteraction && mouseIsMoving) {
+                changeActiveItemByIndex(Number(index));
             }
         },
         handleSettingsIconClick: (): void => {
@@ -110,6 +115,11 @@ const vue = new Vue({
                 ipcRenderer.send(IpcChannels.hideWindow);
             } else if (event.ctrlKey && event.key === "c") {
                 ipcRenderer.send(IpcChannels.exitCommandLineTool);
+            } else if (event.ctrlKey) {
+                const index = Number(event.key);
+                if (!isNaN(index)) {
+                    handleExecuteIndex(index);
+                }
             }
         },
         outputContainerHeight: (): string => {
@@ -313,7 +323,8 @@ function updateSearchResults(searchResults: SearchResultItemViewModel[]): void {
     let index = 0;
 
     searchResults.forEach((searchResultItem: SearchResultItemViewModel): void => {
-        searchResultItem.id = `search-result-item-${index}`;
+        searchResultItem.id = `${searchResultItemIndexPrefix}${index}`;
+        searchResultItem.index = index + 1;
         searchResultItem.active = false;
         index++;
     });
@@ -376,7 +387,7 @@ function scrollIntoView(searchResult: SearchResultItemViewModel): void {
             const elementIsOutOfViewTop = htmlElement.offsetTop - config.userInputHeight < outputContainer.scrollTop;
 
             if (elementIsOutOfViewBottom) {
-                const scrollTo = htmlElement.offsetTop - config.userInputHeight ;
+                const scrollTo = htmlElement.offsetTop - config.userInputHeight;
 
                 outputContainer.scrollTo({ top: scrollTo, behavior: config.smoothScrolling ? "smooth" : "instant" });
             } else if (elementIsOutOfViewTop) {
@@ -426,7 +437,10 @@ function getActiveItem(): SearchResultItemViewModel | undefined {
 }
 
 function execute(executionArgument: string, userInput: string): void {
-    userInputHistoryManager.addItem(userInput);
+    if (userInput !== undefined && userInput.length > 0) {
+        userInputHistoryManager.addItem(userInput);
+    }
+
     ipcRenderer.send(IpcChannels.execute, executionArgument);
 }
 
@@ -472,4 +486,14 @@ function showSettings(): void {
     resetCommandLineOutput();
     ipcRenderer.send(IpcChannels.showSettingsFromRenderer);
     vue.settingsVisible = true;
+}
+
+function handleExecuteIndex(index: number): void {
+    const searchResultItem = vue.searchResults.find((s: SearchResultItemViewModel): boolean => {
+        return s.index === index;
+    });
+
+    if (searchResultItem !== undefined) {
+        execute(searchResultItem.executionArgument, vue.userInput);
+    }
 }

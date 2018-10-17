@@ -30,7 +30,7 @@
 
                 <div class="search-results-container" v-if="searchResults.length > 0">
                     <div :id="searchResult.id" class="search-result" :style="searchResultStyle()" :class="{ 'active' : searchResult.active }"
-                        v-for="(searchResult, searchIndex) in searchResults" v-on:click="handleClick" v-on:mouseenter="handleMouseEnter(searchIndex)">
+                        v-for="searchResult in searchResults" v-on:click="handleClick" v-on:mousemove="handleMouseMove">
                         <div class="search-result-icon">
                             <div class="search-result-icon-container" :style="searchResultIconStyle()" :class="{ 'active' : searchResult.active }" v-html="searchResult.icon"></div>
                         </div>
@@ -41,6 +41,9 @@
                             <span class="search-result-description" :style="searchResultDescriptionStyle()" :class="{ 'active' : searchResult.active } ">
                                 {{ searchResult.description }}
                             </span>
+                        </div>
+                        <div v-if="config.showSearchResultNumber" class="search-result-number-container">
+                            #{{ searchResult.index }}
                         </div>
                     </div>
                 </div>
@@ -488,7 +491,7 @@
                                     <tr v-for="shortcut in config.shortcuts">
                                         <td><input class="setting-text-input" type="text" v-model="shortcut.name" v-on:blur="updateUserConfig"></td>
                                         <td><input class="setting-text-input" type="text" v-model="shortcut.executionArgument" v-on:blur="updateUserConfig"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="shortcut.icon"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="shortcut.icon" v-on:blur="updateUserConfig"></td>
                                         <td class="text-center" v-html="shortcut.icon"></td>
                                         <td class="text-center">
                                             <svg class="setting-action-icon" v-on:click="settingsActionRemoveShortcut(shortcut)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
@@ -511,6 +514,12 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <div class="setting-title">Show search result number</div>
+                        <div class="setting">
+                            <input type="checkbox" v-model="config.showSearchResultNumber" v-on:change="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
