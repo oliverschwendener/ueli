@@ -66,13 +66,13 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "@types/os-locale": "^2.1.0",
     "electron-is-dev": "^0.3.0",
     "electron-store": "^2.0.0",
     "electron-updater": "^3.1.2",
     "fuse.js": "^3.2.1",
-    "immutable": "^3.8.2",
     "mathjs": "^5.1.1",
-    "ts-translate": "^4.2.1",
+    "os-locale": "^3.0.1",
     "vue": "^2.5.17"
   }
 }

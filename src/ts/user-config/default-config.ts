@@ -9,13 +9,13 @@ import { defaultWindowsApplicationFileExtensions, defaultMacOsApplicationFileExt
 import { defaultFileSearchOptions } from "./default-file-search-options";
 import { defaultWebSearches } from "./default-web-searches";
 import { defaultFeatures } from "./default-features";
-import { sync as getLanguage } from "os-locale";
+import { sync as osLocale } from "os-locale";
 
 export class DefaultUserConfigManager {
     public static getDefaultUserConfig(): UserConfigOptions {
         const currentOperatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
         const currentSystemWindows10 = (currentOperatingSystem === OperatingSystem.Windows) ? `${release()}` : "";
-        const language = getLanguage();
+        const language = osLocale();
         return {
             allowMouseInteraction: false,
             alwaysShowOnPrimaryDisplay: false,
