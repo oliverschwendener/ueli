@@ -1,6 +1,7 @@
 .DS_Store
 .idea
 .vscode
+.yarnclean
 
 ueli.count.json
 ueli.config.json

@@ -312,11 +312,9 @@ function handleCommandLineOutput(data: string): void {
 }
 
 function handleInputHistoryBrowsing(direction: string): void {
-    const newUserInput = direction === "prev"
+    vue.userInput = (direction === "prev")
         ? userInputHistoryManager.getPrevious()
         : userInputHistoryManager.getNext();
-
-    vue.userInput = newUserInput;
 }
 
 function updateSearchResults(searchResults: SearchResultItemViewModel[]): void {
