@@ -184,6 +184,17 @@ div.setting {
     width: 72%;
 }
 
+div.setting.setting-range {
+    display: flex;
+    flex-direction: column;
+}
+
+div.setting-range-heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 div.sub-setting {
     display: flex;
     flex-direction: row;

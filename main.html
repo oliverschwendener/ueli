@@ -452,8 +452,13 @@
                     </div>
                     <div class="setting-group">
                         <div class="setting-title">Search engine threshold</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="number" v-model="config.searchEngineThreshold" min="0" max="1" step="0.1" v-on:blur="updateUserConfig">
+                        <div class="setting setting-range">
+                            <div class="setting-range-heading">
+                                <span>Strict</span>
+                                <span>{{ config.searchEngineThreshold }}</span>
+                                <span>Fuzzy</span>
+                            </div>
+                            <input class="setting-text-input" type="range" v-model="config.searchEngineThreshold" min="0" max="1" step="0.05" v-on:change="updateUserConfig">
                         </div>
                     </div>
                     <div class="setting-group">
