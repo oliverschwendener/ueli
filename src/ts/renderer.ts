@@ -60,8 +60,8 @@ const vue = new Vue({
             return `./styles/${config.colorTheme}.css`;
         },
         getUnusedFallbackWebSearches: (): WebSearch[] => {
-            return config.webSearches.filter((w) => {
-                return config.fallbackWebSearches.filter((f) => {
+            return config.webSearches.filter((w): boolean => {
+                return config.fallbackWebSearches.filter((f): boolean => {
                     return f === w.name;
                 }).length === 0;
             });
@@ -282,7 +282,7 @@ ipcRenderer.on(IpcChannels.commandLineOutput, (event: Electron.Event, arg: strin
     handleCommandLineOutput(arg);
 });
 
-ipcRenderer.on(IpcChannels.ueliUpdateWasFound, () => {
+ipcRenderer.on(IpcChannels.ueliUpdateWasFound, (): void => {
     vue.updateAvailable = true;
     vue.noUpdateFound = false;
     vue.errorOnUpdateCheck = false;
@@ -380,7 +380,7 @@ function changeActiveItem(direction: string): void {
 }
 
 function changeActiveItemByIndex(index: number): void {
-    vue.searchResults.forEach((searchResultItem: SearchResultItemViewModel) => {
+    vue.searchResults.forEach((searchResultItem: SearchResultItemViewModel): void => {
         searchResultItem.active = false;
     });
 
@@ -437,7 +437,7 @@ function handleAutoCompletion(): void {
 }
 
 function getActiveItem(): SearchResultItemViewModel | undefined {
-    const activeSearchResults = vue.searchResults.filter((s: any) => {
+    const activeSearchResults = vue.searchResults.filter((s: any): void => {
         return s.active;
     }) as SearchResultItemViewModel[];
 

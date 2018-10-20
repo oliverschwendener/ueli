@@ -4,7 +4,7 @@ import { CustomCommand } from "../custom-shortcut";
 export class CustomCommandBuilder {
     public static buildExecutionArgumentForCustomCommand(userInput: string, customCommand: CustomCommand): string {
         const words = StringHelpers.splitIntoWords(userInput);
-        return `${customCommand.executionArgument} ${words.filter((word) => word !== customCommand.prefix).join(" ")}`;
+        return `${customCommand.executionArgument} ${words.filter((word): boolean => word !== customCommand.prefix).join(" ")}`;
     }
 
     public static buildCustomCommandName(userInput: string, customCommand: CustomCommand): string {

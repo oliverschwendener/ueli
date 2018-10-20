@@ -19,7 +19,9 @@ export class SearchPluginsSearcher implements Searcher {
         const plugins = searchPluginManager.getPlugins();
 
         this.items = plugins.length > 0
-            ? plugins.map((plugin) => plugin.getAllItems()).reduce((acc, pluginItems) => acc.concat(pluginItems))
+            ? plugins
+                .map((plugin): SearchResultItem[] => plugin.getAllItems())
+                .reduce((acc, pluginItems): SearchResultItem[] => acc.concat(pluginItems))
             : [];
     }
 

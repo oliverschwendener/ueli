@@ -57,7 +57,7 @@ export class SearchEngine {
             }
         }
 
-        searchResults = searchResults.sort((a, b) => {
+        searchResults = searchResults.sort((a, b): number => {
             return a.score - b.score;
         });
 

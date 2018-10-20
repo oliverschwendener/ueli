@@ -21,7 +21,7 @@ export class StringHelpers {
 
     public static stringToWords(value: string): string[] {
         const words = value.split(/\s/g);
-        return words.filter((w) => {
+        return words.filter((w): boolean => {
             return !StringHelpers.stringIsWhiteSpace(w);
         });
     }

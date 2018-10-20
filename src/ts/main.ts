@@ -42,7 +42,7 @@ let executionService = new ExecutionService(
     config,
     ipcEmitter);
 
-const otherInstanceIsAlreadyRunning = app.makeSingleInstance(() => { /* do nothing */ });
+const otherInstanceIsAlreadyRunning = app.makeSingleInstance((): void => { /* do nothing */ });
 let rescanInterval = setInterval(initializeInputValidationService, TimeHelpers.convertSecondsToMilliseconds(config.rescanInterval));
 
 if (otherInstanceIsAlreadyRunning) {
@@ -200,7 +200,7 @@ function hideMainWindow(): void {
     mainWindow.webContents.send(IpcChannels.resetUserInput);
     mainWindow.webContents.send(IpcChannels.hideSettings);
 
-    setTimeout(() => {
+    setTimeout((): void => {
         if (mainWindow !== null && mainWindow !== undefined) {
             updateWindowSize(0);
             mainWindow.hide();
@@ -350,11 +350,11 @@ ipcMain.on(IpcChannels.hideSettings, (): void => {
     updateWindowSize(0);
 });
 
-ipcMain.on(IpcChannels.updateAppConfig, (event: Electron.Event, updatedAppConfig: AppConfig) => {
+ipcMain.on(IpcChannels.updateAppConfig, (event: Electron.Event, updatedAppConfig: AppConfig): void => {
     appConfigRepository.setAppConfig(updatedAppConfig);
 });
 
-ipcMain.on(IpcChannels.updateUserConfig, (event: Electron.Event, updatedUserConfig: UserConfigOptions) => {
+ipcMain.on(IpcChannels.updateUserConfig, (event: Electron.Event, updatedUserConfig: UserConfigOptions): void => {
     config = updatedUserConfig;
     setUpNewRescanInterval();
     userConfigRepository.saveConfig(updatedUserConfig);
