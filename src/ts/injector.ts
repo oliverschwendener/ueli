@@ -10,6 +10,9 @@ import { OpenUrlWithDefaultBrowserCommandBuilder } from "./builders/open-url-wit
 import { TrayIconPathBuilder } from "./builders/tray-icon-path-builder";
 import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
 import { IconSet } from "./icon-sets/icon-set";
+import { allWindowsSettings } from "./operating-system-settings/windows/windows-settings";
+import { allWindows10Apps } from "./operating-system-settings/windows/windows-10-apps";
+import { allMacOsSettings } from "./operating-system-settings/macos/mac-os-settings";
 
 export class Injector {
   public static getWebUrlRegExp(): RegExp {
@@ -70,8 +73,8 @@ export class Injector {
 
   public static getOperatingSystemSettingsPlugin(platform: string, iconSet: IconSet): SearchPlugin {
     switch (OperatingSystemHelpers.getOperatingSystemFromString(platform)) {
-      case OperatingSystem.Windows: return new Windows10SettingsSearchPlugin(iconSet);
-      case OperatingSystem.macOS: return new MacOsSettingsPlugin(iconSet);
+      case OperatingSystem.Windows: return new Windows10SettingsSearchPlugin(allWindowsSettings, allWindows10Apps, iconSet);
+      case OperatingSystem.macOS: return new MacOsSettingsPlugin(allMacOsSettings, iconSet);
     }
   }
 }

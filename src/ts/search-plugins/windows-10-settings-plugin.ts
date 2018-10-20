@@ -2,20 +2,18 @@ import { SearchResultItem } from "../search-result-item";
 import { SearchPlugin } from "./search-plugin";
 import { IconSet } from "../icon-sets/icon-set";
 import { WindowsSetting } from "../operating-system-settings/windows/windows-setting";
-import { allWindowsSettings } from "../operating-system-settings/windows/windows-settings";
 import { UeliHelpers } from "../helpers/ueli-helpers";
 import { Windows10App } from "../operating-system-settings/windows/windows-10-app";
-import { allWindows10Apps } from "../operating-system-settings/windows/windows-10-apps";
 
 export class Windows10SettingsSearchPlugin implements SearchPlugin {
     private iconSet: IconSet;
     private settings: WindowsSetting[];
     private apps: Windows10App[];
 
-    constructor(iconSet: IconSet) {
+    constructor(settings: WindowsSetting[], apps: Windows10App[], iconSet: IconSet) {
         this.iconSet = iconSet;
-        this.settings = allWindowsSettings;
-        this.apps = allWindows10Apps;
+        this.settings = settings;
+        this.apps = apps;
     }
 
     public getIndexLength(): number {
