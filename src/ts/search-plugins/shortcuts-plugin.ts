@@ -12,6 +12,10 @@ export class ShortcutsPlugin implements SearchPlugin {
         this.items = this.convertToSearchResultItems(shortcuts);
     }
 
+    public getIndexLength(): number {
+        return this.items.length;
+    }
+
     public getAllItems(): SearchResultItem[] {
         return this.items;
     }

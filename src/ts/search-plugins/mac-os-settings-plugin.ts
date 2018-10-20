@@ -1,6 +1,5 @@
 import { SearchResultItem } from "../search-result-item";
 import { SearchPlugin } from "./search-plugin";
-import { MacOsSettingsHelpers } from "../helpers/mac-os-settings.helpers";
 import { IconSet } from "../icon-sets/icon-set";
 import { MacOsSetting } from "../operating-system-settings/macos/mac-os-setting";
 import { allMacOsSettings } from "../operating-system-settings/macos/mac-os-settings";
@@ -13,9 +12,11 @@ export class MacOsSettingsPlugin implements SearchPlugin {
 
     constructor(iconSet: IconSet) {
         this.iconSet = iconSet;
+        this.settings = allMacOsSettings;
+    }
 
-        this.settings = [];
-        this.settings = this.settings.concat(allMacOsSettings);
+    public getIndexLength(): number {
+        return this.settings.length;
     }
 
     public getAllItems(): SearchResultItem[] {

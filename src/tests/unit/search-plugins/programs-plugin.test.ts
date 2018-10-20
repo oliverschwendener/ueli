@@ -13,19 +13,19 @@ function getTestPrograms(programNames: string[]) {
 }
 
 describe("ProgramsPlugin", (): void => {
-    describe("getAllItems", (): void => {
+    const fakePrograms = getTestPrograms([
+        "Git Bash",
+        "Adobe Premiere Pro",
+        "FL Studio (64-bit)",
+        "Native Instruments Maschine 2",
+        "Visual Studio Code",
+    ]);
+
+    const fakeProgramRepository = new FakeProgramRepository(fakePrograms);
+    const programsPlugin = new ProgramsPlugin(fakeProgramRepository, testIconSet);
+
+    describe(programsPlugin.getAllItems.name, (): void => {
         it("should return all programs", (): void => {
-            const fakePrograms = getTestPrograms([
-                "Git Bash",
-                "Adobe Premiere Pro",
-                "FL Studio (64-bit)",
-                "Native Instruments Maschine 2",
-                "Visual Studio Code",
-            ]);
-
-            const fakeProgramRepository = new FakeProgramRepository(fakePrograms);
-            const programsPlugin = new ProgramsPlugin(fakeProgramRepository, testIconSet);
-
             const actual = programsPlugin.getAllItems();
 
             expect(actual.length).toBeGreaterThan(0);
@@ -39,6 +39,15 @@ describe("ProgramsPlugin", (): void => {
                 expect(filtered[0].name).toBe(fakeProgram.name);
                 expect(filtered[0].executionArgument).toBe(fakeProgram.executionArgument);
             }
+        });
+    });
+
+    describe(programsPlugin.getIndexLength.name, (): void => {
+        it("should return the number of programs", (): void => {
+            const actual = programsPlugin.getIndexLength();
+            const expected = fakePrograms.length;
+
+            expect(actual).toBe(expected);
         });
     });
 });

@@ -23,4 +23,11 @@ describe(EnvironmentVariablePlugin.name, (): void => {
             }
         });
     });
+
+    describe(plugin.getIndexLength.name, (): void => {
+        it("should return the length of env variables", (): void => {
+            const actual = plugin.getIndexLength();
+            expect(actual).toBe(Object.keys(fakeEnvironmentVariableCollection).length);
+        });
+    });
 });

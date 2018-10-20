@@ -20,6 +20,10 @@ export class FileSearchPlugin implements SearchPlugin {
         this.items = this.loadFilesAndFolders();
     }
 
+    public getIndexLength(): number {
+        return this.items.length;
+    }
+
     public getAllItems(): SearchResultItem[] {
         return this.items;
     }

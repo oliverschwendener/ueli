@@ -11,6 +11,10 @@ export class EnvironmentVariablePlugin implements SearchPlugin {
         this.iconSet = iconSet;
     }
 
+    public getIndexLength(): number {
+        return Object.keys(this.variableCollection).length;
+    }
+
     public getAllItems(): SearchResultItem[] {
         const result: SearchResultItem[] = [];
 

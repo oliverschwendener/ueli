@@ -14,6 +14,8 @@ import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
 import { OperatingSystem } from "./operating-system";
 import { windowsSystemCommands } from "./operating-system-settings/windows/windows-system-commands";
 import { macOsSystemCommands } from "./operating-system-settings/macos/mac-os-system-commands";
+import { ipcMain } from "electron";
+import { IpcChannels } from "./ipc-channels";
 
 export class SearchPluginManager {
     private plugins: SearchPlugin[];
@@ -54,9 +56,23 @@ export class SearchPluginManager {
         if (config.features.environmentVariables) {
             this.plugins.push(new EnvironmentVariablePlugin(environmentVariableCollection, config.iconSet));
         }
+
+        ipcMain.on(IpcChannels.getIndexLength, (event: Electron.Event): void => {
+            event.sender.send(IpcChannels.getIndexLengthResponse, this.getIndexLength());
+        });
     }
 
     public getPlugins(): SearchPlugin[] {
         return this.plugins;
+    }
+
+    private getIndexLength(): number {
+        let result = 0;
+
+        for (const plugin of this.plugins) {
+            result += plugin.getIndexLength();
+        }
+
+        return result;
     }
 }

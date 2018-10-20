@@ -25,6 +25,10 @@ export class UeliCommandsSearchPlugin implements SearchPlugin {
         },
     ];
 
+    public getIndexLength(): number {
+        return this.ueliCommands.length;
+    }
+
     public getAllItems(): SearchResultItem[] {
         return this.ueliCommands.map((i): SearchResultItem => {
             return {

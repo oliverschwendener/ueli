@@ -15,6 +15,10 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
             : "macOS";
     }
 
+    public getIndexLength(): number {
+        return this.systemCommands.length;
+    }
+
     public getAllItems(): SearchResultItem[] {
 
         return this.systemCommands.map((setting: OperatingSystemCommand): SearchResultItem => {
