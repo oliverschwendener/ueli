@@ -89,4 +89,22 @@ describe(ShortcutsPlugin.name, (): void => {
             }
         });
     });
+
+    describe("getIndexLength", (): void => {
+        it("should return the number of shortcuts", (): void => {
+            const shortcuts: Shortcut[] = [
+                { executionArgument: "execution-argument-1", name: "shortcut-1", icon: "icon" },
+                { executionArgument: "execution-argument-2", name: "shortcut-2", icon: "icon" },
+                { executionArgument: "execution-argument-3", name: "shortcut-3", icon: "icon" },
+                { executionArgument: "execution-argument-4", name: "shortcut-4", icon: "icon" },
+            ];
+
+            const shortcutPlugin = new ShortcutsPlugin(shortcuts, "default-shortcut-icon");
+
+            const actual = shortcutPlugin.getIndexLength();
+            const expected = shortcuts.length;
+
+            expect(actual).toBe(expected);
+        });
+    });
 });

@@ -42,7 +42,7 @@ let executionService = new ExecutionService(
     config,
     ipcEmitter);
 
-const otherInstanceIsAlreadyRunning = app.makeSingleInstance(() => { /* do nothing */ });
+const otherInstanceIsAlreadyRunning = app.makeSingleInstance((): void => { /* do nothing */ });
 let rescanInterval = setInterval(initializeInputValidationService, TimeHelpers.convertSecondsToMilliseconds(config.rescanInterval));
 
 if (otherInstanceIsAlreadyRunning) {
@@ -157,22 +157,6 @@ function downloadUpdate(): void {
     autoUpdater.downloadUpdate();
 }
 
-autoUpdater.on("update-available", (): void => {
-    mainWindow.webContents.send(IpcChannels.ueliUpdateWasFound);
-});
-
-autoUpdater.on("update-not-available", (): void => {
-    mainWindow.webContents.send(IpcChannels.ueliNoUpdateWasFound);
-});
-
-autoUpdater.on("error", (): void => {
-    mainWindow.webContents.send(IpcChannels.ueliUpdateCheckError);
-});
-
-autoUpdater.on("update-downloaded", (): void => {
-    autoUpdater.quitAndInstall();
-});
-
 function setAutostartSettings() {
     app.setLoginItemSettings({
         args: [],
@@ -216,7 +200,7 @@ function hideMainWindow(): void {
     mainWindow.webContents.send(IpcChannels.resetUserInput);
     mainWindow.webContents.send(IpcChannels.hideSettings);
 
-    setTimeout(() => {
+    setTimeout((): void => {
         if (mainWindow !== null && mainWindow !== undefined) {
             updateWindowSize(0);
             mainWindow.hide();
@@ -260,6 +244,8 @@ function reloadApp(preventMainWindowReload?: boolean, preventWindowSizeReset?: b
     if (!isInDevelopment) {
         setAutostartSettings();
     }
+
+    mainWindow.webContents.send(IpcChannels.appReloaded);
 }
 
 function destroyTrayIcon(): void {
@@ -288,6 +274,22 @@ function setUpNewRescanInterval(): void {
     clearInterval(rescanInterval);
     rescanInterval = setInterval(initializeInputValidationService, TimeHelpers.convertSecondsToMilliseconds(config.rescanInterval));
 }
+
+autoUpdater.on("update-available", (): void => {
+    mainWindow.webContents.send(IpcChannels.ueliUpdateWasFound);
+});
+
+autoUpdater.on("update-not-available", (): void => {
+    mainWindow.webContents.send(IpcChannels.ueliNoUpdateWasFound);
+});
+
+autoUpdater.on("error", (): void => {
+    mainWindow.webContents.send(IpcChannels.ueliUpdateCheckError);
+});
+
+autoUpdater.on("update-downloaded", (): void => {
+    autoUpdater.quitAndInstall();
+});
 
 ipcMain.on(IpcChannels.hideWindow, hideMainWindow);
 ipcMain.on(IpcChannels.ueliReload, reloadApp);
@@ -348,11 +350,11 @@ ipcMain.on(IpcChannels.hideSettings, (): void => {
     updateWindowSize(0);
 });
 
-ipcMain.on(IpcChannels.updateAppConfig, (event: Electron.Event, updatedAppConfig: AppConfig) => {
+ipcMain.on(IpcChannels.updateAppConfig, (event: Electron.Event, updatedAppConfig: AppConfig): void => {
     appConfigRepository.setAppConfig(updatedAppConfig);
 });
 
-ipcMain.on(IpcChannels.updateUserConfig, (event: Electron.Event, updatedUserConfig: UserConfigOptions) => {
+ipcMain.on(IpcChannels.updateUserConfig, (event: Electron.Event, updatedUserConfig: UserConfigOptions): void => {
     config = updatedUserConfig;
     setUpNewRescanInterval();
     userConfigRepository.saveConfig(updatedUserConfig);

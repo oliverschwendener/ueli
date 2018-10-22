@@ -22,7 +22,7 @@ export class WebUrlExecutor implements Executor {
     }
 
     private handleCommandExecution(command: string): void {
-        exec(command, (err) => {
+        exec(command, (err): void => {
             if (err) {
                 throw err;
             }

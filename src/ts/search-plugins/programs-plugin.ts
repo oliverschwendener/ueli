@@ -14,6 +14,10 @@ export class ProgramsPlugin implements SearchPlugin {
         this.programs = programRepository.getPrograms();
     }
 
+    public getIndexLength(): number {
+        return this.programs.length;
+    }
+
     public getAllItems(): SearchResultItem[] {
         return this.programs.map((program): SearchResultItem => {
             return {

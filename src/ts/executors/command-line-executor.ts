@@ -11,28 +11,28 @@ export class CommandLineExecutor implements Executor {
         const commandLineTool = spawn(command.name, command.args);
 
         const commandLineToolStartedMessage = (command.args !== undefined && command.args.length > 0)
-            ? `Started "${command.name}" with parameters: ${command.args.map((c) => `"${c}"`).join(", ")}`
+            ? `Started "${command.name}" with parameters: ${command.args.map((c): string => `"${c}"`).join(", ")}`
             : `Started "${command.name}"`;
 
         this.sendCommandLineOutputToRenderer(commandLineToolStartedMessage);
 
-        commandLineTool.on("error", (err) => {
+        commandLineTool.on("error", (err): void => {
             this.sendCommandLineOutputToRenderer(err.message);
         });
 
-        commandLineTool.stderr.on("data", (data) => {
+        commandLineTool.stderr.on("data", (data): void => {
             this.sendCommandLineOutputToRenderer(data.toString());
         });
 
-        commandLineTool.stdout.on("data", (data) => {
+        commandLineTool.stdout.on("data", (data): void => {
             this.sendCommandLineOutputToRenderer(data.toString());
         });
 
-        commandLineTool.on("exit", (code) => {
+        commandLineTool.on("exit", (code): void => {
             this.sendCommandLineOutputToRenderer(`Exit ${code} `);
         });
 
-        ipcMain.on(IpcChannels.exitCommandLineTool, () => {
+        ipcMain.on(IpcChannels.exitCommandLineTool, (): void => {
             commandLineTool.kill();
         });
     }

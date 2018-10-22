@@ -25,47 +25,47 @@ describe(FileSearchPlugin.name, (): void => {
         "test-file-3",
     ];
 
-    describe("getAllItems", (): void => {
-        beforeEach((): void => {
-            for (const parentFolder of parentFolders) {
-                mkdirSync(parentFolder);
+    beforeEach((): void => {
+        for (const parentFolder of parentFolders) {
+            mkdirSync(parentFolder);
 
-                for (const subFolder of subFolders) {
-                    mkdirSync(join(parentFolder, subFolder));
-
-                    for (const testFile of testFiles) {
-                        const filePath = join(parentFolder, subFolder, testFile);
-                        writeFileSync(filePath, "", "utf-8");
-                    }
-                }
+            for (const subFolder of subFolders) {
+                mkdirSync(join(parentFolder, subFolder));
 
                 for (const testFile of testFiles) {
-                    const filePath = join(parentFolder, testFile);
+                    const filePath = join(parentFolder, subFolder, testFile);
                     writeFileSync(filePath, "", "utf-8");
                 }
             }
-        });
 
-        afterEach((): void => {
-            for (const parentFolder of parentFolders) {
+            for (const testFile of testFiles) {
+                const filePath = join(parentFolder, testFile);
+                writeFileSync(filePath, "", "utf-8");
+            }
+        }
+    });
+
+    afterEach((): void => {
+        for (const parentFolder of parentFolders) {
+            for (const testFile of testFiles) {
+                const filePath = join(parentFolder, testFile);
+                unlinkSync(filePath);
+            }
+
+            for (const subFolder of subFolders) {
                 for (const testFile of testFiles) {
-                    const filePath = join(parentFolder, testFile);
+                    const filePath = join(parentFolder, subFolder, testFile);
                     unlinkSync(filePath);
                 }
 
-                for (const subFolder of subFolders) {
-                    for (const testFile of testFiles) {
-                        const filePath = join(parentFolder, subFolder, testFile);
-                        unlinkSync(filePath);
-                    }
-
-                    rmdirSync(join(parentFolder, subFolder));
-                }
-
-                rmdirSync(parentFolder);
+                rmdirSync(join(parentFolder, subFolder));
             }
-        });
 
+            rmdirSync(parentFolder);
+        }
+    });
+
+    describe("getAllItems", (): void => {
         it("should return only top level files and folders if recursive search is set to false", (): void => {
             const recursiveSearch = false;
             const options = parentFolders.map((folder: string): FileSearchOption => {
@@ -141,6 +141,23 @@ describe(FileSearchPlugin.name, (): void => {
             const acutal = plugin.getAllItems();
 
             expect(acutal.length).toBe(0);
+        });
+    });
+
+    describe("getIndexLength", (): void => {
+        it("should return the number of files", (): void => {
+            const recursive = false;
+            const options = parentFolders.map((folder: string): FileSearchOption => {
+                return {
+                    folderPath: folder,
+                    recursive,
+                };
+            });
+
+            const plugin = new FileSearchPlugin(options, testIconSet, emptyBlackList);
+
+            const actual = plugin.getIndexLength();
+            expect(actual).toBe(parentFolders.length * testFiles.length + parentFolders.length * subFolders.length);
         });
     });
 });

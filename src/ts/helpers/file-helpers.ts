@@ -47,14 +47,14 @@ export class FileHelpers {
                 return join(folderPath, f);
             });
 
-            const accessibleFiles = filePaths.map((filePath) => {
+            const accessibleFiles = filePaths.map((filePath): string | undefined => {
                 try {
                     lstatSync(filePath);
                     return filePath;
                 } catch (err) {
                     // do nothing
                 }
-            }).filter((maybe) => maybe !== undefined) as string[];
+            }).filter((maybe): boolean => maybe !== undefined) as string[];
 
             return accessibleFiles;
         } catch (error) {
@@ -75,7 +75,7 @@ export class FileHelpers {
     private static getFileNamesFromFolder(folderPath: string): string[] {
         const allFiles = readdirSync(folderPath);
 
-        const visibleFiles = allFiles.filter((fileName) => {
+        const visibleFiles = allFiles.filter((fileName): boolean => {
             return !fileName.startsWith(".");
         });
 

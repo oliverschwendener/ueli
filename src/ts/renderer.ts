@@ -45,6 +45,7 @@ const vue = new Vue({
         configEdit,
         downloadingUpdate: false,
         errorOnUpdateCheck: false,
+        indexLength: 0,
         noUpdateFound: false,
         searchResults: [] as SearchResultItemViewModel[],
         settingsVisible: false,
@@ -59,8 +60,8 @@ const vue = new Vue({
             return `./styles/${config.colorTheme}.css`;
         },
         getUnusedFallbackWebSearches: (): WebSearch[] => {
-            return config.webSearches.filter((w) => {
-                return config.fallbackWebSearches.filter((f) => {
+            return config.webSearches.filter((w): boolean => {
+                return config.fallbackWebSearches.filter((f): boolean => {
                     return f === w.name;
                 }).length === 0;
             });
@@ -264,6 +265,11 @@ const vue = new Vue({
     },
 });
 
+ipcRenderer.send(IpcChannels.getIndexLength);
+ipcRenderer.on(IpcChannels.getIndexLengthResponse, (event: Electron.Event, indexLength: number): void => {
+    vue.indexLength = indexLength;
+});
+
 ipcRenderer.on(IpcChannels.getSearchResponse, (event: Electron.Event, searchResults: SearchResultItemViewModel[]): void => {
     updateSearchResults(searchResults);
 });
@@ -276,7 +282,7 @@ ipcRenderer.on(IpcChannels.commandLineOutput, (event: Electron.Event, arg: strin
     handleCommandLineOutput(arg);
 });
 
-ipcRenderer.on(IpcChannels.ueliUpdateWasFound, () => {
+ipcRenderer.on(IpcChannels.ueliUpdateWasFound, (): void => {
     vue.updateAvailable = true;
     vue.noUpdateFound = false;
     vue.errorOnUpdateCheck = false;
@@ -299,6 +305,10 @@ ipcRenderer.on(IpcChannels.resetUserInput, resetUserInput);
 ipcRenderer.on(IpcChannels.hideSettings, hideSettings);
 ipcRenderer.on(IpcChannels.showSettingsFromRenderer, showSettings);
 ipcRenderer.on(IpcChannels.showSettingsFromMain, showSettings);
+
+ipcRenderer.on(IpcChannels.appReloaded, (): void => {
+    ipcRenderer.send(IpcChannels.getIndexLength);
+});
 
 function handleSearch(searchTerm: string): void {
     vue.settingsVisible = false;
@@ -370,7 +380,7 @@ function changeActiveItem(direction: string): void {
 }
 
 function changeActiveItemByIndex(index: number): void {
-    vue.searchResults.forEach((searchResultItem: SearchResultItemViewModel) => {
+    vue.searchResults.forEach((searchResultItem: SearchResultItemViewModel): void => {
         searchResultItem.active = false;
     });
 
@@ -427,7 +437,7 @@ function handleAutoCompletion(): void {
 }
 
 function getActiveItem(): SearchResultItemViewModel | undefined {
-    const activeSearchResults = vue.searchResults.filter((s: any) => {
+    const activeSearchResults = vue.searchResults.filter((s: any): void => {
         return s.active;
     }) as SearchResultItemViewModel[];
 

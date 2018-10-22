@@ -27,4 +27,7 @@ export class IpcChannels {
     public static readonly hideSettings = "hide-settings";
     public static readonly updateAppConfig = "update-app-config";
     public static readonly updateUserConfig = "update-user-config";
+    public static readonly getIndexLength = "get-index-length";
+    public static readonly getIndexLengthResponse = "get-index-length-reponse";
+    public static readonly appReloaded = "app-reloaded";
 }
