@@ -1,8 +1,13 @@
 import { InputValidator } from "./input-validator";
 import * as math from "mathjs";
+import { StringHelpers } from "../helpers/string-helpers";
 
 export class CalculatorInputValidator implements InputValidator {
     public isValidForSearchResults(userInput: string): boolean {
+        if (userInput.indexOf("version") > -1) {
+            return false;
+        }
+
         let result;
         try {
             // Mathjs throws an error when input cannot be evaluated

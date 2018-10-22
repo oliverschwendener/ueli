@@ -28,6 +28,8 @@ describe(CalculatorInputValidator.name, (): void => {
                 "log()",
                 "1 blackhole to mg",
                 "random-string",
+                "version",
+                "  version ",
             ];
 
             for (const invalidInput of invalidInputs) {
