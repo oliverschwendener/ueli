@@ -32,6 +32,7 @@ const configEdit = {
 };
 
 const userInputHistoryManager = new UserInputHistoryManager();
+const language = config.language; // === "system" ? osLocale() : config.language);
 
 document.addEventListener("keyup", handleGlobalKeyPress);
 
@@ -43,6 +44,7 @@ const vue = new Vue({
         commandLineOutput: [] as string[],
         config,
         configEdit,
+        currentLanguage: language,
         downloadingUpdate: false,
         errorOnUpdateCheck: false,
         noUpdateFound: false,

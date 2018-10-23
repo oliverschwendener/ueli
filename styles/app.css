@@ -20,17 +20,17 @@ body {
   padding: 0;
 }
 
-div.container {
+.container {
   display: flex;
   flex-direction: column;
 }
 
-div.user-input-container {
+.user-input-container {
   display: flex;
   padding: 0 var(--side-padding);
 }
 
-input.user-input {
+.user-input {
   background: transparent;
   border: none;
   box-sizing: border-box;
@@ -40,78 +40,78 @@ input.user-input {
   width: 100%;
 }
 
-input.user-input:focus {
+.user-input:focus {
   outline: none;
 }
 
-div.search-icon-container {
+.search-icon-container {
   align-items: center;
   display: flex;
   justify-content: center;
   -webkit-app-region: drag;
 }
 
-div.search-icon-container > svg {
+.search-icon-container > svg {
   fill: var(--text-color);
   width: var(--icon-size);
 }
 
-div.output-container {
+.output-container {
   overflow-x: hidden;
   overflow-y: auto;
   width: 100%;
 }
 
-div.command-line-output-container {
+.command-line-output-container {
   padding: var(--side-padding);
 }
 
-div.command-line-output-container > pre {
+.command-line-output-container > pre {
   color: var(--mono-font-color);
   font-family: var(--font-family-mono);
   margin: 0;
 }
 
-div.search-results-container {
+.search-results-container {
   height: 100%;
   width: 100%;
 }
 
-div.search-result {
+.search-result {
   display: flex;
   flex-direction: row;
 }
 
-div.search-result.active {
+.search-result.active {
   background: var(--accent-color);
   color: var(--accent-text-color);
 }
 
-div.search-result-icon,
-div.search-result-icon-container {
+.search-result-icon,
+.search-result-icon-container {
   align-items: center;
   display: flex;
   justify-content: center;
 }
-div.search-result-icon-container > img,
-div.search-result-icon-container > svg {
+.search-result-icon-container > img,
+.search-result-icon-container > svg {
   width: var(--icon-size);
 }
-div.search-result-icon-container > svg {
+.search-result-icon-container > svg {
   fill: var(--text-color);
 }
-div.search-result-icon-container.active > svg {
+.search-result-icon-container.active > svg {
   fill: var(--accent-text-color);
 }
 
-div.search-result-information {
+.search-result-information {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 90%;
 }
 
-div.search-result-number-container {
+.search-result-number-container {
   align-items: center;
   display: flex;
   justify-content: center;
@@ -119,71 +119,69 @@ div.search-result-number-container {
   width: 10%;
 }
 
-div.hidden {
+.hidden {
   display: none;
 }
 
-span {
+.search-result-item {
   display: block;
   white-space: nowrap;
 }
-
-span.search-result-name.active {
+.search-result-name {
   font-weight: var(--search-result-name-active-font-weight);
 }
-
-span.search-result-description {
+.search-result-description {
   display: none;
   font-weight: var(--search-result-description-font-weight);
   transition: all 250ms ease-in-out;
 }
-
-span.search-result-description.active {
+.search-result-description.active {
   display: block;
 }
 
-div.settings-container {
+.settings-container {
   font-size: var(--settings-font-size);
   padding: 0 var(--side-padding);
   position: relative;
 }
-
-h1.setting-section-title {
+.setting-section-title {
   margin-top: 75px;
 }
-h1.setting-section-title:first-of-type {
+.setting-section-title:first-of-type {
   margin-top: 15px;
 }
-
-div.setting-group {
+.setting-group {
   border-bottom: 1px solid var(--scrollbar-foreground-color);
   display: flex;
   flex-direction: row;
   padding: calc(2* var(--side-padding)) 0;
 }
-div.setting-group:last-child {
+.setting-group:last-child {
   border-bottom: none;
 }
 
-div.setting-title {
-  align-items: center;
+.setting-title {
+  align-items: start;
   display: flex;
   font-size: var(--settings-font-size);
   padding-right: var(--side-padding);
   width: 28%;
 }
-
-div.setting {
+.setting {
   width: 72%;
 }
-
-div.sub-setting {
+.sub-setting {
   align-items: center;
   display: flex;
   flex-direction: row;
 }
-
-input.setting-text-input {
+.sub-setting-label {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.setting-text-input {
   background-color: var(--scrollbar-background-color);
   border: 1px solid var(--scrollbar-foreground-color);
   box-sizing: border-box;
@@ -195,17 +193,17 @@ input.setting-text-input {
   transition: all var(--transition-speed) ease-in-out;
   width: 100%;
 }
-input.setting-text-input:disabled {
+.setting-text-input:disabled {
   border: 1px solid var(--scrollbar-background-color);
 }
-input.setting-text-input:last-child {
+.setting-text-input:last-child {
   margin-bottom: 0;
 }
-input.setting-text-input:focus {
+.setting-text-input:focus {
   border: 1px solid var(--accent-color);
 }
 
-select.setting-select {
+.setting-select {
   background-color: var(--scrollbar-background-color);
   border: 1px solid var(--scrollbar-foreground-color);
   color: var(--text-color);
@@ -214,32 +212,32 @@ select.setting-select {
   padding: 5px;
 }
 
-svg.setting-action-icon {
+.setting-action-icon {
   cursor: pointer;
   fill: var(--text-color);
   height: 20px;
   transition: all var(--transition-speed) ease-in-out;
   width: 20px;
 }
-svg.setting-action-icon:hover {
+.setting-action-icon:hover {
   fill: var(--accent-color);
 }
 
-svg.sub-setting-icon {
+.sub-setting-icon {
   margin-bottom: 5px;
   padding-left: 5px;
 }
 
-table.setting-table {
+.setting-table {
   font-size: var(--settings-font-size);
   text-align: left;
   width: 100%;
 }
-table.setting-table-bordered {
+.setting-table-bordered {
   border-collapse: collapse;
 }
-table.setting-table-bordered th,
-table.setting-table-bordered td {
+.setting-table-bordered th,
+.setting-table-bordered td {
   background-color: var(--scrollbar-background-color);
   border: 1px solid var(--scrollbar-foreground-color);
   padding: 7px;
@@ -257,7 +255,7 @@ td > svg {
   fill: var(--text-color);
 }
 
-svg.close-settings-icon {
+.close-settings-icon {
   cursor: pointer;
   fill: var(--text-color);
   height: var(--icon-size);
@@ -266,11 +264,11 @@ svg.close-settings-icon {
   transition: all var(--transition-speed) ease-in-out;
   width: var(--icon-size);
 }
-svg.close-settings-icon:hover {
-  opacity: 0.5;
+.close-settings-icon:hover {
+  fill: var(--error-color);
 }
 
-button.setting-button {
+.setting-button {
   background-color: var(--scrollbar-background-color);
   border: 1px solid var(--scrollbar-foreground-color);
   color: var(--text-color);
@@ -278,10 +276,10 @@ button.setting-button {
   padding: 5px 15px;
   transition: all var(--transition-speed) ease-in-out;
 }
-button.setting-button:hover {
+.setting-button:hover {
   background-color: var(--scrollbar-foreground-color);
 }
-button.setting-button:focus {
+.setting-button:focus {
   outline: none;
 }
 
