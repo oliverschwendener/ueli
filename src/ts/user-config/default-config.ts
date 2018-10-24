@@ -1,4 +1,4 @@
-import { platform, release } from "os";
+import { platform } from "os";
 import { UserConfigOptions } from "./user-config-options";
 import { OperatingSystemHelpers } from "../helpers/operating-system-helpers";
 import { OperatingSystem } from "../operating-system";
@@ -14,8 +14,6 @@ import { sync as osLocale } from "os-locale";
 export class DefaultUserConfigManager {
     public static getDefaultUserConfig(): UserConfigOptions {
         const currentOperatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
-        const currentSystemWindows10 = (currentOperatingSystem === OperatingSystem.Windows) ? `${release()}` : "";
-        const language = osLocale();
         return {
             allowMouseInteraction: false,
             alwaysShowOnPrimaryDisplay: false,
@@ -35,9 +33,10 @@ export class DefaultUserConfigManager {
             fileSearchOptions: defaultFileSearchOptions,
             hotKey: "alt+space",
             iconSet: currentOperatingSystem === OperatingSystem.Windows ? WindowsIconSet : MacOsIconSet,
-            language: `${language}`,
+            language: "auto",
             logExecution: true,
             maxSearchResultCount: 8,
+            osLanguage: `${osLocale()}`,
             rescanInterval: 60,
             searchEngineLimit: 16,
             searchEngineThreshold: 0.4,

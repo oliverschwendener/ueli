@@ -21,6 +21,7 @@ export interface UserConfigOptions {
     iconSet: IconSet;
     language: string;
     logExecution: boolean;
+    osLanguage: string;
     maxSearchResultCount: number;
     rescanInterval: number;
     searchEngineLimit: number;
