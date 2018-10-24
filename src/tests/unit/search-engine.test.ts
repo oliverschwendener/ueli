@@ -1,5 +1,5 @@
 import { SearchResultItem } from "../../ts/search-result-item";
-import { SearchEngine } from "./../../ts/search-engine";
+import { SearchEngine } from "../../ts/search-engine";
 import { CountManager } from "../../ts/count/count-manager";
 import { FakeCountRepository } from "./fake-count-repository";
 import { Count } from "../../ts/count/count";
