@@ -1,12 +1,11 @@
 import { AppConfig } from "./app-config";
 import { join } from "path";
-// import { homedir } from "os";
-import { cwd } from "process";
+import { homedir } from "os";
 
 export class DefaultAppConfigManager {
     public static getDefaultAppConfig(): AppConfig {
         return {
-            userSettingsFilePath: join(cwd(), "ueli.config.json"),
+            userSettingsFilePath: join(homedir(), "ueli.config.json"),
         };
     }
 }

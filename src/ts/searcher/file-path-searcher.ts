@@ -51,7 +51,7 @@ export class FilePathSearcher implements Searcher {
                 executionArgument: filePath,
                 icon: lstatSync(filePath).isDirectory()
                     ? this.iconSet.folderIcon
-                    : this.iconSet.fileIcon, /* TODO differ icons */
+                    : this.iconSet.fileIcon,
                 name: fileName,
                 searchable: [fileName],
                 tags: [],
