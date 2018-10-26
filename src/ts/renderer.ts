@@ -32,6 +32,7 @@ const configEdit = {
 };
 
 const userInputHistoryManager = new UserInputHistoryManager();
+const language = config.language; // === "system" ? osLocale() : config.language);
 
 document.addEventListener("keyup", handleGlobalKeyPress);
 
@@ -43,6 +44,7 @@ const vue = new Vue({
         commandLineOutput: [] as string[],
         config,
         configEdit,
+        currentLanguage: language,
         downloadingUpdate: false,
         errorOnUpdateCheck: false,
         indexLength: 0,
@@ -322,11 +324,9 @@ function handleCommandLineOutput(data: string): void {
 }
 
 function handleInputHistoryBrowsing(direction: string): void {
-    const newUserInput = direction === "prev"
+    vue.userInput = (direction === "prev")
         ? userInputHistoryManager.getPrevious()
         : userInputHistoryManager.getNext();
-
-    vue.userInput = newUserInput;
 }
 
 function updateSearchResults(searchResults: SearchResultItemViewModel[]): void {

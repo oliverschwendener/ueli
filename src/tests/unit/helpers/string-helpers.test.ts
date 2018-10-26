@@ -1,6 +1,6 @@
 import { StringHelpers } from "../../../ts/helpers/string-helpers";
 import { InputOutputCombination } from "../test-helpers";
-import { validEmailAddresses, invalidEmailAddresses } from "./../test-helpers";
+import { validEmailAddresses, invalidEmailAddresses } from "../test-helpers";
 
 describe(StringHelpers.name, (): void => {
     describe(StringHelpers.removeWhiteSpace.name, (): void => {

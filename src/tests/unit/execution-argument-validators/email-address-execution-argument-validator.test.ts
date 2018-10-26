@@ -1,4 +1,4 @@
-import { EmailAddressExecutionArgumentValidator } from "./../../../ts/execution-argument-validators/email-address-execution-argument-validator";
+import { EmailAddressExecutionArgumentValidator } from "../../../ts/execution-argument-validators/email-address-execution-argument-validator";
 import { validEmailAddresses, invalidEmailAddresses } from "../test-helpers";
 
 describe(EmailAddressExecutionArgumentValidator.name, (): void => {

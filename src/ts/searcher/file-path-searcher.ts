@@ -9,8 +9,8 @@ import { IconSet } from "../icon-sets/icon-set";
 
 export class FilePathSearcher implements Searcher {
     private iconSet: IconSet;
-    private searchEngineThreshold: number;
-    private searchEngineLimit: number;
+    private readonly searchEngineThreshold: number;
+    private readonly searchEngineLimit: number;
 
     constructor(searchEngineThreshold: number, searchEngineLimit: number, iconSet: IconSet) {
         this.searchEngineThreshold = searchEngineThreshold;

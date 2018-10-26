@@ -6,7 +6,7 @@ import { WebSearchHelpers } from "../helpers/web-search-helper";
 import { WebSearchBuilder } from "../builders/web-search-builder";
 
 export class WebSearchSearcher implements Searcher {
-    private webSearches: WebSearch[];
+    private readonly webSearches: WebSearch[];
 
     constructor(webSearches: WebSearch[]) {
         this.webSearches = webSearches;

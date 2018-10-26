@@ -4,7 +4,7 @@ import { UserConfigOptions } from "./user-config/user-config-options";
 import { IpcEmitter } from "./ipc-emitter";
 
 export class ExecutionService {
-    private validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[];
+    private readonly validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[];
     private countManager: CountManager;
     private config: UserConfigOptions;
     private ipcEmitter: IpcEmitter;

@@ -25,7 +25,7 @@ export const windowsSystemCommands: OperatingSystemCommand[] = [
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}rundll32 user32.dll,LockWorkStation`,
         icon: lockIcon,
         name: "Lock computer",
-        tags: [],
+        tags: ["lock"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shell:RecycleBinFolder`,

@@ -1,7 +1,7 @@
 import { AutoCompletionValidator } from "./autocompletion-validator";
 
 export class AutoCompletionService {
-    private validators: AutoCompletionValidator[];
+    private readonly validators: AutoCompletionValidator[];
 
     constructor(validators: AutoCompletionValidator[]) {
         this.validators = validators;

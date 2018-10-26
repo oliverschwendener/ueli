@@ -301,15 +301,13 @@ ipcMain.on(IpcChannels.showSettingsFromMain, (): void => {
 });
 
 ipcMain.on(IpcChannels.getSearch, (event: any, arg: string): void => {
-    const userInput = arg;
-    const result = inputValidationService.getSearchResult(userInput);
+    const result = inputValidationService.getSearchResult(arg);
     updateWindowSize(result.length);
     event.sender.send(IpcChannels.getSearchResponse, result);
 });
 
 ipcMain.on(IpcChannels.execute, (event: any, arg: string): void => {
-    const executionArgument = arg;
-    executionService.execute(executionArgument);
+    executionService.execute(arg);
 });
 
 ipcMain.on(IpcChannels.openFileLocation, (event: any, arg: string): void => {

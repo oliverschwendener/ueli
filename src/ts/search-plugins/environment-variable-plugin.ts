@@ -3,7 +3,7 @@ import { SearchResultItem } from "../search-result-item";
 import { IconSet } from "../icon-sets/icon-set";
 
 export class EnvironmentVariablePlugin implements SearchPlugin {
-    private variableCollection: { [key: string]: string };
+    private readonly variableCollection: { [key: string]: string };
     private iconSet: IconSet;
 
     constructor(variableCollection: { [key: string]: string }, iconSet: IconSet) {

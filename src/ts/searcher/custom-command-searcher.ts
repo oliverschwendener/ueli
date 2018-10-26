@@ -6,8 +6,8 @@ import { UeliHelpers } from "../helpers/ueli-helpers";
 import { StringHelpers } from "../helpers/string-helpers";
 
 export class CustomCommandSearcher implements Searcher {
-    private customCommands: CustomCommand[];
-    private defaultIcon: string;
+    private readonly customCommands: CustomCommand[];
+    private readonly defaultIcon: string;
 
     constructor(customCommands: CustomCommand[], defaultIcon: string) {
         this.customCommands = customCommands;

@@ -1,636 +1,855 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="{{ currentLanguage }}">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ueli</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>ueli</title>
 </head>
 
 <body>
+<div id="vue-root">
+  <link rel="stylesheet" href="./styles/app.css">
+  <link rel="stylesheet" :href="colorTheme()">
+  <link rel="stylesheet" v-if="userStylesheetIsAvailable()" :href="userStylesheet">
 
-    <div id="vue-root">
-        <link rel="stylesheet" href="./styles/app.css">
-        <link rel="stylesheet" :href="colorTheme()">
-        <link rel="stylesheet" v-if="userStylesheetIsAvailable()" :href="userStylesheet">
+  <svg class="svg-icon-symbols" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" style="display: none">
+    <symbol id="svg-icon-del" viewBox="0 0 32 32"><path d="m16 2a14 14 0 0 0 -14 14 14 14 0 0 0 14 14 14 14 0 0 0 14-14 14 14 0 0 0 -14-14zm-8 12h16v4h-16z"></path></symbol>
+    <symbol id="svg-icon-add" viewBox="0 0 32 32"><path d="m16 2c-7.7 0-14 6.3-14 14s6.3 14 14 14 14-6.3 14-14-6.3-14-14-14zm-8 12h6v-6h4v6h6v4h-6v6h-4v-6h-6z"></path></symbol>
+  </svg>
 
-        <div class="container">
+  <div class="container">
 
-            <div class="user-input-container" :style="userInputContainerStyle()">
-                <input id="user-input" class="user-input" :style="userInputStyle()" type="text" v-model="userInput" :autofocus="{ 'autofocus' : autoFocus }"
-                    v-on:keyDown="handleUserInputKeyPress">
-                <div class="search-icon-container" :style="searchResultWidth()" v-html="config.iconSet.searchIcon"></div>                
-            </div>
+    <label class="user-input-container" :style="userInputContainerStyle()">
+      <input id="user-input" class="user-input" :style="userInputStyle()" type="text" v-model="userInput" :autofocus="{ 'autofocus' : autoFocus }" v-on:keyDown="handleUserInputKeyPress" />
+      <span class="search-icon-container" :style="searchResultWidth()" v-html="config.iconSet.searchIcon"></span>
+    </label>
 
-            <div class="output-container" id="output-container" :style="outputContainerHeight()">
+    <div class="output-container" id="output-container" :style="outputContainerHeight()">
 
-                <div class="command-line-output-container" v-if="commandLineOutput.length > 0">
-                    <pre v-for="line in commandLineOutput">{{ line }}</pre>
-                </div>
+      <div class="command-line-output-container" v-if="commandLineOutput.length > 0">
+        <pre v-for="line in commandLineOutput">{{ line }}</pre>
+      </div>
 
-                <div class="search-results-container" v-if="searchResults.length > 0">
-                    <div :id="searchResult.id" class="search-result" :style="searchResultStyle()" :class="{ 'active' : searchResult.active }"
-                        v-for="searchResult in searchResults" v-on:click="handleClick" v-on:mousemove="handleMouseMove">
-                        <div class="search-result-icon">
-                            <div class="search-result-icon-container" :style="searchResultIconStyle()" :class="{ 'active' : searchResult.active }" v-html="searchResult.icon"></div>
-                        </div>
-                        <div class="search-result-information">
-                            <span class="search-result-name" :style="searchResultNameStyle()" :class="{ 'active' : searchResult.active }">
-                                {{ searchResult.name }}
-                            </span>
-                            <span class="search-result-description" :style="searchResultDescriptionStyle()" :class="{ 'active' : searchResult.active } ">
-                                {{ searchResult.description }}
-                            </span>
-                        </div>
-                        <div v-if="config.showSearchResultNumber" class="search-result-number-container">
-                            #{{ searchResult.index }}
-                        </div>
-                    </div>
-                </div>
 
-                <div class="settings-container" v-if="settingsVisible">
-                    <svg v-on:click="handleCloseSettingsIconClick" class="close-settings-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
-                        <g id="surface1">
-                            <path d="M 7.21875 5.78125 L 5.78125 7.21875 L 14.5625 16 L 5.78125 24.78125 L 7.21875 26.21875 L 16 17.4375 L 24.78125 26.21875 L 26.21875 24.78125 L 17.4375 16 L 26.21875 7.21875 L 24.78125 5.78125 L 16 14.5625 Z "></path>
-                        </g>
-                    </svg>
-                    <h1 class="setting-section-title">App Settings</h1>
-                    <div class="setting-group">
-                        <div class="setting-title">Info</div>
-                        <div class="setting">
-                            <div>ueli: {{ version }}</div>
-                            <div>Electron: {{ process.versions.electron }}</div>
-                            <div>Chrome: {{ process.versions.chrome }}</div>
-                            <div>Node: {{ process.versions.node }}</div>
-                            <div>V8: {{ process.versions.v8 }}</div>
-                            <div>Index size: {{ indexLength }}</div>
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Update</div>
-                        <div class="setting">
-                            <div v-if="(updateAvailable || noUpdateFound) === false" class="sub-setting">
-                                <button v-on:click="handleCheckForUpdateButtonClick" class="setting-button">Check for update</button>
-                                <span v-if="errorOnUpdateCheck" class="message text-error">There was an error while checking for updates :(</span>
-                            </div>
-                            <div v-if="updateAvailable" class="sub-setting">
-                                <button v-if="updateAvailable && !downloadingUpdate" v-on:click="handleDownloadUpdateButtonClick" class="setting-button">Download & install update</button>
-                                <button v-if="updateAvailable && downloadingUpdate" class="setting-button">Downloading...</button>
-                            </div>
-                            <div v-if="noUpdateFound">Your are running the latest version</div>
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Config file path</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="text" v-model="appConfig.userSettingsFilePath" v-on:blur="updateAppConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Reset app settings to default</div>
-                        <div class="setting">
-                            <button class="setting-button" v-on:click="resetAppConfigToDefault">Reset</button>
-                        </div>
-                    </div>
-
-                    <h1 class="setting-section-title">User Settings</h1>
-                    <div class="setting-group">
-                        <div class="setting-title">Allow mouse interaction</div>
-                        <div class="setting">
-                            <input type="checkbox" v-model="config.allowMouseInteraction" v-on:change="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Always show on primary display</div>
-                        <div class="setting">
-                            <input type="checkbox" v-model="config.alwaysShowOnPrimaryDisplay" v-on:change="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group" v-if="config.features.programs">
-                        <div class="setting-title">Application file extensions</div>
-                        <div class="setting">
-                            <div class="sub-setting" v-for="(applicationFileExtension, index) in config.applicationFileExtensions">
-                                <input class="setting-text-input" type="text" v-model="config.applicationFileExtensions[index]" v-on:blur="updateUserConfig">
-                                <svg v-on:click="settingsActionRemoveApplicationFileExtension(applicationFileExtension)" class="setting-action-icon sub-setting-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
-                                    <g id="surface1">
-                                        <path d="M 13.5 3.1875 C 7.804688 3.1875 3.1875 7.804688 3.1875 13.5 C 3.1875 19.195313 7.804688 23.8125 13.5 23.8125 C 19.195313 23.8125 23.8125 19.195313 23.8125 13.5 C 23.8125 7.804688 19.195313 3.1875 13.5 3.1875 Z M 19 15 L 8 15 L 8 12 L 19 12 Z "></path>
-                                    </g>
-                                </svg>
-                            </div>
-                            <div class="sub-setting">
-                                <input class="setting-text-input" v-model="configEdit.newApplicationFileExtension" type="text" placeholder="Add more application file extensions">
-                                <svg class="setting-action-icon sub-setting-icon" v-on:click="settingsActionAddApplicationFileExtension(configEdit.newApplicationFileExtension)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
-                                    <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="setting-group" v-if="config.features.programs">
-                        <div class="setting-title">Application folders</div>
-                        <div class="setting">
-                            <div class="sub-setting" v-for="(applicationFolder, index) in config.applicationFolders">
-                                <input class="setting-text-input" type="text" v-model="config.applicationFolders[index]" v-on:blur="updateUserConfig">
-                                <svg v-on:click="settingsActionRemoveApplicationFolder(applicationFolder)" class="setting-action-icon sub-setting-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
-                                    <g id="surface1">
-                                        <path d="M 13.5 3.1875 C 7.804688 3.1875 3.1875 7.804688 3.1875 13.5 C 3.1875 19.195313 7.804688 23.8125 13.5 23.8125 C 19.195313 23.8125 23.8125 19.195313 23.8125 13.5 C 23.8125 7.804688 19.195313 3.1875 13.5 3.1875 Z M 19 15 L 8 15 L 8 12 L 19 12 Z "></path>
-                                    </g>
-                                </svg>
-                            </div>
-                            <div class="sub-setting">
-                                <input class="setting-text-input" v-model="configEdit.newApplicationFolder" type="text" placeholder="Add more application folders">
-                                <svg class="setting-action-icon sub-setting-icon" v-on:click="settingsActionAddApplicationFolder(configEdit.newApplicationFolder)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
-                                    <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Autostart app</div>
-                        <div class="setting">
-                            <input type="checkbox" v-model="config.autoStartApp" v-on:change="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Color theme</div>
-                        <div class="setting">
-                            <select class="setting-select" v-model="config.colorTheme" v-on:change="updateUserConfig">
-                                <option v-for="availableColorTheme in availableColorThemes" :value="availableColorTheme">{{ availableColorTheme }}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="setting-group" v-if="config.features.customCommands">
-                        <div class="setting-title">Custom commands</div>
-                        <div class="setting">
-                            <table class="setting-table">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>ExecutionArgument</th>
-                                        <th>Prefix</th>
-                                        <th>Icon</th>
-                                        <th class="text-center">Preview</th>
-                                        <th class="text-center">+/-</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="customCommand in config.customCommands">
-                                        <td><input class="setting-text-input" type="text" v-model="customCommand.name" v-on:blur="updateUserConfig"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="customCommand.executionArgument" v-on:blur="updateUserConfig"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="customCommand.prefix" v-on:blur="updateUserConfig"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="customCommand.icon" v-on:blur="updateUserConfig"></td>
-                                        <td class="text-center" v-html="customCommand.icon"></td>
-                                        <td class="text-center">
-                                            <svg class="setting-action-icon" v-on:click="settingsActionRemoveCustomCommand(customCommand)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
-                                                <g id="surface1">
-                                                    <path d="M 13.5 3.1875 C 7.804688 3.1875 3.1875 7.804688 3.1875 13.5 C 3.1875 19.195313 7.804688 23.8125 13.5 23.8125 C 19.195313 23.8125 23.8125 19.195313 23.8125 13.5 C 23.8125 7.804688 19.195313 3.1875 13.5 3.1875 Z M 19 15 L 8 15 L 8 12 L 19 12 Z "></path>
-                                                </g>
-                                            </svg>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="setting-text-input" v-model="configEdit.newCustomCommand.name" type="text" placeholder="Name"></td>
-                                        <td><input class="setting-text-input" v-model="configEdit.newCustomCommand.executionArgument" type="text" placeholder="Execution argument"></td>
-                                        <td><input class="setting-text-input" v-model="configEdit.newCustomCommand.prefix" type="text" placeholder="Prefix"></td>
-                                        <td class="slim"><input class="setting-text-input" v-model="configEdit.newCustomCommand.icon" type="text" placeholder="Icon"></td>
-                                        <td class="text-center" v-html="configEdit.newCustomCommand.icon"></td>
-                                        <td class="text-center">
-                                            <svg class="setting-action-icon" v-on:click="settingsActionAddCustomCommand(configEdit.newCustomCommand)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
-                                                <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
-                                            </svg>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="setting-group" v-if="config.features.webSearch">
-                        <div class="setting-title">Fallback web searches</div>
-                        <div class="setting">
-                            <div class="sub-setting" v-for="fallbackWebSearch in config.fallbackWebSearches">
-                                <input disabled class="setting-text-input" type="text" v-model="fallbackWebSearch">
-                                <svg class="setting-action-icon sub-setting-icon" v-on:click="settingsActionRemoveFallbackWebSearch(fallbackWebSearch)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
-                                    <g id="surface1">
-                                        <path d="M 13.5 3.1875 C 7.804688 3.1875 3.1875 7.804688 3.1875 13.5 C 3.1875 19.195313 7.804688 23.8125 13.5 23.8125 C 19.195313 23.8125 23.8125 19.195313 23.8125 13.5 C 23.8125 7.804688 19.195313 3.1875 13.5 3.1875 Z M 19 15 L 8 15 L 8 12 L 19 12 Z "></path>
-                                    </g>
-                                </svg>
-                            </div>
-                            <div v-if="config.fallbackWebSearches.length !== config.webSearches.length" class="sub-setting">
-                                <select class="setting-select" v-model="configEdit.newFallbackWebSearch" v-on:change="settingsActionAddFallbackWebSearch(configEdit.newFallbackWebSearch)">
-                                    <option selected value="">Select a web search engine</option>
-                                    <option v-for="webSearch in getUnusedFallbackWebSearches()" :value="webSearch.name">{{ webSearch.name }}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Features</div>
-                        <div class="setting">
-                            <div class="sub-setting">
-                                <table class="setting-table setting-table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Feature</th>
-                                            <th class="text-center">Enabled</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Calculator</td>
-                                            <td class="text-center"><input type="checkbox" v-model="config.features.calculator" v-on:change="updateUserConfig"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Command line</td>
-                                            <td class="text-center"><input type="checkbox" v-model="config.features.commandLine" v-on:change="updateUserConfig"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Custom commands</td>
-                                            <td class="text-center"><input type="checkbox" v-model="config.features.customCommands" v-on:change="updateUserConfig"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Email</td>
-                                            <td class="text-center"><input type="checkbox" v-model="config.features.email" v-on:change="updateUserConfig"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Environment variables</td>
-                                            <td class="text-center"><input type="checkbox" v-model="config.features.environmentVariables" v-on:change="updateUserConfig"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>File browser</td>
-                                            <td class="text-center"><input type="checkbox" v-model="config.features.fileBrowser" v-on:change="updateUserConfig"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>File search</td>
-                                            <td class="text-center"><input type="checkbox" v-model="config.features.fileSearch" v-on:change="updateUserConfig"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Programs</td>
-                                            <td class="text-center"><input type="checkbox" v-model="config.features.programs" v-on:change="updateUserConfig"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Operating system commands</td>
-                                            <td class="text-center"><input type="checkbox" v-model="config.features.operatingSystemCommands" v-on:change="updateUserConfig"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Operating system settings</td>
-                                            <td class="text-center"><input type="checkbox" v-model="config.features.operatingSystemSettings" v-on:change="updateUserConfig"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Shortcuts</td>
-                                            <td class="text-center"><input type="checkbox" v-model="config.features.shortcuts" v-on:change="updateUserConfig"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ueli commands</td>
-                                            <td class="text-center"><input type="checkbox" v-model="config.features.ueliCommands" v-on:change="updateUserConfig"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Web search</td>
-                                            <td class="text-center"><input type="checkbox" v-model="config.features.webSearch" v-on:change="updateUserConfig"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Web URL</td>
-                                            <td class="text-center"><input type="checkbox" v-model="config.features.webUrl" v-on:change="updateUserConfig"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="setting-group" v-if="config.features.fileSearch">
-                        <div class="setting-title">File search black list</div>
-                        <div class="setting">
-                            <div class="sub-setting" v-for="(blackListEntry, index) in config.fileSearchBlackList">
-                                <input class="setting-text-input" type="text" v-model="config.fileSearchBlackList[index]" v-on:blur="updateUserConfig">
-                                <svg v-on:click="settingsActionRemoveFileSearchBlackListEntry(blackListEntry)" class="setting-action-icon sub-setting-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
-                                    <g id="surface1">
-                                        <path d="M 13.5 3.1875 C 7.804688 3.1875 3.1875 7.804688 3.1875 13.5 C 3.1875 19.195313 7.804688 23.8125 13.5 23.8125 C 19.195313 23.8125 23.8125 19.195313 23.8125 13.5 C 23.8125 7.804688 19.195313 3.1875 13.5 3.1875 Z M 19 15 L 8 15 L 8 12 L 19 12 Z "></path>
-                                    </g>
-                                </svg>
-                            </div>
-                            <div class="sub-setting">
-                                <input class="setting-text-input" v-model="configEdit.newFileSearchBlackListEntry" type="text" placeholder="Add more black list entries">
-                                <svg class="setting-action-icon sub-setting-icon" v-on:click="settingsActionAddFileSearchBlackListEntry(configEdit.newFileSearchBlackListEntry)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
-                                    <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="setting-group" v-if="config.features.fileSearch">
-                        <div class="setting-title">File search options</div>
-                        <div class="setting">
-                            <table class="setting-table">
-                                <thead>
-                                    <tr>
-                                        <th>Folder path</th>
-                                        <th class="text-center">Recursive</th>
-                                        <th class="text-center">+/-</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="fileSearchOption in config.fileSearchOptions">
-                                        <td><input class="setting-text-input" type="text" v-model="fileSearchOption.folderPath" v-on:blur="updateUserConfig"></td>
-                                        <td class="text-center slim"><input type="checkbox" v-model="fileSearchOption.recursive" v-on:change="updateUserConfig"></td>
-                                        <td class="text-center">
-                                            <svg class="setting-action-icon" v-on:click="settingsActionRemoveFileSearchOption(fileSearchOption)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
-                                                <g id="surface1">
-                                                    <path d="M 13.5 3.1875 C 7.804688 3.1875 3.1875 7.804688 3.1875 13.5 C 3.1875 19.195313 7.804688 23.8125 13.5 23.8125 C 19.195313 23.8125 23.8125 19.195313 23.8125 13.5 C 23.8125 7.804688 19.195313 3.1875 13.5 3.1875 Z M 19 15 L 8 15 L 8 12 L 19 12 Z "></path>
-                                                </g>
-                                            </svg>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="setting-text-input" type="text" v-model="configEdit.newFileSearchOption.folderPath" placeholder="Add a folder path"></td>
-                                        <td class="text-center"><input type="checkbox" v-model="configEdit.newFileSearchOption.recursive"></td>
-                                        <td class="text-center">
-                                            <svg class="setting-action-icon" v-on:click="settingsActionAddFileSearchOption(configEdit.newFileSearchOption)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
-                                                <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
-                                            </svg>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Hotkey</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="text" v-model="config.hotKey" v-on:blur="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Icon set</div>
-                        <div class="setting">
-                            <table class="setting-table">
-                                <thead>
-                                    <tr>
-                                        <th>Description</th>
-                                        <th class="text-center">Preview</th>
-                                        <th>HTML</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>App icon</td>
-                                        <td class="text-center" v-html="config.iconSet.appIcon"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.appIcon" v-on:blur="updateUserConfig"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Calculator icon</td>
-                                        <td class="text-center" v-html="config.iconSet.calculatorIcon"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.calculatorIcon" v-on:blur="updateUserConfig"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Commandline icon</td>
-                                        <td class="text-center" v-html="config.iconSet.commandLineIcon"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.commandLineIcon" v-on:blur="updateUserConfig"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Email icon</td>
-                                        <td class="text-center" v-html="config.iconSet.emailIcon"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.emailIcon" v-on:blur="updateUserConfig"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Environment variable icon</td>
-                                        <td class="text-center" v-html="config.iconSet.environmentVariableIcon"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.environmentVariableIcon" v-on:blur="updateUserConfig"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>File icon</td>
-                                        <td class="text-center" v-html="config.iconSet.fileIcon"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.fileIcon" v-on:blur="updateUserConfig"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Folder icon</td>
-                                        <td class="text-center" v-html="config.iconSet.folderIcon"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.folderIcon" v-on:blur="updateUserConfig"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Operating system settings icon</td>
-                                        <td class="text-center" v-html="config.iconSet.operatingSystemSettingsIcon"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.operatingSystemSettingsIcon" v-on:blur="updateUserConfig"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Search icon</td>
-                                        <td class="text-center" v-html="config.iconSet.searchIcon"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.searchIcon" v-on:blur="updateUserConfig"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Shortcut icon</td>
-                                        <td class="text-center" v-html="config.iconSet.shortcutIcon"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.shortcutIcon" v-on:blur="updateUserConfig"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>URL icon</td>
-                                        <td class="text-center" v-html="config.iconSet.urlIcon"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.urlIcon" v-on:blur="updateUserConfig"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Log execution</div>
-                        <div class="setting">
-                            <input type="checkbox" v-model="config.logExecution" v-on:change="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Maximum search result count</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="number" v-model="config.maxSearchResultCount" min="0" v-on:blur="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Rescan interval (in seconds)</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="number" v-model="config.rescanInterval" min="5" v-on:blur="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Search engine limit</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="number" v-model="config.searchEngineLimit" min="0" v-on:blur="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Search engine threshold</div>
-                        <div class="setting setting-range">
-                            <div class="setting-range-heading">
-                                <span>Strict</span>
-                                <span>{{ config.searchEngineThreshold }}</span>
-                                <span>Fuzzy</span>
-                            </div>
-                            <input class="setting-text-input" type="range" v-model="config.searchEngineThreshold" min="0" max="1" step="0.05" v-on:change="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Search result description font size</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="number" v-model="config.searchResultDescriptionFontSize" min="0" v-on:blur="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Search result height</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="number" v-model="config.searchResultHeight" min="0" v-on:blur="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Search result name font size</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="number" v-model="config.searchResultNameFontSize" min="0" v-on:blur="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group" v-if="config.features.shortcuts">
-                        <div class="setting-title">Shortcuts</div>
-                        <div class="setting">
-                            <table class="setting-table">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Execution argument</th>
-                                        <th>Icon</th>
-                                        <th class="text-center">Preview</th>
-                                        <th class="text-center">+/-</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="shortcut in config.shortcuts">
-                                        <td><input class="setting-text-input" type="text" v-model="shortcut.name" v-on:blur="updateUserConfig"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="shortcut.executionArgument" v-on:blur="updateUserConfig"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="shortcut.icon" v-on:blur="updateUserConfig"></td>
-                                        <td class="text-center" v-html="shortcut.icon"></td>
-                                        <td class="text-center">
-                                            <svg class="setting-action-icon" v-on:click="settingsActionRemoveShortcut(shortcut)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
-                                                <g id="surface1">
-                                                    <path d="M 13.5 3.1875 C 7.804688 3.1875 3.1875 7.804688 3.1875 13.5 C 3.1875 19.195313 7.804688 23.8125 13.5 23.8125 C 19.195313 23.8125 23.8125 19.195313 23.8125 13.5 C 23.8125 7.804688 19.195313 3.1875 13.5 3.1875 Z M 19 15 L 8 15 L 8 12 L 19 12 Z "></path>
-                                                </g>
-                                            </svg>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="setting-text-input" type="text" v-model="configEdit.newShortcut.name" placeholder="Name"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="configEdit.newShortcut.executionArgument" placeholder="Execution argument"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="configEdit.newShortcut.icon" placeholder="Icon"></td>
-                                        <td class="text-center" v-html="configEdit.newShortcut.icon"></td>
-                                        <td class="text-center">
-                                            <svg class="setting-action-icon" v-on:click="settingsActionAddShortcut(configEdit.newShortcut)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
-                                                <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
-                                            </svg>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Show search result number</div>
-                        <div class="setting">
-                            <input type="checkbox" v-model="config.showSearchResultNumber" v-on:change="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Show tray icon</div>
-                        <div class="setting">
-                            <input type="checkbox" v-model="config.showTrayIcon" v-on:change="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Smooth scrolling</div>
-                        <div class="setting">
-                            <input type="checkbox" v-model="config.smoothScrolling" v-on:change="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">User input font size</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="number" v-model="config.userInputFontSize" min="0" v-on:blur="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">User input height</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="number" v-model="config.userInputHeight" min="0" v-on:blur="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">User stylesheet</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="text" v-model="config.userStylesheet" placeholder="Add a file path to your custom stylesheet" v-on:blur="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group" v-if="config.features.webSearch">
-                        <div class="setting-title">Web search engines</div>
-                        <div class="setting">
-                            <table class="setting-table">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Prefix</th>
-                                        <th>Url</th>
-                                        <th>Icon</th>
-                                        <th class="text-center">Preview</th>
-                                        <th class="text-center">+/-</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="webSearch in config.webSearches">
-                                        <td><input class="setting-text-input" type="text" v-model="webSearch.name" v-on:blur="updateUserConfig"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="webSearch.prefix" v-on:blur="updateUserConfig"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="webSearch.url" v-on:blur="updateUserConfig"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="webSearch.icon" v-on:blur="updateUserConfig"></td>
-                                        <td class="text-center" v-html="webSearch.icon"></td>
-                                        <td class="text-center">
-                                            <svg class="setting-action-icon" v-on:click="settingsActionRemoveWebSearch(webSearch)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
-                                                <g id="surface1">
-                                                    <path d="M 13.5 3.1875 C 7.804688 3.1875 3.1875 7.804688 3.1875 13.5 C 3.1875 19.195313 7.804688 23.8125 13.5 23.8125 C 19.195313 23.8125 23.8125 19.195313 23.8125 13.5 C 23.8125 7.804688 19.195313 3.1875 13.5 3.1875 Z M 19 15 L 8 15 L 8 12 L 19 12 Z "></path>
-                                                </g>
-                                            </svg>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.name" placeholder="Name"></td>
-                                        <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.prefix" placeholder="Prefix"></td>
-                                        <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.url" placeholder="URL"></td>
-                                        <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.icon" placeholder="Icon"></td>
-                                        <td class="text-center" v-html="configEdit.newWebSearch.icon"></td>
-                                        <td class="text-center">
-                                            <svg class="setting-action-icon" v-on:click="settingsActionAddWebSearch(configEdit.newWebSearch)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
-                                                <path d="M13.5,3.188C7.805,3.188,3.188,7.805,3.188,13.5S7.805,23.813,13.5,23.813S23.813,19.195,23.813,13.5 S19.195,3.188,13.5,3.188z M19,15h-4v4h-3v-4H8v-3h4V8h3v4h4V15z"></path>
-                                            </svg>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Window max height</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="number" v-model="config.windowMaxHeight" min="config.userInputHeight" v-on:blur="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Window width</div>
-                        <div class="setting">
-                            <input class="setting-text-input" type="number" v-model="config.windowWidth" v-on:blur="updateUserConfig">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="setting-title">Reset user settings to default</div>
-                        <div class="setting">
-                            <button class="setting-button" v-on:click="resetUserConfigToDefault">Reset</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
+      <div class="search-results-container" v-if="searchResults.length > 0">
+        <div :id="searchResult.id" class="search-result" :style="searchResultStyle()" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults" v-on:click="handleClick" v-on:mousemove="handleMouseMove">
+          <div class="search-result-icon">
+            <div class="search-result-icon-container" :style="searchResultIconStyle()" :class="{ 'active' : searchResult.active }" v-html="searchResult.icon"></div>
+          </div>
+          <div class="search-result-information">
+            <span class="search-result-item search-result-name" :style="searchResultNameStyle()" :class="{ 'active' : searchResult.active }">
+              {{ searchResult.name }}
+            </span>
+            <span class="search-result-item search-result-description" :style="searchResultDescriptionStyle()" :class="{ 'active' : searchResult.active }">
+              {{ searchResult.description }}
+            </span>
+          </div>
+          <div v-if="config.showSearchResultNumber" class="search-result-number-container">
+            #{{ searchResult.index }}
+          </div>
         </div>
+      </div>
+
+      <div class="settings-container" v-if="settingsVisible">
+        <svg v-on:click="handleCloseSettingsIconClick" class="close-settings-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+          <path d="M 2,27 5.4359577,30 16,19 27,30 30,27 19,16 30,5 27,2 16,13 5,2 2,5 13,16 Z"></path>
+        </svg>
+        <h1 class="setting-section-title">App Settings</h1>
+        <div class="setting-group">
+          <div class="setting-title">Info</div>
+          <div class="setting">
+            <div>ueli: {{ version }}</div>
+            <div>Electron: {{ process.versions.electron }}</div>
+            <div>Chrome: {{ process.versions.chrome }}</div>
+            <div>Node: {{ process.versions.node }}</div>
+            <div>V8: {{ process.versions.v8 }}</div>
+            <div>Index size: {{ indexLength }}</div>
+          </div>
+        </div>
+        <div class="setting-group">
+          <div class="setting-title">Update</div>
+          <div class="setting">
+            <div v-if="(updateAvailable || noUpdateFound) === false" class="sub-setting">
+              <button v-on:click="handleCheckForUpdateButtonClick" class="setting-button">Check for update</button>
+              <span v-if="errorOnUpdateCheck" class="message text-error">There was an error while checking for updates :(</span>
+            </div>
+            <div v-if="updateAvailable" class="sub-setting">
+              <button v-if="updateAvailable && !downloadingUpdate" v-on:click="handleDownloadUpdateButtonClick" class="setting-button">Download & install update</button>
+              <button v-if="updateAvailable && downloadingUpdate" class="setting-button">Downloading...</button>
+            </div>
+            <div v-if="noUpdateFound">Your are running the latest version</div>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-config-file-path">Config file path</label>
+          <span class="setting">
+            <input id="set-config-file-path" class="setting-text-input" type="text" v-model="appConfig.userSettingsFilePath" v-on:blur="updateAppConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <span class="setting-title">Reset app settings to default</span>
+          <span class="setting">
+            <button class="setting-button" v-on:click="resetAppConfigToDefault">Reset</button>
+          </span>
+        </div>
+
+        <h1 class="setting-section-title">User Settings</h1>
+        <div class="setting-group">
+          <label class="setting-title" for="set-mouse-interaction">Allow mouse interaction</label>
+          <span class="setting">
+            <input id="set-mouse-interaction" type="checkbox" v-model="config.allowMouseInteraction" v-on:change="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-always-primary">Always show on primary display</label>
+          <span class="setting">
+            <input id="set-always-primary" type="checkbox" v-model="config.alwaysShowOnPrimaryDisplay" v-on:change="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group" v-if="config.features.programs">
+          <div class="setting-title">
+            <label for="set-another-app-extension">Application file extensionsa</label>
+          </div>
+          <div class="setting">
+            <div class="sub-setting" v-for="(applicationFileExtension, index) in config.applicationFileExtensions">
+              <label class="sub-setting-label">
+                <input class="setting-text-input" type="text" v-model="config.applicationFileExtensions[index]" v-on:blur="updateUserConfig" />
+              </label>
+              <svg v-on:click="settingsActionRemoveApplicationFileExtension(applicationFileExtension)" class="setting-action-icon sub-setting-icon">
+                <use xlink:href="#svg-icon-del"></use>
+              </svg>
+            </div>
+            <div class="sub-setting">
+              <label class="sub-setting-label">
+                <input id="set-another-app-extension" class="setting-text-input" v-model="configEdit.newApplicationFileExtension" type="text" placeholder="Add another application file extension" />
+              </label>
+              <svg v-on:click="settingsActionAddApplicationFileExtension(configEdit.newApplicationFileExtension)" class="setting-action-icon sub-setting-icon">
+                <use xlink:href="#svg-icon-add"></use>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="setting-group" v-if="config.features.programs">
+          <div class="setting-title">
+            <label for="set-another-app-folder">Application folders</label>
+          </div>
+          <div class="setting">
+            <div class="sub-setting" v-for="(applicationFolder, index) in config.applicationFolders">
+              <label class="sub-setting-label">
+                <input class="setting-text-input" type="text" v-model="config.applicationFolders[index]" v-on:blur="updateUserConfig" />
+              </label>
+              <svg v-on:click="settingsActionRemoveApplicationFolder(applicationFolder)" class="setting-action-icon sub-setting-icon">
+                <use xlink:href="#svg-icon-del"></use>
+              </svg>
+            </div>
+            <div class="sub-setting">
+              <label class="sub-setting-label">
+                <input id="set-another-app-folder" class="setting-text-input" v-model="configEdit.newApplicationFolder" type="text" placeholder="Add another application folder" />
+              </label>
+              <svg v-on:click="settingsActionAddApplicationFolder(configEdit.newApplicationFolder)" class="setting-action-icon sub-setting-icon">
+                <use xlink:href="#svg-icon-add"></use>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-autostart">Autostart app</label>
+          <span class="setting">
+            <input id="set-autostart" type="checkbox" v-model="config.autoStartApp" v-on:change="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-color-theme">Color theme</label>
+          <span class="setting">
+            <select id="set-color-theme" class="setting-select" v-model="config.colorTheme" v-on:change="updateUserConfig">
+              <option v-for="availableColorTheme in availableColorThemes" :value="availableColorTheme">{{ availableColorTheme }}</option>
+            </select>
+          </span>
+        </div>
+        <div class="setting-group" v-if="config.features.customCommands">
+          <div class="setting-title">
+            <label for="set-another-custom-command">Custom commands</label>
+          </div>
+          <div class="setting">
+            <table class="setting-table">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>ExecutionArgument</th>
+                <th>Prefix</th>
+                <th>Icon</th>
+                <th class="text-center">Preview</th>
+                <th class="text-center">+/-</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="customCommand in config.customCommands">
+                <td>
+                  <label>
+                    <input class="setting-text-input" type="text" v-model="customCommand.name" v-on:blur="updateUserConfig" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input class="setting-text-input" type="text" v-model="customCommand.executionArgument" v-on:blur="updateUserConfig" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input class="setting-text-input" type="text" v-model="customCommand.prefix" v-on:blur="updateUserConfig" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input class="setting-text-input" type="text" v-model="customCommand.icon" v-on:blur="updateUserConfig" />
+                  </label>
+                </td>
+                <td class="text-center" v-html="customCommand.icon"></td>
+                <td class="text-center">
+                  <svg v-on:click="settingsActionRemoveCustomCommand(customCommand)" class="setting-action-icon">
+                    <use xlink:href="#svg-icon-del"></use>
+                  </svg>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>
+                    <input id="set-another-custom-command" class="setting-text-input" v-model="configEdit.newCustomCommand.name" type="text" placeholder="Name" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input class="setting-text-input" v-model="configEdit.newCustomCommand.executionArgument" type="text" placeholder="Execution argument" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input class="setting-text-input" v-model="configEdit.newCustomCommand.prefix" type="text" placeholder="Prefix" />
+                  </label>
+                </td>
+                <td class="slim">
+                  <label>
+                    <input class="setting-text-input" v-model="configEdit.newCustomCommand.icon" type="text" placeholder="Icon" />
+                  </label>
+                </td>
+                <td class="text-center" v-html="configEdit.newCustomCommand.icon"></td>
+                <td class="text-center">
+                  <svg v-on:click="settingsActionAddCustomCommand(configEdit.newCustomCommand)" class="setting-action-icon">
+                    <use xlink:href="#svg-icon-add"></use>
+                  </svg>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="setting-group" v-if="config.features.webSearch">
+          <div class="setting-title">
+            <label for="set-fallback-web-searches">Fallback web searches</label>
+          </div>
+          <div class="setting">
+            <div class="sub-setting" v-for="fallbackWebSearch in config.fallbackWebSearches">
+              <label class="sub-setting-label">
+                <input disabled class="setting-text-input" type="text" v-model="fallbackWebSearch" />
+              </label>
+              <svg v-on:click="settingsActionRemoveFallbackWebSearch(fallbackWebSearch)" class="setting-action-icon sub-setting-icon">
+                <use xlink:href="#svg-icon-del"></use>
+              </svg>
+            </div>
+            <div v-if="config.fallbackWebSearches.length !== config.webSearches.length" class="sub-setting">
+              <label class="sub-setting-label">
+                <select id="set-fallback-web-searches" class="setting-select" v-model="configEdit.newFallbackWebSearch" v-on:change="settingsActionAddFallbackWebSearch(configEdit.newFallbackWebSearch)">
+                  <option selected value="">Select a web search engine</option>
+                  <option v-for="webSearch in getUnusedFallbackWebSearches()" :value="webSearch.name">{{ webSearch.name }}</option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="setting-group">
+          <div class="setting-title">Features</div>
+          <div class="setting">
+            <div class="sub-setting">
+              <table class="setting-table setting-table-bordered">
+                <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th class="text-center">Enabled</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>
+                    <label for="set-feature-calculator">Calculator</label>
+                  </td>
+                  <td class="text-center">
+                    <input id="set-feature-calculator" type="checkbox" v-model="config.features.calculator" v-on:change="updateUserConfig" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="set-feature-command-line">Command line</label>
+                  </td>
+                  <td class="text-center">
+                    <input id="set-feature-command-line" type="checkbox" v-model="config.features.commandLine" v-on:change="updateUserConfig" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="set-feature-custom-command">Custom commands</label>
+                  </td>
+                  <td class="text-center">
+                    <input id="set-feature-custom-command" type="checkbox" v-model="config.features.customCommands" v-on:change="updateUserConfig" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="set-feature-email">Email</label>
+                  </td>
+                  <td class="text-center">
+                    <input id="set-feature-email" type="checkbox" v-model="config.features.email" v-on:change="updateUserConfig" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="set-feature-environment-vars">Environment variables</label>
+                  </td>
+                  <td class="text-center">
+                    <input id="set-feature-environment-vars" type="checkbox" v-model="config.features.environmentVariables" v-on:change="updateUserConfig" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="set-feature-file-browser">File browser</label>
+                  </td>
+                  <td class="text-center">
+                    <input id="set-feature-file-browser" type="checkbox" v-model="config.features.fileBrowser" v-on:change="updateUserConfig" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="set-feature-file-search">File search</label>
+                  </td>
+                  <td class="text-center">
+                    <input id="set-feature-file-search" type="checkbox" v-model="config.features.fileSearch" v-on:change="updateUserConfig" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="set-feature-programs">Programs</label>
+                  </td>
+                  <td class="text-center">
+                    <input id="set-feature-programs" type="checkbox" v-model="config.features.programs" v-on:change="updateUserConfig" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="set-feature-os-commands">Operating system commands</label>
+                  </td>
+                  <td class="text-center">
+                    <input id="set-feature-os-commands" type="checkbox" v-model="config.features.operatingSystemCommands" v-on:change="updateUserConfig" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="set-feature-os-settings">Operating system settings</label>
+                  </td>
+                  <td class="text-center">
+                    <input id="set-feature-os-settings" type="checkbox" v-model="config.features.operatingSystemSettings" v-on:change="updateUserConfig" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="set-feature-shortcuts">Shortcuts</label>
+                  </td>
+                  <td class="text-center">
+                    <input id="set-feature-shortcuts" type="checkbox" v-model="config.features.shortcuts" v-on:change="updateUserConfig" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="set-feature-ueli-commands">Ueli commands</label>
+                  </td>
+                  <td class="text-center">
+                    <input id="set-feature-ueli-commands" type="checkbox" v-model="config.features.ueliCommands" v-on:change="updateUserConfig" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="set-feature-web-search">Web search</label>
+                  </td>
+                  <td class="text-center">
+                    <input id="set-feature-web-search" type="checkbox" v-model="config.features.webSearch" v-on:change="updateUserConfig" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="set-feature-web-url">Web URL</label>
+                  </td>
+                  <td class="text-center">
+                    <input id="set-feature-web-url" type="checkbox" v-model="config.features.webUrl" v-on:change="updateUserConfig" />
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="setting-group" v-if="config.features.fileSearch">
+          <div class="setting-title">
+            <label for="set-file-search-blacklist">File search black list</label>
+          </div>
+          <div class="setting">
+            <div class="sub-setting" v-for="(blackListEntry, index) in config.fileSearchBlackList">
+              <label class="sub-setting-label">
+                <input class="setting-text-input" type="text" v-model="config.fileSearchBlackList[index]" v-on:blur="updateUserConfig" />
+              </label>
+              <svg v-on:click="settingsActionRemoveFileSearchBlackListEntry(blackListEntry)" class="setting-action-icon sub-setting-icon">
+                <use xlink:href="#svg-icon-del"></use>
+              </svg>
+            </div>
+            <div class="sub-setting">
+              <label class="sub-setting-label">
+                <input id="set-file-search-blacklist" class="setting-text-input" v-model="configEdit.newFileSearchBlackListEntry" type="text" placeholder="Add another black list entry" />
+              </label>
+              <svg v-on:click="settingsActionAddFileSearchBlackListEntry(configEdit.newFileSearchBlackListEntry)" class="setting-action-icon sub-setting-icon">
+                <use xlink:href="#svg-icon-add"></use>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="setting-group" v-if="config.features.fileSearch">
+          <div class="setting-title">
+            <label for="set-another-folder-path">File search options</label>
+          </div>
+          <div class="setting">
+            <table class="setting-table">
+              <thead>
+              <tr>
+                <th>Folder path</th>
+                <th class="text-center">Recursive</th>
+                <th class="text-center">+/-</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="fileSearchOption in config.fileSearchOptions">
+                <td>
+                  <label>
+                    <input class="setting-text-input" type="text" v-model="fileSearchOption.folderPath" v-on:blur="updateUserConfig" />
+                  </label>
+                </td>
+                <td class="text-center slim">
+                  <label>
+                    <input type="checkbox" v-model="fileSearchOption.recursive" v-on:change="updateUserConfig" />
+                  </label>
+                </td>
+                <td class="text-center">
+                  <svg v-on:click="settingsActionRemoveFileSearchOption(fileSearchOption)" class="setting-action-icon">
+                    <use xlink:href="#svg-icon-del"></use>
+                  </svg>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>
+                    <input id="set-another-folder-path" class="setting-text-input" type="text" v-model="configEdit.newFileSearchOption.folderPath" placeholder="Add another folder path" />
+                  </label>
+                </td>
+                <td class="text-center">
+                  <label>
+                    <input type="checkbox" v-model="configEdit.newFileSearchOption.recursive" />
+                  </label>
+                </td>
+                <td class="text-center">
+                  <svg v-on:click="settingsActionAddFileSearchOption(configEdit.newFileSearchOption)" class="setting-action-icon">
+                    <use xlink:href="#svg-icon-add"></use>
+                  </svg>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-app-hotkey">Hotkey</label>
+          <span class="setting">
+            <input id="set-app-hotkey" class="setting-text-input" type="text" v-model="config.hotKey" v-on:blur="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <div class="setting-title">Icon set</div>
+          <div class="setting">
+            <table class="setting-table">
+              <thead>
+              <tr>
+                <th>Description</th>
+                <th class="text-center">Preview</th>
+                <th>HTML</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>
+                  <label for="set-icon-for-app">App icon</label>
+                </td>
+                <td class="text-center" v-html="config.iconSet.appIcon"></td>
+                <td>
+                  <input id="set-icon-for-app" class="setting-text-input" type="text" v-model="config.iconSet.appIcon" v-on:blur="updateUserConfig" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="set-icon-for-calculator">Calculator icon</label>
+                </td>
+                <td class="text-center" v-html="config.iconSet.calculatorIcon"></td>
+                <td>
+                  <input id="set-icon-for-calculator" class="setting-text-input" type="text" v-model="config.iconSet.calculatorIcon" v-on:blur="updateUserConfig" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="set-icon-for-comandline">Command line icon</label>
+                </td>
+                <td class="text-center" v-html="config.iconSet.commandLineIcon"></td>
+                <td>
+                  <input id="set-icon-for-comandline" class="setting-text-input" type="text" v-model="config.iconSet.commandLineIcon" v-on:blur="updateUserConfig" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="set-icon-for-email">Email icon</label>
+                </td>
+                <td class="text-center" v-html="config.iconSet.emailIcon"></td>
+                <td>
+                  <input id="set-icon-for-email" class="setting-text-input" type="text" v-model="config.iconSet.emailIcon" v-on:blur="updateUserConfig" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="set-icon-for-variable">Environment variable icon</label>
+                </td>
+                <td class="text-center" v-html="config.iconSet.environmentVariableIcon"></td>
+                <td>
+                  <input id="set-icon-for-variable" class="setting-text-input" type="text" v-model="config.iconSet.environmentVariableIcon" v-on:blur="updateUserConfig" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="set-icon-for-file">File icon</label>
+                </td>
+                <td class="text-center" v-html="config.iconSet.fileIcon"></td>
+                <td>
+                  <input id="set-icon-for-file" class="setting-text-input" type="text" v-model="config.iconSet.fileIcon" v-on:blur="updateUserConfig" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="set-icon-for-folder">Folder icon</label>
+                </td>
+                <td class="text-center" v-html="config.iconSet.folderIcon"></td>
+                <td>
+                  <input id="set-icon-for-folder" class="setting-text-input" type="text" v-model="config.iconSet.folderIcon" v-on:blur="updateUserConfig" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="set-icon-for-os-setting">Operating system settings icon</label>
+                </td>
+                <td class="text-center" v-html="config.iconSet.operatingSystemSettingsIcon"></td>
+                <td>
+                  <input id="set-icon-for-os-setting" class="setting-text-input" type="text" v-model="config.iconSet.operatingSystemSettingsIcon" v-on:blur="updateUserConfig" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="set-icon-for-search">Search icon</label>
+                </td>
+                <td class="text-center" v-html="config.iconSet.searchIcon"></td>
+                <td>
+                  <input id="set-icon-for-search" class="setting-text-input" type="text" v-model="config.iconSet.searchIcon" v-on:blur="updateUserConfig" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="set-icon-for-shortcurt">Shortcut icon</label>
+                </td>
+                <td class="text-center" v-html="config.iconSet.shortcutIcon"></td>
+                <td>
+                  <input id="set-icon-for-shortcurt" class="setting-text-input" type="text" v-model="config.iconSet.shortcutIcon" v-on:blur="updateUserConfig" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="set-icon-for-url">URL icon</label>
+                </td>
+                <td class="text-center" v-html="config.iconSet.urlIcon"></td>
+                <td>
+                  <input id="set-icon-for-url" class="setting-text-input" type="text" v-model="config.iconSet.urlIcon" v-on:blur="updateUserConfig" />
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-log-executions">Log execution</label>
+          <span class="setting">
+            <input id="set-log-executions" type="checkbox" v-model="config.logExecution" v-on:change="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-max-search-results">Maximum search result count</label>
+          <span class="setting">
+            <input id="set-max-search-results" class="setting-text-input" type="number" v-model="config.maxSearchResultCount" min="0" v-on:blur="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-rescan-interval">Rescan interval (in seconds)</label>
+          <span class="setting">
+            <input id="set-rescan-interval" class="setting-text-input" type="number" v-model="config.rescanInterval" min="5" v-on:blur="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-search-engine-limit">Search engine limit</label>
+          <span class="setting">
+            <input id="set-search-engine-limit" class="setting-text-input" type="number" v-model="config.searchEngineLimit" min="0" v-on:blur="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-search-engine-threshold">Search engine threshold</label>
+          <div class="setting setting-range">
+            <div class="setting-range-heading">
+              <span>Strict</span>
+              <span>{{ config.searchEngineThreshold }}</span>
+              <span>Fuzzy</span>
+             </div>
+             <input class="setting-text-input" id="set-search-engine-threshold" type="range" v-model="config.searchEngineThreshold" min="0" max="1" step="0.05" v-on:change="updateUserConfig">
+			</div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-result-description-fontsize">Search result description font size</label>
+          <span class="setting">
+            <input id="set-result-description-fontsize" class="setting-text-input" type="number" v-model="config.searchResultDescriptionFontSize" min="0" v-on:blur="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-result-height">Search result height</label>
+          <span class="setting">
+            <input id="set-result-height" class="setting-text-input" type="number" v-model="config.searchResultHeight" min="0" v-on:blur="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-result-title-fontsize">Search result name font size</label>
+          <span class="setting">
+            <input id="set-result-title-fontsize" class="setting-text-input" type="number" v-model="config.searchResultNameFontSize" min="0" v-on:blur="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group" v-if="config.features.shortcuts">
+          <div class="setting-title"><label for="set-another-shortcut-name">Shortcuts</label></div>
+          <div class="setting">
+            <table class="setting-table">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Execution argument</th>
+                <th>Icon</th>
+                <th class="text-center">Preview</th>
+                <th class="text-center">+/-</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="shortcut in config.shortcuts">
+                <td>
+                  <label>
+                    <input class="setting-text-input" type="text" v-model="shortcut.name" v-on:blur="updateUserConfig" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input class="setting-text-input" type="text" v-model="shortcut.executionArgument" v-on:blur="updateUserConfig" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input class="setting-text-input" type="text" v-model="shortcut.icon" v-on:blur="updateUserConfig" />
+                  </label>
+                </td>
+                <td class="text-center" v-html="shortcut.icon"></td>
+                <td class="text-center">
+                  <svg v-on:click="settingsActionRemoveShortcut(shortcut)" class="setting-action-icon">
+                    <use xlink:href="#svg-icon-del"></use>
+                  </svg>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>
+                    <input id="set-another-shortcut-name" class="setting-text-input" type="text" v-model="configEdit.newShortcut.name" placeholder="Name" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input class="setting-text-input" type="text" v-model="configEdit.newShortcut.executionArgument" placeholder="Execution argument" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input class="setting-text-input" type="text" v-model="configEdit.newShortcut.icon" placeholder="Icon" />
+                  </label>
+                </td>
+                <td class="text-center" v-html="configEdit.newShortcut.icon"></td>
+                <td class="text-center">
+                  <svg v-on:click="settingsActionAddShortcut(configEdit.newShortcut)" class="setting-action-icon">
+                    <use xlink:href="#svg-icon-add"></use>
+                  </svg>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-show-result-number">Show search result number</label>
+          <span class="setting">
+            <input id="set-show-result-number" type="checkbox" v-model="config.showSearchResultNumber" v-on:change="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-show-tray-icon">Show tray icon</label>
+          <span class="setting">
+            <input id="set-show-tray-icon" type="checkbox" v-model="config.showTrayIcon" v-on:change="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-smooth-scrolling">Smooth scrolling</label>
+          <span class="setting">
+            <input id="set-smooth-scrolling" type="checkbox" v-model="config.smoothScrolling" v-on:change="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-input-fontsize">User input font size</label>
+          <span class="setting">
+            <input id="set-input-fontsize" class="setting-text-input" type="number" v-model="config.userInputFontSize" min="0" v-on:blur="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-input-height">User input height</label>
+          <span class="setting">
+            <input id="set-input-height" class="setting-text-input" type="number" v-model="config.userInputHeight" min="0" v-on:blur="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-custom-stylesheet">User stylesheet</label>
+          <span class="setting">
+            <input id="set-custom-stylesheet" class="setting-text-input" type="text" v-model="config.userStylesheet" placeholder="Add a file path to your custom stylesheet" v-on:blur="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group" v-if="config.features.webSearch">
+          <div class="setting-title">
+            <label for="set-another-websearch">Web search engines</label>
+          </div>
+          <div class="setting">
+            <table class="setting-table">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Prefix</th>
+                <th>Url</th>
+                <th>Icon</th>
+                <th class="text-center">Preview</th>
+                <th class="text-center">+/-</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="webSearch in config.webSearches">
+                <td>
+                  <label>
+                    <input class="setting-text-input" type="text" v-model="webSearch.name" v-on:blur="updateUserConfig" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input class="setting-text-input" type="text" v-model="webSearch.prefix" v-on:blur="updateUserConfig" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input class="setting-text-input" type="text" v-model="webSearch.url" v-on:blur="updateUserConfig" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input class="setting-text-input" type="text" v-model="webSearch.icon" v-on:blur="updateUserConfig" />
+                  </label>
+                </td>
+                <td class="text-center" v-html="webSearch.icon"></td>
+                <td class="text-center">
+                  <svg v-on:click="settingsActionRemoveWebSearch(webSearch)" class="setting-action-icon">
+                    <use xlink:href="#svg-icon-del"></use>
+                  </svg>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>
+                    <input id="set-another-websearch" type="text" class="setting-text-input" v-model="configEdit.newWebSearch.name" placeholder="Name" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.prefix" placeholder="Prefix" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.url" placeholder="URL" />
+                  </label>
+                </td>
+                <td>
+                  <label>
+                    <input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.icon" placeholder="Icon" />
+                  </label>
+                </td>
+                <td class="text-center" v-html="configEdit.newWebSearch.icon"></td>
+                <td class="text-center">
+                  <svg v-on:click="settingsActionAddWebSearch(configEdit.newWebSearch)" class="setting-action-icon">
+                    <use xlink:href="#svg-icon-add"></use>
+                  </svg>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-window-height">Window max height</label>
+          <span class="setting">
+            <input id="set-window-height" class="setting-text-input" type="number" v-model="config.windowMaxHeight" min="config.userInputHeight" v-on:blur="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <label class="setting-title" for="set-window-width">Window width</label>
+          <span class="setting">
+            <input id="set-window-width" class="setting-text-input" type="number" v-model="config.windowWidth" v-on:blur="updateUserConfig" />
+          </span>
+        </div>
+        <div class="setting-group">
+          <div class="setting-title">Reset user settings to default</div>
+          <div class="setting">
+            <button class="setting-button" v-on:click="resetUserConfigToDefault">Reset</button>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <script>
-        require('./bundle/renderer.js');
-    </script>
+  </div>
+</div>
+
+<script>
+  require('./bundle/renderer.js');
+</script>
 </body>
 
 </html>
