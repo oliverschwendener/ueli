@@ -56,6 +56,14 @@ function startApp(): void {
     app.on("window-all-closed", quitApp);
 }
 
+function setMainWindowSize(width: number, height: number): void {
+    if (mainWindow !== undefined && !mainWindow.isDestroyed()) {
+        mainWindow.setResizable(true);
+        mainWindow.setSize(width, height);
+        mainWindow.setResizable(false);
+    }
+}
+
 function createMainWindow(): void {
     hideAppInDock();
 
@@ -64,10 +72,14 @@ function createMainWindow(): void {
         backgroundColor: "#00000000",
         center: true,
         frame: false,
+        fullscreen: false,
         height: WindowHelpers.calculateMaxWindowHeight(config.userInputHeight, config.maxSearchResultCount, config.searchResultHeight),
-        resizable: false,
+        maximizable: false,
+        minimizable: false,
+        resizable: true,
         show: false,
         skipTaskbar: true,
+        transparent: true,
         width: config.windowWidth,
     });
 
@@ -176,12 +188,12 @@ function toggleWindow(): void {
 function updateWindowSize(searchResultCount: number): void {
     if (mainWindow !== undefined && !mainWindow.isDestroyed()) {
         const newWindowHeight = WindowHelpers.calculateWindowHeight(searchResultCount, config.maxSearchResultCount, config.userInputHeight, config.searchResultHeight);
-        mainWindow.setSize(config.windowWidth, newWindowHeight);
+        setMainWindowSize(config.windowWidth, newWindowHeight);
     }
 }
 
 function setWindowHeightToMax(): void {
-    mainWindow.setSize(config.windowWidth, config.windowMaxHeight);
+    setMainWindowSize(config.windowWidth, config.windowMaxHeight);
 }
 
 function showWindow() {
@@ -224,7 +236,7 @@ function reloadApp(preventMainWindowReload?: boolean, preventWindowSizeReset?: b
     if (!preventWindowSizeReset) {
         resetWindowToDefaultSizeAndPosition();
     } else {
-        mainWindow.setSize(config.windowWidth, config.windowMaxHeight);
+        setMainWindowSize(config.windowWidth, config.windowMaxHeight);
         mainWindow.center();
     }
 
