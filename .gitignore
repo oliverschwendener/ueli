@@ -1,6 +1,12 @@
 .DS_Store
+.idea
+.yarnclean
 
 ueli.count.json
+ueli.config.json
+
+#resources
+_resources/
 
 #Bundled files
 bundle/
@@ -66,4 +72,7 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# local vscode settings
+.vscode/settings.json
 
