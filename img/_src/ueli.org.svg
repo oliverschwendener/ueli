@@ -1,0 +1,7 @@
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" id="svg" viewBox="0 0 512 512" sodipodi:docname="ueli.svg" width="512" height="512" inkscape:version="0.92.3 (2405546, 2018-03-11)">
+ <defs id="defs" />
+ <sodipodi:namedview pagecolor="#fff" bordercolor="#666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" id="base" showgrid="true" inkscape:current-layer="svg">
+  <inkscape:grid type="xygrid" id="grid" />
+ </sodipodi:namedview>
+ <path id="p" d="m47 101 71-41c5.1-3 11-3 16 0l70 42c5 3 9 7.1 9 13v162.8c0 12.7 13.1 20.5 24 14.2l54-31c5.1-3 8-8.1 8-14v-182c0-5.9 1.9-11 7-14l72-41c5.1-3 12-3 17 0l70 41c5.1 3 8 8.1 8 14v282c0 5.9-2.9 11-8 14l-244 141c-5.1 3-11 3-16 0l-158-91c-5.1-3-8-8.1-8-14v-282c.1-5.8 3-11.1 8-14z"/>
+</svg>
