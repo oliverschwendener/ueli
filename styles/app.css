@@ -170,29 +170,20 @@ body {
 .setting {
   width: 72%;
 }
-<<<<<<< HEAD
-
-div.setting.setting-range {
+.setting-range {
     display: flex;
     flex-direction: column;
 }
-
-div.setting-range-heading {
+.setting-range-heading {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-div.sub-setting {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-=======
 .sub-setting {
   align-items: center;
   display: flex;
   flex-direction: row;
->>>>>>> origin/master
 }
 .sub-setting-label {
   box-sizing: border-box;
