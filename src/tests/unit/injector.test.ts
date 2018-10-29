@@ -97,6 +97,7 @@ describe(Injector.name, () => {
 
             try {
                 const regexp = new RegExp(webUrlRegexp);
+                regexp.test(""); // just to ignore tsconfig 'noUnusedLocals' rule
                 regexIsValid = true;
             } catch (error) {
                 regexIsValid = false;
