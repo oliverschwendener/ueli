@@ -8,10 +8,10 @@ import { FileSearchOption } from "../file-search-option";
 import { FilePathDescriptionBuilder } from "../builders/file-path-description-builder";
 
 export class FileSearchPlugin implements SearchPlugin {
-    private fileSearchOptions: FileSearchOption[];
-    private items: SearchResultItem[];
-    private iconSet: IconSet;
-    private blackList: string[];
+    private readonly fileSearchOptions: FileSearchOption[];
+    private readonly items: SearchResultItem[];
+    private readonly iconSet: IconSet;
+    private readonly blackList: string[];
 
     public constructor(fileSearchOptions: FileSearchOption[], iconSet: IconSet, blackList: string[]) {
         this.fileSearchOptions = fileSearchOptions;

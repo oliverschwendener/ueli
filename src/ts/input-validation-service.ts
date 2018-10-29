@@ -5,8 +5,8 @@ import { FallbackWebSearchSercher } from "./searcher/fallback-web-search-searche
 import { UserConfigOptions } from "./user-config/user-config-options";
 
 export class InputValidationService {
-    private configOptions: UserConfigOptions;
-    private validatorSearcherCombinations: InputValidatorSearcherCombination[];
+    private readonly configOptions: UserConfigOptions;
+    private readonly validatorSearcherCombinations: InputValidatorSearcherCombination[];
 
     public constructor(configOptions: UserConfigOptions, validatorSearcherCombinations: InputValidatorSearcherCombination[]) {
         this.configOptions = configOptions;

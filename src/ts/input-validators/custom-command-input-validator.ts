@@ -3,7 +3,7 @@ import { CustomCommand } from "../custom-shortcut";
 import { StringHelpers } from "../helpers/string-helpers";
 
 export class CustomCommandInputValidator implements InputValidator {
-    private customCommands: CustomCommand[];
+    private readonly customCommands: CustomCommand[];
 
     constructor(customCommands: CustomCommand[]) {
         this.customCommands = customCommands;

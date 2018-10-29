@@ -6,8 +6,8 @@ import { SearchPlugin } from "./search-plugin";
 import { FilePathDescriptionBuilder } from "../builders/file-path-description-builder";
 
 export class ProgramsPlugin implements SearchPlugin {
-    private programs: Program[];
-    private iconSet: IconSet;
+    private readonly programs: Program[];
+    private readonly iconSet: IconSet;
 
     public constructor(programRepository: ProgramRepository, iconSet: IconSet) {
         this.iconSet = iconSet;

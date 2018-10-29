@@ -4,8 +4,8 @@ import { WebSearch } from "../web-search";
 import { WebSearchBuilder } from "../builders/web-search-builder";
 
 export class FallbackWebSearchSercher implements Searcher {
-    private fallbackWebSearches: string[];
-    private webSearches: WebSearch[];
+    private readonly fallbackWebSearches: string[];
+    private readonly webSearches: WebSearch[];
 
     constructor(fallbackWebSearches: string[], webSearches: WebSearch[]) {
         this.fallbackWebSearches = fallbackWebSearches;

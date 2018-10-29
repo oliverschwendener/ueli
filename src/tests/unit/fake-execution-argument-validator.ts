@@ -1,7 +1,7 @@
 import { ExecutionArgumentValidator } from "../../ts/execution-argument-validators/execution-argument-validator";
 
 export class FakeExecutionArgumentValidator implements ExecutionArgumentValidator {
-    private returnValue: boolean;
+    private readonly returnValue: boolean;
 
     constructor(returnValue: boolean) {
         this.returnValue = returnValue;

@@ -3,7 +3,7 @@ import { Count } from "./count";
 import { readFileSync, writeFileSync, existsSync } from "fs";
 
 export class CountFileRepository implements CountRepository {
-    private countFilePath: string;
+    private readonly countFilePath: string;
 
     constructor(countFilePath: string) {
         this.countFilePath = countFilePath;

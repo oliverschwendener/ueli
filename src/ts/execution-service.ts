@@ -4,10 +4,10 @@ import { UserConfigOptions } from "./user-config/user-config-options";
 import { IpcEmitter } from "./ipc-emitter";
 
 export class ExecutionService {
-    private validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[];
-    private countManager: CountManager;
-    private config: UserConfigOptions;
-    private ipcEmitter: IpcEmitter;
+    private readonly validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[];
+    private readonly countManager: CountManager;
+    private readonly config: UserConfigOptions;
+    private readonly ipcEmitter: IpcEmitter;
 
     public constructor(validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[], countManager: CountManager, config: UserConfigOptions, ipcEmitter: IpcEmitter) {
         this.config = config;

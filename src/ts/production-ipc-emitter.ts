@@ -3,7 +3,7 @@ import { ipcMain } from "electron";
 import { IpcChannels } from "./ipc-channels";
 
 export class ProductionIpcEmitter implements IpcEmitter {
-    private windowHideDelayInMilliSeconds = 50;
+    private readonly windowHideDelayInMilliSeconds = 50;
 
     public emitResetUserInput(): void {
         ipcMain.emit(IpcChannels.resetUserInput);

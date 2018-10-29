@@ -18,7 +18,7 @@ import { ipcMain } from "electron";
 import { IpcChannels } from "./ipc-channels";
 
 export class SearchPluginManager {
-    private plugins: SearchPlugin[];
+    private readonly plugins: SearchPlugin[];
 
     public constructor(config: UserConfigOptions, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }) {
         this.plugins = [];

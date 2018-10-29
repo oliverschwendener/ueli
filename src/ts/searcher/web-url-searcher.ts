@@ -3,7 +3,7 @@ import { Searcher } from "./searcher";
 import { IconSet } from "../icon-sets/icon-set";
 
 export class WebUrlSearcher implements Searcher {
-    private iconSet: IconSet;
+    private readonly iconSet: IconSet;
 
     constructor(iconSet: IconSet) {
         this.iconSet = iconSet;

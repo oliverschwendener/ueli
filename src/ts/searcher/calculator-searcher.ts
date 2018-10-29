@@ -5,7 +5,7 @@ import * as math from "mathjs";
 import { IconSet } from "../icon-sets/icon-set";
 
 export class CalculatorSearcher implements Searcher {
-    private iconSet: IconSet;
+    private readonly iconSet: IconSet;
 
     constructor(iconSet: IconSet) {
         this.iconSet = iconSet;

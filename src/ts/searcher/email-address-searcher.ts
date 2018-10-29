@@ -3,7 +3,7 @@ import { SearchResultItem } from "../search-result-item";
 import { IconSet } from "../icon-sets/icon-set";
 
 export class EmailAddressSearcher implements Searcher {
-    private iconSet: IconSet;
+    private readonly iconSet: IconSet;
 
     constructor(iconSet: IconSet) {
         this.iconSet = iconSet;

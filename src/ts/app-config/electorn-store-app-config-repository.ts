@@ -3,9 +3,9 @@ import Store = require("electron-store");
 import { AppConfig } from "./app-config";
 
 export class ElectronStoreAppConfigRepository implements AppConfigRepository {
-    private store: Store;
-    private configKey = "app-config";
-    private defaultAppConfig: AppConfig;
+    private readonly store: Store;
+    private readonly configKey = "app-config";
+    private readonly defaultAppConfig: AppConfig;
 
     constructor(defaultAppConfig: AppConfig) {
         this.defaultAppConfig = defaultAppConfig;

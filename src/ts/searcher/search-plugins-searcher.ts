@@ -7,9 +7,9 @@ import { CountManager } from "../count/count-manager";
 import { IconSet } from "../icon-sets/icon-set";
 
 export class SearchPluginsSearcher implements Searcher {
-    private items: SearchResultItem[];
-    private countManager: CountManager;
-    private config: UserConfigOptions;
+    private readonly items: SearchResultItem[];
+    private readonly countManager: CountManager;
+    private readonly config: UserConfigOptions;
 
     constructor(config: UserConfigOptions, countManager: CountManager, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }) {
         this.config = config;
