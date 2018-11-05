@@ -93,7 +93,9 @@ describe(FileSearchPlugin.name, (): void => {
             const plugin = new FileSearchPlugin(options, testIconSet, emptyBlackList);
             const actual = plugin.getAllItems();
             const actualLength = actual.length;
-            const expectedLength = (parentFolders.length * subFolders.length * testFiles.length) + (parentFolders.length * testFiles.length);
+            const expectedLength = (parentFolders.length * subFolders.length * testFiles.length)
+                + (parentFolders.length * testFiles.length)
+                + (parentFolders.length * subFolders.length);
 
             expect(actualLength).toBe(expectedLength);
         });

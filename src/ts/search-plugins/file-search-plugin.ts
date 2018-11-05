@@ -30,11 +30,12 @@ export class FileSearchPlugin implements SearchPlugin {
 
     private loadFilesAndFolders(): SearchResultItem[] {
         const result = [] as SearchResultItem[];
+        const includeFolders = true;
 
         if (this.fileSearchOptions.length > 0) {
             for (const option of this.fileSearchOptions) {
                 const filePaths = option.recursive
-                    ? FileHelpers.getFilesFromFolderRecursively(option.folderPath, this.blackList)
+                    ? FileHelpers.getFilesFromFolderRecursively(option.folderPath, this.blackList, includeFolders)
                     : FileHelpers.getFilesFromFolder(option.folderPath);
 
                 for (const filePath of filePaths) {
