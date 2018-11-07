@@ -3,9 +3,9 @@ import { Executor } from "./executor";
 import { WindowsSettingsHelpers } from "../helpers/windows-settings-helpers";
 
 export class WindowsSettingsExecutor implements Executor {
-    public hideAfterExecution = true;
-    public resetUserInputAfterExecution = true;
-    public logExecution = true;
+    public readonly hideAfterExecution = true;
+    public readonly resetUserInputAfterExecution = true;
+    public readonly logExecution = true;
 
     public execute(executionArgument: string): void {
         const command = this.replacePrefix(executionArgument);

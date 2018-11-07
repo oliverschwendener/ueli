@@ -7,6 +7,8 @@ import { CountManager } from "../count/count-manager";
 import { IconSet } from "../icon-sets/icon-set";
 
 export class SearchPluginsSearcher implements Searcher {
+    public readonly blockOthers = false;
+
     private readonly items: SearchResultItem[];
     private readonly countManager: CountManager;
     private readonly config: UserConfigOptions;

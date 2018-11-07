@@ -3,9 +3,9 @@ import { MacOsSettingsHelpers } from "../helpers/mac-os-settings.helpers";
 import { exec } from "child_process";
 
 export class MacOsSettingsExecutor implements Executor {
-    public hideAfterExecution = true;
-    public resetUserInputAfterExecution = true;
-    public logExecution = true;
+    public readonly hideAfterExecution = true;
+    public readonly resetUserInputAfterExecution = true;
+    public readonly logExecution = true;
 
     public execute(executionArgument: string): void {
         const command = this.replacePrefix(executionArgument);

@@ -24,7 +24,12 @@ export class InputValidationService {
 
         for (const combination of this.validatorSearcherCombinations) {
             if (combination.validator.isValidForSearchResults(trimmedUserInput)) {
-                result = result.concat(combination.searcher.getSearchResult(trimmedUserInput));
+                if (combination.searcher.blockOthers) {
+                    result = combination.searcher.getSearchResult(trimmedUserInput);
+                    break;
+                } else {
+                    result = result.concat(combination.searcher.getSearchResult(trimmedUserInput));
+                }
             }
         }
 

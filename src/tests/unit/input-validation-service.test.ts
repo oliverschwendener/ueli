@@ -9,6 +9,7 @@ import { WebSearchBuilder } from "../../ts/builders/web-search-builder";
 describe(InputValidationService.name, (): void => {
     const config = {
         fallbackWebSearches: [] as string[],
+        webSearches: [] as WebSearch[],
     } as UserConfigOptions;
 
     describe("getSearchResults", () => {
@@ -21,17 +22,19 @@ describe(InputValidationService.name, (): void => {
                 null,
             ];
 
+            const shouldBlockOtherSearchers = false;
+
             const combinations = [
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 1" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 1" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(true),
                 },
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 2" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 2" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 3" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 3" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
             ];
@@ -51,17 +54,18 @@ describe(InputValidationService.name, (): void => {
         });
 
         it("should return an empty array if user input matches none of the searchers", (): void => {
+            const shouldBlockOtherSearchers = false;
             const combinations = [
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 1" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 1" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 2" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 2" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 3" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 3" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
             ];
@@ -74,17 +78,18 @@ describe(InputValidationService.name, (): void => {
         });
 
         it("should return all items if user input matches all searchers", (): void => {
+            const shouldBlockOtherSearchers = false;
             const combinations = [
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 1" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 1" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(true),
                 },
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 2" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 2" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(true),
                 },
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 3" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 3" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(true),
                 },
             ];
@@ -96,17 +101,18 @@ describe(InputValidationService.name, (): void => {
         });
 
         it("should return only the items that match the user input", (): void => {
+            const shouldBlockOtherSearchers = false;
             const combinations = [
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 1" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 1" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 2" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 2" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(true),
                 },
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 3" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 3" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
             ];
@@ -120,17 +126,18 @@ describe(InputValidationService.name, (): void => {
         });
 
         it("should return empty search result if no fallback search results are defined and user input does not match any searcher", (): void => {
+            const shouldBlockOtherSearchers = false;
             const combinations = [
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 1" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 1" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 2" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 2" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 3" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 3" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
             ];
@@ -155,17 +162,19 @@ describe(InputValidationService.name, (): void => {
             config.fallbackWebSearches = [fallBackWebSearchName];
             config.webSearches = [webSearch];
 
+            const shouldBlockOtherSearchers = false;
+
             const combinations = [
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 1" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 1" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 2" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 2" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 3" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 3" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
             ];
@@ -189,17 +198,18 @@ describe(InputValidationService.name, (): void => {
             config.fallbackWebSearches = [fallBackWebSearchName];
             config.webSearches = [webSearch];
 
+            const shouldBlockOtherSearchers = false;
             const combinations = [
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 1" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 1" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 2" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 2" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
                 {
-                    searcher: new FakeSearcher([{ name: "Search Result 3" }] as SearchResultItem[]),
+                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 3" }] as SearchResultItem[]),
                     validator: new FakeInputValidator(false),
                 },
             ];
@@ -211,6 +221,30 @@ describe(InputValidationService.name, (): void => {
             expect(actual.length).toBe(1);
             expect(actual[0].name).toBe(WebSearchBuilder.buildSearchResultItem(userInput, webSearch).name);
             expect(actual[0].executionArgument).toBe(`${fallBackWebSearchUrl}${userInput}`);
+        });
+
+        it("should only return search results from first blocking searcher", (): void => {
+            const combinations = [
+                {
+                    searcher: new FakeSearcher(false, [{ name: "Search Result 1" }] as SearchResultItem[]),
+                    validator: new FakeInputValidator(true),
+                },
+                {
+                    searcher: new FakeSearcher(false, [{ name: "Search Result 2" }] as SearchResultItem[]),
+                    validator: new FakeInputValidator(true),
+                },
+                {
+                    searcher: new FakeSearcher(true, [{ name: "Search Result 3" }] as SearchResultItem[]),
+                    validator: new FakeInputValidator(true),
+                },
+            ];
+
+            const userInput = "search";
+
+            const searchResults = new InputValidationService(config, combinations).getSearchResult(userInput);
+
+            expect(searchResults.length).toBe(1);
+            expect(searchResults[0].name).toBe("Search Result 3");
         });
     });
 });

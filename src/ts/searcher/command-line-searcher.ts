@@ -4,6 +4,8 @@ import { CommandLineHelpers } from "../helpers/command-line-helpers";
 import { IconSet } from "../icon-sets/icon-set";
 
 export class CommandLineSearcher implements Searcher {
+    public readonly blockOthers = true;
+
     private readonly iconSet: IconSet;
 
     constructor(iconSet: IconSet) {

@@ -8,6 +8,8 @@ import { FilePathDescriptionBuilder } from "../builders/file-path-description-bu
 import { IconSet } from "../icon-sets/icon-set";
 
 export class FilePathSearcher implements Searcher {
+    public readonly blockOthers = true;
+
     private readonly iconSet: IconSet;
     private readonly searchEngineThreshold: number;
     private readonly searchEngineLimit: number;

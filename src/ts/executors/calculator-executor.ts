@@ -4,9 +4,9 @@ import { StringHelpers } from "../helpers/string-helpers";
 import { clipboard } from "electron";
 
 export class CalculatorExecutor implements Executor {
-    public hideAfterExecution = true;
-    public resetUserInputAfterExecution = true;
-    public logExecution = true;
+    public readonly hideAfterExecution = true;
+    public readonly resetUserInputAfterExecution = true;
+    public readonly logExecution = true;
 
     public execute(executionArgument: string): void {
         const prefix = CalculatorHelper.getExecutionArgumentPrefix;

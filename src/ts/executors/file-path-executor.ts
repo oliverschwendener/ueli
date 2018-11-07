@@ -4,9 +4,9 @@ import { Executor } from "./executor";
 import { platform } from "os";
 
 export class FilePathExecutor implements Executor {
-    public hideAfterExecution = true;
-    public resetUserInputAfterExecution = true;
-    public logExecution = true;
+    public readonly hideAfterExecution = true;
+    public readonly resetUserInputAfterExecution = true;
+    public readonly logExecution = true;
 
     public execute(filePath: string): void {
         const command = Injector.getFileExecutionCommand(platform(), filePath);

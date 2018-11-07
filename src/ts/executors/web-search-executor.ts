@@ -6,9 +6,9 @@ import { WebSearchHelpers } from "../helpers/web-search-helper";
 import { WebSearch } from "../web-search";
 
 export class WebSearchExecutor implements Executor {
-    public hideAfterExecution = true;
-    public resetUserInputAfterExecution = true;
-    public logExecution = false;
+    public readonly hideAfterExecution = true;
+    public readonly resetUserInputAfterExecution = true;
+    public readonly logExecution = false;
 
     private readonly webSearches: WebSearch[];
 

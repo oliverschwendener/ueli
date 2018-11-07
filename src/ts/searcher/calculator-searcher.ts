@@ -5,6 +5,8 @@ import * as math from "mathjs";
 import { IconSet } from "../icon-sets/icon-set";
 
 export class CalculatorSearcher implements Searcher {
+    public readonly blockOthers = false;
+
     private readonly iconSet: IconSet;
 
     constructor(iconSet: IconSet) {

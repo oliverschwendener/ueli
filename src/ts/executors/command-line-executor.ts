@@ -5,9 +5,9 @@ import { Executor } from "./executor";
 import { IpcChannels } from "../ipc-channels";
 
 export class CommandLineExecutor implements Executor {
-    public hideAfterExecution = false;
-    public resetUserInputAfterExecution = true;
-    public logExecution = false;
+    public readonly hideAfterExecution = false;
+    public readonly resetUserInputAfterExecution = true;
+    public readonly logExecution = false;
 
     public execute(executionArgument: string): void {
         const command = CommandLineHelpers.buildCommand(executionArgument);
