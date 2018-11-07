@@ -19,15 +19,15 @@ export class ExecutionService {
     public execute(executionArgument: string): void {
         for (const combi of this.validatorExecutorCombinations) {
             if (combi.validator.isValidForExecution(executionArgument)) {
-                if (combi.executor.resetUserInputAfterExecution()) {
+                if (combi.executor.resetUserInputAfterExecution) {
                     this.ipcEmitter.emitResetUserInput();
                 }
 
-                if (combi.executor.logExecution() && this.config.logExecution) {
+                if (combi.executor.logExecution && this.config.logExecution) {
                     this.countManager.increaseCount(executionArgument);
                 }
 
-                if (combi.executor.hideAfterExecution()) {
+                if (combi.executor.hideAfterExecution) {
                     this.ipcEmitter.emitHideWindow();
                 }
 

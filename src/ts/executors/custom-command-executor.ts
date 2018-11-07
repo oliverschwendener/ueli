@@ -3,6 +3,10 @@ import { exec } from "child_process";
 import { UeliHelpers } from "../helpers/ueli-helpers";
 
 export class CustomCommandExecutor implements Executor {
+    public hideAfterExecution = true;
+    public resetUserInputAfterExecution = true;
+    public logExecution = true;
+
     public execute(executionArgument: string): void {
         executionArgument = executionArgument.replace(UeliHelpers.shortcutPrefix, "");
 
@@ -11,17 +15,5 @@ export class CustomCommandExecutor implements Executor {
                 throw err;
             }
         });
-    }
-
-    public hideAfterExecution(): boolean {
-        return true;
-    }
-
-    public resetUserInputAfterExecution(): boolean {
-        return true;
-    }
-
-    public logExecution(): boolean {
-        return true;
     }
 }

@@ -6,22 +6,14 @@ import { WebSearchHelpers } from "../helpers/web-search-helper";
 import { WebSearch } from "../web-search";
 
 export class WebSearchExecutor implements Executor {
+    public hideAfterExecution = true;
+    public resetUserInputAfterExecution = true;
+    public logExecution = false;
+
     private readonly webSearches: WebSearch[];
 
     constructor(webSearches: WebSearch[]) {
         this.webSearches = webSearches;
-    }
-
-    public hideAfterExecution(): boolean {
-        return true;
-    }
-
-    public resetUserInputAfterExecution(): boolean {
-        return true;
-    }
-
-    public logExecution(): boolean {
-        return false;
     }
 
     public execute(executionArgument: string): void {

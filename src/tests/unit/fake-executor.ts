@@ -2,31 +2,19 @@ import { Executor } from "../../ts/executors/executor";
 
 export class FakeExecutor implements Executor {
     public hasBeenExecuted: boolean;
-    private readonly shouldHideAfterExecution: boolean;
-    private readonly shouldResetUserInputAfterExecution: boolean;
-    private readonly shouldLogExecution: boolean;
+    public hideAfterExecution: boolean;
+    public logExecution: boolean;
+    public resetUserInputAfterExecution: boolean;
 
     constructor(shouldHideAfterExecution: boolean, shouldResetUserInputAfterExecution: boolean, shouldLogExecution: boolean) {
-        this.shouldHideAfterExecution = shouldHideAfterExecution;
-        this.shouldResetUserInputAfterExecution = shouldResetUserInputAfterExecution;
-        this.shouldLogExecution = shouldLogExecution;
+        this.hideAfterExecution = shouldHideAfterExecution;
+        this.logExecution = shouldLogExecution;
+        this.resetUserInputAfterExecution = shouldResetUserInputAfterExecution;
 
         this.hasBeenExecuted = false;
     }
 
     public execute(executionArgument: string): void {
         this.hasBeenExecuted = true;
-    }
-
-    public hideAfterExecution(): boolean {
-        return this.shouldHideAfterExecution;
-    }
-
-    public resetUserInputAfterExecution(): boolean {
-        return this.shouldResetUserInputAfterExecution;
-    }
-
-    public logExecution(): boolean {
-        return this.shouldLogExecution;
     }
 }
