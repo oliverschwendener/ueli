@@ -72,16 +72,12 @@ export class FilePathSearcher implements Searcher {
 
     private getFileSearchResult(filePath: string): SearchResultItem[] {
         const fileName = basename(filePath);
-
-        return [
-            {
-                description: FilePathDescriptionBuilder.buildFilePathDescription(filePath),
-                executionArgument: filePath,
-                icon: this.iconSet.fileIcon,
-                name: fileName,
-                searchable: [fileName],
-                tags: [],
-            } as SearchResultItem,
-        ];
+        return [{
+            description: FilePathDescriptionBuilder.buildFilePathDescription(filePath),
+            executionArgument: filePath,
+            icon: this.iconSet.fileIcon,
+            name: fileName,
+            searchable: [fileName],
+        }];
     }
 }

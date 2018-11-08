@@ -2,7 +2,7 @@ import { SearchPlugin } from "./search-plugin";
 import { SearchResultItem } from "../search-result-item";
 import { IconSet } from "../icon-sets/icon-set";
 
-export class EnvironmentVariablePlugin implements SearchPlugin {
+export class EnvironmentVariableSearchPlugin implements SearchPlugin {
     private readonly variableCollection: { [key: string]: string };
     private readonly iconSet: IconSet;
 

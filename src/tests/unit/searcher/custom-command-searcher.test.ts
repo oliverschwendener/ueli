@@ -64,4 +64,9 @@ describe(CustomCommandSearcher.name, (): void => {
             }
         });
     });
+
+    it("should not block other searchers", (): void => {
+        const actual = new CustomCommandSearcher([], defaultShortcutIcon).blockOthers;
+        expect(actual).toBe(false);
+    });
 });

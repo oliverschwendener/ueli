@@ -19,6 +19,7 @@ import { CountManager } from "./../count/count-manager";
 import { CountFileRepository } from "./../count/count-file-repository";
 import { CustomCommandSearcher } from "./../searcher/custom-command-searcher";
 import { CustomCommandInputValidator } from "./../input-validators/custom-command-input-validator";
+import { ProductionSearchPluginManager } from "../production-search-plugin-manager";
 
 export class ProductionSearchers {
     public static getCombinations(config: UserConfigOptions): InputValidatorSearcherCombination[] {
@@ -27,7 +28,7 @@ export class ProductionSearchers {
 
         const result: InputValidatorSearcherCombination[] = [
             {
-                searcher: new SearchPluginsSearcher(config, countManager, config.iconSet, environmentVariableCollection),
+                searcher: new SearchPluginsSearcher(config, countManager, new ProductionSearchPluginManager(config, environmentVariableCollection)),
                 validator: new SearchPluginsInputValidator(),
             },
         ];

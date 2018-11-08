@@ -33,4 +33,9 @@ describe(WebUrlSearcher.name, (): void => {
             }
         });
     });
+
+    it("should not block other searchers", (): void => {
+        const actual = searcher.blockOthers;
+        expect(actual).toBe(false);
+    });
 });

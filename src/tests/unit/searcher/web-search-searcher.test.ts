@@ -78,4 +78,9 @@ describe(WebSearchSearcher.name, (): void => {
             });
         }
     });
+
+    it("should block other searchers", (): void => {
+        const actual = searcher.blockOthers;
+        expect(actual).toBe(true);
+    });
 });
