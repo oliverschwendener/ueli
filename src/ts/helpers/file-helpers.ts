@@ -2,7 +2,7 @@ import { lstatSync, readdirSync } from "fs";
 import { join } from "path";
 
 export class FileHelpers {
-    public static getFilesFromFolderRecursively(folderPath: string, blackList: string[], includeFolders?: boolean): string[] {
+    public static getFilesFromFolderRecursively(folderPath: string, blackList: string[], includeFolders?: boolean, actionBeforeEachFile?: (filePath: string) => void): string[] {
         try {
             let result = [] as string[];
             const fileNames = FileHelpers.getFileNamesFromFolder(folderPath);
@@ -12,6 +12,11 @@ export class FileHelpers {
             for (const fileName of filteredFileNames) {
                 try {
                     const filePath = join(folderPath, fileName);
+
+                    if (actionBeforeEachFile !== undefined) {
+                        actionBeforeEachFile(filePath);
+                    }
+
                     const stats = lstatSync(filePath);
 
                     if (stats.isDirectory()) {
@@ -22,7 +27,7 @@ export class FileHelpers {
                             if (includeFolders !== undefined && includeFolders) {
                                 result.push(filePath);
                             }
-                            result = result.concat(FileHelpers.getFilesFromFolderRecursively(filePath, blackList));
+                            result = result.concat(FileHelpers.getFilesFromFolderRecursively(filePath, blackList, includeFolders, actionBeforeEachFile));
                         }
                     } else if (stats.isFile()) {
                         result.push(filePath);

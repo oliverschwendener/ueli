@@ -1,6 +1,6 @@
 import { FileHelpers } from "../../../ts/helpers/file-helpers";
-import { join } from "path";
-import { mkdirSync, writeFileSync, unlinkSync, rmdirSync } from "fs";
+import { join, basename } from "path";
+import { mkdirSync, writeFileSync, unlinkSync, rmdirSync, existsSync } from "fs";
 
 const emptyBlackList: string[] = [];
 
@@ -17,13 +17,17 @@ describe(FileHelpers.name, (): void => {
             mkdirSync(testFolder);
 
             for (const testFile of testFiles) {
-                writeFileSync(testFile, "", "utf-8");
+                if (!existsSync(testFile)) {
+                    writeFileSync(testFile, "", "utf-8");
+                }
             }
         });
 
         afterEach((): void => {
             for (const testFile of testFiles) {
-                unlinkSync(testFile);
+                if (existsSync(testFile)) {
+                    unlinkSync(testFile);
+                }
             }
 
             rmdirSync(testFolder);
@@ -57,6 +61,8 @@ describe(FileHelpers.name, (): void => {
             "sub-folder-file-3",
         ];
 
+        const subSubFolders: string[] = [];
+
         beforeEach((): void => {
             mkdirSync(parentFolder);
 
@@ -72,7 +78,17 @@ describe(FileHelpers.name, (): void => {
         afterEach((): void => {
             for (const subFolder of subFolders) {
                 for (const testFile of subFolderFiles) {
-                    unlinkSync(join(parentFolder, subFolder, testFile));
+                    const filePath = join(parentFolder, subFolder, testFile);
+                    if (existsSync(filePath)) {
+                        unlinkSync(filePath);
+                    }
+                }
+
+                for (const subSubFolder of subSubFolders) {
+                    const folderPath = join(parentFolder, subFolder, subSubFolder);
+                    if (existsSync(folderPath)) {
+                        rmdirSync(folderPath);
+                    }
                 }
 
                 rmdirSync(join(parentFolder, subFolder));
@@ -104,6 +120,41 @@ describe(FileHelpers.name, (): void => {
             const expectedLength = subFolders.length + (subFolders.length * subFolderFiles.length);
 
             expect(actualLength).toBe(expectedLength);
+        });
+
+        it("should include folders in subfolders when includeFolders is set to true", (): void => {
+            const subSubFolderCount = 3;
+            for (let i = 0; i < subSubFolderCount; i++) {
+                subSubFolders.push(`sub-sub-folder-${i}`);
+            }
+
+            const includeFolders = true;
+            for (const subFolder of subFolders) {
+                for (const subSubFolder of subSubFolders) {
+                    const subSubFolderPath = join(parentFolder, subFolder, subSubFolder);
+                    if (!existsSync(subSubFolderPath)) {
+                        mkdirSync(subSubFolderPath);
+                    }
+                }
+            }
+
+            const actual = FileHelpers.getFilesFromFolderRecursively(parentFolder, emptyBlackList, includeFolders);
+            const expected = (subFolders.length * subFolderFiles.length + subFolders.length) + (subFolders.length * subSubFolders.length);
+            expect(actual.length).toBe(expected);
+        });
+
+        it("should be able to handle files that are suddenly deleted while scanning folders", (): void => {
+            const includeFolders = false;
+
+            const callback = (filePath: string): void => {
+                if (basename(filePath) === subFolderFiles[0]) {
+                    unlinkSync(filePath);
+                }
+            };
+
+            const files = FileHelpers.getFilesFromFolderRecursively(parentFolder, emptyBlackList, includeFolders, callback);
+            const expected = subFolders.length * (subFolderFiles.length - 1);
+            expect(files.length).toBe(expected);
         });
     });
 
