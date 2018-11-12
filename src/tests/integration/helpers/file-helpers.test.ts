@@ -100,7 +100,7 @@ describe(FileHelpers.name, (): void => {
         it("should get all files recursively", (): void => {
             const files = FileHelpers.getFilesFromFolderRecursively(parentFolder, emptyBlackList);
             const actualLength = files.length;
-            const expectedLength = subFolderFiles.length + subFolderFiles.length;
+            const expectedLength = subFolders.length * subFolderFiles.length;
 
             expect(actualLength).toBe(expectedLength);
         });
@@ -155,6 +155,33 @@ describe(FileHelpers.name, (): void => {
             const files = FileHelpers.getFilesFromFolderRecursively(parentFolder, emptyBlackList, includeFolders, callback);
             const expected = subFolders.length * (subFolderFiles.length - 1);
             expect(files.length).toBe(expected);
+        });
+    });
+
+    describe(FileHelpers.getFilesFromFolderRecursively.name, (): void => {
+        const parentFolder = "parent-folder";
+        const files = ["file-1", "file-2", "file-3"];
+
+        beforeEach((): void => {
+            mkdirSync(parentFolder);
+
+            for (const file of files) {
+                writeFileSync(join(parentFolder, file), "this is shit", "utf-8");
+            }
+        });
+
+        afterEach((): void => {
+            for (const file of files) {
+                unlinkSync(join(parentFolder, file));
+            }
+
+            rmdirSync(parentFolder);
+        });
+
+        it("should return only files when there are only files in a folder", (): void => {
+            const actual = FileHelpers.getFilesFromFolderRecursively(parentFolder, []);
+            const expected = files.length;
+            expect(actual.length).toBe(expected);
         });
     });
 

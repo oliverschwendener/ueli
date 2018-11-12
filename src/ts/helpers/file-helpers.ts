@@ -1,47 +1,49 @@
-import { lstatSync, readdirSync } from "fs";
+import { lstatSync, readdirSync, existsSync } from "fs";
 import { join } from "path";
 
 export class FileHelpers {
     public static getFilesFromFolderRecursively(folderPath: string, blackList: string[], includeFolders?: boolean, actionBeforeEachFile?: (filePath: string) => void): string[] {
-        try {
-            let result = [] as string[];
-            const fileNames = FileHelpers.getFileNamesFromFolder(folderPath);
+        let result = [] as string[];
 
-            const filteredFileNames = FileHelpers.filterBlackList(fileNames, blackList);
-
-            for (const fileName of filteredFileNames) {
-                try {
-                    const filePath = join(folderPath, fileName);
-
-                    if (actionBeforeEachFile !== undefined) {
-                        actionBeforeEachFile(filePath);
-                    }
-
-                    const stats = lstatSync(filePath);
-
-                    if (stats.isDirectory()) {
-                        // treat .app folder as a file because going recursively through the app folder on macOS would cause the scan to take insanely long
-                        if (filePath.endsWith(".app")) {
-                            result.push(filePath);
-                        } else {
-                            if (includeFolders !== undefined && includeFolders) {
-                                result.push(filePath);
-                            }
-                            result = result.concat(FileHelpers.getFilesFromFolderRecursively(filePath, blackList, includeFolders, actionBeforeEachFile));
-                        }
-                    } else if (stats.isFile()) {
-                        result.push(filePath);
-                    }
-                } catch (error) {
-                    continue;
-                }
-            }
-
+        if (!existsSync(folderPath)) {
             return result;
-
-        } catch (error) {
-            return [];
         }
+
+        const fileNames = FileHelpers.getFileNamesFromFolder(folderPath);
+        const filteredFileNames = FileHelpers.filterBlackList(fileNames, blackList);
+
+        for (const fileName of filteredFileNames) {
+            try {
+                const filePath = join(folderPath, fileName);
+
+                if (actionBeforeEachFile !== undefined) {
+                    actionBeforeEachFile(filePath);
+                }
+
+                const stats = lstatSync(filePath);
+                const isDirecotry = stats.isDirectory();
+                const isFile = stats.isFile();
+
+                if (isDirecotry && !isFile) {
+                    // treat .app folder as a file because going recursively through the app folder on macOS would cause the scan to take insanely long
+                    if (filePath.endsWith(".app")) {
+                        result.push(filePath);
+                    } else {
+                        if (includeFolders !== undefined && includeFolders) {
+                            result.push(filePath);
+                        }
+                        result = result.concat(FileHelpers.getFilesFromFolderRecursively(filePath, blackList, includeFolders, actionBeforeEachFile));
+                    }
+                }
+                if (!isDirecotry && isFile) {
+                    result.push(filePath);
+                }
+            } catch (error) {
+                continue;
+            }
+        }
+
+        return result;
     }
 
     public static getFilesFromFolder(folderPath: string): string[] {
