@@ -339,14 +339,13 @@ Run the app in one of these debug modes:
 ### Run tests
 
 ```
-$ yarn test:unit
-$ yarn test:integration
+$ yarn test
 ```
 
 ### Code coverage
 
 ```
-$ yarn test:unit --coverage
+$ yarn test --coverage
 ```
 
 ### Package

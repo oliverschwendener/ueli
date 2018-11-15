@@ -32,17 +32,15 @@
     "start": "./node_modules/.bin/electron . --enable-logging",
     "lint": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json",
     "lint:fix": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json --fix",
-    "test:unit": "./node_modules/.bin/jest --config jest.json --silent ./src/tests/unit",
-    "test:integration": "./node_modules/.bin/jest --config jest.json --silent ./src/tests/integration",
-    "test:all": "./node_modules/.bin/jest --config jest.json --silent ./src/tests",
+    "test": "./node_modules/.bin/jest --config jest.json --silent ./src/tests",
     "coverage": "./node_modules/.bin/coveralls < ./coverage/lcov.info",
     "package:publish": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish onTag",
     "package:dir": "./node_modules/.bin/electron-builder --dir --config electron-builder-config.yml --publish never"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn test:all && yarn bundle",
-      "pre-push": "yarn lint && yarn test:all && yarn bundle"
+      "pre-commit": "yarn lint && yarn test && yarn bundle",
+      "pre-push": "yarn lint && yarn test && yarn bundle"
     }
   },
   "devDependencies": {
