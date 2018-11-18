@@ -34,7 +34,7 @@
                         <div class="search-result-icon">
                             <div class="search-result-icon-container" :style="searchResultIconStyle()" :class="{ 'active' : searchResult.active }" v-html="searchResult.icon"></div>
                         </div>
-                        <div class="search-result-information">
+                        <div class="search-result-information" :style="searchResultInformationStyle()">
                             <span class="search-result-name" :style="searchResultNameStyle()" :class="{ 'active' : searchResult.active }">
                                 {{ searchResult.name }}
                             </span>
