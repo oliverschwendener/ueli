@@ -135,12 +135,18 @@ span {
 
 span.search-result-name.active {
     font-weight: var(--search-result-name-active-font-weight);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 span.search-result-description {
     transition: all 250ms ease-in-out;
     font-weight: var(--search-result-description-font-weight);
-    display: none;  
+    display: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 span.search-result-description.active {

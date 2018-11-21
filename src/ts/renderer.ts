@@ -142,6 +142,9 @@ const vue = new Vue({
         searchResultIconStyle: (): string => {
             return `height: ${config.searchResultHeight}px; width: ${config.searchResultHeight}px;`;
         },
+        searchResultInformationStyle: (): string => {
+            return `width: calc(90% - ${config.searchResultHeight}px)`;
+        },
         searchResultNameStyle: (): string => {
             return `font-size: ${config.searchResultNameFontSize}px;`;
         },
