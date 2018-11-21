@@ -359,6 +359,7 @@ $ yarn package:dir
 * [khanhas/ueli](https://github.com/khanhas/ueli)
 * [Launchy](https://www.launchy.net/)
 * [Wox](https://github.com/Wox-launcher/Wox)
+* [Keypirinha](http://keypirinha.com/)
 * [Alfred](https://www.alfredapp.com/)
 * [Hain](https://github.com/hainproject/hain)
 * [Zazu App](http://zazuapp.org/)
