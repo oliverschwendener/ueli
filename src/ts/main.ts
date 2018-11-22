@@ -25,6 +25,8 @@ import { AppConfig } from "./app-config/app-config";
 import { UserConfigOptions } from "./user-config/user-config-options";
 import { TimeHelpers } from "./helpers/time-helpers";
 import { DefaultAppConfigManager } from "./app-config/default-app-config";
+import { ProductionIconService } from "./production-icon-service";
+import { SearchResultItem } from "./search-result-item";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -303,8 +305,13 @@ ipcMain.on(IpcChannels.showSettingsFromMain, (): void => {
 ipcMain.on(IpcChannels.getSearch, (event: any, arg: string): void => {
     const userInput = arg;
     const result = inputValidationService.getSearchResult(userInput);
-    updateWindowSize(result.length);
-    event.sender.send(IpcChannels.getSearchResponse, result);
+    const iconService = new ProductionIconService();
+    const promises = result.map((r) => iconService.getProgramIcon(config.iconSet, r));
+
+    Promise.all(promises).then((searchResults: SearchResultItem[]) => {
+        updateWindowSize(result.length);
+        event.sender.send(IpcChannels.getSearchResponse, searchResults);
+    });
 });
 
 ipcMain.on(IpcChannels.execute, (event: any, arg: string): void => {
