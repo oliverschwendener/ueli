@@ -5,8 +5,8 @@ import { FakeCountRepository } from "./fake-count-repository";
 import { Count } from "../../ts/count/count";
 
 describe("SearchEngine", (): void => {
-    const threshold = 4; // same as default config
-    const limit = 24; // same as default config
+    const defaultThreshold = 4; // same as default config
+    const defaultLimit = 24; // same as default config
 
     describe("search", (): void => {
         it("should return all items if user input matches all items", (): void => {
@@ -16,7 +16,7 @@ describe("SearchEngine", (): void => {
                 { searchable: ["abcde"] },
             ] as SearchResultItem[];
 
-            const searchEngine = new SearchEngine(fakeItems, threshold, limit);
+            const searchEngine = new SearchEngine(fakeItems, defaultThreshold, defaultLimit);
             const userInput = "abc";
 
             const actual = searchEngine.search(userInput);
@@ -31,7 +31,7 @@ describe("SearchEngine", (): void => {
                 { searchable: ["abcde"] },
             ] as SearchResultItem[];
 
-            const searchEngine = new SearchEngine(fakeItems, threshold, limit);
+            const searchEngine = new SearchEngine(fakeItems, defaultThreshold, defaultLimit);
             const userInput = "xyz";
 
             const actual = searchEngine.search(userInput);
@@ -46,7 +46,7 @@ describe("SearchEngine", (): void => {
                 { name: "3", searchable: ["hasn"] },
             ] as SearchResultItem[];
 
-            const searchEngine = new SearchEngine(fakeItems, threshold, limit);
+            const searchEngine = new SearchEngine(fakeItems, defaultThreshold, defaultLimit);
             const userInput = "han";
 
             const actual = searchEngine.search(userInput);
@@ -70,7 +70,7 @@ describe("SearchEngine", (): void => {
                 { name: "3", searchable: ["abcde"] },
             ] as SearchResultItem[];
 
-            const searchEngine = new SearchEngine(fakeItems, threshold, limit);
+            const searchEngine = new SearchEngine(fakeItems, defaultThreshold, defaultLimit);
             const userInput = "ab";
 
             const result = searchEngine.search(userInput, countManager);
@@ -96,7 +96,7 @@ describe("SearchEngine", (): void => {
                 { name: "3", searchable: ["abcde"], executionArgument: "abcde" },
             ] as SearchResultItem[];
 
-            const searchEngine = new SearchEngine(fakeItems, threshold, limit);
+            const searchEngine = new SearchEngine(fakeItems, defaultThreshold, defaultLimit);
             const userInput = "a";
 
             const result = searchEngine.search(userInput, countManager);
@@ -124,7 +124,7 @@ describe("SearchEngine", (): void => {
                 { name: "3", searchable: ["thisisjustanotherrandomweirdtext"], executionArgument: "thisisjustanotherrandomweirdtext" },
             ] as SearchResultItem[];
 
-            const searchEngine = new SearchEngine(fakeItems, threshold, limit);
+            const searchEngine = new SearchEngine(fakeItems, defaultThreshold, defaultLimit);
             const userInput = "Th";
 
             const result = searchEngine.search(userInput, countManager);
@@ -133,6 +133,22 @@ describe("SearchEngine", (): void => {
             expect(result[0].name).toBe("3");
             expect(result[1].name).toBe("1");
             expect(result[2].name).toBe("2");
+        });
+
+        it("should return an array of the specified lenght", (): void => {
+            const userInput = "abc";
+            const limit = 3;
+            const fakeItems = [
+                { name: "1", searchable: [userInput] },
+                { name: "2", searchable: [userInput] },
+                { name: "3", searchable: [userInput] },
+                { name: "4", searchable: [userInput] },
+                { name: "5", searchable: [userInput] },
+                { name: "6", searchable: [userInput] },
+            ] as SearchResultItem[];
+
+            const actual = new SearchEngine(fakeItems, defaultThreshold, limit).search(userInput);
+            expect(actual.length).toBe(limit);
         });
     });
 });
