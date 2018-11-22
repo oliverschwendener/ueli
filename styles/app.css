@@ -284,6 +284,10 @@ td.slim {
     width: 50px;
 }
 
+td.disabled {
+    opacity: 0.5;
+}
+
 td > svg {
     fill: var(--text-color);
     height: 25px;
