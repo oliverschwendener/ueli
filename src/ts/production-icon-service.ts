@@ -2,7 +2,6 @@ import { NativeImage } from "electron";
 import { SearchResultItem } from "./search-result-item";
 import { IconSet } from "./icon-sets/icon-set";
 import { app } from "electron";
-import { writeFileSync } from "fs";
 
 export class ProductionIconService {
     public getProgramIcon(iconSet: IconSet, searchResultItem: SearchResultItem ): Promise<SearchResultItem> {
@@ -12,7 +11,6 @@ export class ProductionIconService {
                     if (error) {
                         resolve(searchResultItem);
                     } else {
-                        writeFileSync(`/Users/oliverschwendener/Downloads/test/${searchResultItem.name}.png`, icon.toPNG());
                         searchResultItem.icon = `<img src="${icon.toDataURL()}">`;
                         resolve(searchResultItem);
                     }
