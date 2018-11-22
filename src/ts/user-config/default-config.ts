@@ -45,6 +45,7 @@ export class DefaultUserConfigManager {
             showSearchResultNumber: true,
             showTrayIcon: true,
             smoothScrolling: false,
+            useNativeIcons: true,
             userInputFontSize: 36,
             userInputHeight: 80,
             userStylesheet: "",

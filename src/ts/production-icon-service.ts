@@ -7,7 +7,7 @@ import { writeFileSync } from "fs";
 export class ProductionIconService {
     public getProgramIcon(iconSet: IconSet, searchResultItem: SearchResultItem ): Promise<SearchResultItem> {
         return new Promise((resolve, reject) => {
-            if (searchResultItem.icon === iconSet.appIcon || searchResultItem.icon === iconSet.fileIcon ) {
+            if (searchResultItem.icon === iconSet.appIcon || searchResultItem.icon === iconSet.fileIcon) {
                 app.getFileIcon(searchResultItem.executionArgument, { size: "normal" }, (error: Error, icon: NativeImage) => {
                     if (error) {
                         resolve(searchResultItem);

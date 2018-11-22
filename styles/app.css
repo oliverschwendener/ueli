@@ -225,6 +225,8 @@ input.setting-text-input {
 
 input.setting-text-input:disabled {
     border: 1px solid var(--scrollbar-background-color);
+    user-select: none;
+    opacity: 0.5;
 }
 
 input.setting-text-input:last-child {

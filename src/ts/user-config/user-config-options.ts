@@ -31,6 +31,7 @@ export interface UserConfigOptions {
     showSearchResultNumber: boolean;
     showTrayIcon: boolean;
     smoothScrolling: boolean;
+    useNativeIcons: boolean;
     userInputFontSize: number;
     userInputHeight: number;
     userStylesheet: string;

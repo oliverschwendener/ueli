@@ -357,6 +357,12 @@
                         </div>
                     </div>
                     <div class="setting-group">
+                        <div class="setting-title">Use native icons</div>
+                        <div class="setting">
+                            <input type="checkbox" v-model="config.useNativeIcons" v-on:change="updateUserConfig">
+                        </div>
+                    </div>
+                    <div class="setting-group">
                         <div class="setting-title">Icon set</div>
                         <div class="setting">
                             <table class="setting-table">
@@ -371,7 +377,7 @@
                                     <tr>
                                         <td>App icon</td>
                                         <td class="text-center" v-html="config.iconSet.appIcon"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.appIcon" v-on:blur="updateUserConfig"></td>
+                                        <td><input class="setting-text-input" :disabled="config.useNativeIcons" type="text" v-model="config.iconSet.appIcon" v-on:blur="updateUserConfig"></td>
                                     </tr>
                                     <tr>
                                         <td>Calculator icon</td>
@@ -396,7 +402,7 @@
                                     <tr>
                                         <td>File icon</td>
                                         <td class="text-center" v-html="config.iconSet.fileIcon"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.fileIcon" v-on:blur="updateUserConfig"></td>
+                                        <td><input class="setting-text-input" :disabled="config.useNativeIcons" type="text" v-model="config.iconSet.fileIcon" v-on:blur="updateUserConfig"></td>
                                     </tr>
                                     <tr>
                                         <td>Folder icon</td>

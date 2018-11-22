@@ -302,31 +302,33 @@ ipcMain.on(IpcChannels.showSettingsFromMain, (): void => {
     mainWindow.webContents.send(IpcChannels.showSettingsFromMain);
 });
 
-ipcMain.on(IpcChannels.getSearch, (event: any, arg: string): void => {
-    const userInput = arg;
-    const result = inputValidationService.getSearchResult(userInput);
-    const iconService = new ProductionIconService();
-    const promises = result.map((r) => iconService.getProgramIcon(config.iconSet, r));
+ipcMain.on(IpcChannels.getSearch, (event: Electron.Event, userInput: string): void => {
+    if (config.useNativeIcons) {
+        const result = inputValidationService.getSearchResult(userInput);
+        const iconService = new ProductionIconService();
+        const promises = result.map((r) => iconService.getProgramIcon(config.iconSet, r));
 
-    Promise.all(promises).then((searchResults: SearchResultItem[]) => {
-        updateWindowSize(result.length);
-        event.sender.send(IpcChannels.getSearchResponse, searchResults);
-    });
+        Promise.all(promises).then((searchResults: SearchResultItem[]) => {
+            updateWindowSize(result.length);
+            event.sender.send(IpcChannels.getSearchResponse, searchResults);
+        });
+    } else {
+        const result = inputValidationService.getSearchResult(userInput);
+        event.sender.send(IpcChannels.getSearchResponse, result);
+    }
 });
 
-ipcMain.on(IpcChannels.execute, (event: any, arg: string): void => {
-    const executionArgument = arg;
+ipcMain.on(IpcChannels.execute, (event: Electron.Event, executionArgument: string): void => {
     executionService.execute(executionArgument);
 });
 
-ipcMain.on(IpcChannels.openFileLocation, (event: any, arg: string): void => {
-    const filePath = arg;
+ipcMain.on(IpcChannels.openFileLocation, (event: Electron.Event, filePath: string): void => {
     if (new FilePathExecutionArgumentValidator().isValidForExecution(filePath)) {
         filePathExecutor.openFileLocation(filePath);
     }
 });
 
-ipcMain.on(IpcChannels.autoComplete, (event: any, executionArgument: string): void => {
+ipcMain.on(IpcChannels.autoComplete, (event: Electron.Event, executionArgument: string): void => {
     const autoCompletionResult = new AutoCompletionService([
         new FilePathAutoCompletionValidator(),
     ]).getAutocompletionResult(executionArgument);
