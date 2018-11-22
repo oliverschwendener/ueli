@@ -1,24 +1,25 @@
-import { CalculatorSearcher } from "../searcher/calculator-searcher";
-import { CalculatorInputValidator } from "../input-validators/calculator-input-validator";
-import { FilePathSearcher } from "../searcher/file-path-searcher";
-import { FilePathInputValidator } from "../input-validators/file-path-input-validator";
-import { CommandLineSearcher } from "../searcher/command-line-searcher";
-import { CommandLineInputValidator } from "../input-validators/command-line-input-validator";
-import { WebSearchSearcher } from "../searcher/web-search-searcher";
-import { WebSearchInputValidator } from "../input-validators/web-search-input-validator";
-import { EmailAddressSearcher } from "../searcher/email-address-searcher";
-import { EmailAddressInputValidator } from "../input-validators/email-address-input-validator";
-import { WebUrlSearcher } from "../searcher/web-url-searcher";
-import { WebUrlInputValidator } from "../input-validators/web-url-input-validator";
-import { SearchPluginsSearcher } from "../searcher/search-plugins-searcher";
-import { SearchPluginsInputValidator } from "../input-validators/search-plugins-input-validator";
-import { InputValidatorSearcherCombination } from "../input-validator-searcher-combination";
-import { UeliHelpers } from "../helpers/ueli-helpers";
-import { UserConfigOptions } from "../user-config/user-config-options";
-import { CountManager } from "../count/count-manager";
-import { CountFileRepository } from "../count/count-file-repository";
-import { CustomCommandSearcher } from "../searcher/custom-command-searcher";
-import { CustomCommandInputValidator } from "../input-validators/custom-command-input-validator";
+import { CalculatorSearcher } from "./../searcher/calculator-searcher";
+import { CalculatorInputValidator } from "./../input-validators/calculator-input-validator";
+import { FilePathSearcher } from "./../searcher/file-path-searcher";
+import { FilePathInputValidator } from "./../input-validators/file-path-input-validator";
+import { CommandLineSearcher } from "./../searcher/command-line-searcher";
+import { CommandLineInputValidator } from "./../input-validators/command-line-input-validator";
+import { WebSearchSearcher } from "./../searcher/web-search-searcher";
+import { WebSearchInputValidator } from "./../input-validators/web-search-input-validator";
+import { EmailAddressSearcher } from "./../searcher/email-address-searcher";
+import { EmailAddressInputValidator } from "./../input-validators/email-address-input-validator";
+import { WebUrlSearcher } from "./../searcher/web-url-searcher";
+import { WebUrlInputValidator } from "./../input-validators/web-url-input-validator";
+import { SearchPluginsSearcher } from "./../searcher/search-plugins-searcher";
+import { SearchPluginsInputValidator } from "./../input-validators/search-plugins-input-validator";
+import { InputValidatorSearcherCombination } from "./../input-validator-searcher-combination";
+import { UeliHelpers } from "./../helpers/ueli-helpers";
+import { UserConfigOptions } from "./../user-config/user-config-options";
+import { CountManager } from "./../count/count-manager";
+import { CountFileRepository } from "./../count/count-file-repository";
+import { CustomCommandSearcher } from "./../searcher/custom-command-searcher";
+import { CustomCommandInputValidator } from "./../input-validators/custom-command-input-validator";
+import { ProductionSearchPluginManager } from "../production-search-plugin-manager";
 
 export class ProductionSearchers {
     public static getCombinations(config: UserConfigOptions): InputValidatorSearcherCombination[] {
@@ -27,7 +28,7 @@ export class ProductionSearchers {
 
         const result: InputValidatorSearcherCombination[] = [
             {
-                searcher: new SearchPluginsSearcher(config, countManager, config.iconSet, environmentVariableCollection),
+                searcher: new SearchPluginsSearcher(config, countManager, new ProductionSearchPluginManager(config, environmentVariableCollection)),
                 validator: new SearchPluginsInputValidator(),
             },
         ];

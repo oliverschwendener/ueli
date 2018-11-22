@@ -8,7 +8,9 @@ import { FilePathDescriptionBuilder } from "../builders/file-path-description-bu
 import { IconSet } from "../icon-sets/icon-set";
 
 export class FilePathSearcher implements Searcher {
-    private iconSet: IconSet;
+    public readonly blockOthers = true;
+
+    private readonly iconSet: IconSet;
     private readonly searchEngineThreshold: number;
     private readonly searchEngineLimit: number;
 
@@ -70,16 +72,12 @@ export class FilePathSearcher implements Searcher {
 
     private getFileSearchResult(filePath: string): SearchResultItem[] {
         const fileName = basename(filePath);
-
-        return [
-            {
-                description: FilePathDescriptionBuilder.buildFilePathDescription(filePath),
-                executionArgument: filePath,
-                icon: this.iconSet.fileIcon,
-                name: fileName,
-                searchable: [fileName],
-                tags: [],
-            } as SearchResultItem,
-        ];
+        return [{
+            description: FilePathDescriptionBuilder.buildFilePathDescription(filePath),
+            executionArgument: filePath,
+            icon: this.iconSet.fileIcon,
+            name: fileName,
+            searchable: [fileName],
+        }];
     }
 }

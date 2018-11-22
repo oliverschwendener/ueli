@@ -129,12 +129,19 @@ body {
 }
 .search-result-name {
   font-weight: var(--search-result-name-active-font-weight);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .search-result-description {
   display: none;
   font-weight: var(--search-result-description-font-weight);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   transition: all 250ms ease-in-out;
 }
+
 .search-result-description.active {
   display: block;
 }

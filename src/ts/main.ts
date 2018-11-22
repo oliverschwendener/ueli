@@ -1,6 +1,6 @@
 import { join } from "path";
 import { platform } from "os";
-import { app, BrowserWindow, globalShortcut, ipcMain, Menu, Tray, screen, MenuItem, MenuItemConstructorOptions } from "electron";
+import { app, BrowserWindow, globalShortcut, ipcMain, Menu, Tray, screen, MenuItemConstructorOptions } from "electron";
 import { autoUpdater } from "electron-updater";
 import { FilePathExecutionArgumentValidator } from "./execution-argument-validators/file-path-execution-argument-validator";
 import { ExecutionService } from "./execution-service";

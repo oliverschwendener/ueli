@@ -2,7 +2,7 @@ import { CountRepository } from "./count-repository";
 import { Count } from "./count";
 
 export class CountManager {
-    private countRepository: CountRepository;
+    private readonly countRepository: CountRepository;
 
     constructor(countRepository: CountRepository) {
         this.countRepository = countRepository;

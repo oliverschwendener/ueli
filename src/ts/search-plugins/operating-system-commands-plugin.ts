@@ -5,8 +5,8 @@ import { UeliHelpers } from "../helpers/ueli-helpers";
 import { OperatingSystem } from "../operating-system";
 
 export class OperatingSystemCommandsPlugin implements SearchPlugin {
+    private readonly systemCommands: OperatingSystemCommand[];
     private readonly descriptionPrefix: string;
-    private systemCommands: OperatingSystemCommand[];
 
     constructor(systemCommands: OperatingSystemCommand[], operatingSystem: OperatingSystem) {
         this.systemCommands = systemCommands;

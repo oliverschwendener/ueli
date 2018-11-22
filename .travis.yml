@@ -10,8 +10,7 @@ install:
 
 script:
   - yarn lint
-  - yarn test:all
-  - yarn test:unit --coverage
+  - yarn test --coverage
   - yarn coverage
   - yarn bundle
   - yarn package:publish

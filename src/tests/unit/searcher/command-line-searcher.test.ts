@@ -32,5 +32,10 @@ describe(CommandLineSearcher.name, (): void => {
                 expect(actual[0].executionArgument).toBe(combination.output.executionArgument);
             }
         });
+
+        it("should block other searchers", (): void => {
+            const actual = searcher.blockOthers;
+            expect(actual).toBe(true);
+        });
     });
 });

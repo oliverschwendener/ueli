@@ -33,5 +33,10 @@ describe(CalculatorSearcher.name, (): void => {
                 expect(actual[0].executionArgument).toBe(combination.output.executionArgument);
             }
         });
+
+        it("should not block other searchers", (): void => {
+            const actual = searcher.blockOthers;
+            expect(actual).toBe(false);
+        });
     });
 });

@@ -1,14 +1,14 @@
-import { EnvironmentVariablePlugin } from "../../../ts/search-plugins/environment-variable-plugin";
+import { EnvironmentVariableSearchPlugin } from "../../../ts/search-plugins/environment-variable-search-plugin";
 import { testIconSet } from "../../../ts/icon-sets/test-icon-set";
 
-describe(EnvironmentVariablePlugin.name, (): void => {
+describe(EnvironmentVariableSearchPlugin.name, (): void => {
     const fakeEnvironmentVariableCollection = {
         path1: "path-1",
         path2: "path-2",
         path3: "path-3",
     };
 
-    const plugin = new EnvironmentVariablePlugin(fakeEnvironmentVariableCollection, testIconSet);
+    const plugin = new EnvironmentVariableSearchPlugin(fakeEnvironmentVariableCollection, testIconSet);
 
     describe(plugin.getAllItems.name, (): void => {
         it("should return an search result item for each item in the environment variable collection", (): void => {

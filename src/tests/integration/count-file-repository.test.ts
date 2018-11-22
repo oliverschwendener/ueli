@@ -62,6 +62,7 @@ describe("CountFileRepository", (): void => {
 
         it("should create the count file if it does not exist yet", (): void => {
             const countRepository = new CountFileRepository(filePath);
+            countRepository.getCount(); // just to ignore tsconfig 'noUnusedLocals' rule
             const fileExists = existsSync(filePath);
             expect(fileExists).toBe(true);
         });

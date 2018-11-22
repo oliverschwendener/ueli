@@ -2,9 +2,12 @@ import { Searcher } from "../../ts/searcher/searcher";
 import { SearchResultItem } from "../../ts/search-result-item";
 
 export class FakeSearcher implements Searcher {
-    private searchResultItems: SearchResultItem[];
+    public readonly blockOthers: boolean;
 
-    constructor(searchResultItems: SearchResultItem[]) {
+    private readonly searchResultItems: SearchResultItem[];
+
+    constructor(shouldBlockOthers: boolean, searchResultItems: SearchResultItem[]) {
+        this.blockOthers = shouldBlockOthers;
         this.searchResultItems = searchResultItems;
     }
 

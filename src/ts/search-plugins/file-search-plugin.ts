@@ -10,8 +10,8 @@ import { FilePathDescriptionBuilder } from "../builders/file-path-description-bu
 export class FileSearchPlugin implements SearchPlugin {
     private readonly fileSearchOptions: FileSearchOption[];
     private readonly items: SearchResultItem[];
+    private readonly iconSet: IconSet;
     private readonly blackList: string[];
-    private iconSet: IconSet;
 
     public constructor(fileSearchOptions: FileSearchOption[], iconSet: IconSet, blackList: string[]) {
         this.fileSearchOptions = fileSearchOptions;
@@ -30,11 +30,12 @@ export class FileSearchPlugin implements SearchPlugin {
 
     private loadFilesAndFolders(): SearchResultItem[] {
         const result = [] as SearchResultItem[];
+        const includeFolders = true;
 
         if (this.fileSearchOptions.length > 0) {
             for (const option of this.fileSearchOptions) {
                 const filePaths = option.recursive
-                    ? FileHelpers.getFilesFromFolderRecursively(option.folderPath, this.blackList)
+                    ? FileHelpers.getFilesFromFolderRecursively(option.folderPath, this.blackList, includeFolders)
                     : FileHelpers.getFilesFromFolder(option.folderPath);
 
                 for (const filePath of filePaths) {

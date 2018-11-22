@@ -339,14 +339,13 @@ Run the app in one of these debug modes:
 ### Run tests
 
 ```
-$ yarn test:unit
-$ yarn test:integration
+$ yarn test
 ```
 
 ### Code coverage
 
 ```
-$ yarn test:unit --coverage
+$ yarn test --coverage
 ```
 
 ### Package
@@ -360,6 +359,7 @@ $ yarn package:dir
 * [khanhas/ueli](https://github.com/khanhas/ueli)
 * [Launchy](https://www.launchy.net/)
 * [Wox](https://github.com/Wox-launcher/Wox)
+* [Keypirinha](http://keypirinha.com/)
 * [Alfred](https://www.alfredapp.com/)
 * [Hain](https://github.com/hainproject/hain)
 * [Zazu App](http://zazuapp.org/)

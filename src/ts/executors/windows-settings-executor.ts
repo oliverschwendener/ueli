@@ -3,6 +3,10 @@ import { Executor } from "./executor";
 import { WindowsSettingsHelpers } from "../helpers/windows-settings-helpers";
 
 export class WindowsSettingsExecutor implements Executor {
+    public readonly hideAfterExecution = true;
+    public readonly resetUserInputAfterExecution = true;
+    public readonly logExecution = true;
+
     public execute(executionArgument: string): void {
         const command = this.replacePrefix(executionArgument);
 
@@ -11,18 +15,6 @@ export class WindowsSettingsExecutor implements Executor {
                 throw err;
             }
         });
-    }
-
-    public hideAfterExecution(): boolean {
-        return true;
-    }
-
-    public resetUserInputAfterExecution(): boolean {
-        return true;
-    }
-
-    public logExecution(): boolean {
-        return true;
     }
 
     private replacePrefix(executionArgument: string): string {

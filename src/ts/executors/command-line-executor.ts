@@ -5,6 +5,10 @@ import { Executor } from "./executor";
 import { IpcChannels } from "../ipc-channels";
 
 export class CommandLineExecutor implements Executor {
+    public readonly hideAfterExecution = false;
+    public readonly resetUserInputAfterExecution = true;
+    public readonly logExecution = false;
+
     public execute(executionArgument: string): void {
         const command = CommandLineHelpers.buildCommand(executionArgument);
 
@@ -35,18 +39,6 @@ export class CommandLineExecutor implements Executor {
         ipcMain.on(IpcChannels.exitCommandLineTool, (): void => {
             commandLineTool.kill();
         });
-    }
-
-    public hideAfterExecution(): boolean {
-        return false;
-    }
-
-    public resetUserInputAfterExecution(): boolean {
-        return true;
-    }
-
-    public logExecution(): boolean {
-        return false;
     }
 
     private sendCommandLineOutputToRenderer(data: string): void {

@@ -1,7 +1,7 @@
 import { InputValidator } from "../../ts/input-validators/input-validator";
 
 export class FakeInputValidator implements InputValidator {
-    private returnValue: boolean;
+    private readonly returnValue: boolean;
 
     constructor(returnValue: boolean) {
         this.returnValue = returnValue;

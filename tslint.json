@@ -15,7 +15,13 @@
             true,
             "spaces",
             4
-        ]
+        ],
+        "prefer-readonly": true
     },
-    "rulesDirectory": []
+    "rulesDirectory": [],
+    "linterOptions": {
+        "exclude": [
+            "./package.json"
+        ]
+    }
 }

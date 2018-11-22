@@ -31,7 +31,6 @@
         <pre v-for="line in commandLineOutput">{{ line }}</pre>
       </div>
 
-
       <div class="search-results-container" v-if="searchResults.length > 0">
         <div :id="searchResult.id" class="search-result" :style="searchResultStyle()" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults" v-on:click="handleClick" v-on:mousemove="handleMouseMove">
           <div class="search-result-icon">

@@ -6,6 +6,8 @@ import { WebSearchHelpers } from "../helpers/web-search-helper";
 import { WebSearchBuilder } from "../builders/web-search-builder";
 
 export class WebSearchSearcher implements Searcher {
+    public readonly blockOthers = true;
+
     private readonly webSearches: WebSearch[];
 
     constructor(webSearches: WebSearch[]) {

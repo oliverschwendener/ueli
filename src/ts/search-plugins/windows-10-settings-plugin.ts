@@ -6,9 +6,9 @@ import { UeliHelpers } from "../helpers/ueli-helpers";
 import { Windows10App } from "../operating-system-settings/windows/windows-10-app";
 
 export class Windows10SettingsSearchPlugin implements SearchPlugin {
-    private iconSet: IconSet;
-    private settings: WindowsSetting[];
-    private apps: Windows10App[];
+    private readonly iconSet: IconSet;
+    private readonly settings: WindowsSetting[];
+    private readonly apps: Windows10App[];
 
     constructor(settings: WindowsSetting[], apps: Windows10App[], iconSet: IconSet) {
         this.iconSet = iconSet;

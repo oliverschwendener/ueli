@@ -5,8 +5,8 @@ import { FallbackWebSearchSercher } from "./searcher/fallback-web-search-searche
 import { UserConfigOptions } from "./user-config/user-config-options";
 
 export class InputValidationService {
+    private readonly configOptions: UserConfigOptions;
     private readonly validatorSearcherCombinations: InputValidatorSearcherCombination[];
-    private configOptions: UserConfigOptions;
 
     public constructor(configOptions: UserConfigOptions, validatorSearcherCombinations: InputValidatorSearcherCombination[]) {
         this.configOptions = configOptions;
@@ -24,7 +24,12 @@ export class InputValidationService {
 
         for (const combination of this.validatorSearcherCombinations) {
             if (combination.validator.isValidForSearchResults(trimmedUserInput)) {
-                result = result.concat(combination.searcher.getSearchResult(trimmedUserInput));
+                if (combination.searcher.blockOthers) {
+                    result = combination.searcher.getSearchResult(trimmedUserInput);
+                    break;
+                } else {
+                    result = result.concat(combination.searcher.getSearchResult(trimmedUserInput));
+                }
             }
         }
 

@@ -6,8 +6,8 @@ import { UeliHelpers } from "../helpers/ueli-helpers";
 import { basename } from "path";
 
 export class MacOsSettingsPlugin implements SearchPlugin {
-    private iconSet: IconSet;
-    private settings: MacOsSetting[];
+    private readonly iconSet: IconSet;
+    private readonly settings: MacOsSetting[];
 
     constructor(settings: MacOsSetting[], iconSet: IconSet) {
         this.iconSet = iconSet;

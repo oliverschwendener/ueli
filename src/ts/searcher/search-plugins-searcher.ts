@@ -4,18 +4,18 @@ import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
 import { UserConfigOptions } from "../user-config/user-config-options";
 import { CountManager } from "../count/count-manager";
-import { IconSet } from "../icon-sets/icon-set";
 
 export class SearchPluginsSearcher implements Searcher {
+    public readonly blockOthers = false;
+
     private readonly items: SearchResultItem[];
     private readonly countManager: CountManager;
-    private config: UserConfigOptions;
+    private readonly config: UserConfigOptions;
 
-    constructor(config: UserConfigOptions, countManager: CountManager, iconSet: IconSet, environmentVariableCollection: { [key: string]: string }) {
+    constructor(config: UserConfigOptions, countManager: CountManager, searchPluginManager: SearchPluginManager) {
         this.config = config;
         this.countManager = countManager;
 
-        const searchPluginManager = new SearchPluginManager(config, iconSet, environmentVariableCollection);
         const plugins = searchPluginManager.getPlugins();
 
         this.items = plugins.length > 0
