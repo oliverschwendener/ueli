@@ -38,6 +38,6 @@ export class InputValidationService {
             result = fallBackWebSearchSearcher.getSearchResult(userInput);
         }
 
-        return result;
+        return result.slice(0, this.configOptions.searchEngineLimit);
     }
 }

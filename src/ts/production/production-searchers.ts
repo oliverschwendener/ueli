@@ -26,12 +26,7 @@ export class ProductionSearchers {
         const countManager = new CountManager(new CountFileRepository(UeliHelpers.countFilePath));
         const environmentVariableCollection = process.env as { [key: string]: string };
 
-        const result: InputValidatorSearcherCombination[] = [
-            {
-                searcher: new SearchPluginsSearcher(config, countManager, new ProductionSearchPluginManager(config, environmentVariableCollection)),
-                validator: new SearchPluginsInputValidator(),
-            },
-        ];
+        const result: InputValidatorSearcherCombination[] = [];
 
         if (config.features.calculator) {
             result.push({
@@ -81,6 +76,11 @@ export class ProductionSearchers {
                 validator: new CustomCommandInputValidator(config.customCommands),
             });
         }
+
+        result.push({
+            searcher: new SearchPluginsSearcher(config, countManager, new ProductionSearchPluginManager(config, environmentVariableCollection)),
+            validator: new SearchPluginsInputValidator(),
+        });
 
         return result;
     }
