@@ -25,8 +25,9 @@ import { AppConfig } from "./app-config/app-config";
 import { UserConfigOptions } from "./user-config/user-config-options";
 import { TimeHelpers } from "./helpers/time-helpers";
 import { DefaultAppConfigManager } from "./app-config/default-app-config";
-import { ProductionIconService } from "./production-icon-service";
+import { ProductionIconService } from "./icon-service/production-icon-service";
 import { SearchResultItem } from "./search-result-item";
+import { ProductionIconStore } from "./icon-service/production-icon-store";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -37,6 +38,7 @@ const appConfigRepository = new ElectronStoreAppConfigRepository(DefaultAppConfi
 const userConfigRepository = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfigRepository.getAppConfig().userSettingsFilePath);
 let config = userConfigRepository.getConfig();
 let inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config));
+let iconStore = new ProductionIconStore();
 const ipcEmitter = new ProductionIpcEmitter();
 let executionService = new ExecutionService(
     ProductionExecutors.getCombinations(config),
@@ -218,6 +220,7 @@ function reloadApp(preventMainWindowReload?: boolean, preventWindowSizeReset?: b
         new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
         config,
         ipcEmitter);
+    iconStore = new ProductionIconStore();
 
     if (!preventMainWindowReload) {
         mainWindow.reload();
@@ -305,7 +308,7 @@ ipcMain.on(IpcChannels.showSettingsFromMain, (): void => {
 ipcMain.on(IpcChannels.getSearch, (event: Electron.Event, userInput: string): void => {
     if (config.useNativeIcons) {
         const result = inputValidationService.getSearchResult(userInput);
-        const iconService = new ProductionIconService();
+        const iconService = new ProductionIconService(iconStore);
         const promises = result.map((r) => iconService.getProgramIcon(config.iconSet, r));
 
         Promise.all(promises).then((searchResults: SearchResultItem[]) => {
