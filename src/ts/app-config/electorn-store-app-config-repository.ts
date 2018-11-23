@@ -14,9 +14,8 @@ export class ElectronStoreAppConfigRepository implements AppConfigRepository {
 
     public getAppConfig(): AppConfig {
         const appConfig = this.store.get(this.configKey);
-        return appConfig !== undefined
-            ? appConfig
-            : this.defaultAppConfig;
+        const merged = Object.assign(this.defaultAppConfig, appConfig);
+        return merged;
     }
 
     public setAppConfig(newAppConfig: AppConfig): void {

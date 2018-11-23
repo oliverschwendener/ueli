@@ -20,9 +20,10 @@ import { CountFileRepository } from "./../count/count-file-repository";
 import { CustomCommandSearcher } from "./../searcher/custom-command-searcher";
 import { CustomCommandInputValidator } from "./../input-validators/custom-command-input-validator";
 import { ProductionSearchPluginManager } from "../production-search-plugin-manager";
+import { IconStore } from "../icon-service/icon-store";
 
 export class ProductionSearchers {
-    public static getCombinations(config: UserConfigOptions): InputValidatorSearcherCombination[] {
+    public static getCombinations(config: UserConfigOptions, iconStore: IconStore): InputValidatorSearcherCombination[] {
         const countManager = new CountManager(new CountFileRepository(UeliHelpers.countFilePath));
         const environmentVariableCollection = process.env as { [key: string]: string };
 
@@ -78,7 +79,7 @@ export class ProductionSearchers {
         }
 
         result.push({
-            searcher: new SearchPluginsSearcher(config, countManager, new ProductionSearchPluginManager(config, environmentVariableCollection)),
+            searcher: new SearchPluginsSearcher(config, countManager, new ProductionSearchPluginManager(config, environmentVariableCollection), iconStore),
             validator: new SearchPluginsInputValidator(),
         });
 

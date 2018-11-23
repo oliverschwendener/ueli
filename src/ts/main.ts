@@ -37,8 +37,8 @@ const filePathExecutor = new FilePathExecutor();
 const appConfigRepository = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.getDefaultAppConfig());
 const userConfigRepository = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfigRepository.getAppConfig().userSettingsFilePath);
 let config = userConfigRepository.getConfig();
-let inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config));
-let iconStore = new ProductionIconStore();
+let iconStore = new ProductionIconStore(appConfigRepository.getAppConfig().iconStorePath, config.iconSet);
+let inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, iconStore));
 const ipcEmitter = new ProductionIpcEmitter();
 let executionService = new ExecutionService(
     ProductionExecutors.getCombinations(config),
@@ -213,14 +213,14 @@ function hideMainWindow(): void {
 }
 
 function reloadApp(preventMainWindowReload?: boolean, preventWindowSizeReset?: boolean): void {
+    iconStore = new ProductionIconStore(appConfigRepository.getAppConfig().iconStorePath, config.iconSet);
     config = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
-    inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config));
+    inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, iconStore));
     executionService = new ExecutionService(
         ProductionExecutors.getCombinations(config),
         new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
         config,
         ipcEmitter);
-    iconStore = new ProductionIconStore();
 
     if (!preventMainWindowReload) {
         mainWindow.reload();
@@ -272,7 +272,7 @@ function quitApp(): void {
 }
 
 function initializeInputValidationService(): void {
-    inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config));
+    inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, iconStore));
 }
 
 function setUpNewRescanInterval(): void {

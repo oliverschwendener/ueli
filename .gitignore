@@ -6,6 +6,9 @@ bundle/
 #Packaged apps
 dist/
 
+# debug files
+icon-store/
+
 # Logs
 logs
 *.log

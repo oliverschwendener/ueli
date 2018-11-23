@@ -4,6 +4,7 @@ import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
 import { UserConfigOptions } from "../user-config/user-config-options";
 import { CountManager } from "../count/count-manager";
+import { IconStore } from "../icon-service/icon-store";
 
 export class SearchPluginsSearcher implements Searcher {
     public readonly blockOthers = false;
@@ -12,7 +13,7 @@ export class SearchPluginsSearcher implements Searcher {
     private readonly countManager: CountManager;
     private readonly config: UserConfigOptions;
 
-    constructor(config: UserConfigOptions, countManager: CountManager, searchPluginManager: SearchPluginManager) {
+    constructor(config: UserConfigOptions, countManager: CountManager, searchPluginManager: SearchPluginManager, iconStore: IconStore) {
         this.config = config;
         this.countManager = countManager;
 
@@ -23,6 +24,8 @@ export class SearchPluginsSearcher implements Searcher {
                 .map((plugin): SearchResultItem[] => plugin.getAllItems())
                 .reduce((acc, pluginItems): SearchResultItem[] => acc.concat(pluginItems))
             : [];
+
+        iconStore.init(this.items);
     }
 
     public getSearchResult(userInput: string): SearchResultItem[] {
