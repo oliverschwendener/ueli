@@ -1,4 +1,4 @@
-import { ApplicationIcon } from "./base64-icon";
+import { ApplicationIcon } from "./application-icon";
 import { SearchResultItem } from "../search-result-item";
 import { normalize, join } from "path";
 import { convert } from "app2png";
