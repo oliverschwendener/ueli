@@ -13,7 +13,6 @@ import { WebUrlInputValidator } from "./../input-validators/web-url-input-valida
 import { SearchPluginsSearcher } from "./../searcher/search-plugins-searcher";
 import { SearchPluginsInputValidator } from "./../input-validators/search-plugins-input-validator";
 import { InputValidatorSearcherCombination } from "./../input-validator-searcher-combination";
-import { UeliHelpers } from "./../helpers/ueli-helpers";
 import { UserConfigOptions } from "./../user-config/user-config-options";
 import { CountManager } from "./../count/count-manager";
 import { CountFileRepository } from "./../count/count-file-repository";
@@ -21,10 +20,11 @@ import { CustomCommandSearcher } from "./../searcher/custom-command-searcher";
 import { CustomCommandInputValidator } from "./../input-validators/custom-command-input-validator";
 import { ProductionSearchPluginManager } from "../production-search-plugin-manager";
 import { IconStore } from "../icon-service/icon-store";
+import { AppConfig } from "../app-config/app-config";
 
 export class ProductionSearchers {
-    public static getCombinations(config: UserConfigOptions, iconStore: IconStore): InputValidatorSearcherCombination[] {
-        const countManager = new CountManager(new CountFileRepository(UeliHelpers.countFilePath));
+    public static getCombinations(config: UserConfigOptions, appConfig: AppConfig, iconStore: IconStore): InputValidatorSearcherCombination[] {
+        const countManager = new CountManager(new CountFileRepository(appConfig.countFilePath));
         const environmentVariableCollection = process.env as { [key: string]: string };
 
         const result: InputValidatorSearcherCombination[] = [];

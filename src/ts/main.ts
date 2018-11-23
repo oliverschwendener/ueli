@@ -34,15 +34,16 @@ let trayIcon: Tray;
 
 const delayWhenHidingCommandlineOutputInMs = 25;
 const filePathExecutor = new FilePathExecutor();
-const appConfigRepository = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.getDefaultAppConfig());
-const userConfigRepository = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfigRepository.getAppConfig().userSettingsFilePath);
+let appConfig = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.getDefaultAppConfig()).getAppConfig();
+const userConfigRepository = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfig.userSettingsFilePath);
 let config = userConfigRepository.getConfig();
-let iconStore = new MacOSIconStore(appConfigRepository.getAppConfig().iconStorePath, config.iconSet);
-let inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, iconStore));
+
+let iconStore = new MacOSIconStore(appConfig.iconStorePath, config.iconSet);
+let inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, iconStore));
 const ipcEmitter = new ProductionIpcEmitter();
 let executionService = new ExecutionService(
     ProductionExecutors.getCombinations(config),
-    new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
+    new CountManager(new CountFileRepository(appConfig.countFilePath)),
     config,
     ipcEmitter);
 
@@ -213,12 +214,13 @@ function hideMainWindow(): void {
 }
 
 function reloadApp(preventMainWindowReload?: boolean, preventWindowSizeReset?: boolean): void {
-    iconStore = new MacOSIconStore(appConfigRepository.getAppConfig().iconStorePath, config.iconSet);
-    config = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
-    inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, iconStore));
+    appConfig = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.getDefaultAppConfig()).getAppConfig();
+    iconStore = new MacOSIconStore(appConfig.iconStorePath, config.iconSet);
+    config = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfig.userSettingsFilePath).getConfig();
+    inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, iconStore));
     executionService = new ExecutionService(
         ProductionExecutors.getCombinations(config),
-        new CountManager(new CountFileRepository(UeliHelpers.countFilePath)),
+        new CountManager(new CountFileRepository(appConfig.countFilePath)),
         config,
         ipcEmitter);
 
@@ -272,7 +274,7 @@ function quitApp(): void {
 }
 
 function initializeInputValidationService(): void {
-    inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, iconStore));
+    inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, iconStore));
 }
 
 function setUpNewRescanInterval(): void {
@@ -363,7 +365,9 @@ ipcMain.on(IpcChannels.hideSettings, (): void => {
 });
 
 ipcMain.on(IpcChannels.updateAppConfig, (event: Electron.Event, updatedAppConfig: AppConfig): void => {
-    appConfigRepository.setAppConfig(updatedAppConfig);
+    const appConfigRepo = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.getDefaultAppConfig());
+    appConfigRepo.setAppConfig(updatedAppConfig);
+    appConfig = appConfigRepo.getAppConfig();
 });
 
 ipcMain.on(IpcChannels.updateUserConfig, (event: Electron.Event, updatedUserConfig: UserConfigOptions): void => {

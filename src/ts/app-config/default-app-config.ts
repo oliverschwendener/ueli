@@ -1,13 +1,13 @@
 import { AppConfig } from "./app-config";
 import { join } from "path";
-import { homedir } from "os";
-import { cwd } from "process";
+import { ueliTempDir } from "./ueli-temp-dir";
 
 export class DefaultAppConfigManager {
     public static getDefaultAppConfig(): AppConfig {
         return {
-            iconStorePath: join(cwd(), "icon-store"),
-            userSettingsFilePath: join(homedir(), "ueli.config.json"),
+            countFilePath: join(ueliTempDir, "ueli.count.json"),
+            iconStorePath: join(ueliTempDir, "icon-store"),
+            userSettingsFilePath: join(ueliTempDir, "ueli.config.json"),
         };
     }
 }

@@ -1,6 +1,8 @@
 import { AppConfigRepository } from "./app-config-repository";
 import Store = require("electron-store");
 import { AppConfig } from "./app-config";
+import { existsSync, mkdirSync } from "fs";
+import { ueliTempDir } from "./ueli-temp-dir";
 
 export class ElectronStoreAppConfigRepository implements AppConfigRepository {
     private readonly store: Store;
@@ -10,6 +12,10 @@ export class ElectronStoreAppConfigRepository implements AppConfigRepository {
     constructor(defaultAppConfig: AppConfig) {
         this.defaultAppConfig = defaultAppConfig;
         this.store = new Store();
+
+        if (!existsSync(ueliTempDir)) {
+            mkdirSync(ueliTempDir);
+        }
     }
 
     public getAppConfig(): AppConfig {
