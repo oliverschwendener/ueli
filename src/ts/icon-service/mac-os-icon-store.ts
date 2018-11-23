@@ -6,7 +6,7 @@ import { readFile, existsSync, mkdirSync } from "fs";
 import { IconStore } from "./icon-store";
 import { IconSet } from "../icon-sets/icon-set";
 
-export class ProductionIconStore implements IconStore {
+export class MacOSIconStore implements IconStore {
     private readonly storePath: string;
     private readonly icons: ProductionIcon[] = [];
     private readonly iconSet: IconSet;

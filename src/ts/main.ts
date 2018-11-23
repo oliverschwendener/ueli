@@ -27,7 +27,7 @@ import { TimeHelpers } from "./helpers/time-helpers";
 import { DefaultAppConfigManager } from "./app-config/default-app-config";
 import { ProductionIconService } from "./icon-service/production-icon-service";
 import { SearchResultItem } from "./search-result-item";
-import { ProductionIconStore } from "./icon-service/production-icon-store";
+import { MacOSIconStore } from "./icon-service/mac-os-icon-store";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -37,7 +37,7 @@ const filePathExecutor = new FilePathExecutor();
 const appConfigRepository = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.getDefaultAppConfig());
 const userConfigRepository = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfigRepository.getAppConfig().userSettingsFilePath);
 let config = userConfigRepository.getConfig();
-let iconStore = new ProductionIconStore(appConfigRepository.getAppConfig().iconStorePath, config.iconSet);
+let iconStore = new MacOSIconStore(appConfigRepository.getAppConfig().iconStorePath, config.iconSet);
 let inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, iconStore));
 const ipcEmitter = new ProductionIpcEmitter();
 let executionService = new ExecutionService(
@@ -213,7 +213,7 @@ function hideMainWindow(): void {
 }
 
 function reloadApp(preventMainWindowReload?: boolean, preventWindowSizeReset?: boolean): void {
-    iconStore = new ProductionIconStore(appConfigRepository.getAppConfig().iconStorePath, config.iconSet);
+    iconStore = new MacOSIconStore(appConfigRepository.getAppConfig().iconStorePath, config.iconSet);
     config = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfigRepository.getAppConfig().userSettingsFilePath).getConfig();
     inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, iconStore));
     executionService = new ExecutionService(
