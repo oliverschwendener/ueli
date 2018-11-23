@@ -13,7 +13,7 @@ export class ProductionIconService {
         return new Promise((resolve, reject) => {
             const icon = this.iconStore.getIcon(searchResultItem.name);
             if (icon !== undefined) {
-                searchResultItem.icon = `<img src="data:image/png;base64,${icon.base64Icon}">`;
+                searchResultItem.icon = `<img src="${icon.PNGFilePath}">`;
                 resolve(searchResultItem);
             } else {
                 resolve(searchResultItem);

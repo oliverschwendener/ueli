@@ -1,17 +1,17 @@
 import { IconStore } from "../../ts/icon-service/icon-store";
-import { ProductionIcon } from "../../ts/icon-service/production-icon";
+import { ApplicationIcon } from "../../ts/icon-service/base64-icon";
 import { SearchResultItem } from "../../ts/search-result-item";
 
 export class FakeIconStore implements IconStore {
     public hasBeenInitialized = false;
-    private readonly icons: ProductionIcon[];
+    private readonly icons: ApplicationIcon[];
 
-    public addIcon(icon: ProductionIcon): void {
+    public addIcon(icon: ApplicationIcon): void {
         this.icons.push(icon);
     }
 
-    public getIcon(iconName: string): ProductionIcon | undefined {
-        return this.icons.find((icon: ProductionIcon) => {
+    public getIcon(iconName: string): ApplicationIcon | undefined {
+        return this.icons.find((icon: ApplicationIcon) => {
             return icon.name === iconName;
         });
     }
