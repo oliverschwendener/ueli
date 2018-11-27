@@ -28,6 +28,9 @@ import { DefaultAppConfigManager } from "./app-config/default-app-config";
 import { ProductionIconService } from "./icon-service/production-icon-service";
 import { SearchResultItem } from "./search-result-item";
 import { MacOSIconStore } from "./icon-service/mac-os-icon-store";
+import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
+import { OperatingSystem } from "./operating-system";
+import { WindowsIconStore } from "./icon-service/windows-icon-store";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -38,7 +41,10 @@ let appConfig = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.get
 const userConfigRepository = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfig.userSettingsFilePath);
 let config = userConfigRepository.getConfig();
 
-let iconStore = new MacOSIconStore(appConfig.iconStorePath, config.iconSet);
+let iconStore = OperatingSystemHelpers.getOperatingSystemFromString(platform()) === OperatingSystem.Windows
+    ? new WindowsIconStore(appConfig.iconStorePath, config.iconSet)
+    : new MacOSIconStore(appConfig.iconStorePath, config.iconSet);
+
 let inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, iconStore));
 const ipcEmitter = new ProductionIpcEmitter();
 let executionService = new ExecutionService(
