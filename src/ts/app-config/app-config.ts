@@ -1,5 +1,5 @@
 export interface AppConfig {
+    appIconStorePath: string;
     countFilePath: string;
-    iconStorePath: string;
     userSettingsFilePath: string;
 }

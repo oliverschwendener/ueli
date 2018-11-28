@@ -5,8 +5,8 @@ import { ueliTempDir } from "./ueli-temp-dir";
 export class DefaultAppConfigManager {
     public static getDefaultAppConfig(): AppConfig {
         return {
+            appIconStorePath: join(ueliTempDir, "app-icon-store"),
             countFilePath: join(ueliTempDir, "ueli.count.json"),
-            iconStorePath: join(ueliTempDir, "icon-store"),
             userSettingsFilePath: join(ueliTempDir, "ueli.config.json"),
         };
     }

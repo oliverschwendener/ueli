@@ -291,8 +291,8 @@ function setUpNewRescanInterval(): void {
 
 function getAppIconStore(): AppIconStore {
     return currentOperatingSystem === OperatingSystem.Windows
-        ? new WindowsAppIconStore(appConfig.iconStorePath, config.iconSet)
-        : new MacOsAppIconStore(appConfig.iconStorePath, config.iconSet);
+        ? new WindowsAppIconStore(appConfig.appIconStorePath, config.iconSet)
+        : new MacOsAppIconStore(appConfig.appIconStorePath, config.iconSet);
 }
 
 autoUpdater.on("update-available", (): void => {
