@@ -86,25 +86,4 @@ describe(Injector.name, () => {
             expect(actualMac).toBe(TrayIconPathBuilder.buildMacOsTrayIconPath(testFilePath));
         });
     });
-
-    describe(Injector.getWebUrlRegExp.name, () => {
-        it("should return a valid web url regexp", () => {
-            const webUrlRegexp = Injector.getWebUrlRegExp();
-
-            expect(webUrlRegexp).not.toBe(undefined);
-            expect(webUrlRegexp).not.toBe(null);
-
-            let regexIsValid: boolean;
-
-            try {
-                const regexp = new RegExp(webUrlRegexp);
-                regexp.test(""); // just to ignore tsconfig 'noUnusedLocals' rule
-                regexIsValid = true;
-            } catch (error) {
-                regexIsValid = false;
-            }
-
-            expect(regexIsValid).toBe(true);
-        });
-    });
 });

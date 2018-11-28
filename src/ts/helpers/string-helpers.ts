@@ -30,4 +30,9 @@ export class StringHelpers {
         const regex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
         return regex.test(emailAddress);
     }
+
+    public static isValidUrl(url: string): boolean {
+        const regex = new RegExp(/^((https?:)?[/]{2})?([a-z0-9]+[.])+[a-z]{2,}.*$/i, "gi");
+        return regex.test(url) && !this.isValidEmailAddress(url);
+    }
 }

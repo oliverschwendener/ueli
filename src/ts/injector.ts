@@ -15,10 +15,6 @@ import { allWindows10Apps } from "./operating-system-settings/windows/windows-10
 import { allMacOsSettings } from "./operating-system-settings/macos/mac-os-settings";
 
 export class Injector {
-  public static getWebUrlRegExp(): RegExp {
-    return new RegExp(/^((https?:)?[/]{2})?([a-z0-9]+[.])+[a-z]{2,}.*$/i, "gi");
-  }
-
   public static getOpenUrlWithDefaultBrowserCommand(platform: string, url: string): string {
     switch (OperatingSystemHelpers.getOperatingSystemFromString(platform)) {
       case OperatingSystem.Windows:
