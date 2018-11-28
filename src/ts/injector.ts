@@ -62,8 +62,8 @@ export class Injector {
     }
   }
 
-  public static getTrayIconPath(platform: string, pathToProjectRoot: string): string {
-    switch (OperatingSystemHelpers.getOperatingSystemFromString(platform)) {
+  public static getTrayIconPath(operatingSystem: OperatingSystem, pathToProjectRoot: string): string {
+    switch (operatingSystem) {
       case OperatingSystem.Windows:
         return TrayIconPathBuilder.buildWindowsTrayIconPath(pathToProjectRoot);
       case OperatingSystem.macOS:

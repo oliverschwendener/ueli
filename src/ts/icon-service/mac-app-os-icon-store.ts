@@ -3,10 +3,10 @@ import { SearchResultItem } from "../search-result-item";
 import { normalize, join } from "path";
 import { convert } from "app2png";
 import { existsSync, mkdirSync } from "fs";
-import { IconStore } from "./icon-store";
+import { AppIconStore } from "./app-icon-store";
 import { IconSet } from "../icon-sets/icon-set";
 
-export class MacOSIconStore implements IconStore {
+export class MacOsAppIconStore implements AppIconStore {
     private readonly storePath: string;
     private readonly icons: ApplicationIcon[] = [];
     private readonly iconSet: IconSet;

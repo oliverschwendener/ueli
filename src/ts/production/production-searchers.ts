@@ -19,11 +19,11 @@ import { CountFileRepository } from "./../count/count-file-repository";
 import { CustomCommandSearcher } from "./../searcher/custom-command-searcher";
 import { CustomCommandInputValidator } from "./../input-validators/custom-command-input-validator";
 import { ProductionSearchPluginManager } from "../production-search-plugin-manager";
-import { IconStore } from "../icon-service/icon-store";
+import { AppIconStore } from "../icon-service/app-icon-store";
 import { AppConfig } from "../app-config/app-config";
 
 export class ProductionSearchers {
-    public static getCombinations(config: UserConfigOptions, appConfig: AppConfig, iconStore: IconStore): InputValidatorSearcherCombination[] {
+    public static getCombinations(config: UserConfigOptions, appConfig: AppConfig, iconStore: AppIconStore): InputValidatorSearcherCombination[] {
         const countManager = new CountManager(new CountFileRepository(appConfig.countFilePath));
         const environmentVariableCollection = process.env as { [key: string]: string };
 

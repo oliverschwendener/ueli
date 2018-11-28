@@ -25,15 +25,17 @@ import { AppConfig } from "./app-config/app-config";
 import { UserConfigOptions } from "./user-config/user-config-options";
 import { TimeHelpers } from "./helpers/time-helpers";
 import { DefaultAppConfigManager } from "./app-config/default-app-config";
-import { ProductionIconService } from "./icon-service/production-icon-service";
+import { AppIconService } from "./icon-service/app-icon-service";
 import { SearchResultItem } from "./search-result-item";
-import { MacOSIconStore } from "./icon-service/mac-os-icon-store";
+import { MacOsAppIconStore } from "./icon-service/mac-app-os-icon-store";
 import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
 import { OperatingSystem } from "./operating-system";
-import { WindowsIconStore } from "./icon-service/windows-icon-store";
+import { WindowsAppIconStore } from "./icon-service/windows-app-icon-store";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
+
+const currentOperatingSystem = OperatingSystemHelpers.getOperatingSystemFromString(platform());
 
 const delayWhenHidingCommandlineOutputInMs = 25;
 const filePathExecutor = new FilePathExecutor();
@@ -41,11 +43,11 @@ let appConfig = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.get
 const userConfigRepository = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfig.userSettingsFilePath);
 let config = userConfigRepository.getConfig();
 
-let iconStore = OperatingSystemHelpers.getOperatingSystemFromString(platform()) === OperatingSystem.Windows
-    ? new WindowsIconStore(appConfig.iconStorePath, config.iconSet)
-    : new MacOSIconStore(appConfig.iconStorePath, config.iconSet);
+let appIconStore = currentOperatingSystem === OperatingSystem.Windows
+    ? new WindowsAppIconStore(appConfig.iconStorePath, config.iconSet)
+    : new MacOsAppIconStore(appConfig.iconStorePath, config.iconSet);
 
-let inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, iconStore));
+let inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, appIconStore));
 const ipcEmitter = new ProductionIpcEmitter();
 let executionService = new ExecutionService(
     ProductionExecutors.getCombinations(config),
@@ -102,7 +104,7 @@ function createMainWindow(): void {
 }
 
 function createTrayIcon(): void {
-    trayIcon = new Tray(Injector.getTrayIconPath(platform(), join(__dirname, "../")));
+    trayIcon = new Tray(Injector.getTrayIconPath(currentOperatingSystem, join(__dirname, "../")));
     trayIcon.setToolTip(UeliHelpers.productName);
     trayIcon.setContextMenu(Menu.buildFromTemplate([
         { click: showWindow, label: "Show" },
@@ -126,13 +128,13 @@ function unregisterAllGlobalShortcuts(): void {
 }
 
 function hideAppInDock(): void {
-    if (platform() === "darwin") {
+    if (currentOperatingSystem === OperatingSystem.macOS) {
         app.dock.hide();
     }
 }
 
 function setupMacOsKeyboardShortcuts(): void {
-    if (platform() === "darwin") {
+    if (currentOperatingSystem === OperatingSystem.macOS) {
         const template = [
             {
                 label: UeliHelpers.productName,
@@ -221,9 +223,9 @@ function hideMainWindow(): void {
 
 function reloadApp(preventMainWindowReload?: boolean, preventWindowSizeReset?: boolean): void {
     appConfig = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.getDefaultAppConfig()).getAppConfig();
-    iconStore = new MacOSIconStore(appConfig.iconStorePath, config.iconSet);
+    appIconStore = new MacOsAppIconStore(appConfig.iconStorePath, config.iconSet);
     config = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfig.userSettingsFilePath).getConfig();
-    inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, iconStore));
+    inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, appIconStore));
     executionService = new ExecutionService(
         ProductionExecutors.getCombinations(config),
         new CountManager(new CountFileRepository(appConfig.countFilePath)),
@@ -280,7 +282,7 @@ function quitApp(): void {
 }
 
 function initializeInputValidationService(): void {
-    inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, iconStore));
+    inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, appIconStore));
 }
 
 function setUpNewRescanInterval(): void {
@@ -316,7 +318,7 @@ ipcMain.on(IpcChannels.showSettingsFromMain, (): void => {
 ipcMain.on(IpcChannels.getSearch, (event: Electron.Event, userInput: string): void => {
     if (config.useNativeIcons) {
         const result = inputValidationService.getSearchResult(userInput);
-        const iconService = new ProductionIconService(iconStore);
+        const iconService = new AppIconService(appIconStore);
         const promises = result.map((r) => iconService.getProgramIcon(config.iconSet, r));
 
         Promise.all(promises).then((searchResults: SearchResultItem[]) => {

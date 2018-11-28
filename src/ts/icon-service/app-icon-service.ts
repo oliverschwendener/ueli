@@ -1,11 +1,11 @@
 import { SearchResultItem } from "../search-result-item";
 import { IconSet } from "../icon-sets/icon-set";
-import { IconStore } from "./icon-store";
+import { AppIconStore } from "./app-icon-store";
 
-export class ProductionIconService {
-    private readonly iconStore: IconStore;
+export class AppIconService {
+    private readonly iconStore: AppIconStore;
 
-    constructor(iconStore: IconStore) {
+    constructor(iconStore: AppIconStore) {
         this.iconStore = iconStore;
     }
 

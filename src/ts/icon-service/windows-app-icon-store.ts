@@ -1,11 +1,11 @@
-import { IconStore } from "./icon-store";
+import { AppIconStore } from "./app-icon-store";
 import { ApplicationIcon } from "./application-icon";
 import { SearchResultItem } from "../search-result-item";
 import { IconSet } from "../icon-sets/icon-set";
 import shell = require("node-powershell");
 import { normalize, join } from "path";
 
-export class WindowsIconStore implements IconStore {
+export class WindowsAppIconStore implements AppIconStore {
     private readonly icons: ApplicationIcon[] = [];
     private readonly storePath: string;
     private readonly iconSet: IconSet;

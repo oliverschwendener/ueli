@@ -1,8 +1,8 @@
-import { IconStore } from "../../ts/icon-service/icon-store";
+import { AppIconStore } from "../../ts/icon-service/app-icon-store";
 import { ApplicationIcon } from "../../ts/icon-service/application-icon";
 import { SearchResultItem } from "../../ts/search-result-item";
 
-export class FakeIconStore implements IconStore {
+export class FakeAppIconStore implements AppIconStore {
     public hasBeenInitialized = false;
     private readonly icons: ApplicationIcon[] = [];
 

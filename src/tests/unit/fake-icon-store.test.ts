@@ -1,14 +1,14 @@
-import { FakeIconStore } from "./fake-icon-store";
+import { FakeAppIconStore } from "./fake-app-icon-store";
 import { ApplicationIcon } from "../../ts/icon-service/application-icon";
 
-describe(FakeIconStore.name, (): void => {
+describe(FakeAppIconStore.name, (): void => {
     it("should add icons", (): void => {
         const icon: ApplicationIcon = {
             PNGFilePath: "some-file-path",
             name: "some-app",
         };
 
-        const store = new FakeIconStore();
+        const store = new FakeAppIconStore();
         store.addIcon(icon);
 
         const actual = store.getIcon(icon.name);
@@ -16,7 +16,7 @@ describe(FakeIconStore.name, (): void => {
     });
 
     it("should return undefined when getting a non existent icon", (): void => {
-        const store = new FakeIconStore();
+        const store = new FakeAppIconStore();
         const actual = store.getIcon("some-icon");
         expect(actual).toBe(undefined);
     });

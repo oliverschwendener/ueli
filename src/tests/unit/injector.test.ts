@@ -9,6 +9,7 @@ import { FilePathRegex } from "../../ts/file-path-regex";
 import { OpenUrlWithDefaultBrowserCommandBuilder } from "../../ts/builders/open-url-with-default-browser-command-builder";
 import { TrayIconPathBuilder } from "../../ts/builders/tray-icon-path-builder";
 import { testIconSet } from "../../ts/icon-sets/test-icon-set";
+import { OperatingSystem } from "../../ts/operating-system";
 
 const win = "win32";
 const mac = "darwin";
@@ -78,8 +79,8 @@ describe(Injector.name, () => {
 
     describe(Injector.getTrayIconPath.name, () => {
         it("should return a tray icon path", () => {
-            const actualWin = Injector.getTrayIconPath(win, testFilePath);
-            const actualMac = Injector.getTrayIconPath(mac, testFilePath);
+            const actualWin = Injector.getTrayIconPath(OperatingSystem.Windows, testFilePath);
+            const actualMac = Injector.getTrayIconPath(OperatingSystem.macOS, testFilePath);
 
             expect(actualWin).toBe(TrayIconPathBuilder.buildWindowsTrayIconPath(testFilePath));
             expect(actualMac).toBe(TrayIconPathBuilder.buildMacOsTrayIconPath(testFilePath));
