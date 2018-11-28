@@ -27,7 +27,7 @@ import { TimeHelpers } from "./helpers/time-helpers";
 import { DefaultAppConfigManager } from "./app-config/default-app-config";
 import { AppIconService } from "./icon-service/app-icon-service";
 import { SearchResultItem } from "./search-result-item";
-import { MacOsAppIconStore } from "./icon-service/mac-app-os-icon-store";
+import { MacOsAppIconStore } from "./icon-service/mac-os-app-icon-store";
 import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
 import { OperatingSystem } from "./operating-system";
 import { WindowsAppIconStore } from "./icon-service/windows-app-icon-store";
