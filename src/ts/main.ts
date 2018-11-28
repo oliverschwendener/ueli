@@ -31,6 +31,7 @@ import { MacOsAppIconStore } from "./icon-service/mac-app-os-icon-store";
 import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
 import { OperatingSystem } from "./operating-system";
 import { WindowsAppIconStore } from "./icon-service/windows-app-icon-store";
+import { AppIconStore } from "./icon-service/app-icon-store";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -43,9 +44,7 @@ let appConfig = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.get
 const userConfigRepository = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfig.userSettingsFilePath);
 let config = userConfigRepository.getConfig();
 
-let appIconStore = currentOperatingSystem === OperatingSystem.Windows
-    ? new WindowsAppIconStore(appConfig.iconStorePath, config.iconSet)
-    : new MacOsAppIconStore(appConfig.iconStorePath, config.iconSet);
+let appIconStore: AppIconStore = getAppIconStore();
 
 let inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, appIconStore));
 const ipcEmitter = new ProductionIpcEmitter();
@@ -223,7 +222,7 @@ function hideMainWindow(): void {
 
 function reloadApp(preventMainWindowReload?: boolean, preventWindowSizeReset?: boolean): void {
     appConfig = new ElectronStoreAppConfigRepository(DefaultAppConfigManager.getDefaultAppConfig()).getAppConfig();
-    appIconStore = new MacOsAppIconStore(appConfig.iconStorePath, config.iconSet);
+    appIconStore = getAppIconStore();
     config = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfig.userSettingsFilePath).getConfig();
     inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, appIconStore));
     executionService = new ExecutionService(
@@ -288,6 +287,12 @@ function initializeInputValidationService(): void {
 function setUpNewRescanInterval(): void {
     clearInterval(rescanInterval);
     rescanInterval = setInterval(initializeInputValidationService, TimeHelpers.convertSecondsToMilliseconds(config.rescanInterval));
+}
+
+function getAppIconStore(): AppIconStore {
+    return currentOperatingSystem === OperatingSystem.Windows
+        ? new WindowsAppIconStore(appConfig.iconStorePath, config.iconSet)
+        : new MacOsAppIconStore(appConfig.iconStorePath, config.iconSet);
 }
 
 autoUpdater.on("update-available", (): void => {
