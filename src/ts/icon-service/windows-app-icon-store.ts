@@ -4,6 +4,7 @@ import { SearchResultItem } from "../search-result-item";
 import { IconSet } from "../icon-sets/icon-set";
 import shell = require("node-powershell");
 import { normalize, join } from "path";
+import { AppIconStoreHelpers } from "../helpers/app-icon-store-helpers";
 
 export class WindowsAppIconStore implements AppIconStore {
     private readonly icons: ApplicationIcon[] = [];
@@ -25,6 +26,7 @@ export class WindowsAppIconStore implements AppIconStore {
 
     public init(searchResultItems: SearchResultItem[]): void {
         const ps = new shell({
+            debugMsg: false,
             executionPolicy: "Bypass",
             noProfile: true,
         });
@@ -38,18 +40,20 @@ export class WindowsAppIconStore implements AppIconStore {
         for (const app of apps) {
             const inFilePath = normalize(app.executionArgument);
             const appName = app.name;
-            const outFilePath = join(this.storePath, `${appName}.jpg`);
+            const outFilePath = join(this.storePath, `${AppIconStoreHelpers.buildIconFileName(appName)}.png`);
 
             ps.addCommand(`$icon = [System.Drawing.Icon]::ExtractAssociatedIcon("${inFilePath}")`);
-            ps.addCommand(`$bitmap = $icon.ToBitmap().save("${outFilePath}", [System.Drawing.Imaging.ImageFormat]::Jpeg);`);
+            ps.addCommand(`$bitmap = $icon.ToBitmap().save("${outFilePath}", [System.Drawing.Imaging.ImageFormat]::Png);`);
 
             this.addIcon({ name: app.name, PNGFilePath: outFilePath });
         }
 
         ps.invoke().then(() => {
-            // nothing
-        }).catch(() => {
-            // nothing
+            // tslint:disable-next-line:no-console
+            console.log("Sucessfully generated all app icons");
+        }).catch((err) => {
+            // tslint:disable-next-line:no-console
+            console.log(`Error while generating app icon: ${err}`);
         });
     }
 }

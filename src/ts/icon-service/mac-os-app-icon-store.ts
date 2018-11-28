@@ -5,6 +5,7 @@ import { convert } from "app2png";
 import { existsSync, mkdirSync } from "fs";
 import { AppIconStore } from "./app-icon-store";
 import { IconSet } from "../icon-sets/icon-set";
+import { AppIconStoreHelpers } from "../helpers/app-icon-store-helpers";
 
 export class MacOsAppIconStore implements AppIconStore {
     private readonly storePath: string;
@@ -34,7 +35,7 @@ export class MacOsAppIconStore implements AppIconStore {
         }).forEach((searchResultItem: SearchResultItem) => {
             const appFilePath = normalize(searchResultItem.executionArgument);
             const appName = searchResultItem.name;
-            const outFilePath = join(this.storePath, `${appName}.png`);
+            const outFilePath = join(this.storePath, `${AppIconStoreHelpers.buildIconFileName(appName)}.png`);
 
             convert(appFilePath, outFilePath).then(() => {
                 this.addIcon({ name: appName, PNGFilePath: outFilePath });
