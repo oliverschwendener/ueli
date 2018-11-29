@@ -226,7 +226,7 @@ input.setting-text-input {
 input.setting-text-input:disabled {
     border: 1px solid var(--scrollbar-background-color);
     user-select: none;
-    opacity: 0.5;
+    opacity: 0.25;
 }
 
 input.setting-text-input:last-child {
@@ -285,7 +285,7 @@ td.slim {
 }
 
 td.disabled {
-    opacity: 0.5;
+    opacity: 0.25;
 }
 
 td > svg {

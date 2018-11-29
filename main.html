@@ -401,8 +401,8 @@
                                     </tr>
                                     <tr>
                                         <td>File icon</td>
-                                        <td class="text-center" v-html="config.iconSet.fileIcon"></td>
-                                        <td><input class="setting-text-input" type="text" v-model="config.iconSet.fileIcon" v-on:blur="updateUserConfig"></td>
+                                        <td class="text-center" :class="{ 'disabled' : config.useNativeIcons }" v-html="config.iconSet.fileIcon"></td>
+                                        <td><input class="setting-text-input" :disabled="config.useNativeIcons" type="text" v-model="config.iconSet.fileIcon" v-on:blur="updateUserConfig"></td>
                                     </tr>
                                     <tr>
                                         <td>Folder icon</td>
