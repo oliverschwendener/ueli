@@ -26,12 +26,12 @@ import { UserConfigOptions } from "./user-config/user-config-options";
 import { TimeHelpers } from "./helpers/time-helpers";
 import { DefaultAppConfigManager } from "./app-config/default-app-config";
 import { AppIconService } from "./icon-service/app-icon-service";
-import { SearchResultItem } from "./search-result-item";
 import { MacOsAppIconStore } from "./icon-service/mac-os-app-icon-store";
 import { OperatingSystemHelpers } from "./helpers/operating-system-helpers";
 import { OperatingSystem } from "./operating-system";
 import { WindowsAppIconStore } from "./icon-service/windows-app-icon-store";
 import { AppIconStore } from "./icon-service/app-icon-store";
+import { FileIconService } from "./icon-service/file-icon-service";
 
 let mainWindow: BrowserWindow;
 let trayIcon: Tray;
@@ -324,20 +324,34 @@ ipcMain.on(IpcChannels.getSearch, (event: Electron.Event, userInput: string): vo
     if (config.useNativeIcons) {
         const result = inputValidationService.getSearchResult(userInput);
         const iconService = new AppIconService(appIconStore);
-        const promises = result
+        const fileIconService = new FileIconService(config.iconSet);
+        const appIconPromises = result
             .filter((r) => r.icon === config.iconSet.appIcon)
-            .map((r) => iconService.getProgramIcon(config.iconSet, r));
+            .map((r) => iconService.getProgramIcon(r));
 
-        Promise.all(promises).then((resultsWithIcon: SearchResultItem[]) => {
-            for (const resultWithIcon of resultsWithIcon) {
-                const resultItem = result.find((r) => r.executionArgument === resultWithIcon.executionArgument && r.icon === config.iconSet.appIcon);
+        const fileIconPromises = result
+            .filter((r) => r.icon === config.iconSet.fileIcon)
+            .map((r) => fileIconService.getFileIcon(r));
+
+        Promise.all(fileIconPromises).then((resultsWithFileIcon) => {
+            for (const resultWithFileIcon of resultsWithFileIcon) {
+                const resultItem = result.find((r) => r.executionArgument === resultWithFileIcon.executionArgument && r.icon === config.iconSet.fileIcon);
                 if (resultItem !== undefined) {
-                    resultItem.icon = resultWithIcon.icon;
+                    resultItem.icon = resultWithFileIcon.icon;
                 }
             }
 
-            updateWindowSize(result.length);
-            event.sender.send(IpcChannels.getSearchResponse, result);
+            Promise.all(appIconPromises).then((resultsWithAppIcon) => {
+                for (const resultWithAppIcon of resultsWithAppIcon) {
+                    const resultItem = result.find((r) => r.executionArgument === resultWithAppIcon.executionArgument && r.icon === config.iconSet.appIcon);
+                    if (resultItem !== undefined) {
+                        resultItem.icon = resultWithAppIcon.icon;
+                    }
+                }
+
+                updateWindowSize(result.length);
+                event.sender.send(IpcChannels.getSearchResponse, result);
+            });
         });
     } else {
         const result = inputValidationService.getSearchResult(userInput);
