@@ -324,11 +324,20 @@ ipcMain.on(IpcChannels.getSearch, (event: Electron.Event, userInput: string): vo
     if (config.useNativeIcons) {
         const result = inputValidationService.getSearchResult(userInput);
         const iconService = new AppIconService(appIconStore);
-        const promises = result.map((r) => iconService.getProgramIcon(config.iconSet, r));
+        const promises = result
+            .filter((r) => r.icon === config.iconSet.appIcon)
+            .map((r) => iconService.getProgramIcon(config.iconSet, r));
 
-        Promise.all(promises).then((searchResults: SearchResultItem[]) => {
+        Promise.all(promises).then((resultsWithIcon: SearchResultItem[]) => {
+            for (const resultWithIcon of resultsWithIcon) {
+                const resultItem = result.find((r) => r.executionArgument === resultWithIcon.executionArgument && r.icon === config.iconSet.appIcon);
+                if (resultItem !== undefined) {
+                    resultItem.icon = resultWithIcon.icon;
+                }
+            }
+
             updateWindowSize(result.length);
-            event.sender.send(IpcChannels.getSearchResponse, searchResults);
+            event.sender.send(IpcChannels.getSearchResponse, result);
         });
     } else {
         const result = inputValidationService.getSearchResult(userInput);
