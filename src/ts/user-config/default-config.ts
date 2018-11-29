@@ -51,7 +51,7 @@ export class DefaultUserConfigManager {
             userStylesheet: "",
             webSearches:  defaultWebSearches,
             windowMaxHeight: 560,
-            windowWidth: 860,
+            windowWidth: 720,
         };
     }
 }
