@@ -4,7 +4,7 @@
 
 This is a keystroke launcher for Windows and macOS.
 
-![ueli screenshot](img/doc/features/ueli-feature-programs.png)
+![ueli screenshot](img/doc/features/app-search.png)
 
 ## Table of contents
 
@@ -44,7 +44,7 @@ This is a keystroke launcher for Windows and macOS.
 * You can search for installed programs
 * Press `Enter` to launch the selected program
 
-![Feature Program search](img/doc/features/ueli-feature-programs.png)
+![Feature Program search](img/doc/features/app-search.png)
 
 ### Files and folder search
 
@@ -52,27 +52,27 @@ This is a keystroke launcher for Windows and macOS.
 * Press `Enter` to open the selected file/folder
 * You can [customize](#settings) the folders which are scanned for files and folders
 
-![Feature file search](img/doc/features/ueli-feature-files-and-folders.png)
+![Feature file search](img/doc/features/file-search.png)
 
 ### Open URLs with your default web browser
 
 * Type in a URL
 * Press `Enter` to open the URL with your default web browser
 
-![Feature URL](img/doc/features/ueli-feature-url.png)
+![Feature URL](img/doc/features/url.png)
 
 ### Open default mail program
 
 * Type in an email address
 * Press `Enter` to open your default mail program with an empty email to the specified email address
 
-![Feature email](img/doc/features/ueli-feature-mail.png)
+![Feature email](img/doc/features/email.png)
 
 ### Web search engines
 
 * You can use web search engines with a prefix and `?`
 
-![Feature web search engines](img/doc/features/ueli-feature-web-search.png)
+![Feature web search engines](img/doc/features/websearch.png)
 
 Default web search engines:
 
@@ -91,7 +91,7 @@ You can [customize](#settings) your own web search engines
 
 You can [customize](#settings) multiple fallback web search engines which are used if ueli does not find any other search results.
 
-![Feature fallback web search](img/doc/features/ueli-feature-fallback-web-search.png)
+![Feature fallback web search](img/doc/features/fallback-websearch.png)
 
 ### Execute commandline tools
 
@@ -100,7 +100,7 @@ You can [customize](#settings) multiple fallback web search engines which are us
 
 > Note: you can **not** interact with the commandline tool. You only see the output.
 
-![Feature commandline](img/doc/features/ueli-feature-command-line.png)
+![Feature commandline](img/doc/features/commandline.png)
 
 ### Browse file system
 
@@ -108,14 +108,14 @@ You can [customize](#settings) multiple fallback web search engines which are us
 * Press `Enter` to open the file or folder
 * Press `Tab` for autocompletion
 
-![Feature file browser](img/doc/features/ueli-feature-file-browser.png)
+![Feature file browser](img/doc/features/filebrowser.png)
 
 ### Calculator
 
 * Calculate simple math, matrix, symbolic function, convert units and a lot more
 * Press `Enter` to copy the result to the clipboard
 
-![Feature calculator](img/doc/features/ueli-feature-calculator.png)
+![Feature calculator](img/doc/features/calculator.png)
 
 ### Shortcuts
 
@@ -125,13 +125,13 @@ You can [customize](#settings) multiple fallback web search engines which are us
     * open files/folders
     * launch programs
 
-![Feature shortcuts](img/doc/features/ueli-feature-shortcuts.png)
+![Feature shortcuts](img/doc/features/shortcuts.png)
 
 ### Custom commands
 
 * You can [customize](#settings) custom commands with parameters
 
-![Feature custom commands](img/doc/features/ueli-feature-custom-commands.png)
+![Feature custom commands](img/doc/features/custom-commands.png)
 
 ### Environment Variables
 
@@ -139,7 +139,7 @@ You can [customize](#settings) multiple fallback web search engines which are us
 * Press `Enter` to open the current file/folder
 * Press `Tab` to autocomplete if it shows a valid file path
 
-![Feature environment variables](img/doc/features/ueli-feature-environment-variables.png)
+![Feature environment variables](img/doc/features/environment-variables.png)
 
 ### Keyboard shortcuts
 
@@ -161,7 +161,7 @@ You can [customize](#settings) multiple fallback web search engines which are us
 
 To open the settings press `Ctrl+i` or search for `Ueli settings`.
 
-![Settings view](img/doc/ueli-settings.png)
+![Settings view](img/doc/settings.png)
 
 ### Options
 
@@ -240,7 +240,9 @@ To open the settings press `Ctrl+i` or search for `Ueli settings`.
 
 ### Color themes
 
-![Color themes](/img/doc/ueli-color-themes.png)
+![Color themes](/img/doc/color-themes.png)
+
+#### Available color themes
 
 * `atom-one-dark`
 * `dark`
