@@ -165,7 +165,7 @@ To open the settings press `Ctrl+i` or search for `Ueli settings`.
 
 ### Options
 
-> All settings are stored in `~/ueli.config.json`.
+> All settings are stored in `~/.ueli/ueli.config.json`.
 
 * `allowMouseInteraction` Boolean - If mouse interaction should be allowed.
 * `alwaysShowOnPrimaryDisplay` Boolean - If ueli should always show up your the primary display. If set to false ueli will show up on the display your cursor is currently on.
@@ -285,7 +285,7 @@ To check if you are running the latest version open the [settings](#settings). I
 
 ## Privacy
 
-For better search results ueli is keeping track of the applications, files and folders you are executing. All information is stored in `~/ueli.count.json`. If you don't want ueli to track your executions simply delete that file's content and disable logging via the [settings](#settings).
+For better search results ueli is keeping track of the applications, files and folders you are executing. All information is stored in `~/.ueli/ueli.count.json`. If you don't want ueli to track your executions simply delete that file's content and disable logging via the [settings](#settings).
 
 ## Known bugs
 
