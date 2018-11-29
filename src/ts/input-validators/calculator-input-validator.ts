@@ -1,9 +1,10 @@
-import { InputValidator } from "./input-validator";
 import * as math from "mathjs";
+import { InputValidator } from "./input-validator";
+import { CalculatorHelper } from "../helpers/calculator-helper";
 
 export class CalculatorInputValidator implements InputValidator {
     public isValidForSearchResults(userInput: string): boolean {
-        if (userInput.indexOf("version") > -1) {
+        if (CalculatorHelper.getBlackListInputs().find((b) => userInput === b) !== undefined) {
             return false;
         }
 

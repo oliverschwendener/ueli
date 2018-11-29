@@ -1,4 +1,5 @@
 import { CalculatorInputValidator } from "../../../ts/input-validators/calculator-input-validator";
+import { CalculatorHelper } from "../../../ts/helpers/calculator-helper";
 
 describe(CalculatorInputValidator.name, (): void => {
     const validator = new CalculatorInputValidator();
@@ -28,9 +29,7 @@ describe(CalculatorInputValidator.name, (): void => {
                 "log()",
                 "1 blackhole to mg",
                 "random-string",
-                "version",
-                "  version ",
-            ];
+            ].concat(CalculatorHelper.getBlackListInputs());
 
             for (const invalidInput of invalidInputs) {
                 const actual = validator.isValidForSearchResults(invalidInput);
