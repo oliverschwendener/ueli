@@ -226,6 +226,7 @@ To open the settings press `Ctrl+i` or search for `Ueli settings`.
 * `showSearchResultNumber` Boolean - If the search result number should be shown on the GUI.
 * `showTrayIcon` Boolean - If the icon should appear in the system tray.
 * `smoothScrolling` Boolean - If page scrolling for search results should be smooth or instant.
+* `useNativeIcons` Boolean - If native operating system icons should be applied to apps and files.
 * `userInputFontSize` Number - Represents the font size of the user input in pixels.
 * `userInputHeight` Number - Represents the height of the user input box in pixels.
 * `userStylesheet` String - Represents a path to a local stylesheet to modify the appearance of the window.
