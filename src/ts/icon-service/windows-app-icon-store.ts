@@ -5,6 +5,7 @@ import { IconSet } from "../icon-sets/icon-set";
 import shell = require("node-powershell");
 import { normalize, join } from "path";
 import { AppIconStoreHelpers } from "../helpers/app-icon-store-helpers";
+import { existsSync, mkdirSync } from "fs";
 
 export class WindowsAppIconStore implements AppIconStore {
     private readonly icons: ApplicationIcon[] = [];
@@ -25,6 +26,10 @@ export class WindowsAppIconStore implements AppIconStore {
     }
 
     public init(searchResultItems: SearchResultItem[]): void {
+        if (!existsSync(this.storePath)) {
+            mkdirSync(this.storePath);
+        }
+
         const ps = new shell({
             debugMsg: false,
             executionPolicy: "Bypass",
