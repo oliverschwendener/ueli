@@ -331,11 +331,9 @@ $ yarn start
 
 > For debugging you need Visual Studio Code
 
-Run the app in one of these debug modes:
-
-* Electron Main
-* Electron Renderer
-* Jest tests
+1. Go to `.vscode` folder
+2. Make a copy of `launch.example.json` and rename it to `launch.json`
+3. Select one of the preconfigured debug modes and start debugging
 
 
 ### Run tests

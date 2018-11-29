@@ -1,5 +1,9 @@
 .DS_Store
 
+#Visual Studio Code files
+.vscode/*
+!.vscode/launch.example.json
+
 #Bundled files
 bundle/
 
