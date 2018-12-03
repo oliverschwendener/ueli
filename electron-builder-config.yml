@@ -18,7 +18,7 @@ win:
 
 mac:
   icon: ./img/icons/mac/icon.icns
-  category: public.app-category.utility
+  category: public.app-category.utilities
   target:
     - dmg
     - zip
