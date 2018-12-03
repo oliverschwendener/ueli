@@ -355,6 +355,7 @@ ipcMain.on(IpcChannels.getSearch, (event: Electron.Event, userInput: string): vo
         });
     } else {
         const result = inputValidationService.getSearchResult(userInput);
+        updateWindowSize(result.length);
         event.sender.send(IpcChannels.getSearchResponse, result);
     }
 });
