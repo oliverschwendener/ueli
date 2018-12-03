@@ -56,9 +56,11 @@ export class WindowsAppIconStore implements AppIconStore {
         ps.invoke().then(() => {
             // tslint:disable-next-line:no-console
             console.log("Sucessfully generated all app icons");
+            ps.dispose();
         }).catch((err) => {
             // tslint:disable-next-line:no-console
             console.log(`Error while generating app icon: ${err}`);
+            ps.dispose();
         });
     }
 }
