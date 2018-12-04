@@ -7,24 +7,28 @@ export const windowsSystemCommands: OperatingSystemCommand[] = [
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shutdown -s -t 0`,
         icon: shutDownIcon,
         name: "Shutdown",
+        needsUserConfirmationBeforeExecution: true,
         tags: ["poweroff"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shutdown -r -t 0`,
         icon: restartIcon,
         name: "Restart",
+        needsUserConfirmationBeforeExecution: true,
         tags: ["reboot"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}shutdown /l`,
         icon: logOutIcon,
         name: "Sign out",
+        needsUserConfirmationBeforeExecution: true,
         tags: ["signout"],
     },
     {
         executionArgument: `${WindowsSettingsHelpers.windowsSettingsPrefix}rundll32 user32.dll,LockWorkStation`,
         icon: lockIcon,
         name: "Lock computer",
+        needsUserConfirmationBeforeExecution: false,
         tags: [],
     },
     {
@@ -43,6 +47,7 @@ export const windowsSystemCommands: OperatingSystemCommand[] = [
         </g>
         </svg>`,
         name: "Recycle Bin",
+        needsUserConfirmationBeforeExecution: false,
         tags: ["trash"],
     },
 ];

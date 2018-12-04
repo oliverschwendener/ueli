@@ -31,14 +31,14 @@ export class SearchEngine {
             fuseResults = this.sortItemsByCount(fuseResults, countManager);
         }
 
-        const sortedResult = fuseResults.map((fuseResult): SearchResultItem => {
+        const sortedResult = fuseResults.map((fuseResult: FuseResult): SearchResultItem => {
             return {
                 description: fuseResult.item.description,
                 executionArgument: fuseResult.item.executionArgument,
                 icon: fuseResult.item.icon,
                 name: fuseResult.item.name,
+                needsUserConfirmationBeforeExecution: fuseResult.item.needsUserConfirmationBeforeExecution,
                 searchable: fuseResult.item.searchable,
-                tags: fuseResult.item.tags,
             } as SearchResultItem;
         });
 
@@ -63,4 +63,8 @@ export class SearchEngine {
 
         return searchResults;
     }
+}
+
+interface FuseResult {
+    item: SearchResultItem;
 }

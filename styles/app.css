@@ -80,11 +80,16 @@ div.search-results-container {
 div.search-result {
     display: flex;
     flex-direction: row;
+    position: relative;
 }
 
 div.search-result.active {
     background: var(--accent-color);
     color: var(--accent-text-color);
+}
+
+div.search-result:not(.active) .search-result-confirmation-dialog {
+    display: none;
 }
 
 div.search-result-icon {
@@ -122,6 +127,47 @@ div.search-result-number-container {
     justify-content: center;
     align-items: center;
     opacity: 0.5;
+}
+
+div.search-result-confirmation-dialog {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0 15px;
+    overflow: hidden;
+    background-color: var(--accent-color);
+    transform: translateX(100%);
+    transition: all var(--transition-speed) ease-in-out;
+    font-family: var(--font-family-mono);
+    font-size: 0.9rem;
+}
+
+div.search-result-confirmation-dialog.visible {
+    transform: translateX(0);
+}
+
+span.search-result-confirmation-dialog-badge {
+    background-color: var(--background-color);
+    margin: 0 5px;
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+svg.search-result-confirmation-dialog-icon {
+    width: 25px;
+    height: 25px;
+    margin: 0 8px;
+}
+
+svg.search-result-confirmation-dialog-icon .inside {
+    fill: #fff;
+}
+
+svg.search-result-confirmation-dialog-icon .outside {
+    fill: var(--error-color);
 }
 
 div.hidden {

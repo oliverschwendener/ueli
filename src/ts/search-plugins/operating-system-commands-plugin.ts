@@ -21,13 +21,14 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
 
     public getAllItems(): SearchResultItem[] {
 
-        return this.systemCommands.map((setting: OperatingSystemCommand): SearchResultItem => {
+        return this.systemCommands.map((operatingSystemCommand: OperatingSystemCommand): SearchResultItem => {
             return {
-                description: `${this.descriptionPrefix} ${UeliHelpers.searchResultDescriptionSeparator} ${setting.name}`,
-                executionArgument: setting.executionArgument,
-                icon: setting.icon,
-                name: setting.name,
-                searchable: [setting.name].concat(setting.tags),
+                description: `${this.descriptionPrefix} ${UeliHelpers.searchResultDescriptionSeparator} ${operatingSystemCommand.name}`,
+                executionArgument: operatingSystemCommand.executionArgument,
+                icon: operatingSystemCommand.icon,
+                name: operatingSystemCommand.name,
+                needsUserConfirmationBeforeExecution: operatingSystemCommand.needsUserConfirmationBeforeExecution,
+                searchable: [operatingSystemCommand.name].concat(operatingSystemCommand.tags),
             };
         });
     }

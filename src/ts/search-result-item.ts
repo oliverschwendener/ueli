@@ -1,7 +1,8 @@
 export class SearchResultItem {
-    public name: string;
-    public executionArgument: string;
     public description: string;
-    public searchable: string[];
+    public executionArgument: string;
+    public name: string;
+    public needsUserConfirmationBeforeExecution?: boolean;
     public icon: string;
+    public searchable: string[];
 }

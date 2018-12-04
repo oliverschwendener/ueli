@@ -113,7 +113,7 @@ const vue = new Vue({
                 event.preventDefault();
                 handleAutoCompletion();
             } else if (event.key === "Escape") {
-                ipcRenderer.send(IpcChannels.hideWindow);
+                handleEscapePress();
             } else if (event.ctrlKey && event.key === "c") {
                 ipcRenderer.send(IpcChannels.exitCommandLineTool);
             } else if (event.ctrlKey) {
@@ -315,6 +315,7 @@ ipcRenderer.on(IpcChannels.appReloaded, (): void => {
 
 function handleSearch(searchTerm: string): void {
     vue.settingsVisible = false;
+    hideUserConfirmationDialog();
     ipcRenderer.send(IpcChannels.getSearch, searchTerm);
 }
 
@@ -353,7 +354,15 @@ function updateSearchResults(searchResults: SearchResultItemViewModel[]): void {
     }
 }
 
+function hideUserConfirmationDialog() {
+    getAllUserConfirmationDialogs().forEach((elem) => {
+        elem.classList.remove("visible");
+    });
+}
+
 function changeActiveItem(direction: string): void {
+    hideUserConfirmationDialog();
+
     if (vue.searchResults.length === 0) {
         return;
     }
@@ -419,7 +428,50 @@ function handleEnterPress(): void {
     const activeItem = getActiveItem();
 
     if (activeItem !== undefined) {
-        execute(activeItem.executionArgument, vue.userInput);
+        if (activeItem.needsUserConfirmationBeforeExecution) {
+            if (userConfirmationDialogIsVisible()) {
+                execute(activeItem.executionArgument, vue.userInput);
+            } else {
+                askUserForConfirmation(activeItem);
+            }
+        } else {
+            execute(activeItem.executionArgument, vue.userInput);
+        }
+    }
+}
+
+function handleEscapePress(): void {
+    if (userConfirmationDialogIsVisible()) {
+        hideUserConfirmationDialog();
+    } else {
+        ipcRenderer.send(IpcChannels.hideWindow);
+    }
+}
+
+function userConfirmationDialogIsVisible(): boolean {
+    const allDialogs = getAllUserConfirmationDialogs();
+    return allDialogs.find((elem) => elem.classList.contains("visible")) !== undefined;
+}
+
+function getAllUserConfirmationDialogs(): HTMLElement[] {
+    const result: HTMLElement[] = [];
+    const dialogs = document.getElementsByClassName("search-result-confirmation-dialog");
+    if (dialogs.length > 0) {
+        for (let i = 0; i < dialogs.length; i++) {
+            const element = dialogs.item(i) as HTMLElement;
+            if (element) {
+                result.push(element);
+            }
+        }
+    }
+    return result;
+}
+
+function askUserForConfirmation(activeItem: SearchResultItemViewModel): void {
+    const confirmationDialog = document.getElementById(`search-result-confirmation-dialog-${activeItem.id}`) as HTMLElement;
+
+    if (confirmationDialog !== undefined && confirmationDialog !== null) {
+        confirmationDialog.classList.toggle("visible");
     }
 }
 
