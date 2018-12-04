@@ -152,6 +152,7 @@ div.search-result-confirmation-dialog.visible {
 
 span.search-result-confirmation-dialog-badge {
     background-color: var(--background-color);
+    color: var(--text-color);
     margin: 0 5px;
     padding: 2px 5px;
     border-radius: 5px;
