@@ -28,6 +28,7 @@ export interface UserConfigOptions {
     searchResultHeight: number;
     searchResultNameFontSize: number;
     shortcuts: Shortcut[];
+    showConfirmationDialog: boolean;
     showSearchResultNumber: boolean;
     showTrayIcon: boolean;
     smoothScrolling: boolean;

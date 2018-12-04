@@ -14,14 +14,17 @@ export class UeliCommandsSearchPlugin implements SearchPlugin {
         {
             executionArgument: IpcChannels.ueliReload,
             name: "Reload ueli",
+            needsUserConfirmationBeforeExecution: false,
         } as UeliCommand,
         {
             executionArgument: IpcChannels.ueliExit,
             name: "Exit ueli",
+            needsUserConfirmationBeforeExecution: true,
         } as UeliCommand,
         {
             executionArgument: IpcChannels.showSettingsFromMain,
             name: "Ueli settings",
+            needsUserConfirmationBeforeExecution: false,
         },
     ];
 
@@ -30,15 +33,15 @@ export class UeliCommandsSearchPlugin implements SearchPlugin {
     }
 
     public getAllItems(): SearchResultItem[] {
-        return this.ueliCommands.map((i): SearchResultItem => {
+        return this.ueliCommands.map((ueliCommand): SearchResultItem => {
             return {
                 description: "Ueli command",
-                executionArgument: i.executionArgument,
+                executionArgument: ueliCommand.executionArgument,
                 icon: this.icon,
-                name: i.name,
-                searchable: [i.name],
-                tags: [],
-            } as SearchResultItem;
+                name: ueliCommand.name,
+                needsUserConfirmationBeforeExecution: ueliCommand.needsUserConfirmationBeforeExecution,
+                searchable: [ueliCommand.name],
+            };
         });
     }
 }

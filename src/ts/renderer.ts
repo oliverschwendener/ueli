@@ -428,15 +428,7 @@ function handleEnterPress(): void {
     const activeItem = getActiveItem();
 
     if (activeItem !== undefined) {
-        if (activeItem.needsUserConfirmationBeforeExecution) {
-            if (userConfirmationDialogIsVisible()) {
-                execute(activeItem.executionArgument, vue.userInput);
-            } else {
-                askUserForConfirmation(activeItem);
-            }
-        } else {
-            execute(activeItem.executionArgument, vue.userInput);
-        }
+        execute(activeItem, vue.userInput);
     }
 }
 
@@ -467,7 +459,7 @@ function getAllUserConfirmationDialogs(): HTMLElement[] {
     return result;
 }
 
-function askUserForConfirmation(activeItem: SearchResultItemViewModel): void {
+function showUserConfirmationDialog(activeItem: SearchResultItemViewModel): void {
     const confirmationDialog = document.getElementById(`search-result-confirmation-dialog-${activeItem.id}`) as HTMLElement;
 
     if (confirmationDialog !== undefined && confirmationDialog !== null) {
@@ -501,12 +493,24 @@ function getActiveItem(): SearchResultItemViewModel | undefined {
     }
 }
 
-function execute(executionArgument: string, userInput: string): void {
+function execute(searchResultItem: SearchResultItemViewModel, userInput: string): void {
+    const handleExecution = (s: SearchResultItemViewModel): void => {
+        ipcRenderer.send(IpcChannels.execute, s.executionArgument);
+    };
+
     if (userInput !== undefined && userInput.length > 0) {
         userInputHistoryManager.addItem(userInput);
     }
 
-    ipcRenderer.send(IpcChannels.execute, executionArgument);
+    if (searchResultItem.needsUserConfirmationBeforeExecution && config.showConfirmationDialog) {
+        if (userConfirmationDialogIsVisible()) {
+            handleExecution(searchResultItem);
+        } else {
+            showUserConfirmationDialog(searchResultItem);
+        }
+    } else {
+        handleExecution(searchResultItem);
+    }
 }
 
 function resetUserInput(): void {
@@ -559,6 +563,6 @@ function handleExecuteIndex(index: number): void {
     });
 
     if (searchResultItem !== undefined) {
-        execute(searchResultItem.executionArgument, vue.userInput);
+        execute(searchResultItem, vue.userInput);
     }
 }

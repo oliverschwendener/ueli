@@ -223,6 +223,7 @@ To open the settings press `Ctrl+i` or search for `Ueli settings`.
     * `executionArgument` String - Represents the execution argument for the shortcut.
     * `name` String - Represents the displayed name for the shortcut.
     * `icon` String - (Optional) Represents the svg icon for the shortcut. If no icon is set default icon is used.
+* `showConfirmationDialog` Boolean - If a confirmation dialog should pop up when trying to execute "dangerous stuff" like operating system shutdown etc.
 * `showSearchResultNumber` Boolean - If the search result number should be shown on the GUI.
 * `showTrayIcon` Boolean - If the icon should appear in the system tray.
 * `smoothScrolling` Boolean - If page scrolling for search results should be smooth or instant.
