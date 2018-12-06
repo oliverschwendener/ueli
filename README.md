@@ -93,6 +93,18 @@ You can [customize](#settings) multiple fallback web search engines which are us
 
 ![Feature fallback web search](img/doc/features/fallback-websearch.png)
 
+### Operating system settings
+
+* Search for operating system settings
+
+![Feature operating system settings](img/doc/features/operating-system-settings.png)
+
+### Operating system commands
+
+* Execute operating system commands like "Shutdown", "Restart", "Lock computer", etc.
+
+![Feature operating system commands](img/doc/features/operating-system-commands.png)
+
 ### Execute commandline tools
 
 * Start a commandline tool with the `>` prefix
