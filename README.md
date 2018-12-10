@@ -159,7 +159,7 @@ You can [customize](#settings) multiple fallback web search engines which are us
 
 ## Settings
 
-To open the settings press `Ctrl+i` or search for `Ueli settings`.
+To open the settings press `Ctrl+i` or search for `ueli settings`.
 
 ![Settings view](img/doc/settings.png)
 

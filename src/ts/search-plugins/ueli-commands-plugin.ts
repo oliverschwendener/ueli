@@ -23,7 +23,7 @@ export class UeliCommandsSearchPlugin implements SearchPlugin {
         } as UeliCommand,
         {
             executionArgument: IpcChannels.showSettingsFromMain,
-            name: "Ueli settings",
+            name: "ueli settings",
             needsUserConfirmationBeforeExecution: false,
         },
     ];
@@ -35,7 +35,7 @@ export class UeliCommandsSearchPlugin implements SearchPlugin {
     public getAllItems(): SearchResultItem[] {
         return this.ueliCommands.map((ueliCommand): SearchResultItem => {
             return {
-                description: "Ueli command",
+                description: "ueli command",
                 executionArgument: ueliCommand.executionArgument,
                 icon: this.icon,
                 name: ueliCommand.name,
