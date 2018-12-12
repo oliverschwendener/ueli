@@ -42,14 +42,14 @@ This is a keystroke launcher for Windows and macOS.
 ### Program search
 
 * You can search for installed programs
-* Press `Enter` to launch the selected program
+* Press <kbd>Enter</kbd> to launch the selected program
 
 ![Feature Program search](img/doc/features/app-search.png)
 
 ### Files and folder search
 
 * You can search files and folders
-* Press `Enter` to open the selected file/folder
+* Press <kbd>Enter</kbd> to open the selected file/folder
 * You can [customize](#settings) the folders which are scanned for files and folders
 
 ![Feature file search](img/doc/features/file-search.png)
@@ -57,14 +57,14 @@ This is a keystroke launcher for Windows and macOS.
 ### Open URLs with your default web browser
 
 * Type in a URL
-* Press `Enter` to open the URL with your default web browser
+* Press <kbd>Enter</kbd> to open the URL with your default web browser
 
 ![Feature URL](img/doc/features/url.png)
 
 ### Open default mail program
 
 * Type in an email address
-* Press `Enter` to open your default mail program with an empty email to the specified email address
+* Press <kbd>Enter</kbd> to open your default mail program with an empty email to the specified email address
 
 ![Feature email](img/doc/features/email.png)
 
@@ -108,7 +108,7 @@ You can [customize](#settings) multiple fallback web search engines which are us
 ### Execute commandline tools
 
 * Start a commandline tool with the `>` prefix
-* Stop an executing commandline tool with `Ctrl+c`
+* Stop an executing commandline tool with <kbd>Ctrl</kbd> <kbd>c</kbd>
 
 > Note: you can **not** interact with the commandline tool. You only see the output.
 
@@ -117,15 +117,15 @@ You can [customize](#settings) multiple fallback web search engines which are us
 ### Browse file system
 
 * You can browse your file system by typing in a file path
-* Press `Enter` to open the file or folder
-* Press `Tab` for autocompletion
+* Press <kbd>Enter</kbd> to open the file or folder
+* Press <kbd>Tab</kbd> for autocompletion
 
 ![Feature file browser](img/doc/features/filebrowser.png)
 
 ### Calculator
 
 * Calculate simple math, matrix, symbolic function, convert units and a lot more
-* Press `Enter` to copy the result to the clipboard
+* Press <kbd>Enter</kbd> to copy the result to the clipboard
 
 ![Feature calculator](img/doc/features/calculator.png)
 
@@ -148,8 +148,8 @@ You can [customize](#settings) multiple fallback web search engines which are us
 ### Environment Variables
 
 * Search for environment variables
-* Press `Enter` to open the current file/folder
-* Press `Tab` to autocomplete if it shows a valid file path
+* Press <kbd>Enter</kbd> to open the current file/folder
+* Press <kbd>Tab</kbd> to autocomplete if it shows a valid file path
 
 ![Feature environment variables](img/doc/features/environment-variables.png)
 
@@ -157,21 +157,19 @@ You can [customize](#settings) multiple fallback web search engines which are us
 
 |Keyboard shortcut|Description|
 |---|---|
-|`Enter`|Execute selected search result|
-|`Tab`|Autocomplete file path|
-|`Ctrl+o`|Open the selected program or file at it's location|
-|`ArrowUp`|Scroll up|
-|`ArrowDown`|Scroll down|
-|`Ctrl+i`|Open settings|
-|`Shift+ArrowUp`|Browse user input history up|
-|`Shift+ArrowDown`|Browse user input history down|
-|`F6`, `Ctrl+l`|Set focus on user input|
-|`F1`|Get help|
-
+|<kbd>Enter</kbd>|Execute selected search result|
+|<kbd>Tab</kbd>|Autocomplete file path|
+|<kbd>Ctrl</kbd> <kbd>o<kbd>|Open the selected program or file at it's location|
+|<kbd>↑</kbd>|Scroll up|
+|<kbd>↓</kbd>|Scroll down|
+|<kbd>Ctrl</kbd> <kbd>i</kbd>|Open settings|
+|<kbd>Shift</kbd> <kbd>↑</kbd>|Browse user input history up|
+|<kbd>Shift</kbd> <kbd>↓</kbd>|Browse user input history down|
+|<kbd>F6</kbd>, <kbd>Ctrl</kbd> <kbd>l</kbd>|Set focus on user input|
 
 ## Settings
 
-To open the settings press `Ctrl+i` or search for `ueli settings`.
+To open the settings press <kbd>Ctrl</kbd> <kbd>i</kbd> or search for `ueli settings`.
 
 ![Settings view](img/doc/settings.png)
 
