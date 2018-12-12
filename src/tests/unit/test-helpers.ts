@@ -67,6 +67,8 @@ export const validUrls = [
     "google.com?query=asdf&shit=true",
     "mail.google.com",
     "https://www.example.com:8080/index.html?p1=A&p2=B#ressource",
+    "http://goooglecom",
+    "http://.com",
 ];
 
 export const invalidUrls = [
@@ -82,9 +84,7 @@ export const invalidUrls = [
     "google.c",
     "http:/google.com",
     "http//google.com",
-    "http://goooglecom",
     "someone@mail.com",
-    "http://.com",
     "ftp://google.com",
 ];
 
