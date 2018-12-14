@@ -159,6 +159,7 @@ You can [customize](#settings) multiple fallback web search engines which are us
 |Keyboard shortcut|Description|
 |---|---|
 |<kbd>Enter</kbd>|Execute selected search result|
+|<kbd>Shift</kbd> <kbd>Enter</kbd>|Execute selected program as admin (Windows only)|
 |<kbd>Tab</kbd>|Autocomplete file path|
 |<kbd>Ctrl</kbd> <kbd>o</kbd>|Open the selected program or file at it's location|
 |<kbd>↑</kbd>|Scroll up|
