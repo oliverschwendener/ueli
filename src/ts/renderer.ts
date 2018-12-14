@@ -96,7 +96,7 @@ const vue = new Vue({
         },
         handleUserInputKeyPress: (event: KeyboardEvent): void => {
             if (event.key === "Enter") {
-                handleEnterPress();
+                handleEnterPress(event.shiftKey);
             } else if (event.ctrlKey && event.key === "o") {
                 handleOpenFileLocation();
             } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
@@ -424,11 +424,11 @@ function scrollIntoView(searchResult: SearchResultItemViewModel): void {
     }
 }
 
-function handleEnterPress(): void {
+function handleEnterPress(shiftIsPressed?: boolean): void {
     const activeItem = getActiveItem();
 
     if (activeItem !== undefined) {
-        execute(activeItem, vue.userInput);
+        execute(activeItem, vue.userInput, shiftIsPressed);
     }
 }
 
@@ -493,9 +493,13 @@ function getActiveItem(): SearchResultItemViewModel | undefined {
     }
 }
 
-function execute(searchResultItem: SearchResultItemViewModel, userInput: string): void {
-    const handleExecution = (s: SearchResultItemViewModel): void => {
-        ipcRenderer.send(IpcChannels.execute, s.executionArgument);
+function execute(searchResultItem: SearchResultItemViewModel, userInput: string, shiftIsPressed?: boolean): void {
+    const handleExecution = (s: SearchResultItemViewModel, shiftPress?: boolean): void => {
+        if (shiftPress) {
+            ipcRenderer.send(IpcChannels.adminExecution, s.executionArgument);
+        } else  {
+            ipcRenderer.send(IpcChannels.execute, s.executionArgument);
+        }
     };
 
     if (userInput !== undefined && userInput.length > 0) {
@@ -504,12 +508,12 @@ function execute(searchResultItem: SearchResultItemViewModel, userInput: string)
 
     if (searchResultItem.needsUserConfirmationBeforeExecution && config.showConfirmationDialog) {
         if (userConfirmationDialogIsVisible()) {
-            handleExecution(searchResultItem);
+            handleExecution(searchResultItem, shiftIsPressed);
         } else {
             showUserConfirmationDialog(searchResultItem);
         }
     } else {
-        handleExecution(searchResultItem);
+        handleExecution(searchResultItem, shiftIsPressed);
     }
 }
 

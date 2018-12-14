@@ -9,6 +9,29 @@ import { FakeIpcEmitter } from "./fake-ipc-emitter";
 
 describe(ExecutionService.name, (): void => {
     describe("execute", (): void => {
+        it("should execute as admin", (): void => {
+            const hideAfterExecution = false;
+            const resetUserInputAfterExecution = true;
+            const logExecution = true;
+
+            const executor = new FakeExecutor(hideAfterExecution, resetUserInputAfterExecution, logExecution);
+            const adminCombinations: ExecutionArgumentValidatorExecutorCombination[] = [
+                {
+                    executor,
+                    validator: new FakeExecutionArgumentValidator(true),
+                },
+            ];
+
+            const countManager = new CountManager(new FakeCountRepository({}));
+            const config = { logExecution } as UserConfigOptions;
+            const ipcEmitter = new FakeIpcEmitter();
+
+            const executionService = new ExecutionService([], adminCombinations, countManager, config, ipcEmitter);
+            executionService.executeAsAdmin("exec");
+
+            expect(executor.hasBeenExecuted).toBe(true);
+        });
+
         it("should execute only the first combination if the execution argument matches the validator", (): void => {
             const hideAfterExecution = false;
             const resetUserInputAfterExecution = false;
@@ -31,7 +54,7 @@ describe(ExecutionService.name, (): void => {
             const countManager = new CountManager(new FakeCountRepository({}));
             const config = { logExecution } as UserConfigOptions;
             const ipcEmitter = new FakeIpcEmitter();
-            const executionService = new ExecutionService(combinations, countManager, config, ipcEmitter);
+            const executionService = new ExecutionService(combinations, [], countManager, config, ipcEmitter);
 
             executionService.execute("execution argument");
 
@@ -61,7 +84,7 @@ describe(ExecutionService.name, (): void => {
             const countManager = new CountManager(new FakeCountRepository({}));
             const config = { logExecution } as UserConfigOptions;
             const ipcEmitter = new FakeIpcEmitter();
-            const executionService = new ExecutionService(combinations, countManager, config, ipcEmitter);
+            const executionService = new ExecutionService(combinations, [], countManager, config, ipcEmitter);
 
             executionService.execute("execution argument");
 
@@ -86,7 +109,7 @@ describe(ExecutionService.name, (): void => {
             const countManager = new CountManager(new FakeCountRepository({}));
             const config = { logExecution } as UserConfigOptions;
             const ipcEmitter = new FakeIpcEmitter();
-            const executionService = new ExecutionService(combinations, countManager, config, ipcEmitter);
+            const executionService = new ExecutionService(combinations, [], countManager, config, ipcEmitter);
 
             executionService.execute("execution argument");
 
@@ -110,7 +133,7 @@ describe(ExecutionService.name, (): void => {
             const countManager = new CountManager(new FakeCountRepository({}));
             const config = { logExecution } as UserConfigOptions;
             const ipcEmitter = new FakeIpcEmitter();
-            const executionService = new ExecutionService(combinations, countManager, config, ipcEmitter);
+            const executionService = new ExecutionService(combinations, [], countManager, config, ipcEmitter);
 
             executionService.execute("execution argument");
 
@@ -134,7 +157,7 @@ describe(ExecutionService.name, (): void => {
             const countManager = new CountManager(new FakeCountRepository({}));
             const config = { logExecution } as UserConfigOptions;
             const ipcEmitter = new FakeIpcEmitter();
-            const executionService = new ExecutionService(combinations, countManager, config, ipcEmitter);
+            const executionService = new ExecutionService(combinations, [], countManager, config, ipcEmitter);
 
             executionService.execute("exec");
 

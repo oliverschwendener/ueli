@@ -30,4 +30,5 @@ export class IpcChannels {
     public static readonly getIndexLength = "get-index-length";
     public static readonly getIndexLengthResponse = "get-index-length-reponse";
     public static readonly appReloaded = "app-reloaded";
+    public static readonly adminExecution = "admin-execution";
 }

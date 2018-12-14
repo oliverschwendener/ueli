@@ -5,19 +5,34 @@ import { IpcEmitter } from "./ipc-emitter";
 
 export class ExecutionService {
     private readonly validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[];
+    private readonly validatorAdminExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[];
     private readonly countManager: CountManager;
     private readonly config: UserConfigOptions;
     private readonly ipcEmitter: IpcEmitter;
 
-    public constructor(validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[], countManager: CountManager, config: UserConfigOptions, ipcEmitter: IpcEmitter) {
+    public constructor(
+        validatorExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[],
+        validatorAdminExecutorCombinations: ExecutionArgumentValidatorExecutorCombination[],
+        countManager: CountManager,
+        config: UserConfigOptions,
+        ipcEmitter: IpcEmitter) {
         this.config = config;
         this.validatorExecutorCombinations = validatorExecutorCombinations;
+        this.validatorAdminExecutorCombinations = validatorAdminExecutorCombinations;
         this.countManager = countManager;
         this.ipcEmitter = ipcEmitter;
     }
 
     public execute(executionArgument: string): void {
-        for (const combi of this.validatorExecutorCombinations) {
+        this.handleExecution(this.validatorExecutorCombinations, executionArgument);
+    }
+
+    public executeAsAdmin(executionArgument: string): void {
+        this.handleExecution(this.validatorAdminExecutorCombinations, executionArgument);
+    }
+
+    private handleExecution(combinations: ExecutionArgumentValidatorExecutorCombination[], executionArgument: string) {
+        for (const combi of combinations) {
             if (combi.validator.isValidForExecution(executionArgument)) {
                 if (combi.executor.resetUserInputAfterExecution) {
                     this.ipcEmitter.emitResetUserInput();

@@ -22,9 +22,26 @@ import { CustomCommandExecutor } from "./../executors/custom-command-executor";
 import { ShortcutExecutionArgumentValidator } from "./../execution-argument-validators/shortcut-execution-argument-validator";
 import { CalculatorExecutor } from "./../executors/calculator-executor";
 import { CalculatorExecutionArgumentValidator } from "./../execution-argument-validators/calculator-execution-argument-validator";
+import { WindowsAdminFilePathExecutor } from "../executors/windows-admin-file-path-executor";
+import { WindowsAdminFilePathExecutionArgumentValidator } from "../execution-argument-validators/windows-admin-file-path-execution-argument-validator";
 
 export class ProductionExecutors {
-    public static getCombinations(config: UserConfigOptions): ExecutionArgumentValidatorExecutorCombination[] {
+    public static getExecutionArgumentValidatorAdminExecutorCombinations(): ExecutionArgumentValidatorExecutorCombination[] {
+        const os = OperatingSystemHelpers.getOperatingSystemFromString(platform());
+        switch (os) {
+            case OperatingSystem.Windows:
+                return [
+                    {
+                        executor: new WindowsAdminFilePathExecutor(),
+                        validator: new WindowsAdminFilePathExecutionArgumentValidator(),
+                    },
+                ];
+            case OperatingSystem.macOS:
+                return [];
+        }
+    }
+
+    public static getExecutionArgumentValidatorExecutorCombinations(config: UserConfigOptions): ExecutionArgumentValidatorExecutorCombination[] {
         const result = [
             {
                 executor: new CommandLineExecutor(),

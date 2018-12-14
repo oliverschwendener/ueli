@@ -49,7 +49,8 @@ let appIconStore: AppIconStore = getAppIconStore();
 let inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, appIconStore));
 const ipcEmitter = new ProductionIpcEmitter();
 let executionService = new ExecutionService(
-    ProductionExecutors.getCombinations(config),
+    ProductionExecutors.getExecutionArgumentValidatorExecutorCombinations(config),
+    ProductionExecutors.getExecutionArgumentValidatorAdminExecutorCombinations(),
     new CountManager(new CountFileRepository(appConfig.countFilePath)),
     config,
     ipcEmitter);
@@ -226,7 +227,8 @@ function reloadApp(preventMainWindowReload?: boolean, preventWindowSizeReset?: b
     config = new UserConfigFileRepository(DefaultUserConfigManager.getDefaultUserConfig(), appConfig.userSettingsFilePath).getConfig();
     inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, appIconStore));
     executionService = new ExecutionService(
-        ProductionExecutors.getCombinations(config),
+        ProductionExecutors.getExecutionArgumentValidatorExecutorCombinations(config),
+        ProductionExecutors.getExecutionArgumentValidatorAdminExecutorCombinations(),
         new CountManager(new CountFileRepository(appConfig.countFilePath)),
         config,
         ipcEmitter);
@@ -368,6 +370,10 @@ ipcMain.on(IpcChannels.openFileLocation, (event: Electron.Event, filePath: strin
     if (new FilePathExecutionArgumentValidator().isValidForExecution(filePath)) {
         filePathExecutor.openFileLocation(filePath);
     }
+});
+
+ipcMain.on(IpcChannels.adminExecution, (event: Electron.Event, filePath: string): void => {
+    executionService.executeAsAdmin(filePath);
 });
 
 ipcMain.on(IpcChannels.autoComplete, (event: Electron.Event, executionArgument: string): void => {
