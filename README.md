@@ -43,6 +43,7 @@ This is a keystroke launcher for Windows and macOS.
 
 * You can search for installed programs
 * Press <kbd>Enter</kbd> to launch the selected program
+* Press <kbd>Shift</kbd> <kbd>Enter</kbd> to launch the selected program as admin (Windows only)
 
 ![Feature Program search](img/doc/features/app-search.png)
 
