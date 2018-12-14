@@ -2,10 +2,11 @@ import { ExecutionArgumentValidator } from "./execution-argument-validator";
 import { Injector } from "../injector";
 
 export class WindowsAdminFilePathExecutionArgumentValidator implements ExecutionArgumentValidator {
-    private readonly allowedFileExtensions = [
-        ".lnk",
-        ".exe",
-    ];
+    private readonly programFileExtensions: string[];
+
+    constructor(programFileExtensions: string[]) {
+        this.programFileExtensions = programFileExtensions;
+    }
 
     public isValidForExecution(executionArgument: string): boolean {
         return Injector.getFilePathRegExp("win32").test(executionArgument)
@@ -13,7 +14,7 @@ export class WindowsAdminFilePathExecutionArgumentValidator implements Execution
     }
 
     private filePathMatchesAllowedFileExtensions(filePath: string): boolean {
-        for (const allowedFileExtension of this.allowedFileExtensions) {
+        for (const allowedFileExtension of this.programFileExtensions) {
             if (filePath.endsWith(allowedFileExtension)) {
                 return true;
             }

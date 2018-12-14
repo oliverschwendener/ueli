@@ -26,14 +26,14 @@ import { WindowsAdminFilePathExecutor } from "../executors/windows-admin-file-pa
 import { WindowsAdminFilePathExecutionArgumentValidator } from "../execution-argument-validators/windows-admin-file-path-execution-argument-validator";
 
 export class ProductionExecutors {
-    public static getExecutionArgumentValidatorAdminExecutorCombinations(): ExecutionArgumentValidatorExecutorCombination[] {
+    public static getExecutionArgumentValidatorAdminExecutorCombinations(config: UserConfigOptions): ExecutionArgumentValidatorExecutorCombination[] {
         const os = OperatingSystemHelpers.getOperatingSystemFromString(platform());
         switch (os) {
             case OperatingSystem.Windows:
                 return [
                     {
                         executor: new WindowsAdminFilePathExecutor(),
-                        validator: new WindowsAdminFilePathExecutionArgumentValidator(),
+                        validator: new WindowsAdminFilePathExecutionArgumentValidator(config.applicationFileExtensions),
                     },
                 ];
             case OperatingSystem.macOS:

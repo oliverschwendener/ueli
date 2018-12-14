@@ -2,12 +2,13 @@ import { WindowsAdminFilePathExecutionArgumentValidator } from "../../../ts/exec
 import { validMacOsFilePaths } from "../test-helpers";
 
 describe(WindowsAdminFilePathExecutionArgumentValidator.name, () => {
-    const validator = new WindowsAdminFilePathExecutionArgumentValidator();
-    const baseFilePath = "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Google Chrome";
     const allowedFileExtensions = [
         ".lnk",
         ".exe",
     ];
+
+    const validator = new WindowsAdminFilePathExecutionArgumentValidator(allowedFileExtensions);
+    const baseFilePath = "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Google Chrome";
 
     const disallowedFileExtensions = [
         "",

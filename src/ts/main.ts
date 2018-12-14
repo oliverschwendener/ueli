@@ -50,7 +50,7 @@ let inputValidationService = new InputValidationService(config, ProductionSearch
 const ipcEmitter = new ProductionIpcEmitter();
 let executionService = new ExecutionService(
     ProductionExecutors.getExecutionArgumentValidatorExecutorCombinations(config),
-    ProductionExecutors.getExecutionArgumentValidatorAdminExecutorCombinations(),
+    ProductionExecutors.getExecutionArgumentValidatorAdminExecutorCombinations(config),
     new CountManager(new CountFileRepository(appConfig.countFilePath)),
     config,
     ipcEmitter);
@@ -228,7 +228,7 @@ function reloadApp(preventMainWindowReload?: boolean, preventWindowSizeReset?: b
     inputValidationService = new InputValidationService(config, ProductionSearchers.getCombinations(config, appConfig, appIconStore));
     executionService = new ExecutionService(
         ProductionExecutors.getExecutionArgumentValidatorExecutorCombinations(config),
-        ProductionExecutors.getExecutionArgumentValidatorAdminExecutorCombinations(),
+        ProductionExecutors.getExecutionArgumentValidatorAdminExecutorCombinations(config),
         new CountManager(new CountFileRepository(appConfig.countFilePath)),
         config,
         ipcEmitter);
