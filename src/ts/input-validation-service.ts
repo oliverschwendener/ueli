@@ -33,8 +33,8 @@ export class InputValidationService {
             }
         }
 
-        if (result.length === 0 && this.configOptions.fallbackWebSearches.length > 0) {
-            const fallBackWebSearchSearcher = new FallbackWebSearchSercher(this.configOptions.fallbackWebSearches, this.configOptions.webSearches);
+        if (result.length === 0 && this.configOptions.webSearches.filter((w) => w.isFallback).length > 0) {
+            const fallBackWebSearchSearcher = new FallbackWebSearchSercher(this.configOptions.webSearches);
             result = fallBackWebSearchSearcher.getSearchResult(userInput);
         }
 

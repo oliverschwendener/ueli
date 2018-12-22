@@ -9,7 +9,6 @@ import { InputValidatorSearcherCombination } from "../../ts/input-validator-sear
 
 describe(InputValidationService.name, (): void => {
     const config = {
-        fallbackWebSearches: [] as string[],
         webSearches: [] as WebSearch[],
     } as UserConfigOptions;
 
@@ -150,53 +149,16 @@ describe(InputValidationService.name, (): void => {
             expect(actual.length).toBe(0);
         });
 
-        it("should return an emtpy array if defined fallback web search does not match any web searches", (): void => {
-            const fallBackWebSearchName = "DuckDuckGo";
-            const webSearchName = "Google";
-            const fallBackWebSearchUrl = "https://google.com/search?q=";
-            const userInput = "something";
-            const webSearch = {
-                name: webSearchName,
-                url: fallBackWebSearchUrl,
-            } as WebSearch;
-
-            config.fallbackWebSearches = [fallBackWebSearchName];
-            config.webSearches = [webSearch];
-
-            const shouldBlockOtherSearchers = false;
-
-            const combinations: InputValidatorSearcherCombination[] = [
-                {
-                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 1" }] as SearchResultItem[]),
-                    validator: new FakeInputValidator(false),
-                },
-                {
-                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 2" }] as SearchResultItem[]),
-                    validator: new FakeInputValidator(false),
-                },
-                {
-                    searcher: new FakeSearcher(shouldBlockOtherSearchers, [{ name: "Search Result 3" }] as SearchResultItem[]),
-                    validator: new FakeInputValidator(false),
-                },
-            ];
-
-            const inputValidationService = new InputValidationService(config, combinations);
-
-            const actual = inputValidationService.getSearchResult(userInput);
-
-            expect(actual.length).toBe(0);
-        });
-
         it("should return a search result for each fallback search result if user input does not match any searcher", (): void => {
             const fallBackWebSearchName = "Google";
             const fallBackWebSearchUrl = "https://google.com/search?q=";
             const userInput = "something";
             const webSearch = {
+                isFallback: true,
                 name: fallBackWebSearchName,
                 url: fallBackWebSearchUrl,
             } as WebSearch;
 
-            config.fallbackWebSearches = [fallBackWebSearchName];
             config.webSearches = [webSearch];
 
             const shouldBlockOtherSearchers = false;

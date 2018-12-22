@@ -217,25 +217,6 @@
                             </table>
                         </div>
                     </div>
-                    <div class="setting-group" v-if="config.features.webSearch">
-                        <div class="setting-title">Fallback web searches</div>
-                        <div class="setting">
-                            <div class="sub-setting" v-for="fallbackWebSearch in config.fallbackWebSearches">
-                                <input disabled class="setting-text-input" type="text" v-model="fallbackWebSearch">
-                                <svg class="setting-action-icon sub-setting-icon" v-on:click="settingsActionRemoveFallbackWebSearch(fallbackWebSearch)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
-                                    <g id="surface1">
-                                        <path d="M 13.5 3.1875 C 7.804688 3.1875 3.1875 7.804688 3.1875 13.5 C 3.1875 19.195313 7.804688 23.8125 13.5 23.8125 C 19.195313 23.8125 23.8125 19.195313 23.8125 13.5 C 23.8125 7.804688 19.195313 3.1875 13.5 3.1875 Z M 19 15 L 8 15 L 8 12 L 19 12 Z "></path>
-                                    </g>
-                                </svg>
-                            </div>
-                            <div v-if="config.fallbackWebSearches.length !== config.webSearches.length" class="sub-setting">
-                                <select class="setting-select" v-model="configEdit.newFallbackWebSearch" v-on:change="settingsActionAddFallbackWebSearch(configEdit.newFallbackWebSearch)">
-                                    <option selected value="">Select a web search engine</option>
-                                    <option v-for="webSearch in getUnusedFallbackWebSearches()" :value="webSearch.name">{{ webSearch.name }}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                     <div class="setting-group">
                         <div class="setting-title">Features</div>
                         <div class="setting">
@@ -593,6 +574,8 @@
                                         <th>Name</th>
                                         <th>Prefix</th>
                                         <th>Url</th>
+                                        <th>Priority</th>
+                                        <th class="text-center">Fallback</th>
                                         <th>Icon</th>
                                         <th class="text-center">Preview</th>
                                         <th class="text-center">+/-</th>
@@ -603,6 +586,8 @@
                                         <td><input class="setting-text-input" type="text" v-model="webSearch.name" v-on:blur="updateUserConfig"></td>
                                         <td><input class="setting-text-input" type="text" v-model="webSearch.prefix" v-on:blur="updateUserConfig"></td>
                                         <td><input class="setting-text-input" type="text" v-model="webSearch.url" v-on:blur="updateUserConfig"></td>
+                                        <td><input class="setting-text-input" type="number" min="0" v-model="webSearch.priority" v-on:blur="updateUserConfig"></td>
+                                        <td class="text-center"><input type="checkbox" v-model="webSearch.isFallback" v-on:blur="updateUserConfig"></td>
                                         <td><input class="setting-text-input" type="text" v-model="webSearch.icon" v-on:blur="updateUserConfig"></td>
                                         <td class="text-center" v-html="webSearch.icon"></td>
                                         <td class="text-center">
@@ -617,6 +602,8 @@
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.name" placeholder="Name"></td>
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.prefix" placeholder="Prefix"></td>
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.url" placeholder="URL"></td>
+                                        <td><input type="number" class="setting-text-input" min="0" v-model="configEdit.newWebSearch.priority" placeholder="Priority"></td>
+                                        <td class="text-center"><input type="checkbox" v-model="configEdit.newWebSearch.isFallback"></td>
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.icon" placeholder="Icon"></td>
                                         <td class="text-center" v-html="configEdit.newWebSearch.icon"></td>
                                         <td class="text-center">

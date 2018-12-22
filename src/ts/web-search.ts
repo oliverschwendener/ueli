@@ -1,6 +1,8 @@
-export class WebSearch {
-    public name: string;
-    public prefix: string;
-    public url: string;
-    public icon: string;
+export interface WebSearch {
+    name: string;
+    prefix: string;
+    url: string;
+    icon: string;
+    priority: number;
+    isFallback: boolean;
 }

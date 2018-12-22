@@ -22,7 +22,6 @@ export class DefaultUserConfigManager {
             autoStartApp: true,
             colorTheme: "dark",
             customCommands: [],
-            fallbackWebSearches: [],
             features: defaultFeatures,
             fileSearchBlackList: [
                 "vendor",

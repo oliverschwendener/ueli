@@ -24,7 +24,6 @@ const configEdit = {
     newApplicationFileExtension: "",
     newApplicationFolder: "",
     newCustomCommand: {},
-    newFallbackWebSearch: "",
     newFileSearchBlackListEntry: "",
     newFileSearchOption: {} as FileSearchOption,
     newShortcut: {} as Shortcut,
@@ -58,13 +57,6 @@ const vue = new Vue({
     methods: {
         colorTheme: (): string => {
             return `./styles/${config.colorTheme}.css`;
-        },
-        getUnusedFallbackWebSearches: (): WebSearch[] => {
-            return config.webSearches.filter((w): boolean => {
-                return config.fallbackWebSearches.filter((f): boolean => {
-                    return f === w.name;
-                }).length === 0;
-            });
         },
         handleCheckForUpdateButtonClick: (): void => {
             ipcRenderer.send(IpcChannels.ueliCheckForUpdates);
@@ -173,13 +165,6 @@ const vue = new Vue({
             vue.updateUserConfig();
             configEdit.newCustomCommand = {};
         },
-        settingsActionAddFallbackWebSearch: (newFallbackWebSearch: string): void => {
-            if (newFallbackWebSearch.length > 0) {
-                config.fallbackWebSearches.push(newFallbackWebSearch);
-                vue.updateUserConfig();
-                configEdit.newFallbackWebSearch = "";
-            }
-        },
         settingsActionAddFileSearchBlackListEntry: (newFileSearchBlackListEntry: string): void => {
             config.fileSearchBlackList.push(newFileSearchBlackListEntry);
             vue.updateUserConfig();
@@ -213,11 +198,6 @@ const vue = new Vue({
         settingsActionRemoveCustomCommand: (customCommand: CustomCommand): void => {
             const indexToRemove = config.customCommands.indexOf(customCommand);
             config.customCommands.splice(indexToRemove, 1);
-            vue.updateUserConfig();
-        },
-        settingsActionRemoveFallbackWebSearch: (fallbackWebSearch: string): void => {
-            const indexToRemove = config.fallbackWebSearches.indexOf(fallbackWebSearch);
-            config.fallbackWebSearches.splice(indexToRemove, 1);
             vue.updateUserConfig();
         },
         settingsActionRemoveFileSearchBlackListEntry: (blackListEntry: string): void => {

@@ -13,7 +13,6 @@ export interface UserConfigOptions {
     autoStartApp: boolean;
     colorTheme: string;
     customCommands: CustomCommand[];
-    fallbackWebSearches: string[];
     features: FeatureOptions;
     fileSearchBlackList: string[];
     fileSearchOptions: FileSearchOption[];

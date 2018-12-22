@@ -42,6 +42,12 @@ export class UserConfigFileRepository {
         config.userInputFontSize = Number(config.userInputFontSize);
         config.windowMaxHeight = Number(config.windowMaxHeight);
         config.windowWidth = Number(config.windowWidth);
+
+        config.webSearches = config.webSearches.map((w) => {
+            w.priority = Number(w.priority);
+            return w;
+        });
+
         return config;
     }
 }
