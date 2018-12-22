@@ -190,7 +190,6 @@ To open the settings press <kbd>Ctrl</kbd> <kbd>i</kbd> or search for `ueli sett
     * `executionArgument` String - Represents the execution argument for the custom command.
     * `prefix` String - Represents the prefix for the custom command.
     * `icon` String - Represents the svg icon for the custom command.
-* `fallbackWebSearches` Array of string - Represents the names of [web search engines](#web-search-engines) used when ueli does not find any search results.
 * `features` FeatureOptions
     * `calculator` Boolean - If the calculator feature is enabled.
     * `commandLine` Boolean - If the command line feature is enabled.
@@ -246,8 +245,10 @@ To open the settings press <kbd>Ctrl</kbd> <kbd>i</kbd> or search for `ueli sett
 * `webSearches` Array of webSearch Objects - A list of [web search engines](#web-search-engines):
     * `webSearch` Object - Defines a web search engine.
         * `icon` String - Represents the svg icon for the specific web search engine.
+        * `isFallback` Boolean - If the web search should act as [fallback](#fallback-web-search-engines)
         * `name` String - Represents the name of the web search engine.
         * `prefix` String - Represents the prefix for your web search engine. For example if the prefix is `g` you can type in `g?{your search term}` to search.
+        * `priority` Number - Represents the priority of the web search engine when used as fallback (the higher the number the higher the web search engine appears in the search results).
         * `url` String - Represents the url for the search engine to which the search term is appended to. For example `https://google.com/search?q=`.
 * `windowMaxHeight` Number - Represents the maximum window height. Only used for command line output and settings view.
 * `windowWidth`: Number - Represents the width of the main window in pixels.
