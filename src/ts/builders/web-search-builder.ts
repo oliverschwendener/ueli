@@ -6,17 +6,15 @@ import { StringHelpers } from "../helpers/string-helpers";
 
 export class WebSearchBuilder {
     public static buildSearchTerm(userInput: string, webSearch: WebSearch): string {
-        let result = userInput.replace(`${webSearch.prefix}${WebSearchHelpers.webSearchSeparator}`, "");
-
-        if (webSearch.whitespaceCharacter !== undefined && webSearch.whitespaceCharacter.length > 0) {
-            result = StringHelpers.replaceWhitespaceWithString(result, webSearch.whitespaceCharacter);
-        }
-
-        return result;
+        return userInput.replace(`${webSearch.prefix}${WebSearchHelpers.webSearchSeparator}`, "");
     }
 
     public static buildExecutionUrl(userInput: string, webSearch: WebSearch): string {
-        const searchTerm = this.buildSearchTerm(userInput, webSearch);
+        let searchTerm = this.buildSearchTerm(userInput, webSearch);
+
+        if (webSearch.whitespaceCharacter !== undefined && webSearch.whitespaceCharacter.length > 0) {
+            searchTerm = StringHelpers.replaceWhitespaceWithString(searchTerm, webSearch.whitespaceCharacter);
+        }
 
         if (webSearch.url !== undefined && webSearch.url.indexOf(UeliHelpers.websearchQueryPlaceholder) > -1) {
             return webSearch.url.replace(UeliHelpers.websearchQueryPlaceholder, searchTerm);
