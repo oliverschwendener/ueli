@@ -1,6 +1,7 @@
 import { WebSearchBuilder } from "../../../ts/builders/web-search-builder";
 import { WebSearch } from "../../../ts/web-search";
 import { WebSearchHelpers } from "../../../ts/helpers/web-search-helper";
+import { UeliHelpers } from "../../../ts/helpers/ueli-helpers";
 
 describe(WebSearchBuilder.name, (): void => {
     describe(WebSearchBuilder.buildExecutionUrl.name, (): void => {
@@ -12,6 +13,16 @@ describe(WebSearchBuilder.name, (): void => {
             const actual = WebSearchBuilder.buildExecutionUrl(userInput, webSearch);
 
             expect(actual).toBe(`${webSearchUrl}${userInput}`);
+        });
+
+        it("should replace the query placeholder with the search term if it is set", (): void => {
+            const userInput = "something";
+            const webSearchUrl = `https://my-web-search-engine.com/?query=${UeliHelpers.websearchQueryPlaceholder}&suffix=asdf`;
+            const webSearch = { url: webSearchUrl } as WebSearch;
+
+            const actual = WebSearchBuilder.buildExecutionUrl(userInput, webSearch);
+
+            expect(actual).toBe(webSearchUrl.replace(UeliHelpers.websearchQueryPlaceholder, userInput));
         });
     });
 

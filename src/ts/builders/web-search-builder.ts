@@ -1,6 +1,7 @@
 import { WebSearch } from "../web-search";
 import { WebSearchHelpers } from "../helpers/web-search-helper";
 import { SearchResultItem } from "../search-result-item";
+import { UeliHelpers } from "../helpers/ueli-helpers";
 
 export class WebSearchBuilder {
     public static buildSearchTerm(userInput: string, webSearch: WebSearch): string {
@@ -9,7 +10,12 @@ export class WebSearchBuilder {
 
     public static buildExecutionUrl(userInput: string, webSearch: WebSearch): string {
         const searchTerm = this.buildSearchTerm(userInput, webSearch);
-        return `${webSearch.url}${searchTerm.trim()}`;
+
+        if (webSearch.url !== undefined && webSearch.url.indexOf(UeliHelpers.websearchQueryPlaceholder) > -1) {
+            return webSearch.url.replace(UeliHelpers.websearchQueryPlaceholder, searchTerm);
+        } else {
+            return `${webSearch.url}${searchTerm.trim()}`;
+        }
     }
 
     public static buildSearchResultItem(userInput: string, webSearch: WebSearch): SearchResultItem {
