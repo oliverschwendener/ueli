@@ -2,10 +2,17 @@ import { WebSearch } from "../web-search";
 import { WebSearchHelpers } from "../helpers/web-search-helper";
 import { SearchResultItem } from "../search-result-item";
 import { UeliHelpers } from "../helpers/ueli-helpers";
+import { StringHelpers } from "../helpers/string-helpers";
 
 export class WebSearchBuilder {
     public static buildSearchTerm(userInput: string, webSearch: WebSearch): string {
-        return userInput.replace(`${webSearch.prefix}${WebSearchHelpers.webSearchSeparator}`, "");
+        let result = userInput.replace(`${webSearch.prefix}${WebSearchHelpers.webSearchSeparator}`, "");
+
+        if (webSearch.whitespaceCharacter !== undefined && webSearch.whitespaceCharacter.length > 0) {
+            result = StringHelpers.replaceWhitespaceWithString(result, webSearch.whitespaceCharacter);
+        }
+
+        return result;
     }
 
     public static buildExecutionUrl(userInput: string, webSearch: WebSearch): string {

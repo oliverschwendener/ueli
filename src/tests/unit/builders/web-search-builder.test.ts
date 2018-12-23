@@ -72,5 +72,16 @@ describe(WebSearchBuilder.name, (): void => {
 
             expect(actual).toBe(searchTerm);
         });
+
+        it("should replace all whitespaces of user input with the specified character if it is set", (): void => {
+            const whitespaceCharacter = "+";
+            const prefix = "m";
+            const searchTerm = "this is a string with whitespace";
+            const userInput = `${prefix}${WebSearchHelpers.webSearchSeparator}${searchTerm}`;
+            const webSearch = { prefix, whitespaceCharacter } as WebSearch;
+            const expected = "this+is+a+string+with+whitespace";
+            const actual = WebSearchBuilder.buildSearchTerm(userInput, webSearch);
+            expect(actual).toBe(expected);
+        });
     });
 });

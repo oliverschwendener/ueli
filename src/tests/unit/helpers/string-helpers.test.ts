@@ -117,4 +117,14 @@ describe(StringHelpers.name, (): void => {
             }
         });
     });
+
+    describe(StringHelpers.replaceWhitespaceWithString.name, (): void => {
+        it("should replace whitespace of string with a specified string", (): void => {
+            const stringWithWhiteSpace = "this is a normal string with whitespace";
+            const stringToInsert = "+";
+            const expected = "this+is+a+normal+string+with+whitespace";
+            const actual = StringHelpers.replaceWhitespaceWithString(stringWithWhiteSpace, stringToInsert);
+            expect(actual).toBe(expected);
+        });
+    });
 });

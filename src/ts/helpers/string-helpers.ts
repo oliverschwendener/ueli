@@ -19,6 +19,10 @@ export class StringHelpers {
         return value.replace(/\s\s+/g, " ").trim();
     }
 
+    public static replaceWhitespaceWithString(stringWithWhitespace: string, stringToInsert: string) {
+        return stringWithWhitespace.replace(/\s+/g, stringToInsert);
+    }
+
     public static stringToWords(value: string): string[] {
         const words = value.split(/\s/g);
         return words.filter((w): boolean => {

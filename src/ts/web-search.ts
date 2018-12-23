@@ -5,4 +5,5 @@ export interface WebSearch {
     icon: string;
     priority: number;
     isFallback: boolean;
+    whitespaceCharacter?: string;
 }

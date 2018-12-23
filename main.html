@@ -574,6 +574,7 @@
                                         <th>Name</th>
                                         <th>Prefix</th>
                                         <th>Url</th>
+                                        <th>Whitespace Character</th>
                                         <th>Priority</th>
                                         <th class="text-center">Fallback</th>
                                         <th>Icon</th>
@@ -586,6 +587,7 @@
                                         <td><input class="setting-text-input" type="text" v-model="webSearch.name" v-on:blur="updateUserConfig"></td>
                                         <td><input class="setting-text-input" type="text" v-model="webSearch.prefix" v-on:blur="updateUserConfig"></td>
                                         <td><input class="setting-text-input" type="text" v-model="webSearch.url" v-on:blur="updateUserConfig"></td>
+                                        <td><input class="setting-text-input" type="text" v-model="webSearch.whitespaceCharacter" v-on:blur="updateUserConfig"></td>
                                         <td><input class="setting-text-input" type="number" min="0" v-model="webSearch.priority" v-on:blur="updateUserConfig" :disabled="!webSearch.isFallback"></td>
                                         <td class="text-center"><input type="checkbox" v-model="webSearch.isFallback" v-on:blur="updateUserConfig"></td>
                                         <td><input class="setting-text-input" type="text" v-model="webSearch.icon" v-on:blur="updateUserConfig"></td>
@@ -602,6 +604,7 @@
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.name" placeholder="Name"></td>
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.prefix" placeholder="Prefix"></td>
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.url" placeholder="URL"></td>
+                                        <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.whitespaceCharacter" placeholder="Whitespace Character"></td>
                                         <td><input type="number" class="setting-text-input" min="0" v-model="configEdit.newWebSearch.priority" placeholder="Priority" :disabled="!configEdit.newWebSearch.isFallback"></td>
                                         <td class="text-center"><input type="checkbox" v-model="configEdit.newWebSearch.isFallback"></td>
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.icon" placeholder="Icon"></td>
