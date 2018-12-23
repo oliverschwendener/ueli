@@ -9,6 +9,9 @@
     --user-input-font-weight: 200;
     --search-result-name-active-font-weight: 600;
     --search-result-description-font-weight: 200;
+    --settings-title-font-size: 1rem;
+    --settings-title-font-weight: 600;
+    --settings-title-margin-bottom: 15px;
     --settings-font-size: 0.85rem;
     --confirmation-dialog-font-size: 0.85rem;
     --confirmation-dialog-icon-size: 25px;
@@ -243,7 +246,7 @@ h1.setting-section-title:first-of-type {
 div.setting-group {
     padding: calc(2* var(--side-padding)) 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     border-bottom: 1px solid var(--scrollbar-foreground-color);
 }
 
@@ -252,15 +255,17 @@ div.setting-group:last-child {
 }
 
 div.setting-title {
-    font-size: var(--settings-font-size);
+    font-size: var(--settings-title-font-size);
     padding-right: var(--side-padding);
     display: flex;
     align-items: center;
-    width: 28%;
+    width: 100%;
+    margin-bottom: var(--settings-title-margin-bottom);
+    font-weight: var(--settings-title-font-weight);
 }
 
 div.setting {
-    width: 72%;
+    width: 100%;
 }
 
 div.setting.setting-range {
