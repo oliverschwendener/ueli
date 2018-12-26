@@ -2,10 +2,11 @@ import { AppIconStore } from "./app-icon-store";
 import { ApplicationIcon } from "./application-icon";
 import { SearchResultItem } from "../search-result-item";
 import { IconSet } from "../icon-sets/icon-set";
-import shell = require("node-powershell");
 import { normalize, join } from "path";
 import { AppIconStoreHelpers } from "../helpers/app-icon-store-helpers";
-import { existsSync, mkdirSync } from "fs";
+import { existsSync, mkdirSync, unlinkSync } from "fs";
+import { FileHelpers } from "../helpers/file-helpers";
+import { generateIcons, Icon } from "windows-system-icon";
 
 export class WindowsAppIconStore implements AppIconStore {
     private icons: ApplicationIcon[] = [];
@@ -32,39 +33,42 @@ export class WindowsAppIconStore implements AppIconStore {
             mkdirSync(this.storePath);
         }
 
-        const ps = new shell({
-            debugMsg: false,
-            executionPolicy: "Bypass",
-            noProfile: true,
-        });
-
-        ps.addCommand(`Add-Type -AssemblyName System.Drawing`);
-
-        searchResultItems
+        const appIcons = searchResultItems
             .filter((searchResultItem: SearchResultItem) => {
                 return searchResultItem.icon === this.iconSet.appIcon;
-            }).filter((app) => {
-                const inFilePath = normalize(app.executionArgument);
+            })
+            .map((app): Icon => {
                 const appName = app.name;
-                const outFilePath = join(this.storePath, `${AppIconStoreHelpers.buildIconFileName(appName)}.png`);
+                const inputFilePath = normalize(app.executionArgument);
+                const outputFilePath = join(this.storePath, `${AppIconStoreHelpers.buildIconFileName(appName)}.png`);
 
-                ps.addCommand(`$fileExists = Test-Path -Path "${inFilePath}";`);
-                ps.addCommand(`if($fileExists) { $icon = [System.Drawing.Icon]::ExtractAssociatedIcon("${inFilePath}"); }`);
-                ps.addCommand(`if($fileExists) { $bitmap = $icon.ToBitmap().save("${outFilePath}", [System.Drawing.Imaging.ImageFormat]::Png); }`);
+                this.addIcon({ name: app.name, PNGFilePath: outputFilePath });
 
-                this.addIcon({ name: app.name, PNGFilePath: outFilePath });
+                return {
+                    inputFilePath,
+                    outputFilePath,
+                    outputFormat: "Png",
+                };
             });
 
-        ps.invoke().then(() => {
-            // tslint:disable-next-line:no-console
-            console.log("Sucessfully generated all app icons");
-            this.removeNonExistentIcons();
-            ps.dispose();
-        }).catch((err) => {
-            // tslint:disable-next-line:no-console
-            console.log(`Error while generating app icon: ${err}`);
-            this.removeNonExistentIcons();
-            ps.dispose();
+        generateIcons(appIcons)
+            .then(() => {
+                // tslint:disable-next-line:no-console
+                console.log("Sucessfully generated all app icons");
+                this.removeNonExistentIcons();
+            }).catch((err: string) => {
+                // tslint:disable-next-line:no-console
+                console.log(`Error while generating app icon: ${err}`);
+                this.removeNonExistentIcons();
+            });
+    }
+
+    public clearCache(): void {
+        const files = FileHelpers.getFilesFromFolder(this.storePath);
+        files.forEach((file) => {
+            if (existsSync(file)) {
+                unlinkSync(file);
+            }
         });
     }
 

@@ -277,6 +277,7 @@ function resetWindowToDefaultSizeAndPosition(): void {
 }
 
 function quitApp(): void {
+    clearAppIconStoreCache();
     destroyTrayIcon();
     unregisterAllGlobalShortcuts();
     app.quit();
@@ -295,6 +296,10 @@ function getAppIconStore(): AppIconStore {
     return currentOperatingSystem === OperatingSystem.Windows
         ? new WindowsAppIconStore(appConfig.appIconStorePath, config.iconSet)
         : new MacOsAppIconStore(appConfig.appIconStorePath, config.iconSet);
+}
+
+function clearAppIconStoreCache(): void {
+    appIconStore.clearCache();
 }
 
 autoUpdater.on("update-available", (): void => {

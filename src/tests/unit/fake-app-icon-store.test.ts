@@ -20,4 +20,15 @@ describe(FakeAppIconStore.name, (): void => {
         const actual = store.getIcon("some-icon");
         expect(actual).toBe(undefined);
     });
+
+    it("should start with an initialized cache", () => {
+        const store = new FakeAppIconStore();
+        expect(store.cacheHasBeenCleared).toBe(false);
+    });
+
+    it("should reset cache", (): void => {
+        const store = new FakeAppIconStore();
+        store.clearCache();
+        expect(store.cacheHasBeenCleared).toBe(true);
+    });
 });

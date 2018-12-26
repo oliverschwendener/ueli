@@ -2,10 +2,11 @@ import { ApplicationIcon } from "./application-icon";
 import { SearchResultItem } from "../search-result-item";
 import { normalize, join } from "path";
 import { convert } from "app2png";
-import { existsSync, mkdirSync } from "fs";
+import { existsSync, mkdirSync, unlinkSync } from "fs";
 import { AppIconStore } from "./app-icon-store";
 import { IconSet } from "../icon-sets/icon-set";
 import { AppIconStoreHelpers } from "../helpers/app-icon-store-helpers";
+import { FileHelpers } from "../helpers/file-helpers";
 
 export class MacOsAppIconStore implements AppIconStore {
     private readonly storePath: string;
@@ -49,6 +50,15 @@ export class MacOsAppIconStore implements AppIconStore {
             });
 
         this.removeNonExistentIcons();
+    }
+
+    public clearCache(): void {
+        const files = FileHelpers.getFilesFromFolder(this.storePath);
+        files.forEach((file) => {
+            if (existsSync(file)) {
+                unlinkSync(file);
+            }
+        });
     }
 
     private removeNonExistentIcons(): void {

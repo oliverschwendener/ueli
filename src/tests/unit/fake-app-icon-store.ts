@@ -4,6 +4,7 @@ import { SearchResultItem } from "../../ts/search-result-item";
 
 export class FakeAppIconStore implements AppIconStore {
     public hasBeenInitialized = false;
+    public cacheHasBeenCleared = false;
     private readonly icons: ApplicationIcon[] = [];
 
     public addIcon(icon: ApplicationIcon): void {
@@ -18,5 +19,9 @@ export class FakeAppIconStore implements AppIconStore {
 
     public init(searchResultItems: SearchResultItem[]): void {
         this.hasBeenInitialized = true;
+    }
+
+    public clearCache(): void {
+        this.cacheHasBeenCleared = true;
     }
 }
