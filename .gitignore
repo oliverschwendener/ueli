@@ -3,6 +3,7 @@
 #Visual Studio Code files
 .vscode/*
 !.vscode/launch.example.json
+!.vscode/extensions.json
 
 #Bundled files
 bundle/
