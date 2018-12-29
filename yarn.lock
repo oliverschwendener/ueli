@@ -6859,10 +6859,10 @@ window-size@0.1.0:
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
   integrity sha1-VDjNLqk7IC76Ohn+iIeu58lPnJ0=
 
-windows-system-icon@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/windows-system-icon/-/windows-system-icon-0.0.3.tgz#98ca411b9328b20498176d2a255b6fadd8ddc9b9"
-  integrity sha512-5c1/fvksAOjuaP5mKU/b90DPcCPagEiC3A9vxXQm/GrIpXV4PbPCKcGAI9S3TUblLvraTMVveGWV63Tn440/SA==
+windows-system-icon@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/windows-system-icon/-/windows-system-icon-0.0.5.tgz#a1d5a7ca728d9934c48d8ae1006d0b2786737775"
+  integrity sha512-fHYpfMc/xnPj3WftYPB1eRtUUdG2EqfavM46mun/Wl/28m/NqCozZ7GL/jU/7lOlFfcnM5vKFYYb+YqtmW+Cbg==
   dependencies:
     node-powershell "^3.3.1"
 

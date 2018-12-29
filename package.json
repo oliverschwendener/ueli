@@ -72,6 +72,6 @@
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0",
     "webpack-merge": "^4.1.4",
-    "windows-system-icon": "^0.0.3"
+    "windows-system-icon": "^0.0.5"
   }
 }
