@@ -1,26 +1,52 @@
+import * as Fuse from "fuse.js";
 import { SearchResultItem } from "../common/search-result-item";
-import { Plugin } from "./plugin";
+import { SearchPlugin } from "./search-plugin";
+
+interface FuseResult {
+    item: SearchResultItem;
+}
 
 export class SearchEngine {
-    private readonly plugins: Plugin[];
+    private readonly plugins: SearchPlugin[];
 
-    constructor(plugins: Plugin[]) {
+    constructor(plugins: SearchPlugin[]) {
         this.plugins = plugins;
+        this.plugins.forEach((p) => p.refreshIndex());
+
+        setInterval(() => {
+            this.plugins.forEach((p) => p.refreshIndex());
+        });
     }
 
-    public getSearchResults(userInput: string): SearchResultItem[] {
-        let all: SearchResultItem[] = [];
+    public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
+        return new Promise((resolve, reject) => {
+            if (userInput === undefined || userInput.length === 0) {
+                resolve([]);
+            }
 
-        if (userInput === undefined || userInput.length === 0) {
-            return all;
-        }
+            const promises = this.plugins.map((p) => p.getAll());
 
-        this.plugins.forEach((p) => {
-            all = all.concat(p.getAll());
-        });
+            Promise.all(promises).then((resultLists) => {
+                let all: SearchResultItem[] = [];
 
-        return all.filter((a) => {
-            return a.name.toLowerCase().indexOf(userInput.toLowerCase()) > -1;
+                resultLists.forEach((r) => all = all.concat(r));
+
+                const fuse = new Fuse(all, {
+                    distance: 100,
+                    includeScore: true,
+                    keys: ["name"],
+                    location: 0,
+                    maxPatternLength: 32,
+                    minMatchCharLength: 1,
+                    shouldSort: true,
+                    threshold: 0.4,
+                });
+
+                const fuseResult = fuse.search(userInput) as any[];
+                const filtered = fuseResult.map((item: FuseResult): SearchResultItem => item.item);
+
+                resolve(filtered);
+            });
         });
     }
 }

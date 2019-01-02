@@ -12,9 +12,6 @@ Vue.component("search-results", searchResultsComponent);
 
 // tslint:disable-next-line:no-unused-expression
 new Vue({
-    data: {
-        message: "hello",
-    },
     el: "#app",
 });
 
