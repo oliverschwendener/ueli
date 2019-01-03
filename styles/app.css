@@ -1,7 +1,106 @@
 :root {
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
+    --user-input--font-size: 24px;
+    --user-input--font-weight: 200;
+    --user-input--background-color: #20252b;
+    --user-input--color: #fff;
+    --user-input--height: 60px;
+    --user-input--side-padding: 15px;
+
+    --search-results--background-color: #272c34;
+    --search-results--item-active-background-color: #2b313a;
+    --search-results--text-color: #fff;
+    --search-results--item-height: 40px;
+    --search-results--item-side-padding: 15px;
+    --search-results--item-icon-size: 25px;
+
+    --scrollbar--size: 8px;
+    --scrollbar--foreground-color: #3d444f;
+    --scrollbar--background-color: #1f2328;
 }
 
 body {
-    
+    padding: 0;
+    margin: 0;
+    font-family: var(--font-family);
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-input {
+    background-color: var(--user-input--background-color);
+    width: 100%;
+    height: var(--user-input--height);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 var(--user-input--side-padding);
+    box-sizing: border-box;
+    -webkit-app-region: drag;
+}
+
+.user-input__input {
+    background: transparent;
+    width: 100%;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    font-size: var(--user-input--font-size);
+    font-weight: var(--user-input--font-weight);
+    color: var(--user-input--color);
+    -webkit-app-region: no-drag;
+}
+
+.user-input__input:focus {
+    outline: none;
+}
+
+.search-results {
+    background-color: var(--search-results--background-color);
+    color: var(--search-results--text-color);
+    height: calc(100vh - var(--user-input--height));
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.search-results__item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: var(--search-results--item-height);
+    padding: 0 var(--search-results--item-side-padding);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-results__item.active {
+    background-color: var(--search-results--item-active-background-color);
+}
+
+.search-results__item-icon {
+    width: var(--search-results--item-icon-size);
+    height: var(--search-results--item-icon-size);
+    background-size: cover;
+    background-position: center;
+    margin-right: 7.5px;
+}
+
+::-webkit-scrollbar {
+    width: var(--scrollbar--size);
+    height: var(--scrollbar--size);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar--foreground-color);
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar--background-color);
 }

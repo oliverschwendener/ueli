@@ -1,5 +1,5 @@
 import { GeneralOptions } from "./general-options";
 
 export const defaultGeneralOptions: GeneralOptions = {
-    refreshIntervalInSeconds: 30,
+    refreshIntervalInSeconds: 60,
 };

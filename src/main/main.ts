@@ -15,7 +15,10 @@ const searchEngine = new SearchEngine([
 ], config.generalOptions);
 
 app.on("ready", () => {
-    window = new BrowserWindow();
+    window = new BrowserWindow({
+        frame: false,
+        resizable: false,
+    });
     window.loadFile(join(__dirname, "..", "main.html"));
 });
 

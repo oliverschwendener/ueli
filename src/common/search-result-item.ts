@@ -1,4 +1,5 @@
 export interface SearchResultItem {
-    name: string;
     executionArgument: string;
+    icon: string;
+    name: string;
 }

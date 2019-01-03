@@ -19,6 +19,13 @@ vueEventDispatcher.$on(VueEventChannels.userInputChange, (userInput: string) => 
     ipcRenderer.send(IpcChannels.search, userInput);
 });
 
+vueEventDispatcher.$on(VueEventChannels.handleExecution, (searchResultIem: SearchResultItem | undefined) => {
+    if (searchResultIem !== undefined) {
+        // tslint:disable-next-line:no-console
+        console.log(`Execute: ${searchResultIem.name}`);
+    }
+});
+
 ipcRenderer.on(IpcChannels.searchResponse, (event: Electron.Event, searchResults: SearchResultItem[]) => {
     vueEventDispatcher.$emit(VueEventChannels.searchResultsUpdated, searchResults);
 });

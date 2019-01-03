@@ -54,6 +54,7 @@ export class FileApplicationRepository implements ApplicationRepository {
         return new Promise((resolve, reject) => {
             resolve({
                 filePath,
+                icon: this.config.defaultIcon,
                 name: basename(filePath).replace(extname(filePath), ""),
             });
         });

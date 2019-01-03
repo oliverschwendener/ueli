@@ -16,6 +16,7 @@ export class ApplicationSearchPlugin implements SearchPlugin {
                     const result = applications.map((application): SearchResultItem => {
                         return {
                             executionArgument: application.filePath,
+                            icon: application.icon,
                             name: application.name,
                         };
                     });
