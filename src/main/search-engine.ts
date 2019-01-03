@@ -25,29 +25,33 @@ export class SearchEngine {
                 resolve([]);
             }
 
-            const promises = this.plugins.map((p) => p.getAll());
+            const pluginPromises = this.plugins.map((p) => p.getAll());
 
-            Promise.all(promises).then((resultLists) => {
-                let all: SearchResultItem[] = [];
+            Promise.all(pluginPromises)
+                .then((pluginsResults) => {
+                    let all: SearchResultItem[] = [];
 
-                resultLists.forEach((r) => all = all.concat(r));
+                    pluginsResults.forEach((r) => all = all.concat(r));
 
-                const fuse = new Fuse(all, {
-                    distance: 100,
-                    includeScore: true,
-                    keys: ["name"],
-                    location: 0,
-                    maxPatternLength: 32,
-                    minMatchCharLength: 1,
-                    shouldSort: true,
-                    threshold: 0.4,
+                    const fuse = new Fuse(all, {
+                        distance: 100,
+                        includeScore: true,
+                        keys: ["name"],
+                        location: 0,
+                        maxPatternLength: 32,
+                        minMatchCharLength: 1,
+                        shouldSort: true,
+                        threshold: 0.4,
+                    });
+
+                    const fuseResult = fuse.search(userInput) as any[];
+                    const filtered = fuseResult.map((item: FuseResult): SearchResultItem => item.item);
+
+                    resolve(filtered);
+                })
+                .catch((pluginsError) => {
+                    reject(pluginsError);
                 });
-
-                const fuseResult = fuse.search(userInput) as any[];
-                const filtered = fuseResult.map((item: FuseResult): SearchResultItem => item.item);
-
-                resolve(filtered);
-            });
         });
     }
 }

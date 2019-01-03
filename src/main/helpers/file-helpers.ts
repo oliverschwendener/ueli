@@ -9,10 +9,9 @@ interface FileStat {
 export class FileHelpers {
     public static readFilesFromFolderRecursively(folderPath: string): Promise<string[]> {
         return new Promise((resolve, reject) => {
-            readdir(folderPath, (err, readDirResult) => {
-                if (err) {
-                    // tslint:disable-next-line:no-console
-                    console.log(err);
+            readdir(folderPath, (readDirError, readDirResult) => {
+                if (readDirError) {
+                    reject(readDirError);
                 } else {
                     const statPromises = readDirResult
                         .map((file) => join(folderPath, file))
@@ -20,25 +19,33 @@ export class FileHelpers {
                             return this.getStats(filePath);
                         });
 
-                    Promise.all(statPromises).then((statLists) => {
-                        let fileStats: FileStat[] = [];
-                        statLists.forEach((statList) => {
-                            fileStats = fileStats.concat(statList);
-                        });
-
-                        const fileHandles = fileStats.map((fileStat) => {
-                            return this.handleFileStat(fileStat);
-                        });
-
-                        Promise.all(fileHandles).then((fileLists) => {
-                            let files: string[] = [];
-                            fileLists.forEach((fileList) => {
-                                files = files.concat(fileList);
+                    Promise.all(statPromises)
+                        .then((statLists) => {
+                            let fileStats: FileStat[] = [];
+                            statLists.forEach((statList) => {
+                                fileStats = fileStats.concat(statList);
                             });
 
-                            resolve(files);
+                            const fileHandles = fileStats.map((fileStat) => {
+                                return this.handleFileStat(fileStat);
+                            });
+
+                            Promise.all(fileHandles)
+                                .then((fileLists) => {
+                                    let files: string[] = [];
+                                    fileLists.forEach((fileList) => {
+                                        files = files.concat(fileList);
+                                    });
+
+                                    resolve(files);
+                                })
+                                .catch((fileHandleError) => {
+                                    reject(fileHandleError);
+                                });
+                        })
+                        .catch((statError) => {
+                            reject(readDirError);
                         });
-                    });
                 }
             });
         });

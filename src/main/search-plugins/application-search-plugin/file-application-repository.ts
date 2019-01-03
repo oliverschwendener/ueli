@@ -5,39 +5,49 @@ import { ApplicationSearchPluginOptions } from "./application-search-plugin-opti
 import { FileHelpers } from "../../helpers/file-helpers";
 
 export class FileApplicationRepository implements ApplicationRepository {
-    private programs: Application[];
+    private applications: Application[];
     private config: ApplicationSearchPluginOptions;
 
     constructor(config: ApplicationSearchPluginOptions) {
-        this.programs = [];
+        this.applications = [];
         this.config = config;
     }
 
     public getAll(): Promise<Application[]> {
         return new Promise((resolve, reject) => {
-            resolve(this.programs);
+            resolve(this.applications);
         });
     }
 
     public refreshIndex(): void {
-        const promises = this.config.applicationFolders.map((applicationFolder) => {
+        const applicationFilePromises = this.config.applicationFolders.map((applicationFolder) => {
             return FileHelpers.readFilesFromFolderRecursively(applicationFolder);
         });
 
-        Promise.all(promises).then((fileLists) => {
-            let files: string[] = [];
-            fileLists.forEach((fileList) => {
-                files = files.concat(fileList);
-            });
+        Promise.all(applicationFilePromises)
+            .then((fileLists) => {
+                let files: string[] = [];
+                fileLists.forEach((fileList) => {
+                    files = files.concat(fileList);
+                });
 
-            const programPromises = files
-            .filter((file) => this.filterByApplicationFileExtensions(file))
-            .map((file) => this.createProgramFromFilePath(file));
+                const applicationPromises = files
+                    .filter((file) => this.filterByApplicationFileExtensions(file))
+                    .map((file) => this.createProgramFromFilePath(file));
 
-            Promise.all(programPromises).then((programList) => {
-                this.programs = programList;
+                Promise.all(applicationPromises)
+                    .then((applicationList) => {
+                        this.applications = applicationList;
+                    })
+                    .catch((applicationError) => {
+                        // tslint:disable-next-line:no-console
+                        console.log(applicationError);
+                    });
+            })
+            .catch((applicationError) => {
+                // tslint:disable-next-line:no-console
+                console.log(applicationError);
             });
-        });
     }
 
     private createProgramFromFilePath(filePath: string): Promise<Application> {
