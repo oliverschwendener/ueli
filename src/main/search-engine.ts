@@ -1,6 +1,7 @@
 import * as Fuse from "fuse.js";
 import { SearchResultItem } from "../common/search-result-item";
 import { SearchPlugin } from "./search-plugin";
+import { GeneralOptions } from "../common/config/general-options";
 
 interface FuseResult {
     item: SearchResultItem;
@@ -9,13 +10,13 @@ interface FuseResult {
 export class SearchEngine {
     private readonly plugins: SearchPlugin[];
 
-    constructor(plugins: SearchPlugin[]) {
+    constructor(plugins: SearchPlugin[], generalOptions: GeneralOptions) {
         this.plugins = plugins;
         this.plugins.forEach((p) => p.refreshIndex());
 
         setInterval(() => {
             this.plugins.forEach((p) => p.refreshIndex());
-        });
+        }, generalOptions.refreshIntervalInSeconds * 1000);
     }
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {

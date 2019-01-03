@@ -1,11 +1,11 @@
 import { SearchPlugin } from "../../search-plugin";
 import { SearchResultItem } from "../../../common/search-result-item";
-import { ProgramRepository } from "./program-repository";
+import { ApplicationRepository } from "./application-repository";
 
-export class ProgramSearchPlugin implements SearchPlugin {
-    private readonly programRepository: ProgramRepository;
+export class ApplicationSearchPlugin implements SearchPlugin {
+    private readonly programRepository: ApplicationRepository;
 
-    constructor(programRepository: ProgramRepository) {
+    constructor(programRepository: ApplicationRepository) {
         this.programRepository = programRepository;
     }
 

@@ -2,14 +2,17 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import { join } from "path";
 import { IpcChannels } from "../common/ipc-channels";
 import { SearchEngine } from "./search-engine";
-import { ProgramSearchPlugin } from "./search-plugins/program-search-plugin/program-search-plugin";
-import { WindowsProgramRepository } from "./search-plugins/program-search-plugin/windows-program-repository";
+import { ApplicationSearchPlugin } from "./search-plugins/application-search-plugin/application-search-plugin";
+import { FileApplicationRepository } from "./search-plugins/application-search-plugin/file-application-repository";
+import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
 
 let window: BrowserWindow;
 
+const config = defaultUserConfigOptions;
+
 const searchEngine = new SearchEngine([
-    new ProgramSearchPlugin(new WindowsProgramRepository()),
-]);
+    new ApplicationSearchPlugin(new FileApplicationRepository(config.applicationSearchOptions)),
+], config.generalOptions);
 
 app.on("ready", () => {
     window = new BrowserWindow();

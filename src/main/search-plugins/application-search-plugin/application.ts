@@ -1,4 +1,4 @@
-export interface Program {
+export interface Application {
     name: string;
     filePath: string;
 }
