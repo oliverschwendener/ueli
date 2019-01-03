@@ -3,20 +3,20 @@ import { SearchResultItem } from "../../../common/search-result-item";
 import { ApplicationRepository } from "./application-repository";
 
 export class ApplicationSearchPlugin implements SearchPlugin {
-    private readonly programRepository: ApplicationRepository;
+    private readonly applicationRepository: ApplicationRepository;
 
-    constructor(programRepository: ApplicationRepository) {
-        this.programRepository = programRepository;
+    constructor(applicationRepository: ApplicationRepository) {
+        this.applicationRepository = applicationRepository;
     }
 
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            this.programRepository.getAll()
-                .then((programs) => {
-                    const result = programs.map((program): SearchResultItem => {
+            this.applicationRepository.getAll()
+                .then((applications) => {
+                    const result = applications.map((application): SearchResultItem => {
                         return {
-                            executionArgument: program.filePath,
-                            name: program.name,
+                            executionArgument: application.filePath,
+                            name: application.name,
                         };
                     });
                     resolve(result);
@@ -28,6 +28,6 @@ export class ApplicationSearchPlugin implements SearchPlugin {
     }
 
     public refreshIndex(): void {
-        this.programRepository.refreshIndex();
+        this.applicationRepository.refreshIndex();
     }
 }

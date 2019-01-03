@@ -33,7 +33,7 @@ export class FileApplicationRepository implements ApplicationRepository {
 
                 const applicationPromises = files
                     .filter((file) => this.filterByApplicationFileExtensions(file))
-                    .map((file) => this.createProgramFromFilePath(file));
+                    .map((file) => this.createApplicationFromFilePath(file));
 
                 Promise.all(applicationPromises)
                     .then((applicationList) => {
@@ -50,7 +50,7 @@ export class FileApplicationRepository implements ApplicationRepository {
             });
     }
 
-    private createProgramFromFilePath(filePath: string): Promise<Application> {
+    private createApplicationFromFilePath(filePath: string): Promise<Application> {
         return new Promise((resolve, reject) => {
             resolve({
                 filePath,
