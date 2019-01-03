@@ -30,18 +30,23 @@ export class FileApplicationRepository implements ApplicationRepository {
                 files = files.concat(fileList);
             });
 
-            this.programs = [];
-            files
-                .filter((file) => this.filterByApplicationFileExtensions(file))
-                .forEach((file) => this.programs.push(this.createProgramFromFilePath(file)));
+            const programPromises = files
+            .filter((file) => this.filterByApplicationFileExtensions(file))
+            .map((file) => this.createProgramFromFilePath(file));
+
+            Promise.all(programPromises).then((programList) => {
+                this.programs = programList;
+            });
         });
     }
 
-    private createProgramFromFilePath(filePath: string): Application {
-        return {
-            filePath,
-            name: basename(filePath).replace(extname(filePath), ""),
-        };
+    private createProgramFromFilePath(filePath: string): Promise<Application> {
+        return new Promise((resolve, reject) => {
+            resolve({
+                filePath,
+                name: basename(filePath).replace(extname(filePath), ""),
+            });
+        });
     }
 
     private filterByApplicationFileExtensions(file: string): boolean {
