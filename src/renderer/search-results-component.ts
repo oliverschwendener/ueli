@@ -60,9 +60,6 @@ export const searchResultsComponent = Vue.extend({
             this.searchResults[nextActiveIndex].active = true;
             this.scrollIntoView(this.searchResults[nextActiveIndex].id);
         },
-        renderBackgroundImageStyle(searchResult: SearchResultItemViewModel) {
-            return `background-image: url("${searchResult.icon}")`;
-        },
         scrollIntoView(index: string) {
             const userInput = document.getElementById("user-input");
             if (userInput !== undefined && userInput) {
@@ -106,7 +103,7 @@ export const searchResultsComponent = Vue.extend({
     template: `
         <div class="search-results" :id="containerId">
             <div :id="searchResult.id" class="search-results__item" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
-                <div class="search-results__item-icon" :style="renderBackgroundImageStyle(searchResult)"></div>
+                <img class="search-results__item-icon" :src="searchResult.icon">
                 {{ searchResult.name }}
             </div>
         </div>

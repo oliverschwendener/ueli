@@ -67,7 +67,7 @@ export class SearchEngine {
         });
     }
 
-    public clearCache(): Promise<void> {
+    public clearCaches(): Promise<void> {
         return new Promise((resolve, reject) => {
             const promises = this.plugins.map((p) => p.clearCache());
             Promise.all(promises)

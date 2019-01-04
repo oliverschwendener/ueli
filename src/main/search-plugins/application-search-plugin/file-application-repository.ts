@@ -35,17 +35,24 @@ export class FileApplicationRepository implements ApplicationRepository {
                         files = files.concat(fileList);
                     });
 
-                    const applicationPromises = files
+                    const applications = files
                         .filter((file) => this.filterByApplicationFileExtensions(file))
-                        .map((file) => this.createApplicationFromFilePath(file));
+                        .map((applicationFile): Application => this.createApplicationFromFilePath(applicationFile));
 
-                    Promise.all(applicationPromises)
-                        .then((applicationList) => {
-                            this.applications = applicationList;
+                    this.applicationIconService.getIcons(applications)
+                        .then((appIcons) => {
+                            applications.forEach((application) => {
+                                const appIcon = appIcons.find((a) => a.name === application.name);
+                                if (appIcon !== undefined) {
+                                    application.icon = appIcon.filePathToPng;
+                                }
+                            });
+
+                            this.applications = applications;
                             resolve();
                         })
-                        .catch((applicationError) => {
-                            reject(applicationError);
+                        .catch((err) => {
+                            reject(err);
                         });
                 })
                 .catch((applicationError) => {
@@ -66,23 +73,12 @@ export class FileApplicationRepository implements ApplicationRepository {
         });
     }
 
-    private createApplicationFromFilePath(filePath: string): Promise<Application> {
-        return new Promise((resolve, reject) => {
-            const application = {
-                filePath,
-                icon: "",
-                name: basename(filePath).replace(extname(filePath), ""),
-            };
-
-            this.applicationIconService.getIcon(application)
-                .then((pngFilePath) => {
-                    application.icon = pngFilePath;
-                    resolve(application);
-                })
-                .catch(() => {
-                    resolve(application);
-                });
-        });
+    private createApplicationFromFilePath(filePath: string): Application {
+        return {
+            filePath,
+            icon: "",
+            name: basename(filePath).replace(extname(filePath), ""),
+        };
     }
 
     private filterByApplicationFileExtensions(file: string): boolean {

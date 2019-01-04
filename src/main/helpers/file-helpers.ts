@@ -1,4 +1,4 @@
-import { Stats, readdir, lstat } from "fs";
+import { Stats, readdir, lstat, unlink, exists } from "fs";
 import { join, extname } from "path";
 
 interface FileStat {
@@ -47,6 +47,38 @@ export class FileHelpers {
                             reject(readDirError);
                         });
                 }
+            });
+        });
+    }
+
+    public static getFilesFromFolder(folderPath: string): Promise<string[]> {
+        return new Promise((resolve, reject) => {
+            readdir(folderPath, (err, files) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(files);
+                }
+            });
+        });
+    }
+
+    public static deleteFile(filePath: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            unlink(filePath, (err) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        });
+    }
+
+    public static fileExists(filePath: string): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            exists(filePath, (fileExists) => {
+                resolve(fileExists);
             });
         });
     }

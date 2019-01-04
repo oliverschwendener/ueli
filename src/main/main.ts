@@ -6,12 +6,13 @@ import { ApplicationSearchPlugin } from "./search-plugins/application-search-plu
 import { FileApplicationRepository } from "./search-plugins/application-search-plugin/file-application-repository";
 import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
 import { SearchResultItem } from "../common/search-result-item";
-import { MacOsApplicationIconService } from "./search-plugins/application-search-plugin/mac-os-application-icon-service";
+import { ApplicationIconService } from "./search-plugins/application-search-plugin/application-icon-service";
+import { getWindowsAppIcons } from "./search-plugins/application-search-plugin/application-icon-helpers";
 
 let window: BrowserWindow;
 const config = defaultUserConfigOptions;
 const searchEngine = new SearchEngine([
-    new ApplicationSearchPlugin(new FileApplicationRepository(new MacOsApplicationIconService(), config.applicationSearchOptions)),
+    new ApplicationSearchPlugin(new FileApplicationRepository(new ApplicationIconService(getWindowsAppIcons), config.applicationSearchOptions)),
 ], config.generalOptions);
 
 const rescanInterval = setInterval(() => {
@@ -31,26 +32,17 @@ const getMaxWindowHeight = (): number => {
 };
 
 const updateWindowSize = (searchResultCount: number) => {
+    window.setResizable(true);
     const windowHeight = searchResultCount > config.generalOptions.maxSearchResults
         ? getMaxWindowHeight()
         : searchResultCount * config.generalOptions.searchResultHeight + config.generalOptions.userInputHeight;
 
     window.setSize(config.generalOptions.windowWidth, windowHeight);
+    window.setResizable(false);
 };
 
 const quitApp = () => {
     clearInterval(rescanInterval);
-    searchEngine.clearCache()
-        .then(() => {
-            // tslint:disable-next-line:no-console
-            console.log("Successfully cleared caches");
-            app.quit();
-        })
-        .catch((err) => {
-            // tslint:disable-next-line:no-console
-            console.log(`Error while clearing caches: ${err}`);
-            app.quit();
-        });
 };
 
 app.on("ready", () => {
@@ -59,7 +51,7 @@ app.on("ready", () => {
         frame: false,
         height: getMaxWindowHeight(),
         resizable: false,
-        transparent: false,
+        transparent: true,
         width: config.generalOptions.windowWidth,
     });
     window.loadFile(join(__dirname, "..", "main.html"));
