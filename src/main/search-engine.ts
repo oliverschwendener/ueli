@@ -14,7 +14,7 @@ export class SearchEngine {
     constructor(plugins: SearchPlugin[], generalOptions: GeneralOptions) {
         this.options = generalOptions;
         this.plugins = plugins;
-        this.refreshIndexes().then();
+        Promise.resolve(this.refreshIndexes());
     }
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {

@@ -59,6 +59,7 @@ app.on("ready", () => {
         frame: false,
         height: getMaxWindowHeight(),
         resizable: false,
+        transparent: false,
         width: config.generalOptions.windowWidth,
     });
     window.loadFile(join(__dirname, "..", "main.html"));
