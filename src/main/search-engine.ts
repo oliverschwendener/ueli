@@ -9,14 +9,12 @@ interface FuseResult {
 
 export class SearchEngine {
     private readonly plugins: SearchPlugin[];
+    private readonly options: GeneralOptions;
 
     constructor(plugins: SearchPlugin[], generalOptions: GeneralOptions) {
+        this.options = generalOptions;
         this.plugins = plugins;
-        this.plugins.forEach((p) => p.refreshIndex());
-
-        setInterval(() => {
-            this.plugins.forEach((p) => p.refreshIndex());
-        }, generalOptions.refreshIntervalInSeconds * 1000);
+        this.refreshIndexes().then();
     }
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
@@ -46,11 +44,25 @@ export class SearchEngine {
 
                     const fuseResult = fuse.search(userInput) as any[];
                     const filtered = fuseResult.map((item: FuseResult): SearchResultItem => item.item);
+                    const sliced = filtered.slice(0, this.options.maxSearchResults);
 
-                    resolve(filtered);
+                    resolve(sliced);
                 })
                 .catch((pluginsError) => {
                     reject(pluginsError);
+                });
+        });
+    }
+
+    public refreshIndexes(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const promises = this.plugins.map((p) => p.refreshIndex());
+            Promise.all(promises)
+                .then(() => {
+                    resolve();
+                })
+                .catch((err) => {
+                    reject(err);
                 });
         });
     }

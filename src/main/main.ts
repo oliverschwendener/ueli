@@ -9,12 +9,22 @@ import { SearchResultItem } from "../common/search-result-item";
 import { MacOsApplicationIconService } from "./search-plugins/application-search-plugin/mac-os-application-icon-service";
 
 let window: BrowserWindow;
-
 const config = defaultUserConfigOptions;
-
 const searchEngine = new SearchEngine([
     new ApplicationSearchPlugin(new FileApplicationRepository(new MacOsApplicationIconService(), config.applicationSearchOptions)),
 ], config.generalOptions);
+
+const rescanInterval = setInterval(() => {
+    searchEngine.refreshIndexes()
+        .then(() => {
+            // tslint:disable-next-line:no-console
+            console.log("Successfully refreshed indexes");
+        })
+        .catch((err) => {
+            // tslint:disable-next-line:no-console
+            console.log(`Error while refresh indexes: ${err}`);
+        });
+}, config.generalOptions.refreshIntervalInSeconds * 1000);
 
 const getMaxWindowHeight = (): number => {
     return config.generalOptions.maxSearchResults * config.generalOptions.searchResultHeight + config.generalOptions.userInputHeight;
@@ -26,6 +36,21 @@ const updateWindowSize = (searchResultCount: number) => {
         : searchResultCount * config.generalOptions.searchResultHeight + config.generalOptions.userInputHeight;
 
     window.setSize(config.generalOptions.windowWidth, windowHeight);
+};
+
+const quitApp = () => {
+    clearInterval(rescanInterval);
+    searchEngine.clearCache()
+        .then(() => {
+            // tslint:disable-next-line:no-console
+            console.log("Successfully cleared caches");
+            app.quit();
+        })
+        .catch((err) => {
+            // tslint:disable-next-line:no-console
+            console.log(`Error while clearing caches: ${err}`);
+            app.quit();
+        });
 };
 
 app.on("ready", () => {
@@ -40,23 +65,8 @@ app.on("ready", () => {
     updateWindowSize(0);
 });
 
-app.on("window-all-closed", () => {
-    app.quit();
-});
-
-app.on("quit", () => {
-    searchEngine.clearCache()
-        .then(() => {
-            // tslint:disable-next-line:no-console
-            console.log("Successfully cleared caches");
-            app.quit();
-        })
-        .catch((err) => {
-            // tslint:disable-next-line:no-console
-            console.log(`Error while clearing caches: ${err}`);
-            app.quit();
-        });
-});
+app.on("window-all-closed", quitApp);
+app.on("quit", quitApp);
 
 ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {
     searchEngine.getSearchResults(userInput)

@@ -7,8 +7,8 @@ import { ApplicationIconService } from "./application-icon-service";
 
 export class FileApplicationRepository implements ApplicationRepository {
     private readonly applicationIconService: ApplicationIconService;
+    private readonly config: ApplicationSearchPluginOptions;
     private applications: Application[];
-    private config: ApplicationSearchPluginOptions;
 
     constructor(applicationIconService: ApplicationIconService, config: ApplicationSearchPluginOptions) {
         this.applicationIconService = applicationIconService;
@@ -22,35 +22,36 @@ export class FileApplicationRepository implements ApplicationRepository {
         });
     }
 
-    public refreshIndex(): void {
-        const applicationFilePromises = this.config.applicationFolders.map((applicationFolder) => {
-            return FileHelpers.readFilesFromFolderRecursively(applicationFolder);
-        });
-
-        Promise.all(applicationFilePromises)
-            .then((fileLists) => {
-                let files: string[] = [];
-                fileLists.forEach((fileList) => {
-                    files = files.concat(fileList);
-                });
-
-                const applicationPromises = files
-                    .filter((file) => this.filterByApplicationFileExtensions(file))
-                    .map((file) => this.createApplicationFromFilePath(file));
-
-                Promise.all(applicationPromises)
-                    .then((applicationList) => {
-                        this.applications = applicationList;
-                    })
-                    .catch((applicationError) => {
-                        // tslint:disable-next-line:no-console
-                        console.log(applicationError);
-                    });
-            })
-            .catch((applicationError) => {
-                // tslint:disable-next-line:no-console
-                console.log(applicationError);
+    public refreshIndex(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const applicationFilePromises = this.config.applicationFolders.map((applicationFolder) => {
+                return FileHelpers.readFilesFromFolderRecursively(applicationFolder);
             });
+
+            Promise.all(applicationFilePromises)
+                .then((fileLists) => {
+                    let files: string[] = [];
+                    fileLists.forEach((fileList) => {
+                        files = files.concat(fileList);
+                    });
+
+                    const applicationPromises = files
+                        .filter((file) => this.filterByApplicationFileExtensions(file))
+                        .map((file) => this.createApplicationFromFilePath(file));
+
+                    Promise.all(applicationPromises)
+                        .then((applicationList) => {
+                            this.applications = applicationList;
+                            resolve();
+                        })
+                        .catch((applicationError) => {
+                            reject(applicationError);
+                        });
+                })
+                .catch((applicationError) => {
+                    reject(applicationError);
+                });
+        });
     }
 
     public clearCache(): Promise<void> {
