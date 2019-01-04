@@ -5,13 +5,15 @@ import { SearchEngine } from "./search-engine";
 import { ApplicationSearchPlugin } from "./search-plugins/application-search-plugin/application-search-plugin";
 import { FileApplicationRepository } from "./search-plugins/application-search-plugin/file-application-repository";
 import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
+import { SearchResultItem } from "../common/search-result-item";
+import { MacOsApplicationIconService } from "./search-plugins/application-search-plugin/mac-os-application-icon-service";
 
 let window: BrowserWindow;
 
 const config = defaultUserConfigOptions;
 
 const searchEngine = new SearchEngine([
-    new ApplicationSearchPlugin(new FileApplicationRepository(config.applicationSearchOptions)),
+    new ApplicationSearchPlugin(new FileApplicationRepository(new MacOsApplicationIconService(), config.applicationSearchOptions)),
 ], config.generalOptions);
 
 const getMaxWindowHeight = (): number => {
@@ -35,10 +37,25 @@ app.on("ready", () => {
         width: config.generalOptions.windowWidth,
     });
     window.loadFile(join(__dirname, "..", "main.html"));
+    updateWindowSize(0);
 });
 
 app.on("window-all-closed", () => {
     app.quit();
+});
+
+app.on("quit", () => {
+    searchEngine.clearCache()
+        .then(() => {
+            // tslint:disable-next-line:no-console
+            console.log("Successfully cleared caches");
+            app.quit();
+        })
+        .catch((err) => {
+            // tslint:disable-next-line:no-console
+            console.log(`Error while clearing caches: ${err}`);
+            app.quit();
+        });
 });
 
 ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {
@@ -51,4 +68,9 @@ ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {
             // tslint:disable-next-line:no-console
             console.log(err);
         });
+});
+
+ipcMain.on(IpcChannels.execute, (event: Electron.Event, searchResultItem: SearchResultItem) => {
+    // tslint:disable-next-line:no-console
+    console.log(`Executing: ${searchResultItem.name}`);
 });

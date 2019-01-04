@@ -54,4 +54,17 @@ export class SearchEngine {
                 });
         });
     }
+
+    public clearCache(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const promises = this.plugins.map((p) => p.clearCache());
+            Promise.all(promises)
+                .then(() => {
+                    resolve();
+                })
+                .catch((err) => {
+                    reject(`Error while trying to clear cache: ${err}`);
+                });
+        });
+    }
 }

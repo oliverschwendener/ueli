@@ -3,12 +3,15 @@ import { Application } from "./application";
 import { basename, extname } from "path";
 import { ApplicationSearchPluginOptions } from "./application-search-plugin-options";
 import { FileHelpers } from "../../helpers/file-helpers";
+import { ApplicationIconService } from "./application-icon-service";
 
 export class FileApplicationRepository implements ApplicationRepository {
+    private readonly applicationIconService: ApplicationIconService;
     private applications: Application[];
     private config: ApplicationSearchPluginOptions;
 
-    constructor(config: ApplicationSearchPluginOptions) {
+    constructor(applicationIconService: ApplicationIconService, config: ApplicationSearchPluginOptions) {
+        this.applicationIconService = applicationIconService;
         this.applications = [];
         this.config = config;
     }
@@ -50,13 +53,34 @@ export class FileApplicationRepository implements ApplicationRepository {
             });
     }
 
+    public clearCache(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.applicationIconService.clearCache()
+                .then(() => {
+                    resolve();
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+
     private createApplicationFromFilePath(filePath: string): Promise<Application> {
         return new Promise((resolve, reject) => {
-            resolve({
+            const application = {
                 filePath,
-                icon: this.config.defaultIcon,
+                icon: "",
                 name: basename(filePath).replace(extname(filePath), ""),
-            });
+            };
+
+            this.applicationIconService.getIcon(application)
+                .then((pngFilePath) => {
+                    application.icon = pngFilePath;
+                    resolve(application);
+                })
+                .catch(() => {
+                    resolve(application);
+                });
         });
     }
 

@@ -31,4 +31,16 @@ export class ApplicationSearchPlugin implements SearchPlugin {
     public refreshIndex(): void {
         this.applicationRepository.refreshIndex();
     }
+
+    public clearCache(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.applicationRepository.clearCache()
+                .then(() => {
+                    resolve();
+                })
+                .catch((err) => {
+                    reject(`Error while trying to clear application repository cache: ${err}`);
+                });
+        });
+    }
 }

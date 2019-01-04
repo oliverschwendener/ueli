@@ -21,8 +21,7 @@ vueEventDispatcher.$on(VueEventChannels.userInputChange, (userInput: string) => 
 
 vueEventDispatcher.$on(VueEventChannels.handleExecution, (searchResultIem: SearchResultItem | undefined) => {
     if (searchResultIem !== undefined) {
-        // tslint:disable-next-line:no-console
-        console.log(`Execute: ${searchResultIem.name}`);
+        ipcRenderer.send(IpcChannels.execute, searchResultIem);
     }
 });
 

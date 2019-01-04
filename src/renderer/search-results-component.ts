@@ -70,7 +70,7 @@ export const searchResultsComponent = Vue.extend({
                 if (htmlElement !== undefined && htmlElement !== null) {
                     const outputContainer = document.getElementById(this.containerId);
                     if (outputContainer !== undefined && outputContainer !== null) {
-                        const elementIsOutOfViewBottom = (htmlElement.offsetTop - userInput.clientHeight) > (outputContainer.clientHeight - htmlElement.clientHeight);
+                        const elementIsOutOfViewBottom = ((htmlElement.offsetTop - userInput.clientHeight) > (outputContainer.scrollTop + outputContainer.clientHeight - htmlElement.clientHeight));
                         const elementIsOutOfViewTop = htmlElement.offsetTop - userInput.clientHeight < outputContainer.scrollTop;
                         if (elementIsOutOfViewBottom) {
                             const scrollTo = htmlElement.offsetTop - userInput.clientHeight;
