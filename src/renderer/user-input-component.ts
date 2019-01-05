@@ -24,11 +24,35 @@ export const userInputComponent = Vue.extend({
             if (event.key === "Enter") {
                 vueEventDispatcher.$emit(VueEventChannels.enterPress);
             }
+
+            if (event.ctrlKey && event.key.toLowerCase() === "r") {
+                vueEventDispatcher.$emit(VueEventChannels.reloadApp);
+            }
         },
+        resetUserInput(): void {
+            this.userInput = "";
+        },
+        setFocusOnInput(): void {
+            const userInput = document.getElementById("user-input");
+            if (userInput !== null) {
+                userInput.focus();
+            }
+        },
+    },
+    mounted() {
+        this.setFocusOnInput();
+
+        vueEventDispatcher.$on(VueEventChannels.executionSucceeded, () => {
+            this.resetUserInput();
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.mainWindowHasBeenShown, () => {
+            this.setFocusOnInput();
+        });
     },
     template: `
         <div id="user-input" class="user-input">
-            <input autofocus class="user-input__input" type="text" v-model="userInput" @keydown="onKeyPress">
+            <input autofocus id="user-input" class="user-input__input" type="text" v-model="userInput" @keydown="onKeyPress">
         </div>
         `,
     watch: {

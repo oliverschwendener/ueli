@@ -24,17 +24,8 @@ export class FileApplicationRepository implements ApplicationRepository {
 
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            const applicationFilePromises = this.config.applicationFolders.map((applicationFolder) => {
-                return FileHelpers.readFilesFromFolderRecursively(applicationFolder);
-            });
-
-            Promise.all(applicationFilePromises)
-                .then((fileLists) => {
-                    let files: string[] = [];
-                    fileLists.forEach((fileList) => {
-                        files = files.concat(fileList);
-                    });
-
+            FileHelpers.readFilesFromFoldersRecursively(this.config.applicationFolders)
+                .then((files) => {
                     const applications = files
                         .filter((file) => this.filterByApplicationFileExtensions(file))
                         .map((applicationFile): Application => this.createApplicationFromFilePath(applicationFile));
@@ -55,8 +46,8 @@ export class FileApplicationRepository implements ApplicationRepository {
                             reject(err);
                         });
                 })
-                .catch((applicationError) => {
-                    reject(applicationError);
+                .catch((err) => {
+                    reject(err);
                 });
         });
     }

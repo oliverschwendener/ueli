@@ -11,9 +11,10 @@
     --search-results--background-color: #272c34;
     --search-results--item-active-background-color: #2b313a;
     --search-results--text-color: #fff;
-    --search-results--item-height: 40px;
+    --search-results--item-height: 50px;
     --search-results--item-side-padding: 15px;
-    --search-results--item-icon-size: 25px;
+    --search-results--item-icon-size: 30px;
+    --search-results--item-info-container-padding: 10px;
 
     --scrollbar--size: 8px;
     --scrollbar--foreground-color: #3d444f;
@@ -84,12 +85,20 @@ body {
     background-color: var(--search-results--item-active-background-color);
 }
 
-.search-results__item-icon {
+.search-results__item-icon-container {
     width: var(--search-results--item-icon-size);
     height: var(--search-results--item-icon-size);
-    background-size: cover;
-    background-position: center;
-    margin-right: 7.5px;
+}
+
+.search-results__item-icon {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.search-results__item-info-container {
+    flex-grow: 1;
+    padding: 0 var(--search-results--item-info-container-padding);
+    box-sizing: border-box;
 }
 
 ::-webkit-scrollbar {

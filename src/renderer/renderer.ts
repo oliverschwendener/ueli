@@ -25,6 +25,18 @@ vueEventDispatcher.$on(VueEventChannels.handleExecution, (searchResultIem: Searc
     }
 });
 
+vueEventDispatcher.$on(VueEventChannels.reloadApp, () => {
+    ipcRenderer.send(IpcChannels.reloadApp);
+});
+
 ipcRenderer.on(IpcChannels.searchResponse, (event: Electron.Event, searchResults: SearchResultItem[]) => {
     vueEventDispatcher.$emit(VueEventChannels.searchResultsUpdated, searchResults);
+});
+
+ipcRenderer.on(IpcChannels.executionSucceeded, () => {
+    vueEventDispatcher.$emit(VueEventChannels.executionSucceeded);
+});
+
+ipcRenderer.on(IpcChannels.mainWindowHasBeenShown, () => {
+    vueEventDispatcher.$emit(VueEventChannels.mainWindowHasBeenShown);
 });

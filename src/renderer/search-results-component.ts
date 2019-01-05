@@ -31,6 +31,7 @@ export const searchResultsComponent = Vue.extend({
                     icon: searchResult.icon,
                     id: `search-result-item-${counter}`,
                     name: searchResult.name,
+                    originPluginType: searchResult.originPluginType,
                 };
             });
 
@@ -40,12 +41,10 @@ export const searchResultsComponent = Vue.extend({
 
             this.searchResults = viewModel;
         },
-        selectItem(direction: BrowseDirection): void {
+        handleSearchResultBrowsing(direction: BrowseDirection): void {
             let nextActiveIndex = 0;
 
-            // tslint:disable-next-line:prefer-for-of
             for (let i = 0; i < this.searchResults.length; i++) {
-                // tslint:disable-next-line:no-console
                 if (this.searchResults[i].active) {
                     if (direction === BrowseDirection.Next) {
                         nextActiveIndex = i === this.searchResults.length - 1 ? 0 : i + 1;
@@ -89,10 +88,10 @@ export const searchResultsComponent = Vue.extend({
             this.update(s);
         });
         vueEventDispatcher.$on(VueEventChannels.selectNextItem, () => {
-            this.selectItem(BrowseDirection.Next);
+            this.handleSearchResultBrowsing(BrowseDirection.Next);
         });
         vueEventDispatcher.$on(VueEventChannels.selectPreviousItem, () => {
-            this.selectItem(BrowseDirection.Previous);
+            this.handleSearchResultBrowsing(BrowseDirection.Previous);
         });
         vueEventDispatcher.$on(VueEventChannels.enterPress, () => {
             const activeItem = this.searchResults.find((s: SearchResultItemViewModel): boolean => s.active);
@@ -103,8 +102,12 @@ export const searchResultsComponent = Vue.extend({
     template: `
         <div class="search-results" :id="containerId">
             <div :id="searchResult.id" class="search-results__item" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
-                <img class="search-results__item-icon" :src="searchResult.icon">
-                {{ searchResult.name }}
+                <div class="search-results__item-icon-container">
+                    <img class="search-results__item-icon" :src="searchResult.icon">
+                </div>
+                <div class="search-results__item-info-container">
+                    {{ searchResult.name }}
+                </div>
             </div>
         </div>
     `,

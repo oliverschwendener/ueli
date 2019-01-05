@@ -7,6 +7,20 @@ interface FileStat {
 }
 
 export class FileHelpers {
+    public static readFilesFromFoldersRecursively(folderPaths: string[]): Promise<string[]> {
+        return new Promise((resolve, reject) => {
+            Promise.all(folderPaths.map((folderPath) => this.readFilesFromFolderRecursively(folderPath)))
+                .then((fileLists) => {
+                    let result: string[] = [];
+                    fileLists.forEach((fileList) => result = result.concat(fileList));
+                    resolve(result);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+
     public static readFilesFromFolderRecursively(folderPath: string): Promise<string[]> {
         return new Promise((resolve, reject) => {
             readdir(folderPath, (readDirError, readDirResult) => {

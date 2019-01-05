@@ -54,6 +54,19 @@ export class SearchEngine {
         });
     }
 
+    public execute(searchResultItem: SearchResultItem): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const originPlugin = this.plugins.find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+            if (originPlugin !== undefined) {
+                originPlugin.execute(searchResultItem)
+                    .then(() => resolve())
+                    .catch((err) => reject(err));
+            } else {
+                reject("No plugin found for this search result item");
+            }
+        });
+    }
+
     public refreshIndexes(): Promise<void> {
         return new Promise((resolve, reject) => {
             const promises = this.plugins.map((p) => p.refreshIndex());
