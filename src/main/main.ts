@@ -1,21 +1,13 @@
 import { app, BrowserWindow, ipcMain, globalShortcut } from "electron";
 import { join } from "path";
 import { IpcChannels } from "../common/ipc-channels";
-import { SearchEngine } from "./search-engine";
-import { ApplicationSearchPlugin } from "./search-plugins/application-search-plugin/application-search-plugin";
-import { FileApplicationRepository } from "./search-plugins/application-search-plugin/file-application-repository";
 import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
 import { SearchResultItem } from "../common/search-result-item";
-import { ApplicationIconService } from "./search-plugins/application-search-plugin/application-icon-service";
-import { getWindowsAppIcons } from "./search-plugins/application-search-plugin/application-icon-helpers";
-import { executeWindowsApp } from "./search-plugins/application-search-plugin/application-execution";
+import { getProductionSearchEngine } from "./production/production-search-engine";
 
 let mainWindow: BrowserWindow;
-const config = defaultUserConfigOptions;
-const searchEngine = new SearchEngine([
-    new ApplicationSearchPlugin(new FileApplicationRepository(new ApplicationIconService(getWindowsAppIcons), config.applicationSearchOptions), executeWindowsApp),
-], config.generalOptions);
-
+let config = defaultUserConfigOptions;
+let searchEngine = getProductionSearchEngine(config);
 const rescanInterval = setInterval(() => {
     searchEngine.refreshIndexes()
         .then(() => {
@@ -66,11 +58,15 @@ const toggleMainWindow = () => {
 };
 
 const reloadApp = () => {
+    updateWindowSize(mainWindow, 0);
+    config = defaultUserConfigOptions;
+    searchEngine = getProductionSearchEngine(config);
     mainWindow.reload();
 };
 
 const quitApp = () => {
     clearInterval(rescanInterval);
+    globalShortcut.unregisterAll();
     app.quit();
 };
 

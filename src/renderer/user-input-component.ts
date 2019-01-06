@@ -25,7 +25,7 @@ export const userInputComponent = Vue.extend({
                 vueEventDispatcher.$emit(VueEventChannels.enterPress);
             }
 
-            if (event.ctrlKey && event.key.toLowerCase() === "r") {
+            if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "r") {
                 vueEventDispatcher.$emit(VueEventChannels.reloadApp);
             }
         },
