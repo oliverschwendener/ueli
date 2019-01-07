@@ -81,6 +81,7 @@ app.on("ready", () => {
         transparent: true,
         width: config.generalOptions.windowWidth,
     });
+    mainWindow.on("blur", hideWindow);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
     updateWindowSize(mainWindow, 0);
     registerGlobalKeyboardShortcut(toggleMainWindow);

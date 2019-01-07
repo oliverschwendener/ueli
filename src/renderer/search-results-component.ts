@@ -104,10 +104,12 @@ export const searchResultsComponent = Vue.extend({
         <div class="search-results" :id="containerId">
             <div :id="searchResult.id" class="search-results__item" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
                 <div class="search-results__item-icon-container">
+                    <div class="search-results__item-icon-overlay" :class="{ 'active' : searchResult.active }"></div>
                     <img class="search-results__item-icon" :src="searchResult.icon">
                 </div>
                 <div class="search-results__item-info-container">
-                    {{ searchResult.name }}
+                    <div class="search-results__item-name" :class="{ 'active' : searchResult.active }">{{ searchResult.name }}</div>
+                    <div class="search-results__item-description">{{ searchResult.description }}</div>
                 </div>
             </div>
         </div>

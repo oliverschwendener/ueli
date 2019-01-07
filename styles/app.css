@@ -1,5 +1,6 @@
 :root {
     --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --transition-speed: 250ms;
 
     --user-input--font-size: 24px;
     --user-input--font-weight: 200;
@@ -9,8 +10,13 @@
     --user-input--side-padding: 15px;
 
     --search-results--background-color: #272c34;
-    --search-results--item-active-background-color: #2b313a;
-    --search-results--text-color: #fff;
+    --search-results--item-active-background-color: #3d4452;
+    --search-results--item-active-text-color: #fff;
+    --search-results--item-name-text-color: #aab2c0;
+    --search-results--item-name-font-weight: 200;
+    --search-results--item-description-text-color: #ccc;
+    --search-results--item-descriptioin-font-size: 12px;
+    --search-results--item-description-font-weight: 100;
     --search-results--item-height: 50px;
     --search-results--item-side-padding: 15px;
     --search-results--item-icon-size: 30px;
@@ -63,7 +69,6 @@ body {
 
 .search-results {
     background-color: var(--search-results--background-color);
-    color: var(--search-results--text-color);
     height: calc(100vh - var(--user-input--height));
     overflow-y: auto;
     overflow-x: hidden;
@@ -79,6 +84,7 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: all var(--transition-speed) ease-in-out;
 }
 
 .search-results__item.active {
@@ -88,6 +94,7 @@ body {
 .search-results__item-icon-container {
     width: var(--search-results--item-icon-size);
     height: var(--search-results--item-icon-size);
+    position: relative;
 }
 
 .search-results__item-icon {
@@ -95,10 +102,52 @@ body {
     max-height: 100%;
 }
 
+.search-results__item-icon-overlay {
+    background-color: var(--search-results--background-color);
+    opacity: 0.25;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transition: all var(--transition-speed) ease-in-out;
+}
+
+.search-results__item-icon-overlay.active {
+    opacity: 0;
+}
+
 .search-results__item-info-container {
     flex-grow: 1;
     padding: 0 var(--search-results--item-info-container-padding);
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    max-width: calc(100% - var(--search-results--item-icon-size));  
+}
+
+.search-results__item-name,
+.search-results__item-description {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.search-results__item-name {
+    color: var(--search-results--item-name-text-color);
+    transition: all var(--transition-speed) ease-in-out;
+    font-weight: var(--search-results--item-name-font-weight);
+}
+
+.search-results__item-name.active {
+    color: var(--search-results--item-active-text-color);
+}
+
+.search-results__item-description {
+    color: var(--search-results--item-description-text-color);
+    font-size: var(--search-results--item-descriptioin-font-size);
+    font-weight: var(--search-results--item-description-font-weight);
 }
 
 ::-webkit-scrollbar {
