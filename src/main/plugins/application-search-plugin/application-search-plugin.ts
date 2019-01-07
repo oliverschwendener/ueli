@@ -17,7 +17,12 @@ export class ApplicationSearchPlugin implements SearchPlugin {
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             this.applicationRepository.getAll()
-                .then((applications) => resolve(applications.map((application) => this.createSearchResultItemFromApplication(application))))
+                .then((applications) => {
+                    const searchResultItemPromises = applications.map((application) => this.createSearchResultItemFromApplication(application));
+                    Promise.all(searchResultItemPromises)
+                        .then((searchResultItems) => resolve(searchResultItems))
+                        .catch((err) => reject(err));
+                })
                 .catch((err) => reject(err));
         });
     }
@@ -46,12 +51,15 @@ export class ApplicationSearchPlugin implements SearchPlugin {
         });
     }
 
-    private createSearchResultItemFromApplication(application: Application): SearchResultItem {
-        return {
-            executionArgument: application.filePath,
-            icon: application.icon,
-            name: application.name,
-            originPluginType: this.pluginType,
-        };
+    private createSearchResultItemFromApplication(application: Application): Promise<SearchResultItem> {
+        return new Promise((resolve) => {
+            resolve({
+                description: application.filePath,
+                executionArgument: application.filePath,
+                icon: application.icon,
+                name: application.name,
+                originPluginType: this.pluginType,
+            });
+        });
     }
 }

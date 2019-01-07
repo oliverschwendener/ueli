@@ -27,6 +27,7 @@ export const searchResultsComponent = Vue.extend({
                 counter++;
                 return {
                     active: false,
+                    description: searchResult.description,
                     executionArgument: searchResult.executionArgument,
                     icon: searchResult.icon,
                     id: `search-result-item-${counter}`,
