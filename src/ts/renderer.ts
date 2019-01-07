@@ -89,7 +89,7 @@ const vue = new Vue({
         handleUserInputKeyPress: (event: KeyboardEvent): void => {
             if (event.key === "Enter") {
                 handleEnterPress(event.shiftKey);
-            } else if (event.ctrlKey && event.key === "o") {
+            } else if (event.ctrlKey && event.key.toLowerCase() === "o") {
                 handleOpenFileLocation();
             } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
                 event.preventDefault();
@@ -106,7 +106,7 @@ const vue = new Vue({
                 handleAutoCompletion();
             } else if (event.key === "Escape") {
                 handleEscapePress();
-            } else if (event.ctrlKey && event.key === "c") {
+            } else if (event.ctrlKey && event.key.toLowerCase() === "c") {
                 ipcRenderer.send(IpcChannels.exitCommandLineTool);
             } else if (event.ctrlKey) {
                 const index = Number(event.key);
@@ -502,9 +502,9 @@ function resetUserInput(): void {
 }
 
 function handleGlobalKeyPress(event: KeyboardEvent): void {
-    if (event.key === "F6" || (event.key === "l" && event.ctrlKey)) {
+    if (event.key === "F6" || (event.key.toLowerCase() === "l" && event.ctrlKey)) {
         focusOnInput();
-    } else if (event.key === "i" && event.ctrlKey) {
+    } else if (event.key.toLowerCase() === "i" && event.ctrlKey) {
         toggleSettings();
     }
 }
