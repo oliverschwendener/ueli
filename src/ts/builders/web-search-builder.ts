@@ -9,8 +9,8 @@ export class WebSearchBuilder {
         return userInput.replace(`${webSearch.prefix}${WebSearchHelpers.webSearchSeparator}`, "");
     }
 
-    public static buildExecutionUrl(userInput: string, webSearch: WebSearch): string {
-        let searchTerm = this.buildSearchTerm(userInput, webSearch);
+    public static buildExecutionUrl(searchTerm: string, webSearch: WebSearch): string {
+        searchTerm = searchTerm.trim();
 
         if (webSearch.whitespaceCharacter !== undefined && webSearch.whitespaceCharacter.length > 0) {
             searchTerm = StringHelpers.replaceWhitespaceWithString(searchTerm, webSearch.whitespaceCharacter);
@@ -19,7 +19,7 @@ export class WebSearchBuilder {
         if (webSearch.url !== undefined && webSearch.url.indexOf(UeliHelpers.websearchQueryPlaceholder) > -1) {
             return webSearch.url.replace(UeliHelpers.websearchQueryPlaceholder, searchTerm);
         } else {
-            return `${webSearch.url}${searchTerm.trim()}`;
+            return `${webSearch.url}${searchTerm}`;
         }
     }
 
@@ -30,7 +30,7 @@ export class WebSearchBuilder {
             ? `Search ${webSearch.name} for '${searchTerm.trim()}'`
             : `Search ${webSearch.name}`;
 
-        const executionArgument = WebSearchBuilder.buildExecutionUrl(userInput, webSearch);
+        const executionArgument = WebSearchBuilder.buildExecutionUrl(searchTerm, webSearch);
 
         return {
             description: executionArgument,

@@ -6,13 +6,21 @@ import { UeliHelpers } from "../../../ts/helpers/ueli-helpers";
 describe(WebSearchBuilder.name, (): void => {
     describe(WebSearchBuilder.buildExecutionUrl.name, (): void => {
         it("should build the execution url correctly", (): void => {
-            const userInput = "something";
-            const webSearchUrl = "https://my-web-search-engine.com/search?q=";
-            const webSearch = { url: webSearchUrl } as WebSearch;
+            const webSearch = { url: "https://my-web-search-engine.com/search?q=" } as WebSearch;
+            const searchTerm = "something";
+            const actual = WebSearchBuilder.buildExecutionUrl(searchTerm, webSearch);
+            expect(actual).toBe(`${webSearch.url}${searchTerm}`);
+        });
 
-            const actual = WebSearchBuilder.buildExecutionUrl(userInput, webSearch);
-
-            expect(actual).toBe(`${webSearchUrl}${userInput}`);
+        it("should trim the search term", (): void => {
+            const webSearch = {
+                url: `https://my-web-search-engine.com/search?q=${UeliHelpers.websearchQueryPlaceholder}&suffix=foo`,
+                whitespaceCharacter: "+",
+            } as WebSearch;
+            const searchTerm = " something";
+            const expected = `${webSearch.url.replace(UeliHelpers.websearchQueryPlaceholder, searchTerm.trim())}`;
+            const actual = WebSearchBuilder.buildExecutionUrl(searchTerm, webSearch);
+            expect(actual).toBe(expected);
         });
 
         it("should replace the query placeholder with the search term if it is set", (): void => {
