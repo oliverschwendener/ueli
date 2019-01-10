@@ -3,6 +3,7 @@ import { SearchResultItem } from "../../../common/search-result-item";
 import { ApplicationRepository } from "./application-repository";
 import { PluginType } from "../../plugin-type";
 import { Application } from "./application";
+import { dirname, basename } from "path";
 
 export class ApplicationSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.ApplicationSearchPlugin;
@@ -54,12 +55,16 @@ export class ApplicationSearchPlugin implements SearchPlugin {
     private createSearchResultItemFromApplication(application: Application): Promise<SearchResultItem> {
         return new Promise((resolve) => {
             resolve({
-                description: application.filePath,
+                description: this.createApplicationDescription(application),
                 executionArgument: application.filePath,
                 icon: application.icon,
                 name: application.name,
                 originPluginType: this.pluginType,
             });
         });
+    }
+
+    private createApplicationDescription(application: Application): string {
+        return `${basename(dirname(application.filePath))} ▸ ${basename(application.filePath)}`;
     }
 }
