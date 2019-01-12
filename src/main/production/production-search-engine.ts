@@ -20,5 +20,5 @@ export const getProductionSearchEngine = (config: UserConfigOptions): SearchEngi
     const plugins: SearchPlugin[] = [
         getApplicationSearchPlugin(platform(), config),
     ];
-    return new SearchEngine(plugins, config.generalOptions);
+    return new SearchEngine(plugins, config);
 };

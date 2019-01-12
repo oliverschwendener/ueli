@@ -1,7 +1,7 @@
 import * as Fuse from "fuse.js";
 import { SearchResultItem } from "../common/search-result-item";
 import { SearchPlugin } from "./search-plugin";
-import { GeneralOptions } from "../common/config/general-options";
+import { UserConfigOptions } from "../common/config/user-config-options";
 
 interface FuseResult {
     item: SearchResultItem;
@@ -9,10 +9,10 @@ interface FuseResult {
 
 export class SearchEngine {
     private readonly plugins: SearchPlugin[];
-    private readonly options: GeneralOptions;
+    private options: UserConfigOptions;
 
-    constructor(plugins: SearchPlugin[], generalOptions: GeneralOptions) {
-        this.options = generalOptions;
+    constructor(plugins: SearchPlugin[], userConfig: UserConfigOptions) {
+        this.options = userConfig;
         this.plugins = plugins;
         Promise.resolve(this.refreshIndexes());
     }
@@ -44,7 +44,7 @@ export class SearchEngine {
 
                     const fuseResult = fuse.search(userInput) as any[];
                     const filtered = fuseResult.map((item: FuseResult): SearchResultItem => item.item);
-                    const sliced = filtered.slice(0, this.options.maxSearchResults);
+                    const sliced = filtered.slice(0, this.options.generalOptions.maxSearchResults);
 
                     resolve(sliced);
                 })
@@ -90,6 +90,16 @@ export class SearchEngine {
                 .catch((err) => {
                     reject(`Error while trying to clear cache: ${err}`);
                 });
+        });
+    }
+
+    public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.options = updatedConfig;
+            const promises = this.plugins.map((plugin) => plugin.updateConfig(updatedConfig));
+            Promise.all(promises)
+                .then(() => resolve())
+                .catch((err) => reject(err));
         });
     }
 }

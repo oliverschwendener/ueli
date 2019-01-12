@@ -4,8 +4,10 @@ import { IpcChannels } from "../common/ipc-channels";
 import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
 import { SearchResultItem } from "../common/search-result-item";
 import { getProductionSearchEngine } from "./production/production-search-engine";
+import { UserConfigOptions } from "../common/config/user-config-options";
 
 let mainWindow: BrowserWindow;
+let settingsWindow: BrowserWindow | null;
 let config = defaultUserConfigOptions;
 let searchEngine = getProductionSearchEngine(config);
 const rescanInterval = setInterval(() => {
@@ -16,7 +18,7 @@ const rescanInterval = setInterval(() => {
         })
         .catch((err) => {
             // tslint:disable-next-line:no-console
-            console.log(`Error while refresh indexes: ${err}`);
+            console.error(`Error while refresh indexes: ${err}`);
         });
 }, config.generalOptions.refreshIntervalInSeconds * 1000);
 
@@ -24,13 +26,13 @@ const getMaxWindowHeight = (): number => {
     return config.generalOptions.maxSearchResultsPerPage * config.generalOptions.searchResultHeight + config.generalOptions.userInputHeight;
 };
 
-const updateWindowSize = (window: BrowserWindow, searchResultCount: number) => {
-    window.setResizable(true);
+const updateMainWindowSize = (searchResultCount: number) => {
+    mainWindow.setResizable(true);
     const windowHeight = searchResultCount > config.generalOptions.maxSearchResultsPerPage
         ? getMaxWindowHeight()
         : searchResultCount * config.generalOptions.searchResultHeight + config.generalOptions.userInputHeight;
-    window.setSize(config.generalOptions.windowWidth, windowHeight);
-    window.setResizable(false);
+    mainWindow.setSize(Number(config.generalOptions.windowWidth), Number(windowHeight));
+    mainWindow.setResizable(false);
 };
 
 const registerGlobalKeyboardShortcut = (toggleAction: () => void) => {
@@ -38,12 +40,12 @@ const registerGlobalKeyboardShortcut = (toggleAction: () => void) => {
     globalShortcut.register(config.generalOptions.hotKey, toggleAction);
 };
 
-const showWindow = () => {
+const showMainWindow = () => {
     mainWindow.show();
     mainWindow.webContents.send(IpcChannels.mainWindowHasBeenShown);
 };
 
-const hideWindow = () => {
+const hideMainWindow = () => {
     setTimeout(() => {
         mainWindow.hide();
     }, 25);
@@ -51,14 +53,14 @@ const hideWindow = () => {
 
 const toggleMainWindow = () => {
     if (mainWindow.isVisible()) {
-        hideWindow();
+        hideMainWindow();
     } else {
-        showWindow();
+        showMainWindow();
     }
 };
 
 const reloadApp = () => {
-    updateWindowSize(mainWindow, 0);
+    updateMainWindowSize(0);
     config = defaultUserConfigOptions;
     searchEngine = getProductionSearchEngine(config);
     mainWindow.reload();
@@ -70,7 +72,7 @@ const quitApp = () => {
     app.quit();
 };
 
-app.on("ready", () => {
+const startApp = () => {
     mainWindow = new BrowserWindow({
         center: true,
         frame: false,
@@ -81,24 +83,55 @@ app.on("ready", () => {
         transparent: true,
         width: config.generalOptions.windowWidth,
     });
-    mainWindow.on("blur", hideWindow);
+    mainWindow.on("blur", hideMainWindow);
+    mainWindow.on("closed", quitApp);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
-    updateWindowSize(mainWindow, 0);
+
+    updateMainWindowSize(0);
     registerGlobalKeyboardShortcut(toggleMainWindow);
+};
+
+app.on("ready", () => {
+    const gotSingleInstanceLock = app.requestSingleInstanceLock();
+    if (gotSingleInstanceLock) {
+        startApp();
+    } else {
+        // tslint:disable-next-line:no-console
+        console.error("Other instance is already running: quitting app.");
+        quitApp();
+    }
 });
 
 app.on("window-all-closed", quitApp);
-app.on("quit", quitApp);
+app.on("quit", app.quit);
+
+ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: UserConfigOptions) => {
+    config = updatedConfig;
+    searchEngine.updateConfig(updatedConfig)
+        // tslint:disable-next-line:no-console
+        .then(() => {
+            // tslint:disable-next-line:no-console
+            console.log("Config updated");
+
+            searchEngine.refreshIndexes()
+                // tslint:disable-next-line:no-console
+                .then(() =>  console.log("Successfully reloaded everything"))
+                // tslint:disable-next-line:no-console
+                .catch((err) => console.error(err));
+        })
+        // tslint:disable-next-line:no-console
+        .catch((err) =>  console.error(err));
+});
 
 ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {
     searchEngine.getSearchResults(userInput)
         .then((result) => {
-            updateWindowSize(mainWindow, result.length);
+            updateMainWindowSize(result.length);
             event.sender.send(IpcChannels.searchResponse, result);
         })
         .catch((err) => {
             // tslint:disable-next-line:no-console
-            console.log(err);
+            console.error(err);
         });
 });
 
@@ -106,12 +139,22 @@ ipcMain.on(IpcChannels.execute, (event: Electron.Event, searchResultItem: Search
     searchEngine.execute(searchResultItem)
         .then(() => {
             mainWindow.webContents.send(IpcChannels.executionSucceeded);
-            hideWindow();
+            hideMainWindow();
         })
         // tslint:disable-next-line:no-console
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
 });
 
 ipcMain.on(IpcChannels.reloadApp, () => {
     reloadApp();
+});
+
+ipcMain.on(IpcChannels.openSettingsWindow, () => {
+    if (!settingsWindow || settingsWindow.isDestroyed()) {
+        settingsWindow = new BrowserWindow();
+        settingsWindow.setMenu(null);
+        settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
+    } else {
+        settingsWindow.focus();
+    }
 });

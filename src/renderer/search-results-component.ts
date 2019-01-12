@@ -99,7 +99,6 @@ export const searchResultsComponent = Vue.extend({
             vueEventDispatcher.$emit(VueEventChannels.handleExecution, activeItem);
         });
     },
-    props: ["searchResults"],
     template: `
         <div class="search-results" :id="containerId">
             <div :id="searchResult.id" class="search-results__item" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">

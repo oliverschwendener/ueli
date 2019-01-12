@@ -6,4 +6,6 @@ export enum IpcChannels {
     mainWindowHasBeenShown = "main-window-has-been-shown",
     userInputHasBeenResetAndMainWindowCanBeHidden = "user-input-has-been-reset-and-main-window-can-be-hidden",
     reloadApp = "reload-app",
+    openSettingsWindow = "open-settings-window",
+    configUpdated = "config-updated",
 }

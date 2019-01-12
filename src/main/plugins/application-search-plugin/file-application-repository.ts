@@ -7,7 +7,7 @@ import { ApplicationIconService } from "./application-icon-service";
 
 export class FileApplicationRepository implements ApplicationRepository {
     private readonly applicationIconService: ApplicationIconService;
-    private readonly config: ApplicationSearchPluginOptions;
+    private config: ApplicationSearchPluginOptions;
     private applications: Application[];
 
     constructor(applicationIconService: ApplicationIconService, config: ApplicationSearchPluginOptions) {
@@ -24,7 +24,11 @@ export class FileApplicationRepository implements ApplicationRepository {
 
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            FileHelpers.readFilesFromFoldersRecursively(this.config.applicationFolders)
+            if (this.config.applicationFolders.length === 0) {
+                this.applications = [];
+                resolve();
+            } else {
+                FileHelpers.readFilesFromFoldersRecursively(this.config.applicationFolders)
                 .then((files) => {
                     const applications = files
                         .filter((file) => this.filterByApplicationFileExtensions(file))
@@ -49,6 +53,7 @@ export class FileApplicationRepository implements ApplicationRepository {
                 .catch((err) => {
                     reject(err);
                 });
+            }
         });
     }
 
@@ -61,6 +66,13 @@ export class FileApplicationRepository implements ApplicationRepository {
                 .catch((err) => {
                     reject(err);
                 });
+        });
+    }
+
+    public updateConfig(updatedConfig: ApplicationSearchPluginOptions): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.config = updatedConfig;
+            resolve();
         });
     }
 
