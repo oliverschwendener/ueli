@@ -238,6 +238,7 @@ To open the settings press <kbd>Ctrl</kbd> <kbd>i</kbd> or search for `ueli sett
 * `showSearchResultNumber` Boolean - If the search result number should be shown on the GUI.
 * `showTrayIcon` Boolean - If the icon should appear in the system tray.
 * `smoothScrolling` Boolean - If page scrolling for search results should be smooth or instant.
+* `transparentWindow` Boolean - If the window should be transparent. **Changing this option needs a restart of ueli.**.
 * `useNativeIcons` Boolean - If native operating system icons should be applied to apps and files.
 * `userInputFontSize` Number - Represents the font size of the user input in pixels.
 * `userInputHeight` Number - Represents the height of the user input box in pixels.

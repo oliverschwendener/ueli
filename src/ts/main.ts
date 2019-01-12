@@ -81,6 +81,7 @@ function createMainWindow(): void {
         resizable: false,
         show: false,
         skipTaskbar: true,
+        transparent: config.transparentWindow,
         width: config.windowWidth,
     });
 
