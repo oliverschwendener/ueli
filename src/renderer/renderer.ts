@@ -19,10 +19,12 @@ Vue.component("application-search-settings", applicationSearchOptionsComponent);
 // tslint:disable-next-line:no-unused-expression
 new Vue({
     data: {
-        config: defaultUserConfigOptions,
+        config: {},
     },
     el: "#app",
     mounted() {
+        this.config = defaultUserConfigOptions;
+
         vueEventDispatcher.$on(VueEventChannels.userInputChange, (userInput: string) => {
             ipcRenderer.send(IpcChannels.search, userInput);
         });

@@ -39,7 +39,6 @@ export class ApplicationSearchPlugin implements SearchPlugin {
 
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            // tslint:disable-next-line:no-console
             this.applicationRepository.refreshIndex()
                 .then(() => resolve())
                 .catch((err) => reject(err));

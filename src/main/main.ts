@@ -5,21 +5,17 @@ import { defaultUserConfigOptions } from "../common/config/default-user-config-o
 import { SearchResultItem } from "../common/search-result-item";
 import { getProductionSearchEngine } from "./production/production-search-engine";
 import { UserConfigOptions } from "../common/config/user-config-options";
+import { ConsoleLogger } from "../common/logger/console-logger";
 
+const logger = new ConsoleLogger();
 let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow | null;
 let config = defaultUserConfigOptions;
 let searchEngine = getProductionSearchEngine(config);
 const rescanInterval = setInterval(() => {
     searchEngine.refreshIndexes()
-        .then(() => {
-            // tslint:disable-next-line:no-console
-            console.log("Successfully refreshed indexes");
-        })
-        .catch((err) => {
-            // tslint:disable-next-line:no-console
-            console.error(`Error while refresh indexes: ${err}`);
-        });
+        .then(() => logger.debug("Successfully refreshed indexes"))
+        .catch((err) => logger.error(`Error while refresh indexes: ${err}`));
 }, config.generalOptions.refreshIntervalInSeconds * 1000);
 
 const getMaxWindowHeight = (): number => {
@@ -96,8 +92,7 @@ app.on("ready", () => {
     if (gotSingleInstanceLock) {
         startApp();
     } else {
-        // tslint:disable-next-line:no-console
-        console.error("Other instance is already running: quitting app.");
+        logger.error("Other instance is already running: quitting app.");
         quitApp();
     }
 });
@@ -108,19 +103,12 @@ app.on("quit", app.quit);
 ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: UserConfigOptions) => {
     config = updatedConfig;
     searchEngine.updateConfig(updatedConfig)
-        // tslint:disable-next-line:no-console
         .then(() => {
-            // tslint:disable-next-line:no-console
-            console.log("Config updated");
-
             searchEngine.refreshIndexes()
-                // tslint:disable-next-line:no-console
-                .then(() =>  console.log("Successfully reloaded everything"))
-                // tslint:disable-next-line:no-console
-                .catch((err) => console.error(err));
+                .then(() =>  logger.debug("Successfully refreshed all indexes"))
+                .catch((err) => logger.error(err));
         })
-        // tslint:disable-next-line:no-console
-        .catch((err) =>  console.error(err));
+        .catch((err) =>  logger.error(err));
 });
 
 ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {
@@ -129,10 +117,7 @@ ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {
             updateMainWindowSize(result.length);
             event.sender.send(IpcChannels.searchResponse, result);
         })
-        .catch((err) => {
-            // tslint:disable-next-line:no-console
-            console.error(err);
-        });
+        .catch((err) => logger.error(err));
 });
 
 ipcMain.on(IpcChannels.execute, (event: Electron.Event, searchResultItem: SearchResultItem) => {
@@ -141,8 +126,7 @@ ipcMain.on(IpcChannels.execute, (event: Electron.Event, searchResultItem: Search
             mainWindow.webContents.send(IpcChannels.executionSucceeded);
             hideMainWindow();
         })
-        // tslint:disable-next-line:no-console
-        .catch((err) => console.error(err));
+        .catch((err) => logger.error(err));
 });
 
 ipcMain.on(IpcChannels.reloadApp, () => {
