@@ -1,5 +1,21 @@
-.settings__container {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    min-height: 100vh;
+.settings {
+    padding: 15px;
+}
+
+.settings__setting-container {
+    
+}
+
+.settings__setting-title {
+
+}
+
+.settings__setting-content {
+    height: 0;
+    overflow: hidden;
+    transition: all 250ms ease-in-out;
+}
+
+.settings__setting-content.expanded {
+    height: auto;
 }

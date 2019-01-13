@@ -1,17 +1,21 @@
 import { app, BrowserWindow, ipcMain, globalShortcut } from "electron";
 import { join } from "path";
 import { IpcChannels } from "../common/ipc-channels";
-import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
 import { SearchResultItem } from "../common/search-result-item";
 import { getProductionSearchEngine } from "./production/production-search-engine";
 import { UserConfigOptions } from "../common/config/user-config-options";
 import { ConsoleLogger } from "../common/logger/console-logger";
+import { ElectronStoreConfigRepository } from "../common/config/electron-store-config-repository";
+import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
 
 const logger = new ConsoleLogger();
+const configRepository = new ElectronStoreConfigRepository(defaultUserConfigOptions);
+
 let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow | null;
-let config = defaultUserConfigOptions;
+let config = configRepository.getConfig();
 let searchEngine = getProductionSearchEngine(config);
+
 const rescanInterval = setInterval(() => {
     searchEngine.refreshIndexes()
         .then(() => logger.debug("Successfully refreshed indexes"))
@@ -57,7 +61,6 @@ const toggleMainWindow = () => {
 
 const reloadApp = () => {
     updateMainWindowSize(0);
-    config = defaultUserConfigOptions;
     searchEngine = getProductionSearchEngine(config);
     mainWindow.reload();
 };
@@ -102,13 +105,17 @@ app.on("quit", app.quit);
 
 ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: UserConfigOptions) => {
     config = updatedConfig;
-    searchEngine.updateConfig(updatedConfig)
+    configRepository.saveConfig(updatedConfig)
         .then(() => {
-            searchEngine.refreshIndexes()
-                .then(() =>  logger.debug("Successfully refreshed all indexes"))
-                .catch((err) => logger.error(err));
+            searchEngine.updateConfig(updatedConfig)
+                .then(() => {
+                    searchEngine.refreshIndexes()
+                        .then(() =>  logger.debug("Successfully refreshed all indexes"))
+                        .catch((err) => logger.error(err));
+                })
+                .catch((err) =>  logger.error(err));
         })
-        .catch((err) =>  logger.error(err));
+        .catch((err) => logger.error(err));
 });
 
 ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {

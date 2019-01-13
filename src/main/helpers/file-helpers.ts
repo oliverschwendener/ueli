@@ -97,6 +97,21 @@ export class FileHelpers {
         });
     }
 
+    public static getStats(filePath: string): Promise<FileStat> {
+        return new Promise((resolve, reject) => {
+            lstat(filePath, (err, stats) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve({
+                        filePath,
+                        stats,
+                    });
+                }
+            });
+        });
+    }
+
     private static handleFileStat(fileStat: FileStat): Promise<string[]> {
         return new Promise((resolve, reject) => {
             const isFile = fileStat.stats.isFile() || extname(fileStat.filePath) === ".app";
@@ -115,21 +130,6 @@ export class FileHelpers {
             } else {
                 resolve([]);
             }
-        });
-    }
-
-    private static getStats(filePath: string): Promise<FileStat> {
-        return new Promise((resolve, reject) => {
-            lstat(filePath, (err, stats) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve({
-                        filePath,
-                        stats,
-                    });
-                }
-            });
         });
     }
 }

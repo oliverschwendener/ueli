@@ -10,6 +10,7 @@ import { settingsComponent } from "./settings-component";
 import { UserConfigOptions } from "../common/config/user-config-options";
 import { applicationSearchOptionsComponent } from "./application-search-options-component";
 import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
+import { ElectronStoreConfigRepository } from "../common/config/electron-store-config-repository";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -23,7 +24,7 @@ new Vue({
     },
     el: "#app",
     mounted() {
-        this.config = defaultUserConfigOptions;
+        this.config = new ElectronStoreConfigRepository(defaultUserConfigOptions).getConfig();
 
         vueEventDispatcher.$on(VueEventChannels.userInputChange, (userInput: string) => {
             ipcRenderer.send(IpcChannels.search, userInput);

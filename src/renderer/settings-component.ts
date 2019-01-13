@@ -10,7 +10,7 @@ export const settingsComponent = Vue.extend({
     },
     props: ["config"],
     template: `
-        <div class="settings__container container-fluid">
+        <div class="settings">
             <application-search-settings :config="config">
         </div>
     `,
