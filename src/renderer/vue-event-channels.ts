@@ -9,4 +9,5 @@ export enum VueEventChannels {
     selectPreviousItem = "select-previous-item",
     searchResultsUpdated = "search-results-updated",
     configUpdated = "config-updated",
+    settingsError = "settings-error",
 }

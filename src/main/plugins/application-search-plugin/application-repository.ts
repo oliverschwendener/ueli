@@ -1,9 +1,9 @@
 import { Application } from "./application";
-import { ApplicationSearchPluginOptions } from "./application-search-plugin-options";
+import { ApplicationSearchOptions } from "./application-search-options";
 
 export interface ApplicationRepository {
     getAll(): Promise<Application[]>;
     refreshIndex(): Promise<void>;
     clearCache(): Promise<void>;
-    updateConfig(updatedConfig: ApplicationSearchPluginOptions): Promise<void>;
+    updateConfig(updatedConfig: ApplicationSearchOptions): Promise<void>;
 }

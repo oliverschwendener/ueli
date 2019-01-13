@@ -1,16 +1,16 @@
 import { ApplicationRepository } from "./application-repository";
 import { Application } from "./application";
 import { basename, extname } from "path";
-import { ApplicationSearchPluginOptions } from "./application-search-plugin-options";
+import { ApplicationSearchOptions } from "./application-search-options";
 import { FileHelpers } from "../../helpers/file-helpers";
 import { ApplicationIconService } from "./application-icon-service";
 
 export class FileApplicationRepository implements ApplicationRepository {
     private readonly applicationIconService: ApplicationIconService;
-    private config: ApplicationSearchPluginOptions;
+    private config: ApplicationSearchOptions;
     private applications: Application[];
 
-    constructor(applicationIconService: ApplicationIconService, config: ApplicationSearchPluginOptions) {
+    constructor(applicationIconService: ApplicationIconService, config: ApplicationSearchOptions) {
         this.applicationIconService = applicationIconService;
         this.applications = [];
         this.config = config;
@@ -69,7 +69,7 @@ export class FileApplicationRepository implements ApplicationRepository {
         });
     }
 
-    public updateConfig(updatedConfig: ApplicationSearchPluginOptions): Promise<void> {
+    public updateConfig(updatedConfig: ApplicationSearchOptions): Promise<void> {
         return new Promise((resolve, reject) => {
             this.config = updatedConfig;
             resolve();

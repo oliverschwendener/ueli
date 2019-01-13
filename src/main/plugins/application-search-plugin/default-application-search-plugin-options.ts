@@ -1,17 +1,17 @@
-import { ApplicationSearchPluginOptions } from "./application-search-plugin-options";
+import { ApplicationSearchOptions } from "./application-search-options";
 import { homedir, platform } from "os";
 
-const win: ApplicationSearchPluginOptions = {
+const win: ApplicationSearchOptions = {
     applicationFileExtensions: [".lnk", ".appref-ms", ".url", ".exe"],
     applicationFolders: [
         "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs",
         `${homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`,
         `${homedir()}\\Desktop`,
     ],
-    defaultIconFilePath: "",
+    defaultIconFilePath: "./assets/default-windows-app-icon.png",
 };
 
-const darwin: ApplicationSearchPluginOptions = {
+const darwin: ApplicationSearchOptions = {
     applicationFileExtensions: [".app"],
     applicationFolders: [
         "/Applications",
@@ -20,6 +20,6 @@ const darwin: ApplicationSearchPluginOptions = {
     defaultIconFilePath: "./assets/default-mac-app-icon.png",
 };
 
-export const defaultApplicationSearchPluginOptions = platform() === "win32"
+export const defaultApplicationSearchOptions = platform() === "win32"
     ? win
     : darwin;

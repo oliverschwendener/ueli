@@ -1,4 +1,4 @@
-export interface ApplicationSearchPluginOptions {
+export interface ApplicationSearchOptions {
     applicationFolders: string[];
     applicationFileExtensions: string[];
     defaultIconFilePath: string;
