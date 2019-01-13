@@ -15,6 +15,10 @@ export function getApplicationIconFilePath(application: Application): string {
 
 export function getMacAppIcons(applications: Application[]): Promise<ApplicationIcon[]> {
     return new Promise((resolve, reject) => {
+        if (applications.length === 0) {
+            resolve([]);
+        }
+
         const promises = applications.map((application) => {
             return convert(application.filePath, getApplicationIconFilePath(application));
         });
@@ -36,6 +40,10 @@ export function getMacAppIcons(applications: Application[]): Promise<Application
 
 export function getWindowsAppIcons(applications: Application[]): Promise<ApplicationIcon[]> {
     return new Promise((resolve, reject) => {
+        if (applications.length === 0) {
+            resolve([]);
+        }
+
         const icons = applications.map((application): Icon => {
             return {
                 inputFilePath: application.filePath,

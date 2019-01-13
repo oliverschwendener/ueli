@@ -24,12 +24,17 @@ export class FileApplicationRepository implements ApplicationRepository {
 
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            if (this.config.applicationFolders.length === 0) {
+            if (this.config.applicationFolders === undefined || this.config.applicationFolders.length === 0) {
                 this.applications = [];
                 resolve();
             } else {
                 FileHelpers.readFilesFromFoldersRecursively(this.config.applicationFolders)
                 .then((files) => {
+                    if (files.length === 0) {
+                        this.applications = [];
+                        resolve();
+                    }
+
                     const applications = files
                         .filter((file) => this.filterByApplicationFileExtensions(file))
                         .map((applicationFile): Application => this.createApplicationFromFilePath(applicationFile));

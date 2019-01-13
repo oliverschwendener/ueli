@@ -16,11 +16,24 @@ let settingsWindow: BrowserWindow | null;
 let config = configRepository.getConfig();
 let searchEngine = getProductionSearchEngine(config);
 
-const rescanInterval = setInterval(() => {
+const refreshAllIndexes = () => {
     searchEngine.refreshIndexes()
         .then(() => logger.debug("Successfully refreshed indexes"))
-        .catch((err) => logger.error(`Error while refresh indexes: ${err}`));
-}, config.generalOptions.refreshIntervalInSeconds * 1000);
+        .catch((err) => logger.error(err));
+};
+
+const updateConfig = (updatedConfig: UserConfigOptions) => {
+    config = updatedConfig;
+    configRepository.saveConfig(updatedConfig)
+        .then(() => {
+            searchEngine.updateConfig(updatedConfig)
+                .then(() => Promise.resolve(refreshAllIndexes()))
+                .catch((err) =>  logger.error(err));
+        })
+        .catch((err) => logger.error(err));
+};
+
+const rescanInterval = setInterval(() => refreshAllIndexes, config.generalOptions.refreshIntervalInSeconds * 1000);
 
 const getMaxWindowHeight = (): number => {
     return config.generalOptions.maxSearchResultsPerPage * config.generalOptions.searchResultHeight + config.generalOptions.userInputHeight;
@@ -104,18 +117,7 @@ app.on("window-all-closed", quitApp);
 app.on("quit", app.quit);
 
 ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: UserConfigOptions) => {
-    config = updatedConfig;
-    configRepository.saveConfig(updatedConfig)
-        .then(() => {
-            searchEngine.updateConfig(updatedConfig)
-                .then(() => {
-                    searchEngine.refreshIndexes()
-                        .then(() =>  logger.debug("Successfully refreshed all indexes"))
-                        .catch((err) => logger.error(err));
-                })
-                .catch((err) =>  logger.error(err));
-        })
-        .catch((err) => logger.error(err));
+    updateConfig(updatedConfig);
 });
 
 ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {

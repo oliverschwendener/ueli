@@ -16,6 +16,9 @@
 }
 
 .settings__setting-content-item-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     font-size: 1.25rem;
     margin-top: 25px;
     margin-bottom: 10px;
@@ -31,7 +34,7 @@
     height: auto;
 }
 
-.settings__setting-content-item {
+.settings__setting-content-item {    
     margin-bottom: 25px;
 }
 

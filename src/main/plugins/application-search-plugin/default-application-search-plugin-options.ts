@@ -8,7 +8,7 @@ const win: ApplicationSearchOptions = {
         `${homedir()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu`,
         `${homedir()}\\Desktop`,
     ],
-    defaultIconFilePath: "./assets/default-windows-app-icon.png",
+    fallbackIconFilePath: "./assets/default-windows-app-icon.png",
 };
 
 const darwin: ApplicationSearchOptions = {
@@ -17,7 +17,7 @@ const darwin: ApplicationSearchOptions = {
         "/Applications",
         `${homedir()}/Applications`,
     ],
-    defaultIconFilePath: "./assets/default-mac-app-icon.png",
+    fallbackIconFilePath: "./assets/default-mac-app-icon.png",
 };
 
 export const defaultApplicationSearchOptions = platform() === "win32"
