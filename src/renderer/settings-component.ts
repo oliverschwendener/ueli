@@ -103,8 +103,8 @@ export const settingsComponent = Vue.extend({
                 {{ notification.message }}
             </div>
             <div class="settings__setting">
-                <appearance-settings></appearance-settings>
-                <search-engine-settings></search-engine-settings>
+                <appearance-settings :config="config"></appearance-settings>
+                <search-engine-settings :config="config"></search-engine-settings>
                 <application-search-settings :config="config"></application-search-settings>
             </div>
         </div>

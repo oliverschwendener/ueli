@@ -163,6 +163,7 @@ ipcMain.on(IpcChannels.openSettingsWindow, () => {
         });
         settingsWindow.setMenu(null);
         settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
+        settingsWindow.webContents.toggleDevTools();
     } else {
         settingsWindow.focus();
     }

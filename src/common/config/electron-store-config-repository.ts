@@ -5,16 +5,20 @@ import { UserConfigOptions } from "./user-config-options";
 export class ElectronStoreConfigRepository implements ConfigRepository {
     private readonly store: Store;
     private readonly configStoreKey = "user-config-options";
+    private readonly defaultOptions: UserConfigOptions;
 
-    constructor(defaultUserConfigOptions: UserConfigOptions) {
+    constructor(defaultOptions: UserConfigOptions) {
         this.store = new Store();
+
+        this.defaultOptions = defaultOptions;
         if (this.getConfig() === undefined) {
-            this.setDefaultConfig(defaultUserConfigOptions);
+            this.setDefaultConfig();
         }
     }
 
     public getConfig(): UserConfigOptions {
-        return this.store.get(this.configStoreKey);
+        const userOptions = this.store.get(this.configStoreKey);
+        return Object.assign(this.defaultOptions, userOptions);
     }
 
     public saveConfig(updatedConfig: UserConfigOptions): Promise<void> {
@@ -24,7 +28,7 @@ export class ElectronStoreConfigRepository implements ConfigRepository {
         });
     }
 
-    private setDefaultConfig(defaultUserConfigOptions: UserConfigOptions) {
-        this.saveConfig(defaultUserConfigOptions);
+    private setDefaultConfig() {
+        this.saveConfig(this.defaultOptions);
     }
 }

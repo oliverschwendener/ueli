@@ -9,10 +9,10 @@ interface FuseResult {
 
 export class SearchEngine {
     private readonly plugins: SearchPlugin[];
-    private options: UserConfigOptions;
+    private config: UserConfigOptions;
 
-    constructor(plugins: SearchPlugin[], userConfig: UserConfigOptions) {
-        this.options = userConfig;
+    constructor(plugins: SearchPlugin[], config: UserConfigOptions) {
+        this.config = config;
         this.plugins = plugins;
         Promise.resolve(this.refreshIndexes());
     }
@@ -41,12 +41,12 @@ export class SearchEngine {
                         maxPatternLength: 32,
                         minMatchCharLength: 1,
                         shouldSort: true,
-                        threshold: 0.4,
+                        threshold: this.config.searchEngineOptions.fuzzyness,
                     });
 
                     const fuseResult = fuse.search(userInput) as any[];
                     const filtered = fuseResult.map((item: FuseResult): SearchResultItem => item.item);
-                    const sliced = filtered.slice(0, this.options.generalOptions.maxSearchResults);
+                    const sliced = filtered.slice(0, this.config.generalOptions.maxSearchResults);
 
                     resolve(sliced);
                 })
@@ -97,7 +97,7 @@ export class SearchEngine {
 
     public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.options = updatedConfig;
+            this.config = updatedConfig;
             const promises = this.plugins.map((plugin) => plugin.updateConfig(updatedConfig));
             Promise.all(promises)
                 .then(() => resolve())
