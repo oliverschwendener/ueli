@@ -5,6 +5,8 @@ import { vueEventDispatcher } from "./vue-event-dispatcher";
 import { exists } from "fs";
 import { FileHelpers } from "../main/helpers/file-helpers";
 import { defaultApplicationSearchOptions } from "../main/plugins/application-search-plugin/default-application-search-plugin-options";
+import { SettingsNotificationType } from "./settings-notification-type";
+import { cloneDeep } from "lodash";
 
 export const applicationSearchOptionsComponent = Vue.extend({
     data() {
@@ -65,36 +67,30 @@ export const applicationSearchOptionsComponent = Vue.extend({
             this.updateConfig();
         },
         resetApplicationFoldersToDefault() {
-            let defaultApplicationFolders: string[] = [];
-            defaultApplicationFolders = defaultApplicationFolders.concat(defaultApplicationSearchOptions.applicationFolders);
             const config: UserConfigOptions = this.config;
-            config.applicationSearchOptions.applicationFolders = defaultApplicationFolders;
+            config.applicationSearchOptions.applicationFolders = cloneDeep(defaultApplicationSearchOptions.applicationFolders);
             this.updateConfig();
         },
         resetApplicationFileExtensionsToDefault() {
-            let defaultApplicationFileExtensions: string[] = [];
-            defaultApplicationFileExtensions = defaultApplicationFileExtensions.concat(defaultApplicationSearchOptions.applicationFileExtensions);
             const config: UserConfigOptions = this.config;
-            config.applicationSearchOptions.applicationFileExtensions = defaultApplicationFileExtensions;
+            config.applicationSearchOptions.applicationFileExtensions = cloneDeep(defaultApplicationSearchOptions.applicationFileExtensions);
             this.updateConfig();
         },
         resetApplicationSearchOptionsToDefault() {
-            this.resetApplicationFileExtensionsToDefault();
-            this.resetApplicationFoldersToDefault();
-            this.resetFallbackIconFilePathToDefault();
+            const config: UserConfigOptions = this.config;
+            config.applicationSearchOptions = cloneDeep(defaultApplicationSearchOptions);
+            this.updateConfig();
         },
         resetFallbackIconFilePathToDefault() {
-            let defaultFallbackIconFilePath: string = "";
-            defaultFallbackIconFilePath = `${defaultApplicationSearchOptions.fallbackIconFilePath}`;
             const config: UserConfigOptions = this.config;
-            config.applicationSearchOptions.fallbackIconFilePath = defaultFallbackIconFilePath;
+            config.applicationSearchOptions.fallbackIconFilePath = defaultApplicationSearchOptions.fallbackIconFilePath;
             this.updateConfig();
         },
         updateConfig() {
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
         },
         handleError(message: string) {
-            vueEventDispatcher.$emit(VueEventChannels.settingsError, message);
+            vueEventDispatcher.$emit(VueEventChannels.pushNotification, message, SettingsNotificationType.Error);
         },
     },
     mounted() {
@@ -108,100 +104,100 @@ export const applicationSearchOptionsComponent = Vue.extend({
     },
     props: ["config"],
     template: `
-        <div v-if="visible">
-            <div class="settings__setting-title">
-                <span>Application search</span>
+        <div v-if="visible" class="box">
+            <div class="settings__setting-title title is-3">
+                <span>
+                    Application Search
+                </span>
                 <div>
-                    <button class="button is-small" @click="resetApplicationSearchOptionsToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                    <button class="button" @click="resetApplicationSearchOptionsToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                 </div>
             </div>
             <div class="settings__setting-content">
-                <div class="settings__setting-content-item">
+                <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
-                        <span>Application folders</span>
-                        <button class="button is-small" @click="resetApplicationFoldersToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                        <div class="title is-5">Application folders</div>
+                        <button class="button" @click="resetApplicationFoldersToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
-                    <table class="table is-fullwidth is-striped is-bordered">
-                        <tbody>
-                            <tr v-for="applicationFolder in config.applicationSearchOptions.applicationFolders">
-                                <td>
-                                    <input readonly type="text" class="input is-small" v-model="applicationFolder">
-                                </td>
-                                <td>
-                                    <button class="button is-danger is-small" @click="removeApplicationFolder(applicationFolder)">
-                                        <span class="icon">
-                                            <i class="fas fa-minus"></i>
-                                        </span>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="text" class="input is-small" v-model="newApplicationFolder">
-                                </td>
-                                <td>
-                                    <button class="button is-primary is-small" @click="onAddFolderClick">
-                                        <span class="icon">
-                                            <i class="fas fa-plus"></i>
-                                        </span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="settings__setting-content-item">
-                    <div class="settings__setting-content-item-title">
-                        <span>Application file extensions</span>
-                        <button class="button is-small" @click="resetApplicationFileExtensionsToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
-                    </div>
-                    <table class="table is-fullwidth is-striped is-bordered">
-                        <tbody>
-                            <tr v-for="applicationFileExtension in config.applicationSearchOptions.applicationFileExtensions">
-                                <td>
-                                    <input readonly type="text" class="input is-small" v-model="applicationFileExtension">
-                                </td>
-                                <td>
-                                    <button class="button is-danger is-small" @click="removeApplicationFileExtension(applicationFileExtension)">
-                                        <span class="icon">
-                                            <i class="fas fa-minus"></i>
-                                        </span>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="text" class="input is-small" v-model="newApplicationFileExtension">
-                                </td>
-                                <td>
-                                    <button class="button is-primary is-small" @click="onAddFileExtensionClick">
-                                        <span class="icon">
-                                            <i class="fas fa-plus"></i>
-                                        </span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="settings__setting-content-item">
-                    <div class="settings__setting-content-item-title">
-                        <span>Default app icon</span>
-                        <button class="button is-small" @click="resetFallbackIconFilePathToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
-                    </div>
-                    <div class="field has-addons vertical-align">
-                        <div class="settings__image-preview-container">
-                            <img class="settings__image-preview" :src="config.applicationSearchOptions.fallbackIconFilePath">
+                    <div class="columns is-vcentered" v-for="applicationFolder in config.applicationSearchOptions.applicationFolders">
+                        <div class="column is-four-fifths">
+                            <input readonly type="text" class="input" v-model="applicationFolder">
                         </div>
-                        <div class="control is-expanded">
-                            <input type="text" class="input" v-model="config.applicationSearchOptions.fallbackIconFilePath">
-                        </div>
-                        <div class="control">
-                            <button class="button is-primary" @click="updateConfig">
+                        <div class="column">
+                            <button class="button is-danger" @click="removeApplicationFolder(applicationFolder)">
                                 <span class="icon">
-                                    <i class="fas fa-check"></i>
+                                    <i class="fas fa-minus"></i>
                                 </span>
                             </button>
+                        </div>
+                    </div>
+                    <div class="columns is-vcentered">
+                        <div class="column is-four-fifths">
+                            <input type="text" class="input" v-model="newApplicationFolder">
+                        </div>
+                        <div class="column">
+                            <button class="button is-primary" @click="onAddFolderClick">
+                                <span class="icon">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings__setting-content-item box">
+                    <div class="settings__setting-content-item-title">
+                        <div class="title is-5">Application file extensions</div>
+                        <button class="button" @click="resetApplicationFileExtensionsToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                    </div>
+                    <div class="columns" v-for="applicationFileExtension in config.applicationSearchOptions.applicationFileExtensions">
+                        <div class="column is-four-fifths">
+                            <input readonly type="text" class="input" v-model="applicationFileExtension">
+                        </div>
+                        <div class="column">
+                            <button class="button is-danger" @click="removeApplicationFileExtension(applicationFileExtension)">
+                                <span class="icon">
+                                    <i class="fas fa-minus"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column is-four-fifths">
+                            <input type="text" class="input" v-model="newApplicationFileExtension">
+                        </div>
+                        <div class="column">
+                            <button class="button is-primary" @click="onAddFileExtensionClick">
+                                <span class="icon">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings__setting-content-item box">
+                    <div class="settings__setting-content-item-title">
+                        <div class="title is-5">Default app icon</div>
+                        <button class="button" @click="resetFallbackIconFilePathToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                    </div>
+                    <div class="columns is-vcentered">
+                        <div class="column is-four-fifths">
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+                                    <input type="text" class="input" v-model="config.applicationSearchOptions.fallbackIconFilePath">
+                                </div>
+                                <div class="control">
+                                    <button class="button is-primary" @click="updateConfig">
+                                        <span class="icon">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="image is-48x48">
+                                <img :src="config.applicationSearchOptions.fallbackIconFilePath">
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -14,6 +14,7 @@ import { ElectronStoreConfigRepository } from "../common/config/electron-store-c
 import { appearanceSettingsComponent } from "./appearance-settings-component";
 import { searchEngineSettingsComponent } from "./search-engine-settings-component";
 import { settingMenuItemComponent } from "./setting-menu-item-component";
+import { settingsLoadingOverlayComponent } from "./settings-loading-overlay-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -22,6 +23,7 @@ Vue.component("appearance-settings", appearanceSettingsComponent);
 Vue.component("search-engine-settings", searchEngineSettingsComponent);
 Vue.component("application-search-settings", applicationSearchOptionsComponent);
 Vue.component("setting-menu-item", settingMenuItemComponent);
+Vue.component("settings-loading-overlay", settingsLoadingOverlayComponent);
 
 // tslint:disable-next-line:no-unused-expression
 new Vue({
@@ -43,6 +45,7 @@ new Vue({
         vueEventDispatcher.$on(VueEventChannels.configUpdated, (config: UserConfigOptions) => {
             this.config = config;
             ipcRenderer.send(IpcChannels.configUpdated, config);
+            vueEventDispatcher.$emit(VueEventChannels.loadingStarted);
         });
 
         ipcRenderer.on(IpcChannels.searchResponse, (event: Electron.Event, searchResults: SearchResultItem[]) => {

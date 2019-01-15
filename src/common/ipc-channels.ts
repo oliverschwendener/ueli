@@ -8,4 +8,6 @@ export enum IpcChannels {
     reloadApp = "reload-app",
     openSettingsWindow = "open-settings-window",
     configUpdated = "config-updated",
+    indexRefreshSucceeded = "index-refresh-succeeded",
+    indexRefreshFailed = "index-refresh-failed",
 }

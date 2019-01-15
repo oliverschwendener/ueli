@@ -12,14 +12,27 @@ const logger = new ConsoleLogger();
 const configRepository = new ElectronStoreConfigRepository(defaultUserConfigOptions);
 
 let mainWindow: BrowserWindow;
-let settingsWindow: BrowserWindow | null;
+let settingsWindow: BrowserWindow;
+
 let config = configRepository.getConfig();
 let searchEngine = getProductionSearchEngine(config);
 
+const notifyRenderer = (ipcChannel: IpcChannels, message?: string) => {
+    const allWindows = [mainWindow, settingsWindow];
+    allWindows.forEach((window) => window.webContents.send(ipcChannel, message));
+};
+
 const refreshAllIndexes = () => {
     searchEngine.refreshIndexes()
-        .then(() => logger.debug("Successfully refreshed indexes"))
-        .catch((err) => logger.error(err));
+        .then(() => {
+            const message = "Successfully refreshed indexes";
+            logger.debug(message);
+            notifyRenderer(IpcChannels.indexRefreshSucceeded, message);
+        })
+        .catch((err) => {
+            logger.error(err);
+            notifyRenderer(IpcChannels.indexRefreshFailed, err);
+        });
 };
 
 const updateConfig = (updatedConfig: UserConfigOptions) => {
@@ -27,7 +40,7 @@ const updateConfig = (updatedConfig: UserConfigOptions) => {
     configRepository.saveConfig(updatedConfig)
         .then(() => {
             searchEngine.updateConfig(updatedConfig)
-                .then(() => Promise.resolve(refreshAllIndexes()))
+                .then(() => refreshAllIndexes())
                 .catch((err) =>  logger.error(err));
         })
         .catch((err) => logger.error(err));
