@@ -1,19 +1,22 @@
+html {
+    overflow-y: hidden !important;
+}
+
 .settings {
-    padding: 15px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    height: 100vh;
 }
 
 .settings__sidebar {
-    max-height: 100vh;
-    overflow: hidden;
+    overflow-y: auto;
     padding: 15px;
 }
 
 .settings__setting {
+    overflow-y: auto;
     flex-grow: 1;
-    height: 100px;
     padding: 15px 30px;
 }
 
@@ -31,7 +34,7 @@
 }
 
 .settings__setting-content-item {    
-    margin-bottom: 25px;
+    margin-bottom: 50px;
 }
 
 .settings__setting-content-item:last-child {
@@ -40,17 +43,18 @@
 
 .settings__notification {
     position: fixed;
-    right: 15px;
-    top: 15px;
+    left: 50%;
+    bottom: 0;
     transition: all 250ms ease-in-out;
     z-index: 100;
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateY(100%) translateX(-50%);
+    box-shadow: 0 0 50px rgba(0,0,0,0.25);
 }
 
 .settings__notification.visible {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0) translateX(-50%);
 }
 
 .settings-loading-overlay {

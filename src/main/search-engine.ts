@@ -23,7 +23,9 @@ export class SearchEngine {
                 resolve([]);
             }
 
-            const pluginPromises = this.plugins.map((p) => p.getAll());
+            const pluginPromises = this.plugins
+                .filter((p) => p.isEnabled())
+                .map((p) => p.getAll());
 
             Promise.all(pluginPromises)
                 .then((pluginsResults) => {

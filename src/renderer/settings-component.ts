@@ -39,6 +39,18 @@ export const settingsComponent = Vue.extend({
                 { name: "Appearance", slug: "appearance" },
                 { name: "Search Engine", slug: "search-engine" },
                 { name: "Application Search", slug: "application-search" },
+                { name: "File & Folder Search", slug: "file-and-folder-search" },
+                { name: "URL", slug: "url" },
+                { name: "E-Mail", slug: "email" },
+                { name: "Web search engines", slug: "web-search-engines" },
+                { name: "Operating System Settings", slug: "operating-system-settings" },
+                { name: "Operating System Commands", slug: "operating-system-commands" },
+                { name: "Commandline Tools", slug: "commandline-tools" },
+                { name: "Filebrowser", slug: "filebrowser" },
+                { name: "Calculator", slug: "calculator" },
+                { name: "Shortcuts", slug: "shortcuts" },
+                { name: "Custom Commands", slug: "custom-commands" },
+                { name: "Environment Variables", slug: "environment-variables" },
             ],
         };
     },
@@ -78,7 +90,7 @@ export const settingsComponent = Vue.extend({
     template: `
         <div class="settings container">
             <settings-loading-overlay></settings-loading-overlay>
-            <div class="settins__sidebar menu">
+            <div class="settings__sidebar menu">
                 <ul class="menu-list">
                     <setting-menu-item v-for="settingMenuItem in settingMenuItems" :name="settingMenuItem.name" :slug="settingMenuItem.slug"></setting-menu-item>
                 </ul>

@@ -13,12 +13,13 @@ const getApplicationSearchPlugin = (os: string, config: UserConfigOptions) => {
     const getAppIcons = os === "win32" ? getWindowsAppIcons : getMacAppIcons;
     const applicationIconService = new ApplicationIconService(getAppIcons);
     const applicationFileRepository = new FileApplicationRepository(applicationIconService, config.applicationSearchOptions);
-    return new ApplicationSearchPlugin(applicationFileRepository, executeApplication);
+    return new ApplicationSearchPlugin(config.applicationSearchOptions, applicationFileRepository, executeApplication);
 };
 
 export const getProductionSearchEngine = (config: UserConfigOptions): SearchEngine => {
     const plugins: SearchPlugin[] = [
         getApplicationSearchPlugin(platform(), config),
     ];
+
     return new SearchEngine(plugins, config);
 };

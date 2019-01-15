@@ -54,6 +54,11 @@ export const applicationSearchOptionsComponent = Vue.extend({
                 }
             });
         },
+        toggleEnabled() {
+            const config: UserConfigOptions = this.config;
+            config.applicationSearchOptions.enabled = !config.applicationSearchOptions.enabled;
+            this.updateConfig();
+        },
         removeApplicationFileExtension(applicationFileExtension: string) {
             const config: UserConfigOptions = this.config;
             const indexToRemove = config.applicationSearchOptions.applicationFileExtensions.indexOf(applicationFileExtension);
@@ -104,17 +109,22 @@ export const applicationSearchOptionsComponent = Vue.extend({
     },
     props: ["config"],
     template: `
-        <div v-if="visible" class="box">
+        <div v-if="visible">
             <div class="settings__setting-title title is-3">
                 <span>
                     Application Search
                 </span>
                 <div>
-                    <button class="button" @click="resetApplicationSearchOptionsToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                    <button class="button" :class="{ 'is-success' : config.applicationSearchOptions.enabled }" @click="toggleEnabled">
+                        <span class="icon"><i class="fas fa-power-off"></i></span>
+                    </button>
+                    <button v-if="config.applicationSearchOptions.enabled" class="button" @click="resetApplicationSearchOptionsToDefault">
+                        <span class="icon"><i class="fas fa-undo-alt"></i></span>
+                    </button>
                 </div>
             </div>
             <div class="settings__setting-content">
-                <div class="settings__setting-content-item box">
+                <div class="settings__setting-content-item box" v-if="config.applicationSearchOptions.enabled">
                     <div class="settings__setting-content-item-title">
                         <div class="title is-5">Application folders</div>
                         <button class="button" @click="resetApplicationFoldersToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
@@ -144,7 +154,7 @@ export const applicationSearchOptionsComponent = Vue.extend({
                         </div>
                     </div>
                 </div>
-                <div class="settings__setting-content-item box">
+                <div class="settings__setting-content-item box" v-if="config.applicationSearchOptions.enabled">
                     <div class="settings__setting-content-item-title">
                         <div class="title is-5">Application file extensions</div>
                         <button class="button" @click="resetApplicationFileExtensionsToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
@@ -174,7 +184,7 @@ export const applicationSearchOptionsComponent = Vue.extend({
                         </div>
                     </div>
                 </div>
-                <div class="settings__setting-content-item box">
+                <div class="settings__setting-content-item box" v-if="config.applicationSearchOptions.enabled">
                     <div class="settings__setting-content-item-title">
                         <div class="title is-5">Default app icon</div>
                         <button class="button" @click="resetFallbackIconFilePathToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>

@@ -157,7 +157,10 @@ ipcMain.on(IpcChannels.reloadApp, () => {
 
 ipcMain.on(IpcChannels.openSettingsWindow, () => {
     if (!settingsWindow || settingsWindow.isDestroyed()) {
-        settingsWindow = new BrowserWindow();
+        settingsWindow = new BrowserWindow({
+            height: 700,
+            width: 850,
+        });
         settingsWindow.setMenu(null);
         settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
     } else {
