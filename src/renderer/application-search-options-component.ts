@@ -10,9 +10,10 @@ export const applicationSearchOptionsComponent = Vue.extend({
     data() {
         return {
             errorMessage: "",
-            expanded: false,
             newApplicationFileExtension: "",
             newApplicationFolder: "",
+            settingName: "application-search",
+            visible: false,
         };
     },
     methods: {
@@ -95,24 +96,29 @@ export const applicationSearchOptionsComponent = Vue.extend({
         handleError(message: string) {
             vueEventDispatcher.$emit(VueEventChannels.settingsError, message);
         },
-        settingsTitleClick() {
-            this.expanded = !this.expanded;
-        },
+    },
+    mounted() {
+        vueEventDispatcher.$on(VueEventChannels.showSetting, (settingName: string) => {
+            if (settingName === this.settingName) {
+                this.visible = true;
+            } else {
+                this.visible = false;
+            }
+        });
     },
     props: ["config"],
     template: `
-        <div class="box">
+        <div v-if="visible">
             <div class="settings__setting-title">
-                <span><i class="far fa-window-restore"></i> Application search</span>
+                <span>Application search</span>
                 <div>
-                    <button v-if="expanded" class="button is-small" @click="resetApplicationSearchOptionsToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
-                    <button class="button is-small" @click="settingsTitleClick"><span class="icon"><i :class="{ 'fas fa-minus' : expanded, 'fas fa-plus' : !expanded }"></i></span></button>
+                    <button class="button is-small" @click="resetApplicationSearchOptionsToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                 </div>
             </div>
-            <div class="settings__setting-content" :class="{ 'expanded' : expanded }">
+            <div class="settings__setting-content">
                 <div class="settings__setting-content-item">
                     <div class="settings__setting-content-item-title">
-                        <span><i class="fas fa-folder"></i> Application folders</span>
+                        <span>Application folders</span>
                         <button class="button is-small" @click="resetApplicationFoldersToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <table class="table is-fullwidth is-striped is-bordered">
@@ -146,9 +152,7 @@ export const applicationSearchOptionsComponent = Vue.extend({
                 </div>
                 <div class="settings__setting-content-item">
                     <div class="settings__setting-content-item-title">
-                        <span>
-                            <i class="fas fa-file"></i> Application file extensions
-                        </span>
+                        <span>Application file extensions</span>
                         <button class="button is-small" @click="resetApplicationFileExtensionsToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <table class="table is-fullwidth is-striped is-bordered">
@@ -182,9 +186,7 @@ export const applicationSearchOptionsComponent = Vue.extend({
                 </div>
                 <div class="settings__setting-content-item">
                     <div class="settings__setting-content-item-title">
-                        <span>
-                            <i class="fas fa-image"></i> Default app icon
-                        </span>
+                        <span>Default app icon</span>
                         <button class="button is-small" @click="resetFallbackIconFilePathToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <div class="field has-addons vertical-align">

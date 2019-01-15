@@ -10,4 +10,5 @@ export enum VueEventChannels {
     searchResultsUpdated = "search-results-updated",
     configUpdated = "config-updated",
     settingsError = "settings-error",
+    showSetting = "show-setting",
 }

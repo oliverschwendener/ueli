@@ -1,9 +1,24 @@
 .settings {
     padding: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
 .no-margin {
     margin: 0 !important;
+}
+
+.settings__sidebar {
+    max-height: 100vh;
+    overflow: hidden;
+    padding: 15px;
+}
+
+.settings__setting {
+    flex-grow: 1;
+    height: 100px;
+    padding: 15px 30px;
 }
 
 .settings__setting-title {
@@ -23,15 +38,6 @@
     margin-top: 25px;
     margin-bottom: 10px;
     font-weight: 400;
-}
-
-.settings__setting-content {
-    height: 0;
-    overflow: hidden;
-}
-
-.settings__setting-content.expanded {
-    height: auto;
 }
 
 .settings__setting-content-item {    

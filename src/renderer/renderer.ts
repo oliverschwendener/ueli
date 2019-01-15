@@ -11,11 +11,17 @@ import { UserConfigOptions } from "../common/config/user-config-options";
 import { applicationSearchOptionsComponent } from "./application-search-options-component";
 import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
 import { ElectronStoreConfigRepository } from "../common/config/electron-store-config-repository";
+import { appearanceSettingsComponent } from "./appearance-settings-component";
+import { searchEngineSettingsComponent } from "./search-engine-settings-component";
+import { settingMenuItemComponent } from "./setting-menu-item-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
 Vue.component("settings", settingsComponent);
+Vue.component("appearance-settings", appearanceSettingsComponent);
+Vue.component("search-engine-settings", searchEngineSettingsComponent);
 Vue.component("application-search-settings", applicationSearchOptionsComponent);
+Vue.component("setting-menu-item", settingMenuItemComponent);
 
 // tslint:disable-next-line:no-unused-expression
 new Vue({
