@@ -14,8 +14,6 @@ export const settingsComponent = Vue.extend({
             let typeClass = "is-info";
 
             const type = this.notification.type as SettingsNotificationType;
-            // tslint:disable-next-line:no-console
-            console.log(type);
             switch (type) {
                 case SettingsNotificationType.Error:
                     typeClass = "is-danger";
