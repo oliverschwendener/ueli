@@ -35,35 +35,11 @@ const refreshAllIndexes = () => {
         });
 };
 
-const updateConfig = (updatedConfig: UserConfigOptions) => {
-    config = updatedConfig;
-    configRepository.saveConfig(updatedConfig)
-        .then(() => {
-            searchEngine.updateConfig(updatedConfig)
-                .then(() => refreshAllIndexes())
-                .catch((err) =>  logger.error(err));
-        })
-        .catch((err) => logger.error(err));
-};
+let rescanInterval = setInterval(() => refreshAllIndexes(), Number(config.generalOptions.rescanIntervalInSeconds) * 1000);
 
-const rescanInterval = setInterval(() => refreshAllIndexes, config.generalOptions.refreshIntervalInSeconds * 1000);
-
-const getMaxWindowHeight = (): number => {
-    return config.generalOptions.maxSearchResultsPerPage * config.generalOptions.searchResultHeight + config.generalOptions.userInputHeight;
-};
-
-const updateMainWindowSize = (searchResultCount: number) => {
-    mainWindow.setResizable(true);
-    const windowHeight = searchResultCount > config.generalOptions.maxSearchResultsPerPage
-        ? getMaxWindowHeight()
-        : searchResultCount * config.generalOptions.searchResultHeight + config.generalOptions.userInputHeight;
-    mainWindow.setSize(Number(config.generalOptions.windowWidth), Number(windowHeight));
-    mainWindow.setResizable(false);
-};
-
-const registerGlobalKeyboardShortcut = (toggleAction: () => void) => {
+const registerGlobalKeyboardShortcut = (toggleAction: () => void, hotKey: string) => {
     globalShortcut.unregisterAll();
-    globalShortcut.register(config.generalOptions.hotKey, toggleAction);
+    globalShortcut.register(hotKey, toggleAction);
 };
 
 const showMainWindow = () => {
@@ -83,6 +59,39 @@ const toggleMainWindow = () => {
     } else {
         showMainWindow();
     }
+};
+
+const updateConfig = (updatedConfig: UserConfigOptions) => {
+    if (updatedConfig.generalOptions.hotKey !== config.generalOptions.hotKey) {
+        registerGlobalKeyboardShortcut(toggleMainWindow, updatedConfig.generalOptions.hotKey);
+    }
+
+    if (updatedConfig.generalOptions.rescanIntervalInSeconds !== config.generalOptions.rescanIntervalInSeconds) {
+        clearInterval(rescanInterval);
+        rescanInterval = setInterval(() => refreshAllIndexes(), updatedConfig.generalOptions.rescanIntervalInSeconds * 1000);
+    }
+
+    config = updatedConfig;
+    configRepository.saveConfig(updatedConfig)
+        .then(() => {
+            searchEngine.updateConfig(updatedConfig)
+                .then(() => refreshAllIndexes())
+                .catch((err) =>  logger.error(err));
+        })
+        .catch((err) => logger.error(err));
+};
+
+const getMaxWindowHeight = (): number => {
+    return config.appearanceOptions.maxSearchResultsPerPage * config.appearanceOptions.searchResultHeight + config.appearanceOptions.userInputHeight;
+};
+
+const updateMainWindowSize = (searchResultCount: number) => {
+    mainWindow.setResizable(true);
+    const windowHeight = searchResultCount > config.appearanceOptions.maxSearchResultsPerPage
+        ? getMaxWindowHeight()
+        : searchResultCount * config.appearanceOptions.searchResultHeight + config.appearanceOptions.userInputHeight;
+    mainWindow.setSize(Number(config.appearanceOptions.windowWidth), Number(windowHeight));
+    mainWindow.setResizable(false);
 };
 
 const reloadApp = () => {
@@ -106,14 +115,14 @@ const startApp = () => {
         show: false,
         skipTaskbar: true,
         transparent: true,
-        width: config.generalOptions.windowWidth,
+        width: config.appearanceOptions.windowWidth,
     });
     mainWindow.on("blur", hideMainWindow);
     mainWindow.on("closed", quitApp);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
 
     updateMainWindowSize(0);
-    registerGlobalKeyboardShortcut(toggleMainWindow);
+    registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
 };
 
 app.on("ready", () => {

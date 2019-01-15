@@ -36,7 +36,7 @@ export const settingsComponent = Vue.extend({
                 visible: false,
             },
             settingMenuItems: [
-                { name: "Appearance", slug: "appearance" },
+                { name: "General Options", slug: "general-options" },
                 { name: "Search Engine", slug: "search-engine" },
                 { name: "Application Search", slug: "application-search" },
                 { name: "File & Folder Search", slug: "file-and-folder-search" },
@@ -103,7 +103,7 @@ export const settingsComponent = Vue.extend({
                 {{ notification.message }}
             </div>
             <div class="settings__setting">
-                <appearance-settings :config="config"></appearance-settings>
+                <general-options :config="config"></general-options>
                 <search-engine-settings :config="config"></search-engine-settings>
                 <application-search-settings :config="config"></application-search-settings>
             </div>

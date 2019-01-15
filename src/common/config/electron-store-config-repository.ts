@@ -17,7 +17,7 @@ export class ElectronStoreConfigRepository implements ConfigRepository {
     }
 
     public getConfig(): UserConfigOptions {
-        const userOptions = this.store.get(this.configStoreKey);
+        const userOptions: UserConfigOptions = this.store.get(this.configStoreKey);
         return Object.assign(this.defaultOptions, userOptions);
     }
 
