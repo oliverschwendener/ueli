@@ -7,6 +7,7 @@ import { UserConfigOptions } from "../common/config/user-config-options";
 import { ConsoleLogger } from "../common/logger/console-logger";
 import { ElectronStoreConfigRepository } from "../common/config/electron-store-config-repository";
 import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
+import { AppearanceOptions } from "../common/config/appearance-options";
 
 const logger = new ConsoleLogger();
 const configRepository = new ElectronStoreConfigRepository(defaultUserConfigOptions);
@@ -61,6 +62,10 @@ const toggleMainWindow = () => {
     }
 };
 
+const getMaxWindowHeight = (maxSearchResultsPerPage: number, searchResultHeight: number, userInputHeight: number): number => {
+    return Number(maxSearchResultsPerPage) * Number(searchResultHeight) + Number(userInputHeight);
+};
+
 const updateConfig = (updatedConfig: UserConfigOptions) => {
     if (updatedConfig.generalOptions.hotKey !== config.generalOptions.hotKey) {
         registerGlobalKeyboardShortcut(toggleMainWindow, updatedConfig.generalOptions.hotKey);
@@ -69,6 +74,17 @@ const updateConfig = (updatedConfig: UserConfigOptions) => {
     if (updatedConfig.generalOptions.rescanIntervalInSeconds !== config.generalOptions.rescanIntervalInSeconds) {
         clearInterval(rescanInterval);
         rescanInterval = setInterval(() => refreshAllIndexes(), updatedConfig.generalOptions.rescanIntervalInSeconds * 1000);
+    }
+
+    if (updatedConfig.appearanceOptions.windowWidth !== config.appearanceOptions.windowWidth) {
+        mainWindow.setResizable(true);
+        mainWindow.setSize(Number(updatedConfig.appearanceOptions.windowWidth), getMaxWindowHeight(
+            updatedConfig.appearanceOptions.maxSearchResultsPerPage,
+            updatedConfig.appearanceOptions.searchResultHeight,
+            updatedConfig.appearanceOptions.userInputHeight));
+        updateMainWindowSize(0, updatedConfig.appearanceOptions);
+        mainWindow.center();
+        mainWindow.setResizable(false);
     }
 
     config = updatedConfig;
@@ -81,21 +97,17 @@ const updateConfig = (updatedConfig: UserConfigOptions) => {
         .catch((err) => logger.error(err));
 };
 
-const getMaxWindowHeight = (): number => {
-    return config.appearanceOptions.maxSearchResultsPerPage * config.appearanceOptions.searchResultHeight + config.appearanceOptions.userInputHeight;
-};
-
-const updateMainWindowSize = (searchResultCount: number) => {
+const updateMainWindowSize = (searchResultCount: number, appearanceOptions: AppearanceOptions) => {
     mainWindow.setResizable(true);
-    const windowHeight = searchResultCount > config.appearanceOptions.maxSearchResultsPerPage
-        ? getMaxWindowHeight()
-        : searchResultCount * config.appearanceOptions.searchResultHeight + config.appearanceOptions.userInputHeight;
-    mainWindow.setSize(Number(config.appearanceOptions.windowWidth), Number(windowHeight));
+    const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
+        ? getMaxWindowHeight(appearanceOptions.maxSearchResultsPerPage, appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight)
+        : searchResultCount * appearanceOptions.searchResultHeight + appearanceOptions.userInputHeight;
+    mainWindow.setSize(Number(appearanceOptions.windowWidth), Number(windowHeight));
     mainWindow.setResizable(false);
 };
 
 const reloadApp = () => {
-    updateMainWindowSize(0);
+    updateMainWindowSize(0, config.appearanceOptions);
     searchEngine = getProductionSearchEngine(config);
     mainWindow.reload();
 };
@@ -110,7 +122,7 @@ const startApp = () => {
     mainWindow = new BrowserWindow({
         center: true,
         frame: false,
-        height: getMaxWindowHeight(),
+        height: getMaxWindowHeight(config.appearanceOptions.maxSearchResultsPerPage, config.appearanceOptions.searchResultHeight, config.appearanceOptions.userInputHeight),
         resizable: false,
         show: false,
         skipTaskbar: true,
@@ -121,7 +133,7 @@ const startApp = () => {
     mainWindow.on("closed", quitApp);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
 
-    updateMainWindowSize(0);
+    updateMainWindowSize(0, config.appearanceOptions);
     registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
 };
 
@@ -145,7 +157,7 @@ ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: Use
 ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {
     searchEngine.getSearchResults(userInput)
         .then((result) => {
-            updateMainWindowSize(result.length);
+            updateMainWindowSize(result.length, config.appearanceOptions);
             event.sender.send(IpcChannels.searchResponse, result);
         })
         .catch((err) => logger.error(err));

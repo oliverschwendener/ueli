@@ -4,9 +4,10 @@ import { VueEventChannels } from "./vue-event-channels";
 import { SettingsNotificationType } from "./settings-notification-type";
 import { ipcRenderer } from "electron";
 import { IpcChannels } from "../common/ipc-channels";
+import { Settings } from "./settings";
 
 const autoHideErrorMessageDelayInMilliseconds = 5000;
-let autoHideErrorMessageTimeout: NodeJS.Timeout;
+let autoHideErrorMessageTimeout: number;
 
 export const settingsComponent = Vue.extend({
     computed: {
@@ -35,23 +36,7 @@ export const settingsComponent = Vue.extend({
                 type: undefined,
                 visible: false,
             },
-            settingMenuItems: [
-                { name: "General Options", slug: "general-options" },
-                { name: "Search Engine", slug: "search-engine" },
-                { name: "Application Search", slug: "application-search" },
-                { name: "File & Folder Search", slug: "file-and-folder-search" },
-                { name: "URL", slug: "url" },
-                { name: "E-Mail", slug: "email" },
-                { name: "Web search engines", slug: "web-search-engines" },
-                { name: "Operating System Settings", slug: "operating-system-settings" },
-                { name: "Operating System Commands", slug: "operating-system-commands" },
-                { name: "Commandline Tools", slug: "commandline-tools" },
-                { name: "Filebrowser", slug: "filebrowser" },
-                { name: "Calculator", slug: "calculator" },
-                { name: "Shortcuts", slug: "shortcuts" },
-                { name: "Custom Commands", slug: "custom-commands" },
-                { name: "Environment Variables", slug: "environment-variables" },
-            ],
+            settingMenuItems: Object.values(Settings).sort(),
         };
     },
     methods: {
@@ -69,14 +54,14 @@ export const settingsComponent = Vue.extend({
                 visible: true,
             };
 
-            autoHideErrorMessageTimeout = setTimeout(() => {
+            autoHideErrorMessageTimeout = Number(setTimeout(() => {
                 this.removeNotification();
-            }, autoHideErrorMessageDelayInMilliseconds);
+            }, autoHideErrorMessageDelayInMilliseconds));
         },
     },
     props: ["config"],
     mounted() {
-        vueEventDispatcher.$emit(VueEventChannels.showSetting, this.settingMenuItems[0].slug);
+        vueEventDispatcher.$emit(VueEventChannels.showSetting, this.settingMenuItems[0]);
 
         vueEventDispatcher.$on(VueEventChannels.pushNotification, (message: string, type: SettingsNotificationType) => {
             this.showNotification(message, type);
@@ -92,7 +77,7 @@ export const settingsComponent = Vue.extend({
             <settings-loading-overlay></settings-loading-overlay>
             <div class="settings__sidebar menu">
                 <ul class="menu-list">
-                    <setting-menu-item v-for="settingMenuItem in settingMenuItems" :name="settingMenuItem.name" :slug="settingMenuItem.slug"></setting-menu-item>
+                    <setting-menu-item v-for="settingMenuItem in settingMenuItems" :name="settingMenuItem"></setting-menu-item>
                 </ul>
             </div>
             <div
@@ -103,7 +88,8 @@ export const settingsComponent = Vue.extend({
                 {{ notification.message }}
             </div>
             <div class="settings__setting">
-                <general-options :config="config"></general-options>
+                <general-settings :config="config"></general-settings>
+                <appearance-settings :config="config"></appearance-settings>
                 <search-engine-settings :config="config"></search-engine-settings>
                 <application-search-settings :config="config"></application-search-settings>
             </div>

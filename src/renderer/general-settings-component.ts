@@ -4,11 +4,12 @@ import { VueEventChannels } from "./vue-event-channels";
 import { UserConfigOptions } from "../common/config/user-config-options";
 import { cloneDeep } from "lodash";
 import { defaultGeneralOptions } from "../common/config/default-general-options";
+import { Settings } from "./settings";
 
 export const generalOptionsComponent = Vue.extend({
     data() {
         return {
-            settingName: "general-options",
+            settingName: Settings.General,
             visible: false,
         };
     },

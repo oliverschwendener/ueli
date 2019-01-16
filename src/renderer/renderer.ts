@@ -8,20 +8,22 @@ import { IpcChannels } from "../common/ipc-channels";
 import { SearchResultItem } from "../common/search-result-item";
 import { settingsComponent } from "./settings-component";
 import { UserConfigOptions } from "../common/config/user-config-options";
-import { applicationSearchOptionsComponent } from "./application-search-options-component";
+import { applicationSearchSettingsComponent as applicationSearchSettingsComponent } from "./application-search-options-component";
 import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
 import { ElectronStoreConfigRepository } from "../common/config/electron-store-config-repository";
 import { searchEngineSettingsComponent } from "./search-engine-settings-component";
 import { settingMenuItemComponent } from "./setting-menu-item-component";
 import { settingsLoadingOverlayComponent } from "./settings-loading-overlay-component";
-import { generalOptionsComponent } from "./general-options-component";
+import { generalOptionsComponent as generalSettingsComponent } from "./general-settings-component";
+import { appearanceSettingsComponent } from "./appearance-settings-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
 Vue.component("settings", settingsComponent);
-Vue.component("general-options", generalOptionsComponent);
+Vue.component("general-settings", generalSettingsComponent);
+Vue.component("appearance-settings", appearanceSettingsComponent);
 Vue.component("search-engine-settings", searchEngineSettingsComponent);
-Vue.component("application-search-settings", applicationSearchOptionsComponent);
+Vue.component("application-search-settings", applicationSearchSettingsComponent);
 Vue.component("setting-menu-item", settingMenuItemComponent);
 Vue.component("settings-loading-overlay", settingsLoadingOverlayComponent);
 

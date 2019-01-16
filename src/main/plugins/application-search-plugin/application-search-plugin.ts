@@ -21,7 +21,10 @@ export class ApplicationSearchPlugin implements SearchPlugin {
 
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            this.applicationRepository.getAll()
+            if (!this.isEnabled()) {
+                resolve();
+            } else {
+                this.applicationRepository.getAll()
                 .then((applications) => {
                     const searchResultItemPromises = applications.map((application) => this.createSearchResultItemFromApplication(application));
                     Promise.all(searchResultItemPromises)
@@ -29,6 +32,7 @@ export class ApplicationSearchPlugin implements SearchPlugin {
                         .catch((err) => reject(err));
                 })
                 .catch((err) => reject(err));
+            }
         });
     }
 
@@ -42,9 +46,13 @@ export class ApplicationSearchPlugin implements SearchPlugin {
 
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.applicationRepository.refreshIndex()
-                .then(() => resolve())
-                .catch((err) => reject(err));
+            if (!this.isEnabled()) {
+                resolve();
+            } else {
+                this.applicationRepository.refreshIndex()
+                    .then(() => resolve())
+                    .catch((err) => reject(err));
+            }
         });
     }
 

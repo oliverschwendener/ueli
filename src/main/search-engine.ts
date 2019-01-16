@@ -46,7 +46,7 @@ export class SearchEngine {
 
                     const fuseResult = fuse.search(userInput) as any[];
                     const filtered = fuseResult.map((item: FuseResult): SearchResultItem => item.item);
-                    const sliced = filtered.slice(0, this.config.appearanceOptions.maxSearchResults);
+                    const sliced = filtered.slice(0, this.config.searchEngineOptions.maxSearchResults);
 
                     resolve(sliced);
                 })

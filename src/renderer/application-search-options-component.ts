@@ -7,14 +7,15 @@ import { FileHelpers } from "../main/helpers/file-helpers";
 import { defaultApplicationSearchOptions } from "../main/plugins/application-search-plugin/default-application-search-plugin-options";
 import { SettingsNotificationType } from "./settings-notification-type";
 import { cloneDeep } from "lodash";
+import { Settings } from "./settings";
 
-export const applicationSearchOptionsComponent = Vue.extend({
+export const applicationSearchSettingsComponent = Vue.extend({
     data() {
         return {
             errorMessage: "",
             newApplicationFileExtension: "",
             newApplicationFolder: "",
-            settingName: "application-search",
+            settingName: Settings.ApplicationSearch,
             visible: false,
         };
     },
@@ -146,7 +147,7 @@ export const applicationSearchOptionsComponent = Vue.extend({
                             <input type="text" class="input" v-model="newApplicationFolder">
                         </div>
                         <div class="column">
-                            <button class="button is-primary" @click="onAddFolderClick">
+                            <button class="button is-success" @click="onAddFolderClick">
                                 <span class="icon">
                                     <i class="fas fa-plus"></i>
                                 </span>
@@ -176,7 +177,7 @@ export const applicationSearchOptionsComponent = Vue.extend({
                             <input type="text" class="input" v-model="newApplicationFileExtension">
                         </div>
                         <div class="column">
-                            <button class="button is-primary" @click="onAddFileExtensionClick">
+                            <button class="button is-success" @click="onAddFileExtensionClick">
                                 <span class="icon">
                                     <i class="fas fa-plus"></i>
                                 </span>
@@ -196,7 +197,7 @@ export const applicationSearchOptionsComponent = Vue.extend({
                                     <input type="text" class="input" v-model="config.applicationSearchOptions.fallbackIconFilePath">
                                 </div>
                                 <div class="control">
-                                    <button class="button is-primary" @click="updateConfig">
+                                    <button class="button is-success" @click="updateConfig">
                                         <span class="icon">
                                             <i class="fas fa-check"></i>
                                         </span>

@@ -10,15 +10,15 @@ export const settingMenuItemComponent = Vue.extend({
     },
     methods: {
         showSetting() {
-            vueEventDispatcher.$emit(VueEventChannels.showSetting, this.slug);
+            vueEventDispatcher.$emit(VueEventChannels.showSetting, this.name);
         },
     },
     mounted() {
-        vueEventDispatcher.$on(VueEventChannels.showSetting, (slug: string) => {
-            this.isActive = this.slug === slug;
+        vueEventDispatcher.$on(VueEventChannels.showSetting, (name: string) => {
+            this.isActive = this.name === name;
         });
     },
-    props: ["slug", "name"],
+    props: ["name"],
     template: `<li @click="showSetting">
         <a :class="{ 'is-active' : isActive }">
             {{ name }}
