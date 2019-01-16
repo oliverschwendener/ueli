@@ -54,12 +54,21 @@ export const searchEngineSettingsComponent = Vue.extend({
         <div class="settings__setting-content">
             <div class="settings__setting-content-item box">
                 <div class="settings__setting-content-item-title">
-                    <div class="title is-5">Fuzzyness: {{ config.searchEngineOptions.fuzzyness }}</div>
+                    <div class="title is-5">Fuzzyness</div>
                     <button class="button" @click="resetFuzzyness"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                 </div>
+                <div class="columns is-vcentered">
+                    <div class="column is-one-fifths">Strict</div>
+                    <div class="column is-three-fifths">
+                        <div class="control is-expanded">
+                            <input class="slider is-fullwidth is-large" type="range" min="0.01" max="1" step="0.01" v-model="config.searchEngineOptions.fuzzyness" @change="updateConfig">
+                        </div>
+                    </div>
+                    <div class="column is-one-fifths has-text-right">Fuzzy</div>
+                </div>
                 <div class="columns">
-                    <div class="column">
-                        <input class="slider is-fullwidth is-large" type="range" min="0.01" max="1" step="0.01" v-model="config.searchEngineOptions.fuzzyness" @change="updateConfig">
+                    <div class="column has-text-centered">
+                        <span class="title is-6 has-text-centered">{{ config.searchEngineOptions.fuzzyness }}</span>
                     </div>
                 </div>
             </div>

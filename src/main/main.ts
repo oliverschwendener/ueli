@@ -8,6 +8,7 @@ import { ConsoleLogger } from "../common/logger/console-logger";
 import { ElectronStoreConfigRepository } from "../common/config/electron-store-config-repository";
 import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
 import { AppearanceOptions } from "../common/config/appearance-options";
+import { isDev } from "../common/is-dev";
 
 const logger = new ConsoleLogger();
 const configRepository = new ElectronStoreConfigRepository(defaultUserConfigOptions);
@@ -184,7 +185,9 @@ ipcMain.on(IpcChannels.openSettingsWindow, () => {
         });
         settingsWindow.setMenu(null);
         settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
-        settingsWindow.webContents.toggleDevTools();
+        if (isDev()) {
+            settingsWindow.webContents.openDevTools();
+        }
     } else {
         settingsWindow.focus();
     }
