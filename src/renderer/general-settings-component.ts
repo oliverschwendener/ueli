@@ -19,6 +19,11 @@ export const generalOptionsComponent = Vue.extend({
             config.generalOptions = cloneDeep(defaultGeneralOptions);
             this.updateConfig();
         },
+        resetAutostart() {
+            const config: UserConfigOptions = this.config;
+            config.generalOptions.autostart = defaultGeneralOptions.autostart;
+            this.updateConfig();
+        },
         resetHotKey() {
             const config: UserConfigOptions = this.config;
             config.generalOptions.hotKey = defaultGeneralOptions.hotKey;
@@ -52,6 +57,23 @@ export const generalOptionsComponent = Vue.extend({
                 </button>
             </div>
             <div class="settings__setting-content">
+                <div class="settings__setting-content-item box">
+                    <div class="settings__setting-content-item-title">
+                        <div class="title is-5">Autostart App</div>
+                        <button class="button" @click="resetAutostart"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                    </div>
+                    <div class="columns">
+                        <div class="column field has-addons">
+                            <div class="control is-expanded">
+                                <input class="is-checkradio" id="autoStartCheckbox" type="checkbox" name="autoStartCheckbox" v-model="config.generalOptions.autostart" @change="updateConfig">
+                                <label for="autoStartCheckbox"></label>
+                                <div class="field">
+                                    <input class="is-checkradio is-block is-success" id="exampleCheckboxBlockSuccess" type="checkbox" name="exampleCheckboxBlockSuccess" checked="checked">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
                         <div class="title is-5">Hot Key</div>

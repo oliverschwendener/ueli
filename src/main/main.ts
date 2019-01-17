@@ -88,6 +88,8 @@ const updateConfig = (updatedConfig: UserConfigOptions) => {
         mainWindow.setResizable(false);
     }
 
+    setAutoStartOptions(updatedConfig);
+
     config = updatedConfig;
     configRepository.saveConfig(updatedConfig)
         .then(() => {
@@ -98,12 +100,15 @@ const updateConfig = (updatedConfig: UserConfigOptions) => {
         .catch((err) => logger.error(err));
 };
 
-const updateMainWindowSize = (searchResultCount: number, appearanceOptions: AppearanceOptions) => {
+const updateMainWindowSize = (searchResultCount: number, appearanceOptions: AppearanceOptions, center?: boolean) => {
     mainWindow.setResizable(true);
     const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
         ? getMaxWindowHeight(appearanceOptions.maxSearchResultsPerPage, appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight)
         : searchResultCount * appearanceOptions.searchResultHeight + appearanceOptions.userInputHeight;
     mainWindow.setSize(Number(appearanceOptions.windowWidth), Number(windowHeight));
+    if (center) {
+        mainWindow.center();
+    }
     mainWindow.setResizable(false);
 };
 
@@ -117,6 +122,16 @@ const quitApp = () => {
     clearInterval(rescanInterval);
     globalShortcut.unregisterAll();
     app.quit();
+};
+
+const setAutoStartOptions = (userConfig: UserConfigOptions) => {
+    if (!isDev()) {
+        app.setLoginItemSettings({
+            args: [],
+            openAtLogin: userConfig.generalOptions.autostart,
+            path: process.execPath,
+        });
+    }
 };
 
 const startApp = () => {
@@ -134,8 +149,9 @@ const startApp = () => {
     mainWindow.on("closed", quitApp);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
 
-    updateMainWindowSize(0, config.appearanceOptions);
+    updateMainWindowSize(0, config.appearanceOptions, true);
     registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
+    setAutoStartOptions(config);
 };
 
 app.on("ready", () => {
