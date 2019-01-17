@@ -10,4 +10,5 @@ export enum IpcChannels {
     configUpdated = "config-updated",
     indexRefreshSucceeded = "index-refresh-succeeded",
     indexRefreshFailed = "index-refresh-failed",
+    appearanceOptionsUpdated = "user-styles-updated",
 }

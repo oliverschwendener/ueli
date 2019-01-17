@@ -9,6 +9,7 @@
 </head>
 <body>
     <div id="app" @keydown="onKeypress">
+        <user-styles :config="config.appearanceOptions"></user-styles>
         <user-input></user-input>
         <search-results></search-results>
     </div>

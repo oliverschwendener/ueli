@@ -16,6 +16,8 @@ import { settingMenuItemComponent } from "./setting-menu-item-component";
 import { settingsLoadingOverlayComponent } from "./settings-loading-overlay-component";
 import { generalOptionsComponent as generalSettingsComponent } from "./general-settings-component";
 import { appearanceSettingsComponent } from "./appearance-settings-component";
+import { userStylesComponent } from "./user-styles-component";
+import { AppearanceOptions } from "../common/config/appearance-options";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -26,6 +28,7 @@ Vue.component("search-engine-settings", searchEngineSettingsComponent);
 Vue.component("application-search-settings", applicationSearchSettingsComponent);
 Vue.component("setting-menu-item", settingMenuItemComponent);
 Vue.component("settings-loading-overlay", settingsLoadingOverlayComponent);
+Vue.component("user-styles", userStylesComponent);
 
 // tslint:disable-next-line:no-unused-expression
 new Vue({
@@ -48,6 +51,10 @@ new Vue({
             this.config = config;
             ipcRenderer.send(IpcChannels.configUpdated, config);
             vueEventDispatcher.$emit(VueEventChannels.loadingStarted);
+        });
+
+        ipcRenderer.on(IpcChannels.appearanceOptionsUpdated, (event: Electron.Event, updatedAppearanceOptions: AppearanceOptions) => {
+            vueEventDispatcher.$emit(VueEventChannels.appearanceOptionsUpdated, updatedAppearanceOptions);
         });
 
         ipcRenderer.on(IpcChannels.searchResponse, (event: Electron.Event, searchResults: SearchResultItem[]) => {

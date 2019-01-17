@@ -13,4 +13,5 @@ export enum VueEventChannels {
     showSetting = "show-setting",
     loadingStarted = "loading-started",
     loadingCompleted = "loading-completed",
+    appearanceOptionsUpdated = "user-styles-udpated",
 }

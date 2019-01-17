@@ -51,6 +51,7 @@ const showMainWindow = () => {
 
 const hideMainWindow = () => {
     setTimeout(() => {
+        updateMainWindowSize(0, config.appearanceOptions);
         mainWindow.hide();
     }, 25);
 };
@@ -88,6 +89,10 @@ const updateConfig = (updatedConfig: UserConfigOptions) => {
         mainWindow.setResizable(false);
     }
 
+    if (JSON.stringify(updatedConfig.appearanceOptions) !== JSON.stringify(config.appearanceOptions)) {
+        mainWindow.webContents.send(IpcChannels.appearanceOptionsUpdated, updatedConfig.appearanceOptions);
+    }
+
     setAutoStartOptions(updatedConfig);
 
     config = updatedConfig;
@@ -104,7 +109,8 @@ const updateMainWindowSize = (searchResultCount: number, appearanceOptions: Appe
     mainWindow.setResizable(true);
     const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
         ? getMaxWindowHeight(appearanceOptions.maxSearchResultsPerPage, appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight)
-        : searchResultCount * appearanceOptions.searchResultHeight + appearanceOptions.userInputHeight;
+        : (Number(searchResultCount) * Number(appearanceOptions.searchResultHeight)) + Number(appearanceOptions.userInputHeight);
+
     mainWindow.setSize(Number(appearanceOptions.windowWidth), Number(windowHeight));
     if (center) {
         mainWindow.center();
