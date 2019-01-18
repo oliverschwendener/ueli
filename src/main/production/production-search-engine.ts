@@ -7,6 +7,7 @@ import { FileApplicationRepository } from "../plugins/application-search-plugin/
 import { SearchPlugin } from "../search-plugin";
 import { ApplicationSearchPlugin } from "../plugins/application-search-plugin/application-search-plugin";
 import { SearchEngine } from "../search-engine";
+import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/ueli-command-search-plugin";
 
 const getApplicationSearchPlugin = (os: string, config: UserConfigOptions) => {
     const executeApplication = os === "win32" ? executeWindowsApp : executeMacApp;
@@ -19,6 +20,7 @@ const getApplicationSearchPlugin = (os: string, config: UserConfigOptions) => {
 export const getProductionSearchEngine = (config: UserConfigOptions): SearchEngine => {
     const plugins: SearchPlugin[] = [
         getApplicationSearchPlugin(platform(), config),
+        new UeliCommandSearchPlugin(),
     ];
 
     return new SearchEngine(plugins, config);

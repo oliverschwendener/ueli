@@ -61,8 +61,8 @@ new Vue({
             vueEventDispatcher.$emit(VueEventChannels.searchResultsUpdated, searchResults);
         });
 
-        ipcRenderer.on(IpcChannels.executionSucceeded, () => {
-            vueEventDispatcher.$emit(VueEventChannels.executionSucceeded);
+        ipcRenderer.on(IpcChannels.mainWindowHasBeenHidden, () => {
+            vueEventDispatcher.$emit(VueEventChannels.mainWindowHasBeenHidden);
         });
 
         ipcRenderer.on(IpcChannels.mainWindowHasBeenShown, () => {

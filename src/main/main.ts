@@ -9,6 +9,8 @@ import { ElectronStoreConfigRepository } from "../common/config/electron-store-c
 import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
 import { AppearanceOptions } from "../common/config/appearance-options";
 import { isDev } from "../common/is-dev";
+import { UeliCommand } from "./plugins/ueli-command-search-plugin/ueli-command";
+import { UeliCommandExecutionArgument } from "./plugins/ueli-command-search-plugin/ueli-command-execution-argument";
 
 const logger = new ConsoleLogger();
 const configRepository = new ElectronStoreConfigRepository(defaultUserConfigOptions);
@@ -50,6 +52,8 @@ const showMainWindow = () => {
 };
 
 const hideMainWindow = () => {
+    mainWindow.webContents.send(IpcChannels.mainWindowHasBeenHidden);
+
     setTimeout(() => {
         updateMainWindowSize(0, config.appearanceOptions);
         mainWindow.hide();
@@ -160,6 +164,22 @@ const startApp = () => {
     setAutoStartOptions(config);
 };
 
+const openSettings = () => {
+    if (!settingsWindow || settingsWindow.isDestroyed()) {
+        settingsWindow = new BrowserWindow({
+            height: 700,
+            width: 850,
+        });
+        settingsWindow.setMenu(null);
+        settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
+        if (isDev()) {
+            settingsWindow.webContents.openDevTools();
+        }
+    } else {
+        settingsWindow.focus();
+    }
+};
+
 app.on("ready", () => {
     const gotSingleInstanceLock = app.requestSingleInstanceLock();
     if (gotSingleInstanceLock) {
@@ -188,10 +208,7 @@ ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {
 
 ipcMain.on(IpcChannels.execute, (event: Electron.Event, searchResultItem: SearchResultItem) => {
     searchEngine.execute(searchResultItem)
-        .then(() => {
-            mainWindow.webContents.send(IpcChannels.executionSucceeded);
-            hideMainWindow();
-        })
+        .then(() => hideMainWindow())
         .catch((err) => logger.error(err));
 });
 
@@ -200,17 +217,25 @@ ipcMain.on(IpcChannels.reloadApp, () => {
 });
 
 ipcMain.on(IpcChannels.openSettingsWindow, () => {
-    if (!settingsWindow || settingsWindow.isDestroyed()) {
-        settingsWindow = new BrowserWindow({
-            height: 700,
-            width: 850,
-        });
-        settingsWindow.setMenu(null);
-        settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
-        if (isDev()) {
-            settingsWindow.webContents.openDevTools();
-        }
-    } else {
-        settingsWindow.focus();
+    openSettings();
+});
+
+ipcMain.on(IpcChannels.ueliCommandExecuted, (command: UeliCommand) => {
+    switch (command.executionArgument) {
+        case UeliCommandExecutionArgument.Exit:
+            quitApp();
+            break;
+        case UeliCommandExecutionArgument.Reload:
+            reloadApp();
+            break;
+        case UeliCommandExecutionArgument.EditConfigFile:
+            configRepository.openConfigFile();
+            break;
+        case UeliCommandExecutionArgument.OpenSettings:
+            openSettings();
+            break;
+        default:
+            logger.error("Unhandled ueli command execution");
+            break;
     }
 });

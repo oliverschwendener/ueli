@@ -2,7 +2,7 @@ export enum IpcChannels {
     search = "search",
     searchResponse = "search-response",
     execute = "execute",
-    executionSucceeded = "executed-succeeded",
+    mainWindowHasBeenHidden = "main-window-has-been-hidden",
     mainWindowHasBeenShown = "main-window-has-been-shown",
     userInputHasBeenResetAndMainWindowCanBeHidden = "user-input-has-been-reset-and-main-window-can-be-hidden",
     reloadApp = "reload-app",
@@ -11,4 +11,5 @@ export enum IpcChannels {
     indexRefreshSucceeded = "index-refresh-succeeded",
     indexRefreshFailed = "index-refresh-failed",
     appearanceOptionsUpdated = "user-styles-updated",
+    ueliCommandExecuted = "ueli-command-executed",
 }

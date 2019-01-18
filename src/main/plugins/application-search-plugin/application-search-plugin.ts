@@ -6,6 +6,7 @@ import { Application } from "./application";
 import { dirname, basename } from "path";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { ApplicationSearchOptions } from "./application-search-options";
+import { IconType } from "../../../common/icon-type";
 
 export class ApplicationSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.ApplicationSearchPlugin;
@@ -82,7 +83,10 @@ export class ApplicationSearchPlugin implements SearchPlugin {
             resolve({
                 description: this.createApplicationDescription(application),
                 executionArgument: application.filePath,
-                icon: application.icon,
+                icon: {
+                    parameter: application.icon,
+                    type: IconType.URL,
+                },
                 name: application.name,
                 originPluginType: this.pluginType,
             });

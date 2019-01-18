@@ -71,6 +71,11 @@ export const settingsComponent = Vue.extend({
             this.showNotification(message, SettingsNotificationType.Info);
             vueEventDispatcher.$emit(VueEventChannels.loadingCompleted);
         });
+
+        ipcRenderer.on(IpcChannels.indexRefreshFailed, (event: Electron.Event, message: string) => {
+            this.showNotification(message, SettingsNotificationType.Error);
+            vueEventDispatcher.$emit(VueEventChannels.loadingCompleted);
+        });
     },
     template: `
         <div class="settings container">

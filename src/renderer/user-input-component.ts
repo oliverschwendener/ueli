@@ -44,7 +44,7 @@ export const userInputComponent = Vue.extend({
     mounted() {
         this.setFocusOnInput();
 
-        vueEventDispatcher.$on(VueEventChannels.executionSucceeded, () => {
+        vueEventDispatcher.$on(VueEventChannels.mainWindowHasBeenHidden, () => {
             this.resetUserInput();
         });
 

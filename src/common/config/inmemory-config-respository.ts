@@ -18,4 +18,8 @@ export class InMemoryConfigRepository implements ConfigRepository {
             resolve();
         });
     }
+
+    public openConfigFile() {
+        throw new Error("Not implemented");
+    }
 }

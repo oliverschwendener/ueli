@@ -28,6 +28,10 @@ export class ElectronStoreConfigRepository implements ConfigRepository {
         });
     }
 
+    public openConfigFile() {
+        this.store.openInEditor();
+    }
+
     private setDefaultConfig() {
         this.saveConfig(this.defaultOptions);
     }

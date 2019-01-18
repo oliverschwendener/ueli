@@ -1,6 +1,6 @@
 export enum VueEventChannels {
     enterPress = "enter-press",
-    executionSucceeded = "execution-succeeded",
+    mainWindowHasBeenHidden = "execution-succeeded",
     handleExecution = "handle-execution",
     mainWindowHasBeenShown = "main-window-has-been-shown",
     userInputChange = "my-event",

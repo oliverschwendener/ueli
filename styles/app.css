@@ -14,13 +14,14 @@
     --search-results--item-active-text-color: #fff;
     --search-results--item-name-text-color: #aab2c0;
     --search-results--item-name-font-weight: 400;
-    --search-result--item-name-padding: 0 0 2px;
+    --search-results--item-name-padding: 0 0 2px;
     --search-results--item-description-text-color: #ccc;
     --search-results--item-descriptioin-font-size: 12px;
     --search-results--item-description-font-weight: 200;
     --search-results--item-height: 50px;
     --search-results--item-side-padding: 15px;
     --search-results--item-icon-size: 30px;
+    --search-results--item-icon-color: #fff;
     --search-results--item-info-container-padding: 10px;
 
     --scrollbar--size: 8px;
@@ -98,9 +99,13 @@ body {
     position: relative;
 }
 
-.search-results__item-icon {
+.search-results__item-icon--url {
     max-width: 100%;
     max-height: 100%;
+}
+
+.search-results__item-icon--svg {
+    fill: var(--search-results--item-icon-color);
 }
 
 .search-results__item-icon-overlay {
@@ -139,7 +144,7 @@ body {
     color: var(--search-results--item-name-text-color);
     transition: all var(--transition-speed) ease-in-out;
     font-weight: var(--search-results--item-name-font-weight);
-    padding: var(--search-result--item-name-padding);
+    padding: var(--search-results--item-name-padding);
 }
 
 .search-results__item-name.active {
