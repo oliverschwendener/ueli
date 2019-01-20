@@ -23,7 +23,11 @@ let searchEngine = getProductionSearchEngine(config);
 
 const notifyRenderer = (ipcChannel: IpcChannels, message?: string) => {
     const allWindows = [mainWindow, settingsWindow];
-    allWindows.forEach((window) => window.webContents.send(ipcChannel, message));
+    allWindows.forEach((window) => {
+        if (window !== undefined && !window.isDestroyed()) {
+            window.webContents.send(ipcChannel, message);
+        }
+    });
 };
 
 const refreshAllIndexes = () => {
@@ -159,7 +163,7 @@ const startApp = () => {
     mainWindow.on("closed", quitApp);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
 
-    updateMainWindowSize(0, config.appearanceOptions, true);
+    updateMainWindowSize(0, config.appearanceOptions);
     registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
     setAutoStartOptions(config);
 };
