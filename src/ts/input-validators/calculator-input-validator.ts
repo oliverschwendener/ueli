@@ -2,6 +2,8 @@ import * as math from "mathjs";
 import { InputValidator } from "./input-validator";
 import { CalculatorHelper } from "../helpers/calculator-helper";
 
+math.config({ number: "BigNumber" });
+
 export class CalculatorInputValidator implements InputValidator {
     public isValidForSearchResults(userInput: string): boolean {
         if (CalculatorHelper.getBlackListInputs().find((b) => userInput === b) !== undefined) {

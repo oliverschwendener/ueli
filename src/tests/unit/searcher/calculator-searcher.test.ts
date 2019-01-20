@@ -24,6 +24,13 @@ describe(CalculatorSearcher.name, (): void => {
                         name: "= true",
                     } as SearchResultItem,
                 },
+                {
+                    input: "1.1 - 1",
+                    output: {
+                        executionArgument: CalculatorHelper.getExecutionArgument("0.1"),
+                        name: "= 0.1",
+                    } as SearchResultItem,
+                },
             ];
 
             for (const combination of combinations) {

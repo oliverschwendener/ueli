@@ -4,6 +4,8 @@ import { CalculatorHelper } from "../helpers/calculator-helper";
 import * as math from "mathjs";
 import { IconSet } from "../icon-sets/icon-set";
 
+math.config({ number: "BigNumber" });
+
 export class CalculatorSearcher implements Searcher {
     public readonly blockOthers = false;
 
