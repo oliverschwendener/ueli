@@ -47,9 +47,9 @@ new Vue({
             }
         });
 
-        vueEventDispatcher.$on(VueEventChannels.configUpdated, (config: UserConfigOptions) => {
+        vueEventDispatcher.$on(VueEventChannels.configUpdated, (config: UserConfigOptions, needsIndexRefresh: boolean) => {
             this.config = config;
-            ipcRenderer.send(IpcChannels.configUpdated, config);
+            ipcRenderer.send(IpcChannels.configUpdated, config, needsIndexRefresh);
             vueEventDispatcher.$emit(VueEventChannels.loadingStarted);
         });
 

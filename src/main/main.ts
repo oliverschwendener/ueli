@@ -79,7 +79,7 @@ const getMaxWindowHeight = (maxSearchResultsPerPage: number, searchResultHeight:
     return Number(maxSearchResultsPerPage) * Number(searchResultHeight) + Number(userInputHeight);
 };
 
-const updateConfig = (updatedConfig: UserConfigOptions) => {
+const updateConfig = (updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) => {
     if (updatedConfig.generalOptions.hotKey !== config.generalOptions.hotKey) {
         registerGlobalKeyboardShortcut(toggleMainWindow, updatedConfig.generalOptions.hotKey);
     }
@@ -110,7 +110,13 @@ const updateConfig = (updatedConfig: UserConfigOptions) => {
     configRepository.saveConfig(updatedConfig)
         .then(() => {
             searchEngine.updateConfig(updatedConfig)
-                .then(() => refreshAllIndexes())
+                .then(() => {
+                    if (needsIndexRefresh) {
+                        refreshAllIndexes();
+                    } else {
+                        notifyRenderer(IpcChannels.indexRefreshSucceeded, "Sucessfully updated config");
+                    }
+                })
                 .catch((err) =>  logger.error(err));
         })
         .catch((err) => logger.error(err));
@@ -201,8 +207,8 @@ app.on("ready", () => {
 app.on("window-all-closed", quitApp);
 app.on("quit", app.quit);
 
-ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: UserConfigOptions) => {
-    updateConfig(updatedConfig);
+ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) => {
+    updateConfig(updatedConfig, needsIndexRefresh);
 });
 
 ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {

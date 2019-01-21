@@ -24,13 +24,13 @@ export const applicationSearchSettingsComponent = Vue.extend({
             const config: UserConfigOptions = this.config;
             config.applicationSearchOptions.applicationFileExtensions.push(this.newApplicationFileExtension);
             this.newApplicationFileExtension = "";
-            this.updateConfig();
+            this.updateConfig(true);
         },
         addApplicationFolder() {
             const config: UserConfigOptions = this.config;
             config.applicationSearchOptions.applicationFolders.push(this.newApplicationFolder);
             this.newApplicationFolder = "";
-            this.updateConfig();
+            this.updateConfig(true);
         },
         onAddFileExtensionClick() {
             if (!this.newApplicationFileExtension.startsWith(".")) {
@@ -58,42 +58,42 @@ export const applicationSearchSettingsComponent = Vue.extend({
         toggleEnabled() {
             const config: UserConfigOptions = this.config;
             config.applicationSearchOptions.enabled = !config.applicationSearchOptions.enabled;
-            this.updateConfig();
+            this.updateConfig(true);
         },
         removeApplicationFileExtension(applicationFileExtension: string) {
             const config: UserConfigOptions = this.config;
             const indexToRemove = config.applicationSearchOptions.applicationFileExtensions.indexOf(applicationFileExtension);
             config.applicationSearchOptions.applicationFileExtensions.splice(indexToRemove, 1);
-            this.updateConfig();
+            this.updateConfig(true);
         },
         removeApplicationFolder(applicationFolder: string) {
             const config: UserConfigOptions = this.config;
             const indexToRemove = config.applicationSearchOptions.applicationFolders.indexOf(applicationFolder);
             config.applicationSearchOptions.applicationFolders.splice(indexToRemove, 1);
-            this.updateConfig();
+            this.updateConfig(true);
         },
         resetApplicationFoldersToDefault() {
             const config: UserConfigOptions = this.config;
             config.applicationSearchOptions.applicationFolders = cloneDeep(defaultApplicationSearchOptions.applicationFolders);
-            this.updateConfig();
+            this.updateConfig(true);
         },
         resetApplicationFileExtensionsToDefault() {
             const config: UserConfigOptions = this.config;
             config.applicationSearchOptions.applicationFileExtensions = cloneDeep(defaultApplicationSearchOptions.applicationFileExtensions);
-            this.updateConfig();
+            this.updateConfig(true);
         },
         resetApplicationSearchOptionsToDefault() {
             const config: UserConfigOptions = this.config;
             config.applicationSearchOptions = cloneDeep(defaultApplicationSearchOptions);
-            this.updateConfig();
+            this.updateConfig(true);
         },
         resetFallbackIconFilePathToDefault() {
             const config: UserConfigOptions = this.config;
             config.applicationSearchOptions.fallbackIconFilePath = defaultApplicationSearchOptions.fallbackIconFilePath;
-            this.updateConfig();
+            this.updateConfig(true);
         },
-        updateConfig() {
-            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
+        updateConfig(needsIndexRefresh: boolean) {
+            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, needsIndexRefresh);
         },
         handleError(message: string) {
             vueEventDispatcher.$emit(VueEventChannels.pushNotification, message, SettingsNotificationType.Error);
