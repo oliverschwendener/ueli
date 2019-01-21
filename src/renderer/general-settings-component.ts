@@ -6,7 +6,7 @@ import { cloneDeep } from "lodash";
 import { defaultGeneralOptions } from "../common/config/default-general-options";
 import { Settings } from "./settings";
 
-export const generalOptionsComponent = Vue.extend({
+export const generalSettingsComponent = Vue.extend({
     data() {
         return {
             settingName: Settings.General,
