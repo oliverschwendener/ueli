@@ -307,6 +307,9 @@ For better search results ueli is keeping track of the applications, files and f
 ## Known bugs
 
 * ([#37](https://github.com/oliverschwendener/ueli/issues/37)) Window starts to move while typing when custom scaling in Windows is set.
+* ([#92](https://github.com/oliverschwendener/ueli/issues/92)) If you see an error that says `spawn powershell.exe ENOENT` check if powershell is installed (should be installed in all recent Versions of Windows by default) and check if powershell is in the PATH variable.
+
+
 
 ## Development
 
