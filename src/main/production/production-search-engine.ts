@@ -1,27 +1,39 @@
-import { UserConfigOptions } from "../../common/config/user-config-options";
-import { platform } from "os";
-import { executeWindowsApp, executeMacApp } from "../plugins/application-search-plugin/application-execution";
-import { getWindowsAppIcons, getMacAppIcons } from "../plugins/application-search-plugin/application-icon-helpers";
-import { ApplicationIconService } from "../plugins/application-search-plugin/application-icon-service";
-import { FileApplicationRepository } from "../plugins/application-search-plugin/file-application-repository";
+import { SearchEngine } from "../search-engine";
 import { SearchPlugin } from "../search-plugin";
 import { ApplicationSearchPlugin } from "../plugins/application-search-plugin/application-search-plugin";
-import { SearchEngine } from "../search-engine";
+import { UserConfigOptions } from "../../common/config/user-config-options";
+import { FileApplicationRepository } from "../plugins/application-search-plugin/file-application-repository";
+import { ApplicationIconService } from "../plugins/application-search-plugin/application-icon-service";
+import { getMacAppIcons, getWindowsAppIcons } from "../plugins/application-search-plugin/application-icon-helpers";
+import { executeMacApp, executeWindowsApp } from "../plugins/application-search-plugin/application-execution";
 import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/ueli-command-search-plugin";
 
-const getApplicationSearchPlugin = (os: string, config: UserConfigOptions) => {
-    const executeApplication = os === "win32" ? executeWindowsApp : executeMacApp;
-    const getAppIcons = os === "win32" ? getWindowsAppIcons : getMacAppIcons;
-    const applicationIconService = new ApplicationIconService(getAppIcons);
-    const applicationFileRepository = new FileApplicationRepository(applicationIconService, config.applicationSearchOptions);
-    return new ApplicationSearchPlugin(config.applicationSearchOptions, applicationFileRepository, executeApplication);
+const commonProductionSearchPlugins: SearchPlugin[] = [
+    new UeliCommandSearchPlugin(),
+];
+
+export const getMacOsProductionSearchEngine = (userConfig: UserConfigOptions): SearchEngine => {
+    const plugins: SearchPlugin[] = [
+        new ApplicationSearchPlugin(
+            userConfig.applicationSearchOptions,
+            new FileApplicationRepository(
+                new ApplicationIconService(getMacAppIcons),
+                userConfig.applicationSearchOptions,
+            ),
+            executeMacApp),
+    ];
+    return new SearchEngine(plugins.concat(commonProductionSearchPlugins), userConfig);
 };
 
-export const getProductionSearchEngine = (config: UserConfigOptions): SearchEngine => {
+export const getWindowsProductionSearchEngine = (userConfig: UserConfigOptions): SearchEngine => {
     const plugins: SearchPlugin[] = [
-        getApplicationSearchPlugin(platform(), config),
-        new UeliCommandSearchPlugin(),
+        new ApplicationSearchPlugin(
+            userConfig.applicationSearchOptions,
+            new FileApplicationRepository(
+                new ApplicationIconService(getWindowsAppIcons),
+                userConfig.applicationSearchOptions,
+            ),
+            executeWindowsApp),
     ];
-
-    return new SearchEngine(plugins, config);
+    return new SearchEngine(plugins.concat(commonProductionSearchPlugins), userConfig);
 };

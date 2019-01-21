@@ -2,7 +2,7 @@ import { app, BrowserWindow, ipcMain, globalShortcut } from "electron";
 import { join } from "path";
 import { IpcChannels } from "../common/ipc-channels";
 import { SearchResultItem } from "../common/search-result-item";
-import { getProductionSearchEngine } from "./production/production-search-engine";
+import { getMacOsProductionSearchEngine, getWindowsProductionSearchEngine } from "./production/production-search-engine";
 import { UserConfigOptions } from "../common/config/user-config-options";
 import { ConsoleLogger } from "../common/logger/console-logger";
 import { ElectronStoreConfigRepository } from "../common/config/electron-store-config-repository";
@@ -11,15 +11,18 @@ import { AppearanceOptions } from "../common/config/appearance-options";
 import { isDev } from "../common/is-dev";
 import { UeliCommand } from "./plugins/ueli-command-search-plugin/ueli-command";
 import { UeliCommandExecutionArgument } from "./plugins/ueli-command-search-plugin/ueli-command-execution-argument";
+import { platform } from "os";
+import { OperatingSystem } from "../common/operating-system";
 
 const logger = new ConsoleLogger();
 const configRepository = new ElectronStoreConfigRepository(defaultUserConfigOptions);
+const currentOperatingSystem = platform() === "darwin" ? OperatingSystem.macOS : OperatingSystem.Windows;
 
 let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow;
 
 let config = configRepository.getConfig();
-let searchEngine = getProductionSearchEngine(config);
+let searchEngine = currentOperatingSystem === OperatingSystem.macOS ? getMacOsProductionSearchEngine(config) : getWindowsProductionSearchEngine(config);
 
 const notifyRenderer = (ipcChannel: IpcChannels, message?: string) => {
     const allWindows = [mainWindow, settingsWindow];
@@ -128,7 +131,7 @@ const updateMainWindowSize = (searchResultCount: number, appearanceOptions: Appe
 
 const reloadApp = () => {
     updateMainWindowSize(0, config.appearanceOptions);
-    searchEngine = getProductionSearchEngine(config);
+    searchEngine = currentOperatingSystem === OperatingSystem.macOS ? getMacOsProductionSearchEngine(config) : getWindowsProductionSearchEngine(config);
     mainWindow.reload();
 };
 
@@ -163,7 +166,8 @@ const startApp = () => {
     mainWindow.on("closed", quitApp);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
 
-    updateMainWindowSize(0, config.appearanceOptions);
+    const recenter = currentOperatingSystem === OperatingSystem.macOS;
+    updateMainWindowSize(0, config.appearanceOptions, recenter);
     registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
     setAutoStartOptions(config);
 };
