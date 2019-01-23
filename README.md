@@ -184,6 +184,7 @@ To open the settings press <kbd>Ctrl</kbd> <kbd>i</kbd> or search for `ueli sett
 * `applicationFileExtensions` Array of string - Represents the file extensions which are used to find applications in the specified folders.
 * `applicationFolders` Array of string - Represents the folders which are scanned for applications.
 * `autoStartApp` Boolean - If the app should be started automatically when you log in.
+* `calculatorPrecision` Number - Defines the calculator's precision of decimal numbers. Minimum is `0` and maximum is `64`.
 * `colorTheme` String - Defines the [color theme](#color-themes).
 * `customCommands` Array of customCommand objects - A list of [custom commands](#custom-commands)
     * `name` String - Represents the displayed name of the custom command.
