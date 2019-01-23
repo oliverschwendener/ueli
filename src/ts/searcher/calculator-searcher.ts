@@ -1,10 +1,8 @@
 import { SearchResultItem } from "../search-result-item";
 import { Searcher } from "./searcher";
 import { CalculatorHelper } from "../helpers/calculator-helper";
-import * as math from "mathjs";
 import { IconSet } from "../icon-sets/icon-set";
-
-math.config({ number: "BigNumber" });
+import { Calculator } from "../calculator/calculator";
 
 export class CalculatorSearcher implements Searcher {
     public readonly blockOthers = false;
@@ -16,7 +14,7 @@ export class CalculatorSearcher implements Searcher {
     }
 
     public getSearchResult(userInput: string): SearchResultItem[] {
-        const result = math.eval(userInput);
+        const result = Calculator.calculate(userInput);
 
         return [
             {
