@@ -6,15 +6,16 @@ import { Calculator } from "../calculator/calculator";
 
 export class CalculatorSearcher implements Searcher {
     public readonly blockOthers = false;
-
     private readonly iconSet: IconSet;
+    private readonly precision: number;
 
-    constructor(iconSet: IconSet) {
+    constructor(iconSet: IconSet, precision: number) {
         this.iconSet = iconSet;
+        this.precision = precision;
     }
 
     public getSearchResult(userInput: string): SearchResultItem[] {
-        const result = Calculator.calculate(userInput);
+        const result = Calculator.calculate(userInput, this.precision);
 
         return [
             {

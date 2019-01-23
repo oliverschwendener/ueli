@@ -1,10 +1,6 @@
 import * as mathjs from "mathjs";
 import { CalculatorHelper } from "../helpers/calculator-helper";
 
-mathjs.config({
-    number: "BigNumber",
-});
-
 export class Calculator {
     public static isValidInput(input: string): boolean {
         if (input.length === 0) {
@@ -25,7 +21,12 @@ export class Calculator {
         return !isNaN(result) || this.isValidMathType(result) || false;
     }
 
-    public static calculate(input: string): string {
+    public static calculate(input: string, precision: number): string {
+        precision = Number(precision);
+        if (precision > 64 || precision < 0) {
+            precision = 16;
+        }
+        mathjs.config({ number: "BigNumber", precision });
         return mathjs.eval(input).toString();
     }
 

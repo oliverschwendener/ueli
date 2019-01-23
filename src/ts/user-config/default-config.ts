@@ -20,6 +20,7 @@ export class DefaultUserConfigManager {
             applicationFileExtensions: currentOperatingSystem === OperatingSystem.Windows ? defaultWindowsApplicationFileExtensions : defaultMacOsApplicationFileExtensions,
             applicationFolders: currentOperatingSystem === OperatingSystem.Windows ? defaultWindowsApplicationFolders : defaultMacOsApplicationFolders,
             autoStartApp: true,
+            calculatorPrecision: 16,
             colorTheme: "dark",
             customCommands: [],
             features: defaultFeatures,

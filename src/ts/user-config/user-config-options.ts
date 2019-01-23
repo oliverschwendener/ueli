@@ -11,6 +11,7 @@ export interface UserConfigOptions {
     applicationFileExtensions: string[];
     applicationFolders: string[];
     autoStartApp: boolean;
+    calculatorPrecision: number;
     colorTheme: string;
     customCommands: CustomCommand[];
     features: FeatureOptions;

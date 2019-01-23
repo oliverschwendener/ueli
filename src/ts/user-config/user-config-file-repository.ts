@@ -31,6 +31,7 @@ export class UserConfigFileRepository {
     }
 
     private enforceDataTypes(config: UserConfigOptions): UserConfigOptions {
+        config.calculatorPrecision = Number(config.calculatorPrecision);
         config.maxSearchResultCount = Number(config.maxSearchResultCount);
         config.rescanInterval = Number(config.rescanInterval);
         config.searchEngineLimit = Number(config.searchEngineLimit);
@@ -43,9 +44,8 @@ export class UserConfigFileRepository {
         config.windowMaxHeight = Number(config.windowMaxHeight);
         config.windowWidth = Number(config.windowWidth);
 
-        config.webSearches = config.webSearches.map((w) => {
-            w.priority = Number(w.priority);
-            return w;
+        config.webSearches.forEach((webSearch) => {
+            webSearch.priority = Number(webSearch.priority);
         });
 
         return config;

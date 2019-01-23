@@ -4,6 +4,7 @@ import { InputOutputCombination } from "../test-helpers";
 describe(Calculator.name, () => {
     describe(Calculator.calculate.name, () => {
         it("should return the correct result", () => {
+            const precision = 16;
             const inputOutputCombinations: InputOutputCombination[] = [
                 {
                     input: "1.1 - 1",
@@ -20,8 +21,38 @@ describe(Calculator.name, () => {
             ];
 
             inputOutputCombinations.forEach((combination) => {
-                const actual = Calculator.calculate(combination.input);
+                const actual = Calculator.calculate(combination.input, precision);
                 const expected = combination.output;
+                expect(actual).toBe(expected);
+            });
+        });
+
+        it("should use specified precision", () => {
+            const calculation = "1/3";
+            const inputOutputCombinations: InputOutputCombination[] = [
+                { input: 1, output: "0.3" },
+                { input: 16, output: "0.3333333333333333" },
+            ];
+
+            inputOutputCombinations.forEach((combination) => {
+                const actual = Calculator.calculate(calculation, combination.input);
+                const epxected = combination.output;
+                expect(actual).toBe(epxected);
+            });
+        });
+
+        it("should use default precision if specified precision is outside of allowed range", () => {
+            const calculation = "1/3";
+            const invalidPrecisions = [
+                -1,
+                65,
+                91243,
+                -243,
+            ];
+            const expected = "0.3333333333333333";
+
+            invalidPrecisions.forEach((invalidPrecision) => {
+                const actual = Calculator.calculate(calculation, invalidPrecision);
                 expect(actual).toBe(expected);
             });
         });

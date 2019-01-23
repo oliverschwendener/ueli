@@ -165,6 +165,12 @@
                         </div>
                     </div>
                     <div class="setting-group">
+                        <div class="setting-title">Calculator precision</div>
+                        <div class="setting">
+                            <input class="setting-text-input" type="number" min="0" max="64" v-model="config.calculatorPrecision" v-on:blur="updateUserConfig">
+                        </div>
+                    </div>
+                    <div class="setting-group">
                         <div class="setting-title">Color theme</div>
                         <div class="setting">
                             <select class="setting-select" v-model="config.colorTheme" v-on:change="updateUserConfig">

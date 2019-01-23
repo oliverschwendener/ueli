@@ -5,7 +5,8 @@ import { CalculatorHelper } from "../../../ts/helpers/calculator-helper";
 import { testIconSet } from "../../../ts/icon-sets/test-icon-set";
 
 describe(CalculatorSearcher.name, (): void => {
-    const searcher = new CalculatorSearcher(testIconSet);
+    const precision = 16;
+    const searcher = new CalculatorSearcher(testIconSet, precision);
 
     describe(searcher.getSearchResult.name, (): void => {
         it("should return a correct search result", (): void => {
