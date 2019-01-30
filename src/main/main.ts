@@ -145,13 +145,30 @@ function reloadApp() {
     mainWindow.reload();
 }
 
-function quitApp() {
-    clearInterval(rescanInterval);
-    globalShortcut.unregisterAll();
-    app.quit();
+function beforeQuitApp(): Promise<void> {
+    return new Promise((resolve, reject) => {
+        if (config.generalOptions.clearCachesOnExit) {
+            searchEngine.clearCaches()
+                .then(() => resolve())
+                .catch((err) => reject(err));
+        } else {
+            resolve();
+        }
+    });
 }
 
-function setAutoStartOptions (userConfig: UserConfigOptions) {
+function quitApp() {
+    beforeQuitApp()
+        .then(() => logger.debug("Successfully cleared caches before app quit"))
+        .catch((err) => logger.error(err))
+        .then(() => {
+            clearInterval(rescanInterval);
+            globalShortcut.unregisterAll();
+            app.quit();
+        });
+}
+
+function setAutoStartOptions(userConfig: UserConfigOptions) {
     if (!isDev()) {
         app.setLoginItemSettings({
             args: [],

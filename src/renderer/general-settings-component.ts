@@ -24,6 +24,11 @@ export const generalSettingsComponent = Vue.extend({
             config.generalOptions.autostart = defaultGeneralOptions.autostart;
             this.updateConfig();
         },
+        resetClearCachesOnExit() {
+            const config: UserConfigOptions = this.config;
+            config.generalOptions.clearCachesOnExit = defaultGeneralOptions.clearCachesOnExit;
+            this.updateConfig();
+        },
         resetHotKey() {
             const config: UserConfigOptions = this.config;
             config.generalOptions.hotKey = defaultGeneralOptions.hotKey;
@@ -69,6 +74,23 @@ export const generalSettingsComponent = Vue.extend({
                                 <label for="autoStartCheckbox"></label>
                                 <div class="field">
                                     <input class="is-checkradio is-block is-success" id="exampleCheckboxBlockSuccess" type="checkbox" name="exampleCheckboxBlockSuccess" checked="checked">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings__setting-content-item box">
+                    <div class="settings__setting-content-item-title">
+                        <div class="title is-5">Clear caches on exit</div>
+                        <button class="button" @click="resetClearCachesOnExit"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                    </div>
+                    <div class="columns">
+                        <div class="column field has-addons">
+                            <div class="control is-expanded">
+                                <input class="is-checkradio" id="clearCachesOnExit" type="checkbox" name="clearCachesOnExit" v-model="config.generalOptions.clearCachesOnExit" @change="updateConfig">
+                                <label for="clearCachesOnExit"></label>
+                                <div class="field">
+                                    <input class="is-checkradio is-block is-success" id="clearCachesOnExit" type="checkbox" name="clearCachesOnExit" checked="checked">
                                 </div>
                             </div>
                         </div>
