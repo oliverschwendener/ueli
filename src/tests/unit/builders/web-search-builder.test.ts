@@ -3,16 +3,16 @@ import { WebSearch } from "../../../ts/web-search";
 import { WebSearchHelpers } from "../../../ts/helpers/web-search-helper";
 import { UeliHelpers } from "../../../ts/helpers/ueli-helpers";
 
-describe(WebSearchBuilder.name, (): void => {
-    describe(WebSearchBuilder.buildExecutionUrl.name, (): void => {
-        it("should build the execution url correctly", (): void => {
+describe(WebSearchBuilder.name, () => {
+    describe(WebSearchBuilder.buildExecutionUrl.name, () => {
+        it("should build the execution url correctly", () => {
             const webSearch = { url: "https://my-web-search-engine.com/search?q=" } as WebSearch;
             const searchTerm = "something";
             const actual = WebSearchBuilder.buildExecutionUrl(searchTerm, webSearch);
             expect(actual).toBe(`${webSearch.url}${searchTerm}`);
         });
 
-        it("should trim the search term", (): void => {
+        it("should trim the search term", () => {
             const webSearch = {
                 url: `https://my-web-search-engine.com/search?q=${UeliHelpers.websearchQueryPlaceholder}&suffix=foo`,
                 whitespaceCharacter: "+",
@@ -23,7 +23,7 @@ describe(WebSearchBuilder.name, (): void => {
             expect(actual).toBe(expected);
         });
 
-        it("should replace the query placeholder with the search term if it is set", (): void => {
+        it("should replace the query placeholder with the search term if it is set", () => {
             const userInput = "something";
             const webSearchUrl = `https://my-web-search-engine.com/?query=${UeliHelpers.websearchQueryPlaceholder}&suffix=asdf`;
             const webSearch = { url: webSearchUrl } as WebSearch;
@@ -33,7 +33,7 @@ describe(WebSearchBuilder.name, (): void => {
             expect(actual).toBe(webSearchUrl.replace(UeliHelpers.websearchQueryPlaceholder, userInput));
         });
 
-        it("should replace all whitespace by specified whitespace string if it is set", (): void => {
+        it("should replace all whitespace by specified whitespace string if it is set", () => {
             const userInput = "this contains whitespace";
             const webSearchUrl = "https://my-search-engine.com/?query=";
             const whitespaceCharacter = "+";
@@ -42,10 +42,34 @@ describe(WebSearchBuilder.name, (): void => {
             const actual = WebSearchBuilder.buildExecutionUrl(userInput, webSearch);
             expect(actual).toBe(expected);
         });
+
+        it("should encode the search term if encodeSearchTerm is set to true", () => {
+            const searchTerm = "c#";
+            const webSearch = {
+                encodeSearchTerm: true,
+                prefix: "g",
+                url: "https://google.com/q=",
+            } as WebSearch;
+            const expected = `${webSearch.url}${encodeURIComponent(searchTerm)}`;
+            const actual = WebSearchBuilder.buildExecutionUrl(searchTerm, webSearch);
+            expect(actual).toBe(expected);
+        });
+
+        it("should not encode the search term if encodeSearchTerm is set to false", () => {
+            const searchTerm = "c#";
+            const webSearch = {
+                encodeSearchTerm: false,
+                prefix: "g",
+                url: "https://google.com/q=",
+            } as WebSearch;
+            const expected = `${webSearch.url}${searchTerm}`;
+            const actual = WebSearchBuilder.buildExecutionUrl(searchTerm, webSearch);
+            expect(actual).toBe(expected);
+        });
     });
 
-    describe(WebSearchBuilder.buildSearchResultItem.name, (): void => {
-        it("should build the search result item correctly if userinput is not an empty string", (): void => {
+    describe(WebSearchBuilder.buildSearchResultItem.name, () => {
+        it("should build the search result item correctly if userinput is not an empty string", () => {
             const userInput = "something";
             const webSearch = {
                 icon: "<svg>...</svg>",
@@ -61,7 +85,7 @@ describe(WebSearchBuilder.name, (): void => {
             expect(actual.name).toBe(`Search ${webSearch.name} for '${userInput}'`);
         });
 
-        it("should build the search result item correctly if userinput is an empty string", (): void => {
+        it("should build the search result item correctly if userinput is an empty string", () => {
             const userInput = "";
 
             const webSearch = {
@@ -79,8 +103,8 @@ describe(WebSearchBuilder.name, (): void => {
         });
     });
 
-    describe(WebSearchBuilder.buildSearchTerm.name, (): void => {
-        it("should build the search term correctly", (): void => {
+    describe(WebSearchBuilder.buildSearchTerm.name, () => {
+        it("should build the search term correctly", () => {
             const prefix = "m";
             const searchTerm = "something";
             const userInput = `${prefix}${WebSearchHelpers.webSearchSeparator}${searchTerm}`;

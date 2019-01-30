@@ -6,4 +6,5 @@ export interface WebSearch {
     priority: number;
     isFallback: boolean;
     whitespaceCharacter?: string;
+    encodeSearchTerm: boolean;
 }

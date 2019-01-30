@@ -12,6 +12,10 @@ export class WebSearchBuilder {
     public static buildExecutionUrl(searchTerm: string, webSearch: WebSearch): string {
         searchTerm = searchTerm.trim();
 
+        if (webSearch.encodeSearchTerm) {
+            searchTerm = encodeURIComponent(searchTerm);
+        }
+
         if (webSearch.whitespaceCharacter !== undefined && webSearch.whitespaceCharacter.length > 0) {
             searchTerm = StringHelpers.replaceWhitespaceWithString(searchTerm, webSearch.whitespaceCharacter);
         }

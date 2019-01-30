@@ -12,6 +12,7 @@ describe(FallbackWebSearchSercher.name, (): void => {
     it("should return a search result for earch fallback web searcher", (): void => {
         const webSearches: WebSearch[] = [
             {
+                encodeSearchTerm: false,
                 icon: "",
                 isFallback: false,
                 name: "non fallback",
@@ -20,6 +21,7 @@ describe(FallbackWebSearchSercher.name, (): void => {
                 url: "url",
             },
             {
+                encodeSearchTerm: false,
                 icon: "",
                 isFallback: true,
                 name: "fallback",

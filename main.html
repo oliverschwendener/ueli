@@ -587,6 +587,7 @@
                                         <th>Prefix</th>
                                         <th>Url</th>
                                         <th>Whitespace Character</th>
+                                        <th class="text-center">Encode Searchterm</th>
                                         <th>Priority</th>
                                         <th class="text-center">Fallback</th>
                                         <th>Icon</th>
@@ -600,6 +601,7 @@
                                         <td><input class="setting-text-input" type="text" v-model="webSearch.prefix" v-on:blur="updateUserConfig"></td>
                                         <td><input class="setting-text-input" type="text" v-model="webSearch.url" v-on:blur="updateUserConfig"></td>
                                         <td><input class="setting-text-input" type="text" v-model="webSearch.whitespaceCharacter" v-on:blur="updateUserConfig"></td>
+                                        <td class="text-center"><input type="checkbox" v-model="webSearch.encodeSearchTerm" v-on:change="updateUserConfig"></td>
                                         <td><input class="setting-text-input" type="number" min="0" v-model="webSearch.priority" v-on:blur="updateUserConfig" :disabled="!webSearch.isFallback"></td>
                                         <td class="text-center"><input type="checkbox" v-model="webSearch.isFallback" v-on:blur="updateUserConfig"></td>
                                         <td><input class="setting-text-input" type="text" v-model="webSearch.icon" v-on:blur="updateUserConfig"></td>
