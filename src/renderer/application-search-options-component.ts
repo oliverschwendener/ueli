@@ -2,7 +2,6 @@ import Vue from "vue";
 import { UserConfigOptions } from "../common/config/user-config-options";
 import { VueEventChannels } from "./vue-event-channels";
 import { vueEventDispatcher } from "./vue-event-dispatcher";
-import { exists } from "fs";
 import { FileHelpers } from "../main/helpers/file-helpers";
 import { defaultApplicationSearchOptions } from "../main/plugins/application-search-plugin/default-application-search-plugin-options";
 import { SettingsNotificationType } from "./settings-notification-type";
@@ -40,20 +39,21 @@ export const applicationSearchSettingsComponent = Vue.extend({
             }
         },
         onAddFolderClick() {
-            exists(this.newApplicationFolder, (folderExists) => {
-                if (folderExists) {
-                    FileHelpers.getStats(this.newApplicationFolder)
-                        .then((stats) => {
-                            if (stats.stats.isDirectory()) {
-                                this.addApplicationFolder();
-                            } else {
-                                this.handleError(`"${this.newApplicationFolder}" is not a directory`);
-                            }
-                        });
-                } else {
-                    this.handleError(`The directory "${this.newApplicationFolder}" does not exist`);
-                }
-            });
+            FileHelpers.fileExists(this.newApplicationFolder)
+                .then((folderExists) => {
+                    if (folderExists) {
+                        FileHelpers.getStats(this.newApplicationFolder)
+                            .then((stats) => {
+                                if (stats.stats.isDirectory()) {
+                                    this.addApplicationFolder();
+                                } else {
+                                    this.handleError(`"${this.newApplicationFolder}" is not a directory`);
+                                }
+                            });
+                    } else {
+                        this.handleError(`The directory "${this.newApplicationFolder}" does not exist`);
+                    }
+                });
         },
         toggleEnabled() {
             const config: UserConfigOptions = this.config;
