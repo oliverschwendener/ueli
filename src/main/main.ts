@@ -18,22 +18,26 @@ const logger = new ConsoleLogger();
 const configRepository = new ElectronStoreConfigRepository(defaultUserConfigOptions);
 const currentOperatingSystem = platform() === "darwin" ? OperatingSystem.macOS : OperatingSystem.Windows;
 
+if (currentOperatingSystem === OperatingSystem.macOS) {
+    app.dock.hide();
+}
+
 let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow;
 
 let config = configRepository.getConfig();
 let searchEngine = currentOperatingSystem === OperatingSystem.macOS ? getMacOsProductionSearchEngine(config) : getWindowsProductionSearchEngine(config);
 
-const notifyRenderer = (ipcChannel: IpcChannels, message?: string) => {
+function notifyRenderer(ipcChannel: IpcChannels, message?: string) {
     const allWindows = [mainWindow, settingsWindow];
     allWindows.forEach((window) => {
         if (window !== undefined && !window.isDestroyed()) {
             window.webContents.send(ipcChannel, message);
         }
     });
-};
+}
 
-const refreshAllIndexes = () => {
+function refreshAllIndexes() {
     searchEngine.refreshIndexes()
         .then(() => {
             const message = "Successfully refreshed indexes";
@@ -44,42 +48,42 @@ const refreshAllIndexes = () => {
             logger.error(err);
             notifyRenderer(IpcChannels.indexRefreshFailed, err);
         });
-};
+}
 
 let rescanInterval = setInterval(() => refreshAllIndexes(), Number(config.generalOptions.rescanIntervalInSeconds) * 1000);
 
-const registerGlobalKeyboardShortcut = (toggleAction: () => void, hotKey: string) => {
+function registerGlobalKeyboardShortcut(toggleAction: () => void, hotKey: string) {
     globalShortcut.unregisterAll();
     globalShortcut.register(hotKey, toggleAction);
-};
+}
 
-const showMainWindow = () => {
+function showMainWindow() {
     mainWindow.show();
     mainWindow.webContents.send(IpcChannels.mainWindowHasBeenShown);
-};
+}
 
-const hideMainWindow = () => {
+function hideMainWindow() {
     mainWindow.webContents.send(IpcChannels.mainWindowHasBeenHidden);
 
     setTimeout(() => {
         updateMainWindowSize(0, config.appearanceOptions);
         mainWindow.hide();
     }, 25);
-};
+}
 
-const toggleMainWindow = () => {
+function toggleMainWindow() {
     if (mainWindow.isVisible()) {
         hideMainWindow();
     } else {
         showMainWindow();
     }
-};
+}
 
-const getMaxWindowHeight = (maxSearchResultsPerPage: number, searchResultHeight: number, userInputHeight: number): number => {
+function getMaxWindowHeight(maxSearchResultsPerPage: number, searchResultHeight: number, userInputHeight: number): number {
     return Number(maxSearchResultsPerPage) * Number(searchResultHeight) + Number(userInputHeight);
-};
+}
 
-const updateConfig = (updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) => {
+function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) {
     if (updatedConfig.generalOptions.hotKey !== config.generalOptions.hotKey) {
         registerGlobalKeyboardShortcut(toggleMainWindow, updatedConfig.generalOptions.hotKey);
     }
@@ -120,9 +124,9 @@ const updateConfig = (updatedConfig: UserConfigOptions, needsIndexRefresh: boole
                 .catch((err) =>  logger.error(err));
         })
         .catch((err) => logger.error(err));
-};
+}
 
-const updateMainWindowSize = (searchResultCount: number, appearanceOptions: AppearanceOptions, center?: boolean) => {
+function updateMainWindowSize(searchResultCount: number, appearanceOptions: AppearanceOptions, center?: boolean) {
     mainWindow.setResizable(true);
     const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
         ? getMaxWindowHeight(appearanceOptions.maxSearchResultsPerPage, appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight)
@@ -133,21 +137,21 @@ const updateMainWindowSize = (searchResultCount: number, appearanceOptions: Appe
         mainWindow.center();
     }
     mainWindow.setResizable(false);
-};
+}
 
-const reloadApp = () => {
+function reloadApp() {
     updateMainWindowSize(0, config.appearanceOptions);
     searchEngine = currentOperatingSystem === OperatingSystem.macOS ? getMacOsProductionSearchEngine(config) : getWindowsProductionSearchEngine(config);
     mainWindow.reload();
-};
+}
 
-const quitApp = () => {
+function quitApp() {
     clearInterval(rescanInterval);
     globalShortcut.unregisterAll();
     app.quit();
-};
+}
 
-const setAutoStartOptions = (userConfig: UserConfigOptions) => {
+function setAutoStartOptions (userConfig: UserConfigOptions) {
     if (!isDev()) {
         app.setLoginItemSettings({
             args: [],
@@ -155,9 +159,9 @@ const setAutoStartOptions = (userConfig: UserConfigOptions) => {
             path: process.execPath,
         });
     }
-};
+}
 
-const startApp = () => {
+function startApp() {
     mainWindow = new BrowserWindow({
         center: true,
         frame: false,
@@ -176,9 +180,10 @@ const startApp = () => {
     updateMainWindowSize(0, config.appearanceOptions, recenter);
     registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
     setAutoStartOptions(config);
-};
+    registerAllIpcListeners();
+}
 
-const openSettings = () => {
+function openSettings() {
     if (!settingsWindow || settingsWindow.isDestroyed()) {
         settingsWindow = new BrowserWindow({
             height: 700,
@@ -192,7 +197,56 @@ const openSettings = () => {
     } else {
         settingsWindow.focus();
     }
-};
+}
+
+function registerAllIpcListeners() {
+    ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) => {
+        updateConfig(updatedConfig, needsIndexRefresh);
+    });
+
+    ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {
+        searchEngine.getSearchResults(userInput)
+            .then((result) => {
+                updateMainWindowSize(result.length, config.appearanceOptions);
+                event.sender.send(IpcChannels.searchResponse, result);
+            })
+            .catch((err) => logger.error(err));
+    });
+
+    ipcMain.on(IpcChannels.execute, (event: Electron.Event, searchResultItem: SearchResultItem) => {
+        searchEngine.execute(searchResultItem)
+            .then(() => hideMainWindow())
+            .catch((err) => logger.error(err));
+    });
+
+    ipcMain.on(IpcChannels.reloadApp, () => {
+        reloadApp();
+    });
+
+    ipcMain.on(IpcChannels.openSettingsWindow, () => {
+        openSettings();
+    });
+
+    ipcMain.on(IpcChannels.ueliCommandExecuted, (command: UeliCommand) => {
+        switch (command.executionArgument) {
+            case UeliCommandExecutionArgument.Exit:
+                quitApp();
+                break;
+            case UeliCommandExecutionArgument.Reload:
+                reloadApp();
+                break;
+            case UeliCommandExecutionArgument.EditConfigFile:
+                configRepository.openConfigFile();
+                break;
+            case UeliCommandExecutionArgument.OpenSettings:
+                openSettings();
+                break;
+            default:
+                logger.error("Unhandled ueli command execution");
+                break;
+        }
+    });
+}
 
 app.on("ready", () => {
     const gotSingleInstanceLock = app.requestSingleInstanceLock();
@@ -206,50 +260,3 @@ app.on("ready", () => {
 
 app.on("window-all-closed", quitApp);
 app.on("quit", app.quit);
-
-ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) => {
-    updateConfig(updatedConfig, needsIndexRefresh);
-});
-
-ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {
-    searchEngine.getSearchResults(userInput)
-        .then((result) => {
-            updateMainWindowSize(result.length, config.appearanceOptions);
-            event.sender.send(IpcChannels.searchResponse, result);
-        })
-        .catch((err) => logger.error(err));
-});
-
-ipcMain.on(IpcChannels.execute, (event: Electron.Event, searchResultItem: SearchResultItem) => {
-    searchEngine.execute(searchResultItem)
-        .then(() => hideMainWindow())
-        .catch((err) => logger.error(err));
-});
-
-ipcMain.on(IpcChannels.reloadApp, () => {
-    reloadApp();
-});
-
-ipcMain.on(IpcChannels.openSettingsWindow, () => {
-    openSettings();
-});
-
-ipcMain.on(IpcChannels.ueliCommandExecuted, (command: UeliCommand) => {
-    switch (command.executionArgument) {
-        case UeliCommandExecutionArgument.Exit:
-            quitApp();
-            break;
-        case UeliCommandExecutionArgument.Reload:
-            reloadApp();
-            break;
-        case UeliCommandExecutionArgument.EditConfigFile:
-            configRepository.openConfigFile();
-            break;
-        case UeliCommandExecutionArgument.OpenSettings:
-            openSettings();
-            break;
-        default:
-            logger.error("Unhandled ueli command execution");
-            break;
-    }
-});

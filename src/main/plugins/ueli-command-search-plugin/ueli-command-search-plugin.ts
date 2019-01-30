@@ -3,7 +3,7 @@ import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { UeliCommand } from "./ueli-command";
-import { IconType } from "../../../common/icon-type";
+import { IconType } from "../../../common/icon/icon-type";
 import { UeliCommandExecutionArgument } from "./ueli-command-execution-argument";
 import { ipcMain } from "electron";
 import { IpcChannels } from "../../../common/ipc-channels";

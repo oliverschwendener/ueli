@@ -17,7 +17,7 @@ html {
 .settings__setting {
     overflow-y: auto;
     flex-grow: 1;
-    padding: 15px 30px;
+    padding: 30px;
 }
 
 .settings__setting-title {

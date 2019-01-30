@@ -18,6 +18,7 @@ import { generalSettingsComponent } from "./general-settings-component";
 import { appearanceSettingsComponent } from "./appearance-settings-component";
 import { userStylesComponent } from "./user-styles-component";
 import { AppearanceOptions } from "../common/config/appearance-options";
+import { shortcutSettingsComponent } from "./shortcut-settings-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -29,6 +30,7 @@ Vue.component("application-search-settings", applicationSearchSettingsComponent)
 Vue.component("setting-menu-item", settingMenuItemComponent);
 Vue.component("settings-loading-overlay", settingsLoadingOverlayComponent);
 Vue.component("user-styles", userStylesComponent);
+Vue.component("shortcut-settings", shortcutSettingsComponent);
 
 // tslint:disable-next-line:no-unused-expression
 new Vue({
@@ -70,7 +72,10 @@ new Vue({
         });
     },
     methods: {
-        onKeypress(event: KeyboardEvent) {
+        onKeyPress(event: KeyboardEvent) {
+            if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "i") {
+                ipcRenderer.send(IpcChannels.openSettingsWindow);
+            }
             if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "r") {
                 ipcRenderer.send(IpcChannels.reloadApp);
             }

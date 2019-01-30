@@ -90,7 +90,7 @@ export class FileHelpers {
     }
 
     public static fileExists(filePath: string): Promise<boolean> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             exists(filePath, (fileExists) => {
                 resolve(fileExists);
             });

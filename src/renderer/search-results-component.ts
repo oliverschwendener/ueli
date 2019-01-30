@@ -2,8 +2,8 @@ import Vue from "vue";
 import { vueEventDispatcher } from "./vue-event-dispatcher";
 import { VueEventChannels } from "./vue-event-channels";
 import { SearchResultItem } from "../common/search-result-item";
-import { Icon } from "../common/icon";
-import { IconType } from "../common/icon-type";
+import { Icon } from "../common/icon/icon";
+import { IconType } from "../common/icon/icon-type";
 
 enum BrowseDirection {
     Next = "next",
@@ -114,7 +114,7 @@ export const searchResultsComponent = Vue.extend({
             <div :id="searchResult.id" class="search-results__item" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
                 <div class="search-results__item-icon-container">
                     <div class="search-results__item-icon-overlay" :class="{ 'active' : searchResult.active }"></div>
-                    <div v-html="getIcon(searchResult.icon)"></div>
+                    <div class="search-results__item-icon" v-html="getIcon(searchResult.icon)"></div>
                 </div>
                 <div class="search-results__item-info-container">
                     <div class="search-results__item-name" :class="{ 'active' : searchResult.active }">{{ searchResult.name }}</div>

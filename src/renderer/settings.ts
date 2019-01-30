@@ -3,4 +3,5 @@ export enum Settings {
     ApplicationSearch = "Application Search",
     General = "General",
     SearchEngine = "Search Engine",
+    Shortcuts = "Shortcuts",
 }

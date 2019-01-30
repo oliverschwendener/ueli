@@ -1,8 +1,6 @@
 import { vueEventDispatcher } from "./vue-event-dispatcher";
 import { VueEventChannels } from "./vue-event-channels";
 import Vue from "vue";
-import { ipcRenderer } from "electron";
-import { IpcChannels } from "../common/ipc-channels";
 
 export const userInputComponent = Vue.extend({
     data() {
@@ -25,10 +23,6 @@ export const userInputComponent = Vue.extend({
 
             if (event.key === "Enter") {
                 vueEventDispatcher.$emit(VueEventChannels.enterPress);
-            }
-
-            if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "i") {
-                ipcRenderer.send(IpcChannels.openSettingsWindow);
             }
         },
         resetUserInput(): void {

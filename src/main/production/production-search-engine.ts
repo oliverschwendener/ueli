@@ -7,10 +7,14 @@ import { ApplicationIconService } from "../plugins/application-search-plugin/app
 import { getMacAppIcons, getWindowsAppIcons } from "../plugins/application-search-plugin/application-icon-helpers";
 import { executeMacApp, executeWindowsApp } from "../plugins/application-search-plugin/application-execution";
 import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/ueli-command-search-plugin";
+import { ShortcutsSearchPlugin } from "../plugins/shorcuts-plugin/shortcuts-search-plugin";
 
-const commonProductionSearchPlugins: SearchPlugin[] = [
-    new UeliCommandSearchPlugin(),
-];
+const getCommonProductionSearchPlugins = (userConfig: UserConfigOptions): SearchPlugin[] => {
+    return [
+        new UeliCommandSearchPlugin(),
+        new ShortcutsSearchPlugin(userConfig.shortcutsOptions),
+    ];
+};
 
 export const getMacOsProductionSearchEngine = (userConfig: UserConfigOptions): SearchEngine => {
     const plugins: SearchPlugin[] = [
@@ -22,7 +26,7 @@ export const getMacOsProductionSearchEngine = (userConfig: UserConfigOptions): S
             ),
             executeMacApp),
     ];
-    return new SearchEngine(plugins.concat(commonProductionSearchPlugins), userConfig);
+    return new SearchEngine(plugins.concat(getCommonProductionSearchPlugins(userConfig)), userConfig);
 };
 
 export const getWindowsProductionSearchEngine = (userConfig: UserConfigOptions): SearchEngine => {
@@ -35,5 +39,5 @@ export const getWindowsProductionSearchEngine = (userConfig: UserConfigOptions):
             ),
             executeWindowsApp),
     ];
-    return new SearchEngine(plugins.concat(commonProductionSearchPlugins), userConfig);
+    return new SearchEngine(plugins.concat(getCommonProductionSearchPlugins(userConfig)), userConfig);
 };

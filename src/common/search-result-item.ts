@@ -1,5 +1,5 @@
 import { PluginType } from "../main/plugin-type";
-import { Icon } from "./icon";
+import { Icon } from "./icon/icon";
 
 export interface SearchResultItem {
     description: string;

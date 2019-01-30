@@ -97,6 +97,7 @@ export const settingsComponent = Vue.extend({
                 <appearance-settings :config="config"></appearance-settings>
                 <search-engine-settings :config="config"></search-engine-settings>
                 <application-search-settings :config="config"></application-search-settings>
+                <shortcut-settings :config="config"></shortcut-settings>
             </div>
         </div>
     `,
