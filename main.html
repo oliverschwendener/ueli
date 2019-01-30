@@ -587,7 +587,7 @@
                                         <th>Prefix</th>
                                         <th>Url</th>
                                         <th>Whitespace Character</th>
-                                        <th class="text-center">Encode Searchterm</th>
+                                        <th class="text-center">Encode search term</th>
                                         <th>Priority</th>
                                         <th class="text-center">Fallback</th>
                                         <th>Icon</th>
@@ -619,6 +619,7 @@
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.prefix" placeholder="Prefix"></td>
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.url" placeholder="URL"></td>
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.whitespaceCharacter" placeholder="Whitespace Character"></td>
+                                        <td class="text-center"><input type="checkbox" v-model="configEdit.newWebSearch.encodeSearchTerm"></td>
                                         <td><input type="number" class="setting-text-input" min="0" v-model="configEdit.newWebSearch.priority" placeholder="Priority" :disabled="!configEdit.newWebSearch.isFallback"></td>
                                         <td class="text-center"><input type="checkbox" v-model="configEdit.newWebSearch.isFallback"></td>
                                         <td><input type="text" class="setting-text-input" v-model="configEdit.newWebSearch.icon" placeholder="Icon"></td>
