@@ -61,7 +61,7 @@ export const settingsComponent = Vue.extend({
     },
     props: ["config"],
     mounted() {
-        vueEventDispatcher.$emit(VueEventChannels.showSetting, this.settingMenuItems[0]);
+        vueEventDispatcher.$emit(VueEventChannels.showSetting, Settings.General);
 
         vueEventDispatcher.$on(VueEventChannels.pushNotification, (message: string, type: SettingsNotificationType) => {
             this.showNotification(message, type);
