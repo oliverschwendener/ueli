@@ -1,59 +1,49 @@
 import Vue from "vue";
 import { Settings } from "./settings";
-import { defaultShortcutsOptions } from "../common/config/default-shortcuts-options";
+import { defaultShortcutsOptions, defaultShortcutIcon } from "../common/config/default-shortcuts-options";
 import { vueEventDispatcher } from "./vue-event-dispatcher";
 import { VueEventChannels } from "./vue-event-channels";
 import { UserConfigOptions } from "../common/config/user-config-options";
-import { ShortcutType } from "../main/plugins/shorcuts-plugin/shortcut-type";
-import { Shortcut } from "../main/plugins/shorcuts-plugin/shortcut";
-import { IconType } from "../common/icon/icon-type";
-import { ShortcutHelpers } from "../main/plugins/shorcuts-plugin/shortcut-helpers";
 import { cloneDeep } from "lodash";
-import { SettingsNotificationType } from "./settings-notification-type";
-
-const defaultNewShortcut = {
-    icon: {
-        type: IconType.URL,
-    },
-    type: ShortcutType.Url,
-} as Shortcut;
+import { defaultNewShortcut } from "../main/plugins/shorcuts-plugin/shortcut-helpers";
+import { IconType } from "../common/icon/icon-type";
+import { EditingMode } from "./shortcut-editing-modal-component";
+import { Shortcut } from "../main/plugins/shorcuts-plugin/shortcut";
 
 export const shortcutSettingsComponent = Vue.extend({
     data() {
         return {
-            addNewModalVisible: false,
+            defaultShortcutIcon,
             iconTypeSvg: IconType.SVG,
             iconTypeUrl: IconType.URL,
-            iconTypes: Object.values(IconType).sort(),
-            newShortcut: cloneDeep(defaultNewShortcut),
             settingName: Settings.Shortcuts,
-            shortcutTypes: Object.values(ShortcutType).sort(),
             visible: false,
         };
     },
     methods: {
-        addNewShortcut() {
-            let newShortcut: Shortcut = this.newShortcut;
-            if (ShortcutHelpers.isValidShortcut(newShortcut)) {
-                const config: UserConfigOptions = this.config;
-                config.shortcutsOptions.shortcuts.push(newShortcut);
-                newShortcut = cloneDeep(defaultNewShortcut);
-                this.addNewModalVisible = false;
-                this.updateConfig();
-            } else {
-                vueEventDispatcher.$emit(VueEventChannels.pushNotification, "Invalid shortcut", SettingsNotificationType.Error);
-            }
+        addButtonClick() {
+            vueEventDispatcher.$emit(VueEventChannels.openShortcutEditingModal, cloneDeep(defaultNewShortcut), EditingMode.Add);
         },
-        addNewShortcutButtonClick() {
-            this.addNewModalVisible = true;
-        },
-        closeAddNewShortcutModalButtonClick() {
-            this.addNewModalVisible = false;
+        addShortcut(shortcut: Shortcut) {
+            const config: UserConfigOptions = this.config;
+            config.shortcutsOptions.shortcuts.push(cloneDeep(shortcut));
+            this.updateConfig();
         },
         deleteShortcut(id: number) {
             const config: UserConfigOptions = this.config;
             config.shortcutsOptions.shortcuts.splice(id, 1);
             this.updateConfig();
+        },
+        updateShortcut(shortcut: Shortcut, index: number) {
+            const config: UserConfigOptions = cloneDeep(this.config);
+            config.shortcutsOptions.shortcuts[index] = cloneDeep(shortcut);
+            this.config = cloneDeep(config);
+            this.updateConfig();
+        },
+        editShortcut(index: number): void {
+            const config: UserConfigOptions = this.config;
+            const shortcut: Shortcut = cloneDeep(config.shortcutsOptions.shortcuts[index]);
+            vueEventDispatcher.$emit(VueEventChannels.openShortcutEditingModal, shortcut, EditingMode.Edit, index);
         },
         onKeyUp(event: KeyboardEvent) {
             if (event.key === "Escape") {
@@ -63,6 +53,11 @@ export const shortcutSettingsComponent = Vue.extend({
         resetAll() {
             const config: UserConfigOptions = this.config;
             config.shortcutsOptions = cloneDeep(defaultShortcutsOptions);
+            this.updateConfig();
+        },
+        resetShortcutsToDefault() {
+            const config: UserConfigOptions = this.config;
+            config.shortcutsOptions.shortcuts = cloneDeep(defaultShortcutsOptions.shortcuts);
             this.updateConfig();
         },
         toggleEnabled() {
@@ -80,6 +75,14 @@ export const shortcutSettingsComponent = Vue.extend({
                 this.visible = true;
             } else {
                 this.visible = false;
+            }
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.shortcutEdited, (shortcut: Shortcut, editMode: EditingMode, saveIndex?: number) => {
+            if (editMode === EditingMode.Add) {
+                this.addShortcut(shortcut);
+            } else if (editMode === EditingMode.Edit && saveIndex !== undefined) {
+                this.updateShortcut(shortcut, saveIndex);
             }
         });
     },
@@ -100,6 +103,10 @@ export const shortcutSettingsComponent = Vue.extend({
                 </div>
             </div>
             <div v-if="config.shortcutsOptions.isEnabled" class="settings__setting-content box">
+                <div class="settings__setting-content-item-title">
+                    <div class="title is-5">Shortcuts</div>
+                    <button class="button" @click="resetShortcutsToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                </div>
                 <div v-if="config.shortcutsOptions.shortcuts.length > 0" class="settings__setting-content-item">
                     <table class="table is-striped is-fullwidth">
                         <thead>
@@ -119,78 +126,21 @@ export const shortcutSettingsComponent = Vue.extend({
                                 <td>{{ shortcut.description }}</td>
                                 <td>{{ shortcut.executionArgument }}</td>
                                 <td>{{ shortcut.type }}</td>
-                                <td><img v-if="shortcut.icon.type === iconTypeUrl" :src="shortcut.icon.parameter"><span v-else="shortcut.icon.type === iconTypeSvg" v-html="shortcut.icon.parameter"></span></td>
-                                <td><button class="button"><span class="icon"><i class="fas fa-edit"></i></span></button></td>
+                                <td>
+                                    <img v-if="shortcut.icon.type === iconTypeUrl" :src="shortcut.icon.parameter" class="settings-table__icon-url">
+                                    <div v-else="shortcut.icon.type === iconTypeSvg" v-html="shortcut.icon.parameter" class="settings-table__icon-svg"></div>
+                                </td>
+                                <td><button class="button" @click="editShortcut(index)"><span class="icon"><i class="fas fa-edit"></i></span></button></td>
                                 <td><button class="button is-danger" @click="deleteShortcut(index)"><span class="icon"><i class="fas fa-trash"></i></span></button></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div>
-                    <button class="button is-success" @click="addNewShortcutButtonClick"><span class="icon"><i class="fas fa-plus"></i></span></button>
-                </div>
-                <div class="modal" :class="{ 'is-active' : addNewModalVisible }">
-                    <div class="modal-background"></div>
-                    <div class="modal-content">
-                        <div class="message">
-                            <div class="message-header">
-                                <p>Add new shortcut</p>
-                                <button class="delete" aria-label="delete" @click="closeAddNewShortcutModalButtonClick"></button>
-                            </div>
-                            <div class="message-body">
-                                <div class="field">
-                                    <label class="label">Name</label>
-                                    <div class="control">
-                                        <input class="input" type="text" placeholder="Text input" v-model="newShortcut.name" autofocus>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label">Description</label>
-                                    <div class="control">
-                                        <input class="input" type="text" placeholder="Text input" v-model="newShortcut.description">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label">Execution Argument</label>
-                                    <div class="control">
-                                        <input class="input" type="text" placeholder="Text input" v-model="newShortcut.executionArgument">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label">Shortcut Type</label>
-                                    <div class="control is-expanded">
-                                        <div class="select is-fullwidth">
-                                            <select v-model="newShortcut.type">
-                                                <option v-for="shortcutType in shortcutTypes">{{ shortcutType }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label">Icon</label>
-                                    <div class="field has-addons">
-                                        <div class="control">
-                                            <span class="select">
-                                                <select v-model="newShortcut.icon.type">
-                                                    <option v-for="iconType in iconTypes">{{ iconType }}</option>
-                                                </select>
-                                            </span>
-                                        </div>
-                                        <div class="control is-expanded">
-                                            <input class="input" type="text" placeholder="Icon parameter" v-model="newShortcut.icon.parameter">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="field"
-                                    <div class="control">
-                                        <button class="button is-success" @click="addNewShortcut">Add</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <button class="button is-success" @click="addButtonClick"><span class="icon"><i class="fas fa-plus"></i></span></button>
                 </div>
             </div>
+            <shortcut-editing-modal></shortcut-editing-modal>
         </div>
     `,
 });

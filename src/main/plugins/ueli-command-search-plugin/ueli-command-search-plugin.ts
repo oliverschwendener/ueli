@@ -11,10 +11,26 @@ import { IpcChannels } from "../../../common/ipc-channels";
 export class UeliCommandSearchPlugin implements SearchPlugin {
     public pluginType = PluginType.UeliCommandSearchPlugin;
     private readonly commands: UeliCommand[] = [
-        { description: "Exit ueli", executionArgument: UeliCommandExecutionArgument.Exit, name: "Exit" },
-        { description: "Reload ueli", executionArgument: UeliCommandExecutionArgument.Reload, name: "Reload" },
-        { description: "Edit config file in your default text editor", executionArgument: UeliCommandExecutionArgument.EditConfigFile, name: "Edit config file" },
-        { description: "Open ueli setttings", executionArgument: UeliCommandExecutionArgument.OpenSettings, name: "Open settings" },
+        {
+            description: "Exit ueli",
+            executionArgument: UeliCommandExecutionArgument.Exit,
+            name: "Exit",
+        },
+        {
+            description: "Reload ueli",
+            executionArgument: UeliCommandExecutionArgument.Reload,
+            name: "Reload",
+        },
+        {
+            description: "Edit settings file in your default text editor",
+            executionArgument: UeliCommandExecutionArgument.EditConfigFile,
+             name: "Edit settings file",
+        },
+        {
+            description: "Open ueli setttings",
+            executionArgument: UeliCommandExecutionArgument.OpenSettings,
+            name: "Open settings",
+        },
     ];
     private readonly icon = `
     <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

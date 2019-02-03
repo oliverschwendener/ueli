@@ -1,20 +1,40 @@
 import { Shortcut } from "./shortcut";
 import { ShortcutType } from "./shortcut-type";
-import { IconTypeHelpers } from "../../../common/icon/icon-type-helpers";
+import { IconType } from "../../../common/icon/icon-type";
+
+export const defaultNewShortcut = {
+    icon: {
+        type: IconType.URL,
+    },
+    type: ShortcutType.Url,
+} as Shortcut;
 
 export class ShortcutHelpers {
-    public static isValidShortcut(shortcut: Shortcut): boolean {
-        return shortcut.description !== undefined
-            && shortcut.description.length !== 0
-            && shortcut.executionArgument !== undefined
-            && shortcut.executionArgument.length !== 0
-            && shortcut.icon !== undefined
-            && shortcut.icon.parameter !== undefined
-            && IconTypeHelpers.isValidIconType(shortcut.icon.type)
+    public static isValidShortcuType(shortcutType: ShortcutType): boolean {
+        return Object.values(ShortcutType).find((s) => s === shortcutType) !== undefined;
+    }
+
+    public static isValidToAdd(shortcut: Shortcut, filePathValidator: (filePath: string) => boolean): boolean {
+        return shortcut !== undefined
+            && this.isValidExecutionArgument(shortcut, filePathValidator)
             && this.isValidShortcuType(shortcut.type);
     }
 
-    public static isValidShortcuType(shortcutType: ShortcutType): boolean {
-        return Object.values(ShortcutType).find((s) => s === shortcutType) !== undefined;
+    public static isValidExecutionArgument(shortcut: Shortcut, filePathValidator: (filePath: string) => boolean): boolean {
+        switch (shortcut.type) {
+            case ShortcutType.Url:
+                return this.isValidUrl(shortcut.executionArgument);
+            case ShortcutType.FilePath:
+                return this.isValidFilePath(shortcut.executionArgument, filePathValidator);
+        }
+    }
+
+    private static isValidUrl(url: string): boolean {
+        return url !== undefined
+            && (url.startsWith("https://") || url.startsWith("http://"));
+    }
+
+    private static isValidFilePath(filePath: string, filePathValidator: (filePath: string) => boolean): boolean {
+        return filePath !== undefined && filePathValidator(filePath);
     }
 }

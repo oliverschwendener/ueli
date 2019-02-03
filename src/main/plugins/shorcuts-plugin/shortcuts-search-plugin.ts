@@ -3,15 +3,30 @@ import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { ShortcutsOptions } from "../../../common/config/shortcuts-options";
-import { exec } from "child_process";
-import { FileHelpers } from "../../helpers/file-helpers";
+import { IconHelpers } from "../../../common/icon/icon-helpers";
+import { defaultShortcutIcon } from "../../../common/config/default-shortcuts-options";
+import { Shortcut } from "./shortcut";
+import { ShortcutType } from "./shortcut-type";
+
+interface ExecutionArgumentDecodeResult {
+    shortcutType: ShortcutType;
+    executionArgument: string;
+}
 
 export class ShortcutsSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.ShortcutsSearchPlugin;
     private config: ShortcutsOptions;
+    private readonly urlExecutor: (url: string) => Promise<void>;
+    private readonly filePathExecutor: (filePath: string) => Promise<void>;
 
-    constructor(config: ShortcutsOptions) {
+    constructor(
+        config: ShortcutsOptions,
+        urlExecutor: (url: string) => Promise<void>,
+        filePathExecutor: (filePath: string) => Promise<void>,
+        ) {
         this.config = config;
+        this.urlExecutor = urlExecutor;
+        this.filePathExecutor = filePathExecutor;
     }
 
     public getAll(): Promise<SearchResultItem[]> {
@@ -19,8 +34,10 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
             const result = this.config.shortcuts.map((shortcut): SearchResultItem => {
                 return {
                     description: shortcut.description,
-                    executionArgument: shortcut.executionArgument,
-                    icon: shortcut.icon,
+                    executionArgument: this.encodeExecutionArgument(shortcut),
+                    icon: IconHelpers.isValidIcon(shortcut.icon)
+                        ? shortcut.icon
+                        : defaultShortcutIcon,
                     name: shortcut.name,
                     originPluginType: this.pluginType,
                 };
@@ -38,20 +55,15 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
 
     public execute(searchResultItem: SearchResultItem): Promise<void> {
         return new Promise((resolve, reject) => {
-            let action: (executionArgument: string) => Promise<void>
-                = (): Promise<void> => new Promise((emptyResolve, emptyReject) => {
-                    emptyReject(`No execution function found for execution argument: ${searchResultItem.executionArgument}`);
-                });
-
-            if (this.isUrl(searchResultItem.executionArgument)) {
-                action = this.executeUrl;
-            } else if (this.isFilePath(searchResultItem.executionArgument)) {
-                action = this.openFile;
+            const decodeResult = this.decodeExecutionArgument(searchResultItem.executionArgument);
+            switch (decodeResult.shortcutType) {
+                case ShortcutType.Url:
+                    return this.executeUrl(decodeResult.executionArgument);
+                case ShortcutType.FilePath:
+                    return this.executeFilePath(decodeResult.executionArgument);
+                default:
+                    reject(`Unsupported shortcut type: ${decodeResult.shortcutType}`);
             }
-
-            action(searchResultItem.executionArgument)
-                .then(() => resolve())
-                .catch((err) => reject(err));
         });
     }
 
@@ -72,45 +84,33 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
         });
     }
 
-    private isUrl(url: string): boolean {
-        return url.startsWith("http://")
-            || url.startsWith("https://");
-    }
-
-    private isFilePath(filePath: string): boolean {
-        return filePath.startsWith("/");
-    }
-
     private executeUrl(url: string): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const command = `open "${url}"`;
-            exec(command, (err) => {
-                if (err) {
-                    reject(`Error while executing URL: ${err}`);
-                } else {
-                    resolve();
-                }
-            });
-        });
+        return this.urlExecutor(url);
     }
 
-    private openFile(filePath: string): Promise<void> {
-        return new Promise((resolve, reject) => {
-            FileHelpers.fileExists(filePath)
-                .then((exists) => {
-                    if (exists) {
-                        const command = `open "${filePath}"`;
-                        exec(command, (err) => {
-                            if (err) {
-                                reject(`Error while opening file: ${err}`);
-                            } else {
-                                resolve();
-                            }
-                        });
-                    } else {
-                        reject("Error while opening file: file does not exist.");
-                    }
-                });
-        });
+    private executeFilePath(filePath: string): Promise<void> {
+        return this.filePathExecutor(filePath);
+    }
+
+    private getExecutionArgumentPrefix(shortcutType: string): string {
+        return `[[[${shortcutType}]]]`;
+    }
+
+    private encodeExecutionArgument(shortcut: Shortcut): string {
+        return `${this.getExecutionArgumentPrefix(shortcut.type)}${shortcut.executionArgument}`;
+    }
+
+    private decodeExecutionArgument(executionArgument: string): ExecutionArgumentDecodeResult {
+        for (const s of Object.values(ShortcutType)) {
+            const shortcutType: ShortcutType = s;
+            if (executionArgument.startsWith(this.getExecutionArgumentPrefix(shortcutType))) {
+                return {
+                    executionArgument: executionArgument.replace(this.getExecutionArgumentPrefix(shortcutType), ""),
+                    shortcutType,
+                };
+            }
+        }
+
+        throw new Error(`Unknown shortcut type; ${executionArgument}`);
     }
 }

@@ -8,11 +8,18 @@ import { generateMacAppIcons, generateWindowsAppIcons } from "../plugins/applica
 import { executeMacApp, executeWindowsApp } from "../plugins/application-search-plugin/application-execution";
 import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/ueli-command-search-plugin";
 import { ShortcutsSearchPlugin } from "../plugins/shorcuts-plugin/shortcuts-search-plugin";
+import { isWindows } from "../../common/helpers/operating-system-helpers";
+import { platform } from "os";
+import { executeUrlWindows, executeUrlMacOs } from "../executors/url-executor";
+import { executeFilePathWindows, executeFilePathMacOs } from "../executors/file-path-executor";
 
 const getCommonProductionSearchPlugins = (userConfig: UserConfigOptions): SearchPlugin[] => {
+    const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
+    const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
+
     return [
         new UeliCommandSearchPlugin(),
-        new ShortcutsSearchPlugin(userConfig.shortcutsOptions),
+        new ShortcutsSearchPlugin(userConfig.shortcutsOptions, urlExecutor, filePathExecutor),
     ];
 };
 

@@ -19,6 +19,7 @@ import { appearanceSettingsComponent } from "./appearance-settings-component";
 import { userStylesComponent } from "./user-styles-component";
 import { AppearanceOptions } from "../common/config/appearance-options";
 import { shortcutSettingsComponent } from "./shortcut-settings-component";
+import { shortcutEditingModal } from "./shortcut-editing-modal-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -31,6 +32,7 @@ Vue.component("setting-menu-item", settingMenuItemComponent);
 Vue.component("settings-loading-overlay", settingsLoadingOverlayComponent);
 Vue.component("user-styles", userStylesComponent);
 Vue.component("shortcut-settings", shortcutSettingsComponent);
+Vue.component("shortcut-editing-modal", shortcutEditingModal);
 
 // tslint:disable-next-line:no-unused-expression
 new Vue({
