@@ -4,7 +4,7 @@ import { ApplicationSearchPlugin } from "../plugins/application-search-plugin/ap
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { FileApplicationRepository } from "../plugins/application-search-plugin/file-application-repository";
 import { ApplicationIconService } from "../plugins/application-search-plugin/application-icon-service";
-import { getMacAppIcons, getWindowsAppIcons } from "../plugins/application-search-plugin/application-icon-helpers";
+import { generateMacAppIcons, generateWindowsAppIcons } from "../plugins/application-search-plugin/application-icon-helpers";
 import { executeMacApp, executeWindowsApp } from "../plugins/application-search-plugin/application-execution";
 import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/ueli-command-search-plugin";
 import { ShortcutsSearchPlugin } from "../plugins/shorcuts-plugin/shortcuts-search-plugin";
@@ -21,7 +21,7 @@ export const getMacOsProductionSearchEngine = (userConfig: UserConfigOptions): S
         new ApplicationSearchPlugin(
             userConfig.applicationSearchOptions,
             new FileApplicationRepository(
-                new ApplicationIconService(getMacAppIcons),
+                new ApplicationIconService(generateMacAppIcons),
                 userConfig.applicationSearchOptions,
             ),
             executeMacApp),
@@ -34,7 +34,7 @@ export const getWindowsProductionSearchEngine = (userConfig: UserConfigOptions):
         new ApplicationSearchPlugin(
             userConfig.applicationSearchOptions,
             new FileApplicationRepository(
-                new ApplicationIconService(getWindowsAppIcons),
+                new ApplicationIconService(generateWindowsAppIcons),
                 userConfig.applicationSearchOptions,
             ),
             executeWindowsApp),

@@ -4,7 +4,6 @@ import { createHash } from "crypto";
 import { homedir } from "os";
 import { convert } from "app2png";
 import { Icon, generateIcons } from "windows-system-icon";
-import { ApplicationIcon } from "./application-icon";
 
 export const applicationIconLocation = join(homedir(), ".ueli", "application-icons");
 
@@ -13,10 +12,10 @@ export function getApplicationIconFilePath(application: Application): string {
     return `${join(applicationIconLocation, fileHashName)}.png`;
 }
 
-export function getMacAppIcons(applications: Application[]): Promise<ApplicationIcon[]> {
+export function generateMacAppIcons(applications: Application[]): Promise<void> {
     return new Promise((resolve, reject) => {
         if (applications.length === 0) {
-            resolve([]);
+            resolve();
         }
 
         const promises = applications.map((application) => {
@@ -25,12 +24,7 @@ export function getMacAppIcons(applications: Application[]): Promise<Application
 
         Promise.all(promises)
             .then(() => {
-                resolve(applications.map((application): ApplicationIcon => {
-                    return {
-                        filePathToPng: getApplicationIconFilePath(application),
-                        name: application.name,
-                    };
-                }));
+                resolve();
             })
             .catch((err) => {
                 reject(err);
@@ -38,10 +32,10 @@ export function getMacAppIcons(applications: Application[]): Promise<Application
     });
 }
 
-export function getWindowsAppIcons(applications: Application[]): Promise<ApplicationIcon[]> {
+export function generateWindowsAppIcons(applications: Application[]): Promise<void> {
     return new Promise((resolve, reject) => {
         if (applications.length === 0) {
-            resolve([]);
+            resolve();
         }
 
         const icons = applications.map((application): Icon => {
@@ -54,12 +48,7 @@ export function getWindowsAppIcons(applications: Application[]): Promise<Applica
 
         generateIcons(icons)
             .then(() => {
-                resolve(applications.map((application): ApplicationIcon => {
-                    return {
-                        filePathToPng: getApplicationIconFilePath(application),
-                        name: application.name,
-                    };
-                }));
+                resolve();
             })
             .catch((err) => {
                 reject(err);

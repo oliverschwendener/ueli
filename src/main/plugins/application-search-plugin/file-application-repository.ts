@@ -4,6 +4,7 @@ import { basename, extname } from "path";
 import { ApplicationSearchOptions } from "./application-search-options";
 import { FileHelpers } from "../../helpers/file-helpers";
 import { ApplicationIconService } from "./application-icon-service";
+import { getApplicationIconFilePath } from "./application-icon-helpers";
 
 export class FileApplicationRepository implements ApplicationRepository {
     private readonly applicationIconService: ApplicationIconService;
@@ -39,21 +40,10 @@ export class FileApplicationRepository implements ApplicationRepository {
                         .filter((file) => this.filterByApplicationFileExtensions(file))
                         .map((applicationFile): Application => this.createApplicationFromFilePath(applicationFile));
 
-                    this.applicationIconService.getIcons(applications)
-                        .then((appIcons) => {
-                            applications.forEach((application) => {
-                                const appIcon = appIcons.find((a) => a.name === application.name);
-                                if (appIcon !== undefined) {
-                                    application.icon = appIcon.filePathToPng;
-                                }
-                            });
-
-                            this.applications = applications;
-                            resolve();
-                        })
-                        .catch((err) => {
-                            reject(err);
-                        });
+                    this.applicationIconService.generateAppIcons(applications);
+                    applications.forEach((application) => application.icon = getApplicationIconFilePath(application));
+                    this.applications = applications;
+                    resolve();
                 })
                 .catch((err) => {
                     reject(err);

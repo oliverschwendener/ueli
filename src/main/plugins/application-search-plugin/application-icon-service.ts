@@ -2,20 +2,19 @@ import { Application } from "./application";
 import { join } from "path";
 import { applicationIconLocation } from "./application-icon-helpers";
 import { FileHelpers } from "../../helpers/file-helpers";
-import { ApplicationIcon } from "./application-icon";
 
 export class ApplicationIconService {
-    private readonly getAppIcons: (applications: Application[]) => Promise<ApplicationIcon[]>;
+    private readonly generateIcons: (applications: Application[]) => Promise<void>;
 
-    constructor(getAppIcons: (applications: Application[]) => Promise<ApplicationIcon[]>) {
-        this.getAppIcons = getAppIcons;
+    constructor(generateIcons: (applications: Application[]) => Promise<void>) {
+        this.generateIcons = generateIcons;
     }
 
-    public getIcons(applications: Application[]): Promise<ApplicationIcon[]> {
+    public generateAppIcons(applications: Application[]): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.getAppIcons(applications)
-                .then((appIcons) => {
-                    resolve(appIcons);
+            this.generateIcons(applications)
+                .then(() => {
+                    resolve();
                 })
                 .catch((err) => {
                     reject(err);
