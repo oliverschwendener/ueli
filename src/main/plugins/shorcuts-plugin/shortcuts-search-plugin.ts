@@ -54,17 +54,15 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
     }
 
     public execute(searchResultItem: SearchResultItem): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const decodeResult = this.decodeExecutionArgument(searchResultItem.executionArgument);
-            switch (decodeResult.shortcutType) {
-                case ShortcutType.Url:
-                    return this.executeUrl(decodeResult.executionArgument);
-                case ShortcutType.FilePath:
-                    return this.executeFilePath(decodeResult.executionArgument);
-                default:
-                    reject(`Unsupported shortcut type: ${decodeResult.shortcutType}`);
-            }
-        });
+        const decodeResult = this.decodeExecutionArgument(searchResultItem.executionArgument);
+        switch (decodeResult.shortcutType) {
+            case ShortcutType.Url:
+                return this.executeUrl(decodeResult.executionArgument);
+            case ShortcutType.FilePath:
+                return this.executeFilePath(decodeResult.executionArgument);
+            default:
+                return this.getUnsupportedShortcutTypePromise(decodeResult.shortcutType);
+        }
     }
 
     public isEnabled(): boolean {
@@ -81,6 +79,12 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
         return new Promise((resolve) => {
             this.config = updatedConfig.shortcutsOptions;
             resolve();
+        });
+    }
+
+    private getUnsupportedShortcutTypePromise(shortcutType: ShortcutType): Promise<void> {
+        return new Promise((resolve, reject) => {
+            reject(`Unsupported shortcut type: ${shortcutType}`);
         });
     }
 
