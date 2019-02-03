@@ -21,6 +21,9 @@ const defaultNewShortcut = {
 export const shortcutSettingsComponent = Vue.extend({
     data() {
         return {
+            addNewModalVisible: false,
+            iconTypeSvg: IconType.SVG,
+            iconTypeUrl: IconType.URL,
             iconTypes: Object.values(IconType).sort(),
             newShortcut: cloneDeep(defaultNewShortcut),
             settingName: Settings.Shortcuts,
@@ -31,14 +34,30 @@ export const shortcutSettingsComponent = Vue.extend({
     methods: {
         addNewShortcut() {
             let newShortcut: Shortcut = this.newShortcut;
-
             if (ShortcutHelpers.isValidShortcut(newShortcut)) {
                 const config: UserConfigOptions = this.config;
                 config.shortcutsOptions.shortcuts.push(newShortcut);
                 newShortcut = cloneDeep(defaultNewShortcut);
+                this.addNewModalVisible = false;
                 this.updateConfig();
             } else {
                 vueEventDispatcher.$emit(VueEventChannels.pushNotification, "Invalid shortcut", SettingsNotificationType.Error);
+            }
+        },
+        addNewShortcutButtonClick() {
+            this.addNewModalVisible = true;
+        },
+        closeAddNewShortcutModalButtonClick() {
+            this.addNewModalVisible = false;
+        },
+        deleteShortcut(id: number) {
+            const config: UserConfigOptions = this.config;
+            config.shortcutsOptions.shortcuts.splice(id, 1);
+            this.updateConfig();
+        },
+        onKeyUp(event: KeyboardEvent) {
+            if (event.key === "Escape") {
+                this.closeAddNewShortcutModalButtonClick();
             }
         },
         resetAll() {
@@ -66,11 +85,11 @@ export const shortcutSettingsComponent = Vue.extend({
     },
     props: ["config"],
     template: `
-        <div v-if="visible" class="">
+        <div v-if="visible" @keyup="onKeyUp">
             <div class="settings__setting-title title is-3">
                 <span>
                     Shortcut Options
-                    </span>
+                </span>
                 <div>
                     <button class="button" :class="{ 'is-success' : config.shortcutsOptions.isEnabled }" @click="toggleEnabled">
                         <span class="icon"><i class="fas fa-power-off"></i></span>
@@ -80,132 +99,94 @@ export const shortcutSettingsComponent = Vue.extend({
                     </button>
                 </div>
             </div>
-            <div v-if="config.shortcutsOptions.isEnabled" class="settings__setting-content">
-                <div v-for="shortcut in config.shortcutsOptions.shortcuts" class="settings__setting-content-item box">
-                    <div class="columns is-vcentered">
-                        <div class="column is-one-fifth"><h6 class="title is-6">Name</h6></div>
-                        <div class="column field has-addons">
-                            <div class="control is-expanded">
-                                <input class="input" type="text" v-model="shortcut.name">
-                            </div>
-                            <div class="control is-four-fifths">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="columns is-vcentered">
-                        <div class="column is-one-fifth"><h6 class="title is-6">Description</h6></div>
-                        <div class="column is-four-fifths field has-addons">
-                            <div class="control is-expanded">
-                                <input class="input" type="text" v-model="shortcut.description">
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="columns is-vcentered">
-                        <div class="column is-one-fifth"><h6 class="title is-6">Execution Argument</h6></div>
-                        <div class="column field has-addons">
-                            <div class="control is-expanded">
-                                <input class="input" type="text" v-model="shortcut.executionArgument">
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="columns is-vcentered">
-                        <div class="column is-one-fifth"><h6 class="title is-6">Icon</h6></div>
-                        <div class="column field has-addons">
-                            <div class="control is-expanded">
-                                <input class="input" type="text" v-model="shortcut.icon.parameter">
-                            </div>
-                            <div class="control">
-                                <div class="select">
-                                    <select v-model="shortcut.icon.type">
-                                        <option v-for="iconType in iconTypes">{{ iconType }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="columns is-vcentered">
-                        <div class="column is-one-fifth"><h6 class="title is-6">Shortcut Type</h6></div>
-                        <div class="column field has-addons">
-                            <div class="control is-expanded">
-                                <div class="select is-fullwidth">
-                                    <select v-model="shortcut.type">
-                                        <option v-for="type in shortcutTypes">{{ type }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+            <div v-if="config.shortcutsOptions.isEnabled" class="settings__setting-content box">
+                <div v-if="config.shortcutsOptions.shortcuts.length > 0" class="settings__setting-content-item">
+                    <table class="table is-striped is-fullwidth">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th class="is-expanded">Execution Argument</th>
+                                <th>Type</th>
+                                <th>Icon</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(shortcut, index) in config.shortcutsOptions.shortcuts">
+                                <td>{{ shortcut.name }}</td>
+                                <td>{{ shortcut.description }}</td>
+                                <td>{{ shortcut.executionArgument }}</td>
+                                <td>{{ shortcut.type }}</td>
+                                <td><img v-if="shortcut.icon.type === iconTypeUrl" :src="shortcut.icon.parameter"><span v-else="shortcut.icon.type === iconTypeSvg" v-html="shortcut.icon.parameter"></span></td>
+                                <td><button class="button"><span class="icon"><i class="fas fa-edit"></i></span></button></td>
+                                <td><button class="button is-danger" @click="deleteShortcut(index)"><span class="icon"><i class="fas fa-trash"></i></span></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="settings__setting-content-item box">
-                    <div class="columns is-vcentered">
-                        <div class="column is-one-fifth"><h6 class="title is-6">Name</h6></div>
-                        <div class="column control is-expanded">
-                            <input class="input" type="text" v-model="newShortcut.name">
-                        </div>
-                    </div>
-                    <div class="columns is-vcentered">
-                        <div class="column is-one-fifth"><h6 class="title is-6">Description</h6></div>
-                        <div class="column control is-expanded">
-                            <input class="input" type="text" v-model="newShortcut.description">
-                        </div>
-                    </div>
-                    <div class="columns is-vcentered">
-                        <div class="column is-one-fifth"><h6 class="title is-6">Execution Argument</h6></div>
-                        <div class="column control is-expanded">
-                            <input class="input" type="text" v-model="newShortcut.executionArgument">
-                        </div>
-                    </div>
-                    <div class="columns is-vcentered">
-                        <div class="column is-one-fifth"><h6 class="title is-6">Type</h6></div>
-                        <div class="column control is-expanded">
-                            <div class="select is-fullwidth">
-                                <select v-model="newShortcut.type">
-                                    <option v-for="type in shortcutTypes">{{ type }}</option>
-                                </select>
+                <div>
+                    <button class="button is-success" @click="addNewShortcutButtonClick"><span class="icon"><i class="fas fa-plus"></i></span></button>
+                </div>
+                <div class="modal" :class="{ 'is-active' : addNewModalVisible }">
+                    <div class="modal-background"></div>
+                    <div class="modal-content">
+                        <div class="message">
+                            <div class="message-header">
+                                <p>Add new shortcut</p>
+                                <button class="delete" aria-label="delete" @click="closeAddNewShortcutModalButtonClick"></button>
                             </div>
-                        </div>
-                    </div>
-                    <div class="columns is-vcentered">
-                        <div class="column is-one-fifth"><h6 class="title is-6">Icon</h6></div>
-                        <div class="column field has-addons">
-                            <div class="control is-expanded">
-                                <input class="input" type="text" v-model="newShortcut.icon.parameter">
-                            </div>
-                            <div class="control">
-                                <div class="select">
-                                    <select v-model="newShortcut.icon.type">
-                                        <option v-for="iconType in iconTypes"">{{ iconType }}</option>
-                                    </select>
+                            <div class="message-body">
+                                <div class="field">
+                                    <label class="label">Name</label>
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="Text input" v-model="newShortcut.name" autofocus>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label">Description</label>
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="Text input" v-model="newShortcut.description">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label">Execution Argument</label>
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="Text input" v-model="newShortcut.executionArgument">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label">Shortcut Type</label>
+                                    <div class="control is-expanded">
+                                        <div class="select is-fullwidth">
+                                            <select v-model="newShortcut.type">
+                                                <option v-for="shortcutType in shortcutTypes">{{ shortcutType }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label">Icon</label>
+                                    <div class="field has-addons">
+                                        <div class="control">
+                                            <span class="select">
+                                                <select v-model="newShortcut.icon.type">
+                                                    <option v-for="iconType in iconTypes">{{ iconType }}</option>
+                                                </select>
+                                            </span>
+                                        </div>
+                                        <div class="control is-expanded">
+                                            <input class="input" type="text" placeholder="Icon parameter" v-model="newShortcut.icon.parameter">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field"
+                                    <div class="control">
+                                        <button class="button is-success" @click="addNewShortcut">Add</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="field is-grouped">
-                        <div class="control">
-                            <button class="button is-success" @click="addNewShortcut">Add</button>
                         </div>
                     </div>
                 </div>
