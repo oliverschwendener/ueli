@@ -9,11 +9,12 @@ import { defaultNewShortcut } from "../main/plugins/shorcuts-plugin/shortcut-hel
 import { IconType } from "../common/icon/icon-type";
 import { EditingMode } from "./shortcut-editing-modal-component";
 import { Shortcut } from "../main/plugins/shorcuts-plugin/shortcut";
+import { Icon } from "../common/icon/icon";
+import { IconHelpers } from "../common/icon/icon-helpers";
 
 export const shortcutSettingsComponent = Vue.extend({
     data() {
         return {
-            defaultShortcutIcon,
             iconTypeSvg: IconType.SVG,
             iconTypeUrl: IconType.URL,
             settingName: Settings.Shortcuts,
@@ -44,6 +45,13 @@ export const shortcutSettingsComponent = Vue.extend({
             const config: UserConfigOptions = this.config;
             const shortcut: Shortcut = cloneDeep(config.shortcutOptions.shortcuts[index]);
             vueEventDispatcher.$emit(VueEventChannels.openShortcutEditingModal, shortcut, EditingMode.Edit, index);
+        },
+        getShortcutIcon(shortcut: Shortcut): Icon {
+            if (IconHelpers.isValidIcon(shortcut.icon)) {
+                return shortcut.icon;
+            } else {
+                return defaultShortcutIcon;
+            }
         },
         resetAll() {
             const config: UserConfigOptions = this.config;
@@ -128,8 +136,8 @@ export const shortcutSettingsComponent = Vue.extend({
                                 <td>{{ shortcut.executionArgument }}</td>
                                 <td>{{ shortcut.type }}</td>
                                 <td>
-                                    <img v-if="shortcut.icon.type === iconTypeUrl" :src="shortcut.icon.parameter" class="settings-table__icon-url">
-                                    <div v-else="shortcut.icon.type === iconTypeSvg" v-html="shortcut.icon.parameter" class="settings-table__icon-svg"></div>
+                                    <img v-if="getShortcutIcon(shortcut).type === iconTypeUrl" :src="getShortcutIcon(shortcut).parameter" class="settings-table__icon-url">
+                                    <div v-else="getShortcutIcon(shortcut).type === iconTypeSvg" v-html="getShortcutIcon(shortcut).parameter" class="settings-table__icon-svg"></div>
                                 </td>
                                 <td><button class="button" @click="editShortcut(index)"><span class="icon"><i class="fas fa-edit"></i></span></button></td>
                                 <td><button class="button is-danger" @click="deleteShortcut(index)"><span class="icon"><i class="fas fa-trash"></i></span></button></td>
@@ -137,7 +145,6 @@ export const shortcutSettingsComponent = Vue.extend({
                         </tbody>
                     </table>
                 </div>
-                <h6 class="title is-6 has-text-danger">There are no shortcuts yet.</h6>
                 <div>
                     <button class="button is-success" @click="addButtonClick"><span class="icon"><i class="fas fa-plus"></i></span></button>
                 </div>

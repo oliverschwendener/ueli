@@ -150,11 +150,11 @@ export const shortcutEditingModal = Vue.extend({
                         </div>
                         <div class="field">
                             <label class="label">Tags</label>
-                            <div class="control">
-                                <input class="input" type="text" v-model="newTag" @keyup="onTagKeyPress">
-                            </div>
                             <div v-if="shortcut.tags.length > 0" class="tags">
                                 <span v-for="(tag, index) in shortcut.tags" class="tag is-dark">{{ tag }} <button @click="deleteTag(index)" class="delete is-small"></button></span>
+                            </div>
+                            <div class="control">
+                                <input class="input" type="text" v-model="newTag" @keyup="onTagKeyPress">
                             </div>
                         </div>
                         <div class="field">
