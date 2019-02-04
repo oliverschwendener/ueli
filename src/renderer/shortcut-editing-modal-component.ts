@@ -11,7 +11,7 @@ import { SettingsNotificationType } from "./settings-notification-type";
 import { isValidWindowsFilePath, isValidMacOsFilePath } from "../common/helpers/file-path-validators";
 import { isWindows } from "../common/helpers/operating-system-helpers";
 
-export enum EditingMode {
+export enum ModalEditMode {
     Edit = "Edit Shortcut",
     Add = "Add new Shortcut",
 }
@@ -19,7 +19,8 @@ export enum EditingMode {
 export const shortcutEditingModal = Vue.extend({
     data() {
         return {
-            editMode: EditingMode.Add,
+            autofocus: true,
+            editMode: ModalEditMode.Add,
             iconTypeSvg: IconType.SVG,
             iconTypeUrl: IconType.URL,
             iconTypes: Object.values(IconType).sort(),
@@ -106,11 +107,12 @@ export const shortcutEditingModal = Vue.extend({
         },
     },
     mounted() {
-        vueEventDispatcher.$on(VueEventChannels.openShortcutEditingModal, (shortcut: Shortcut, editMode: EditingMode, saveIndex?: number) => {
+        vueEventDispatcher.$on(VueEventChannels.openShortcutEditingModal, (shortcut: Shortcut, editMode: ModalEditMode, saveIndex?: number) => {
             this.visible = true;
             this.editMode = editMode;
             this.shortcut = shortcut;
             this.saveIndex = saveIndex;
+            this.autofocus = true;
         });
     },
     template: `
@@ -127,7 +129,7 @@ export const shortcutEditingModal = Vue.extend({
                             <label class="label">Shortcut Type</label>
                             <div class="control is-expanded">
                                 <div class="select is-fullwidth">
-                                    <select v-model="shortcut.type">
+                                    <select v-model="shortcut.type" :autofocus="autofocus">
                                         <option v-for="shortcutType in shortcutTypes">{{ shortcutType }}</option>
                                     </select>
                                 </div>
@@ -136,7 +138,7 @@ export const shortcutEditingModal = Vue.extend({
                         <div class="field">
                             <label class="label">Name</label>
                             <div class="control">
-                                <input class="input" type="text" :placeholder="getShorcutTypeNamePlaceholder(shortcut.type)" v-model="shortcut.name" autofocus>
+                                <input class="input" type="text" :placeholder="getShorcutTypeNamePlaceholder(shortcut.type)" v-model="shortcut.name">
                             </div>
                         </div>
                         <div class="field">

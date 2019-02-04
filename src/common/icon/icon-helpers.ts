@@ -11,6 +11,21 @@ export class IconHelpers {
         return icon !== undefined
             && this.isValidIconType(icon.type)
             && icon.parameter !== undefined
-            && icon.parameter.length > 0;
+            && icon.parameter.length > 0
+            && this.isValidIconParameter(icon);
+    }
+
+    public static isValidIconParameter(icon: Icon): boolean {
+        if (icon.type === IconType.SVG) {
+            return icon.parameter.startsWith("<svg>")
+                && icon.parameter.endsWith("</svg>");
+        }
+
+        if (icon.type === IconType.URL) {
+            return icon.parameter.startsWith("<img")
+                && icon.parameter.endsWith(">");
+        }
+
+        return false;
     }
 }

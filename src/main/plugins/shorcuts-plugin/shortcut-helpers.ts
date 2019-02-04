@@ -1,6 +1,7 @@
 import { Shortcut } from "./shortcut";
 import { ShortcutType } from "./shortcut-type";
 import { IconType } from "../../../common/icon/icon-type";
+import { IconHelpers } from "../../../common/icon/icon-helpers";
 
 export const defaultNewShortcut: Shortcut = {
     description: "",
@@ -20,9 +21,15 @@ export class ShortcutHelpers {
     }
 
     public static isValidToAdd(shortcut: Shortcut, filePathValidator: (filePath: string) => boolean): boolean {
+        let iconCondition = true;
+        if (shortcut.icon.parameter && shortcut.icon.parameter.length > 0) {
+            iconCondition = IconHelpers.isValidIconParameter(shortcut.icon);
+        }
+
         return shortcut !== undefined
             && this.isValidExecutionArgument(shortcut, filePathValidator)
-            && this.isValidShortcuType(shortcut.type);
+            && this.isValidShortcuType(shortcut.type)
+            && iconCondition;
     }
 
     public static isValidExecutionArgument(shortcut: Shortcut, filePathValidator: (filePath: string) => boolean): boolean {
