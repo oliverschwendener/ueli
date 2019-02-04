@@ -23,12 +23,8 @@ export function generateMacAppIcons(applications: Application[]): Promise<void> 
         });
 
         Promise.all(promises)
-            .then(() => {
-                resolve();
-            })
-            .catch((err) => {
-                reject(err);
-            });
+            .then(() => resolve())
+            .catch((err) => reject(err));
     });
 }
 
@@ -47,11 +43,7 @@ export function generateWindowsAppIcons(applications: Application[]): Promise<vo
         });
 
         generateIcons(icons)
-            .then(() => {
-                resolve();
-            })
-            .catch((err) => {
-                reject(err);
-            });
+            .then(() => resolve())
+            .catch((err) => reject(err));
     });
 }

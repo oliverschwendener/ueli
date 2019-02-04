@@ -45,9 +45,7 @@ export class FileApplicationRepository implements ApplicationRepository {
                     this.applications = applications;
                     resolve();
                 })
-                .catch((err) => {
-                    reject(err);
-                });
+                .catch((err) => reject(err));
             }
         });
     }
@@ -55,12 +53,8 @@ export class FileApplicationRepository implements ApplicationRepository {
     public clearCache(): Promise<void> {
         return new Promise((resolve, reject) => {
             this.applicationIconService.clearCache()
-                .then(() => {
-                    resolve();
-                })
-                .catch((err) => {
-                    reject(err);
-                });
+                .then(() => resolve())
+                .catch((err) => reject(err));
         });
     }
 

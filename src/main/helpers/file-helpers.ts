@@ -15,9 +15,7 @@ export class FileHelpers {
                     fileLists.forEach((fileList) => result = result.concat(fileList));
                     resolve(result);
                 })
-                .catch((err) => {
-                    reject(err);
-                });
+                .catch((err) => reject(err));
         });
     }
 
@@ -29,9 +27,7 @@ export class FileHelpers {
                 } else {
                     const statPromises = readDirResult
                         .map((file) => join(folderPath, file))
-                        .map((filePath) => {
-                            return this.getStats(filePath);
-                        });
+                        .map((filePath) => this.getStats(filePath));
 
                     Promise.all(statPromises)
                         .then((statLists) => {
@@ -53,13 +49,9 @@ export class FileHelpers {
 
                                     resolve(files);
                                 })
-                                .catch((fileHandleError) => {
-                                    reject(fileHandleError);
-                                });
+                                .catch((fileHandleError) => reject(fileHandleError));
                         })
-                        .catch((statError) => {
-                            reject(readDirError);
-                        });
+                        .catch((statError) => reject(statError));
                 }
             });
         });
@@ -121,12 +113,8 @@ export class FileHelpers {
                 resolve([fileStat.filePath]);
             } else if (isDirectory) {
                 this.readFilesFromFolderRecursively(fileStat.filePath)
-                    .then((f) => {
-                        resolve(f);
-                    })
-                    .catch((err) => {
-                        reject(err);
-                    });
+                    .then((f) => resolve(f))
+                    .catch((err) => reject(err));
             } else {
                 resolve([]);
             }

@@ -73,12 +73,8 @@ export class SearchEngine {
         return new Promise((resolve, reject) => {
             const promises = this.plugins.map((p) => p.refreshIndex());
             Promise.all(promises)
-                .then(() => {
-                    resolve();
-                })
-                .catch((err) => {
-                    reject(err);
-                });
+                .then(() => resolve())
+                .catch((err) => reject(err));
         });
     }
 
@@ -86,12 +82,8 @@ export class SearchEngine {
         return new Promise((resolve, reject) => {
             const promises = this.plugins.map((p) => p.clearCache());
             Promise.all(promises)
-                .then(() => {
-                    resolve();
-                })
-                .catch((err) => {
-                    reject(`Error while trying to clear cache: ${err}`);
-                });
+                .then(() => resolve())
+                .catch((err) => reject(`Error while trying to clear cache: ${err}`));
         });
     }
 

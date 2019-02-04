@@ -13,12 +13,8 @@ export class ApplicationIconService {
     public generateAppIcons(applications: Application[]): Promise<void> {
         return new Promise((resolve, reject) => {
             this.generateIcons(applications)
-                .then(() => {
-                    resolve();
-                })
-                .catch((err) => {
-                    reject(err);
-                });
+                .then(() => resolve())
+                .catch((err) => reject(err));
         });
     }
 
@@ -28,16 +24,10 @@ export class ApplicationIconService {
                 .then((files) => {
                     const deletionPromises = files.map((file) => FileHelpers.deleteFile(join(applicationIconLocation, file)));
                     Promise.all(deletionPromises)
-                        .then(() => {
-                            resolve();
-                        })
-                        .catch((deletionError) => {
-                            reject(deletionError);
-                        });
+                        .then(() => resolve())
+                        .catch((deletionError) => reject(deletionError));
                 })
-                .catch((err) => {
-                    reject(err);
-                });
+                .catch((err) => reject(err));
         });
     }
 }
