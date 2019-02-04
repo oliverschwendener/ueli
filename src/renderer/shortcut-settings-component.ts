@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { Settings } from "./settings";
-import { defaultShortcutsOptions, defaultShortcutIcon } from "../common/config/default-shortcuts-options";
+import { defaultShortcutOptions, defaultShortcutIcon } from "../common/config/default-shortcuts-options";
 import { vueEventDispatcher } from "./vue-event-dispatcher";
 import { VueEventChannels } from "./vue-event-channels";
 import { UserConfigOptions } from "../common/config/user-config-options";
@@ -26,23 +26,23 @@ export const shortcutSettingsComponent = Vue.extend({
         },
         addShortcut(shortcut: Shortcut) {
             const config: UserConfigOptions = this.config;
-            config.shortcutsOptions.shortcuts.push(cloneDeep(shortcut));
+            config.shortcutOptions.shortcuts.push(cloneDeep(shortcut));
             this.updateConfig();
         },
         deleteShortcut(id: number) {
             const config: UserConfigOptions = this.config;
-            config.shortcutsOptions.shortcuts.splice(id, 1);
+            config.shortcutOptions.shortcuts.splice(id, 1);
             this.updateConfig();
         },
         updateShortcut(shortcut: Shortcut, index: number) {
             const config: UserConfigOptions = cloneDeep(this.config);
-            config.shortcutsOptions.shortcuts[index] = cloneDeep(shortcut);
+            config.shortcutOptions.shortcuts[index] = cloneDeep(shortcut);
             this.config = cloneDeep(config);
             this.updateConfig();
         },
         editShortcut(index: number): void {
             const config: UserConfigOptions = this.config;
-            const shortcut: Shortcut = cloneDeep(config.shortcutsOptions.shortcuts[index]);
+            const shortcut: Shortcut = cloneDeep(config.shortcutOptions.shortcuts[index]);
             vueEventDispatcher.$emit(VueEventChannels.openShortcutEditingModal, shortcut, EditingMode.Edit, index);
         },
         onKeyUp(event: KeyboardEvent) {
@@ -52,17 +52,17 @@ export const shortcutSettingsComponent = Vue.extend({
         },
         resetAll() {
             const config: UserConfigOptions = this.config;
-            config.shortcutsOptions = cloneDeep(defaultShortcutsOptions);
+            config.shortcutOptions = cloneDeep(defaultShortcutOptions);
             this.updateConfig();
         },
         resetShortcutsToDefault() {
             const config: UserConfigOptions = this.config;
-            config.shortcutsOptions.shortcuts = cloneDeep(defaultShortcutsOptions.shortcuts);
+            config.shortcutOptions.shortcuts = cloneDeep(defaultShortcutOptions.shortcuts);
             this.updateConfig();
         },
         toggleEnabled() {
             const config: UserConfigOptions = this.config;
-            config.shortcutsOptions.isEnabled = !config.shortcutsOptions.isEnabled;
+            config.shortcutOptions.isEnabled = !config.shortcutOptions.isEnabled;
             this.updateConfig();
         },
         updateConfig() {
@@ -94,7 +94,7 @@ export const shortcutSettingsComponent = Vue.extend({
                     Shortcut Options
                 </span>
                 <div>
-                    <button class="button" :class="{ 'is-success' : config.shortcutsOptions.isEnabled }" @click="toggleEnabled">
+                    <button class="button" :class="{ 'is-success' : config.shortcutOptions.isEnabled }" @click="toggleEnabled">
                         <span class="icon"><i class="fas fa-power-off"></i></span>
                     </button>
                     <button class="button" @click="resetAll">
@@ -102,17 +102,18 @@ export const shortcutSettingsComponent = Vue.extend({
                     </button>
                 </div>
             </div>
-            <div v-if="config.shortcutsOptions.isEnabled" class="settings__setting-content box">
+            <div v-if="config.shortcutOptions.isEnabled" class="settings__setting-content box">
                 <div class="settings__setting-content-item-title">
                     <div class="title is-5">Shortcuts</div>
                     <button class="button" @click="resetShortcutsToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                 </div>
-                <div v-if="config.shortcutsOptions.shortcuts.length > 0" class="settings__setting-content-item">
+                <div v-if="config.shortcutOptions.shortcuts.length > 0" class="settings__setting-content-item">
                     <table class="table is-striped is-fullwidth">
                         <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Description</th>
+                                <th>Tags</th>
                                 <th class="is-expanded">Execution Argument</th>
                                 <th>Type</th>
                                 <th>Icon</th>
@@ -121,9 +122,14 @@ export const shortcutSettingsComponent = Vue.extend({
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(shortcut, index) in config.shortcutsOptions.shortcuts">
+                            <tr v-for="(shortcut, index) in config.shortcutOptions.shortcuts">
                                 <td>{{ shortcut.name }}</td>
                                 <td>{{ shortcut.description }}</td>
+                                <td>
+                                    <div v-if="shortcut.tags.length > 0" class="tags">
+                                        <span v-for="tag in shortcut.tags" class="tag is-dark">{{ tag }}</span>
+                                    </div>
+                                </td>
                                 <td>{{ shortcut.executionArgument }}</td>
                                 <td>{{ shortcut.type }}</td>
                                 <td>
@@ -136,9 +142,13 @@ export const shortcutSettingsComponent = Vue.extend({
                         </tbody>
                     </table>
                 </div>
+                <h6 class="title is-6 has-text-danger">There are no shortcuts yet.</h6>
                 <div>
                     <button class="button is-success" @click="addButtonClick"><span class="icon"><i class="fas fa-plus"></i></span></button>
                 </div>
+            </div>
+            <div v-else>
+                <h6 class="title is-6 has-text-danger">Shortcuts are disabled</h6>
             </div>
             <shortcut-editing-modal></shortcut-editing-modal>
         </div>

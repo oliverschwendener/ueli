@@ -3,12 +3,12 @@ import { defaultApplicationSearchOptions } from "../../main/plugins/application-
 import { defaultGeneralOptions } from "./default-general-options";
 import { defaultSearchEngineOptions } from "./default-search-engine-options";
 import { defaultAppearanceOptions } from "./default-appearance-options";
-import { defaultShortcutsOptions } from "./default-shortcuts-options";
+import { defaultShortcutOptions } from "./default-shortcuts-options";
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
     applicationSearchOptions: defaultApplicationSearchOptions,
     generalOptions: defaultGeneralOptions,
     searchEngineOptions: defaultSearchEngineOptions,
-    shortcutsOptions: defaultShortcutsOptions,
+    shortcutOptions: defaultShortcutOptions,
 };

@@ -36,7 +36,7 @@ export class SearchEngine {
                     const fuse = new Fuse(all, {
                         distance: 100,
                         includeScore: true,
-                        keys: ["name"],
+                        keys: ["searchable"],
                         location: 0,
                         maxPatternLength: 32,
                         minMatchCharLength: 1,

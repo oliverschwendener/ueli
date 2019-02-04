@@ -7,4 +7,5 @@ export interface SearchResultItem {
     icon: Icon;
     name: string;
     originPluginType: PluginType;
+    searchable: string[];
 }

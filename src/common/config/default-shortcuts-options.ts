@@ -1,8 +1,8 @@
-import { ShortcutsOptions } from "./shortcuts-options";
+import { ShortcutOptions } from "./shortcuts-options";
 import { Icon } from "../icon/icon";
 import { IconType } from "../icon/icon-type";
 
-export const defaultShortcutsOptions: ShortcutsOptions = {
+export const defaultShortcutOptions: ShortcutOptions = {
     isEnabled: true,
     shortcuts: [],
 };

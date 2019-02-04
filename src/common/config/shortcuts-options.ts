@@ -1,6 +1,6 @@
 import { Shortcut } from "../../main/plugins/shorcuts-plugin/shortcut";
 
-export interface ShortcutsOptions {
+export interface ShortcutOptions {
     isEnabled: boolean;
     shortcuts: Shortcut[];
 }

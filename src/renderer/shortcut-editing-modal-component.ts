@@ -23,6 +23,7 @@ export const shortcutEditingModal = Vue.extend({
             iconTypeSvg: IconType.SVG,
             iconTypeUrl: IconType.URL,
             iconTypes: Object.values(IconType).sort(),
+            newTag: "",
             saveIndex: undefined,
             shortcut: cloneDeep(defaultNewShortcut),
             shortcutTypes: Object.values(ShortcutType).sort(),
@@ -42,6 +43,9 @@ export const shortcutEditingModal = Vue.extend({
         closeButtonClick() {
             this.shortcut = cloneDeep(defaultNewShortcut);
             this.visible = false;
+        },
+        deleteTag(index: number) {
+            this.shortcut.tags.splice(index, 1);
         },
         getIconTypePlaceholder(iconType: IconType): string {
             return iconType === IconType.SVG
@@ -80,6 +84,15 @@ export const shortcutEditingModal = Vue.extend({
                 : "Downloads";
 
             return `For example: "${placeholder}"`;
+        },
+        onTagKeyPress(event: KeyboardEvent) {
+            if (event.key === "Enter") {
+                if (this.newTag.length > 0) {
+                    const shortcut: Shortcut = this.shortcut;
+                    shortcut.tags.push(this.newTag);
+                    this.newTag = "";
+                }
+            }
         },
         resetModal(): void {
             this.shortcut = cloneDeep(defaultNewShortcut);
@@ -125,6 +138,15 @@ export const shortcutEditingModal = Vue.extend({
                             <label class="label">Description (optional)</label>
                             <div class="control">
                                 <input class="input" type="text" :placeholder="getShorcutTypeDescriptionPlaceholder(shortcut.type)" v-model="shortcut.description">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Tags</label>
+                            <div v-if="shortcut.tags.length > 0" class="tags">
+                                <span v-for="(tag, index) in shortcut.tags" class="tag is-dark">{{ tag }} <button @click="deleteTag(index)" class="delete is-small"></button></span>
+                            </div>
+                            <div class="control">
+                                <input class="input" type="text" v-model="newTag" @keyup="onTagKeyPress">
                             </div>
                         </div>
                         <div class="field">

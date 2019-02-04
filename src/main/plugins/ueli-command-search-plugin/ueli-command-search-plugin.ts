@@ -93,6 +93,7 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
             },
             name: ueliCommand.name,
             originPluginType: this.pluginType,
+            searchable: [ueliCommand.name, ueliCommand.description],
         };
     }
 }

@@ -19,7 +19,7 @@ const getCommonProductionSearchPlugins = (userConfig: UserConfigOptions): Search
 
     return [
         new UeliCommandSearchPlugin(),
-        new ShortcutsSearchPlugin(userConfig.shortcutsOptions, urlExecutor, filePathExecutor),
+        new ShortcutsSearchPlugin(userConfig.shortcutOptions, urlExecutor, filePathExecutor),
     ];
 };
 

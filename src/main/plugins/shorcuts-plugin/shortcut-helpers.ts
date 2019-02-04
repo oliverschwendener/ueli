@@ -2,12 +2,17 @@ import { Shortcut } from "./shortcut";
 import { ShortcutType } from "./shortcut-type";
 import { IconType } from "../../../common/icon/icon-type";
 
-export const defaultNewShortcut = {
+export const defaultNewShortcut: Shortcut = {
+    description: "",
+    executionArgument: "",
     icon: {
+        parameter: "",
         type: IconType.URL,
     },
+    name: "",
+    tags: [],
     type: ShortcutType.Url,
-} as Shortcut;
+};
 
 export class ShortcutHelpers {
     public static isValidShortcuType(shortcutType: ShortcutType): boolean {

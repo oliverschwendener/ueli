@@ -6,5 +6,6 @@ export interface Shortcut {
     description: string;
     executionArgument: string;
     icon: Icon;
+    tags: string[];
     type: ShortcutType;
 }

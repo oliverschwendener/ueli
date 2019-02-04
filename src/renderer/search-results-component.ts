@@ -43,6 +43,7 @@ export const searchResultsComponent = Vue.extend({
                     id: `search-result-item-${counter}`,
                     name: searchResult.name,
                     originPluginType: searchResult.originPluginType,
+                    searchable: searchResult.searchable,
                 };
             });
 

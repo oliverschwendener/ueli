@@ -2,7 +2,7 @@ import { SearchPlugin } from "../../search-plugin";
 import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
-import { ShortcutsOptions } from "../../../common/config/shortcuts-options";
+import { ShortcutOptions } from "../../../common/config/shortcuts-options";
 import { IconHelpers } from "../../../common/icon/icon-helpers";
 import { defaultShortcutIcon } from "../../../common/config/default-shortcuts-options";
 import { Shortcut } from "./shortcut";
@@ -15,12 +15,12 @@ interface ExecutionArgumentDecodeResult {
 
 export class ShortcutsSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.ShortcutsSearchPlugin;
-    private config: ShortcutsOptions;
+    private config: ShortcutOptions;
     private readonly urlExecutor: (url: string) => Promise<void>;
     private readonly filePathExecutor: (filePath: string) => Promise<void>;
 
     constructor(
-        config: ShortcutsOptions,
+        config: ShortcutOptions,
         urlExecutor: (url: string) => Promise<void>,
         filePathExecutor: (filePath: string) => Promise<void>,
         ) {
@@ -40,6 +40,7 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
                         : defaultShortcutIcon,
                     name: shortcut.name,
                     originPluginType: this.pluginType,
+                    searchable: [shortcut.name].concat(shortcut.tags),
                 };
             });
 
@@ -77,7 +78,7 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
 
     public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
         return new Promise((resolve) => {
-            this.config = updatedConfig.shortcutsOptions;
+            this.config = updatedConfig.shortcutOptions;
             resolve();
         });
     }

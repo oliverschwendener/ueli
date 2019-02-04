@@ -89,6 +89,7 @@ export class ApplicationSearchPlugin implements SearchPlugin {
                 },
                 name: application.name,
                 originPluginType: this.pluginType,
+                searchable: [application.name],
             });
         });
     }
