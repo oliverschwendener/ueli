@@ -56,7 +56,6 @@ export const shortcutEditingModal = Vue.extend({
             const placeholder = shortcutType === ShortcutType.Url
                 ? "Google Website"
                 : "Downloads Folder";
-
             return `For example: "${placeholder}"`;
         },
         getShorcutTypeExecutionArgumentDescription(shortcutType: ShortcutType): string {
@@ -75,14 +74,12 @@ export const shortcutEditingModal = Vue.extend({
                 : isWindows(platform())
                     ? "C:\\Users\\Downloads"
                     : "/Users/Foo/Downloads";
-
             return `For example: "${placeholder}"`;
         },
         getShorcutTypeNamePlaceholder(shortcutType: ShortcutType): string {
             const placeholder = shortcutType === ShortcutType.Url
                 ? "Google"
                 : "Downloads";
-
             return `For example: "${placeholder}"`;
         },
         onBackgroundClick() {
@@ -143,28 +140,28 @@ export const shortcutEditingModal = Vue.extend({
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">Description (optional)</label>
-                            <div class="control">
-                                <input class="input" type="text" :placeholder="getShorcutTypeDescriptionPlaceholder(shortcut.type)" v-model="shortcut.description">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">Tags</label>
-                            <div v-if="shortcut.tags.length > 0" class="tags">
-                                <span v-for="(tag, index) in shortcut.tags" class="tag is-dark">{{ tag }} <button @click="deleteTag(index)" class="delete is-small"></button></span>
-                            </div>
-                            <div class="control">
-                                <input class="input" type="text" v-model="newTag" @keyup="onTagKeyPress">
-                            </div>
-                        </div>
-                        <div class="field">
                             <label class="label">{{ getShorcutTypeExecutionArgumentDescription(shortcut.type) }}</label>
                             <div class="control">
                                 <input class="input" type="text" :placeholder="getShorcutTypeExecutionArgumentPlaceholder(shortcut.type)" v-model="shortcut.executionArgument">
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">Icon</label>
+                            <label class="label">Description (optional)</label>
+                            <div class="control">
+                                <input class="input" type="text" :placeholder="getShorcutTypeDescriptionPlaceholder(shortcut.type)" v-model="shortcut.description">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Tags (optional)</label>
+                            <div v-if="shortcut.tags.length > 0" class="tags">
+                                <span v-for="(tag, index) in shortcut.tags" class="tag is-dark">{{ tag }} <button @click="deleteTag(index)" class="delete is-small"></button></span>
+                            </div>
+                            <div class="control">
+                                <input class="input" type="text" v-model="newTag" placeholder="Add a tag and press Enter" @keyup="onTagKeyPress">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Icon (optional)</label>
                             <div class="field has-addons">
                                 <div class="control">
                                     <span class="select">

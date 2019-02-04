@@ -11,6 +11,7 @@ import { EditingMode } from "./shortcut-editing-modal-component";
 import { Shortcut } from "../main/plugins/shorcuts-plugin/shortcut";
 import { Icon } from "../common/icon/icon";
 import { IconHelpers } from "../common/icon/icon-helpers";
+import { ShortcutType } from "../main/plugins/shorcuts-plugin/shortcut-type";
 
 export const shortcutSettingsComponent = Vue.extend({
     data() {
@@ -51,6 +52,16 @@ export const shortcutSettingsComponent = Vue.extend({
                 return shortcut.icon;
             } else {
                 return defaultShortcutIcon;
+            }
+        },
+        getShortcutTypeClass(shortcutType: ShortcutType): string {
+            switch (shortcutType) {
+                case ShortcutType.Url:
+                    return "is-primary";
+                case ShortcutType.FilePath:
+                    return "is-info";
+                default:
+                    return "is-dark";
             }
         },
         resetAll() {
@@ -114,11 +125,11 @@ export const shortcutSettingsComponent = Vue.extend({
                     <table class="table is-striped is-fullwidth">
                         <thead>
                             <tr>
+                                <th>Type</th>
                                 <th>Name</th>
+                                <th class="is-expanded">Execution Argument</th>
                                 <th>Description</th>
                                 <th>Tags</th>
-                                <th class="is-expanded">Execution Argument</th>
-                                <th>Type</th>
                                 <th>Icon</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
@@ -126,15 +137,15 @@ export const shortcutSettingsComponent = Vue.extend({
                         </thead>
                         <tbody>
                             <tr v-for="(shortcut, index) in config.shortcutOptions.shortcuts">
+                                <td><span class="tag" :class="getShortcutTypeClass(shortcut.type)">{{ shortcut.type }}</span></td>
                                 <td>{{ shortcut.name }}</td>
+                                <td>{{ shortcut.executionArgument }}</td>
                                 <td>{{ shortcut.description }}</td>
                                 <td>
                                     <div v-if="shortcut.tags.length > 0" class="tags">
                                         <span v-for="tag in shortcut.tags" class="tag is-light">{{ tag }}</span>
                                     </div>
                                 </td>
-                                <td>{{ shortcut.executionArgument }}</td>
-                                <td>{{ shortcut.type }}</td>
                                 <td>
                                     <img v-if="getShortcutIcon(shortcut).type === iconTypeUrl" :src="getShortcutIcon(shortcut).parameter" class="settings-table__icon-url">
                                     <div v-else="getShortcutIcon(shortcut).type === iconTypeSvg" v-html="getShortcutIcon(shortcut).parameter" class="settings-table__icon-svg"></div>
