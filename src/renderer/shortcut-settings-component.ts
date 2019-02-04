@@ -45,11 +45,6 @@ export const shortcutSettingsComponent = Vue.extend({
             const shortcut: Shortcut = cloneDeep(config.shortcutOptions.shortcuts[index]);
             vueEventDispatcher.$emit(VueEventChannels.openShortcutEditingModal, shortcut, EditingMode.Edit, index);
         },
-        onKeyUp(event: KeyboardEvent) {
-            if (event.key === "Escape") {
-                this.closeAddNewShortcutModalButtonClick();
-            }
-        },
         resetAll() {
             const config: UserConfigOptions = this.config;
             config.shortcutOptions = cloneDeep(defaultShortcutOptions);
@@ -88,7 +83,7 @@ export const shortcutSettingsComponent = Vue.extend({
     },
     props: ["config"],
     template: `
-        <div v-if="visible" @keyup="onKeyUp">
+        <div v-if="visible">
             <div class="settings__setting-title title is-3">
                 <span>
                     Shortcut Options
@@ -127,7 +122,7 @@ export const shortcutSettingsComponent = Vue.extend({
                                 <td>{{ shortcut.description }}</td>
                                 <td>
                                     <div v-if="shortcut.tags.length > 0" class="tags">
-                                        <span v-for="tag in shortcut.tags" class="tag is-dark">{{ tag }}</span>
+                                        <span v-for="tag in shortcut.tags" class="tag is-light">{{ tag }}</span>
                                     </div>
                                 </td>
                                 <td>{{ shortcut.executionArgument }}</td>

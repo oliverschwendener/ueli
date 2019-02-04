@@ -85,6 +85,14 @@ export const shortcutEditingModal = Vue.extend({
 
             return `For example: "${placeholder}"`;
         },
+        onBackgroundClick() {
+            this.resetModal();
+        },
+        onGlobalKeyPress(event: KeyboardEvent) {
+            if (event.key === "Escape") {
+                this.resetModal();
+            }
+        },
         onTagKeyPress(event: KeyboardEvent) {
             if (event.key === "Enter") {
                 if (this.newTag.length > 0) {
@@ -109,8 +117,8 @@ export const shortcutEditingModal = Vue.extend({
         });
     },
     template: `
-        <div class="modal" :class="{ 'is-active' : visible }">
-            <div class="modal-background"></div>
+        <div class="modal" :class="{ 'is-active' : visible }" @keyup="onGlobalKeyPress">
+            <div class="modal-background" @click="onBackgroundClick"></div>
             <div class="modal-content">
                 <div class="message">
                     <div class="message-header">
@@ -142,11 +150,11 @@ export const shortcutEditingModal = Vue.extend({
                         </div>
                         <div class="field">
                             <label class="label">Tags</label>
-                            <div v-if="shortcut.tags.length > 0" class="tags">
-                                <span v-for="(tag, index) in shortcut.tags" class="tag is-dark">{{ tag }} <button @click="deleteTag(index)" class="delete is-small"></button></span>
-                            </div>
                             <div class="control">
                                 <input class="input" type="text" v-model="newTag" @keyup="onTagKeyPress">
+                            </div>
+                            <div v-if="shortcut.tags.length > 0" class="tags">
+                                <span v-for="(tag, index) in shortcut.tags" class="tag is-dark">{{ tag }} <button @click="deleteTag(index)" class="delete is-small"></button></span>
                             </div>
                         </div>
                         <div class="field">
