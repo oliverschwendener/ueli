@@ -78,7 +78,7 @@ export const settingsComponent = Vue.extend({
         });
     },
     template: `
-        <div class="settings container">
+        <div class="settings">
             <settings-loading-overlay></settings-loading-overlay>
             <div class="settings__sidebar menu">
                 <ul class="menu-list">
