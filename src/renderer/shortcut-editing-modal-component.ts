@@ -10,6 +10,7 @@ import { defaultNewShortcut, ShortcutHelpers } from "../main/plugins/shorcuts-pl
 import { SettingsNotificationType } from "./settings-notification-type";
 import { isValidWindowsFilePath, isValidMacOsFilePath } from "../common/helpers/file-path-validators";
 import { isWindows } from "../common/helpers/operating-system-helpers";
+import { isEqual } from "lodash";
 
 export enum ModalEditMode {
     Edit = "Edit Shortcut",
@@ -17,6 +18,11 @@ export enum ModalEditMode {
 }
 
 export const shortcutEditingModal = Vue.extend({
+    computed: {
+        noChanges(): boolean {
+            return isEqual(this.initialShortcut, this.shortcut);
+        },
+    },
     data() {
         return {
             autofocus: true,
@@ -117,6 +123,7 @@ export const shortcutEditingModal = Vue.extend({
             this.visible = true;
             this.editMode = editMode;
             this.shortcut = shortcut;
+            this.initialShortcut = cloneDeep(shortcut);
             this.saveIndex = saveIndex;
             this.autofocus = true;
         });
@@ -196,7 +203,7 @@ export const shortcutEditingModal = Vue.extend({
                                 </button>
                             </div>
                             <div class="control">
-                                <button class="button is-success" @click="saveButtonClick">
+                                <button :disabled="noChanges" class="button is-success" @click="saveButtonClick">
                                     <span class="icon">
                                         <i class="fas fa-check"></i>
                                     </span>
