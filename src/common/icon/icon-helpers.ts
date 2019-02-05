@@ -22,8 +22,7 @@ export class IconHelpers {
         }
 
         if (icon.type === IconType.URL) {
-            return icon.parameter.startsWith("<img")
-                && icon.parameter.endsWith(">");
+            return true;
         }
 
         return false;
