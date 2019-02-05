@@ -1,3 +1,7 @@
+:root {
+    --font-family-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
 html {
     overflow-y: hidden !important;
 }
@@ -80,6 +84,11 @@ html {
 .settings-table__icon-svg > svg{
     width: 24px;
     height: 24px;
+}
+
+.font-mono {
+    font-family: var(--font-family-mono) !important;
+    font-size: 0.8rem;
 }
 
 /* Spinner */

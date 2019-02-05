@@ -2,7 +2,6 @@ import { app, BrowserWindow, ipcMain, globalShortcut } from "electron";
 import { join } from "path";
 import { IpcChannels } from "../common/ipc-channels";
 import { SearchResultItem } from "../common/search-result-item";
-import { getMacOsProductionSearchEngine, getWindowsProductionSearchEngine } from "./production/production-search-engine";
 import { UserConfigOptions } from "../common/config/user-config-options";
 import { ConsoleLogger } from "../common/logger/console-logger";
 import { ElectronStoreConfigRepository } from "../common/config/electron-store-config-repository";
@@ -13,6 +12,7 @@ import { UeliCommand } from "./plugins/ueli-command-search-plugin/ueli-command";
 import { UeliCommandExecutionArgument } from "./plugins/ueli-command-search-plugin/ueli-command-execution-argument";
 import { platform } from "os";
 import { OperatingSystem } from "../common/operating-system";
+import { getProductionSearchPlugins as getProductionSearchEngine } from "./production/production-search-engine";
 
 const logger = new ConsoleLogger();
 const configRepository = new ElectronStoreConfigRepository(defaultUserConfigOptions);
@@ -26,7 +26,7 @@ let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow;
 
 let config = configRepository.getConfig();
-let searchEngine = currentOperatingSystem === OperatingSystem.macOS ? getMacOsProductionSearchEngine(config) : getWindowsProductionSearchEngine(config);
+let searchEngine = getProductionSearchEngine(config);
 
 function notifyRenderer(ipcChannel: IpcChannels, message?: string) {
     const allWindows = [mainWindow, settingsWindow];
@@ -141,7 +141,7 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
 
 function reloadApp() {
     updateMainWindowSize(0, config.appearanceOptions);
-    searchEngine = currentOperatingSystem === OperatingSystem.macOS ? getMacOsProductionSearchEngine(config) : getWindowsProductionSearchEngine(config);
+    searchEngine = getProductionSearchEngine(config);
     mainWindow.reload();
 }
 

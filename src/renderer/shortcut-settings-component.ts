@@ -157,7 +157,10 @@ export const shortcutSettingsComponent = Vue.extend({
                     </table>
                 </div>
                 <div>
-                    <button class="button is-success" @click="addButtonClick"><span class="icon"><i class="fas fa-plus"></i></span></button>
+                    <button class="button is-success" @click="addButtonClick">
+                        <span class="icon"><i class="fas fa-plus"></i></span>
+                        <span>Add Shortcut</span>
+                    </button>
                 </div>
             </div>
             <div v-else>

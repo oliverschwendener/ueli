@@ -17,7 +17,7 @@ export class IconHelpers {
 
     public static isValidIconParameter(icon: Icon): boolean {
         if (icon.type === IconType.SVG) {
-            return icon.parameter.startsWith("<svg>")
+            return icon.parameter.startsWith("<svg")
                 && icon.parameter.endsWith("</svg>");
         }
 
