@@ -10,6 +10,7 @@ import { IpcChannels } from "../../../common/ipc-channels";
 
 export class UeliCommandSearchPlugin implements SearchPlugin {
     public pluginType = PluginType.UeliCommandSearchPlugin;
+    private readonly ueliCommandTags = ["ueli"];
     private readonly commands: UeliCommand[] = [
         {
             description: "Exit ueli",
@@ -93,7 +94,7 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
             },
             name: ueliCommand.name,
             originPluginType: this.pluginType,
-            searchable: [ueliCommand.name, ueliCommand.description],
+            searchable: [ueliCommand.name, ueliCommand.description].concat(this.ueliCommandTags),
         };
     }
 }
