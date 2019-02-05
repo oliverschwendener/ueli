@@ -200,7 +200,20 @@ function startApp() {
     registerAllIpcListeners();
 }
 
+function onSettingsOpen() {
+    if (currentOperatingSystem === OperatingSystem.macOS) {
+        app.dock.show();
+    }
+}
+
+function onSettingsClose() {
+    if (currentOperatingSystem === OperatingSystem.macOS) {
+        app.dock.hide();
+    }
+}
+
 function openSettings() {
+    onSettingsOpen();
     if (!settingsWindow || settingsWindow.isDestroyed()) {
         settingsWindow = new BrowserWindow({
             height: 700,
@@ -208,6 +221,7 @@ function openSettings() {
         });
         settingsWindow.setMenu(null);
         settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
+        settingsWindow.on("close", onSettingsClose);
         if (isDev()) {
             settingsWindow.webContents.openDevTools();
         }
