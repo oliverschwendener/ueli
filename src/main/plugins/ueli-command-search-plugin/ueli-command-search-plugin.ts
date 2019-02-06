@@ -10,27 +10,42 @@ import { IpcChannels } from "../../../common/ipc-channels";
 
 export class UeliCommandSearchPlugin implements SearchPlugin {
     public pluginType = PluginType.UeliCommandSearchPlugin;
-    private readonly ueliCommandTags = ["ueli"];
     private readonly commands: UeliCommand[] = [
         {
-            description: "Exit ueli",
+            description: "Quit ueli",
             executionArgument: UeliCommandExecutionArgument.Exit,
-            name: "Exit",
+            hideMainWindowAfterExecution: true,
+            name: "Quit",
         },
         {
             description: "Reload ueli",
             executionArgument: UeliCommandExecutionArgument.Reload,
+            hideMainWindowAfterExecution: false,
             name: "Reload",
         },
         {
             description: "Edit settings file in your default text editor",
             executionArgument: UeliCommandExecutionArgument.EditConfigFile,
-             name: "Edit settings file",
+            hideMainWindowAfterExecution: true,
+            name: "Edit settings file",
         },
         {
             description: "Open ueli setttings",
             executionArgument: UeliCommandExecutionArgument.OpenSettings,
+            hideMainWindowAfterExecution: false,
             name: "Open settings",
+        },
+        {
+            description: "Refresh ueli indexes",
+            executionArgument: UeliCommandExecutionArgument.RefreshIndexes,
+            hideMainWindowAfterExecution: false,
+            name: "Refresh indexes",
+        },
+        {
+            description: "Clear ueli caches",
+            executionArgument: UeliCommandExecutionArgument.ClearCaches,
+            hideMainWindowAfterExecution: false,
+            name: "Clear caches",
         },
     ];
     private readonly icon = `
@@ -88,13 +103,14 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
         return {
             description: ueliCommand.description,
             executionArgument: ueliCommand.executionArgument,
+            hideMainWindowAfterExecution: ueliCommand.hideMainWindowAfterExecution,
             icon: {
                 parameter: this.icon,
                 type: IconType.SVG,
             },
             name: ueliCommand.name,
             originPluginType: this.pluginType,
-            searchable: [ueliCommand.name, ueliCommand.description].concat(this.ueliCommandTags),
+            searchable: [ueliCommand.name, ueliCommand.description],
         };
     }
 }

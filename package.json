@@ -32,7 +32,8 @@
     "start": "./node_modules/.bin/electron . --enable-logging",
     "lint": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json",
     "lint:fix": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json --fix",
-    "test": "./node_modules/.bin/jest --config jest.json --silent ."
+    "test": "./node_modules/.bin/jest --config jest.json --silent .",
+    "tsc:validate": "./node_modules/.bin/tsc --noEmit"
   },
   "devDependencies": {
     "@types/electron-store": "^1.3.0",

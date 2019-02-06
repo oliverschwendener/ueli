@@ -83,6 +83,7 @@ export class ApplicationSearchPlugin implements SearchPlugin {
             resolve({
                 description: this.createApplicationDescription(application),
                 executionArgument: application.filePath,
+                hideMainWindowAfterExecution: true,
                 icon: {
                     parameter: application.icon,
                     type: IconType.URL,

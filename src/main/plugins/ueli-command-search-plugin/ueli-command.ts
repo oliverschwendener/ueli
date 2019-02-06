@@ -4,4 +4,5 @@ export interface UeliCommand {
     name: string;
     description: string;
     executionArgument: UeliCommandExecutionArgument;
+    hideMainWindowAfterExecution: boolean;
 }

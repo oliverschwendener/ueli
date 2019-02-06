@@ -35,6 +35,7 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
                 return {
                     description: shortcut.description,
                     executionArgument: this.encodeExecutionArgument(shortcut),
+                    hideMainWindowAfterExecution: true,
                     icon: IconHelpers.isValidIcon(shortcut.icon)
                         ? shortcut.icon
                         : defaultShortcutIcon,

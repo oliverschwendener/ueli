@@ -28,6 +28,8 @@ let settingsWindow: BrowserWindow;
 let config = configRepository.getConfig();
 let searchEngine = getProductionSearchEngine(config);
 
+let rescanInterval = setInterval(() => refreshAllIndexes(), Number(config.generalOptions.rescanIntervalInSeconds) * 1000);
+
 function notifyRenderer(ipcChannel: IpcChannels, message?: string) {
     const allWindows = [mainWindow, settingsWindow];
     allWindows.forEach((window) => {
@@ -50,7 +52,11 @@ function refreshAllIndexes() {
         });
 }
 
-let rescanInterval = setInterval(() => refreshAllIndexes(), Number(config.generalOptions.rescanIntervalInSeconds) * 1000);
+function clearAllCaches() {
+    searchEngine.clearCaches()
+        .then(() => logger.debug("Successfully cleared all caches"))
+        .catch((err) => logger.error(err));
+}
 
 function registerGlobalKeyboardShortcut(toggleAction: () => void, hotKey: string) {
     globalShortcut.unregisterAll();
@@ -246,7 +252,13 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.execute, (event: Electron.Event, searchResultItem: SearchResultItem) => {
         searchEngine.execute(searchResultItem)
-            .then(() => hideMainWindow())
+            .then(() => {
+                if (searchResultItem.hideMainWindowAfterExecution) {
+                    hideMainWindow();
+                } else {
+                    updateMainWindowSize(0, config.appearanceOptions);
+                }
+            })
             .catch((err) => logger.error(err));
     });
 
@@ -271,6 +283,12 @@ function registerAllIpcListeners() {
                 break;
             case UeliCommandExecutionArgument.OpenSettings:
                 openSettings();
+                break;
+            case UeliCommandExecutionArgument.RefreshIndexes:
+                refreshAllIndexes();
+                break;
+            case UeliCommandExecutionArgument.ClearCaches:
+                clearAllCaches();
                 break;
             default:
                 logger.error("Unhandled ueli command execution");
