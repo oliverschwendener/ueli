@@ -5,10 +5,14 @@ import { UserConfigOptions } from "../common/config/user-config-options";
 import { cloneDeep } from "lodash";
 import { defaultGeneralOptions } from "../common/config/default-general-options";
 import { Settings } from "./settings";
+import { GlobalHotKeyModifier } from "../common/global-hot-key/global-hot-key-modifier";
+import { GlobalHotKeyKey } from "../common/global-hot-key/global-hot-key-key";
 
 export const generalSettingsComponent = Vue.extend({
     data() {
         return {
+            globalHotKeyKeys: Object.values(GlobalHotKeyKey).map((k) => k),
+            globalHotKeyModifiers: Object.values(GlobalHotKeyModifier).map((m) => m),
             settingName: Settings.General,
             visible: false,
         };
@@ -103,8 +107,19 @@ export const generalSettingsComponent = Vue.extend({
                     </div>
                     <div class="columns">
                         <div class="column field has-addons">
+                            <div class="control">
+                                <div class="select">
+                                    <select v-model="config.generalOptions.hotKey.modifier">
+                                        <option v-for="globalHotKeyModifier in globalHotKeyModifiers">{{ globalHotKeyModifier }}</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="control is-expanded">
-                                <input class="input" type="text" v-model="config.generalOptions.hotKey">
+                                <div class="select is-fullwidth">
+                                    <select v-model="config.generalOptions.hotKey.key">
+                                        <option v-for="globalHotKeyKey in globalHotKeyKeys">{{ globalHotKeyKey }}</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="control">
                                 <button class="button is-success" @click="updateConfig">

@@ -212,6 +212,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
                         </div>
                     </div>
                 </div>
+                <h6 v-else class="title is-6 has-text-danger">Application search is disabled</h6>
             </div>
         </div>
     `,

@@ -14,6 +14,9 @@ import { platform } from "os";
 import { OperatingSystem } from "../common/operating-system";
 import { getProductionSearchPlugins as getProductionSearchEngine } from "./production/production-search-engine";
 import { cloneDeep } from "lodash";
+import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
+import { GlobalHotKeyHelpers } from "../common/global-hot-key/global-hot-key-helpers";
+import { defaultGeneralOptions } from "../common/config/default-general-options";
 
 const logger = new ConsoleLogger();
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
@@ -59,9 +62,10 @@ function clearAllCaches() {
         .catch((err) => logger.error(err));
 }
 
-function registerGlobalKeyboardShortcut(toggleAction: () => void, hotKey: string) {
+function registerGlobalKeyboardShortcut(toggleAction: () => void, newHotKey: GlobalHotKey) {
+    newHotKey = GlobalHotKeyHelpers.isValidHotKey(newHotKey) ? newHotKey : defaultGeneralOptions.hotKey;
     globalShortcut.unregisterAll();
-    globalShortcut.register(hotKey, toggleAction);
+    globalShortcut.register(`${newHotKey.modifier ? `${newHotKey.modifier}+` : ``}${newHotKey.key}`, toggleAction);
 }
 
 function showMainWindow() {
