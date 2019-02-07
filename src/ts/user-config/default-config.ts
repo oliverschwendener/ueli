@@ -43,6 +43,7 @@ export class DefaultUserConfigManager {
             searchResultNameFontSize: 20,
             shortcuts: [],
             showConfirmationDialog: true,
+            showDescriptionOnAllSearchResults: false,
             showSearchResultNumber: true,
             showTrayIcon: true,
             smoothScrolling: false,

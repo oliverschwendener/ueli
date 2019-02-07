@@ -129,7 +129,8 @@ const vue = new Vue({
             vue.updateUserConfig();
         },
         searchResultDescriptionStyle: (): string => {
-            return `font-size: ${config.searchResultDescriptionFontSize}px;`;
+            const display = config.showDescriptionOnAllSearchResults ? `display: block;` : ``;
+            return `font-size: ${config.searchResultDescriptionFontSize}px;${display}`;
         },
         searchResultIconStyle: (): string => {
             return `height: ${config.searchResultHeight}px; width: ${config.searchResultHeight}px;`;

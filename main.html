@@ -536,6 +536,12 @@
                         </div>
                     </div>
                     <div class="setting-group">
+                        <div class="setting-title">Show description on all search results</div>
+                        <div class="setting">
+                            <input type="checkbox" v-model="config.showDescriptionOnAllSearchResults" v-on:change="updateUserConfig">
+                        </div>
+                    </div>
+                    <div class="setting-group">
                         <div class="setting-title">Show search result number</div>
                         <div class="setting">
                             <input type="checkbox" v-model="config.showSearchResultNumber" v-on:change="updateUserConfig">
