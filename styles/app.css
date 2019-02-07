@@ -164,9 +164,14 @@ body {
 }
 
 .search-results__item-description {
+    display: none;
     color: var(--search-results--item-description-text-color);
     font-size: var(--search-results--item-descriptioin-font-size);
     font-weight: var(--search-results--item-description-font-weight);
+}
+
+.search-results__item-description.visible {
+    display: block;
 }
 
 .settings__container {

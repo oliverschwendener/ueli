@@ -34,6 +34,11 @@ export const appearanceSettingsComponent = Vue.extend({
             config.appearanceOptions.searchResultHeight = defaultAppearanceOptions.searchResultHeight;
             this.updateConfig();
         },
+        resetShowDescriptionOnAllSearchResults() {
+            const config: UserConfigOptions = this.config;
+            config.appearanceOptions.showDescriptionOnAllSearchResults = defaultAppearanceOptions.showDescriptionOnAllSearchResults;
+            this.updateConfig();
+        },
         resetUserInputHeight() {
             const config: UserConfigOptions = this.config;
             config.appearanceOptions.userInputHeight = defaultAppearanceOptions.userInputHeight;
@@ -138,6 +143,23 @@ export const appearanceSettingsComponent = Vue.extend({
                             <button class="button is-success" @click="updateConfig">
                                 <span class="icon"><i class="fas fa-check"></i></span>
                             </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="settings__setting-content-item box">
+                <div class="settings__setting-content-item-title">
+                    <div class="title is-5">Show description on all search results</div>
+                    <button class="button" @click="resetShowDescriptionOnAllSearchResults"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                </div>
+                <div class="columns">
+                    <div class="column field has-addons">
+                        <div class="control is-expanded">
+                            <input class="is-checkradio" id="showDescriptionOnAllSearchResults" type="checkbox" name="showDescriptionOnAllSearchResults" v-model="config.appearanceOptions.showDescriptionOnAllSearchResults" @change="updateConfig">
+                            <label for="showDescriptionOnAllSearchResults"></label>
+                            <div class="field">
+                                <input class="is-checkradio is-block is-success" id="showDescriptionOnAllSearchResults" type="checkbox" name="showDescriptionOnAllSearchResults" checked="checked">
+                            </div>
                         </div>
                     </div>
                 </div>

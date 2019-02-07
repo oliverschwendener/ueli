@@ -9,9 +9,9 @@
 </head>
 <body>
     <div id="app" @keydown="onKeyPress">
-        <user-styles :config="config.appearanceOptions"></user-styles>
-        <user-input></user-input>
-        <search-results></search-results>
+        <user-styles :appearance="config.appearanceOptions"></user-styles>
+        <user-input :appearance="config.appearanceOptions"></user-input>
+        <search-results :appearance="config.appearanceOptions"></search-results>
     </div>
     <script src="./bundle/renderer.js"></script>
 </body>

@@ -35,6 +35,7 @@ export const userInputComponent = Vue.extend({
             }
         },
     },
+    props: ["appearance"],
     mounted() {
         this.setFocusOnInput();
 

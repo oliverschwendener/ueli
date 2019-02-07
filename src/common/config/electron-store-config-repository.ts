@@ -1,24 +1,20 @@
 import Store = require("electron-store");
 import { ConfigRepository } from "./config-repository";
 import { UserConfigOptions } from "./user-config-options";
+import { merge } from "lodash";
 
 export class ElectronStoreConfigRepository implements ConfigRepository {
     private readonly store: Store;
-    private readonly configStoreKey = "user-config-options";
+    private readonly configStoreKey = "userConfigOptions";
     private readonly defaultOptions: UserConfigOptions;
 
     constructor(defaultOptions: UserConfigOptions) {
         this.store = new Store();
-
         this.defaultOptions = defaultOptions;
-        if (this.getConfig() === undefined) {
-            this.setDefaultConfig();
-        }
     }
 
     public getConfig(): UserConfigOptions {
-        const userOptions: UserConfigOptions = this.store.get(this.configStoreKey);
-        return Object.assign(this.defaultOptions, userOptions);
+        return merge(this.defaultOptions, this.store.get(this.configStoreKey));
     }
 
     public saveConfig(updatedConfig: UserConfigOptions): Promise<void> {
@@ -30,9 +26,5 @@ export class ElectronStoreConfigRepository implements ConfigRepository {
 
     public openConfigFile() {
         this.store.openInEditor();
-    }
-
-    private setDefaultConfig() {
-        this.saveConfig(this.defaultOptions);
     }
 }

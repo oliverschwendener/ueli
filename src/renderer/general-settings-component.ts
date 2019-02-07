@@ -73,7 +73,7 @@ export const generalSettingsComponent = Vue.extend({
                                 <input class="is-checkradio" id="autoStartCheckbox" type="checkbox" name="autoStartCheckbox" v-model="config.generalOptions.autostart" @change="updateConfig">
                                 <label for="autoStartCheckbox"></label>
                                 <div class="field">
-                                    <input class="is-checkradio is-block is-success" id="exampleCheckboxBlockSuccess" type="checkbox" name="exampleCheckboxBlockSuccess" checked="checked">
+                                    <input class="is-checkradio is-block is-success" id="autoStartCheckbox" type="checkbox" name="autoStartCheckbox" checked="checked">
                                 </div>
                             </div>
                         </div>

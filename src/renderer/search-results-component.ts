@@ -4,6 +4,7 @@ import { VueEventChannels } from "./vue-event-channels";
 import { SearchResultItem } from "../common/search-result-item";
 import { Icon } from "../common/icon/icon";
 import { IconType } from "../common/icon/icon-type";
+import { AppearanceOptions } from "../common/config/appearance-options";
 
 enum BrowseDirection {
     Next = "next",
@@ -96,7 +97,11 @@ export const searchResultsComponent = Vue.extend({
             }
         },
     },
+    props: ["appearance"],
     mounted() {
+        vueEventDispatcher.$on(VueEventChannels.appearanceOptionsUpdated, (appearanceOptions: AppearanceOptions) => {
+            this.appearance = appearanceOptions;
+        });
         vueEventDispatcher.$on(VueEventChannels.searchResultsUpdated, (s: SearchResultItem[]) => {
             this.update(s);
         });
@@ -120,7 +125,7 @@ export const searchResultsComponent = Vue.extend({
                 </div>
                 <div class="search-results__item-info-container">
                     <div class="search-results__item-name" :class="{ 'active' : searchResult.active }">{{ searchResult.name }}</div>
-                    <div class="search-results__item-description">{{ searchResult.description }}</div>
+                    <div class="search-results__item-description" :class="{ 'visible' : searchResult.active || appearance.showDescriptionOnAllSearchResults }">{{ searchResult.description }}</div>
                 </div>
             </div>
         </div>
