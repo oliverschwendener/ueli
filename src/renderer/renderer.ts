@@ -20,6 +20,7 @@ import { userStylesComponent } from "./user-styles-component";
 import { AppearanceOptions } from "../common/config/appearance-options";
 import { shortcutSettingsComponent } from "./shortcut-settings-component";
 import { shortcutEditingModal } from "./shortcut-editing-modal-component";
+import { cloneDeep } from "lodash";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -37,7 +38,7 @@ Vue.component("shortcut-editing-modal", shortcutEditingModal);
 // tslint:disable-next-line:no-unused-expression
 new Vue({
     data: {
-        config: new ElectronStoreConfigRepository(defaultUserConfigOptions).getConfig(),
+        config: new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig(),
     },
     el: "#app",
     mounted() {

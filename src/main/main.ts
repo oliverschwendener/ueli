@@ -13,9 +13,10 @@ import { UeliCommandExecutionArgument } from "./plugins/ueli-command-search-plug
 import { platform } from "os";
 import { OperatingSystem } from "../common/operating-system";
 import { getProductionSearchPlugins as getProductionSearchEngine } from "./production/production-search-engine";
+import { cloneDeep } from "lodash";
 
 const logger = new ConsoleLogger();
-const configRepository = new ElectronStoreConfigRepository(defaultUserConfigOptions);
+const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
 const currentOperatingSystem = platform() === "darwin" ? OperatingSystem.macOS : OperatingSystem.Windows;
 
 if (currentOperatingSystem === OperatingSystem.macOS) {
