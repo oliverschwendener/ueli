@@ -74,6 +74,8 @@ export const searchResultsComponent = Vue.extend({
             this.scrollIntoView(this.searchResults[nextActiveIndex].id);
         },
         scrollIntoView(index: string) {
+            const appearanceOptions: AppearanceOptions = this.appearance;
+            const scrollBehavior = appearanceOptions.smoothScrolling ? "smooth" : "auto";
             const userInput = document.getElementById("user-input");
             if (userInput !== undefined && userInput) {
                 const htmlElement = document.getElementById(index);
@@ -84,13 +86,13 @@ export const searchResultsComponent = Vue.extend({
                         const elementIsOutOfViewTop = htmlElement.offsetTop - userInput.clientHeight < outputContainer.scrollTop;
                         if (elementIsOutOfViewBottom) {
                             const scrollTo = htmlElement.offsetTop - userInput.clientHeight;
-                            outputContainer.scrollTo({ top: scrollTo, behavior: "smooth" });
+                            outputContainer.scrollTo({ top: scrollTo, behavior: scrollBehavior });
                         } else if (elementIsOutOfViewTop) {
                             let scrollTo = htmlElement.offsetTop - outputContainer.clientHeight - 20; // I have no idea why 20
                             if (scrollTo < 0) {
                                 scrollTo = 0;
                             }
-                            outputContainer.scrollTo({ top: scrollTo, behavior: "smooth" });
+                            outputContainer.scrollTo({ top: scrollTo, behavior: scrollBehavior });
                         }
                     }
                 }

@@ -1,7 +1,8 @@
 export interface AppearanceOptions {
-    windowWidth: number;
     maxSearchResultsPerPage: number;
     searchResultHeight: number;
     showDescriptionOnAllSearchResults: boolean;
+    smoothScrolling: boolean;
     userInputHeight: number;
+    windowWidth: number;
 }

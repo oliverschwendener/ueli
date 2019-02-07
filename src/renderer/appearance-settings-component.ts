@@ -39,6 +39,11 @@ export const appearanceSettingsComponent = Vue.extend({
             config.appearanceOptions.showDescriptionOnAllSearchResults = defaultAppearanceOptions.showDescriptionOnAllSearchResults;
             this.updateConfig();
         },
+        resetUseSmoothScrolling() {
+            const config: UserConfigOptions = this.config;
+            config.appearanceOptions.smoothScrolling = defaultAppearanceOptions.smoothScrolling;
+            this.updateConfig();
+        },
         resetUserInputHeight() {
             const config: UserConfigOptions = this.config;
             config.appearanceOptions.userInputHeight = defaultAppearanceOptions.userInputHeight;
@@ -123,6 +128,25 @@ export const appearanceSettingsComponent = Vue.extend({
                             <button class="button is-success" @click="updateConfig">
                                 <span class="icon"><i class="fas fa-check"></i></span>
                             </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="settings__setting-content-item box">
+                <div class="settings__setting-content-item-title">
+                    <div class="title is-5">Smooth scrolling</div>
+                    <button class="button" @click="resetUseSmoothScrolling">
+                        <span class="icon"><i class="fas fa-undo-alt"></i></span>
+                    </button>
+                </div>
+                <div class="columns">
+                    <div class="column field has-addons">
+                        <div class="control is-expanded">
+                            <input class="is-checkradio" id="smoothScrollingCheckBox" type="checkbox" name="smoothScrollingCheckBox" v-model="config.appearanceOptions.smoothScrolling" @change="updateConfig">
+                            <label for="smoothScrollingCheckBox"></label>
+                            <div class="field">
+                                <input class="is-checkradio is-block is-success" id="smoothScrollingCheckBox" type="checkbox" name="smoothScrollingCheckBox" checked="checked">
+                            </div>
                         </div>
                     </div>
                 </div>

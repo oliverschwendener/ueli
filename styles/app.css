@@ -1,6 +1,5 @@
 :root {
     --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    --transition-speed: 250ms;
 
     --user-input--font-size: 24px;
     --user-input--font-weight: 200;
@@ -86,7 +85,6 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: all var(--transition-speed) ease-in-out;
     user-select: none;
 }
 
@@ -128,7 +126,6 @@ body {
     height: 100%;
     top: 0;
     left: 0;
-    transition: all var(--transition-speed) ease-in-out;
 }
 
 .search-results__item-icon-overlay.active {
@@ -154,7 +151,6 @@ body {
 
 .search-results__item-name {
     color: var(--search-results--item-name-text-color);
-    transition: all var(--transition-speed) ease-in-out;
     font-weight: var(--search-results--item-name-font-weight);
     padding: var(--search-results--item-name-padding);
 }
