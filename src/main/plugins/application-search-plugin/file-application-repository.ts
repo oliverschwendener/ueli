@@ -5,6 +5,7 @@ import { ApplicationSearchOptions } from "./application-search-options";
 import { FileHelpers } from "../../helpers/file-helpers";
 import { ApplicationIconService } from "./application-icon-service";
 import { getApplicationIconFilePath } from "./application-icon-helpers";
+import { uniq } from "lodash";
 
 export class FileApplicationRepository implements ApplicationRepository {
     private readonly applicationIconService: ApplicationIconService;
@@ -30,22 +31,22 @@ export class FileApplicationRepository implements ApplicationRepository {
                 resolve();
             } else {
                 FileHelpers.readFilesFromFoldersRecursively(this.config.applicationFolders)
-                .then((files) => {
-                    if (files.length === 0) {
-                        this.applications = [];
+                    .then((files) => {
+                        if (files.length === 0) {
+                            this.applications = [];
+                            resolve();
+                        }
+
+                        const applications = uniq(files)
+                            .filter((file) => this.filterByApplicationFileExtensions(file))
+                            .map((applicationFile): Application => this.createApplicationFromFilePath(applicationFile));
+
+                        this.applicationIconService.generateAppIcons(applications);
+                        applications.forEach((application) => application.icon = getApplicationIconFilePath(application));
+                        this.applications = applications;
                         resolve();
-                    }
-
-                    const applications = files
-                        .filter((file) => this.filterByApplicationFileExtensions(file))
-                        .map((applicationFile): Application => this.createApplicationFromFilePath(applicationFile));
-
-                    this.applicationIconService.generateAppIcons(applications);
-                    applications.forEach((application) => application.icon = getApplicationIconFilePath(application));
-                    this.applications = applications;
-                    resolve();
-                })
-                .catch((err) => reject(err));
+                    })
+                    .catch((err) => reject(err));
             }
         });
     }

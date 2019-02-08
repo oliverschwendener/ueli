@@ -9,3 +9,12 @@ export function getFolderPaths(): Promise<string[]> {
         });
     });
 }
+
+export function getFileAndFolderPaths(): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+        ipcRenderer.send(IpcChannels.folderAndFilePathsRequested);
+        ipcRenderer.once(IpcChannels.folderAndFilePathsResult, (event: Electron.Event, foldersAndFiles: string[]) => {
+            resolve(foldersAndFiles);
+        });
+    });
+}

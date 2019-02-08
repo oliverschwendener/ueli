@@ -6,6 +6,7 @@ import { defaultApplicationSearchOptions } from "../main/plugins/application-sea
 import { cloneDeep } from "lodash";
 import { Settings } from "./settings";
 import { SettingsNotificationType } from "./settings-notification-type";
+import { showNotification } from "./notifications";
 
 export const applicationSearchSettingsComponent = Vue.extend({
     data() {
@@ -15,20 +16,27 @@ export const applicationSearchSettingsComponent = Vue.extend({
         };
     },
     methods: {
-        addApplicationFileExtension() {
+        addApplicationFileExtension(applicationFileExtension: string) {
             const config: UserConfigOptions = this.config;
-            config.applicationSearchOptions.applicationFileExtensions.push(this.newApplicationFileExtension);
-            this.newApplicationFileExtension = "";
-            this.updateConfig(true);
+            if (config.applicationSearchOptions.applicationFileExtensions.find((a) => a === applicationFileExtension) !== undefined) {
+                showNotification(`"${applicationFileExtension}" already exists in your list`, SettingsNotificationType.Info);
+            } else {
+                config.applicationSearchOptions.applicationFileExtensions.push(applicationFileExtension);
+                this.updateConfig(true);
+            }
         },
-        addApplicationFolder() {
+        addApplicationFolder(folderPath: string) {
             const config: UserConfigOptions = this.config;
-            config.applicationSearchOptions.applicationFolders.push(this.newApplicationFolder);
-            this.newApplicationFolder = "";
-            this.updateConfig(true);
+            const folderAlreadyExistsInList = config.applicationSearchOptions.applicationFolders.find((a) => a === folderPath) !== undefined;
+            if (folderAlreadyExistsInList) {
+                showNotification(`Folder "${folderPath}" already exists in your list`, SettingsNotificationType.Info);
+            } else {
+                config.applicationSearchOptions.applicationFolders.push(folderPath);
+                this.updateConfig(true);
+            }
         },
         onAddFileExtensionClick() {
-            //
+            vueEventDispatcher.$emit(VueEventChannels.openNewApplicationFileExtensionModal);
         },
         onAddFolderClick() {
             vueEventDispatcher.$emit(VueEventChannels.openNewApplicationFolderModal);
@@ -79,14 +87,11 @@ export const applicationSearchSettingsComponent = Vue.extend({
         });
 
         vueEventDispatcher.$on(VueEventChannels.applicationFolderAdded, (folderPath: string) => {
-            const config: UserConfigOptions = this.config;
-            const folderAlreadyExistsInList = config.applicationSearchOptions.applicationFolders.find((a) => a === folderPath) !== undefined;
-            if (folderAlreadyExistsInList) {
-                vueEventDispatcher.$emit(VueEventChannels.pushNotification, `Folder "${folderPath}" already exists in your list`, SettingsNotificationType.Info);
-            } else {
-                config.applicationSearchOptions.applicationFolders.push(folderPath);
-                this.updateConfig(true);
-            }
+            this.addApplicationFolder(folderPath);
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.applicationFileExtensionAdded, (applicationFileExtension: string) => {
+            this.addApplicationFileExtension(applicationFileExtension);
         });
     },
     props: ["config"],
@@ -173,6 +178,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
                 <h6 v-else class="title is-6 has-text-danger">Application search is disabled</h6>
             </div>
             <new-application-folder-modal></new-application-folder-modal>
+            <new-application-file-extension-modal></new-application-file-extension-modal>
         </div>
     `,
 });

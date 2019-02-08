@@ -14,4 +14,6 @@ export enum IpcChannels {
     ueliCommandExecuted = "ueli-command-executed",
     folderPathRequested = "folder-path-requested",
     folderPathResult = "folder-path-result",
+    folderAndFilePathsRequested = "folder-and-file-paths-requested",
+    folderAndFilePathsResult = "folder-and-file-paths-result",
 }

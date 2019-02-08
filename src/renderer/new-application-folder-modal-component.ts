@@ -4,6 +4,7 @@ import { VueEventChannels } from "./vue-event-channels";
 import { FileHelpers } from "../main/helpers/file-helpers";
 import { SettingsNotificationType } from "./settings-notification-type";
 import { getFolderPaths } from "./dialogs";
+import { showNotification } from "./notifications";
 
 export const newApplicationFolderModalComponent = Vue.extend({
     data() {
@@ -32,11 +33,13 @@ export const newApplicationFolderModalComponent = Vue.extend({
                     vueEventDispatcher.$emit(VueEventChannels.applicationFolderAdded, this.newApplicationFolder);
                     this.closeModal();
                 })
-                .catch((err: string) => {
-                    vueEventDispatcher.$emit(VueEventChannels.pushNotification, err, SettingsNotificationType.Error);
-                });
+                .catch((err: string) => showNotification(err, SettingsNotificationType.Error));
         },
         validateFolderPath(folderPath: string): Promise<void> {
+            const notAFolderError = `"${folderPath}" is not a folder`;
+            const folderDoesNotExistError = `${folderPath} does not exist`;
+            const genericError = `Error while trying to validate folder path: ${folderPath}`;
+
             return new Promise((resolve, reject) => {
                 FileHelpers.fileExists(folderPath)
                     .then((fileExists) => {
@@ -46,15 +49,15 @@ export const newApplicationFolderModalComponent = Vue.extend({
                                     if (stats.stats.isDirectory()) {
                                         resolve();
                                     } else {
-                                        reject("Specified path is not a folder");
+                                        reject(notAFolderError);
                                     }
                                 })
                                 .catch((err) => reject(err));
                         } else {
-                            reject("Folder does not exist");
+                            reject(folderDoesNotExistError);
                         }
                     })
-                    .catch(() => reject(`Error while trying to validate folder path: ${folderPath}`));
+                    .catch(() => reject(genericError));
             });
         },
     },
@@ -98,7 +101,7 @@ export const newApplicationFolderModalComponent = Vue.extend({
                                 </button>
                             </div>
                             <div class="control">
-                                <button class="button is-success" @click="saveButtonClick">
+                                <button :disabled="newApplicationFolder.length === 0" class="button is-success" @click="saveButtonClick">
                                     <span class="icon">
                                         <i class="fas fa-check"></i>
                                     </span>
@@ -109,7 +112,6 @@ export const newApplicationFolderModalComponent = Vue.extend({
                     </div>
                 </div>
             </div>
-            <button class="modal-close is-large" aria-label="close" @click="closeModal"></button>
         </div>
     `,
 });

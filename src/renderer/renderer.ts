@@ -22,6 +22,7 @@ import { shortcutSettingsComponent } from "./shortcut-settings-component";
 import { shortcutEditingModal } from "./shortcut-editing-modal-component";
 import { cloneDeep } from "lodash";
 import { newApplicationFolderModalComponent } from "./new-application-folder-modal-component";
+import { newApplicationFileExtensionModalComponent } from "./new-application-fileextension-modal-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -36,6 +37,7 @@ Vue.component("user-styles", userStylesComponent);
 Vue.component("shortcut-settings", shortcutSettingsComponent);
 Vue.component("shortcut-editing-modal", shortcutEditingModal);
 Vue.component("new-application-folder-modal", newApplicationFolderModalComponent);
+Vue.component("new-application-file-extension-modal", newApplicationFileExtensionModalComponent);
 
 // tslint:disable-next-line:no-unused-expression
 new Vue({

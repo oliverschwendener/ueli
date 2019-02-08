@@ -283,6 +283,14 @@ function registerAllIpcListeners() {
         });
     });
 
+    ipcMain.on(IpcChannels.folderAndFilePathsRequested, (event: Electron.Event) => {
+        dialog.showOpenDialog(settingsWindow, {
+            properties: ["openFile", "openDirectory"],
+        }, (filePaths: string[]) => {
+            event.sender.send(IpcChannels.folderAndFilePathsResult, filePaths);
+        });
+    });
+
     ipcMain.on(IpcChannels.ueliCommandExecuted, (command: UeliCommand) => {
         switch (command.executionArgument) {
             case UeliCommandExecutionArgument.Exit:

@@ -11,6 +11,8 @@ import { SettingsNotificationType } from "./settings-notification-type";
 import { isValidWindowsFilePath, isValidMacOsFilePath } from "../common/helpers/file-path-validators";
 import { isWindows } from "../common/helpers/operating-system-helpers";
 import { isEqual } from "lodash";
+import { showNotification } from "./notifications";
+import { getFileAndFolderPaths } from "./dialogs";
 
 export enum ModalEditMode {
     Edit = "Edit Shortcut",
@@ -33,6 +35,8 @@ export const shortcutEditingModal = Vue.extend({
             newTag: "",
             saveIndex: undefined,
             shortcut: cloneDeep(defaultNewShortcut),
+            shortcutTypeFilePath: ShortcutType.FilePath,
+            shortcutTypeUrl: ShortcutType.Url,
             shortcutTypes: Object.values(ShortcutType).sort(),
             visible: false,
         };
@@ -44,7 +48,7 @@ export const shortcutEditingModal = Vue.extend({
                 vueEventDispatcher.$emit(VueEventChannels.shortcutEdited, this.shortcut, this.editMode, this.saveIndex);
                 this.resetModal();
             } else {
-                vueEventDispatcher.$emit(VueEventChannels.pushNotification, "Invalid shortcut", SettingsNotificationType.Error);
+                showNotification("Invalid shortcut", SettingsNotificationType.Error);
             }
         },
         closeButtonClick() {
@@ -98,10 +102,14 @@ export const shortcutEditingModal = Vue.extend({
         onBackgroundClick() {
             this.resetModal();
         },
-        onGlobalKeyPress(event: KeyboardEvent) {
-            if (event.key === "Escape") {
-                this.resetModal();
-            }
+        openFolderDialog() {
+            getFileAndFolderPaths()
+                .then((filePaths) => {
+                    if (filePaths.length > 0) {
+                        const shortcut: Shortcut = this.shortcut;
+                        shortcut.executionArgument = filePaths[0];
+                    }
+                });
         },
         onTagKeyPress(event: KeyboardEvent) {
             if (event.key === "Enter") {
@@ -129,7 +137,7 @@ export const shortcutEditingModal = Vue.extend({
         });
     },
     template: `
-        <div class="modal" :class="{ 'is-active' : visible }" @keyup="onGlobalKeyPress">
+        <div class="modal" :class="{ 'is-active' : visible }">
             <div class="modal-background" @click="onBackgroundClick"></div>
             <div class="modal-content">
                 <div class="message">
@@ -156,8 +164,15 @@ export const shortcutEditingModal = Vue.extend({
                         </div>
                         <div class="field">
                             <label class="label">{{ getShorcutTypeExecutionArgumentDescription(shortcut.type) }}</label>
-                            <div class="control">
+                        </div>
+                        <div class="field" :class="{ 'has-addons' : shortcut.type === shortcutTypeFilePath }">
+                            <div class="control is-expanded">
                                 <input class="input" type="text" :placeholder="getShorcutTypeExecutionArgumentPlaceholder(shortcut.type)" v-model="shortcut.executionArgument">
+                            </div>
+                            <div v-if="shortcut.type === shortcutTypeFilePath" class="control">
+                                <button class="button" @click="openFolderDialog" autofocus>
+                                    <span class="icon"><i class="fas fa-folder"></i></span>
+                                </button>
                             </div>
                         </div>
                         <div class="field">
