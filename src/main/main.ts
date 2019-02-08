@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, globalShortcut } from "electron";
+import { app, BrowserWindow, ipcMain, globalShortcut, dialog } from "electron";
 import { join } from "path";
 import { IpcChannels } from "../common/ipc-channels";
 import { SearchResultItem } from "../common/search-result-item";
@@ -273,6 +273,14 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.openSettingsWindow, () => {
         openSettings();
+    });
+
+    ipcMain.on(IpcChannels.folderPathRequested, (event: Electron.Event) => {
+        dialog.showOpenDialog(settingsWindow, {
+            properties: ["openDirectory"],
+        }, (folderPaths: string[]) => {
+            event.sender.send(IpcChannels.folderPathResult, folderPaths);
+        });
     });
 
     ipcMain.on(IpcChannels.ueliCommandExecuted, (command: UeliCommand) => {

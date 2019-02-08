@@ -82,7 +82,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
             const config: UserConfigOptions = this.config;
             const folderAlreadyExistsInList = config.applicationSearchOptions.applicationFolders.find((a) => a === folderPath) !== undefined;
             if (folderAlreadyExistsInList) {
-                vueEventDispatcher.$emit(VueEventChannels.pushNotification, "Folder already exists in your list", SettingsNotificationType.Warning);
+                vueEventDispatcher.$emit(VueEventChannels.pushNotification, `Folder "${folderPath}" already exists in your list`, SettingsNotificationType.Info);
             } else {
                 config.applicationSearchOptions.applicationFolders.push(folderPath);
                 this.updateConfig(true);

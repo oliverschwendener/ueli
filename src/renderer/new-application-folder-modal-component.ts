@@ -3,6 +3,7 @@ import { vueEventDispatcher } from "./vue-event-dispatcher";
 import { VueEventChannels } from "./vue-event-channels";
 import { FileHelpers } from "../main/helpers/file-helpers";
 import { SettingsNotificationType } from "./settings-notification-type";
+import { getFolderPaths } from "./dialogs";
 
 export const newApplicationFolderModalComponent = Vue.extend({
     data() {
@@ -15,6 +16,14 @@ export const newApplicationFolderModalComponent = Vue.extend({
         closeModal() {
             this.visible = false;
             this.newApplicationFolder = "";
+        },
+        openFolderDialog() {
+            getFolderPaths()
+                .then((folderPaths) => {
+                    if (folderPaths.length > 0) {
+                        this.newApplicationFolder = folderPaths[0];
+                    }
+                });
         },
         saveButtonClick() {
             const validator: (filePath: string) => Promise<void> = this.validateFolderPath;
@@ -56,7 +65,7 @@ export const newApplicationFolderModalComponent = Vue.extend({
     },
     template: `
         <div class="modal" :class="{ 'is-active' : visible }">
-            <div class="modal-background"></div>
+            <div class="modal-background" @click="closeModal"></div>
             <div class="modal-content">
                 <div class="message">
                     <div class="message-header">
@@ -65,9 +74,18 @@ export const newApplicationFolderModalComponent = Vue.extend({
                     </div>
                     <div class="message-body">
                         <div class="field">
-                            <label class="label">Application folder path</label>
+                            <label class="label">
+                                Application folder path
+                            </label>
+                        </div>
+                        <div class="field has-addons">
                             <div class="control is-expanded">
                                 <input class="input" type="text" v-model="newApplicationFolder">
+                            </div>
+                            <div class="control">
+                                <button class="button" @click="openFolderDialog" autofocus>
+                                    <span class="icon"><i class="fas fa-folder"></i></span>
+                                </button>
                             </div>
                         </div>
                         <div class="field is-grouped is-grouped-right">
@@ -91,7 +109,7 @@ export const newApplicationFolderModalComponent = Vue.extend({
                     </div>
                 </div>
             </div>
-            <button class="modal-close is-large" aria-label="close"></button>
+            <button class="modal-close is-large" aria-label="close" @click="closeModal"></button>
         </div>
     `,
 });

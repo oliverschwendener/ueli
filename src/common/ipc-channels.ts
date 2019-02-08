@@ -12,4 +12,6 @@ export enum IpcChannels {
     indexRefreshFailed = "index-refresh-failed",
     appearanceOptionsUpdated = "user-styles-updated",
     ueliCommandExecuted = "ueli-command-executed",
+    folderPathRequested = "folder-path-requested",
+    folderPathResult = "folder-path-result",
 }
