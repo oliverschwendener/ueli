@@ -16,4 +16,6 @@ export enum VueEventChannels {
     appearanceOptionsUpdated = "user-styles-udpated",
     openShortcutEditingModal = "add-new-shortcut-button-clicked",
     shortcutEdited = "shortcut-edited",
+    openNewApplicationFolderModal = "open-new-application-folder-modal",
+    applicationFolderAdded = "application-folder-added",
 }

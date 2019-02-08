@@ -5,6 +5,7 @@ import { vueEventDispatcher } from "./vue-event-dispatcher";
 import { defaultApplicationSearchOptions } from "../main/plugins/application-search-plugin/default-application-search-plugin-options";
 import { cloneDeep } from "lodash";
 import { Settings } from "./settings";
+import { SettingsNotificationType } from "./settings-notification-type";
 
 export const applicationSearchSettingsComponent = Vue.extend({
     data() {
@@ -30,7 +31,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
             //
         },
         onAddFolderClick() {
-            //
+            vueEventDispatcher.$emit(VueEventChannels.openNewApplicationFolderModal);
         },
         toggleEnabled() {
             const config: UserConfigOptions = this.config;
@@ -74,6 +75,17 @@ export const applicationSearchSettingsComponent = Vue.extend({
                 this.visible = true;
             } else {
                 this.visible = false;
+            }
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.applicationFolderAdded, (folderPath: string) => {
+            const config: UserConfigOptions = this.config;
+            const folderAlreadyExistsInList = config.applicationSearchOptions.applicationFolders.find((a) => a === folderPath) !== undefined;
+            if (folderAlreadyExistsInList) {
+                vueEventDispatcher.$emit(VueEventChannels.pushNotification, "Folder already exists in your list", SettingsNotificationType.Warning);
+            } else {
+                config.applicationSearchOptions.applicationFolders.push(folderPath);
+                this.updateConfig(true);
             }
         });
     },
@@ -160,6 +172,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
                 </div>
                 <h6 v-else class="title is-6 has-text-danger">Application search is disabled</h6>
             </div>
+            <new-application-folder-modal></new-application-folder-modal>
         </div>
     `,
 });
