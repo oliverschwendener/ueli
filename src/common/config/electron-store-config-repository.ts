@@ -1,7 +1,7 @@
 import Store = require("electron-store");
 import { ConfigRepository } from "./config-repository";
 import { UserConfigOptions } from "./user-config-options";
-import { merge } from "lodash";
+import { cloneDeep } from "lodash";
 
 export class ElectronStoreConfigRepository implements ConfigRepository {
     private readonly store: Store;
@@ -14,7 +14,17 @@ export class ElectronStoreConfigRepository implements ConfigRepository {
     }
 
     public getConfig(): UserConfigOptions {
-        return merge(this.defaultOptions, this.store.get(this.configStoreKey));
+        const userConfig = this.store.get(this.configStoreKey);
+        const result: any = cloneDeep(this.defaultOptions);
+
+        Object.keys(this.defaultOptions).forEach((key: string) => {
+            const merged = userConfig !== undefined && userConfig.hasOwnProperty(key)
+                ? Object.assign(result[key], userConfig[key])
+                : result[key];
+            result[key] = merged;
+        });
+
+        return result;
     }
 
     public saveConfig(updatedConfig: UserConfigOptions): Promise<void> {
