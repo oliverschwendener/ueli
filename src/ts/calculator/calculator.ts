@@ -18,6 +18,10 @@ export class Calculator {
         } catch (e) {
             return false;
         }
+
+        if (result === undefined) {
+            return false;
+        }
         return !isNaN(result) || this.isValidMathType(result) || false;
     }
 

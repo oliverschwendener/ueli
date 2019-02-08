@@ -24,6 +24,8 @@ describe(CalculatorInputValidator.name, (): void => {
 
         it("should return false when passing in an invalid argument", (): void => {
             const invalidInputs = [
+                "#",
+                "#2",
                 "s",
                 "kg",
                 "log()",
