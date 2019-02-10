@@ -4,10 +4,12 @@ import { defaultGeneralOptions } from "./default-general-options";
 import { defaultSearchEngineOptions } from "./default-search-engine-options";
 import { defaultAppearanceOptions } from "./default-appearance-options";
 import { defaultShortcutOptions } from "./default-shortcuts-options";
+import { defaultEverythingSearchOptions } from "./default-everything-search-options";
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
     applicationSearchOptions: defaultApplicationSearchOptions,
+    everythingSearchOptions: defaultEverythingSearchOptions,
     generalOptions: defaultGeneralOptions,
     searchEngineOptions: defaultSearchEngineOptions,
     shortcutOptions: defaultShortcutOptions,

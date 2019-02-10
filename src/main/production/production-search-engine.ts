@@ -10,13 +10,16 @@ import { platform } from "os";
 import { executeUrlWindows, executeUrlMacOs } from "../executors/url-executor";
 import { executeFilePathWindows, executeFilePathMacOs } from "../executors/file-path-executor";
 import { SearchEngine } from "../search-engine";
+import { EverythingSearchPlugin } from "../plugins/everything/everthing-search-plugin";
+import { SearchPlugin } from "../search-plugin";
+import { ExecutionPlugin } from "../execution-plugin";
 
 const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
 const appGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
 
 export const getProductionSearchPlugins = (userConfig: UserConfigOptions): SearchEngine => {
-    const plugins = [
+    const searchPlugins: SearchPlugin[] = [
         new UeliCommandSearchPlugin(),
         new ShortcutsSearchPlugin(userConfig.shortcutOptions, urlExecutor, filePathExecutor),
         new ApplicationSearchPlugin(
@@ -28,5 +31,11 @@ export const getProductionSearchPlugins = (userConfig: UserConfigOptions): Searc
             filePathExecutor),
     ];
 
-    return new SearchEngine(plugins, userConfig);
+    const executionPlugins: ExecutionPlugin[] = [];
+
+    if (isWindows(platform())) {
+        executionPlugins.push(new EverythingSearchPlugin(userConfig, filePathExecutor));
+    }
+
+    return new SearchEngine(searchPlugins, executionPlugins, userConfig);
 };
