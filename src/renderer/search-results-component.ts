@@ -113,9 +113,9 @@ export const searchResultsComponent = Vue.extend({
         vueEventDispatcher.$on(VueEventChannels.selectPreviousItem, () => {
             this.handleSearchResultBrowsing(BrowseDirection.Previous);
         });
-        vueEventDispatcher.$on(VueEventChannels.enterPress, () => {
+        vueEventDispatcher.$on(VueEventChannels.enterPress, (privileged: boolean) => {
             const activeItem = this.searchResults.find((s: SearchResultItemViewModel): boolean => s.active);
-            vueEventDispatcher.$emit(VueEventChannels.handleExecution, activeItem);
+            vueEventDispatcher.$emit(VueEventChannels.handleExecution, activeItem, privileged);
         });
     },
     template: `

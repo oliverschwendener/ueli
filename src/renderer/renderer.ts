@@ -50,9 +50,9 @@ new Vue({
             ipcRenderer.send(IpcChannels.search, userInput);
         });
 
-        vueEventDispatcher.$on(VueEventChannels.handleExecution, (searchResultIem: SearchResultItem | undefined) => {
+        vueEventDispatcher.$on(VueEventChannels.handleExecution, (searchResultIem: SearchResultItem | undefined, privileged: boolean) => {
             if (searchResultIem !== undefined) {
-                ipcRenderer.send(IpcChannels.execute, searchResultIem);
+                ipcRenderer.send(IpcChannels.execute, searchResultIem, privileged);
             }
         });
 

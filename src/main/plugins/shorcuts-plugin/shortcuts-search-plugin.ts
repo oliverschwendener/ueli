@@ -17,12 +17,12 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.ShortcutsSearchPlugin;
     private config: ShortcutOptions;
     private readonly urlExecutor: (url: string) => Promise<void>;
-    private readonly filePathExecutor: (filePath: string) => Promise<void>;
+    private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
 
     constructor(
         config: ShortcutOptions,
         urlExecutor: (url: string) => Promise<void>,
-        filePathExecutor: (filePath: string) => Promise<void>,
+        filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>,
         ) {
         this.config = config;
         this.urlExecutor = urlExecutor;
@@ -55,13 +55,13 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
         });
     }
 
-    public execute(searchResultItem: SearchResultItem): Promise<void> {
+    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         const decodeResult = this.decodeExecutionArgument(searchResultItem.executionArgument);
         switch (decodeResult.shortcutType) {
             case ShortcutType.Url:
                 return this.executeUrl(decodeResult.executionArgument);
             case ShortcutType.FilePath:
-                return this.executeFilePath(decodeResult.executionArgument);
+                return this.executeFilePath(decodeResult.executionArgument, privileged);
             default:
                 return this.getUnsupportedShortcutTypePromise(decodeResult.shortcutType);
         }
@@ -94,8 +94,8 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
         return this.urlExecutor(url);
     }
 
-    private executeFilePath(filePath: string): Promise<void> {
-        return this.filePathExecutor(filePath);
+    private executeFilePath(filePath: string, privileged: boolean): Promise<void> {
+        return this.filePathExecutor(filePath, privileged);
     }
 
     private getExecutionArgumentPrefix(shortcutType: string): string {

@@ -40,6 +40,13 @@
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.119.tgz#be847e5f4bc3e35e46d041c394ead8b603ad8b39"
   integrity sha512-Z3TNyBL8Vd/M9D9Ms2S3LmFq2sSMzahodD6rCS9V2N44HUMINb75jNkSuwAx7eo2ufqTdfOdtGQpNbieUjPQmw==
 
+"@types/node-powershell@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@types/node-powershell/-/node-powershell-3.1.0.tgz#09a8d69b8238154eefec220c9318b3e199fa6d58"
+  integrity sha1-CajWm4I4FU7v7CIMkxiz4Zn6bVg=
+  dependencies:
+    "@types/node" "*"
+
 "@types/node@*":
   version "10.12.18"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"

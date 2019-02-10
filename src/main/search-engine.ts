@@ -40,7 +40,7 @@ export class SearchEngine {
         });
     }
 
-    public execute(searchResultItem: SearchResultItem): Promise<void> {
+    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
             let allPlugins: UeliPlugin[] = this.searchPlugins;
             allPlugins = allPlugins.concat(this.executionPlugins);
@@ -48,9 +48,9 @@ export class SearchEngine {
             const originPlugin = allPlugins.find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
 
             if (originPlugin !== undefined) {
-                originPlugin.execute(searchResultItem)
+                originPlugin.execute(searchResultItem, privileged)
                     .then(() => resolve())
-                    .catch((err) => reject(err));
+                    .catch((err: string) => reject(err));
             } else {
                 reject("No plugin found for this search result item");
             }

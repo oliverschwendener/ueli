@@ -12,9 +12,11 @@ export class ApplicationSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.ApplicationSearchPlugin;
     private config: ApplicationSearchOptions;
     private readonly applicationRepository: ApplicationRepository;
-    private readonly executeApplication: (executionArgument: string) => Promise<void>;
+    private readonly executeApplication: (executionArgument: string, privileged?: boolean) => Promise<void>;
 
-    constructor(config: ApplicationSearchOptions, applicationRepository: ApplicationRepository, executeApplication: (executionArgument: string) => Promise<void>) {
+    constructor(config: ApplicationSearchOptions,
+                applicationRepository: ApplicationRepository,
+                executeApplication: (executionArgument: string, privileged: boolean) => Promise<void>) {
         this.config = config;
         this.applicationRepository = applicationRepository;
         this.executeApplication = executeApplication;
@@ -37,9 +39,9 @@ export class ApplicationSearchPlugin implements SearchPlugin {
         });
     }
 
-    public execute(searchResultItem: SearchResultItem): Promise<void> {
+    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.executeApplication(searchResultItem.executionArgument)
+            this.executeApplication(searchResultItem.executionArgument, privileged)
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });

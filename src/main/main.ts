@@ -261,8 +261,8 @@ function registerAllIpcListeners() {
             .catch((err) => logger.error(err));
     });
 
-    ipcMain.on(IpcChannels.execute, (event: Electron.Event, searchResultItem: SearchResultItem) => {
-        searchEngine.execute(searchResultItem)
+    ipcMain.on(IpcChannels.execute, (event: Electron.Event, searchResultItem: SearchResultItem, privileged: boolean) => {
+        searchEngine.execute(searchResultItem, privileged)
             .then(() => {
                 if (searchResultItem.hideMainWindowAfterExecution) {
                     hideMainWindow();

@@ -22,7 +22,8 @@ export const userInputComponent = Vue.extend({
             }
 
             if (event.key === "Enter") {
-                vueEventDispatcher.$emit(VueEventChannels.enterPress);
+                const privileged = event.shiftKey;
+                vueEventDispatcher.$emit(VueEventChannels.enterPress, privileged);
             }
         },
         resetUserInput(): void {

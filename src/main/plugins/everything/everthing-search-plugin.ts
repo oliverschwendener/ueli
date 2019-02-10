@@ -11,7 +11,7 @@ import { Icon } from "../../../common/icon/icon";
 export class EverythingSearchPlugin implements ExecutionPlugin {
     public pluginType: PluginType = PluginType.EverythingSearchPlugin;
     private config: UserConfigOptions;
-    private readonly filePathExecutor: (filePath: string) => Promise<void>;
+    private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
     private readonly defaultIcon: Icon = {
         parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
         <g id="surface1">
@@ -21,7 +21,7 @@ export class EverythingSearchPlugin implements ExecutionPlugin {
         type: IconType.SVG,
     };
 
-    constructor(config: UserConfigOptions, filePathExecutor: (filePath: string) => Promise<void>) {
+    constructor(config: UserConfigOptions, filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>) {
         this.config = config;
         this.filePathExecutor = filePathExecutor;
     }
@@ -77,9 +77,9 @@ export class EverythingSearchPlugin implements ExecutionPlugin {
         });
     }
 
-    public execute(searchResultItem: SearchResultItem): Promise<void> {
+    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.filePathExecutor(searchResultItem.executionArgument)
+            this.filePathExecutor(searchResultItem.executionArgument, privileged)
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });
