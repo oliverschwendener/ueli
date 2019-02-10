@@ -46,7 +46,6 @@ export class FileHelpers {
                                     fileLists.forEach((fileList) => {
                                         files = files.concat(fileList);
                                     });
-
                                     resolve(files);
                                 })
                                 .catch((fileHandleError) => reject(fileHandleError));

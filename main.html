@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="./styles/app.css">
-    <title>ueli</title>
-</head>
-<body>
-    <div id="app" @keydown="onKeyPress">
-        <user-styles :appearance="config.appearanceOptions"></user-styles>
-        <user-input :appearance="config.appearanceOptions"></user-input>
-        <search-results :appearance="config.appearanceOptions"></search-results>
-    </div>
-    <script src="./bundle/renderer.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="./styles/app.css">
+        <title>ueli</title>
+    </head>
+    <body>
+        <div id="app" @keyup="onKeyPress">
+            <user-styles :appearance="config.appearanceOptions"></user-styles>
+            <user-input :appearance="config.appearanceOptions"></user-input>
+            <search-results :appearance="config.appearanceOptions"></search-results>
+        </div>
+        <script src="./bundle/renderer.js"></script>
+    </body>
 </html>
