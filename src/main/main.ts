@@ -198,6 +198,9 @@ function startApp() {
         show: false,
         skipTaskbar: true,
         transparent: true,
+        webPreferences: {
+            nodeIntegration: true,
+        },
         width: config.appearanceOptions.windowWidth,
     });
     mainWindow.on("blur", hideMainWindow);
@@ -228,6 +231,9 @@ function openSettings() {
     if (!settingsWindow || settingsWindow.isDestroyed()) {
         settingsWindow = new BrowserWindow({
             height: 700,
+            webPreferences: {
+                nodeIntegration: true,
+            },
             width: 850,
         });
         settingsWindow.setMenu(null);
