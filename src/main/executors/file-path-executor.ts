@@ -1,6 +1,7 @@
 import { FileHelpers } from "../helpers/file-helpers";
 import { exec } from "child_process";
 import shell = require("node-powershell");
+import osascript = require("node-osascript");
 
 export function executeFilePathWindows(filePath: string, privileged: boolean): Promise<void> {
     return privileged
@@ -52,6 +53,12 @@ function executeFilePathWindowsAsPrivileged(filePath: string): Promise<void> {
 
 function executeFilePathMacOsAsPrivileged(filePath: string): Promise<void> {
     return new Promise((resolve, reject) => {
-        reject("Not implemented in macOS yet");
+        osascript.execute(`do shell script \"open '${filePath}'\" with administrator privileges`, {}, (err: any) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
     });
 }

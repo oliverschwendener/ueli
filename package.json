@@ -47,6 +47,7 @@
     "fuse.js": "^3.3.0",
     "jest": "^23.6.0",
     "lodash": "^4.17.11",
+    "node-osascript": "^2.1.0",
     "node-powershell": "^3.3.1",
     "ts-jest": "^23.10.5",
     "ts-loader": "^5.3.2",
