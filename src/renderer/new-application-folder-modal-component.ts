@@ -5,6 +5,8 @@ import { FileHelpers } from "../main/helpers/file-helpers";
 import { SettingsNotificationType } from "./settings-notification-type";
 import { getFolderPaths } from "./dialogs";
 import { showNotification } from "./notifications";
+import { isWindows } from "../common/helpers/operating-system-helpers";
+import { platform } from "os";
 
 export const newApplicationFolderModalComponent = Vue.extend({
     data() {
@@ -17,6 +19,13 @@ export const newApplicationFolderModalComponent = Vue.extend({
         closeModal() {
             this.visible = false;
             this.newApplicationFolder = "";
+        },
+        getPlaceholder(): string {
+            const folderPath = isWindows(platform())
+                ? "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs"
+                : "/Applications";
+
+            return `For example: "${folderPath}"`;
         },
         openFolderDialog() {
             getFolderPaths()
@@ -83,7 +92,7 @@ export const newApplicationFolderModalComponent = Vue.extend({
                         </div>
                         <div class="field has-addons">
                             <div class="control is-expanded">
-                                <input class="input" type="text" v-model="newApplicationFolder">
+                                <input class="input" type="text" v-model="newApplicationFolder" :placeholder="getPlaceholder()">
                             </div>
                             <div class="control">
                                 <button class="button" @click="openFolderDialog" autofocus>

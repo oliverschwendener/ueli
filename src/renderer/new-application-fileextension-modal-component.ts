@@ -3,6 +3,8 @@ import { vueEventDispatcher } from "./vue-event-dispatcher";
 import { VueEventChannels } from "./vue-event-channels";
 import { showNotification } from "./notifications";
 import { SettingsNotificationType } from "./settings-notification-type";
+import { isWindows } from "../common/helpers/operating-system-helpers";
+import { platform } from "os";
 
 export const newApplicationFileExtensionModalComponent = Vue.extend({
     data() {
@@ -12,6 +14,17 @@ export const newApplicationFileExtensionModalComponent = Vue.extend({
         };
     },
     methods: {
+        closeModal() {
+            this.newApplicationFileExtension = "";
+            this.visible = false;
+        },
+        getPlaceholder(): string {
+            const ext = isWindows(platform())
+                ? ".lnk"
+                : ".app";
+
+            return `For example: "${ext}"`;
+        },
         saveButtonClick() {
             const applicationFileExtension: string = this.newApplicationFileExtension;
             const isValidApplicationFileExtension = applicationFileExtension !== undefined
@@ -24,10 +37,6 @@ export const newApplicationFileExtensionModalComponent = Vue.extend({
             } else {
                 showNotification(`"${applicationFileExtension}" is not a valid file extension`, SettingsNotificationType.Error);
             }
-        },
-        closeModal() {
-            this.newApplicationFileExtension = "";
-            this.visible = false;
         },
     },
     mounted() {
@@ -50,7 +59,7 @@ export const newApplicationFileExtensionModalComponent = Vue.extend({
                                 Application file extension
                             </label>
                             <div class="control is-expanded">
-                                <input class="input" type="text" v-model="newApplicationFileExtension" autofocus>
+                                <input class="input" type="text" v-model="newApplicationFileExtension" autofocus :placeholder="getPlaceholder()">
                             </div>
                         </div>
                         <div class="field is-grouped is-grouped-right">
