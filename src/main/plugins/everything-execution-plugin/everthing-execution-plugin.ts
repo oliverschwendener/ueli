@@ -2,11 +2,9 @@ import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { PluginType } from "../../plugin-type";
 import { ExecutionPlugin } from "../../execution-plugin";
-import { exec } from "child_process";
-import { normalize, basename } from "path";
 import { IconType } from "../../../common/icon/icon-type";
-import { getFileIconDataUrl } from "../../../common/icon/generate-file-icon";
 import { Icon } from "../../../common/icon/icon";
+import { EverythingSearcher } from "./everything-searcher";
 
 export class EverythingExecutionPlugin implements ExecutionPlugin {
     public pluginType: PluginType = PluginType.EverythingSearchPlugin;
@@ -37,40 +35,9 @@ export class EverythingExecutionPlugin implements ExecutionPlugin {
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            const searchTerm = userInput.replace(this.config.everythingSearchOptions.prefix, "").trim();
-            const command = `${this.config.everythingSearchOptions.pathToEs} -max-results ${this.config.everythingSearchOptions.maxSearchResults} ${searchTerm}`;
-            exec(command, (everythingError, stdout) => {
-                if (everythingError) {
-                    reject(everythingError);
-                } else {
-                    const filePaths =  stdout.trim()
-                        .split("\n")
-                        .map((line) => normalize(line).trim())
-                        .filter((f) => f !== ".");
-
-                    if (filePaths.length === 0) {
-                        resolve([]);
-                    }
-
-                    const iconPromises = filePaths.map((filePath) => getFileIconDataUrl(filePath, this.defaultIcon));
-                    Promise.all(iconPromises)
-                        .then((icons) => {
-                            const results = icons.map((icon): SearchResultItem => {
-                                return {
-                                    description: icon.filePath,
-                                    executionArgument: icon.filePath,
-                                    hideMainWindowAfterExecution: true,
-                                    icon: icon.icon,
-                                    name: basename(icon.filePath),
-                                    originPluginType: this.pluginType,
-                                    searchable: [],
-                                };
-                            });
-                            resolve(results);
-                        })
-                        .catch((err) => reject(err));
-                }
-            });
+            EverythingSearcher.search(userInput, this.config.everythingSearchOptions, this.defaultIcon, this.pluginType)
+                .then((result) => resolve(result))
+                .catch((err) => reject(err));
         });
     }
 
