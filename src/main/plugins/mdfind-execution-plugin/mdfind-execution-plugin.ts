@@ -2,11 +2,9 @@ import { ExecutionPlugin } from "../../execution-plugin";
 import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
-import { exec } from "child_process";
-import { normalize, basename } from "path";
-import { getFileIconDataUrl } from "../../../common/icon/generate-file-icon";
 import { Icon } from "../../../common/icon/icon";
 import { IconType } from "../../../common/icon/icon-type";
+import { MdFindSearcher } from "./mdfind-searcher";
 
 export class MdFindExecutionPlugin implements ExecutionPlugin {
     public pluginType = PluginType.MdFindExecutionPlugin;
@@ -42,38 +40,9 @@ export class MdFindExecutionPlugin implements ExecutionPlugin {
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             const searchTerm = userInput.replace(this.config.mdfindOptions.prefix, "");
-            exec(`mdfind ${searchTerm} | head -n ${this.config.mdfindOptions.maxSearchResults}`, (mdfindError, stdout) => {
-                if (mdfindError) {
-                    reject(mdfindError);
-                } else {
-                    const filePaths = stdout
-                        .split("\n")
-                        .map((f) => normalize(f).trim())
-                        .filter((f) => f !== ".");
-
-                    if (filePaths.length === 0) {
-                        resolve([]);
-                    }
-
-                    const iconPromises = filePaths.map((f) => getFileIconDataUrl(f, this.defaultIcon));
-                    Promise.all(iconPromises)
-                        .then((icons) => {
-                            const results = icons.map((icon): SearchResultItem => {
-                                return {
-                                    description: icon.filePath,
-                                    executionArgument: icon.filePath,
-                                    hideMainWindowAfterExecution: true,
-                                    icon: icon.icon,
-                                    name: basename(icon.filePath),
-                                    originPluginType: this.pluginType,
-                                    searchable: [],
-                                };
-                            });
-                            resolve(results);
-                        })
-                        .catch((iconError) => reject(iconError));
-                }
-            });
+            MdFindSearcher.search(searchTerm, this.config.mdfindOptions, this.pluginType, this.defaultIcon)
+                .then((result) => resolve(result))
+                .catch((err) => reject(err));
         });
     }
 
