@@ -1,5 +1,6 @@
 :root {
     --font-family-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    --sidebar-width: 250px;
 }
 
 html {
@@ -16,11 +17,12 @@ html {
 .settings__sidebar {
     overflow-y: auto;
     padding: 15px;
+    width: 250px;
 }
 
 .settings__setting {
     overflow-y: auto;
-    flex-grow: 1;
+    width: 100%;
     padding: 30px;
 }
 
