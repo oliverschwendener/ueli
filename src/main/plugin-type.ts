@@ -3,4 +3,5 @@ export enum PluginType {
     UeliCommandSearchPlugin = "ueli-command-search-plugin",
     ShortcutsSearchPlugin = "shortcuts-search-plugin",
     EverythingSearchPlugin = "everything-search-plugin",
+    MdFindExecutionPlugin = "md-find-execution-plugin",
 }

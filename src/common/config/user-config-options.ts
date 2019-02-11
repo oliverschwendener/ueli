@@ -4,11 +4,13 @@ import { SearchEngineOptions } from "./search-engine-options";
 import { AppearanceOptions } from "./appearance-options";
 import { ShortcutOptions } from "./shortcuts-options";
 import { EverythingSearchOptions } from "./everything-search-options";
+import { MdFindOptions } from "./mdfind-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
     applicationSearchOptions: ApplicationSearchOptions;
     everythingSearchOptions: EverythingSearchOptions;
+    mdfindOptions: MdFindOptions;
     searchEngineOptions: SearchEngineOptions;
     shortcutOptions: ShortcutOptions;
     generalOptions: GeneralOptions;

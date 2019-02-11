@@ -10,9 +10,10 @@ import { platform } from "os";
 import { executeUrlWindows, executeUrlMacOs } from "../executors/url-executor";
 import { executeFilePathWindows, executeFilePathMacOs } from "../executors/file-path-executor";
 import { SearchEngine } from "../search-engine";
-import { EverythingSearchPlugin } from "../plugins/everything/everthing-search-plugin";
+import { EverythingExecutionPlugin } from "../plugins/everything-execution-plugin/everthing-execution-plugin";
 import { SearchPlugin } from "../search-plugin";
 import { ExecutionPlugin } from "../execution-plugin";
+import { MdFindExecutionPlugin } from "../plugins/mdfind-execution-plugin/mdfind-execution-plugin";
 
 const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -34,7 +35,9 @@ export const getProductionSearchPlugins = (userConfig: UserConfigOptions): Searc
     const executionPlugins: ExecutionPlugin[] = [];
 
     if (isWindows(platform())) {
-        executionPlugins.push(new EverythingSearchPlugin(userConfig, filePathExecutor));
+        executionPlugins.push(new EverythingExecutionPlugin(userConfig, filePathExecutor));
+    } else {
+        executionPlugins.push(new MdFindExecutionPlugin(userConfig, filePathExecutor));
     }
 
     return new SearchEngine(searchPlugins, executionPlugins, userConfig);
