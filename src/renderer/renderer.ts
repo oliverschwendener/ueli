@@ -81,13 +81,16 @@ new Vue({
         });
     },
     methods: {
-        onKeyPress(event: KeyboardEvent) {
-            if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "i") {
+        mainGlobalKeyPress(event: KeyboardEvent) {
+            if ((event.ctrlKey && event.key.toLowerCase() === "i") || (event.metaKey && event.key === ",")) {
                 ipcRenderer.send(IpcChannels.openSettingsWindow);
             }
             if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "r") {
                 ipcRenderer.send(IpcChannels.reloadApp);
             }
+        },
+        settingsGlobalKeyPress(event: KeyboardEvent) {
+            //
         },
     },
 });
