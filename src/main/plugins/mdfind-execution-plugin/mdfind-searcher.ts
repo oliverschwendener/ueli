@@ -18,29 +18,37 @@ export class MdFindSearcher {
                         .map((f) => normalize(f).trim())
                         .filter((f) => f !== ".");
 
-                    if (filePaths.length === 0) {
-                        resolve([]);
-                    }
-
-                    const iconPromises = filePaths.map((f) => getFileIconDataUrl(f, defaultIcon));
-                    Promise.all(iconPromises)
-                        .then((icons) => {
-                            const results = icons.map((icon): SearchResultItem => {
-                                return {
-                                    description: icon.filePath,
-                                    executionArgument: icon.filePath,
-                                    hideMainWindowAfterExecution: true,
-                                    icon: icon.icon,
-                                    name: basename(icon.filePath),
-                                    originPluginType: pluginType,
-                                    searchable: [],
-                                };
-                            });
-                            resolve(results);
-                        })
-                        .catch((iconError) => reject(iconError));
+                    this.handleFilePaths(filePaths, pluginType, defaultIcon)
+                        .then((result) => resolve(result))
+                        .catch((err) => reject(err));
                 }
             });
+        });
+    }
+
+    private static handleFilePaths(filePaths: string[], pluginType: PluginType, defaultIcon: Icon): Promise<SearchResultItem[]> {
+        return new Promise((resolve, reject) => {
+            if (filePaths.length === 0) {
+                resolve([]);
+            }
+
+            const iconPromises = filePaths.map((f) => getFileIconDataUrl(f, defaultIcon));
+            Promise.all(iconPromises)
+                .then((icons) => {
+                    const results = icons.map((icon): SearchResultItem => {
+                        return {
+                            description: icon.filePath,
+                            executionArgument: icon.filePath,
+                            hideMainWindowAfterExecution: true,
+                            icon: icon.icon,
+                            name: basename(icon.filePath),
+                            originPluginType: pluginType,
+                            searchable: [],
+                        };
+                    });
+                    resolve(results);
+                })
+                .catch((iconError) => reject(iconError));
         });
     }
 }

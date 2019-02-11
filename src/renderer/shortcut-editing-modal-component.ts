@@ -1,12 +1,12 @@
 import Vue from "vue";
 import { vueEventDispatcher } from "./vue-event-dispatcher";
 import { VueEventChannels } from "./vue-event-channels";
-import { Shortcut } from "../main/plugins/shorcuts-plugin/shortcut";
-import { ShortcutType } from "../main/plugins/shorcuts-plugin/shortcut-type";
+import { Shortcut } from "../main/plugins/shorcuts-search-plugin/shortcut";
+import { ShortcutType } from "../main/plugins/shorcuts-search-plugin/shortcut-type";
 import { IconType } from "../common/icon/icon-type";
 import { platform } from "os";
 import { cloneDeep } from "lodash";
-import { defaultNewShortcut, ShortcutHelpers } from "../main/plugins/shorcuts-plugin/shortcut-helpers";
+import { defaultNewShortcut, ShortcutHelpers } from "../main/plugins/shorcuts-search-plugin/shortcut-helpers";
 import { SettingsNotificationType } from "./settings-notification-type";
 import { isValidWindowsFilePath, isValidMacOsFilePath } from "../common/helpers/file-path-validators";
 import { isWindows } from "../common/helpers/operating-system-helpers";
