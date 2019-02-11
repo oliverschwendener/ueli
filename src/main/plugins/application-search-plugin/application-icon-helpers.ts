@@ -42,7 +42,9 @@ export function generateWindowsAppIcons(applications: Application[]): Promise<vo
             };
         });
 
-        generateIcons(icons)
+        const followShorcuts = true;
+
+        generateIcons(icons, followShorcuts)
             .then(() => resolve())
             .catch((err) => reject(err));
     });

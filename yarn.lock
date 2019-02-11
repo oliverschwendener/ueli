@@ -6035,10 +6035,10 @@ wide-align@^1.1.0:
   dependencies:
     string-width "^1.0.2"
 
-windows-system-icon@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/windows-system-icon/-/windows-system-icon-0.0.5.tgz#a1d5a7ca728d9934c48d8ae1006d0b2786737775"
-  integrity sha512-fHYpfMc/xnPj3WftYPB1eRtUUdG2EqfavM46mun/Wl/28m/NqCozZ7GL/jU/7lOlFfcnM5vKFYYb+YqtmW+Cbg==
+windows-system-icon@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/windows-system-icon/-/windows-system-icon-0.0.7.tgz#9425b45d18e6a221c7292e623b68df11ce3ee83c"
+  integrity sha512-shBQcQPUqqGiehGBRRPtVfgG3pOt56sj2Wmgn/PZ4sItSarENR2ocMX/yQr0DdmoOftR6EbKxj4XqpXNZwEjdQ==
   dependencies:
     node-powershell "^3.3.1"
 
