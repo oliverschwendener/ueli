@@ -5,6 +5,8 @@ import { SettingsNotificationType } from "./settings-notification-type";
 import { ipcRenderer } from "electron";
 import { IpcChannels } from "../common/ipc-channels";
 import { Settings } from "./settings";
+import { SettingOsSpecific } from "./settings-os-specific";
+import { platform } from "os";
 
 const autoHideErrorMessageDelayInMilliseconds = 5000;
 let autoHideErrorMessageTimeout: number;
@@ -36,7 +38,13 @@ export const settingsComponent = Vue.extend({
                 type: undefined,
                 visible: false,
             },
-            settingMenuItems: Object.values(Settings).sort(),
+            settingMenuItems: Object
+                .values(Settings)
+                .concat(Object
+                    .values(SettingOsSpecific)
+                    .filter((setting: string) => setting.startsWith(platform()))
+                    .map((setting: string) => setting.replace(`${platform()}:`, "")))
+                .sort(),
         };
     },
     methods: {
@@ -98,6 +106,7 @@ export const settingsComponent = Vue.extend({
                 <search-engine-settings :config="config"></search-engine-settings>
                 <application-search-settings :config="config"></application-search-settings>
                 <shortcut-settings :config="config"></shortcut-settings>
+                <mdfind-settings :config="config"></mdfind-settings>
             </div>
         </div>
     `,

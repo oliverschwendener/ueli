@@ -26,7 +26,10 @@ export class SearchEngine {
             if (userInput === undefined || userInput.length === 0) {
                 resolve([]);
             } else {
-                const matchingExecutionPlugin = this.executionPlugins.find((e) => e.isValidUserInput(userInput));
+                const matchingExecutionPlugin = this.executionPlugins
+                    .filter((e) => e.isEnabled())
+                    .find((e) => e.isValidUserInput(userInput));
+
                 if (matchingExecutionPlugin !== undefined) {
                     matchingExecutionPlugin.getSearchResults(userInput)
                         .then((result) => resolve(result))
@@ -78,7 +81,11 @@ export class SearchEngine {
     public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
         return new Promise((resolve, reject) => {
             this.config = updatedConfig;
-            const promises = this.searchPlugins.map((plugin) => plugin.updateConfig(updatedConfig));
+            let allPlugins: UeliPlugin[] = [];
+            allPlugins = allPlugins.concat(this.searchPlugins);
+            allPlugins = allPlugins.concat(this.executionPlugins);
+
+            const promises = allPlugins.map((plugin) => plugin.updateConfig(updatedConfig));
             Promise.all(promises)
                 .then(() => resolve())
                 .catch((err) => reject(err));
