@@ -81,26 +81,26 @@ export const translationSettingsComponent = Vue.extend({
                     </button>
                 </div>
             </div>
-            <div class="settings__setting-content">
+            <div class="settings__setting-content" v-if="config.translationOptions.enabled">
 
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">Debounce Delay (in milliseconds)</div>
-                    <button class="button" @click="resetDebounceDelay"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
-                </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control is-expanded">
-                            <input type="number" class="input" min="1" v-model="config.translationOptions.debounceDelay">
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fas fa-check"></i></span>
-                            </button>
+                <div class="settings__setting-content-item box">
+                    <div class="settings__setting-content-item-title">
+                        <div class="title is-5">Debounce Delay (in milliseconds)</div>
+                        <button class="button" @click="resetDebounceDelay"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                    </div>
+                    <div class="columns">
+                        <div class="column field has-addons">
+                            <div class="control is-expanded">
+                                <input type="number" class="input" min="1" v-model="config.translationOptions.debounceDelay">
+                            </div>
+                            <div class="control">
+                                <button class="button is-success" @click="updateConfig">
+                                    <span class="icon"><i class="fas fa-check"></i></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
@@ -187,6 +187,7 @@ export const translationSettingsComponent = Vue.extend({
                 </div>
 
             </div>
+            <h6 v-else class="title is-6 has-text-danger">Translation is disabled</h6>
         </div>
     `,
 });
