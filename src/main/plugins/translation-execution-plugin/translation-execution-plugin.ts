@@ -6,9 +6,15 @@ import axios from "axios";
 import { IconType } from "../../../common/icon/icon-type";
 import { Icon } from "../../../common/icon/icon";
 import { clipboard } from "electron";
+import { StringHelpers } from "../../../common/helpers/string-helpers";
+
+interface WordType {
+    pos: string;
+}
 
 interface Translation {
     text: string;
+    word_type: WordType;
 }
 
 interface ExactMatch {
@@ -83,19 +89,19 @@ export class TranslationExecutionPlugin implements ExecutionPlugin {
             axios.get(url)
                 .then((response) => {
                     const data: TranslationResponse = response.data;
-                    let translationList: string[] = [];
+                    let translations: Translation[] = [];
                     if (data.exact_matches) {
                         data.exact_matches
-                            .map((exactMatch) => exactMatch.translations.map((t) => t.text))
-                            .forEach((t) => translationList = translationList.concat(t));
+                            .map((exactMatch) => exactMatch.translations)
+                            .forEach((t) => translations = translations.concat(t));
                     }
-                    const result = translationList.map((t): SearchResultItem => {
+                    const result = translations.map((t): SearchResultItem => {
                         return {
-                            description: "Press ENTER to copy to clipboard",
-                            executionArgument: t,
+                            description: `${StringHelpers.capitalize(t.word_type.pos)}`,
+                            executionArgument: t.text,
                             hideMainWindowAfterExecution: true,
                             icon: this.defaultIcon,
-                            name: t,
+                            name: t.text,
                             originPluginType: this.pluginType,
                             searchable: [],
                         };
