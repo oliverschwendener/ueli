@@ -57,7 +57,7 @@
     "vue": "^2.5.21",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2",
-    "windows-system-icon": "^0.0.5"
+    "windows-system-icon": "^0.0.7"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.6.3",
