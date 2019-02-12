@@ -17,6 +17,7 @@ import { cloneDeep } from "lodash";
 import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
 import { GlobalHotKeyHelpers } from "../common/global-hot-key/global-hot-key-helpers";
 import { defaultGeneralOptions } from "../common/config/default-general-options";
+import { errorSearchResultItem } from "../common/error-search-result-item";
 
 const logger = new ConsoleLogger();
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
@@ -258,7 +259,11 @@ function registerAllIpcListeners() {
                 updateMainWindowSize(result.length, config.appearanceOptions);
                 event.sender.send(IpcChannels.searchResponse, result);
             })
-            .catch((err) => logger.error(err));
+            .catch((err) => {
+                logger.error(err);
+                updateMainWindowSize(1, config.appearanceOptions);
+                event.sender.send(IpcChannels.searchResponse, [errorSearchResultItem]);
+            });
     });
 
     ipcMain.on(IpcChannels.execute, (event: Electron.Event, searchResultItem: SearchResultItem, privileged: boolean) => {

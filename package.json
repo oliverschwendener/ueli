@@ -41,6 +41,7 @@
     "@types/lodash": "^4.14.119",
     "@types/node-powershell": "^3.1.0",
     "app2png": "https://github.com/oliverschwendener/app2png",
+    "axios": "^0.18.0",
     "bulma-extensions": "^4.0.1",
     "electron": "^4.0.0",
     "electron-store": "^2.0.0",

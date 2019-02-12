@@ -4,4 +4,5 @@ export enum Settings {
     General = "General",
     SearchEngine = "Search Engine",
     Shortcuts = "Shortcuts",
+    Translation = "Translation",
 }

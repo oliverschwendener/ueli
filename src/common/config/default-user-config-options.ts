@@ -6,6 +6,7 @@ import { defaultAppearanceOptions } from "./default-appearance-options";
 import { defaultShortcutOptions } from "./default-shortcuts-options";
 import { defaultEverythingSearchOptions } from "./default-everything-search-options";
 import { defaultMdfindOptions } from "./default-mdfind-options";
+import { defaultTranslationOptions } from "./default-translation-options";
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
@@ -15,4 +16,5 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     mdfindOptions: defaultMdfindOptions,
     searchEngineOptions: defaultSearchEngineOptions,
     shortcutOptions: defaultShortcutOptions,
+    translationOptions: defaultTranslationOptions,
 };

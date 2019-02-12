@@ -14,6 +14,7 @@ import { EverythingExecutionPlugin } from "../plugins/everything-execution-plugi
 import { SearchPlugin } from "../search-plugin";
 import { ExecutionPlugin } from "../execution-plugin";
 import { MdFindExecutionPlugin } from "../plugins/mdfind-execution-plugin/mdfind-execution-plugin";
+import { TranslationExecutionPlugin } from "../plugins/translation-execution-plugin/translation-execution-plugin";
 
 const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -32,7 +33,9 @@ export const getProductionSearchPlugins = (userConfig: UserConfigOptions): Searc
             filePathExecutor),
     ];
 
-    const executionPlugins: ExecutionPlugin[] = [];
+    const executionPlugins: ExecutionPlugin[] = [
+        new TranslationExecutionPlugin(userConfig),
+    ];
 
     if (isWindows(platform())) {
         executionPlugins.push(new EverythingExecutionPlugin(userConfig, filePathExecutor));

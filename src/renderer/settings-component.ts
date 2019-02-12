@@ -93,10 +93,7 @@ export const settingsComponent = Vue.extend({
                     <setting-menu-item v-for="settingMenuItem in settingMenuItems" :name="settingMenuItem"></setting-menu-item>
                 </ul>
             </div>
-            <div
-                class="settings__notification notification"
-                :class="notificationClass"
-                >
+            <div class="settings__notification notification" :class="notificationClass">
                 <button class="delete" @click="removeNotification"></button>
                 {{ notification.message }}
             </div>
@@ -107,6 +104,7 @@ export const settingsComponent = Vue.extend({
                 <application-search-settings :config="config"></application-search-settings>
                 <shortcut-settings :config="config"></shortcut-settings>
                 <mdfind-settings :config="config"></mdfind-settings>
+                <translation-settings :config="config"></translation-settings>
             </div>
         </div>
     `,
