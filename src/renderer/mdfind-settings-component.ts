@@ -20,6 +20,11 @@ export const mdfindSettingsComponent = Vue.extend({
             config.mdfindOptions = cloneDeep(defaultMdfindOptions);
             this.updateConfig();
         },
+        resetDebounceDelay() {
+            const config: UserConfigOptions = this.config;
+            config.mdfindOptions.debounceDelay = defaultMdfindOptions.debounceDelay;
+            this.updateConfig();
+        },
         resetMdfindPrefix() {
             const config: UserConfigOptions = this.config;
             config.mdfindOptions.prefix = defaultMdfindOptions.prefix;
@@ -65,6 +70,25 @@ export const mdfindSettingsComponent = Vue.extend({
                 </div>
             </div>
             <div class="settings__setting-content" v-if="config.mdfindOptions.enabled">
+                <div class="settings__setting-content-item box">
+                    <div class="settings__setting-content-item-title">
+                        <div class="title is-5">Debouce delay (in milliseconds)</div>
+                        <button class="button" @click="resetDebounceDelay"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                    </div>
+                    <div class="columns">
+                        <div class="column field has-addons">
+                            <div class="control is-expanded">
+                                <input type="number" min="1" class="input" v-model="config.mdfindOptions.debounceDelay">
+                            </div>
+                            <div class="control">
+                                <button class="button is-success" @click="updateConfig">
+                                    <span class="icon"><i class="fas fa-check"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
                         <div class="title is-5">Prefix</div>

@@ -4,6 +4,7 @@ import { SearchPlugin } from "./search-plugin";
 import { UserConfigOptions } from "../common/config/user-config-options";
 import { ExecutionPlugin } from "./execution-plugin";
 import { UeliPlugin } from "./ueli-plugin";
+import { noSearchResultsFoundResultItem } from "./no-search-results-found-result-item";
 
 interface FuseResult {
     item: SearchResultItem;
@@ -32,11 +33,11 @@ export class SearchEngine {
 
                 if (matchingExecutionPlugin !== undefined) {
                     matchingExecutionPlugin.getSearchResults(userInput)
-                        .then((result) => resolve(result))
+                        .then((result) => resolve(this.beforeSolveSearchResults(userInput, result)))
                         .catch((err) => reject(err));
                 } else {
                     this.getSearchPluginsResult(userInput)
-                        .then((result) => resolve(result))
+                        .then((result) => resolve(this.beforeSolveSearchResults(userInput, result)))
                         .catch((err) => reject(err));
                 }
             }
@@ -125,5 +126,12 @@ export class SearchEngine {
                     reject(pluginsError);
                 });
         });
+    }
+
+    private beforeSolveSearchResults(userInput: string, searchResults: SearchResultItem[]): SearchResultItem[] {
+        if (userInput.length > 0 && searchResults.length === 0) {
+            searchResults.push(noSearchResultsFoundResultItem);
+        }
+        return searchResults;
     }
 }

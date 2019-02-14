@@ -5,11 +5,13 @@ import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { Icon } from "../../../common/icon/icon";
 import { IconType } from "../../../common/icon/icon-type";
 import { MdFindSearcher } from "./mdfind-searcher";
+import { defaultErrorIcon } from "../../../common/icon/default-error-icon";
 
 export class MdFindExecutionPlugin implements ExecutionPlugin {
     public pluginType = PluginType.MdFindExecutionPlugin;
     private config: UserConfigOptions;
     private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
+    private searchDelay: NodeJS.Timeout | number;
     private readonly defaultIcon: Icon = {
         parameter: `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
         <g><polygon style="fill:#FFFFFF;" points="6.5,37.5 6.5,2.5 24.793,2.5 33.5,11.207 33.5,37.5 	"></polygon>
@@ -39,10 +41,22 @@ export class MdFindExecutionPlugin implements ExecutionPlugin {
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            const searchTerm = userInput.replace(this.config.mdfindOptions.prefix, "");
-            MdFindSearcher.search(searchTerm, this.config.mdfindOptions, this.pluginType, this.defaultIcon)
-                .then((result) => resolve(result))
-                .catch((err) => reject(err));
+            if (this.searchDelay !== undefined) {
+                clearTimeout(this.searchDelay as number);
+            }
+
+            this.searchDelay = setTimeout(() => {
+                const searchTerm = userInput.replace(this.config.mdfindOptions.prefix, "");
+                MdFindSearcher.search(searchTerm, this.config.mdfindOptions, this.pluginType, this.defaultIcon)
+                    .then((result) => {
+                        if (result.length > 0) {
+                            resolve(result);
+                        } else {
+                            resolve([this.getErrorResult("No search results found")]);
+                        }
+                    })
+                    .catch((err) => reject(err));
+            }, this.config.mdfindOptions.debounceDelay);
         });
     }
 
@@ -63,5 +77,17 @@ export class MdFindExecutionPlugin implements ExecutionPlugin {
             this.config = updatedConfig;
             resolve();
         });
+    }
+
+    private getErrorResult(errorMessage: string, details?: string): SearchResultItem {
+        return {
+            description: details ? details : "",
+            executionArgument: "",
+            hideMainWindowAfterExecution: false,
+            icon: defaultErrorIcon,
+            name: errorMessage,
+            originPluginType: PluginType.None,
+            searchable: [],
+        };
     }
 }

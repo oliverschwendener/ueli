@@ -5,6 +5,7 @@ import { SearchResultItem } from "../common/search-result-item";
 import { Icon } from "../common/icon/icon";
 import { IconType } from "../common/icon/icon-type";
 import { AppearanceOptions } from "../common/config/appearance-options";
+import { PluginType } from "../main/plugin-type";
 
 enum BrowseDirection {
     Next = "next",
@@ -114,8 +115,11 @@ export const searchResultsComponent = Vue.extend({
             this.handleSearchResultBrowsing(BrowseDirection.Previous);
         });
         vueEventDispatcher.$on(VueEventChannels.enterPress, (privileged: boolean) => {
-            const activeItem = this.searchResults.find((s: SearchResultItemViewModel): boolean => s.active);
-            vueEventDispatcher.$emit(VueEventChannels.handleExecution, activeItem, privileged);
+            const searchResults: SearchResultItemViewModel[] = this.searchResults;
+            const activeItem = searchResults.find((s): boolean => s.active);
+            if (activeItem && activeItem.originPluginType !== PluginType.None) {
+                vueEventDispatcher.$emit(VueEventChannels.handleExecution, activeItem, privileged);
+            }
         });
     },
     template: `
