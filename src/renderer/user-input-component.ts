@@ -5,6 +5,7 @@ import Vue from "vue";
 export const userInputComponent = Vue.extend({
     data() {
         return {
+            loadingVisible: false,
             stylesheet: "./styles/user-input.css",
             userInput: "",
         };
@@ -47,10 +48,25 @@ export const userInputComponent = Vue.extend({
         vueEventDispatcher.$on(VueEventChannels.mainWindowHasBeenShown, () => {
             this.setFocusOnInput();
         });
+
+        vueEventDispatcher.$on(VueEventChannels.userInputChange, () => {
+            this.loadingVisible = true;
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.searchResultsUpdated, () => {
+            this.loadingVisible = false;
+        });
     },
     template: `
         <div id="user-input" class="user-input">
             <input autofocus id="user-input" class="user-input__input" type="text" v-model="userInput" @keydown="onKeyPress">
+            <div class="user-input__loader" :class="{ 'visible' : loadingVisible }">
+                <div class="spinner">
+                    <div class="bounce bounce1"></div>
+                    <div class="bounce bounce2"></div>
+                    <div class="bounce bounce3"></div>
+                </div>
+            </div>
         </div>
         `,
     watch: {

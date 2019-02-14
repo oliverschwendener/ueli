@@ -7,6 +7,8 @@
     --user-input--color: #fff;
     --user-input--height: 60px;
     --user-input--side-padding: 15px;
+    --user-input--loader-width: 70px;
+    --user-input--loader-speed: 1.4s;
 
     --search-results--background-color: #272c34;
     --search-results--item-active-background-color: #3d4452;
@@ -66,6 +68,18 @@ body {
 
 .user-input__input:focus {
     outline: none;
+}
+
+.user-input__loader {
+    width: 0;
+    overflow: hidden;
+    transition: all 250ms ease-in-out;
+    opacity: 0;
+}
+
+.user-input__loader.visible {
+    width: var(--user-input--loader-width);
+    opacity: 1;
 }
 
 .search-results {
@@ -186,3 +200,38 @@ body {
 ::-webkit-scrollbar-track {
     background: var(--scrollbar--background-color);
 }
+
+.spinner {
+    width: var(--user-input--loader-width);
+    text-align: center;
+}
+
+.spinner .bounce {
+    width: 10px;
+    height: 10px;
+    background-color: var(--user-input--color);
+    border-radius: 100%;
+    display: inline-block;
+    animation: sk-bouncedelay var(--user-input--loader-speed) infinite ease-in-out both;
+}
+  
+.spinner .bounce1 {
+    animation-delay: -0.32s;
+}
+  
+.spinner .bounce2 {
+    animation-delay: -0.16s;
+}
+  
+@-webkit-keyframes sk-bouncedelay {
+    0%, 80%, 100% { transform: scale(0) }
+    40% { transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+    0%, 80%, 100% { 
+        transform: scale(0);
+    } 40% { 
+        transform: scale(1.0);
+    }
+} 
