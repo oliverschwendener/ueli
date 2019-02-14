@@ -9,6 +9,7 @@
     --user-input--side-padding: 15px;
     --user-input--loader-width: 70px;
     --user-input--loader-speed: 1.4s;
+    --user-input--loader-dot-size: 8px;
 
     --search-results--background-color: #272c34;
     --search-results--item-active-background-color: #3d4452;
@@ -207,8 +208,9 @@ body {
 }
 
 .spinner .bounce {
-    width: 10px;
-    height: 10px;
+    width: var(--user-input--loader-dot-size);
+    height: var(--user-input--loader-dot-size);
+    margin: 0 1px;
     background-color: var(--user-input--color);
     border-radius: 100%;
     display: inline-block;
