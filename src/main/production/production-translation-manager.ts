@@ -9,5 +9,5 @@ export function getProductionTranslationManager(userConfig: UserConfigOptions) {
         new EnglishTranslationRepository(),
         new GermanTranslationRepository(),
     ];
-    return new TranslationManager(userConfig, translationRepositories);
+    return new TranslationManager(userConfig.generalOptions.language, translationRepositories);
 }

@@ -1,14 +1,13 @@
 import { TranslationRepository } from "./translation-repository";
-import { UserConfigOptions } from "../config/user-config-options";
 import { Language } from "./language";
 import { TranslationKey } from "./translation-key";
 
 export class TranslationManager {
     private readonly translationRepositories: TranslationRepository[];
-    private config: UserConfigOptions;
+    private currentLanguage: Language;
 
-    constructor(userConfig: UserConfigOptions, translationRepositories: TranslationRepository[]) {
-        this.config = userConfig;
+    constructor(initLanguage: Language, translationRepositories: TranslationRepository[]) {
+        this.currentLanguage = initLanguage;
         this.translationRepositories = translationRepositories;
     }
 
@@ -17,16 +16,16 @@ export class TranslationManager {
     }
 
     public getTranslation(translationKey: TranslationKey): string {
-        const currentTranslationRepo = this.translationRepositories.find((repo) => repo.getLanguage() === this.config.generalOptions.language);
+        const currentTranslationRepo = this.translationRepositories.find((repo) => repo.getLanguage() === this.currentLanguage);
         if (!currentTranslationRepo) {
             throw new Error("Unsupported language");
         }
         return currentTranslationRepo.getTranslation(translationKey);
     }
 
-    public updateConfig(updatedUserConfig: UserConfigOptions): Promise<void> {
+    public updateLanguage(language: Language): Promise<void> {
         return new Promise((resolve) => {
-            this.config = updatedUserConfig;
+            this.currentLanguage = language;
             resolve();
         });
     }

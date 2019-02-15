@@ -99,7 +99,9 @@ function getMaxWindowHeight(maxSearchResultsPerPage: number, searchResultHeight:
 }
 
 function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) {
-    translationManager.updateConfig(updatedConfig);
+    if (updatedConfig.generalOptions.language !== config.generalOptions.language) {
+        translationManager.updateLanguage(updatedConfig.generalOptions.language);
+    }
 
     if (updatedConfig.generalOptions.hotKey !== config.generalOptions.hotKey) {
         registerGlobalKeyboardShortcut(toggleMainWindow, updatedConfig.generalOptions.hotKey);
