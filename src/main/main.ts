@@ -17,7 +17,7 @@ import { cloneDeep } from "lodash";
 import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
 import { GlobalHotKeyHelpers } from "../common/global-hot-key/global-hot-key-helpers";
 import { defaultGeneralOptions } from "../common/config/default-general-options";
-import { errorSearchResultItem } from "../common/error-search-result-item";
+import { getErrorSearchResultItem } from "../common/error-search-result-item";
 import { getProductionTranslationManager } from "./production/production-translation-manager";
 import { TranslationKey } from "../common/translation/translation-key";
 
@@ -137,7 +137,9 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boole
                     if (needsIndexRefresh) {
                         refreshAllIndexes();
                     } else {
-                        notifyRenderer(IpcChannels.indexRefreshSucceeded, translationManager.getTranslation(TranslationKey.SuccessfullyUpdatedConfig));
+                        notifyRenderer(
+                            IpcChannels.indexRefreshSucceeded,
+                            translationManager.getTranslation(TranslationKey.SuccessfullyUpdatedConfig));
                     }
                 })
                 .catch((err) =>  logger.error(err));
@@ -148,7 +150,9 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boole
 function updateMainWindowSize(searchResultCount: number, appearanceOptions: AppearanceOptions, center?: boolean) {
     mainWindow.setResizable(true);
     const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
-        ? getMaxWindowHeight(appearanceOptions.maxSearchResultsPerPage, appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight)
+        ? getMaxWindowHeight(
+            appearanceOptions.maxSearchResultsPerPage,
+            appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight)
         : (Number(searchResultCount) * Number(appearanceOptions.searchResultHeight)) + Number(appearanceOptions.userInputHeight);
 
     mainWindow.setSize(Number(appearanceOptions.windowWidth), Number(windowHeight));
@@ -201,7 +205,10 @@ function startApp() {
     mainWindow = new BrowserWindow({
         center: true,
         frame: false,
-        height: getMaxWindowHeight(config.appearanceOptions.maxSearchResultsPerPage, config.appearanceOptions.searchResultHeight, config.appearanceOptions.userInputHeight),
+        height: getMaxWindowHeight(
+            config.appearanceOptions.maxSearchResultsPerPage,
+            config.appearanceOptions.searchResultHeight,
+            config.appearanceOptions.userInputHeight),
         resizable: false,
         show: false,
         skipTaskbar: true,
@@ -269,7 +276,10 @@ function registerAllIpcListeners() {
             .catch((err) => {
                 logger.error(err);
                 updateMainWindowSize(1, config.appearanceOptions);
-                event.sender.send(IpcChannels.searchResponse, [errorSearchResultItem]);
+                const noResultFound = getErrorSearchResultItem(
+                    translationManager.getTranslation(TranslationKey.GeneralErrorTitle),
+                    translationManager.getTranslation(TranslationKey.GeneralErrorDescription));
+                event.sender.send(IpcChannels.searchResponse, [noResultFound]);
             });
     });
 

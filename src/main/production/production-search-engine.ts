@@ -44,5 +44,5 @@ export const getProductionSearchPlugins = (userConfig: UserConfigOptions, transl
         executionPlugins.push(new MdFindExecutionPlugin(userConfig, filePathExecutor));
     }
 
-    return new SearchEngine(searchPlugins, executionPlugins, userConfig);
+    return new SearchEngine(searchPlugins, executionPlugins, userConfig, translationManager);
 };

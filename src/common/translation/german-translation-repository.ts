@@ -38,6 +38,16 @@ export class GermanTranslationRepository implements TranslationRepository {
             case TranslationKey.UeliCommandClearCachesDescription:
                 return "Löscht alle Caches von allen ueli Plugins";
 
+            // errors
+            case TranslationKey.NoSearchResultsFoundTitle:
+                return "Keine Suchergebnisse gefunden";
+            case TranslationKey.NoSearchResultsFoundDescription:
+                return "";
+            case TranslationKey.GeneralErrorTitle:
+                return "Es ist ein Fehler aufgetreten";
+            case TranslationKey.GeneralErrorDescription:
+                return "Überprüfe den Log von ueli für weitere Details";
+
             // common stuff
             case TranslationKey.SuccessfullyClearedCaches:
                 return "Erfolgreich alle Caches gelöscht";

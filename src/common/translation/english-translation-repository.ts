@@ -38,6 +38,16 @@ export class EnglishTranslationRepository implements TranslationRepository {
             case TranslationKey.UeliCommandClearCachesDescription:
                 return "Cleares all caches of all ueli plugins";
 
+            // errors
+            case TranslationKey.NoSearchResultsFoundTitle:
+                return "No search results found";
+            case TranslationKey.NoSearchResultsFoundDescription:
+                return "";
+            case TranslationKey.GeneralErrorTitle:
+                return "An error occurred";
+            case TranslationKey.GeneralErrorDescription:
+                return "Check ueli's log for more details";
+
             // Common stuff
             case TranslationKey.SuccessfullyClearedCaches:
                 return "Successfully cleared caches";

@@ -1,4 +1,5 @@
 export enum TranslationKey {
+    // ueli commands
     UeliCommandQuit,
     UeliCommandQuitDescription,
     UeliCommandReload,
@@ -12,6 +13,13 @@ export enum TranslationKey {
     UeliCommandClearCaches,
     UeliCommandClearCachesDescription,
 
+    // errors
+    NoSearchResultsFoundTitle,
+    NoSearchResultsFoundDescription,
+    GeneralErrorTitle,
+    GeneralErrorDescription,
+
+    // common stuff
     SuccessfullyRefreshedIndexes,
     SuccessfullyClearedCaches,
     SuccessfullyClearedCachesBeforeAppQuit,

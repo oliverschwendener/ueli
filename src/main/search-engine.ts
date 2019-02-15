@@ -4,7 +4,9 @@ import { SearchPlugin } from "./search-plugin";
 import { UserConfigOptions } from "../common/config/user-config-options";
 import { ExecutionPlugin } from "./execution-plugin";
 import { UeliPlugin } from "./ueli-plugin";
-import { noSearchResultsFoundResultItem } from "./no-search-results-found-result-item";
+import { getNoSearchResultsFoundResultItem } from "./no-search-results-found-result-item";
+import { TranslationManager } from "../common/translation/translation-manager";
+import { TranslationKey } from "../common/translation/translation-key";
 
 interface FuseResult {
     item: SearchResultItem;
@@ -13,9 +15,15 @@ interface FuseResult {
 export class SearchEngine {
     private readonly searchPlugins: SearchPlugin[];
     private readonly executionPlugins: ExecutionPlugin[];
+    private readonly translationManager: TranslationManager;
     private config: UserConfigOptions;
 
-    constructor(plugins: SearchPlugin[], executionPlugins: ExecutionPlugin[], config: UserConfigOptions) {
+    constructor(
+        plugins: SearchPlugin[],
+        executionPlugins: ExecutionPlugin[],
+        config: UserConfigOptions,
+        translationManager: TranslationManager) {
+        this.translationManager = translationManager;
         this.config = config;
         this.searchPlugins = plugins;
         this.executionPlugins = executionPlugins;
@@ -130,7 +138,11 @@ export class SearchEngine {
 
     private beforeSolveSearchResults(userInput: string, searchResults: SearchResultItem[]): SearchResultItem[] {
         if (userInput.length > 0 && searchResults.length === 0) {
-            searchResults.push(noSearchResultsFoundResultItem);
+            const result = getNoSearchResultsFoundResultItem(
+                this.translationManager.getTranslation(TranslationKey.NoSearchResultsFoundTitle),
+                this.translationManager.getTranslation(TranslationKey.NoSearchResultsFoundDescription),
+            );
+            searchResults.push(result);
         }
         return searchResults;
     }
