@@ -12,7 +12,7 @@ import { TranslationKey } from "../../../common/translation/translation-key";
 
 export class UeliCommandSearchPlugin implements SearchPlugin {
     public pluginType = PluginType.UeliCommandSearchPlugin;
-    private translationManager: TranslationManager;
+    private readonly translationManager: TranslationManager;
     private readonly icon = `
     <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         viewBox="0 0 600 600" xml:space="preserve">
