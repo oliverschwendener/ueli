@@ -7,47 +7,12 @@ import { IconType } from "../../../common/icon/icon-type";
 import { UeliCommandExecutionArgument } from "./ueli-command-execution-argument";
 import { ipcMain } from "electron";
 import { IpcChannels } from "../../../common/ipc-channels";
+import { TranslationManager } from "../../../common/translation/translation-manager";
+import { TranslationKey } from "../../../common/translation/translation-key";
 
 export class UeliCommandSearchPlugin implements SearchPlugin {
     public pluginType = PluginType.UeliCommandSearchPlugin;
-    private readonly commands: UeliCommand[] = [
-        {
-            description: "Quit ueli",
-            executionArgument: UeliCommandExecutionArgument.Exit,
-            hideMainWindowAfterExecution: true,
-            name: "Quit",
-        },
-        {
-            description: "Reload ueli",
-            executionArgument: UeliCommandExecutionArgument.Reload,
-            hideMainWindowAfterExecution: false,
-            name: "Reload",
-        },
-        {
-            description: "Edit settings file in your default text editor",
-            executionArgument: UeliCommandExecutionArgument.EditConfigFile,
-            hideMainWindowAfterExecution: true,
-            name: "Edit settings file",
-        },
-        {
-            description: "Open ueli setttings",
-            executionArgument: UeliCommandExecutionArgument.OpenSettings,
-            hideMainWindowAfterExecution: false,
-            name: "Open settings",
-        },
-        {
-            description: "Refresh ueli indexes",
-            executionArgument: UeliCommandExecutionArgument.RefreshIndexes,
-            hideMainWindowAfterExecution: false,
-            name: "Refresh indexes",
-        },
-        {
-            description: "Clear ueli caches",
-            executionArgument: UeliCommandExecutionArgument.ClearCaches,
-            hideMainWindowAfterExecution: false,
-            name: "Clear caches",
-        },
-    ];
+    private translationManager: TranslationManager;
     private readonly icon = `
     <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         viewBox="0 0 600 600" xml:space="preserve">
@@ -58,20 +23,24 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
     </svg>
     `;
 
+    constructor(translationManager: TranslationManager) {
+        this.translationManager = translationManager;
+    }
+
     public isEnabled(): boolean {
         return true;
     }
 
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve) => {
-            const result = this.commands.map((command) => this.createSearchResultItemFromUeliCommand(command));
+            const result = this.getAllCommands().map((command) => this.createSearchResultItemFromUeliCommand(command));
             resolve(result);
         });
     }
 
     public execute(searchResultItem: SearchResultItem): Promise<void> {
         return new Promise((resolve, reject) => {
-            const ueliCommand = this.commands.find((command) => command.executionArgument === searchResultItem.executionArgument);
+            const ueliCommand = this.getAllCommands().find((command) => command.executionArgument === searchResultItem.executionArgument);
             if (ueliCommand) {
                 ipcMain.emit(IpcChannels.ueliCommandExecuted, ueliCommand);
                 resolve();
@@ -110,7 +79,48 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
             },
             name: ueliCommand.name,
             originPluginType: this.pluginType,
-            searchable: [ueliCommand.name, ueliCommand.description],
+            searchable: [ueliCommand.name, ueliCommand.description, "ueli"],
         };
+    }
+
+    private getAllCommands(): UeliCommand[] {
+        return [
+            {
+                description: this.translationManager.getTranslation(TranslationKey.UeliCommandQuitDescription),
+                executionArgument: UeliCommandExecutionArgument.Exit,
+                hideMainWindowAfterExecution: true,
+                name: this.translationManager.getTranslation(TranslationKey.UeliCommandQuit),
+            },
+            {
+                description: this.translationManager.getTranslation(TranslationKey.UeliCommandReloadDescription),
+                executionArgument: UeliCommandExecutionArgument.Reload,
+                hideMainWindowAfterExecution: false,
+                name: this.translationManager.getTranslation(TranslationKey.UeliCommandReload),
+            },
+            {
+                description: this.translationManager.getTranslation(TranslationKey.UeliCommandEditSettingsFileDescription),
+                executionArgument: UeliCommandExecutionArgument.EditConfigFile,
+                hideMainWindowAfterExecution: true,
+                name: this.translationManager.getTranslation(TranslationKey.UeliCommandEditSettingsFile),
+            },
+            {
+                description: this.translationManager.getTranslation(TranslationKey.UeliCommandOpenSettingsDescription),
+                executionArgument: UeliCommandExecutionArgument.OpenSettings,
+                hideMainWindowAfterExecution: false,
+                name: this.translationManager.getTranslation(TranslationKey.UeliCommandOpenSettings),
+            },
+            {
+                description: this.translationManager.getTranslation(TranslationKey.UeliCommandRefreshIndexesDescription),
+                executionArgument: UeliCommandExecutionArgument.RefreshIndexes,
+                hideMainWindowAfterExecution: false,
+                name: this.translationManager.getTranslation(TranslationKey.UeliCommandRefreshIndexes),
+            },
+            {
+                description: this.translationManager.getTranslation(TranslationKey.UeliCommandClearCachesDescription),
+                executionArgument: UeliCommandExecutionArgument.ClearCaches,
+                hideMainWindowAfterExecution: false,
+                name: this.translationManager.getTranslation(TranslationKey.UeliCommandClearCaches),
+            },
+        ];
     }
 }

@@ -18,6 +18,8 @@ import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
 import { GlobalHotKeyHelpers } from "../common/global-hot-key/global-hot-key-helpers";
 import { defaultGeneralOptions } from "../common/config/default-general-options";
 import { errorSearchResultItem } from "../common/error-search-result-item";
+import { getProductionTranslationManager } from "./production/production-translation-manager";
+import { TranslationKey } from "../common/translation/translation-key";
 
 const logger = new ConsoleLogger();
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
@@ -31,7 +33,8 @@ let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow;
 
 let config = configRepository.getConfig();
-let searchEngine = getProductionSearchEngine(config);
+const translationManager = getProductionTranslationManager(config);
+let searchEngine = getProductionSearchEngine(config, translationManager);
 
 let rescanInterval = setInterval(() => refreshAllIndexes(), Number(config.generalOptions.rescanIntervalInSeconds) * 1000);
 
@@ -47,7 +50,7 @@ function notifyRenderer(ipcChannel: IpcChannels, message?: string) {
 function refreshAllIndexes() {
     searchEngine.refreshIndexes()
         .then(() => {
-            const message = "Successfully refreshed indexes";
+            const message = translationManager.getTranslation(TranslationKey.SuccessfullyRefreshedIndexes);
             logger.debug(message);
             notifyRenderer(IpcChannels.indexRefreshSucceeded, message);
         })
@@ -59,7 +62,7 @@ function refreshAllIndexes() {
 
 function clearAllCaches() {
     searchEngine.clearCaches()
-        .then(() => logger.debug("Successfully cleared all caches"))
+        .then(() => logger.debug(translationManager.getTranslation(TranslationKey.SuccessfullyClearedCaches)))
         .catch((err) => logger.error(err));
 }
 
@@ -96,6 +99,8 @@ function getMaxWindowHeight(maxSearchResultsPerPage: number, searchResultHeight:
 }
 
 function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) {
+    translationManager.updateConfig(updatedConfig);
+
     if (updatedConfig.generalOptions.hotKey !== config.generalOptions.hotKey) {
         registerGlobalKeyboardShortcut(toggleMainWindow, updatedConfig.generalOptions.hotKey);
     }
@@ -130,7 +135,7 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boole
                     if (needsIndexRefresh) {
                         refreshAllIndexes();
                     } else {
-                        notifyRenderer(IpcChannels.indexRefreshSucceeded, "Sucessfully updated config");
+                        notifyRenderer(IpcChannels.indexRefreshSucceeded, translationManager.getTranslation(TranslationKey.SuccessfullyUpdatedConfig));
                     }
                 })
                 .catch((err) =>  logger.error(err));
@@ -153,7 +158,7 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
 
 function reloadApp() {
     updateMainWindowSize(0, config.appearanceOptions);
-    searchEngine = getProductionSearchEngine(config);
+    searchEngine = getProductionSearchEngine(config, translationManager);
     mainWindow.reload();
 }
 
@@ -171,7 +176,7 @@ function beforeQuitApp(): Promise<void> {
 
 function quitApp() {
     beforeQuitApp()
-        .then(() => logger.debug("Successfully cleared caches before app quit"))
+        .then(() => logger.debug(translationManager.getTranslation(TranslationKey.SuccessfullyClearedCachesBeforeAppQuit)))
         .catch((err) => logger.error(err))
         .then(() => {
             clearInterval(rescanInterval);
