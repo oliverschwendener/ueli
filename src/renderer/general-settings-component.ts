@@ -7,10 +7,12 @@ import { defaultGeneralOptions } from "../common/config/default-general-options"
 import { Settings } from "./settings";
 import { GlobalHotKeyModifier } from "../common/global-hot-key/global-hot-key-modifier";
 import { GlobalHotKeyKey } from "../common/global-hot-key/global-hot-key-key";
+import { Language } from "../common/translation/language";
 
 export const generalSettingsComponent = Vue.extend({
     data() {
         return {
+            availableLanguages: Object.values(Language).map((l) => l),
             globalHotKeyKeys: Object.values(GlobalHotKeyKey).map((k) => k),
             globalHotKeyModifiers: Object.values(GlobalHotKeyModifier).map((m) => m),
             settingName: Settings.General,
@@ -21,6 +23,11 @@ export const generalSettingsComponent = Vue.extend({
         resetAll() {
             const config: UserConfigOptions = this.config;
             config.generalOptions = cloneDeep(defaultGeneralOptions);
+            this.updateConfig();
+        },
+        resetLanguage() {
+            const config: UserConfigOptions = this.config;
+            config.generalOptions.language = defaultGeneralOptions.language;
             this.updateConfig();
         },
         resetAutostart() {
@@ -66,6 +73,30 @@ export const generalSettingsComponent = Vue.extend({
                 </button>
             </div>
             <div class="settings__setting-content">
+
+                <div class="settings__setting-content-item box">
+                    <div class="settings__setting-content-item-title">
+                        <div class="title is-5">Language</div>
+                        <button class="button" @click="resetLanguage"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                    </div>
+                    <div class="columns">
+                        <div class="column field has-addons">
+                            <div class="control is-expanded">
+                                <div class="select is-fullwidth">
+                                    <select v-model="config.generalOptions.language">
+                                        <option v-for="availableLanguage in availableLanguages">{{ availableLanguage }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control">
+                                <button class="button is-success" @click="updateConfig">
+                                    <span class="icon"><i class="fas fa-check"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
                         <div class="title is-5">Autostart App</div>
@@ -83,6 +114,7 @@ export const generalSettingsComponent = Vue.extend({
                         </div>
                     </div>
                 </div>
+
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
                         <div class="title is-5">Clear caches on exit</div>
@@ -100,6 +132,7 @@ export const generalSettingsComponent = Vue.extend({
                         </div>
                     </div>
                 </div>
+
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
                         <div class="title is-5">Hot Key</div>
@@ -129,6 +162,7 @@ export const generalSettingsComponent = Vue.extend({
                         </div>
                     </div>
                 </div>
+
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
                         <div class="title is-5">Rescan interval (in seconds)</div>
@@ -147,6 +181,7 @@ export const generalSettingsComponent = Vue.extend({
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     `,

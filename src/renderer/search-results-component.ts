@@ -57,16 +57,21 @@ export const searchResultsComponent = Vue.extend({
             this.searchResults = viewModel;
         },
         handleSearchResultBrowsing(direction: BrowseDirection): void {
+            const searchResults: SearchResultItemViewModel[] = this.searchResults;
+            if (searchResults.length === 0 ) {
+                return;
+            }
+
             let nextActiveIndex = 0;
 
-            for (let i = 0; i < this.searchResults.length; i++) {
-                if (this.searchResults[i].active) {
+            for (let i = 0; i < searchResults.length; i++) {
+                if (searchResults[i].active) {
                     if (direction === BrowseDirection.Next) {
-                        nextActiveIndex = i === this.searchResults.length - 1 ? 0 : i + 1;
+                        nextActiveIndex = i === searchResults.length - 1 ? 0 : i + 1;
                     } else {
-                        nextActiveIndex = i === 0 ? this.searchResults.length - 1 : i - 1;
+                        nextActiveIndex = i === 0 ? searchResults.length - 1 : i - 1;
                     }
-                    this.searchResults[i].active = false;
+                    searchResults[i].active = false;
                     break;
                 }
             }

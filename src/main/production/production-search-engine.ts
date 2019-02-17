@@ -15,14 +15,15 @@ import { SearchPlugin } from "../search-plugin";
 import { ExecutionPlugin } from "../execution-plugin";
 import { MdFindExecutionPlugin } from "../plugins/mdfind-execution-plugin/mdfind-execution-plugin";
 import { TranslationExecutionPlugin } from "../plugins/translation-execution-plugin/translation-execution-plugin";
+import { TranslationManager } from "../../common/translation/translation-manager";
 
 const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
 const appGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
 
-export const getProductionSearchPlugins = (userConfig: UserConfigOptions): SearchEngine => {
+export const getProductionSearchPlugins = (userConfig: UserConfigOptions, translationManager: TranslationManager): SearchEngine => {
     const searchPlugins: SearchPlugin[] = [
-        new UeliCommandSearchPlugin(),
+        new UeliCommandSearchPlugin(translationManager),
         new ShortcutsSearchPlugin(userConfig.shortcutOptions, urlExecutor, filePathExecutor),
         new ApplicationSearchPlugin(
             userConfig.applicationSearchOptions,
