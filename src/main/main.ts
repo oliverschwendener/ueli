@@ -291,6 +291,12 @@ function registerAllIpcListeners() {
             .catch((err) => logger.error(err));
     });
 
+    ipcMain.on(IpcChannels.openSearchResultLocation, (event: Electron.Event, searchResultItem: SearchResultItem) => {
+        searchEngine.openLocation(searchResultItem)
+            .then(() => hideMainWindow())
+            .catch((err) => logger.error(err));
+    });
+
     ipcMain.on(IpcChannels.reloadApp, () => {
         reloadApp();
     });

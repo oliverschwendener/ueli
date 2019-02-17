@@ -11,6 +11,7 @@ import { LingueeTranslator } from "./linguee-translator";
 
 export class TranslationExecutionPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.TranslationPlugin;
+    public readonly openLocationSupported = false;
     private config: UserConfigOptions;
     private delay: NodeJS.Timeout | number;
     private readonly icon: Icon = {
@@ -31,6 +32,10 @@ export class TranslationExecutionPlugin implements ExecutionPlugin {
             clipboard.writeText(searchResultItem.executionArgument);
             resolve();
         });
+    }
+
+    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
+        throw new Error("Opening location is not supported on this plugin");
     }
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {

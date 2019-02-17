@@ -10,16 +10,20 @@ import { IconType } from "../../../common/icon/icon-type";
 
 export class ApplicationSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.ApplicationSearchPlugin;
+    public readonly openLocationSupported = true;
     private config: ApplicationSearchOptions;
     private readonly applicationRepository: ApplicationRepository;
     private readonly executeApplication: (executionArgument: string, privileged?: boolean) => Promise<void>;
+    private readonly openApplicationLocation: (filePath: string) => Promise<void>;
 
     constructor(config: ApplicationSearchOptions,
                 applicationRepository: ApplicationRepository,
-                executeApplication: (executionArgument: string, privileged: boolean) => Promise<void>) {
+                executeApplication: (executionArgument: string, privileged: boolean) => Promise<void>,
+                openApplicationLocation: (filePath: string) => Promise<void>) {
         this.config = config;
         this.applicationRepository = applicationRepository;
         this.executeApplication = executeApplication;
+        this.openApplicationLocation = openApplicationLocation;
     }
 
     public getAll(): Promise<SearchResultItem[]> {
@@ -42,6 +46,14 @@ export class ApplicationSearchPlugin implements SearchPlugin {
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
             this.executeApplication(searchResultItem.executionArgument, privileged)
+                .then(() => resolve())
+                .catch((err) => reject(err));
+        });
+    }
+
+    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.openApplicationLocation(searchResultItem.executionArgument)
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });

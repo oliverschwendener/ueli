@@ -16,22 +16,31 @@ import { ExecutionPlugin } from "../execution-plugin";
 import { MdFindExecutionPlugin } from "../plugins/mdfind-execution-plugin/mdfind-execution-plugin";
 import { TranslationExecutionPlugin } from "../plugins/translation-execution-plugin/translation-execution-plugin";
 import { TranslationManager } from "../../common/translation/translation-manager";
+import { executeFilePathLocationWindows, executeFilePathLocationMacOs } from "../executors/file-path-location-executor";
 
 const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
+const filePathLocationExecutor = isWindows(platform()) ? executeFilePathLocationWindows : executeFilePathLocationMacOs;
 const appGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
 
 export const getProductionSearchEngine = (userConfig: UserConfigOptions, translationManager: TranslationManager): SearchEngine => {
     const searchPlugins: SearchPlugin[] = [
         new UeliCommandSearchPlugin(translationManager),
-        new ShortcutsSearchPlugin(userConfig.shortcutOptions, urlExecutor, filePathExecutor),
+        new ShortcutsSearchPlugin(
+            userConfig.shortcutOptions,
+            urlExecutor,
+            filePathExecutor,
+            filePathLocationExecutor,
+            ),
         new ApplicationSearchPlugin(
             userConfig.applicationSearchOptions,
             new FileApplicationRepository(
                 new ApplicationIconService(appGenerator),
                 userConfig.applicationSearchOptions,
+                ),
+            filePathExecutor,
+            filePathLocationExecutor,
             ),
-            filePathExecutor),
     ];
 
     const executionPlugins: ExecutionPlugin[] = [
@@ -39,9 +48,9 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
     ];
 
     if (isWindows(platform())) {
-        executionPlugins.push(new EverythingExecutionPlugin(userConfig, filePathExecutor));
+        executionPlugins.push(new EverythingExecutionPlugin(userConfig, filePathExecutor, filePathLocationExecutor));
     } else {
-        executionPlugins.push(new MdFindExecutionPlugin(userConfig, filePathExecutor));
+        executionPlugins.push(new MdFindExecutionPlugin(userConfig, filePathExecutor, filePathLocationExecutor));
     }
 
     return new SearchEngine(searchPlugins, executionPlugins, userConfig);

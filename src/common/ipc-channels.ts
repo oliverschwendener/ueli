@@ -2,6 +2,7 @@ export enum IpcChannels {
     search = "search",
     searchResponse = "search-response",
     execute = "execute",
+    openSearchResultLocation = "open-search-result-location",
     mainWindowHasBeenHidden = "main-window-has-been-hidden",
     mainWindowHasBeenShown = "main-window-has-been-shown",
     userInputHasBeenResetAndMainWindowCanBeHidden = "user-input-has-been-reset-and-main-window-can-be-hidden",

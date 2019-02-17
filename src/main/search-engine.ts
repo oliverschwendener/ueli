@@ -46,24 +46,34 @@ export class SearchEngine {
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
-            let allPlugins: UeliPlugin[] = this.searchPlugins;
-            allPlugins = allPlugins.concat(this.executionPlugins);
-
-            const originPlugin = allPlugins.find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
-
+            const originPlugin = this.getAllPlugins().find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
             if (originPlugin !== undefined) {
                 originPlugin.execute(searchResultItem, privileged)
                     .then(() => resolve())
                     .catch((err: string) => reject(err));
             } else {
-                reject("No plugin found for this search result item");
+                reject("Error while trying to execute search result item. No plugin found for this search result item");
+            }
+        });
+    }
+
+    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const pluginsWithOpenLocationSupport = this.getAllPlugins().filter((plugin) => plugin.openLocationSupported);
+            const originPlugin = pluginsWithOpenLocationSupport.find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+            if (originPlugin !== undefined) {
+                originPlugin.openLocation(searchResultItem)
+                    .then(() => resolve())
+                    .catch((err) => reject(err));
+            } else {
+                reject("Error while trying to open file location. No plugin found for the search result item");
             }
         });
     }
 
     public refreshIndexes(): Promise<void> {
         return new Promise((resolve, reject) => {
-            const promises = this.searchPlugins.map((p) => p.refreshIndex());
+            const promises = this.searchPlugins.map((plugin) => plugin.refreshIndex());
             Promise.all(promises)
                 .then(() => resolve())
                 .catch((err) => reject(err));
@@ -72,7 +82,7 @@ export class SearchEngine {
 
     public clearCaches(): Promise<void> {
         return new Promise((resolve, reject) => {
-            const promises = this.searchPlugins.map((p) => p.clearCache());
+            const promises = this.searchPlugins.map((plugin) => plugin.clearCache());
             Promise.all(promises)
                 .then(() => resolve())
                 .catch((err) => reject(`Error while trying to clear cache: ${err}`));
@@ -82,11 +92,7 @@ export class SearchEngine {
     public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
         return new Promise((resolve, reject) => {
             this.config = updatedConfig;
-            let allPlugins: UeliPlugin[] = [];
-            allPlugins = allPlugins.concat(this.searchPlugins);
-            allPlugins = allPlugins.concat(this.executionPlugins);
-
-            const promises = allPlugins.map((plugin) => plugin.updateConfig(updatedConfig));
+            const promises = this.getAllPlugins().map((plugin) => plugin.updateConfig(updatedConfig));
             Promise.all(promises)
                 .then(() => resolve())
                 .catch((err) => reject(err));
@@ -96,8 +102,8 @@ export class SearchEngine {
     private getSearchPluginsResult(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             const pluginPromises = this.searchPlugins
-                .filter((p) => p.isEnabled())
-                .map((p) => p.getAll());
+                .filter((plugin) => plugin.isEnabled())
+                .map((plugin) => plugin.getAll());
 
             Promise.all(pluginPromises)
                 .then((pluginsResults) => {
@@ -133,5 +139,12 @@ export class SearchEngine {
             searchResults.push(noSearchResultsFoundResultItem);
         }
         return searchResults;
+    }
+
+    private getAllPlugins(): UeliPlugin[] {
+        let allPlugins: UeliPlugin[] = [];
+        allPlugins = allPlugins.concat(this.searchPlugins);
+        allPlugins = allPlugins.concat(this.executionPlugins);
+        return allPlugins;
     }
 }

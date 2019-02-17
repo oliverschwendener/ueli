@@ -10,4 +10,8 @@ export class StringHelpers {
 
         return value.charAt(0).toUpperCase() + value.slice(1);
     }
+
+    public static replaceWhitespace(original: string, replaceWith: string): string {
+        return original.replace(/\s/g, replaceWith);
+    }
 }

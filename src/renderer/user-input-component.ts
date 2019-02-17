@@ -26,6 +26,10 @@ export const userInputComponent = Vue.extend({
                 const privileged = event.shiftKey;
                 vueEventDispatcher.$emit(VueEventChannels.enterPress, privileged);
             }
+
+            if (event.key.toLowerCase() === "o" && (event.ctrlKey || event.metaKey)) {
+                vueEventDispatcher.$emit(VueEventChannels.openSearchResultLocationKeyPress);
+            }
         },
         resetUserInput(): void {
             this.userInput = "";
@@ -55,6 +59,10 @@ export const userInputComponent = Vue.extend({
 
         vueEventDispatcher.$on(VueEventChannels.searchResultsUpdated, () => {
             this.loadingVisible = false;
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.handleExecution, () => {
+            this.userInput = "";
         });
     },
     template: `

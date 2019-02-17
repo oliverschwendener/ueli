@@ -8,9 +8,11 @@ import { MdFindSearcher } from "./mdfind-searcher";
 import { defaultErrorIcon } from "../../../common/icon/default-error-icon";
 
 export class MdFindExecutionPlugin implements ExecutionPlugin {
-    public pluginType = PluginType.MdFindExecutionPlugin;
+    public readonly pluginType = PluginType.MdFindExecutionPlugin;
+    public readonly openLocationSupported = true;
     private config: UserConfigOptions;
     private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
+    private readonly filePathLocationExecutor: (filePath: string) => Promise<void>;
     private searchDelay: NodeJS.Timeout | number;
     private readonly defaultIcon: Icon = {
         parameter: `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
@@ -29,9 +31,14 @@ export class MdFindExecutionPlugin implements ExecutionPlugin {
         type: IconType.SVG,
     };
 
-    constructor(config: UserConfigOptions, filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>) {
+    constructor(
+        config: UserConfigOptions,
+        filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>,
+        filePathLocationExecutor: (filePath: string) => Promise<void>,
+        ) {
         this.config = config;
         this.filePathExecutor = filePathExecutor;
+        this.filePathLocationExecutor = filePathLocationExecutor;
     }
 
     public isValidUserInput(userInput: string): boolean {
@@ -67,6 +74,14 @@ export class MdFindExecutionPlugin implements ExecutionPlugin {
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
             this.filePathExecutor(searchResultItem.executionArgument, privileged)
+                .then(() => resolve())
+                .catch((err) => reject(err));
+        });
+    }
+
+    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.filePathLocationExecutor(searchResultItem.executionArgument)
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });
