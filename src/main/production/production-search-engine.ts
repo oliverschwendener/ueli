@@ -21,7 +21,7 @@ const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
 const appGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
 
-export const getProductionSearchPlugins = (userConfig: UserConfigOptions, translationManager: TranslationManager): SearchEngine => {
+export const getProductionSearchEngine = (userConfig: UserConfigOptions, translationManager: TranslationManager): SearchEngine => {
     const searchPlugins: SearchPlugin[] = [
         new UeliCommandSearchPlugin(translationManager),
         new ShortcutsSearchPlugin(userConfig.shortcutOptions, urlExecutor, filePathExecutor),
