@@ -18,6 +18,12 @@ import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
 import { GlobalHotKeyHelpers } from "../common/global-hot-key/global-hot-key-helpers";
 import { defaultGeneralOptions } from "../common/config/default-general-options";
 import { errorSearchResultItem } from "../common/error-search-result-item";
+import { FileHelpers } from "./helpers/file-helpers";
+import { ueliTempFolder } from "../common/helpers/ueli-helpers";
+
+if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
+    FileHelpers.createFolderSync(ueliTempFolder);
+}
 
 const logger = new ConsoleLogger();
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));

@@ -1,6 +1,5 @@
 import { FileHelpers } from "../helpers/file-helpers";
 import { exec } from "child_process";
-import shell = require("node-powershell");
 import osascript = require("node-osascript");
 
 export function executeFilePathWindows(filePath: string, privileged: boolean): Promise<void> {
@@ -37,17 +36,14 @@ function executeFilePath(command: string, filePath: string): Promise<void> {
 
 function executeFilePathWindowsAsPrivileged(filePath: string): Promise<void> {
     return new Promise((resolve, reject) => {
-        const ps = new shell({
-            debugMsg: false,
-            executionPolicy: "Bypass",
-            noProfile: true,
+        const command = `powershell -Command "& {Start-Process -Verb runas '${filePath}'}"`;
+        exec(command, (error) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve();
+            }
         });
-
-        ps.addCommand(`Start-Process -Verb runas "${filePath}"`);
-        ps.invoke()
-            .then(() =>  resolve())
-            .catch((err) => reject(err))
-            .then(() => ps.dispose());
     });
 }
 
