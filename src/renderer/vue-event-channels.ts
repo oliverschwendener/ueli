@@ -22,4 +22,5 @@ export enum VueEventChannels {
     applicationFolderAdded = "application-folder-added",
     openNewApplicationFileExtensionModal = "open-new-application-file-extension-modal",
     applicationFileExtensionAdded = "application-file-extension-added",
+    languageUpdated = "language-updated",
 }

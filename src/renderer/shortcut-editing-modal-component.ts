@@ -13,6 +13,7 @@ import { isWindows } from "../common/helpers/operating-system-helpers";
 import { isEqual } from "lodash";
 import { showNotification } from "./notifications";
 import { getFileAndFolderPaths } from "./dialogs";
+import { TranslationSet } from "../common/translation/translation-set";
 
 export enum ModalEditMode {
     Edit = "Edit Shortcut",
@@ -43,12 +44,13 @@ export const shortcutEditingModal = Vue.extend({
     },
     methods: {
         saveButtonClick(): void {
+            const translations: TranslationSet = this.translations;
             const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
             if (ShortcutHelpers.isValidToAdd(this.shortcut, filePathValidator)) {
                 vueEventDispatcher.$emit(VueEventChannels.shortcutEdited, this.shortcut, this.editMode, this.saveIndex);
                 this.resetModal();
             } else {
-                showNotification("Invalid shortcut", SettingsNotificationType.Error);
+                showNotification(translations.shortcutSettingsInvalidShortcutErrorMessage, SettingsNotificationType.Error);
             }
         },
         closeButtonClick() {
@@ -58,46 +60,63 @@ export const shortcutEditingModal = Vue.extend({
         deleteTag(index: number) {
             this.shortcut.tags.splice(index, 1);
         },
+        getModalTitle(): string {
+            const translations: TranslationSet = this.translations;
+            const editMode: ModalEditMode = this.editMode;
+            return editMode === ModalEditMode.Add
+                ? translations.shortcutSettingsAddShortcut
+                : translations.shortcutSettingsTableEdit;
+        },
         getIconTypePlaceholder(iconType: IconType): string {
+            const translations: TranslationSet = this.translations;
             const placeHolder = iconType === IconType.SVG
                 ? "<svg>...</svg>"
                 : `<img src="...">`;
-            return `For example: ${placeHolder}`;
+            return `${translations.forExample}: ${placeHolder}`;
         },
         getIconTypeParameterLabel(iconType: IconType): string {
+            const translations: TranslationSet = this.translations;
             return iconType === IconType.URL
-                ? "Image URL"
-                : "SVG String";
+                ? translations.shortcutSettingsEditModalImageUrl
+                : translations.shortcutSettingsEditModalSvgString;
         },
         getShorcutTypeDescriptionPlaceholder(shortcutType: ShortcutType): string {
+            const translations: TranslationSet = this.translations;
             const placeholder = shortcutType === ShortcutType.Url
-                ? "Google Website"
-                : "Downloads Folder";
-            return `For example: "${placeholder}"`;
+                ? translations.shortcutSettingsEditModalGoogleWebsite
+                : translations.shortcutSettingsEditModalDownloadsFolder;
+            return `${translations.forExample}: "${placeholder}"`;
         },
         getShorcutTypeExecutionArgumentDescription(shortcutType: ShortcutType): string {
+            const translations: TranslationSet = this.translations;
             switch (shortcutType) {
                 case ShortcutType.Url:
                     return "URL";
                 case ShortcutType.FilePath:
-                    return "File Path";
+                    return translations.shortcutSettingsEditModalFilePath;
                 default:
-                    return "Execution Argument";
+                    return translations.shortcutSettingsTableExecutionArgument;
             }
         },
         getShorcutTypeExecutionArgumentPlaceholder(shortcutType: ShortcutType): string {
+            const translations: TranslationSet = this.translations;
             const placeholder = shortcutType === ShortcutType.Url
                 ? "https://google.com"
                 : isWindows(platform())
                     ? "C:\\Users\\Downloads"
                     : "/Users/Foo/Downloads";
-            return `For example: "${placeholder}"`;
+            return `${translations.forExample}: "${placeholder}"`;
         },
         getShorcutTypeNamePlaceholder(shortcutType: ShortcutType): string {
+            const translations: TranslationSet = this.translations;
             const placeholder = shortcutType === ShortcutType.Url
                 ? "Google"
                 : "Downloads";
-            return `For example: "${placeholder}"`;
+            return `${translations.forExample}: "${placeholder}"`;
+        },
+        getTagsPlaceholder(): string {
+            const translation: TranslationSet = this.translations;
+            return translation.shortcutSettingsTagPlaceholder;
         },
         onBackgroundClick() {
             this.resetModal();
@@ -136,18 +155,21 @@ export const shortcutEditingModal = Vue.extend({
             this.autofocus = true;
         });
     },
+    props: ["translations"],
     template: `
         <div class="modal" :class="{ 'is-active' : visible }">
             <div class="modal-background" @click="onBackgroundClick"></div>
             <div class="modal-content">
                 <div class="message">
                     <div class="message-header">
-                        <p>{{ editMode }}</p>
+                        <p>{{ getModalTitle() }}</p>
                         <button class="delete" aria-label="delete" @click="closeButtonClick"></button>
                     </div>
                     <div class="message-body">
                         <div class="field">
-                            <label class="label">Shortcut Type</label>
+                            <label class="label">
+                                {{ translations.shortcutSettingsTableType }}
+                            </label>
                             <div class="control is-expanded">
                                 <div class="select is-fullwidth">
                                     <select v-model="shortcut.type" :autofocus="autofocus">
@@ -157,7 +179,9 @@ export const shortcutEditingModal = Vue.extend({
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">Name</label>
+                            <label class="label">
+                                {{ translations.shortcutSettingsTableName }}
+                            </label>
                             <div class="control">
                                 <input class="input" type="text" :placeholder="getShorcutTypeNamePlaceholder(shortcut.type)" v-model="shortcut.name">
                             </div>
@@ -176,22 +200,28 @@ export const shortcutEditingModal = Vue.extend({
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">Description (optional)</label>
+                            <label class="label">
+                                {{ translations.shortcutSettingsTableDescription }}
+                            </label>
                             <div class="control">
                                 <input class="input" type="text" :placeholder="getShorcutTypeDescriptionPlaceholder(shortcut.type)" v-model="shortcut.description">
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">Tags (optional)</label>
+                            <label class="label">
+                                {{ translations.shortcutSettingsTableTags }}
+                            </label>
                             <div v-if="shortcut.tags.length > 0" class="tags">
                                 <span v-for="(tag, index) in shortcut.tags" class="tag is-dark">{{ tag }} <button @click="deleteTag(index)" class="delete is-small"></button></span>
                             </div>
                             <div class="control">
-                                <input class="input" type="text" v-model="newTag" placeholder="Add a tag and press Enter" @keyup="onTagKeyPress">
+                                <input class="input" type="text" v-model="newTag" :placeholder="getTagsPlaceholder()" @keyup="onTagKeyPress">
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">Icon (optional)</label>
+                            <label class="label">
+                                {{ translations.shortcutSettingsTableIcon }}
+                            </label>
                             <div class="field">
                                 <div class="control is-expanded">
                                     <div class="select is-fullwidth">
@@ -203,7 +233,7 @@ export const shortcutEditingModal = Vue.extend({
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">{{ getIconTypeParameterLabel(shortcut.icon.type) }} (optional)</label>
+                            <label class="label">{{ getIconTypeParameterLabel(shortcut.icon.type) }}</label>
                             <div class="control is-expanded">
                                 <textarea class="textarea font-mono" type="text" :placeholder="getIconTypePlaceholder(shortcut.icon.type)" v-model="shortcut.icon.parameter"></textarea>
                             </div>
@@ -214,7 +244,7 @@ export const shortcutEditingModal = Vue.extend({
                                     <span class="icon">
                                         <i class="fas fa-times"></i>
                                     </span>
-                                    <span>Cancel</span>
+                                    <span>{{ translations.cancel }}</span>
                                 </button>
                             </div>
                             <div class="control">
@@ -222,7 +252,7 @@ export const shortcutEditingModal = Vue.extend({
                                     <span class="icon">
                                         <i class="fas fa-check"></i>
                                     </span>
-                                    <span>Save</span>
+                                    <span>{{ translations.save }}</span>
                                 </button>
                             </div>
                         </div>

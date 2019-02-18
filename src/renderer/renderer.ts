@@ -25,6 +25,7 @@ import { newApplicationFolderModalComponent } from "./new-application-folder-mod
 import { newApplicationFileExtensionModalComponent } from "./new-application-fileextension-modal-component";
 import { mdfindSettingsComponent } from "./mdfind-settings-component";
 import { translationSettingsComponent } from "./translation-settings-component";
+import { getTranslationSet } from "../common/translation/translation-set-manager";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -43,10 +44,13 @@ Vue.component("new-application-file-extension-modal", newApplicationFileExtensio
 Vue.component("mdfind-settings", mdfindSettingsComponent);
 Vue.component("translation-settings", translationSettingsComponent);
 
+const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
+
 // tslint:disable-next-line:no-unused-expression
 new Vue({
     data: {
-        config: new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig(),
+        config: initialConfig,
+        translations: getTranslationSet(initialConfig.generalOptions.language),
     },
     el: "#app",
     mounted() {
@@ -67,6 +71,7 @@ new Vue({
         });
 
         vueEventDispatcher.$on(VueEventChannels.configUpdated, (config: UserConfigOptions, needsIndexRefresh: boolean) => {
+            this.translations = getTranslationSet(config.generalOptions.language);
             this.config = config;
             ipcRenderer.send(IpcChannels.configUpdated, config, needsIndexRefresh);
             vueEventDispatcher.$emit(VueEventChannels.loadingStarted);

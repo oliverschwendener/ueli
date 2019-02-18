@@ -67,7 +67,7 @@ export const settingsComponent = Vue.extend({
             }, autoHideErrorMessageDelayInMilliseconds));
         },
     },
-    props: ["config"],
+    props: ["config", "translations"],
     mounted() {
         vueEventDispatcher.$emit(VueEventChannels.showSetting, Settings.General);
 
@@ -98,13 +98,13 @@ export const settingsComponent = Vue.extend({
                 {{ notification.message }}
             </div>
             <div class="settings__setting">
-                <general-settings :config="config"></general-settings>
-                <appearance-settings :config="config"></appearance-settings>
-                <search-engine-settings :config="config"></search-engine-settings>
-                <application-search-settings :config="config"></application-search-settings>
-                <shortcut-settings :config="config"></shortcut-settings>
-                <mdfind-settings :config="config"></mdfind-settings>
-                <translation-settings :config="config"></translation-settings>
+                <general-settings :config="config" :translations="translations"></general-settings>
+                <appearance-settings :config="config" :translations="translations"></appearance-settings>
+                <search-engine-settings :config="config" :translations="translations"></search-engine-settings>
+                <application-search-settings :config="config" :translations="translations"></application-search-settings>
+                <shortcut-settings :config="config" :translations="translations"></shortcut-settings>
+                <mdfind-settings :config="config" :translations="translations"></mdfind-settings>
+                <translation-settings :config="config" :translations="translations"></translation-settings>
             </div>
         </div>
     `,

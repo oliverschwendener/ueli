@@ -5,8 +5,7 @@ import { UserConfigOptions } from "../common/config/user-config-options";
 import { ExecutionPlugin } from "./execution-plugin";
 import { UeliPlugin } from "./ueli-plugin";
 import { getNoSearchResultsFoundResultItem } from "./no-search-results-found-result-item";
-import { TranslationManager } from "../common/translation/translation-manager";
-import { TranslationKey } from "../common/translation/translation-key";
+import { TranslationSet } from "../common/translation/translation-set";
 
 interface FuseResult {
     item: SearchResultItem;
@@ -15,15 +14,15 @@ interface FuseResult {
 export class SearchEngine {
     private readonly searchPlugins: SearchPlugin[];
     private readonly executionPlugins: ExecutionPlugin[];
-    private readonly translationManager: TranslationManager;
+    private translationSet: TranslationSet;
     private config: UserConfigOptions;
 
     constructor(
         plugins: SearchPlugin[],
         executionPlugins: ExecutionPlugin[],
         config: UserConfigOptions,
-        translationManager: TranslationManager) {
-        this.translationManager = translationManager;
+        translationSet: TranslationSet) {
+        this.translationSet = translationSet;
         this.config = config;
         this.searchPlugins = plugins;
         this.executionPlugins = executionPlugins;
@@ -97,10 +96,11 @@ export class SearchEngine {
         });
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
+    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
         return new Promise((resolve, reject) => {
+            this.translationSet = translationSet;
             this.config = updatedConfig;
-            const promises = this.getAllPlugins().map((plugin) => plugin.updateConfig(updatedConfig));
+            const promises = this.getAllPlugins().map((plugin) => plugin.updateConfig(updatedConfig, translationSet));
             Promise.all(promises)
                 .then(() => resolve())
                 .catch((err) => reject(err));
@@ -145,8 +145,8 @@ export class SearchEngine {
     private beforeSolveSearchResults(userInput: string, searchResults: SearchResultItem[]): SearchResultItem[] {
         if (userInput.length > 0 && searchResults.length === 0) {
             const result = getNoSearchResultsFoundResultItem(
-                this.translationManager.getTranslation(TranslationKey.NoSearchResultsFoundTitle),
-                this.translationManager.getTranslation(TranslationKey.NoSearchResultsFoundDescription),
+                this.translationSet.noSearchResultsFoundTitle,
+                this.translationSet.noSearchResultsFoundDescription,
             );
             searchResults.push(result);
         }

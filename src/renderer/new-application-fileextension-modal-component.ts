@@ -5,6 +5,7 @@ import { showNotification } from "./notifications";
 import { SettingsNotificationType } from "./settings-notification-type";
 import { isWindows } from "../common/helpers/operating-system-helpers";
 import { platform } from "os";
+import { TranslationSet } from "../common/translation/translation-set";
 
 export const newApplicationFileExtensionModalComponent = Vue.extend({
     data() {
@@ -23,9 +24,10 @@ export const newApplicationFileExtensionModalComponent = Vue.extend({
                 ? ".lnk"
                 : ".app";
 
-            return `For example: "${ext}"`;
+            return `${this.translations.forExample}: "${ext}"`;
         },
         saveButtonClick() {
+            const translations: TranslationSet = this.translations;
             const applicationFileExtension: string = this.newApplicationFileExtension;
             const isValidApplicationFileExtension = applicationFileExtension !== undefined
                 && applicationFileExtension.startsWith(".")
@@ -35,7 +37,9 @@ export const newApplicationFileExtensionModalComponent = Vue.extend({
                 vueEventDispatcher.$emit(VueEventChannels.applicationFileExtensionAdded, applicationFileExtension);
                 this.closeModal();
             } else {
-                showNotification(`"${applicationFileExtension}" is not a valid file extension`, SettingsNotificationType.Error);
+                showNotification(
+                    translations.applicationSearchSettingsInvalidFileExtensionErrorMessage.replace("{{value}}", applicationFileExtension),
+                    SettingsNotificationType.Error);
             }
         },
     },
@@ -44,19 +48,20 @@ export const newApplicationFileExtensionModalComponent = Vue.extend({
             this.visible = true;
         });
     },
+    props: ["translations"],
     template: `
         <div class="modal" :class="{ 'is-active' : visible }">
             <div class="modal-background" @click="closeModal"></div>
                 <div class="modal-content">
                     <div class="message">
                     <div class="message-header">
-                        <p>Add new application folder</p>
+                        <p>{{ translations.applicationSearchSettingsAddApplicationFileExtension }}</p>
                         <button @click="closeModal" class="delete" aria-label="delete"></button>
                     </div>
                     <div class="message-body">
                         <div class="field">
                             <label class="label">
-                                Application file extension
+                                {{ translations.applicationSearchSettingsApplicationFileExtension }}
                             </label>
                             <div class="control is-expanded">
                                 <input class="input" type="text" v-model="newApplicationFileExtension" autofocus :placeholder="getPlaceholder()">
@@ -68,7 +73,9 @@ export const newApplicationFileExtensionModalComponent = Vue.extend({
                                     <span class="icon">
                                         <i class="fas fa-times"></i>
                                     </span>
-                                    <span>Cancel</span>
+                                    <span>
+                                        {{ translations.cancel }}
+                                    </span>
                                 </button>
                             </div>
                             <div class="control">
@@ -76,7 +83,7 @@ export const newApplicationFileExtensionModalComponent = Vue.extend({
                                     <span class="icon">
                                         <i class="fas fa-check"></i>
                                     </span>
-                                    <span>Save</span>
+                                    <span>{{ translations.save }}</span>
                                 </button>
                             </div>
                         </div>

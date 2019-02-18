@@ -94,12 +94,12 @@ export const applicationSearchSettingsComponent = Vue.extend({
             this.addApplicationFileExtension(applicationFileExtension);
         });
     },
-    props: ["config"],
+    props: ["config", "translations"],
     template: `
         <div v-if="visible">
             <div class="settings__setting-title title is-3">
                 <span>
-                    Application Search
+                    {{ translations.applicationSearchSettings }}
                 </span>
                 <div>
                     <button class="button" :class="{ 'is-success' : config.applicationSearchOptions.enabled }" @click="toggleEnabled">
@@ -113,14 +113,16 @@ export const applicationSearchSettingsComponent = Vue.extend({
             <div class="settings__setting-content">
                 <div class="settings__setting-content-item box" v-if="config.applicationSearchOptions.enabled">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Application folders</div>
+                        <div class="title is-5">
+                            {{ translations.applicationSearchSettingsApplicationFolders }}
+                        </div>
                         <button class="button" @click="resetApplicationFoldersToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <table v-if="config.applicationSearchOptions.applicationFolders.length > 0" class="table is-striped is-fullwidth">
                         <thead>
                             <tr>
-                                <th>Folder path</th>
-                                <th class="has-text-right">Remove</th>
+                                <th>{{ translations.applicationSearchSettingsFolderPath }}</th>
+                                <th class="has-text-right">{{ translations.applicationSearchSettingsRemoveAction }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -139,20 +141,24 @@ export const applicationSearchSettingsComponent = Vue.extend({
                     <div>
                         <button class="button is-success" @click="onAddFolderClick">
                             <span class="icon"><i class="fas fa-plus"></i></span>
-                            <span>Add application folder</span>
+                            <span>
+                                {{ translations.applicationSearchSettingsAddApplicationFolder }}
+                            </span>
                         </button>
                     </div>
                 </div>
                 <div class="settings__setting-content-item box" v-if="config.applicationSearchOptions.enabled">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Application file extensions</div>
+                        <div class="title is-5">
+                            {{ translations.applicationSearchSettingsApplicationFileExtensions }}
+                        </div>
                         <button class="button" @click="resetApplicationFileExtensionsToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <table class="table is-striped is-fullwidth">
                         <thead>
                             <tr>
-                                <th>Application file extension</th>
-                                <th class="has-text-right">Remove</th>
+                                <th>{{ translations.applicationSearchSettingsApplicationFileExtension }}</th>
+                                <th class="has-text-right">{{ translations.applicationSearchSettingsRemoveAction }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -171,14 +177,16 @@ export const applicationSearchSettingsComponent = Vue.extend({
                     <div>
                         <button class="button is-success" @click="onAddFileExtensionClick">
                             <span class="icon"><i class="fas fa-plus"></i></span>
-                            <span>Add application file extension</span>
+                            <span>{{ translations.applicationSearchSettingsAddApplicationFileExtension }}</span>
                         </button>
                     </div>
                 </div>
-                <h6 v-else class="title is-6 has-text-danger">Application search is disabled</h6>
+                <h6 v-else class="title is-6 has-text-danger">
+                    {{ translations.applicationSearchSettingsDisabled }}
+                </h6>
             </div>
-            <new-application-folder-modal></new-application-folder-modal>
-            <new-application-file-extension-modal></new-application-file-extension-modal>
+            <new-application-folder-modal :translations="translations"></new-application-folder-modal>
+            <new-application-file-extension-modal :translations="translations"></new-application-file-extension-modal>
         </div>
     `,
 });

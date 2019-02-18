@@ -62,11 +62,13 @@ export const appearanceSettingsComponent = Vue.extend({
             }
         });
     },
-    props: ["config"],
+    props: ["config", "translations"],
     template: `
     <div v-if="visible">
         <div class="settings__setting-title title is-3">
-            <span>Appearance</span>
+            <span>
+                {{ translations.appearanceSettings }}
+            </span>
             <button class="button" @click="resetAll">
                 <span class="icon"><i class="fas fa-undo-alt"></i></span>
             </button>
@@ -74,7 +76,9 @@ export const appearanceSettingsComponent = Vue.extend({
         <div class="settings__setting-content">
             <div class="settings__setting-content-item box">
                 <div class="settings__setting-content-item-title">
-                    <div class="title is-5">Window Width (in Pixels)</div>
+                    <div class="title is-5">
+                        {{ translations.appearanceSettingsWindowWidth }}
+                    </div>
                     <button class="button" @click="resetWindowWidth">
                         <span class="icon"><i class="fas fa-undo-alt"></i></span>
                     </button>
@@ -94,7 +98,9 @@ export const appearanceSettingsComponent = Vue.extend({
             </div>
             <div class="settings__setting-content-item box">
                 <div class="settings__setting-content-item-title">
-                    <div class="title is-5">Max Search Results (per Page)</div>
+                    <div class="title is-5">
+                        {{ translations.appearanceSettingsMaxSearchResultsPerPage }}
+                    </div>
                     <button class="button" @click="resetMaxSearchResultsPerPage">
                         <span class="icon"><i class="fas fa-undo-alt"></i></span>
                     </button>
@@ -114,7 +120,9 @@ export const appearanceSettingsComponent = Vue.extend({
             </div>
             <div class="settings__setting-content-item box">
                 <div class="settings__setting-content-item-title">
-                    <div class="title is-5">Search Result Height (in Pixels)</div>
+                    <div class="title is-5">
+                        {{ translations.appearanceSettingsSearchResultHeight }}
+                    </div>
                     <button class="button" @click="resetSearchResultHeight">
                         <span class="icon"><i class="fas fa-undo-alt"></i></span>
                     </button>
@@ -134,7 +142,9 @@ export const appearanceSettingsComponent = Vue.extend({
             </div>
             <div class="settings__setting-content-item box">
                 <div class="settings__setting-content-item-title">
-                    <div class="title is-5">Smooth scrolling</div>
+                    <div class="title is-5">
+                        {{ translations.appearanceSettingsSmoothScrolling }}
+                    </div>
                     <button class="button" @click="resetUseSmoothScrolling">
                         <span class="icon"><i class="fas fa-undo-alt"></i></span>
                     </button>
@@ -153,7 +163,9 @@ export const appearanceSettingsComponent = Vue.extend({
             </div>
             <div class="settings__setting-content-item box">
                 <div class="settings__setting-content-item-title">
-                    <div class="title is-5">User Input Height (in Pixels)</div>
+                    <div class="title is-5">
+                        {{ translations.appearanceSettingsUserInputHeight }}
+                    </div>
                     <button class="button" @click="resetUserInputHeight">
                         <span class="icon"><i class="fas fa-undo-alt"></i></span>
                     </button>
@@ -173,7 +185,9 @@ export const appearanceSettingsComponent = Vue.extend({
             </div>
             <div class="settings__setting-content-item box">
                 <div class="settings__setting-content-item-title">
-                    <div class="title is-5">Show description on all search results</div>
+                    <div class="title is-5">
+                        {{ translations.appearanceSettingsShowDescriptionOnAllSearchResults }}
+                    </div>
                     <button class="button" @click="resetShowDescriptionOnAllSearchResults"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                 </div>
                 <div class="columns">

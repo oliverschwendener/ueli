@@ -20,8 +20,7 @@ import { defaultGeneralOptions } from "../common/config/default-general-options"
 import { getErrorSearchResultItem } from "../common/error-search-result-item";
 import { FileHelpers } from "./helpers/file-helpers";
 import { ueliTempFolder } from "../common/helpers/ueli-helpers";
-import { getProductionTranslationManager } from "./production/production-translation-manager";
-import { TranslationKey } from "../common/translation/translation-key";
+import { getTranslationSet } from "../common/translation/translation-set-manager";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -39,8 +38,8 @@ let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow;
 
 let config = configRepository.getConfig();
-const translationManager = getProductionTranslationManager(config);
-let searchEngine = getProductionSearchEngine(config, translationManager);
+let translationSet = getTranslationSet(config.generalOptions.language);
+let searchEngine = getProductionSearchEngine(config, translationSet);
 
 let rescanInterval = setInterval(() => refreshAllIndexes(), Number(config.generalOptions.rescanIntervalInSeconds) * 1000);
 
@@ -56,7 +55,7 @@ function notifyRenderer(ipcChannel: IpcChannels, message?: string) {
 function refreshAllIndexes() {
     searchEngine.refreshIndexes()
         .then(() => {
-            const message = translationManager.getTranslation(TranslationKey.SuccessfullyRefreshedIndexes);
+            const message = translationSet.successfullyRefreshedIndexes;
             logger.debug(message);
             notifyRenderer(IpcChannels.indexRefreshSucceeded, message);
         })
@@ -68,7 +67,7 @@ function refreshAllIndexes() {
 
 function clearAllCaches() {
     searchEngine.clearCaches()
-        .then(() => logger.debug(translationManager.getTranslation(TranslationKey.SuccessfullyClearedCaches)))
+        .then(() => logger.debug(translationSet.successfullyClearedCaches))
         .catch((err) => logger.error(err));
 }
 
@@ -106,7 +105,7 @@ function getMaxWindowHeight(maxSearchResultsPerPage: number, searchResultHeight:
 
 function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) {
     if (updatedConfig.generalOptions.language !== config.generalOptions.language) {
-        translationManager.updateLanguage(updatedConfig.generalOptions.language);
+        translationSet = getTranslationSet(updatedConfig.generalOptions.language);
     }
 
     if (updatedConfig.generalOptions.hotKey !== config.generalOptions.hotKey) {
@@ -138,14 +137,12 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boole
     config = updatedConfig;
     configRepository.saveConfig(updatedConfig)
         .then(() => {
-            searchEngine.updateConfig(updatedConfig)
+            searchEngine.updateConfig(updatedConfig, translationSet)
                 .then(() => {
                     if (needsIndexRefresh) {
                         refreshAllIndexes();
                     } else {
-                        notifyRenderer(
-                            IpcChannels.indexRefreshSucceeded,
-                            translationManager.getTranslation(TranslationKey.SuccessfullyUpdatedConfig));
+                        notifyRenderer(IpcChannels.indexRefreshSucceeded, translationSet.successfullyUpdatedconfig);
                     }
                 })
                 .catch((err) =>  logger.error(err));
@@ -170,7 +167,7 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
 
 function reloadApp() {
     updateMainWindowSize(0, config.appearanceOptions);
-    searchEngine = getProductionSearchEngine(config, translationManager);
+    searchEngine = getProductionSearchEngine(config, translationSet);
     mainWindow.reload();
 }
 
@@ -188,7 +185,7 @@ function beforeQuitApp(): Promise<void> {
 
 function quitApp() {
     beforeQuitApp()
-        .then(() => logger.debug(translationManager.getTranslation(TranslationKey.SuccessfullyClearedCachesBeforeAppQuit)))
+        .then(() => logger.debug(translationSet.successfullyClearedCachesBeforeExit))
         .catch((err) => logger.error(err))
         .then(() => {
             clearInterval(rescanInterval);
@@ -282,9 +279,7 @@ function registerAllIpcListeners() {
             .catch((err) => {
                 logger.error(err);
                 updateMainWindowSize(1, config.appearanceOptions);
-                const noResultFound = getErrorSearchResultItem(
-                    translationManager.getTranslation(TranslationKey.GeneralErrorTitle),
-                    translationManager.getTranslation(TranslationKey.GeneralErrorDescription));
+                const noResultFound = getErrorSearchResultItem(translationSet.generalErrorTitle, translationSet.generalErrorDescription);
                 event.sender.send(IpcChannels.searchResponse, [noResultFound]);
             });
     });

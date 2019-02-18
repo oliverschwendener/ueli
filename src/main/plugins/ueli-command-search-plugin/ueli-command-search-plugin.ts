@@ -7,13 +7,12 @@ import { IconType } from "../../../common/icon/icon-type";
 import { UeliCommandExecutionArgument } from "./ueli-command-execution-argument";
 import { ipcMain } from "electron";
 import { IpcChannels } from "../../../common/ipc-channels";
-import { TranslationManager } from "../../../common/translation/translation-manager";
-import { TranslationKey } from "../../../common/translation/translation-key";
+import { TranslationSet } from "../../../common/translation/translation-set";
 
 export class UeliCommandSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.UeliCommandSearchPlugin;
     public readonly openLocationSupported = false;
-    private readonly translationManager: TranslationManager;
+    private translationSet: TranslationSet;
     private readonly icon = `
     <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         viewBox="0 0 600 600" xml:space="preserve">
@@ -24,8 +23,8 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
     </svg>
     `;
 
-    constructor(translationManager: TranslationManager) {
-        this.translationManager = translationManager;
+    constructor(translationSet: TranslationSet) {
+        this.translationSet = translationSet;
     }
 
     public isEnabled(): boolean {
@@ -67,8 +66,9 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
         });
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
+    public updateConfig(updatedConfig: UserConfigOptions, tranlsationSet: TranslationSet): Promise<void> {
         return new Promise((resolve) => {
+            this.translationSet = tranlsationSet;
             resolve();
         });
     }
@@ -91,40 +91,40 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
     private getAllCommands(): UeliCommand[] {
         return [
             {
-                description: this.translationManager.getTranslation(TranslationKey.UeliCommandQuitDescription),
+                description: this.translationSet.ueliCommandExitDescription,
                 executionArgument: UeliCommandExecutionArgument.Exit,
                 hideMainWindowAfterExecution: true,
-                name: this.translationManager.getTranslation(TranslationKey.UeliCommandQuit),
+                name: this.translationSet.ueliCommandExit,
             },
             {
-                description: this.translationManager.getTranslation(TranslationKey.UeliCommandReloadDescription),
+                description: this.translationSet.ueliCommandReloadDescription,
                 executionArgument: UeliCommandExecutionArgument.Reload,
                 hideMainWindowAfterExecution: false,
-                name: this.translationManager.getTranslation(TranslationKey.UeliCommandReload),
+                name: this.translationSet.ueliCommandReload,
             },
             {
-                description: this.translationManager.getTranslation(TranslationKey.UeliCommandEditSettingsFileDescription),
+                description: this.translationSet.ueliCommandEditSettingsFileDescription,
                 executionArgument: UeliCommandExecutionArgument.EditConfigFile,
                 hideMainWindowAfterExecution: true,
-                name: this.translationManager.getTranslation(TranslationKey.UeliCommandEditSettingsFile),
+                name: this.translationSet.ueliCommandEditSettingsFile,
             },
             {
-                description: this.translationManager.getTranslation(TranslationKey.UeliCommandOpenSettingsDescription),
+                description: this.translationSet.ueliCommandOpenSettingsDescription,
                 executionArgument: UeliCommandExecutionArgument.OpenSettings,
                 hideMainWindowAfterExecution: false,
-                name: this.translationManager.getTranslation(TranslationKey.UeliCommandOpenSettings),
+                name: this.translationSet.ueliCommandOpenSettings,
             },
             {
-                description: this.translationManager.getTranslation(TranslationKey.UeliCommandRefreshIndexesDescription),
+                description: this.translationSet.ueliCommandRefreshIndexesDescription,
                 executionArgument: UeliCommandExecutionArgument.RefreshIndexes,
                 hideMainWindowAfterExecution: false,
-                name: this.translationManager.getTranslation(TranslationKey.UeliCommandRefreshIndexes),
+                name: this.translationSet.ueliCommandRefreshIndexes,
             },
             {
-                description: this.translationManager.getTranslation(TranslationKey.UeliCommandClearCachesDescription),
+                description: this.translationSet.ueliCommandClearCachesDescription,
                 executionArgument: UeliCommandExecutionArgument.ClearCaches,
                 hideMainWindowAfterExecution: false,
-                name: this.translationManager.getTranslation(TranslationKey.UeliCommandClearCaches),
+                name: this.translationSet.ueliCommandClearCaches,
             },
         ];
     }

@@ -100,12 +100,12 @@ export const shortcutSettingsComponent = Vue.extend({
             }
         });
     },
-    props: ["config"],
+    props: ["config", "translations"],
     template: `
         <div v-if="visible">
             <div class="settings__setting-title title is-3">
                 <span>
-                    Shortcut Options
+                    {{ translations.shortcutSettings }}
                 </span>
                 <div>
                     <button class="button" :class="{ 'is-success' : config.shortcutOptions.isEnabled }" @click="toggleEnabled">
@@ -118,21 +118,27 @@ export const shortcutSettingsComponent = Vue.extend({
             </div>
             <div v-if="config.shortcutOptions.isEnabled" class="settings__setting-content box">
                 <div class="settings__setting-content-item-title">
-                    <div class="title is-5">Shortcuts</div>
-                    <button class="button" @click="resetShortcutsToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                    <div class="title is-5">
+                        {{ translations.shortcutSettingsShortcut }}
+                    </div>
+                    <button class="button" @click="resetShortcutsToDefault">
+                        <span class="icon">
+                            <i class="fas fa-undo-alt"></i>
+                        </span>
+                    </button>
                 </div>
                 <div v-if="config.shortcutOptions.shortcuts.length > 0" class="settings__setting-content-item">
                     <table class="table is-striped is-fullwidth">
                         <thead>
                             <tr>
-                                <th>Type</th>
-                                <th>Name</th>
-                                <th class="is-expanded">Execution Argument</th>
-                                <th>Description</th>
-                                <th>Tags</th>
-                                <th>Icon</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th>{{ translations.shortcutSettingsTableType }}</th>
+                                <th>{{ translations.shortcutSettingsTableName }}</th>
+                                <th class="is-expanded">{{ translations.shortcutSettingsTableExecutionArgument }}</th>
+                                <th>{{ translations.shortcutSettingsTableDescription }}</th>
+                                <th>{{ translations.shortcutSettingsTableTags }}</th>
+                                <th class="has-text-centered">{{ translations.shortcutSettingsTableIcon }}</th>
+                                <th class="has-text-centered">{{ translations.shortcutSettingsTableEdit }}</th>
+                                <th class="has-text-centered">{{ translations.shortcutSettingsTableDelete }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -146,12 +152,12 @@ export const shortcutSettingsComponent = Vue.extend({
                                         <span v-for="tag in shortcut.tags" class="tag is-light">{{ tag }}</span>
                                     </div>
                                 </td>
-                                <td>
+                                <td class="has-text-centered">
                                     <img v-if="getShortcutIcon(shortcut).type === iconTypeUrl" :src="getShortcutIcon(shortcut).parameter" class="settings-table__icon-url">
                                     <div v-else="getShortcutIcon(shortcut).type === iconTypeSvg" v-html="getShortcutIcon(shortcut).parameter" class="settings-table__icon-svg"></div>
                                 </td>
-                                <td><button class="button" @click="editShortcut(index)"><span class="icon"><i class="fas fa-edit"></i></span></button></td>
-                                <td><button class="button is-danger" @click="deleteShortcut(index)"><span class="icon"><i class="fas fa-trash"></i></span></button></td>
+                                <td class="has-text-centered"><button class="button" @click="editShortcut(index)"><span class="icon"><i class="fas fa-edit"></i></span></button></td>
+                                <td class="has-text-centered"><button class="button is-danger" @click="deleteShortcut(index)"><span class="icon"><i class="fas fa-trash"></i></span></button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -159,14 +165,16 @@ export const shortcutSettingsComponent = Vue.extend({
                 <div>
                     <button class="button is-success" @click="addButtonClick">
                         <span class="icon"><i class="fas fa-plus"></i></span>
-                        <span>Add Shortcut</span>
+                        <span>{{ translations.shortcutSettingsAddShortcut }}</span>
                     </button>
                 </div>
             </div>
             <div v-else>
-                <h6 class="title is-6 has-text-danger">Shortcuts are disabled</h6>
+                <h6 class="title is-6 has-text-danger">
+                    {{ translations.shortcutSettingsDisabled }}
+                </h6>
             </div>
-            <shortcut-editing-modal></shortcut-editing-modal>
+            <shortcut-editing-modal :translations="translations"></shortcut-editing-modal>
         </div>
     `,
 });

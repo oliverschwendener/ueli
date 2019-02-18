@@ -63,11 +63,13 @@ export const generalSettingsComponent = Vue.extend({
             }
         });
     },
-    props: ["config"],
+    props: ["config", "translations"],
     template: `
         <div v-if="visible">
             <div class="settings__setting-title title is-3">
-                <span>General Options</span>
+                <span>
+                    {{ translations.generalSettings }}
+                </span>
                 <button class="button" @click="resetAll">
                     <span class="icon"><i class="fas fa-undo-alt"></i></span>
                 </button>
@@ -76,7 +78,9 @@ export const generalSettingsComponent = Vue.extend({
 
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Language</div>
+                        <div class="title is-5">
+                            {{ translations.generalSettingsLanguage }}
+                        </div>
                         <button class="button" @click="resetLanguage"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <div class="columns">
@@ -99,7 +103,9 @@ export const generalSettingsComponent = Vue.extend({
 
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Autostart App</div>
+                        <div class="title is-5">
+                            {{ translations.generalSettingsAutostartApp }}
+                        </div>
                         <button class="button" @click="resetAutostart"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <div class="columns">
@@ -117,7 +123,9 @@ export const generalSettingsComponent = Vue.extend({
 
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Clear caches on exit</div>
+                        <div class="title is-5">
+                            {{ translations.generalSettingsClearCachesOnExit }}
+                        </div>
                         <button class="button" @click="resetClearCachesOnExit"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <div class="columns">
@@ -135,7 +143,9 @@ export const generalSettingsComponent = Vue.extend({
 
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Hot Key</div>
+                        <div class="title is-5">
+                            {{ translations.generalSettingsHotKey }}
+                        </div>
                         <button class="button" @click="resetHotKey"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <div class="columns">
@@ -165,7 +175,9 @@ export const generalSettingsComponent = Vue.extend({
 
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Rescan interval (in seconds)</div>
+                        <div class="title is-5">
+                            {{ translations.generalSettingsRescanInterval }}
+                        </div>
                         <button class="button" @click="resetRescanInterval"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <div class="columns">

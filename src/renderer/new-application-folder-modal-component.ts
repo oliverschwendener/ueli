@@ -7,6 +7,7 @@ import { getFolderPaths } from "./dialogs";
 import { showNotification } from "./notifications";
 import { isWindows } from "../common/helpers/operating-system-helpers";
 import { platform } from "os";
+import { TranslationSet } from "../common/translation/translation-set";
 
 export const newApplicationFolderModalComponent = Vue.extend({
     data() {
@@ -21,11 +22,12 @@ export const newApplicationFolderModalComponent = Vue.extend({
             this.newApplicationFolder = "";
         },
         getPlaceholder(): string {
+            const translations: TranslationSet = this.translations;
             const folderPath = isWindows(platform())
                 ? "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs"
                 : "/Applications";
 
-            return `For example: "${folderPath}"`;
+            return `${translations.forExample}: "${folderPath}"`;
         },
         openFolderDialog() {
             getFolderPaths()
@@ -45,9 +47,10 @@ export const newApplicationFolderModalComponent = Vue.extend({
                 .catch((err: string) => showNotification(err, SettingsNotificationType.Error));
         },
         validateFolderPath(folderPath: string): Promise<void> {
-            const notAFolderError = `"${folderPath}" is not a folder`;
-            const folderDoesNotExistError = `${folderPath} does not exist`;
-            const genericError = `Error while trying to validate folder path: ${folderPath}`;
+            const translations: TranslationSet = this.translations;
+            const notAFolderError = translations.applicationSearchSettingsNotAFolderErrorMessage.replace("{{value}}", folderPath);
+            const folderDoesNotExistError = translations.applicationSearchSettingsDoesNotExistErrorMessage.replace("{{value}}", folderPath);
+            const genericError = translations.applicationSearchSettingsFolderValidationError.replace("{{value}}", folderPath);
 
             return new Promise((resolve, reject) => {
                 FileHelpers.fileExists(folderPath)
@@ -75,19 +78,20 @@ export const newApplicationFolderModalComponent = Vue.extend({
             this.visible = true;
         });
     },
+    props: ["translations"],
     template: `
         <div class="modal" :class="{ 'is-active' : visible }">
             <div class="modal-background" @click="closeModal"></div>
             <div class="modal-content">
                 <div class="message">
                     <div class="message-header">
-                        <p>Add new application folder</p>
+                        <p>{{ translations.applicationSearchSettingsAddApplicationFolder }}</p>
                         <button @click="closeModal" class="delete" aria-label="delete"></button>
                     </div>
                     <div class="message-body">
                         <div class="field">
                             <label class="label">
-                                Application folder path
+                                {{ translations.applicationSearchSettingsApplicationFolder }}
                             </label>
                         </div>
                         <div class="field has-addons">
@@ -106,7 +110,7 @@ export const newApplicationFolderModalComponent = Vue.extend({
                                     <span class="icon">
                                         <i class="fas fa-times"></i>
                                     </span>
-                                    <span>Cancel</span>
+                                    <span>{{ translations.cancel }}</span>
                                 </button>
                             </div>
                             <div class="control">
@@ -114,7 +118,7 @@ export const newApplicationFolderModalComponent = Vue.extend({
                                     <span class="icon">
                                         <i class="fas fa-check"></i>
                                     </span>
-                                    <span>Save</span>
+                                    <span>{{ translations.save }}</span>
                                 </button>
                             </div>
                         </div>

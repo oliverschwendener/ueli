@@ -15,17 +15,17 @@ import { SearchPlugin } from "../search-plugin";
 import { ExecutionPlugin } from "../execution-plugin";
 import { MdFindExecutionPlugin } from "../plugins/mdfind-execution-plugin/mdfind-execution-plugin";
 import { TranslationExecutionPlugin } from "../plugins/translation-execution-plugin/translation-execution-plugin";
-import { TranslationManager } from "../../common/translation/translation-manager";
 import { executeFilePathLocationWindows, executeFilePathLocationMacOs } from "../executors/file-path-location-executor";
+import { TranslationSet } from "../../common/translation/translation-set";
 
 const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
 const filePathLocationExecutor = isWindows(platform()) ? executeFilePathLocationWindows : executeFilePathLocationMacOs;
 const appGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
 
-export const getProductionSearchEngine = (userConfig: UserConfigOptions, translationManager: TranslationManager): SearchEngine => {
+export const getProductionSearchEngine = (userConfig: UserConfigOptions, translationSet: TranslationSet): SearchEngine => {
     const searchPlugins: SearchPlugin[] = [
-        new UeliCommandSearchPlugin(translationManager),
+        new UeliCommandSearchPlugin(translationSet),
         new ShortcutsSearchPlugin(
             userConfig.shortcutOptions,
             urlExecutor,
@@ -53,5 +53,5 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
         executionPlugins.push(new MdFindExecutionPlugin(userConfig, filePathExecutor, filePathLocationExecutor));
     }
 
-    return new SearchEngine(searchPlugins, executionPlugins, userConfig, translationManager);
+    return new SearchEngine(searchPlugins, executionPlugins, userConfig, translationSet);
 };
