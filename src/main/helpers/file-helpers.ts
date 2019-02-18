@@ -1,4 +1,4 @@
-import { Stats, readdir, lstat, unlink, exists } from "fs";
+import { Stats, readdir, lstat, unlink, exists, writeFile, existsSync, mkdirSync } from "fs";
 import { join, extname } from "path";
 
 interface FileStat {
@@ -101,6 +101,26 @@ export class FileHelpers {
                 }
             });
         });
+    }
+
+    public static writeFile(filePath: string, fileContent: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            writeFile(filePath, fileContent, (err) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        });
+    }
+
+    public static fileExistsSync(filePath: string): boolean {
+        return existsSync(filePath);
+    }
+
+    public static createFolderSync(filePath: string) {
+        mkdirSync(filePath);
     }
 
     private static handleFileStat(fileStat: FileStat): Promise<string[]> {

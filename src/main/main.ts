@@ -12,14 +12,20 @@ import { UeliCommand } from "./plugins/ueli-command-search-plugin/ueli-command";
 import { UeliCommandExecutionArgument } from "./plugins/ueli-command-search-plugin/ueli-command-execution-argument";
 import { platform } from "os";
 import { OperatingSystem } from "../common/operating-system";
-import { getProductionSearchPlugins as getProductionSearchEngine } from "./production/production-search-engine";
+import { getProductionSearchEngine } from "./production/production-search-engine";
 import { cloneDeep } from "lodash";
 import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
 import { GlobalHotKeyHelpers } from "../common/global-hot-key/global-hot-key-helpers";
 import { defaultGeneralOptions } from "../common/config/default-general-options";
 import { getErrorSearchResultItem } from "../common/error-search-result-item";
+import { FileHelpers } from "./helpers/file-helpers";
+import { ueliTempFolder } from "../common/helpers/ueli-helpers";
 import { getProductionTranslationManager } from "./production/production-translation-manager";
 import { TranslationKey } from "../common/translation/translation-key";
+
+if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
+    FileHelpers.createFolderSync(ueliTempFolder);
+}
 
 const logger = new ConsoleLogger();
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
@@ -292,6 +298,12 @@ function registerAllIpcListeners() {
                     updateMainWindowSize(0, config.appearanceOptions);
                 }
             })
+            .catch((err) => logger.error(err));
+    });
+
+    ipcMain.on(IpcChannels.openSearchResultLocation, (event: Electron.Event, searchResultItem: SearchResultItem) => {
+        searchEngine.openLocation(searchResultItem)
+            .then(() => hideMainWindow())
             .catch((err) => logger.error(err));
     });
 

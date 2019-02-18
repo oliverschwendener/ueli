@@ -1,6 +1,6 @@
 import { SearchResultItem } from "../common/search-result-item";
-import { IconType } from "../common/icon/icon-type";
 import { PluginType } from "./plugin-type";
+import { IconType } from "../common/icon/icon-type";
 
 export function getNoSearchResultsFoundResultItem(message: string, description?: string): SearchResultItem {
     return {

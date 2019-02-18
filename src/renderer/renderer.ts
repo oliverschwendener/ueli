@@ -60,6 +60,12 @@ new Vue({
             }
         });
 
+        vueEventDispatcher.$on(VueEventChannels.handleOpenLocation, (searchResultItem: SearchResultItem | undefined) => {
+            if (searchResultItem !== undefined) {
+                ipcRenderer.send(IpcChannels.openSearchResultLocation, searchResultItem);
+            }
+        });
+
         vueEventDispatcher.$on(VueEventChannels.configUpdated, (config: UserConfigOptions, needsIndexRefresh: boolean) => {
             this.config = config;
             ipcRenderer.send(IpcChannels.configUpdated, config, needsIndexRefresh);

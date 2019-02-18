@@ -1,5 +1,7 @@
 export enum VueEventChannels {
     enterPress = "enter-press",
+    openSearchResultLocationKeyPress = "open-search-result-location-key-press",
+    handleOpenLocation = "handle-open-location",
     mainWindowHasBeenHidden = "execution-succeeded",
     handleExecution = "handle-execution",
     mainWindowHasBeenShown = "main-window-has-been-shown",

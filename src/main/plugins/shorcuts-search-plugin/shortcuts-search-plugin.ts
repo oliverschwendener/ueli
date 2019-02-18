@@ -15,18 +15,22 @@ interface ExecutionArgumentDecodeResult {
 
 export class ShortcutsSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.ShortcutsSearchPlugin;
+    public readonly openLocationSupported = true;
     private config: ShortcutOptions;
     private readonly urlExecutor: (url: string) => Promise<void>;
     private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
+    private readonly filePathLocationExecutor: (filePath: string) => Promise<void>;
 
     constructor(
         config: ShortcutOptions,
         urlExecutor: (url: string) => Promise<void>,
         filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>,
+        filePathLocationExecutor: (filePath: string) => Promise<void>,
         ) {
         this.config = config;
         this.urlExecutor = urlExecutor;
         this.filePathExecutor = filePathExecutor;
+        this.filePathLocationExecutor = filePathLocationExecutor;
     }
 
     public getAll(): Promise<SearchResultItem[]> {
@@ -65,6 +69,19 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
             default:
                 return this.getUnsupportedShortcutTypePromise(decodeResult.shortcutType);
         }
+    }
+
+    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const decodeResult = this.decodeExecutionArgument(searchResultItem.executionArgument);
+            if (decodeResult.shortcutType === ShortcutType.FilePath) {
+                this.filePathLocationExecutor(decodeResult.executionArgument)
+                    .then(() => resolve())
+                    .catch((err) => reject(err));
+            } else {
+                reject(`Error while trying to open file location. "${decodeResult.executionArgument}" is not a valid file path`);
+            }
+        });
     }
 
     public isEnabled(): boolean {

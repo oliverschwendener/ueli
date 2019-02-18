@@ -25,6 +25,10 @@ export const searchResultsComponent = Vue.extend({
         };
     },
     methods: {
+        getActiveSearchResultItem(): SearchResultItemViewModel | undefined {
+            const searchResults: SearchResultItemViewModel[] = this.searchResults;
+            return searchResults.find((s): boolean => s.active);
+        },
         getIcon(icon: Icon) {
             switch (icon.type) {
                 case IconType.URL:
@@ -110,8 +114,8 @@ export const searchResultsComponent = Vue.extend({
         vueEventDispatcher.$on(VueEventChannels.appearanceOptionsUpdated, (appearanceOptions: AppearanceOptions) => {
             this.appearance = appearanceOptions;
         });
-        vueEventDispatcher.$on(VueEventChannels.searchResultsUpdated, (s: SearchResultItem[]) => {
-            this.update(s);
+        vueEventDispatcher.$on(VueEventChannels.searchResultsUpdated, (updatedSearchResults: SearchResultItem[]) => {
+            this.update(updatedSearchResults);
         });
         vueEventDispatcher.$on(VueEventChannels.selectNextItem, () => {
             this.handleSearchResultBrowsing(BrowseDirection.Next);
@@ -120,10 +124,15 @@ export const searchResultsComponent = Vue.extend({
             this.handleSearchResultBrowsing(BrowseDirection.Previous);
         });
         vueEventDispatcher.$on(VueEventChannels.enterPress, (privileged: boolean) => {
-            const searchResults: SearchResultItemViewModel[] = this.searchResults;
-            const activeItem = searchResults.find((s): boolean => s.active);
+            const activeItem = this.getActiveSearchResultItem();
             if (activeItem && activeItem.originPluginType !== PluginType.None) {
                 vueEventDispatcher.$emit(VueEventChannels.handleExecution, activeItem, privileged);
+            }
+        });
+        vueEventDispatcher.$on(VueEventChannels.openSearchResultLocationKeyPress, () => {
+            const activeItem = this.getActiveSearchResultItem();
+            if (activeItem && activeItem.originPluginType !== PluginType.None) {
+                vueEventDispatcher.$emit(VueEventChannels.handleOpenLocation, activeItem);
             }
         });
     },
