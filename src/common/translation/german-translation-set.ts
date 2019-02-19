@@ -85,6 +85,14 @@ export const germanTranslationSet: TranslationSet = {
     shortcutSettingsTypeUrl: "URL",
     shortcutSettingsTypeFilePath: "Dateipfad",
 
+    translationSettingsTranslation: "Übersetzung",
+    translationSettingsDebounceDelay: "Debounce Verzögerung (in Millisekunden)",
+    translationSettingsMinSearchTermLength: "Minimum Suchbegrifflänge",
+    translationSettingsPrefix: "Prefix",
+    translationSettingsSourceLanguage: "Quellsprache",
+    translationSettingsTargetLanguage: "Zielsprache",
+    translationSettingsDisabled: "Übersetzung ist deaktiviert",
+
     cancel: "Abbrechen",
     save: "Speichern",
     forExample: "Zum Beispiel",

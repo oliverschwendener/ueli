@@ -85,6 +85,14 @@ export const englishTranslationSet: TranslationSet = {
     shortcutSettingsTypeUrl: "URL",
     shortcutSettingsTypeFilePath: "File path",
 
+    translationSettingsTranslation: "Translation",
+    translationSettingsDebounceDelay: "Debounce delay (in milliseconds)",
+    translationSettingsMinSearchTermLength: "Min search term length",
+    translationSettingsPrefix: "Prefix",
+    translationSettingsSourceLanguage: "Source language",
+    translationSettingsTargetLanguage: "Target language",
+    translationSettingsDisabled: "Translation is disabled",
+
     cancel: "Cancel",
     save: "Save",
     forExample: "For example",

@@ -65,12 +65,12 @@ export const translationSettingsComponent = Vue.extend({
             }
         });
     },
-    props: ["config"],
+    props: ["config", "translations"],
     template: `
         <div v-if="visible">
             <div class="settings__setting-title title is-3">
                 <span>
-                    Translation
+                    {{ translations.translationSettingsTranslation }}
                 </span>
                 <div>
                     <button class="button" :class="{ 'is-success' : config.translationOptions.enabled }" @click="toggleEnabled">
@@ -85,7 +85,9 @@ export const translationSettingsComponent = Vue.extend({
 
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Debounce Delay (in milliseconds)</div>
+                        <div class="title is-5">
+                            {{ translations.translationSettingsDebounceDelay }}
+                        </div>
                         <button class="button" @click="resetDebounceDelay"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <div class="columns">
@@ -104,7 +106,9 @@ export const translationSettingsComponent = Vue.extend({
 
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Min search term length</div>
+                        <div class="title is-5">
+                            {{ translations.translationSettingsMinSearchTermLength }}
+                        </div>
                         <button class="button" @click="resetMinSearchTermLength"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <div class="columns">
@@ -123,7 +127,9 @@ export const translationSettingsComponent = Vue.extend({
 
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Prefix</div>
+                        <div class="title is-5">
+                            {{ translations.translationSettingsPrefix }}
+                        </div>
                         <button class="button" @click="resetPrefix"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <div class="columns">
@@ -142,7 +148,9 @@ export const translationSettingsComponent = Vue.extend({
 
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Source Language</div>
+                        <div class="title is-5">
+                            {{ translations.translationSettingsSourceLanguage }}
+                        </div>
                         <button class="button" @click="resetSourceLanguage"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <div class="columns">
@@ -165,7 +173,9 @@ export const translationSettingsComponent = Vue.extend({
 
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Target Language</div>
+                        <div class="title is-5">
+                            {{ translations.translationSettingsTargetLanguage }}
+                        </div>
                         <button class="button" @click="resetTargetLanguage"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <div class="columns">
@@ -187,7 +197,9 @@ export const translationSettingsComponent = Vue.extend({
                 </div>
 
             </div>
-            <h6 v-else class="title is-6 has-text-danger">Translation is disabled</h6>
+            <h6 v-else class="title is-6 has-text-danger">
+                {{ translations.translationSettingsDisabled }}
+            </h6>
         </div>
     `,
 });

@@ -82,6 +82,14 @@ export interface TranslationSet {
     shortcutSettingsTypeUrl: string;
     shortcutSettingsTypeFilePath: string;
 
+    translationSettingsTranslation: string;
+    translationSettingsDebounceDelay: string;
+    translationSettingsMinSearchTermLength: string;
+    translationSettingsPrefix: string;
+    translationSettingsSourceLanguage: string;
+    translationSettingsTargetLanguage: string;
+    translationSettingsDisabled: string;
+
     cancel: string;
     save: string;
     forExample: string;
