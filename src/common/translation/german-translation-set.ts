@@ -82,6 +82,8 @@ export const germanTranslationSet: TranslationSet = {
     shortcutSettingsEditModalFilePath: "Dateipfad",
     shortcutSettingsInvalidShortcutErrorMessage: "Ungültiger Shortcut",
     shortcutSettingsTagPlaceholder: "Füge einen Tag hinzu und drücke Enter",
+    shortcutSettingsTypeUrl: "URL",
+    shortcutSettingsTypeFilePath: "Dateipfad",
 
     cancel: "Abbrechen",
     save: "Speichern",

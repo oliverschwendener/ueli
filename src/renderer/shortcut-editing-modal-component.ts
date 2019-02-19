@@ -60,6 +60,15 @@ export const shortcutEditingModal = Vue.extend({
         deleteTag(index: number) {
             this.shortcut.tags.splice(index, 1);
         },
+        getShortcutType(shortcutType: ShortcutType): string {
+            const translations: TranslationSet = this.translations;
+            switch (shortcutType) {
+                case ShortcutType.Url:
+                    return translations.shortcutSettingsTypeUrl;
+                case ShortcutType.FilePath:
+                    return translations.shortcutSettingsTypeFilePath;
+            }
+        },
         getModalTitle(): string {
             const translations: TranslationSet = this.translations;
             const editMode: ModalEditMode = this.editMode;
@@ -173,7 +182,9 @@ export const shortcutEditingModal = Vue.extend({
                             <div class="control is-expanded">
                                 <div class="select is-fullwidth">
                                     <select v-model="shortcut.type" :autofocus="autofocus">
-                                        <option v-for="shortcutType in shortcutTypes">{{ shortcutType }}</option>
+                                        <option v-for="shortcutType in shortcutTypes" :value="shortcutType">
+                                            {{ getShortcutType(shortcutType) }}
+                                        </option>
                                     </select>
                                 </div>
                             </div>

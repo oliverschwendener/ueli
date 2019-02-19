@@ -79,6 +79,8 @@ export interface TranslationSet {
     shortcutSettingsEditModalFilePath: string;
     shortcutSettingsInvalidShortcutErrorMessage: string;
     shortcutSettingsTagPlaceholder: string;
+    shortcutSettingsTypeUrl: string;
+    shortcutSettingsTypeFilePath: string;
 
     cancel: string;
     save: string;

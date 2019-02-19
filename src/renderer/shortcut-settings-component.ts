@@ -12,6 +12,7 @@ import { Shortcut } from "../main/plugins/shorcuts-search-plugin/shortcut";
 import { Icon } from "../common/icon/icon";
 import { IconHelpers } from "../common/icon/icon-helpers";
 import { ShortcutType } from "../main/plugins/shorcuts-search-plugin/shortcut-type";
+import { TranslationSet } from "../common/translation/translation-set";
 
 export const shortcutSettingsComponent = Vue.extend({
     data() {
@@ -62,6 +63,15 @@ export const shortcutSettingsComponent = Vue.extend({
                     return "is-info";
                 default:
                     return "is-dark";
+            }
+        },
+        getShortcutType(shortcutType: ShortcutType): string {
+            const translations: TranslationSet = this.translations;
+            switch (shortcutType) {
+                case ShortcutType.Url:
+                    return translations.shortcutSettingsTypeUrl;
+                case ShortcutType.FilePath:
+                    return translations.shortcutSettingsTypeFilePath;
             }
         },
         resetAll() {
@@ -143,7 +153,7 @@ export const shortcutSettingsComponent = Vue.extend({
                         </thead>
                         <tbody>
                             <tr v-for="(shortcut, index) in config.shortcutOptions.shortcuts">
-                                <td><span class="tag" :class="getShortcutTypeClass(shortcut.type)">{{ shortcut.type }}</span></td>
+                                <td><span class="tag" :class="getShortcutTypeClass(shortcut.type)">{{ getShortcutType(shortcut.type) }}</span></td>
                                 <td>{{ shortcut.name }}</td>
                                 <td>{{ shortcut.executionArgument }}</td>
                                 <td>{{ shortcut.description }}</td>

@@ -82,6 +82,8 @@ export const englishTranslationSet: TranslationSet = {
     shortcutSettingsEditModalFilePath: "File path",
     shortcutSettingsInvalidShortcutErrorMessage: "Invalid shortcut",
     shortcutSettingsTagPlaceholder: "Add a tag and press enter",
+    shortcutSettingsTypeUrl: "URL",
+    shortcutSettingsTypeFilePath: "File path",
 
     cancel: "Cancel",
     save: "Save",
