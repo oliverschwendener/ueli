@@ -1,13 +1,9 @@
-import { shell } from "electron";
+import { executeCommand } from "./command-executor";
 
-export function executeUrl(url: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-        shell.openExternal(url, undefined, (err) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    });
+export function executeUrlWindows(url: string): Promise<void> {
+    return executeCommand(`start explorer "${url}"`);
+}
+
+export function executeUrlMacOs(url: string): Promise<void> {
+    return executeCommand(`open "${url}"`);
 }

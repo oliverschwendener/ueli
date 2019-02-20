@@ -1,37 +1,20 @@
-import { shell } from "electron";
-import { exec } from "child_process";
 import osascript = require("node-osascript");
+import { executeCommand } from "./command-executor";
 
 export function executeFilePathWindows(filePath: string, privileged: boolean): Promise<void> {
     return privileged
         ? executeFilePathWindowsAsPrivileged(filePath)
-        : executeFilePath(filePath);
+        : executeCommand(`start explorer "${filePath}"`);
 }
 
 export function executeFilePathMacOs(filePath: string, privileged: boolean): Promise<void> {
     return privileged
         ? executeFilePathMacOsAsPrivileged(filePath)
-        : executeFilePath(filePath);
-}
-
-function executeFilePath(filePath: string): Promise<void> {
-    return new Promise((resolve) => {
-        shell.openItem(filePath);
-        resolve();
-    });
+        : executeCommand(`open "${filePath}"`);
 }
 
 function executeFilePathWindowsAsPrivileged(filePath: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-        const command = `powershell -Command "& {Start-Process -Verb runas '${filePath}'}"`;
-        exec(command, (error) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve();
-            }
-        });
-    });
+    return executeCommand(`powershell -Command "& {Start-Process -Verb runas '${filePath}'}"`);
 }
 
 function executeFilePathMacOsAsPrivileged(filePath: string): Promise<void> {

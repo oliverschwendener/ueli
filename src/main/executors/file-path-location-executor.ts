@@ -1,8 +1,9 @@
-import { shell } from "electron";
+import { executeCommand } from "./command-executor";
 
-export function executeFilePathLocation(filePath: string): Promise<void> {
-    return new Promise((resolve) => {
-        shell.showItemInFolder(filePath);
-        resolve();
-    });
+export function executeFilePathLocationWindows(filePath: string): Promise<void> {
+    return executeCommand(`start explorer.exe /select,"${filePath}"`);
+}
+
+export function executeFilePathLocationMacOs(filePath: string): Promise<void> {
+    return executeCommand(`open -R "${filePath}"`);
 }
