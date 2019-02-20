@@ -3,7 +3,7 @@ import { Icon } from "../icon/icon";
 import { IconType } from "../icon/icon-type";
 
 export const defaultShortcutOptions: ShortcutOptions = {
-    isEnabled: true,
+    isEnabled: false,
     shortcuts: [],
 };
 
