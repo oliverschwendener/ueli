@@ -23,9 +23,10 @@ export function getFileIconDataUrl(filePath: string, defaultFileIcon: Icon, fold
                         } else {
                             FileHelpers.getStats(filePath)
                                 .then((stats) => {
+                                    const isDirectory = stats.stats.isDirectory() && !filePath.endsWith(".app");
                                     resolve({
                                         filePath,
-                                        icon: stats.stats.isDirectory() && folderIcon
+                                        icon: isDirectory && folderIcon
                                             ? folderIcon
                                             : { parameter: icon.toDataURL(), type: IconType.URL },
                                     });
