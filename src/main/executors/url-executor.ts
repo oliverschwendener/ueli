@@ -1,18 +1,10 @@
-import { exec } from "child_process";
+import { shell } from "electron";
 
-export function executeUrlWindows(url: string): Promise<void> {
-    return executeUrl(`start explorer "${url}"`);
-}
-
-export function executeUrlMacOs(url: string): Promise<void> {
-    return executeUrl(`open "${url}"`);
-}
-
-function executeUrl(command: string): Promise<void> {
+export function executeUrl(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
-        exec(command, (err) => {
+        shell.openExternal(url, undefined, (err) => {
             if (err) {
-                reject(`Error while executing URL: ${err}`);
+                reject(err);
             } else {
                 resolve();
             }

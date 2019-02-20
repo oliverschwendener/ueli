@@ -7,7 +7,7 @@ import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/u
 import { ShortcutsSearchPlugin } from "../plugins/shorcuts-search-plugin/shortcuts-search-plugin";
 import { isWindows } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
-import { executeUrlWindows, executeUrlMacOs } from "../executors/url-executor";
+import { executeUrl } from "../executors/url-executor";
 import { executeFilePathWindows, executeFilePathMacOs } from "../executors/file-path-executor";
 import { SearchEngine } from "../search-engine";
 import { EverythingExecutionPlugin } from "../plugins/everything-execution-plugin/everthing-execution-plugin";
@@ -15,12 +15,10 @@ import { SearchPlugin } from "../search-plugin";
 import { ExecutionPlugin } from "../execution-plugin";
 import { MdFindExecutionPlugin } from "../plugins/mdfind-execution-plugin/mdfind-execution-plugin";
 import { TranslationExecutionPlugin } from "../plugins/translation-execution-plugin/translation-execution-plugin";
-import { executeFilePathLocationWindows, executeFilePathLocationMacOs } from "../executors/file-path-location-executor";
+import { executeFilePathLocation } from "../executors/file-path-location-executor";
 import { TranslationSet } from "../../common/translation/translation-set";
 
-const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
-const filePathLocationExecutor = isWindows(platform()) ? executeFilePathLocationWindows : executeFilePathLocationMacOs;
 const appGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
 
 export const getProductionSearchEngine = (userConfig: UserConfigOptions, translationSet: TranslationSet): SearchEngine => {
@@ -28,9 +26,9 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
         new UeliCommandSearchPlugin(translationSet),
         new ShortcutsSearchPlugin(
             userConfig.shortcutOptions,
-            urlExecutor,
+            executeUrl,
             filePathExecutor,
-            filePathLocationExecutor,
+            executeFilePathLocation,
             ),
         new ApplicationSearchPlugin(
             userConfig.applicationSearchOptions,
@@ -39,7 +37,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
                 userConfig.applicationSearchOptions,
                 ),
             filePathExecutor,
-            filePathLocationExecutor,
+            executeFilePathLocation,
             ),
     ];
 
@@ -48,10 +46,22 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
     ];
 
     if (isWindows(platform())) {
-        executionPlugins.push(new EverythingExecutionPlugin(userConfig, filePathExecutor, filePathLocationExecutor));
+        executionPlugins.push(
+            new EverythingExecutionPlugin(
+                userConfig,
+                filePathExecutor,
+                executeFilePathLocation));
     } else {
-        executionPlugins.push(new MdFindExecutionPlugin(userConfig, filePathExecutor, filePathLocationExecutor));
+        executionPlugins.push(
+            new MdFindExecutionPlugin(
+                userConfig,
+                filePathExecutor,
+                executeFilePathLocation));
     }
 
-    return new SearchEngine(searchPlugins, executionPlugins, userConfig, translationSet);
+    return new SearchEngine(
+        searchPlugins,
+        executionPlugins,
+        userConfig,
+        translationSet);
 };

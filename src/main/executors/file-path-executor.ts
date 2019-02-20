@@ -1,27 +1,23 @@
+import { shell } from "electron";
 import { exec } from "child_process";
 import osascript = require("node-osascript");
 
 export function executeFilePathWindows(filePath: string, privileged: boolean): Promise<void> {
     return privileged
         ? executeFilePathWindowsAsPrivileged(filePath)
-        : executeFilePath(`start explorer "${filePath}"`);
+        : executeFilePath(filePath);
 }
 
 export function executeFilePathMacOs(filePath: string, privileged: boolean): Promise<void> {
     return privileged
         ? executeFilePathMacOsAsPrivileged(filePath)
-        : executeFilePath(`open "${filePath}"`);
+        : executeFilePath(filePath);
 }
 
-function executeFilePath(command: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-        exec(command, (err) => {
-            if (err) {
-                reject(`Error while opening file: ${err}`);
-            } else {
-                resolve();
-            }
-        });
+function executeFilePath(filePath: string): Promise<void> {
+    return new Promise((resolve) => {
+        shell.openItem(filePath);
+        resolve();
     });
 }
 
