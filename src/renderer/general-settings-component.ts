@@ -35,6 +35,11 @@ export const generalSettingsComponent = Vue.extend({
             config.generalOptions.autostart = defaultGeneralOptions.autostart;
             this.updateConfig();
         },
+        resetShowTrayIcon() {
+            const config: UserConfigOptions = this.config;
+            config.generalOptions.showTrayIcon = defaultGeneralOptions.showTrayIcon;
+            this.updateConfig();
+        },
         resetClearCachesOnExit() {
             const config: UserConfigOptions = this.config;
             config.generalOptions.clearCachesOnExit = defaultGeneralOptions.clearCachesOnExit;
@@ -115,6 +120,26 @@ export const generalSettingsComponent = Vue.extend({
                                 <label for="autoStartCheckbox"></label>
                                 <div class="field">
                                     <input class="is-checkradio is-block is-success" id="autoStartCheckbox" type="checkbox" name="autoStartCheckbox" checked="checked">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings__setting-content-item box">
+                    <div class="settings__setting-content-item-title">
+                        <div class="title is-5">
+                            {{ translations.generalSettingsShowTrayIcon }}
+                        </div>
+                        <button class="button" @click="resetShowTrayIcon"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                    </div>
+                    <div class="columns">
+                        <div class="column field has-addons">
+                            <div class="control is-expanded">
+                                <input class="is-checkradio" id="showTrayIconCheckbox" type="checkbox" name="showTrayIconCheckbox" v-model="config.generalOptions.showTrayIcon" @change="updateConfig">
+                                <label for="showTrayIconCheckbox"></label>
+                                <div class="field">
+                                    <input class="is-checkradio is-block is-success" id="showTrayIconCheckbox" type="checkbox" name="showTrayIconCheckbox" checked="checked">
                                 </div>
                             </div>
                         </div>

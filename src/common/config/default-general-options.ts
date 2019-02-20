@@ -12,4 +12,5 @@ export const defaultGeneralOptions: GeneralOptions = {
     },
     language: Language.English,
     rescanIntervalInSeconds: 60,
+    showTrayIcon: true,
 };

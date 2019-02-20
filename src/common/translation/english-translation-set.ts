@@ -2,6 +2,10 @@ import { TranslationSet } from "./translation-set";
 
 // tslint:disable:object-literal-sort-keys for better readability
 export const englishTranslationSet: TranslationSet = {
+    trayIconShow: "Show",
+    trayIconSettings: "Settings",
+    trayIconQuit: "Quit",
+
     noSearchResultsFoundDescription: "",
     noSearchResultsFoundTitle: "No search results found",
 
@@ -30,6 +34,7 @@ export const englishTranslationSet: TranslationSet = {
     generalSettings: "General",
     generalSettingsLanguage: "Language",
     generalSettingsAutostartApp: "Autostart app on system startup",
+    generalSettingsShowTrayIcon: "Show tray icon",
     generalSettingsClearCachesOnExit: "Clear caches on quit",
     generalSettingsHotKey: "Hot Key",
     generalSettingsRescanInterval: "Rescan interval (in seconds)",

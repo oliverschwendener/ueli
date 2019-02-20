@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, globalShortcut, dialog } from "electron";
+import { app, BrowserWindow, ipcMain, globalShortcut, dialog, Tray, Menu } from "electron";
 import { join } from "path";
 import { IpcChannels } from "../common/ipc-channels";
 import { SearchResultItem } from "../common/search-result-item";
@@ -21,6 +21,7 @@ import { getErrorSearchResultItem } from "../common/error-search-result-item";
 import { FileHelpers } from "./helpers/file-helpers";
 import { ueliTempFolder } from "../common/helpers/ueli-helpers";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
+import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-helpers";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -34,6 +35,7 @@ if (currentOperatingSystem === OperatingSystem.macOS) {
     app.dock.hide();
 }
 
+let trayIcon: Tray;
 let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow;
 
@@ -78,17 +80,23 @@ function registerGlobalKeyboardShortcut(toggleAction: () => void, newHotKey: Glo
 }
 
 function showMainWindow() {
-    mainWindow.show();
-    mainWindow.webContents.send(IpcChannels.mainWindowHasBeenShown);
+    if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.show();
+        mainWindow.webContents.send(IpcChannels.mainWindowHasBeenShown);
+    }
 }
 
 function hideMainWindow() {
-    mainWindow.webContents.send(IpcChannels.mainWindowHasBeenHidden);
+    if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send(IpcChannels.mainWindowHasBeenHidden);
 
-    setTimeout(() => {
-        updateMainWindowSize(0, config.appearanceOptions);
-        mainWindow.hide();
-    }, 25);
+        setTimeout(() => {
+            updateMainWindowSize(0, config.appearanceOptions);
+            if (mainWindow && !mainWindow.isDestroyed()) {
+                mainWindow.hide();
+            }
+        }, 25);
+    }
 }
 
 function toggleMainWindow() {
@@ -105,7 +113,7 @@ function getMaxWindowHeight(maxSearchResultsPerPage: number, searchResultHeight:
 
 function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) {
     if (updatedConfig.generalOptions.language !== config.generalOptions.language) {
-        translationSet = getTranslationSet(updatedConfig.generalOptions.language);
+        onLanguageChange(updatedConfig);
     }
 
     if (updatedConfig.generalOptions.hotKey !== config.generalOptions.hotKey) {
@@ -132,9 +140,11 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boole
         mainWindow.webContents.send(IpcChannels.appearanceOptionsUpdated, updatedConfig.appearanceOptions);
     }
 
+    config = updatedConfig;
+
+    updateTrayIcon(updatedConfig);
     setAutoStartOptions(updatedConfig);
 
-    config = updatedConfig;
     configRepository.saveConfig(updatedConfig)
         .then(() => {
             searchEngine.updateConfig(updatedConfig, translationSet)
@@ -151,18 +161,20 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boole
 }
 
 function updateMainWindowSize(searchResultCount: number, appearanceOptions: AppearanceOptions, center?: boolean) {
-    mainWindow.setResizable(true);
-    const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
-        ? getMaxWindowHeight(
-            appearanceOptions.maxSearchResultsPerPage,
-            appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight)
-        : (Number(searchResultCount) * Number(appearanceOptions.searchResultHeight)) + Number(appearanceOptions.userInputHeight);
+    if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.setResizable(true);
+        const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
+            ? getMaxWindowHeight(
+                appearanceOptions.maxSearchResultsPerPage,
+                appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight)
+            : (Number(searchResultCount) * Number(appearanceOptions.searchResultHeight)) + Number(appearanceOptions.userInputHeight);
 
-    mainWindow.setSize(Number(appearanceOptions.windowWidth), Number(windowHeight));
-    if (center) {
-        mainWindow.center();
+        mainWindow.setSize(Number(appearanceOptions.windowWidth), Number(windowHeight));
+        if (center) {
+            mainWindow.center();
+        }
+        mainWindow.setResizable(false);
     }
-    mainWindow.setResizable(false);
 }
 
 function reloadApp() {
@@ -175,7 +187,10 @@ function beforeQuitApp(): Promise<void> {
     return new Promise((resolve, reject) => {
         if (config.generalOptions.clearCachesOnExit) {
             searchEngine.clearCaches()
-                .then(() => resolve())
+                .then(() => {
+                    logger.debug(translationSet.successfullyClearedCachesBeforeExit);
+                    resolve();
+                })
                 .catch((err) => reject(err));
         } else {
             resolve();
@@ -185,9 +200,10 @@ function beforeQuitApp(): Promise<void> {
 
 function quitApp() {
     beforeQuitApp()
-        .then(() => logger.debug(translationSet.successfullyClearedCachesBeforeExit))
+        .then()
         .catch((err) => logger.error(err))
         .then(() => {
+            destroyTrayIcon();
             clearInterval(rescanInterval);
             globalShortcut.unregisterAll();
             app.quit();
@@ -204,7 +220,50 @@ function setAutoStartOptions(userConfig: UserConfigOptions) {
     }
 }
 
-function startApp() {
+function createTrayIcon() {
+    if (config.generalOptions.showTrayIcon) {
+        const trayIconFilePath = currentOperatingSystem === OperatingSystem.Windows
+            ? trayIconPathWindows
+            : trayIconPathMacOs;
+        trayIcon = new Tray(trayIconFilePath);
+        updateTrayIconContextMenu();
+    }
+}
+
+function updateTrayIconContextMenu() {
+    trayIcon.setContextMenu(Menu.buildFromTemplate([
+        {
+            click: showMainWindow,
+            label: translationSet.trayIconShow,
+        },
+        {
+            click: openSettings,
+            label: translationSet.trayIconSettings,
+        },
+        {
+            click: quitApp,
+            label: translationSet.trayIconQuit,
+        },
+    ]));
+}
+
+function updateTrayIcon(updatedConfig: UserConfigOptions) {
+    if (updatedConfig.generalOptions.showTrayIcon) {
+        if (trayIcon === undefined || (trayIcon && trayIcon.isDestroyed())) {
+            createTrayIcon();
+        }
+    } else {
+        destroyTrayIcon();
+    }
+}
+
+function destroyTrayIcon() {
+    if (trayIcon !== undefined && !trayIcon.isDestroyed()) {
+        trayIcon.destroy();
+    }
+}
+
+function createMainWindow() {
     mainWindow = new BrowserWindow({
         center: true,
         frame: false,
@@ -224,12 +283,22 @@ function startApp() {
     mainWindow.on("blur", hideMainWindow);
     mainWindow.on("closed", quitApp);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
+}
+
+function startApp() {
+    createTrayIcon();
+    createMainWindow();
 
     const recenter = currentOperatingSystem === OperatingSystem.macOS;
     updateMainWindowSize(0, config.appearanceOptions, recenter);
     registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
     setAutoStartOptions(config);
     registerAllIpcListeners();
+}
+
+function onLanguageChange(updatedConfig: UserConfigOptions) {
+    translationSet = getTranslationSet(updatedConfig.generalOptions.language);
+    updateTrayIconContextMenu();
 }
 
 function onSettingsOpen() {

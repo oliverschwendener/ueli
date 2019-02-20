@@ -7,4 +7,5 @@ export interface GeneralOptions {
     hotKey: GlobalHotKey;
     language: Language;
     clearCachesOnExit: boolean;
+    showTrayIcon: boolean;
 }

@@ -1,4 +1,8 @@
 export interface TranslationSet {
+    trayIconShow: string;
+    trayIconSettings: string;
+    trayIconQuit: string;
+
     noSearchResultsFoundTitle: string;
     noSearchResultsFoundDescription: string;
 
@@ -27,6 +31,7 @@ export interface TranslationSet {
     generalSettings: string;
     generalSettingsLanguage: string;
     generalSettingsAutostartApp: string;
+    generalSettingsShowTrayIcon: string;
     generalSettingsClearCachesOnExit: string;
     generalSettingsHotKey: string;
     generalSettingsRescanInterval: string;
