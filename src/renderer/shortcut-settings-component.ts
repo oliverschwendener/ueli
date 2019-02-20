@@ -121,7 +121,7 @@ export const shortcutSettingsComponent = Vue.extend({
                     <button class="button" :class="{ 'is-success' : config.shortcutOptions.isEnabled }" @click="toggleEnabled">
                         <span class="icon"><i class="fas fa-power-off"></i></span>
                     </button>
-                    <button class="button" @click="resetAll">
+                    <button v-if="config.shortcutOptions.isEnabled" class="button" @click="resetAll">
                         <span class="icon"><i class="fas fa-undo-alt"></i></span>
                     </button>
                 </div>
