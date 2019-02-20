@@ -3,7 +3,7 @@ import { TranslationLanguage } from "../../main/plugins/translation-execution-pl
 
 export const defaultTranslationOptions: TranslationOptions = {
     debounceDelay: 250,
-    enabled: true,
+    enabled: false,
     minSearchTermLength: 3,
     prefix: "t?",
     sourceLanguage: TranslationLanguage.German,
