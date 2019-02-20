@@ -8,31 +8,35 @@ export interface FileIconDataResult {
     icon: Icon;
 }
 
-export function getFileIconDataUrl(filePath: string, defaultIcon: Icon): Promise<FileIconDataResult> {
+export function getFileIconDataUrl(filePath: string, defaultFileIcon: Icon, folderIcon?: Icon): Promise<FileIconDataResult> {
     return new Promise((resolve) => {
         FileHelpers.fileExists(filePath)
             .then((fileExists) => {
                 if (fileExists) {
                     app.getFileIcon(filePath, (err, icon) => {
+                        const defaultResult = {
+                            filePath,
+                            icon: defaultFileIcon,
+                        };
                         if (err) {
-                            resolve({
-                                filePath,
-                                icon: defaultIcon,
-                            });
+                            resolve(defaultResult);
                         } else {
-                            resolve({
-                                filePath,
-                                icon: {
-                                    parameter: icon.toDataURL(),
-                                    type: IconType.URL,
-                                },
-                            });
+                            FileHelpers.getStats(filePath)
+                                .then((stats) => {
+                                    resolve({
+                                        filePath,
+                                        icon: stats.stats.isDirectory() && folderIcon
+                                            ? folderIcon
+                                            : { parameter: icon.toDataURL(), type: IconType.URL },
+                                    });
+                                })
+                                .catch(() => resolve(defaultResult));
                         }
                     });
                 } else {
                     resolve({
                         filePath,
-                        icon: defaultIcon,
+                        icon: defaultFileIcon,
                     });
                 }
             });
