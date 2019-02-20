@@ -104,6 +104,7 @@ export const settingsComponent = Vue.extend({
                 <application-search-settings :config="config" :translations="translations"></application-search-settings>
                 <shortcut-settings :config="config" :translations="translations"></shortcut-settings>
                 <mdfind-settings :config="config" :translations="translations"></mdfind-settings>
+                <everthing-settings :config="config" :translations="translations"></everthing-settings>
                 <translation-settings :config="config" :translations="translations"></translation-settings>
             </div>
         </div>

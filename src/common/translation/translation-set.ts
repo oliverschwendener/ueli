@@ -95,6 +95,13 @@ export interface TranslationSet {
     translationSettingsTargetLanguage: string;
     translationSettingsDisabled: string;
 
+    everythingSearch: string;
+    everythingSearchPathToBinary: string;
+    everythingSearchPrefix: string;
+    everythingSearchMaxSearchResults: string;
+    everythingSearchDisabled: string;
+    everythingSearchPathToBinaryFilterName: string;
+
     cancel: string;
     save: string;
     forExample: string;

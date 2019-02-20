@@ -185,6 +185,7 @@ function reloadApp() {
 
 function beforeQuitApp(): Promise<void> {
     return new Promise((resolve, reject) => {
+        destroyTrayIcon();
         if (config.generalOptions.clearCachesOnExit) {
             searchEngine.clearCaches()
                 .then(() => {
@@ -203,7 +204,6 @@ function quitApp() {
         .then()
         .catch((err) => logger.error(err))
         .then(() => {
-            destroyTrayIcon();
             clearInterval(rescanInterval);
             globalShortcut.unregisterAll();
             app.quit();
@@ -392,6 +392,18 @@ function registerAllIpcListeners() {
             properties: ["openFile", "openDirectory"],
         }, (filePaths: string[]) => {
             event.sender.send(IpcChannels.folderAndFilePathsResult, filePaths);
+        });
+    });
+
+    ipcMain.on(IpcChannels.filePathRequested, (event: Electron.Event, filters: Electron.FileFilter[]) => {
+        dialog.showOpenDialog(settingsWindow, {
+            filters,
+            properties: ["openFile"],
+        }, (filePaths: string[]) => {
+            if (!filePaths) {
+                filePaths = [];
+            }
+            event.sender.send(IpcChannels.filePathResult, filePaths);
         });
     });
 

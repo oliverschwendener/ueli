@@ -26,6 +26,7 @@ import { newApplicationFileExtensionModalComponent } from "./new-application-fil
 import { mdfindSettingsComponent } from "./mdfind-settings-component";
 import { translationSettingsComponent } from "./translation-settings-component";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
+import { everythingSettingsComponent } from "./everything-settings-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -42,6 +43,7 @@ Vue.component("shortcut-editing-modal", shortcutEditingModal);
 Vue.component("new-application-folder-modal", newApplicationFolderModalComponent);
 Vue.component("new-application-file-extension-modal", newApplicationFileExtensionModalComponent);
 Vue.component("mdfind-settings", mdfindSettingsComponent);
+Vue.component("everthing-settings", everythingSettingsComponent);
 Vue.component("translation-settings", translationSettingsComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();

@@ -98,6 +98,13 @@ export const englishTranslationSet: TranslationSet = {
     translationSettingsTargetLanguage: "Target language",
     translationSettingsDisabled: "Translation is disabled",
 
+    everythingSearch: "Everything search",
+    everythingSearchPathToBinary: `Path to "es.exe"`,
+    everythingSearchPrefix: "Prefix",
+    everythingSearchMaxSearchResults: "Max search results",
+    everythingSearchDisabled: "Everything search is disabled",
+    everythingSearchPathToBinaryFilterName: "Executable files",
+
     cancel: "Cancel",
     save: "Save",
     forExample: "For example",

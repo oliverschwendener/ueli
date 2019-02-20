@@ -17,4 +17,6 @@ export enum IpcChannels {
     folderPathResult = "folder-path-result",
     folderAndFilePathsRequested = "folder-and-file-paths-requested",
     folderAndFilePathsResult = "folder-and-file-paths-result",
+    filePathRequested = "file-path-requested",
+    filePathResult = "file-path-result",
 }

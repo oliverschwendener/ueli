@@ -98,6 +98,13 @@ export const germanTranslationSet: TranslationSet = {
     translationSettingsTargetLanguage: "Zielsprache",
     translationSettingsDisabled: "Übersetzung ist deaktiviert",
 
+    everythingSearch: "Everything Suche",
+    everythingSearchPathToBinary: `Dateipfad zu "es.exe"`,
+    everythingSearchPrefix: "Prefix",
+    everythingSearchMaxSearchResults: "Maximale Suchergebnisse",
+    everythingSearchDisabled: "Everything Suche ist deaktiviert",
+    everythingSearchPathToBinaryFilterName: "Ausführbare Dateien",
+
     cancel: "Abbrechen",
     save: "Speichern",
     forExample: "Zum Beispiel",
