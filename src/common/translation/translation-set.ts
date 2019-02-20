@@ -102,6 +102,12 @@ export interface TranslationSet {
     everythingSearchDisabled: string;
     everythingSearchPathToBinaryFilterName: string;
 
+    mdfindSearch: string;
+    mdfindSearchDebounceDelay: string;
+    mdfindSearchPrefix: string;
+    mdfindSearchMaxSearchResults: string;
+    mdfindSearchDisabled: string;
+
     cancel: string;
     save: string;
     forExample: string;

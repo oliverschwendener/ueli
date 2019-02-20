@@ -53,12 +53,12 @@ export const mdfindSettingsComponent = Vue.extend({
             }
         });
     },
-    props: ["config"],
+    props: ["config", "translations"],
     template: `
         <div v-if="visible">
             <div class="settings__setting-title title is-3">
                 <span>
-                    mdfind
+                    {{ translations.mdfindSearch }}
                 </span>
                 <div>
                     <button class="button" :class="{ 'is-success' : config.mdfindOptions.enabled }" @click="toggleEnabled">
@@ -72,8 +72,14 @@ export const mdfindSettingsComponent = Vue.extend({
             <div class="settings__setting-content" v-if="config.mdfindOptions.enabled">
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Debouce delay (in milliseconds)</div>
-                        <button class="button" @click="resetDebounceDelay"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
+                        <div class="title is-5">
+                            {{ translations.mdfindSearchDebounceDelay }}
+                        </div>
+                        <button class="button" @click="resetDebounceDelay">
+                            <span class="icon">
+                                <i class="fas fa-undo-alt"></i>
+                            </span>
+                        </button>
                     </div>
                     <div class="columns">
                         <div class="column field has-addons">
@@ -91,7 +97,9 @@ export const mdfindSettingsComponent = Vue.extend({
 
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Prefix</div>
+                        <div class="title is-5">
+                            {{ translations.mdfindSearchPrefix }}
+                        </div>
                         <button class="button" @click="resetMdfindPrefix"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <div class="columns">
@@ -110,7 +118,9 @@ export const mdfindSettingsComponent = Vue.extend({
 
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
-                        <div class="title is-5">Prefix</div>
+                        <div class="title is-5">
+                            {{ translations.mdfindSearchMaxSearchResults }}
+                        </div>
                         <button class="button" @click="resetMdfindMaxResults"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
                     <div class="columns">
@@ -127,7 +137,9 @@ export const mdfindSettingsComponent = Vue.extend({
                     </div>
                 </div>
             </div>
-            <h6 v-else class="title is-6 has-text-danger">mdfind is disabled</h6>
+            <h6 v-else class="title is-6 has-text-danger">
+                {{ translations.mdfindSearchDisabled }}
+            </h6>
         </div>
     `,
 });

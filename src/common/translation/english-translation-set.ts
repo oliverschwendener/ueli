@@ -105,6 +105,12 @@ export const englishTranslationSet: TranslationSet = {
     everythingSearchDisabled: "Everything search is disabled",
     everythingSearchPathToBinaryFilterName: "Executable files",
 
+    mdfindSearch: "mdfind search",
+    mdfindSearchDebounceDelay: "Debounce delay (in milliseconds)",
+    mdfindSearchPrefix: "Prefix",
+    mdfindSearchMaxSearchResults: "Max search results",
+    mdfindSearchDisabled: "mdfind search is disabled",
+
     cancel: "Cancel",
     save: "Save",
     forExample: "For example",
