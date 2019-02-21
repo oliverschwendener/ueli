@@ -1,4 +1,3 @@
-import osascript = require("node-osascript");
 import { executeCommand } from "./command-executor";
 
 export function executeFilePathWindows(filePath: string, privileged: boolean): Promise<void> {
@@ -18,13 +17,5 @@ function executeFilePathWindowsAsPrivileged(filePath: string): Promise<void> {
 }
 
 function executeFilePathMacOsAsPrivileged(filePath: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-        osascript.execute(`do shell script \"open '${filePath}'\" with administrator privileges`, {}, (err: any) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    });
+    return executeCommand(`osascript -e 'do shell script "open \\"${filePath}\\"" with administrator privileges'`);
 }
