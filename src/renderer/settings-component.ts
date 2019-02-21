@@ -90,7 +90,12 @@ export const settingsComponent = Vue.extend({
             <settings-loading-overlay></settings-loading-overlay>
             <div class="settings__sidebar menu">
                 <ul class="menu-list">
-                    <setting-menu-item v-for="settingMenuItem in settingMenuItems" :name="settingMenuItem"></setting-menu-item>
+                    <setting-menu-item
+                        v-for="settingMenuItem in settingMenuItems"
+                        :item="settingMenuItem"
+                        :translations="translations"
+                        >
+                    </setting-menu-item>
                 </ul>
             </div>
             <div class="settings__notification notification" :class="notificationClass">
