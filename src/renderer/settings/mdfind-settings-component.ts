@@ -1,10 +1,10 @@
 import Vue from "vue";
-import { vueEventDispatcher } from "./vue-event-dispatcher";
-import { VueEventChannels } from "./vue-event-channels";
+import { vueEventDispatcher } from "../vue-event-dispatcher";
+import { VueEventChannels } from "../vue-event-channels";
 import { SettingOsSpecific } from "./settings-os-specific";
 import { platform } from "os";
-import { UserConfigOptions } from "../common/config/user-config-options";
-import { defaultMdfindOptions } from "../common/config/default-mdfind-options";
+import { UserConfigOptions } from "../../common/config/user-config-options";
+import { defaultMdfindOptions } from "../../common/config/default-mdfind-options";
 import { cloneDeep } from "lodash";
 
 export const mdfindSettingsComponent = Vue.extend({

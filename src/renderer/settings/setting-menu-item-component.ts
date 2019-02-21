@@ -1,9 +1,9 @@
 import Vue from "vue";
-import { VueEventChannels } from "./vue-event-channels";
-import { vueEventDispatcher } from "./vue-event-dispatcher";
+import { VueEventChannels } from "../vue-event-channels";
+import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { Settings } from "./settings";
 import { SettingOsSpecific } from "./settings-os-specific";
-import { TranslationSet } from "../common/translation/translation-set";
+import { TranslationSet } from "../../common/translation/translation-set";
 
 export const settingMenuItemComponent = Vue.extend({
     data() {

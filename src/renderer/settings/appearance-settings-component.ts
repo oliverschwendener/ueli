@@ -1,9 +1,9 @@
 import Vue from "vue";
-import { vueEventDispatcher } from "./vue-event-dispatcher";
-import { VueEventChannels } from "./vue-event-channels";
-import { UserConfigOptions } from "../common/config/user-config-options";
+import { vueEventDispatcher } from "../vue-event-dispatcher";
+import { VueEventChannels } from "../vue-event-channels";
+import { UserConfigOptions } from "../../common/config/user-config-options";
 import { cloneDeep } from "lodash";
-import { defaultAppearanceOptions } from "../common/config/default-appearance-options";
+import { defaultAppearanceOptions } from "../../common/config/default-appearance-options";
 import { Settings } from "./settings";
 
 export const appearanceSettingsComponent = Vue.extend({

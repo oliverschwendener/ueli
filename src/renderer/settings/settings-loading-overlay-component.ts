@@ -1,6 +1,6 @@
 import Vue from "vue";
-import { vueEventDispatcher } from "./vue-event-dispatcher";
-import { VueEventChannels } from "./vue-event-channels";
+import { vueEventDispatcher } from "../vue-event-dispatcher";
+import { VueEventChannels } from "../vue-event-channels";
 
 export const settingsLoadingOverlayComponent = Vue.extend({
     data() {

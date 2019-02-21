@@ -1,13 +1,13 @@
 import Vue from "vue";
 import { SettingOsSpecific } from "./settings-os-specific";
-import { vueEventDispatcher } from "./vue-event-dispatcher";
-import { VueEventChannels } from "./vue-event-channels";
-import { UserConfigOptions } from "../common/config/user-config-options";
+import { vueEventDispatcher } from "../vue-event-dispatcher";
+import { VueEventChannels } from "../vue-event-channels";
+import { UserConfigOptions } from "../../common/config/user-config-options";
 import { cloneDeep } from "lodash";
-import { defaultEverythingSearchOptions } from "../common/config/default-everything-search-options";
+import { defaultEverythingSearchOptions } from "../../common/config/default-everything-search-options";
 import { platform } from "os";
-import { getFilePath } from "./dialogs";
-import { TranslationSet } from "../common/translation/translation-set";
+import { getFilePath } from "../dialogs";
+import { TranslationSet } from "../../common/translation/translation-set";
 
 export const everythingSettingsComponent = Vue.extend({
     data() {

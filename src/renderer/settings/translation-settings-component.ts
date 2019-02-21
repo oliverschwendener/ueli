@@ -1,11 +1,11 @@
 import Vue from "vue";
 import { Settings } from "./settings";
-import { vueEventDispatcher } from "./vue-event-dispatcher";
-import { VueEventChannels } from "./vue-event-channels";
-import { UserConfigOptions } from "../common/config/user-config-options";
-import { defaultTranslationOptions } from "../common/config/default-translation-options";
+import { vueEventDispatcher } from "./../vue-event-dispatcher";
+import { VueEventChannels } from "./../vue-event-channels";
+import { UserConfigOptions } from "../../common/config/user-config-options";
+import { defaultTranslationOptions } from "../../common/config/default-translation-options";
 import { cloneDeep } from "lodash";
-import { TranslationLanguage } from "../main/plugins/translation-execution-plugin/translation-language";
+import { TranslationLanguage } from "../../main/plugins/translation-execution-plugin/translation-language";
 
 export const translationSettingsComponent = Vue.extend({
     data() {

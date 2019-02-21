@@ -1,9 +1,9 @@
 import Vue from "vue";
-import { vueEventDispatcher } from "./vue-event-dispatcher";
-import { VueEventChannels } from "./vue-event-channels";
+import { vueEventDispatcher } from "../vue-event-dispatcher";
+import { VueEventChannels } from "../vue-event-channels";
 import { SettingsNotificationType } from "./settings-notification-type";
 import { ipcRenderer } from "electron";
-import { IpcChannels } from "../common/ipc-channels";
+import { IpcChannels } from "../../common/ipc-channels";
 import { Settings } from "./settings";
 import { SettingOsSpecific } from "./settings-os-specific";
 import { platform } from "os";

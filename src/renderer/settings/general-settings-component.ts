@@ -1,13 +1,13 @@
 import Vue from "vue";
-import { vueEventDispatcher } from "./vue-event-dispatcher";
-import { VueEventChannels } from "./vue-event-channels";
-import { UserConfigOptions } from "../common/config/user-config-options";
+import { vueEventDispatcher } from "../vue-event-dispatcher";
+import { VueEventChannels } from "../vue-event-channels";
+import { UserConfigOptions } from "../../common/config/user-config-options";
 import { cloneDeep } from "lodash";
-import { defaultGeneralOptions } from "../common/config/default-general-options";
+import { defaultGeneralOptions } from "../../common/config/default-general-options";
 import { Settings } from "./settings";
-import { GlobalHotKeyModifier } from "../common/global-hot-key/global-hot-key-modifier";
-import { GlobalHotKeyKey } from "../common/global-hot-key/global-hot-key-key";
-import { Language } from "../common/translation/language";
+import { GlobalHotKeyModifier } from "../../common/global-hot-key/global-hot-key-modifier";
+import { GlobalHotKeyKey } from "../../common/global-hot-key/global-hot-key-key";
+import { Language } from "../../common/translation/language";
 
 export const generalSettingsComponent = Vue.extend({
     data() {

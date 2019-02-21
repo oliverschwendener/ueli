@@ -1,13 +1,13 @@
 import Vue from "vue";
-import { vueEventDispatcher } from "./vue-event-dispatcher";
-import { VueEventChannels } from "./vue-event-channels";
-import { FileHelpers } from "../main/helpers/file-helpers";
-import { SettingsNotificationType } from "./settings-notification-type";
-import { getFolderPaths } from "./dialogs";
-import { showNotification } from "./notifications";
-import { isWindows } from "../common/helpers/operating-system-helpers";
+import { vueEventDispatcher } from "../../vue-event-dispatcher";
+import { VueEventChannels } from "../../vue-event-channels";
+import { FileHelpers } from "../../../main/helpers/file-helpers";
+import { SettingsNotificationType } from "../settings-notification-type";
+import { getFolderPaths } from "../../dialogs";
+import { showNotification } from "../../notifications";
+import { isWindows } from "../../../common/helpers/operating-system-helpers";
 import { platform } from "os";
-import { TranslationSet } from "../common/translation/translation-set";
+import { TranslationSet } from "../../../common/translation/translation-set";
 
 export const newApplicationFolderModalComponent = Vue.extend({
     data() {

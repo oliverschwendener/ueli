@@ -1,4 +1,4 @@
-import { SettingsNotificationType } from "./settings-notification-type";
+import { SettingsNotificationType } from "./settings/settings-notification-type";
 import { vueEventDispatcher } from "./vue-event-dispatcher";
 import { VueEventChannels } from "./vue-event-channels";
 
