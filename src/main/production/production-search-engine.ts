@@ -17,6 +17,7 @@ import { MdFindExecutionPlugin } from "../plugins/mdfind-execution-plugin/mdfind
 import { TranslationExecutionPlugin } from "../plugins/translation-execution-plugin/translation-execution-plugin";
 import { executeFilePathLocationMacOs, executeFilePathLocationWindows } from "../executors/file-path-location-executor";
 import { TranslationSet } from "../../common/translation/translation-set";
+import { WebSearchPlugin } from "../plugins/websearch-plugin/websearch-plugin";
 
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
 const filePathLocationExecutor = isWindows(platform()) ? executeFilePathLocationWindows : executeFilePathLocationMacOs;
@@ -44,6 +45,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
     ];
 
     const executionPlugins: ExecutionPlugin[] = [
+        new WebSearchPlugin(userConfig, urlExecutor),
         new TranslationExecutionPlugin(userConfig),
     ];
 

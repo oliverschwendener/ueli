@@ -6,6 +6,7 @@ import { ShortcutOptions } from "./shortcuts-options";
 import { EverythingSearchOptions } from "./everything-search-options";
 import { MdFindOptions } from "./mdfind-options";
 import { TranslationOptions } from "./translation-options";
+import { WebSearchOptions } from "./websearch-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -16,4 +17,5 @@ export interface UserConfigOptions {
     shortcutOptions: ShortcutOptions;
     translationOptions: TranslationOptions;
     generalOptions: GeneralOptions;
+    websearchOptions: WebSearchOptions;
 }
