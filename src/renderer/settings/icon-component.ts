@@ -25,5 +25,5 @@ export const iconComponent = Vue.extend({
             <img v-if="getIcon(icon).type === iconTypeUrl" :src="getIcon(icon).parameter" class="settings-table__icon-url">
             <div v-else="getIcon(icon).type === iconTypeSvg" v-html="getIcon(icon).parameter" class="settings-table__icon-svg"></div>
         </div>
-    `
+    `,
 });

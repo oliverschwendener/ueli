@@ -2,5 +2,5 @@ import { WebSearchEngine } from "../../main/plugins/websearch-plugin/web-search-
 
 export interface WebSearchOptions {
     isEnabled: boolean;
-    webSearchEngines: WebSearchEngine[],
+    webSearchEngines: WebSearchEngine[];
 }
