@@ -83,9 +83,23 @@ html {
     height: 24px;
 }
 
+.settings-table__icon-svg {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 .settings-table__icon-svg > svg{
     width: 24px;
     height: 24px;
+}
+
+.settings-table__icon-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .font-mono {

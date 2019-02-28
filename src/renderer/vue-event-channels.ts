@@ -23,4 +23,6 @@ export enum VueEventChannels {
     openNewApplicationFileExtensionModal = "open-new-application-file-extension-modal",
     applicationFileExtensionAdded = "application-file-extension-added",
     languageUpdated = "language-updated",
+    openWebSearchEditingModal = "open-websearch-editing-modal",
+    websearchEngineEdited = "websearch-engine-edited",
 }

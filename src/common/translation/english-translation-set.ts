@@ -111,7 +111,23 @@ export const englishTranslationSet: TranslationSet = {
     mdfindSearchMaxSearchResults: "Max search results",
     mdfindSearchDisabled: "mdfind search is disabled",
 
+    websearch: "Web search",
+    websearchEngines: "Web search engines",
+    websearchEditingModalTitleAdd: "Add web search engine",
+    websearchEditingModalTitleEdit: "Edit web search engine",
+    websearchName: "Name",
+    websearchPrefix: "Prefix",
+    websearchUrl: "URL",
+    websearchIcon: "Icon",
+    websearchPriority: "Priority",
+    websearchInvalidWebsearchEngine: "Invalid web search engine",
+    websearchDisabled: "Web search is disabled",
+
     cancel: "Cancel",
     save: "Save",
+    add: "Add",
+    remove: "Remove",
+    edit: "Edit",
     forExample: "For example",
+    iconType: "Icon type",
 };

@@ -76,19 +76,6 @@ export const shortcutEditingModal = Vue.extend({
                 ? translations.shortcutSettingsAddShortcut
                 : translations.shortcutSettingsTableEdit;
         },
-        getIconTypePlaceholder(iconType: IconType): string {
-            const translations: TranslationSet = this.translations;
-            const placeHolder = iconType === IconType.SVG
-                ? "<svg>...</svg>"
-                : `<img src="...">`;
-            return `${translations.forExample}: ${placeHolder}`;
-        },
-        getIconTypeParameterLabel(iconType: IconType): string {
-            const translations: TranslationSet = this.translations;
-            return iconType === IconType.URL
-                ? translations.shortcutSettingsEditModalImageUrl
-                : translations.shortcutSettingsEditModalSvgString;
-        },
         getShorcutTypeDescriptionPlaceholder(shortcutType: ShortcutType): string {
             const translations: TranslationSet = this.translations;
             const placeholder = shortcutType === ShortcutType.Url
@@ -229,26 +216,7 @@ export const shortcutEditingModal = Vue.extend({
                                 <input class="input" type="text" v-model="newTag" :placeholder="getTagsPlaceholder()" @keyup="onTagKeyPress">
                             </div>
                         </div>
-                        <div class="field">
-                            <label class="label">
-                                {{ translations.shortcutSettingsTableIcon }}
-                            </label>
-                            <div class="field">
-                                <div class="control is-expanded">
-                                    <div class="select is-fullwidth">
-                                        <select v-model="shortcut.icon.type">
-                                            <option v-for="iconType in iconTypes">{{ iconType }}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">{{ getIconTypeParameterLabel(shortcut.icon.type) }}</label>
-                            <div class="control is-expanded">
-                                <textarea class="textarea font-mono" type="text" :placeholder="getIconTypePlaceholder(shortcut.icon.type)" v-model="shortcut.icon.parameter"></textarea>
-                            </div>
-                        </div>
+                        <icon-editing :icon="shortcut.icon" :translations="translations"></icon-editing>
                         <div class="field is-grouped is-grouped-right">
                             <div class="control">
                                 <button class="button is-danger" @click="closeButtonClick">

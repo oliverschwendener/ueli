@@ -108,7 +108,23 @@ export interface TranslationSet {
     mdfindSearchMaxSearchResults: string;
     mdfindSearchDisabled: string;
 
+    websearch: string;
+    websearchEngines: string;
+    websearchEditingModalTitleAdd: string;
+    websearchEditingModalTitleEdit: string;
+    websearchName: string;
+    websearchPrefix: string;
+    websearchUrl: string;
+    websearchIcon: string;
+    websearchPriority: string;
+    websearchInvalidWebsearchEngine: string;
+    websearchDisabled: string;
+
     cancel: string;
     save: string;
+    add: string;
+    remove: string;
+    edit: string;
     forExample: string;
+    iconType: string;
 }

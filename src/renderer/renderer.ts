@@ -27,6 +27,10 @@ import { mdfindSettingsComponent } from "./settings/mdfind-settings-component";
 import { translationSettingsComponent } from "./settings/translation-settings-component";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
 import { everythingSettingsComponent } from "./settings/everything-settings-component";
+import { webSearchSettingsComponent } from "./settings/websearch-settings-component";
+import { iconComponent } from "./settings/icon-component";
+import { websearchEditingModal } from "./settings/modals/websearch-editing-modal-component";
+import { iconEditingComponent } from "./settings/icon-editing-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -45,6 +49,10 @@ Vue.component("new-application-file-extension-modal", newApplicationFileExtensio
 Vue.component("mdfind-settings", mdfindSettingsComponent);
 Vue.component("everthing-settings", everythingSettingsComponent);
 Vue.component("translation-settings", translationSettingsComponent);
+Vue.component("websearch-settings", webSearchSettingsComponent);
+Vue.component("websearch-editing-modal", websearchEditingModal);
+Vue.component("icon", iconComponent);
+Vue.component("icon-editing", iconEditingComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 

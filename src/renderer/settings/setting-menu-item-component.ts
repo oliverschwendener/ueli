@@ -27,6 +27,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.shortcutSettings;
                 case Settings.Translation:
                     return translations.translationSettingsTranslation;
+                case Settings.WebSearch:
+                    return translations.websearch;
                 case SettingOsSpecific.Everything:
                     return translations.everythingSearch;
                 case SettingOsSpecific.MdFind:

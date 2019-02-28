@@ -5,4 +5,5 @@ export enum Settings {
     SearchEngine = "Search Engine",
     Shortcuts = "Shortcuts",
     Translation = "Translation",
+    WebSearch = "Websearch",
 }

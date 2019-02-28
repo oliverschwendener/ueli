@@ -9,14 +9,13 @@ import { defaultNewShortcut } from "../../main/plugins/shorcuts-search-plugin/sh
 import { IconType } from "../../common/icon/icon-type";
 import { ModalEditMode } from "./modals/shortcut-editing-modal-component";
 import { Shortcut } from "../../main/plugins/shorcuts-search-plugin/shortcut";
-import { Icon } from "../../common/icon/icon";
-import { IconHelpers } from "../../common/icon/icon-helpers";
 import { ShortcutType } from "../../main/plugins/shorcuts-search-plugin/shortcut-type";
 import { TranslationSet } from "../../common/translation/translation-set";
 
 export const shortcutSettingsComponent = Vue.extend({
     data() {
         return {
+            defaultShortcutIcon,
             iconTypeSvg: IconType.SVG,
             iconTypeUrl: IconType.URL,
             settingName: Settings.Shortcuts,
@@ -47,13 +46,6 @@ export const shortcutSettingsComponent = Vue.extend({
             const config: UserConfigOptions = this.config;
             const shortcut: Shortcut = cloneDeep(config.shortcutOptions.shortcuts[index]);
             vueEventDispatcher.$emit(VueEventChannels.openShortcutEditingModal, shortcut, ModalEditMode.Edit, index);
-        },
-        getShortcutIcon(shortcut: Shortcut): Icon {
-            if (IconHelpers.isValidIcon(shortcut.icon)) {
-                return shortcut.icon;
-            } else {
-                return defaultShortcutIcon;
-            }
         },
         getShortcutTypeClass(shortcutType: ShortcutType): string {
             switch (shortcutType) {
@@ -163,8 +155,7 @@ export const shortcutSettingsComponent = Vue.extend({
                                     </div>
                                 </td>
                                 <td class="has-text-centered">
-                                    <img v-if="getShortcutIcon(shortcut).type === iconTypeUrl" :src="getShortcutIcon(shortcut).parameter" class="settings-table__icon-url">
-                                    <div v-else="getShortcutIcon(shortcut).type === iconTypeSvg" v-html="getShortcutIcon(shortcut).parameter" class="settings-table__icon-svg"></div>
+                                    <icon :icon="shortcut.icon" :defaulticon="defaultShortcutIcon"></icon>
                                 </td>
                                 <td class="has-text-centered"><button class="button" @click="editShortcut(index)"><span class="icon"><i class="fas fa-edit"></i></span></button></td>
                                 <td class="has-text-centered"><button class="button is-danger" @click="deleteShortcut(index)"><span class="icon"><i class="fas fa-trash"></i></span></button></td>

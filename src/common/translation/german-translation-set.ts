@@ -111,7 +111,23 @@ export const germanTranslationSet: TranslationSet = {
     mdfindSearchMaxSearchResults: "Maximale Suchergebnisse",
     mdfindSearchDisabled: "mdfind Suche ist deaktiviert",
 
+    websearch: "Websuche",
+    websearchEngines: "Websuchmaschinen",
+    websearchEditingModalTitleAdd: "Websuchmaschine hinzufügen",
+    websearchEditingModalTitleEdit: "Websuchmaschine bearbeiten",
+    websearchName: "Name",
+    websearchPrefix: "Präfix",
+    websearchUrl: "URL",
+    websearchIcon: "Icon",
+    websearchPriority: "Priorität",
+    websearchInvalidWebsearchEngine: "Ungültige Websuchmaschine",
+    websearchDisabled: "Websuche ist deaktiviert",
+
     cancel: "Abbrechen",
     save: "Speichern",
+    add: "Hinzufügen",
+    remove: "Entfernen",
+    edit: "Bearbeiten",
     forExample: "Zum Beispiel",
+    iconType: "Icontyp",
 };
