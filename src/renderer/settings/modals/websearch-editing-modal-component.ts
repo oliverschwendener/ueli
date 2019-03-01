@@ -48,6 +48,18 @@ export const websearchEditingModal = Vue.extend({
                     return translations.websearchEditingModalTitleEdit;
             }
         },
+        getNamePlaceholder(): string {
+            const translations: TranslationSet = this.translations;
+            return `${translations.forExample}: "Google"`;
+        },
+        getPrefixPlaceholder(): string {
+            const translations: TranslationSet = this.translations;
+            return `${translations.forExample}: "g?"`;
+        },
+        getUrlPlaceholder(): string {
+            const translations: TranslationSet = this.translations;
+            return `${translations.forExample}: "https://google.com/search?q={{query}}"`;
+        },
     },
     mounted() {
         vueEventDispatcher.$on(VueEventChannels.openWebSearchEditingModal, (websearchEngine: WebSearchEngine, editMode: ModalEditMode, saveIndex?: number) => {
@@ -76,7 +88,7 @@ export const websearchEditingModal = Vue.extend({
                             {{ translations.websearchName }}
                         </label>
                         <div class="control is-expanded">
-                            <input class="input" type="text" v-model="websearchEngine.name" :autofocus="autofocus">
+                            <input class="input" type="text" v-model="websearchEngine.name" :autofocus="autofocus" :placeholder="getNamePlaceholder()">
                         </div>
                     </div>
 
@@ -85,7 +97,7 @@ export const websearchEditingModal = Vue.extend({
                             {{ translations.websearchPrefix }}
                         </label>
                         <div class="control is-expanded">
-                            <input class="input" type="text" v-model="websearchEngine.prefix">
+                            <input class="input" type="text" v-model="websearchEngine.prefix" :placeholder="getPrefixPlaceholder()">
                         </div>
                     </div>
 
@@ -94,7 +106,7 @@ export const websearchEditingModal = Vue.extend({
                             {{ translations.websearchUrl }}
                         </label>
                         <div class="control is-expanded">
-                            <input class="input" type="url" v-model="websearchEngine.url">
+                            <input class="input" type="url" v-model="websearchEngine.url" :placeholder="getUrlPlaceholder()">
                         </div>
                     </div>
 
