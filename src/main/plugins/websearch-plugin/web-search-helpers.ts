@@ -3,6 +3,7 @@ import { IconType } from "../../../common/icon/icon-type";
 import { IconHelpers } from "../../../common/icon/icon-helpers";
 
 export const defaultNewWebSearchEngine: WebSearchEngine = {
+    encodeSearchTerm: true,
     icon: {
         parameter: "",
         type: IconType.URL,

@@ -7,4 +7,5 @@ export interface WebSearchEngine {
     icon: Icon;
     priority: number;
     isFallback: boolean;
+    encodeSearchTerm: boolean;
 }

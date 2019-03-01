@@ -121,6 +121,7 @@ export const germanTranslationSet: TranslationSet = {
     websearchIcon: "Icon",
     websearchPriority: "Priorität",
     websearchIsFallback: "Fallback",
+    websearchEncodeSearchTerm: "Suchbegriff kodieren",
     websearchInvalidWebsearchEngine: "Ungültige Websuchmaschine",
     websearchDisabled: "Websuche ist deaktiviert",
 

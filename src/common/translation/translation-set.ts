@@ -118,6 +118,7 @@ export interface TranslationSet {
     websearchIcon: string;
     websearchPriority: string;
     websearchIsFallback: string;
+    websearchEncodeSearchTerm: string;
     websearchInvalidWebsearchEngine: string;
     websearchDisabled: string;
 

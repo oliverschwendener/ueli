@@ -75,7 +75,13 @@ export class WebSearchPlugin implements ExecutionPlugin {
     }
 
     private getSearchTerm(webSearchEngine: WebSearchEngine, userInput: string): string {
-        return userInput.replace(webSearchEngine.prefix, "");
+        let searchTerm = userInput.replace(webSearchEngine.prefix, "");
+
+        if (webSearchEngine.encodeSearchTerm) {
+            searchTerm = encodeURIComponent(searchTerm);
+        }
+
+        return searchTerm;
     }
 
     private buildDescription(webSearchEngine: WebSearchEngine, userInput: string): string {

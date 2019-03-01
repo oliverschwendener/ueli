@@ -21,6 +21,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
     isEnabled: true,
     webSearchEngines: [
         {
+            encodeSearchTerm: true,
             icon: {
                 parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve">
                 <path style="fill:#FF3D00;" d="M44,24c0,11-9,20-20,20S4,35,4,24S13,4,24,4S44,13,44,24z"></path>
@@ -40,6 +41,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             url: "https://duckduckgo.com/?q={{query}}",
         },
         {
+            encodeSearchTerm: true,
             icon: {
                 parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1">
                 <g id="surface1">
@@ -58,6 +60,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             url: "https://google.com/search?q={{query}}",
         },
         {
+            encodeSearchTerm: true,
             icon: {
                 parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1">
                 <g id="surface1">
@@ -80,6 +83,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             url: "https://www.google.com/search?tbm=isch&q={{query}}",
         },
         {
+            encodeSearchTerm: true,
             icon: {
                 parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
                 <g id="surface1">
@@ -95,6 +99,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             url: "https://en.wikipedia.org/wiki/{{query}}",
         },
         {
+            encodeSearchTerm: true,
             icon: {
                 parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1">
                 <g id="surface1">
