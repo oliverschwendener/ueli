@@ -16,11 +16,13 @@ export class WebSearchPlugin implements ExecutionPlugin {
         this.urlExecutor = urlExecutor;
     }
 
-    public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
+    public getSearchResults(userInput: string, fallback?: boolean): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             const searchResults = this.config.webSearchEngines
                 .filter((webSearchEngine) => {
-                    return userInput.startsWith(webSearchEngine.prefix);
+                    return fallback
+                        ? webSearchEngine.isFallback
+                        : userInput.startsWith(webSearchEngine.prefix);
                 })
                 .sort((a, b) => {
                     if (a.priority > b.priority) {
@@ -47,10 +49,10 @@ export class WebSearchPlugin implements ExecutionPlugin {
         });
     }
 
-    public isValidUserInput(userInput: string): boolean {
+    public isValidUserInput(userInput: string, fallback?: boolean): boolean {
         return userInput !== undefined
             && userInput.length > 0
-            && this.userInputMatches(userInput);
+            && this.userInputMatches(userInput, fallback);
     }
 
     public execute(searchResultItem: SearchResultItem): Promise<void> {
@@ -84,9 +86,11 @@ export class WebSearchPlugin implements ExecutionPlugin {
         return webSearchEngine.url.replace("{{query}}", this.getSearchTerm(webSearchEngine, userInput));
     }
 
-    private userInputMatches(userInput: string): boolean {
+    private userInputMatches(userInput: string, fallback?: boolean): boolean {
         return this.config.webSearchEngines.some((websearchEngine) => {
-            return userInput.startsWith(websearchEngine.prefix);
+            return fallback
+                ? websearchEngine.isFallback
+                : userInput.startsWith(websearchEngine.prefix);
         });
     }
 }

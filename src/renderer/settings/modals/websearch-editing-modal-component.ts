@@ -112,6 +112,19 @@ export const websearchEditingModal = Vue.extend({
                         </div>
                     </div>
 
+                    <div class="field">
+                        <label class="label">
+                            {{ translations.websearchIsFallback }}
+                        </label>
+                        <div class="control is-expanded">
+                            <input class="is-checkradio" id="isFallbackCheckbox" type="checkbox" name="isFallbackCheckbox" v-model="websearchEngine.isFallback">
+                            <label for="isFallbackCheckbox"></label>
+                            <div class="field">
+                                <input class="is-checkradio is-block is-success" id="isFallbackCheckbox" type="checkbox" name="isFallbackCheckbox" checked="checked">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="field is-grouped is-grouped-right">
                         <div class="control">
                             <button class="button is-danger" @click="closeButtonClick">

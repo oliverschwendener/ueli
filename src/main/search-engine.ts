@@ -4,8 +4,8 @@ import { SearchPlugin } from "./search-plugin";
 import { UserConfigOptions } from "../common/config/user-config-options";
 import { ExecutionPlugin } from "./execution-plugin";
 import { UeliPlugin } from "./ueli-plugin";
-import { getNoSearchResultsFoundResultItem } from "./no-search-results-found-result-item";
 import { TranslationSet } from "../common/translation/translation-set";
+import { getNoSearchResultsFoundResultItem } from "./no-search-results-found-result-item";
 
 interface FuseResult {
     item: SearchResultItem;
@@ -14,18 +14,21 @@ interface FuseResult {
 export class SearchEngine {
     private readonly searchPlugins: SearchPlugin[];
     private readonly executionPlugins: ExecutionPlugin[];
+    private readonly fallbackPlugins: ExecutionPlugin[];
     private translationSet: TranslationSet;
     private config: UserConfigOptions;
 
     constructor(
         plugins: SearchPlugin[],
         executionPlugins: ExecutionPlugin[],
+        fallbackPlugins: ExecutionPlugin[],
         config: UserConfigOptions,
         translationSet: TranslationSet) {
         this.translationSet = translationSet;
         this.config = config;
         this.searchPlugins = plugins;
         this.executionPlugins = executionPlugins;
+        this.fallbackPlugins = fallbackPlugins;
         Promise.resolve(this.refreshIndexes());
     }
 
@@ -40,11 +43,19 @@ export class SearchEngine {
 
                 if (matchingExecutionPlugin !== undefined) {
                     matchingExecutionPlugin.getSearchResults(userInput)
-                        .then((result) => resolve(this.beforeSolveSearchResults(userInput, result)))
+                        .then((executionPluginResults) => {
+                            this.beforeSolveSearchResults(userInput, executionPluginResults)
+                                .then((result) => resolve(result))
+                                .catch((err) => reject(err));
+                        })
                         .catch((err) => reject(err));
                 } else {
                     this.getSearchPluginsResult(userInput)
-                        .then((result) => resolve(this.beforeSolveSearchResults(userInput, result)))
+                        .then((searchPluginResults) => {
+                            this.beforeSolveSearchResults(userInput, searchPluginResults)
+                                .then((result) => resolve(result))
+                                .catch((err) => reject(err));
+                        })
                         .catch((err) => reject(err));
                 }
             }
@@ -142,7 +153,33 @@ export class SearchEngine {
         });
     }
 
-    private beforeSolveSearchResults(userInput: string, searchResults: SearchResultItem[]): SearchResultItem[] {
+    private beforeSolveSearchResults(userInput: string, searchResults: SearchResultItem[]): Promise<SearchResultItem[]> {
+        return new Promise((resolve, reject) => {
+            if (this.fallbackPlugins.length > 0 && searchResults.length === 0) {
+                const fallbackPluginPromises = this.fallbackPlugins
+                    .filter((fallbackPlugin) => fallbackPlugin.isValidUserInput(userInput, true))
+                    .map((fallbackPlugin) => fallbackPlugin.getSearchResults(userInput, true));
+
+                if (fallbackPluginPromises.length > 0) {
+                    Promise.all(fallbackPluginPromises)
+                        .then((resultLists) => {
+                            const result = resultLists.length > 0
+                                ? resultLists.reduce((all, r) => all = all.concat(r))
+                                : [];
+
+                            resolve(this.beforeResolve(userInput, result));
+                        })
+                        .catch((err) => reject(err));
+                } else {
+                    resolve(this.beforeResolve(userInput, searchResults));
+                }
+            } else {
+                resolve(this.beforeResolve(userInput, searchResults));
+            }
+        });
+    }
+
+    private beforeResolve(userInput: string, searchResults: SearchResultItem[]): SearchResultItem[] {
         if (userInput.length > 0 && searchResults.length === 0) {
             const result = getNoSearchResultsFoundResultItem(
                 this.translationSet.noSearchResultsFoundTitle,
@@ -150,7 +187,8 @@ export class SearchEngine {
             );
             searchResults.push(result);
         }
-        return searchResults;
+
+        return(searchResults);
     }
 
     private getAllPlugins(): UeliPlugin[] {

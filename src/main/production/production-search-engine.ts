@@ -44,9 +44,15 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
             ),
     ];
 
+    const webSearchPlugin = new WebSearchPlugin(userConfig, urlExecutor);
+
     const executionPlugins: ExecutionPlugin[] = [
-        new WebSearchPlugin(userConfig, urlExecutor),
+        webSearchPlugin,
         new TranslationExecutionPlugin(userConfig),
+    ];
+
+    const fallbackPlugins: ExecutionPlugin[] = [
+        webSearchPlugin,
     ];
 
     if (isWindows(platform())) {
@@ -66,6 +72,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
     return new SearchEngine(
         searchPlugins,
         executionPlugins,
+        fallbackPlugins,
         userConfig,
         translationSet);
 };

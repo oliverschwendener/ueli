@@ -120,6 +120,7 @@ export const englishTranslationSet: TranslationSet = {
     websearchUrl: "URL",
     websearchIcon: "Icon",
     websearchPriority: "Priority",
+    websearchIsFallback: "Fallback",
     websearchInvalidWebsearchEngine: "Invalid web search engine",
     websearchDisabled: "Web search is disabled",
 

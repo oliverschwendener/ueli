@@ -7,6 +7,7 @@ export const defaultNewWebSearchEngine: WebSearchEngine = {
         parameter: "",
         type: IconType.URL,
     },
+    isFallback: false,
     name: "",
     prefix: "",
     priority: 0,

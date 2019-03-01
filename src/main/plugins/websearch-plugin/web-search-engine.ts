@@ -6,4 +6,5 @@ export interface WebSearchEngine {
     name: string;
     icon: Icon;
     priority: number;
+    isFallback: boolean;
 }
