@@ -18,7 +18,7 @@ export const defaultWebSearchIcon: Icon = {
 };
 
 export const defaultWebSearchOptions: WebSearchOptions = {
-    isEnabled: false,
+    isEnabled: true,
     webSearchEngines: [
         {
             icon: {
