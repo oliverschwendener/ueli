@@ -5,7 +5,7 @@ import { ApplicationIconService } from "../plugins/application-search-plugin/app
 import { generateMacAppIcons, generateWindowsAppIcons } from "../plugins/application-search-plugin/application-icon-helpers";
 import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/ueli-command-search-plugin";
 import { ShortcutsSearchPlugin } from "../plugins/shorcuts-search-plugin/shortcuts-search-plugin";
-import { isWindows } from "../../common/helpers/operating-system-helpers";
+import { isWindows, isMacOs } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
 import { executeUrlMacOs, executeUrlWindows } from "../executors/url-executor";
 import { executeFilePathWindows, executeFilePathMacOs } from "../executors/file-path-executor";
@@ -61,7 +61,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
                 userConfig,
                 filePathExecutor,
                 filePathLocationExecutor));
-    } else {
+    } else if (isMacOs(platform())) {
         executionPlugins.push(
             new MdFindExecutionPlugin(
                 userConfig,
