@@ -55,6 +55,11 @@ export const generalSettingsComponent = Vue.extend({
             config.generalOptions.rescanIntervalInSeconds = defaultGeneralOptions.rescanIntervalInSeconds;
             this.updateConfig();
         },
+        resetShowAlwaysOnPrimaryDisplay() {
+            const config: UserConfigOptions = this.config;
+            config.generalOptions.showAlwaysOnPrimaryDisplay = defaultGeneralOptions.showAlwaysOnPrimaryDisplay;
+            this.updateConfig();
+        },
         updateConfig() {
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
         },
@@ -214,6 +219,30 @@ export const generalSettingsComponent = Vue.extend({
                                 <button class="button is-success" @click="updateConfig">
                                     <span class="icon"><i class="fas fa-check"></i></span>
                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings__setting-content-item box">
+                    <div class="settings__setting-content-item-title">
+                        <div class="title is-5">
+                            {{ translations.generalSettingsShowAlwaysOnPrimaryDisplay }}
+                        </div>
+                        <button class="button" @click="resetShowAlwaysOnPrimaryDisplay">
+                            <span class="icon">
+                                <i class="fas fa-undo-alt"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="columns">
+                        <div class="column field has-addons">
+                            <div class="control is-expanded">
+                                <input class="is-checkradio" id="showAlwaysOnPrimaryDisplayCheckbox" type="checkbox" name="showAlwaysOnPrimaryDisplayCheckbox" v-model="config.generalOptions.showAlwaysOnPrimaryDisplay" @change="updateConfig">
+                                <label for="showAlwaysOnPrimaryDisplayCheckbox"></label>
+                                <div class="field">
+                                    <input class="is-checkradio is-block is-success" id="showAlwaysOnPrimaryDisplayCheckbox" type="checkbox" name="showAlwaysOnPrimaryDisplayCheckbox" checked="checked">
+                                </div>
                             </div>
                         </div>
                     </div>

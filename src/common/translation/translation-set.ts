@@ -35,6 +35,7 @@ export interface TranslationSet {
     generalSettingsClearCachesOnExit: string;
     generalSettingsHotKey: string;
     generalSettingsRescanInterval: string;
+    generalSettingsShowAlwaysOnPrimaryDisplay: string;
 
     appearanceSettings: string;
     appearanceSettingsWindowWidth: string;

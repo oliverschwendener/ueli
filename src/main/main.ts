@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, globalShortcut, dialog, Tray, Menu } from "electron";
+import { app, BrowserWindow, ipcMain, globalShortcut, dialog, Tray, Menu, screen } from "electron";
 import { join } from "path";
 import { IpcChannels } from "../common/ipc-channels";
 import { SearchResultItem } from "../common/search-result-item";
@@ -81,6 +81,22 @@ function registerGlobalKeyboardShortcut(toggleAction: () => void, newHotKey: Glo
 
 function showMainWindow() {
     if (mainWindow && !mainWindow.isDestroyed()) {
+        const mousePosition = screen.getCursorScreenPoint();
+        const display = config.generalOptions.showAlwaysOnPrimaryDisplay
+            ? screen.getPrimaryDisplay()
+            : screen.getDisplayNearestPoint(mousePosition);
+
+        const windowBounds: Electron.Rectangle = {
+            height: config.appearanceOptions.userInputHeight,
+            width: config.appearanceOptions.windowWidth,
+            x: display.bounds.x + (display.bounds.width / 2) - (config.appearanceOptions.windowWidth / 2),
+            y: display.bounds.y + (display.bounds.height / 2) - (getMaxWindowHeight(
+                    config.appearanceOptions.maxSearchResultsPerPage,
+                    config.appearanceOptions.searchResultHeight,
+                    config.appearanceOptions.userInputHeight) / 2),
+        };
+
+        mainWindow.setBounds(windowBounds);
         mainWindow.show();
         mainWindow.webContents.send(IpcChannels.mainWindowHasBeenShown);
     }
