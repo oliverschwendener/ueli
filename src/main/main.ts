@@ -303,9 +303,6 @@ function createMainWindow() {
     mainWindow.on("blur", hideMainWindow);
     mainWindow.on("closed", quitApp);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
-    if (isDev()) {
-        mainWindow.webContents.openDevTools();
-    }
 }
 
 function startApp() {
