@@ -14,5 +14,6 @@ install:
 build_script:
   - yarn lint
   - yarn bundle
+  - yarn test
 
 test: off

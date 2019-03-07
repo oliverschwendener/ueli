@@ -11,3 +11,4 @@ install:
 script:
   - yarn lint
   - yarn bundle
+  - yarn test
