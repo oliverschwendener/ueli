@@ -9,6 +9,7 @@ install:
   - yarn install
 
 script:
+  - yarn tsc:validate
   - yarn lint
   - yarn bundle
   - yarn test

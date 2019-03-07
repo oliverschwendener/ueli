@@ -12,6 +12,7 @@ install:
   - yarn install
 
 build_script:
+  - yarn tsc:validate
   - yarn lint
   - yarn bundle
   - yarn test
