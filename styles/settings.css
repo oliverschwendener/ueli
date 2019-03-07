@@ -107,6 +107,10 @@ html {
     font-size: 0.8rem;
 }
 
+.previw-button {
+    width: 37px;
+}
+
 /* Spinner */
 .lds-dual-ring {
     display: inline-block;

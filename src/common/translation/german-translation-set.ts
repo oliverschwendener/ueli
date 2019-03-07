@@ -47,6 +47,17 @@ export const germanTranslationSet: TranslationSet = {
     appearanceSettingsUserInputHeight: "Eingabefeld (in Pixel)",
     appearanceSettingsShowDescriptionOnAllSearchResults: "Beschreibung bei allen Suchresultaten anzeigen",
 
+    colorThemeSettings: "Farbschema",
+    colorthemeUserInputBackgroundColor: "Suchfeld Hintergrundfarbe",
+    colorThemeUserInputTextColor: "Suchfeld Textfarbe",
+    colorThemeSearchResultsBackgroundColor: "Suchergebnisse Hintergrundfarbe",
+    colorThemeSearchResultsItemActiveBackgroundColor: "Aktives Suchergebnis Hintergrundfarbe",
+    colorThemeSearchResultsItemActiveTextColor: "Aktives Suchergebnis Textfarbe",
+    colorThemeSearchResutlsItemNameTextColor: "Suchergebnis Name Textfarbe",
+    colorThemeSearchResultsItemDescriptionTextColor: "Suchergebnis Beschreibung Textfarbe",
+    colorThemeScrollbarForegroundColor: "Scrollbar Vordergrundfarbe",
+    colorThemeScrollbarBackgroundColor: "Scrollbar Hintergrundfarbe",
+
     applicationSearchSettings: "Programmsuche",
     applicationSearchSettingsApplicationFolders: "Programmverzeichnisse",
     applicationSearchSettingsApplicationFolder: "Programmverzeichnis",

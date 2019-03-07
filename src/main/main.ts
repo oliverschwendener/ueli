@@ -140,6 +140,10 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boole
         mainWindow.webContents.send(IpcChannels.appearanceOptionsUpdated, updatedConfig.appearanceOptions);
     }
 
+    if (JSON.stringify(updatedConfig.colorThemeOptions) !== JSON.stringify(config.colorThemeOptions)) {
+        mainWindow.webContents.send(IpcChannels.colorThemeOptionsUpdated, updatedConfig.colorThemeOptions);
+    }
+
     config = updatedConfig;
 
     updateTrayIcon(updatedConfig);
@@ -283,6 +287,9 @@ function createMainWindow() {
     mainWindow.on("blur", hideMainWindow);
     mainWindow.on("closed", quitApp);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
+    if (isDev()) {
+        mainWindow.webContents.openDevTools();
+    }
 }
 
 function startApp() {

@@ -17,6 +17,8 @@ export const settingMenuItemComponent = Vue.extend({
             switch (item) {
                 case Settings.Appearance:
                     return translations.appearanceSettings;
+                case Settings.ColorTheme:
+                    return translations.colorThemeSettings;
                 case Settings.ApplicationSearch:
                     return translations.applicationSearchSettings;
                 case Settings.General:

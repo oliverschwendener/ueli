@@ -12,6 +12,7 @@ export enum IpcChannels {
     indexRefreshSucceeded = "index-refresh-succeeded",
     indexRefreshFailed = "index-refresh-failed",
     appearanceOptionsUpdated = "user-styles-updated",
+    colorThemeOptionsUpdated = "color-theme-updated",
     ueliCommandExecuted = "ueli-command-executed",
     folderPathRequested = "folder-path-requested",
     folderPathResult = "folder-path-result",

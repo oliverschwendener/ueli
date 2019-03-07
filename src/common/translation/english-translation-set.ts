@@ -47,6 +47,17 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsUserInputHeight: "User input height (in pixels)",
     appearanceSettingsShowDescriptionOnAllSearchResults: "Show description on all search results",
 
+    colorThemeSettings: "Color Theme",
+    colorthemeUserInputBackgroundColor: "User input background color",
+    colorThemeUserInputTextColor: "User input text color",
+    colorThemeSearchResultsBackgroundColor: "Search results background color",
+    colorThemeSearchResultsItemActiveBackgroundColor: "Search results active background color",
+    colorThemeSearchResultsItemActiveTextColor: "Search results active text color",
+    colorThemeSearchResutlsItemNameTextColor: "Search results name text color",
+    colorThemeSearchResultsItemDescriptionTextColor: "Search results description text color",
+    colorThemeScrollbarForegroundColor: "Scrollbar foreground color",
+    colorThemeScrollbarBackgroundColor: "Scrollbar background color",
+
     applicationSearchSettings: "Application Search",
     applicationSearchSettingsApplicationFolders: "Application folders",
     applicationSearchSettingsApplicationFolder: "Application folder",

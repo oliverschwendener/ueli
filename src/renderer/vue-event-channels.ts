@@ -16,6 +16,7 @@ export enum VueEventChannels {
     loadingStarted = "loading-started",
     loadingCompleted = "loading-completed",
     appearanceOptionsUpdated = "user-styles-udpated",
+    colorThemeOptionsUpdated = "color-theme-options-updated",
     openShortcutEditingModal = "add-new-shortcut-button-clicked",
     shortcutEdited = "shortcut-edited",
     openNewApplicationFolderModal = "open-new-application-folder-modal",

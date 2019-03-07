@@ -44,6 +44,17 @@ export interface TranslationSet {
     appearanceSettingsUserInputHeight: string;
     appearanceSettingsShowDescriptionOnAllSearchResults: string;
 
+    colorThemeSettings: string;
+    colorthemeUserInputBackgroundColor: string;
+    colorThemeUserInputTextColor: string;
+    colorThemeSearchResultsBackgroundColor: string;
+    colorThemeSearchResultsItemActiveBackgroundColor: string;
+    colorThemeSearchResultsItemActiveTextColor: string;
+    colorThemeSearchResutlsItemNameTextColor: string;
+    colorThemeSearchResultsItemDescriptionTextColor: string;
+    colorThemeScrollbarForegroundColor: string;
+    colorThemeScrollbarBackgroundColor: string;
+
     applicationSearchSettings: string;
     applicationSearchSettingsApplicationFolders: string;
     applicationSearchSettingsApplicationFolder: string;

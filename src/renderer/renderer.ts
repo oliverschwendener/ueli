@@ -31,6 +31,8 @@ import { webSearchSettingsComponent } from "./settings/websearch-settings-compon
 import { iconComponent } from "./settings/icon-component";
 import { websearchEditingModal } from "./settings/modals/websearch-editing-modal-component";
 import { iconEditingComponent } from "./settings/icon-editing-component";
+import { colorThemeSettingsComponent } from "./settings/color-theme-settings-component";
+import { ColorThemeOptions } from "../common/config/color-theme-options";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -53,6 +55,7 @@ Vue.component("websearch-settings", webSearchSettingsComponent);
 Vue.component("websearch-editing-modal", websearchEditingModal);
 Vue.component("icon", iconComponent);
 Vue.component("icon-editing", iconEditingComponent);
+Vue.component("color-theme-settings", colorThemeSettingsComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 
@@ -89,6 +92,10 @@ new Vue({
 
         ipcRenderer.on(IpcChannels.appearanceOptionsUpdated, (event: Electron.Event, updatedAppearanceOptions: AppearanceOptions) => {
             vueEventDispatcher.$emit(VueEventChannels.appearanceOptionsUpdated, updatedAppearanceOptions);
+        });
+
+        ipcRenderer.on(IpcChannels.colorThemeOptionsUpdated, (event: Electron.Event, updatedColorThemeOptions: ColorThemeOptions) => {
+            vueEventDispatcher.$emit(VueEventChannels.colorThemeOptionsUpdated, updatedColorThemeOptions);
         });
 
         ipcRenderer.on(IpcChannels.searchResponse, (event: Electron.Event, searchResults: SearchResultItem[]) => {
