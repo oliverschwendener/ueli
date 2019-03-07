@@ -7,8 +7,10 @@ import { FakeSearchPlugin } from "./fake-search-plugin";
 import { SearchResultItem } from "../common/search-result-item";
 import { PluginType } from "../main/plugin-type";
 import { dummyIcon } from "./dummy-icon";
+import { TestLogger } from "./test-logger";
 
 describe(SearchEngine.name, () => {
+    const logger = new TestLogger();
     it("should find search results when searching for the exact name", (done) => {
         const items: SearchResultItem[] = [
             {
@@ -30,7 +32,7 @@ describe(SearchEngine.name, () => {
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, englishTranslationSet);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, englishTranslationSet, logger);
 
         searchEngine.getSearchResults("Google Chrome")
             .then((searchResults) => {
@@ -63,7 +65,7 @@ describe(SearchEngine.name, () => {
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger);
 
         searchEngine.getSearchResults("blabla")
             .then((searchResults) => {
@@ -96,7 +98,7 @@ describe(SearchEngine.name, () => {
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger);
 
         searchEngine.getSearchResults("gOoGlE ChRoMe")
             .then((searchResults) => {
@@ -131,7 +133,7 @@ describe(SearchEngine.name, () => {
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger);
 
         searchEngine.getSearchResults("gglchrm")
             .then((searchResults) => {
@@ -166,7 +168,7 @@ describe(SearchEngine.name, () => {
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger);
 
         searchEngine.getSearchResults("gglchrm")
             .then((searchResults) => {
