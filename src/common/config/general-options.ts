@@ -8,4 +8,5 @@ export interface GeneralOptions {
     language: Language;
     clearCachesOnExit: boolean;
     showTrayIcon: boolean;
+    showAlwaysOnPrimaryDisplay: boolean;
 }

@@ -38,6 +38,7 @@ export const englishTranslationSet: TranslationSet = {
     generalSettingsClearCachesOnExit: "Clear caches on quit",
     generalSettingsHotKey: "Hot Key",
     generalSettingsRescanInterval: "Rescan interval (in seconds)",
+    generalSettingsShowAlwaysOnPrimaryDisplay: "Always show on primary display",
 
     appearanceSettings: "Appearance",
     appearanceSettingsWindowWidth: "Window width (in pixels)",

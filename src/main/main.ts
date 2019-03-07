@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, globalShortcut, dialog, Tray, Menu } from "electron";
+import { app, BrowserWindow, ipcMain, globalShortcut, dialog, Tray, Menu, screen, MenuItemConstructorOptions } from "electron";
 import { join } from "path";
 import { IpcChannels } from "../common/ipc-channels";
 import { SearchResultItem } from "../common/search-result-item";
@@ -41,7 +41,7 @@ let settingsWindow: BrowserWindow;
 
 let config = configRepository.getConfig();
 let translationSet = getTranslationSet(config.generalOptions.language);
-let searchEngine = getProductionSearchEngine(config, translationSet);
+let searchEngine = getProductionSearchEngine(config, translationSet, logger);
 
 let rescanInterval = setInterval(() => refreshAllIndexes(), Number(config.generalOptions.rescanIntervalInSeconds) * 1000);
 
@@ -81,6 +81,22 @@ function registerGlobalKeyboardShortcut(toggleAction: () => void, newHotKey: Glo
 
 function showMainWindow() {
     if (mainWindow && !mainWindow.isDestroyed()) {
+        const mousePosition = screen.getCursorScreenPoint();
+        const display = config.generalOptions.showAlwaysOnPrimaryDisplay
+            ? screen.getPrimaryDisplay()
+            : screen.getDisplayNearestPoint(mousePosition);
+
+        const windowBounds: Electron.Rectangle = {
+            height: config.appearanceOptions.userInputHeight,
+            width: config.appearanceOptions.windowWidth,
+            x: display.bounds.x + (display.bounds.width / 2) - (config.appearanceOptions.windowWidth / 2),
+            y: display.bounds.y + (display.bounds.height / 2) - (getMaxWindowHeight(
+                    config.appearanceOptions.maxSearchResultsPerPage,
+                    config.appearanceOptions.searchResultHeight,
+                    config.appearanceOptions.userInputHeight) / 2),
+        };
+
+        mainWindow.setBounds(windowBounds);
         mainWindow.show();
         mainWindow.webContents.send(IpcChannels.mainWindowHasBeenShown);
     }
@@ -183,7 +199,7 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
 
 function reloadApp() {
     updateMainWindowSize(0, config.appearanceOptions);
-    searchEngine = getProductionSearchEngine(config, translationSet);
+    searchEngine = getProductionSearchEngine(config, translationSet, logger);
     mainWindow.reload();
 }
 
@@ -300,7 +316,36 @@ function startApp() {
     updateMainWindowSize(0, config.appearanceOptions, recenter);
     registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
     setAutoStartOptions(config);
+    setKeyboardShortcuts();
     registerAllIpcListeners();
+}
+
+function setKeyboardShortcuts() {
+    if (currentOperatingSystem === OperatingSystem.macOS) {
+        const template = [
+            {
+                label: "ueli",
+                submenu: [
+                    { label: "Quit", accelerator: "Command+Q", click: quitApp },
+                    { label: "Reload", accelerator: "Command+R", click: reloadApp },
+                ],
+            },
+            {
+                label: "Edit",
+                submenu: [
+                    { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+                    { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+                    { type: "separator" },
+                    { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+                    { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+                    { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+                    { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" },
+                ],
+            },
+        ] as MenuItemConstructorOptions[];
+
+        Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+    }
 }
 
 function onLanguageChange(updatedConfig: UserConfigOptions) {
