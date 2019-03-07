@@ -129,7 +129,7 @@ describe(SearchEngine.name, () => {
         const userConfig = {
             searchEngineOptions: {
                 fuzzyness: 0.8,
-            }
+            },
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
