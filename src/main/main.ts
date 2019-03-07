@@ -41,7 +41,7 @@ let settingsWindow: BrowserWindow;
 
 let config = configRepository.getConfig();
 let translationSet = getTranslationSet(config.generalOptions.language);
-let searchEngine = getProductionSearchEngine(config, translationSet);
+let searchEngine = getProductionSearchEngine(config, translationSet, logger);
 
 let rescanInterval = setInterval(() => refreshAllIndexes(), Number(config.generalOptions.rescanIntervalInSeconds) * 1000);
 
@@ -195,7 +195,7 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
 
 function reloadApp() {
     updateMainWindowSize(0, config.appearanceOptions);
-    searchEngine = getProductionSearchEngine(config, translationSet);
+    searchEngine = getProductionSearchEngine(config, translationSet, logger);
     mainWindow.reload();
 }
 

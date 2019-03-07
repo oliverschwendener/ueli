@@ -6,6 +6,7 @@ import { ExecutionPlugin } from "./execution-plugin";
 import { UeliPlugin } from "./ueli-plugin";
 import { TranslationSet } from "../common/translation/translation-set";
 import { getNoSearchResultsFoundResultItem } from "./no-search-results-found-result-item";
+import { Logger } from "../common/logger/logger";
 
 interface FuseResult {
     item: SearchResultItem;
@@ -17,19 +18,24 @@ export class SearchEngine {
     private readonly fallbackPlugins: ExecutionPlugin[];
     private translationSet: TranslationSet;
     private config: UserConfigOptions;
+    private readonly logger: Logger;
 
     constructor(
         plugins: SearchPlugin[],
         executionPlugins: ExecutionPlugin[],
         fallbackPlugins: ExecutionPlugin[],
         config: UserConfigOptions,
-        translationSet: TranslationSet) {
+        translationSet: TranslationSet,
+        logger: Logger) {
         this.translationSet = translationSet;
         this.config = config;
         this.searchPlugins = plugins;
         this.executionPlugins = executionPlugins;
         this.fallbackPlugins = fallbackPlugins;
-        Promise.resolve(this.refreshIndexes());
+        this.logger = logger;
+        this.refreshIndexes()
+            .then(() => this.logger.debug(translationSet.successfullyRefreshedIndexes))
+            .catch((err) => this.logger.error(err));
     }
 
     public  getSearchResults(userInput: string): Promise<SearchResultItem[]> {
@@ -91,8 +97,7 @@ export class SearchEngine {
 
     public refreshIndexes(): Promise<void> {
         return new Promise((resolve, reject) => {
-            const promises = this.searchPlugins.map((plugin) => plugin.refreshIndex());
-            Promise.all(promises)
+            Promise.all(this.searchPlugins.map((plugin) => plugin.refreshIndex()))
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });
@@ -100,8 +105,7 @@ export class SearchEngine {
 
     public clearCaches(): Promise<void> {
         return new Promise((resolve, reject) => {
-            const promises = this.searchPlugins.map((plugin) => plugin.clearCache());
-            Promise.all(promises)
+            Promise.all(this.searchPlugins.map((plugin) => plugin.clearCache()))
                 .then(() => resolve())
                 .catch((err) => reject(`Error while trying to clear cache: ${err}`));
         });
@@ -111,8 +115,7 @@ export class SearchEngine {
         return new Promise((resolve, reject) => {
             this.translationSet = translationSet;
             this.config = updatedConfig;
-            const promises = this.getAllPlugins().map((plugin) => plugin.updateConfig(updatedConfig, translationSet));
-            Promise.all(promises)
+            Promise.all(this.getAllPlugins().map((plugin) => plugin.updateConfig(updatedConfig, translationSet)))
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });
@@ -158,19 +161,15 @@ export class SearchEngine {
                     .filter((fallbackPlugin) => fallbackPlugin.isValidUserInput(userInput, true))
                     .map((fallbackPlugin) => fallbackPlugin.getSearchResults(userInput, true));
 
-                if (fallbackPluginPromises.length > 0) {
-                    Promise.all(fallbackPluginPromises)
-                        .then((resultLists) => {
-                            const result = resultLists.length > 0
-                                ? resultLists.reduce((all, r) => all = all.concat(r))
-                                : [];
+                Promise.all(fallbackPluginPromises)
+                    .then((resultLists) => {
+                        const result = resultLists.length > 0
+                            ? resultLists.reduce((all, r) => all = all.concat(r))
+                            : [];
 
-                            resolve(this.beforeResolve(userInput, result));
-                        })
-                        .catch((err) => reject(err));
-                } else {
-                    resolve(this.beforeResolve(userInput, searchResults));
-                }
+                        resolve(this.beforeResolve(userInput, result));
+                    })
+                    .catch((err) => reject(err));
             } else {
                 resolve(this.beforeResolve(userInput, searchResults));
             }
