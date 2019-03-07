@@ -32,7 +32,7 @@ export class SearchEngine {
         Promise.resolve(this.refreshIndexes());
     }
 
-    public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
+    public  getSearchResults(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             if (userInput === undefined || userInput.length === 0) {
                 resolve([]);
@@ -126,9 +126,7 @@ export class SearchEngine {
 
             Promise.all(pluginPromises)
                 .then((pluginsResults) => {
-                    let all: SearchResultItem[] = [];
-
-                    pluginsResults.forEach((r) => all = all.concat(r));
+                    const all = pluginsResults.reduce((a, r) => a = a.concat(r));
 
                     const fuse = new Fuse(all, {
                         distance: 100,

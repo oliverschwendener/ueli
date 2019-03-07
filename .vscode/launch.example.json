@@ -13,6 +13,20 @@
       "outFiles": [
         "${workspaceRoot}/bundle/main.js"
       ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Jest Tests",
+      "program": "${workspaceRoot}/node_modules/jest/bin/jest",
+      "args": [
+        "--runInBand",
+        "--config",
+        "jest.json",
+        "src/tests"
+      ],
+      "console": "internalConsole",
+      "internalConsoleOptions": "neverOpen"
     }
   ]
 }

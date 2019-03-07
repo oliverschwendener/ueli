@@ -3,7 +3,7 @@
         "^.+\\.tsx?$": "ts-jest"
     },
     "verbose": true,
-    "testRegex": "((test|spec))\\.(jsx?|tsx?)$",
+    "testRegex": "((test|spec))\\.ts$",
     "moduleFileExtensions": [
         "ts",
         "js",
