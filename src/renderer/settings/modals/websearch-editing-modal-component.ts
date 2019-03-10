@@ -97,7 +97,7 @@ export const websearchEditingModal = Vue.extend({
                             {{ translations.websearchPrefix }}
                         </label>
                         <div class="control is-expanded">
-                            <input class="input" type="text" v-model="websearchEngine.prefix" :placeholder="getPrefixPlaceholder()">
+                            <input class="input font-mono" type="text" v-model="websearchEngine.prefix" :placeholder="getPrefixPlaceholder()">
                         </div>
                     </div>
 

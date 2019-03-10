@@ -126,7 +126,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                         </div>
                         <div class="control is-expanded">
                             <input
-                                class="input"
+                                class="input font-mono"
                                 type="text"
                                 v-model="config.colorThemeOptions.userInputBackgroundColor"
                                 @click="editColor('userInputBackgroundColor', config.colorThemeOptions.userInputBackgroundColor)"
@@ -159,7 +159,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                         </div>
                         <div class="control is-expanded">
                             <input
-                                class="input"
+                                class="input font-mono"
                                 type="text"
                                 v-model="config.colorThemeOptions.userInputTextColor"
                                 @click="editColor('userInputTextColor', config.colorThemeOptions.userInputTextColor)"
@@ -192,7 +192,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                         </div>
                         <div class="control is-expanded">
                             <input
-                                class="input"
+                                class="input font-mono"
                                 type="text"
                                 v-model="config.colorThemeOptions.searchResultsBackgroundColor"
                                 @click="editColor('searchResultsBackgroundColor', config.colorThemeOptions.searchResultsBackgroundColor)"
@@ -225,7 +225,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                         </div>
                         <div class="control is-expanded">
                             <input
-                                class="input"
+                                class="input font-mono"
                                 type="text"
                                 v-model="config.colorThemeOptions.searchResultsItemActiveBackgroundColor"
                                 @click="editColor('searchResultsItemActiveBackgroundColor', config.colorThemeOptions.searchResultsItemActiveBackgroundColor)"
@@ -258,7 +258,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                         </div>
                         <div class="control is-expanded">
                             <input
-                                class="input"
+                                class="input font-mono"
                                 type="text"
                                 v-model="config.colorThemeOptions.searchResultsItemActiveTextColor"
                                 @click="editColor('searchResultsItemActiveTextColor', config.colorThemeOptions.searchResultsItemActiveTextColor)"
@@ -291,7 +291,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                         </div>
                         <div class="control is-expanded">
                             <input
-                                class="input"
+                                class="input font-mono"
                                 type="text"
                                 v-model="config.colorThemeOptions.searchResultsItemNameTextcolor"
                                 @click="editColor('searchResultsItemNameTextcolor', config.colorThemeOptions.searchResultsItemNameTextcolor)"
@@ -324,7 +324,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                         </div>
                         <div class="control is-expanded">
                             <input
-                                class="input"
+                                class="input font-mono"
                                 type="text"
                                 v-model="config.colorThemeOptions.searchResultsItemDescriptionTextColor"
                                 @click="editColor('searchResultsItemDescriptionTextColor', config.colorThemeOptions.searchResultsItemDescriptionTextColor)"
@@ -357,7 +357,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                         </div>
                         <div class="control is-expanded">
                             <input
-                                class="input"
+                                class="input font-mono"
                                 type="text"
                                 v-model="config.colorThemeOptions.scrollbarForegroundColor"
                                 @click="editColor('scrollbarForegroundColor', config.colorThemeOptions.scrollbarForegroundColor)"
@@ -390,7 +390,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                         </div>
                         <div class="control is-expanded">
                             <input
-                                class="input"
+                                class="input font-mono"
                                 type="text"
                                 v-model="config.colorThemeOptions.scrollbarBackgroundColor"
                                 @click="editColor('scrollbarBackgroundColor', config.colorThemeOptions.scrollbarBackgroundColor)"

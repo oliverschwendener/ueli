@@ -124,7 +124,7 @@ export const webSearchSettingsComponent = Vue.extend({
                     <tbody>
                         <tr v-for="(websearchEngine, index) in config.websearchOptions.webSearchEngines">
                             <td>{{ websearchEngine.name }}</td>
-                            <td>{{ websearchEngine.prefix }}</td>
+                            <td class="font-mono">{{ websearchEngine.prefix }}</td>
                             <td>{{ websearchEngine.url }}</td>
                             <td class="has-text-centered"><icon :icon="websearchEngine.icon" :defaulticon="defaultWebSearchIcon"></icon></td>
                             <td class="has-text-centered">{{ websearchEngine.priority }}</td>

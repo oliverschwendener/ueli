@@ -135,7 +135,7 @@ export const translationSettingsComponent = Vue.extend({
                     <div class="columns">
                         <div class="column field has-addons">
                             <div class="control is-expanded">
-                                <input type="text" class="input" v-model="config.translationOptions.prefix">
+                                <input type="text" class="input font-mono" v-model="config.translationOptions.prefix">
                             </div>
                             <div class="control">
                                 <button class="button is-success" @click="updateConfig">
