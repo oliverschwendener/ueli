@@ -70,6 +70,17 @@ export const colorThemeSettingsComponent = Vue.extend({
         getPreviewColor(color: string): string {
             return `background-color: ${color};`;
         },
+        editColor(pickerId: string, color: string) {
+            vueEventDispatcher.$emit(VueEventChannels.editColor, pickerId, color);
+        },
+        updateColor(pickerId: string, color: string) {
+            Object.keys(this.config.colorThemeOptions).forEach((key) => {
+                if (key === pickerId) {
+                    this.config.colorThemeOptions[key] = color;
+                }
+            });
+            this.updateConfig();
+        },
     },
     mounted() {
         vueEventDispatcher.$on(VueEventChannels.showSetting, (settingName: string) => {
@@ -78,6 +89,10 @@ export const colorThemeSettingsComponent = Vue.extend({
             } else {
                 this.visible = false;
             }
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.saveColor, (pickerId: string, color: string) => {
+            this.updateColor(pickerId, color);
         });
     },
     props: ["config", "translations"],
@@ -110,7 +125,12 @@ export const colorThemeSettingsComponent = Vue.extend({
                             <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.userInputBackgroundColor)"></button>
                         </div>
                         <div class="control is-expanded">
-                            <input class="input" type="text" v-model="config.colorThemeOptions.userInputBackgroundColor">
+                            <input
+                                class="input"
+                                type="text"
+                                v-model="config.colorThemeOptions.userInputBackgroundColor"
+                                @click="editColor('userInputBackgroundColor', config.colorThemeOptions.userInputBackgroundColor)"
+                                >
                         </div>
                         <div class="control">
                             <button class="button is-success" @click="updateConfig">
@@ -138,7 +158,12 @@ export const colorThemeSettingsComponent = Vue.extend({
                             <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.userInputTextColor)"></button>
                         </div>
                         <div class="control is-expanded">
-                            <input class="input" type="text" v-model="config.colorThemeOptions.userInputTextColor">
+                            <input
+                                class="input"
+                                type="text"
+                                v-model="config.colorThemeOptions.userInputTextColor"
+                                @click="editColor('userInputTextColor', config.colorThemeOptions.userInputTextColor)"
+                                >
                         </div>
                         <div class="control">
                             <button class="button is-success" @click="updateConfig">
@@ -166,7 +191,12 @@ export const colorThemeSettingsComponent = Vue.extend({
                             <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsBackgroundColor)"></button>
                         </div>
                         <div class="control is-expanded">
-                            <input class="input" type="text" v-model="config.colorThemeOptions.searchResultsBackgroundColor">
+                            <input
+                                class="input"
+                                type="text"
+                                v-model="config.colorThemeOptions.searchResultsBackgroundColor"
+                                @click="editColor('searchResultsBackgroundColor', config.colorThemeOptions.searchResultsBackgroundColor)"
+                                >
                         </div>
                         <div class="control">
                             <button class="button is-success" @click="updateConfig">
@@ -194,7 +224,12 @@ export const colorThemeSettingsComponent = Vue.extend({
                             <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemActiveBackgroundColor)"></button>
                         </div>
                         <div class="control is-expanded">
-                            <input class="input" type="text" v-model="config.colorThemeOptions.searchResultsItemActiveBackgroundColor">
+                            <input
+                                class="input"
+                                type="text"
+                                v-model="config.colorThemeOptions.searchResultsItemActiveBackgroundColor"
+                                @click="editColor('searchResultsItemActiveBackgroundColor', config.colorThemeOptions.searchResultsItemActiveBackgroundColor)"
+                                >
                         </div>
                         <div class="control">
                             <button class="button is-success" @click="updateConfig">
@@ -222,7 +257,12 @@ export const colorThemeSettingsComponent = Vue.extend({
                             <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemActiveTextColor)"></button>
                         </div>
                         <div class="control is-expanded">
-                            <input class="input" type="text" v-model="config.colorThemeOptions.searchResultsItemActiveTextColor">
+                            <input
+                                class="input"
+                                type="text"
+                                v-model="config.colorThemeOptions.searchResultsItemActiveTextColor"
+                                @click="editColor('searchResultsItemActiveTextColor', config.colorThemeOptions.searchResultsItemActiveTextColor)"
+                                >
                         </div>
                         <div class="control">
                             <button class="button is-success" @click="updateConfig">
@@ -250,7 +290,12 @@ export const colorThemeSettingsComponent = Vue.extend({
                             <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemNameTextcolor)"></button>
                         </div>
                         <div class="control is-expanded">
-                            <input class="input" type="text" v-model="config.colorThemeOptions.searchResultsItemNameTextcolor">
+                            <input
+                                class="input"
+                                type="text"
+                                v-model="config.colorThemeOptions.searchResultsItemNameTextcolor"
+                                @click="editColor('searchResultsItemNameTextcolor', config.colorThemeOptions.searchResultsItemNameTextcolor)"
+                                >
                         </div>
                         <div class="control">
                             <button class="button is-success" @click="updateConfig">
@@ -278,7 +323,12 @@ export const colorThemeSettingsComponent = Vue.extend({
                             <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemDescriptionTextColor)"></button>
                         </div>
                         <div class="control is-expanded">
-                            <input class="input" type="text" v-model="config.colorThemeOptions.searchResultsItemDescriptionTextColor">
+                            <input
+                                class="input"
+                                type="text"
+                                v-model="config.colorThemeOptions.searchResultsItemDescriptionTextColor"
+                                @click="editColor('searchResultsItemDescriptionTextColor', config.colorThemeOptions.searchResultsItemDescriptionTextColor)"
+                                >
                         </div>
                         <div class="control">
                             <button class="button is-success" @click="updateConfig">
@@ -306,7 +356,12 @@ export const colorThemeSettingsComponent = Vue.extend({
                             <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.scrollbarForegroundColor)"></button>
                         </div>
                         <div class="control is-expanded">
-                            <input class="input" type="text" v-model="config.colorThemeOptions.scrollbarForegroundColor">
+                            <input
+                                class="input"
+                                type="text"
+                                v-model="config.colorThemeOptions.scrollbarForegroundColor"
+                                @click="editColor('scrollbarForegroundColor', config.colorThemeOptions.scrollbarForegroundColor)"
+                                >
                         </div>
                         <div class="control">
                             <button class="button is-success" @click="updateConfig">
@@ -317,7 +372,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                 </div>
             </div>
 
-            <div class="settings__setting-content-item box">
+            <div class="settings__setting-content-item show-overflow box">
                 <div class="settings__setting-content-item-title">
                     <div class="title is-5">
                         {{ translations.colorThemeScrollbarBackgroundColor }}
@@ -334,7 +389,12 @@ export const colorThemeSettingsComponent = Vue.extend({
                             <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.scrollbarBackgroundColor)"></button>
                         </div>
                         <div class="control is-expanded">
-                            <input class="input" type="text" v-model="config.colorThemeOptions.scrollbarBackgroundColor">
+                            <input
+                                class="input"
+                                type="text"
+                                v-model="config.colorThemeOptions.scrollbarBackgroundColor"
+                                @click="editColor('scrollbarBackgroundColor', config.colorThemeOptions.scrollbarBackgroundColor)"
+                                >
                         </div>
                         <div class="control">
                             <button class="button is-success" @click="updateConfig">
@@ -344,6 +404,8 @@ export const colorThemeSettingsComponent = Vue.extend({
                     </div>
                 </div>
             </div>
+
+            <color-picker :translations="translations"></color-picker>
 
         </div>
     </div>

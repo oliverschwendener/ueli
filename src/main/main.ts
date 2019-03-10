@@ -321,7 +321,7 @@ function startApp() {
 }
 
 function setKeyboardShortcuts() {
-    if (currentOperatingSystem === OperatingSystem.macOS) {
+    if (currentOperatingSystem === OperatingSystem.macOS && !isDev()) {
         const template = [
             {
                 label: "ueli",

@@ -56,6 +56,8 @@ export interface TranslationSet {
     colorThemeScrollbarForegroundColor: string;
     colorThemeScrollbarBackgroundColor: string;
 
+    colorPicker: string;
+
     applicationSearchSettings: string;
     applicationSearchSettingsApplicationFolders: string;
     applicationSearchSettingsApplicationFolder: string;

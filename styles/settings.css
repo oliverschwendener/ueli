@@ -44,6 +44,10 @@ html {
     overflow: auto;
 }
 
+.settings__setting-content-item.show-overflow {
+    overflow: visible;
+}
+
 .settings__setting-content-item:last-child {
     margin-bottom: 0;
 }
@@ -102,9 +106,17 @@ html {
     justify-content: center;
 }
 
+.modal-content.slim {
+    width: 450px;
+}
+
+/* Overwrite color picker styling */
+.vc-chrome {
+    width: 100% !important;
+}
+
 .font-mono {
     font-family: var(--font-family-mono) !important;
-    font-size: 0.8rem;
 }
 
 .previw-button {

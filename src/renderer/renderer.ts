@@ -33,6 +33,8 @@ import { websearchEditingModal } from "./settings/modals/websearch-editing-modal
 import { iconEditingComponent } from "./settings/icon-editing-component";
 import { colorThemeSettingsComponent } from "./settings/color-theme-settings-component";
 import { ColorThemeOptions } from "../common/config/color-theme-options";
+import { colorPickerComponent } from "./settings/color-picker-component";
+import { Chrome } from "vue-color";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -56,6 +58,8 @@ Vue.component("websearch-editing-modal", websearchEditingModal);
 Vue.component("icon", iconComponent);
 Vue.component("icon-editing", iconEditingComponent);
 Vue.component("color-theme-settings", colorThemeSettingsComponent);
+Vue.component("chrome-picker", Chrome);
+Vue.component("color-picker", colorPickerComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 

@@ -59,6 +59,8 @@ export const englishTranslationSet: TranslationSet = {
     colorThemeScrollbarForegroundColor: "Scrollbar foreground color",
     colorThemeScrollbarBackgroundColor: "Scrollbar background color",
 
+    colorPicker: "Color picker",
+
     applicationSearchSettings: "Application Search",
     applicationSearchSettingsApplicationFolders: "Application folders",
     applicationSearchSettingsApplicationFolder: "Application folder",
