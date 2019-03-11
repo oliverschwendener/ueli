@@ -113,11 +113,11 @@ export const colorThemeSettingsComponent = Vue.extend({
                 <div class="settings__option">
                     <div class="settings__option-name">{{ translations.colorthemeUserInputBackgroundColor }}</div>
                     <div class="settings__option-content">
-                        <div class="field has-addons">
+                        <div class="field has-addons has-addons-right">
                             <div class="control">
                                 <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.userInputBackgroundColor)"></button>
                             </div>
-                            <div class="control is-expanded">
+                            <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
@@ -144,11 +144,11 @@ export const colorThemeSettingsComponent = Vue.extend({
                 <div class="settings__option">
                     <div class="settings__option-name">{{ translations.colorThemeUserInputTextColor }}</div>
                     <div class="settings__option-content">
-                        <div class="field has-addons">
+                        <div class="field has-addons has-addons-right">
                             <div class="control">
                                 <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.userInputTextColor)"></button>
                             </div>
-                            <div class="control is-expanded">
+                            <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
@@ -175,11 +175,11 @@ export const colorThemeSettingsComponent = Vue.extend({
                 <div class="settings__option">
                     <div class="settings__option-name">{{ translations.colorThemeSearchResultsBackgroundColor }}</div>
                     <div class="settings__option-content">
-                        <div class="field has-addons">
+                        <div class="field has-addons has-addons-right">
                             <div class="control">
                                 <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsBackgroundColor)"></button>
                             </div>
-                            <div class="control is-expanded">
+                            <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
@@ -206,11 +206,11 @@ export const colorThemeSettingsComponent = Vue.extend({
                 <div class="settings__option">
                     <div class="settings__option-name">{{ translations.colorThemeSearchResultsItemActiveBackgroundColor }}</div>
                     <div class="settings__option-content">
-                        <div class="field has-addons">
+                        <div class="field has-addons has-addons-right">
                             <div class="control">
                                 <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemActiveBackgroundColor)"></button>
                             </div>
-                            <div class="control is-expanded">
+                            <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
@@ -237,11 +237,11 @@ export const colorThemeSettingsComponent = Vue.extend({
                 <div class="settings__option">
                     <div class="settings__option-name">{{ translations.colorThemeSearchResultsItemActiveTextColor }}</div>
                     <div class="settings__option-content">
-                        <div class="field has-addons">
+                        <div class="field has-addons has-addons-right">
                             <div class="control">
                                 <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemActiveTextColor)"></button>
                             </div>
-                            <div class="control is-expanded">
+                            <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
@@ -268,11 +268,11 @@ export const colorThemeSettingsComponent = Vue.extend({
                 <div class="settings__option">
                     <div class="settings__option-name">{{ translations.colorThemeSearchResutlsItemNameTextColor }}</div>
                     <div class="settings__option-content">
-                        <div class="field has-addons">
+                        <div class="field has-addons has-addons-right">
                             <div class="control">
                                 <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemNameTextcolor)"></button>
                             </div>
-                            <div class="control is-expanded">
+                            <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
@@ -299,11 +299,11 @@ export const colorThemeSettingsComponent = Vue.extend({
                 <div class="settings__option">
                     <div class="settings__option-name">{{ translations.colorThemeSearchResultsItemDescriptionTextColor }}</div>
                     <div class="settings__option-content">
-                        <div class="field has-addons">
+                        <div class="field has-addons has-addons-right">
                             <div class="control">
                                 <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemDescriptionTextColor)"></button>
                             </div>
-                            <div class="control is-expanded">
+                            <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
@@ -330,11 +330,11 @@ export const colorThemeSettingsComponent = Vue.extend({
                 <div class="settings__option">
                     <div class="settings__option-name">{{ translations.colorThemeScrollbarForegroundColor }}</div>
                     <div class="settings__option-content">
-                        <div class="field has-addons">
+                        <div class="field has-addons has-addons-right">
                             <div class="control">
                                 <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.scrollbarForegroundColor)"></button>
                             </div>
-                            <div class="control is-expanded">
+                            <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
@@ -361,11 +361,11 @@ export const colorThemeSettingsComponent = Vue.extend({
                 <div class="settings__option">
                     <div class="settings__option-name">{{ translations.colorThemeScrollbarBackgroundColor }}</div>
                     <div class="settings__option-content">
-                        <div class="field has-addons">
+                        <div class="field has-addons has-addons-right">
                             <div class="control">
                                 <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.scrollbarBackgroundColor)"></button>
                             </div>
-                            <div class="control is-expanded">
+                            <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"

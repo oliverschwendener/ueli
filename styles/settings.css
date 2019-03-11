@@ -61,13 +61,12 @@ html {
 }
 
 .settings__option-name {
-    width: 40%;
     padding-right: 10px;
     box-sizing: border-box;
 }
 
 .settings__option-content {
-    width: 60%;
+    flex-grow: 1;
 }
 
 .settings__notification {
@@ -126,6 +125,10 @@ html {
 
 .modal-content.slim {
     width: 450px;
+}
+
+.vertical-center {
+    align-items: center;
 }
 
 /* Overwrite color picker styling */

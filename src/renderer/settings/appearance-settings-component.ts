@@ -19,36 +19,6 @@ export const appearanceSettingsComponent = Vue.extend({
             config.appearanceOptions = cloneDeep(defaultAppearanceOptions);
             this.updateConfig();
         },
-        resetWindowWidth() {
-            const config: UserConfigOptions = this.config;
-            config.appearanceOptions.windowWidth = defaultAppearanceOptions.windowWidth;
-            this.updateConfig();
-        },
-        resetMaxSearchResultsPerPage() {
-            const config: UserConfigOptions = this.config;
-            config.appearanceOptions.maxSearchResultsPerPage = defaultAppearanceOptions.maxSearchResultsPerPage;
-            this.updateConfig();
-        },
-        resetSearchResultHeight() {
-            const config: UserConfigOptions = this.config;
-            config.appearanceOptions.searchResultHeight = defaultAppearanceOptions.searchResultHeight;
-            this.updateConfig();
-        },
-        resetShowDescriptionOnAllSearchResults() {
-            const config: UserConfigOptions = this.config;
-            config.appearanceOptions.showDescriptionOnAllSearchResults = defaultAppearanceOptions.showDescriptionOnAllSearchResults;
-            this.updateConfig();
-        },
-        resetUseSmoothScrolling() {
-            const config: UserConfigOptions = this.config;
-            config.appearanceOptions.smoothScrolling = defaultAppearanceOptions.smoothScrolling;
-            this.updateConfig();
-        },
-        resetUserInputHeight() {
-            const config: UserConfigOptions = this.config;
-            config.appearanceOptions.userInputHeight = defaultAppearanceOptions.userInputHeight;
-            this.updateConfig();
-        },
         updateConfig() {
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
         },
@@ -74,134 +44,80 @@ export const appearanceSettingsComponent = Vue.extend({
             </button>
         </div>
         <div class="settings__setting-content">
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.appearanceSettingsWindowWidth }}
-                    </div>
-                    <button class="button" @click="resetWindowWidth">
-                        <span class="icon"><i class="fas fa-undo-alt"></i></span>
-                    </button>
-                </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control is-expanded">
-                            <input type="number" class="input" v-model="config.appearanceOptions.windowWidth">
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fas fa-check"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.appearanceSettingsMaxSearchResultsPerPage }}
-                    </div>
-                    <button class="button" @click="resetMaxSearchResultsPerPage">
-                        <span class="icon"><i class="fas fa-undo-alt"></i></span>
-                    </button>
-                </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control is-expanded">
-                            <input type="number" class="input" v-model="config.appearanceOptions.maxSearchResultsPerPage">
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fas fa-check"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.appearanceSettingsSearchResultHeight }}
-                    </div>
-                    <button class="button" @click="resetSearchResultHeight">
-                        <span class="icon"><i class="fas fa-undo-alt"></i></span>
-                    </button>
-                </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control is-expanded">
-                            <input type="number" class="input" v-model="config.appearanceOptions.searchResultHeight">
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fas fa-check"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.appearanceSettingsSmoothScrolling }}
-                    </div>
-                    <button class="button" @click="resetUseSmoothScrolling">
-                        <span class="icon"><i class="fas fa-undo-alt"></i></span>
-                    </button>
-                </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control is-expanded">
-                            <input class="is-checkradio" id="smoothScrollingCheckBox" type="checkbox" name="smoothScrollingCheckBox" v-model="config.appearanceOptions.smoothScrolling" @change="updateConfig">
-                            <label for="smoothScrollingCheckBox"></label>
-                            <div class="field">
-                                <input class="is-checkradio is-block is-success" id="smoothScrollingCheckBox" type="checkbox" name="smoothScrollingCheckBox" checked="checked">
+            <div class=" box">
+                <div class="settings__options-container">
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsWindowWidth }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="number" class="input" v-model="config.appearanceOptions.windowWidth" @blur="updateConfig">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.appearanceSettingsUserInputHeight }}
-                    </div>
-                    <button class="button" @click="resetUserInputHeight">
-                        <span class="icon"><i class="fas fa-undo-alt"></i></span>
-                    </button>
-                </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control is-expanded">
-                            <input type="number" class="input" v-model="config.appearanceOptions.userInputHeight">
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fas fa-check"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.appearanceSettingsShowDescriptionOnAllSearchResults }}
-                    </div>
-                    <button class="button" @click="resetShowDescriptionOnAllSearchResults"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
-                </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control is-expanded">
-                            <input class="is-checkradio" id="showDescriptionOnAllSearchResults" type="checkbox" name="showDescriptionOnAllSearchResults" v-model="config.appearanceOptions.showDescriptionOnAllSearchResults" @change="updateConfig">
-                            <label for="showDescriptionOnAllSearchResults"></label>
-                            <div class="field">
-                                <input class="is-checkradio is-block is-success" id="showDescriptionOnAllSearchResults" type="checkbox" name="showDescriptionOnAllSearchResults" checked="checked">
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsMaxSearchResultsPerPage }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="number" class="input" v-model="config.appearanceOptions.maxSearchResultsPerPage" @blur="updateConfig">
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsSearchResultHeight }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="number" class="input" v-model="config.appearanceOptions.searchResultHeight" @blur="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsSmoothScrolling }}</div>
+                        <div class="settings__option-content">
+                            <div class="field has-addons has-addons-right vertical-center">
+                                <div class="control">
+                                    <input id="smoothScrollingCheckBox" type="checkbox" name="smoothScrollingCheckBox" class="switch is-rounded is-success" checked="checked" v-model="config.appearanceOptions.smoothScrolling" @change="updateConfig">
+                                    <label for="smoothScrollingCheckBox"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsUserInputHeight }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="number" class="input" v-model="config.appearanceOptions.userInputHeight" @blur="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsShowDescriptionOnAllSearchResults }}</div>
+                        <div class="settings__option-content">
+                            <div class="field has-addons has-addons-right vertical-center">
+                                <div class="control">
+                                    <input id="showDescriptionOnAllSearchResults" type="checkbox" name="showDescriptionOnAllSearchResults" class="switch is-rounded is-success" checked="checked" v-model="config.appearanceOptions.showDescriptionOnAllSearchResults" @change="updateConfig">
+                                    <label for="showDescriptionOnAllSearchResults"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
+
         </div>
     </div>
     `,
