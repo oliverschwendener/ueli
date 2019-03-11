@@ -106,303 +106,289 @@ export const colorThemeSettingsComponent = Vue.extend({
                 <span class="icon"><i class="fas fa-undo-alt"></i></span>
             </button>
         </div>
-        <div class="settings__setting-content">
+        <div class="box">
 
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.colorthemeUserInputBackgroundColor }}
-                    </div>
-                    <button class="button" @click="resetUserInputBackgroundColor">
-                        <span class="icon">
-                            <i class="fas fa-undo-alt"></i>
-                        </span>
-                    </button>
-                </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control">
-                            <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.userInputBackgroundColor)"></button>
-                        </div>
-                        <div class="control is-expanded">
-                            <input
-                                class="input font-mono"
-                                type="text"
-                                v-model="config.colorThemeOptions.userInputBackgroundColor"
-                                @click="editColor('userInputBackgroundColor', config.colorThemeOptions.userInputBackgroundColor)"
-                                >
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fas fa-check"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="settings__options-container">
 
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.colorThemeUserInputTextColor }}
+                <div class="settings__option">
+                    <div class="settings__option-name">{{ translations.colorthemeUserInputBackgroundColor }}</div>
+                    <div class="settings__option-content">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.userInputBackgroundColor)"></button>
+                            </div>
+                            <div class="control is-expanded">
+                                <input
+                                    class="input font-mono"
+                                    type="text"
+                                    v-model="config.colorThemeOptions.userInputBackgroundColor"
+                                    @click="editColor('userInputBackgroundColor', config.colorThemeOptions.userInputBackgroundColor)"
+                                    >
+                            </div>
+                            <div class="control">
+                                <button class="button is-success" @click="updateConfig">
+                                    <span class="icon"><i class="fas fa-check"></i></span>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button" @click="resetUserInputBackgroundColor">
+                                    <span class="icon">
+                                        <i class="fas fa-undo-alt"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <button class="button" @click="resetUserInputTextColor">
-                        <span class="icon">
-                            <i class="fas fa-undo-alt"></i>
-                        </span>
-                    </button>
                 </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control">
-                            <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.userInputTextColor)"></button>
-                        </div>
-                        <div class="control is-expanded">
-                            <input
-                                class="input font-mono"
-                                type="text"
-                                v-model="config.colorThemeOptions.userInputTextColor"
-                                @click="editColor('userInputTextColor', config.colorThemeOptions.userInputTextColor)"
-                                >
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fas fa-check"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.colorThemeSearchResultsBackgroundColor }}
+                <div class="settings__option">
+                    <div class="settings__option-name">{{ translations.colorThemeUserInputTextColor }}</div>
+                    <div class="settings__option-content">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.userInputTextColor)"></button>
+                            </div>
+                            <div class="control is-expanded">
+                                <input
+                                    class="input font-mono"
+                                    type="text"
+                                    v-model="config.colorThemeOptions.userInputTextColor"
+                                    @click="editColor('userInputTextColor', config.colorThemeOptions.userInputTextColor)"
+                                    >
+                            </div>
+                            <div class="control">
+                                <button class="button is-success" @click="updateConfig">
+                                    <span class="icon"><i class="fas fa-check"></i></span>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button" @click="resetUserInputTextColor">
+                                    <span class="icon">
+                                        <i class="fas fa-undo-alt"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <button class="button" @click="resetSearchResultsBackgroundColor">
-                        <span class="icon">
-                            <i class="fas fa-undo-alt"></i>
-                        </span>
-                    </button>
                 </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control">
-                            <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsBackgroundColor)"></button>
-                        </div>
-                        <div class="control is-expanded">
-                            <input
-                                class="input font-mono"
-                                type="text"
-                                v-model="config.colorThemeOptions.searchResultsBackgroundColor"
-                                @click="editColor('searchResultsBackgroundColor', config.colorThemeOptions.searchResultsBackgroundColor)"
-                                >
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fas fa-check"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.colorThemeSearchResultsItemActiveBackgroundColor }}
+                <div class="settings__option">
+                    <div class="settings__option-name">{{ translations.colorThemeSearchResultsBackgroundColor }}</div>
+                    <div class="settings__option-content">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsBackgroundColor)"></button>
+                            </div>
+                            <div class="control is-expanded">
+                                <input
+                                    class="input font-mono"
+                                    type="text"
+                                    v-model="config.colorThemeOptions.searchResultsBackgroundColor"
+                                    @click="editColor('searchResultsBackgroundColor', config.colorThemeOptions.searchResultsBackgroundColor)"
+                                    >
+                            </div>
+                            <div class="control">
+                                <button class="button is-success" @click="updateConfig">
+                                    <span class="icon"><i class="fas fa-check"></i></span>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button" @click="resetSearchResultsBackgroundColor">
+                                    <span class="icon">
+                                        <i class="fas fa-undo-alt"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <button class="button" @click="resetSearchResultsItemActiveBackgroundColor">
-                        <span class="icon">
-                            <i class="fas fa-undo-alt"></i>
-                        </span>
-                    </button>
                 </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control">
-                            <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemActiveBackgroundColor)"></button>
-                        </div>
-                        <div class="control is-expanded">
-                            <input
-                                class="input font-mono"
-                                type="text"
-                                v-model="config.colorThemeOptions.searchResultsItemActiveBackgroundColor"
-                                @click="editColor('searchResultsItemActiveBackgroundColor', config.colorThemeOptions.searchResultsItemActiveBackgroundColor)"
-                                >
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fas fa-check"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.colorThemeSearchResultsItemActiveTextColor }}
+                <div class="settings__option">
+                    <div class="settings__option-name">{{ translations.colorThemeSearchResultsItemActiveBackgroundColor }}</div>
+                    <div class="settings__option-content">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemActiveBackgroundColor)"></button>
+                            </div>
+                            <div class="control is-expanded">
+                                <input
+                                    class="input font-mono"
+                                    type="text"
+                                    v-model="config.colorThemeOptions.searchResultsItemActiveBackgroundColor"
+                                    @click="editColor('searchResultsItemActiveBackgroundColor', config.colorThemeOptions.searchResultsItemActiveBackgroundColor)"
+                                    >
+                            </div>
+                            <div class="control">
+                                <button class="button is-success" @click="updateConfig">
+                                    <span class="icon"><i class="fas fa-check"></i></span>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button" @click="resetSearchResultsItemActiveBackgroundColor">
+                                    <span class="icon">
+                                        <i class="fas fa-undo-alt"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <button class="button" @click="resetSearchResultsItemActiveTextColor">
-                        <span class="icon">
-                            <i class="fas fa-undo-alt"></i>
-                        </span>
-                    </button>
                 </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control">
-                            <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemActiveTextColor)"></button>
-                        </div>
-                        <div class="control is-expanded">
-                            <input
-                                class="input font-mono"
-                                type="text"
-                                v-model="config.colorThemeOptions.searchResultsItemActiveTextColor"
-                                @click="editColor('searchResultsItemActiveTextColor', config.colorThemeOptions.searchResultsItemActiveTextColor)"
-                                >
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fas fa-check"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.colorThemeSearchResutlsItemNameTextColor }}
+                <div class="settings__option">
+                    <div class="settings__option-name">{{ translations.colorThemeSearchResultsItemActiveTextColor }}</div>
+                    <div class="settings__option-content">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemActiveTextColor)"></button>
+                            </div>
+                            <div class="control is-expanded">
+                                <input
+                                    class="input font-mono"
+                                    type="text"
+                                    v-model="config.colorThemeOptions.searchResultsItemActiveTextColor"
+                                    @click="editColor('searchResultsItemActiveTextColor', config.colorThemeOptions.searchResultsItemActiveTextColor)"
+                                    >
+                            </div>
+                            <div class="control">
+                                <button class="button is-success" @click="updateConfig">
+                                    <span class="icon"><i class="fas fa-check"></i></span>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button" @click="resetSearchResultsItemActiveTextColor">
+                                    <span class="icon">
+                                        <i class="fas fa-undo-alt"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <button class="button" @click="resetSearchResultsItemNameTextColor">
-                        <span class="icon">
-                            <i class="fas fa-undo-alt"></i>
-                        </span>
-                    </button>
                 </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control">
-                            <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemNameTextcolor)"></button>
-                        </div>
-                        <div class="control is-expanded">
-                            <input
-                                class="input font-mono"
-                                type="text"
-                                v-model="config.colorThemeOptions.searchResultsItemNameTextcolor"
-                                @click="editColor('searchResultsItemNameTextcolor', config.colorThemeOptions.searchResultsItemNameTextcolor)"
-                                >
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fas fa-check"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.colorThemeSearchResultsItemDescriptionTextColor }}
+                <div class="settings__option">
+                    <div class="settings__option-name">{{ translations.colorThemeSearchResutlsItemNameTextColor }}</div>
+                    <div class="settings__option-content">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemNameTextcolor)"></button>
+                            </div>
+                            <div class="control is-expanded">
+                                <input
+                                    class="input font-mono"
+                                    type="text"
+                                    v-model="config.colorThemeOptions.searchResultsItemNameTextcolor"
+                                    @click="editColor('searchResultsItemNameTextcolor', config.colorThemeOptions.searchResultsItemNameTextcolor)"
+                                    >
+                            </div>
+                            <div class="control">
+                                <button class="button is-success" @click="updateConfig">
+                                    <span class="icon"><i class="fas fa-check"></i></span>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button" @click="resetSearchResultsItemNameTextColor">
+                                    <span class="icon">
+                                        <i class="fas fa-undo-alt"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <button class="button" @click="resetSearchResultsItemDescriptionTextColor">
-                        <span class="icon">
-                            <i class="fas fa-undo-alt"></i>
-                        </span>
-                    </button>
                 </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control">
-                            <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemDescriptionTextColor)"></button>
-                        </div>
-                        <div class="control is-expanded">
-                            <input
-                                class="input font-mono"
-                                type="text"
-                                v-model="config.colorThemeOptions.searchResultsItemDescriptionTextColor"
-                                @click="editColor('searchResultsItemDescriptionTextColor', config.colorThemeOptions.searchResultsItemDescriptionTextColor)"
-                                >
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fas fa-check"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.colorThemeScrollbarForegroundColor }}
+                <div class="settings__option">
+                    <div class="settings__option-name">{{ translations.colorThemeSearchResultsItemDescriptionTextColor }}</div>
+                    <div class="settings__option-content">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemDescriptionTextColor)"></button>
+                            </div>
+                            <div class="control is-expanded">
+                                <input
+                                    class="input font-mono"
+                                    type="text"
+                                    v-model="config.colorThemeOptions.searchResultsItemDescriptionTextColor"
+                                    @click="editColor('searchResultsItemDescriptionTextColor', config.colorThemeOptions.searchResultsItemDescriptionTextColor)"
+                                    >
+                            </div>
+                            <div class="control">
+                                <button class="button is-success" @click="updateConfig">
+                                    <span class="icon"><i class="fas fa-check"></i></span>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button" @click="resetSearchResultsItemDescriptionTextColor">
+                                    <span class="icon">
+                                        <i class="fas fa-undo-alt"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <button class="button" @click="resetScrollbarForegroundColor">
-                        <span class="icon">
-                            <i class="fas fa-undo-alt"></i>
-                        </span>
-                    </button>
                 </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control">
-                            <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.scrollbarForegroundColor)"></button>
-                        </div>
-                        <div class="control is-expanded">
-                            <input
-                                class="input font-mono"
-                                type="text"
-                                v-model="config.colorThemeOptions.scrollbarForegroundColor"
-                                @click="editColor('scrollbarForegroundColor', config.colorThemeOptions.scrollbarForegroundColor)"
-                                >
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fas fa-check"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="settings__setting-content-item show-overflow box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.colorThemeScrollbarBackgroundColor }}
+                <div class="settings__option">
+                    <div class="settings__option-name">{{ translations.colorThemeScrollbarForegroundColor }}</div>
+                    <div class="settings__option-content">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.scrollbarForegroundColor)"></button>
+                            </div>
+                            <div class="control is-expanded">
+                                <input
+                                    class="input font-mono"
+                                    type="text"
+                                    v-model="config.colorThemeOptions.scrollbarForegroundColor"
+                                    @click="editColor('scrollbarForegroundColor', config.colorThemeOptions.scrollbarForegroundColor)"
+                                    >
+                            </div>
+                            <div class="control">
+                                <button class="button is-success" @click="updateConfig">
+                                    <span class="icon"><i class="fas fa-check"></i></span>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button" @click="resetScrollbarForegroundColor">
+                                    <span class="icon">
+                                        <i class="fas fa-undo-alt"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <button class="button" @click="resetScrollbarBackgroundColor">
-                        <span class="icon">
-                            <i class="fas fa-undo-alt"></i>
-                        </span>
-                    </button>
                 </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control">
-                            <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.scrollbarBackgroundColor)"></button>
-                        </div>
-                        <div class="control is-expanded">
-                            <input
-                                class="input font-mono"
-                                type="text"
-                                v-model="config.colorThemeOptions.scrollbarBackgroundColor"
-                                @click="editColor('scrollbarBackgroundColor', config.colorThemeOptions.scrollbarBackgroundColor)"
-                                >
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fas fa-check"></i></span>
-                            </button>
+
+                <div class="settings__option">
+                    <div class="settings__option-name">{{ translations.colorThemeScrollbarBackgroundColor }}</div>
+                    <div class="settings__option-content">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.scrollbarBackgroundColor)"></button>
+                            </div>
+                            <div class="control is-expanded">
+                                <input
+                                    class="input font-mono"
+                                    type="text"
+                                    v-model="config.colorThemeOptions.scrollbarBackgroundColor"
+                                    @click="editColor('scrollbarBackgroundColor', config.colorThemeOptions.scrollbarBackgroundColor)"
+                                    >
+                            </div>
+                            <div class="control">
+                                <button class="button is-success" @click="updateConfig">
+                                    <span class="icon"><i class="fas fa-check"></i></span>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button class="button" @click="resetScrollbarBackgroundColor">
+                                    <span class="icon">
+                                        <i class="fas fa-undo-alt"></i>
+                                    </span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <color-picker :translations="translations"></color-picker>

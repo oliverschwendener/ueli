@@ -39,17 +39,35 @@ html {
     justify-content: space-between;
 }
 
-.settings__setting-content-item {    
-    margin-bottom: 50px;
-    overflow: auto;
+.settings__options-container {
+    display: flex;
+    flex-direction: column;
 }
 
-.settings__setting-content-item.show-overflow {
-    overflow: visible;
+.settings__option {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.75rem;
 }
 
-.settings__setting-content-item:last-child {
+.settings__option:last-child{
     margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.settings__option-name {
+    width: 40%;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+
+.settings__option-content {
+    width: 60%;
 }
 
 .settings__notification {
