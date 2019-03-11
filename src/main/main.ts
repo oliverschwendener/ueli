@@ -87,13 +87,13 @@ function showMainWindow() {
             : screen.getDisplayNearestPoint(mousePosition);
 
         const windowBounds: Electron.Rectangle = {
-            height: config.appearanceOptions.userInputHeight,
-            width: config.appearanceOptions.windowWidth,
-            x: display.bounds.x + (display.bounds.width / 2) - (config.appearanceOptions.windowWidth / 2),
-            y: display.bounds.y + (display.bounds.height / 2) - (getMaxWindowHeight(
+            height: Number(config.appearanceOptions.userInputHeight),
+            width: Number(config.appearanceOptions.windowWidth),
+            x: Number(display.bounds.x + (display.bounds.width / 2) - (config.appearanceOptions.windowWidth / 2)),
+            y: Number(display.bounds.y + (display.bounds.height / 2) - (getMaxWindowHeight(
                     config.appearanceOptions.maxSearchResultsPerPage,
                     config.appearanceOptions.searchResultHeight,
-                    config.appearanceOptions.userInputHeight) / 2),
+                    config.appearanceOptions.userInputHeight) / 2)),
         };
 
         mainWindow.setBounds(windowBounds);
@@ -141,7 +141,7 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boole
         rescanInterval = setInterval(() => refreshAllIndexes(), updatedConfig.generalOptions.rescanIntervalInSeconds * 1000);
     }
 
-    if (updatedConfig.appearanceOptions.windowWidth !== config.appearanceOptions.windowWidth) {
+    if (Number(updatedConfig.appearanceOptions.windowWidth) !== Number(config.appearanceOptions.windowWidth)) {
         mainWindow.setResizable(true);
         mainWindow.setSize(Number(updatedConfig.appearanceOptions.windowWidth), getMaxWindowHeight(
             updatedConfig.appearanceOptions.maxSearchResultsPerPage,
@@ -251,20 +251,22 @@ function createTrayIcon() {
 }
 
 function updateTrayIconContextMenu() {
-    trayIcon.setContextMenu(Menu.buildFromTemplate([
-        {
-            click: showMainWindow,
-            label: translationSet.trayIconShow,
-        },
-        {
-            click: openSettings,
-            label: translationSet.trayIconSettings,
-        },
-        {
-            click: quitApp,
-            label: translationSet.trayIconQuit,
-        },
-    ]));
+    if (trayIcon && !trayIcon.isDestroyed()) {
+        trayIcon.setContextMenu(Menu.buildFromTemplate([
+            {
+                click: showMainWindow,
+                label: translationSet.trayIconShow,
+            },
+            {
+                click: openSettings,
+                label: translationSet.trayIconSettings,
+            },
+            {
+                click: quitApp,
+                label: translationSet.trayIconQuit,
+            },
+        ]));
+    }
 }
 
 function updateTrayIcon(updatedConfig: UserConfigOptions) {
