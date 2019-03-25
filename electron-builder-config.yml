@@ -1,0 +1,32 @@
+directories:
+  output: dist
+  buildResources: bundle
+
+files:
+  - bundle/**/*.js
+  - styles/**/*.css
+  - ./*.html
+  - img/**/*
+  - assets/**/*
+
+win:
+  icon: ./img/icons/win/icon.ico
+  target:
+    - nsis
+    - zip
+  publish:
+    - github
+
+mac:
+  icon: ./img/icons/mac/icon.icns
+  category: public.app-category.utilities
+  target:
+    - dmg
+    - zip
+  publish:
+    - github
+
+nsis:
+  allowToChangeInstallationDirectory: true
+  oneClick: false
+  perMachine: true
