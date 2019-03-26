@@ -7,6 +7,7 @@ import { IconHelpers } from "../../../common/icon/icon-helpers";
 import { defaultShortcutIcon } from "../../../common/config/default-shortcuts-options";
 import { Shortcut } from "./shortcut";
 import { ShortcutType } from "./shortcut-type";
+import { AutoCompletionResult } from "../../../common/auto-completion-result";
 
 interface ExecutionArgumentDecodeResult {
     shortcutType: ShortcutType;
@@ -16,6 +17,7 @@ interface ExecutionArgumentDecodeResult {
 export class ShortcutsSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.ShortcutsSearchPlugin;
     public readonly openLocationSupported = true;
+    public readonly autoCompletionSupported = false;
     private config: ShortcutOptions;
     private readonly urlExecutor: (url: string) => Promise<void>;
     private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
@@ -81,6 +83,12 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
             } else {
                 reject(`Error while trying to open file location. "${decodeResult.executionArgument}" is not a valid file path`);
             }
+        });
+    }
+
+    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
+        return new Promise((resolve, reject) => {
+            reject("Autocompletion not supported");
         });
     }
 

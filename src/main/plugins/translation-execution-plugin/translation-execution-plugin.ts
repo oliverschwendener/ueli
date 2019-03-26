@@ -4,14 +4,16 @@ import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { PluginType } from "../../plugin-type";
 import { clipboard } from "electron";
 import { StringHelpers } from "../../../common/helpers/string-helpers";
-import { defaultErrorIcon } from "../../../common/icon/default-error-icon";
+import { defaultErrorIcon } from "../../../common/icon/default-icons";
 import { Icon } from "../../../common/icon/icon";
 import { IconType } from "../../../common/icon/icon-type";
 import { LingueeTranslator } from "./linguee-translator";
+import { AutoCompletionResult } from "../../../common/auto-completion-result";
 
 export class TranslationExecutionPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.TranslationPlugin;
     public readonly openLocationSupported = false;
+    public readonly autoCompletionSupported = false;
     private config: UserConfigOptions;
     private delay: NodeJS.Timeout | number;
     private readonly icon: Icon = {
@@ -36,6 +38,12 @@ export class TranslationExecutionPlugin implements ExecutionPlugin {
 
     public openLocation(searchResultItem: SearchResultItem): Promise<void> {
         throw new Error("Opening location is not supported on this plugin");
+    }
+
+    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
+        return new Promise((resolve, reject) => {
+            reject("Autocompletion not supported");
+        });
     }
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {

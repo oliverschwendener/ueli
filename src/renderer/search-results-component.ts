@@ -124,15 +124,21 @@ export const searchResultsComponent = Vue.extend({
             this.handleSearchResultBrowsing(BrowseDirection.Previous);
         });
         vueEventDispatcher.$on(VueEventChannels.enterPress, (privileged: boolean) => {
-            const activeItem = this.getActiveSearchResultItem();
+            const activeItem: SearchResultItemViewModel = this.getActiveSearchResultItem();
             if (activeItem && activeItem.originPluginType !== PluginType.None) {
                 vueEventDispatcher.$emit(VueEventChannels.handleExecution, activeItem, privileged);
             }
         });
         vueEventDispatcher.$on(VueEventChannels.openSearchResultLocationKeyPress, () => {
-            const activeItem = this.getActiveSearchResultItem();
+            const activeItem: SearchResultItemViewModel = this.getActiveSearchResultItem();
             if (activeItem && activeItem.originPluginType !== PluginType.None) {
                 vueEventDispatcher.$emit(VueEventChannels.handleOpenLocation, activeItem);
+            }
+        });
+        vueEventDispatcher.$on(VueEventChannels.tabPress, () => {
+            const activeItem: SearchResultItemViewModel = this.getActiveSearchResultItem();
+            if (activeItem && activeItem.originPluginType !== PluginType.None) {
+                vueEventDispatcher.$emit(VueEventChannels.handleAutoCompletion, activeItem);
             }
         });
     },

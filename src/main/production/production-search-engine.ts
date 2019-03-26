@@ -19,11 +19,14 @@ import { executeFilePathLocationMacOs, executeFilePathLocationWindows } from "..
 import { TranslationSet } from "../../common/translation/translation-set";
 import { WebSearchPlugin } from "../plugins/websearch-plugin/websearch-plugin";
 import { Logger } from "../../common/logger/logger";
+import { FileBrowserExecutionPlugin } from "../plugins/filebrowser-plugin/filebrowser-plugin";
+import { isValidWindowsFilePath, isValidMacOsFilePath } from "../../common/helpers/file-path-validators";
 
+const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
 const filePathLocationExecutor = isWindows(platform()) ? executeFilePathLocationWindows : executeFilePathLocationMacOs;
 const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
-const appGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
+const appIconGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
 
 export const getProductionSearchEngine = (userConfig: UserConfigOptions, translationSet: TranslationSet, logger: Logger): SearchEngine => {
     const searchPlugins: SearchPlugin[] = [
@@ -37,7 +40,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
         new ApplicationSearchPlugin(
             userConfig.applicationSearchOptions,
             new FileApplicationRepository(
-                new ApplicationIconService(appGenerator),
+                new ApplicationIconService(appIconGenerator),
                 userConfig.applicationSearchOptions,
                 ),
             filePathExecutor,
@@ -49,6 +52,11 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
 
     const executionPlugins: ExecutionPlugin[] = [
         webSearchPlugin,
+        new FileBrowserExecutionPlugin(
+            userConfig.fileBrowserOptions,
+            filePathValidator,
+            filePathExecutor,
+            filePathLocationExecutor),
         new TranslationExecutionPlugin(userConfig),
     ];
 
@@ -62,7 +70,8 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
                 userConfig,
                 filePathExecutor,
                 filePathLocationExecutor));
-    } else if (isMacOs(platform())) {
+    }
+    if (isMacOs(platform())) {
         executionPlugins.push(
             new MdFindExecutionPlugin(
                 userConfig,

@@ -2,34 +2,18 @@ import { ExecutionPlugin } from "../../execution-plugin";
 import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
-import { Icon } from "../../../common/icon/icon";
-import { IconType } from "../../../common/icon/icon-type";
 import { MdFindSearcher } from "./mdfind-searcher";
-import { defaultErrorIcon } from "../../../common/icon/default-error-icon";
+import { defaultErrorIcon, defaultFileIcon } from "../../../common/icon/default-icons";
+import { AutoCompletionResult } from "../../../common/auto-completion-result";
 
 export class MdFindExecutionPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.MdFindExecutionPlugin;
     public readonly openLocationSupported = true;
+    public readonly autoCompletionSupported = false;
     private config: UserConfigOptions;
     private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
     private readonly filePathLocationExecutor: (filePath: string) => Promise<void>;
     private searchDelay: NodeJS.Timeout | number;
-    private readonly defaultIcon: Icon = {
-        parameter: `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
-        <g><polygon style="fill:#FFFFFF;" points="6.5,37.5 6.5,2.5 24.793,2.5 33.5,11.207 33.5,37.5 	"></polygon>
-            <g>
-                <path style="fill:#788B9C;" d="M24.586,3L33,11.414V37H7V3H24.586 M25,2H6v36h28V11L25,2L25,2z"></path>
-            </g>
-        </g>
-        <g>
-            <polygon style="fill:#FFFFFF;" points="24.5,11.5 24.5,2.5 24.793,2.5 33.5,11.207 33.5,11.5 	"></polygon>
-            <g>
-                <path style="fill:#788B9C;" d="M25,3.414L32.586,11H25V3.414 M25,2h-1v10h10v-1L25,2L25,2z"></path>
-            </g>
-        </g>
-        </svg>`,
-        type: IconType.SVG,
-    };
 
     constructor(
         config: UserConfigOptions,
@@ -54,7 +38,7 @@ export class MdFindExecutionPlugin implements ExecutionPlugin {
 
             this.searchDelay = setTimeout(() => {
                 const searchTerm = userInput.replace(this.config.mdfindOptions.prefix, "");
-                MdFindSearcher.search(searchTerm, this.config.mdfindOptions, this.pluginType, this.defaultIcon)
+                MdFindSearcher.search(searchTerm, this.config.mdfindOptions, this.pluginType, defaultFileIcon)
                     .then((result) => {
                         if (result.length > 0) {
                             resolve(result);
@@ -84,6 +68,12 @@ export class MdFindExecutionPlugin implements ExecutionPlugin {
             this.filePathLocationExecutor(searchResultItem.executionArgument)
                 .then(() => resolve())
                 .catch((err) => reject(err));
+        });
+    }
+
+    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
+        return new Promise((resolve, reject) => {
+            reject("Autocompletion not supported");
         });
     }
 

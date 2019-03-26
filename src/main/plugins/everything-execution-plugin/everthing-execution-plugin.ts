@@ -5,10 +5,12 @@ import { ExecutionPlugin } from "../../execution-plugin";
 import { IconType } from "../../../common/icon/icon-type";
 import { Icon } from "../../../common/icon/icon";
 import { EverythingSearcher } from "./everything-searcher";
+import { AutoCompletionResult } from "../../../common/auto-completion-result";
 
 export class EverythingExecutionPlugin implements ExecutionPlugin {
     public pluginType: PluginType = PluginType.EverythingSearchPlugin;
     public readonly openLocationSupported = true;
+    public readonly autoCompletionSupported = false;
     private config: UserConfigOptions;
     private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
     private readonly filePathLocationExecutor: (filePath: string) => Promise<void>;
@@ -61,6 +63,12 @@ export class EverythingExecutionPlugin implements ExecutionPlugin {
             this.filePathLocationExecutor(searchResultItem.executionArgument)
                 .then(() => resolve())
                 .catch((err) => reject(err));
+        });
+    }
+
+    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
+        return new Promise((resolve, reject) => {
+            reject("Autocompletion not supported");
         });
     }
 

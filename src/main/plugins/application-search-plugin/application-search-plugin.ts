@@ -7,10 +7,12 @@ import { dirname, basename } from "path";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { ApplicationSearchOptions } from "./application-search-options";
 import { IconType } from "../../../common/icon/icon-type";
+import { AutoCompletionResult } from "../../../common/auto-completion-result";
 
 export class ApplicationSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.ApplicationSearchPlugin;
     public readonly openLocationSupported = true;
+    public readonly autoCompletionSupported = true;
     private config: ApplicationSearchOptions;
     private readonly applicationRepository: ApplicationRepository;
     private readonly executeApplication: (executionArgument: string, privileged?: boolean) => Promise<void>;
@@ -56,6 +58,12 @@ export class ApplicationSearchPlugin implements SearchPlugin {
             this.openApplicationLocation(searchResultItem.executionArgument)
                 .then(() => resolve())
                 .catch((err) => reject(err));
+        });
+    }
+
+    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
+        return new Promise((resolve, reject) => {
+            reject("Autocompletion not supported");
         });
     }
 

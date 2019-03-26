@@ -7,4 +7,5 @@ export enum PluginType {
     MdFindExecutionPlugin = "md-find-execution-plugin",
     TranslationPlugin = "translation-plugin",
     WebSearchPlugin = "websearch-plugin",
+    FileBrowserPlugin = "filebrowser-plugin",
 }

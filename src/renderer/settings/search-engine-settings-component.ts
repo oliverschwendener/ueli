@@ -19,16 +19,6 @@ export const searchEngineSettingsComponent = Vue.extend({
             config.searchEngineOptions = cloneDeep(defaultSearchEngineOptions);
             this.updateConfig();
         },
-        resetFuzzyness() {
-            const config: UserConfigOptions = this.config;
-            config.searchEngineOptions.fuzzyness = defaultSearchEngineOptions.fuzzyness;
-            this.updateConfig();
-        },
-        resetMaxSearchResults() {
-            const config: UserConfigOptions = this.config;
-            config.searchEngineOptions.maxSearchResults = defaultSearchEngineOptions.maxSearchResults;
-            this.updateConfig();
-        },
         updateConfig() {
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
         },
@@ -54,56 +44,39 @@ export const searchEngineSettingsComponent = Vue.extend({
             </button>
         </div>
         <div class="settings__setting-content">
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.searchEngineSettingsFuzzyness }}
-                    </div>
-                    <button class="button" @click="resetFuzzyness">
-                        <span class="icon">
-                            <i class="fas fa-undo-alt"></i>
-                        </span>
-                    </button>
-                </div>
-                <div class="columns is-vcentered">
-                    <div class="column is-one-fifths">
-                        {{ translations.searchEngineSettingsStrict }}
-                    </div>
-                    <div class="column is-three-fifths">
-                        <div class="control is-expanded">
-                            <input class="slider is-fullwidth is-large" type="range" min="0.01" max="1" step="0.01" v-model="config.searchEngineOptions.fuzzyness" @change="updateConfig">
+            <div class="box">
+                <div class="settings__options-container">
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.searchEngineSettingsFuzzyness }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right vertical-center">
+                                <div class="control">
+                                    <input class="slider" type="range" min="0.01" max="1" step="0.01" v-model="config.searchEngineOptions.fuzzyness" @change="updateConfig">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="column is-one-fifths has-text-right">
-                        {{ translations.searchEngineSettingsFuzzy }}
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.searchEngineSettingsMaxSearchResults }}</div>
+                        <div class="settings__option-content">
+                            <div class="field has-addons has-addons-right">
+                                <div class="control">
+                                    <input class="input" type="number" min="1" v-model="config.searchEngineOptions.maxSearchResults">
+                                </div>
+                                <div class="control">
+                                    <button class="button is-success" @click="updateConfig">
+                                        <span class="icon"><i class="fa fa-check"></i></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="columns">
-                    <div class="column has-text-centered">
-                        <span class="title is-6 has-text-centered">{{ config.searchEngineOptions.fuzzyness }}</span>
-                    </div>
+
                 </div>
             </div>
-            <div class="settings__setting-content-item box">
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.searchEngineSettingsMaxSearchResults }}
-                    </div>
-                    <button class="button" @click="resetMaxSearchResults"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
-                </div>
-                <div class="columns">
-                    <div class="column field has-addons">
-                        <div class="control is-expanded">
-                            <input class="input" type="number" min="1" v-model="config.searchEngineOptions.maxSearchResults">
-                        </div>
-                        <div class="control">
-                            <button class="button is-success" @click="updateConfig">
-                                <span class="icon"><i class="fa fa-check"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>`,
 });

@@ -4,10 +4,12 @@ import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { WebSearchOptions } from "../../../common/config/websearch-options";
 import { ExecutionPlugin } from "../../execution-plugin";
 import { WebSearchEngine } from "./web-search-engine";
+import { AutoCompletionResult } from "../../../common/auto-completion-result";
 
 export class WebSearchPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.WebSearchPlugin;
     public readonly openLocationSupported = false;
+    public readonly autoCompletionSupported = false;
     private config: WebSearchOptions;
     private readonly urlExecutor: (url: string) => Promise<void>;
 
@@ -65,6 +67,12 @@ export class WebSearchPlugin implements ExecutionPlugin {
 
     public openLocation(): Promise<void> {
         throw new Error("not implemented");
+    }
+
+    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
+        return new Promise((resolve, reject) => {
+            reject("Autocompletion not supported");
+        });
     }
 
     public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {

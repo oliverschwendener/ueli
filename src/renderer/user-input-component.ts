@@ -27,6 +27,11 @@ export const userInputComponent = Vue.extend({
                 vueEventDispatcher.$emit(VueEventChannels.enterPress, privileged);
             }
 
+            if (event.key === "Tab") {
+                event.preventDefault();
+                vueEventDispatcher.$emit(VueEventChannels.tabPress);
+            }
+
             if (event.key.toLowerCase() === "o" && (event.ctrlKey || event.metaKey)) {
                 vueEventDispatcher.$emit(VueEventChannels.openSearchResultLocationKeyPress);
             }
@@ -55,6 +60,10 @@ export const userInputComponent = Vue.extend({
 
         vueEventDispatcher.$on(VueEventChannels.userInputChange, () => {
             this.loadingVisible = true;
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.userInputUpdated, (updatedUserInput: string) => {
+            this.userInput = updatedUserInput;
         });
 
         vueEventDispatcher.$on(VueEventChannels.searchResultsUpdated, () => {

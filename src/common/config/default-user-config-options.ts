@@ -9,12 +9,14 @@ import { defaultMdfindOptions } from "./default-mdfind-options";
 import { defaultTranslationOptions } from "./default-translation-options";
 import { defaultWebSearchOptions } from "./default-websearch-options";
 import { defaultColorThemeOptions } from "./default-color-theme-options";
+import { defaultFileBrowserOptions } from "./default-filebrowser-options";
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
     applicationSearchOptions: defaultApplicationSearchOptions,
     colorThemeOptions: defaultColorThemeOptions,
     everythingSearchOptions: defaultEverythingSearchOptions,
+    fileBrowserOptions: defaultFileBrowserOptions,
     generalOptions: defaultGeneralOptions,
     mdfindOptions: defaultMdfindOptions,
     searchEngineOptions: defaultSearchEngineOptions,

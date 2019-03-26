@@ -87,6 +87,12 @@ new Vue({
             }
         });
 
+        vueEventDispatcher.$on(VueEventChannels.handleAutoCompletion, (searchResultItem: SearchResultItem | undefined) => {
+            if (searchResultItem !== undefined) {
+                ipcRenderer.send(IpcChannels.autoComplete, searchResultItem);
+            }
+        });
+
         vueEventDispatcher.$on(VueEventChannels.configUpdated, (config: UserConfigOptions, needsIndexRefresh: boolean) => {
             this.translations = getTranslationSet(config.generalOptions.language);
             this.config = config;
@@ -112,6 +118,10 @@ new Vue({
 
         ipcRenderer.on(IpcChannels.mainWindowHasBeenShown, () => {
             vueEventDispatcher.$emit(VueEventChannels.mainWindowHasBeenShown);
+        });
+
+        ipcRenderer.on(IpcChannels.userInputUpdated, (event: Electron.Event, updatedUserInput: string) => {
+            vueEventDispatcher.$emit(VueEventChannels.userInputUpdated, updatedUserInput);
         });
     },
     methods: {

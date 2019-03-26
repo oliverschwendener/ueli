@@ -7,6 +7,7 @@ import { UeliPlugin } from "./ueli-plugin";
 import { TranslationSet } from "../common/translation/translation-set";
 import { getNoSearchResultsFoundResultItem } from "./no-search-results-found-result-item";
 import { Logger } from "../common/logger/logger";
+import { AutoCompletionResult } from "../common/auto-completion-result";
 
 interface FuseResult {
     item: SearchResultItem;
@@ -91,6 +92,20 @@ export class SearchEngine {
                     .catch((err) => reject(err));
             } else {
                 reject("Error while trying to open file location. No plugin found for the search result item");
+            }
+        });
+    }
+
+    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
+        return new Promise((resolve, reject) => {
+            const pluginsWithAutoCompleteSupport = this.getAllPlugins().filter((plugin) => plugin.autoCompletionSupported);
+            const originPlugin = pluginsWithAutoCompleteSupport.find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+            if (originPlugin) {
+                originPlugin.autoComplete(searchResultItem)
+                    .then((result) => resolve(result))
+                    .catch((err) => reject(err));
+            } else {
+                reject("Error while trying to autocomplete. No plugin found for the search result item");
             }
         });
     }

@@ -11,7 +11,7 @@ export const defaultGeneralOptions: GeneralOptions = {
         modifier: GlobalHotKeyModifier.Alt,
     },
     language: Language.English,
-    rescanIntervalInSeconds: 60,
+    rescanIntervalInSeconds: 300,
     showAlwaysOnPrimaryDisplay: false,
     showTrayIcon: true,
 };

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, globalShortcut, dialog, Tray, Menu, screen, MenuItemConstructorOptions } from "electron";
+import { app, BrowserWindow, ipcMain, globalShortcut, dialog, Tray, Menu, screen, MenuItemConstructorOptions, WebContents } from "electron";
 import { join } from "path";
 import { IpcChannels } from "../common/ipc-channels";
 import { SearchResultItem } from "../common/search-result-item";
@@ -385,6 +385,21 @@ function openSettings() {
     }
 }
 
+function updateSearchResults(results: SearchResultItem[], webcontents: WebContents, updatedUserInput?: string) {
+    if (updatedUserInput) {
+        webcontents.send(IpcChannels.userInputUpdated, updatedUserInput);
+    }
+
+    updateMainWindowSize(results.length, config.appearanceOptions);
+    webcontents.send(IpcChannels.searchResponse, results);
+}
+
+function sendErrorToRenderer(err: string, webcontents: WebContents) {
+    updateMainWindowSize(1, config.appearanceOptions);
+    const noResultFound = getErrorSearchResultItem(translationSet.generalErrorTitle, translationSet.generalErrorDescription);
+    webcontents.send(IpcChannels.searchResponse, [noResultFound]);
+}
+
 function registerAllIpcListeners() {
     ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) => {
         updateConfig(updatedConfig, needsIndexRefresh);
@@ -393,14 +408,11 @@ function registerAllIpcListeners() {
     ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {
         searchEngine.getSearchResults(userInput)
             .then((result) => {
-                updateMainWindowSize(result.length, config.appearanceOptions);
-                event.sender.send(IpcChannels.searchResponse, result);
+                updateSearchResults(result, event.sender);
             })
             .catch((err) => {
                 logger.error(err);
-                updateMainWindowSize(1, config.appearanceOptions);
-                const noResultFound = getErrorSearchResultItem(translationSet.generalErrorTitle, translationSet.generalErrorDescription);
-                event.sender.send(IpcChannels.searchResponse, [noResultFound]);
+                sendErrorToRenderer(err, event.sender);
             });
     });
 
@@ -420,6 +432,12 @@ function registerAllIpcListeners() {
         searchEngine.openLocation(searchResultItem)
             .then(() => hideMainWindow())
             .catch((err) => logger.error(err));
+    });
+
+    ipcMain.on(IpcChannels.autoComplete, (event: Electron.Event, searchResultItem: SearchResultItem) => {
+        searchEngine.autoComplete(searchResultItem)
+            .then((result) => updateSearchResults(result.results, event.sender, result.updatedUserInput))
+            .catch((err) => sendErrorToRenderer(err, event.sender));
     });
 
     ipcMain.on(IpcChannels.reloadApp, () => {
