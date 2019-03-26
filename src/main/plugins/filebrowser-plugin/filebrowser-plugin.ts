@@ -6,10 +6,12 @@ import { TranslationSet } from "../../../common/translation/translation-set";
 import { FileBrowserOptions } from "../../../common/config/filebrowser-options";
 import { FileHelpers } from "../../helpers/file-helpers";
 import { basename, dirname, join, sep } from "path";
-import { existsSync, lstatSync } from "fs";
-import Fuse = require("fuse.js");
+import { existsSync } from "fs";
 import { AutoCompletionResult } from "../../../common/auto-completion-result";
-import { defaultFolderIcon, defaultFileIcon } from "../../../common/icon/default-icons";
+import { FileIconDataResult } from "../../../common/icon/generate-file-icon";
+import { defaultFileIcon, defaultFolderIcon } from "../../../common/icon/default-icons";
+import { Icon } from "../../../common/icon/icon";
+import Fuse = require("fuse.js");
 
 export class FileBrowserExecutionPlugin implements ExecutionPlugin {
     public readonly pluginType: PluginType.FileBrowserPlugin;
@@ -19,17 +21,20 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin {
     private readonly filePathValidator: (filePath: string) => boolean;
     private readonly filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>;
     private readonly fileLocationExecutor: (filePath: string) => Promise<void>;
+    private readonly fileIconGenerator: (filePath: string, defaultFileIcon: Icon, defaultFolderIcon: Icon) => Promise<FileIconDataResult>;
 
     constructor(
         config: FileBrowserOptions,
         filePathValidator: (filePath: string) => boolean,
         filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>,
         fileLocationExecutor: (filePath: string) => Promise<void>,
+        fileIconGenerator: (filePath: string, defaultFileIcon: Icon, defaultFolderIcon: Icon) => Promise<FileIconDataResult>,
     ) {
         this.config = config;
         this.filePathValidator = filePathValidator;
         this.filePathExecutor = filePathExecutor;
         this.fileLocationExecutor = fileLocationExecutor;
+        this.fileIconGenerator = fileIconGenerator;
     }
 
     public isValidUserInput(userInput: string, fallback?: boolean): boolean {
@@ -88,7 +93,11 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin {
             .then((stats) => {
                 if (stats.stats.isDirectory() && !stats.stats.isSymbolicLink()) {
                     FileHelpers.getFilesFromFolder(filePath)
-                        .then((files) => resolve(this.buildSearchResults(files, filePath, searchTerm)))
+                        .then((files) => {
+                            this.buildSearchResults(files, filePath, searchTerm)
+                                .then((results) => resolve(results))
+                                .catch((err) => reject(err));
+                        })
                         .catch((err) => reject(err));
                 } else if (stats.stats.isFile() && !stats.stats.isSymbolicLink()) {
                     resolve([]);
@@ -100,49 +109,61 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin {
         });
     }
 
-    private buildSearchResults(files: string[], parentFolder: string, searchTerm?: string): SearchResultItem[] {
-        const unsortedReults = files
-            .filter((file) => {
-                if (this.config.showHiddenFiles) {
-                    return true;
-                } else {
-                    return !basename(file).startsWith(".");
-                }
-            })
-            .map((file): SearchResultItem => {
-                const filePath = join(parentFolder, file);
-                const stats = lstatSync(filePath);
-                return {
-                    description: filePath,
-                    executionArgument: filePath,
-                    hideMainWindowAfterExecution: true,
-                    icon: stats.isFile() ? defaultFileIcon : defaultFolderIcon,
-                    name: file,
-                    originPluginType: this.pluginType,
-                    searchable: [file],
-                };
-            });
+    private buildSearchResults(files: string[], parentFolder: string, searchTerm?: string): Promise<SearchResultItem[]> {
+        return new Promise((resolve, reject) => {
+            const unsortedReults = files
+                .filter((file) => {
+                    if (this.config.showHiddenFiles) {
+                        return true;
+                    } else {
+                        return !basename(file).startsWith(".");
+                    }
+                })
+                .map((file): SearchResultItem => {
+                    const filePath = join(parentFolder, file);
+                    return {
+                        description: filePath,
+                        executionArgument: filePath,
+                        hideMainWindowAfterExecution: true,
+                        icon: defaultFileIcon,
+                        name: file,
+                        originPluginType: this.pluginType,
+                        searchable: [file],
+                    };
+                });
 
-        let sortedResutls: SearchResultItem[] = [];
+            const promises = unsortedReults.map((unsortedResult) => this.fileIconGenerator(unsortedResult.executionArgument, defaultFileIcon, defaultFolderIcon));
+            Promise.all(promises)
+                .then((iconResults) => {
+                    unsortedReults.forEach((unsortedResult) => {
+                        const icon = iconResults.find((iconResult) => iconResult.filePath === unsortedResult.executionArgument);
+                        if (icon) {
+                            unsortedResult.icon = icon.icon;
+                        }
+                    });
 
-        if (searchTerm) {
-            const fuse = new Fuse(unsortedReults, {
-                distance: 100,
-                includeScore: true,
-                keys: ["searchable"],
-                location: 0,
-                maxPatternLength: 32,
-                minMatchCharLength: 1,
-                shouldSort: true,
-                threshold: 0.4,
-            });
-            const fuseResult = fuse.search(searchTerm) as any[];
-            sortedResutls = fuseResult.map((item) => item.item);
-        } else {
-            sortedResutls = unsortedReults;
-        }
+                    let sortedResutls: SearchResultItem[] = [];
 
-        return sortedResutls
-            .splice(0, this.config.maxSearchResults);
+                    if (searchTerm) {
+                        const fuse = new Fuse(unsortedReults, {
+                            distance: 100,
+                            includeScore: true,
+                            keys: ["searchable"],
+                            location: 0,
+                            maxPatternLength: 32,
+                            minMatchCharLength: 1,
+                            shouldSort: true,
+                            threshold: 0.4,
+                        });
+                        const fuseResult = fuse.search(searchTerm) as any[];
+                        sortedResutls = fuseResult.map((item) => item.item);
+                    } else {
+                        sortedResutls = unsortedReults;
+                    }
+
+                    resolve(sortedResutls.splice(0, this.config.maxSearchResults));
+                })
+                .catch((err) => reject(err));
+        });
     }
 }

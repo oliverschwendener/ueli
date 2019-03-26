@@ -21,6 +21,7 @@ import { WebSearchPlugin } from "../plugins/websearch-plugin/websearch-plugin";
 import { Logger } from "../../common/logger/logger";
 import { FileBrowserExecutionPlugin } from "../plugins/filebrowser-plugin/filebrowser-plugin";
 import { isValidWindowsFilePath, isValidMacOsFilePath } from "../../common/helpers/file-path-validators";
+import { getFileIconDataUrl } from "../../common/icon/generate-file-icon";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -56,7 +57,8 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
             userConfig.fileBrowserOptions,
             filePathValidator,
             filePathExecutor,
-            filePathLocationExecutor),
+            filePathLocationExecutor,
+            getFileIconDataUrl),
         new TranslationExecutionPlugin(userConfig),
     ];
 
