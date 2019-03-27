@@ -3,6 +3,8 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { Settings } from "./settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
+import { cloneDeep } from "lodash";
+import { defaultFileBrowserOptions } from "../../common/config/default-filebrowser-options";
 
 export const fileBrowserSettingsComponent = Vue.extend({
     data() {
@@ -13,7 +15,9 @@ export const fileBrowserSettingsComponent = Vue.extend({
     },
     methods: {
         resetAll() {
-            //
+            const config: UserConfigOptions = this.config;
+            config.fileBrowserOptions = cloneDeep(defaultFileBrowserOptions);
+            this.updateConfig();
         },
         toggleEnabled() {
             const config: UserConfigOptions = this.config;
