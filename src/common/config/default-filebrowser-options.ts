@@ -1,7 +1,7 @@
 import { FileBrowserOptions } from "./filebrowser-options";
 
 export const defaultFileBrowserOptions: FileBrowserOptions = {
-    isEnabled: true,
+    isEnabled: false,
     maxSearchResults: 100,
     showHiddenFiles: false,
 };
