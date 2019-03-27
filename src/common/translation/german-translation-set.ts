@@ -78,6 +78,7 @@ export const germanTranslationSet: TranslationSet = {
 
     searchEngineSettings: "Suchmaschine",
     searchEngineSettingsFuzzyness: "Fuzzyness",
+    searchEngineSettingsFuzzynessDescription: "0 = strikt, 1 = fuzzy",
     searchEngineSettingsStrict: "Strikt",
     searchEngineSettingsFuzzy: "Fuzzy",
     searchEngineSettingsMaxSearchResults: "Maximale Suchergebnisse",
@@ -138,6 +139,11 @@ export const germanTranslationSet: TranslationSet = {
     websearchEncodeSearchTerm: "Suchbegriff kodieren",
     websearchInvalidWebsearchEngine: "Ungültige Websuchmaschine",
     websearchDisabled: "Websuche ist deaktiviert",
+
+    fileBrowser: "Dateibrowser",
+    fileBrowserSettingsMaxSearchResults: "Maximale Suchergebnisse",
+    fileBrowserOptionsShowHiddenFiles: "Versteckte Dateien anzeigen",
+    fileBrowserDisabled: "Dateibrowser ist deaktiviert",
 
     cancel: "Abbrechen",
     save: "Speichern",

@@ -7,4 +7,5 @@ export enum Settings {
     Shortcuts = "Shortcuts",
     Translation = "Translation",
     WebSearch = "Websearch",
+    FileBrowser = "File Browser",
 }

@@ -75,6 +75,7 @@ export interface TranslationSet {
 
     searchEngineSettings: string;
     searchEngineSettingsFuzzyness: string;
+    searchEngineSettingsFuzzynessDescription: string;
     searchEngineSettingsStrict: string;
     searchEngineSettingsFuzzy: string;
     searchEngineSettingsMaxSearchResults: string;
@@ -135,6 +136,11 @@ export interface TranslationSet {
     websearchEncodeSearchTerm: string;
     websearchInvalidWebsearchEngine: string;
     websearchDisabled: string;
+
+    fileBrowser: string;
+    fileBrowserSettingsMaxSearchResults: string;
+    fileBrowserOptionsShowHiddenFiles: string;
+    fileBrowserDisabled: string;
 
     cancel: string;
     save: string;

@@ -78,6 +78,7 @@ export const englishTranslationSet: TranslationSet = {
 
     searchEngineSettings: "Search engine",
     searchEngineSettingsFuzzyness: "Fuzzyness",
+    searchEngineSettingsFuzzynessDescription: "0 = strict, 1 = fuzzy",
     searchEngineSettingsStrict: "Strict",
     searchEngineSettingsFuzzy: "Fuzzy",
     searchEngineSettingsMaxSearchResults: "Max search results",
@@ -138,6 +139,11 @@ export const englishTranslationSet: TranslationSet = {
     websearchEncodeSearchTerm: "Encode search term",
     websearchInvalidWebsearchEngine: "Invalid web search engine",
     websearchDisabled: "Web search is disabled",
+
+    fileBrowser: "File Browser",
+    fileBrowserSettingsMaxSearchResults: "Max search results",
+    fileBrowserOptionsShowHiddenFiles: "Show hidden files",
+    fileBrowserDisabled: "File Browser is disabled",
 
     cancel: "Cancel",
     save: "Save",

@@ -48,11 +48,21 @@ export const searchEngineSettingsComponent = Vue.extend({
                 <div class="settings__options-container">
 
                     <div class="settings__option">
-                        <div class="settings__option-name">{{ translations.searchEngineSettingsFuzzyness }}</div>
+                        <div class="settings__option-name">
+                            <span>
+                                {{ translations.searchEngineSettingsFuzzyness }}
+                            </span>
+                            <span class="icon tooltip" :data-tooltip="translations.searchEngineSettingsFuzzynessDescription">
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </div>
                         <div class="settings__option-content">
                             <div class="field is-grouped is-grouped-right vertical-center">
                                 <div class="control">
                                     <input class="slider" type="range" min="0.01" max="1" step="0.01" v-model="config.searchEngineOptions.fuzzyness" @change="updateConfig">
+                                </div>
+                                <div class="control">
+                                    <input class="input" type="number" min="0" max="1" step="0.05" v-model="config.searchEngineOptions.fuzzyness">
                                 </div>
                             </div>
                         </div>

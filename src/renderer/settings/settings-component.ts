@@ -113,6 +113,7 @@ export const settingsComponent = Vue.extend({
                 <everthing-settings :config="config" :translations="translations"></everthing-settings>
                 <translation-settings :config="config" :translations="translations"></translation-settings>
                 <websearch-settings :config="config" :translations="translations"></websearch-settings>
+                <filebrowser-settings :config="config" :translations="translations"></filebrowser-settings>
             </div>
         </div>
     `,

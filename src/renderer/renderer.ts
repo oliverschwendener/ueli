@@ -35,6 +35,7 @@ import { colorThemeSettingsComponent } from "./settings/color-theme-settings-com
 import { ColorThemeOptions } from "../common/config/color-theme-options";
 import { colorPickerComponent } from "./settings/color-picker-component";
 import { Chrome } from "vue-color";
+import { fileBrowserSettingsComponent } from "./settings/filebrowser-settings-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -60,6 +61,7 @@ Vue.component("icon-editing", iconEditingComponent);
 Vue.component("color-theme-settings", colorThemeSettingsComponent);
 Vue.component("chrome-picker", Chrome);
 Vue.component("color-picker", colorPickerComponent);
+Vue.component("filebrowser-settings", fileBrowserSettingsComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 
