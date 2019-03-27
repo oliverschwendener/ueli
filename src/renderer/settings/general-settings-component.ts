@@ -12,9 +12,9 @@ import { Language } from "../../common/translation/language";
 export const generalSettingsComponent = Vue.extend({
     data() {
         return {
-            availableLanguages: Object.values(Language).map((l) => l),
-            globalHotKeyKeys: Object.values(GlobalHotKeyKey).map((k) => k),
-            globalHotKeyModifiers: Object.values(GlobalHotKeyModifier).map((m) => m),
+            availableLanguages: Object.values(Language).map((language) => language),
+            globalHotKeyKeys: Object.values(GlobalHotKeyKey).map((key) => key),
+            globalHotKeyModifiers: Object.values(GlobalHotKeyModifier).map((modifier) => modifier),
             settingName: Settings.General,
             visible: false,
         };
