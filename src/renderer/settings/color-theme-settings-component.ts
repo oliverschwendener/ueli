@@ -127,7 +127,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                                     class="input font-mono"
                                     type="text"
                                     v-model="config.colorThemeOptions.userInputBackgroundColor"
-                                    @blur="updateConfig"
+                                    @change="updateConfig"
                                     >
                             </div>
                             <div class="control">
@@ -158,7 +158,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                                     class="input font-mono"
                                     type="text"
                                     v-model="config.colorThemeOptions.userInputTextColor"
-                                    @blur="updateConfig"
+                                    @change="updateConfig"
                                     >
                             </div>
                             <div class="control">
@@ -189,7 +189,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                                     class="input font-mono"
                                     type="text"
                                     v-model="config.colorThemeOptions.searchResultsBackgroundColor"
-                                    @blur="updateConfig"
+                                    @change="updateConfig"
                                     >
                             </div>
                             <div class="control">
@@ -220,7 +220,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                                     class="input font-mono"
                                     type="text"
                                     v-model="config.colorThemeOptions.searchResultsItemActiveBackgroundColor"
-                                    @blur="updateConfig"
+                                    @change="updateConfig"
                                     >
                             </div>
                             <div class="control">
@@ -251,7 +251,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                                     class="input font-mono"
                                     type="text"
                                     v-model="config.colorThemeOptions.searchResultsItemActiveTextColor"
-                                    @blur="updateConfig"
+                                    @change="updateConfig"
                                     >
                             </div>
                             <div class="control">

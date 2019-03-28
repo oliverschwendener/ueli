@@ -52,7 +52,7 @@ export const appearanceSettingsComponent = Vue.extend({
                         <div class="settings__option-content">
                             <div class="field is-grouped is-grouped-right">
                                 <div class="control">
-                                    <input type="number" class="input" v-model="config.appearanceOptions.windowWidth" @blur="updateConfig">
+                                    <input type="number" class="input" v-model="config.appearanceOptions.windowWidth" @change="updateConfig">
                                 </div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@ export const appearanceSettingsComponent = Vue.extend({
                         <div class="settings__option-content">
                             <div class="field is-grouped is-grouped-right">
                                 <div class="control">
-                                    <input type="number" class="input" v-model="config.appearanceOptions.maxSearchResultsPerPage" @blur="updateConfig">
+                                    <input type="number" class="input" v-model="config.appearanceOptions.maxSearchResultsPerPage" @change="updateConfig">
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@ export const appearanceSettingsComponent = Vue.extend({
                         <div class="settings__option-content">
                             <div class="field is-grouped is-grouped-right">
                                 <div class="control">
-                                    <input type="number" class="input" v-model="config.appearanceOptions.searchResultHeight" @blur="updateConfig">
+                                    <input type="number" class="input" v-model="config.appearanceOptions.searchResultHeight" @change="updateConfig">
                                 </div>
                             </div>
                         </div>
@@ -97,7 +97,7 @@ export const appearanceSettingsComponent = Vue.extend({
                         <div class="settings__option-content">
                             <div class="field is-grouped is-grouped-right">
                                 <div class="control">
-                                    <input type="number" class="input" v-model="config.appearanceOptions.userInputHeight" @blur="updateConfig">
+                                    <input type="number" class="input" v-model="config.appearanceOptions.userInputHeight" @change="updateConfig">
                                 </div>
                             </div>
                         </div>
