@@ -109,7 +109,7 @@ export const fileBrowserSettingsComponent = Vue.extend({
                         </div>
                         <div class="field has-addons has-addons-right">
                             <div class="control">
-                                <input type="text" class="input" v-model="newBlackListEntry">
+                                <input type="text" class="input" v-model="newBlackListEntry" :placeholder="translations.fileBrowserOptionsBlackListPlaceholder">
                             </div>
                             <div class="control">
                                 <button class="button is-success" @click="addBlackListEntry">

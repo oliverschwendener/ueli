@@ -141,6 +141,7 @@ export interface TranslationSet {
     fileBrowserSettingsMaxSearchResults: string;
     fileBrowserOptionsShowHiddenFiles: string;
     fileBrowserOptionsBlackList: string;
+    fileBrowserOptionsBlackListPlaceholder: string;
     fileBrowserDisabled: string;
 
     cancel: string;
