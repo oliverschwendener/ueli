@@ -134,7 +134,7 @@ export const translationSettingsComponent = Vue.extend({
                                 <div class="field is-grouped is-grouped-right">
                                     <div class="control">
                                         <div class="select">
-                                            <select 
+                                            <select
                                                 v-model="config.translationOptions.targetLanguage"
                                                 @change="updateConfig"
                                                 >

@@ -100,7 +100,7 @@ export const mdfindSettingsComponent = Vue.extend({
                                         type="number"
                                         min="1"
                                         max="100"
-                                        class="input" 
+                                        class="input"
                                         v-model="config.mdfindOptions.maxSearchResults"
                                         @change="updateConfig"
                                         >
