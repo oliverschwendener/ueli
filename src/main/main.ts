@@ -163,7 +163,7 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boole
     config = updatedConfig;
 
     updateTrayIcon(updatedConfig);
-    setAutoStartOptions(updatedConfig);
+    updateAutoStartOptions(updatedConfig);
 
     configRepository.saveConfig(updatedConfig)
         .then(() => {
@@ -230,7 +230,7 @@ function quitApp() {
         });
 }
 
-function setAutoStartOptions(userConfig: UserConfigOptions) {
+function updateAutoStartOptions(userConfig: UserConfigOptions) {
     if (!isDev()) {
         app.setLoginItemSettings({
             args: [],
@@ -314,7 +314,7 @@ function startApp() {
     const recenter = currentOperatingSystem === OperatingSystem.macOS;
     updateMainWindowSize(0, config.appearanceOptions, recenter);
     registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
-    setAutoStartOptions(config);
+    updateAutoStartOptions(config);
     setKeyboardShortcuts();
     registerAllIpcListeners();
 }
