@@ -143,6 +143,7 @@ export const germanTranslationSet: TranslationSet = {
     fileBrowser: "Dateibrowser",
     fileBrowserSettingsMaxSearchResults: "Maximale Suchergebnisse",
     fileBrowserOptionsShowHiddenFiles: "Versteckte Dateien anzeigen",
+    fileBrowserOptionsBlackList: "Blacklist",
     fileBrowserDisabled: "Dateibrowser ist deaktiviert",
 
     cancel: "Abbrechen",

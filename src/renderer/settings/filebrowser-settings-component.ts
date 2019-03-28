@@ -9,6 +9,7 @@ import { defaultFileBrowserOptions } from "../../common/config/default-filebrows
 export const fileBrowserSettingsComponent = Vue.extend({
     data() {
         return {
+            newBlackListEntry: "",
             settingName: Settings.FileBrowser,
             visible: false,
         };
@@ -22,6 +23,20 @@ export const fileBrowserSettingsComponent = Vue.extend({
         toggleEnabled() {
             const config: UserConfigOptions = this.config;
             config.fileBrowserOptions.isEnabled = !config.fileBrowserOptions.isEnabled;
+            this.updateConfig();
+        },
+        addBlackListEntry() {
+            const newBlackListEntry: string = this.newBlackListEntry;
+            if (newBlackListEntry.length > 0) {
+                const config: UserConfigOptions = this.config;
+                config.fileBrowserOptions.blackList.push(newBlackListEntry);
+                this.newBlackListEntry = "";
+                this.updateConfig();
+            }
+        },
+        removeBlackListEntry(id: number) {
+            const config: UserConfigOptions = this.config;
+            config.fileBrowserOptions.blackList.splice(id, 1);
             this.updateConfig();
         },
         updateConfig() {
@@ -74,6 +89,34 @@ export const fileBrowserSettingsComponent = Vue.extend({
                             <div class="control">
                                 <input id="showHiddenFilesCheckbox" type="checkbox" name="showHiddenFilesCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.fileBrowserOptions.showHiddenFiles" @change="updateConfig">
                                 <label for="showHiddenFilesCheckbox"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings__option">
+                    <div class="settings__option-name">{{ translations.fileBrowserOptionsBlackList }}</div>
+                    <div class="settings__option-content">
+                        <div class="field is-grouped is-grouped-right">
+                            <ul v-if="config.fileBrowserOptions.blackList.length > 0" class="has-text-right">
+                                <li v-for="(blackListEntry, index) in config.fileBrowserOptions.blackList">
+                                    <span class="tag">
+                                        {{ blackListEntry }}
+                                        <button class="delete is-small" @click="removeBlackListEntry(index)"></button>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="field has-addons has-addons-right">
+                            <div class="control">
+                                <input type="text" class="input" v-model="newBlackListEntry">
+                            </div>
+                            <div class="control">
+                                <button class="button is-success" @click="addBlackListEntry">
+                                    <span class="icon">
+                                        <i class="fa fa-plus"></i>
+                                    </span>
+                                </button>
                             </div>
                         </div>
                     </div>

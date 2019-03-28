@@ -119,6 +119,15 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin {
                         return !basename(file).startsWith(".");
                     }
                 })
+                .filter((file) => {
+                    if (this.config.blackList.length > 0) {
+                        return this.config.blackList.every((blackListEntry) => {
+                            return blackListEntry !== file;
+                        });
+                    } else {
+                        return true;
+                    }
+                })
                 .map((file): SearchResultItem => {
                     const filePath = join(parentFolder, file);
                     return {

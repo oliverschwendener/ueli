@@ -140,6 +140,7 @@ export interface TranslationSet {
     fileBrowser: string;
     fileBrowserSettingsMaxSearchResults: string;
     fileBrowserOptionsShowHiddenFiles: string;
+    fileBrowserOptionsBlackList: string;
     fileBrowserDisabled: string;
 
     cancel: string;
