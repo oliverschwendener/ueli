@@ -131,16 +131,26 @@ html {
     align-items: center;
 }
 
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
 /* Overwrite color picker styling */
 .vc-chrome {
     width: 100% !important;
+}
+
+/* Hide color picker's text input (hex, rgba, etc.) */
+.vc-chrome-fields-wrap {
+    display: none !important;
 }
 
 .font-mono {
     font-family: var(--font-family-mono) !important;
 }
 
-.previw-button {
+.preview-button {
     width: 37px;
 }
 

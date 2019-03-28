@@ -130,38 +130,40 @@ export const shortcutSettingsComponent = Vue.extend({
                     </button>
                 </div>
                 <div v-if="config.shortcutOptions.shortcuts.length > 0" class="settings__setting-content-item">
-                    <table class="table is-striped is-fullwidth">
-                        <thead>
-                            <tr>
-                                <th>{{ translations.shortcutSettingsTableType }}</th>
-                                <th>{{ translations.shortcutSettingsTableName }}</th>
-                                <th class="is-expanded">{{ translations.shortcutSettingsTableExecutionArgument }}</th>
-                                <th>{{ translations.shortcutSettingsTableDescription }}</th>
-                                <th>{{ translations.shortcutSettingsTableTags }}</th>
-                                <th class="has-text-centered">{{ translations.shortcutSettingsTableIcon }}</th>
-                                <th class="has-text-centered">{{ translations.shortcutSettingsTableEdit }}</th>
-                                <th class="has-text-centered">{{ translations.shortcutSettingsTableDelete }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(shortcut, index) in config.shortcutOptions.shortcuts">
-                                <td><span class="tag" :class="getShortcutTypeClass(shortcut.type)">{{ getShortcutType(shortcut.type) }}</span></td>
-                                <td>{{ shortcut.name }}</td>
-                                <td>{{ shortcut.executionArgument }}</td>
-                                <td>{{ shortcut.description }}</td>
-                                <td>
-                                    <div v-if="shortcut.tags.length > 0" class="tags">
-                                        <span v-for="tag in shortcut.tags" class="tag is-light">{{ tag }}</span>
-                                    </div>
-                                </td>
-                                <td class="has-text-centered">
-                                    <icon :icon="shortcut.icon" :defaulticon="defaultShortcutIcon"></icon>
-                                </td>
-                                <td class="has-text-centered"><button class="button" @click="editShortcut(index)"><span class="icon"><i class="fas fa-edit"></i></span></button></td>
-                                <td class="has-text-centered"><button class="button is-danger" @click="deleteShortcut(index)"><span class="icon"><i class="fas fa-trash"></i></span></button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="table is-striped is-fullwidth">
+                            <thead>
+                                <tr>
+                                    <th>{{ translations.shortcutSettingsTableType }}</th>
+                                    <th>{{ translations.shortcutSettingsTableName }}</th>
+                                    <th class="is-expanded">{{ translations.shortcutSettingsTableExecutionArgument }}</th>
+                                    <th>{{ translations.shortcutSettingsTableDescription }}</th>
+                                    <th>{{ translations.shortcutSettingsTableTags }}</th>
+                                    <th class="has-text-centered">{{ translations.shortcutSettingsTableIcon }}</th>
+                                    <th class="has-text-centered">{{ translations.shortcutSettingsTableEdit }}</th>
+                                    <th class="has-text-centered">{{ translations.shortcutSettingsTableDelete }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(shortcut, index) in config.shortcutOptions.shortcuts">
+                                    <td><span class="tag" :class="getShortcutTypeClass(shortcut.type)">{{ getShortcutType(shortcut.type) }}</span></td>
+                                    <td>{{ shortcut.name }}</td>
+                                    <td>{{ shortcut.executionArgument }}</td>
+                                    <td>{{ shortcut.description }}</td>
+                                    <td>
+                                        <div v-if="shortcut.tags.length > 0" class="tags">
+                                            <span v-for="tag in shortcut.tags" class="tag is-light">{{ tag }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="has-text-centered">
+                                        <icon :icon="shortcut.icon" :defaulticon="defaultShortcutIcon"></icon>
+                                    </td>
+                                    <td class="has-text-centered"><button class="button" @click="editShortcut(index)"><span class="icon"><i class="fas fa-edit"></i></span></button></td>
+                                    <td class="has-text-centered"><button class="button is-danger" @click="deleteShortcut(index)"><span class="icon"><i class="fas fa-trash"></i></span></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div>
                     <button class="button is-success" @click="addButtonClick">

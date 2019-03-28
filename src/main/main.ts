@@ -372,7 +372,7 @@ function openSettings() {
             webPreferences: {
                 nodeIntegration: true,
             },
-            width: 850,
+            width: 900,
         });
         settingsWindow.setMenu(null);
         settingsWindow.loadFile(join(__dirname, "..", "settings.html"));

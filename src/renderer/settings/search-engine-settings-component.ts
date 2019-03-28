@@ -71,14 +71,15 @@ export const searchEngineSettingsComponent = Vue.extend({
                     <div class="settings__option">
                         <div class="settings__option-name">{{ translations.searchEngineSettingsMaxSearchResults }}</div>
                         <div class="settings__option-content">
-                            <div class="field has-addons has-addons-right">
+                            <div class="field is-grouped is-grouped-right">
                                 <div class="control">
-                                    <input class="input" type="number" min="1" v-model="config.searchEngineOptions.maxSearchResults">
-                                </div>
-                                <div class="control">
-                                    <button class="button is-success" @click="updateConfig">
-                                        <span class="icon"><i class="fa fa-check"></i></span>
-                                    </button>
+                                    <input
+                                        class="input"
+                                        type="number"
+                                        min="1"
+                                        v-model="config.searchEngineOptions.maxSearchResults"
+                                        @change="updateConfig"
+                                        >
                                 </div>
                             </div>
                         </div>
