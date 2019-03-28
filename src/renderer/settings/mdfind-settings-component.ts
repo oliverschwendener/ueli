@@ -20,21 +20,6 @@ export const mdfindSettingsComponent = Vue.extend({
             config.mdfindOptions = cloneDeep(defaultMdfindOptions);
             this.updateConfig();
         },
-        resetDebounceDelay() {
-            const config: UserConfigOptions = this.config;
-            config.mdfindOptions.debounceDelay = defaultMdfindOptions.debounceDelay;
-            this.updateConfig();
-        },
-        resetMdfindPrefix() {
-            const config: UserConfigOptions = this.config;
-            config.mdfindOptions.prefix = defaultMdfindOptions.prefix;
-            this.updateConfig();
-        },
-        resetMdfindMaxResults() {
-            const config: UserConfigOptions = this.config;
-            config.mdfindOptions.maxSearchResults = defaultMdfindOptions.maxSearchResults;
-            this.updateConfig();
-        },
         toggleEnabled() {
             const config: UserConfigOptions = this.config;
             config.mdfindOptions.enabled = !config.mdfindOptions.enabled;
@@ -70,70 +55,60 @@ export const mdfindSettingsComponent = Vue.extend({
                 </div>
             </div>
             <div class="settings__setting-content" v-if="config.mdfindOptions.enabled">
-                <div class="settings__setting-content-item box">
-                    <div class="settings__setting-content-item-title">
-                        <div class="title is-5">
-                            {{ translations.mdfindSearchDebounceDelay }}
-                        </div>
-                        <button class="button" @click="resetDebounceDelay">
-                            <span class="icon">
-                                <i class="fas fa-undo-alt"></i>
-                            </span>
-                        </button>
-                    </div>
-                    <div class="columns">
-                        <div class="column field has-addons">
-                            <div class="control is-expanded">
-                                <input type="number" min="1" class="input" v-model="config.mdfindOptions.debounceDelay">
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="box">
+                    <div class="settings__option-container">
 
-                <div class="settings__setting-content-item box">
-                    <div class="settings__setting-content-item-title">
-                        <div class="title is-5">
-                            {{ translations.mdfindSearchPrefix }}
-                        </div>
-                        <button class="button" @click="resetMdfindPrefix"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
-                    </div>
-                    <div class="columns">
-                        <div class="column field has-addons">
-                            <div class="control is-expanded">
-                                <input type="text" class="input font-mono" v-model="config.mdfindOptions.prefix">
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.mdfindSearchDebounceDelay }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        class="input"
+                                        v-model="config.mdfindOptions.debounceDelay"
+                                        @change="updateConfig"
+                                        >
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="settings__setting-content-item box">
-                    <div class="settings__setting-content-item-title">
-                        <div class="title is-5">
-                            {{ translations.mdfindSearchMaxSearchResults }}
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.mdfindSearchPrefix }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input
+                                        type="text"
+                                        class="input font-mono"
+                                        v-model="config.mdfindOptions.prefix"
+                                        @change="updateConfig"
+                                    >
+                                </div>
+                            </div>
                         </div>
-                        <button class="button" @click="resetMdfindMaxResults"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
-                    <div class="columns">
-                        <div class="column field has-addons">
-                            <div class="control is-expanded">
-                                <input type="number" min="1" max="100" class="input" v-model="config.mdfindOptions.maxSearchResults">
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.mdfindSearchMaxSearchResults }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        max="100"
+                                        class="input" 
+                                        v-model="config.mdfindOptions.maxSearchResults"
+                                        @change="updateConfig"
+                                        >
+                                </div>
                             </div>
                         </div>
+                    </div>
+
                     </div>
                 </div>
             </div>

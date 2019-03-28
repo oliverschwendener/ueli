@@ -115,20 +115,20 @@ export const colorThemeSettingsComponent = Vue.extend({
                     <div class="settings__option-content">
                         <div class="field has-addons has-addons-right">
                             <div class="control">
-                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.userInputBackgroundColor)"></button>
+                                <button
+                                    class="button preview-button"
+                                    :style="getPreviewColor(config.colorThemeOptions.userInputBackgroundColor)"
+                                    @click="editColor('userInputBackgroundColor', config.colorThemeOptions.userInputBackgroundColor)"
+                                    >
+                                </button>
                             </div>
                             <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
                                     v-model="config.colorThemeOptions.userInputBackgroundColor"
-                                    @click="editColor('userInputBackgroundColor', config.colorThemeOptions.userInputBackgroundColor)"
+                                    @blur="updateConfig"
                                     >
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
                             </div>
                             <div class="control">
                                 <button class="button" @click="resetUserInputBackgroundColor">
@@ -146,20 +146,20 @@ export const colorThemeSettingsComponent = Vue.extend({
                     <div class="settings__option-content">
                         <div class="field has-addons has-addons-right">
                             <div class="control">
-                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.userInputTextColor)"></button>
+                                <button
+                                    class="button preview-button"
+                                    :style="getPreviewColor(config.colorThemeOptions.userInputTextColor)"
+                                    @click="editColor('userInputTextColor', config.colorThemeOptions.userInputTextColor)"
+                                    >
+                                </button>
                             </div>
                             <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
                                     v-model="config.colorThemeOptions.userInputTextColor"
-                                    @click="editColor('userInputTextColor', config.colorThemeOptions.userInputTextColor)"
+                                    @blur="updateConfig"
                                     >
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
                             </div>
                             <div class="control">
                                 <button class="button" @click="resetUserInputTextColor">
@@ -177,20 +177,20 @@ export const colorThemeSettingsComponent = Vue.extend({
                     <div class="settings__option-content">
                         <div class="field has-addons has-addons-right">
                             <div class="control">
-                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsBackgroundColor)"></button>
+                                <button
+                                    class="button preview-button"
+                                    :style="getPreviewColor(config.colorThemeOptions.searchResultsBackgroundColor)"
+                                    @click="editColor('searchResultsBackgroundColor', config.colorThemeOptions.searchResultsBackgroundColor)"
+                                    >
+                                </button>
                             </div>
                             <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
                                     v-model="config.colorThemeOptions.searchResultsBackgroundColor"
-                                    @click="editColor('searchResultsBackgroundColor', config.colorThemeOptions.searchResultsBackgroundColor)"
+                                    @blur="updateConfig"
                                     >
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
                             </div>
                             <div class="control">
                                 <button class="button" @click="resetSearchResultsBackgroundColor">
@@ -208,20 +208,20 @@ export const colorThemeSettingsComponent = Vue.extend({
                     <div class="settings__option-content">
                         <div class="field has-addons has-addons-right">
                             <div class="control">
-                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemActiveBackgroundColor)"></button>
+                                <button
+                                    class="button preview-button"
+                                    :style="getPreviewColor(config.colorThemeOptions.searchResultsItemActiveBackgroundColor)"
+                                    @click="editColor('searchResultsItemActiveBackgroundColor', config.colorThemeOptions.searchResultsItemActiveBackgroundColor)"
+                                    >
+                                </button>
                             </div>
                             <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
                                     v-model="config.colorThemeOptions.searchResultsItemActiveBackgroundColor"
-                                    @click="editColor('searchResultsItemActiveBackgroundColor', config.colorThemeOptions.searchResultsItemActiveBackgroundColor)"
+                                    @blur="updateConfig"
                                     >
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
                             </div>
                             <div class="control">
                                 <button class="button" @click="resetSearchResultsItemActiveBackgroundColor">
@@ -239,20 +239,20 @@ export const colorThemeSettingsComponent = Vue.extend({
                     <div class="settings__option-content">
                         <div class="field has-addons has-addons-right">
                             <div class="control">
-                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemActiveTextColor)"></button>
+                                <button
+                                    class="button preview-button"
+                                    :style="getPreviewColor(config.colorThemeOptions.searchResultsItemActiveTextColor)"
+                                    @click="editColor('searchResultsItemActiveTextColor', config.colorThemeOptions.searchResultsItemActiveTextColor)"
+                                    >
+                                </button>
                             </div>
                             <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
                                     v-model="config.colorThemeOptions.searchResultsItemActiveTextColor"
-                                    @click="editColor('searchResultsItemActiveTextColor', config.colorThemeOptions.searchResultsItemActiveTextColor)"
+                                    @blur="updateConfig"
                                     >
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
                             </div>
                             <div class="control">
                                 <button class="button" @click="resetSearchResultsItemActiveTextColor">
@@ -270,20 +270,20 @@ export const colorThemeSettingsComponent = Vue.extend({
                     <div class="settings__option-content">
                         <div class="field has-addons has-addons-right">
                             <div class="control">
-                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemNameTextcolor)"></button>
+                                <button
+                                    class="button preview-button"
+                                    :style="getPreviewColor(config.colorThemeOptions.searchResultsItemNameTextcolor)"
+                                    @click="editColor('searchResultsItemNameTextcolor', config.colorThemeOptions.searchResultsItemNameTextcolor)"
+                                    >
+                                </button>
                             </div>
                             <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
                                     v-model="config.colorThemeOptions.searchResultsItemNameTextcolor"
-                                    @click="editColor('searchResultsItemNameTextcolor', config.colorThemeOptions.searchResultsItemNameTextcolor)"
+                                    @change="updateConfig"
                                     >
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
                             </div>
                             <div class="control">
                                 <button class="button" @click="resetSearchResultsItemNameTextColor">
@@ -301,20 +301,20 @@ export const colorThemeSettingsComponent = Vue.extend({
                     <div class="settings__option-content">
                         <div class="field has-addons has-addons-right">
                             <div class="control">
-                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.searchResultsItemDescriptionTextColor)"></button>
+                                <button
+                                    class="button preview-button"
+                                    :style="getPreviewColor(config.colorThemeOptions.searchResultsItemDescriptionTextColor)"
+                                    @click="editColor('searchResultsItemDescriptionTextColor', config.colorThemeOptions.searchResultsItemDescriptionTextColor)"
+                                    >
+                                </button>
                             </div>
                             <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
                                     v-model="config.colorThemeOptions.searchResultsItemDescriptionTextColor"
-                                    @click="editColor('searchResultsItemDescriptionTextColor', config.colorThemeOptions.searchResultsItemDescriptionTextColor)"
+                                    @change="updateConfig"
                                     >
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
                             </div>
                             <div class="control">
                                 <button class="button" @click="resetSearchResultsItemDescriptionTextColor">
@@ -332,20 +332,20 @@ export const colorThemeSettingsComponent = Vue.extend({
                     <div class="settings__option-content">
                         <div class="field has-addons has-addons-right">
                             <div class="control">
-                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.scrollbarForegroundColor)"></button>
+                                <button
+                                    class="button preview-button"
+                                    :style="getPreviewColor(config.colorThemeOptions.scrollbarForegroundColor)"
+                                    @click="editColor('scrollbarForegroundColor', config.colorThemeOptions.scrollbarForegroundColor)"
+                                    >
+                                </button>
                             </div>
                             <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
                                     v-model="config.colorThemeOptions.scrollbarForegroundColor"
-                                    @click="editColor('scrollbarForegroundColor', config.colorThemeOptions.scrollbarForegroundColor)"
+                                    @change="updateConfig"
                                     >
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
                             </div>
                             <div class="control">
                                 <button class="button" @click="resetScrollbarForegroundColor">
@@ -363,20 +363,20 @@ export const colorThemeSettingsComponent = Vue.extend({
                     <div class="settings__option-content">
                         <div class="field has-addons has-addons-right">
                             <div class="control">
-                                <button class="button is-static previw-button" :style="getPreviewColor(config.colorThemeOptions.scrollbarBackgroundColor)"></button>
+                                <button
+                                    class="button preview-button"
+                                    :style="getPreviewColor(config.colorThemeOptions.scrollbarBackgroundColor)"
+                                    @click="editColor('scrollbarBackgroundColor', config.colorThemeOptions.scrollbarBackgroundColor)"
+                                    >
+                                </button>
                             </div>
                             <div class="control">
                                 <input
                                     class="input font-mono"
                                     type="text"
                                     v-model="config.colorThemeOptions.scrollbarBackgroundColor"
-                                    @click="editColor('scrollbarBackgroundColor', config.colorThemeOptions.scrollbarBackgroundColor)"
+                                    @change="updateConfig"
                                     >
-                            </div>
-                            <div class="control">
-                                <button class="button is-success" @click="updateConfig">
-                                    <span class="icon"><i class="fas fa-check"></i></span>
-                                </button>
                             </div>
                             <div class="control">
                                 <button class="button" @click="resetScrollbarBackgroundColor">
