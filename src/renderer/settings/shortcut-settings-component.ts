@@ -118,21 +118,21 @@ export const shortcutSettingsComponent = Vue.extend({
                     </button>
                 </div>
             </div>
-            <div class="settings__setting-content box">
+            <div class="settings__setting-content">
                 <div v-if="!config.shortcutOptions.isEnabled" class="settings__setting-disabled-overlay"></div>
-                <div class="settings__setting-content-item-title">
-                    <div class="title is-5">
-                        {{ translations.shortcutSettingsShortcut }}
+                <div class="settings__setting-content-item box">
+                    <div class="settings__setting-content-item-title">
+                        <div class="title is-5">
+                            {{ translations.shortcutSettingsShortcut }}
+                        </div>
+                        <button class="button" @click="resetShortcutsToDefault">
+                            <span class="icon">
+                                <i class="fas fa-undo-alt"></i>
+                            </span>
+                        </button>
                     </div>
-                    <button class="button" @click="resetShortcutsToDefault">
-                        <span class="icon">
-                            <i class="fas fa-undo-alt"></i>
-                        </span>
-                    </button>
-                </div>
-                <div v-if="config.shortcutOptions.shortcuts.length > 0" class="settings__setting-content-item">
                     <div class="table-container">
-                        <table class="table is-striped is-fullwidth">
+                        <table class="table is-striped is-fullwidth" v-if="config.shortcutOptions.shortcuts.length > 0">
                             <thead>
                                 <tr>
                                     <th>{{ translations.shortcutSettingsTableType }}</th>
@@ -165,12 +165,12 @@ export const shortcutSettingsComponent = Vue.extend({
                             </tbody>
                         </table>
                     </div>
-                </div>
-                <div>
-                    <button class="button is-success" @click="addButtonClick">
-                        <span class="icon"><i class="fas fa-plus"></i></span>
-                        <span>{{ translations.shortcutSettingsAddShortcut }}</span>
-                    </button>
+                    <div>
+                        <button class="button is-success" @click="addButtonClick">
+                            <span class="icon"><i class="fas fa-plus"></i></span>
+                            <span>{{ translations.shortcutSettingsAddShortcut }}</span>
+                        </button>
+                    </div>
                 </div>
             </div>
             <shortcut-editing-modal :translations="translations"></shortcut-editing-modal>
