@@ -43,7 +43,9 @@ let config = configRepository.getConfig();
 let translationSet = getTranslationSet(config.generalOptions.language);
 let searchEngine = getProductionSearchEngine(config, translationSet, logger);
 
-let rescanInterval = setInterval(() => refreshAllIndexes(), Number(config.generalOptions.rescanIntervalInSeconds) * 1000);
+let rescanInterval = config.generalOptions.rescanEnabled
+    ? setInterval(() => refreshAllIndexes(), Number(config.generalOptions.rescanIntervalInSeconds) * 1000)
+    : undefined;
 
 function notifyRenderer(ipcChannel: IpcChannels, message?: string) {
     const allWindows = [mainWindow, settingsWindow];
@@ -137,8 +139,16 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boole
     }
 
     if (updatedConfig.generalOptions.rescanIntervalInSeconds !== config.generalOptions.rescanIntervalInSeconds) {
-        clearInterval(rescanInterval);
+        if (rescanInterval) {
+            clearInterval(rescanInterval);
+        }
         rescanInterval = setInterval(() => refreshAllIndexes(), updatedConfig.generalOptions.rescanIntervalInSeconds * 1000);
+    }
+
+    if (!updatedConfig.generalOptions.rescanEnabled) {
+        if (rescanInterval) {
+            clearInterval(rescanInterval);
+        }
     }
 
     if (Number(updatedConfig.appearanceOptions.windowWidth) !== Number(config.appearanceOptions.windowWidth)) {
@@ -224,7 +234,9 @@ function quitApp() {
         .then()
         .catch((err) => logger.error(err))
         .then(() => {
-            clearInterval(rescanInterval);
+            if (rescanInterval) {
+                clearInterval(rescanInterval);
+            }
             globalShortcut.unregisterAll();
             app.quit();
         });

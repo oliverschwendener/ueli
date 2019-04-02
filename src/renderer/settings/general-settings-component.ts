@@ -135,6 +135,18 @@ export const generalSettingsComponent = Vue.extend({
                         </div>
 
                         <div class="settings__option">
+                            <div class="settings__option-name">{{ translations.generalSettingsRescanIntervalEnabled }}</div>
+                            <div class="settings__option-content">
+                                <div class="field is-grouped is-grouped-right">
+                                    <div class="control">
+                                        <input id="rescanEnabledCheckbox" type="checkbox" name="rescanEnabledCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.rescanEnabled" @change="updateConfig">
+                                        <label for="rescanEnabledCheckbox"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings__option" v-if="config.generalOptions.rescanEnabled">
                             <div class="settings__option-name">{{ translations.generalSettingsRescanInterval }}</div>
                             <div class="settings__option-content">
                                 <div class="field is-grouped is-grouped-right">

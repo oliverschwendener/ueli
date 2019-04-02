@@ -37,6 +37,7 @@ export const englishTranslationSet: TranslationSet = {
     generalSettingsShowTrayIcon: "Show tray icon",
     generalSettingsClearCachesOnExit: "Clear caches on quit",
     generalSettingsHotKey: "Hot Key",
+    generalSettingsRescanIntervalEnabled: "Periodic rescan enabled",
     generalSettingsRescanInterval: "Rescan interval (in seconds)",
     generalSettingsShowAlwaysOnPrimaryDisplay: "Always show on primary display",
 

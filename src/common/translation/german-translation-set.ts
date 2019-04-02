@@ -37,6 +37,7 @@ export const germanTranslationSet: TranslationSet = {
     generalSettingsShowTrayIcon: "Symbol im Systemtray anzeigen",
     generalSettingsClearCachesOnExit: "Zwischenspeicher beim Beenden löschen",
     generalSettingsHotKey: "Hot Key",
+    generalSettingsRescanIntervalEnabled: "Periodischer Rescan aktiviert",
     generalSettingsRescanInterval: "Rescan Intervall (in Sekunden)",
     generalSettingsShowAlwaysOnPrimaryDisplay: "Immer auf primärem Bildschirm anzeigen",
 
