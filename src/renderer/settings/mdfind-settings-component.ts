@@ -54,7 +54,8 @@ export const mdfindSettingsComponent = Vue.extend({
                     </button>
                 </div>
             </div>
-            <div class="settings__setting-content" v-if="config.mdfindOptions.enabled">
+            <div class="settings__setting-content" >
+                <div v-if="!config.mdfindOptions.enabled" class="settings__setting-disabled-overlay"></div>
                 <div class="box">
                     <div class="settings__option-container">
 
@@ -112,9 +113,6 @@ export const mdfindSettingsComponent = Vue.extend({
                     </div>
                 </div>
             </div>
-            <h6 v-else class="title is-6 has-text-danger">
-                {{ translations.mdfindSearchDisabled }}
-            </h6>
         </div>
     `,
 });

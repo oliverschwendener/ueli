@@ -68,7 +68,8 @@ export const fileBrowserSettingsComponent = Vue.extend({
                 </button>
             </div>
         </div>
-        <div class="settings__setting-content" v-if="config.fileBrowserOptions.isEnabled">
+        <div class="settings__setting-content">
+            <div v-if="!config.fileBrowserOptions.isEnabled" class="settings__setting-disabled-overlay"></div>
             <div class="box">
 
                 <div class="settings__option">
@@ -124,9 +125,6 @@ export const fileBrowserSettingsComponent = Vue.extend({
 
             </div>
         </div>
-        <h6 v-else class="title is-6 has-text-danger">
-            {{ translations.fileBrowserDisabled }}
-        </h6>
     </div>
     `,
 });

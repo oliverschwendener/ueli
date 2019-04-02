@@ -67,7 +67,6 @@ export interface TranslationSet {
     applicationSearchSettingsApplicationFileExtensions: string;
     applicationSearchSettingsApplicationFileExtension: string;
     applicationSearchSettingsAddApplicationFileExtension: string;
-    applicationSearchSettingsDisabled: string;
     applicationSearchSettingsInvalidFileExtensionErrorMessage: string;
     applicationSearchSettingsNotAFolderErrorMessage: string;
     applicationSearchSettingsDoesNotExistErrorMessage: string;
@@ -91,7 +90,6 @@ export interface TranslationSet {
     shortcutSettingsTableEdit: string;
     shortcutSettingsTableDelete: string;
     shortcutSettingsAddShortcut: string;
-    shortcutSettingsDisabled: string;
     shortcutSettingsEditModalImageUrl: string;
     shortcutSettingsEditModalSvgString: string;
     shortcutSettingsEditModalGoogleWebsite: string;
@@ -108,20 +106,17 @@ export interface TranslationSet {
     translationSettingsPrefix: string;
     translationSettingsSourceLanguage: string;
     translationSettingsTargetLanguage: string;
-    translationSettingsDisabled: string;
 
     everythingSearch: string;
     everythingSearchPathToBinary: string;
     everythingSearchPrefix: string;
     everythingSearchMaxSearchResults: string;
-    everythingSearchDisabled: string;
     everythingSearchPathToBinaryFilterName: string;
 
     mdfindSearch: string;
     mdfindSearchDebounceDelay: string;
     mdfindSearchPrefix: string;
     mdfindSearchMaxSearchResults: string;
-    mdfindSearchDisabled: string;
 
     websearch: string;
     websearchEngines: string;
@@ -135,14 +130,12 @@ export interface TranslationSet {
     websearchIsFallback: string;
     websearchEncodeSearchTerm: string;
     websearchInvalidWebsearchEngine: string;
-    websearchDisabled: string;
 
     fileBrowser: string;
     fileBrowserSettingsMaxSearchResults: string;
     fileBrowserOptionsShowHiddenFiles: string;
     fileBrowserOptionsBlackList: string;
     fileBrowserOptionsBlackListPlaceholder: string;
-    fileBrowserDisabled: string;
 
     cancel: string;
     save: string;

@@ -118,7 +118,8 @@ export const shortcutSettingsComponent = Vue.extend({
                     </button>
                 </div>
             </div>
-            <div v-if="config.shortcutOptions.isEnabled" class="settings__setting-content box">
+            <div class="settings__setting-content box">
+                <div v-if="!config.shortcutOptions.isEnabled" class="settings__setting-disabled-overlay"></div>
                 <div class="settings__setting-content-item-title">
                     <div class="title is-5">
                         {{ translations.shortcutSettingsShortcut }}
@@ -171,11 +172,6 @@ export const shortcutSettingsComponent = Vue.extend({
                         <span>{{ translations.shortcutSettingsAddShortcut }}</span>
                     </button>
                 </div>
-            </div>
-            <div v-else>
-                <h6 class="title is-6 has-text-danger">
-                    {{ translations.shortcutSettingsDisabled }}
-                </h6>
             </div>
             <shortcut-editing-modal :translations="translations"></shortcut-editing-modal>
         </div>

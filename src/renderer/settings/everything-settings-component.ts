@@ -86,7 +86,8 @@ export const everythingSettingsComponent = Vue.extend({
                     </button>
                 </div>
             </div>
-            <div class="settings__setting-content" v-if="config.everythingSearchOptions.enabled">
+            <div class="settings__setting-content">
+                <div v-if="!config.everythingSearchOptions.enabled" class="settings__setting-disabled-overlay"></div>
                 <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
                         <div class="title is-5">
@@ -175,9 +176,6 @@ export const everythingSettingsComponent = Vue.extend({
                     </div>
                 </div>
             </div>
-            <h6 v-else class="title is-6 has-text-danger">
-                {{ translations.everythingSearchDisabled }}
-            </h6>
         </div>
     `,
 });

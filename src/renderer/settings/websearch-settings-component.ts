@@ -94,8 +94,8 @@ export const webSearchSettingsComponent = Vue.extend({
                 </button>
             </div>
         </div>
-        <div class="settings__setting-content" v-if="config.websearchOptions.isEnabled">
-
+        <div class="settings__setting-content">
+            <div v-if="!config.websearchOptions.isEnabled" class="settings__setting-disabled-overlay"></div>
             <div class="settings__setting-content-item box">
                 <div class="settings__setting-content-item-title">
                     <div class="title is-5">
@@ -160,9 +160,6 @@ export const webSearchSettingsComponent = Vue.extend({
             </div>
 
         </div>
-        <h6 v-else class="title is-6 has-text-danger">
-            {{ translations.websearchDisabled }}
-        </h6>
         <websearch-editing-modal :translations="translations"></websearch-editing-modal>
     </div>
     `,

@@ -111,7 +111,8 @@ export const applicationSearchSettingsComponent = Vue.extend({
                 </div>
             </div>
             <div class="settings__setting-content">
-                <div class="settings__setting-content-item box" v-if="config.applicationSearchOptions.enabled">
+                <div v-if="!config.applicationSearchOptions.enabled" class="settings__setting-disabled-overlay"></div>
+                <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
                         <div class="title is-5">
                             {{ translations.applicationSearchSettingsApplicationFolders }}
@@ -147,7 +148,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
                         </button>
                     </div>
                 </div>
-                <div class="settings__setting-content-item box" v-if="config.applicationSearchOptions.enabled">
+                <div class="settings__setting-content-item box">
                     <div class="settings__setting-content-item-title">
                         <div class="title is-5">
                             {{ translations.applicationSearchSettingsApplicationFileExtensions }}
@@ -181,9 +182,6 @@ export const applicationSearchSettingsComponent = Vue.extend({
                         </button>
                     </div>
                 </div>
-                <h6 v-else class="title is-6 has-text-danger">
-                    {{ translations.applicationSearchSettingsDisabled }}
-                </h6>
             </div>
             <new-application-folder-modal :translations="translations"></new-application-folder-modal>
             <new-application-file-extension-modal :translations="translations"></new-application-file-extension-modal>

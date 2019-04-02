@@ -56,7 +56,8 @@ export const translationSettingsComponent = Vue.extend({
                     </button>
                 </div>
             </div>
-            <div class="settings__setting-content" v-if="config.translationOptions.enabled">
+            <div class="settings__setting-content">
+                <div v-if="!config.translationOptions.enabled" class="settings__setting-disabled-overlay"></div>
                 <div class="box">
                     <div class="settings__option-container">
 
@@ -150,9 +151,6 @@ export const translationSettingsComponent = Vue.extend({
                 </div>
 
             </div>
-            <h6 v-else class="title is-6 has-text-danger">
-                {{ translations.translationSettingsDisabled }}
-            </h6>
         </div>
     `,
 });
