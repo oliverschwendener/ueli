@@ -13,8 +13,8 @@ export class WebSearchPlugin implements ExecutionPlugin {
     private config: WebSearchOptions;
     private readonly urlExecutor: (url: string) => Promise<void>;
 
-    constructor(userConfig: UserConfigOptions, urlExecutor: (url: string) => Promise<void>) {
-        this.config = userConfig.websearchOptions;
+    constructor(userConfig: WebSearchOptions, urlExecutor: (url: string) => Promise<void>) {
+        this.config = userConfig;
         this.urlExecutor = urlExecutor;
     }
 

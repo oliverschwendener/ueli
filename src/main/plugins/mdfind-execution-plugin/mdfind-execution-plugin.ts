@@ -5,18 +5,19 @@ import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { MdFindSearcher } from "./mdfind-searcher";
 import { defaultErrorIcon, defaultFileIcon } from "../../../common/icon/default-icons";
 import { AutoCompletionResult } from "../../../common/auto-completion-result";
+import { MdFindOptions } from "../../../common/config/mdfind-options";
 
 export class MdFindExecutionPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.MdFindExecutionPlugin;
     public readonly openLocationSupported = true;
     public readonly autoCompletionSupported = false;
-    private config: UserConfigOptions;
+    private config: MdFindOptions;
     private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
     private readonly filePathLocationExecutor: (filePath: string) => Promise<void>;
     private searchDelay: NodeJS.Timeout | number;
 
     constructor(
-        config: UserConfigOptions,
+        config: MdFindOptions,
         filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>,
         filePathLocationExecutor: (filePath: string) => Promise<void>,
         ) {
@@ -26,8 +27,8 @@ export class MdFindExecutionPlugin implements ExecutionPlugin {
     }
 
     public isValidUserInput(userInput: string): boolean {
-        return userInput.startsWith(this.config.mdfindOptions.prefix)
-            && userInput.replace(this.config.mdfindOptions.prefix, "").length > 0;
+        return userInput.startsWith(this.config.prefix)
+            && userInput.replace(this.config.prefix, "").length > 0;
     }
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
@@ -37,8 +38,8 @@ export class MdFindExecutionPlugin implements ExecutionPlugin {
             }
 
             this.searchDelay = setTimeout(() => {
-                const searchTerm = userInput.replace(this.config.mdfindOptions.prefix, "");
-                MdFindSearcher.search(searchTerm, this.config.mdfindOptions, this.pluginType, defaultFileIcon)
+                const searchTerm = userInput.replace(this.config.prefix, "");
+                MdFindSearcher.search(searchTerm, this.config, this.pluginType, defaultFileIcon)
                     .then((result) => {
                         if (result.length > 0) {
                             resolve(result);
@@ -47,12 +48,12 @@ export class MdFindExecutionPlugin implements ExecutionPlugin {
                         }
                     })
                     .catch((err) => reject(err));
-            }, this.config.mdfindOptions.debounceDelay);
+            }, this.config.debounceDelay);
         });
     }
 
     public isEnabled(): boolean {
-        return this.config.mdfindOptions.enabled;
+        return this.config.enabled;
     }
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
@@ -79,7 +80,7 @@ export class MdFindExecutionPlugin implements ExecutionPlugin {
 
     public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
         return new Promise((resolve) => {
-            this.config = updatedConfig;
+            this.config = updatedConfig.mdfindOptions;
             resolve();
         });
     }

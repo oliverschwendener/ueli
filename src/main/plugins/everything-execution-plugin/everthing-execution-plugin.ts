@@ -6,12 +6,13 @@ import { IconType } from "../../../common/icon/icon-type";
 import { Icon } from "../../../common/icon/icon";
 import { EverythingSearcher } from "./everything-searcher";
 import { AutoCompletionResult } from "../../../common/auto-completion-result";
+import { EverythingSearchOptions } from "../../../common/config/everything-search-options";
 
 export class EverythingExecutionPlugin implements ExecutionPlugin {
     public pluginType: PluginType = PluginType.EverythingSearchPlugin;
     public readonly openLocationSupported = true;
     public readonly autoCompletionSupported = false;
-    private config: UserConfigOptions;
+    private config: EverythingSearchOptions;
     private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
     private readonly filePathLocationExecutor: (filePath: string) => Promise<void>;
     private readonly defaultIcon: Icon = {
@@ -24,7 +25,7 @@ export class EverythingExecutionPlugin implements ExecutionPlugin {
     };
 
     constructor(
-        config: UserConfigOptions,
+        config: EverythingSearchOptions,
         filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>,
         filePathLocationExecutor: (filePath: string) => Promise<void>,
         ) {
@@ -34,17 +35,17 @@ export class EverythingExecutionPlugin implements ExecutionPlugin {
     }
 
     public isEnabled(): boolean {
-        return this.config.everythingSearchOptions.enabled;
+        return this.config.enabled;
     }
 
     public isValidUserInput(userInput: string): boolean {
-        return userInput.startsWith(this.config.everythingSearchOptions.prefix)
-            && userInput.replace(this.config.everythingSearchOptions.prefix, "").length > 0;
+        return userInput.startsWith(this.config.prefix)
+            && userInput.replace(this.config.prefix, "").length > 0;
     }
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            EverythingSearcher.search(userInput, this.config.everythingSearchOptions, this.defaultIcon, this.pluginType)
+            EverythingSearcher.search(userInput, this.config, this.defaultIcon, this.pluginType)
                 .then((result) => resolve(result))
                 .catch((err) => reject(err));
         });
@@ -74,7 +75,7 @@ export class EverythingExecutionPlugin implements ExecutionPlugin {
 
     public updateConfig(updatedUserConfig: UserConfigOptions): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.config = updatedUserConfig;
+            this.config = updatedUserConfig.everythingSearchOptions;
             resolve();
         });
     }

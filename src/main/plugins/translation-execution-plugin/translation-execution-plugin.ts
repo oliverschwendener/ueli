@@ -9,12 +9,13 @@ import { Icon } from "../../../common/icon/icon";
 import { IconType } from "../../../common/icon/icon-type";
 import { LingueeTranslator } from "./linguee-translator";
 import { AutoCompletionResult } from "../../../common/auto-completion-result";
+import { TranslationOptions } from "../../../common/config/translation-options";
 
 export class TranslationExecutionPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.TranslationPlugin;
     public readonly openLocationSupported = false;
     public readonly autoCompletionSupported = false;
-    private config: UserConfigOptions;
+    private config: TranslationOptions;
     private delay: NodeJS.Timeout | number;
     private readonly icon: Icon = {
         parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -25,7 +26,7 @@ export class TranslationExecutionPlugin implements ExecutionPlugin {
         type: IconType.SVG,
     };
 
-    constructor(config: UserConfigOptions) {
+    constructor(config: TranslationOptions) {
         this.config = config;
     }
 
@@ -48,9 +49,9 @@ export class TranslationExecutionPlugin implements ExecutionPlugin {
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            const textToTranslate = userInput.replace(this.config.translationOptions.prefix, "");
-            const source = this.config.translationOptions.sourceLanguage;
-            const target = this.config.translationOptions.targetLanguage;
+            const textToTranslate = userInput.replace(this.config.prefix, "");
+            const source = this.config.sourceLanguage;
+            const target = this.config.targetLanguage;
             const url = `https://linguee-api.herokuapp.com/api?q=${textToTranslate}&src=${source}&dst=${target}`;
 
             if (this.delay !== undefined) {
@@ -61,22 +62,22 @@ export class TranslationExecutionPlugin implements ExecutionPlugin {
                 this.getTranslationResults(url)
                     .then((result) => resolve(result))
                     .catch((err) => reject(err));
-            }, this.config.translationOptions.debounceDelay);
+            }, this.config.debounceDelay);
         });
     }
 
     public isEnabled() {
-        return this.config.translationOptions.enabled;
+        return this.config.enabled;
     }
 
     public isValidUserInput(userInput: string) {
-        return userInput.startsWith(this.config.translationOptions.prefix)
-            && userInput.replace(this.config.translationOptions.prefix, "").length >= this.config.translationOptions.minSearchTermLength;
+        return userInput.startsWith(this.config.prefix)
+            && userInput.replace(this.config.prefix, "").length >= this.config.minSearchTermLength;
     }
 
     public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
         return new Promise((resolve) => {
-            this.config = updatedConfig;
+            this.config = updatedConfig.translationOptions;
             resolve();
         });
     }

@@ -49,7 +49,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
             ),
     ];
 
-    const webSearchPlugin = new WebSearchPlugin(userConfig, urlExecutor);
+    const webSearchPlugin = new WebSearchPlugin(userConfig.websearchOptions, urlExecutor);
 
     const executionPlugins: ExecutionPlugin[] = [
         webSearchPlugin,
@@ -59,7 +59,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
             filePathExecutor,
             filePathLocationExecutor,
             getFileIconDataUrl),
-        new TranslationExecutionPlugin(userConfig),
+        new TranslationExecutionPlugin(userConfig.translationOptions),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [
@@ -69,14 +69,14 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
     if (isWindows(platform())) {
         executionPlugins.push(
             new EverythingExecutionPlugin(
-                userConfig,
+                userConfig.everythingSearchOptions,
                 filePathExecutor,
                 filePathLocationExecutor));
     }
     if (isMacOs(platform())) {
         executionPlugins.push(
             new MdFindExecutionPlugin(
-                userConfig,
+                userConfig.mdfindOptions,
                 filePathExecutor,
                 filePathLocationExecutor));
     }
