@@ -10,7 +10,7 @@ files:
   - assets/**/*
 
 win:
-  icon: ./img/icons/win/icon.ico
+  icon: ./img/icons/win/ueli-black-on-white-logo.ico
   target:
     - nsis
     - zip
@@ -18,7 +18,7 @@ win:
     - github
 
 mac:
-  icon: ./img/icons/mac/icon.icns
+  icon: ./img/icons/mac/ueli-black-on-white-logo.icns
   category: public.app-category.utilities
   target:
     - dmg

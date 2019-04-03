@@ -30,6 +30,7 @@ if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
 const logger = new ConsoleLogger();
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
 const currentOperatingSystem = platform() === "darwin" ? OperatingSystem.macOS : OperatingSystem.Windows;
+const windowIconFilePath = join(__dirname, "..", "assets", "ueli-black-on-white-logo.png");
 
 if (currentOperatingSystem === OperatingSystem.macOS) {
     app.dock.hide();
@@ -305,6 +306,7 @@ function createMainWindow() {
             config.appearanceOptions.maxSearchResultsPerPage,
             config.appearanceOptions.searchResultHeight,
             config.appearanceOptions.userInputHeight),
+        icon: windowIconFilePath,
         resizable: false,
         show: false,
         skipTaskbar: true,
@@ -381,6 +383,7 @@ function openSettings() {
     if (!settingsWindow || settingsWindow.isDestroyed()) {
         settingsWindow = new BrowserWindow({
             height: 700,
+            icon: windowIconFilePath,
             webPreferences: {
                 nodeIntegration: true,
             },
