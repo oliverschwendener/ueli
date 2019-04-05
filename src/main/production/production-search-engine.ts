@@ -22,6 +22,9 @@ import { Logger } from "../../common/logger/logger";
 import { FileBrowserExecutionPlugin } from "../plugins/filebrowser-plugin/filebrowser-plugin";
 import { isValidWindowsFilePath, isValidMacOsFilePath } from "../../common/helpers/file-path-validators";
 import { getFileIconDataUrl } from "../../common/icon/generate-file-icon";
+import { OperatingSystemCommandsPlugin } from "../plugins/operating-system-commands-plugin/operating-system-commands-plugin";
+import { MacOsOperatingSystemCommandRepository } from "../plugins/operating-system-commands-plugin/mac-os-operating-system-command-repository";
+import { WindowsOperatingSystemCommandRepository } from "../plugins/operating-system-commands-plugin/windows-operating-system-command-repository";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -30,6 +33,10 @@ const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const appIconGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
 
 export const getProductionSearchEngine = (userConfig: UserConfigOptions, translationSet: TranslationSet, logger: Logger): SearchEngine => {
+    const operatingSystemCommandRepository = isWindows(platform())
+        ? new WindowsOperatingSystemCommandRepository(translationSet)
+        : new MacOsOperatingSystemCommandRepository(translationSet);
+
     const searchPlugins: SearchPlugin[] = [
         new UeliCommandSearchPlugin(translationSet),
         new ShortcutsSearchPlugin(
@@ -46,6 +53,10 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
                 ),
             filePathExecutor,
             filePathLocationExecutor,
+            ),
+        new OperatingSystemCommandsPlugin(
+            userConfig.operatingSystemCommandsOptions,
+            operatingSystemCommandRepository,
             ),
     ];
 

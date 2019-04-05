@@ -143,6 +143,26 @@ export interface TranslationSet {
     fileBrowserOptionsBlackList: string;
     fileBrowserOptionsBlackListPlaceholder: string;
 
+    operatingSystemCommands: string;
+
+    macOsShutdown: string;
+    macOsShutdownDescription: string;
+    macOsRestart: string;
+    macOsRestartDescription: string;
+    macOsLogout: string;
+    macOsLogoutDescription: string;
+    macOsLock: string;
+    macOsLockDescription: string;
+
+    windowsShutdown: string;
+    windowsShutdownDescription: string;
+    windowsRestart: string;
+    windowsRestartDescription: string;
+    windowsSignout: string;
+    windowsSignoutDescription: string;
+    windowsLock: string;
+    windowsLockDescription: string;
+
     cancel: string;
     save: string;
     add: string;

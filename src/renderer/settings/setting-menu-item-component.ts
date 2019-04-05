@@ -37,6 +37,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.everythingSearch;
                 case SettingOsSpecific.MdFind:
                     return translations.mdfindSearch;
+                case Settings.OperatingSystemCommands:
+                    return translations.operatingSystemCommands;
                 default:
                     return item;
             }

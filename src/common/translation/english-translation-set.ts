@@ -146,6 +146,26 @@ export const englishTranslationSet: TranslationSet = {
     fileBrowserOptionsBlackList: "Blacklist",
     fileBrowserOptionsBlackListPlaceholder: "File or folder name",
 
+    operatingSystemCommands: "Operating system commands",
+
+    macOsShutdown: "Shut Down",
+    macOsShutdownDescription: "Shut down computer",
+    macOsRestart: "Restart",
+    macOsRestartDescription: "Restart computer",
+    macOsLogout: "Log out",
+    macOsLogoutDescription: "Log out current user",
+    macOsLock: "Lock",
+    macOsLockDescription: "Lock computer",
+
+    windowsShutdown: "Shut down",
+    windowsShutdownDescription: "Shut down computer",
+    windowsRestart: "Restart",
+    windowsRestartDescription: "Restart computer",
+    windowsSignout: "Sign out",
+    windowsSignoutDescription: "Sign out current user",
+    windowsLock: "Lock",
+    windowsLockDescription: "Lock computer",
+
     cancel: "Cancel",
     save: "Save",
     add: "Add",

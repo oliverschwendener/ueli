@@ -9,6 +9,7 @@ import { TranslationOptions } from "./translation-options";
 import { WebSearchOptions } from "./websearch-options";
 import { ColorThemeOptions } from "./color-theme-options";
 import { FileBrowserOptions } from "./filebrowser-options";
+import { OperatingSystemCommandsOptions } from "./operating-system-commands-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -22,4 +23,5 @@ export interface UserConfigOptions {
     generalOptions: GeneralOptions;
     websearchOptions: WebSearchOptions;
     fileBrowserOptions: FileBrowserOptions;
+    operatingSystemCommandsOptions: OperatingSystemCommandsOptions;
 }

@@ -10,6 +10,7 @@ import { defaultTranslationOptions } from "./default-translation-options";
 import { defaultWebSearchOptions } from "./default-websearch-options";
 import { defaultColorThemeOptions } from "./default-color-theme-options";
 import { defaultFileBrowserOptions } from "./default-filebrowser-options";
+import { defaultOperatingSystemCommandsOptions } from "./default-operating-system-commands-options";
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
@@ -19,6 +20,7 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     fileBrowserOptions: defaultFileBrowserOptions,
     generalOptions: defaultGeneralOptions,
     mdfindOptions: defaultMdfindOptions,
+    operatingSystemCommandsOptions: defaultOperatingSystemCommandsOptions,
     searchEngineOptions: defaultSearchEngineOptions,
     shortcutOptions: defaultShortcutOptions,
     translationOptions: defaultTranslationOptions,

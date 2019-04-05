@@ -8,4 +8,5 @@ export enum Settings {
     Translation = "Translation",
     WebSearch = "Websearch",
     FileBrowser = "File Browser",
+    OperatingSystemCommands = "Operating System Commands",
 }

@@ -146,6 +146,26 @@ export const germanTranslationSet: TranslationSet = {
     fileBrowserOptionsBlackList: "Blacklist",
     fileBrowserOptionsBlackListPlaceholder: "Datei- oder Ordnername",
 
+    operatingSystemCommands: "Betriebssystembefehle",
+
+    macOsShutdown: "Ausschalten",
+    macOsShutdownDescription: "Computer ausschalten",
+    macOsRestart: "Neustart",
+    macOsRestartDescription: "Computer neu starten",
+    macOsLogout: "Abmelden",
+    macOsLogoutDescription: "Aktuellen Benutzer abmelden",
+    macOsLock: "Sperren",
+    macOsLockDescription: "Computer sperren",
+
+    windowsShutdown: "Herunterfahren",
+    windowsShutdownDescription: "Computer herunterfahren",
+    windowsRestart: "Neu starten",
+    windowsRestartDescription: "Computer neu starten",
+    windowsSignout: "Abmelden",
+    windowsSignoutDescription: "Aktuellen Benutzer abmelden",
+    windowsLock: "Sperren",
+    windowsLockDescription: "Computer sperren",
+
     cancel: "Abbrechen",
     save: "Speichern",
     add: "Hinzufügen",
