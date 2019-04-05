@@ -3,7 +3,7 @@ import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
 import { FileHelpers } from "../../../main/helpers/file-helpers";
 import { SettingsNotificationType } from "../settings-notification-type";
-import { getFolderPaths } from "../../dialogs";
+import { getFolderPath } from "../../dialogs";
 import { showNotification } from "../../notifications";
 import { isWindows } from "../../../common/helpers/operating-system-helpers";
 import { platform } from "os";
@@ -30,11 +30,9 @@ export const newApplicationFolderModalComponent = Vue.extend({
             return `${translations.forExample}: "${folderPath}"`;
         },
         openFolderDialog() {
-            getFolderPaths()
-                .then((folderPaths) => {
-                    if (folderPaths.length > 0) {
-                        this.newApplicationFolder = folderPaths[0];
-                    }
+            getFolderPath()
+                .then((folderPath) => {
+                    this.newApplicationFolder = folderPath;
                 });
         },
         saveButtonClick() {

@@ -37,6 +37,11 @@ export interface TranslationSet {
     generalSettingsRescanIntervalEnabled: string;
     generalSettingsRescanInterval: string;
     generalSettingsShowAlwaysOnPrimaryDisplay: string;
+    generalSettingsExportSettings: string;
+    generalSettingsSuccessfullyExportedSettings: string;
+    generalSettingsImportSettings: string;
+    generalSettingsImportFileFilterJsonFiles: string;
+    generalSettingsImportErrorInvalidConfig: string;
 
     appearanceSettings: string;
     appearanceSettingsWindowWidth: string;

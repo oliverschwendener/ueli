@@ -40,6 +40,11 @@ export const englishTranslationSet: TranslationSet = {
     generalSettingsRescanIntervalEnabled: "Periodic rescan enabled",
     generalSettingsRescanInterval: "Rescan interval (in seconds)",
     generalSettingsShowAlwaysOnPrimaryDisplay: "Always show on primary display",
+    generalSettingsExportSettings: "Export current settings",
+    generalSettingsSuccessfullyExportedSettings: "Successfully exported settings",
+    generalSettingsImportSettings: "Import settings",
+    generalSettingsImportFileFilterJsonFiles: "JSON files",
+    generalSettingsImportErrorInvalidConfig: "Settings import failed: file content seems to be invalid",
 
     appearanceSettings: "Appearance",
     appearanceSettingsWindowWidth: "Window width (in pixels)",

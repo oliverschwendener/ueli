@@ -1,4 +1,4 @@
-import { Stats, readdir, lstat, unlink, exists, writeFile, existsSync, mkdirSync } from "fs";
+import { Stats, readdir, lstat, unlink, exists, writeFile, existsSync, mkdirSync, readFile } from "fs";
 import { join, extname } from "path";
 
 interface FileStat {
@@ -7,6 +7,26 @@ interface FileStat {
 }
 
 export class FileHelpers {
+    public static readFile(filePath: string): Promise<string> {
+        return new Promise((resolve, reject) => {
+            this.fileExists(filePath)
+                .then((fileExists) => {
+                    if (fileExists) {
+                        readFile(filePath, (err, data) => {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve(data.toString("utf8"));
+                            }
+                        });
+                    } else {
+                        reject(`File "${filePath} does not exist"`);
+                    }
+                })
+                .catch((err) => reject(err));
+        });
+    }
+
     public static readFilesFromFoldersRecursively(folderPaths: string[]): Promise<string[]> {
         return new Promise((resolve, reject) => {
             Promise.all(folderPaths.map((folderPath) => this.readFilesFromFolderRecursively(folderPath)))

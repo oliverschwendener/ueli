@@ -3,16 +3,24 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { cloneDeep } from "lodash";
+import { join } from "path";
 import { defaultGeneralOptions } from "../../common/config/default-general-options";
 import { Settings } from "./settings";
 import { GlobalHotKeyModifier } from "../../common/global-hot-key/global-hot-key-modifier";
 import { GlobalHotKeyKey } from "../../common/global-hot-key/global-hot-key-key";
 import { Language } from "../../common/translation/language";
+import { getFolderPath, getFilePath } from "../dialogs";
+import { SettingsNotificationType } from "./settings-notification-type";
+import { TranslationSet } from "../../common/translation/translation-set";
+import { FileHelpers } from "../../main/helpers/file-helpers";
+import { isValidUserConfig, mergeUserConfigWithDefault } from "../../common/helpers/config-helpers";
+import { defaultUserConfigOptions } from "../../common/config/default-user-config-options";
 
 export const generalSettingsComponent = Vue.extend({
     data() {
         return {
             availableLanguages: Object.values(Language).map((language) => language),
+            dropdownVisible: false,
             globalHotKeyKeys: Object.values(GlobalHotKeyKey).map((key) => key),
             globalHotKeyModifiers: Object.values(GlobalHotKeyModifier).map((modifier) => modifier),
             settingName: Settings.General,
@@ -20,6 +28,42 @@ export const generalSettingsComponent = Vue.extend({
         };
     },
     methods: {
+        dropdownTrigger() {
+            this.dropdownVisible = !this.dropdownVisible;
+        },
+        exportCurrentSettings() {
+            getFolderPath()
+                .then((filePath: string) => {
+                    const config: UserConfigOptions = this.config;
+                    const translations: TranslationSet = this.translations;
+                    const settingsFilePath = join(filePath, "ueli.config.json");
+                    FileHelpers.writeFile(settingsFilePath, JSON.stringify(config, undefined, 2))
+                        .then(() => vueEventDispatcher.$emit(VueEventChannels.notification, translations.generalSettingsSuccessfullyExportedSettings, SettingsNotificationType.Info))
+                        .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, SettingsNotificationType.Error));
+                });
+        },
+        importSettings() {
+            const translations: TranslationSet = this.translations;
+            const filter: Electron.FileFilter = {
+                extensions: ["json"],
+                name: translations.generalSettingsImportFileFilterJsonFiles,
+            };
+            getFilePath([filter])
+                .then((filePath) => {
+                    FileHelpers.readFile(filePath)
+                        .then((fileContent) => {
+                            if (isValidUserConfig(fileContent)) {
+                                const userConfig: UserConfigOptions = JSON.parse(fileContent);
+                                const config: UserConfigOptions = mergeUserConfigWithDefault(userConfig, defaultUserConfigOptions);
+                                this.config = config;
+                                this.updateConfig();
+                            } else {
+                                vueEventDispatcher.$emit(VueEventChannels.notification, translations.generalSettingsImportErrorInvalidConfig, SettingsNotificationType.Error);
+                            }
+                        })
+                        .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, SettingsNotificationType.Error));
+                });
+        },
         resetAll() {
             const config: UserConfigOptions = this.config;
             config.generalOptions = cloneDeep(defaultGeneralOptions);
@@ -45,9 +89,34 @@ export const generalSettingsComponent = Vue.extend({
                 <span>
                     {{ translations.generalSettings }}
                 </span>
-                <button class="button" @click="resetAll">
-                    <span class="icon"><i class="fas fa-undo-alt"></i></span>
-                </button>
+                <div>
+                    <div class="dropdown is-right" :class="{ 'is-active' : dropdownVisible}">
+                        <div class="dropdown-trigger">
+                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" @click="dropdownTrigger">
+                                <span class="icon">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                            <div class="dropdown-content">
+                                <a href="#" class="dropdown-item" @click="importSettings">
+                                    <span class="icon"><i class="fa fa-file-import"></i></span>
+                                    <span>{{ translations.generalSettingsImportSettings }}</span>
+                                </a>
+                                <a class="dropdown-item" @click="exportCurrentSettings">
+                                    <span class="icon"><i class="fa fa-file-export"></i></span>
+                                    <span>{{ translations.generalSettingsExportSettings }}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="button" @click="resetAll">
+                        <span class="icon">
+                            <i class="fas fa-undo-alt"></i>
+                        </span>
+                    </button>
+                </div>
             </div>
             <div class="settings__setting-content">
 

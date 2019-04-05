@@ -40,6 +40,11 @@ export const germanTranslationSet: TranslationSet = {
     generalSettingsRescanIntervalEnabled: "Periodischer Rescan aktiviert",
     generalSettingsRescanInterval: "Rescan Intervall (in Sekunden)",
     generalSettingsShowAlwaysOnPrimaryDisplay: "Immer auf primärem Bildschirm anzeigen",
+    generalSettingsExportSettings: "Aktuelle Einstellungen exportieren",
+    generalSettingsSuccessfullyExportedSettings: "Erfolgreich Einstellungen exportiert",
+    generalSettingsImportSettings: "Einstellungen importieren",
+    generalSettingsImportFileFilterJsonFiles: "JSON Dateien",
+    generalSettingsImportErrorInvalidConfig: "Einstellungsimport fehlgeschlagen: Dateiinhalt scheint ungültig zu sein",
 
     appearanceSettings: "Erscheinungsbild",
     appearanceSettingsWindowWidth: "Fensterbreite (in Pixel)",
