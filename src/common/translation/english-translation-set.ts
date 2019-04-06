@@ -139,6 +139,7 @@ export const englishTranslationSet: TranslationSet = {
     websearchIsFallback: "Fallback",
     websearchEncodeSearchTerm: "Encode search term",
     websearchInvalidWebsearchEngine: "Invalid web search engine",
+    websearchDescription: `Search on {{websearch_engine}} for "{{search_term}}"`,
 
     fileBrowser: "File Browser",
     fileBrowserSettingsMaxSearchResults: "Max search results",

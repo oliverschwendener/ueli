@@ -136,6 +136,7 @@ export interface TranslationSet {
     websearchIsFallback: string;
     websearchEncodeSearchTerm: string;
     websearchInvalidWebsearchEngine: string;
+    websearchDescription: string;
 
     fileBrowser: string;
     fileBrowserSettingsMaxSearchResults: string;

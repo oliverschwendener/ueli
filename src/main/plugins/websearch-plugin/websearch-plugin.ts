@@ -5,16 +5,19 @@ import { WebSearchOptions } from "../../../common/config/websearch-options";
 import { ExecutionPlugin } from "../../execution-plugin";
 import { WebSearchEngine } from "./web-search-engine";
 import { AutoCompletionResult } from "../../../common/auto-completion-result";
+import { TranslationSet } from "../../../common/translation/translation-set";
 
 export class WebSearchPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.WebSearchPlugin;
     public readonly openLocationSupported = false;
     public readonly autoCompletionSupported = false;
     private config: WebSearchOptions;
+    private translationSet: TranslationSet;
     private readonly urlExecutor: (url: string) => Promise<void>;
 
-    constructor(userConfig: WebSearchOptions, urlExecutor: (url: string) => Promise<void>) {
+    constructor(userConfig: WebSearchOptions, translationSet: TranslationSet, urlExecutor: (url: string) => Promise<void>) {
         this.config = userConfig;
+        this.translationSet = translationSet;
         this.urlExecutor = urlExecutor;
     }
 
@@ -75,9 +78,10 @@ export class WebSearchPlugin implements ExecutionPlugin {
         });
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
+    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
         return new Promise((resolve) => {
             this.config = updatedConfig.websearchOptions;
+            this.translationSet = translationSet;
             resolve();
         });
     }
@@ -93,7 +97,9 @@ export class WebSearchPlugin implements ExecutionPlugin {
     }
 
     private buildDescription(webSearchEngine: WebSearchEngine, userInput: string): string {
-        return `Search on ${webSearchEngine.name} for "${this.getSearchTerm(webSearchEngine, userInput)}"`;
+        return this.translationSet.websearchDescription
+            .replace("{{websearch_engine}}", webSearchEngine.name)
+            .replace("{{search_term}}", this.getSearchTerm(webSearchEngine, userInput));
     }
 
     private buildExecutionArgument(webSearchEngine: WebSearchEngine, userInput: string): string {

@@ -60,7 +60,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
             ),
     ];
 
-    const webSearchPlugin = new WebSearchPlugin(userConfig.websearchOptions, urlExecutor);
+    const webSearchPlugin = new WebSearchPlugin(userConfig.websearchOptions, translationSet, urlExecutor);
 
     const executionPlugins: ExecutionPlugin[] = [
         webSearchPlugin,

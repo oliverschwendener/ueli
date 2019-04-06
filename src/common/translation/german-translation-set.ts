@@ -139,6 +139,7 @@ export const germanTranslationSet: TranslationSet = {
     websearchIsFallback: "Fallback",
     websearchEncodeSearchTerm: "Suchbegriff kodieren",
     websearchInvalidWebsearchEngine: "Ungültige Websuchmaschine",
+    websearchDescription: `Suche auf {{websearch_engine}} nach "{{search_term}}"`,
 
     fileBrowser: "Dateibrowser",
     fileBrowserSettingsMaxSearchResults: "Maximale Suchergebnisse",
