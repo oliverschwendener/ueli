@@ -55,6 +55,7 @@ export const operatingSystemCommandsSettingsComponent = Vue.extend({
                 </button>
             </div>
         </div>
+        <p class="settings__setting-description" v-html="translations.operatingSystemCommandsSettingsDescription"></p>
     </div>
     `,
 });

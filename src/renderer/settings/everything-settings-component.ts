@@ -86,6 +86,7 @@ export const everythingSettingsComponent = Vue.extend({
                     </button>
                 </div>
             </div>
+            <p class="settings__setting-description" v-html="translations.everythingSearchSettingDescription"></p>
             <div class="settings__setting-content">
                 <div v-if="!config.everythingSearchOptions.enabled" class="settings__setting-disabled-overlay"></div>
                 <div class="settings__setting-content-item box">

@@ -68,6 +68,7 @@ export const germanTranslationSet: TranslationSet = {
     colorPicker: "Farbwähler",
 
     applicationSearchSettings: "Programmsuche",
+    applicationSearchSettingsDescription: `Dieses Plugin sucht nach Programmen auf deinem Computer. Du kannst Ordner definieren, wo nach Applikationen gesucht werden soll und anhand welcher Dateiendung ein Programm erkennt werden soll.`,
     applicationSearchSettingsApplicationFolders: "Programmverzeichnisse",
     applicationSearchSettingsApplicationFolder: "Programmverzeichnis",
     applicationSearchSettingsFolderPath: "Ordnerpfad",
@@ -82,6 +83,7 @@ export const germanTranslationSet: TranslationSet = {
     applicationSearchSettingsFolderValidationError: `Während der Validierung von "{{value}}" ist ein Fehler aufgetreten`,
 
     searchEngineSettings: "Suchmaschine",
+    searchEngineSettingsDescription: `Die Suchmaschine wird für vorindexierte Inhalte benutzt, z.B. Programme, Shortcuts und Betriebssystembefehle und -einstellungen.`,
     searchEngineSettingsFuzzyness: "Fuzzyness",
     searchEngineSettingsFuzzynessDescription: "0 = strikt, 1 = fuzzy",
     searchEngineSettingsStrict: "Strikt",
@@ -89,6 +91,7 @@ export const germanTranslationSet: TranslationSet = {
     searchEngineSettingsMaxSearchResults: "Maximale Suchergebnisse",
 
     shortcutSettings: "Shorcuts",
+    shortcutSettingsDescription: `Dieses Plugin erlaubt es dir Dateien und Webseiten schnell zu öffnen indem du eigene Shorctus erstellst.`,
     shortcutSettingsShortcut: "Shortcuts",
     shortcutSettingsTableType: "Typ",
     shortcutSettingsTableName: "Name",
@@ -110,6 +113,7 @@ export const germanTranslationSet: TranslationSet = {
     shortcutSettingsTypeFilePath: "Dateipfad",
 
     translationSettingsTranslation: "Übersetzung",
+    translationSettingsDescription: `Dieses Plugin erlaubt es dir schnell Wörter und kurze Sätze zu übersetzen. Es benutzt eine inoffizielle API (https://github.com/imankulov/linguee-api) für Linguee (https://github.com/imankulov/linguee-api) und kann daher instabil sein.`,
     translationSettingsDebounceDelay: "Debounce Verzögerung (in Millisekunden)",
     translationSettingsMinSearchTermLength: "Minimum Suchbegrifflänge",
     translationSettingsPrefix: "Präfix",
@@ -117,17 +121,20 @@ export const germanTranslationSet: TranslationSet = {
     translationSettingsTargetLanguage: "Zielsprache",
 
     everythingSearch: "Everything Suche",
+    everythingSearchSettingDescription: `Dieses Plugin erlaubt es dir lokale Dateien und Ordner mit Everthing search zu finden. Du musst "Everything" und "Everything Command-line Interface" von https://www.voidtools.com/downloads/ installieren. Nachdem beides installiert ist musst du den Dateipfad zu 'es.exe' unten angeben.`,
     everythingSearchPathToBinary: `Dateipfad zu "es.exe"`,
     everythingSearchPrefix: "Präfix",
     everythingSearchMaxSearchResults: "Maximale Suchergebnisse",
     everythingSearchPathToBinaryFilterName: "Ausführbare Dateien",
 
     mdfindSearch: "mdfind Suche",
+    mdfindSettingsDescription: "Dieses Plugin erlaubt es dir mithilfe der nativen macOS-Suche Dateien und Ordner in deinem lokalen Dateisystem zu finden.",
     mdfindSearchDebounceDelay: "Debounce Verzögerung (in Millisekunden)",
     mdfindSearchPrefix: "Präfix",
     mdfindSearchMaxSearchResults: "Maximale Suchergebnisse",
 
     websearch: "Websuche",
+    websearchSettingDescription: `Dieses Plugin erlaubt es dir schnell das Internet mit deiner Lieblings-Websuchmaschine zu durchsuchen, indem du deine eigenen Websuchamschinen erstellst.`,
     websearchEngines: "Websuchmaschinen",
     websearchEditingModalTitleAdd: "Websuchmaschine hinzufügen",
     websearchEditingModalTitleEdit: "Websuchmaschine bearbeiten",
@@ -142,12 +149,14 @@ export const germanTranslationSet: TranslationSet = {
     websearchDescription: `Suche auf {{websearch_engine}} nach "{{search_term}}"`,
 
     fileBrowser: "Dateibrowser",
+    fileBrowserSettingsDescription: `Dieses Plugin erlaubt es dir dein lokales Dateisystem zu durchsuchen. Um zu starten musst du einen validen absoluten Dateipfad angeben.`,
     fileBrowserSettingsMaxSearchResults: "Maximale Suchergebnisse",
     fileBrowserOptionsShowHiddenFiles: "Versteckte Dateien anzeigen",
     fileBrowserOptionsBlackList: "Blacklist",
     fileBrowserOptionsBlackListPlaceholder: "Datei- oder Ordnername",
 
     operatingSystemCommands: "Betriebssystembefehle",
+    operatingSystemCommandsSettingsDescription: `Betriebssystembefehle sind simple Befehle um das Betriebssystem zu steuern, z.B. Herunterfahren, Neustart.`,
 
     macOsShutdown: "Ausschalten",
     macOsShutdownDescription: "Computer ausschalten",

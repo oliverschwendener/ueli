@@ -65,6 +65,7 @@ export interface TranslationSet {
     colorPicker: string;
 
     applicationSearchSettings: string;
+    applicationSearchSettingsDescription: string;
     applicationSearchSettingsApplicationFolders: string;
     applicationSearchSettingsApplicationFolder: string;
     applicationSearchSettingsFolderPath: string;
@@ -79,6 +80,7 @@ export interface TranslationSet {
     applicationSearchSettingsFolderValidationError: string;
 
     searchEngineSettings: string;
+    searchEngineSettingsDescription: string;
     searchEngineSettingsFuzzyness: string;
     searchEngineSettingsFuzzynessDescription: string;
     searchEngineSettingsStrict: string;
@@ -86,6 +88,7 @@ export interface TranslationSet {
     searchEngineSettingsMaxSearchResults: string;
 
     shortcutSettings: string;
+    shortcutSettingsDescription: string;
     shortcutSettingsShortcut: string;
     shortcutSettingsTableType: string;
     shortcutSettingsTableName: string;
@@ -107,6 +110,7 @@ export interface TranslationSet {
     shortcutSettingsTypeFilePath: string;
 
     translationSettingsTranslation: string;
+    translationSettingsDescription: string;
     translationSettingsDebounceDelay: string;
     translationSettingsMinSearchTermLength: string;
     translationSettingsPrefix: string;
@@ -114,17 +118,20 @@ export interface TranslationSet {
     translationSettingsTargetLanguage: string;
 
     everythingSearch: string;
+    everythingSearchSettingDescription: string;
     everythingSearchPathToBinary: string;
     everythingSearchPrefix: string;
     everythingSearchMaxSearchResults: string;
     everythingSearchPathToBinaryFilterName: string;
 
     mdfindSearch: string;
+    mdfindSettingsDescription: string;
     mdfindSearchDebounceDelay: string;
     mdfindSearchPrefix: string;
     mdfindSearchMaxSearchResults: string;
 
     websearch: string;
+    websearchSettingDescription: string;
     websearchEngines: string;
     websearchEditingModalTitleAdd: string;
     websearchEditingModalTitleEdit: string;
@@ -139,12 +146,14 @@ export interface TranslationSet {
     websearchDescription: string;
 
     fileBrowser: string;
+    fileBrowserSettingsDescription: string;
     fileBrowserSettingsMaxSearchResults: string;
     fileBrowserOptionsShowHiddenFiles: string;
     fileBrowserOptionsBlackList: string;
     fileBrowserOptionsBlackListPlaceholder: string;
 
     operatingSystemCommands: string;
+    operatingSystemCommandsSettingsDescription: string;
 
     macOsShutdown: string;
     macOsShutdownDescription: string;

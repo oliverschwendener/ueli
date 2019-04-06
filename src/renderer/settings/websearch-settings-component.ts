@@ -94,6 +94,7 @@ export const webSearchSettingsComponent = Vue.extend({
                 </button>
             </div>
         </div>
+        <p class="settings__setting-description" v-html="translations.websearchSettingDescription"></p>
         <div class="settings__setting-content">
             <div v-if="!config.websearchOptions.isEnabled" class="settings__setting-disabled-overlay"></div>
             <div class="settings__setting-content-item box">

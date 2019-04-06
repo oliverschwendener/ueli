@@ -43,6 +43,7 @@ export const searchEngineSettingsComponent = Vue.extend({
                 <span class="icon"><i class="fas fa-undo-alt"></i></span>
             </button>
         </div>
+        <p class="settings__setting-description" v-html="translations.searchEngineSettingsDescription"></p>
         <div class="settings__setting-content">
             <div class="box">
                 <div class="settings__options-container">

@@ -54,6 +54,7 @@ export const mdfindSettingsComponent = Vue.extend({
                     </button>
                 </div>
             </div>
+            <p class="settings__setting-description" v-html="translations.mdfindSettingsDescription"></p>
             <div class="settings__setting-content" >
                 <div v-if="!config.mdfindOptions.enabled" class="settings__setting-disabled-overlay"></div>
                 <div class="box">

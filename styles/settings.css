@@ -33,6 +33,10 @@ html {
     align-items: center;
 }
 
+.settings__setting-description {
+    margin-bottom: 1.5rem;
+}
+
 .settings__setting-content {
     position: relative;
 }

@@ -110,6 +110,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
                     </button>
                 </div>
             </div>
+            <p class="settings__setting-description" v-html="translations.applicationSearchSettingsDescription"></p>
             <div class="settings__setting-content">
                 <div v-if="!config.applicationSearchOptions.enabled" class="settings__setting-disabled-overlay"></div>
                 <div class="settings__setting-content-item box">

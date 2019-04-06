@@ -68,6 +68,7 @@ export const englishTranslationSet: TranslationSet = {
     colorPicker: "Color picker",
 
     applicationSearchSettings: "Application Search",
+    applicationSearchSettingsDescription: `This plugin is searching for applications on your computer. You can specify the folders where your applications are installed and which file extension should be used to recognize an application.`,
     applicationSearchSettingsApplicationFolders: "Application folders",
     applicationSearchSettingsApplicationFolder: "Application folder",
     applicationSearchSettingsFolderPath: "Folder path",
@@ -82,6 +83,7 @@ export const englishTranslationSet: TranslationSet = {
     applicationSearchSettingsFolderValidationError: `An error occured while trying to validate "{{value}}"`,
 
     searchEngineSettings: "Search engine",
+    searchEngineSettingsDescription: `The search engine is used for preindexed items like applications, shortcuts and operating system settings/commands.`,
     searchEngineSettingsFuzzyness: "Fuzzyness",
     searchEngineSettingsFuzzynessDescription: "0 = strict, 1 = fuzzy",
     searchEngineSettingsStrict: "Strict",
@@ -89,6 +91,7 @@ export const englishTranslationSet: TranslationSet = {
     searchEngineSettingsMaxSearchResults: "Max search results",
 
     shortcutSettings: "Shorcuts",
+    shortcutSettingsDescription: `This plugin enables you to quickly open files or websites by setting up your own shortcuts.`,
     shortcutSettingsShortcut: "Shortcuts",
     shortcutSettingsTableType: "Type",
     shortcutSettingsTableName: "Name",
@@ -110,6 +113,7 @@ export const englishTranslationSet: TranslationSet = {
     shortcutSettingsTypeFilePath: "File path",
 
     translationSettingsTranslation: "Translation",
+    translationSettingsDescription: `This plugin enables you to quickly translate words or short sentences. It uses an unofficial API (https://github.com/imankulov/linguee-api) for Linguee (https://linguee.de) and may be unstable.`,
     translationSettingsDebounceDelay: "Debounce delay (in milliseconds)",
     translationSettingsMinSearchTermLength: "Min search term length",
     translationSettingsPrefix: "Prefix",
@@ -117,17 +121,20 @@ export const englishTranslationSet: TranslationSet = {
     translationSettingsTargetLanguage: "Target language",
 
     everythingSearch: "Everything search",
+    everythingSearchSettingDescription: `This plugin enables you to use Everything search to find files and folders on your local file system. You have to install "Everything" and the "Everything Command-line Interface" from https://www.voidtools.com/downloads/. After installing both you have to specify the file path to 'es.exe' below.`,
     everythingSearchPathToBinary: `Path to "es.exe"`,
     everythingSearchPrefix: "Prefix",
     everythingSearchMaxSearchResults: "Max search results",
     everythingSearchPathToBinaryFilterName: "Executable files",
 
     mdfindSearch: "mdfind search",
+    mdfindSettingsDescription: "This plugin enables you to use the native macOS search to find files and folders on your local file system.",
     mdfindSearchDebounceDelay: "Debounce delay (in milliseconds)",
     mdfindSearchPrefix: "Prefix",
     mdfindSearchMaxSearchResults: "Max search results",
 
     websearch: "Web search",
+    websearchSettingDescription: `This plugin enables you to quickly search the internet with your favorite web search engine by setting up your own web search engines.`,
     websearchEngines: "Web search engines",
     websearchEditingModalTitleAdd: "Add web search engine",
     websearchEditingModalTitleEdit: "Edit web search engine",
@@ -142,12 +149,14 @@ export const englishTranslationSet: TranslationSet = {
     websearchDescription: `Search on {{websearch_engine}} for "{{search_term}}"`,
 
     fileBrowser: "File Browser",
+    fileBrowserSettingsDescription: `This plugin enables you to browse through your local file system. To start you have to enter a valid absolute filepath.`,
     fileBrowserSettingsMaxSearchResults: "Max search results",
     fileBrowserOptionsShowHiddenFiles: "Show hidden files",
     fileBrowserOptionsBlackList: "Blacklist",
     fileBrowserOptionsBlackListPlaceholder: "File or folder name",
 
     operatingSystemCommands: "Operating system commands",
+    operatingSystemCommandsSettingsDescription: `Operating system commands are simple commands to control your operating system e.g. to shutdown or restart your computer.`,
 
     macOsShutdown: "Shut Down",
     macOsShutdownDescription: "Shut down computer",
