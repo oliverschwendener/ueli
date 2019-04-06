@@ -1111,10 +1111,10 @@ bulma-extensions@^4.0.1:
   resolved "https://registry.yarnpkg.com/bulma-extensions/-/bulma-extensions-4.0.1.tgz#aa52dfd3b03eae095fdc8784d27bdd48c63f6035"
   integrity sha512-gyn8OXlZWWRyOEh1Do1oKzZj3BuPFzruBK6tPhDs13cxPF539P7jvK+LVttQQPUIRq5B2WCjR/JaZmXSPxKg1g==
 
-bulma@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.2.tgz#8e944377b74c7926558830d38d8e19eaf49f5fb6"
-  integrity sha512-6JHEu8U/1xsyOst/El5ImLcZIiE2JFXgvrz8GGWbnDLwTNRPJzdAM0aoUM1Ns0avALcVb6KZz9NhzmU53dGDcQ==
+bulma@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.4.tgz#7e74512e9118d9799021339e67e365ee0ac4f3f9"
+  integrity sha512-krG2rP6eAX1WE0sf6O0SC/FUVSOBX4m1PBC2+GKLpb2pX0qanaDqcv9U2nu75egFrsHkI0zdWYuk/oGwoszVWg==
 
 cacache@^11.0.2:
   version "11.3.2"
