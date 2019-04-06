@@ -6,7 +6,7 @@ import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultOperatingSystemCommandsOptions } from "../../common/config/default-operating-system-commands-options";
 import { cloneDeep } from "lodash";
 
-export const operatingSystemSettingsComponent = Vue.extend({
+export const operatingSystemCommandsSettingsComponent = Vue.extend({
     data() {
         return {
             settingName: Settings.OperatingSystemCommands,

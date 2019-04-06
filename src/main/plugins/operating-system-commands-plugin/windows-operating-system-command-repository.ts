@@ -5,29 +5,29 @@ import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { IconType } from "../../../common/icon/icon-type";
 
 export class WindowsOperatingSystemCommandRepository implements OperatingSystemCommandRepository {
-    private operatingSystemCommands: OperatingSystemCommand[];
+    private translationSet: TranslationSet;
 
     constructor(translationSet: TranslationSet) {
-        this.operatingSystemCommands = this.getOperatingSystemCommands(translationSet);
+        this.translationSet = translationSet;
     }
 
     public getAll(): Promise<OperatingSystemCommand[]> {
         return new Promise((resolve, reject) => {
-            resolve(this.operatingSystemCommands);
+            resolve(this.getOperatingSystemCommands());
         });
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.operatingSystemCommands = this.getOperatingSystemCommands(translationSet);
+        return new Promise((resolve) => {
+            this.translationSet = translationSet;
             resolve();
         });
     }
 
-    private getOperatingSystemCommands(translationSet: TranslationSet): OperatingSystemCommand[] {
+    private getOperatingSystemCommands(): OperatingSystemCommand[] {
         return [
             {
-                description: translationSet.windowsShutdownDescription,
+                description: this.translationSet.windowsShutdownDescription,
                 executionArgument: `shutdown -s -t 0`,
                 icon: {
                     parameter: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
@@ -35,11 +35,11 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                 </svg>`,
                     type: IconType.SVG,
                 },
-                name: translationSet.windowsShutdown,
-                searchable: [translationSet.windowsShutdown],
+                name: this.translationSet.windowsShutdown,
+                searchable: [this.translationSet.windowsShutdown],
             },
             {
-                description: translationSet.windowsRestartDescription,
+                description: this.translationSet.windowsRestartDescription,
                 executionArgument: `shutdown -s -t 0`,
                 icon: {
                     parameter: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -47,11 +47,11 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                 </svg>`,
                     type: IconType.SVG,
                 },
-                name: translationSet.windowsRestart,
-                searchable: [translationSet.windowsRestart],
+                name: this.translationSet.windowsRestart,
+                searchable: [this.translationSet.windowsRestart],
             },
             {
-                description: translationSet.windowsSignoutDescription,
+                description: this.translationSet.windowsSignoutDescription,
                 executionArgument: `shutdown -s -t 0`,
                 icon: {
                     parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
@@ -61,11 +61,11 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                 </svg>`,
                     type: IconType.SVG,
                 },
-                name: translationSet.windowsSignout,
-                searchable: [translationSet.windowsSignout],
+                name: this.translationSet.windowsSignout,
+                searchable: [this.translationSet.windowsSignout],
             },
             {
-                description: translationSet.windowsLockDescription,
+                description: this.translationSet.windowsLockDescription,
                 executionArgument: `shutdown -s -t 0`,
                 icon: {
                     parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
@@ -75,8 +75,8 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                 </svg>`,
                     type: IconType.SVG,
                 },
-                name: translationSet.windowsLock,
-                searchable: [translationSet.windowsLock],
+                name: this.translationSet.windowsLock,
+                searchable: [this.translationSet.windowsLock],
             },
         ];
     }

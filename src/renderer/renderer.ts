@@ -36,7 +36,7 @@ import { ColorThemeOptions } from "../common/config/color-theme-options";
 import { colorPickerComponent } from "./settings/color-picker-component";
 import { Chrome } from "vue-color";
 import { fileBrowserSettingsComponent } from "./settings/filebrowser-settings-component";
-import { operatingSystemSettingsComponent } from "./settings/operating-system-settings-component";
+import { operatingSystemCommandsSettingsComponent } from "./settings/operating-system-commands-settings-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -63,7 +63,7 @@ Vue.component("color-theme-settings", colorThemeSettingsComponent);
 Vue.component("chrome-picker", Chrome);
 Vue.component("color-picker", colorPickerComponent);
 Vue.component("filebrowser-settings", fileBrowserSettingsComponent);
-Vue.component("operating-system-settings", operatingSystemSettingsComponent);
+Vue.component("operating-system-settings", operatingSystemCommandsSettingsComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 
