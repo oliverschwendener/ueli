@@ -25,6 +25,8 @@ import { getFileIconDataUrl } from "../../common/icon/generate-file-icon";
 import { OperatingSystemCommandsPlugin } from "../plugins/operating-system-commands-plugin/operating-system-commands-plugin";
 import { MacOsOperatingSystemCommandRepository } from "../plugins/operating-system-commands-plugin/mac-os-operating-system-command-repository";
 import { WindowsOperatingSystemCommandRepository } from "../plugins/operating-system-commands-plugin/windows-operating-system-command-repository";
+import { CalculatorPlugin } from "../plugins/calculator-plugin/calculator-plugin";
+import { electronClipboardCopier } from "./electron-clipboard-copier";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -71,6 +73,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
             filePathLocationExecutor,
             getFileIconDataUrl),
         new TranslationExecutionPlugin(userConfig.translationOptions),
+        new CalculatorPlugin(userConfig.calculatorOptions, translationSet, electronClipboardCopier),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [

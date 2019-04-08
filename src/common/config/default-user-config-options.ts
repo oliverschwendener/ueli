@@ -11,10 +11,12 @@ import { defaultWebSearchOptions } from "./default-websearch-options";
 import { defaultColorThemeOptions } from "./default-color-theme-options";
 import { defaultFileBrowserOptions } from "./default-filebrowser-options";
 import { defaultOperatingSystemCommandsOptions } from "./default-operating-system-commands-options";
+import { defaultCalculatorOptions } from "./default-calculator-options";
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
     applicationSearchOptions: defaultApplicationSearchOptions,
+    calculatorOptions: defaultCalculatorOptions,
     colorThemeOptions: defaultColorThemeOptions,
     everythingSearchOptions: defaultEverythingSearchOptions,
     fileBrowserOptions: defaultFileBrowserOptions,

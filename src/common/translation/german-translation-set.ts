@@ -180,6 +180,8 @@ export const germanTranslationSet: TranslationSet = {
     windowsLock: "Sperren",
     windowsLockDescription: "Computer sperren",
 
+    calculatorCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",
+
     cancel: "Abbrechen",
     save: "Speichern",
     add: "Hinzufügen",

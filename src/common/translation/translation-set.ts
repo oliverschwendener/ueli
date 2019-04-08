@@ -177,6 +177,8 @@ export interface TranslationSet {
     windowsLock: string;
     windowsLockDescription: string;
 
+    calculatorCopyToClipboard: string;
+
     cancel: string;
     save: string;
     add: string;

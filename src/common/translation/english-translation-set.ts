@@ -180,6 +180,8 @@ export const englishTranslationSet: TranslationSet = {
     windowsLock: "Lock",
     windowsLockDescription: "Lock computer",
 
+    calculatorCopyToClipboard: "Press enter to copy to clipboard",
+
     cancel: "Cancel",
     save: "Save",
     add: "Add",

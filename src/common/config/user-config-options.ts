@@ -10,6 +10,7 @@ import { WebSearchOptions } from "./websearch-options";
 import { ColorThemeOptions } from "./color-theme-options";
 import { FileBrowserOptions } from "./filebrowser-options";
 import { OperatingSystemCommandsOptions } from "./operating-system-commands-options";
+import { CalculatorOptions } from "./calculator-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -24,4 +25,5 @@ export interface UserConfigOptions {
     websearchOptions: WebSearchOptions;
     fileBrowserOptions: FileBrowserOptions;
     operatingSystemCommandsOptions: OperatingSystemCommandsOptions;
+    calculatorOptions: CalculatorOptions;
 }
