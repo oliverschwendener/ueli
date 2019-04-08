@@ -31,6 +31,9 @@ export const englishTranslationSet: TranslationSet = {
     successfullyClearedCachesBeforeExit: "Successfully cleared caches before exit",
 
     // settings
+    generalSettingsMenuSection: "General",
+    pluginSettingsMenuSection: "Plugins",
+
     generalSettings: "General",
     generalSettingsLanguage: "Language",
     generalSettingsAutostartApp: "Autostart app on system startup",
@@ -45,6 +48,7 @@ export const englishTranslationSet: TranslationSet = {
     generalSettingsImportSettings: "Import settings",
     generalSettingsImportFileFilterJsonFiles: "JSON files",
     generalSettingsImportErrorInvalidConfig: "Settings import failed: file content seems to be invalid",
+    generalSettingsResetAllSettings: "Reset all settings to default",
 
     appearanceSettings: "Appearance",
     appearanceSettingsWindowWidth: "Window width (in pixels)",

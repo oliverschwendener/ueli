@@ -31,6 +31,9 @@ export const germanTranslationSet: TranslationSet = {
     successfullyClearedCachesBeforeExit: "Erfolgreich alle Zwischenspeicher vor dem Beenden gelöscht",
 
     // settings
+    generalSettingsMenuSection: "Allgemein",
+    pluginSettingsMenuSection: "Plugins",
+
     generalSettings: "Allgemein",
     generalSettingsLanguage: "Sprache",
     generalSettingsAutostartApp: "App bei Systemstart starten",
@@ -45,6 +48,7 @@ export const germanTranslationSet: TranslationSet = {
     generalSettingsImportSettings: "Einstellungen importieren",
     generalSettingsImportFileFilterJsonFiles: "JSON Dateien",
     generalSettingsImportErrorInvalidConfig: "Einstellungsimport fehlgeschlagen: Dateiinhalt scheint ungültig zu sein",
+    generalSettingsResetAllSettings: "Alle Einstellungen auf Standard zurücksetzen",
 
     appearanceSettings: "Erscheinungsbild",
     appearanceSettingsWindowWidth: "Fensterbreite (in Pixel)",

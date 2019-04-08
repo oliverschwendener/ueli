@@ -1,9 +1,10 @@
 import Vue from "vue";
 import { VueEventChannels } from "../vue-event-channels";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
-import { Settings } from "./settings";
+import { PluginSettings } from "./plugin-settings";
 import { SettingOsSpecific } from "./settings-os-specific";
 import { TranslationSet } from "../../common/translation/translation-set";
+import { GeneralSettings } from "./general-settings";
 
 export const settingMenuItemComponent = Vue.extend({
     data() {
@@ -12,33 +13,33 @@ export const settingMenuItemComponent = Vue.extend({
         };
     },
     methods: {
-        getItemName(item: Settings | SettingOsSpecific) {
+        getItemName(item: GeneralSettings | PluginSettings | SettingOsSpecific) {
             const translations: TranslationSet = this.translations;
             switch (item) {
-                case Settings.Appearance:
+                case GeneralSettings.Appearance:
                     return translations.appearanceSettings;
-                case Settings.ColorTheme:
+                case GeneralSettings.ColorTheme:
                     return translations.colorThemeSettings;
-                case Settings.ApplicationSearch:
-                    return translations.applicationSearchSettings;
-                case Settings.General:
+                case GeneralSettings.General:
                     return translations.generalSettings;
-                case Settings.SearchEngine:
+                case GeneralSettings.SearchEngine:
                     return translations.searchEngineSettings;
-                case Settings.Shortcuts:
+                case PluginSettings.ApplicationSearch:
+                    return translations.applicationSearchSettings;
+                case PluginSettings.Shortcuts:
                     return translations.shortcutSettings;
-                case Settings.Translation:
+                case PluginSettings.Translation:
                     return translations.translationSettingsTranslation;
-                case Settings.WebSearch:
+                case PluginSettings.WebSearch:
                     return translations.websearch;
-                case Settings.FileBrowser:
+                case PluginSettings.FileBrowser:
                     return translations.fileBrowser;
+                case PluginSettings.OperatingSystemCommands:
+                    return translations.operatingSystemCommands;
                 case SettingOsSpecific.Everything:
                     return translations.everythingSearch;
                 case SettingOsSpecific.MdFind:
                     return translations.mdfindSearch;
-                case Settings.OperatingSystemCommands:
-                    return translations.operatingSystemCommands;
                 default:
                     return item;
             }

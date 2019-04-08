@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
-import { Settings } from "./settings";
+import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultWebSearchOptions, defaultWebSearchIcon } from "../../common/config/default-websearch-options";
 import { cloneDeep } from "lodash";
@@ -13,7 +13,7 @@ export const webSearchSettingsComponent = Vue.extend({
     data() {
         return {
             defaultWebSearchIcon,
-            settingName: Settings.WebSearch,
+            settingName: PluginSettings.WebSearch,
             visible: false,
         };
     },
@@ -62,7 +62,7 @@ export const webSearchSettingsComponent = Vue.extend({
         },
     },
     mounted() {
-        vueEventDispatcher.$on(VueEventChannels.showSetting, (settingName: Settings) => {
+        vueEventDispatcher.$on(VueEventChannels.showSetting, (settingName: PluginSettings) => {
             if (this.settingName === settingName) {
                 this.visible = true;
             } else {

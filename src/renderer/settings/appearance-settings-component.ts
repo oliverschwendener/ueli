@@ -4,12 +4,12 @@ import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { cloneDeep } from "lodash";
 import { defaultAppearanceOptions } from "../../common/config/default-appearance-options";
-import { Settings } from "./settings";
+import { GeneralSettings } from "./general-settings";
 
 export const appearanceSettingsComponent = Vue.extend({
     data() {
         return {
-            settingName: Settings.Appearance,
+            settingName: GeneralSettings.Appearance,
             visible: false,
         };
     },

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
-import { Settings } from "./settings";
+import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { cloneDeep } from "lodash";
 import { defaultFileBrowserOptions } from "../../common/config/default-filebrowser-options";
@@ -10,7 +10,7 @@ export const fileBrowserSettingsComponent = Vue.extend({
     data() {
         return {
             newBlackListEntry: "",
-            settingName: Settings.FileBrowser,
+            settingName: PluginSettings.FileBrowser,
             visible: false,
         };
     },

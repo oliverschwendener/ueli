@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { Settings } from "./settings";
+import { PluginSettings } from "./plugin-settings";
 import { defaultShortcutOptions, defaultShortcutIcon } from "../../common/config/default-shortcuts-options";
 import { vueEventDispatcher } from "./../vue-event-dispatcher";
 import { VueEventChannels } from "./../vue-event-channels";
@@ -18,7 +18,7 @@ export const shortcutSettingsComponent = Vue.extend({
             defaultShortcutIcon,
             iconTypeSvg: IconType.SVG,
             iconTypeUrl: IconType.URL,
-            settingName: Settings.Shortcuts,
+            settingName: PluginSettings.Shortcuts,
             visible: false,
         };
     },

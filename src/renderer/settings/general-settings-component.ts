@@ -5,7 +5,6 @@ import { UserConfigOptions } from "../../common/config/user-config-options";
 import { cloneDeep } from "lodash";
 import { join } from "path";
 import { defaultGeneralOptions } from "../../common/config/default-general-options";
-import { Settings } from "./settings";
 import { GlobalHotKeyModifier } from "../../common/global-hot-key/global-hot-key-modifier";
 import { GlobalHotKeyKey } from "../../common/global-hot-key/global-hot-key-key";
 import { Language } from "../../common/translation/language";
@@ -15,6 +14,7 @@ import { TranslationSet } from "../../common/translation/translation-set";
 import { FileHelpers } from "../../main/helpers/file-helpers";
 import { isValidUserConfig, mergeUserConfigWithDefault } from "../../common/helpers/config-helpers";
 import { defaultUserConfigOptions } from "../../common/config/default-user-config-options";
+import { GeneralSettings } from "./general-settings";
 
 export const generalSettingsComponent = Vue.extend({
     data() {
@@ -23,7 +23,7 @@ export const generalSettingsComponent = Vue.extend({
             dropdownVisible: false,
             globalHotKeyKeys: Object.values(GlobalHotKeyKey).map((key) => key),
             globalHotKeyModifiers: Object.values(GlobalHotKeyModifier).map((modifier) => modifier),
-            settingName: Settings.General,
+            settingName: GeneralSettings.General,
             visible: false,
         };
     },
@@ -61,13 +61,19 @@ export const generalSettingsComponent = Vue.extend({
                                 vueEventDispatcher.$emit(VueEventChannels.notification, translations.generalSettingsImportErrorInvalidConfig, SettingsNotificationType.Error);
                             }
                         })
-                        .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, SettingsNotificationType.Error));
+                        .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, SettingsNotificationType.Error))
+                        .then(() => this.dropdownVisible = false);
                 });
         },
         resetAll() {
             const config: UserConfigOptions = this.config;
             config.generalOptions = cloneDeep(defaultGeneralOptions);
             this.updateConfig();
+        },
+        resetAllSettingsToDefault() {
+            this.config = cloneDeep(defaultUserConfigOptions);
+            this.updateConfig();
+            this.dropdownVisible = false;
         },
         updateConfig() {
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
@@ -107,6 +113,10 @@ export const generalSettingsComponent = Vue.extend({
                                 <a class="dropdown-item" @click="exportCurrentSettings">
                                     <span class="icon"><i class="fa fa-file-export"></i></span>
                                     <span>{{ translations.generalSettingsExportSettings }}</span>
+                                </a>
+                                <a class="dropdown-item" @click="resetAllSettingsToDefault">
+                                    <span class="icon"><i class="fas fa-undo-alt"></i></span>
+                                    <span>{{ translations.generalSettingsResetAllSettings }}</span>
                                 </a>
                             </div>
                         </div>

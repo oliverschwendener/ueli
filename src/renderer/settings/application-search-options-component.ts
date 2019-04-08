@@ -4,14 +4,14 @@ import { VueEventChannels } from "../vue-event-channels";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { defaultApplicationSearchOptions } from "../../main/plugins/application-search-plugin/default-application-search-plugin-options";
 import { cloneDeep } from "lodash";
-import { Settings } from "./settings";
+import { PluginSettings } from "./plugin-settings";
 import { SettingsNotificationType } from "./settings-notification-type";
 import { showNotification } from "../notifications";
 
 export const applicationSearchSettingsComponent = Vue.extend({
     data() {
         return {
-            settingName: Settings.ApplicationSearch,
+            settingName: PluginSettings.ApplicationSearch,
             visible: false,
         };
     },

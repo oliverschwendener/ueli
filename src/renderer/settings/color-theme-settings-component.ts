@@ -1,15 +1,15 @@
 import Vue from "vue";
-import { Settings } from "./settings";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultColorThemeOptions } from "../../common/config/default-color-theme-options";
 import { cloneDeep } from "lodash";
+import { GeneralSettings } from "./general-settings";
 
 export const colorThemeSettingsComponent = Vue.extend({
     data() {
         return {
-            settingName: Settings.ColorTheme,
+            settingName: GeneralSettings.ColorTheme,
             visible: false,
         };
     },

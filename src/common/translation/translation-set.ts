@@ -28,6 +28,9 @@ export interface TranslationSet {
     successfullyClearedCachesBeforeExit: string;
 
     // Settings
+    generalSettingsMenuSection: string;
+    pluginSettingsMenuSection: string;
+
     generalSettings: string;
     generalSettingsLanguage: string;
     generalSettingsAutostartApp: string;
@@ -42,6 +45,7 @@ export interface TranslationSet {
     generalSettingsImportSettings: string;
     generalSettingsImportFileFilterJsonFiles: string;
     generalSettingsImportErrorInvalidConfig: string;
+    generalSettingsResetAllSettings: string;
 
     appearanceSettings: string;
     appearanceSettingsWindowWidth: string;

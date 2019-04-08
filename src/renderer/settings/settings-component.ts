@@ -4,9 +4,10 @@ import { VueEventChannels } from "../vue-event-channels";
 import { SettingsNotificationType } from "./settings-notification-type";
 import { ipcRenderer } from "electron";
 import { IpcChannels } from "../../common/ipc-channels";
-import { Settings } from "./settings";
+import { PluginSettings } from "./plugin-settings";
 import { SettingOsSpecific } from "./settings-os-specific";
 import { platform } from "os";
+import { GeneralSettings } from "./general-settings";
 
 const autoHideErrorMessageDelayInMilliseconds = 5000;
 let autoHideErrorMessageTimeout: number;
@@ -33,18 +34,18 @@ export const settingsComponent = Vue.extend({
     },
     data() {
         return {
+            generalSettingMenuItems: Object.values(GeneralSettings),
             notification: {
                 message: "",
                 type: undefined,
                 visible: false,
             },
-            settingMenuItems: Object
-                .values(Settings)
+            pluginSettingMenuItems: Object
+                .values(PluginSettings)
                 .concat(Object
                     .values(SettingOsSpecific)
                     .filter((setting: string) => setting.startsWith(platform()))
-                    .map((setting: string) => setting.replace(`${platform()}:`, "")))
-                .sort(),
+                    .map((setting: string) => setting.replace(`${platform()}:`, ""))),
         };
     },
     methods: {
@@ -69,7 +70,7 @@ export const settingsComponent = Vue.extend({
     },
     props: ["config", "translations"],
     mounted() {
-        vueEventDispatcher.$emit(VueEventChannels.showSetting, Settings.General);
+        vueEventDispatcher.$emit(VueEventChannels.showSetting, GeneralSettings.General);
 
         vueEventDispatcher.$on(VueEventChannels.notification, (message: string, type: SettingsNotificationType) => {
             this.showNotification(message, type);
@@ -89,10 +90,24 @@ export const settingsComponent = Vue.extend({
         <div class="settings container">
             <settings-loading-overlay></settings-loading-overlay>
             <div class="settings__sidebar menu">
+                <div class="menu-label">
+                    {{ translations.generalSettingsMenuSection }}
+                </div>
                 <ul class="menu-list">
                     <setting-menu-item
-                        v-for="settingMenuItem in settingMenuItems"
-                        :item="settingMenuItem"
+                        v-for="generalSettingMenuItem in generalSettingMenuItems"
+                        :item="generalSettingMenuItem"
+                        :translations="translations"
+                        >
+                    </setting-menu-item>
+                </ul>
+                <div class="menu-label">
+                    {{ translations.pluginSettingsMenuSection }}
+                </div>
+                <ul class="menu-list">
+                    <setting-menu-item
+                        v-for="pluginSettingMenuItem in pluginSettingMenuItems"
+                        :item="pluginSettingMenuItem"
                         :translations="translations"
                         >
                     </setting-menu-item>

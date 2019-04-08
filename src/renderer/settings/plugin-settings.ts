@@ -1,9 +1,5 @@
-export enum Settings {
-    Appearance = "Appearance",
+export enum PluginSettings {
     ApplicationSearch = "Application Search",
-    ColorTheme = "Color Theme",
-    General = "General",
-    SearchEngine = "Search Engine",
     Shortcuts = "Shortcuts",
     Translation = "Translation",
     WebSearch = "Websearch",

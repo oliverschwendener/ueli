@@ -4,12 +4,12 @@ import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { cloneDeep } from "lodash";
 import { defaultSearchEngineOptions } from "../../common/config/default-search-engine-options";
-import { Settings } from "./settings";
+import { GeneralSettings } from "./general-settings";
 
 export const searchEngineSettingsComponent = Vue.extend({
     data() {
         return {
-            settingName: Settings.SearchEngine,
+            settingName: GeneralSettings.SearchEngine,
             visible: false,
         };
     },

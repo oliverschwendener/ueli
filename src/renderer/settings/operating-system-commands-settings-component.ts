@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
-import { Settings } from "./settings";
+import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultOperatingSystemCommandsOptions } from "../../common/config/default-operating-system-commands-options";
 import { cloneDeep } from "lodash";
@@ -9,7 +9,7 @@ import { cloneDeep } from "lodash";
 export const operatingSystemCommandsSettingsComponent = Vue.extend({
     data() {
         return {
-            settingName: Settings.OperatingSystemCommands,
+            settingName: PluginSettings.OperatingSystemCommands,
             visible: false,
         };
     },

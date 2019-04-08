@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { Settings } from "./settings";
+import { PluginSettings } from "./plugin-settings";
 import { vueEventDispatcher } from "./../vue-event-dispatcher";
 import { VueEventChannels } from "./../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
@@ -10,7 +10,7 @@ import { TranslationLanguage } from "../../main/plugins/translation-execution-pl
 export const translationSettingsComponent = Vue.extend({
     data() {
         return {
-            settingName: Settings.Translation,
+            settingName: PluginSettings.Translation,
             sourceLanguages: Object.values(TranslationLanguage),
             targetLanguages: Object.values(TranslationLanguage),
             visible: false,
