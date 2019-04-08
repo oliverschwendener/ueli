@@ -180,7 +180,10 @@ export const englishTranslationSet: TranslationSet = {
     windowsLock: "Lock",
     windowsLockDescription: "Lock computer",
 
+    calcuator: "Calculator",
     calculatorCopyToClipboard: "Press enter to copy to clipboard",
+    calculatorDescription: "This Plugin lets you quickly to simple calculations.",
+    calculatorPrecision: "Precision",
 
     cancel: "Cancel",
     save: "Save",

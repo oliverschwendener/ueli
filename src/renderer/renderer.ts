@@ -37,6 +37,7 @@ import { colorPickerComponent } from "./settings/color-picker-component";
 import { Chrome } from "vue-color";
 import { fileBrowserSettingsComponent } from "./settings/filebrowser-settings-component";
 import { operatingSystemCommandsSettingsComponent } from "./settings/operating-system-commands-settings-component";
+import { calculatorSettingsComponent } from "./settings/calculator-settings-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -64,6 +65,7 @@ Vue.component("chrome-picker", Chrome);
 Vue.component("color-picker", colorPickerComponent);
 Vue.component("filebrowser-settings", fileBrowserSettingsComponent);
 Vue.component("operating-system-settings", operatingSystemCommandsSettingsComponent);
+Vue.component("calculator-settings", calculatorSettingsComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 

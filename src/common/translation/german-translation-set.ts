@@ -180,7 +180,10 @@ export const germanTranslationSet: TranslationSet = {
     windowsLock: "Sperren",
     windowsLockDescription: "Computer sperren",
 
+    calcuator: "Rechner",
     calculatorCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",
+    calculatorDescription: "Dieses Plugin erlaubt es dir schnell einfache Rechnungen zu machen.",
+    calculatorPrecision: "Präzision",
 
     cancel: "Abbrechen",
     save: "Speichern",
