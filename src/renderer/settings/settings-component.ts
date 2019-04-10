@@ -131,6 +131,7 @@ export const settingsComponent = Vue.extend({
                 <filebrowser-settings :config="config" :translations="translations"></filebrowser-settings>
                 <operating-system-settings :config="config" :translations="translations"></operating-system-settings>
                 <calculator-settings :config="config" :translations="translations"></calculator-settings>
+                <url-settings :config="config" :translations="translations"></url-settings>
             </div>
         </div>
     `,

@@ -10,4 +10,5 @@ export enum PluginType {
     FileBrowserPlugin = "filebrowser-plugin",
     OperatingSystemCommandsPlugin = "operating-system-commands-plugin",
     Calculator = "calculator",
+    Url = "Url",
 }

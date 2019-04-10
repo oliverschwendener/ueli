@@ -185,6 +185,11 @@ export const englishTranslationSet: TranslationSet = {
     calculatorDescription: "This Plugin lets you quickly to simple calculations.",
     calculatorPrecision: "Precision",
 
+    openUrlWithBrowser: "Open with web browser",
+    url: "URL",
+    urlDescription: "This plugin enables you to quickly open websites by typing in a URL.",
+    urlDefaultProtocol: "Default protocol",
+
     cancel: "Cancel",
     save: "Save",
     add: "Add",

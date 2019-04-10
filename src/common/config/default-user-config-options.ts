@@ -12,6 +12,7 @@ import { defaultColorThemeOptions } from "./default-color-theme-options";
 import { defaultFileBrowserOptions } from "./default-filebrowser-options";
 import { defaultOperatingSystemCommandsOptions } from "./default-operating-system-commands-options";
 import { defaultCalculatorOptions } from "./default-calculator-options";
+import { defaultUrlOptions } from "./default-url-oprions";
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
@@ -26,5 +27,6 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     searchEngineOptions: defaultSearchEngineOptions,
     shortcutOptions: defaultShortcutOptions,
     translationOptions: defaultTranslationOptions,
+    urlOptions: defaultUrlOptions,
     websearchOptions: defaultWebSearchOptions,
 };

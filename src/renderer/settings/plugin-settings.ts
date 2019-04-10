@@ -6,4 +6,5 @@ export enum PluginSettings {
     FileBrowser = "File Browser",
     OperatingSystemCommands = "Operating System Commands",
     Calculator = "Calculator",
+    Url = "Url",
 }

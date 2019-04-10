@@ -11,6 +11,7 @@ import { ColorThemeOptions } from "./color-theme-options";
 import { FileBrowserOptions } from "./filebrowser-options";
 import { OperatingSystemCommandsOptions } from "./operating-system-commands-options";
 import { CalculatorOptions } from "./calculator-options";
+import { UrlOptions } from "./url-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -26,4 +27,5 @@ export interface UserConfigOptions {
     fileBrowserOptions: FileBrowserOptions;
     operatingSystemCommandsOptions: OperatingSystemCommandsOptions;
     calculatorOptions: CalculatorOptions;
+    urlOptions: UrlOptions;
 }

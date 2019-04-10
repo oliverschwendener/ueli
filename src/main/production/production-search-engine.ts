@@ -27,6 +27,7 @@ import { MacOsOperatingSystemCommandRepository } from "../plugins/operating-syst
 import { WindowsOperatingSystemCommandRepository } from "../plugins/operating-system-commands-plugin/windows-operating-system-command-repository";
 import { CalculatorPlugin } from "../plugins/calculator-plugin/calculator-plugin";
 import { electronClipboardCopier } from "./electron-clipboard-copier";
+import { UrlPlugin } from "../plugins/url-plugin/url-plugin";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -74,6 +75,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
             getFileIconDataUrl),
         new TranslationPlugin(userConfig.translationOptions),
         new CalculatorPlugin(userConfig.calculatorOptions, translationSet, electronClipboardCopier),
+        new UrlPlugin(userConfig.urlOptions, translationSet, urlExecutor),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [

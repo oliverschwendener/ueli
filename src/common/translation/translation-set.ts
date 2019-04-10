@@ -182,6 +182,11 @@ export interface TranslationSet {
     calculatorDescription: string;
     calculatorPrecision: string;
 
+    openUrlWithBrowser: string;
+    url: string;
+    urlDescription: string;
+    urlDefaultProtocol: string;
+
     cancel: string;
     save: string;
     add: string;
