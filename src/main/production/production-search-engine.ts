@@ -29,6 +29,7 @@ import { CalculatorPlugin } from "../plugins/calculator-plugin/calculator-plugin
 import { electronClipboardCopier } from "./electron-clipboard-copier";
 import { UrlPlugin } from "../plugins/url-plugin/url-plugin";
 import { EmailPlugin } from "../plugins/email-plugin/email-plugin";
+import { ElectronStoreFavoriteRepository } from "../favorites/electron-store-favorite-repository";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -105,5 +106,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
         fallbackPlugins,
         userConfig,
         translationSet,
-        logger);
+        logger,
+        new ElectronStoreFavoriteRepository(),
+    );
 };

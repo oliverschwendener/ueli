@@ -12,4 +12,5 @@ export enum PluginType {
     Calculator = "calculator",
     Url = "Url",
     Email = "Email",
+    Test = "Test",
 }

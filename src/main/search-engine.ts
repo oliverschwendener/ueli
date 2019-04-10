@@ -8,9 +8,12 @@ import { TranslationSet } from "../common/translation/translation-set";
 import { getNoSearchResultsFoundResultItem } from "./no-search-results-found-result-item";
 import { Logger } from "../common/logger/logger";
 import { AutoCompletionResult } from "../common/auto-completion-result";
+import { FavoriteRepository } from "./favorites/favorite-repository";
+import { FavoriteManager } from "./favorites/favorites-manager";
 
 interface FuseResult {
     item: SearchResultItem;
+    score: number;
 }
 
 export class SearchEngine {
@@ -20,6 +23,7 @@ export class SearchEngine {
     private translationSet: TranslationSet;
     private config: UserConfigOptions;
     private readonly logger: Logger;
+    private readonly favoriteManager: FavoriteManager;
 
     constructor(
         plugins: SearchPlugin[],
@@ -27,13 +31,15 @@ export class SearchEngine {
         fallbackPlugins: ExecutionPlugin[],
         config: UserConfigOptions,
         translationSet: TranslationSet,
-        logger: Logger) {
+        logger: Logger,
+        favoriteRepository: FavoriteRepository) {
         this.translationSet = translationSet;
         this.config = config;
         this.searchPlugins = plugins;
         this.executionPlugins = executionPlugins;
         this.fallbackPlugins = fallbackPlugins;
         this.logger = logger;
+        this.favoriteManager = new FavoriteManager(favoriteRepository);
         this.refreshIndexes()
             .then(() => this.logger.debug(translationSet.successfullyRefreshedIndexes))
             .catch((err) => this.logger.error(err));
@@ -74,7 +80,10 @@ export class SearchEngine {
             const originPlugin = this.getAllPlugins().find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
             if (originPlugin !== undefined) {
                 originPlugin.execute(searchResultItem, privileged)
-                    .then(() => resolve())
+                    .then(() => {
+                        this.favoriteManager.increaseCount(searchResultItem);
+                        resolve();
+                    })
                     .catch((err: string) => reject(err));
             } else {
                 reject("Error while trying to execute search result item. No plugin found for this search result item");
@@ -158,7 +167,17 @@ export class SearchEngine {
                     });
 
                     const fuseResult = fuse.search(userInput) as any[];
-                    const filtered = fuseResult.map((item: FuseResult): SearchResultItem => item.item);
+                    const favorites = this.favoriteManager.getAllFavorites();
+
+                    fuseResult.forEach((fuseResultItem: FuseResult) => {
+                        const favorite = favorites.find((f) => f.item.executionArgument === fuseResultItem.item.executionArgument);
+                        if (favorite && favorite.executionCount !== 0) {
+                            fuseResultItem.score /= favorite.executionCount * 3;
+                        }
+                    });
+
+                    const sorted = fuseResult.sort((a: FuseResult, b: FuseResult) => a.score  - b.score);
+                    const filtered = sorted.map((item: FuseResult): SearchResultItem => item.item);
                     const sliced = filtered.slice(0, this.config.searchEngineOptions.maxSearchResults);
 
                     resolve(sliced);

@@ -8,8 +8,12 @@ import { SearchResultItem } from "../common/search-result-item";
 import { PluginType } from "../main/plugin-type";
 import { dummyIcon } from "./dummy-icon";
 import { TestLogger } from "./test-logger";
+import { ExecutionPlugin } from "../main/execution-plugin";
+import { TranslationSet } from "../common/translation/translation-set";
+import { FakeFavoriteRepository } from "./fake-favorite-repository";
 
 describe(SearchEngine.name, () => {
+    const fakeFavoritesRepository = new FakeFavoriteRepository([]);
     const logger = new TestLogger();
     it("should find search results when searching for the exact name", (done) => {
         const items: SearchResultItem[] = [
@@ -19,20 +23,20 @@ describe(SearchEngine.name, () => {
                 hideMainWindowAfterExecution: true,
                 icon: dummyIcon,
                 name: "Google Chrome",
-                originPluginType: PluginType.ApplicationSearchPlugin,
+                originPluginType: PluginType.Test,
                 searchable: ["Google Chrome"],
             },
         ];
 
         const searchPlugins: SearchPlugin[] = [
-            new FakeSearchPlugin(PluginType.ApplicationSearchPlugin, items, true),
+            new FakeSearchPlugin(PluginType.Test, items, true),
         ];
         const userConfig = {
             //
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, englishTranslationSet, logger);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, englishTranslationSet, logger, fakeFavoritesRepository);
 
         searchEngine.getSearchResults("Google Chrome")
             .then((searchResults) => {
@@ -51,21 +55,21 @@ describe(SearchEngine.name, () => {
                 hideMainWindowAfterExecution: true,
                 icon: dummyIcon,
                 name: "Google Chrome",
-                originPluginType: PluginType.ApplicationSearchPlugin,
+                originPluginType: PluginType.Test,
                 searchable: ["Google Chrome"],
             },
         ];
         const translationSet = englishTranslationSet;
 
         const searchPlugins: SearchPlugin[] = [
-            new FakeSearchPlugin(PluginType.ApplicationSearchPlugin, items, true),
+            new FakeSearchPlugin(PluginType.Test, items, true),
         ];
         const userConfig = {
             //
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger, fakeFavoritesRepository);
 
         searchEngine.getSearchResults("blabla")
             .then((searchResults) => {
@@ -84,21 +88,21 @@ describe(SearchEngine.name, () => {
                 hideMainWindowAfterExecution: true,
                 icon: dummyIcon,
                 name: "Google Chrome",
-                originPluginType: PluginType.ApplicationSearchPlugin,
+                originPluginType: PluginType.Test,
                 searchable: ["Google Chrome"],
             },
         ];
         const translationSet = englishTranslationSet;
 
         const searchPlugins: SearchPlugin[] = [
-            new FakeSearchPlugin(PluginType.ApplicationSearchPlugin, items, true),
+            new FakeSearchPlugin(PluginType.Test, items, true),
         ];
         const userConfig = {
             //
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger, fakeFavoritesRepository);
 
         searchEngine.getSearchResults("gOoGlE ChRoMe")
             .then((searchResults) => {
@@ -117,14 +121,14 @@ describe(SearchEngine.name, () => {
                 hideMainWindowAfterExecution: true,
                 icon: dummyIcon,
                 name: "Google Chrome",
-                originPluginType: PluginType.ApplicationSearchPlugin,
+                originPluginType: PluginType.Test,
                 searchable: ["Google Chrome"],
             },
         ];
         const translationSet = englishTranslationSet;
 
         const searchPlugins: SearchPlugin[] = [
-            new FakeSearchPlugin(PluginType.ApplicationSearchPlugin, items, true),
+            new FakeSearchPlugin(PluginType.Test, items, true),
         ];
         const userConfig = {
             searchEngineOptions: {
@@ -133,7 +137,7 @@ describe(SearchEngine.name, () => {
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger, fakeFavoritesRepository);
 
         searchEngine.getSearchResults("gglchrm")
             .then((searchResults) => {
@@ -152,14 +156,14 @@ describe(SearchEngine.name, () => {
                 hideMainWindowAfterExecution: true,
                 icon: dummyIcon,
                 name: "Google Chrome",
-                originPluginType: PluginType.ApplicationSearchPlugin,
+                originPluginType: PluginType.Test,
                 searchable: ["Google Chrome"],
             },
         ];
         const translationSet = englishTranslationSet;
 
         const searchPlugins: SearchPlugin[] = [
-            new FakeSearchPlugin(PluginType.ApplicationSearchPlugin, items, true),
+            new FakeSearchPlugin(PluginType.Test, items, true),
         ];
         const userConfig = {
             searchEngineOptions: {
@@ -168,12 +172,54 @@ describe(SearchEngine.name, () => {
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger, fakeFavoritesRepository);
 
         searchEngine.getSearchResults("gglchrm")
             .then((searchResults) => {
                 expect(searchResults.length).toBe(1);
                 expect(searchResults[0].name).toBe(translationSet.noSearchResultsFoundTitle);
+                done();
+            })
+            .catch((err) => done(err));
+    });
+
+    it("should list frequently accessed items higher", (done) => {
+        const config = {
+            searchEngineOptions: {
+                fuzzyness: 0.4,
+            },
+        } as UserConfigOptions;
+        const translationSet = {} as TranslationSet;
+        const items = [
+            { name: "abc", executionArgument: "abc", searchable: ["abc"] },
+            { name: "abcd", executionArgument: "abcd", searchable: ["abcd"] },
+            { name: "abcde", executionArgument: "abcde", searchable: ["abcde"] },
+            { name: "abcdef", executionArgument: "abcdef", searchable: ["abcdef"] },
+        ] as SearchResultItem[];
+        const favoritesRepository = new FakeFavoriteRepository([
+            { executionCount: 0, item: items[0] },
+            { executionCount: 0, item: items[1] },
+            { executionCount: 0, item: items[2] },
+            { executionCount: 10, item: items[3] },
+        ]);
+        const searchPlugins: SearchPlugin[] = [
+            new FakeSearchPlugin(PluginType.Test, items, true),
+        ];
+        const executionPlugins: ExecutionPlugin[] = [];
+        const fallbackPlugins: ExecutionPlugin[] = [];
+        const searchEngine = new SearchEngine(
+            searchPlugins,
+            executionPlugins,
+            fallbackPlugins,
+            config,
+            translationSet,
+            logger,
+            favoritesRepository,
+        );
+        searchEngine.getSearchResults("a")
+            .then((result) => {
+                expect(result.length).toBe(4);
+                expect(result[0].name).toBe("abcdef");
                 done();
             })
             .catch((err) => done(err));
