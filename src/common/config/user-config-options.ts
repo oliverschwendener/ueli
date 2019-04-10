@@ -12,6 +12,7 @@ import { FileBrowserOptions } from "./filebrowser-options";
 import { OperatingSystemCommandsOptions } from "./operating-system-commands-options";
 import { CalculatorOptions } from "./calculator-options";
 import { UrlOptions } from "./url-options";
+import { EmailOptions } from "./email-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -28,4 +29,5 @@ export interface UserConfigOptions {
     operatingSystemCommandsOptions: OperatingSystemCommandsOptions;
     calculatorOptions: CalculatorOptions;
     urlOptions: UrlOptions;
+    emailOptions: EmailOptions;
 }

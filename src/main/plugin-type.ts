@@ -11,4 +11,5 @@ export enum PluginType {
     OperatingSystemCommandsPlugin = "operating-system-commands-plugin",
     Calculator = "calculator",
     Url = "Url",
+    Email = "Email",
 }

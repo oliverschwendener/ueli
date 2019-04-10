@@ -190,6 +190,10 @@ export const englishTranslationSet: TranslationSet = {
     urlDescription: "This plugin enables you to quickly open websites by typing in a URL.",
     urlDefaultProtocol: "Default protocol",
 
+    email: "Email",
+    emailSettingsDescription: "This plugin enables you to quickly start writing an email by typing in an email address.",
+    openNewMail: "Open new email",
+
     cancel: "Cancel",
     save: "Save",
     add: "Add",

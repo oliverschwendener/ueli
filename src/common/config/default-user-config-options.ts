@@ -13,12 +13,14 @@ import { defaultFileBrowserOptions } from "./default-filebrowser-options";
 import { defaultOperatingSystemCommandsOptions } from "./default-operating-system-commands-options";
 import { defaultCalculatorOptions } from "./default-calculator-options";
 import { defaultUrlOptions } from "./default-url-oprions";
+import { defaultEmailOptions } from "./default-email-options";
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
     applicationSearchOptions: defaultApplicationSearchOptions,
     calculatorOptions: defaultCalculatorOptions,
     colorThemeOptions: defaultColorThemeOptions,
+    emailOptions: defaultEmailOptions,
     everythingSearchOptions: defaultEverythingSearchOptions,
     fileBrowserOptions: defaultFileBrowserOptions,
     generalOptions: defaultGeneralOptions,

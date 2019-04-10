@@ -7,4 +7,5 @@ export enum PluginSettings {
     OperatingSystemCommands = "Operating System Commands",
     Calculator = "Calculator",
     Url = "Url",
+    Email = "Email",
 }

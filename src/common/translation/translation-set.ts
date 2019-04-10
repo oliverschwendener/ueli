@@ -187,6 +187,10 @@ export interface TranslationSet {
     urlDescription: string;
     urlDefaultProtocol: string;
 
+    email: string;
+    emailSettingsDescription: string;
+    openNewMail: string;
+
     cancel: string;
     save: string;
     add: string;
