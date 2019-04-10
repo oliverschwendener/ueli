@@ -19,7 +19,11 @@ export const userInputComponent = Vue.extend({
 
             if (event.key === "ArrowDown") {
                 event.preventDefault();
-                vueEventDispatcher.$emit(VueEventChannels.selectNextItem);
+                if (event.shiftKey) {
+                    vueEventDispatcher.$emit(VueEventChannels.favoritesRequested);
+                } else {
+                    vueEventDispatcher.$emit(VueEventChannels.selectNextItem);
+                }
             }
 
             if (event.key === "Enter") {

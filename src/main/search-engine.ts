@@ -75,6 +75,16 @@ export class SearchEngine {
         });
     }
 
+    public getFavorites(): Promise<SearchResultItem[]> {
+        return new Promise((resolve) => {
+            const result = this.favoriteManager.getAllFavorites()
+                .sort((a, b) => b.executionCount - a.executionCount)
+                .map((f) => f.item);
+
+            resolve(result);
+        });
+    }
+
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
             const originPlugin = this.getAllPlugins().find((plugin) => plugin.pluginType === searchResultItem.originPluginType);

@@ -31,4 +31,5 @@ export enum VueEventChannels {
     websearchEngineEdited = "websearch-engine-edited",
     editColor = "edit-color",
     saveColor = "save-color",
+    favoritesRequested = "favorites-requested",
 }

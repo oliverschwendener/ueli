@@ -422,9 +422,16 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {
         searchEngine.getSearchResults(userInput)
-            .then((result) => {
-                updateSearchResults(result, event.sender);
-            })
+            .then((result) => updateSearchResults(result, event.sender))
+            .catch((err) => {
+                logger.error(err);
+                sendErrorToRenderer(err, event.sender);
+            });
+    });
+
+    ipcMain.on(IpcChannels.favoritesRequested, (event: Electron.Event) => {
+        searchEngine.getFavorites()
+            .then((result) => updateSearchResults(result, event.sender))
             .catch((err) => {
                 logger.error(err);
                 sendErrorToRenderer(err, event.sender);

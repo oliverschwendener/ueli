@@ -21,4 +21,6 @@ export enum IpcChannels {
     folderAndFilePathsResult = "folder-and-file-paths-result",
     filePathRequested = "file-path-requested",
     filePathResult = "file-path-result",
+    favoritesRequested = "favorites-requested",
+    favoritesReponse = "favorites-response",
 }

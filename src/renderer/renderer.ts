@@ -103,6 +103,10 @@ new Vue({
             }
         });
 
+        vueEventDispatcher.$on(VueEventChannels.favoritesRequested, () => {
+            ipcRenderer.send(IpcChannels.favoritesRequested);
+        });
+
         vueEventDispatcher.$on(VueEventChannels.configUpdated, (config: UserConfigOptions, needsIndexRefresh: boolean) => {
             this.translations = getTranslationSet(config.generalOptions.language);
             this.config = config;
@@ -119,6 +123,10 @@ new Vue({
         });
 
         ipcRenderer.on(IpcChannels.searchResponse, (event: Electron.Event, searchResults: SearchResultItem[]) => {
+            vueEventDispatcher.$emit(VueEventChannels.searchResultsUpdated, searchResults);
+        });
+
+        ipcRenderer.on(IpcChannels.favoritesReponse, (event: Electron.Event, searchResults: SearchResultItem[]) => {
             vueEventDispatcher.$emit(VueEventChannels.searchResultsUpdated, searchResults);
         });
 
