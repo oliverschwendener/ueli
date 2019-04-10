@@ -1,4 +1,4 @@
-import { TranslationLanguage } from "../../main/plugins/translation-execution-plugin/translation-language";
+import { TranslationLanguage } from "../../main/plugins/translation-plugin/translation-language";
 
 export interface TranslationOptions {
     enabled: boolean;

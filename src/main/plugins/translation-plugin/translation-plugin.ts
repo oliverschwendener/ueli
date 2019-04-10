@@ -11,7 +11,7 @@ import { LingueeTranslator } from "./linguee-translator";
 import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { TranslationOptions } from "../../../common/config/translation-options";
 
-export class TranslationExecutionPlugin implements ExecutionPlugin {
+export class TranslationPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.TranslationPlugin;
     public readonly openLocationSupported = false;
     public readonly autoCompletionSupported = false;

@@ -5,7 +5,7 @@ import { VueEventChannels } from "./../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultTranslationOptions } from "../../common/config/default-translation-options";
 import { cloneDeep } from "lodash";
-import { TranslationLanguage } from "../../main/plugins/translation-execution-plugin/translation-language";
+import { TranslationLanguage } from "../../main/plugins/translation-plugin/translation-language";
 
 export const translationSettingsComponent = Vue.extend({
     data() {

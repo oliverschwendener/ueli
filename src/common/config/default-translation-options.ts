@@ -1,5 +1,5 @@
 import { TranslationOptions } from "./translation-options";
-import { TranslationLanguage } from "../../main/plugins/translation-execution-plugin/translation-language";
+import { TranslationLanguage } from "../../main/plugins/translation-plugin/translation-language";
 
 export const defaultTranslationOptions: TranslationOptions = {
     debounceDelay: 250,

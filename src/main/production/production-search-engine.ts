@@ -10,11 +10,11 @@ import { platform } from "os";
 import { executeUrlMacOs, executeUrlWindows } from "../executors/url-executor";
 import { executeFilePathWindows, executeFilePathMacOs } from "../executors/file-path-executor";
 import { SearchEngine } from "../search-engine";
-import { EverythingExecutionPlugin } from "../plugins/everything-execution-plugin/everthing-execution-plugin";
+import { EverythingPlugin } from "../plugins/everything-plugin/everthing-plugin";
 import { SearchPlugin } from "../search-plugin";
 import { ExecutionPlugin } from "../execution-plugin";
-import { MdFindExecutionPlugin } from "../plugins/mdfind-execution-plugin/mdfind-execution-plugin";
-import { TranslationExecutionPlugin } from "../plugins/translation-execution-plugin/translation-execution-plugin";
+import { MdFindPlugin } from "../plugins/mdfind-plugin/mdfind-plugin";
+import { TranslationPlugin } from "../plugins/translation-plugin/translation-plugin";
 import { executeFilePathLocationMacOs, executeFilePathLocationWindows } from "../executors/file-path-location-executor";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { WebSearchPlugin } from "../plugins/websearch-plugin/websearch-plugin";
@@ -72,7 +72,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
             filePathExecutor,
             filePathLocationExecutor,
             getFileIconDataUrl),
-        new TranslationExecutionPlugin(userConfig.translationOptions),
+        new TranslationPlugin(userConfig.translationOptions),
         new CalculatorPlugin(userConfig.calculatorOptions, translationSet, electronClipboardCopier),
     ];
 
@@ -82,14 +82,14 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
 
     if (isWindows(platform())) {
         executionPlugins.push(
-            new EverythingExecutionPlugin(
+            new EverythingPlugin(
                 userConfig.everythingSearchOptions,
                 filePathExecutor,
                 filePathLocationExecutor));
     }
     if (isMacOs(platform())) {
         executionPlugins.push(
-            new MdFindExecutionPlugin(
+            new MdFindPlugin(
                 userConfig.mdfindOptions,
                 filePathExecutor,
                 filePathLocationExecutor));
