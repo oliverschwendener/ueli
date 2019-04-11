@@ -1,12 +1,14 @@
 import { Logger } from "./logger";
 import * as Winston from "winston";
 
-export class FileLogger implements Logger {
+export class ProductionLogger implements Logger {
     private readonly logger: Winston.Logger;
 
     constructor() {
         const { combine, timestamp, printf } = Winston.format;
-        const myFormat = printf(({ level, message, t }) => `${t} ${level}: ${message}`);
+
+        // tslint:disable-next-line: no-shadowed-variable
+        const myFormat = printf(({ level, message, timestamp }) => `${timestamp} ${level}: ${message}`);
 
         this.logger = Winston.createLogger({
             defaultMeta: { service: "user-service" },

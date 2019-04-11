@@ -21,13 +21,13 @@ import { FileHelpers } from "./helpers/file-helpers";
 import { ueliTempFolder } from "../common/helpers/ueli-helpers";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
 import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-helpers";
-import { FileLogger } from "../common/logger/file-logger";
+import { ProductionLogger } from "../common/logger/production-logger";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
 }
 
-const logger = new FileLogger();
+const logger = new ProductionLogger();
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
 const currentOperatingSystem = platform() === "darwin" ? OperatingSystem.macOS : OperatingSystem.Windows;
 const windowIconFilePath = join(__dirname, "..", "assets", "ueli-black-on-white-logo.png");
