@@ -6,4 +6,5 @@ export interface FavoriteRepository {
     getAll(): Favorite[];
     save(favorite: Favorite): void;
     update(favorite: Favorite): void;
+    clearAll(): Promise<void>;
 }

@@ -25,4 +25,8 @@ export class FavoriteManager {
     public getAllFavorites(): Favorite[] {
         return this.favoriteRepository.getAll();
     }
+
+    public clearExecutionLog(): Promise<void> {
+        return this.favoriteRepository.clearAll();
+    }
 }

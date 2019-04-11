@@ -498,6 +498,12 @@ function registerAllIpcListeners() {
         });
     });
 
+    ipcMain.on(IpcChannels.clearExecutionLogConfirmed, (event: Electron.Event) => {
+        searchEngine.clearExecutionLog()
+            .then(() => notifyRenderer(IpcChannels.executionLogClearingSucceeded, translationSet.successfullyClearedExecutionLog))
+            .catch((err) => notifyRenderer(IpcChannels.executionLogClearingErrored, err));
+    });
+
     ipcMain.on(IpcChannels.ueliCommandExecuted, (command: UeliCommand) => {
         switch (command.executionArgument) {
             case UeliCommandExecutionArgument.Exit:

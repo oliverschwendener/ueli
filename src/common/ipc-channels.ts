@@ -23,4 +23,7 @@ export enum IpcChannels {
     filePathResult = "file-path-result",
     favoritesRequested = "favorites-requested",
     favoritesReponse = "favorites-response",
+    clearExecutionLogConfirmed = "clear-execution-log-confirmed",
+    executionLogClearingSucceeded = "execution-log-clearing-succeeded",
+    executionLogClearingErrored = "execution-log-clearing-errored",
 }

@@ -29,6 +29,7 @@ export const englishTranslationSet: TranslationSet = {
     successfullyClearedCaches: "Successfully cleared caches",
     successfullyUpdatedconfig: "Successfully updated config",
     successfullyClearedCachesBeforeExit: "Successfully cleared caches before exit",
+    successfullyClearedExecutionLog: "Successfully cleared execution log",
 
     // settings
     generalSettingsMenuSection: "General",
@@ -36,6 +37,7 @@ export const englishTranslationSet: TranslationSet = {
 
     generalSettings: "General",
     generalSettingsLanguage: "Language",
+    generalSettingsLogExecution: "Log execution",
     generalSettingsAutostartApp: "Autostart app on system startup",
     generalSettingsShowTrayIcon: "Show tray icon",
     generalSettingsClearCachesOnExit: "Clear caches on quit",
@@ -49,6 +51,7 @@ export const englishTranslationSet: TranslationSet = {
     generalSettingsImportFileFilterJsonFiles: "JSON files",
     generalSettingsImportErrorInvalidConfig: "Settings import failed: file content seems to be invalid",
     generalSettingsResetAllSettings: "Reset all settings to default",
+    clearExecutionLog: "Clear execution log",
 
     appearanceSettings: "Appearance",
     appearanceSettingsWindowWidth: "Window width (in pixels)",

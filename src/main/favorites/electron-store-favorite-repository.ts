@@ -6,7 +6,7 @@ import Store = require("electron-store");
 export class ElectronStoreFavoriteRepository implements FavoriteRepository {
     private readonly store: Store;
     private readonly favoritesStoreKey = "favorites";
-    private readonly favorites: Favorite[];
+    private favorites: Favorite[];
 
     constructor() {
         this.store = new Store();
@@ -36,5 +36,13 @@ export class ElectronStoreFavoriteRepository implements FavoriteRepository {
         }
 
         this.store.set(this.favoritesStoreKey, this.favorites);
+    }
+
+    public clearAll(): Promise<void> {
+        return new Promise((resolve) => {
+            this.favorites = [];
+            this.store.set(this.favoritesStoreKey, this.favorites);
+            resolve();
+        });
     }
 }

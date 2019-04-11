@@ -7,6 +7,7 @@ export interface GeneralOptions {
     rescanEnabled: boolean;
     hotKey: GlobalHotKey;
     language: Language;
+    logExecution: boolean;
     clearCachesOnExit: boolean;
     showTrayIcon: boolean;
     showAlwaysOnPrimaryDisplay: boolean;

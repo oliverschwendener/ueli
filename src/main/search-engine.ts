@@ -155,6 +155,10 @@ export class SearchEngine {
         });
     }
 
+    public clearExecutionLog(): Promise<void> {
+        return this.favoriteManager.clearExecutionLog();
+    }
+
     private getSearchPluginsResult(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             const pluginPromises = this.searchPlugins
@@ -177,14 +181,16 @@ export class SearchEngine {
                     });
 
                     const fuseResult = fuse.search(userInput) as any[];
-                    const favorites = this.favoriteManager.getAllFavorites();
 
-                    fuseResult.forEach((fuseResultItem: FuseResult) => {
-                        const favorite = favorites.find((f) => f.item.executionArgument === fuseResultItem.item.executionArgument);
-                        if (favorite && favorite.executionCount !== 0) {
-                            fuseResultItem.score /= favorite.executionCount * 3;
-                        }
-                    });
+                    if (this.config.generalOptions.logExecution) {
+                        fuseResult.forEach((fuseResultItem: FuseResult) => {
+                            const favorite = this.favoriteManager.getAllFavorites()
+                                .find((f) => f.item.executionArgument === fuseResultItem.item.executionArgument);
+                            if (favorite && favorite.executionCount !== 0) {
+                                fuseResultItem.score /= favorite.executionCount * 3;
+                            }
+                        });
+                    }
 
                     const sorted = fuseResult.sort((a: FuseResult, b: FuseResult) => a.score  - b.score);
                     const filtered = sorted.map((item: FuseResult): SearchResultItem => item.item);

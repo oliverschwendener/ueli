@@ -26,6 +26,7 @@ export interface TranslationSet {
     successfullyClearedCaches: string;
     successfullyUpdatedconfig: string;
     successfullyClearedCachesBeforeExit: string;
+    successfullyClearedExecutionLog: string;
 
     // Settings
     generalSettingsMenuSection: string;
@@ -33,6 +34,7 @@ export interface TranslationSet {
 
     generalSettings: string;
     generalSettingsLanguage: string;
+    generalSettingsLogExecution: string;
     generalSettingsAutostartApp: string;
     generalSettingsShowTrayIcon: string;
     generalSettingsClearCachesOnExit: string;
@@ -46,6 +48,7 @@ export interface TranslationSet {
     generalSettingsImportFileFilterJsonFiles: string;
     generalSettingsImportErrorInvalidConfig: string;
     generalSettingsResetAllSettings: string;
+    clearExecutionLog: string;
 
     appearanceSettings: string;
     appearanceSettingsWindowWidth: string;

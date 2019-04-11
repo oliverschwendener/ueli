@@ -29,6 +29,7 @@ export const germanTranslationSet: TranslationSet = {
     successfullyClearedCaches: "Erfolgreich alle Zwischenspeicher gelöscht",
     successfullyUpdatedconfig: "Erfolgreich Einstellungen aktualisiert",
     successfullyClearedCachesBeforeExit: "Erfolgreich alle Zwischenspeicher vor dem Beenden gelöscht",
+    successfullyClearedExecutionLog: "Erfolgreich den Ausführungslog gelöscht",
 
     // settings
     generalSettingsMenuSection: "Allgemein",
@@ -36,6 +37,7 @@ export const germanTranslationSet: TranslationSet = {
 
     generalSettings: "Allgemein",
     generalSettingsLanguage: "Sprache",
+    generalSettingsLogExecution: "Ausführungen loggen",
     generalSettingsAutostartApp: "App bei Systemstart starten",
     generalSettingsShowTrayIcon: "Symbol im Systemtray anzeigen",
     generalSettingsClearCachesOnExit: "Zwischenspeicher beim Beenden löschen",
@@ -49,6 +51,7 @@ export const germanTranslationSet: TranslationSet = {
     generalSettingsImportFileFilterJsonFiles: "JSON Dateien",
     generalSettingsImportErrorInvalidConfig: "Einstellungsimport fehlgeschlagen: Dateiinhalt scheint ungültig zu sein",
     generalSettingsResetAllSettings: "Alle Einstellungen auf Standard zurücksetzen",
+    clearExecutionLog: "Ausführungslog löschen",
 
     appearanceSettings: "Erscheinungsbild",
     appearanceSettingsWindowWidth: "Fensterbreite (in Pixel)",

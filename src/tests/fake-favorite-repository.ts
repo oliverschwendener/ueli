@@ -3,7 +3,7 @@ import { Favorite } from "../main/favorites/favorite";
 import { SearchResultItem } from "../common/search-result-item";
 
 export class FakeFavoriteRepository implements FavoriteRepository {
-    private readonly favorites: Favorite[];
+    private favorites: Favorite[];
 
     constructor(favorites: Favorite[]) {
         this.favorites = favorites;
@@ -29,5 +29,12 @@ export class FakeFavoriteRepository implements FavoriteRepository {
                 break;
             }
         }
+    }
+
+    public clearAll(): Promise<void> {
+        return new Promise((resolve) => {
+            this.favorites = [];
+            resolve();
+        });
     }
 }

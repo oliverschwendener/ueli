@@ -40,6 +40,7 @@ import { operatingSystemCommandsSettingsComponent } from "./settings/operating-s
 import { calculatorSettingsComponent } from "./settings/calculator-settings-component";
 import { urlSettingsComponent } from "./settings/url-settings-component";
 import { emailSettingsComponent } from "./settings/email-settings";
+import { SettingsNotificationType } from "./settings/settings-notification-type";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -114,6 +115,10 @@ new Vue({
             vueEventDispatcher.$emit(VueEventChannels.loadingStarted);
         });
 
+        vueEventDispatcher.$on(VueEventChannels.clearExecutionLogConfirmed, () => {
+            ipcRenderer.send(IpcChannels.clearExecutionLogConfirmed);
+        });
+
         ipcRenderer.on(IpcChannels.appearanceOptionsUpdated, (event: Electron.Event, updatedAppearanceOptions: AppearanceOptions) => {
             vueEventDispatcher.$emit(VueEventChannels.appearanceOptionsUpdated, updatedAppearanceOptions);
         });
@@ -140,6 +145,14 @@ new Vue({
 
         ipcRenderer.on(IpcChannels.userInputUpdated, (event: Electron.Event, updatedUserInput: string) => {
             vueEventDispatcher.$emit(VueEventChannels.userInputUpdated, updatedUserInput);
+        });
+
+        ipcRenderer.on(IpcChannels.executionLogClearingSucceeded, (event: Electron.Event, message: string) => {
+            vueEventDispatcher.$emit(VueEventChannels.notification, message, SettingsNotificationType.Info);
+        });
+
+        ipcRenderer.on(IpcChannels.executionLogClearingErrored, (event: Electron.Event, message: string) => {
+            vueEventDispatcher.$emit(VueEventChannels.notification, message, SettingsNotificationType.Error);
         });
     },
     methods: {

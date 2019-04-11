@@ -32,4 +32,5 @@ export enum VueEventChannels {
     editColor = "edit-color",
     saveColor = "save-color",
     favoritesRequested = "favorites-requested",
+    clearExecutionLogConfirmed = "clear-execution-log-confirmed",
 }

@@ -28,6 +28,9 @@ export const generalSettingsComponent = Vue.extend({
         };
     },
     methods: {
+        clearExecutionLog() {
+            vueEventDispatcher.$emit(VueEventChannels.clearExecutionLogConfirmed);
+        },
         dropdownTrigger() {
             this.dropdownVisible = !this.dropdownVisible;
         },
@@ -117,6 +120,10 @@ export const generalSettingsComponent = Vue.extend({
                                 <a class="dropdown-item" @click="resetAllSettingsToDefault">
                                     <span class="icon"><i class="fas fa-undo-alt"></i></span>
                                     <span>{{ translations.generalSettingsResetAllSettings }}</span>
+                                </a>
+                                <a class="dropdown-item" @click="clearExecutionLog">
+                                    <span class="icon"><i class="fas fa-trash"></i></span>
+                                    <span>{{ translations.clearExecutionLog }}</span>
                                 </a>
                             </div>
                         </div>
@@ -247,6 +254,19 @@ export const generalSettingsComponent = Vue.extend({
                                 </div>
                             </div>
                         </div>
+
+                        <div class="settings__option">
+                            <div class="settings__option-name">{{ translations.generalSettingsLogExecution }}</div>
+                            <div class="settings__option-content">
+                                <div class="field has-addons has-addons-right vertical-center">
+                                    <div class="control">
+                                        <input id="logExecutionCheckbox" type="checkbox" name="logExecutionCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.logExecution" @change="updateConfig">
+                                        <label for="logExecutionCheckbox"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
