@@ -13,6 +13,7 @@ import { OperatingSystemCommandsOptions } from "./operating-system-commands-opti
 import { CalculatorOptions } from "./calculator-options";
 import { UrlOptions } from "./url-options";
 import { EmailOptions } from "./email-options";
+import { CurrencyConverterOptions } from "./currency-converter-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -30,4 +31,5 @@ export interface UserConfigOptions {
     calculatorOptions: CalculatorOptions;
     urlOptions: UrlOptions;
     emailOptions: EmailOptions;
+    currencyConverterOptions: CurrencyConverterOptions;
 }

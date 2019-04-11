@@ -21,6 +21,8 @@ export class ProductionLogger implements Logger {
                 new Winston.transports.File({
                     filename: "debug.log",
                     level: "debug",
+                    maxFiles: 1,
+                    maxsize: 1000000,
                 }),
                 new Winston.transports.Console({
                     level: "debug",

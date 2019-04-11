@@ -28,7 +28,7 @@ export class CalculatorPlugin implements ExecutionPlugin {
 
     public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            const result = Calculator.calculate(userInput, this.config.precision);
+            const result = Calculator.calculate(userInput, Number(this.config.precision));
             resolve([{
                 description: this.translationSet.calculatorCopyToClipboard,
                 executionArgument: result,

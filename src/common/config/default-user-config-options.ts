@@ -14,12 +14,14 @@ import { defaultOperatingSystemCommandsOptions } from "./default-operating-syste
 import { defaultCalculatorOptions } from "./default-calculator-options";
 import { defaultUrlOptions } from "./default-url-oprions";
 import { defaultEmailOptions } from "./default-email-options";
+import { defaultCurrencyConverterOptions } from "./default-currency-converter-options";
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
     applicationSearchOptions: defaultApplicationSearchOptions,
     calculatorOptions: defaultCalculatorOptions,
     colorThemeOptions: defaultColorThemeOptions,
+    currencyConverterOptions: defaultCurrencyConverterOptions,
     emailOptions: defaultEmailOptions,
     everythingSearchOptions: defaultEverythingSearchOptions,
     fileBrowserOptions: defaultFileBrowserOptions,

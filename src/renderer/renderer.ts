@@ -41,6 +41,7 @@ import { calculatorSettingsComponent } from "./settings/calculator-settings-comp
 import { urlSettingsComponent } from "./settings/url-settings-component";
 import { emailSettingsComponent } from "./settings/email-settings";
 import { SettingsNotificationType } from "./settings/settings-notification-type";
+import { currencyConverterSettingsComponent } from "./settings/currency-converter-settings-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -71,6 +72,7 @@ Vue.component("operating-system-settings", operatingSystemCommandsSettingsCompon
 Vue.component("calculator-settings", calculatorSettingsComponent);
 Vue.component("url-settings", urlSettingsComponent);
 Vue.component("email-settings", emailSettingsComponent);
+Vue.component("currency-converter-settings", currencyConverterSettingsComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 

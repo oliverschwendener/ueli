@@ -8,4 +8,5 @@ export enum PluginSettings {
     Calculator = "Calculator",
     Url = "Url",
     Email = "Email",
+    CurrencyConverter = "Currency Converter",
 }

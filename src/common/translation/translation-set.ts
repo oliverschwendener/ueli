@@ -194,6 +194,10 @@ export interface TranslationSet {
     emailSettingsDescription: string;
     openNewMail: string;
 
+    currencyConverter: string;
+    currencyConverterDescription: string;
+    currencyConverterPrecision: string;
+
     cancel: string;
     save: string;
     add: string;

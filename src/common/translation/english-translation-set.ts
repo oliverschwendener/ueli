@@ -197,6 +197,10 @@ export const englishTranslationSet: TranslationSet = {
     emailSettingsDescription: "This plugin enables you to quickly start writing an email by typing in an email address.",
     openNewMail: "Open new email",
 
+    currencyConverter: "Currency Converter",
+    currencyConverterDescription: "This plugin enables you to quickly convert currencies. The latest conversion rates are provided by https://exchangeratesapi.io/.",
+    currencyConverterPrecision: "Precision",
+
     cancel: "Cancel",
     save: "Save",
     add: "Add",

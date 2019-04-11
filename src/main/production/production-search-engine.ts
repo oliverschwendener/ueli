@@ -30,6 +30,7 @@ import { electronClipboardCopier } from "./electron-clipboard-copier";
 import { UrlPlugin } from "../plugins/url-plugin/url-plugin";
 import { EmailPlugin } from "../plugins/email-plugin/email-plugin";
 import { ElectronStoreFavoriteRepository } from "../favorites/electron-store-favorite-repository";
+import { CurrencyConverterPlugin } from "../plugins/currency-converter-plugin/currency-converter-plugin";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -79,6 +80,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
         new CalculatorPlugin(userConfig.calculatorOptions, translationSet, electronClipboardCopier),
         new UrlPlugin(userConfig.urlOptions, translationSet, urlExecutor),
         new EmailPlugin(userConfig.emailOptions, translationSet, urlExecutor),
+        new CurrencyConverterPlugin(userConfig.currencyConverterOptions, electronClipboardCopier),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [
