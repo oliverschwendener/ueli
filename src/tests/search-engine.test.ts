@@ -32,7 +32,9 @@ describe(SearchEngine.name, () => {
             new FakeSearchPlugin(PluginType.Test, items, true),
         ];
         const userConfig = {
-            //
+            generalOptions: {
+                logExecution: false,
+            },
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
@@ -65,7 +67,9 @@ describe(SearchEngine.name, () => {
             new FakeSearchPlugin(PluginType.Test, items, true),
         ];
         const userConfig = {
-            //
+            generalOptions: {
+                logExecution: false,
+            },
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
@@ -98,7 +102,9 @@ describe(SearchEngine.name, () => {
             new FakeSearchPlugin(PluginType.Test, items, true),
         ];
         const userConfig = {
-            //
+            generalOptions: {
+                logExecution: false,
+            },
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
@@ -131,6 +137,9 @@ describe(SearchEngine.name, () => {
             new FakeSearchPlugin(PluginType.Test, items, true),
         ];
         const userConfig = {
+            generalOptions: {
+                logExecution: false,
+            },
             searchEngineOptions: {
                 fuzzyness: 0.8,
             },
@@ -166,6 +175,9 @@ describe(SearchEngine.name, () => {
             new FakeSearchPlugin(PluginType.Test, items, true),
         ];
         const userConfig = {
+            generalOptions: {
+                logExecution: false,
+            },
             searchEngineOptions: {
                 fuzzyness: 0.2,
             },
@@ -185,6 +197,9 @@ describe(SearchEngine.name, () => {
 
     it("should list frequently accessed items higher", (done) => {
         const config = {
+            generalOptions: {
+                logExecution: true,
+            },
             searchEngineOptions: {
                 fuzzyness: 0.4,
             },
