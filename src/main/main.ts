@@ -3,7 +3,6 @@ import { join } from "path";
 import { IpcChannels } from "../common/ipc-channels";
 import { SearchResultItem } from "../common/search-result-item";
 import { UserConfigOptions } from "../common/config/user-config-options";
-import { ConsoleLogger } from "../common/logger/console-logger";
 import { ElectronStoreConfigRepository } from "../common/config/electron-store-config-repository";
 import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
 import { AppearanceOptions } from "../common/config/appearance-options";
@@ -22,12 +21,13 @@ import { FileHelpers } from "./helpers/file-helpers";
 import { ueliTempFolder } from "../common/helpers/ueli-helpers";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
 import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-helpers";
+import { FileLogger } from "../common/logger/file-logger";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
 }
 
-const logger = new ConsoleLogger();
+const logger = new FileLogger();
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
 const currentOperatingSystem = platform() === "darwin" ? OperatingSystem.macOS : OperatingSystem.Windows;
 const windowIconFilePath = join(__dirname, "..", "assets", "ueli-black-on-white-logo.png");
