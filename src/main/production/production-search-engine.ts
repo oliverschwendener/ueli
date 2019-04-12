@@ -80,7 +80,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
         new CalculatorPlugin(userConfig.calculatorOptions, translationSet, electronClipboardCopier),
         new UrlPlugin(userConfig.urlOptions, translationSet, urlExecutor),
         new EmailPlugin(userConfig.emailOptions, translationSet, urlExecutor),
-        new CurrencyConverterPlugin(userConfig.currencyConverterOptions, electronClipboardCopier),
+        new CurrencyConverterPlugin(userConfig.currencyConverterOptions, translationSet, electronClipboardCopier),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [

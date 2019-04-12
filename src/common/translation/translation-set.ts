@@ -197,6 +197,7 @@ export interface TranslationSet {
     currencyConverter: string;
     currencyConverterDescription: string;
     currencyConverterPrecision: string;
+    currencyConverterCopyToClipboard: string;
 
     cancel: string;
     save: string;

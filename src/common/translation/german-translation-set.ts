@@ -200,6 +200,7 @@ export const germanTranslationSet: TranslationSet = {
     currencyConverter: "Währungsumrechnung",
     currencyConverterDescription: "Dieses Plugin erlaubt es dir schnell Währungsumrechnungen zu machen. Aktuelle Wechselkurse werden von https://exchangeratesapi.io/ bereit gestellt.",
     currencyConverterPrecision: "Präzision",
+    currencyConverterCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",
 
     cancel: "Abbrechen",
     save: "Speichern",

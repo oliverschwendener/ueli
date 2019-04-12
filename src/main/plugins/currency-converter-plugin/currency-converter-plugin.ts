@@ -5,35 +5,22 @@ import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { CurrencyCode } from "./currency-code";
-import axios from "axios";
-import { defaultCurrencyExchangeIcon } from "../../../common/icon/default-icons";
 import { CurrencyConverterOptions } from "../../../common/config/currency-converter-options";
-
-interface CurrencyConversion {
-    value: number;
-    base: CurrencyCode;
-    target: CurrencyCode;
-}
-
-interface ConversionRate {
-    [key: string]: number;
-}
-
-interface ConversionApiResult {
-    base: string;
-    date: string;
-    rates: ConversionRate;
-}
+import { CurrencyConverter } from "./currency-converter";
+import { CurrencyConversion } from "./currency-conversion";
+import { defaultCurrencyExchangeIcon } from "../../../common/icon/default-icons";
 
 export class CurrencyConverterPlugin implements ExecutionPlugin {
-    public readonly pluginType: PluginType.CurrencyConverter;
+    public readonly pluginType = PluginType.CurrencyConverter;
     public readonly openLocationSupported = false;
     public readonly autoCompletionSupported = false;
     private config: CurrencyConverterOptions;
+    private translationSet: TranslationSet;
     private readonly clipboardCopier: (value: string) => Promise<void>;
 
-    constructor(config: CurrencyConverterOptions, clipboardCopier: (value: string) => Promise<void>) {
+    constructor(config: CurrencyConverterOptions, translationSet: TranslationSet, clipboardCopier: (value: string) => Promise<void>) {
         this.config = config;
+        this.translationSet = translationSet;
         this.clipboardCopier = clipboardCopier;
     }
 
@@ -56,25 +43,18 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
     public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             const conversion = this.buildCurrencyConversion(userInput);
-            axios.get(`https://api.exchangeratesapi.io/latest?base=${conversion.base}`)
-                .then((response) => {
-                    const apiResult: ConversionApiResult = response.data;
-                    const targetKey = Object.keys(apiResult.rates).find((r) => r.toLowerCase() === conversion.target.toLowerCase());
-                    if (targetKey) {
-                        const rate = Number(apiResult.rates[targetKey]);
-                        const converted = Number.parseFloat(`${conversion.value * rate}`).toFixed(Number(this.config.precision));
-                        const result: SearchResultItem = {
-                            description: `1 ${conversion.base} = ${rate} ${conversion.target}`,
-                            executionArgument: converted.toString(),
-                            hideMainWindowAfterExecution: true,
-                            icon: defaultCurrencyExchangeIcon,
-                            name: `= ${converted} ${conversion.target}`,
-                            originPluginType: this.pluginType,
-                            searchable: [],
-                        };
-                        resolve([result]);
-                    }
-                    reject(`No conversion rate found for ${conversion.target}`);
+            CurrencyConverter.convert(conversion, Number(this.config.precision))
+                .then((converted) => {
+                    const result: SearchResultItem = {
+                        description: this.translationSet.currencyConverterCopyToClipboard,
+                        executionArgument: converted.toString(),
+                        hideMainWindowAfterExecution: true,
+                        icon: defaultCurrencyExchangeIcon,
+                        name: `= ${converted} ${conversion.target}`,
+                        originPluginType: this.pluginType,
+                        searchable: [],
+                    };
+                    resolve([result]);
                 })
                 .catch((err) => reject(err));
         });
@@ -99,6 +79,7 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
         return new Promise((resolve) => {
             this.config = updatedConfig.currencyConverterOptions;
+            this.translationSet = translationSet;
             resolve();
         });
     }
