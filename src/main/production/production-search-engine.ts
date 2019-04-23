@@ -31,6 +31,7 @@ import { UrlPlugin } from "../plugins/url-plugin/url-plugin";
 import { EmailPlugin } from "../plugins/email-plugin/email-plugin";
 import { ElectronStoreFavoriteRepository } from "../favorites/electron-store-favorite-repository";
 import { CurrencyConverterPlugin } from "../plugins/currency-converter-plugin/currency-converter-plugin";
+import { executeCommand } from "../executors/command-executor";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -50,6 +51,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
             urlExecutor,
             filePathExecutor,
             filePathLocationExecutor,
+            executeCommand,
             ),
         new ApplicationSearchPlugin(
             userConfig.applicationSearchOptions,

@@ -4,7 +4,7 @@ import { VueEventChannels } from "../../vue-event-channels";
 import { Shortcut } from "../../../main/plugins/shorcuts-search-plugin/shortcut";
 import { ShortcutType } from "../../../main/plugins/shorcuts-search-plugin/shortcut-type";
 import { IconType } from "../../../common/icon/icon-type";
-import { platform } from "os";
+import { platform, homedir } from "os";
 import { cloneDeep } from "lodash";
 import { defaultNewShortcut, ShortcutHelpers } from "../../../main/plugins/shorcuts-search-plugin/shortcut-helpers";
 import { SettingsNotificationType } from "../settings-notification-type";
@@ -14,6 +14,7 @@ import { isEqual } from "lodash";
 import { showNotification } from "../../notifications";
 import { getFileAndFolderPaths } from "../../dialogs";
 import { TranslationSet } from "../../../common/translation/translation-set";
+import { join } from "path";
 
 export enum ModalEditMode {
     Edit = "Edit Shortcut",
@@ -67,6 +68,8 @@ export const shortcutEditingModal = Vue.extend({
                     return translations.shortcutSettingsTypeUrl;
                 case ShortcutType.FilePath:
                     return translations.shortcutSettingsTypeFilePath;
+                case ShortcutType.CommandlineTool:
+                    return translations.shortcutSettingsTypeCommandlineTool;
             }
         },
         getModalTitle(): string {
@@ -78,9 +81,18 @@ export const shortcutEditingModal = Vue.extend({
         },
         getShorcutTypeDescriptionPlaceholder(shortcutType: ShortcutType): string {
             const translations: TranslationSet = this.translations;
-            const placeholder = shortcutType === ShortcutType.Url
-                ? translations.shortcutSettingsEditModalGoogleWebsite
-                : translations.shortcutSettingsEditModalDownloadsFolder;
+            let placeholder = "";
+            switch (shortcutType) {
+                case ShortcutType.Url:
+                    placeholder = translations.shortcutSettingsEditModalGoogleWebsite;
+                    break;
+                case ShortcutType.FilePath:
+                    placeholder = translations.shortcutSettingsEditModalDownloadsFolder;
+                    break;
+                case ShortcutType.CommandlineTool:
+                    placeholder = translations.shortcutSettingsEditModalCommandLinetoolDescription;
+                    break;
+            }
             return `${translations.forExample}: "${placeholder}"`;
         },
         getShorcutTypeExecutionArgumentDescription(shortcutType: ShortcutType): string {
@@ -90,17 +102,26 @@ export const shortcutEditingModal = Vue.extend({
                     return "URL";
                 case ShortcutType.FilePath:
                     return translations.shortcutSettingsEditModalFilePath;
+                case ShortcutType.CommandlineTool:
+                    return translations.shortcutSettingsEditModalCommand;
                 default:
                     return translations.shortcutSettingsTableExecutionArgument;
             }
         },
         getShorcutTypeExecutionArgumentPlaceholder(shortcutType: ShortcutType): string {
             const translations: TranslationSet = this.translations;
-            const placeholder = shortcutType === ShortcutType.Url
-                ? "https://google.com"
-                : isWindows(platform())
-                    ? "C:\\Users\\Downloads"
-                    : "/Users/Foo/Downloads";
+            let placeholder = "";
+            switch (shortcutType) {
+                case ShortcutType.FilePath:
+                    placeholder = `${join(homedir(), "Downloads")}`;
+                    break;
+                case ShortcutType.Url:
+                    placeholder = "https://google.com";
+                    break;
+                case ShortcutType.CommandlineTool:
+                    placeholder = `code ${join(homedir(), "file.txt")}`;
+                    break;
+            }
             return `${translations.forExample}: "${placeholder}"`;
         },
         getShorcutTypeNamePlaceholder(shortcutType: ShortcutType): string {

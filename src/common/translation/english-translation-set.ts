@@ -114,10 +114,13 @@ export const englishTranslationSet: TranslationSet = {
     shortcutSettingsEditModalGoogleWebsite: "Google website",
     shortcutSettingsEditModalDownloadsFolder: "Downloads folder",
     shortcutSettingsEditModalFilePath: "File path",
+    shortcutSettingsEditModalCommand: "Command",
     shortcutSettingsInvalidShortcutErrorMessage: "Invalid shortcut",
     shortcutSettingsTagPlaceholder: "Add a tag and press enter",
     shortcutSettingsTypeUrl: "URL",
     shortcutSettingsTypeFilePath: "File path",
+    shortcutSettingsTypeCommandlineTool: "Commandline tool",
+    shortcutSettingsEditModalCommandLinetoolDescription: "Edit file in Visual Studio Code",
 
     translationSettingsTranslation: "Translation",
     translationSettingsDescription: `This plugin enables you to quickly translate words or short sentences. It uses an unofficial API (https://github.com/imankulov/linguee-api) for Linguee (https://linguee.de) and may be unstable.`,

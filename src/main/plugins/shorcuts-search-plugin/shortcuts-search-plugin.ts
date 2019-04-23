@@ -22,17 +22,20 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
     private readonly urlExecutor: (url: string) => Promise<void>;
     private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
     private readonly filePathLocationExecutor: (filePath: string) => Promise<void>;
+    private readonly commandlineExtecutor: (command: string) => Promise<void>;
 
     constructor(
         config: ShortcutOptions,
         urlExecutor: (url: string) => Promise<void>,
         filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>,
         filePathLocationExecutor: (filePath: string) => Promise<void>,
+        commandlineExecutor: (command: string) => Promise<void>,
         ) {
         this.config = config;
         this.urlExecutor = urlExecutor;
         this.filePathExecutor = filePathExecutor;
         this.filePathLocationExecutor = filePathLocationExecutor;
+        this.commandlineExtecutor = commandlineExecutor;
     }
 
     public getAll(): Promise<SearchResultItem[]> {
@@ -65,9 +68,11 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
         const decodeResult = this.decodeExecutionArgument(searchResultItem.executionArgument);
         switch (decodeResult.shortcutType) {
             case ShortcutType.Url:
-                return this.executeUrl(decodeResult.executionArgument);
+                return this.urlExecutor(decodeResult.executionArgument);
             case ShortcutType.FilePath:
-                return this.executeFilePath(decodeResult.executionArgument, privileged);
+                return this.filePathExecutor(decodeResult.executionArgument, privileged);
+            case ShortcutType.CommandlineTool:
+                return this.commandlineExtecutor(decodeResult.executionArgument);
             default:
                 return this.getUnsupportedShortcutTypePromise(decodeResult.shortcutType);
         }
@@ -113,14 +118,6 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
         return new Promise((resolve, reject) => {
             reject(`Unsupported shortcut type: ${shortcutType}`);
         });
-    }
-
-    private executeUrl(url: string): Promise<void> {
-        return this.urlExecutor(url);
-    }
-
-    private executeFilePath(filePath: string, privileged: boolean): Promise<void> {
-        return this.filePathExecutor(filePath, privileged);
     }
 
     private getExecutionArgumentPrefix(shortcutType: string): string {

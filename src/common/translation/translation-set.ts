@@ -111,10 +111,13 @@ export interface TranslationSet {
     shortcutSettingsEditModalGoogleWebsite: string;
     shortcutSettingsEditModalDownloadsFolder: string;
     shortcutSettingsEditModalFilePath: string;
+    shortcutSettingsEditModalCommand: string;
     shortcutSettingsInvalidShortcutErrorMessage: string;
     shortcutSettingsTagPlaceholder: string;
     shortcutSettingsTypeUrl: string;
     shortcutSettingsTypeFilePath: string;
+    shortcutSettingsTypeCommandlineTool: string;
+    shortcutSettingsEditModalCommandLinetoolDescription: string;
 
     translationSettingsTranslation: string;
     translationSettingsDescription: string;

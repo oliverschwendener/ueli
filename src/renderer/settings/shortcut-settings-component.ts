@@ -53,6 +53,8 @@ export const shortcutSettingsComponent = Vue.extend({
                     return "is-primary";
                 case ShortcutType.FilePath:
                     return "is-info";
+                case ShortcutType.CommandlineTool:
+                    return "is-link";
                 default:
                     return "is-dark";
             }
@@ -64,6 +66,8 @@ export const shortcutSettingsComponent = Vue.extend({
                     return translations.shortcutSettingsTypeUrl;
                 case ShortcutType.FilePath:
                     return translations.shortcutSettingsTypeFilePath;
+                case ShortcutType.CommandlineTool:
+                    return translations.shortcutSettingsTypeCommandlineTool;
             }
         },
         resetAll() {

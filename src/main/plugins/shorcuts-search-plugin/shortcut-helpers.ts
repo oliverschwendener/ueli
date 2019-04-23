@@ -38,6 +38,8 @@ export class ShortcutHelpers {
                 return this.isValidUrl(shortcut.executionArgument);
             case ShortcutType.FilePath:
                 return this.isValidFilePath(shortcut.executionArgument, filePathValidator);
+            case ShortcutType.CommandlineTool:
+                return this.isValidCommand(shortcut.executionArgument);
         }
     }
 
@@ -48,5 +50,9 @@ export class ShortcutHelpers {
 
     private static isValidFilePath(filePath: string, filePathValidator: (filePath: string) => boolean): boolean {
         return filePath !== undefined && filePathValidator(filePath);
+    }
+
+    private static isValidCommand(command: string): boolean {
+        return command.length > 0;
     }
 }
