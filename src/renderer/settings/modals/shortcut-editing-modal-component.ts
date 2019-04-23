@@ -126,9 +126,18 @@ export const shortcutEditingModal = Vue.extend({
         },
         getShorcutTypeNamePlaceholder(shortcutType: ShortcutType): string {
             const translations: TranslationSet = this.translations;
-            const placeholder = shortcutType === ShortcutType.Url
-                ? "Google"
-                : "Downloads";
+            let placeholder = "";
+            switch (shortcutType) {
+                case ShortcutType.FilePath:
+                    placeholder = "Downloads";
+                    break;
+                case ShortcutType.Url:
+                    placeholder = "Google";
+                    break;
+                case ShortcutType.CommandlineTool:
+                    placeholder = "file.txt";
+                    break;
+            }
             return `${translations.forExample}: "${placeholder}"`;
         },
         getTagsPlaceholder(): string {
