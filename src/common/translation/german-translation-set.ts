@@ -32,6 +32,8 @@ export const germanTranslationSet: TranslationSet = {
     successfullyClearedExecutionLog: "Erfolgreich den Ausführungslog gelöscht",
 
     // settings
+    settings: "Einstellungen",
+
     generalSettingsMenuSection: "Allgemein",
     pluginSettingsMenuSection: "Plugins",
 

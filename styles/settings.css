@@ -131,6 +131,26 @@ html {
     justify-content: center;
 }
 
+.settings__sidebar-header-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.settings__sidebar-header-image {
+    width: 35px;
+}
+
+.settings__sidebar-header-title {
+    width: 100%;
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding-left: 10px;
+}
+
 .modal-content.slim {
     width: 450px;
 }

@@ -29,6 +29,8 @@ export interface TranslationSet {
     successfullyClearedExecutionLog: string;
 
     // Settings
+    settings: string;
+
     generalSettingsMenuSection: string;
     pluginSettingsMenuSection: string;
 
