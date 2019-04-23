@@ -382,12 +382,12 @@ function openSettings() {
     onSettingsOpen();
     if (!settingsWindow || settingsWindow.isDestroyed()) {
         settingsWindow = new BrowserWindow({
-            height: 700,
+            height: 900,
             icon: windowIconFilePath,
             webPreferences: {
                 nodeIntegration: true,
             },
-            width: 900,
+            width: 1200,
         });
         settingsWindow.setMenu(null);
         settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
