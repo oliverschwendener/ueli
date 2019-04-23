@@ -15,6 +15,7 @@ import { defaultCalculatorOptions } from "./default-calculator-options";
 import { defaultUrlOptions } from "./default-url-oprions";
 import { defaultEmailOptions } from "./default-email-options";
 import { defaultCurrencyConverterOptions } from "./default-currency-converter-options";
+import { defaultWorkflowOptions } from "./default-workflow-options";
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
@@ -33,4 +34,5 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     translationOptions: defaultTranslationOptions,
     urlOptions: defaultUrlOptions,
     websearchOptions: defaultWebSearchOptions,
+    workflowOptions: defaultWorkflowOptions,
 };

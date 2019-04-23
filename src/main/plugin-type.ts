@@ -13,5 +13,6 @@ export enum PluginType {
     Url = "Url",
     Email = "Email",
     CurrencyConverter = "Currency Converter",
+    Workflow = "Workflow",
     Test = "Test",
 }

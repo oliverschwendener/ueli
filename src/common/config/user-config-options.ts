@@ -14,6 +14,7 @@ import { CalculatorOptions } from "./calculator-options";
 import { UrlOptions } from "./url-options";
 import { EmailOptions } from "./email-options";
 import { CurrencyConverterOptions } from "./currency-converter-options";
+import { WorkflowOptions } from "./workflow-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -32,4 +33,5 @@ export interface UserConfigOptions {
     urlOptions: UrlOptions;
     emailOptions: EmailOptions;
     currencyConverterOptions: CurrencyConverterOptions;
+    workflowOptions: WorkflowOptions;
 }
