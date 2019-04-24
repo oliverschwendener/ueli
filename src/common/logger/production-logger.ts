@@ -1,5 +1,6 @@
 import { Logger } from "./logger";
 import * as Winston from "winston";
+import { ueliTempFolder } from "../helpers/ueli-helpers";
 
 export class ProductionLogger implements Logger {
     private readonly logger: Winston.Logger;
@@ -19,6 +20,7 @@ export class ProductionLogger implements Logger {
             level: "debug",
             transports: [
                 new Winston.transports.File({
+                    dirname: ueliTempFolder,
                     filename: "debug.log",
                     level: "debug",
                     maxFiles: 1,
