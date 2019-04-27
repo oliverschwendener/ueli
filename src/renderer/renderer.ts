@@ -42,6 +42,8 @@ import { urlSettingsComponent } from "./settings/url-settings-component";
 import { emailSettingsComponent } from "./settings/email-settings";
 import { SettingsNotificationType } from "./settings/settings-notification-type";
 import { currencyConverterSettingsComponent } from "./settings/currency-converter-settings-component";
+import { workflowSettingsComponent } from "./settings/workflow-settings-component";
+import { workflowEditingModal } from "./settings/modals/workflow-editing-modal-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -73,6 +75,8 @@ Vue.component("calculator-settings", calculatorSettingsComponent);
 Vue.component("url-settings", urlSettingsComponent);
 Vue.component("email-settings", emailSettingsComponent);
 Vue.component("currency-converter-settings", currencyConverterSettingsComponent);
+Vue.component("workflow-settings", workflowSettingsComponent);
+Vue.component("workflow-editing-modal", workflowEditingModal);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 

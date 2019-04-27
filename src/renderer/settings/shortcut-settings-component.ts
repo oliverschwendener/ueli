@@ -10,7 +10,6 @@ import { IconType } from "../../common/icon/icon-type";
 import { ModalEditMode } from "./modals/shortcut-editing-modal-component";
 import { Shortcut } from "../../main/plugins/shorcuts-search-plugin/shortcut";
 import { ShortcutType } from "../../main/plugins/shorcuts-search-plugin/shortcut-type";
-import { TranslationSet } from "../../common/translation/translation-set";
 
 export const shortcutSettingsComponent = Vue.extend({
     data() {
@@ -47,6 +46,16 @@ export const shortcutSettingsComponent = Vue.extend({
             const shortcut: Shortcut = cloneDeep(config.shortcutOptions.shortcuts[index]);
             vueEventDispatcher.$emit(VueEventChannels.openShortcutEditingModal, shortcut, ModalEditMode.Edit, index);
         },
+        getShortcutTypeIconClass(shorcutType: ShortcutType): string {
+            switch (shorcutType) {
+                case ShortcutType.Url:
+                    return "fas fa-globe-europe";
+                case ShortcutType.FilePath:
+                    return "fas fa-file";
+                case ShortcutType.CommandlineTool:
+                    return "fas fa-terminal";
+            }
+        },
         getShortcutTypeClass(shortcutType: ShortcutType): string {
             switch (shortcutType) {
                 case ShortcutType.Url:
@@ -59,25 +68,9 @@ export const shortcutSettingsComponent = Vue.extend({
                     return "is-dark";
             }
         },
-        getShortcutType(shortcutType: ShortcutType): string {
-            const translations: TranslationSet = this.translations;
-            switch (shortcutType) {
-                case ShortcutType.Url:
-                    return translations.shortcutSettingsTypeUrl;
-                case ShortcutType.FilePath:
-                    return translations.shortcutSettingsTypeFilePath;
-                case ShortcutType.CommandlineTool:
-                    return translations.shortcutSettingsTypeCommandlineTool;
-            }
-        },
         resetAll() {
             const config: UserConfigOptions = this.config;
             config.shortcutOptions = cloneDeep(defaultShortcutOptions);
-            this.updateConfig();
-        },
-        resetShortcutsToDefault() {
-            const config: UserConfigOptions = this.config;
-            config.shortcutOptions.shortcuts = cloneDeep(defaultShortcutOptions.shortcuts);
             this.updateConfig();
         },
         toggleEnabled() {
@@ -130,11 +123,6 @@ export const shortcutSettingsComponent = Vue.extend({
                         <div class="title is-5">
                             {{ translations.shortcutSettingsShortcut }}
                         </div>
-                        <button class="button" @click="resetShortcutsToDefault">
-                            <span class="icon">
-                                <i class="fas fa-undo-alt"></i>
-                            </span>
-                        </button>
                     </div>
                     <div class="table-container">
                         <table class="table is-striped is-fullwidth" v-if="config.shortcutOptions.shortcuts.length > 0">
@@ -152,7 +140,11 @@ export const shortcutSettingsComponent = Vue.extend({
                             </thead>
                             <tbody>
                                 <tr v-for="(shortcut, index) in config.shortcutOptions.shortcuts">
-                                    <td><span class="tag" :class="getShortcutTypeClass(shortcut.type)">{{ getShortcutType(shortcut.type) }}</span></td>
+                                    <td>
+                                        <span class="tag" :class="getShortcutTypeClass(shortcut.type)">
+                                            <span class="icon"><i :class="getShortcutTypeIconClass(shortcut.type)"></i></span>
+                                        </span>
+                                    </td>
                                     <td>{{ shortcut.name }}</td>
                                     <td>{{ shortcut.executionArgument }}</td>
                                     <td>{{ shortcut.description }}</td>
@@ -164,8 +156,16 @@ export const shortcutSettingsComponent = Vue.extend({
                                     <td class="has-text-centered">
                                         <icon :icon="shortcut.icon" :defaulticon="defaultShortcutIcon"></icon>
                                     </td>
-                                    <td class="has-text-centered"><button class="button" @click="editShortcut(index)"><span class="icon"><i class="fas fa-edit"></i></span></button></td>
-                                    <td class="has-text-centered"><button class="button is-danger" @click="deleteShortcut(index)"><span class="icon"><i class="fas fa-trash"></i></span></button></td>
+                                    <td class="has-text-centered">
+                                        <button class="button" @click="editShortcut(index)">
+                                            <span class="icon"><i class="fas fa-edit"></i></span>
+                                        </button>
+                                    </td>
+                                    <td class="has-text-centered">
+                                        <button class="button is-danger" @click="deleteShortcut(index)">
+                                            <span class="icon"><i class="fas fa-trash"></i></span>
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

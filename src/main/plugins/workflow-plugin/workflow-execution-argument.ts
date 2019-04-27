@@ -1,6 +1,6 @@
 import { WorkflowExecutionArgumentType } from "./workflow-execution-argument-type";
 
-export interface WorkflowExecutionArgument {
+export interface WorkflowExecutionStep {
     executionArgument: string;
     executionArgumentType: WorkflowExecutionArgumentType;
 }

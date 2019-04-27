@@ -1,4 +1,4 @@
-import { WorkflowExecutionArgument } from "./workflow-execution-argument";
+import { WorkflowExecutionStep } from "./workflow-execution-argument";
 import { Icon } from "../../../common/icon/icon";
 
 export interface Workflow {
@@ -6,5 +6,5 @@ export interface Workflow {
     description: string;
     tags: string[];
     icon?: Icon;
-    executionArguments: WorkflowExecutionArgument[];
+    executionSteps: WorkflowExecutionStep[];
 }

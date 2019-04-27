@@ -204,6 +204,15 @@ export interface TranslationSet {
     currencyConverterPrecision: string;
     currencyConverterCopyToClipboard: string;
 
+    workflows: string;
+    workflowSettingsDescription: string;
+    workflowSettingsAddWorkflow: string;
+    workflowName: string;
+    workflowDescription: string;
+    workflowTags: string;
+    workflowIcon: string;
+    workflowExecutionSteps: string;
+
     cancel: string;
     save: string;
     add: string;

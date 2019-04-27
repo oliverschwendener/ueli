@@ -207,6 +207,15 @@ export const englishTranslationSet: TranslationSet = {
     currencyConverterPrecision: "Precision",
     currencyConverterCopyToClipboard: "Press enter to copy to clipboard",
 
+    workflows: "Workflows",
+    workflowSettingsDescription: "This plugin enables you to quickly execute multiple things at once.",
+    workflowSettingsAddWorkflow: "Add workflow",
+    workflowName: "Name",
+    workflowDescription: "Description",
+    workflowTags: "Tags",
+    workflowIcon: "Icon",
+    workflowExecutionSteps: "Execution steps",
+
     cancel: "Cancel",
     save: "Save",
     add: "Add",

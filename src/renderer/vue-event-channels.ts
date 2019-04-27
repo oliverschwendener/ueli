@@ -33,4 +33,5 @@ export enum VueEventChannels {
     saveColor = "save-color",
     favoritesRequested = "favorites-requested",
     clearExecutionLogConfirmed = "clear-execution-log-confirmed",
+    openWorkflowEditingModal = "open-workflow-editing-modal",
 }
