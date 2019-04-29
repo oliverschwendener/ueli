@@ -58,6 +58,7 @@ export interface TranslationSet {
     appearanceSettingsSmoothScrolling: string;
     appearanceSettingsUserInputHeight: string;
     appearanceSettingsShowDescriptionOnAllSearchResults: string;
+    appearanceSettingsShowSearchIcon: string;
 
     colorThemeSettings: string;
     colorthemeUserInputBackgroundColor: string;

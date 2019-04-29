@@ -61,6 +61,7 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsSmoothScrolling: "Smooth scrolling",
     appearanceSettingsUserInputHeight: "User input height (in pixels)",
     appearanceSettingsShowDescriptionOnAllSearchResults: "Show description on all search results",
+    appearanceSettingsShowSearchIcon: "Show search icon in search field",
 
     colorThemeSettings: "Color Theme",
     colorthemeUserInputBackgroundColor: "User input background color",

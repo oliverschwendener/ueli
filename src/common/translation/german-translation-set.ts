@@ -61,6 +61,7 @@ export const germanTranslationSet: TranslationSet = {
     appearanceSettingsSmoothScrolling: "Weiches Scrollen",
     appearanceSettingsUserInputHeight: "Eingabefeld (in Pixel)",
     appearanceSettingsShowDescriptionOnAllSearchResults: "Beschreibung bei allen Suchresultaten anzeigen",
+    appearanceSettingsShowSearchIcon: "Suchsymbol in der Suchleiste anzeigen",
 
     colorThemeSettings: "Farbschema",
     colorthemeUserInputBackgroundColor: "Suchfeld Hintergrundfarbe",
