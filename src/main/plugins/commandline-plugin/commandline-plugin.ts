@@ -58,7 +58,7 @@ export class CommandlinePlugin implements ExecutionPlugin {
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             this.config = updatedConfig.commandlineOptions;
             resolve();
         });
