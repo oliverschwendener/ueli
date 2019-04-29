@@ -3,8 +3,11 @@ import * as Winston from "winston";
 
 export class ProductionLogger implements Logger {
     private readonly logger: Winston.Logger;
+    private readonly fileOpener: (filePath: string) => Promise<void>;
 
-    constructor() {
+    constructor(fileOpener: (filePath: string, privileged?: boolean) => Promise<void>) {
+        this.fileOpener = fileOpener;
+
         const { combine, timestamp, printf } = Winston.format;
 
         // tslint:disable-next-line: no-shadowed-variable
@@ -37,5 +40,9 @@ export class ProductionLogger implements Logger {
 
     public error(message: string): void {
         this.logger.error(message);
+    }
+
+    public openLog(): Promise<void> {
+        return this.fileOpener("debug.log");
     }
 }

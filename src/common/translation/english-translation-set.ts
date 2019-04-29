@@ -52,6 +52,7 @@ export const englishTranslationSet: TranslationSet = {
     generalSettingsImportErrorInvalidConfig: "Settings import failed: file content seems to be invalid",
     generalSettingsResetAllSettings: "Reset all settings to default",
     clearExecutionLog: "Clear execution log",
+    openDebugLog: "Open debug log",
 
     appearanceSettings: "Appearance",
     appearanceSettingsWindowWidth: "Window width (in pixels)",

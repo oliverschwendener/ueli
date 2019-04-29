@@ -121,6 +121,10 @@ new Vue({
             ipcRenderer.send(IpcChannels.clearExecutionLogConfirmed);
         });
 
+        vueEventDispatcher.$on(VueEventChannels.openDebugLogRequested, () => {
+            ipcRenderer.send(IpcChannels.openDebugLogRequested);
+        });
+
         ipcRenderer.on(IpcChannels.appearanceOptionsUpdated, (event: Electron.Event, updatedAppearanceOptions: AppearanceOptions) => {
             vueEventDispatcher.$emit(VueEventChannels.appearanceOptionsUpdated, updatedAppearanceOptions);
         });

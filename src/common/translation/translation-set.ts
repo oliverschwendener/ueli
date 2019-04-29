@@ -49,6 +49,7 @@ export interface TranslationSet {
     generalSettingsImportErrorInvalidConfig: string;
     generalSettingsResetAllSettings: string;
     clearExecutionLog: string;
+    openDebugLog: string;
 
     appearanceSettings: string;
     appearanceSettingsWindowWidth: string;

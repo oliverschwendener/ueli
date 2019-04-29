@@ -18,7 +18,6 @@ import { TranslationPlugin } from "../plugins/translation-plugin/translation-plu
 import { executeFilePathLocationMacOs, executeFilePathLocationWindows } from "../executors/file-path-location-executor";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { WebSearchPlugin } from "../plugins/websearch-plugin/websearch-plugin";
-import { Logger } from "../../common/logger/logger";
 import { FileBrowserExecutionPlugin } from "../plugins/filebrowser-plugin/filebrowser-plugin";
 import { isValidWindowsFilePath, isValidMacOsFilePath } from "../../common/helpers/file-path-validators";
 import { getFileIconDataUrl } from "../../common/icon/generate-file-icon";
@@ -32,6 +31,7 @@ import { EmailPlugin } from "../plugins/email-plugin/email-plugin";
 import { ElectronStoreFavoriteRepository } from "../favorites/electron-store-favorite-repository";
 import { CurrencyConverterPlugin } from "../plugins/currency-converter-plugin/currency-converter-plugin";
 import { executeCommand } from "../executors/command-executor";
+import { ProductionLogger } from "../../common/logger/production-logger";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -39,7 +39,7 @@ const filePathLocationExecutor = isWindows(platform()) ? executeFilePathLocation
 const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const appIconGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
 
-export const getProductionSearchEngine = (userConfig: UserConfigOptions, translationSet: TranslationSet, logger: Logger): SearchEngine => {
+export const getProductionSearchEngine = (userConfig: UserConfigOptions, translationSet: TranslationSet): SearchEngine => {
     const operatingSystemCommandRepository = isWindows(platform())
         ? new WindowsOperatingSystemCommandRepository(translationSet)
         : new MacOsOperatingSystemCommandRepository(translationSet);
@@ -110,7 +110,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
         fallbackPlugins,
         userConfig,
         translationSet,
-        logger,
+        new ProductionLogger(filePathExecutor),
         new ElectronStoreFavoriteRepository(),
     );
 };

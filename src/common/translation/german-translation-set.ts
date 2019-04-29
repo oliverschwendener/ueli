@@ -52,6 +52,7 @@ export const germanTranslationSet: TranslationSet = {
     generalSettingsImportErrorInvalidConfig: "Einstellungsimport fehlgeschlagen: Dateiinhalt scheint ungültig zu sein",
     generalSettingsResetAllSettings: "Alle Einstellungen auf Standard zurücksetzen",
     clearExecutionLog: "Ausführungslog löschen",
+    openDebugLog: "Debug log öffnen",
 
     appearanceSettings: "Erscheinungsbild",
     appearanceSettingsWindowWidth: "Fensterbreite (in Pixel)",

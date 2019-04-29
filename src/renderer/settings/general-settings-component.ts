@@ -68,6 +68,9 @@ export const generalSettingsComponent = Vue.extend({
                         .then(() => this.dropdownVisible = false);
                 });
         },
+        openDebugLog() {
+            vueEventDispatcher.$emit(VueEventChannels.openDebugLogRequested);
+        },
         resetAll() {
             const config: UserConfigOptions = this.config;
             config.generalOptions = cloneDeep(defaultGeneralOptions);
@@ -124,6 +127,10 @@ export const generalSettingsComponent = Vue.extend({
                                 <a class="dropdown-item" @click="clearExecutionLog">
                                     <span class="icon"><i class="fas fa-trash"></i></span>
                                     <span>{{ translations.clearExecutionLog }}</span>
+                                </a>
+                                <a class="dropdown-item" @click="openDebugLog">
+                                    <span class="icon"><i class="fas fa-bug"></i></span>
+                                    <span>{{ translations.openDebugLog }}</span>
                                 </a>
                             </div>
                         </div>

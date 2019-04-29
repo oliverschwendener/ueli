@@ -26,4 +26,5 @@ export enum IpcChannels {
     clearExecutionLogConfirmed = "clear-execution-log-confirmed",
     executionLogClearingSucceeded = "execution-log-clearing-succeeded",
     executionLogClearingErrored = "execution-log-clearing-errored",
+    openDebugLogRequested = "open-debug-log-requested",
 }
