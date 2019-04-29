@@ -20,10 +20,10 @@ export const workflowSettingsComponent = Vue.extend({
     },
     methods: {
         addWorkflow() {
-
+            //
         },
         updateWorkflow() {
-
+            //
         },
         addButtonClick() {
             //

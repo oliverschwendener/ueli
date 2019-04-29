@@ -10,7 +10,7 @@ export const workflowEditingModal = Vue.extend({
     computed: {
         noChanges(): boolean {
             return isEqual(this.initialWorkflow, this.workflow);
-        }
+        },
     },
     data() {
         return {
