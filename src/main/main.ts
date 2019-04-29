@@ -363,6 +363,9 @@ function setKeyboardShortcuts() {
 
 function onLanguageChange(updatedConfig: UserConfigOptions) {
     translationSet = getTranslationSet(updatedConfig.generalOptions.language);
+    if (settingsWindow && !settingsWindow.isDestroyed()) {
+        settingsWindow.setTitle(translationSet.settings);
+    }
     updateTrayIconContextMenu();
 }
 
@@ -384,6 +387,7 @@ function openSettings() {
         settingsWindow = new BrowserWindow({
             height: 900,
             icon: windowIconFilePath,
+            title: translationSet.settings,
             webPreferences: {
                 nodeIntegration: true,
             },
