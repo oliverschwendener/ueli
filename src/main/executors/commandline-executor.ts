@@ -12,7 +12,5 @@ export const macOsCommandLineExecutor = (command: string): Promise<void> => {
 };
 
 export const windowsCommandLineExecutor = (command: string): Promise<void> => {
-    return new Promise((resolve, reject) => {
-        reject("not implemented");
-    });
+    return executeCommand(`start cmd.exe /k "${command}"`);
 };
