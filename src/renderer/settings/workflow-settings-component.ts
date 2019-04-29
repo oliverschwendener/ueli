@@ -19,6 +19,12 @@ export const workflowSettingsComponent = Vue.extend({
         };
     },
     methods: {
+        addWorkflow() {
+
+        },
+        updateWorkflow() {
+
+        },
         addButtonClick() {
             //
         },
@@ -74,6 +80,14 @@ export const workflowSettingsComponent = Vue.extend({
                 this.visible = true;
             } else {
                 this.visible = false;
+            }
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.workflowEdited, (workflow: Workflow, editMode: ModalEditMode, saveIndex?: number) => {
+            if (editMode === ModalEditMode.Add) {
+                this.addWorkflow(workflow);
+            } else if (editMode === ModalEditMode.Edit) {
+                this.updateWorkflow(workflow, saveIndex);
             }
         });
     },

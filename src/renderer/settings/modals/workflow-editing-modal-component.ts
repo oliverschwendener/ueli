@@ -4,11 +4,18 @@ import { VueEventChannels } from "../../vue-event-channels";
 import { Workflow } from "../../../main/plugins/workflow-plugin/workflow";
 import { ModalEditMode } from "./shortcut-editing-modal-component";
 import { TranslationSet } from "../../../common/translation/translation-set";
+import { isEqual, cloneDeep } from "lodash";
 
 export const workflowEditingModal = Vue.extend({
+    computed: {
+        noChanges(): boolean {
+            return isEqual(this.initialWorkflow, this.workflow);
+        }
+    },
     data() {
         return {
             editMode: ModalEditMode.Add,
+            initialWorkflow: {},
             saveIndex: undefined,
             visible: false,
             workflow: {},
@@ -29,12 +36,18 @@ export const workflowEditingModal = Vue.extend({
             this.workflow = {};
             this.visible = false;
         },
+        saveButtonClick() {
+            vueEventDispatcher.$emit(VueEventChannels.workflowEdited, this.workflow, this.editMode, this.saveIndex);
+            this.closeModal();
+        },
     },
     mounted() {
         vueEventDispatcher.$on(VueEventChannels.openWorkflowEditingModal, (workflow: Workflow, editMode: ModalEditMode, saveIndex?: number) => {
             this.visible = true;
             this.editMode = editMode;
             this.workflow = workflow;
+            this.initialWorkflow = cloneDeep(workflow);
+            this.saveIndex = saveIndex;
         });
     },
     props: ["translations"],
@@ -64,6 +77,24 @@ export const workflowEditingModal = Vue.extend({
                             </label>
                             <div class="control">
                                 <input class="input" type="text" :placeholder="translations.workflowDescriptionPlaceholder" v-model="workflow.description">
+                            </div>
+                        </div>
+                        <div class="field is-grouped is-grouped-right">
+                            <div class="control">
+                                <button class="button is-danger" @click="closeModal">
+                                    <span class="icon">
+                                        <i class="fas fa-times"></i>
+                                    </span>
+                                    <span>{{ translations.cancel }}</span>
+                                </button>
+                            </div>
+                            <div class="control">
+                                <button :disabled="noChanges" class="button is-success" @click="saveButtonClick">
+                                    <span class="icon">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                    <span>{{ translations.save }}</span>
+                                </button>
                             </div>
                         </div>
                     </div>
