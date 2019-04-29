@@ -46,3 +46,17 @@ export const defaultCurrencyExchangeIcon: Icon = {
 </svg>`,
     type: IconType.SVG,
 };
+
+export const defaultTerminalIcon: Icon = {
+    parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1">
+    <g id="surface1">
+    <path style=" fill:#CFD8DC;" d="M 41 6 L 7 6 C 6.398438 6 6 6.398438 6 7 L 6 42 L 42 42 L 42 7 C 42 6.398438 41.601563 6 41 6 Z "></path>
+    <path style=" fill:#263238;" d="M 8 13 L 40 13 L 40 40 L 8 40 Z "></path>
+    <path style=" fill:#90A4AE;" d="M 15 9.5 C 15 10.328125 14.328125 11 13.5 11 C 12.671875 11 12 10.328125 12 9.5 C 12 8.671875 12.671875 8 13.5 8 C 14.328125 8 15 8.671875 15 9.5 Z "></path>
+    <path style=" fill:#90A4AE;" d="M 11 9.5 C 11 10.328125 10.328125 11 9.5 11 C 8.671875 11 8 10.328125 8 9.5 C 8 8.671875 8.671875 8 9.5 8 C 10.328125 8 11 8.671875 11 9.5 Z "></path>
+    <path style=" fill:#18FFFF;" d="M 18.5 26.5 L 15 24.5 L 15 22 L 21 25.398438 L 21 27.5 L 15 31 L 15 28.5 Z "></path>
+    <path style=" fill:#18FFFF;" d="M 23 29 L 33 29 L 33 31 L 23 31 Z "></path>
+    </g>
+    </svg>`,
+    type: IconType.SVG,
+};

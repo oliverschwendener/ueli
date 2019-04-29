@@ -32,14 +32,17 @@ import { ElectronStoreFavoriteRepository } from "../favorites/electron-store-fav
 import { CurrencyConverterPlugin } from "../plugins/currency-converter-plugin/currency-converter-plugin";
 import { executeCommand } from "../executors/command-executor";
 import { ProductionLogger } from "../../common/logger/production-logger";
+import { CommandlinePlugin } from "../plugins/commandline-plugin/commandline-plugin";
+import { windowsCommandLineExecutor, macOsCommandLineExecutor } from "../executors/commandline-executor";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
 const filePathLocationExecutor = isWindows(platform()) ? executeFilePathLocationWindows : executeFilePathLocationMacOs;
 const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const appIconGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
+const commandlineExecutor = isWindows(platform()) ? windowsCommandLineExecutor : macOsCommandLineExecutor;
 
-export const getProductionSearchEngine = (userConfig: UserConfigOptions, translationSet: TranslationSet): SearchEngine => {
+export const getProductionSearchEngine = (config: UserConfigOptions, translationSet: TranslationSet): SearchEngine => {
     const operatingSystemCommandRepository = isWindows(platform())
         ? new WindowsOperatingSystemCommandRepository(translationSet)
         : new MacOsOperatingSystemCommandRepository(translationSet);
@@ -47,42 +50,43 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
     const searchPlugins: SearchPlugin[] = [
         new UeliCommandSearchPlugin(translationSet),
         new ShortcutsSearchPlugin(
-            userConfig.shortcutOptions,
+            config.shortcutOptions,
             urlExecutor,
             filePathExecutor,
             filePathLocationExecutor,
             executeCommand,
             ),
         new ApplicationSearchPlugin(
-            userConfig.applicationSearchOptions,
+            config.applicationSearchOptions,
             new FileApplicationRepository(
                 new ApplicationIconService(appIconGenerator),
-                userConfig.applicationSearchOptions,
+                config.applicationSearchOptions,
                 ),
             filePathExecutor,
             filePathLocationExecutor,
             ),
         new OperatingSystemCommandsPlugin(
-            userConfig.operatingSystemCommandsOptions,
+            config.operatingSystemCommandsOptions,
             operatingSystemCommandRepository,
             ),
     ];
 
-    const webSearchPlugin = new WebSearchPlugin(userConfig.websearchOptions, translationSet, urlExecutor);
+    const webSearchPlugin = new WebSearchPlugin(config.websearchOptions, translationSet, urlExecutor);
 
     const executionPlugins: ExecutionPlugin[] = [
         webSearchPlugin,
         new FileBrowserExecutionPlugin(
-            userConfig.fileBrowserOptions,
+            config.fileBrowserOptions,
             filePathValidator,
             filePathExecutor,
             filePathLocationExecutor,
             getFileIconDataUrl),
-        new TranslationPlugin(userConfig.translationOptions),
-        new CalculatorPlugin(userConfig.calculatorOptions, translationSet, electronClipboardCopier),
-        new UrlPlugin(userConfig.urlOptions, translationSet, urlExecutor),
-        new EmailPlugin(userConfig.emailOptions, translationSet, urlExecutor),
-        new CurrencyConverterPlugin(userConfig.currencyConverterOptions, translationSet, electronClipboardCopier),
+        new TranslationPlugin(config.translationOptions),
+        new CalculatorPlugin(config.calculatorOptions, translationSet, electronClipboardCopier),
+        new UrlPlugin(config.urlOptions, translationSet, urlExecutor),
+        new EmailPlugin(config.emailOptions, translationSet, urlExecutor),
+        new CurrencyConverterPlugin(config.currencyConverterOptions, translationSet, electronClipboardCopier),
+        new CommandlinePlugin(config.commandlineOptions, commandlineExecutor),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [
@@ -92,14 +96,14 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
     if (isWindows(platform())) {
         executionPlugins.push(
             new EverythingPlugin(
-                userConfig.everythingSearchOptions,
+                config.everythingSearchOptions,
                 filePathExecutor,
                 filePathLocationExecutor));
     }
     if (isMacOs(platform())) {
         executionPlugins.push(
             new MdFindPlugin(
-                userConfig.mdfindOptions,
+                config.mdfindOptions,
                 filePathExecutor,
                 filePathLocationExecutor));
     }
@@ -108,7 +112,7 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
         searchPlugins,
         executionPlugins,
         fallbackPlugins,
-        userConfig,
+        config,
         translationSet,
         new ProductionLogger(filePathExecutor),
         new ElectronStoreFavoriteRepository(),
