@@ -31,6 +31,8 @@ export const englishTranslationSet: TranslationSet = {
     successfullyClearedCachesBeforeExit: "Successfully cleared caches before exit",
     successfullyClearedExecutionLog: "Successfully cleared execution log",
 
+    commandlineSearchResultDescription: "Execute {{command}}",
+
     // settings
     generalSettingsMenuSection: "General",
     pluginSettingsMenuSection: "Plugins",

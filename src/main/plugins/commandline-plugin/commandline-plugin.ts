@@ -13,9 +13,11 @@ export class CommandlinePlugin implements ExecutionPlugin {
     public readonly autoCompletionSupported = false;
     private readonly commandlineExecutor: (command: string) => Promise<void>;
     private config: CommandlineOptions;
+    private translationSet: TranslationSet;
 
-    constructor(config: CommandlineOptions, commandlineExecutor: (command: string) => Promise<void>) {
+    constructor(config: CommandlineOptions, translationSet: TranslationSet, commandlineExecutor: (command: string) => Promise<void>) {
         this.config = config;
+        this.translationSet = translationSet;
         this.commandlineExecutor = commandlineExecutor;
     }
 
@@ -28,7 +30,7 @@ export class CommandlinePlugin implements ExecutionPlugin {
         return new Promise((resolve, reject) => {
             const command = userInput.replace(">", "").trim();
             const result: SearchResultItem = {
-                description: `Execute ${command} in Terminal`,
+                description: this.translationSet.commandlineSearchResultDescription.replace("{{command}}", command),
                 executionArgument: command,
                 hideMainWindowAfterExecution: true,
                 icon: defaultTerminalIcon,
@@ -60,6 +62,7 @@ export class CommandlinePlugin implements ExecutionPlugin {
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
         return new Promise((resolve) => {
             this.config = updatedConfig.commandlineOptions;
+            this.translationSet = translationSet;
             resolve();
         });
     }

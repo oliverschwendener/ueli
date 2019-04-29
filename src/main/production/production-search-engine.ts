@@ -86,7 +86,7 @@ export const getProductionSearchEngine = (config: UserConfigOptions, translation
         new UrlPlugin(config.urlOptions, translationSet, urlExecutor),
         new EmailPlugin(config.emailOptions, translationSet, urlExecutor),
         new CurrencyConverterPlugin(config.currencyConverterOptions, translationSet, electronClipboardCopier),
-        new CommandlinePlugin(config.commandlineOptions, commandlineExecutor),
+        new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [

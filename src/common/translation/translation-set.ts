@@ -28,6 +28,8 @@ export interface TranslationSet {
     successfullyClearedCachesBeforeExit: string;
     successfullyClearedExecutionLog: string;
 
+    commandlineSearchResultDescription: string;
+
     // Settings
     generalSettingsMenuSection: string;
     pluginSettingsMenuSection: string;
