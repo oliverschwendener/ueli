@@ -206,6 +206,10 @@ export interface TranslationSet {
     currencyConverterPrecision: string;
     currencyConverterCopyToClipboard: string;
 
+    commandline: string;
+    commandlinePrefix: string;
+    commandlineSettingsDescription: string;
+
     cancel: string;
     save: string;
     add: string;

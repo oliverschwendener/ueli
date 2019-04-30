@@ -209,6 +209,10 @@ export const englishTranslationSet: TranslationSet = {
     currencyConverterPrecision: "Precision",
     currencyConverterCopyToClipboard: "Press enter to copy to clipboard",
 
+    commandline: "Commandline",
+    commandlinePrefix: "Prefix",
+    commandlineSettingsDescription: "This plugin enables you to quickly execute commandline commands.",
+
     cancel: "Cancel",
     save: "Save",
     add: "Add",

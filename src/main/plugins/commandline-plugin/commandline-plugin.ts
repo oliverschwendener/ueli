@@ -28,7 +28,7 @@ export class CommandlinePlugin implements ExecutionPlugin {
 
     public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            const command = userInput.replace(">", "").trim();
+            const command = userInput.replace(this.config.prefix, "").trim();
             const result: SearchResultItem = {
                 description: this.translationSet.commandlineSearchResultDescription.replace("{{command}}", command),
                 executionArgument: command,
@@ -38,7 +38,6 @@ export class CommandlinePlugin implements ExecutionPlugin {
                 originPluginType: this.pluginType,
                 searchable: [],
             };
-
             resolve([result]);
         });
     }

@@ -209,6 +209,10 @@ export const germanTranslationSet: TranslationSet = {
     currencyConverterPrecision: "Präzision",
     currencyConverterCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",
 
+    commandline: "Kommandozeile",
+    commandlinePrefix: "Präfix",
+    commandlineSettingsDescription: "Dieses Plugin erlaubt es dir schnell Kommandozeilenbefehle auszuführen.",
+
     cancel: "Abbrechen",
     save: "Speichern",
     add: "Hinzufügen",
