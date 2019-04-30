@@ -115,6 +115,18 @@ export const appearanceSettingsComponent = Vue.extend({
                         </div>
                     </div>
 
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsShowSearchIcon }}</div>
+                        <div class="settings__option-content">
+                            <div class="field has-addons has-addons-right vertical-center">
+                                <div class="control">
+                                    <input id="showSearchIconCheckbox" type="checkbox" name="showSearchIconCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.appearanceOptions.showSearchIcon" @change="updateConfig">
+                                    <label for="showSearchIconCheckbox"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

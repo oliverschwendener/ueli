@@ -22,8 +22,8 @@ export class SearchEngine {
     private readonly fallbackPlugins: ExecutionPlugin[];
     private translationSet: TranslationSet;
     private config: UserConfigOptions;
-    private readonly logger: Logger;
     private readonly favoriteManager: FavoriteManager;
+    private readonly logger: Logger;
 
     constructor(
         plugins: SearchPlugin[],
@@ -157,6 +157,10 @@ export class SearchEngine {
 
     public clearExecutionLog(): Promise<void> {
         return this.favoriteManager.clearExecutionLog();
+    }
+
+    public getLogger(): Logger {
+        return this.logger;
     }
 
     private getSearchPluginsResult(userInput: string): Promise<SearchResultItem[]> {

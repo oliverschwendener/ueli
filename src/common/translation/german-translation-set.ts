@@ -31,6 +31,8 @@ export const germanTranslationSet: TranslationSet = {
     successfullyClearedCachesBeforeExit: "Erfolgreich alle Zwischenspeicher vor dem Beenden gelöscht",
     successfullyClearedExecutionLog: "Erfolgreich den Ausführungslog gelöscht",
 
+    commandlineSearchResultDescription: "{{command}} ausführen",
+
     // settings
     settings: "Einstellungen",
 
@@ -54,6 +56,7 @@ export const germanTranslationSet: TranslationSet = {
     generalSettingsImportErrorInvalidConfig: "Einstellungsimport fehlgeschlagen: Dateiinhalt scheint ungültig zu sein",
     generalSettingsResetAllSettings: "Alle Einstellungen auf Standard zurücksetzen",
     clearExecutionLog: "Ausführungslog löschen",
+    openDebugLog: "Debug log öffnen",
 
     appearanceSettings: "Erscheinungsbild",
     appearanceSettingsWindowWidth: "Fensterbreite (in Pixel)",
@@ -62,6 +65,7 @@ export const germanTranslationSet: TranslationSet = {
     appearanceSettingsSmoothScrolling: "Weiches Scrollen",
     appearanceSettingsUserInputHeight: "Eingabefeld (in Pixel)",
     appearanceSettingsShowDescriptionOnAllSearchResults: "Beschreibung bei allen Suchresultaten anzeigen",
+    appearanceSettingsShowSearchIcon: "Suchsymbol in der Suchleiste anzeigen",
 
     colorThemeSettings: "Farbschema",
     colorthemeUserInputBackgroundColor: "Suchfeld Hintergrundfarbe",
@@ -99,7 +103,7 @@ export const germanTranslationSet: TranslationSet = {
     searchEngineSettingsFuzzy: "Fuzzy",
     searchEngineSettingsMaxSearchResults: "Maximale Suchergebnisse",
 
-    shortcutSettings: "Shorcuts",
+    shortcutSettings: "Shortcuts",
     shortcutSettingsDescription: `Dieses Plugin erlaubt es dir Dateien und Webseiten schnell zu öffnen indem du eigene Shorctus erstellst.`,
     shortcutSettingsShortcut: "Shortcuts",
     shortcutSettingsTableType: "Typ",
@@ -215,6 +219,10 @@ export const germanTranslationSet: TranslationSet = {
     workflowTags: "Tags",
     workflowIcon: "Icon",
     workflowExecutionSteps: "Ausführungsschritte",
+
+    commandline: "Kommandozeile",
+    commandlinePrefix: "Präfix",
+    commandlineSettingsDescription: "Dieses Plugin erlaubt es dir schnell Kommandozeilenbefehle auszuführen.",
 
     cancel: "Abbrechen",
     save: "Speichern",

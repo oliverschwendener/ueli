@@ -10,4 +10,5 @@ export enum PluginSettings {
     Email = "Email",
     CurrencyConverter = "Currency Converter",
     Workflow = "Workflow",
+    Commandline = "Commandline",
 }

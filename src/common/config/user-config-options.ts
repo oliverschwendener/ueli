@@ -15,6 +15,7 @@ import { UrlOptions } from "./url-options";
 import { EmailOptions } from "./email-options";
 import { CurrencyConverterOptions } from "./currency-converter-options";
 import { WorkflowOptions } from "./workflow-options";
+import { CommandlineOptions } from "./commandline-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -34,4 +35,5 @@ export interface UserConfigOptions {
     emailOptions: EmailOptions;
     currencyConverterOptions: CurrencyConverterOptions;
     workflowOptions: WorkflowOptions;
+    commandlineOptions: CommandlineOptions;
 }

@@ -31,6 +31,8 @@ export const englishTranslationSet: TranslationSet = {
     successfullyClearedCachesBeforeExit: "Successfully cleared caches before exit",
     successfullyClearedExecutionLog: "Successfully cleared execution log",
 
+    commandlineSearchResultDescription: "Execute {{command}}",
+
     // settings
     settings: "Settings",
 
@@ -54,6 +56,7 @@ export const englishTranslationSet: TranslationSet = {
     generalSettingsImportErrorInvalidConfig: "Settings import failed: file content seems to be invalid",
     generalSettingsResetAllSettings: "Reset all settings to default",
     clearExecutionLog: "Clear execution log",
+    openDebugLog: "Open debug log",
 
     appearanceSettings: "Appearance",
     appearanceSettingsWindowWidth: "Window width (in pixels)",
@@ -62,6 +65,7 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsSmoothScrolling: "Smooth scrolling",
     appearanceSettingsUserInputHeight: "User input height (in pixels)",
     appearanceSettingsShowDescriptionOnAllSearchResults: "Show description on all search results",
+    appearanceSettingsShowSearchIcon: "Show search icon in search field",
 
     colorThemeSettings: "Color Theme",
     colorthemeUserInputBackgroundColor: "User input background color",
@@ -99,7 +103,7 @@ export const englishTranslationSet: TranslationSet = {
     searchEngineSettingsFuzzy: "Fuzzy",
     searchEngineSettingsMaxSearchResults: "Max search results",
 
-    shortcutSettings: "Shorcuts",
+    shortcutSettings: "Shortcuts",
     shortcutSettingsDescription: `This plugin enables you to quickly open files or websites by setting up your own shortcuts.`,
     shortcutSettingsShortcut: "Shortcuts",
     shortcutSettingsTableType: "Type",
@@ -215,6 +219,10 @@ export const englishTranslationSet: TranslationSet = {
     workflowTags: "Tags",
     workflowIcon: "Icon",
     workflowExecutionSteps: "Execution steps",
+
+    commandline: "Commandline",
+    commandlinePrefix: "Prefix",
+    commandlineSettingsDescription: "This plugin enables you to quickly execute commandline commands.",
 
     cancel: "Cancel",
     save: "Save",

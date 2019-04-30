@@ -23,6 +23,12 @@ export class TestLogger implements Logger {
         });
     }
 
+    public openLog(): Promise<void> {
+        return new Promise((resolve) => {
+            resolve();
+        });
+    }
+
     public getAllMessages(): LogMessage[] {
         return this.messages;
     }

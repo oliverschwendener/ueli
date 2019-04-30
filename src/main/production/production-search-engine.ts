@@ -4,7 +4,7 @@ import { FileApplicationRepository } from "../plugins/application-search-plugin/
 import { ApplicationIconService } from "../plugins/application-search-plugin/application-icon-service";
 import { generateMacAppIcons, generateWindowsAppIcons } from "../plugins/application-search-plugin/application-icon-helpers";
 import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/ueli-command-search-plugin";
-import { ShortcutsSearchPlugin } from "../plugins/shorcuts-search-plugin/shortcuts-search-plugin";
+import { ShortcutsSearchPlugin } from "../plugins/shortcuts-search-plugin/shortcuts-search-plugin";
 import { isWindows, isMacOs } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
 import { executeUrlMacOs, executeUrlWindows } from "../executors/url-executor";
@@ -18,7 +18,6 @@ import { TranslationPlugin } from "../plugins/translation-plugin/translation-plu
 import { executeFilePathLocationMacOs, executeFilePathLocationWindows } from "../executors/file-path-location-executor";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { WebSearchPlugin } from "../plugins/websearch-plugin/websearch-plugin";
-import { Logger } from "../../common/logger/logger";
 import { FileBrowserExecutionPlugin } from "../plugins/filebrowser-plugin/filebrowser-plugin";
 import { isValidWindowsFilePath, isValidMacOsFilePath } from "../../common/helpers/file-path-validators";
 import { getFileIconDataUrl } from "../../common/icon/generate-file-icon";
@@ -33,14 +32,18 @@ import { ElectronStoreFavoriteRepository } from "../favorites/electron-store-fav
 import { CurrencyConverterPlugin } from "../plugins/currency-converter-plugin/currency-converter-plugin";
 import { executeCommand } from "../executors/command-executor";
 import { WorkflowPlugin } from "../plugins/workflow-plugin/workflow-plugin";
+import { ProductionLogger } from "../../common/logger/production-logger";
+import { CommandlinePlugin } from "../plugins/commandline-plugin/commandline-plugin";
+import { windowsCommandLineExecutor, macOsCommandLineExecutor } from "../executors/commandline-executor";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
 const filePathLocationExecutor = isWindows(platform()) ? executeFilePathLocationWindows : executeFilePathLocationMacOs;
 const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const appIconGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
+const commandlineExecutor = isWindows(platform()) ? windowsCommandLineExecutor : macOsCommandLineExecutor;
 
-export const getProductionSearchEngine = (userConfig: UserConfigOptions, translationSet: TranslationSet, logger: Logger): SearchEngine => {
+export const getProductionSearchEngine = (config: UserConfigOptions, translationSet: TranslationSet): SearchEngine => {
     const operatingSystemCommandRepository = isWindows(platform())
         ? new WindowsOperatingSystemCommandRepository(translationSet)
         : new MacOsOperatingSystemCommandRepository(translationSet);
@@ -48,48 +51,49 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
     const searchPlugins: SearchPlugin[] = [
         new UeliCommandSearchPlugin(translationSet),
         new ShortcutsSearchPlugin(
-            userConfig.shortcutOptions,
+            config.shortcutOptions,
             urlExecutor,
             filePathExecutor,
             filePathLocationExecutor,
             executeCommand,
             ),
         new ApplicationSearchPlugin(
-            userConfig.applicationSearchOptions,
+            config.applicationSearchOptions,
             new FileApplicationRepository(
                 new ApplicationIconService(appIconGenerator),
-                userConfig.applicationSearchOptions,
+                config.applicationSearchOptions,
                 ),
             filePathExecutor,
             filePathLocationExecutor,
             ),
         new OperatingSystemCommandsPlugin(
-            userConfig.operatingSystemCommandsOptions,
+            config.operatingSystemCommandsOptions,
             operatingSystemCommandRepository,
             ),
         new WorkflowPlugin(
-            userConfig.workflowOptions,
+            config.workflowOptions,
             filePathExecutor,
             urlExecutor,
             executeCommand,
         ),
     ];
 
-    const webSearchPlugin = new WebSearchPlugin(userConfig.websearchOptions, translationSet, urlExecutor);
+    const webSearchPlugin = new WebSearchPlugin(config.websearchOptions, translationSet, urlExecutor);
 
     const executionPlugins: ExecutionPlugin[] = [
         webSearchPlugin,
         new FileBrowserExecutionPlugin(
-            userConfig.fileBrowserOptions,
+            config.fileBrowserOptions,
             filePathValidator,
             filePathExecutor,
             filePathLocationExecutor,
             getFileIconDataUrl),
-        new TranslationPlugin(userConfig.translationOptions),
-        new CalculatorPlugin(userConfig.calculatorOptions, translationSet, electronClipboardCopier),
-        new UrlPlugin(userConfig.urlOptions, translationSet, urlExecutor),
-        new EmailPlugin(userConfig.emailOptions, translationSet, urlExecutor),
-        new CurrencyConverterPlugin(userConfig.currencyConverterOptions, translationSet, electronClipboardCopier),
+        new TranslationPlugin(config.translationOptions),
+        new CalculatorPlugin(config.calculatorOptions, translationSet, electronClipboardCopier),
+        new UrlPlugin(config.urlOptions, translationSet, urlExecutor),
+        new EmailPlugin(config.emailOptions, translationSet, urlExecutor),
+        new CurrencyConverterPlugin(config.currencyConverterOptions, translationSet, electronClipboardCopier),
+        new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [
@@ -99,14 +103,14 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
     if (isWindows(platform())) {
         executionPlugins.push(
             new EverythingPlugin(
-                userConfig.everythingSearchOptions,
+                config.everythingSearchOptions,
                 filePathExecutor,
                 filePathLocationExecutor));
     }
     if (isMacOs(platform())) {
         executionPlugins.push(
             new MdFindPlugin(
-                userConfig.mdfindOptions,
+                config.mdfindOptions,
                 filePathExecutor,
                 filePathLocationExecutor));
     }
@@ -115,9 +119,9 @@ export const getProductionSearchEngine = (userConfig: UserConfigOptions, transla
         searchPlugins,
         executionPlugins,
         fallbackPlugins,
-        userConfig,
+        config,
         translationSet,
-        logger,
+        new ProductionLogger(filePathExecutor),
         new ElectronStoreFavoriteRepository(),
     );
 };

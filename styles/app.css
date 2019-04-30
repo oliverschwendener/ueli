@@ -10,6 +10,7 @@
     --user-input--loader-width: 70px;
     --user-input--loader-speed: 1.4s;
     --user-input--loader-dot-size: 8px;
+    --user-input--icon-size: 28px;
 
     --search-results--background-color: #272c34;
     --search-results--item-active-background-color: #3d4452;
@@ -55,6 +56,29 @@ body {
     -webkit-app-region: drag;
 }
 
+.user-input__search-icon-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-right: calc(var(--user-input--side-padding) / 2);
+}
+
+.user-input__search-icon {
+    fill: var(--user-input--color);
+    width: var(--user-input--icon-size);
+    height: var(--user-input--icon-size);
+    transition: all 500ms ease-in-out;
+}
+
+.user-input__search-icon.is-loading {
+    animation: vibrating;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
 .user-input__input {
     background: transparent;
     width: 100%;
@@ -69,18 +93,6 @@ body {
 
 .user-input__input:focus {
     outline: none;
-}
-
-.user-input__loader {
-    width: 0;
-    overflow: hidden;
-    transition: all 250ms ease-in-out;
-    opacity: 0;
-}
-
-.user-input__loader.visible {
-    width: var(--user-input--loader-width);
-    opacity: 1;
 }
 
 .search-results {
@@ -224,16 +236,15 @@ body {
 .spinner .bounce2 {
     animation-delay: -0.16s;
 }
-  
-@-webkit-keyframes sk-bouncedelay {
-    0%, 80%, 100% { transform: scale(0) }
-    40% { transform: scale(1.0) }
-}
 
-@keyframes sk-bouncedelay {
-    0%, 80%, 100% { 
-        transform: scale(0);
-    } 40% { 
-        transform: scale(1.0);
+@keyframes vibrating {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
     }
 } 

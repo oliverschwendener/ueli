@@ -28,6 +28,8 @@ export interface TranslationSet {
     successfullyClearedCachesBeforeExit: string;
     successfullyClearedExecutionLog: string;
 
+    commandlineSearchResultDescription: string;
+
     // Settings
     settings: string;
 
@@ -51,6 +53,7 @@ export interface TranslationSet {
     generalSettingsImportErrorInvalidConfig: string;
     generalSettingsResetAllSettings: string;
     clearExecutionLog: string;
+    openDebugLog: string;
 
     appearanceSettings: string;
     appearanceSettingsWindowWidth: string;
@@ -59,6 +62,7 @@ export interface TranslationSet {
     appearanceSettingsSmoothScrolling: string;
     appearanceSettingsUserInputHeight: string;
     appearanceSettingsShowDescriptionOnAllSearchResults: string;
+    appearanceSettingsShowSearchIcon: string;
 
     colorThemeSettings: string;
     colorthemeUserInputBackgroundColor: string;
@@ -212,6 +216,10 @@ export interface TranslationSet {
     workflowTags: string;
     workflowIcon: string;
     workflowExecutionSteps: string;
+
+    commandline: string;
+    commandlinePrefix: string;
+    commandlineSettingsDescription: string;
 
     cancel: string;
     save: string;

@@ -44,6 +44,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.email;
                 case PluginSettings.CurrencyConverter:
                     return translations.currencyConverter;
+                case PluginSettings.Commandline:
+                    return translations.commandline;
                 case SettingOsSpecific.Everything:
                     return translations.everythingSearch;
                 case SettingOsSpecific.MdFind:

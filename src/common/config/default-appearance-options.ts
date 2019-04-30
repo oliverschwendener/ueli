@@ -4,6 +4,7 @@ export const defaultAppearanceOptions: AppearanceOptions = {
     maxSearchResultsPerPage: 8,
     searchResultHeight: 50,
     showDescriptionOnAllSearchResults: true,
+    showSearchIcon: true,
     smoothScrolling: true,
     userInputHeight: 60,
     windowWidth: 600,

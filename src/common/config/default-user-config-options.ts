@@ -16,12 +16,14 @@ import { defaultUrlOptions } from "./default-url-oprions";
 import { defaultEmailOptions } from "./default-email-options";
 import { defaultCurrencyConverterOptions } from "./default-currency-converter-options";
 import { defaultWorkflowOptions } from "./default-workflow-options";
+import { defaultCommandlineOptions } from "./default-commandline-options";
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
     applicationSearchOptions: defaultApplicationSearchOptions,
     calculatorOptions: defaultCalculatorOptions,
     colorThemeOptions: defaultColorThemeOptions,
+    commandlineOptions: defaultCommandlineOptions,
     currencyConverterOptions: defaultCurrencyConverterOptions,
     emailOptions: defaultEmailOptions,
     everythingSearchOptions: defaultEverythingSearchOptions,

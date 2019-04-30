@@ -35,4 +35,5 @@ export enum VueEventChannels {
     clearExecutionLogConfirmed = "clear-execution-log-confirmed",
     openWorkflowEditingModal = "open-workflow-editing-modal",
     workflowEdited = "workflow-edited",
+    openDebugLogRequested = "open-debug-log-requested",
 }

@@ -21,13 +21,11 @@ import { FileHelpers } from "./helpers/file-helpers";
 import { ueliTempFolder } from "../common/helpers/ueli-helpers";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
 import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-helpers";
-import { ProductionLogger } from "../common/logger/production-logger";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
 }
 
-const logger = new ProductionLogger();
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
 const currentOperatingSystem = platform() === "darwin" ? OperatingSystem.macOS : OperatingSystem.Windows;
 const windowIconFilePath = join(__dirname, "..", "assets", "ueli-black-on-white-logo.png");
@@ -42,7 +40,8 @@ let settingsWindow: BrowserWindow;
 
 let config = configRepository.getConfig();
 let translationSet = getTranslationSet(config.generalOptions.language);
-let searchEngine = getProductionSearchEngine(config, translationSet, logger);
+let searchEngine = getProductionSearchEngine(config, translationSet);
+const logger = searchEngine.getLogger();
 
 let rescanInterval = config.generalOptions.rescanEnabled
     ? setInterval(() => refreshAllIndexes(), Number(config.generalOptions.rescanIntervalInSeconds) * 1000)
@@ -210,7 +209,7 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
 
 function reloadApp() {
     updateMainWindowSize(0, config.appearanceOptions);
-    searchEngine = getProductionSearchEngine(config, translationSet, logger);
+    searchEngine = getProductionSearchEngine(config, translationSet);
     mainWindow.reload();
 }
 
@@ -506,6 +505,10 @@ function registerAllIpcListeners() {
         searchEngine.clearExecutionLog()
             .then(() => notifyRenderer(IpcChannels.executionLogClearingSucceeded, translationSet.successfullyClearedExecutionLog))
             .catch((err) => notifyRenderer(IpcChannels.executionLogClearingErrored, err));
+    });
+
+    ipcMain.on(IpcChannels.openDebugLogRequested, (event: Electron.Event) => {
+        logger.openLog();
     });
 
     ipcMain.on(IpcChannels.ueliCommandExecuted, (command: UeliCommand) => {

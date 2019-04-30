@@ -139,6 +139,7 @@ export const settingsComponent = Vue.extend({
                 <email-settings :config="config" :translations="translations"></email-settings>
                 <currency-converter-settings :config="config" :translations="translations"></currency-converter-settings>
                 <workflow-settings :config="config" :translations="translations"></workflow-settings>
+                <commandline-settings :config="config" :translations="translations"></commandline-settings>
             </div>
         </div>
     `,

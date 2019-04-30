@@ -1,12 +1,12 @@
 import { vueEventDispatcher } from "./vue-event-dispatcher";
 import { VueEventChannels } from "./vue-event-channels";
 import Vue from "vue";
+import { AppearanceOptions } from "../common/config/appearance-options";
 
 export const userInputComponent = Vue.extend({
     data() {
         return {
             loadingVisible: false,
-            stylesheet: "./styles/user-input.css",
             userInput: "",
         };
     },
@@ -77,17 +77,21 @@ export const userInputComponent = Vue.extend({
         vueEventDispatcher.$on(VueEventChannels.handleExecution, () => {
             this.userInput = "";
         });
+
+        vueEventDispatcher.$on(VueEventChannels.appearanceOptionsUpdated, (updatedAppearanceOptions: AppearanceOptions) => {
+            this.appearance = updatedAppearanceOptions;
+        });
     },
     template: `
         <div id="user-input" class="user-input">
-            <input autofocus id="user-input" class="user-input__input" type="text" v-model="userInput" @keydown="onKeyPress">
-            <div class="user-input__loader" :class="{ 'visible' : loadingVisible }">
-                <div class="spinner">
-                    <div class="bounce bounce1"></div>
-                    <div class="bounce bounce2"></div>
-                    <div class="bounce bounce3"></div>
-                </div>
+            <div v-if="appearance.showSearchIcon" class="user-input__search-icon-container">
+                <svg class="user-input__search-icon" :class="{ 'is-loading' : loadingVisible }" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1">
+                    <g id="surface1">
+                        <path d="M 19 3 C 13.488281 3 9 7.488281 9 13 C 9 15.394531 9.839844 17.589844 11.25 19.3125 L 3.28125 27.28125 L 4.71875 28.71875 L 12.6875 20.75 C 14.410156 22.160156 16.605469 23 19 23 C 24.511719 23 29 18.511719 29 13 C 29 7.488281 24.511719 3 19 3 Z M 19 5 C 23.429688 5 27 8.570313 27 13 C 27 17.429688 23.429688 21 19 21 C 14.570313 21 11 17.429688 11 13 C 11 8.570313 14.570313 5 19 5 Z "></path>
+                    </g>
+                </svg>
             </div>
+            <input autofocus id="user-input" class="user-input__input" type="text" v-model="userInput" @keydown="onKeyPress">
         </div>
         `,
     watch: {
