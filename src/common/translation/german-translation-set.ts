@@ -101,7 +101,7 @@ export const germanTranslationSet: TranslationSet = {
     searchEngineSettingsFuzzy: "Fuzzy",
     searchEngineSettingsMaxSearchResults: "Maximale Suchergebnisse",
 
-    shortcutSettings: "Shorcuts",
+    shortcutSettings: "Shortcuts",
     shortcutSettingsDescription: `Dieses Plugin erlaubt es dir Dateien und Webseiten schnell zu öffnen indem du eigene Shorctus erstellst.`,
     shortcutSettingsShortcut: "Shortcuts",
     shortcutSettingsTableType: "Typ",

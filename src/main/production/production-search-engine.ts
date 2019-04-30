@@ -4,7 +4,7 @@ import { FileApplicationRepository } from "../plugins/application-search-plugin/
 import { ApplicationIconService } from "../plugins/application-search-plugin/application-icon-service";
 import { generateMacAppIcons, generateWindowsAppIcons } from "../plugins/application-search-plugin/application-icon-helpers";
 import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/ueli-command-search-plugin";
-import { ShortcutsSearchPlugin } from "../plugins/shorcuts-search-plugin/shortcuts-search-plugin";
+import { ShortcutsSearchPlugin } from "../plugins/shortcuts-search-plugin/shortcuts-search-plugin";
 import { isWindows, isMacOs } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
 import { executeUrlMacOs, executeUrlWindows } from "../executors/url-executor";

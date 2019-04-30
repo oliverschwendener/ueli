@@ -5,11 +5,11 @@ import { vueEventDispatcher } from "./../vue-event-dispatcher";
 import { VueEventChannels } from "./../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { cloneDeep } from "lodash";
-import { defaultNewShortcut } from "../../main/plugins/shorcuts-search-plugin/shortcut-helpers";
+import { defaultNewShortcut } from "../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
 import { IconType } from "../../common/icon/icon-type";
 import { ModalEditMode } from "./modals/shortcut-editing-modal-component";
-import { Shortcut } from "../../main/plugins/shorcuts-search-plugin/shortcut";
-import { ShortcutType } from "../../main/plugins/shorcuts-search-plugin/shortcut-type";
+import { Shortcut } from "../../main/plugins/shortcuts-search-plugin/shortcut";
+import { ShortcutType } from "../../main/plugins/shortcuts-search-plugin/shortcut-type";
 import { TranslationSet } from "../../common/translation/translation-set";
 
 export const shortcutSettingsComponent = Vue.extend({
