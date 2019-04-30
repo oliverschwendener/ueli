@@ -5,6 +5,6 @@ export interface Workflow {
     name: string;
     description: string;
     tags: string[];
-    icon?: Icon;
+    icon: Icon;
     executionSteps: WorkflowExecutionStep[];
 }

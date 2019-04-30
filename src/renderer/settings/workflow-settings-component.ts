@@ -8,7 +8,16 @@ import { cloneDeep } from "lodash";
 import { defaultWorkflowIcon } from "../../common/icon/default-icons";
 import { WorkflowExecutionArgumentType } from "../../main/plugins/workflow-plugin/workflow-execution-argument-type";
 import { Workflow } from "../../main/plugins/workflow-plugin/workflow";
-import { ModalEditMode } from "./modals/shortcut-editing-modal-component";
+import { ModalEditMode } from "./modals/modal-edit-mode";
+import { getWorkflowExecutionArgumentTypeIcon, getWorkflowExecutionArgumentTypeClass } from "./helpers";
+
+const defaultNewWorkflow: Workflow = {
+    description: "",
+    executionSteps: [],
+    icon: defaultWorkflowIcon,
+    name: "",
+    tags: [],
+};
 
 export const workflowSettingsComponent = Vue.extend({
     data() {
@@ -19,14 +28,17 @@ export const workflowSettingsComponent = Vue.extend({
         };
     },
     methods: {
-        addWorkflow() {
+        addWorkflow(workflow: Workflow) {
             //
         },
-        updateWorkflow() {
-            //
+        updateWorkflow(workflow: Workflow, saveIndex: number) {
+            const config: UserConfigOptions = cloneDeep(this.config);
+            config.workflowOptions.workflows[saveIndex] = cloneDeep(workflow);
+            this.config = cloneDeep(config);
+            this.updateConfig();
         },
         addButtonClick() {
-            //
+            vueEventDispatcher.$emit(VueEventChannels.openWorkflowEditingModal, cloneDeep(defaultNewWorkflow), ModalEditMode.Add);
         },
         editWorkflow(index: number) {
             const config: UserConfigOptions = this.config;
@@ -52,26 +64,10 @@ export const workflowSettingsComponent = Vue.extend({
             this.updateConfig();
         },
         getExecutionArgumentTypeIcon(type: WorkflowExecutionArgumentType): string {
-            switch (type) {
-                case WorkflowExecutionArgumentType.URL:
-                    return "fas fa-globe-europe";
-                case WorkflowExecutionArgumentType.FilePath:
-                    return "fas fa-file";
-                case WorkflowExecutionArgumentType.CommandlineTool:
-                    return "fas fa-terminal";
-            }
+            return getWorkflowExecutionArgumentTypeIcon(type);
         },
         getExecutionArgumentTypeClass(type: WorkflowExecutionArgumentType): string {
-            switch (type) {
-                case WorkflowExecutionArgumentType.URL:
-                    return "is-primary";
-                case WorkflowExecutionArgumentType.FilePath:
-                    return "is-info";
-                case WorkflowExecutionArgumentType.CommandlineTool:
-                    return "is-link";
-                default:
-                    return "is-light";
-            }
+            return getWorkflowExecutionArgumentTypeClass(type);
         },
     },
     mounted() {
@@ -144,7 +140,9 @@ export const workflowSettingsComponent = Vue.extend({
                                 <td>
                                     <div v-for="executionStep in workflow.executionSteps" class="tags has-addons">
                                         <span class="tag" :class="getExecutionArgumentTypeClass(executionStep.executionArgumentType)">
-                                            <span class="icon"><i :class="getExecutionArgumentTypeIcon(executionStep.executionArgumentType)"></i></span>
+                                            <span class="icon">
+                                                <i :class="getExecutionArgumentTypeIcon(executionStep.executionArgumentType)"></i>
+                                            </span>
                                         </span>
                                         <span class="tag is-dark">{{ executionStep.executionArgument }}</span>
                                     </div>

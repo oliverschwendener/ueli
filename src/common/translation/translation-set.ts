@@ -216,6 +216,12 @@ export interface TranslationSet {
     workflowTags: string;
     workflowIcon: string;
     workflowExecutionSteps: string;
+    workflowExecutionArgumentType: string;
+    wofkflowExecutionArgumentTypeCommandlineTool: string;
+    wofkflowExecutionArgumentTypeFilePath: string;
+    workflowExecutionArgumentTypeUrl: string;
+    workflowInvalidExecutionStep: string;
+    workflowInvalidWorkflow: string;
 
     commandline: string;
     commandlinePrefix: string;

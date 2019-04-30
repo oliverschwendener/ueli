@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { PluginSettings } from "./plugin-settings";
-import { vueEventDispatcher } from "./../vue-event-dispatcher";
-import { VueEventChannels } from "./../vue-event-channels";
+import { vueEventDispatcher } from "../vue-event-dispatcher";
+import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultTranslationOptions } from "../../common/config/default-translation-options";
 import { cloneDeep } from "lodash";

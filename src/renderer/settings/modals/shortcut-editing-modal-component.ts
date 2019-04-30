@@ -15,11 +15,7 @@ import { showNotification } from "../../notifications";
 import { getFileAndFolderPaths } from "../../dialogs";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { join } from "path";
-
-export enum ModalEditMode {
-    Edit = "Edit Shortcut",
-    Add = "Add new Shortcut",
-}
+import { ModalEditMode } from "./modal-edit-mode";
 
 export const shortcutEditingModal = Vue.extend({
     computed: {
@@ -150,7 +146,7 @@ export const shortcutEditingModal = Vue.extend({
         openFolderDialog() {
             getFileAndFolderPaths()
                 .then((filePaths) => {
-                    if (filePaths.length > 0) {
+                    if (filePaths && filePaths.length > 0) {
                         const shortcut: Shortcut = this.shortcut;
                         shortcut.executionArgument = filePaths[0];
                     }

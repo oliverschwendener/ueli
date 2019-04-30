@@ -219,6 +219,12 @@ export const englishTranslationSet: TranslationSet = {
     workflowTags: "Tags",
     workflowIcon: "Icon",
     workflowExecutionSteps: "Execution steps",
+    workflowExecutionArgumentType: "Executionargument Type",
+    wofkflowExecutionArgumentTypeCommandlineTool: "Commandline Tool",
+    wofkflowExecutionArgumentTypeFilePath: "File Path",
+    workflowExecutionArgumentTypeUrl: "URL",
+    workflowInvalidExecutionStep: "Invalid execution step",
+    workflowInvalidWorkflow: "Invalid workflow",
 
     commandline: "Commandline",
     commandlinePrefix: "Prefix",

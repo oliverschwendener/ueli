@@ -6,7 +6,7 @@ import { TranslationSet } from "../../../common/translation/translation-set";
 import { PluginType } from "../../plugin-type";
 import { UrlOptions } from "../../../common/config/url-options";
 import { defaultUrlIcon } from "../../../common/icon/default-icons";
-import { StringHelpers } from "../../../common/helpers/string-helpers";
+import { isValidUrl } from "../../../common/helpers/url-helpers";
 
 export class UrlPlugin implements ExecutionPlugin {
     public readonly pluginType: PluginType.Url;
@@ -23,11 +23,7 @@ export class UrlPlugin implements ExecutionPlugin {
     }
 
     public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
-        const http = "http://";
-        const https = "https://";
-        const fullUrlRegex = new RegExp(/^((https?:)?[/]{2})?([a-z0-9]+[.])+[a-z]{2,}.*$/i, "gi");
-        const stringStartsWithHttpOrHttps = (userInput.startsWith(http) && userInput.length > http.length) || (userInput.startsWith(https) && userInput.length > https.length);
-        return (fullUrlRegex.test(userInput) || stringStartsWithHttpOrHttps) && !StringHelpers.isValidEmailAddress(userInput);
+        return isValidUrl(userInput);
     }
 
     public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {

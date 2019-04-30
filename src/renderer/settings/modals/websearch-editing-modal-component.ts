@@ -2,11 +2,11 @@ import Vue from "vue";
 import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
 import { WebSearchEngine } from "../../../main/plugins/websearch-plugin/web-search-engine";
-import { ModalEditMode } from "./shortcut-editing-modal-component";
 import { cloneDeep, isEqual } from "lodash";
 import { defaultNewWebSearchEngine, isValidForAdd } from "../../../main/plugins/websearch-plugin/web-search-helpers";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { SettingsNotificationType } from "../settings-notification-type";
+import { ModalEditMode } from "./modal-edit-mode";
 
 export const websearchEditingModal = Vue.extend({
     computed: {

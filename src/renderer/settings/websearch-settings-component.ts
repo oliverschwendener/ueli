@@ -6,8 +6,8 @@ import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultWebSearchOptions, defaultWebSearchIcon } from "../../common/config/default-websearch-options";
 import { cloneDeep } from "lodash";
 import { defaultNewWebSearchEngine } from "../../main/plugins/websearch-plugin/web-search-helpers";
-import { ModalEditMode } from "./modals/shortcut-editing-modal-component";
 import { WebSearchEngine } from "../../main/plugins/websearch-plugin/web-search-engine";
+import { ModalEditMode } from "./modals/modal-edit-mode";
 
 export const webSearchSettingsComponent = Vue.extend({
     data() {
