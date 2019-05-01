@@ -29,7 +29,9 @@ export const workflowSettingsComponent = Vue.extend({
     },
     methods: {
         addWorkflow(workflow: Workflow) {
-            //
+            const config: UserConfigOptions = this.config;
+            config.workflowOptions.workflows.push(cloneDeep(workflow));
+            this.updateConfig();
         },
         updateWorkflow(workflow: Workflow, saveIndex: number) {
             const config: UserConfigOptions = cloneDeep(this.config);

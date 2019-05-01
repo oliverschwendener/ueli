@@ -45,6 +45,7 @@ import { currencyConverterSettingsComponent } from "./settings/currency-converte
 import { workflowSettingsComponent } from "./settings/workflow-settings-component";
 import { workflowEditingModal } from "./settings/modals/workflow-editing-modal-component";
 import { commandlineSettingsComponent } from "./settings/commandline-settings-component";
+import { tagsEditingComponent } from "./settings/tags-editing-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -58,6 +59,7 @@ Vue.component("settings-loading-overlay", settingsLoadingOverlayComponent);
 Vue.component("user-styles", userStylesComponent);
 Vue.component("shortcut-settings", shortcutSettingsComponent);
 Vue.component("shortcut-editing-modal", shortcutEditingModal);
+Vue.component("tags-editing", tagsEditingComponent);
 Vue.component("new-application-folder-modal", newApplicationFolderModalComponent);
 Vue.component("new-application-file-extension-modal", newApplicationFileExtensionModalComponent);
 Vue.component("mdfind-settings", mdfindSettingsComponent);

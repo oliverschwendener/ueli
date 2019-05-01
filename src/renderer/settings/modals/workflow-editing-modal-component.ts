@@ -11,10 +11,21 @@ import { WorkflowExecutionStep } from "../../../main/plugins/workflow-plugin/wor
 import { getFileAndFolderPaths } from "../../dialogs";
 import { isValidExecutionStep, isValidWorkflow } from "../../../main/plugins/workflow-plugin/workflow-helpers";
 import { SettingsNotificationType } from "../settings-notification-type";
+import { defaultWorkflowIcon } from "../../../common/icon/default-icons";
 
 const initialNewWorkflowExecutionStep: WorkflowExecutionStep = {
     executionArgument: "",
     executionArgumentType: WorkflowExecutionArgumentType.FilePath,
+};
+
+const initialWorkflow: Workflow = {
+    description: "",
+    executionSteps: [
+        cloneDeep(initialNewWorkflowExecutionStep),
+    ],
+    icon: cloneDeep(defaultWorkflowIcon),
+    name: "",
+    tags: [],
 };
 
 export const workflowEditingModal = Vue.extend({
@@ -28,11 +39,11 @@ export const workflowEditingModal = Vue.extend({
             editMode: ModalEditMode.Add,
             executionArgumentTypeFilePath: WorkflowExecutionArgumentType.FilePath,
             executionArgumentTypes: Object.values(WorkflowExecutionArgumentType).sort(),
-            initialWorkflow: {},
+            initialWorkflow: cloneDeep(initialWorkflow),
             newWorkflowExecutionStep: cloneDeep(initialNewWorkflowExecutionStep),
             saveIndex: undefined,
             visible: false,
-            workflow: {},
+            workflow: cloneDeep(initialWorkflow),
         };
     },
     methods: {
@@ -189,6 +200,8 @@ export const workflowEditingModal = Vue.extend({
                                 </button>
                             </div>
                         </div>
+                        <tags-editing :tags="workflow.tags" :field-title="translations.workflowTags" :translations="translations"></tags-editing>
+                        <icon-editing :icon="workflow.icon" :translations="translations"></icon-editing>
                         <div class="field is-grouped is-grouped-right">
                             <div class="control">
                                 <button class="button is-danger" @click="closeModal">

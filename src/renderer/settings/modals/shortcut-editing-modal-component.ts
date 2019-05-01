@@ -30,7 +30,6 @@ export const shortcutEditingModal = Vue.extend({
             iconTypeSvg: IconType.SVG,
             iconTypeUrl: IconType.URL,
             iconTypes: Object.values(IconType).sort(),
-            newTag: "",
             saveIndex: undefined,
             shortcut: cloneDeep(defaultNewShortcut),
             shortcutTypeFilePath: ShortcutType.FilePath,
@@ -53,9 +52,6 @@ export const shortcutEditingModal = Vue.extend({
         closeButtonClick() {
             this.shortcut = cloneDeep(defaultNewShortcut);
             this.visible = false;
-        },
-        deleteTag(index: number) {
-            this.shortcut.tags.splice(index, 1);
         },
         getShortcutType(shortcutType: ShortcutType): string {
             const translations: TranslationSet = this.translations;
@@ -136,10 +132,6 @@ export const shortcutEditingModal = Vue.extend({
             }
             return `${translations.forExample}: "${placeholder}"`;
         },
-        getTagsPlaceholder(): string {
-            const translation: TranslationSet = this.translations;
-            return translation.shortcutSettingsTagPlaceholder;
-        },
         onBackgroundClick() {
             this.resetModal();
         },
@@ -151,15 +143,6 @@ export const shortcutEditingModal = Vue.extend({
                         shortcut.executionArgument = filePaths[0];
                     }
                 });
-        },
-        onTagKeyPress(event: KeyboardEvent) {
-            if (event.key === "Enter") {
-                if (this.newTag.length > 0) {
-                    const shortcut: Shortcut = this.shortcut;
-                    shortcut.tags.push(this.newTag);
-                    this.newTag = "";
-                }
-            }
         },
         resetModal(): void {
             this.shortcut = cloneDeep(defaultNewShortcut);
@@ -231,17 +214,7 @@ export const shortcutEditingModal = Vue.extend({
                                 <input class="input" type="text" :placeholder="getShorcutTypeDescriptionPlaceholder(shortcut.type)" v-model="shortcut.description">
                             </div>
                         </div>
-                        <div class="field">
-                            <label class="label">
-                                {{ translations.shortcutSettingsTableTags }}
-                            </label>
-                            <div v-if="shortcut.tags.length > 0" class="tags">
-                                <span v-for="(tag, index) in shortcut.tags" class="tag is-dark">{{ tag }} <button @click="deleteTag(index)" class="delete is-small"></button></span>
-                            </div>
-                            <div class="control">
-                                <input class="input" type="text" v-model="newTag" :placeholder="getTagsPlaceholder()" @keyup="onTagKeyPress">
-                            </div>
-                        </div>
+                        <tags-editing :tags="shortcut.tags" :field-title="translations.shortcutSettingsTableTags" :translations="translations"></tags-editing>
                         <icon-editing :icon="shortcut.icon" :translations="translations"></icon-editing>
                         <div class="field is-grouped is-grouped-right">
                             <div class="control">
