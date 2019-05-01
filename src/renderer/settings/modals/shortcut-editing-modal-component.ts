@@ -6,7 +6,7 @@ import { ShortcutType } from "../../../main/plugins/shortcuts-search-plugin/shor
 import { IconType } from "../../../common/icon/icon-type";
 import { platform, homedir } from "os";
 import { cloneDeep } from "lodash";
-import { defaultNewShortcut, ShortcutHelpers } from "../../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
+import { defaultNewShortcut, isValidShortcutToAdd } from "../../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
 import { SettingsNotificationType } from "../settings-notification-type";
 import { isValidWindowsFilePath, isValidMacOsFilePath } from "../../../common/helpers/file-path-validators";
 import { isWindows } from "../../../common/helpers/operating-system-helpers";
@@ -42,7 +42,7 @@ export const shortcutEditingModal = Vue.extend({
         saveButtonClick(): void {
             const translations: TranslationSet = this.translations;
             const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
-            if (ShortcutHelpers.isValidToAdd(this.shortcut, filePathValidator)) {
+            if (isValidShortcutToAdd(this.shortcut, filePathValidator)) {
                 vueEventDispatcher.$emit(VueEventChannels.shortcutEdited, this.shortcut, this.editMode, this.saveIndex);
                 this.resetModal();
             } else {

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { IconType } from "../../common/icon/icon-type";
 import { Icon } from "../../common/icon/icon";
-import { IconHelpers } from "../../common/icon/icon-helpers";
+import { isValidIcon } from "../../common/icon/icon-helpers";
 
 export const iconComponent = Vue.extend({
     data() {
@@ -12,7 +12,7 @@ export const iconComponent = Vue.extend({
     },
     methods: {
         getIcon(icon: Icon) {
-            if (IconHelpers.isValidIcon(icon)) {
+            if (isValidIcon(icon)) {
                 return icon;
             } else {
                 return this.defaulticon;

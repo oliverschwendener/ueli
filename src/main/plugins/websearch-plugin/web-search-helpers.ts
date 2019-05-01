@@ -1,6 +1,6 @@
 import { WebSearchEngine } from "./web-search-engine";
 import { IconType } from "../../../common/icon/icon-type";
-import { IconHelpers } from "../../../common/icon/icon-helpers";
+import { isValidIcon } from "../../../common/icon/icon-helpers";
 
 export const defaultNewWebSearchEngine: WebSearchEngine = {
     encodeSearchTerm: true,
@@ -15,9 +15,9 @@ export const defaultNewWebSearchEngine: WebSearchEngine = {
     url: "",
 };
 
-export function isValidForAdd(websearchEngine: WebSearchEngine): boolean {
+export function isValidWebSearchEngineToAdd(websearchEngine: WebSearchEngine): boolean {
     const iconCondition = websearchEngine.icon.parameter && websearchEngine.icon.parameter.length > 0
-        ? IconHelpers.isValidIconParameter(websearchEngine.icon)
+        ? isValidIcon(websearchEngine.icon)
         : true;
 
     return websearchEngine !== undefined

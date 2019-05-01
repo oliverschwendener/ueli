@@ -3,7 +3,7 @@ import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
 import { WebSearchEngine } from "../../../main/plugins/websearch-plugin/web-search-engine";
 import { cloneDeep, isEqual } from "lodash";
-import { defaultNewWebSearchEngine, isValidForAdd } from "../../../main/plugins/websearch-plugin/web-search-helpers";
+import { defaultNewWebSearchEngine, isValidWebSearchEngineToAdd } from "../../../main/plugins/websearch-plugin/web-search-helpers";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { SettingsNotificationType } from "../settings-notification-type";
 import { ModalEditMode } from "./modal-edit-mode";
@@ -31,7 +31,7 @@ export const websearchEditingModal = Vue.extend({
         saveButtonClick() {
             const websearchEngine: WebSearchEngine = this.websearchEngine;
             const translations: TranslationSet = this.translations;
-            if (isValidForAdd(websearchEngine)) {
+            if (isValidWebSearchEngineToAdd(websearchEngine)) {
                 this.visible = false;
                 vueEventDispatcher.$emit(VueEventChannels.websearchEngineEdited, this.websearchEngine, this.editMode, this.saveIndex);
             } else {

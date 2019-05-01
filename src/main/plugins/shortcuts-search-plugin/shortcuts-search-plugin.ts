@@ -3,11 +3,11 @@ import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { ShortcutOptions } from "../../../common/config/shortcuts-options";
-import { IconHelpers } from "../../../common/icon/icon-helpers";
 import { defaultShortcutIcon } from "../../../common/config/default-shortcuts-options";
 import { Shortcut } from "./shortcut";
 import { ShortcutType } from "./shortcut-type";
 import { AutoCompletionResult } from "../../../common/auto-completion-result";
+import { isValidIcon } from "./../../../common/icon/icon-helpers";
 
 interface ExecutionArgumentDecodeResult {
     shortcutType: ShortcutType;
@@ -45,7 +45,7 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
                     description: shortcut.description,
                     executionArgument: this.encodeExecutionArgument(shortcut),
                     hideMainWindowAfterExecution: true,
-                    icon: IconHelpers.isValidIcon(shortcut.icon)
+                    icon: isValidIcon(shortcut.icon)
                         ? shortcut.icon
                         : defaultShortcutIcon,
                     name: shortcut.name,
