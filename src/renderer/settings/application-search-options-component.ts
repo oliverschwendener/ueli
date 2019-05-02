@@ -133,7 +133,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
                                 <td class="has-text-right">
                                     <button class="button is-danger" @click="removeApplicationFolder(applicationFolder)">
                                         <span class="icon">
-                                            <i class="fas fa-minus"></i>
+                                            <i class="fas fa-trash"></i>
                                         </span>
                                     </button>
                                 </td>
@@ -169,7 +169,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
                                 <td class="has-text-right">
                                     <button class="button is-danger" @click="removeApplicationFileExtension(applicationFileExtension)">
                                         <span class="icon">
-                                            <i class="fas fa-minus"></i>
+                                            <i class="fas fa-trash"></i>
                                         </span>
                                     </button>
                                 </td>

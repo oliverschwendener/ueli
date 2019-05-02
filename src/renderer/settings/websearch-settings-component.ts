@@ -142,7 +142,7 @@ export const webSearchSettingsComponent = Vue.extend({
                                 <td class="has-text-centered">
                                     <button class="button is-danger" @click="removeWebsearchEngine(index)">
                                         <span class="icon">
-                                            <i class="fas fa-minus"></i>
+                                            <i class="fas fa-trash"></i>
                                         </span>
                                     </button>
                                 </td>
