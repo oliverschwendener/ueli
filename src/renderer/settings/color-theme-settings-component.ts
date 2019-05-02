@@ -93,7 +93,7 @@ export const colorThemeSettingsComponent = Vue.extend({
             this.dropdownVisible = !this.dropdownVisible;
         },
         importColorTheme() {
-            getFilePath([])
+            getFilePath([{ extensions: ["json"], name: "JSON" }])
                 .then((filePath: string) => {
                     const translations: TranslationSet = this.translations;
                     if (filePath) {
@@ -102,7 +102,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                                 const colorThemeOptions = JSON.parse(fileContent) as ColorThemeOptions;
                                 if (isValidColorTheme(colorThemeOptions)) {
                                     const config: UserConfigOptions = this.config;
-                                    config.colorThemeOptions = colorThemeOptions;
+                                    config.colorThemeOptions = Object.assign({}, config.colorThemeOptions, colorThemeOptions);
                                     this.updateConfig();
                                     vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeImportSucceeded, NotificationType.Info);
                                 } else {
