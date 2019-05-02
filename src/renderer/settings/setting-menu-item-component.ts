@@ -54,6 +54,20 @@ export const settingMenuItemComponent = Vue.extend({
                     return item;
             }
         },
+        getItemIcon(item: GeneralSettings): string {
+            switch (item) {
+                case GeneralSettings.Appearance:
+                    return `<i class="fas fa-eye"></i>`;
+                case GeneralSettings.ColorTheme:
+                    return `<i class="fas fa-palette"></i>`;
+                case GeneralSettings.General:
+                    return `<i class="fas fa-cog"></i>`;
+                case GeneralSettings.SearchEngine:
+                    return `<i class="fas fa-search"></i>`;
+                default:
+                    return "";
+            }
+        },
         showSetting() {
             vueEventDispatcher.$emit(VueEventChannels.showSetting, this.item);
         },
@@ -67,7 +81,8 @@ export const settingMenuItemComponent = Vue.extend({
     template: `
         <li @click="showSetting">
             <a :class="{ 'is-active' : isActive }">
-                {{ getItemName(item) }}
+                <span v-if="getItemIcon(item).length > 0" class="icon" v-html="getItemIcon(item)"></span>
+                <span>{{ getItemName(item) }}</span>
             </a>
         </li>
     `,

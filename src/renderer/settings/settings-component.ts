@@ -32,14 +32,14 @@ export const settingsComponent = Vue.extend({
     },
     data() {
         return {
-            generalSettingMenuItems: Object.values(GeneralSettings),
+            generalSettingMenuItems: Object.values(GeneralSettings).sort(),
             notification: {
                 message: "",
                 type: undefined,
                 visible: false,
             },
-            pluginSettingMenuItems: Object
-                .values(PluginSettings)
+            pluginSettingMenuItems: Object.values(PluginSettings)
+                .sort()
                 .concat(Object
                     .values(SettingOsSpecific)
                     .filter((setting: string) => setting.startsWith(platform()))
