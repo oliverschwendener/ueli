@@ -8,7 +8,7 @@ import { IpcChannels } from "../common/ipc-channels";
 import { SearchResultItem } from "../common/search-result-item";
 import { settingsComponent } from "./settings/settings-component";
 import { UserConfigOptions } from "../common/config/user-config-options";
-import { applicationSearchSettingsComponent } from "./settings/application-search-options-component";
+import { applicationSearchSettingsComponent } from "./settings/application-search-settings-component";
 import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
 import { ElectronStoreConfigRepository } from "../common/config/electron-store-config-repository";
 import { searchEngineSettingsComponent } from "./settings/search-engine-settings-component";
