@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { PluginSettings } from "./plugin-settings";
-import { defaultShortcutOptions, defaultShortcutIcon } from "../../common/config/default-shortcuts-options";
+import { defaultShortcutOptions } from "../../common/config/default-shortcuts-options";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
@@ -10,6 +10,7 @@ import { IconType } from "../../common/icon/icon-type";
 import { Shortcut } from "../../main/plugins/shortcuts-search-plugin/shortcut";
 import { ShortcutType } from "../../main/plugins/shortcuts-search-plugin/shortcut-type";
 import { ModalEditMode } from "./modals/modal-edit-mode";
+import { defaultShortcutIcon } from "../../common/icon/default-icons";
 
 export const shortcutSettingsComponent = Vue.extend({
     data() {

@@ -3,11 +3,12 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { defaultWebSearchOptions, defaultWebSearchIcon } from "../../common/config/default-websearch-options";
+import { defaultWebSearchOptions } from "../../common/config/default-websearch-options";
 import { cloneDeep } from "lodash";
 import { defaultNewWebSearchEngine } from "../../main/plugins/websearch-plugin/web-search-helpers";
 import { WebSearchEngine } from "../../main/plugins/websearch-plugin/web-search-engine";
 import { ModalEditMode } from "./modals/modal-edit-mode";
+import { defaultWebSearchIcon } from "../../common/icon/default-icons";
 
 export const webSearchSettingsComponent = Vue.extend({
     data() {

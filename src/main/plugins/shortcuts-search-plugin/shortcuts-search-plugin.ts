@@ -3,11 +3,11 @@ import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { ShortcutOptions } from "../../../common/config/shortcuts-options";
-import { defaultShortcutIcon } from "../../../common/config/default-shortcuts-options";
 import { Shortcut } from "./shortcut";
 import { ShortcutType } from "./shortcut-type";
 import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { isValidIcon } from "./../../../common/icon/icon-helpers";
+import { defaultShortcutIcon } from "../../../common/icon/default-icons";
 
 interface ExecutionArgumentDecodeResult {
     shortcutType: ShortcutType;

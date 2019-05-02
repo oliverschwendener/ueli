@@ -1,21 +1,5 @@
 import { WebSearchOptions } from "./websearch-options";
 import { IconType } from "../icon/icon-type";
-import { Icon } from "../icon/icon";
-
-export const defaultWebSearchIcon: Icon = {
-    parameter: `
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1">
-    <g id="surface1">
-    <path style=" fill:#616161;" d="M 29.179688 31.988281 L 32.007813 29.160156 L 44.03125 41.183594 L 41.203125 44.011719 Z "></path>
-    <path style=" fill:#616161;" d="M 36 20 C 36 28.835938 28.835938 36 20 36 C 11.164063 36 4 28.835938 4 20 C 4 11.164063 11.164063 4 20 4 C 28.835938 4 36 11.164063 36 20 Z "></path>
-    <path style=" fill:#37474F;" d="M 32.457031 35.339844 L 35.285156 32.511719 L 43.980469 41.210938 L 41.152344 44.039063 Z "></path>
-    <path style=" fill:#64B5F6;" d="M 33 20 C 33 27.179688 27.179688 33 20 33 C 12.820313 33 7 27.179688 7 20 C 7 12.820313 12.820313 7 20 7 C 27.179688 7 33 12.820313 33 20 Z "></path>
-    <path style=" fill:#BBDEFB;" d="M 26.898438 14.199219 C 25.199219 12.199219 22.699219 11 20 11 C 17.300781 11 14.800781 12.199219 13.101563 14.199219 C 12.699219 14.601563 12.800781 15.300781 13.199219 15.601563 C 13.601563 16 14.300781 15.898438 14.601563 15.5 C 16 13.898438 17.898438 13 20 13 C 22.101563 13 24 13.898438 25.398438 15.5 C 25.601563 15.699219 25.898438 15.898438 26.199219 15.898438 C 26.398438 15.898438 26.699219 15.800781 26.800781 15.699219 C 27.199219 15.300781 27.199219 14.601563 26.898438 14.199219 Z "></path>
-    </g>
-    </svg>
-    `,
-    type: IconType.SVG,
-};
 
 export const defaultWebSearchOptions: WebSearchOptions = {
     isEnabled: true,
