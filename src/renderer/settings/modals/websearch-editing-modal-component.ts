@@ -5,7 +5,7 @@ import { WebSearchEngine } from "../../../main/plugins/websearch-plugin/web-sear
 import { cloneDeep, isEqual } from "lodash";
 import { defaultNewWebSearchEngine, isValidWebSearchEngineToAdd } from "../../../main/plugins/websearch-plugin/web-search-helpers";
 import { TranslationSet } from "../../../common/translation/translation-set";
-import { SettingsNotificationType } from "../settings-notification-type";
+import { NotificationType } from "../../../common/notification-type";
 import { ModalEditMode } from "./modal-edit-mode";
 
 export const websearchEditingModal = Vue.extend({
@@ -35,7 +35,7 @@ export const websearchEditingModal = Vue.extend({
                 this.visible = false;
                 vueEventDispatcher.$emit(VueEventChannels.websearchEngineEdited, this.websearchEngine, this.editMode, this.saveIndex);
             } else {
-                vueEventDispatcher.$emit(VueEventChannels.notification, translations.websearchInvalidWebsearchEngine, SettingsNotificationType.Error);
+                vueEventDispatcher.$emit(VueEventChannels.notification, translations.websearchInvalidWebsearchEngine, NotificationType.Error);
             }
         },
         getModalTitle(): string {

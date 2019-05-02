@@ -2,7 +2,7 @@ import Vue from "vue";
 import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
 import { showNotification } from "../../notifications";
-import { SettingsNotificationType } from "../settings-notification-type";
+import { NotificationType } from "../../../common/notification-type";
 import { isWindows } from "../../../common/helpers/operating-system-helpers";
 import { platform } from "os";
 import { TranslationSet } from "../../../common/translation/translation-set";
@@ -39,7 +39,7 @@ export const newApplicationFileExtensionModalComponent = Vue.extend({
             } else {
                 showNotification(
                     translations.applicationSearchSettingsInvalidFileExtensionErrorMessage.replace("{{value}}", applicationFileExtension),
-                    SettingsNotificationType.Error);
+                    NotificationType.Error);
             }
         },
     },

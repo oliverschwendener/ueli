@@ -65,6 +65,13 @@ export interface TranslationSet {
     appearanceSettingsShowSearchIcon: string;
 
     colorThemeSettings: string;
+    colorThemeSettingsImportColorTheme: string;
+    colorThemeSettingsExportColorTheme: string;
+    colorThemeExportSucceeded: string;
+    colorThemeExportFailed: string;
+    colorThemeImportSucceeded: string;
+    colorThemeImportFailed: string;
+    colorThemeInvalidColorTheme: string;
     colorthemeUserInputBackgroundColor: string;
     colorThemeUserInputTextColor: string;
     colorThemeSearchResultsBackgroundColor: string;

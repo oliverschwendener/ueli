@@ -68,6 +68,13 @@ export const germanTranslationSet: TranslationSet = {
     appearanceSettingsShowSearchIcon: "Suchsymbol in der Suchleiste anzeigen",
 
     colorThemeSettings: "Farbschema",
+    colorThemeSettingsImportColorTheme: "Farbschema importieren",
+    colorThemeSettingsExportColorTheme: "Farbschema exportieren",
+    colorThemeExportSucceeded: "Erfolgreich Farbschema exportiert",
+    colorThemeExportFailed: "Farbschemaexport fehlgeschlagen",
+    colorThemeImportSucceeded: "Erfolgreich Farbschema importiert",
+    colorThemeImportFailed: "Farbschemaimport fehlgeschlagen",
+    colorThemeInvalidColorTheme: "Ungültiges Farbschema",
     colorthemeUserInputBackgroundColor: "Suchfeld Hintergrundfarbe",
     colorThemeUserInputTextColor: "Suchfeld Textfarbe",
     colorThemeSearchResultsBackgroundColor: "Suchergebnisse Hintergrundfarbe",

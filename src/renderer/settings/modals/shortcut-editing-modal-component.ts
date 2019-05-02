@@ -7,7 +7,7 @@ import { IconType } from "../../../common/icon/icon-type";
 import { platform, homedir } from "os";
 import { cloneDeep } from "lodash";
 import { defaultNewShortcut, isValidShortcutToAdd } from "../../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
-import { SettingsNotificationType } from "../settings-notification-type";
+import { NotificationType } from "../../../common/notification-type";
 import { isValidWindowsFilePath, isValidMacOsFilePath } from "../../../common/helpers/file-path-validators";
 import { isWindows } from "../../../common/helpers/operating-system-helpers";
 import { isEqual } from "lodash";
@@ -46,7 +46,7 @@ export const shortcutEditingModal = Vue.extend({
                 vueEventDispatcher.$emit(VueEventChannels.shortcutEdited, this.shortcut, this.editMode, this.saveIndex);
                 this.resetModal();
             } else {
-                showNotification(translations.shortcutSettingsInvalidShortcutErrorMessage, SettingsNotificationType.Error);
+                showNotification(translations.shortcutSettingsInvalidShortcutErrorMessage, NotificationType.Error);
             }
         },
         closeButtonClick() {

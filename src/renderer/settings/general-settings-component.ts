@@ -9,7 +9,7 @@ import { GlobalHotKeyModifier } from "../../common/global-hot-key/global-hot-key
 import { GlobalHotKeyKey } from "../../common/global-hot-key/global-hot-key-key";
 import { Language } from "../../common/translation/language";
 import { getFolderPath, getFilePath } from "../dialogs";
-import { SettingsNotificationType } from "./settings-notification-type";
+import { NotificationType } from "../../common/notification-type";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { FileHelpers } from "../../main/helpers/file-helpers";
 import { isValidUserConfig, mergeUserConfigWithDefault } from "../../common/helpers/config-helpers";
@@ -41,8 +41,8 @@ export const generalSettingsComponent = Vue.extend({
                     const translations: TranslationSet = this.translations;
                     const settingsFilePath = join(filePath, "ueli.config.json");
                     FileHelpers.writeFile(settingsFilePath, JSON.stringify(config, undefined, 2))
-                        .then(() => vueEventDispatcher.$emit(VueEventChannels.notification, translations.generalSettingsSuccessfullyExportedSettings, SettingsNotificationType.Info))
-                        .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, SettingsNotificationType.Error));
+                        .then(() => vueEventDispatcher.$emit(VueEventChannels.notification, translations.generalSettingsSuccessfullyExportedSettings, NotificationType.Info))
+                        .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, NotificationType.Error));
                 });
         },
         importSettings() {
@@ -61,10 +61,10 @@ export const generalSettingsComponent = Vue.extend({
                                 this.config = config;
                                 this.updateConfig();
                             } else {
-                                vueEventDispatcher.$emit(VueEventChannels.notification, translations.generalSettingsImportErrorInvalidConfig, SettingsNotificationType.Error);
+                                vueEventDispatcher.$emit(VueEventChannels.notification, translations.generalSettingsImportErrorInvalidConfig, NotificationType.Error);
                             }
                         })
-                        .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, SettingsNotificationType.Error))
+                        .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, NotificationType.Error))
                         .then(() => this.dropdownVisible = false);
                 });
         },

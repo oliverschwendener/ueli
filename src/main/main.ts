@@ -21,6 +21,7 @@ import { ueliTempFolder } from "../common/helpers/ueli-helpers";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
 import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-helpers";
 import { isValidHotKey } from "../common/global-hot-key/global-hot-key-helpers";
+import { NotificationType } from "../common/notification-type";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -47,11 +48,10 @@ let rescanInterval = config.generalOptions.rescanEnabled
     ? setInterval(() => refreshAllIndexes(), Number(config.generalOptions.rescanIntervalInSeconds) * 1000)
     : undefined;
 
-function notifyRenderer(ipcChannel: IpcChannels, message?: string) {
-    const allWindows = [mainWindow, settingsWindow];
-    allWindows.forEach((window) => {
+function notifyRenderer(message: string, notificationType: NotificationType) {
+    BrowserWindow.getAllWindows().forEach((window) => {
         if (window !== undefined && !window.isDestroyed()) {
-            window.webContents.send(ipcChannel, message);
+            window.webContents.send(IpcChannels.notification, message, notificationType);
         }
     });
 }
@@ -61,11 +61,16 @@ function refreshAllIndexes() {
         .then(() => {
             const message = translationSet.successfullyRefreshedIndexes;
             logger.debug(message);
-            notifyRenderer(IpcChannels.indexRefreshSucceeded, message);
+            notifyRenderer(message, NotificationType.Info);
         })
         .catch((err) => {
             logger.error(err);
-            notifyRenderer(IpcChannels.indexRefreshFailed, err);
+            notifyRenderer(err, NotificationType.Error);
+        })
+        .then(() => {
+            BrowserWindow.getAllWindows().forEach((window) => {
+                window.webContents.send(IpcChannels.refreshIndexesCompleted);
+            });
         });
 }
 
@@ -182,7 +187,7 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boole
                     if (needsIndexRefresh) {
                         refreshAllIndexes();
                     } else {
-                        notifyRenderer(IpcChannels.indexRefreshSucceeded, translationSet.successfullyUpdatedconfig);
+                        notifyRenderer(translationSet.successfullyUpdatedconfig, NotificationType.Info);
                     }
                 })
                 .catch((err) =>  logger.error(err));
@@ -503,8 +508,8 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.clearExecutionLogConfirmed, (event: Electron.Event) => {
         searchEngine.clearExecutionLog()
-            .then(() => notifyRenderer(IpcChannels.executionLogClearingSucceeded, translationSet.successfullyClearedExecutionLog))
-            .catch((err) => notifyRenderer(IpcChannels.executionLogClearingErrored, err));
+            .then(() => notifyRenderer(translationSet.successfullyClearedExecutionLog, NotificationType.Info))
+            .catch((err) => notifyRenderer(err, NotificationType.Error));
     });
 
     ipcMain.on(IpcChannels.openDebugLogRequested, (event: Electron.Event) => {

@@ -40,7 +40,7 @@ import { operatingSystemCommandsSettingsComponent } from "./settings/operating-s
 import { calculatorSettingsComponent } from "./settings/calculator-settings-component";
 import { urlSettingsComponent } from "./settings/url-settings-component";
 import { emailSettingsComponent } from "./settings/email-settings";
-import { SettingsNotificationType } from "./settings/settings-notification-type";
+import { NotificationType } from "../common/notification-type";
 import { currencyConverterSettingsComponent } from "./settings/currency-converter-settings-component";
 import { workflowSettingsComponent } from "./settings/workflow-settings-component";
 import { workflowEditingModal } from "./settings/modals/workflow-editing-modal-component";
@@ -119,10 +119,13 @@ new Vue({
         });
 
         vueEventDispatcher.$on(VueEventChannels.configUpdated, (config: UserConfigOptions, needsIndexRefresh: boolean) => {
+            if (needsIndexRefresh) {
+                vueEventDispatcher.$emit(VueEventChannels.loadingStarted);
+            }
+
             this.translations = getTranslationSet(config.generalOptions.language);
             this.config = config;
             ipcRenderer.send(IpcChannels.configUpdated, config, needsIndexRefresh);
-            vueEventDispatcher.$emit(VueEventChannels.loadingStarted);
         });
 
         vueEventDispatcher.$on(VueEventChannels.clearExecutionLogConfirmed, () => {
@@ -161,12 +164,12 @@ new Vue({
             vueEventDispatcher.$emit(VueEventChannels.userInputUpdated, updatedUserInput);
         });
 
-        ipcRenderer.on(IpcChannels.executionLogClearingSucceeded, (event: Electron.Event, message: string) => {
-            vueEventDispatcher.$emit(VueEventChannels.notification, message, SettingsNotificationType.Info);
+        ipcRenderer.on(IpcChannels.notification, (event: Electron.Event, message: string, type?: NotificationType) => {
+            vueEventDispatcher.$emit(VueEventChannels.notification, message, type);
         });
 
-        ipcRenderer.on(IpcChannels.executionLogClearingErrored, (event: Electron.Event, message: string) => {
-            vueEventDispatcher.$emit(VueEventChannels.notification, message, SettingsNotificationType.Error);
+        ipcRenderer.on(IpcChannels.refreshIndexesCompleted, (event: Electron.Event, message: string) => {
+            vueEventDispatcher.$emit(VueEventChannels.loadingCompleted);
         });
     },
     methods: {
@@ -177,9 +180,6 @@ new Vue({
             if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "r") {
                 ipcRenderer.send(IpcChannels.reloadApp);
             }
-        },
-        settingsGlobalKeyPress(event: KeyboardEvent) {
-            //
         },
     },
 });

@@ -10,7 +10,7 @@ import { getWorkflowExecutionArgumentTypeIcon, getWorkflowExecutionArgumentTypeC
 import { WorkflowExecutionStep } from "../../../main/plugins/workflow-plugin/workflow-execution-argument";
 import { getFileAndFolderPaths } from "../../dialogs";
 import { isValidExecutionStep, isValidWorkflow } from "../../../main/plugins/workflow-plugin/workflow-helpers";
-import { SettingsNotificationType } from "../settings-notification-type";
+import { NotificationType } from "../../../common/notification-type";
 import { defaultWorkflowIcon } from "../../../common/icon/default-icons";
 
 const initialNewWorkflowExecutionStep: WorkflowExecutionStep = {
@@ -55,7 +55,7 @@ export const workflowEditingModal = Vue.extend({
                 this.resetNewExecutionStep();
             } else {
                 const translations: TranslationSet = this.translations;
-                vueEventDispatcher.$emit(VueEventChannels.notification, translations.workflowInvalidExecutionStep, SettingsNotificationType.Error);
+                vueEventDispatcher.$emit(VueEventChannels.notification, translations.workflowInvalidExecutionStep, NotificationType.Error);
             }
         },
         getModalTitle(): string {
@@ -108,7 +108,7 @@ export const workflowEditingModal = Vue.extend({
                 this.closeModal();
             } else {
                 const translations: TranslationSet = this.translations;
-                vueEventDispatcher.$emit(VueEventChannels.notification, translations.workflowInvalidWorkflow, SettingsNotificationType.Error);
+                vueEventDispatcher.$emit(VueEventChannels.notification, translations.workflowInvalidWorkflow, NotificationType.Error);
             }
         },
     },

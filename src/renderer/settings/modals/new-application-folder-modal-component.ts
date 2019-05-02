@@ -2,7 +2,7 @@ import Vue from "vue";
 import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
 import { FileHelpers } from "../../../main/helpers/file-helpers";
-import { SettingsNotificationType } from "../settings-notification-type";
+import { NotificationType } from "../../../common/notification-type";
 import { getFolderPath } from "../../dialogs";
 import { showNotification } from "../../notifications";
 import { isWindows } from "../../../common/helpers/operating-system-helpers";
@@ -42,7 +42,7 @@ export const newApplicationFolderModalComponent = Vue.extend({
                     vueEventDispatcher.$emit(VueEventChannels.applicationFolderAdded, this.newApplicationFolder);
                     this.closeModal();
                 })
-                .catch((err: string) => showNotification(err, SettingsNotificationType.Error));
+                .catch((err: string) => showNotification(err, NotificationType.Error));
         },
         validateFolderPath(folderPath: string): Promise<void> {
             const translations: TranslationSet = this.translations;

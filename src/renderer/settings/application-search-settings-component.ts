@@ -5,7 +5,7 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { defaultApplicationSearchOptions } from "../../main/plugins/application-search-plugin/default-application-search-plugin-options";
 import { cloneDeep } from "lodash";
 import { PluginSettings } from "./plugin-settings";
-import { SettingsNotificationType } from "./settings-notification-type";
+import { NotificationType } from "../../common/notification-type";
 import { showNotification } from "../notifications";
 
 export const applicationSearchSettingsComponent = Vue.extend({
@@ -19,7 +19,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
         addApplicationFileExtension(applicationFileExtension: string) {
             const config: UserConfigOptions = this.config;
             if (config.applicationSearchOptions.applicationFileExtensions.find((a) => a === applicationFileExtension) !== undefined) {
-                showNotification(`"${applicationFileExtension}" already exists in your list`, SettingsNotificationType.Info);
+                showNotification(`"${applicationFileExtension}" already exists in your list`, NotificationType.Info);
             } else {
                 config.applicationSearchOptions.applicationFileExtensions.push(applicationFileExtension);
                 this.updateConfig(true);
@@ -29,7 +29,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
             const config: UserConfigOptions = this.config;
             const folderAlreadyExistsInList = config.applicationSearchOptions.applicationFolders.find((a) => a === folderPath) !== undefined;
             if (folderAlreadyExistsInList) {
-                showNotification(`Folder "${folderPath}" already exists in your list`, SettingsNotificationType.Info);
+                showNotification(`Folder "${folderPath}" already exists in your list`, NotificationType.Info);
             } else {
                 config.applicationSearchOptions.applicationFolders.push(folderPath);
                 this.updateConfig(true);

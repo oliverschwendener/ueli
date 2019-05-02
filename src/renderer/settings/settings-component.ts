@@ -1,9 +1,7 @@
 import Vue from "vue";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
-import { SettingsNotificationType } from "./settings-notification-type";
-import { ipcRenderer } from "electron";
-import { IpcChannels } from "../../common/ipc-channels";
+import { NotificationType } from "../../common/notification-type";
 import { PluginSettings } from "./plugin-settings";
 import { SettingOsSpecific } from "./settings-os-specific";
 import { platform } from "os";
@@ -17,12 +15,12 @@ export const settingsComponent = Vue.extend({
         notificationClass() {
             let typeClass = "is-info";
 
-            const type = this.notification.type as SettingsNotificationType;
+            const type = this.notification.type as NotificationType;
             switch (type) {
-                case SettingsNotificationType.Error:
+                case NotificationType.Error:
                     typeClass = "is-danger";
                     break;
-                case SettingsNotificationType.Warning:
+                case NotificationType.Warning:
                     typeClass = "is-warning";
                     break;
             }
@@ -52,7 +50,7 @@ export const settingsComponent = Vue.extend({
         removeNotification() {
             this.notification.visible = false;
         },
-        showNotification(message: string, type: SettingsNotificationType) {
+        showNotification(message: string, type: NotificationType) {
             if (autoHideErrorMessageTimeout) {
                 clearTimeout(autoHideErrorMessageTimeout);
             }
@@ -72,18 +70,8 @@ export const settingsComponent = Vue.extend({
     mounted() {
         vueEventDispatcher.$emit(VueEventChannels.showSetting, GeneralSettings.General);
 
-        vueEventDispatcher.$on(VueEventChannels.notification, (message: string, type: SettingsNotificationType) => {
+        vueEventDispatcher.$on(VueEventChannels.notification, (message: string, type: NotificationType) => {
             this.showNotification(message, type);
-        });
-
-        ipcRenderer.on(IpcChannels.indexRefreshSucceeded, (event: Electron.Event, message: string) => {
-            this.showNotification(message, SettingsNotificationType.Info);
-            vueEventDispatcher.$emit(VueEventChannels.loadingCompleted);
-        });
-
-        ipcRenderer.on(IpcChannels.indexRefreshFailed, (event: Electron.Event, message: string) => {
-            this.showNotification(message, SettingsNotificationType.Error);
-            vueEventDispatcher.$emit(VueEventChannels.loadingCompleted);
         });
     },
     template: `

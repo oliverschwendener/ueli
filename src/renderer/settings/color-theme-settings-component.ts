@@ -5,10 +5,18 @@ import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultColorThemeOptions } from "../../common/config/default-color-theme-options";
 import { cloneDeep } from "lodash";
 import { GeneralSettings } from "./general-settings";
+import { getFolderPath, getFilePath } from "../dialogs";
+import { join } from "path";
+import { FileHelpers } from "../../main/helpers/file-helpers";
+import { TranslationSet } from "../../common/translation/translation-set";
+import { NotificationType } from "../../common/notification-type";
+import { ColorThemeOptions } from "../../common/config/color-theme-options";
+import { isValidColorTheme } from "../../common/helpers/color-theme-helpers";
 
 export const colorThemeSettingsComponent = Vue.extend({
     data() {
         return {
+            dropdownVisible: false,
             settingName: GeneralSettings.ColorTheme,
             visible: false,
         };
@@ -81,6 +89,44 @@ export const colorThemeSettingsComponent = Vue.extend({
             });
             this.updateConfig();
         },
+        toggleDropDown() {
+            this.dropdownVisible = !this.dropdownVisible;
+        },
+        importColorTheme() {
+            getFilePath([])
+                .then((filePath: string) => {
+                    const translations: TranslationSet = this.translations;
+                    if (filePath) {
+                        FileHelpers.readFile(filePath)
+                            .then((fileContent: string) => {
+                                const colorThemeOptions = JSON.parse(fileContent) as ColorThemeOptions;
+                                if (isValidColorTheme(colorThemeOptions)) {
+                                    const config: UserConfigOptions = this.config;
+                                    config.colorThemeOptions = colorThemeOptions;
+                                    this.updateConfig();
+                                    vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeImportSucceeded, NotificationType.Info);
+                                } else {
+                                    vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeInvalidColorTheme, NotificationType.Error);
+                                }
+                            })
+                            .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeImportFailed, NotificationType.Error));
+                    }
+                });
+        },
+        exportColorTheme() {
+            getFolderPath()
+                .then((folderPath: string) => {
+                    if (folderPath) {
+                        const translations: TranslationSet = this.translations;
+                        const config: UserConfigOptions = this.config;
+                        const fileContent = JSON.stringify(config.colorThemeOptions);
+                        const filePath = join(folderPath, "ueli-color-theme.json");
+                        FileHelpers.writeFile(filePath, fileContent)
+                            .then(() => vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeExportSucceeded, NotificationType.Info))
+                            .catch(() => vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeExportFailed, NotificationType.Error));
+                    }
+                });
+        },
     },
     mounted() {
         vueEventDispatcher.$on(VueEventChannels.showSetting, (settingName: string) => {
@@ -102,9 +148,32 @@ export const colorThemeSettingsComponent = Vue.extend({
             <span>
                 {{ translations.colorThemeSettings }}
             </span>
-            <button class="button" @click="resetAll">
-                <span class="icon"><i class="fas fa-undo-alt"></i></span>
-            </button>
+            <div>
+                <button class="button" @click="resetAll">
+                    <span class="icon"><i class="fas fa-undo-alt"></i></span>
+                </button>
+                <div class="dropdown is-right" :class="{ 'is-active' : dropdownVisible}">
+                    <div class="dropdown-trigger">
+                        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" @click="toggleDropDown">
+                            <span class="icon">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <a href="#" class="dropdown-item" @click="importColorTheme">
+                                <span class="icon"><i class="fa fa-file-import"></i></span>
+                                <span>{{ translations.colorThemeSettingsImportColorTheme }}</span>
+                            </a>
+                            <a href="#" class="dropdown-item" @click="exportColorTheme">
+                                <span class="icon"><i class="fa fa-file-export"></i></span>
+                                <span>{{ translations.colorThemeSettingsExportColorTheme }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="box">
 

@@ -68,6 +68,13 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsShowSearchIcon: "Show search icon in search field",
 
     colorThemeSettings: "Color Theme",
+    colorThemeSettingsImportColorTheme: "Import color theme",
+    colorThemeSettingsExportColorTheme: "Export color theme",
+    colorThemeExportSucceeded: "Color theme successfully exported",
+    colorThemeExportFailed: "Color theme export failed",
+    colorThemeImportSucceeded: "Color theme successfully imported",
+    colorThemeImportFailed: "Color theme import failed",
+    colorThemeInvalidColorTheme: "Invalid color theme",
     colorthemeUserInputBackgroundColor: "User input background color",
     colorThemeUserInputTextColor: "User input text color",
     colorThemeSearchResultsBackgroundColor: "Search results background color",
