@@ -6,6 +6,7 @@ export enum IpcChannels {
     openSearchResultLocation = "open-search-result-location",
     mainWindowHasBeenHidden = "main-window-has-been-hidden",
     mainWindowHasBeenShown = "main-window-has-been-shown",
+    mainWindowHideRequested = "main-window-hide-requested",
     userInputUpdated = "user-input-updated",
     refreshIndexesCompleted = "refresh-indexes-completed",
     reloadApp = "reload-app",

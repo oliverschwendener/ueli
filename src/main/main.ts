@@ -446,6 +446,10 @@ function registerAllIpcListeners() {
             });
     });
 
+    ipcMain.on(IpcChannels.mainWindowHideRequested, () => {
+        hideMainWindow();
+    });
+
     ipcMain.on(IpcChannels.execute, (event: Electron.Event, searchResultItem: SearchResultItem, privileged: boolean) => {
         searchEngine.execute(searchResultItem, privileged)
             .then(() => {

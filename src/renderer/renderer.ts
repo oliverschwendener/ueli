@@ -180,6 +180,9 @@ new Vue({
             if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "r") {
                 ipcRenderer.send(IpcChannels.reloadApp);
             }
+            if (event.key === "Escape") {
+                ipcRenderer.send(IpcChannels.mainWindowHideRequested);
+            }
         },
     },
 });
