@@ -12,7 +12,7 @@ import { AutoCompletionResult } from "../../../common/auto-completion-result";
 export class ApplicationSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.ApplicationSearchPlugin;
     public readonly openLocationSupported = true;
-    public readonly autoCompletionSupported = true;
+    public readonly autoCompletionSupported = false;
     private config: ApplicationSearchOptions;
     private readonly applicationRepository: ApplicationRepository;
     private readonly executeApplication: (executionArgument: string, privileged?: boolean) => Promise<void>;
