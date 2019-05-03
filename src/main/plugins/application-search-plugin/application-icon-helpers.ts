@@ -2,7 +2,7 @@ import { Application } from "./application";
 import { join } from "path";
 import { createHash } from "crypto";
 import { convert } from "app2png";
-import { FileHelpers } from "../../helpers/file-helpers";
+import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { exec } from "child_process";
 import { ueliTempFolder } from "../../../common/helpers/ueli-helpers";
 import { StringHelpers } from "../../../common/helpers/string-helpers";

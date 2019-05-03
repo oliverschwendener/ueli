@@ -1,7 +1,7 @@
 import { Application } from "./application";
 import { join } from "path";
 import { applicationIconLocation } from "./application-icon-helpers";
-import { FileHelpers } from "../../helpers/file-helpers";
+import { FileHelpers } from "../../../common/helpers/file-helpers";
 
 export class ApplicationIconService {
     private readonly generateIcons: (applications: Application[]) => Promise<void>;

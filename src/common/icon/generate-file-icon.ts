@@ -1,4 +1,4 @@
-import { FileHelpers } from "../../main/helpers/file-helpers";
+import { FileHelpers } from "../helpers/file-helpers";
 import { app } from "electron";
 import { Icon } from "./icon";
 import { IconType } from "./icon-type";

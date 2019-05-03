@@ -7,7 +7,7 @@ import { cloneDeep } from "lodash";
 import { GeneralSettings } from "./general-settings";
 import { getFolderPath, getFilePath } from "../dialogs";
 import { join } from "path";
-import { FileHelpers } from "../../main/helpers/file-helpers";
+import { FileHelpers } from "../../common/helpers/file-helpers";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { NotificationType } from "../../common/notification-type";
 import { ColorThemeOptions } from "../../common/config/color-theme-options";

@@ -4,7 +4,7 @@ import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { FileBrowserOptions } from "../../../common/config/filebrowser-options";
-import { FileHelpers } from "../../helpers/file-helpers";
+import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { basename, dirname, join, sep } from "path";
 import { existsSync } from "fs";
 import { AutoCompletionResult } from "../../../common/auto-completion-result";

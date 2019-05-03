@@ -11,7 +11,7 @@ import { Language } from "../../common/translation/language";
 import { getFolderPath, getFilePath } from "../dialogs";
 import { NotificationType } from "../../common/notification-type";
 import { TranslationSet } from "../../common/translation/translation-set";
-import { FileHelpers } from "../../main/helpers/file-helpers";
+import { FileHelpers } from "../../common/helpers/file-helpers";
 import { isValidUserConfig, mergeUserConfigWithDefault } from "../../common/helpers/config-helpers";
 import { defaultUserConfigOptions } from "../../common/config/default-user-config-options";
 import { GeneralSettings } from "./general-settings";
