@@ -94,13 +94,13 @@ function showMainWindow() {
             : screen.getDisplayNearestPoint(mousePosition);
 
         const windowBounds: Electron.Rectangle = {
-            height: Number(config.appearanceOptions.userInputHeight),
-            width: Number(config.appearanceOptions.windowWidth),
-            x: Number(display.bounds.x + (display.bounds.width / 2) - (config.appearanceOptions.windowWidth / 2)),
-            y: Number(display.bounds.y + (display.bounds.height / 2) - (getMaxWindowHeight(
+            height: Math.round(Number(config.appearanceOptions.userInputHeight)),
+            width: Math.round(Number(config.appearanceOptions.windowWidth)),
+            x: Math.round(Number(display.bounds.x + (display.bounds.width / 2) - (config.appearanceOptions.windowWidth / 2))),
+            y: Math.round(Number(display.bounds.y + (display.bounds.height / 2) - (getMaxWindowHeight(
                     config.appearanceOptions.maxSearchResultsPerPage,
                     config.appearanceOptions.searchResultHeight,
-                    config.appearanceOptions.userInputHeight) / 2)),
+                    config.appearanceOptions.userInputHeight) / 2))),
         };
 
         mainWindow.setBounds(windowBounds);
@@ -199,10 +199,10 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
     if (mainWindow && !mainWindow.isDestroyed()) {
         mainWindow.setResizable(true);
         const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
-            ? getMaxWindowHeight(
+            ? Math.round(getMaxWindowHeight(
                 appearanceOptions.maxSearchResultsPerPage,
-                appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight)
-            : (Number(searchResultCount) * Number(appearanceOptions.searchResultHeight)) + Number(appearanceOptions.userInputHeight);
+                appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight))
+            : Math.round((Number(searchResultCount) * Number(appearanceOptions.searchResultHeight)) + Number(appearanceOptions.userInputHeight));
 
         mainWindow.setSize(Number(appearanceOptions.windowWidth), Number(windowHeight));
         if (center) {
