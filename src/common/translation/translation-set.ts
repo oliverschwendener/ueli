@@ -55,6 +55,29 @@ export interface TranslationSet {
     clearExecutionLog: string;
     openDebugLog: string;
 
+    hotkeyKeyBackspace: string;
+    hotkeyKeyDelete: string;
+    hotkeyKeyDown: string;
+    hotkeyKeyEnd: string;
+    hotkeyKeyEscape: string;
+    hotkeyKeyHome: string;
+    hotkeyKeyInsert: string;
+    hotkeyKeyLeft: string;
+    hotkeyKeyPageDown: string;
+    hotkeyKeyPageUp: string;
+    hotkeyKeyPlus: string;
+    hotkeyKeyReturn: string;
+    hotkeyKeyRight: string;
+    hotkeyKeySpace: string;
+    hotkeyKeyTab: string;
+    hotkeyKeyUp: string;
+    hotkeyModifierAlt: string;
+    hotkeyModifierAltGr: string;
+    hotkeyModifierCommand: string;
+    hotkeyModifierControl: string;
+    hotkeyModifierOption: string;
+    hotkeyModifierShift: string;
+
     appearanceSettings: string;
     appearanceSettingsWindowWidth: string;
     appearanceSettingsMaxSearchResultsPerPage: string;

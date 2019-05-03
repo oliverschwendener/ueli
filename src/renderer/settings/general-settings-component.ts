@@ -45,6 +45,64 @@ export const generalSettingsComponent = Vue.extend({
                         .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, NotificationType.Error));
                 });
         },
+        getTranslatedGlobalHotKeyModifier(hotkeyModifier: GlobalHotKeyModifier): string {
+            const translations: TranslationSet = this.translations;
+            switch (hotkeyModifier) {
+                case GlobalHotKeyModifier.Alt:
+                    return translations.hotkeyModifierAlt;
+                case GlobalHotKeyModifier.AltGr:
+                    return translations.hotkeyModifierAltGr;
+                case GlobalHotKeyModifier.Command:
+                    return translations.hotkeyModifierCommand;
+                case GlobalHotKeyModifier.Control:
+                    return translations.hotkeyModifierControl;
+                case GlobalHotKeyModifier.Option:
+                    return translations.hotkeyModifierOption;
+                case GlobalHotKeyModifier.Shift:
+                    return translations.hotkeyModifierShift;
+                default:
+                    return hotkeyModifier;
+            }
+        },
+        getTranslatedGlobalHotKeyKey(hotkeyKey: GlobalHotKeyKey): string {
+            const translations: TranslationSet = this.translations;
+            switch (hotkeyKey) {
+                case GlobalHotKeyKey.Backspace:
+                    return translations.hotkeyKeyBackspace;
+                case GlobalHotKeyKey.Delete:
+                    return translations.hotkeyKeyDelete;
+                case GlobalHotKeyKey.Down:
+                    return translations.hotkeyKeyDown;
+                case GlobalHotKeyKey.End:
+                    return translations.hotkeyKeyEnd;
+                case GlobalHotKeyKey.Escape:
+                    return translations.hotkeyKeyEscape;
+                case GlobalHotKeyKey.Home:
+                    return translations.hotkeyKeyHome;
+                case GlobalHotKeyKey.Insert:
+                    return translations.hotkeyKeyInsert;
+                case GlobalHotKeyKey.Left:
+                    return translations.hotkeyKeyLeft;
+                case GlobalHotKeyKey.PageDown:
+                    return translations.hotkeyKeyPageDown;
+                case GlobalHotKeyKey.PageUp:
+                    return translations.hotkeyKeyPageUp;
+                case GlobalHotKeyKey.Plus:
+                    return translations.hotkeyKeyPlus;
+                case GlobalHotKeyKey.Return:
+                    return translations.hotkeyKeyReturn;
+                case GlobalHotKeyKey.Right:
+                    return translations.hotkeyKeyRight;
+                case GlobalHotKeyKey.Space:
+                    return translations.hotkeyKeySpace;
+                case GlobalHotKeyKey.Tab:
+                    return translations.hotkeyKeyTab;
+                case GlobalHotKeyKey.Up:
+                    return translations.hotkeyKeyUp;
+                default:
+                    return hotkeyKey;
+            }
+        },
         importSettings() {
             const translations: TranslationSet = this.translations;
             const filter: Electron.FileFilter = {
@@ -205,7 +263,9 @@ export const generalSettingsComponent = Vue.extend({
                                     <div class="control">
                                         <div class="select">
                                             <select v-model="config.generalOptions.hotKey.modifier" @change="updateConfig">
-                                                <option v-for="globalHotKeyModifier in globalHotKeyModifiers">{{ globalHotKeyModifier }}</option>
+                                                <option v-for="globalHotKeyModifier in globalHotKeyModifiers" :value="globalHotKeyModifier">
+                                                    {{ getTranslatedGlobalHotKeyModifier(globalHotKeyModifier) }}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -219,7 +279,9 @@ export const generalSettingsComponent = Vue.extend({
                                     <div class="control">
                                         <div class="select">
                                             <select v-model="config.generalOptions.hotKey.key" @change="updateConfig">
-                                                <option v-for="globalHotKeyKey in globalHotKeyKeys">{{ globalHotKeyKey }}</option>
+                                                <option v-for="globalHotKeyKey in globalHotKeyKeys" :value="globalHotKeyKey">
+                                                    {{ getTranslatedGlobalHotKeyKey(globalHotKeyKey) }}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
