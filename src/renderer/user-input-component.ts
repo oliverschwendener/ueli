@@ -13,6 +13,46 @@ export const userInputComponent = Vue.extend({
         };
     },
     methods: {
+        keyPress(event: KeyboardEvent) {
+            if (event.key === "ArrowUp") {
+                event.preventDefault();
+                if (event.shiftKey) {
+                    vueEventDispatcher.$emit(VueEventChannels.selectInputHistoryItem, "previous");
+                } else {
+                    vueEventDispatcher.$emit(VueEventChannels.selectPreviousItem);
+                }
+            }
+
+            if (event.key === "ArrowDown") {
+                event.preventDefault();
+                if (event.shiftKey) {
+                    vueEventDispatcher.$emit(VueEventChannels.selectInputHistoryItem, "next");
+                } else {
+                    vueEventDispatcher.$emit(VueEventChannels.selectNextItem);
+                }
+            }
+
+            if (event.key.toLowerCase() === "f") {
+                event.preventDefault();
+                if (event.ctrlKey || event.metaKey) {
+                    vueEventDispatcher.$emit(VueEventChannels.favoritesRequested);
+                }
+            }
+
+            if (event.key === "Enter") {
+                const privileged = event.shiftKey;
+                vueEventDispatcher.$emit(VueEventChannels.enterPress, this.userInput, privileged);
+            }
+
+            if (event.key === "Tab") {
+                event.preventDefault();
+                vueEventDispatcher.$emit(VueEventChannels.tabPress);
+            }
+
+            if (event.key.toLowerCase() === "o" && (event.ctrlKey || event.metaKey)) {
+                vueEventDispatcher.$emit(VueEventChannels.openSearchResultLocationKeyPress);
+            }
+        },
         resetUserInput(): void {
             this.userInput = "";
         },
@@ -75,7 +115,7 @@ export const userInputComponent = Vue.extend({
                     </g>
                 </svg>
             </div>
-            <input autofocus id="user-input" class="user-input__input" type="text" v-model="userInput">
+            <input autofocus id="user-input" class="user-input__input" type="text" v-model="userInput" @keydown="keyPress">
         </div>
         `,
     watch: {

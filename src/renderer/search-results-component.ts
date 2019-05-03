@@ -138,10 +138,10 @@ export const searchResultsComponent = Vue.extend({
         vueEventDispatcher.$on(VueEventChannels.selectPreviousItem, () => {
             this.handleSearchResultBrowsing(BrowseDirection.Previous);
         });
-        vueEventDispatcher.$on(VueEventChannels.enterPress, (privileged: boolean) => {
+        vueEventDispatcher.$on(VueEventChannels.enterPress, (userInput: string, privileged: boolean) => {
             const activeItem: SearchResultItemViewModel = this.getActiveSearchResultItem();
             if (activeItem && activeItem.originPluginType !== PluginType.None) {
-                vueEventDispatcher.$emit(VueEventChannels.handleExecution, activeItem, privileged);
+                vueEventDispatcher.$emit(VueEventChannels.handleExecution, userInput, activeItem, privileged);
             }
         });
         vueEventDispatcher.$on(VueEventChannels.openSearchResultLocationKeyPress, () => {

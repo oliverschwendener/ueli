@@ -96,9 +96,9 @@ new Vue({
             ipcRenderer.send(IpcChannels.search, userInput);
         });
 
-        vueEventDispatcher.$on(VueEventChannels.handleExecution, (searchResultIem: SearchResultItem | undefined, privileged: boolean) => {
+        vueEventDispatcher.$on(VueEventChannels.handleExecution, (userInput: string, searchResultIem: SearchResultItem | undefined, privileged: boolean) => {
             if (searchResultIem !== undefined) {
-                ipcRenderer.send(IpcChannels.execute, searchResultIem, privileged);
+                ipcRenderer.send(IpcChannels.execute, userInput, searchResultIem, privileged);
             }
         });
 
@@ -134,6 +134,10 @@ new Vue({
 
         vueEventDispatcher.$on(VueEventChannels.openDebugLogRequested, () => {
             ipcRenderer.send(IpcChannels.openDebugLogRequested);
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.selectInputHistoryItem, (direction: string) => {
+            ipcRenderer.send(IpcChannels.selectInputHistoryItem, direction);
         });
 
         ipcRenderer.on(IpcChannels.appearanceOptionsUpdated, (event: Electron.Event, updatedAppearanceOptions: AppearanceOptions) => {
@@ -173,46 +177,7 @@ new Vue({
         });
     },
     methods: {
-        mainGlobalKeyPress(event: KeyboardEvent) {
-            if (event.key === "ArrowUp") {
-                event.preventDefault();
-                if (event.shiftKey) {
-                    //
-                } else {
-                    vueEventDispatcher.$emit(VueEventChannels.selectPreviousItem);
-                }
-            }
-
-            if (event.key === "ArrowDown") {
-                event.preventDefault();
-                if (event.shiftKey) {
-                    //
-                } else {
-                    vueEventDispatcher.$emit(VueEventChannels.selectNextItem);
-                }
-            }
-
-            if (event.key.toLowerCase() === "f") {
-                event.preventDefault();
-                if (event.ctrlKey || event.metaKey) {
-                    vueEventDispatcher.$emit(VueEventChannels.favoritesRequested);
-                }
-            }
-
-            if (event.key === "Enter") {
-                const privileged = event.shiftKey;
-                vueEventDispatcher.$emit(VueEventChannels.enterPress, privileged);
-            }
-
-            if (event.key === "Tab") {
-                event.preventDefault();
-                vueEventDispatcher.$emit(VueEventChannels.tabPress);
-            }
-
-            if (event.key.toLowerCase() === "o" && (event.ctrlKey || event.metaKey)) {
-                vueEventDispatcher.$emit(VueEventChannels.openSearchResultLocationKeyPress);
-            }
-
+        mainWindowGlobalKeyPress(event: KeyboardEvent) {
             if ((event.ctrlKey && event.key.toLowerCase() === "i") || (event.metaKey && event.key === ",")) {
                 ipcRenderer.send(IpcChannels.openSettingsWindow);
             }

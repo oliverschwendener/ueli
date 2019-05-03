@@ -26,4 +26,5 @@ export enum IpcChannels {
     clearExecutionLogConfirmed = "clear-execution-log-confirmed",
     openDebugLogRequested = "open-debug-log-requested",
     notification = "notification",
+    selectInputHistoryItem = "select-input-history-item",
 }

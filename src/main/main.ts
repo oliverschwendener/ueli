@@ -22,6 +22,7 @@ import { getTranslationSet } from "../common/translation/translation-set-manager
 import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-helpers";
 import { isValidHotKey } from "../common/global-hot-key/global-hot-key-helpers";
 import { NotificationType } from "../common/notification-type";
+import { UserInputHistoryManager } from "./user-input-history-manager";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -30,6 +31,7 @@ if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
 const currentOperatingSystem = platform() === "darwin" ? OperatingSystem.macOS : OperatingSystem.Windows;
 const windowIconFilePath = join(__dirname, "..", "assets", "ueli-black-on-white-logo.png");
+const userInputHistoryManager = new UserInputHistoryManager();
 
 if (currentOperatingSystem === OperatingSystem.macOS) {
     app.dock.hide();
@@ -450,9 +452,10 @@ function registerAllIpcListeners() {
         hideMainWindow();
     });
 
-    ipcMain.on(IpcChannels.execute, (event: Electron.Event, searchResultItem: SearchResultItem, privileged: boolean) => {
+    ipcMain.on(IpcChannels.execute, (event: Electron.Event, userInput: string, searchResultItem: SearchResultItem, privileged: boolean) => {
         searchEngine.execute(searchResultItem, privileged)
             .then(() => {
+                userInputHistoryManager.addItem(userInput);
                 if (searchResultItem.hideMainWindowAfterExecution) {
                     hideMainWindow();
                 } else {
@@ -524,6 +527,13 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.openDebugLogRequested, (event: Electron.Event) => {
         logger.openLog();
+    });
+
+    ipcMain.on(IpcChannels.selectInputHistoryItem, (event: Electron.Event, direction: string) => {
+        const newUserInput = direction === "next"
+            ? userInputHistoryManager.getNext()
+            : userInputHistoryManager.getPrevious();
+        event.sender.send(IpcChannels.userInputUpdated, newUserInput);
     });
 
     ipcMain.on(IpcChannels.ueliCommandExecuted, (command: UeliCommand) => {
