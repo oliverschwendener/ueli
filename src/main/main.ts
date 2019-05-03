@@ -518,7 +518,7 @@ function registerAllIpcListeners() {
             .then(() => notifyRenderer(translationSet.successfullyClearedExecutionLog, NotificationType.Info))
             .catch((err) => {
                 logger.error(err);
-                notifyRenderer(err, NotificationType.Error)
+                notifyRenderer(err, NotificationType.Error);
             });
     });
 
