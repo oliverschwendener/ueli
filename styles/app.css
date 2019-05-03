@@ -71,12 +71,11 @@ body {
     transition: all 500ms ease-in-out;
 }
 
-.user-input__search-icon.is-loading {
-    animation: vibrating;
-    animation-duration: 1s;
+.user-input__search-icon.spinning {
+    animation: spinning;
+    animation-duration: 1.5s;
     animation-fill-mode: forwards;
     animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
 }
 
 .user-input__input {
@@ -100,6 +99,11 @@ body {
     height: calc(100vh - var(--user-input--height));
     overflow-y: auto;
     overflow-x: hidden;
+    position: relative;
+}
+
+.search-results.scroll-disabled {
+    overflow: hidden;
 }
 
 .search-results__item {
@@ -197,6 +201,16 @@ body {
     display: block;
 }
 
+.search-results__overlay {
+    background-color: var(--search-results--background-color);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.75;
+}
+
 .settings__container {
     padding: 15px;
 }
@@ -237,14 +251,17 @@ body {
     animation-delay: -0.16s;
 }
 
-@keyframes vibrating {
+@keyframes spinning {
     0% {
+        transform: rotate(0deg);
         opacity: 1;
     }
     50% {
+        transform: rotate(180deg);
         opacity: 0.5;
     }
     100% {
+        transform: rotate(360deg);
         opacity: 1;
     }
 } 

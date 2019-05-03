@@ -6,6 +6,7 @@ import { Icon } from "../common/icon/icon";
 import { IconType } from "../common/icon/icon-type";
 import { AppearanceOptions } from "../common/config/appearance-options";
 import { PluginType } from "../main/plugin-type";
+import { showLoaderDelay } from "./renderer-helpers";
 
 enum BrowseDirection {
     Next = "next",
@@ -21,6 +22,8 @@ export const searchResultsComponent = Vue.extend({
     data() {
         return {
             containerId: "search-result-container",
+            isLoading: false,
+            loadingCompleted: true,
             searchResults: [],
         };
     },
@@ -114,7 +117,19 @@ export const searchResultsComponent = Vue.extend({
         vueEventDispatcher.$on(VueEventChannels.appearanceOptionsUpdated, (appearanceOptions: AppearanceOptions) => {
             this.appearance = appearanceOptions;
         });
+        vueEventDispatcher.$on(VueEventChannels.userInputChange, () => {
+            this.loadingCompleted = false;
+
+            // show loader only when loading has not completed within the given time
+            setTimeout(() => {
+                if (!this.loadingCompleted) {
+                    this.isLoading = true;
+                }
+            }, showLoaderDelay);
+        });
         vueEventDispatcher.$on(VueEventChannels.searchResultsUpdated, (updatedSearchResults: SearchResultItem[]) => {
+            this.loadingCompleted = true;
+            this.isLoading = false;
             this.update(updatedSearchResults);
         });
         vueEventDispatcher.$on(VueEventChannels.selectNextItem, () => {
@@ -143,7 +158,7 @@ export const searchResultsComponent = Vue.extend({
         });
     },
     template: `
-        <div class="search-results" :id="containerId">
+        <div class="search-results" :class="{ 'scroll-disabled' : isLoading }" :id="containerId">
             <div :id="searchResult.id" class="search-results__item" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
                 <div class="search-results__item-icon-container">
                     <div class="search-results__item-icon-overlay" :class="{ 'active' : searchResult.active }"></div>
@@ -154,6 +169,7 @@ export const searchResultsComponent = Vue.extend({
                     <div class="search-results__item-description" :class="{ 'visible' : searchResult.active || appearance.showDescriptionOnAllSearchResults }">{{ searchResult.description }}</div>
                 </div>
             </div>
+            <div v-if="isLoading" class="search-results__overlay"></div>
         </div>
     `,
 });
