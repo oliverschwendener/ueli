@@ -13,35 +13,6 @@ export const userInputComponent = Vue.extend({
         };
     },
     methods: {
-        onKeyPress(event: KeyboardEvent): void {
-            if (event.key === "ArrowUp") {
-                event.preventDefault();
-                vueEventDispatcher.$emit(VueEventChannels.selectPreviousItem);
-            }
-
-            if (event.key === "ArrowDown") {
-                event.preventDefault();
-                if (event.shiftKey) {
-                    vueEventDispatcher.$emit(VueEventChannels.favoritesRequested);
-                } else {
-                    vueEventDispatcher.$emit(VueEventChannels.selectNextItem);
-                }
-            }
-
-            if (event.key === "Enter") {
-                const privileged = event.shiftKey;
-                vueEventDispatcher.$emit(VueEventChannels.enterPress, privileged);
-            }
-
-            if (event.key === "Tab") {
-                event.preventDefault();
-                vueEventDispatcher.$emit(VueEventChannels.tabPress);
-            }
-
-            if (event.key.toLowerCase() === "o" && (event.ctrlKey || event.metaKey)) {
-                vueEventDispatcher.$emit(VueEventChannels.openSearchResultLocationKeyPress);
-            }
-        },
         resetUserInput(): void {
             this.userInput = "";
         },
@@ -104,7 +75,7 @@ export const userInputComponent = Vue.extend({
                     </g>
                 </svg>
             </div>
-            <input autofocus id="user-input" class="user-input__input" type="text" v-model="userInput" @keydown="onKeyPress">
+            <input autofocus id="user-input" class="user-input__input" type="text" v-model="userInput">
         </div>
         `,
     watch: {

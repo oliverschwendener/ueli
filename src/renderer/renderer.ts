@@ -174,12 +174,53 @@ new Vue({
     },
     methods: {
         mainGlobalKeyPress(event: KeyboardEvent) {
+            if (event.key === "ArrowUp") {
+                event.preventDefault();
+                if (event.shiftKey) {
+                    //
+                } else {
+                    vueEventDispatcher.$emit(VueEventChannels.selectPreviousItem);
+                }
+            }
+
+            if (event.key === "ArrowDown") {
+                event.preventDefault();
+                if (event.shiftKey) {
+                    //
+                } else {
+                    vueEventDispatcher.$emit(VueEventChannels.selectNextItem);
+                }
+            }
+
+            if (event.key.toLowerCase() === "f") {
+                event.preventDefault();
+                if (event.ctrlKey || event.metaKey) {
+                    vueEventDispatcher.$emit(VueEventChannels.favoritesRequested);
+                }
+            }
+
+            if (event.key === "Enter") {
+                const privileged = event.shiftKey;
+                vueEventDispatcher.$emit(VueEventChannels.enterPress, privileged);
+            }
+
+            if (event.key === "Tab") {
+                event.preventDefault();
+                vueEventDispatcher.$emit(VueEventChannels.tabPress);
+            }
+
+            if (event.key.toLowerCase() === "o" && (event.ctrlKey || event.metaKey)) {
+                vueEventDispatcher.$emit(VueEventChannels.openSearchResultLocationKeyPress);
+            }
+
             if ((event.ctrlKey && event.key.toLowerCase() === "i") || (event.metaKey && event.key === ",")) {
                 ipcRenderer.send(IpcChannels.openSettingsWindow);
             }
+
             if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "r") {
                 ipcRenderer.send(IpcChannels.reloadApp);
             }
+
             if (event.key === "Escape") {
                 ipcRenderer.send(IpcChannels.mainWindowHideRequested);
             }
