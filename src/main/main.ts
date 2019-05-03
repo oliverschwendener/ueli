@@ -471,7 +471,10 @@ function registerAllIpcListeners() {
     ipcMain.on(IpcChannels.autoComplete, (event: Electron.Event, searchResultItem: SearchResultItem) => {
         searchEngine.autoComplete(searchResultItem)
             .then((result) => updateSearchResults(result.results, event.sender, result.updatedUserInput))
-            .catch((err) => sendErrorToRenderer(err, event.sender));
+            .catch((err) => {
+                logger.error(err);
+                sendErrorToRenderer(err, event.sender);
+            });
     });
 
     ipcMain.on(IpcChannels.reloadApp, () => {
@@ -513,7 +516,10 @@ function registerAllIpcListeners() {
     ipcMain.on(IpcChannels.clearExecutionLogConfirmed, (event: Electron.Event) => {
         searchEngine.clearExecutionLog()
             .then(() => notifyRenderer(translationSet.successfullyClearedExecutionLog, NotificationType.Info))
-            .catch((err) => notifyRenderer(err, NotificationType.Error));
+            .catch((err) => {
+                logger.error(err);
+                notifyRenderer(err, NotificationType.Error)
+            });
     });
 
     ipcMain.on(IpcChannels.openDebugLogRequested, (event: Electron.Event) => {
