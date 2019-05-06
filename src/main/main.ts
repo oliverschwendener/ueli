@@ -23,13 +23,16 @@ import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-help
 import { isValidHotKey } from "../common/global-hot-key/global-hot-key-helpers";
 import { NotificationType } from "../common/notification-type";
 import { UserInputHistoryManager } from "./user-input-history-manager";
+import { isWindows } from "../common/helpers/operating-system-helpers";
+import { executeFilePathWindows, executeFilePathMacOs } from "./executors/file-path-executor";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
 }
 
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
-const currentOperatingSystem = platform() === "darwin" ? OperatingSystem.macOS : OperatingSystem.Windows;
+const currentOperatingSystem = isWindows(platform()) ? OperatingSystem.Windows : OperatingSystem.macOS;
+const filePathExecutor = currentOperatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
 const windowIconFilePath = join(__dirname, "..", "assets", "ueli-black-on-white-logo.png");
 const userInputHistoryManager = new UserInputHistoryManager();
 
@@ -527,6 +530,10 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.openDebugLogRequested, (event: Electron.Event) => {
         logger.openLog();
+    });
+
+    ipcMain.on(IpcChannels.openTempFolderRequested, (event: Electron.Event) => {
+        filePathExecutor(ueliTempFolder, false);
     });
 
     ipcMain.on(IpcChannels.selectInputHistoryItem, (event: Electron.Event, direction: string) => {

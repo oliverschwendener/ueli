@@ -25,6 +25,7 @@ export enum IpcChannels {
     favoritesReponse = "favorites-response",
     clearExecutionLogConfirmed = "clear-execution-log-confirmed",
     openDebugLogRequested = "open-debug-log-requested",
+    openTempFolderRequested = "open-temp-folder-requested",
     notification = "notification",
     selectInputHistoryItem = "select-input-history-item",
 }

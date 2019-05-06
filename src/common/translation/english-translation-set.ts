@@ -57,6 +57,7 @@ export const englishTranslationSet: TranslationSet = {
     generalSettingsResetAllSettings: "Reset all settings to default",
     clearExecutionLog: "Clear execution log",
     openDebugLog: "Open debug log",
+    openTempFolder: "Open temp folder",
 
     hotkeyKeyBackspace: "Backspace",
     hotkeyKeyDelete: "Delete",

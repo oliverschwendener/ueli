@@ -136,6 +136,10 @@ new Vue({
             ipcRenderer.send(IpcChannels.openDebugLogRequested);
         });
 
+        vueEventDispatcher.$on(VueEventChannels.openTempFolderRequested, () => {
+            ipcRenderer.send(IpcChannels.openTempFolderRequested);
+        });
+
         vueEventDispatcher.$on(VueEventChannels.selectInputHistoryItem, (direction: string) => {
             ipcRenderer.send(IpcChannels.selectInputHistoryItem, direction);
         });

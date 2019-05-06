@@ -54,6 +54,7 @@ export interface TranslationSet {
     generalSettingsResetAllSettings: string;
     clearExecutionLog: string;
     openDebugLog: string;
+    openTempFolder: string;
 
     hotkeyKeyBackspace: string;
     hotkeyKeyDelete: string;

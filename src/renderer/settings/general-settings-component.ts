@@ -129,6 +129,9 @@ export const generalSettingsComponent = Vue.extend({
         openDebugLog() {
             vueEventDispatcher.$emit(VueEventChannels.openDebugLogRequested);
         },
+        openTempFolder() {
+            vueEventDispatcher.$emit(VueEventChannels.openTempFolderRequested);
+        },
         resetAll() {
             const config: UserConfigOptions = this.config;
             config.generalOptions = cloneDeep(defaultGeneralOptions);
@@ -189,6 +192,10 @@ export const generalSettingsComponent = Vue.extend({
                                 <a class="dropdown-item" @click="openDebugLog">
                                     <span class="icon"><i class="fas fa-bug"></i></span>
                                     <span>{{ translations.openDebugLog }}</span>
+                                </a>
+                                <a class="dropdown-item" @click="openTempFolder">
+                                    <span class="icon"><i class="fas fa-folder"></i></span>
+                                    <span>{{ translations.openTempFolder }}</span>
                                 </a>
                             </div>
                         </div>
