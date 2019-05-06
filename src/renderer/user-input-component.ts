@@ -32,11 +32,9 @@ export const userInputComponent = Vue.extend({
                 }
             }
 
-            if (event.key.toLowerCase() === "f") {
+            if (event.key.toLowerCase() === "f" && (event.ctrlKey || event.metaKey)) {
                 event.preventDefault();
-                if (event.ctrlKey || event.metaKey) {
-                    vueEventDispatcher.$emit(VueEventChannels.favoritesRequested);
-                }
+                vueEventDispatcher.$emit(VueEventChannels.favoritesRequested);
             }
 
             if (event.key === "Enter") {
