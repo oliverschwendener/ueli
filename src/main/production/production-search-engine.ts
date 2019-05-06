@@ -69,6 +69,7 @@ export const getProductionSearchEngine = (config: UserConfigOptions, translation
         new OperatingSystemCommandsPlugin(
             config.operatingSystemCommandsOptions,
             operatingSystemCommandRepository,
+            executeCommand,
             ),
         new WorkflowPlugin(
             config.workflowOptions,

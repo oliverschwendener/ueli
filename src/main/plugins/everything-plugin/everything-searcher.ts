@@ -15,9 +15,11 @@ export class EverythingSearcher {
         return new Promise((resolve, reject) => {
             const searchTerm = userInput.replace(everythingSearchOptions.prefix, "").trim();
             const command = `${everythingSearchOptions.pathToEs} -max-results ${everythingSearchOptions.maxSearchResults} ${searchTerm}`;
-            exec(command, (everythingError, stdout) => {
+            exec(command, (everythingError, stdout, stderr) => {
                 if (everythingError) {
                     reject(everythingError);
+                } else if (stderr) {
+                    reject(stderr);
                 } else {
                     const filePaths =  stdout.trim()
                         .split("\n")

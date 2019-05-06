@@ -3,9 +3,9 @@ import { join } from "path";
 import { createHash } from "crypto";
 import { convert } from "app2png";
 import { FileHelpers } from "../../../common/helpers/file-helpers";
-import { exec } from "child_process";
 import { ueliTempFolder } from "../../../common/helpers/ueli-helpers";
 import { StringHelpers } from "../../../common/helpers/string-helpers";
+import { executeCommand } from "../../executors/command-executor";
 
 export const applicationIconLocation = join(ueliTempFolder, "application-icons");
 export const powershellScriptFilePath = join(ueliTempFolder, "generate-icons.ps1");
@@ -82,13 +82,5 @@ export function generateWindowsAppIcons(applications: Application[]): Promise<vo
 }
 
 function executePowershellScript(filePath: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-        exec(`powershell -File ${filePath}`, (err, stdout) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    });
+    return executeCommand(`powershell -File ${filePath}`);
 }

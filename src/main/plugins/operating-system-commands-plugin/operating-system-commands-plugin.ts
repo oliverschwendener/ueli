@@ -5,7 +5,6 @@ import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { OperatingSystemCommandsOptions } from "../../../common/config/operating-system-commands-options";
-import { exec } from "child_process";
 import { OperatingSystemCommandRepository } from "./operating-system-commands-repository";
 
 export class OperatingSystemCommandsPlugin implements SearchPlugin {
@@ -14,10 +13,15 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
     public autoCompletionSupported = false;
     private config: OperatingSystemCommandsOptions;
     private readonly operatingSystemCommandRepository: OperatingSystemCommandRepository;
+    private readonly commandExecutor: (command: string) => Promise<void>;
 
-    constructor(config: OperatingSystemCommandsOptions, operatingSystemCommandRepository: OperatingSystemCommandRepository) {
+    constructor(
+        config: OperatingSystemCommandsOptions,
+        operatingSystemCommandRepository: OperatingSystemCommandRepository,
+        commandExecutor: (command: string) => Promise<void>) {
         this.config = config;
         this.operatingSystemCommandRepository = operatingSystemCommandRepository;
+        this.commandExecutor = commandExecutor;
     }
 
     public getAll(): Promise<SearchResultItem[]> {
@@ -62,15 +66,7 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
     }
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        return new Promise((resolve, reject) => {
-            exec(searchResultItem.executionArgument, (err) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve();
-                }
-            });
-        });
+        return this.commandExecutor(searchResultItem.executionArgument);
     }
 
     public openLocation(searchResultItem: SearchResultItem): Promise<void> {

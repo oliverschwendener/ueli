@@ -10,9 +10,11 @@ import { defaultFolderIcon } from "../../../common/icon/default-icons";
 export class MdFindSearcher {
     public static search(searchTerm: string, mdfindOptions: MdFindOptions, pluginType: PluginType, defaultIcon: Icon): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            exec(`mdfind -name ${searchTerm} | head -n ${mdfindOptions.maxSearchResults}`, (mdfindError, stdout) => {
+            exec(`mdfind -name ${searchTerm} | head -n ${mdfindOptions.maxSearchResults}`, (mdfindError, stdout, stderr) => {
                 if (mdfindError) {
                     reject(mdfindError);
+                } else if (stderr) {
+                    reject(stderr);
                 } else {
                     const filePaths = stdout
                         .split("\n")
