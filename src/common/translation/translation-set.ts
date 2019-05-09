@@ -30,6 +30,9 @@ export interface TranslationSet {
 
     commandlineSearchResultDescription: string;
 
+    noFavoritesFoundDescription: string;
+    noFavoritesFoundTitle: string;
+
     // Settings
     settings: string;
 

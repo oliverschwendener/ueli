@@ -33,6 +33,9 @@ export const englishTranslationSet: TranslationSet = {
 
     commandlineSearchResultDescription: "Execute {{command}}",
 
+    noFavoritesFoundDescription: "Your execution log is empty",
+    noFavoritesFoundTitle: "No favorites found",
+
     // settings
     settings: "Settings",
 

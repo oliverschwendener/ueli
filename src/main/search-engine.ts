@@ -39,7 +39,7 @@ export class SearchEngine {
         this.executionPlugins = executionPlugins;
         this.fallbackPlugins = fallbackPlugins;
         this.logger = logger;
-        this.favoriteManager = new FavoriteManager(favoriteRepository);
+        this.favoriteManager = new FavoriteManager(favoriteRepository, translationSet);
         this.refreshIndexes()
             .then(() => this.logger.debug(translationSet.successfullyRefreshedIndexes))
             .catch((err) => this.logger.error(err));
@@ -91,7 +91,10 @@ export class SearchEngine {
             if (originPlugin !== undefined) {
                 originPlugin.execute(searchResultItem, privileged)
                     .then(() => {
-                        this.favoriteManager.increaseCount(searchResultItem);
+                        if (this.config.generalOptions.logExecution) {
+                            this.favoriteManager.increaseCount(searchResultItem);
+                        }
+
                         resolve();
                     })
                     .catch((err: string) => reject(err));
@@ -148,7 +151,10 @@ export class SearchEngine {
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
         return new Promise((resolve, reject) => {
             this.translationSet = translationSet;
+            this.favoriteManager.updateTranslationSet(translationSet);
+
             this.config = updatedConfig;
+
             Promise.all(this.getAllPlugins().map((plugin) => plugin.updateConfig(updatedConfig, translationSet)))
                 .then(() => resolve())
                 .catch((err) => reject(err));
