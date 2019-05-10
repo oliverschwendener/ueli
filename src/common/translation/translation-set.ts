@@ -49,6 +49,7 @@ export interface TranslationSet {
     generalSettingsRescanIntervalEnabled: string;
     generalSettingsRescanInterval: string;
     generalSettingsShowAlwaysOnPrimaryDisplay: string;
+    generalSettingsRememberWindowPosition: string;
     generalSettingsExportSettings: string;
     generalSettingsSuccessfullyExportedSettings: string;
     generalSettingsImportSettings: string;

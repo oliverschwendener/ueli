@@ -12,6 +12,7 @@ export const defaultGeneralOptions: GeneralOptions = {
     },
     language: Language.English,
     logExecution: true,
+    rememberWindowPosition: false,
     rescanEnabled: true,
     rescanIntervalInSeconds: 300,
     showAlwaysOnPrimaryDisplay: false,

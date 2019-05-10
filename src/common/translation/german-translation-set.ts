@@ -52,6 +52,7 @@ export const germanTranslationSet: TranslationSet = {
     generalSettingsRescanIntervalEnabled: "Periodischer Rescan aktiviert",
     generalSettingsRescanInterval: "Rescan Intervall (in Sekunden)",
     generalSettingsShowAlwaysOnPrimaryDisplay: "Immer auf primärem Bildschirm anzeigen",
+    generalSettingsRememberWindowPosition: "Fensterposition merken",
     generalSettingsExportSettings: "Aktuelle Einstellungen exportieren",
     generalSettingsSuccessfullyExportedSettings: "Erfolgreich Einstellungen exportiert",
     generalSettingsImportSettings: "Einstellungen importieren",

@@ -25,6 +25,7 @@ import { NotificationType } from "../common/notification-type";
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { isWindows } from "../common/helpers/operating-system-helpers";
 import { executeFilePathWindows, executeFilePathMacOs } from "./executors/file-path-executor";
+import { WindowPosition } from "../common/window-position";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -43,6 +44,7 @@ if (currentOperatingSystem === OperatingSystem.macOS) {
 let trayIcon: Tray;
 let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow;
+let lastWindowPosition: WindowPosition;
 
 let config = configRepository.getConfig();
 let translationSet = getTranslationSet(config.generalOptions.language);
@@ -101,17 +103,25 @@ function showMainWindow() {
         const windowBounds: Electron.Rectangle = {
             height: Math.round(Number(config.appearanceOptions.userInputHeight)),
             width: Math.round(Number(config.appearanceOptions.windowWidth)),
-            x: Math.round(Number(display.bounds.x + (display.bounds.width / 2) - (config.appearanceOptions.windowWidth / 2))),
-            y: Math.round(Number(display.bounds.y + (display.bounds.height / 2) - (getMaxWindowHeight(
-                    config.appearanceOptions.maxSearchResultsPerPage,
-                    config.appearanceOptions.searchResultHeight,
-                    config.appearanceOptions.userInputHeight) / 2))),
+            x: config.generalOptions.rememberWindowPosition ? lastWindowPosition.x : calculateX(display),
+            y: config.generalOptions.rememberWindowPosition ? lastWindowPosition.y : calculateY(display),
         };
 
         mainWindow.setBounds(windowBounds);
         mainWindow.show();
         mainWindow.webContents.send(IpcChannels.mainWindowHasBeenShown);
     }
+}
+
+function calculateX(display: Electron.Display): number {
+    return Math.round(Number(display.bounds.x + (display.bounds.width / 2) - (config.appearanceOptions.windowWidth / 2)));
+}
+
+function calculateY(display: Electron.Display): number {
+    return Math.round(Number(display.bounds.y + (display.bounds.height / 2) - (getMaxWindowHeight(
+        config.appearanceOptions.maxSearchResultsPerPage,
+        config.appearanceOptions.searchResultHeight,
+        config.appearanceOptions.userInputHeight) / 2)));
 }
 
 function hideMainWindow() {
@@ -307,6 +317,18 @@ function destroyTrayIcon() {
     }
 }
 
+function onMainWindowMoved() {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+        const currentPosition = mainWindow.getPosition();
+        if (currentPosition.length === 2) {
+            lastWindowPosition = {
+                x: currentPosition[0],
+                y: currentPosition[1],
+            };
+        }
+    }
+}
+
 function createMainWindow() {
     mainWindow = new BrowserWindow({
         center: true,
@@ -327,6 +349,7 @@ function createMainWindow() {
     });
     mainWindow.on("blur", hideMainWindow);
     mainWindow.on("closed", quitApp);
+    mainWindow.on("moved", onMainWindowMoved);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
 }
 

@@ -343,6 +343,18 @@ export const generalSettingsComponent = Vue.extend({
                             </div>
                         </div>
 
+                        <div class="settings__option">
+                            <div class="settings__option-name">{{ translations.generalSettingsRememberWindowPosition }}</div>
+                            <div class="settings__option-content">
+                                <div class="field has-addons has-addons-right vertical-center">
+                                    <div class="control">
+                                        <input id="rememberWindowPositionCheckbox" type="checkbox" name="rememberWindowPositionCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.rememberWindowPosition" @change="updateConfig">
+                                        <label for="rememberWindowPositionCheckbox"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

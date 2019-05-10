@@ -3,12 +3,13 @@ import { Language } from "../translation/language";
 
 export interface GeneralOptions {
     autostart: boolean;
-    rescanIntervalInSeconds: number;
-    rescanEnabled: boolean;
+    clearCachesOnExit: boolean;
     hotKey: GlobalHotKey;
     language: Language;
     logExecution: boolean;
-    clearCachesOnExit: boolean;
-    showTrayIcon: boolean;
+    rememberWindowPosition: boolean;
+    rescanEnabled: boolean;
+    rescanIntervalInSeconds: number;
     showAlwaysOnPrimaryDisplay: boolean;
+    showTrayIcon: boolean;
 }
