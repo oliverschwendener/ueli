@@ -34,7 +34,7 @@ if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
 const currentOperatingSystem = isWindows(platform()) ? OperatingSystem.Windows : OperatingSystem.macOS;
 const filePathExecutor = currentOperatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
-const windowIconFilePath = join(__dirname, "..", "assets", "ueli-white-on-black-logo.png");
+const windowIconFilePath = join(__dirname, "..", "assets", "ueli-white-on-black-logo-circle.png");
 const userInputHistoryManager = new UserInputHistoryManager();
 
 if (currentOperatingSystem === OperatingSystem.macOS) {
