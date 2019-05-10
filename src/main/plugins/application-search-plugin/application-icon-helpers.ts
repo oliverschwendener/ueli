@@ -5,7 +5,7 @@ import { convert } from "app2png";
 import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { ueliTempFolder } from "../../../common/helpers/ueli-helpers";
 import { StringHelpers } from "../../../common/helpers/string-helpers";
-import { executeCommand } from "../../executors/command-executor";
+import { generateIcons, Icon } from "windows-system-icon";
 
 export const applicationIconLocation = join(ueliTempFolder, "application-icons");
 export const powershellScriptFilePath = join(ueliTempFolder, "generate-icons.ps1");
@@ -52,35 +52,18 @@ export function generateWindowsAppIcons(applications: Application[]): Promise<vo
                     FileHelpers.createFolderSync(applicationIconLocation);
                 }
 
-                let powershellScript = `
-                    Add-Type -AssemblyName System.Drawing;
-                    function generateIcon($filePath, $outputFilePath) {
-                        $fileExists = Test-Path -Path $filePath;
-                        if ($fileExists) {
-                            $icon = [System.Drawing.Icon]::ExtractAssociatedIcon($filePath);
-                            $icon.ToBitmap().save($outputFilePath, [System.Drawing.Imaging.ImageFormat]::Png);
-                        }
-                    }
-                `;
-
-                applications.forEach((application) => {
-                    const command = `generateIcon -filePath "${application.filePath}" -outputFilePath "${getApplicationIconFilePath(application)}";`;
-                    powershellScript = powershellScript.concat(command);
+                const icons = applications.map((application): Icon => {
+                    return {
+                        inputFilePath: application.filePath,
+                        outputFilePath: getApplicationIconFilePath(application),
+                        outputFormat: "Png",
+                    };
                 });
 
-                FileHelpers.writeFile(powershellScriptFilePath, powershellScript)
-                    .then(() => {
-                        executePowershellScript(powershellScriptFilePath)
-                            .then(() => resolve())
-                            .catch((err) => reject(err))
-                            .then(() => FileHelpers.deleteFile(powershellScriptFilePath));
-                    })
+                generateIcons(icons)
+                    .then(() => resolve())
                     .catch((err) => reject(err));
             })
             .catch((err) => reject(err));
     });
-}
-
-function executePowershellScript(filePath: string): Promise<void> {
-    return executeCommand(`powershell -File ${filePath}`);
 }
