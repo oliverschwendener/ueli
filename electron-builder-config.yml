@@ -10,7 +10,7 @@ files:
   - assets/**/*
 
 win:
-  icon: ./img/icons/win/ueli-white-on-black-logo.ico
+  icon: ./img/icons/win/ueli-white-on-black-logo-circle.ico
   target:
     - nsis
     - zip
