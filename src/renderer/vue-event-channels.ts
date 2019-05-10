@@ -7,6 +7,7 @@ export enum VueEventChannels {
     handleExecution = "handle-execution",
     handleAutoCompletion = "handle-auto-completion",
     mainWindowHasBeenShown = "main-window-has-been-shown",
+    focusOnInput = "focus-on-input",
     userInputChange = "user-input-change",
     userInputUpdated = "user-input-updated",
     userInputHasBeenReset = "user-input-has-been-reset",

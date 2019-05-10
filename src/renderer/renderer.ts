@@ -84,8 +84,7 @@ Vue.component("commandline-settings", commandlineSettingsComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 
-// tslint:disable-next-line:no-unused-expression
-new Vue({
+const app = new Vue({
     data: {
         config: initialConfig,
         translations: getTranslationSet(initialConfig.generalOptions.language),
@@ -186,6 +185,10 @@ new Vue({
                 ipcRenderer.send(IpcChannels.openSettingsWindow);
             }
 
+            if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "l") {
+                vueEventDispatcher.$emit(VueEventChannels.focusOnInput);
+            }
+
             if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "r") {
                 ipcRenderer.send(IpcChannels.reloadApp);
             }
@@ -196,3 +199,7 @@ new Vue({
         },
     },
 });
+
+document.onkeydown = (event: KeyboardEvent) => {
+    app.mainWindowGlobalKeyPress(event);
+};
