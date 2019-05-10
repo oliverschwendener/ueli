@@ -9,6 +9,7 @@ export enum PluginType {
     WebSearchPlugin = "websearch-plugin",
     FileBrowserPlugin = "filebrowser-plugin",
     OperatingSystemCommandsPlugin = "operating-system-commands-plugin",
+    OperatingSystemSettingsPlugin = "operating-system-settings-plugin",
     Calculator = "calculator",
     Url = "Url",
     Email = "Email",

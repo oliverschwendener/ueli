@@ -35,6 +35,10 @@ import { WorkflowPlugin } from "../plugins/workflow-plugin/workflow-plugin";
 import { ProductionLogger } from "../../common/logger/production-logger";
 import { CommandlinePlugin } from "../plugins/commandline-plugin/commandline-plugin";
 import { windowsCommandLineExecutor, macOsCommandLineExecutor } from "../executors/commandline-executor";
+import { OperatingSystemSettingsPlugin } from "../plugins/operating-system-settings-plugin/operating-system-settings-plugin";
+import { MacOsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/macos-operating-system-setting-repository";
+import { executeWindowsOperatingSystemSetting, executeMacOSOperatingSystemSetting } from "../executors/operating-system-setting-executor";
+import { WindowsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/windows-operating-system-setting-repository";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -42,6 +46,8 @@ const filePathLocationExecutor = isWindows(platform()) ? executeFilePathLocation
 const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const appIconGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
 const commandlineExecutor = isWindows(platform()) ? windowsCommandLineExecutor : macOsCommandLineExecutor;
+const operatingSystemSettingsRepository = isWindows(platform()) ? new WindowsOperatingSystemSettingRepository() : new MacOsOperatingSystemSettingRepository();
+const operatingSystemSettingExecutor = isWindows(platform()) ? executeWindowsOperatingSystemSetting : executeMacOSOperatingSystemSetting;
 
 export const getProductionSearchEngine = (config: UserConfigOptions, translationSet: TranslationSet): SearchEngine => {
     const operatingSystemCommandRepository = isWindows(platform())
@@ -71,6 +77,12 @@ export const getProductionSearchEngine = (config: UserConfigOptions, translation
             operatingSystemCommandRepository,
             executeCommand,
             ),
+        new OperatingSystemSettingsPlugin(
+            config.operatingSystemSettingsOptions,
+            translationSet,
+            operatingSystemSettingsRepository,
+            operatingSystemSettingExecutor,
+        ),
         new WorkflowPlugin(
             config.workflowOptions,
             filePathExecutor,

@@ -6,6 +6,11 @@ interface FileStat {
     stats: Stats;
 }
 
+function isPackageFile(filePath: string): boolean {
+    return extname(filePath) === ".app"
+        || extname(filePath) === ".prefPane";
+}
+
 export class FileHelpers {
     public static readFile(filePath: string): Promise<string> {
         return new Promise((resolve, reject) => {
@@ -24,6 +29,18 @@ export class FileHelpers {
                     }
                 })
                 .catch((err) => reject(err));
+        });
+    }
+
+    public static readFilesFromFolder(folerPath: string): Promise<string[]> {
+        return new Promise((resolve, reject) => {
+            readdir(folerPath, (err, files) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(files.map((file) => join(folerPath, file)));
+                }
+            });
         });
     }
 
@@ -145,7 +162,7 @@ export class FileHelpers {
 
     private static handleFileStat(fileStat: FileStat): Promise<string[]> {
         return new Promise((resolve, reject) => {
-            const isFile = fileStat.stats.isFile() || extname(fileStat.filePath) === ".app";
+            const isFile = fileStat.stats.isFile() || isPackageFile(fileStat.filePath);
             const isDirectory = fileStat.stats.isDirectory();
 
             if (isFile) {
