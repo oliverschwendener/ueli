@@ -1,6 +1,10 @@
 const path = require("path");
 const webpack = require("webpack");
 
+const mode = process.env.NODE_ENV === "production" ? "production" : "development";
+
+console.log(`Using "${mode}" mode for webpack bundles`);
+
 const mainConfig = {
     entry: path.join(__dirname, "src", "main", "main.ts"),
     output: {
@@ -18,7 +22,7 @@ const mainConfig = {
     resolve: {
         extensions: [".ts", ".js"]
     },
-    mode: "development",
+    mode,
     target: "electron-main",
     node: false,
     devtool: "source-map"
@@ -44,7 +48,7 @@ const rendererConfig = {
         },
         extensions: [".ts", ".js"]
     },
-    mode: "development",
+    mode,
     target: "electron-renderer",
     node: false,
     devtool: "source-map",
