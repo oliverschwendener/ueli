@@ -2,7 +2,6 @@ image: Visual Studio 2017
 
 environment:
   nodejs_version: "8"
-  NODE_ENV: production
 
 platform:
   - x64
@@ -11,6 +10,9 @@ install:
   - ps: Install-Product node $env:nodejs_version $env:platform
   - node --version
   - yarn install
+
+before_build:
+  - set NODE_ENV=production
 
 build_script:
   - yarn tsc:validate
