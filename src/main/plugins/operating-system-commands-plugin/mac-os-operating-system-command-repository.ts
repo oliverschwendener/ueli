@@ -28,7 +28,7 @@ export class MacOsOperatingSystemCommandRepository implements OperatingSystemCom
         return [
             {
                 description: this.translationSet.macOsShutdownDescription,
-                executionArgument: `/System/Library/CoreServices/Menu\\ Extras/User.menu/Contents/Resources/CGSession -suspend`,
+                executionArgument: `osascript -e \'tell app "System Events" to shut down\'`,
                 icon: {
                     parameter: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
                     <path style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal" d="M 14.984375 2.9863281 A 1.0001 1.0001 0 0 0 14 4 L 14 15 A 1.0001 1.0001 0 1 0 16 15 L 16 4 A 1.0001 1.0001 0 0 0 14.984375 2.9863281 z M 9.9960938 4.2128906 A 1.0001 1.0001 0 0 0 9.5449219 4.328125 C 5.6645289 6.3141271 3 10.347825 3 15 C 3 21.615466 8.3845336 27 15 27 C 21.615466 27 27 21.615466 27 15 C 27 10.347825 24.335471 6.3141271 20.455078 4.328125 A 1.0001544 1.0001544 0 1 0 19.544922 6.109375 C 22.780529 7.7653729 25 11.110175 25 15 C 25 20.534534 20.534534 25 15 25 C 9.4654664 25 5 20.534534 5 15 C 5 11.110175 7.2194712 7.7653729 10.455078 6.109375 A 1.0001 1.0001 0 0 0 9.9960938 4.2128906 z" font-weight="400" font-family="sans-serif" white-space="normal" overflow="visible"></path>
@@ -40,7 +40,7 @@ export class MacOsOperatingSystemCommandRepository implements OperatingSystemCom
             },
             {
                 description: this.translationSet.macOsRestartDescription,
-                executionArgument: `/System/Library/CoreServices/Menu\\ Extras/User.menu/Contents/Resources/CGSession -suspend`,
+                executionArgument: `osascript -e \'tell app "System Events" to restart\'`,
                 icon: {
                     parameter: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path d="M 2 2 L 4.9394531 4.9394531 C 3.1262684 6.7482143 2 9.2427079 2 12 C 2 17.514 6.486 22 12 22 C 17.514 22 22 17.514 22 12 C 22 6.486 17.514 2 12 2 L 12 4 C 16.411 4 20 7.589 20 12 C 20 16.411 16.411 20 12 20 C 7.589 20 4 16.411 4 12 C 4 9.7940092 4.9004767 7.7972757 6.3496094 6.3496094 L 9 9 L 9 2 L 2 2 z"></path>
@@ -52,7 +52,7 @@ export class MacOsOperatingSystemCommandRepository implements OperatingSystemCom
             },
             {
                 description: this.translationSet.macOsLogoutDescription,
-                executionArgument: `/System/Library/CoreServices/Menu\\ Extras/User.menu/Contents/Resources/CGSession -suspend`,
+                executionArgument: `osascript -e \'tell application "System Events" to log out\'`,
                 icon: {
                     parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1">
                     <g id="surface1">
