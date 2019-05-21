@@ -52,6 +52,7 @@ export const searchResultsComponent = Vue.extend({
                     icon: searchResult.icon,
                     id: `search-result-item-${counter}`,
                     name: searchResult.name,
+                    needsUserConfirmationBeforeExecution: searchResult.needsUserConfirmationBeforeExecution,
                     originPluginType: searchResult.originPluginType,
                     searchable: searchResult.searchable,
                 };
@@ -138,10 +139,14 @@ export const searchResultsComponent = Vue.extend({
         vueEventDispatcher.$on(VueEventChannels.selectPreviousItem, () => {
             this.handleSearchResultBrowsing(BrowseDirection.Previous);
         });
-        vueEventDispatcher.$on(VueEventChannels.enterPress, (userInput: string, privileged: boolean) => {
+        vueEventDispatcher.$on(VueEventChannels.enterPress, (userInput: string, privileged: boolean, userConfirmed?: boolean) => {
             const activeItem: SearchResultItemViewModel = this.getActiveSearchResultItem();
             if (activeItem && activeItem.originPluginType !== PluginType.None) {
-                vueEventDispatcher.$emit(VueEventChannels.handleExecution, userInput, activeItem, privileged);
+                if (activeItem.needsUserConfirmationBeforeExecution && !userConfirmed) {
+                    vueEventDispatcher.$emit(VueEventChannels.userConfirmationRequested);
+                } else {
+                    vueEventDispatcher.$emit(VueEventChannels.handleExecution, userInput, activeItem, privileged);
+                }
             }
         });
         vueEventDispatcher.$on(VueEventChannels.openSearchResultLocationKeyPress, () => {

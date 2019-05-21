@@ -9,6 +9,7 @@ export const userInputComponent = Vue.extend({
         return {
             loadingCompleted: true,
             loadingVisible: false,
+            userConfirmationDialogVisible: false,
             userInput: "",
         };
     },
@@ -38,8 +39,9 @@ export const userInputComponent = Vue.extend({
             }
 
             if (event.key === "Enter") {
-                const privileged = event.shiftKey;
-                vueEventDispatcher.$emit(VueEventChannels.enterPress, this.userInput, privileged);
+                const privileged: boolean = event.shiftKey;
+                const userConfirmed: boolean = this.userConfirmationDialogVisible;
+                vueEventDispatcher.$emit(VueEventChannels.enterPress, this.userInput, privileged, userConfirmed);
             }
 
             if (event.key === "Tab") {
@@ -61,7 +63,7 @@ export const userInputComponent = Vue.extend({
             }
         },
     },
-    props: ["appearance"],
+    props: ["appearance", "translations"],
     mounted() {
         this.setFocusOnInput();
 
@@ -75,6 +77,10 @@ export const userInputComponent = Vue.extend({
 
         vueEventDispatcher.$on(VueEventChannels.focusOnInput, () => {
             this.setFocusOnInput();
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.userConfirmationRequested, () => {
+            this.userConfirmationDialogVisible = true;
         });
 
         vueEventDispatcher.$on(VueEventChannels.userInputChange, () => {
@@ -118,10 +124,20 @@ export const userInputComponent = Vue.extend({
                 </svg>
             </div>
             <input autofocus id="user-input" class="user-input__input" type="text" v-model="userInput" @keydown="keyPress">
+            <div class="user-input__user-confirmation-container" :class="{ 'visible' : userConfirmationDialogVisible }">
+                <svg class="user-input__user-confirmation-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1">
+                    <g id="surface1">
+                        <path style=" fill:#F44336;" d="M 21.199219 44.800781 L 3.199219 26.800781 C 1.601563 25.199219 1.601563 22.699219 3.199219 21.101563 L 21.199219 3.101563 C 22.800781 1.5 25.300781 1.5 26.898438 3.101563 L 44.898438 21.101563 C 46.5 22.699219 46.5 25.199219 44.898438 26.800781 L 26.898438 44.800781 C 25.300781 46.398438 22.699219 46.398438 21.199219 44.800781 Z "></path>
+                        <path style=" fill:#FFFFFF;" d="M 21.601563 32.699219 C 21.601563 32.398438 21.699219 32.101563 21.800781 31.800781 C 21.898438 31.5 22.101563 31.300781 22.300781 31.101563 C 22.5 30.898438 22.800781 30.699219 23.101563 30.601563 C 23.398438 30.5 23.699219 30.398438 24.101563 30.398438 C 24.5 30.398438 24.800781 30.5 25.101563 30.601563 C 25.398438 30.699219 25.699219 30.898438 25.898438 31.101563 C 26.101563 31.300781 26.300781 31.5 26.398438 31.800781 C 26.5 32.101563 26.601563 32.398438 26.601563 32.699219 C 26.601563 33 26.5 33.300781 26.398438 33.601563 C 26.300781 33.898438 26.101563 34.101563 25.898438 34.300781 C 25.699219 34.5 25.398438 34.699219 25.101563 34.800781 C 24.800781 34.898438 24.5 35 24.101563 35 C 23.699219 35 23.398438 34.898438 23.101563 34.800781 C 22.800781 34.699219 22.601563 34.5 22.300781 34.300781 C 22.101563 34.101563 21.898438 33.898438 21.800781 33.601563 C 21.699219 33.300781 21.601563 33.101563 21.601563 32.699219 Z M 25.800781 28.101563 L 22.199219 28.101563 L 21.699219 13 L 26.300781 13 Z "></path>
+                    </g>
+                </svg>
+                <span>{{ translations.userConfirmationProceed }}</span>
+            </div>
         </div>
         `,
     watch: {
         userInput(val: string) {
+            this.userConfirmationDialogVisible = false;
             vueEventDispatcher.$emit(VueEventChannels.userInputChange, val);
         },
     },

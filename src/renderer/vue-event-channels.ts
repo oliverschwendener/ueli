@@ -39,4 +39,5 @@ export enum VueEventChannels {
     openDebugLogRequested = "open-debug-log-requested",
     openTempFolderRequested = "open-temp-folder-requested",
     selectInputHistoryItem = "select-input-history-item",
+    userConfirmationRequested = "user-confirmation-requested",
 }

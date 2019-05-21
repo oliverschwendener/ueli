@@ -6,6 +6,8 @@ export const englishTranslationSet: TranslationSet = {
     trayIconSettings: "Settings",
     trayIconQuit: "Quit",
 
+    userConfirmationProceed: "Proceed?",
+
     noSearchResultsFoundDescription: "",
     noSearchResultsFoundTitle: "No search results found",
 

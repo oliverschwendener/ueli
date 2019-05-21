@@ -3,6 +3,8 @@ export interface TranslationSet {
     trayIconSettings: string;
     trayIconQuit: string;
 
+    userConfirmationProceed: string;
+
     noSearchResultsFoundTitle: string;
     noSearchResultsFoundDescription: string;
 

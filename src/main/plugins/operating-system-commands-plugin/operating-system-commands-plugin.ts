@@ -38,6 +38,7 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
                                 hideMainWindowAfterExecution: true,
                                 icon: command.icon,
                                 name: command.name,
+                                needsUserConfirmationBeforeExecution: true,
                                 originPluginType: this.pluginType,
                                 searchable: command.searchable,
                             };
