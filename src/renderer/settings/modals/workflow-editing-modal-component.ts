@@ -93,6 +93,9 @@ export const workflowEditingModal = Vue.extend({
                         const executionStep: WorkflowExecutionStep = this.newWorkflowExecutionStep;
                         executionStep.executionArgument = filePaths[0];
                     }
+                })
+                .catch((err) => {
+                    // do nothing if no file or folder selected
                 });
         },
         removeExecutionStep(index: number) {

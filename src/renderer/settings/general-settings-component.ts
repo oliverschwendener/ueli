@@ -124,6 +124,9 @@ export const generalSettingsComponent = Vue.extend({
                         })
                         .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, NotificationType.Error))
                         .then(() => this.dropdownVisible = false);
+                })
+                .catch((err) => {
+                    // do nothing if no file selected
                 });
         },
         openDebugLog() {

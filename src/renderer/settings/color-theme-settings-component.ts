@@ -111,6 +111,9 @@ export const colorThemeSettingsComponent = Vue.extend({
                             })
                             .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeImportFailed, NotificationType.Error));
                     }
+                })
+                .catch((err) => {
+                    // do nothing if no file selected
                 });
         },
         exportColorTheme() {

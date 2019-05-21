@@ -55,7 +55,9 @@ export const everythingSettingsComponent = Vue.extend({
                     const config: UserConfigOptions = this.config;
                     config.everythingSearchOptions.pathToEs = filePath;
                 })
-                .catch((err) => { /* do nothing if no file is selected */ });
+                .catch((err) => {
+                    // do nothing if no file is selected
+                });
         },
         updateConfig() {
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
