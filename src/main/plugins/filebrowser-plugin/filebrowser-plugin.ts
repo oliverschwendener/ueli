@@ -92,7 +92,7 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin {
             FileHelpers.getStats(filePath)
             .then((stats) => {
                 if (stats.stats.isDirectory() && !stats.stats.isSymbolicLink()) {
-                    FileHelpers.getFilesFromFolder(filePath)
+                    FileHelpers.readFilesFromFolder(filePath)
                         .then((files) => {
                             this.buildSearchResults(files, filePath, searchTerm)
                                 .then((results) => resolve(results))

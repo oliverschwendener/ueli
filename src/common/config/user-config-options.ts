@@ -17,6 +17,7 @@ import { CurrencyConverterOptions } from "./currency-converter-options";
 import { WorkflowOptions } from "./workflow-options";
 import { CommandlineOptions } from "./commandline-options";
 import { OperatingSystemSettingsOptions } from "./operating-system-settings-options";
+import { SimpleFolderSearchOptions } from "./simple-folder-search-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -38,4 +39,5 @@ export interface UserConfigOptions {
     currencyConverterOptions: CurrencyConverterOptions;
     workflowOptions: WorkflowOptions;
     commandlineOptions: CommandlineOptions;
+    simpleFolderSearchOptions: SimpleFolderSearchOptions;
 }

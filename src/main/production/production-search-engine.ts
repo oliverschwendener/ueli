@@ -39,6 +39,7 @@ import { OperatingSystemSettingsPlugin } from "../plugins/operating-system-setti
 import { MacOsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/macos-operating-system-setting-repository";
 import { executeWindowsOperatingSystemSetting, executeMacOSOperatingSystemSetting } from "../executors/operating-system-setting-executor";
 import { WindowsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/windows-operating-system-setting-repository";
+import { SimpleFolderSearchPlugin } from "../plugins/simple-folder-search-plugin/simple-folder-search-plugin";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -88,6 +89,10 @@ export const getProductionSearchEngine = (config: UserConfigOptions, translation
             filePathExecutor,
             urlExecutor,
             executeCommand,
+        ),
+        new SimpleFolderSearchPlugin(
+            config.simpleFolderSearchOptions,
+            filePathExecutor,
         ),
     ];
 

@@ -18,6 +18,7 @@ import { defaultCurrencyConverterOptions } from "./default-currency-converter-op
 import { defaultWorkflowOptions } from "./default-workflow-options";
 import { defaultCommandlineOptions } from "./default-commandline-options";
 import { defaultOperatingSystemSettingsOptions } from "./default-operating-system-settings-options";
+import { defaultSimpleFolderSearchOptions } from "./default-simple-folder-search-options";
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
@@ -35,6 +36,7 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     operatingSystemSettingsOptions: defaultOperatingSystemSettingsOptions,
     searchEngineOptions: defaultSearchEngineOptions,
     shortcutOptions: defaultShortcutOptions,
+    simpleFolderSearchOptions: defaultSimpleFolderSearchOptions,
     translationOptions: defaultTranslationOptions,
     urlOptions: defaultUrlOptions,
     websearchOptions: defaultWebSearchOptions,

@@ -20,7 +20,7 @@ export class ApplicationIconService {
 
     public clearCache(): Promise<void> {
         return new Promise((resolve, reject) => {
-            FileHelpers.getFilesFromFolder(applicationIconLocation)
+            FileHelpers.readFilesFromFolder(applicationIconLocation)
                 .then((files) => {
                     const deletionPromises = files.map((file) => FileHelpers.deleteFile(join(applicationIconLocation, file)));
                     Promise.all(deletionPromises)

@@ -177,7 +177,9 @@ export class SearchEngine {
 
             Promise.all(pluginPromises)
                 .then((pluginsResults) => {
-                    const all = pluginsResults.reduce((a, r) => a = a.concat(r));
+                    const all = pluginsResults.length > 0
+                        ? pluginsResults.reduce((a, r) => a = a.concat(r))
+                        : [];
 
                     const fuse = new Fuse(all, {
                         distance: 100,
