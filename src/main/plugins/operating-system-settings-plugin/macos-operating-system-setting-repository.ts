@@ -17,6 +17,9 @@ export class MacOsOperatingSystemSettingRepository implements OperatingSystemSet
                 Promise.all(filePaths.map((filePath) => this.buildOperatingSystemSetting(filePath)))
                     .then((results) => this.all = results)
                     .catch((err) => this.all = []);
+            })
+            .catch((err) => {
+                throw new Error(`Error while reading macos operating system commands: ${err}`);
             });
     }
 

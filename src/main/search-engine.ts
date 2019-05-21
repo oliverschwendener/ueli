@@ -94,7 +94,6 @@ export class SearchEngine {
                         if (this.config.generalOptions.logExecution) {
                             this.favoriteManager.increaseCount(searchResultItem);
                         }
-
                         resolve();
                     })
                     .catch((err: string) => reject(err));
@@ -210,9 +209,7 @@ export class SearchEngine {
 
                     resolve(sliced);
                 })
-                .catch((pluginsError) => {
-                    reject(pluginsError);
-                });
+                .catch((pluginsError) => reject(pluginsError));
         });
     }
 

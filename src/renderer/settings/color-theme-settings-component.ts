@@ -128,6 +128,9 @@ export const colorThemeSettingsComponent = Vue.extend({
                             .then(() => vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeExportSucceeded, NotificationType.Info))
                             .catch(() => vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeExportFailed, NotificationType.Error));
                     }
+                })
+                .catch((err) => {
+                    // do nothing when no folder selected
                 });
         },
     },

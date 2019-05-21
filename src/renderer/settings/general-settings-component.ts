@@ -43,6 +43,9 @@ export const generalSettingsComponent = Vue.extend({
                     FileHelpers.writeFile(settingsFilePath, JSON.stringify(config, undefined, 2))
                         .then(() => vueEventDispatcher.$emit(VueEventChannels.notification, translations.generalSettingsSuccessfullyExportedSettings, NotificationType.Info))
                         .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, NotificationType.Error));
+                })
+                .catch((err) => {
+                    // do nothing when no folder selected
                 });
         },
         getTranslatedGlobalHotKeyModifier(hotkeyModifier: GlobalHotKeyModifier): string {
