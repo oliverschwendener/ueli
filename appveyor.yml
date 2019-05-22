@@ -7,7 +7,7 @@ platform:
   - x64
 
 install:
-  - ps: Install-Product node $env:nodejs_version $env:platform
+  - ps: Update-NodeJsInstallation (Get-NodeJsLatestBuild $env:nodejs_version) x64
   - node --version
   - yarn install
 
