@@ -9,6 +9,7 @@ import { basename } from "path";
 import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { getFileIconDataUrl, FileIconDataResult } from "../../../common/icon/generate-file-icon";
 import { defaultFileIcon, defaultFolderIcon } from "../../../common/icon/default-icons";
+import { createFilePathDescription } from "../../helpers/file-path-helpers";
 
 export class SimpleFolderSearchPlugin implements SearchPlugin {
     public pluginType = PluginType.SimpleFolderSearch;
@@ -98,7 +99,7 @@ export class SimpleFolderSearchPlugin implements SearchPlugin {
 
     private buildSearchResultItem(iconResult: FileIconDataResult): SearchResultItem {
         return {
-            description: iconResult.filePath,
+            description: createFilePathDescription(iconResult.filePath),
             executionArgument: iconResult.filePath,
             hideMainWindowAfterExecution: true,
             icon: iconResult.icon,
