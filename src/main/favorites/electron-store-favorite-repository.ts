@@ -10,7 +10,7 @@ export class ElectronStoreFavoriteRepository implements FavoriteRepository {
 
     constructor() {
         this.store = new Store();
-        this.favorites = this.store.get(this.favoritesStoreKey) || [];
+        this.favorites = this.store.get(this.favoritesStoreKey) as Favorite[] || [];
     }
 
     public get(searchResultItem: SearchResultItem): Favorite | undefined {

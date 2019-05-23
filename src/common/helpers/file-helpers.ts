@@ -6,6 +6,11 @@ interface FileStat {
     stats: Stats;
 }
 
+function isPackageFile(filePath: string): boolean {
+    return extname(filePath) === ".app"
+        || extname(filePath) === ".prefPane";
+}
+
 export class FileHelpers {
     public static readFile(filePath: string): Promise<string> {
         return new Promise((resolve, reject) => {
@@ -27,9 +32,31 @@ export class FileHelpers {
         });
     }
 
-    public static readFilesFromFoldersRecursively(folderPaths: string[]): Promise<string[]> {
+    public static readFilesFromFolder(folerPath: string, excludeHiddenFiles?: boolean): Promise<string[]> {
         return new Promise((resolve, reject) => {
-            Promise.all(folderPaths.map((folderPath) => this.readFilesFromFolderRecursively(folderPath)))
+            readdir(folerPath, (err, files) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const result = files
+                        .filter((file) => {
+                            if (excludeHiddenFiles) {
+                                return !this.isHiddenFile(file);
+                            } else {
+                                return true;
+                            }
+                        })
+                        .map((file) => join(folerPath, file));
+
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    public static readFilesFromFoldersRecursively(folderPaths: string[], excludeHiddenFiles?: boolean): Promise<string[]> {
+        return new Promise((resolve, reject) => {
+            Promise.all(folderPaths.map((folderPath) => this.readFilesFromFolderRecursively(folderPath, excludeHiddenFiles)))
                 .then((fileLists) => {
                     let result: string[] = [];
                     fileLists.forEach((fileList) => result = result.concat(fileList));
@@ -39,13 +66,20 @@ export class FileHelpers {
         });
     }
 
-    public static readFilesFromFolderRecursively(folderPath: string): Promise<string[]> {
+    public static readFilesFromFolderRecursively(folderPath: string, excludeHiddenFiles?: boolean): Promise<string[]> {
         return new Promise((resolve, reject) => {
             readdir(folderPath, (readDirError, readDirResult) => {
                 if (readDirError) {
                     reject(readDirError);
                 } else {
                     const statPromises = readDirResult
+                        .filter((file) => {
+                            if (excludeHiddenFiles) {
+                                return !this.isHiddenFile(file);
+                            } else {
+                                return true;
+                            }
+                        })
                         .map((file) => join(folderPath, file))
                         .map((filePath) => this.getStats(filePath));
 
@@ -62,27 +96,15 @@ export class FileHelpers {
 
                             Promise.all(fileHandles)
                                 .then((fileLists) => {
-                                    let files: string[] = [];
-                                    fileLists.forEach((fileList) => {
-                                        files = files.concat(fileList);
-                                    });
+                                    const files = fileLists.length > 0
+                                        ? fileLists.reduce((all, fileList) => all = all.concat(fileList))
+                                        : [];
+
                                     resolve(files);
                                 })
                                 .catch((fileHandleError) => reject(fileHandleError));
                         })
                         .catch((statError) => reject(statError));
-                }
-            });
-        });
-    }
-
-    public static getFilesFromFolder(folderPath: string): Promise<string[]> {
-        return new Promise((resolve, reject) => {
-            readdir(folderPath, (err, files) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(files);
                 }
             });
         });
@@ -145,7 +167,7 @@ export class FileHelpers {
 
     private static handleFileStat(fileStat: FileStat): Promise<string[]> {
         return new Promise((resolve, reject) => {
-            const isFile = fileStat.stats.isFile() || extname(fileStat.filePath) === ".app";
+            const isFile = fileStat.stats.isFile() || isPackageFile(fileStat.filePath);
             const isDirectory = fileStat.stats.isDirectory();
 
             if (isFile) {
@@ -158,5 +180,9 @@ export class FileHelpers {
                 resolve([]);
             }
         });
+    }
+
+    private static isHiddenFile(fileName: string): boolean {
+        return fileName.startsWith(".");
     }
 }

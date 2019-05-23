@@ -395,9 +395,15 @@ function setKeyboardShortcuts() {
 
 function onLanguageChange(updatedConfig: UserConfigOptions) {
     translationSet = getTranslationSet(updatedConfig.generalOptions.language);
+
     if (settingsWindow && !settingsWindow.isDestroyed()) {
         settingsWindow.setTitle(translationSet.settings);
     }
+
+    if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send(IpcChannels.languageUpdated, translationSet);
+    }
+
     updateTrayIconContextMenu();
 }
 

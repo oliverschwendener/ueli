@@ -7,6 +7,7 @@ export interface SearchResultItem {
     hideMainWindowAfterExecution: boolean;
     icon: Icon;
     name: string;
+    needsUserConfirmationBeforeExecution?: boolean;
     originPluginType: PluginType;
     searchable: string[];
 }

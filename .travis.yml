@@ -3,10 +3,13 @@ os:
 
 language: node_js
 node_js:
-  "8"
+  "12"
 
 install:
   - yarn install
+
+before_script:
+  - export NODE_ENV=production
 
 script:
   - yarn tsc:validate

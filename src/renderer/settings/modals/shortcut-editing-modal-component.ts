@@ -142,6 +142,9 @@ export const shortcutEditingModal = Vue.extend({
                         const shortcut: Shortcut = this.shortcut;
                         shortcut.executionArgument = filePaths[0];
                     }
+                })
+                .catch((err) => {
+                    // do nothing if no file or folder selected
                 });
         },
         resetModal(): void {

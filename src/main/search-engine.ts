@@ -94,7 +94,6 @@ export class SearchEngine {
                         if (this.config.generalOptions.logExecution) {
                             this.favoriteManager.increaseCount(searchResultItem);
                         }
-
                         resolve();
                     })
                     .catch((err: string) => reject(err));
@@ -177,7 +176,9 @@ export class SearchEngine {
 
             Promise.all(pluginPromises)
                 .then((pluginsResults) => {
-                    const all = pluginsResults.reduce((a, r) => a = a.concat(r));
+                    const all = pluginsResults.length > 0
+                        ? pluginsResults.reduce((a, r) => a = a.concat(r))
+                        : [];
 
                     const fuse = new Fuse(all, {
                         distance: 100,
@@ -208,9 +209,7 @@ export class SearchEngine {
 
                     resolve(sliced);
                 })
-                .catch((pluginsError) => {
-                    reject(pluginsError);
-                });
+                .catch((pluginsError) => reject(pluginsError));
         });
     }
 

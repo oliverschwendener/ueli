@@ -25,7 +25,7 @@ import { OperatingSystemCommandsPlugin } from "../plugins/operating-system-comma
 import { MacOsOperatingSystemCommandRepository } from "../plugins/operating-system-commands-plugin/mac-os-operating-system-command-repository";
 import { WindowsOperatingSystemCommandRepository } from "../plugins/operating-system-commands-plugin/windows-operating-system-command-repository";
 import { CalculatorPlugin } from "../plugins/calculator-plugin/calculator-plugin";
-import { electronClipboardCopier } from "./electron-clipboard-copier";
+import { electronClipboardCopier } from "../executors/electron-clipboard-copier";
 import { UrlPlugin } from "../plugins/url-plugin/url-plugin";
 import { EmailPlugin } from "../plugins/email-plugin/email-plugin";
 import { ElectronStoreFavoriteRepository } from "../favorites/electron-store-favorite-repository";
@@ -35,6 +35,11 @@ import { WorkflowPlugin } from "../plugins/workflow-plugin/workflow-plugin";
 import { ProductionLogger } from "../../common/logger/production-logger";
 import { CommandlinePlugin } from "../plugins/commandline-plugin/commandline-plugin";
 import { windowsCommandLineExecutor, macOsCommandLineExecutor } from "../executors/commandline-executor";
+import { OperatingSystemSettingsPlugin } from "../plugins/operating-system-settings-plugin/operating-system-settings-plugin";
+import { MacOsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/macos-operating-system-setting-repository";
+import { executeWindowsOperatingSystemSetting, executeMacOSOperatingSystemSetting } from "../executors/operating-system-setting-executor";
+import { WindowsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/windows-operating-system-setting-repository";
+import { SimpleFolderSearchPlugin } from "../plugins/simple-folder-search-plugin/simple-folder-search-plugin";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -42,6 +47,8 @@ const filePathLocationExecutor = isWindows(platform()) ? executeFilePathLocation
 const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const appIconGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
 const commandlineExecutor = isWindows(platform()) ? windowsCommandLineExecutor : macOsCommandLineExecutor;
+const operatingSystemSettingsRepository = isWindows(platform()) ? new WindowsOperatingSystemSettingRepository() : new MacOsOperatingSystemSettingRepository();
+const operatingSystemSettingExecutor = isWindows(platform()) ? executeWindowsOperatingSystemSetting : executeMacOSOperatingSystemSetting;
 
 export const getProductionSearchEngine = (config: UserConfigOptions, translationSet: TranslationSet): SearchEngine => {
     const operatingSystemCommandRepository = isWindows(platform())
@@ -71,11 +78,21 @@ export const getProductionSearchEngine = (config: UserConfigOptions, translation
             operatingSystemCommandRepository,
             executeCommand,
             ),
+        new OperatingSystemSettingsPlugin(
+            config.operatingSystemSettingsOptions,
+            translationSet,
+            operatingSystemSettingsRepository,
+            operatingSystemSettingExecutor,
+        ),
         new WorkflowPlugin(
             config.workflowOptions,
             filePathExecutor,
             urlExecutor,
             executeCommand,
+        ),
+        new SimpleFolderSearchPlugin(
+            config.simpleFolderSearchOptions,
+            filePathExecutor,
         ),
     ];
 

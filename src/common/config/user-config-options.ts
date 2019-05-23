@@ -16,6 +16,8 @@ import { EmailOptions } from "./email-options";
 import { CurrencyConverterOptions } from "./currency-converter-options";
 import { WorkflowOptions } from "./workflow-options";
 import { CommandlineOptions } from "./commandline-options";
+import { OperatingSystemSettingsOptions } from "./operating-system-settings-options";
+import { SimpleFolderSearchOptions } from "./simple-folder-search-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -30,10 +32,12 @@ export interface UserConfigOptions {
     websearchOptions: WebSearchOptions;
     fileBrowserOptions: FileBrowserOptions;
     operatingSystemCommandsOptions: OperatingSystemCommandsOptions;
+    operatingSystemSettingsOptions: OperatingSystemSettingsOptions;
     calculatorOptions: CalculatorOptions;
     urlOptions: UrlOptions;
     emailOptions: EmailOptions;
     currencyConverterOptions: CurrencyConverterOptions;
     workflowOptions: WorkflowOptions;
     commandlineOptions: CommandlineOptions;
+    simpleFolderSearchOptions: SimpleFolderSearchOptions;
 }

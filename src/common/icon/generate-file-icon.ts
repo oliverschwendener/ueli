@@ -9,7 +9,7 @@ export interface FileIconDataResult {
 }
 
 export function getFileIconDataUrl(filePath: string, defaultFileIcon: Icon, folderIcon?: Icon): Promise<FileIconDataResult> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         FileHelpers.fileExists(filePath)
             .then((fileExists) => {
                 if (fileExists) {
@@ -40,6 +40,7 @@ export function getFileIconDataUrl(filePath: string, defaultFileIcon: Icon, fold
                         icon: defaultFileIcon,
                     });
                 }
-            });
+            })
+            .catch((err) => reject(err));
     });
 }

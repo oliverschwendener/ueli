@@ -3,11 +3,11 @@ import { SearchResultItem } from "../../../common/search-result-item";
 import { ApplicationRepository } from "./application-repository";
 import { PluginType } from "../../plugin-type";
 import { Application } from "./application";
-import { dirname, basename } from "path";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { ApplicationSearchOptions } from "./application-search-options";
 import { IconType } from "../../../common/icon/icon-type";
 import { AutoCompletionResult } from "../../../common/auto-completion-result";
+import { createFilePathDescription } from "../../helpers/file-path-helpers";
 
 export class ApplicationSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.ApplicationSearchPlugin;
@@ -103,7 +103,7 @@ export class ApplicationSearchPlugin implements SearchPlugin {
     private createSearchResultItemFromApplication(application: Application): Promise<SearchResultItem> {
         return new Promise((resolve) => {
             resolve({
-                description: this.createApplicationDescription(application),
+                description: createFilePathDescription(application.filePath),
                 executionArgument: application.filePath,
                 hideMainWindowAfterExecution: true,
                 icon: {
@@ -115,9 +115,5 @@ export class ApplicationSearchPlugin implements SearchPlugin {
                 searchable: [application.name],
             });
         });
-    }
-
-    private createApplicationDescription(application: Application): string {
-        return `${basename(dirname(application.filePath))} ▸ ${basename(application.filePath)}`;
     }
 }

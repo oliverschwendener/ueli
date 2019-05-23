@@ -46,6 +46,7 @@ import { workflowSettingsComponent } from "./settings/workflow-settings-componen
 import { workflowEditingModal } from "./settings/modals/workflow-editing-modal-component";
 import { commandlineSettingsComponent } from "./settings/commandline-settings-component";
 import { tagsEditingComponent } from "./settings/tags-editing-component";
+import { TranslationSet } from "../common/translation/translation-set";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -117,14 +118,14 @@ const app = new Vue({
             ipcRenderer.send(IpcChannels.favoritesRequested);
         });
 
-        vueEventDispatcher.$on(VueEventChannels.configUpdated, (config: UserConfigOptions, needsIndexRefresh: boolean) => {
+        vueEventDispatcher.$on(VueEventChannels.configUpdated, (updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) => {
             if (needsIndexRefresh) {
                 vueEventDispatcher.$emit(VueEventChannels.loadingStarted);
             }
 
-            this.translations = getTranslationSet(config.generalOptions.language);
-            this.config = config;
-            ipcRenderer.send(IpcChannels.configUpdated, config, needsIndexRefresh);
+            this.translations = getTranslationSet(updatedConfig.generalOptions.language);
+            this.config = updatedConfig;
+            ipcRenderer.send(IpcChannels.configUpdated, updatedConfig, needsIndexRefresh);
         });
 
         vueEventDispatcher.$on(VueEventChannels.clearExecutionLogConfirmed, () => {
@@ -145,6 +146,10 @@ const app = new Vue({
 
         ipcRenderer.on(IpcChannels.appearanceOptionsUpdated, (event: Electron.Event, updatedAppearanceOptions: AppearanceOptions) => {
             vueEventDispatcher.$emit(VueEventChannels.appearanceOptionsUpdated, updatedAppearanceOptions);
+        });
+
+        ipcRenderer.on(IpcChannels.languageUpdated, (event: Electron.Event, updatedTranslationSet: TranslationSet) => {
+            this.translations = updatedTranslationSet;
         });
 
         ipcRenderer.on(IpcChannels.colorThemeOptionsUpdated, (event: Electron.Event, updatedColorThemeOptions: ColorThemeOptions) => {

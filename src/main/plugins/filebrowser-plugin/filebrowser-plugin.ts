@@ -5,13 +5,14 @@ import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { FileBrowserOptions } from "../../../common/config/filebrowser-options";
 import { FileHelpers } from "../../../common/helpers/file-helpers";
-import { basename, dirname, join, sep } from "path";
+import { basename, dirname, sep } from "path";
 import { existsSync } from "fs";
 import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { FileIconDataResult } from "../../../common/icon/generate-file-icon";
 import { defaultFileIcon, defaultFolderIcon } from "../../../common/icon/default-icons";
 import { Icon } from "../../../common/icon/icon";
 import Fuse = require("fuse.js");
+import { createFilePathDescription } from "../../helpers/file-path-helpers";
 
 export class FileBrowserExecutionPlugin implements ExecutionPlugin {
     public readonly pluginType: PluginType.FileBrowserPlugin;
@@ -67,15 +68,12 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin {
 
     public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
         return new Promise((resolve, reject) => {
-            this.handleFilePath(searchResultItem.executionArgument)
-                .then((results) => {
-                    resolve({
-                        results,
-                        updatedUserInput: searchResultItem.executionArgument.endsWith(sep)
-                            ? searchResultItem.executionArgument
-                            : `${searchResultItem.executionArgument}${sep}`,
-                    });
-                })
+            const updatedUserInput = searchResultItem.executionArgument.endsWith(sep)
+                ? searchResultItem.executionArgument
+                : `${searchResultItem.executionArgument}${sep}`;
+
+            this.handleFilePath(updatedUserInput)
+                .then((results) => resolve({ results, updatedUserInput }))
                 .catch((err) => reject(err));
         });
     }
@@ -92,9 +90,9 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin {
             FileHelpers.getStats(filePath)
             .then((stats) => {
                 if (stats.stats.isDirectory() && !stats.stats.isSymbolicLink()) {
-                    FileHelpers.getFilesFromFolder(filePath)
-                        .then((files) => {
-                            this.buildSearchResults(files, filePath, searchTerm)
+                    FileHelpers.readFilesFromFolder(filePath)
+                        .then((filePaths) => {
+                            this.buildSearchResults(filePaths, filePath, searchTerm)
                                 .then((results) => resolve(results))
                                 .catch((err) => reject(err));
                         })
@@ -109,70 +107,73 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin {
         });
     }
 
-    private buildSearchResults(files: string[], parentFolder: string, searchTerm?: string): Promise<SearchResultItem[]> {
+    private buildSearchResults(filePaths: string[], parentFolder: string, searchTerm?: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            const unsortedReults = files
-                .filter((file) => {
+            const unsortedResults = filePaths
+                .filter((filePath) => {
                     if (this.config.showHiddenFiles) {
                         return true;
                     } else {
-                        return !basename(file).startsWith(".");
+                        return !basename(filePath).startsWith(".");
                     }
                 })
-                .filter((file) => {
+                .filter((filePath) => {
                     if (this.config.blackList.length > 0) {
                         return this.config.blackList.every((blackListEntry) => {
-                            return blackListEntry !== file;
+                            return blackListEntry !== basename(filePath);
                         });
                     } else {
                         return true;
                     }
                 })
-                .map((file): SearchResultItem => {
-                    const filePath = join(parentFolder, file);
+                .map((filePath): SearchResultItem => {
                     return {
-                        description: filePath,
+                        description: createFilePathDescription(filePath),
                         executionArgument: filePath,
                         hideMainWindowAfterExecution: true,
                         icon: defaultFileIcon,
-                        name: file,
+                        name: basename(filePath),
                         originPluginType: this.pluginType,
-                        searchable: [file],
+                        searchable: [basename(filePath)],
                     };
                 });
 
-            const promises = unsortedReults.map((unsortedResult) => this.fileIconGenerator(unsortedResult.executionArgument, defaultFileIcon, defaultFolderIcon));
+            const promises = unsortedResults.map((unsortedResult) => this.fileIconGenerator(unsortedResult.executionArgument, defaultFileIcon, defaultFolderIcon));
             Promise.all(promises)
                 .then((iconResults) => {
-                    unsortedReults.forEach((unsortedResult) => {
+                    unsortedResults.forEach((unsortedResult) => {
                         const icon = iconResults.find((iconResult) => iconResult.filePath === unsortedResult.executionArgument);
                         if (icon) {
                             unsortedResult.icon = icon.icon;
                         }
                     });
 
-                    let sortedResutls: SearchResultItem[] = [];
-
-                    if (searchTerm) {
-                        const fuse = new Fuse(unsortedReults, {
-                            distance: 100,
-                            includeScore: true,
-                            keys: ["searchable"],
-                            location: 0,
-                            maxPatternLength: 32,
-                            minMatchCharLength: 1,
-                            shouldSort: true,
-                            threshold: 0.4,
-                        });
-                        const fuseResult = fuse.search(searchTerm) as any[];
-                        sortedResutls = fuseResult.map((item) => item.item);
-                    } else {
-                        sortedResutls = unsortedReults;
-                    }
-
-                    resolve(sortedResutls.splice(0, this.config.maxSearchResults));
+                    resolve(this.sortResults(unsortedResults, searchTerm));
                 })
                 .catch((err) => reject(err));
         });
+    }
+
+    private sortResults(unsortedResults: SearchResultItem[], searchTerm?: string): SearchResultItem[] {
+        let sortedResutls: SearchResultItem[] = [];
+
+        if (searchTerm) {
+            const fuse = new Fuse(unsortedResults, {
+                distance: 100,
+                includeScore: true,
+                keys: ["searchable"],
+                location: 0,
+                maxPatternLength: 32,
+                minMatchCharLength: 1,
+                shouldSort: true,
+                threshold: 0.4,
+            });
+            const fuseResult = fuse.search(searchTerm) as any[];
+            sortedResutls = fuseResult.map((item) => item.item);
+        } else {
+            sortedResutls = unsortedResults;
+        }
+
+        return sortedResutls.splice(0, this.config.maxSearchResults);
     }
 }
