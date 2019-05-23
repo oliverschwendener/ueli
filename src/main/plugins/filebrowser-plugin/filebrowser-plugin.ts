@@ -109,7 +109,7 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin {
 
     private buildSearchResults(filePaths: string[], parentFolder: string, searchTerm?: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            const unsortedReults = filePaths
+            const unsortedResults = filePaths
                 .filter((filePath) => {
                     if (this.config.showHiddenFiles) {
                         return true;
@@ -138,38 +138,42 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin {
                     };
                 });
 
-            const promises = unsortedReults.map((unsortedResult) => this.fileIconGenerator(unsortedResult.executionArgument, defaultFileIcon, defaultFolderIcon));
+            const promises = unsortedResults.map((unsortedResult) => this.fileIconGenerator(unsortedResult.executionArgument, defaultFileIcon, defaultFolderIcon));
             Promise.all(promises)
                 .then((iconResults) => {
-                    unsortedReults.forEach((unsortedResult) => {
+                    unsortedResults.forEach((unsortedResult) => {
                         const icon = iconResults.find((iconResult) => iconResult.filePath === unsortedResult.executionArgument);
                         if (icon) {
                             unsortedResult.icon = icon.icon;
                         }
                     });
 
-                    let sortedResutls: SearchResultItem[] = [];
-
-                    if (searchTerm) {
-                        const fuse = new Fuse(unsortedReults, {
-                            distance: 100,
-                            includeScore: true,
-                            keys: ["searchable"],
-                            location: 0,
-                            maxPatternLength: 32,
-                            minMatchCharLength: 1,
-                            shouldSort: true,
-                            threshold: 0.4,
-                        });
-                        const fuseResult = fuse.search(searchTerm) as any[];
-                        sortedResutls = fuseResult.map((item) => item.item);
-                    } else {
-                        sortedResutls = unsortedReults;
-                    }
-
-                    resolve(sortedResutls.splice(0, this.config.maxSearchResults));
+                    resolve(this.sortResults(unsortedResults, searchTerm));
                 })
                 .catch((err) => reject(err));
         });
+    }
+
+    private sortResults(unsortedResults: SearchResultItem[], searchTerm?: string): SearchResultItem[] {
+        let sortedResutls: SearchResultItem[] = [];
+
+        if (searchTerm) {
+            const fuse = new Fuse(unsortedResults, {
+                distance: 100,
+                includeScore: true,
+                keys: ["searchable"],
+                location: 0,
+                maxPatternLength: 32,
+                minMatchCharLength: 1,
+                shouldSort: true,
+                threshold: 0.4,
+            });
+            const fuseResult = fuse.search(searchTerm) as any[];
+            sortedResutls = fuseResult.map((item) => item.item);
+        } else {
+            sortedResutls = unsortedResults;
+        }
+
+        return sortedResutls.splice(0, this.config.maxSearchResults);
     }
 }
