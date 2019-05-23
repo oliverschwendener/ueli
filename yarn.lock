@@ -929,11 +929,6 @@ bluebird@^3.5.0, bluebird@^3.5.3, bluebird@^3.5.4:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.4.tgz#d6cc661595de30d5b3af5fcedd3c0b3ef6ec5714"
   integrity sha512-FG+nFEZChJrbQ9tIccIfZJBz3J7mLrAhxakAbnrJWn8d7aKOC+LWifa0G+p4ZqKp4y13T7juYvdhq9NzKdsrjw==
 
-bluebird@^3.5.1:
-  version "3.5.4"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.4.tgz#d6cc661595de30d5b3af5fcedd3c0b3ef6ec5714"
-  integrity sha512-FG+nFEZChJrbQ9tIccIfZJBz3J7mLrAhxakAbnrJWn8d7aKOC+LWifa0G+p4ZqKp4y13T7juYvdhq9NzKdsrjw==
-
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
@@ -6276,13 +6271,6 @@ widest-line@^2.0.0:
   integrity sha512-Ba5m9/Fa4Xt9eb2ELXt77JxVDV8w7qQrH0zS/TWSJdLyAwQjWoOzpzj5lwVftDz6n/EOu3tNACS84v509qwnJA==
   dependencies:
     string-width "^2.1.1"
-
-windows-system-icon@0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/windows-system-icon/-/windows-system-icon-0.0.5.tgz#a1d5a7ca728d9934c48d8ae1006d0b2786737775"
-  integrity sha512-fHYpfMc/xnPj3WftYPB1eRtUUdG2EqfavM46mun/Wl/28m/NqCozZ7GL/jU/7lOlFfcnM5vKFYYb+YqtmW+Cbg==
-  dependencies:
-    node-powershell "^3.3.1"
 
 winston-transport@^4.3.0:
   version "4.3.0"
