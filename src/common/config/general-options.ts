@@ -7,6 +7,7 @@ export interface GeneralOptions {
     hotKey: GlobalHotKey;
     language: Language;
     logExecution: boolean;
+    persistentUserInput: boolean;
     rememberWindowPosition: boolean;
     rescanEnabled: boolean;
     rescanIntervalInSeconds: number;

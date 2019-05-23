@@ -47,6 +47,7 @@ export const englishTranslationSet: TranslationSet = {
     generalSettings: "General",
     generalSettingsLanguage: "Language",
     generalSettingsLogExecution: "Log execution",
+    generalSettingsPersistentUserInput: "Peristent user input",
     generalSettingsAutostartApp: "Autostart app on system startup",
     generalSettingsShowTrayIcon: "Show tray icon",
     generalSettingsClearCachesOnExit: "Clear caches on quit",
@@ -266,6 +267,9 @@ export const englishTranslationSet: TranslationSet = {
     commandline: "Commandline",
     commandlinePrefix: "Prefix",
     commandlineSettingsDescription: "This plugin enables you to quickly execute commandline commands.",
+
+    simpleFolderSearch: "Simple folder search",
+    simpleFolderSearchDescription: "This plugin enables you to quickly search for files or folders",
 
     cancel: "Cancel",
     save: "Save",

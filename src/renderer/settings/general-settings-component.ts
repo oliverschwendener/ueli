@@ -365,6 +365,18 @@ export const generalSettingsComponent = Vue.extend({
                             </div>
                         </div>
 
+                        <div class="settings__option">
+                            <div class="settings__option-name">{{ translations.generalSettingsPersistentUserInput }}</div>
+                            <div class="settings__option-content">
+                                <div class="field has-addons has-addons-right vertical-center">
+                                    <div class="control">
+                                        <input id="persistentUserInput" type="checkbox" name="persistentUserInput" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.persistentUserInput" @change="updateConfig">
+                                        <label for="persistentUserInput"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

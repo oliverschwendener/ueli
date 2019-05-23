@@ -44,6 +44,7 @@ export interface TranslationSet {
     generalSettings: string;
     generalSettingsLanguage: string;
     generalSettingsLogExecution: string;
+    generalSettingsPersistentUserInput: string;
     generalSettingsAutostartApp: string;
     generalSettingsShowTrayIcon: string;
     generalSettingsClearCachesOnExit: string;
@@ -263,6 +264,9 @@ export interface TranslationSet {
     commandline: string;
     commandlinePrefix: string;
     commandlineSettingsDescription: string;
+
+    simpleFolderSearch: string;
+    simpleFolderSearchDescription: string;
 
     cancel: string;
     save: string;

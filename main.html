@@ -10,7 +10,7 @@
     <body>
         <div id="app">
             <user-styles :appearance="config.appearanceOptions" :colortheme="config.colorThemeOptions"></user-styles>
-            <user-input :appearance="config.appearanceOptions" :translations="translations"></user-input>
+            <user-input :config="config" :translations="translations"></user-input>
             <search-results :appearance="config.appearanceOptions"></search-results>
         </div>
         <script src="./bundle/renderer.js"></script>

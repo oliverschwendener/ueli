@@ -13,6 +13,7 @@ export enum IpcChannels {
     openSettingsWindow = "open-settings-window",
     configUpdated = "config-updated",
     appearanceOptionsUpdated = "user-styles-updated",
+    generalOptionsUpdated = "general-options-updated",
     languageUpdated = "language-updated",
     colorThemeOptionsUpdated = "color-theme-updated",
     ueliCommandExecuted = "ueli-command-executed",

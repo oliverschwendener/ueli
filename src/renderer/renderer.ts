@@ -47,6 +47,8 @@ import { workflowEditingModal } from "./settings/modals/workflow-editing-modal-c
 import { commandlineSettingsComponent } from "./settings/commandline-settings-component";
 import { tagsEditingComponent } from "./settings/tags-editing-component";
 import { TranslationSet } from "../common/translation/translation-set";
+import { simpleFolderSearchSettingsComponent } from "./settings/simple-folder-search-settings-component";
+import { GeneralOptions } from "../common/config/general-options";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -82,6 +84,7 @@ Vue.component("currency-converter-settings", currencyConverterSettingsComponent)
 Vue.component("workflow-settings", workflowSettingsComponent);
 Vue.component("workflow-editing-modal", workflowEditingModal);
 Vue.component("commandline-settings", commandlineSettingsComponent);
+Vue.component("simple-folder-search-settings", simpleFolderSearchSettingsComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 
@@ -146,6 +149,10 @@ const app = new Vue({
 
         ipcRenderer.on(IpcChannels.appearanceOptionsUpdated, (event: Electron.Event, updatedAppearanceOptions: AppearanceOptions) => {
             vueEventDispatcher.$emit(VueEventChannels.appearanceOptionsUpdated, updatedAppearanceOptions);
+        });
+
+        ipcRenderer.on(IpcChannels.generalOptionsUpdated, (event: Electron.Event, updatedGeneralOptions: GeneralOptions) => {
+            vueEventDispatcher.$emit(VueEventChannels.generalOptionsUpdated, updatedGeneralOptions);
         });
 
         ipcRenderer.on(IpcChannels.languageUpdated, (event: Electron.Event, updatedTranslationSet: TranslationSet) => {

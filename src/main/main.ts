@@ -190,6 +190,10 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boole
         mainWindow.webContents.send(IpcChannels.colorThemeOptionsUpdated, updatedConfig.colorThemeOptions);
     }
 
+    if (JSON.stringify(updatedConfig.generalOptions) !== JSON.stringify(config.generalOptions)) {
+        mainWindow.webContents.send(IpcChannels.generalOptionsUpdated, updatedConfig.generalOptions);
+    }
+
     config = updatedConfig;
 
     updateTrayIcon(updatedConfig);

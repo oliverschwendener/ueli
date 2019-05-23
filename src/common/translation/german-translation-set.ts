@@ -47,6 +47,7 @@ export const germanTranslationSet: TranslationSet = {
     generalSettings: "Allgemein",
     generalSettingsLanguage: "Sprache",
     generalSettingsLogExecution: "Ausführungen loggen",
+    generalSettingsPersistentUserInput: "Persistente Benutzereingabe",
     generalSettingsAutostartApp: "App bei Systemstart starten",
     generalSettingsShowTrayIcon: "Symbol im Systemtray anzeigen",
     generalSettingsClearCachesOnExit: "Zwischenspeicher beim Beenden löschen",
@@ -266,6 +267,9 @@ export const germanTranslationSet: TranslationSet = {
     commandline: "Kommandozeile",
     commandlinePrefix: "Präfix",
     commandlineSettingsDescription: "Dieses Plugin erlaubt es dir schnell Kommandozeilenbefehle auszuführen.",
+
+    simpleFolderSearch: "Einfache Ordnersuche",
+    simpleFolderSearchDescription: "Dieses Plugin erlaubt es dir, schnell Dateien und Ordner zu finden.",
 
     cancel: "Abbrechen",
     save: "Speichern",
