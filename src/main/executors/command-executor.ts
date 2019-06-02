@@ -1,15 +1,13 @@
-import { exec } from "child_process";
+import {promisify} from "util";
+const exec = promisify(require("child_process").exec); // tslint:disable-line
 
-export function executeCommand(command: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-        exec(command, (err, stdout, stderr) => {
-            if (err) {
-                reject(err);
-            } else if (stderr) {
-                reject(stderr);
-            } else {
-                resolve();
-            }
-        });
-    });
+export async function executeCommand(command: string): Promise<void> {
+    try {
+        const {stderr} = await exec(command);
+        if (stderr) {
+            return stderr;
+        }
+    } catch (error) {
+        return error;
+    }
 }

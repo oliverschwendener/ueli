@@ -11,17 +11,12 @@ export class MacOsOperatingSystemCommandRepository implements OperatingSystemCom
         this.translationSet = translationSet;
     }
 
-    public getAll(): Promise<OperatingSystemCommand[]> {
-        return new Promise((resolve, reject) => {
-            resolve(this.getOperatingSystemCommands());
-        });
+    public async getAll(): Promise<OperatingSystemCommand[]> {
+        return this.getOperatingSystemCommands();
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve) => {
-            this.translationSet = translationSet;
-            resolve();
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        this.translationSet = translationSet;
     }
 
     private getOperatingSystemCommands(): OperatingSystemCommand[] {

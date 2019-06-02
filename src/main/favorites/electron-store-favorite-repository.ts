@@ -38,11 +38,8 @@ export class ElectronStoreFavoriteRepository implements FavoriteRepository {
         this.store.set(this.favoritesStoreKey, this.favorites);
     }
 
-    public clearAll(): Promise<void> {
-        return new Promise((resolve) => {
-            this.favorites = [];
-            this.store.set(this.favoritesStoreKey, this.favorites);
-            resolve();
-        });
+    public async clearAll(): Promise<void> {
+        this.favorites = [];
+        this.store.set(this.favoritesStoreKey, this.favorites);
     }
 }

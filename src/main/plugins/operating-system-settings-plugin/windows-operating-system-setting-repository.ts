@@ -711,9 +711,7 @@ const allOperatingSystemSettings: OperatingSystemSetting[] = base
     .concat(windowsUpdateAndSecuritySettings);
 
 export class WindowsOperatingSystemSettingRepository implements OperatingSystemSettingRepository {
-    public getAll(): Promise<OperatingSystemSetting[]> {
-        return new Promise((resolve) => {
-            resolve(allOperatingSystemSettings);
-        });
+    public async getAll(): Promise<OperatingSystemSetting[]> {
+        return allOperatingSystemSettings;
     }
 }

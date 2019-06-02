@@ -38,8 +38,8 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
         this.commandlineExtecutor = commandlineExecutor;
     }
 
-    public getAll(): Promise<SearchResultItem[]> {
-        return new Promise((resolve) => {
+    public async getAll(): Promise<SearchResultItem[]> {
+        try {
             const result = this.config.shortcuts.map((shortcut): SearchResultItem => {
                 return {
                     description: shortcut.description,
@@ -53,16 +53,14 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
                     searchable: [shortcut.name].concat(shortcut.tags),
                 };
             });
+            return result;
 
-            resolve(result);
-        });
+        } catch (error) {
+            return error;
+        }
     }
 
-    public clearCache(): Promise<void> {
-        return new Promise((resolve) => {
-            resolve();
-        });
-    }
+    public async clearCache(): Promise<void> {} // tslint:disable-line
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         const decodeResult = this.decodeExecutionArgument(searchResultItem.executionArgument);
@@ -78,46 +76,33 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
         }
     }
 
-    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
-        return new Promise((resolve, reject) => {
+    public async openLocation(searchResultItem: SearchResultItem): Promise<void> {
+        try {
             const decodeResult = this.decodeExecutionArgument(searchResultItem.executionArgument);
             if (decodeResult.shortcutType === ShortcutType.FilePath) {
-                this.filePathLocationExecutor(decodeResult.executionArgument)
-                    .then(() => resolve())
-                    .catch((err) => reject(err));
-            } else {
-                reject(`Error while trying to open file location. "${decodeResult.executionArgument}" is not a valid file path`);
+                await this.filePathLocationExecutor(decodeResult.executionArgument);
             }
-        });
+        } catch (error) {
+            return error;
+        }
     }
 
     public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("Autocompletion not supported");
-        });
+        throw Error("Autocompletion not supported");
     }
 
     public isEnabled(): boolean {
         return this.config.isEnabled;
     }
 
-    public refreshIndex(): Promise<void> {
-        return new Promise((resolve) => {
-            resolve();
-        });
+    public async refreshIndex(): Promise<void> {} // tslint:disable-line
+
+    public async updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
+        this.config = updatedConfig.shortcutOptions;
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig.shortcutOptions;
-            resolve();
-        });
-    }
-
-    private getUnsupportedShortcutTypePromise(shortcutType: ShortcutType): Promise<void> {
-        return new Promise((resolve, reject) => {
-            reject(`Unsupported shortcut type: ${shortcutType}`);
-        });
+    private async getUnsupportedShortcutTypePromise(shortcutType: ShortcutType): Promise<void> {
+        throw Error(`Unsupported shortcut type: ${shortcutType}`);
     }
 
     private getExecutionArgumentPrefix(shortcutType: string): string {

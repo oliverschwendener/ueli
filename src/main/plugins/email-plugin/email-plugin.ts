@@ -26,20 +26,16 @@ export class EmailPlugin implements ExecutionPlugin {
         return isValidEmailAddress(userInput);
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
-        return new Promise((resolve) => {
-            const result: SearchResultItem = {
-                description: this.translationSet.openNewMail,
-                executionArgument: `mailto:${userInput}`,
-                hideMainWindowAfterExecution: true,
-                icon: defaultEmailIcon,
-                name: userInput,
-                originPluginType: this.pluginType,
-                searchable: [],
-            };
-
-            resolve([result]);
-        });
+    public async getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
+        return [{
+            description: this.translationSet.openNewMail,
+            executionArgument: `mailto:${userInput}`,
+            hideMainWindowAfterExecution: true,
+            icon: defaultEmailIcon,
+            name: userInput,
+            originPluginType: this.pluginType,
+            searchable: [],
+        }];
     }
 
     public isEnabled(): boolean {
@@ -58,11 +54,8 @@ export class EmailPlugin implements ExecutionPlugin {
         throw new Error("Method not implemented.");
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig.emailOptions;
-            this.translationSet = translationSet;
-            resolve();
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        this.config = updatedConfig.emailOptions;
+        this.translationSet = translationSet;
     }
 }

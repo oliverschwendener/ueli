@@ -16,54 +16,39 @@ export function getApplicationIconFilePath(application: Application): string {
     return `${join(applicationIconLocation, fileName)}.png`;
 }
 
-export function generateMacAppIcons(applications: Application[]): Promise<void> {
-    return new Promise((resolve, reject) => {
-        if (applications.length === 0) {
-            resolve();
+export async function generateMacAppIcons(applications: Application[]): Promise<void> {
+    if (applications.length === 0) { return; }
+    try {
+        const fileExists = await FileHelpers.fileExists(applicationIconLocation);
+        if (!fileExists) {
+            FileHelpers.createFolderSync(applicationIconLocation);
         }
+        const promises = applications.map((application) => {
+            return convert(application.filePath, getApplicationIconFilePath(application));
+        });
+        await Promise.all(promises);
 
-        FileHelpers.fileExists(applicationIconLocation)
-            .then((fileExists) => {
-                if (!fileExists) {
-                    FileHelpers.createFolderSync(applicationIconLocation);
-                }
-
-                const promises = applications.map((application) => {
-                    return convert(application.filePath, getApplicationIconFilePath(application));
-                });
-
-                Promise.all(promises)
-                    .then(() => resolve())
-                    .catch((err) => reject(err));
-            })
-            .catch((err) => reject(err));
-    });
+    } catch (error) {
+        return error;
+    }
 }
 
-export function generateWindowsAppIcons(applications: Application[]): Promise<void> {
-    return new Promise((resolve, reject) => {
-        if (applications.length === 0) {
-            resolve();
+export async function generateWindowsAppIcons(applications: Application[]): Promise<void> {
+    if (applications.length === 0) { return; }
+    try {
+        const fileExists = await FileHelpers.fileExists(applicationIconLocation);
+        if (!fileExists) {
+            FileHelpers.createFolderSync(applicationIconLocation);
         }
-
-        FileHelpers.fileExists(applicationIconLocation)
-            .then((fileExists) => {
-                if (!fileExists) {
-                    FileHelpers.createFolderSync(applicationIconLocation);
-                }
-
-                const icons = applications.map((application): Icon => {
-                    return {
-                        inputFilePath: application.filePath,
-                        outputFilePath: getApplicationIconFilePath(application),
-                        outputFormat: "Png",
-                    };
-                });
-
-                generateIcons(icons)
-                    .then(() => resolve())
-                    .catch((err) => reject(err));
-            })
-            .catch((err) => reject(err));
-    });
+        const icons = applications.map((application): Icon => {
+            return {
+                inputFilePath: application.filePath,
+                outputFilePath: getApplicationIconFilePath(application),
+                outputFormat: "Png",
+            };
+        });
+        await generateIcons(icons);
+    } catch (error) {
+        return error;
+    }
 }

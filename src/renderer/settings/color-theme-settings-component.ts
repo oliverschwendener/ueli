@@ -92,46 +92,39 @@ export const colorThemeSettingsComponent = Vue.extend({
         toggleDropDown() {
             this.dropdownVisible = !this.dropdownVisible;
         },
-        importColorTheme() {
-            getFilePath([{ extensions: ["json"], name: "JSON" }])
-                .then((filePath: string) => {
-                    const translations: TranslationSet = this.translations;
-                    if (filePath) {
-                        FileHelpers.readFile(filePath)
-                            .then((fileContent: string) => {
-                                const colorThemeOptions = JSON.parse(fileContent) as ColorThemeOptions;
-                                if (isValidColorTheme(colorThemeOptions)) {
-                                    const config: UserConfigOptions = this.config;
-                                    config.colorThemeOptions = Object.assign({}, config.colorThemeOptions, colorThemeOptions);
-                                    this.updateConfig();
-                                    vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeImportSucceeded, NotificationType.Info);
-                                } else {
-                                    vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeInvalidColorTheme, NotificationType.Error);
-                                }
-                            })
-                            .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeImportFailed, NotificationType.Error));
-                    }
-                })
-                .catch((err) => {
-                    // do nothing if no file selected
-                });
+        async importColorTheme(): Promise<void> {
+            const translations: TranslationSet = this.translations;
+            try {
+                const filePath = await getFilePath([{ extensions: ["json"], name: "JSON" }]);
+                const fileContent = await FileHelpers.readFile(filePath);
+                const colorThemeOptions = JSON.parse(fileContent) as ColorThemeOptions;
+                if (isValidColorTheme(colorThemeOptions)) {
+                    const config: UserConfigOptions = this.config;
+                    config.colorThemeOptions = Object.assign({}, config.colorThemeOptions, colorThemeOptions);
+                    this.updateConfig();
+                    vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeImportSucceeded, NotificationType.Info);
+                } else {
+                    vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeInvalidColorTheme, NotificationType.Error);
+                }
+
+            } catch (_) {
+                vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeImportFailed, NotificationType.Error);
+            }
         },
-        exportColorTheme() {
-            getFolderPath()
-                .then((folderPath: string) => {
-                    if (folderPath) {
-                        const translations: TranslationSet = this.translations;
-                        const config: UserConfigOptions = this.config;
-                        const fileContent = JSON.stringify(config.colorThemeOptions);
-                        const filePath = join(folderPath, "ueli-color-theme.json");
-                        FileHelpers.writeFile(filePath, fileContent)
-                            .then(() => vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeExportSucceeded, NotificationType.Info))
-                            .catch(() => vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeExportFailed, NotificationType.Error));
-                    }
-                })
-                .catch((err) => {
-                    // do nothing when no folder selected
-                });
+        async exportColorTheme(): Promise<void> {
+            const translations: TranslationSet = this.translations;
+            try {
+                const folderPath = await getFolderPath();
+                if (folderPath) {
+                    const config: UserConfigOptions = this.config;
+                    const fileContent = JSON.stringify(config.colorThemeOptions);
+                    const filePath = join(folderPath, "ueli-color-theme.json");
+                    await FileHelpers.writeFile(filePath, fileContent);
+                    vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeExportSucceeded, NotificationType.Info);
+                }
+            } catch (_) {
+                vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeExportFailed, NotificationType.Error);
+            }
         },
     },
     mounted() {

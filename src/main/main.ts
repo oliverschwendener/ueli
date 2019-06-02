@@ -63,28 +63,30 @@ function notifyRenderer(message: string, notificationType: NotificationType) {
     });
 }
 
-function refreshAllIndexes() {
-    searchEngine.refreshIndexes()
-        .then(() => {
-            const message = translationSet.successfullyRefreshedIndexes;
-            logger.debug(message);
-            notifyRenderer(message, NotificationType.Info);
-        })
-        .catch((err) => {
-            logger.error(err);
-            notifyRenderer(err, NotificationType.Error);
-        })
-        .then(() => {
-            BrowserWindow.getAllWindows().forEach((window) => {
-                window.webContents.send(IpcChannels.refreshIndexesCompleted);
-            });
+async function refreshAllIndexes(): Promise<void> {
+    try {
+        await searchEngine.refreshIndexes();
+        const message = translationSet.successfullyRefreshedIndexes;
+        logger.debug(message);
+        notifyRenderer(message, NotificationType.Info);
+
+        BrowserWindow.getAllWindows().forEach((window) => {
+            window.webContents.send(IpcChannels.refreshIndexesCompleted);
         });
+
+    } catch (error) {
+        logger.error(error);
+        notifyRenderer(error, NotificationType.Error);
+    }
 }
 
-function clearAllCaches() {
-    searchEngine.clearCaches()
-        .then(() => logger.debug(translationSet.successfullyClearedCaches))
-        .catch((err) => logger.error(err));
+async function clearAllCaches(): Promise<void> {
+    try {
+        await searchEngine.clearCaches();
+        logger.debug(translationSet.successfullyClearedCaches);
+    } catch (error) {
+        logger.error(error);
+    }
 }
 
 function registerGlobalKeyboardShortcut(toggleAction: () => void, newHotKey: GlobalHotKey) {
@@ -149,7 +151,7 @@ function getMaxWindowHeight(maxSearchResultsPerPage: number, searchResultHeight:
     return Number(maxSearchResultsPerPage) * Number(searchResultHeight) + Number(userInputHeight);
 }
 
-function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) {
+async function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boolean): Promise<void> {
     if (updatedConfig.generalOptions.language !== config.generalOptions.language) {
         onLanguageChange(updatedConfig);
     }
@@ -194,25 +196,23 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boole
 
     updateTrayIcon(updatedConfig);
     updateAutoStartOptions(updatedConfig);
-
-    configRepository.saveConfig(updatedConfig)
-        .then(() => {
-            searchEngine.updateConfig(updatedConfig, translationSet)
-                .then(() => {
-                    if (needsIndexRefresh) {
-                        refreshAllIndexes();
-                    } else {
-                        notifyRenderer(translationSet.successfullyUpdatedconfig, NotificationType.Info);
-                    }
-                })
-                .catch((err) =>  logger.error(err));
-        })
-        .catch((err) => logger.error(err));
+    try {
+        await configRepository.saveConfig(updatedConfig);
+        await searchEngine.updateConfig(updatedConfig, translationSet);
+        if (needsIndexRefresh) {
+            refreshAllIndexes();
+        } else {
+            notifyRenderer(translationSet.successfullyUpdatedconfig, NotificationType.Info);
+        }
+    } catch (error) {
+        logger.error(error);
+    }
 }
 
 function updateMainWindowSize(searchResultCount: number, appearanceOptions: AppearanceOptions, center?: boolean) {
     if (mainWindow && !mainWindow.isDestroyed()) {
         mainWindow.setResizable(true);
+
         const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
             ? Math.round(getMaxWindowHeight(
                 appearanceOptions.maxSearchResultsPerPage,
@@ -233,33 +233,29 @@ function reloadApp() {
     mainWindow.reload();
 }
 
-function beforeQuitApp(): Promise<void> {
-    return new Promise((resolve, reject) => {
+async function beforeQuitApp(): Promise<void> {
+    try {
         destroyTrayIcon();
         if (config.generalOptions.clearCachesOnExit) {
-            searchEngine.clearCaches()
-                .then(() => {
-                    logger.debug(translationSet.successfullyClearedCachesBeforeExit);
-                    resolve();
-                })
-                .catch((err) => reject(err));
-        } else {
-            resolve();
+            await searchEngine.clearCaches();
+            logger.debug(translationSet.successfullyClearedCachesBeforeExit);
         }
-    });
+    } catch (error) {
+        return error;
+    }
 }
 
-function quitApp() {
-    beforeQuitApp()
-        .then()
-        .catch((err) => logger.error(err))
-        .then(() => {
-            if (rescanInterval) {
-                clearInterval(rescanInterval);
-            }
-            globalShortcut.unregisterAll();
-            app.quit();
-        });
+async function quitApp(): Promise<void> {
+    try {
+        await beforeQuitApp();
+        if (rescanInterval) {
+            clearInterval(rescanInterval);
+        }
+        globalShortcut.unregisterAll();
+        app.quit();
+    } catch (error) {
+        logger.error(error);
+    }
 }
 
 function updateAutoStartOptions(userConfig: UserConfigOptions) {
@@ -446,9 +442,13 @@ function updateSearchResults(results: SearchResultItem[], webcontents: WebConten
     if (updatedUserInput) {
         webcontents.send(IpcChannels.userInputUpdated, updatedUserInput);
     }
+    try {
+        updateMainWindowSize(results.length, config.appearanceOptions);
+        webcontents.send(IpcChannels.searchResponse, results);
+    } catch (error) {
+        return error;
+    }
 
-    updateMainWindowSize(results.length, config.appearanceOptions);
-    webcontents.send(IpcChannels.searchResponse, results);
 }
 
 function sendErrorToRenderer(err: string, webcontents: WebContents) {
@@ -462,54 +462,63 @@ function registerAllIpcListeners() {
         updateConfig(updatedConfig, needsIndexRefresh);
     });
 
-    ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {
-        searchEngine.getSearchResults(userInput)
-            .then((result) => updateSearchResults(result, event.sender))
-            .catch((err) => {
-                logger.error(err);
-                sendErrorToRenderer(err, event.sender);
-            });
+    ipcMain.on(IpcChannels.search, async (event: Electron.Event, userInput: string) => {
+        try {
+            const result = await searchEngine.getSearchResults(userInput);
+            updateSearchResults(result, event.sender);
+        } catch (error) {
+            logger.error(error);
+            sendErrorToRenderer(error, event.sender);
+
+        }
     });
 
-    ipcMain.on(IpcChannels.favoritesRequested, (event: Electron.Event) => {
-        searchEngine.getFavorites()
-            .then((result) => updateSearchResults(result, event.sender))
-            .catch((err) => {
-                logger.error(err);
-                sendErrorToRenderer(err, event.sender);
-            });
+    ipcMain.on(IpcChannels.favoritesRequested, async (event: Electron.Event) => {
+        try {
+            const result = await searchEngine.getFavorites();
+            updateSearchResults(result, event.sender);
+
+        } catch (error) {
+            logger.error(error);
+            sendErrorToRenderer(error, event.sender);
+        }
     });
 
     ipcMain.on(IpcChannels.mainWindowHideRequested, () => {
         hideMainWindow();
     });
 
-    ipcMain.on(IpcChannels.execute, (event: Electron.Event, userInput: string, searchResultItem: SearchResultItem, privileged: boolean) => {
-        searchEngine.execute(searchResultItem, privileged)
-            .then(() => {
-                userInputHistoryManager.addItem(userInput);
-                if (searchResultItem.hideMainWindowAfterExecution) {
-                    hideMainWindow();
-                } else {
-                    updateMainWindowSize(0, config.appearanceOptions);
-                }
-            })
-            .catch((err) => logger.error(err));
+    ipcMain.on(IpcChannels.execute, async (event: Electron.Event, userInput: string, searchResultItem: SearchResultItem, privileged: boolean) => {
+        try {
+            await searchEngine.execute(searchResultItem, privileged);
+            userInputHistoryManager.addItem(userInput);
+            if (searchResultItem.hideMainWindowAfterExecution) {
+                hideMainWindow();
+            } else {
+                updateMainWindowSize(0, config.appearanceOptions);
+            }
+        } catch (error) {
+            logger.error(error);
+        }
     });
 
-    ipcMain.on(IpcChannels.openSearchResultLocation, (event: Electron.Event, searchResultItem: SearchResultItem) => {
-        searchEngine.openLocation(searchResultItem)
-            .then(() => hideMainWindow())
-            .catch((err) => logger.error(err));
+    ipcMain.on(IpcChannels.openSearchResultLocation, async (event: Electron.Event, searchResultItem: SearchResultItem) => {
+        try {
+            await searchEngine.openLocation(searchResultItem);
+            hideMainWindow();
+        } catch (error) {
+            logger.error(error);
+        }
     });
 
-    ipcMain.on(IpcChannels.autoComplete, (event: Electron.Event, searchResultItem: SearchResultItem) => {
-        searchEngine.autoComplete(searchResultItem)
-            .then((result) => updateSearchResults(result.results, event.sender, result.updatedUserInput))
-            .catch((err) => {
-                logger.error(err);
-                sendErrorToRenderer(err, event.sender);
-            });
+    ipcMain.on(IpcChannels.autoComplete, async (event: Electron.Event, searchResultItem: SearchResultItem) => {
+        try {
+            const result = await searchEngine.autoComplete(searchResultItem);
+            await updateSearchResults(result.results, event.sender, result.updatedUserInput);
+        } catch (error) {
+            logger.error(error);
+            sendErrorToRenderer(error, event.sender);
+        }
     });
 
     ipcMain.on(IpcChannels.reloadApp, () => {
@@ -548,13 +557,14 @@ function registerAllIpcListeners() {
         });
     });
 
-    ipcMain.on(IpcChannels.clearExecutionLogConfirmed, (event: Electron.Event) => {
-        searchEngine.clearExecutionLog()
-            .then(() => notifyRenderer(translationSet.successfullyClearedExecutionLog, NotificationType.Info))
-            .catch((err) => {
-                logger.error(err);
-                notifyRenderer(err, NotificationType.Error);
-            });
+    ipcMain.on(IpcChannels.clearExecutionLogConfirmed, async (event: Electron.Event) => {
+        try {
+            await searchEngine.clearExecutionLog();
+            notifyRenderer(translationSet.successfullyClearedExecutionLog, NotificationType.Info);
+        } catch (error) {
+            logger.error(error);
+            notifyRenderer(error, NotificationType.Error);
+        }
     });
 
     ipcMain.on(IpcChannels.openDebugLogRequested, (event: Electron.Event) => {

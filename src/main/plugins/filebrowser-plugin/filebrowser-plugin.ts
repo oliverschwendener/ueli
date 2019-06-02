@@ -43,15 +43,16 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin {
         return filePaths.some((filePath) => this.filePathValidator(filePath) && existsSync(filePath));
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
+    public async getSearchResults(userInput: string, fallback?: boolean): Promise<SearchResultItem[]> {
+        try {
             const userInputIsExactMatch = existsSync(userInput);
             const filePath = userInputIsExactMatch ? userInput : dirname(userInput);
             const searchTerm = userInputIsExactMatch ? undefined : basename(userInput);
-            this.handleFilePath(filePath, searchTerm)
-                .then((results) => resolve(results))
-                .catch((err) => reject(err));
-        });
+            const results = await this.handleFilePath(filePath, searchTerm);
+            return results;
+        } catch (error) {
+            return error;
+        }
     }
 
     public isEnabled(): boolean {
@@ -66,92 +67,83 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin {
         return this.fileLocationExecutor(searchResultItem.executionArgument);
     }
 
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
+    public async autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
+        try {
             const updatedUserInput = searchResultItem.executionArgument.endsWith(sep)
                 ? searchResultItem.executionArgument
                 : `${searchResultItem.executionArgument}${sep}`;
-
-            this.handleFilePath(updatedUserInput)
-                .then((results) => resolve({ results, updatedUserInput }))
-                .catch((err) => reject(err));
-        });
+            const results = await this.handleFilePath(updatedUserInput);
+            return {
+                results,
+                updatedUserInput,
+            };
+        } catch (error) {
+            return error;
+        }
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig.fileBrowserOptions;
-            resolve();
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        this.config = updatedConfig.fileBrowserOptions;
     }
 
-    private handleFilePath(filePath: string, searchTerm?: string): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
-            FileHelpers.getStats(filePath)
-            .then((stats) => {
-                if (stats.stats.isDirectory() && !stats.stats.isSymbolicLink()) {
-                    FileHelpers.readFilesFromFolder(filePath)
-                        .then((filePaths) => {
-                            this.buildSearchResults(filePaths, filePath, searchTerm)
-                                .then((results) => resolve(results))
-                                .catch((err) => reject(err));
-                        })
-                        .catch((err) => reject(err));
-                } else if (stats.stats.isFile() && !stats.stats.isSymbolicLink()) {
-                    resolve([]);
+    private async handleFilePath(filePath: string, searchTerm?: string): Promise<SearchResultItem[]> {
+        try {
+            const stats = await FileHelpers.getStats(filePath);
+            if (stats.stats.isDirectory() && !stats.stats.isSymbolicLink()) {
+                const filePaths = await FileHelpers.readFilesFromFolder(filePath);
+                const results = await this.buildSearchResults(filePaths, filePath, searchTerm);
+                return results;
+            } else if (stats.stats.isDirectory() && !stats.stats.isSymbolicLink()) {
+                return [];
+            } else {
+                return [];
+            }
+        } catch (error) {
+            return error;
+        }
+    }
+
+    private async buildSearchResults(filePaths: string[], parentFolder: string, searchTerm?: string): Promise<SearchResultItem[]> {
+        try {
+            const unsortedResults = filePaths.filter((filePath) => {
+                if (this.config.showHiddenFiles) {
+                    return true;
                 } else {
-                    resolve([]);
+                    return !basename(filePath).startsWith(".");
                 }
             })
-            .catch((err) => reject(err));
-        });
-    }
-
-    private buildSearchResults(filePaths: string[], parentFolder: string, searchTerm?: string): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
-            const unsortedResults = filePaths
-                .filter((filePath) => {
-                    if (this.config.showHiddenFiles) {
-                        return true;
-                    } else {
-                        return !basename(filePath).startsWith(".");
-                    }
-                })
-                .filter((filePath) => {
-                    if (this.config.blackList.length > 0) {
-                        return this.config.blackList.every((blackListEntry) => {
-                            return blackListEntry !== basename(filePath);
-                        });
-                    } else {
-                        return true;
-                    }
-                })
-                .map((filePath): SearchResultItem => {
-                    return {
-                        description: createFilePathDescription(filePath),
-                        executionArgument: filePath,
-                        hideMainWindowAfterExecution: true,
-                        icon: defaultFileIcon,
-                        name: basename(filePath),
-                        originPluginType: this.pluginType,
-                        searchable: [basename(filePath)],
-                    };
-                });
-
-            const promises = unsortedResults.map((unsortedResult) => this.fileIconGenerator(unsortedResult.executionArgument, defaultFileIcon, defaultFolderIcon));
-            Promise.all(promises)
-                .then((iconResults) => {
-                    unsortedResults.forEach((unsortedResult) => {
-                        const icon = iconResults.find((iconResult) => iconResult.filePath === unsortedResult.executionArgument);
-                        if (icon) {
-                            unsortedResult.icon = icon.icon;
-                        }
+            .filter((filePath) => {
+                if (this.config.blackList.length > 0) {
+                    return this.config.blackList.every((blackListEntry) => {
+                        return blackListEntry !== basename(filePath);
                     });
-
-                    resolve(this.sortResults(unsortedResults, searchTerm));
-                })
-                .catch((err) => reject(err));
-        });
+                } else {
+                    return true;
+                }
+            })
+            .map((filePath): SearchResultItem => {
+                return {
+                    description: createFilePathDescription(filePath),
+                    executionArgument: filePath,
+                    hideMainWindowAfterExecution: true,
+                    icon: defaultFileIcon,
+                    name: basename(filePath),
+                    originPluginType: this.pluginType,
+                    searchable: [basename(filePath)],
+                };
+            });
+            const promises = unsortedResults.map((unsortedResult) => this.fileIconGenerator(unsortedResult.executionArgument, defaultFileIcon, defaultFolderIcon));
+            const iconResults = await Promise.all(promises);
+            unsortedResults.forEach((unsortedResult) => {
+                const icon = iconResults.find((iconResult) => iconResult.filePath === unsortedResult.executionArgument);
+                if (icon) {
+                    unsortedResult.icon = icon.icon;
+                }
+            });
+            return this.sortResults(unsortedResults, searchTerm);
+        } catch (error) {
+            return error;
+        }
     }
 
     private sortResults(unsortedResults: SearchResultItem[], searchTerm?: string): SearchResultItem[] {

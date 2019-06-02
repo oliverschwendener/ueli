@@ -28,7 +28,7 @@ export class MdFindPlugin implements ExecutionPlugin {
 
     public isValidUserInput(userInput: string): boolean {
         return userInput.startsWith(this.config.prefix)
-            && userInput.replace(this.config.prefix, "").length > 0;
+            && userInput.replace(this.config.prefix, "").trim().length > 0;
     }
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
@@ -56,15 +56,16 @@ export class MdFindPlugin implements ExecutionPlugin {
         return this.config.enabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.filePathExecutor(searchResultItem.executionArgument, privileged)
-                .then(() => resolve())
-                .catch((err) => reject(err));
-        });
+    public async execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+        try {
+            await this.filePathExecutor(searchResultItem.executionArgument, privileged);
+        } catch (error) {
+            return error;
+        }
     }
 
-    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
+    public async openLocation(searchResultItem: SearchResultItem): Promise<void> {
+
         return new Promise((resolve, reject) => {
             this.filePathLocationExecutor(searchResultItem.executionArgument)
                 .then(() => resolve())
@@ -72,17 +73,12 @@ export class MdFindPlugin implements ExecutionPlugin {
         });
     }
 
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("Autocompletion not supported");
-        });
+    public async autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
+        throw Error("Autocompletion not supported");
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig.mdfindOptions;
-            resolve();
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
+        this.config = updatedConfig.mdfindOptions;
     }
 
     private getErrorResult(errorMessage: string, details?: string): SearchResultItem {

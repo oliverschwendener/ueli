@@ -18,42 +18,29 @@ export class FakeSearchPlugin implements SearchPlugin {
         this.enabled = enabled;
     }
 
-    public getAll(): Promise<SearchResultItem[]> {
-        return new Promise((resolve) => {
-            resolve(this.items);
-        });
+    public async getAll(): Promise<SearchResultItem[]> {
+        return this.items;
     }
-    public refreshIndex(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            reject("Method not implemented.");
-        });
+    public async refreshIndex(): Promise<void> {
+        throw Error("Method not implemented.");
+
     }
     public clearCache(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            reject("Method not implemented.");
-        });
+        throw Error("Method not implemented.");
     }
     public isEnabled(): boolean {
         return this.enabled;
     }
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        return new Promise((resolve, reject) => {
-            reject("Method not implemented.");
-        });
+    public async execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+        throw Error("Method not implemented.");
     }
-    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
-        return new Promise((resolve, reject) => {
-            reject("Method not implemented.");
-        });
+    public async openLocation(searchResultItem: SearchResultItem): Promise<void> {
+        throw Error("Method not implemented.");
     }
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("Method not implemented");
-        });
+    public async autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
+        throw Error("Method not implemented.");
     }
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve, reject) => {
-            reject("Method not implemented.");
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        throw Error("Method not implemented.");
     }
 }

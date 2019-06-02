@@ -33,23 +33,18 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
         return true;
     }
 
-    public getAll(): Promise<SearchResultItem[]> {
-        return new Promise((resolve) => {
-            const result = this.getAllCommands().map((command) => this.createSearchResultItemFromUeliCommand(command));
-            resolve(result);
-        });
+    public async getAll(): Promise<SearchResultItem[]> {
+        const result = this.getAllCommands().map((command) => this.createSearchResultItemFromUeliCommand(command));
+        return result;
     }
 
-    public execute(searchResultItem: SearchResultItem): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const ueliCommand = this.getAllCommands().find((command) => command.executionArgument === searchResultItem.executionArgument);
-            if (ueliCommand) {
-                ipcMain.emit(IpcChannels.ueliCommandExecuted, ueliCommand);
-                resolve();
-            } else {
-                reject("Error while trying to execute ueli command: Invalid ueli command");
-            }
-        });
+    public async execute(searchResultItem: SearchResultItem): Promise<void> {
+        const ueliCommand = this.getAllCommands().find((command) => command.executionArgument === searchResultItem.executionArgument);
+        if (ueliCommand) {
+            ipcMain.emit(IpcChannels.ueliCommandExecuted, ueliCommand);
+        } else {
+            throw Error("Error while trying to execute ueli command: Invalid ueli command");
+        }
     }
 
     public openLocation(searchResultItem: SearchResultItem): Promise<void> {
@@ -57,28 +52,15 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
     }
 
     public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("Autocompletion not supported");
-        });
+        throw Error("Autocompletion not supported");
     }
 
-    public refreshIndex(): Promise<void> {
-        return new Promise((resolve) => {
-            resolve();
-        });
-    }
+    public async refreshIndex(): Promise<void> {} // tslint:disable-line
 
-    public clearCache(): Promise<void> {
-        return new Promise((resolve) => {
-            resolve();
-        });
-    }
+    public async clearCache(): Promise<void> {} // tslint:disable-line
 
-    public updateConfig(updatedConfig: UserConfigOptions, tranlsationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve) => {
-            this.translationSet = tranlsationSet;
-            resolve();
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions, tranlsationSet: TranslationSet): Promise<void> {
+        this.translationSet = tranlsationSet;
     }
 
     private createSearchResultItemFromUeliCommand(ueliCommand: UeliCommand): SearchResultItem {

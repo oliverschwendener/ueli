@@ -34,19 +34,18 @@ export const generalSettingsComponent = Vue.extend({
         dropdownTrigger() {
             this.dropdownVisible = !this.dropdownVisible;
         },
-        exportCurrentSettings() {
-            getFolderPath()
-                .then((filePath: string) => {
-                    const config: UserConfigOptions = this.config;
-                    const translations: TranslationSet = this.translations;
-                    const settingsFilePath = join(filePath, "ueli.config.json");
-                    FileHelpers.writeFile(settingsFilePath, JSON.stringify(config, undefined, 2))
-                        .then(() => vueEventDispatcher.$emit(VueEventChannels.notification, translations.generalSettingsSuccessfullyExportedSettings, NotificationType.Info))
-                        .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, NotificationType.Error));
-                })
-                .catch((err) => {
-                    // do nothing when no folder selected
-                });
+        async exportCurrentSettings(): Promise<void> {
+            try {
+                const filePath: string = await getFolderPath();
+                const config: UserConfigOptions = this.config;
+                const translations: TranslationSet = this.translations;
+                const settingsFilePath = join(filePath, "ueli.config.json");
+                await FileHelpers.writeFile(settingsFilePath, JSON.stringify(config, undefined, 2));
+                vueEventDispatcher.$emit(VueEventChannels.notification, translations.generalSettingsSuccessfullyExportedSettings, NotificationType.Info);
+
+            } catch (error) {
+                vueEventDispatcher.$emit(VueEventChannels.notification, error, NotificationType.Error);
+            }
         },
         getTranslatedGlobalHotKeyModifier(hotkeyModifier: GlobalHotKeyModifier): string {
             const translations: TranslationSet = this.translations;
@@ -106,31 +105,27 @@ export const generalSettingsComponent = Vue.extend({
                     return hotkeyKey;
             }
         },
-        importSettings() {
+        async importSettings(): Promise<void> {
             const translations: TranslationSet = this.translations;
             const filter: Electron.FileFilter = {
                 extensions: ["json"],
                 name: translations.generalSettingsImportFileFilterJsonFiles,
             };
-            getFilePath([filter])
-                .then((filePath) => {
-                    FileHelpers.readFile(filePath)
-                        .then((fileContent) => {
-                            if (isValidUserConfig(fileContent)) {
-                                const userConfig: UserConfigOptions = JSON.parse(fileContent);
-                                const config: UserConfigOptions = mergeUserConfigWithDefault(userConfig, defaultUserConfigOptions);
-                                this.config = config;
-                                this.updateConfig();
-                            } else {
-                                vueEventDispatcher.$emit(VueEventChannels.notification, translations.generalSettingsImportErrorInvalidConfig, NotificationType.Error);
-                            }
-                        })
-                        .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, NotificationType.Error))
-                        .then(() => this.dropdownVisible = false);
-                })
-                .catch((err) => {
-                    // do nothing if no file selected
-                });
+            try {
+                const filePath = await getFilePath([filter]);
+                const fileContent = await FileHelpers.readFile(filePath);
+                if (isValidUserConfig(fileContent)) {
+                    const userConfig: UserConfigOptions = JSON.parse(fileContent);
+                    const config: UserConfigOptions = mergeUserConfigWithDefault(userConfig, defaultUserConfigOptions);
+                    this.config = config;
+                    this.updateConfig();
+                } else {
+                    vueEventDispatcher.$emit(VueEventChannels.notification, translations.generalSettingsImportErrorInvalidConfig, NotificationType.Error);
+                }
+
+            } catch (error) {
+                vueEventDispatcher.$emit(VueEventChannels.notification, error, NotificationType.Error);
+            }
         },
         openDebugLog() {
             vueEventDispatcher.$emit(VueEventChannels.openDebugLogRequested);

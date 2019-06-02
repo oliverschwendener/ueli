@@ -18,20 +18,19 @@ interface TranslationResponse {
 }
 
 export class LingueeTranslator {
-    public static getTranslations(url: string): Promise<Translation[]> {
-        return new Promise((resolve, reject) => {
-            axios.get(url)
-                .then((response) => {
-                    const data = response.data as TranslationResponse;
-                    let translations: Translation[] = [];
-                    if (data.exact_matches) {
-                        data.exact_matches
-                            .map((exactMatch) => exactMatch.translations)
-                            .forEach((t) => translations = translations.concat(t));
-                    }
-                    resolve(translations);
-                })
-                .catch((err) => reject(err));
-        });
+    public static async getTranslations(url: string): Promise<Translation[]> {
+        try {
+            const data = (await axios.get(url)).data as TranslationResponse;
+            let translations: Translation[] = [];
+            if (data.exact_matches) {
+                translations = data.exact_matches
+                    .map((exactMatch) => exactMatch.translations)
+                    .flat();
+                return translations;
+            }
+            return translations;
+        } catch (error) {
+            return error;
+        }
     }
 }

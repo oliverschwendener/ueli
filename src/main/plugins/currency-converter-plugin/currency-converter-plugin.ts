@@ -26,38 +26,34 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
 
     public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
         const words = userInput.trim().split(" ");
-        if (words.length === 4) {
-            try {
-                return !isNaN(Number(words[0]))
-                    && this.isCurrencyCode(words[1])
-                    && words[2] === "in"
-                    && this.isCurrencyCode(words[3]);
-            } catch (err) {
-                return false;
-            }
-        } else {
+        try {
+            const isValidInput = words.length === 4 &&
+                !isNaN(Number(words[0])) &&
+                this.isCurrencyCode(words[1]) &&
+                words[2] === "in" &&
+                this.isCurrencyCode(words[3]);
+            return isValidInput;
+        } catch (error) {
             return false;
         }
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
-            const conversion = this.buildCurrencyConversion(userInput);
-            CurrencyConverter.convert(conversion, Number(this.config.precision))
-                .then((converted) => {
-                    const result: SearchResultItem = {
-                        description: this.translationSet.currencyConverterCopyToClipboard,
-                        executionArgument: converted.toString(),
-                        hideMainWindowAfterExecution: true,
-                        icon: defaultCurrencyExchangeIcon,
-                        name: `= ${converted} ${conversion.target}`,
-                        originPluginType: this.pluginType,
-                        searchable: [],
-                    };
-                    resolve([result]);
-                })
-                .catch((err) => reject(err));
-        });
+    public async getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
+        const conversion = this.buildCurrencyConversion(userInput);
+        try {
+            const converted = await CurrencyConverter.convert(conversion, Number(this.config.precision));
+            return [{
+                description: this.translationSet.currencyConverterCopyToClipboard,
+                executionArgument: converted.toString(),
+                hideMainWindowAfterExecution: true,
+                icon: defaultCurrencyExchangeIcon,
+                name: `= ${converted} ${conversion.target}`,
+                originPluginType: this.pluginType,
+                searchable: [],
+            }];
+        } catch (error) {
+            return error;
+        }
     }
 
     public isEnabled(): boolean {
@@ -76,12 +72,9 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
         throw new Error("Method not implemented.");
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig.currencyConverterOptions;
-            this.translationSet = translationSet;
-            resolve();
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        this.config = updatedConfig.currencyConverterOptions;
+        this.translationSet = translationSet;
     }
 
     private isCurrencyCode(value: string): boolean {

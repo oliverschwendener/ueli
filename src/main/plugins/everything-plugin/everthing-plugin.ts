@@ -32,43 +32,39 @@ export class EverythingPlugin implements ExecutionPlugin {
 
     public isValidUserInput(userInput: string): boolean {
         return userInput.startsWith(this.config.prefix)
-            && userInput.replace(this.config.prefix, "").length > 0;
+            && userInput.replace(this.config.prefix, "").trim().length > 0;
     }
 
-    public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
-            EverythingSearcher.search(userInput, this.config, defaultFileIcon, defaultFolderIcon, this.pluginType)
-                .then((result) => resolve(result))
-                .catch((err) => reject(err));
-        });
+    public async getSearchResults(userInput: string): Promise<SearchResultItem[]> {
+        try {
+            const result = await EverythingSearcher.search(userInput, this.config, defaultFileIcon, defaultFolderIcon, this.pluginType);
+            return result;
+        } catch (error) {
+            return error;
+        }
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.filePathExecutor(searchResultItem.executionArgument, privileged)
-                .then(() => resolve())
-                .catch((err) => reject(err));
-        });
+    public async execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+        try {
+            await this.filePathExecutor(searchResultItem.executionArgument, privileged);
+        } catch (error) {
+            return error;
+        }
     }
 
-    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.filePathLocationExecutor(searchResultItem.executionArgument)
-                .then(() => resolve())
-                .catch((err) => reject(err));
-        });
+    public async openLocation(searchResultItem: SearchResultItem): Promise<void> {
+        try {
+            await this.filePathLocationExecutor(searchResultItem.executionArgument);
+        } catch (error) {
+            return error;
+        }
     }
 
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("Autocompletion not supported");
-        });
+    public async autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
+        throw Error("Autocompletion not supported");
     }
 
-    public updateConfig(updatedUserConfig: UserConfigOptions): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.config = updatedUserConfig.everythingSearchOptions;
-            resolve();
-        });
+    public async updateConfig(updatedUserConfig: UserConfigOptions): Promise<void> {
+        this.config = updatedUserConfig.everythingSearchOptions;
     }
 }

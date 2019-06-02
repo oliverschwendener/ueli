@@ -135,17 +135,16 @@ export const shortcutEditingModal = Vue.extend({
         onBackgroundClick() {
             this.resetModal();
         },
-        openFolderDialog() {
-            getFileAndFolderPaths()
-                .then((filePaths) => {
-                    if (filePaths && filePaths.length > 0) {
-                        const shortcut: Shortcut = this.shortcut;
-                        shortcut.executionArgument = filePaths[0];
-                    }
-                })
-                .catch((err) => {
-                    // do nothing if no file or folder selected
-                });
+        async openFolderDialog(): Promise<void> {
+            try {
+                const filePaths = await getFileAndFolderPaths();
+                if (filePaths && filePaths.length > 0) {
+                    const shortcut: Shortcut = this.shortcut;
+                    shortcut.executionArgument = filePaths[0];
+                }
+            } catch (error) {
+                throw new Error(error);
+            }
         },
         resetModal(): void {
             this.shortcut = cloneDeep(defaultNewShortcut);

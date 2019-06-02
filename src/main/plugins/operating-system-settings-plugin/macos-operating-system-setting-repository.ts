@@ -12,37 +12,34 @@ export class MacOsOperatingSystemSettingRepository implements OperatingSystemSet
     private all: OperatingSystemSetting[];
 
     constructor() {
-        FileHelpers.readFilesFromFolder(this.basePath)
-            .then((filePaths) => {
-                Promise.all(filePaths.map((filePath) => this.buildOperatingSystemSetting(filePath)))
-                    .then((results) => this.all = results)
-                    .catch((err) => this.all = []);
-            })
-            .catch((err) => {
-                throw new Error(`Error while reading macos operating system commands: ${err}`);
-            });
+        (async (): Promise<void> => {
+            try {
+                const filePaths = await FileHelpers.readFilesFromFolder(this.basePath);
+                const result = await Promise.all(filePaths.map((filePath) => this.buildOperatingSystemSetting(filePath)));
+                this.all = result;
+            } catch (error) {
+                this.all = [];
+            }
+        })();
     }
 
-    public getAll(translationSet: TranslationSet): Promise<OperatingSystemSetting[]> {
-        return new Promise((resolve) => {
-            resolve(this.all);
-        });
+    public async getAll(translationSet: TranslationSet): Promise<OperatingSystemSetting[]> {
+        return this.all;
     }
 
-    private buildOperatingSystemSetting(filePath: string): Promise<OperatingSystemSetting> {
-        return new Promise((resolve, reject) => {
-            const iconFilePath = join(applicationIconLocation, `${basename(filePath)}.png`);
-            convert(filePath, iconFilePath)
-                .then(() => {
-                    resolve({
-                        description: filePath,
-                        executionArgument: filePath,
-                        icon: { parameter: iconFilePath, type: IconType.URL },
-                        name: basename(filePath).replace(extname(filePath), ""),
-                        tags: [],
-                    });
-                })
-                .catch((err) => reject(err));
-        });
+    private async buildOperatingSystemSetting(filePath: string): Promise<OperatingSystemSetting> {
+        const iconFilePath = join(applicationIconLocation, `${basename(filePath)}.png`);
+        try {
+            await convert(filePath, iconFilePath);
+            return {
+                description: filePath,
+                executionArgument: filePath,
+                icon: { parameter: iconFilePath, type: IconType.URL },
+                name: basename(filePath).replace(extname(filePath), ""),
+                tags: [],
+            };
+        } catch (error) {
+            return error;
+        }
     }
 }

@@ -40,124 +40,121 @@ export class SearchEngine {
         this.fallbackPlugins = fallbackPlugins;
         this.logger = logger;
         this.favoriteManager = new FavoriteManager(favoriteRepository, translationSet);
-        this.refreshIndexes()
-            .then(() => this.logger.debug(translationSet.successfullyRefreshedIndexes))
-            .catch((err) => this.logger.error(err));
+        (async () => {
+            try {
+                await this.refreshIndexes();
+                this.logger.debug(translationSet.successfullyRefreshedIndexes);
+            } catch (error) {
+                this.logger.error(error);
+            }
+          })();
     }
 
-    public  getSearchResults(userInput: string): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
+    public async getSearchResults(userInput: string): Promise<SearchResultItem[]> {
+        try {
             if (userInput === undefined || userInput.length === 0) {
-                resolve([]);
+                return [];
             } else {
                 const matchingExecutionPlugin = this.executionPlugins
                     .filter((e) => e.isEnabled())
                     .find((e) => e.isValidUserInput(userInput));
 
                 if (matchingExecutionPlugin !== undefined) {
-                    matchingExecutionPlugin.getSearchResults(userInput)
-                        .then((executionPluginResults) => {
-                            this.beforeSolveSearchResults(userInput, executionPluginResults)
-                                .then((result) => resolve(result))
-                                .catch((err) => reject(err));
-                        })
-                        .catch((err) => reject(err));
-                } else {
-                    this.getSearchPluginsResult(userInput)
-                        .then((searchPluginResults) => {
-                            this.beforeSolveSearchResults(userInput, searchPluginResults)
-                                .then((result) => resolve(result))
-                                .catch((err) => reject(err));
-                        })
-                        .catch((err) => reject(err));
-                }
+                        const executionPluginResults = await matchingExecutionPlugin.getSearchResults(userInput);
+                        const result = await this.beforeSolveSearchResults(userInput, executionPluginResults);
+                        return result;
+                    } else {
+                        const searchPluginResults = await this.getSearchPluginsResult(userInput);
+                        const result = this.beforeSolveSearchResults(userInput, searchPluginResults);
+                        return result;
+                    }
             }
-        });
+        } catch (error) {
+            return error;
+        }
     }
 
-    public getFavorites(): Promise<SearchResultItem[]> {
-        return new Promise((resolve) => {
+    public async getFavorites(): Promise<SearchResultItem[]> {
+        try {
             const result = this.favoriteManager.getAllFavorites()
                 .sort((a, b) => b.executionCount - a.executionCount)
                 .map((f) => f.item);
-
-            resolve(result);
-        });
+            return result;
+        } catch (error) {
+            return error;
+        }
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        return new Promise((resolve, reject) => {
+    public async execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+        try {
             const originPlugin = this.getAllPlugins().find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
             if (originPlugin !== undefined) {
-                originPlugin.execute(searchResultItem, privileged)
-                    .then(() => {
-                        if (this.config.generalOptions.logExecution) {
-                            this.favoriteManager.increaseCount(searchResultItem);
-                        }
-                        resolve();
-                    })
-                    .catch((err: string) => reject(err));
+                await originPlugin.execute(searchResultItem, privileged);
+                if (this.config.generalOptions.logExecution) {
+                    this.favoriteManager.increaseCount(searchResultItem);
+                }
             } else {
-                reject("Error while trying to execute search result item. No plugin found for this search result item");
+                throw Error("Error while trying to execute search result item. No plugin found for this search result item");
             }
-        });
+        } catch (error) {
+            return error;
+        }
     }
 
-    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const pluginsWithOpenLocationSupport = this.getAllPlugins().filter((plugin) => plugin.openLocationSupported);
-            const originPlugin = pluginsWithOpenLocationSupport.find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
-            if (originPlugin !== undefined) {
-                originPlugin.openLocation(searchResultItem)
-                    .then(() => resolve())
-                    .catch((err) => reject(err));
-            } else {
-                reject("Error while trying to open file location. No plugin found for the search result item");
+    public async openLocation(searchResultItem: SearchResultItem): Promise<void> {
+        const pluginsWithOpenLocationSupport = this.getAllPlugins().filter((plugin) => plugin.openLocationSupported);
+        const originPlugin = pluginsWithOpenLocationSupport.find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+        if (originPlugin !== undefined) {
+            try {
+                await originPlugin.openLocation(searchResultItem);
+            } catch (error) {
+                return error;
             }
-        });
+        } else {
+            throw Error("Error while trying to open file location. No plugin found for the search result item");
+        }
     }
 
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            const pluginsWithAutoCompleteSupport = this.getAllPlugins().filter((plugin) => plugin.autoCompletionSupported);
-            const originPlugin = pluginsWithAutoCompleteSupport.find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
-            if (originPlugin) {
-                originPlugin.autoComplete(searchResultItem)
-                    .then((result) => resolve(result))
-                    .catch((err) => reject(err));
-            } else {
-                reject("Error while trying to autocomplete. No plugin found for the search result item");
+    public async autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
+        const pluginsWithAutoCompleteSupport = this.getAllPlugins().filter((plugin) => plugin.autoCompletionSupported);
+        const originPlugin = pluginsWithAutoCompleteSupport.find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+        if (originPlugin) {
+            try {
+                const result = await originPlugin.autoComplete(searchResultItem);
+                return result;
+            } catch (error) {
+                return error;
             }
-        });
+        } else {
+            throw Error("Error while trying to autocomplete. No plugin found for the search result item");
+        }
     }
 
-    public refreshIndexes(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            Promise.all(this.searchPlugins.map((plugin) => plugin.refreshIndex()))
-                .then(() => resolve())
-                .catch((err) => reject(err));
-        });
+    public async refreshIndexes(): Promise<void> {
+        try {
+            await Promise.all(this.searchPlugins.map((plugin) => plugin.refreshIndex()));
+        } catch (error) {
+            return error;
+        }
     }
 
-    public clearCaches(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            Promise.all(this.searchPlugins.map((plugin) => plugin.clearCache()))
-                .then(() => resolve())
-                .catch((err) => reject(`Error while trying to clear cache: ${err}`));
-        });
+    public async clearCaches(): Promise<void> {
+        try {
+            await Promise.all(this.searchPlugins.map((plugin) => plugin.clearCache()));
+        } catch (error) {
+            return error;
+        }
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve, reject) => {
+    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        try {
             this.translationSet = translationSet;
             this.favoriteManager.updateTranslationSet(translationSet);
-
             this.config = updatedConfig;
-
-            Promise.all(this.getAllPlugins().map((plugin) => plugin.updateConfig(updatedConfig, translationSet)))
-                .then(() => resolve())
-                .catch((err) => reject(err));
-        });
+            await Promise.all(this.getAllPlugins().map((plugin) => plugin.updateConfig(updatedConfig, translationSet)));
+        } catch (error) {
+            return error;
+        }
     }
 
     public clearExecutionLog(): Promise<void> {
@@ -168,71 +165,63 @@ export class SearchEngine {
         return this.logger;
     }
 
-    private getSearchPluginsResult(userInput: string): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
+    private async getSearchPluginsResult(userInput: string): Promise<SearchResultItem[]> {
+        try {
             const pluginPromises = this.searchPlugins
                 .filter((plugin) => plugin.isEnabled())
                 .map((plugin) => plugin.getAll());
 
-            Promise.all(pluginPromises)
-                .then((pluginsResults) => {
-                    const all = pluginsResults.length > 0
-                        ? pluginsResults.reduce((a, r) => a = a.concat(r))
-                        : [];
+            const pluginsResults = (await Promise.all(pluginPromises)).flat();
 
-                    const fuse = new Fuse(all, {
-                        distance: 100,
-                        includeScore: true,
-                        keys: ["searchable"],
-                        location: 0,
-                        maxPatternLength: 32,
-                        minMatchCharLength: 1,
-                        shouldSort: true,
-                        threshold: this.config.searchEngineOptions.fuzzyness,
-                    });
+            const fuse = new Fuse(pluginsResults, {
+                distance: 100,
+                includeScore: true,
+                keys: ["searchable"],
+                location: 0,
+                maxPatternLength: 32,
+                minMatchCharLength: 1,
+                shouldSort: true,
+                threshold: this.config.searchEngineOptions.fuzzyness,
+            });
 
-                    const fuseResult = fuse.search(userInput) as any[];
-
-                    if (this.config.generalOptions.logExecution) {
-                        fuseResult.forEach((fuseResultItem: FuseResult) => {
-                            const favorite = this.favoriteManager.getAllFavorites()
-                                .find((f) => f.item.executionArgument === fuseResultItem.item.executionArgument);
-                            if (favorite && favorite.executionCount !== 0) {
-                                fuseResultItem.score /= favorite.executionCount * 3;
-                            }
-                        });
+            const fuseResult = fuse.search(userInput) as any[];
+            if (this.config.generalOptions.logExecution) {
+                fuseResult.forEach((fuseResultItem: FuseResult) => {
+                    const favorite = this.favoriteManager.getAllFavorites()
+                        .find((f) => f.item.executionArgument === fuseResultItem.item.executionArgument);
+                    if (favorite && favorite.executionCount !== 0) {
+                        fuseResultItem.score /= favorite.executionCount * 3;
                     }
+                });
+            }
+            const sorted = fuseResult.sort((a: FuseResult, b: FuseResult) => a.score  - b.score);
+            const filtered = sorted.map((item: FuseResult): SearchResultItem => item.item);
+            const sliced = filtered.slice(0, this.config.searchEngineOptions.maxSearchResults);
+            return sliced;
 
-                    const sorted = fuseResult.sort((a: FuseResult, b: FuseResult) => a.score  - b.score);
-                    const filtered = sorted.map((item: FuseResult): SearchResultItem => item.item);
-                    const sliced = filtered.slice(0, this.config.searchEngineOptions.maxSearchResults);
-
-                    resolve(sliced);
-                })
-                .catch((pluginsError) => reject(pluginsError));
-        });
+        } catch (error) {
+            return error;
+        }
     }
 
-    private beforeSolveSearchResults(userInput: string, searchResults: SearchResultItem[]): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
+    private async beforeSolveSearchResults(userInput: string, searchResults: SearchResultItem[]): Promise<SearchResultItem[]> {
+        try {
             if (this.fallbackPlugins.length > 0 && searchResults.length === 0) {
                 const fallbackPluginPromises = this.fallbackPlugins
-                    .filter((fallbackPlugin) => fallbackPlugin.isValidUserInput(userInput, true))
-                    .map((fallbackPlugin) => fallbackPlugin.getSearchResults(userInput, true));
+                .filter((fallbackPlugin) => fallbackPlugin.isValidUserInput(userInput, true))
+                .map((fallbackPlugin) => fallbackPlugin.getSearchResults(userInput, true));
 
-                Promise.all(fallbackPluginPromises)
-                    .then((resultLists) => {
-                        const result = resultLists.length > 0
-                            ? resultLists.reduce((all, r) => all = all.concat(r))
-                            : [];
-
-                        resolve(this.beforeResolve(userInput, result));
-                    })
-                    .catch((err) => reject(err));
+                const resultList = await Promise.all(fallbackPluginPromises);
+                const result = resultList.length > 0
+                        ? resultList.flat()
+                        : [];
+                return this.beforeResolve(userInput, result);
             } else {
-                resolve(this.beforeResolve(userInput, searchResults));
+                return this.beforeResolve(userInput, searchResults);
             }
-        });
+        } catch (error) {
+            return error;
+        }
     }
 
     private beforeResolve(userInput: string, searchResults: SearchResultItem[]): SearchResultItem[] {

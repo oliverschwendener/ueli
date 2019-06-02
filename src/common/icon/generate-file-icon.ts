@@ -1,4 +1,6 @@
-import { FileHelpers } from "../helpers/file-helpers";
+import {promises} from "fs";
+const {access, lstat} = promises;
+
 import { app } from "electron";
 import { Icon } from "./icon";
 import { IconType } from "./icon-type";
@@ -8,39 +10,25 @@ export interface FileIconDataResult {
     icon: Icon;
 }
 
-export function getFileIconDataUrl(filePath: string, defaultFileIcon: Icon, folderIcon?: Icon): Promise<FileIconDataResult> {
-    return new Promise((resolve, reject) => {
-        FileHelpers.fileExists(filePath)
-            .then((fileExists) => {
-                if (fileExists) {
-                    app.getFileIcon(filePath, (err, icon) => {
-                        const defaultResult = {
-                            filePath,
-                            icon: defaultFileIcon,
-                        };
-                        if (err) {
-                            resolve(defaultResult);
-                        } else {
-                            FileHelpers.getStats(filePath)
-                                .then((stats) => {
-                                    const isDirectory = stats.stats.isDirectory() && !filePath.endsWith(".app");
-                                    resolve({
-                                        filePath,
-                                        icon: isDirectory && folderIcon
-                                            ? folderIcon
-                                            : { parameter: icon.toDataURL(), type: IconType.URL },
-                                    });
-                                })
-                                .catch(() => resolve(defaultResult));
-                        }
-                    });
-                } else {
-                    resolve({
-                        filePath,
-                        icon: defaultFileIcon,
-                    });
-                }
-            })
-            .catch((err) => reject(err));
-    });
+export async function getFileIconDataUrl(filePath: string, defaultFileIcon: Icon, folderIcon?: Icon): Promise<FileIconDataResult> {
+    const fileExists = (await access(filePath)) === undefined;
+    const defaultResult = {
+        filePath,
+        icon: defaultFileIcon,
+    };
+
+    if (fileExists) {
+        try {
+            const icon = (await app.getFileIcon(filePath)).toDataURL();
+            const isDirectory = (await lstat(filePath)).isDirectory() && !filePath.endsWith(".app");
+            return {
+                filePath,
+                icon: (isDirectory && folderIcon) ? folderIcon : {parameter: icon, type: IconType.URL},
+            };
+        } catch (error) {
+            return defaultResult;
+        }
+    } else {
+        return defaultResult;
+    }
 }

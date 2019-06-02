@@ -42,7 +42,7 @@ export const everythingSettingsComponent = Vue.extend({
             config.everythingSearchOptions.maxSearchResults = defaultEverythingSearchOptions.maxSearchResults;
             this.updateConfig();
         },
-        selectFile() {
+        async selectFile(): Promise<void> {
             const translations: TranslationSet = this.translations;
             const filters: Electron.FileFilter[] = [
                 {
@@ -50,14 +50,14 @@ export const everythingSettingsComponent = Vue.extend({
                     name: translations.everythingSearchPathToBinaryFilterName,
                 },
             ];
-            getFilePath(filters)
-                .then((filePath) => {
-                    const config: UserConfigOptions = this.config;
-                    config.everythingSearchOptions.pathToEs = filePath;
-                })
-                .catch((err) => {
-                    // do nothing if no file is selected
-                });
+            try {
+                const filePath = await getFilePath(filters);
+                const config: UserConfigOptions = this.config;
+                config.everythingSearchOptions.pathToEs = filePath;
+
+            } catch (error) {
+                // do nothing if no file is selected
+            }
         },
         updateConfig() {
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);

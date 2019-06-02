@@ -18,52 +18,44 @@ export class FileApplicationRepository implements ApplicationRepository {
         this.config = config;
     }
 
-    public getAll(): Promise<Application[]> {
-        return new Promise((resolve, reject) => {
-            resolve(this.applications);
-        });
+    public async getAll(): Promise<Application[]> {
+        return this.applications;
     }
 
-    public refreshIndex(): Promise<void> {
-        return new Promise((resolve, reject) => {
+    public async refreshIndex(): Promise<void> {
+        try {
             if (this.config.applicationFolders === undefined || this.config.applicationFolders.length === 0) {
                 this.applications = [];
-                resolve();
             } else {
-                FileHelpers.readFilesFromFoldersRecursively(this.config.applicationFolders)
-                    .then((files) => {
-                        if (files.length === 0) {
-                            this.applications = [];
-                            resolve();
-                        }
+                const files = await FileHelpers.readFilesFromFoldersRecursively(this.config.applicationFolders);
+                if (files.length === 0) {
+                    this.applications = [];
+                    return;
+                } else {
+                    const applications = uniq(files)
+                        .filter((file) => this.filterByApplicationFileExtensions(file))
+                        .map((applicationFile): Application => this.createApplicationFromFilePath(applicationFile));
 
-                        const applications = uniq(files)
-                            .filter((file) => this.filterByApplicationFileExtensions(file))
-                            .map((applicationFile): Application => this.createApplicationFromFilePath(applicationFile));
-
-                        this.applicationIconService.generateAppIcons(applications);
-                        applications.forEach((application) => application.icon = getApplicationIconFilePath(application));
-                        this.applications = applications;
-                        resolve();
-                    })
-                    .catch((err) => reject(err));
+                    this.applicationIconService.generateAppIcons(applications);
+                    applications.forEach((application) => application.icon = getApplicationIconFilePath(application));
+                    this.applications = applications;
+                }
             }
-        });
+        } catch (error) {
+            return error;
+        }
     }
 
-    public clearCache(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.applicationIconService.clearCache()
-                .then(() => resolve())
-                .catch((err) => reject(err));
-        });
+    public async clearCache(): Promise<void> {
+        try {
+            await this.applicationIconService.clearCache();
+        } catch (error) {
+            return error;
+        }
     }
 
-    public updateConfig(updatedConfig: ApplicationSearchOptions): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.config = updatedConfig;
-            resolve();
-        });
+    public async updateConfig(updatedConfig: ApplicationSearchOptions): Promise<void> {
+        this.config = updatedConfig;
     }
 
     private createApplicationFromFilePath(filePath: string): Application {

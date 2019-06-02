@@ -24,43 +24,34 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
         this.commandExecutor = commandExecutor;
     }
 
-    public getAll(): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
-            this.operatingSystemCommandRepository.getAll()
-                .then((commands) => {
-                    if (commands.length === 0) {
-                        resolve([]);
-                    } else {
-                        const result = commands.map((command): SearchResultItem => {
-                            return {
-                                description: command.description,
-                                executionArgument: command.executionArgument,
-                                hideMainWindowAfterExecution: true,
-                                icon: command.icon,
-                                name: command.name,
-                                needsUserConfirmationBeforeExecution: true,
-                                originPluginType: this.pluginType,
-                                searchable: command.searchable,
-                            };
-                        });
-                        resolve(result);
-                    }
-                })
-                .catch((err) => reject(err));
-        });
+    public async getAll(): Promise<SearchResultItem[]> {
+        try {
+            const commands = await this.operatingSystemCommandRepository.getAll();
+            if (commands.length === 0) {
+                return [];
+            } else {
+                const result = commands.map((command): SearchResultItem => {
+                    return {
+                        description: command.description,
+                        executionArgument: command.executionArgument,
+                        hideMainWindowAfterExecution: true,
+                        icon: command.icon,
+                        name: command.name,
+                        needsUserConfirmationBeforeExecution: true,
+                        originPluginType: this.pluginType,
+                        searchable: command.searchable,
+                    };
+                });
+                return result;
+            }
+        } catch (error) {
+            return error;
+        }
     }
 
-    public refreshIndex(): Promise<void> {
-        return new Promise((resolve) => {
-            resolve();
-        });
-    }
+    public async refreshIndex(): Promise<void> {} // tslint:disable-line
 
-    public clearCache(): Promise<void> {
-        return new Promise((resolve) => {
-            resolve();
-        });
-    }
+    public async clearCache(): Promise<void> {} // tslint:disable-line
 
     public isEnabled(): boolean {
         return this.config.isEnabled;
@@ -70,24 +61,20 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
         return this.commandExecutor(searchResultItem.executionArgument);
     }
 
-    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
-        return new Promise((resolve, reject) => {
-            reject("openLocation is not supported in operating system commands plugin");
-        });
+    public async openLocation(searchResultItem: SearchResultItem): Promise<void> {
+        throw Error("openLocation is not supported in operating system commands plugin");
     }
 
     public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("autoComplete is not supported in operating system commands plugin");
-        });
+        throw Error("autoComplete is not supported in operating system commands plugin");
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.config = updatedConfig.operatingSystemCommandsOptions;
-            this.operatingSystemCommandRepository.updateConfig(updatedConfig, translationSet)
-                .then(() => resolve())
-                .catch((err) => reject(err));
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        this.config = updatedConfig.operatingSystemCommandsOptions;
+        try {
+            await this.operatingSystemCommandRepository.updateConfig(updatedConfig, translationSet);
+        } catch (error) {
+            return error;
+        }
     }
 }

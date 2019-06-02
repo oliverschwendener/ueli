@@ -26,8 +26,7 @@ export class CommandlinePlugin implements ExecutionPlugin {
             && userInput.length > this.config.prefix.length;
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
+    public async getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
             const command = userInput.replace(this.config.prefix, "").trim();
             const result: SearchResultItem = {
                 description: this.translationSet.commandlineSearchResultDescription.replace("{{command}}", command),
@@ -38,8 +37,7 @@ export class CommandlinePlugin implements ExecutionPlugin {
                 originPluginType: this.pluginType,
                 searchable: [],
             };
-            resolve([result]);
-        });
+            return [result];
     }
 
     public isEnabled(): boolean {
@@ -58,11 +56,8 @@ export class CommandlinePlugin implements ExecutionPlugin {
         throw new Error("Method not implemented.");
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig.commandlineOptions;
-            this.translationSet = translationSet;
-            resolve();
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        this.config = updatedConfig.commandlineOptions;
+        this.translationSet = translationSet;
     }
 }

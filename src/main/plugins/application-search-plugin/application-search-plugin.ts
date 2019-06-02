@@ -28,92 +28,80 @@ export class ApplicationSearchPlugin implements SearchPlugin {
         this.openApplicationLocation = openApplicationLocation;
     }
 
-    public getAll(): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
-            if (!this.isEnabled()) {
-                resolve();
-            } else {
-                this.applicationRepository.getAll()
-                .then((applications) => {
-                    const searchResultItemPromises = applications.map((application) => this.createSearchResultItemFromApplication(application));
-                    Promise.all(searchResultItemPromises)
-                        .then((searchResultItems) => resolve(searchResultItems))
-                        .catch((err) => reject(err));
-                })
-                .catch((err) => reject(err));
-            }
-        });
+    public async getAll(): Promise<SearchResultItem[]> {
+        if (!this.isEnabled()) { return []; }
+        try {
+            const applications = await this.applicationRepository.getAll();
+            const searchResultItemPromises = applications.map((application) => this.createSearchResultItemFromApplication(application));
+            const searchResultItems =  await Promise.all(searchResultItemPromises);
+            return searchResultItems;
+        } catch (error) {
+            return error;
+        }
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.executeApplication(searchResultItem.executionArgument, privileged)
-                .then(() => resolve())
-                .catch((err) => reject(err));
-        });
+    public async execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+        try {
+            await this.executeApplication(searchResultItem.executionArgument, privileged);
+        } catch (error) {
+            return error;
+        }
     }
 
-    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.openApplicationLocation(searchResultItem.executionArgument)
-                .then(() => resolve())
-                .catch((err) => reject(err));
-        });
+    public async openLocation(searchResultItem: SearchResultItem): Promise<void> {
+        try {
+            await this.openApplicationLocation(searchResultItem.executionArgument);
+        } catch (error) {
+            return error;
+        }
     }
 
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("Autocompletion not supported");
-        });
+    public async autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
+        throw Error("Autocompletion not supported");
     }
 
-    public refreshIndex(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            if (!this.isEnabled()) {
-                resolve();
-            } else {
-                this.applicationRepository.refreshIndex()
-                    .then(() => resolve())
-                    .catch((err) => reject(err));
-            }
-        });
+    public async refreshIndex(): Promise<void> {
+        if (!this.isEnabled()) { return; }
+        try {
+            await this.applicationRepository.refreshIndex();
+        } catch (error) {
+            return error;
+        }
     }
 
-    public clearCache(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.applicationRepository.clearCache()
-                .then(() => resolve())
-                .catch((err) => reject(`Error while trying to clear application repository cache: ${err}`));
-        });
+    public async clearCache(): Promise<void> {
+        try {
+            await this.applicationRepository.clearCache();
+        } catch (error) {
+            return error;
+        }
     }
 
-    public updateConfig(config: UserConfigOptions): Promise<void> {
-        return new Promise((resolve, reject) => {
+    public async updateConfig(config: UserConfigOptions): Promise<void> {
+        try {
             this.config = config.applicationSearchOptions;
-            this.applicationRepository.updateConfig(config.applicationSearchOptions)
-                .then(() => resolve())
-                .catch((err) => reject(err));
-        });
+            await this.applicationRepository.updateConfig(config.applicationSearchOptions);
+        } catch (error) {
+            return error;
+        }
     }
 
     public isEnabled(): boolean {
         return this.config.enabled;
     }
 
-    private createSearchResultItemFromApplication(application: Application): Promise<SearchResultItem> {
-        return new Promise((resolve) => {
-            resolve({
-                description: createFilePathDescription(application.filePath),
-                executionArgument: application.filePath,
-                hideMainWindowAfterExecution: true,
-                icon: {
-                    parameter: application.icon,
-                    type: IconType.URL,
-                },
-                name: application.name,
-                originPluginType: this.pluginType,
-                searchable: [application.name],
-            });
-        });
+    private async createSearchResultItemFromApplication(application: Application): Promise<SearchResultItem> {
+        return {
+            description: createFilePathDescription(application.filePath),
+            executionArgument: application.filePath,
+            hideMainWindowAfterExecution: true,
+            icon: {
+                parameter: application.icon,
+                type: IconType.URL,
+            },
+            name: application.name,
+            originPluginType: this.pluginType,
+            searchable: [application.name],
+        };
     }
 }

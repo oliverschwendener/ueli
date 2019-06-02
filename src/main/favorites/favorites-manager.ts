@@ -13,17 +13,14 @@ export class FavoriteManager {
         this.translationSet = translationSet;
     }
 
-    public increaseCount(searchResultItem: SearchResultItem): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const favorite = this.favoriteRepository.get(searchResultItem);
-            if (favorite) {
-                favorite.executionCount++;
-                this.favoriteRepository.update(favorite);
-            } else {
-                this.favoriteRepository.save({ executionCount: 1, item: searchResultItem });
-            }
-            resolve();
-        });
+    public async increaseCount(searchResultItem: SearchResultItem): Promise<void> {
+        const favorite = this.favoriteRepository.get(searchResultItem);
+        if (favorite) {
+            favorite.executionCount++;
+            this.favoriteRepository.update(favorite);
+        } else {
+            this.favoriteRepository.save({ executionCount: 1, item: searchResultItem });
+        }
     }
 
     public getAllFavorites(): Favorite[] {

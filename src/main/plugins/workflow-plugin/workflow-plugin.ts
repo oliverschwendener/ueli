@@ -31,45 +31,36 @@ export class WorkflowPlugin implements SearchPlugin {
         this.commandlineExecutor = commandlineExecutor;
     }
 
-    public getAll(): Promise<SearchResultItem[]> {
-        return new Promise((resolve) => {
-            const result = this.config.workflows.map((workflow): SearchResultItem => {
-                return {
-                    description: workflow.description,
-                    executionArgument: this.encodeExecutionArguments(workflow),
-                    hideMainWindowAfterExecution: true,
-                    icon: workflow.icon || defaultWorkflowIcon,
-                    name: workflow.name,
-                    originPluginType: this.pluginType,
-                    searchable: workflow.tags.concat([workflow.name]),
-                };
-            });
-
-            resolve(result);
+    public async getAll(): Promise<SearchResultItem[]> {
+        const result = this.config.workflows.map((workflow): SearchResultItem => {
+            return {
+                description: workflow.description,
+                executionArgument: this.encodeExecutionArguments(workflow),
+                hideMainWindowAfterExecution: true,
+                icon: workflow.icon || defaultWorkflowIcon,
+                name: workflow.name,
+                originPluginType: this.pluginType,
+                searchable: workflow.tags.concat([workflow.name]),
+            };
         });
+        return result;
     }
+    public async refreshIndex(): Promise<void> {} // tslint:disable-line
 
-    public refreshIndex(): Promise<void> {
-        return Promise.resolve();
-    }
-
-    public clearCache(): Promise<void> {
-        return Promise.resolve();
-    }
+    public async clearCache(): Promise<void> {} // tslint:disable-line
 
     public isEnabled(): boolean {
         return this.config.isEnabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const promises = this.decodeExecutionArgument(searchResultItem.executionArgument).executionSteps
-                .map((executionArgument) => this.handleExecutionStep(executionArgument));
-
-            Promise.all(promises)
-                .then(() => resolve())
-                .catch((err) => reject(err));
-        });
+    public async execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+        const promises = this.decodeExecutionArgument(searchResultItem.executionArgument).executionSteps
+            .map((executionArgument) => this.handleExecutionStep(executionArgument));
+        try {
+            await Promise.all(promises);
+        } catch (error) {
+            return error;
+        }
     }
 
     public openLocation(searchResultItem: SearchResultItem): Promise<void> {
@@ -80,11 +71,8 @@ export class WorkflowPlugin implements SearchPlugin {
         throw new Error("Method not implemented.");
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig.workflowOptions;
-            resolve();
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        this.config = updatedConfig.workflowOptions;
     }
 
     private encodeExecutionArguments(workflow: Workflow): string {

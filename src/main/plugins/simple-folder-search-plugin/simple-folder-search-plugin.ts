@@ -25,54 +25,37 @@ export class SimpleFolderSearchPlugin implements SearchPlugin {
         this.filePathExecutor = filePathExecutor;
     }
 
-    public getAll(): Promise<SearchResultItem[]> {
-        return new Promise((resolve) => {
-            resolve(this.items);
-        });
+    public async getAll(): Promise<SearchResultItem[]> {
+        return this.items;
     }
 
-    public refreshIndex(): Promise<void> {
-        return new Promise((resolve, reject) => {
+    public async refreshIndex(): Promise<void> {
+        try {
             if (this.config.folders.length === 0) {
                 this.items = [];
-                resolve();
             } else {
                 const filePromises = this.config.folders.map((folderOption) => {
                     return folderOption.recursive
                         ? FileHelpers.readFilesFromFolderRecursively(folderOption.folderPath, folderOption.excludeHiddenFiles)
                         : FileHelpers.readFilesFromFolder(folderOption.folderPath, folderOption.excludeHiddenFiles);
                 });
-
-                Promise.all(filePromises)
-                    .then((filePathLists) => {
-                        const iconPromises = filePathLists.length > 0
-                            ? filePathLists
-                                .reduce((all, filePathList) => all = all.concat(filePathList))
-                                .map((file) => getFileIconDataUrl(file, defaultFileIcon, defaultFolderIcon))
-                            : [];
-
-                        if (iconPromises.length === 0) {
-                            this.items = [];
-                            resolve();
-                        } else {
-                            Promise.all(iconPromises)
-                            .then((iconResults) => {
-                                this.items = iconResults.map((iconResult): SearchResultItem => this.buildSearchResultItem(iconResult));
-                                resolve();
-                            })
-                            .catch((err) => reject(err));
-                        }
-                    })
-                    .catch((err) => reject(err));
+                const filePathLists = await Promise.all(filePromises);
+                const iconPromises = filePathLists.length > 0
+                    ? filePathLists.flat().map((file) => getFileIconDataUrl(file, defaultFileIcon, defaultFolderIcon))
+                    : [];
+                if (iconPromises.length === 0) {
+                        this.items = [];
+                    } else {
+                        const iconResults = await Promise.all(iconPromises);
+                        this.items = iconResults.map((iconResult): SearchResultItem => this.buildSearchResultItem(iconResult));
+                    }
             }
-        });
+        } catch (error) {
+            return error;
+        }
     }
 
-    public clearCache(): Promise<void> {
-        return new Promise((resolve) => {
-            resolve();
-        });
-    }
+    public async clearCache(): Promise<void> {} // tslint:disable-line
 
     public isEnabled(): boolean {
         return this.config.isEnabled;
@@ -90,11 +73,8 @@ export class SimpleFolderSearchPlugin implements SearchPlugin {
         throw new Error("Method not implemented.");
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig.simpleFolderSearchOptions;
-            resolve();
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        this.config = updatedConfig.simpleFolderSearchOptions;
     }
 
     private buildSearchResultItem(iconResult: FileIconDataResult): SearchResultItem {

@@ -29,46 +29,46 @@ export const newApplicationFolderModalComponent = Vue.extend({
 
             return `${translations.forExample}: "${folderPath}"`;
         },
-        openFolderDialog() {
-            getFolderPath()
-                .then((folderPath) => {
-                    this.newApplicationFolder = folderPath;
-                });
+        async openFolderDialog(): Promise<void> {
+            try {
+                const folderPath = getFolderPath();
+                this.newApplicationFolder = folderPath;
+            } catch (error) {
+                throw new Error(error);
+            }
         },
-        saveButtonClick() {
-            const validator: (filePath: string) => Promise<void> = this.validateFolderPath;
-            validator(this.newApplicationFolder)
-                .then(() => {
-                    vueEventDispatcher.$emit(VueEventChannels.applicationFolderAdded, this.newApplicationFolder);
-                    this.closeModal();
-                })
-                .catch((err: string) => showNotification(err, NotificationType.Error));
+        async saveButtonClick() {
+            try {
+                const validator: (filePath: string) => Promise<void> = this.validateFolderPath;
+                await validator(this.newApplicationFolder);
+                vueEventDispatcher.$emit(VueEventChannels.applicationFolderAdded, this.newApplicationFolder);
+                this.closeModal();
+            } catch (error) {
+                showNotification(error, NotificationType.Error);
+            }
         },
-        validateFolderPath(folderPath: string): Promise<void> {
+        async validateFolderPath(folderPath: string): Promise<void> {
             const translations: TranslationSet = this.translations;
             const notAFolderError = translations.applicationSearchSettingsNotAFolderErrorMessage.replace("{{value}}", folderPath);
             const folderDoesNotExistError = translations.applicationSearchSettingsDoesNotExistErrorMessage.replace("{{value}}", folderPath);
             const genericError = translations.applicationSearchSettingsFolderValidationError.replace("{{value}}", folderPath);
 
-            return new Promise((resolve, reject) => {
-                FileHelpers.fileExists(folderPath)
-                    .then((fileExists) => {
-                        if (fileExists) {
-                            FileHelpers.getStats(folderPath)
-                                .then((stats) => {
-                                    if (stats.stats.isDirectory()) {
-                                        resolve();
-                                    } else {
-                                        reject(notAFolderError);
-                                    }
-                                })
-                                .catch((err) => reject(err));
-                        } else {
-                            reject(folderDoesNotExistError);
-                        }
-                    })
-                    .catch(() => reject(genericError));
-            });
+            try {
+                const fileExists = await FileHelpers.fileExists(folderPath);
+                if (fileExists) {
+                    const stats = await FileHelpers.getStats(folderPath);
+                    if (stats.stats.isDirectory()) {
+                        return;
+                    } else {
+                        throw Error(notAFolderError);
+                    }
+                } else {
+                    throw Error(folderDoesNotExistError);
+                }
+
+            } catch (_) {
+                throw Error(genericError);
+            }
         },
     },
     mounted() {

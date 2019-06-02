@@ -26,12 +26,11 @@ export class UrlPlugin implements ExecutionPlugin {
         return isValidUrl(userInput);
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
-        return new Promise((resolve) => {
+    public async getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
+        try {
             const urlStartsWithHttp = userInput.startsWith("http://");
             const urlStartsWithHttps = userInput.startsWith("https://");
             const urlStartsWithDoubleSlashes = userInput.startsWith("//");
-
             const url = !urlStartsWithHttp && !urlStartsWithHttps
                 ? urlStartsWithDoubleSlashes
                     ? `${this.config.defaultProtocol}:${userInput}`
@@ -47,9 +46,11 @@ export class UrlPlugin implements ExecutionPlugin {
                 originPluginType: this.pluginType,
                 searchable: [],
             };
+            return [result];
 
-            resolve([result]);
-        });
+        } catch (error) {
+            return error;
+        }
     }
 
     public isEnabled(): boolean {
@@ -68,11 +69,8 @@ export class UrlPlugin implements ExecutionPlugin {
         throw new Error("Method not implemented.");
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig.urlOptions;
-            this.translationSet = translationSet;
-            resolve();
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        this.config = updatedConfig.urlOptions;
+        this.translationSet = translationSet;
     }
 }

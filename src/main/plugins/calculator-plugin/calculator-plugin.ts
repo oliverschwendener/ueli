@@ -26,19 +26,17 @@ export class CalculatorPlugin implements ExecutionPlugin {
         return Calculator.isValidInput(userInput);
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
-            const result = Calculator.calculate(userInput, Number(this.config.precision));
-            resolve([{
-                description: this.translationSet.calculatorCopyToClipboard,
-                executionArgument: result,
-                hideMainWindowAfterExecution: true,
-                icon: defaultCalculatorIcon,
-                name: `= ${result}`,
-                originPluginType: this.pluginType,
-                searchable: [],
-            }]);
-        });
+    public async getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
+        const result = Calculator.calculate(userInput, Number(this.config.precision));
+        return [{
+            description: this.translationSet.calculatorCopyToClipboard,
+            executionArgument: result,
+            hideMainWindowAfterExecution: true,
+            icon: defaultCalculatorIcon,
+            name: `= ${result}`,
+            originPluginType: this.pluginType,
+            searchable: [],
+        }];
     }
 
     public isEnabled(): boolean {
@@ -57,11 +55,8 @@ export class CalculatorPlugin implements ExecutionPlugin {
         throw new Error("Method not implemented.");
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig.calculatorOptions;
-            this.translationSet = translationSet;
-            resolve();
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        this.config = updatedConfig.calculatorOptions;
+        this.translationSet = translationSet;
     }
 }

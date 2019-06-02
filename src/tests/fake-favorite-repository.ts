@@ -31,10 +31,7 @@ export class FakeFavoriteRepository implements FavoriteRepository {
         }
     }
 
-    public clearAll(): Promise<void> {
-        return new Promise((resolve) => {
-            this.favorites = [];
-            resolve();
-        });
+    public async clearAll(): Promise<void> {
+        this.favorites = [];
     }
 }

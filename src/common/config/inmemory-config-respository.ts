@@ -12,11 +12,8 @@ export class InMemoryConfigRepository implements ConfigRepository {
         return this.config;
     }
 
-    public saveConfig(updatedConfig: UserConfigOptions): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig;
-            resolve();
-        });
+    public async saveConfig(updatedConfig: UserConfigOptions): Promise<void> {
+        this.config = updatedConfig;
     }
 
     public openConfigFile() {

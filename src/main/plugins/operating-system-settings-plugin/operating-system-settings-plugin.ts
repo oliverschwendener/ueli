@@ -27,35 +27,29 @@ export class OperatingSystemSettingsPlugin implements SearchPlugin {
         this.operatingSystemSettingExecutor = operatingSystemSettingExecutor;
     }
 
-    public getAll(): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
-            this.operatingSystemSettingRepository.getAll(this.translationSet)
-                .then((operatingSystemSettings) => {
-                    const result = operatingSystemSettings.map((operatingSystemSetting): SearchResultItem => {
-                        return {
-                            description: operatingSystemSetting.description,
-                            executionArgument: operatingSystemSetting.executionArgument,
-                            hideMainWindowAfterExecution: true,
-                            icon: operatingSystemSetting.icon,
-                            name: operatingSystemSetting.name,
-                            originPluginType: this.pluginType,
-                            searchable: operatingSystemSetting.tags.concat([operatingSystemSetting.name]),
-                        };
-                    });
-
-                    resolve(result);
-                })
-                .catch((err) => reject(err));
-        });
+    public async getAll(): Promise<SearchResultItem[]> {
+        try {
+            const operatingSystemSettings = await this.operatingSystemSettingRepository.getAll(this.translationSet);
+            const result = operatingSystemSettings.map((operatingSystemSetting): SearchResultItem => {
+                return {
+                    description: operatingSystemSetting.description,
+                    executionArgument: operatingSystemSetting.executionArgument,
+                    hideMainWindowAfterExecution: true,
+                    icon: operatingSystemSetting.icon,
+                    name: operatingSystemSetting.name,
+                    originPluginType: this.pluginType,
+                    searchable: operatingSystemSetting.tags.concat([operatingSystemSetting.name]),
+                };
+            });
+            return result;
+        } catch (error) {
+            return error;
+        }
     }
 
-    public refreshIndex(): Promise<void> {
-        return new Promise((resolve) => resolve());
-    }
+    public async refreshIndex(): Promise<void> {} // tslint:disable-line
 
-    public clearCache(): Promise<void> {
-        return new Promise((resolve) => resolve());
-    }
+    public async clearCache(): Promise<void> {} // tslint:disable-line
 
     public isEnabled(): boolean {
         return this.config.isEnabled;
@@ -73,11 +67,8 @@ export class OperatingSystemSettingsPlugin implements SearchPlugin {
         throw new Error("Method not implemented.");
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig.operatingSystemSettingsOptions;
-            this.translationSet = translationSet;
-            resolve();
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        this.config = updatedConfig.operatingSystemSettingsOptions;
+        this.translationSet = translationSet;
     }
 }

@@ -21,8 +21,8 @@ export class WebSearchPlugin implements ExecutionPlugin {
         this.urlExecutor = urlExecutor;
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
+    public async getSearchResults(userInput: string, fallback?: boolean): Promise<SearchResultItem[]> {
+        try {
             const searchResults = this.config.webSearchEngines
                 .filter((webSearchEngine) => {
                     return fallback
@@ -50,8 +50,11 @@ export class WebSearchPlugin implements ExecutionPlugin {
                     };
                 });
 
-            resolve(searchResults);
-        });
+            return searchResults;
+
+        } catch (error) {
+            return error;
+        }
     }
 
     public isValidUserInput(userInput: string, fallback?: boolean): boolean {
@@ -72,18 +75,13 @@ export class WebSearchPlugin implements ExecutionPlugin {
         throw new Error("not implemented");
     }
 
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("Autocompletion not supported");
-        });
+    public async autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
+        throw Error("Autocompletion not supported");
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig.websearchOptions;
-            this.translationSet = translationSet;
-            resolve();
-        });
+    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        this.config = updatedConfig.websearchOptions;
+        this.translationSet = translationSet;
     }
 
     private getSearchTerm(webSearchEngine: WebSearchEngine, userInput: string): string {

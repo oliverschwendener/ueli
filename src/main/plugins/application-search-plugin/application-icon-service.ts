@@ -10,24 +10,21 @@ export class ApplicationIconService {
         this.generateIcons = generateIcons;
     }
 
-    public generateAppIcons(applications: Application[]): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.generateIcons(applications)
-                .then(() => resolve())
-                .catch((err) => reject(err));
-        });
+    public async generateAppIcons(applications: Application[]): Promise<void> {
+        try {
+            await this.generateIcons(applications);
+        } catch (error) {
+            return error;
+        }
     }
 
-    public clearCache(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            FileHelpers.readFilesFromFolder(applicationIconLocation)
-                .then((files) => {
-                    const deletionPromises = files.map((file) => FileHelpers.deleteFile(join(applicationIconLocation, file)));
-                    Promise.all(deletionPromises)
-                        .then(() => resolve())
-                        .catch((deletionError) => reject(deletionError));
-                })
-                .catch((err) => reject(err));
-        });
+    public async clearCache(): Promise<void> {
+        try {
+            const files = await FileHelpers.readFilesFromFolder(applicationIconLocation);
+            const deletionPromises = files.map((file) => FileHelpers.deleteFile(join(applicationIconLocation, file)));
+            await Promise.all(deletionPromises);
+        } catch (error) {
+            return error;
+        }
     }
 }
