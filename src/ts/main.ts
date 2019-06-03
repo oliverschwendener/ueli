@@ -189,13 +189,17 @@ function toggleWindow(): void {
 
 function updateWindowSize(searchResultCount: number): void {
     if (mainWindow !== undefined && !mainWindow.isDestroyed()) {
+        mainWindow.setResizable(true);
         const newWindowHeight = WindowHelpers.calculateWindowHeight(searchResultCount, config.maxSearchResultCount, config.userInputHeight, config.searchResultHeight);
         mainWindow.setSize(config.windowWidth, newWindowHeight);
+        mainWindow.setResizable(false);
     }
 }
 
 function setWindowHeightToMax(): void {
+    mainWindow.setResizable(true);
     mainWindow.setSize(config.windowWidth, config.windowMaxHeight);
+    mainWindow.setResizable(false);
 }
 
 function showWindow() {
@@ -241,7 +245,9 @@ function reloadApp(preventMainWindowReload?: boolean, preventWindowSizeReset?: b
     if (!preventWindowSizeReset) {
         resetWindowToDefaultSizeAndPosition();
     } else {
+        mainWindow.setResizable(true);
         mainWindow.setSize(config.windowWidth, config.windowMaxHeight);
+        mainWindow.setResizable(false);
         mainWindow.center();
     }
 
