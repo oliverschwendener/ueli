@@ -391,15 +391,14 @@ function scrollIntoView(searchResult: SearchResultItemViewModel): void {
 
             if (elementIsOutOfViewBottom) {
                 const scrollTo = htmlElement.offsetTop - config.userInputHeight;
-
-                outputContainer.scrollTo({ top: scrollTo, behavior: config.smoothScrolling ? "smooth" : "instant" });
+                outputContainer.scrollTo({ top: scrollTo, behavior: config.smoothScrolling ? "smooth" : "auto" });
             } else if (elementIsOutOfViewTop) {
                 let scrollTo = htmlElement.offsetTop - outputContainer.clientHeight - 20; // I have no idea why 20
                 if (scrollTo < 0) {
                     scrollTo = 0;
                 }
 
-                outputContainer.scrollTo({ top: scrollTo, behavior: config.smoothScrolling ? "smooth" : "instant" });
+                outputContainer.scrollTo({ top: scrollTo, behavior: config.smoothScrolling ? "smooth" : "auto" });
             }
         }
     }
