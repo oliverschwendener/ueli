@@ -120,8 +120,7 @@ export class SearchEngine {
 
     public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
         return new Promise((resolve, reject) => {
-            const pluginsWithAutoCompleteSupport = this.getAllPlugins();
-            const originPlugin = pluginsWithAutoCompleteSupport.find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+            const originPlugin = this.getAllPlugins().find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
             if (originPlugin && this.pluginSupportsAutocompletion(originPlugin)) {
                 originPlugin.autoComplete(searchResultItem)
                     .then((result) => resolve(result))
