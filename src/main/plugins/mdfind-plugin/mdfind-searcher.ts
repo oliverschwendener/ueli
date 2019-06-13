@@ -46,6 +46,7 @@ export class MdFindSearcher {
                             name: basename(icon.filePath),
                             originPluginType: pluginType,
                             searchable: [],
+                            supportsOpenLocation: true,
                         };
                     });
                     resolve(results);

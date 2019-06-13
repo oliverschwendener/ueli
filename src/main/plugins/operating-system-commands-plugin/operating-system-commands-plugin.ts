@@ -1,7 +1,6 @@
 import { SearchPlugin } from "../../search-plugin";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { PluginType } from "../../plugin-type";
-import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { OperatingSystemCommandsOptions } from "../../../common/config/operating-system-commands-options";
@@ -9,8 +8,6 @@ import { OperatingSystemCommandRepository } from "./operating-system-commands-re
 
 export class OperatingSystemCommandsPlugin implements SearchPlugin {
     public pluginType = PluginType.OperatingSystemCommandsPlugin;
-    public openLocationSupported = false;
-    public autoCompletionSupported = false;
     private config: OperatingSystemCommandsOptions;
     private readonly operatingSystemCommandRepository: OperatingSystemCommandRepository;
     private readonly commandExecutor: (command: string) => Promise<void>;
@@ -68,18 +65,6 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return this.commandExecutor(searchResultItem.executionArgument);
-    }
-
-    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
-        return new Promise((resolve, reject) => {
-            reject("openLocation is not supported in operating system commands plugin");
-        });
-    }
-
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("autoComplete is not supported in operating system commands plugin");
-        });
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {

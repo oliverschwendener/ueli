@@ -13,11 +13,11 @@ import { defaultFileIcon, defaultFolderIcon } from "../../../common/icon/default
 import { Icon } from "../../../common/icon/icon";
 import Fuse = require("fuse.js");
 import { createFilePathDescription } from "../../helpers/file-path-helpers";
+import { OpenLocationPlugin } from "../../open-location-plugin";
+import { AutoCompletionPlugin } from "../../auto-completion-plugin";
 
-export class FileBrowserExecutionPlugin implements ExecutionPlugin {
-    public readonly pluginType: PluginType.FileBrowserPlugin;
-    public readonly openLocationSupported = true;
-    public readonly autoCompletionSupported = true;
+export class FileBrowserExecutionPlugin implements ExecutionPlugin, AutoCompletionPlugin, OpenLocationPlugin {
+    public readonly pluginType = PluginType.FileBrowserPlugin;
     private config: FileBrowserOptions;
     private readonly filePathValidator: (filePath: string) => boolean;
     private readonly filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>;
@@ -135,6 +135,8 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin {
                         name: basename(filePath),
                         originPluginType: this.pluginType,
                         searchable: [basename(filePath)],
+                        supportsAutocompletion: true,
+                        supportsOpenLocation: true,
                     };
                 });
 

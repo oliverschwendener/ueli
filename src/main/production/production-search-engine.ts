@@ -93,6 +93,7 @@ export const getProductionSearchEngine = (config: UserConfigOptions, translation
         new SimpleFolderSearchPlugin(
             config.simpleFolderSearchOptions,
             filePathExecutor,
+            filePathLocationExecutor,
         ),
     ];
 

@@ -10,6 +10,8 @@ import { Logger } from "../common/logger/logger";
 import { AutoCompletionResult } from "../common/auto-completion-result";
 import { FavoriteRepository } from "./favorites/favorite-repository";
 import { FavoriteManager } from "./favorites/favorites-manager";
+import { OpenLocationPlugin } from "./open-location-plugin";
+import { AutoCompletionPlugin } from "./auto-completion-plugin";
 
 interface FuseResult {
     item: SearchResultItem;
@@ -105,9 +107,8 @@ export class SearchEngine {
 
     public openLocation(searchResultItem: SearchResultItem): Promise<void> {
         return new Promise((resolve, reject) => {
-            const pluginsWithOpenLocationSupport = this.getAllPlugins().filter((plugin) => plugin.openLocationSupported);
-            const originPlugin = pluginsWithOpenLocationSupport.find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
-            if (originPlugin !== undefined) {
+            const originPlugin = this.getAllPlugins().find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+            if (originPlugin && this.pluginSupportsOpenLocation(originPlugin)) {
                 originPlugin.openLocation(searchResultItem)
                     .then(() => resolve())
                     .catch((err) => reject(err));
@@ -119,9 +120,9 @@ export class SearchEngine {
 
     public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
         return new Promise((resolve, reject) => {
-            const pluginsWithAutoCompleteSupport = this.getAllPlugins().filter((plugin) => plugin.autoCompletionSupported);
+            const pluginsWithAutoCompleteSupport = this.getAllPlugins();
             const originPlugin = pluginsWithAutoCompleteSupport.find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
-            if (originPlugin) {
+            if (originPlugin && this.pluginSupportsAutocompletion(originPlugin)) {
                 originPlugin.autoComplete(searchResultItem)
                     .then((result) => resolve(result))
                     .catch((err) => reject(err));
@@ -252,5 +253,15 @@ export class SearchEngine {
         allPlugins = allPlugins.concat(this.searchPlugins);
         allPlugins = allPlugins.concat(this.executionPlugins);
         return allPlugins;
+    }
+
+    private pluginSupportsOpenLocation(plugin: any): plugin is OpenLocationPlugin {
+        const openLocationPlugin = plugin as OpenLocationPlugin;
+        return openLocationPlugin.openLocation !== undefined;
+    }
+
+    private pluginSupportsAutocompletion(plugin: any): plugin is AutoCompletionPlugin {
+        const autoCompletionPlugin = plugin as AutoCompletionPlugin;
+        return autoCompletionPlugin.autoComplete !== undefined;
     }
 }

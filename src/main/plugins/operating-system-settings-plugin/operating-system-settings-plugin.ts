@@ -1,7 +1,6 @@
 import { SearchPlugin } from "../../search-plugin";
 import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
-import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { OperatingSystemSettingsOptions } from "../../../common/config/operating-system-settings-options";
@@ -9,8 +8,6 @@ import { OperatingSystemSettingRepository } from "./operating-system-setting-rep
 
 export class OperatingSystemSettingsPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.OperatingSystemSettingsPlugin;
-    public readonly openLocationSupported = false;
-    public readonly autoCompletionSupported = false;
     private config: OperatingSystemSettingsOptions;
     private translationSet: TranslationSet;
     private readonly operatingSystemSettingRepository: OperatingSystemSettingRepository;
@@ -63,14 +60,6 @@ export class OperatingSystemSettingsPlugin implements SearchPlugin {
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return this.operatingSystemSettingExecutor(searchResultItem.executionArgument);
-    }
-
-    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        throw new Error("Method not implemented.");
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {

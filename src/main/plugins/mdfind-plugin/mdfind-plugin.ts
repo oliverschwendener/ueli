@@ -4,13 +4,11 @@ import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { MdFindSearcher } from "./mdfind-searcher";
 import { defaultErrorIcon, defaultFileIcon } from "../../../common/icon/default-icons";
-import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { MdFindOptions } from "../../../common/config/mdfind-options";
+import { OpenLocationPlugin } from "../../open-location-plugin";
 
-export class MdFindPlugin implements ExecutionPlugin {
+export class MdFindPlugin implements ExecutionPlugin, OpenLocationPlugin {
     public readonly pluginType = PluginType.MdFindExecutionPlugin;
-    public readonly openLocationSupported = true;
-    public readonly autoCompletionSupported = false;
     private config: MdFindOptions;
     private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
     private readonly filePathLocationExecutor: (filePath: string) => Promise<void>;
@@ -69,12 +67,6 @@ export class MdFindPlugin implements ExecutionPlugin {
             this.filePathLocationExecutor(searchResultItem.executionArgument)
                 .then(() => resolve())
                 .catch((err) => reject(err));
-        });
-    }
-
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("Autocompletion not supported");
         });
     }
 

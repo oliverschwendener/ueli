@@ -1,7 +1,6 @@
 import { ExecutionPlugin } from "../../execution-plugin";
 import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
-import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { defaultTerminalIcon } from "../../../common/icon/default-icons";
@@ -9,8 +8,6 @@ import { CommandlineOptions } from "../../../common/config/commandline-options";
 
 export class CommandlinePlugin implements ExecutionPlugin {
     public pluginType = PluginType.Commandline;
-    public readonly openLocationSupported = false;
-    public readonly autoCompletionSupported = false;
     private readonly commandlineExecutor: (command: string) => Promise<void>;
     private config: CommandlineOptions;
     private translationSet: TranslationSet;
@@ -48,14 +45,6 @@ export class CommandlinePlugin implements ExecutionPlugin {
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return this.commandlineExecutor(searchResultItem.executionArgument);
-    }
-
-    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        throw new Error("Method not implemented.");
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {

@@ -42,6 +42,7 @@ export class EverythingSearcher {
                                     name: basename(icon.filePath),
                                     originPluginType: pluginType,
                                     searchable: [],
+                                    supportsOpenLocation: true,
                                 };
                             });
                             resolve(results);

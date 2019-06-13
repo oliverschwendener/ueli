@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { vueEventDispatcher } from "./vue-event-dispatcher";
 import { VueEventChannels } from "./vue-event-channels";
-import { SearchResultItem } from "../common/search-result-item";
+import { SearchResultItem, SearchResultItemViewModel, createSearchResultItemViewModel } from "../common/search-result-item";
 import { Icon } from "../common/icon/icon";
 import { IconType } from "../common/icon/icon-type";
 import { AppearanceOptions } from "../common/config/appearance-options";
@@ -11,11 +11,6 @@ import { showLoaderDelay } from "./renderer-helpers";
 enum BrowseDirection {
     Next = "next",
     Previous = "previous",
-}
-
-interface SearchResultItemViewModel extends SearchResultItem {
-    active: boolean;
-    id: string;
 }
 
 export const searchResultsComponent = Vue.extend({
@@ -42,20 +37,10 @@ export const searchResultsComponent = Vue.extend({
         },
         update(searchResults: SearchResultItem[]) {
             let counter = 0;
+
             const viewModel = searchResults.map((searchResult): SearchResultItemViewModel => {
                 counter++;
-                return {
-                    active: false,
-                    description: searchResult.description,
-                    executionArgument: searchResult.executionArgument,
-                    hideMainWindowAfterExecution: searchResult.hideMainWindowAfterExecution,
-                    icon: searchResult.icon,
-                    id: `search-result-item-${counter}`,
-                    name: searchResult.name,
-                    needsUserConfirmationBeforeExecution: searchResult.needsUserConfirmationBeforeExecution,
-                    originPluginType: searchResult.originPluginType,
-                    searchable: searchResult.searchable,
-                };
+                return createSearchResultItemViewModel(searchResult, counter);
             });
 
             if (viewModel.length > 0) {
@@ -151,13 +136,13 @@ export const searchResultsComponent = Vue.extend({
         });
         vueEventDispatcher.$on(VueEventChannels.openSearchResultLocationKeyPress, () => {
             const activeItem: SearchResultItemViewModel = this.getActiveSearchResultItem();
-            if (activeItem && activeItem.originPluginType !== PluginType.None) {
+            if (activeItem && activeItem.supportsOpenLocation && activeItem.originPluginType !== PluginType.None) {
                 vueEventDispatcher.$emit(VueEventChannels.handleOpenLocation, activeItem);
             }
         });
         vueEventDispatcher.$on(VueEventChannels.tabPress, () => {
             const activeItem: SearchResultItemViewModel = this.getActiveSearchResultItem();
-            if (activeItem && activeItem.originPluginType !== PluginType.None) {
+            if (activeItem && activeItem.supportsAutocompletion && activeItem.originPluginType !== PluginType.None) {
                 vueEventDispatcher.$emit(VueEventChannels.handleAutoCompletion, activeItem);
             }
         });

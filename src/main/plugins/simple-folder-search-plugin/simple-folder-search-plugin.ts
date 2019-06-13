@@ -1,7 +1,6 @@
 import { SearchPlugin } from "../../search-plugin";
 import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
-import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { SimpleFolderSearchOptions } from "../../../common/config/simple-folder-search-options";
@@ -10,19 +9,24 @@ import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { getFileIconDataUrl, FileIconDataResult } from "../../../common/icon/generate-file-icon";
 import { defaultFileIcon, defaultFolderIcon } from "../../../common/icon/default-icons";
 import { createFilePathDescription } from "../../helpers/file-path-helpers";
+import { OpenLocationPlugin } from "../../open-location-plugin";
 
-export class SimpleFolderSearchPlugin implements SearchPlugin {
+export class SimpleFolderSearchPlugin implements SearchPlugin, OpenLocationPlugin {
     public pluginType = PluginType.SimpleFolderSearch;
-    public openLocationSupported = false;
-    public autoCompletionSupported = false;
     private config: SimpleFolderSearchOptions;
     private items: SearchResultItem[];
     private readonly filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>;
+    private readonly filePathLocationExecutor: (filePath: string) => Promise<void>;
 
-    constructor(config: SimpleFolderSearchOptions, filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>) {
+    constructor(
+        config: SimpleFolderSearchOptions,
+        filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>,
+        filePathLocationExecutor: (filePath: string) => Promise<void>,
+        ) {
         this.config = config;
         this.items = [];
         this.filePathExecutor = filePathExecutor;
+        this.filePathLocationExecutor = filePathLocationExecutor;
     }
 
     public getAll(): Promise<SearchResultItem[]> {
@@ -86,11 +90,7 @@ export class SimpleFolderSearchPlugin implements SearchPlugin {
     }
 
     public openLocation(searchResultItem: SearchResultItem): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        throw new Error("Method not implemented.");
+        return this.filePathLocationExecutor(searchResultItem.executionArgument);
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
@@ -110,6 +110,7 @@ export class SimpleFolderSearchPlugin implements SearchPlugin {
             needsUserConfirmationBeforeExecution: false,
             originPluginType: this.pluginType,
             searchable: [basename(iconResult.filePath)],
+            supportsOpenLocation: true,
         };
     }
 }

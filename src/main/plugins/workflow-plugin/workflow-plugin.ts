@@ -1,6 +1,5 @@
 import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
-import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { SearchPlugin } from "../../search-plugin";
@@ -12,8 +11,6 @@ import { defaultWorkflowIcon } from "../../../common/icon/default-icons";
 
 export class WorkflowPlugin implements SearchPlugin {
     public pluginType = PluginType.Workflow;
-    public openLocationSupported = false;
-    public autoCompletionSupported = false;
     private config: WorkflowOptions;
     private readonly filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>;
     private readonly urlExecutor: (url: string) => Promise<void>;
@@ -70,14 +67,6 @@ export class WorkflowPlugin implements SearchPlugin {
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });
-    }
-
-    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        throw new Error("Method not implemented.");
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {

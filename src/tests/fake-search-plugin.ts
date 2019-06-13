@@ -7,8 +7,6 @@ import { AutoCompletionResult } from "../common/auto-completion-result";
 
 export class FakeSearchPlugin implements SearchPlugin {
     public pluginType: PluginType;
-    public openLocationSupported: boolean;
-    public autoCompletionSupported: boolean;
     private readonly items: SearchResultItem[];
     private readonly enabled: boolean;
 

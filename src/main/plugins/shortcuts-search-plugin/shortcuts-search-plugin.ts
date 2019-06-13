@@ -5,19 +5,17 @@ import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { ShortcutOptions } from "../../../common/config/shortcuts-options";
 import { Shortcut } from "./shortcut";
 import { ShortcutType } from "./shortcut-type";
-import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { isValidIcon } from "./../../../common/icon/icon-helpers";
 import { defaultShortcutIcon } from "../../../common/icon/default-icons";
+import { OpenLocationPlugin } from "../../open-location-plugin";
 
 interface ExecutionArgumentDecodeResult {
     shortcutType: ShortcutType;
     executionArgument: string;
 }
 
-export class ShortcutsSearchPlugin implements SearchPlugin {
+export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
     public readonly pluginType = PluginType.ShortcutsSearchPlugin;
-    public readonly openLocationSupported = true;
-    public readonly autoCompletionSupported = false;
     private config: ShortcutOptions;
     private readonly urlExecutor: (url: string) => Promise<void>;
     private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
@@ -51,6 +49,7 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
                     name: shortcut.name,
                     originPluginType: this.pluginType,
                     searchable: [shortcut.name].concat(shortcut.tags),
+                    supportsOpenLocation: true,
                 };
             });
 
@@ -88,12 +87,6 @@ export class ShortcutsSearchPlugin implements SearchPlugin {
             } else {
                 reject(`Error while trying to open file location. "${decodeResult.executionArgument}" is not a valid file path`);
             }
-        });
-    }
-
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("Autocompletion not supported");
         });
     }
 

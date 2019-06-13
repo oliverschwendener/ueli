@@ -1,7 +1,6 @@
 import { ExecutionPlugin } from "../../execution-plugin";
 import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
-import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { CurrencyCode } from "./currency-code";
@@ -12,8 +11,6 @@ import { defaultCurrencyExchangeIcon } from "../../../common/icon/default-icons"
 
 export class CurrencyConverterPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.CurrencyConverter;
-    public readonly openLocationSupported = false;
-    public readonly autoCompletionSupported = false;
     private config: CurrencyConverterOptions;
     private translationSet: TranslationSet;
     private readonly clipboardCopier: (value: string) => Promise<void>;
@@ -66,14 +63,6 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return this.clipboardCopier(searchResultItem.executionArgument);
-    }
-
-    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        throw new Error("Method not implemented.");
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {

@@ -4,14 +4,12 @@ import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { PluginType } from "../../plugin-type";
 import { ExecutionPlugin } from "../../execution-plugin";
 import { EverythingSearcher } from "./everything-searcher";
-import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { EverythingSearchOptions } from "../../../common/config/everything-search-options";
 import { defaultFileIcon, defaultFolderIcon } from "../../../common/icon/default-icons";
+import { OpenLocationPlugin } from "../../open-location-plugin";
 
-export class EverythingPlugin implements ExecutionPlugin {
+export class EverythingPlugin implements ExecutionPlugin, OpenLocationPlugin {
     public pluginType: PluginType = PluginType.EverythingSearchPlugin;
-    public readonly openLocationSupported = true;
-    public readonly autoCompletionSupported = false;
     private config: EverythingSearchOptions;
     private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
     private readonly filePathLocationExecutor: (filePath: string) => Promise<void>;
@@ -56,12 +54,6 @@ export class EverythingPlugin implements ExecutionPlugin {
             this.filePathLocationExecutor(searchResultItem.executionArgument)
                 .then(() => resolve())
                 .catch((err) => reject(err));
-        });
-    }
-
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("Autocompletion not supported");
         });
     }
 

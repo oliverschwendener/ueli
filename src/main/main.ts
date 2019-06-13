@@ -504,7 +504,10 @@ function registerAllIpcListeners() {
     ipcMain.on(IpcChannels.openSearchResultLocation, (event: Electron.Event, searchResultItem: SearchResultItem) => {
         searchEngine.openLocation(searchResultItem)
             .then(() => hideMainWindow())
-            .catch((err) => logger.error(err));
+            .catch((err) => {
+                logger.error(err);
+                sendErrorToRenderer(err, event.sender);
+            });
     });
 
     ipcMain.on(IpcChannels.autoComplete, (event: Electron.Event, searchResultItem: SearchResultItem) => {

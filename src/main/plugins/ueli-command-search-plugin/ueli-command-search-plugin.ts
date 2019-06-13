@@ -8,12 +8,9 @@ import { UeliCommandExecutionArgument } from "./ueli-command-execution-argument"
 import { ipcMain } from "electron";
 import { IpcChannels } from "../../../common/ipc-channels";
 import { TranslationSet } from "../../../common/translation/translation-set";
-import { AutoCompletionResult } from "../../../common/auto-completion-result";
 
 export class UeliCommandSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.UeliCommandSearchPlugin;
-    public readonly openLocationSupported = false;
-    public readonly autoCompletionSupported = false;
     private translationSet: TranslationSet;
     private readonly icon = `
     <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -49,16 +46,6 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
             } else {
                 reject("Error while trying to execute ueli command: Invalid ueli command");
             }
-        });
-    }
-
-    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
-        throw new Error("Opening location is not supported on this plugin");
-    }
-
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("Autocompletion not supported");
         });
     }
 

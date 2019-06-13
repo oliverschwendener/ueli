@@ -6,13 +6,10 @@ import { clipboard } from "electron";
 import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { defaultErrorIcon, defaultTranslatorIcon } from "../../../common/icon/default-icons";
 import { LingueeTranslator } from "./linguee-translator";
-import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { TranslationOptions } from "../../../common/config/translation-options";
 
 export class TranslationPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.TranslationPlugin;
-    public readonly openLocationSupported = false;
-    public readonly autoCompletionSupported = false;
     private config: TranslationOptions;
     private delay: NodeJS.Timeout | number;
 
@@ -24,16 +21,6 @@ export class TranslationPlugin implements ExecutionPlugin {
         return new Promise((resolve) => {
             clipboard.writeText(searchResultItem.executionArgument);
             resolve();
-        });
-    }
-
-    public openLocation(searchResultItem: SearchResultItem): Promise<void> {
-        throw new Error("Opening location is not supported on this plugin");
-    }
-
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("Autocompletion not supported");
         });
     }
 

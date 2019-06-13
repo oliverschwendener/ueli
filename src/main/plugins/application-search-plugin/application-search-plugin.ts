@@ -8,11 +8,10 @@ import { ApplicationSearchOptions } from "./application-search-options";
 import { IconType } from "../../../common/icon/icon-type";
 import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { createFilePathDescription } from "../../helpers/file-path-helpers";
+import { OpenLocationPlugin } from "../../open-location-plugin";
 
-export class ApplicationSearchPlugin implements SearchPlugin {
+export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin {
     public readonly pluginType = PluginType.ApplicationSearchPlugin;
-    public readonly openLocationSupported = true;
-    public readonly autoCompletionSupported = false;
     private config: ApplicationSearchOptions;
     private readonly applicationRepository: ApplicationRepository;
     private readonly executeApplication: (executionArgument: string, privileged?: boolean) => Promise<void>;
@@ -113,6 +112,7 @@ export class ApplicationSearchPlugin implements SearchPlugin {
                 name: application.name,
                 originPluginType: this.pluginType,
                 searchable: [application.name],
+                supportsOpenLocation: true,
             });
         });
     }
