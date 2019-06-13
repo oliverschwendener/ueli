@@ -4,7 +4,7 @@ import { homedir } from "os";
 export const defaultSimpleFolderSearchOptions: SimpleFolderSearchOptions = {
     folders: [
         {
-            excludeHiddenFiles: false,
+            excludeHiddenFiles: true,
             folderPath: homedir(),
             recursive: false,
         },

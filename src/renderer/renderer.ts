@@ -49,6 +49,7 @@ import { tagsEditingComponent } from "./settings/tags-editing-component";
 import { TranslationSet } from "../common/translation/translation-set";
 import { simpleFolderSearchSettingsComponent } from "./settings/simple-folder-search-settings-component";
 import { GeneralOptions } from "../common/config/general-options";
+import { simpleFolderSearchEditingModalComponent } from "./settings/modals/simple-folder-search-editing-modal-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -85,6 +86,7 @@ Vue.component("workflow-settings", workflowSettingsComponent);
 Vue.component("workflow-editing-modal", workflowEditingModal);
 Vue.component("commandline-settings", commandlineSettingsComponent);
 Vue.component("simple-folder-search-settings", simpleFolderSearchSettingsComponent);
+Vue.component("simple-folder-search-editing", simpleFolderSearchEditingModalComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 
@@ -179,8 +181,8 @@ const app = new Vue({
             vueEventDispatcher.$emit(VueEventChannels.mainWindowHasBeenShown);
         });
 
-        ipcRenderer.on(IpcChannels.userInputUpdated, (event: Electron.Event, updatedUserInput: string) => {
-            vueEventDispatcher.$emit(VueEventChannels.userInputUpdated, updatedUserInput);
+        ipcRenderer.on(IpcChannels.userInputUpdated, (event: Electron.Event, updatedUserInput: string, selectText?: boolean) => {
+            vueEventDispatcher.$emit(VueEventChannels.userInputUpdated, updatedUserInput, selectText);
         });
 
         ipcRenderer.on(IpcChannels.notification, (event: Electron.Event, message: string, type?: NotificationType) => {

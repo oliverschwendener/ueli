@@ -3,7 +3,7 @@ export interface SimpleFolderSearchOptions {
     folders: SimpleFolderSearchFolderOption[];
 }
 
-interface SimpleFolderSearchFolderOption {
+export interface SimpleFolderSearchFolderOption {
     folderPath: string;
     recursive: boolean;
     excludeHiddenFiles: boolean;

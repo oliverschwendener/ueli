@@ -60,9 +60,23 @@ export const userInputComponent = Vue.extend({
         },
         setFocusOnInput(): void {
             const userInput = document.getElementById("user-input");
-            if (userInput !== null) {
+            if (userInput) {
                 userInput.focus();
             }
+        },
+        selectUserInput(): void {
+            this.setFocusOnInput();
+            document.execCommand("selectall");
+        },
+        updateUserInput(updatedUserInput: string, selectText?: boolean) {
+            this.userInput = updatedUserInput;
+
+            // delay user input selection because user input update takes a while
+            setTimeout(() => {
+                if (selectText) {
+                    this.selectUserInput();
+                }
+            }, 50);
         },
     },
     props: ["config", "translations"],
@@ -73,6 +87,8 @@ export const userInputComponent = Vue.extend({
             const config: UserConfigOptions = this.config;
             if (!config.generalOptions.persistentUserInput) {
                 this.resetUserInput();
+            } else {
+                this.selectUserInput();
             }
         });
 
@@ -99,8 +115,8 @@ export const userInputComponent = Vue.extend({
             }, showLoaderDelay);
         });
 
-        vueEventDispatcher.$on(VueEventChannels.userInputUpdated, (updatedUserInput: string) => {
-            this.userInput = updatedUserInput;
+        vueEventDispatcher.$on(VueEventChannels.userInputUpdated, (updatedUserInput: string, selectText?: boolean) => {
+            this.updateUserInput(updatedUserInput, selectText);
         });
 
         vueEventDispatcher.$on(VueEventChannels.searchResultsUpdated, () => {

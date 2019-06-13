@@ -160,8 +160,8 @@ export const workflowEditingModal = Vue.extend({
                             <div class="control">
                                 <button disabled class="button" :class="getExecutionArgumentTypeClass(executionStep.executionArgumentType)">
                                     <span class="icon">
-                                        <i :class="getExecutionArgumentTypeIcon(executionStep.executionArgumentType)">
-                                    </span
+                                        <i :class="getExecutionArgumentTypeIcon(executionStep.executionArgumentType)"></i>
+                                    </span>
                                 </button>
                             </div>
                             <div class="control is-expanded">

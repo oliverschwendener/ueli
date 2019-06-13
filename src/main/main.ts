@@ -573,7 +573,7 @@ function registerAllIpcListeners() {
         const newUserInput = direction === "next"
             ? userInputHistoryManager.getNext()
             : userInputHistoryManager.getPrevious();
-        event.sender.send(IpcChannels.userInputUpdated, newUserInput);
+        event.sender.send(IpcChannels.userInputUpdated, newUserInput, true);
     });
 
     ipcMain.on(IpcChannels.ueliCommandExecuted, (command: UeliCommand) => {

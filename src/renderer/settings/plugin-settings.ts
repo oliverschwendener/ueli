@@ -11,4 +11,5 @@ export enum PluginSettings {
     CurrencyConverter = "Currency Converter",
     Workflow = "Workflow",
     Commandline = "Commandline",
+    SimpleFolderSearch = "Simple Folder Search",
 }

@@ -140,7 +140,6 @@ export interface TranslationSet {
 
     shortcutSettings: string;
     shortcutSettingsDescription: string;
-    shortcutSettingsShortcut: string;
     shortcutSettingsTableType: string;
     shortcutSettingsTableName: string;
     shortcutSettingsTableExecutionArgument: string;
@@ -267,6 +266,11 @@ export interface TranslationSet {
 
     simpleFolderSearch: string;
     simpleFolderSearchDescription: string;
+    simpleFolderSearchRecursive: string;
+    simpleFolderSearchExcludeHiddenFiles: string;
+    simpleFolderSearchFolderPath: string;
+    simpleFolderSearchAddFolder: string;
+    simpleFolderSearchEditFolder: string;
 
     cancel: string;
     save: string;

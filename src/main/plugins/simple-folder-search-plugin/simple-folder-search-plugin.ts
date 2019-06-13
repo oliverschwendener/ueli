@@ -33,9 +33,13 @@ export class SimpleFolderSearchPlugin implements SearchPlugin {
 
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            if (this.config.folders.length === 0) {
+            const handleEmptyResult = () => {
                 this.items = [];
                 resolve();
+            };
+
+            if (this.config.folders.length === 0) {
+                handleEmptyResult();
             } else {
                 const filePromises = this.config.folders.map((folderOption) => {
                     return folderOption.recursive
@@ -52,8 +56,7 @@ export class SimpleFolderSearchPlugin implements SearchPlugin {
                             : [];
 
                         if (iconPromises.length === 0) {
-                            this.items = [];
-                            resolve();
+                            handleEmptyResult();
                         } else {
                             Promise.all(iconPromises)
                             .then((iconResults) => {

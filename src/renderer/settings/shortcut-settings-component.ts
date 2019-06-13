@@ -120,11 +120,6 @@ export const shortcutSettingsComponent = Vue.extend({
             <div class="settings__setting-content">
                 <div v-if="!config.shortcutOptions.isEnabled" class="settings__setting-disabled-overlay"></div>
                 <div class="settings__setting-content-item box">
-                    <div class="settings__setting-content-item-title">
-                        <div class="title is-5">
-                            {{ translations.shortcutSettingsShortcut }}
-                        </div>
-                    </div>
                     <div class="table-container">
                         <table class="table is-striped is-fullwidth" v-if="config.shortcutOptions.shortcuts.length > 0">
                             <thead>

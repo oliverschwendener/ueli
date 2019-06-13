@@ -143,7 +143,6 @@ export const englishTranslationSet: TranslationSet = {
 
     shortcutSettings: "Shortcuts",
     shortcutSettingsDescription: `This plugin enables you to quickly open files or websites by setting up your own shortcuts.`,
-    shortcutSettingsShortcut: "Shortcuts",
     shortcutSettingsTableType: "Type",
     shortcutSettingsTableName: "Name",
     shortcutSettingsTableExecutionArgument: "Execution argument",
@@ -270,6 +269,11 @@ export const englishTranslationSet: TranslationSet = {
 
     simpleFolderSearch: "Simple folder search",
     simpleFolderSearchDescription: "This plugin enables you to quickly search for files or folders",
+    simpleFolderSearchRecursive: "Recursive file scan",
+    simpleFolderSearchExcludeHiddenFiles: "Exclude hidden files",
+    simpleFolderSearchFolderPath: "Folder path",
+    simpleFolderSearchAddFolder: "Add folder",
+    simpleFolderSearchEditFolder: "Edit folder",
 
     cancel: "Cancel",
     save: "Save",

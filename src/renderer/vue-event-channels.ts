@@ -41,4 +41,6 @@ export enum VueEventChannels {
     openTempFolderRequested = "open-temp-folder-requested",
     selectInputHistoryItem = "select-input-history-item",
     userConfirmationRequested = "user-confirmation-requested",
+    openSimpleFolderSearchEditingModal = "open-simple-folder-search-editing-modal",
+    simpleFolderSearchOptionSaved = "simple-folder-search-option-saved",
 }

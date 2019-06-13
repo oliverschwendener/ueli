@@ -143,7 +143,6 @@ export const germanTranslationSet: TranslationSet = {
 
     shortcutSettings: "Shortcuts",
     shortcutSettingsDescription: `Dieses Plugin erlaubt es dir Dateien und Webseiten schnell zu öffnen indem du eigene Shorctus erstellst.`,
-    shortcutSettingsShortcut: "Shortcuts",
     shortcutSettingsTableType: "Typ",
     shortcutSettingsTableName: "Name",
     shortcutSettingsTableExecutionArgument: "Ausführungsargument",
@@ -270,6 +269,11 @@ export const germanTranslationSet: TranslationSet = {
 
     simpleFolderSearch: "Einfache Ordnersuche",
     simpleFolderSearchDescription: "Dieses Plugin erlaubt es dir, schnell Dateien und Ordner zu finden.",
+    simpleFolderSearchRecursive: "Rekursiver Dateiscan",
+    simpleFolderSearchExcludeHiddenFiles: "Versteckte Dateien ausblenden",
+    simpleFolderSearchFolderPath: "Dateipfad",
+    simpleFolderSearchAddFolder: "Ordner hinzufügen",
+    simpleFolderSearchEditFolder: "Ordner bearbeiten",
 
     cancel: "Abbrechen",
     save: "Speichern",
