@@ -121,7 +121,8 @@ export const settingsComponent = Vue.extend({
                 <translation-settings :config="config" :translations="translations"></translation-settings>
                 <websearch-settings :config="config" :translations="translations"></websearch-settings>
                 <filebrowser-settings :config="config" :translations="translations"></filebrowser-settings>
-                <operating-system-settings :config="config" :translations="translations"></operating-system-settings>
+                <operating-system-commands-settings :config="config" :translations="translations"></operating-system-commands-settings>
+                <operating-system-settings-settings :config="config" :translations="translations"></operating-system-settings-settings>
                 <calculator-settings :config="config" :translations="translations"></calculator-settings>
                 <url-settings :config="config" :translations="translations"></url-settings>
                 <email-settings :config="config" :translations="translations"></email-settings>

@@ -211,6 +211,9 @@ export const germanTranslationSet: TranslationSet = {
     operatingSystemCommands: "Betriebssystembefehle",
     operatingSystemCommandsSettingsDescription: `Betriebssystembefehle sind simple Befehle um das Betriebssystem zu steuern, z.B. Herunterfahren, Neustart.`,
 
+    operatingSystemSettings: "Betriebssystemeinstellungen",
+    operatingSystemSettingsSettingsDescription: "Dieses Plugin erlaubt es dir schnell nach Betriebssystemeinstellungen zu suchen.",
+
     macOsShutdown: "Ausschalten",
     macOsShutdownDescription: "Computer ausschalten",
     macOsRestart: "Neustart",

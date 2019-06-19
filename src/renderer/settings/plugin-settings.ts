@@ -5,6 +5,7 @@ export enum PluginSettings {
     WebSearch = "Websearch",
     FileBrowser = "File Browser",
     OperatingSystemCommands = "Operating System Commands",
+    OperatingSystemSettings = "Operating System Settings",
     Calculator = "Calculator",
     Url = "Url",
     Email = "Email",

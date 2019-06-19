@@ -50,6 +50,7 @@ import { TranslationSet } from "../common/translation/translation-set";
 import { simpleFolderSearchSettingsComponent } from "./settings/simple-folder-search-settings-component";
 import { GeneralOptions } from "../common/config/general-options";
 import { simpleFolderSearchEditingModalComponent } from "./settings/modals/simple-folder-search-editing-modal-component";
+import { operatingSystemSettingsSettingsComponent } from "./settings/operating-system-settings-settings-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -77,7 +78,8 @@ Vue.component("color-theme-settings", colorThemeSettingsComponent);
 Vue.component("chrome-picker", Chrome);
 Vue.component("color-picker", colorPickerComponent);
 Vue.component("filebrowser-settings", fileBrowserSettingsComponent);
-Vue.component("operating-system-settings", operatingSystemCommandsSettingsComponent);
+Vue.component("operating-system-commands-settings", operatingSystemCommandsSettingsComponent);
+Vue.component("operating-system-settings-settings", operatingSystemSettingsSettingsComponent);
 Vue.component("calculator-settings", calculatorSettingsComponent);
 Vue.component("url-settings", urlSettingsComponent);
 Vue.component("email-settings", emailSettingsComponent);

@@ -208,6 +208,9 @@ export interface TranslationSet {
     operatingSystemCommands: string;
     operatingSystemCommandsSettingsDescription: string;
 
+    operatingSystemSettings: string;
+    operatingSystemSettingsSettingsDescription: string;
+
     macOsShutdown: string;
     macOsShutdownDescription: string;
     macOsRestart: string;

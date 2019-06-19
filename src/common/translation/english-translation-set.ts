@@ -211,6 +211,9 @@ export const englishTranslationSet: TranslationSet = {
     operatingSystemCommands: "Operating system commands",
     operatingSystemCommandsSettingsDescription: `Operating system commands are simple commands to control your operating system e.g. to shutdown or restart your computer.`,
 
+    operatingSystemSettings: "Operating system settings",
+    operatingSystemSettingsSettingsDescription: "This plugin enables you to quickly find operating system settings.",
+
     macOsShutdown: "Shut Down",
     macOsShutdownDescription: "Shut down computer",
     macOsRestart: "Restart",
