@@ -103,6 +103,7 @@ export interface TranslationSet {
     colorThemeImportSucceeded: string;
     colorThemeImportFailed: string;
     colorThemeInvalidColorTheme: string;
+    colorThemePresets: string;
     colorthemeUserInputBackgroundColor: string;
     colorThemeUserInputTextColor: string;
     colorThemeSearchResultsBackgroundColor: string;

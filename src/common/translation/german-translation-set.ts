@@ -106,6 +106,7 @@ export const germanTranslationSet: TranslationSet = {
     colorThemeImportSucceeded: "Erfolgreich Farbschema importiert",
     colorThemeImportFailed: "Farbschemaimport fehlgeschlagen",
     colorThemeInvalidColorTheme: "Ungültiges Farbschema",
+    colorThemePresets: "Vorlagen",
     colorthemeUserInputBackgroundColor: "Suchfeld Hintergrundfarbe",
     colorThemeUserInputTextColor: "Suchfeld Textfarbe",
     colorThemeSearchResultsBackgroundColor: "Suchergebnisse Hintergrundfarbe",

@@ -106,6 +106,7 @@ export const englishTranslationSet: TranslationSet = {
     colorThemeImportSucceeded: "Color theme successfully imported",
     colorThemeImportFailed: "Color theme import failed",
     colorThemeInvalidColorTheme: "Invalid color theme",
+    colorThemePresets: "Presets",
     colorthemeUserInputBackgroundColor: "User input background color",
     colorThemeUserInputTextColor: "User input text color",
     colorThemeSearchResultsBackgroundColor: "Search results background color",

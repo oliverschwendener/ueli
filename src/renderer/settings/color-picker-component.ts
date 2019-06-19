@@ -67,5 +67,6 @@ export const colorPickerComponent = Vue.extend({
                 </div>
             </div>
         </div>
+    </div>
     `,
 });

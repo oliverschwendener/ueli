@@ -1,4 +1,6 @@
 export interface ColorThemeOptions {
+    name: string;
+
     userInputBackgroundColor: string;
     userInputTextColor: string;
 

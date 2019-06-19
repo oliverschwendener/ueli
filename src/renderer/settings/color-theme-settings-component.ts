@@ -12,11 +12,15 @@ import { TranslationSet } from "../../common/translation/translation-set";
 import { NotificationType } from "../../common/notification-type";
 import { ColorThemeOptions } from "../../common/config/color-theme-options";
 import { isValidColorTheme } from "../../common/helpers/color-theme-helpers";
+import { showNotification } from "../notifications";
+import { colorThemes } from "../color-themes/color-themes";
 
 export const colorThemeSettingsComponent = Vue.extend({
     data() {
         return {
+            colorThemes,
             dropdownVisible: false,
+            presetDropdownVisible: false,
             settingName: GeneralSettings.ColorTheme,
             visible: false,
         };
@@ -81,6 +85,16 @@ export const colorThemeSettingsComponent = Vue.extend({
         editColor(pickerId: string, color: string) {
             vueEventDispatcher.$emit(VueEventChannels.editColor, pickerId, color);
         },
+        changeColorTheme(name: string) {
+            const colorTheme = colorThemes.find((c) => c.name === name);
+            if (colorTheme) {
+                const config: UserConfigOptions = this.config;
+                config.colorThemeOptions = colorTheme;
+                this.updateConfig();
+            } else {
+                showNotification("No color theme preset found", NotificationType.Error);
+            }
+        },
         updateColor(pickerId: string, color: string) {
             Object.keys(this.config.colorThemeOptions).forEach((key) => {
                 if (key === pickerId) {
@@ -90,7 +104,12 @@ export const colorThemeSettingsComponent = Vue.extend({
             this.updateConfig();
         },
         toggleDropDown() {
+            this.presetDropdownVisible = false;
             this.dropdownVisible = !this.dropdownVisible;
+        },
+        togglePresetDropDown() {
+            this.dropdownVisible = false;
+            this.presetDropdownVisible = !this.presetDropdownVisible;
         },
         importColorTheme() {
             getFilePath([{ extensions: ["json"], name: "JSON" }])
@@ -179,12 +198,27 @@ export const colorThemeSettingsComponent = Vue.extend({
                         </div>
                     </div>
                 </div>
+                <div class="dropdown is-right" :class="{ 'is-active' : presetDropdownVisible}">
+                    <div class="dropdown-trigger">
+                        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" @click="togglePresetDropDown">
+                            <span class="icon">
+                                <i class="fas fa-swatchbook"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <a v-for="colorTheme in colorThemes" href="#" class="dropdown-item" @click="changeColorTheme(colorTheme.name)">
+                                {{ colorTheme.name }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="box">
 
             <div class="settings__options-container">
-
                 <div class="settings__option">
                     <div class="settings__option-name">{{ translations.colorthemeUserInputBackgroundColor }}</div>
                     <div class="settings__option-content">
