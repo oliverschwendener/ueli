@@ -89,7 +89,7 @@ export const colorThemeSettingsComponent = Vue.extend({
             const colorTheme = colorThemes.find((c) => c.name === name);
             if (colorTheme) {
                 const config: UserConfigOptions = this.config;
-                config.colorThemeOptions = colorTheme;
+                config.colorThemeOptions = cloneDeep(colorTheme);
                 this.updateConfig();
             } else {
                 showNotification("No color theme preset found", NotificationType.Error);
