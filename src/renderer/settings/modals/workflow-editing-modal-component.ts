@@ -12,6 +12,8 @@ import { getFileAndFolderPaths } from "../../dialogs";
 import { isValidExecutionStep, isValidWorkflow } from "../../../main/plugins/workflow-plugin/workflow-helpers";
 import { NotificationType } from "../../../common/notification-type";
 import { defaultWorkflowIcon } from "../../../common/icon/default-icons";
+import { homedir, platform } from "os";
+import { isWindows } from "../../../common/helpers/operating-system-helpers";
 
 const initialNewWorkflowExecutionStep: WorkflowExecutionStep = {
     executionArgument: "",
@@ -82,6 +84,24 @@ export const workflowEditingModal = Vue.extend({
             const translations: TranslationSet = this.translations;
             return getWorkflowExecutionArgumentTypeTranslation(type, translations);
         },
+        getNewWorkflowExecutionStepPlaceholder(): string {
+            const translations: TranslationSet = this.translations;
+            const newWorkflowExecutionStep: WorkflowExecutionStep = this.newWorkflowExecutionStep;
+            let executionStepPlaceholder = "";
+            switch (newWorkflowExecutionStep.executionArgumentType) {
+                case WorkflowExecutionArgumentType.URL:
+                    executionStepPlaceholder = "https://google.com"
+                    break;
+                case WorkflowExecutionArgumentType.FilePath:
+                    executionStepPlaceholder = homedir();
+                    break;
+                case WorkflowExecutionArgumentType.CommandlineTool:
+                    executionStepPlaceholder = isWindows(platform()) ? "ping 1.1.1.1 -t" : "ping 1.1.1.1";
+                    break;
+            }
+
+            return `${translations.forExample}: "${executionStepPlaceholder}"`;
+        },
         onNewExecutionStepTypeChange() {
             const executionStep: WorkflowExecutionStep = this.newWorkflowExecutionStep;
             executionStep.executionArgument = "";
@@ -142,7 +162,12 @@ export const workflowEditingModal = Vue.extend({
                                 {{ translations.workflowName }}
                             </label>
                             <div class="control">
-                                <input class="input" type="text" :placeholder="translations.workflowNamePlaceholder" v-model="workflow.name">
+                                <input
+                                    class="input"
+                                    type="text"
+                                    :placeholder="translations.workflowNamePlaceholder"
+                                    v-model="workflow.name"
+                                >
                             </div>
                         </div>
                         <div class="field">
@@ -150,7 +175,11 @@ export const workflowEditingModal = Vue.extend({
                                 {{ translations.workflowDescription }}
                             </label>
                             <div class="control">
-                                <input class="input" type="text" :placeholder="translations.workflowDescriptionPlaceholder" v-model="workflow.description">
+                                <input
+                                    class="input"
+                                    type="text"
+                                    :placeholder="translations.workflowDescriptionPlaceholder"
+                                    v-model="workflow.description">
                             </div>
                         </div>
                         <div class="field">
@@ -186,7 +215,11 @@ export const workflowEditingModal = Vue.extend({
                                 </div>
                             </div>
                             <div class="control is-expanded">
-                                <input class="input" v-model="newWorkflowExecutionStep.executionArgument">
+                                <input
+                                    class="input"
+                                    v-model="newWorkflowExecutionStep.executionArgument"
+                                    :placeholder="getNewWorkflowExecutionStepPlaceholder()"
+                                >
                             </div>
                             <div class="control" v-if="newWorkflowExecutionStep.executionArgumentType === executionArgumentTypeFilePath">
                                 <button class="button" @click="openFile">

@@ -253,7 +253,9 @@ export interface TranslationSet {
     workflowSettingsDescription: string;
     workflowSettingsAddWorkflow: string;
     workflowName: string;
+    workflowNamePlaceholder: string;
     workflowDescription: string;
+    workflowDescriptionPlaceholder: string;
     workflowTags: string;
     workflowIcon: string;
     workflowExecutionSteps: string;
