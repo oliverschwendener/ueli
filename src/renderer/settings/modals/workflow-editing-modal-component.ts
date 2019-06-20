@@ -90,7 +90,7 @@ export const workflowEditingModal = Vue.extend({
             let executionStepPlaceholder = "";
             switch (newWorkflowExecutionStep.executionArgumentType) {
                 case WorkflowExecutionArgumentType.URL:
-                    executionStepPlaceholder = "https://google.com"
+                    executionStepPlaceholder = "https://google.com";
                     break;
                 case WorkflowExecutionArgumentType.FilePath:
                     executionStepPlaceholder = homedir();
