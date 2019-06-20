@@ -141,7 +141,7 @@ export const workflowSettingsComponent = Vue.extend({
                                     <icon :icon="workflow.icon" :defaulticon="defaultWorkflowIcon"></icon>
                                 </td>
                                 <td>
-                                    <div v-for="executionStep in workflow.executionSteps" class="tags has-addons">
+                                    <div v-for="executionStep in workflow.executionSteps" class="tags has-addons is-marginless">
                                         <span class="tag" :class="getExecutionArgumentTypeClass(executionStep.executionArgumentType)">
                                             <span class="icon">
                                                 <i :class="getExecutionArgumentTypeIcon(executionStep.executionArgumentType)"></i>
