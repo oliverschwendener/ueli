@@ -71,7 +71,7 @@ export const workflowEditingModal = Vue.extend({
             }
         },
         closeModal() {
-            this.workflow = {};
+            this.workflow = cloneDeep(initialWorkflow);
             this.visible = false;
         },
         getExecutionArgumentTypeIcon(type: WorkflowExecutionArgumentType): string {
