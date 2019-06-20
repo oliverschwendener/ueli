@@ -36,6 +36,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.fileBrowser;
                 case PluginSettings.OperatingSystemCommands:
                     return translations.operatingSystemCommands;
+                case PluginSettings.OperatingSystemSettings:
+                    return translations.operatingSystemSettings;
                 case PluginSettings.Calculator:
                     return translations.calcuator;
                 case PluginSettings.Url:
