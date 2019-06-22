@@ -43,7 +43,7 @@
     "@types/vue-color": "^2.4.2",
     "app2png": "https://github.com/oliverschwendener/app2png",
     "axios": "^0.18.0",
-    "electron": "^5.0.1",
+    "electron": "^5.0.5",
     "electron-builder": "^20.40.2",
     "electron-store": "^3.2.0",
     "fuse.js": "^3.4.4",

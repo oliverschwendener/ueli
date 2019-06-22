@@ -4,13 +4,13 @@ import { SearchResultItem } from "../../common/search-result-item";
 import Store = require("electron-store");
 
 export class ElectronStoreFavoriteRepository implements FavoriteRepository {
-    private readonly store: Store;
+    private readonly store: Store<Favorite[]>;
     private readonly favoritesStoreKey = "favorites";
     private favorites: Favorite[];
 
     constructor() {
         this.store = new Store();
-        this.favorites = this.store.get(this.favoritesStoreKey) as Favorite[] || [];
+        this.favorites = this.store.get(this.favoritesStoreKey);
     }
 
     public get(searchResultItem: SearchResultItem): Favorite | undefined {
