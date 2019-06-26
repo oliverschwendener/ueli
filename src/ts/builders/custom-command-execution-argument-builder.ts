@@ -1,5 +1,5 @@
 import { StringHelpers } from "../helpers/string-helpers";
-import { CustomCommand } from "../custom-shortcut";
+import { CustomCommand } from "../custom-command";
 
 export class CustomCommandBuilder {
     public static buildExecutionArgumentForCustomCommand(userInput: string, customCommand: CustomCommand): string {

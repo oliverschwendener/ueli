@@ -1,5 +1,5 @@
 import { CustomCommandSearcher } from "../../../ts/searcher/custom-command-searcher";
-import { CustomCommand } from "../../../ts/custom-shortcut";
+import { CustomCommand } from "../../../ts/custom-command";
 import { InputOutputCombination, defaultShortcutIcon } from "../test-helpers";
 import { SearchResultItem } from "../../../ts/search-result-item";
 import { UeliHelpers } from "../../../ts/helpers/ueli-helpers";

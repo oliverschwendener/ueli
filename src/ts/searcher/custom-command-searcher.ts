@@ -1,6 +1,6 @@
 import { Searcher } from "./searcher";
 import { SearchResultItem } from "../search-result-item";
-import { CustomCommand } from "../custom-shortcut";
+import { CustomCommand } from "../custom-command";
 import { CustomCommandBuilder } from "../builders/custom-command-execution-argument-builder";
 import { UeliHelpers } from "../helpers/ueli-helpers";
 import { StringHelpers } from "../helpers/string-helpers";
@@ -21,7 +21,7 @@ export class CustomCommandSearcher implements Searcher {
         const firstWord = StringHelpers.splitIntoWords(userInput)[0];
 
         for (const customCommand of this.customCommands) {
-            if (userInput.startsWith(customCommand.prefix) || (firstWord.length > 0 && customCommand.prefix.startsWith(firstWord))) {
+            if (customCommand.prefix && userInput.startsWith(customCommand.prefix) || (firstWord.length > 0 && customCommand.prefix && customCommand.prefix.startsWith(firstWord))) {
                 result.push({
                     description: UeliHelpers.customCommandDescription,
                     executionArgument: CustomCommandBuilder.buildExecutionArgumentForCustomCommand(userInput, customCommand),

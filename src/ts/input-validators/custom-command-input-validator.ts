@@ -1,5 +1,5 @@
 import { InputValidator } from "./input-validator";
-import { CustomCommand } from "../custom-shortcut";
+import { CustomCommand } from "../custom-command";
 import { StringHelpers } from "../helpers/string-helpers";
 
 export class CustomCommandInputValidator implements InputValidator {
@@ -14,7 +14,7 @@ export class CustomCommandInputValidator implements InputValidator {
             const wordsOfUserInput = StringHelpers.splitIntoWords(userInput);
             if (wordsOfUserInput.length >= 2) {
                 const word = wordsOfUserInput[0];
-                if (customCommand.prefix.startsWith(word) && !StringHelpers.stringIsWhiteSpace(word)) {
+                if (customCommand.prefix && customCommand.prefix.startsWith(word) && !StringHelpers.stringIsWhiteSpace(word)) {
                     return true;
                 }
             }

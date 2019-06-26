@@ -5,7 +5,7 @@ import { UserConfigFileRepository } from "./user-config/user-config-file-reposit
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { ElectronStoreAppConfigRepository } from "./app-config/electorn-store-app-config-repository";
 import { availableColorThemes } from "./available-color-themes";
-import { CustomCommand } from "./custom-shortcut";
+import { CustomCommand } from "./custom-command";
 import { FileSearchOption } from "./file-search-option";
 import { Shortcut } from "./shortcut";
 import { WebSearch } from "./web-search";

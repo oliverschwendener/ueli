@@ -1,5 +1,5 @@
 import { CustomCommandBuilder } from "../../../ts/builders/custom-command-execution-argument-builder";
-import { CustomCommand } from "../../../ts/custom-shortcut";
+import { CustomCommand } from "../../../ts/custom-command";
 import { defaultShortcutIcon } from "../test-helpers";
 
 describe(CustomCommandBuilder.name, (): void => {
