@@ -84,6 +84,23 @@ export const simpleFolderSearchSettingsComponent = Vue.extend({
             </div>
             <p class="settings__setting-description" v-html="translations.simpleFolderSearchDescription"></p>
             <div class="settings__setting-content">
+
+                <div class="box">
+                    <div class="settings__options-container">
+                        <div class="settings__option">
+                            <div class="settings__option-name">Show full file path</div>
+                            <div class="settings__option-content">
+                                <div class="field has-addons has-addons-right vertical-center">
+                                    <div class="control">
+                                        <input id="showFullFilePathCheckbox" type="checkbox" name="showFullFilePathCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.simpleFolderSearchOptions.showFullFilePath" @change="updateConfig">
+                                        <label for="showFullFilePathCheckbox"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div v-if="!config.simpleFolderSearchOptions.isEnabled" class="settings__setting-disabled-overlay"></div>
                 <div class="settings__setting-content-item box">
                     <div class="table-container">

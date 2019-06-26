@@ -6,5 +6,6 @@ export const defaultFileBrowserOptions: FileBrowserOptions = {
     ],
     isEnabled: false,
     maxSearchResults: 100,
+    showFullFilePath: true,
     showHiddenFiles: false,
 };

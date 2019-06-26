@@ -9,6 +9,7 @@ const win: ApplicationSearchOptions = {
         `${homedir()}\\Desktop`,
     ],
     enabled: true,
+    showFullFilePath: false,
 };
 
 const darwin: ApplicationSearchOptions = {
@@ -18,6 +19,7 @@ const darwin: ApplicationSearchOptions = {
         `${homedir()}/Applications`,
     ],
     enabled: true,
+    showFullFilePath: false,
 };
 
 export const defaultApplicationSearchOptions = platform() === "win32"

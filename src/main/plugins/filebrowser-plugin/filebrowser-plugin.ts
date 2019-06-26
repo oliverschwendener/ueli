@@ -128,7 +128,9 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin, AutoCompleti
                 })
                 .map((filePath): SearchResultItem => {
                     return {
-                        description: createFilePathDescription(filePath),
+                        description: createFilePathDescription(filePath, {
+                            showFullFilePath: this.config.showFullFilePath,
+                        }),
                         executionArgument: filePath,
                         hideMainWindowAfterExecution: true,
                         icon: defaultFileIcon,

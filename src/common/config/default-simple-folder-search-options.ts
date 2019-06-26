@@ -10,4 +10,5 @@ export const defaultSimpleFolderSearchOptions: SimpleFolderSearchOptions = {
         },
     ],
     isEnabled: true,
+    showFullFilePath: true,
 };

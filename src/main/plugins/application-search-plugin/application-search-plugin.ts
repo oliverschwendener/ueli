@@ -102,7 +102,9 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
     private createSearchResultItemFromApplication(application: Application): Promise<SearchResultItem> {
         return new Promise((resolve) => {
             resolve({
-                description: createFilePathDescription(application.filePath),
+                description: createFilePathDescription(application.filePath, {
+                    showFullFilePath: this.config.showFullFilePath,
+                }),
                 executionArgument: application.filePath,
                 hideMainWindowAfterExecution: true,
                 icon: {
