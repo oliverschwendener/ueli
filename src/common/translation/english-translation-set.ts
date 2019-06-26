@@ -288,4 +288,5 @@ export const englishTranslationSet: TranslationSet = {
     edit: "Edit",
     forExample: "For example",
     iconType: "Icon type",
+    showFullFilePath: "Show full file path",
 };

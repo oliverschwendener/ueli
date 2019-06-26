@@ -288,4 +288,5 @@ export const germanTranslationSet: TranslationSet = {
     edit: "Bearbeiten",
     forExample: "Zum Beispiel",
     iconType: "Icontyp",
+    showFullFilePath: "Vollständiger Dateipfad anzeigen",
 };

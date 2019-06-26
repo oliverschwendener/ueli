@@ -125,7 +125,7 @@ export const fileBrowserSettingsComponent = Vue.extend({
                 </div>
 
                 <div class="settings__option">
-                    <div class="settings__option-name">Show full file path</div>
+                    <div class="settings__option-name">{{ translations.showFullFilePath }}</div>
                     <div class="settings__option-content">
                         <div class="field has-addons has-addons-right vertical-center">
                             <div class="control">
