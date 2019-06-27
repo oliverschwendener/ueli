@@ -102,7 +102,9 @@ export class SimpleFolderSearchPlugin implements SearchPlugin, OpenLocationPlugi
 
     private buildSearchResultItem(iconResult: FileIconDataResult): SearchResultItem {
         return {
-            description: createFilePathDescription(iconResult.filePath),
+            description: createFilePathDescription(iconResult.filePath, {
+                showFullFilePath: this.config.showFullFilePath,
+            }),
             executionArgument: iconResult.filePath,
             hideMainWindowAfterExecution: true,
             icon: iconResult.icon,

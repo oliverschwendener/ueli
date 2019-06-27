@@ -285,4 +285,5 @@ export interface TranslationSet {
     edit: string;
     forExample: string;
     iconType: string;
+    showFullFilePath: string;
 }

@@ -124,6 +124,18 @@ export const fileBrowserSettingsComponent = Vue.extend({
                     </div>
                 </div>
 
+                <div class="settings__option">
+                    <div class="settings__option-name">{{ translations.showFullFilePath }}</div>
+                    <div class="settings__option-content">
+                        <div class="field has-addons has-addons-right vertical-center">
+                            <div class="control">
+                                <input id="showFullFilePathCheckbox" type="checkbox" name="showFullFilePathCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.fileBrowserOptions.showFullFilePath" @change="updateConfig">
+                                <label for="showFullFilePathCheckbox"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 export interface SimpleFolderSearchOptions {
     isEnabled: boolean;
     folders: SimpleFolderSearchFolderOption[];
+    showFullFilePath: boolean;
 }
 
 export interface SimpleFolderSearchFolderOption {
