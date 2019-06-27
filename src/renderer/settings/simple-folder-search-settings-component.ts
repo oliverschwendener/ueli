@@ -27,20 +27,20 @@ export const simpleFolderSearchSettingsComponent = Vue.extend({
         removeFolder(index: number) {
             const config: UserConfigOptions = this.config;
             config.simpleFolderSearchOptions.folders.splice(index, 1);
-            this.updateConfig();
+            this.updateConfig(true);
         },
         resetAll() {
             const config: UserConfigOptions = this.config;
             config.simpleFolderSearchOptions = cloneDeep(defaultSimpleFolderSearchOptions);
-            this.updateConfig();
+            this.updateConfig(true);
         },
         toggleEnabled() {
             const config: UserConfigOptions = this.config;
             config.simpleFolderSearchOptions.isEnabled = !config.simpleFolderSearchOptions.isEnabled;
-            this.updateConfig();
+            this.updateConfig(true);
         },
-        updateConfig() {
-            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, true);
+        updateConfig(forceRefreshIndex: boolean) {
+            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, forceRefreshIndex);
         },
     },
     mounted() {
@@ -61,7 +61,7 @@ export const simpleFolderSearchSettingsComponent = Vue.extend({
             } else if (editMode === ModalEditMode.Add) {
                 config.simpleFolderSearchOptions.folders.push(folderOptions);
             }
-            this.updateConfig();
+            this.updateConfig(true);
         });
     },
     props: ["config", "translations"],
@@ -92,7 +92,7 @@ export const simpleFolderSearchSettingsComponent = Vue.extend({
                             <div class="settings__option-content">
                                 <div class="field has-addons has-addons-right vertical-center">
                                     <div class="control">
-                                        <input id="showFullFilePathCheckbox" type="checkbox" name="showFullFilePathCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.simpleFolderSearchOptions.showFullFilePath" @change="updateConfig">
+                                        <input id="showFullFilePathCheckbox" type="checkbox" name="showFullFilePathCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.simpleFolderSearchOptions.showFullFilePath" @change="updateConfig(false)">
                                         <label for="showFullFilePathCheckbox"></label>
                                     </div>
                                 </div>
