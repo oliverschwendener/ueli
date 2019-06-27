@@ -16,6 +16,7 @@ const darwin: ApplicationSearchOptions = {
     applicationFileExtensions: [".app"],
     applicationFolders: [
         "/Applications",
+        "/System/Library/CoreServices",
         `${homedir()}/Applications`,
     ],
     enabled: true,
