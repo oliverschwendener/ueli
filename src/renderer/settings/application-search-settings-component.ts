@@ -190,7 +190,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
                             <div class="settings__option-content">
                                 <div class="field has-addons has-addons-right vertical-center">
                                     <div class="control">
-                                        <input id="showFullFilePathCheckbox" type="checkbox" name="showFullFilePathCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.applicationSearchOptions.showFullFilePath" @change="updateConfig">
+                                        <input id="showFullFilePathCheckbox" type="checkbox" name="showFullFilePathCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.applicationSearchOptions.showFullFilePath" @change="updateConfig(false)">
                                         <label for="showFullFilePathCheckbox"></label>
                                     </div>
                                 </div>
