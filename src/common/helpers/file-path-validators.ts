@@ -1,4 +1,7 @@
+import { win32 } from "path";
+
 export function isValidWindowsFilePath(filePath: string): boolean {
+    filePath = win32.normalize(filePath);
     return /^[a-zA-Z]:\\[\\\S|*\S]?.*$/.test(filePath);
 }
 
