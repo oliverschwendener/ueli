@@ -138,7 +138,7 @@ export const workflowSettingsComponent = Vue.extend({
                                     </div>
                                 </td>
                                 <td class="has-text-centered">
-                                    <icon :icon="workflow.icon" :defaulticon="defaultWorkflowIcon"></icon>
+                                    <icon :icon="workflow.icon" :defaulticon="defaultWorkflowIcon"/>
                                 </td>
                                 <td>
                                     <div v-for="executionStep in workflow.executionSteps" class="tags has-addons is-marginless">
@@ -172,7 +172,7 @@ export const workflowSettingsComponent = Vue.extend({
                 </div>
             </div>
         </div>
-        <workflow-editing-modal :translations="translations"></workflow-editing-modal>
+        <workflow-editing-modal :translations="translations"/>
     </div>
     `,
 });

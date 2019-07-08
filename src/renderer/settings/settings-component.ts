@@ -108,27 +108,27 @@ export const settingsComponent = Vue.extend({
                 {{ notification.message }}
             </div>
             <div class="settings__setting">
-                <general-settings :config="config" :translations="translations" />
-                <appearance-settings :config="config" :translations="translations" />
-                <color-theme-settings :config="config" :translations="translations" />
-                <search-engine-settings :config="config" :translations="translations" />
-                <application-search-settings :config="config" :translations="translations" />
-                <shortcut-settings :config="config" :translations="translations" />
-                <mdfind-settings :config="config" :translations="translations" />
-                <everthing-settings :config="config" :translations="translations" />
-                <translation-settings :config="config" :translations="translations" />
-                <websearch-settings :config="config" :translations="translations" />
-                <filebrowser-settings :config="config" :translations="translations" />
-                <operating-system-commands-settings :config="config" :translations="translations" />
-                <operating-system-settings-settings :config="config" :translations="translations" />
-                <calculator-settings :config="config" :translations="translations" />
-                <url-settings :config="config" :translations="translations" />
-                <email-settings :config="config" :translations="translations" />
-                <currency-converter-settings :config="config" :translations="translations" />
-                <workflow-settings :config="config" :translations="translations" />
-                <commandline-settings :config="config" :translations="translations" />
-                <simple-folder-search-settings :config="config" :translations="translations" />
-                <user-confirmation :translations="translations" />
+                <general-settings :config="config" :translations="translations"/>
+                <appearance-settings :config="config" :translations="translations"/>
+                <color-theme-settings :config="config" :translations="translations"/>
+                <search-engine-settings :config="config" :translations="translations"/>
+                <application-search-settings :config="config" :translations="translations"/>
+                <shortcut-settings :config="config" :translations="translations"/>
+                <mdfind-settings :config="config" :translations="translations"/>
+                <everthing-settings :config="config" :translations="translations"/>
+                <translation-settings :config="config" :translations="translations"/>
+                <websearch-settings :config="config" :translations="translations"/>
+                <filebrowser-settings :config="config" :translations="translations"/>
+                <operating-system-commands-settings :config="config" :translations="translations"/>
+                <operating-system-settings-settings :config="config" :translations="translations"/>
+                <calculator-settings :config="config" :translations="translations"/>
+                <url-settings :config="config" :translations="translations"/>
+                <email-settings :config="config" :translations="translations"/>
+                <currency-converter-settings :config="config" :translations="translations"/>
+                <workflow-settings :config="config" :translations="translations"/>
+                <commandline-settings :config="config" :translations="translations"/>
+                <simple-folder-search-settings :config="config" :translations="translations"/>
+                <user-confirmation :translations="translations"/>
             </div>
         </div>
     `,

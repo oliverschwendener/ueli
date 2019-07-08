@@ -112,8 +112,8 @@ export const websearchEditingModal = Vue.extend({
 
                     <icon-editing
                         :icon="websearchEngine.icon"
-                        :translations="translations">
-                    </icon-editing>
+                        :translations="translations"
+                        />
 
                     <div class="field">
                         <label class="label">

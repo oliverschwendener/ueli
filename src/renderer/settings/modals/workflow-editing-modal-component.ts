@@ -236,8 +236,8 @@ export const workflowEditingModal = Vue.extend({
                                 </button>
                             </div>
                         </div>
-                        <tags-editing :tags="workflow.tags" :field-title="translations.workflowTags" :translations="translations"></tags-editing>
-                        <icon-editing :icon="workflow.icon" :translations="translations"></icon-editing>
+                        <tags-editing :tags="workflow.tags" :field-title="translations.workflowTags" :translations="translations"/>
+                        <icon-editing :icon="workflow.icon" :translations="translations"/>
                         <div class="field is-grouped is-grouped-right">
                             <div class="control">
                                 <button class="button is-danger" @click="closeModal">

@@ -145,7 +145,7 @@ export const simpleFolderSearchSettingsComponent = Vue.extend({
                     </div>
                 </div>
             </div>
-            <simple-folder-search-editing :translations="translations"></simple-folder-search-editing>
+            <simple-folder-search-editing :translations="translations"/>
         </div>
     `,
 });

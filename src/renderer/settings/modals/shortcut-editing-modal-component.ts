@@ -217,8 +217,8 @@ export const shortcutEditingModal = Vue.extend({
                                 <input class="input" type="text" :placeholder="getShorcutTypeDescriptionPlaceholder(shortcut.type)" v-model="shortcut.description">
                             </div>
                         </div>
-                        <tags-editing :tags="shortcut.tags" :field-title="translations.shortcutSettingsTableTags" :translations="translations"></tags-editing>
-                        <icon-editing :icon="shortcut.icon" :translations="translations"></icon-editing>
+                        <tags-editing :tags="shortcut.tags" :field-title="translations.shortcutSettingsTableTags" :translations="translations"/>
+                        <icon-editing :icon="shortcut.icon" :translations="translations"/>
                         <div class="field is-grouped is-grouped-right">
                             <div class="control">
                                 <button class="button is-danger" @click="closeButtonClick">

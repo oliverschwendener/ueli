@@ -209,8 +209,8 @@ export const applicationSearchSettingsComponent = Vue.extend({
                     </div>
                 </div>
             </div>
-            <new-application-folder-modal :translations="translations"></new-application-folder-modal>
-            <new-application-file-extension-modal :translations="translations"></new-application-file-extension-modal>
+            <new-application-folder-modal :translations="translations"/>
+            <new-application-file-extension-modal :translations="translations"/>
         </div>
     `,
 });

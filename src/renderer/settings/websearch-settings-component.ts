@@ -129,7 +129,7 @@ export const webSearchSettingsComponent = Vue.extend({
                                 <td>{{ websearchEngine.name }}</td>
                                 <td class="font-mono">{{ websearchEngine.prefix }}</td>
                                 <td>{{ websearchEngine.url }}</td>
-                                <td class="has-text-centered"><icon :icon="websearchEngine.icon" :defaulticon="defaultWebSearchIcon"></icon></td>
+                                <td class="has-text-centered"><icon :icon="websearchEngine.icon" :defaulticon="defaultWebSearchIcon"/></td>
                                 <td class="has-text-centered">{{ websearchEngine.priority }}</td>
                                 <td class="has-text-centered"><i v-if="websearchEngine.isFallback" class="fas fa-check"></i></td>
                                 <td class="has-text-centered"><i v-if="websearchEngine.encodeSearchTerm" class="fas fa-check"></i></td>
@@ -162,7 +162,7 @@ export const webSearchSettingsComponent = Vue.extend({
             </div>
 
         </div>
-        <websearch-editing-modal :translations="translations"></websearch-editing-modal>
+        <websearch-editing-modal :translations="translations"/>
     </div>
     `,
 });
