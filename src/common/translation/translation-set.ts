@@ -130,6 +130,8 @@ export interface TranslationSet {
     applicationSearchSettingsNotAFolderErrorMessage: string;
     applicationSearchSettingsDoesNotExistErrorMessage: string;
     applicationSearchSettingsFolderValidationError: string;
+    applicationSearchSettingsResetWarningMessage: string;
+    applicationSearchSettingsResetWarningTitle: string;
 
     searchEngineSettings: string;
     searchEngineSettingsDescription: string;
@@ -286,4 +288,6 @@ export interface TranslationSet {
     forExample: string;
     iconType: string;
     showFullFilePath: string;
+    yes: string;
+    no: string;
 }

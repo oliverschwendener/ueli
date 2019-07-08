@@ -133,6 +133,8 @@ export const englishTranslationSet: TranslationSet = {
     applicationSearchSettingsNotAFolderErrorMessage: `"{{value}} is not a folder"`,
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}} does not exist"`,
     applicationSearchSettingsFolderValidationError: `An error occured while trying to validate "{{value}}"`,
+    applicationSearchSettingsResetWarningMessage: "You are about to reset all application search settings to default. Do you want to proceed?",
+    applicationSearchSettingsResetWarningTitle: "Reset application search settings?",
 
     searchEngineSettings: "Search engine",
     searchEngineSettingsDescription: `The search engine is used for preindexed items like applications, shortcuts and operating system settings/commands.`,
@@ -289,4 +291,6 @@ export const englishTranslationSet: TranslationSet = {
     forExample: "For example",
     iconType: "Icon type",
     showFullFilePath: "Show full file path",
+    yes: "Yes",
+    no: "No",
 };

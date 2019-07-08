@@ -43,4 +43,5 @@ export enum VueEventChannels {
     userConfirmationRequested = "user-confirmation-requested",
     openSimpleFolderSearchEditingModal = "open-simple-folder-search-editing-modal",
     simpleFolderSearchOptionSaved = "simple-folder-search-option-saved",
+    settingsConfirmation = "settings-confirmation",
 }

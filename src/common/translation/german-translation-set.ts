@@ -133,6 +133,8 @@ export const germanTranslationSet: TranslationSet = {
     applicationSearchSettingsNotAFolderErrorMessage: `"{{value}}" ist kein Ordner`,
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}}" existiert nicht`,
     applicationSearchSettingsFolderValidationError: `Während der Validierung von "{{value}}" ist ein Fehler aufgetreten`,
+    applicationSearchSettingsResetWarningMessage: "You are about to reset all application search settings to default. Do you want to proceed?",
+    applicationSearchSettingsResetWarningTitle: "Reset application search settings?",
 
     searchEngineSettings: "Suchmaschine",
     searchEngineSettingsDescription: `Die Suchmaschine wird für vorindexierte Inhalte benutzt, z.B. Programme, Shortcuts und Betriebssystembefehle und -einstellungen.`,
@@ -289,4 +291,6 @@ export const germanTranslationSet: TranslationSet = {
     forExample: "Zum Beispiel",
     iconType: "Icontyp",
     showFullFilePath: "Vollständiger Dateipfad anzeigen",
+    yes: "Ja",
+    no: "Nein",
 };

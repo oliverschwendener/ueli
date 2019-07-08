@@ -51,6 +51,7 @@ import { simpleFolderSearchSettingsComponent } from "./settings/simple-folder-se
 import { GeneralOptions } from "../common/config/general-options";
 import { simpleFolderSearchEditingModalComponent } from "./settings/modals/simple-folder-search-editing-modal-component";
 import { operatingSystemSettingsSettingsComponent } from "./settings/operating-system-settings-settings-component";
+import { userConfirmationDialog } from "./settings/modals/user-confirmation";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -89,6 +90,7 @@ Vue.component("workflow-editing-modal", workflowEditingModal);
 Vue.component("commandline-settings", commandlineSettingsComponent);
 Vue.component("simple-folder-search-settings", simpleFolderSearchSettingsComponent);
 Vue.component("simple-folder-search-editing", simpleFolderSearchEditingModalComponent);
+Vue.component("user-confirmation", userConfirmationDialog);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 

@@ -7,6 +7,8 @@ import { cloneDeep } from "lodash";
 import { PluginSettings } from "./plugin-settings";
 import { NotificationType } from "../../common/notification-type";
 import { showNotification } from "../notifications";
+import { UserConfirmationDialogParams } from "./modals/user-confirmation-dialog-params";
+import { TranslationSet } from "../../common/translation/translation-set";
 
 export const applicationSearchSettingsComponent = Vue.extend({
     data() {
@@ -59,9 +61,17 @@ export const applicationSearchSettingsComponent = Vue.extend({
             this.updateConfig(true);
         },
         resetAll() {
-            const config: UserConfigOptions = this.config;
-            config.applicationSearchOptions = cloneDeep(defaultApplicationSearchOptions);
-            this.updateConfig(true);
+            const translations: TranslationSet = this.translations;
+            const userConfirmationDialogParams: UserConfirmationDialogParams = {
+                callback: () => {
+                    const config: UserConfigOptions = this.config;
+                    config.applicationSearchOptions = cloneDeep(defaultApplicationSearchOptions);
+                    this.updateConfig(true);
+                },
+                message: translations.applicationSearchSettingsResetWarningMessage,
+                modalTitle: translations.applicationSearchSettingsResetWarningTitle,
+            };
+            vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         resetApplicationFoldersToDefault() {
             const config: UserConfigOptions = this.config;
