@@ -66,6 +66,11 @@ export const colorThemeSettingsComponent = Vue.extend({
             config.colorThemeOptions.searchResultsItemActiveTextColor = defaultColorThemeOptions.searchResultsItemActiveTextColor;
             this.updateConfig();
         },
+        resetSearchResultsItemActiveDescriptionColor() {
+            const config: UserConfigOptions = this.config;
+            config.colorThemeOptions.searchResultsItemActiveDescriptionColor = defaultColorThemeOptions.searchResultsItemActiveDescriptionColor;
+            this.updateConfig();
+        },
         resetSearchResultsItemNameTextColor() {
             const config: UserConfigOptions = this.config;
             config.colorThemeOptions.searchResultsItemNameTextcolor = defaultColorThemeOptions.searchResultsItemNameTextcolor;
@@ -375,6 +380,37 @@ export const colorThemeSettingsComponent = Vue.extend({
                             </div>
                             <div class="control">
                                 <button class="button" @click="resetSearchResultsItemActiveTextColor">
+                                    <span class="icon">
+                                        <i class="fas fa-undo-alt"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings__option">
+                    <div class="settings__option-name">{{ translations.colorThemeSearchResultsItemActiveDescriptionColor }}</div>
+                    <div class="settings__option-content">
+                        <div class="field has-addons has-addons-right">
+                            <div class="control">
+                                <button
+                                    class="button preview-button"
+                                    :style="getPreviewColor(config.colorThemeOptions.searchResultsItemActiveDescriptionColor)"
+                                    @click="editColor('searchResultsItemActiveDescriptionColor', config.colorThemeOptions.searchResultsItemActiveDescriptionColor)"
+                                    >
+                                </button>
+                            </div>
+                            <div class="control">
+                                <input
+                                    class="input font-mono"
+                                    type="text"
+                                    v-model="config.colorThemeOptions.searchResultsItemActiveDescriptionColor"
+                                    @change="updateConfig"
+                                    >
+                            </div>
+                            <div class="control">
+                                <button class="button" @click="resetSearchResultsItemActiveDescriptionColor">
                                     <span class="icon">
                                         <i class="fas fa-undo-alt"></i>
                                     </span>

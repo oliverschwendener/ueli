@@ -22,9 +22,13 @@ export const userStylesComponent = Vue.extend({
 
             --user-input--background-color: {{ colortheme.userInputBackgroundColor }};
             --user-input--color: {{ colortheme.userInputTextColor }};
+
             --search-results--background-color: {{ colortheme.searchResultsBackgroundColor }};
+
             --search-results--item-active-background-color: {{ colortheme.searchResultsItemActiveBackgroundColor }};
             --search-results--item-active-text-color: {{ colortheme.searchResultsItemActiveTextColor }};
+            --search-results--item-active-description-color: {{ colortheme.searchResultsItemActiveDescriptionColor }};
+
             --search-results--item-name-text-color: {{ colortheme.searchResultsItemNameTextcolor }};
             --search-results--item-description-text-color: {{ colortheme.searchResultsItemDescriptionTextColor }};
 

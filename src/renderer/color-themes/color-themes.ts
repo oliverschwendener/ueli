@@ -7,8 +7,11 @@ const light: ColorThemeOptions = {
     userInputTextColor: "#000",
 
     searchResultsBackgroundColor: "#fff",
+
     searchResultsItemActiveBackgroundColor: "#1976D2",
+    searchResultsItemActiveDescriptionColor: "#ccc",
     searchResultsItemActiveTextColor: "#fff",
+
     searchResultsItemDescriptionTextColor: "#666",
     searchResultsItemNameTextcolor: "#000",
 
@@ -23,8 +26,11 @@ const dark: ColorThemeOptions = {
     userInputTextColor: "#fff",
 
     searchResultsBackgroundColor: "#000",
+
     searchResultsItemActiveBackgroundColor: "#0078d7",
+    searchResultsItemActiveDescriptionColor: "#ccc",
     searchResultsItemActiveTextColor: "#fff",
+
     searchResultsItemDescriptionTextColor: "#ccc",
     searchResultsItemNameTextcolor: "#fff",
 
@@ -39,8 +45,11 @@ export const atomOneDark: ColorThemeOptions = {
     userInputTextColor: "#fff",
 
     searchResultsBackgroundColor: "#272c34",
+
     searchResultsItemActiveBackgroundColor: "#3d4452",
+    searchResultsItemActiveDescriptionColor: "#fff",
     searchResultsItemActiveTextColor: "#fff",
+
     searchResultsItemDescriptionTextColor: "#ccc",
     searchResultsItemNameTextcolor: "#aab2c0",
 

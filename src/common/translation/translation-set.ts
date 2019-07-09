@@ -114,6 +114,7 @@ export interface TranslationSet {
     colorThemeSearchResultsBackgroundColor: string;
     colorThemeSearchResultsItemActiveBackgroundColor: string;
     colorThemeSearchResultsItemActiveTextColor: string;
+    colorThemeSearchResultsItemActiveDescriptionColor: string;
     colorThemeSearchResutlsItemNameTextColor: string;
     colorThemeSearchResultsItemDescriptionTextColor: string;
     colorThemeScrollbarForegroundColor: string;

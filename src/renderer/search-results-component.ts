@@ -156,7 +156,7 @@ export const searchResultsComponent = Vue.extend({
                 </div>
                 <div class="search-results__item-info-container">
                     <div class="search-results__item-name" :class="{ 'active' : searchResult.active }">{{ searchResult.name }}</div>
-                    <div class="search-results__item-description" :class="{ 'visible' : searchResult.active || appearance.showDescriptionOnAllSearchResults }">{{ searchResult.description }}</div>
+                    <div class="search-results__item-description" :class="{ 'visible' : searchResult.active || appearance.showDescriptionOnAllSearchResults, 'active' : searchResult.active }">{{ searchResult.description }}</div>
                 </div>
             </div>
             <div v-if="isLoading" class="search-results__overlay"></div>

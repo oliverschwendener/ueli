@@ -5,8 +5,11 @@ export interface ColorThemeOptions {
     userInputTextColor: string;
 
     searchResultsBackgroundColor: string;
+
     searchResultsItemActiveBackgroundColor: string;
     searchResultsItemActiveTextColor: string;
+    searchResultsItemActiveDescriptionColor: string;
+
     searchResultsItemNameTextcolor: string;
     searchResultsItemDescriptionTextColor: string;
 

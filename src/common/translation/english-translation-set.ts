@@ -117,6 +117,7 @@ export const englishTranslationSet: TranslationSet = {
     colorThemeSearchResultsBackgroundColor: "Search results background color",
     colorThemeSearchResultsItemActiveBackgroundColor: "Search results active background color",
     colorThemeSearchResultsItemActiveTextColor: "Search results active text color",
+    colorThemeSearchResultsItemActiveDescriptionColor: "Search results active description color",
     colorThemeSearchResutlsItemNameTextColor: "Search results name text color",
     colorThemeSearchResultsItemDescriptionTextColor: "Search results description text color",
     colorThemeScrollbarForegroundColor: "Scrollbar foreground color",

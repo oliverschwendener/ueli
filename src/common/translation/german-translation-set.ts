@@ -117,6 +117,7 @@ export const germanTranslationSet: TranslationSet = {
     colorThemeSearchResultsBackgroundColor: "Suchergebnisse Hintergrundfarbe",
     colorThemeSearchResultsItemActiveBackgroundColor: "Aktives Suchergebnis Hintergrundfarbe",
     colorThemeSearchResultsItemActiveTextColor: "Aktives Suchergebnis Textfarbe",
+    colorThemeSearchResultsItemActiveDescriptionColor: "Aktives Suchergebnis Beschreibungsfarbe",
     colorThemeSearchResutlsItemNameTextColor: "Suchergebnis Name Textfarbe",
     colorThemeSearchResultsItemDescriptionTextColor: "Suchergebnis Beschreibung Textfarbe",
     colorThemeScrollbarForegroundColor: "Scrollbar Vordergrundfarbe",

@@ -226,6 +226,10 @@ body {
     font-weight: var(--search-results--item-description-font-weight);
 }
 
+.search-results__item-description.active {
+    color: var(--search-results--item-active-description-color);
+}
+
 .search-results__item-description.visible {
     display: block;
 }
