@@ -65,6 +65,7 @@ export const englishTranslationSet: TranslationSet = {
     generalSettingsResetWarning: "You are about to reset all general settings to default. Do you want to proceed?",
     generalSettingsResetAllSettingsWarning: "You are about to reset ALL settings to default. Do you want to proceed?",
     generalSettingsClearExecutionLogWarning: "You are about to clear the execution log. Do you want to proceed?",
+    generalSettingsHideMainWindowOnBlur: "Hide window when focus is lost",
     clearExecutionLog: "Clear execution log",
     openDebugLog: "Open debug log",
     openTempFolder: "Open temp folder",

@@ -6,6 +6,7 @@ import { Language } from "../translation/language";
 export const defaultGeneralOptions: GeneralOptions = {
     autostart: true,
     clearCachesOnExit: false,
+    hideMainWindowOnBlur: true,
     hotKey: {
         key: GlobalHotKeyKey.Space,
         modifier: GlobalHotKeyModifier.Alt,

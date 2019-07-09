@@ -405,6 +405,18 @@ export const generalSettingsComponent = Vue.extend({
                             </div>
                         </div>
 
+                        <div class="settings__option">
+                            <div class="settings__option-name">{{ translations.generalSettingsHideMainWindowOnBlur }}</div>
+                            <div class="settings__option-content">
+                                <div class="field has-addons has-addons-right vertical-center">
+                                    <div class="control">
+                                        <input id="hideMainWindowOnBlur" type="checkbox" name="hideMainWindowOnBlur" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.hideMainWindowOnBlur" @change="updateConfig()">
+                                        <label for="hideMainWindowOnBlur"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

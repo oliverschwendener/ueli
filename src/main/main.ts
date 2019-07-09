@@ -95,20 +95,22 @@ function registerGlobalKeyboardShortcut(toggleAction: () => void, newHotKey: Glo
 
 function showMainWindow() {
     if (mainWindow && !mainWindow.isDestroyed()) {
-        const mousePosition = screen.getCursorScreenPoint();
-        const display = config.generalOptions.showAlwaysOnPrimaryDisplay
-            ? screen.getPrimaryDisplay()
-            : screen.getDisplayNearestPoint(mousePosition);
-
-        const windowBounds: Electron.Rectangle = {
-            height: Math.round(Number(config.appearanceOptions.userInputHeight)),
-            width: Math.round(Number(config.appearanceOptions.windowWidth)),
-            x: config.generalOptions.rememberWindowPosition ? lastWindowPosition.x : calculateX(display),
-            y: config.generalOptions.rememberWindowPosition ? lastWindowPosition.y : calculateY(display),
-        };
-
-        mainWindow.setBounds(windowBounds);
-        mainWindow.show();
+        if (mainWindow.isVisible()) {
+            mainWindow.focus();
+        } else {
+            const mousePosition = screen.getCursorScreenPoint();
+            const display = config.generalOptions.showAlwaysOnPrimaryDisplay
+                ? screen.getPrimaryDisplay()
+                : screen.getDisplayNearestPoint(mousePosition);
+            const windowBounds: Electron.Rectangle = {
+                height: Math.round(Number(config.appearanceOptions.userInputHeight)),
+                width: Math.round(Number(config.appearanceOptions.windowWidth)),
+                x: config.generalOptions.rememberWindowPosition ? lastWindowPosition.x : calculateX(display),
+                y: config.generalOptions.rememberWindowPosition ? lastWindowPosition.y : calculateY(display),
+            };
+            mainWindow.setBounds(windowBounds);
+            mainWindow.show();
+        }
         mainWindow.webContents.send(IpcChannels.mainWindowHasBeenShown);
     }
 }
@@ -122,6 +124,12 @@ function calculateY(display: Electron.Display): number {
         config.appearanceOptions.maxSearchResultsPerPage,
         config.appearanceOptions.searchResultHeight,
         config.appearanceOptions.userInputHeight) / 2)));
+}
+
+function onBlur() {
+    if (config.generalOptions.hideMainWindowOnBlur) {
+        hideMainWindow();
+    }
 }
 
 function hideMainWindow() {
@@ -139,7 +147,11 @@ function hideMainWindow() {
 
 function toggleMainWindow() {
     if (mainWindow.isVisible()) {
-        hideMainWindow();
+        if (!config.generalOptions.hideMainWindowOnBlur) {
+            showMainWindow();
+        } else {
+            hideMainWindow();
+        }
     } else {
         showMainWindow();
     }
@@ -352,7 +364,7 @@ function createMainWindow() {
         },
         width: config.appearanceOptions.windowWidth,
     });
-    mainWindow.on("blur", hideMainWindow);
+    mainWindow.on("blur", onBlur);
     mainWindow.on("closed", quitApp);
     mainWindow.on("moved", onMainWindowMoved);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));

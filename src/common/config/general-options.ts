@@ -4,6 +4,7 @@ import { Language } from "../translation/language";
 export interface GeneralOptions {
     autostart: boolean;
     clearCachesOnExit: boolean;
+    hideMainWindowOnBlur: boolean;
     hotKey: GlobalHotKey;
     language: Language;
     logExecution: boolean;
