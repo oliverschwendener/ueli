@@ -440,13 +440,13 @@ function openSettings() {
     onSettingsOpen();
     if (!settingsWindow || settingsWindow.isDestroyed()) {
         settingsWindow = new BrowserWindow({
-            height: 900,
+            height: 750,
             icon: windowIconFilePath,
             title: translationSet.settings,
             webPreferences: {
                 nodeIntegration: true,
             },
-            width: 1200,
+            width: 1000,
         });
         settingsWindow.setMenu(null);
         settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
