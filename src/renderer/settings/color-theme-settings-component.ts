@@ -500,7 +500,7 @@ export const colorThemeSettingsComponent = Vue.extend({
 
             </div>
 
-            <color-picker :translations="translations">
+            <color-picker :translations="translations"></color-picker>
 
         </div>
     </div>

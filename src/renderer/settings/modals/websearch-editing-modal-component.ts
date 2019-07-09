@@ -110,10 +110,7 @@ export const websearchEditingModal = Vue.extend({
                         </div>
                     </div>
 
-                    <icon-editing
-                        :icon="websearchEngine.icon"
-                        :translations="translations"
-                        />
+                    <icon-editing :icon="websearchEngine.icon" :translations="translations"></icon-editing>
 
                     <div class="field">
                         <label class="label">

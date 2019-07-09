@@ -150,7 +150,7 @@ export const shortcutSettingsComponent = Vue.extend({
                                         </div>
                                     </td>
                                     <td class="has-text-centered">
-                                        <icon :icon="shortcut.icon" :defaulticon="defaultShortcutIcon"/>
+                                        <icon :icon="shortcut.icon" :defaulticon="defaultShortcutIcon"></icon>
                                     </td>
                                     <td class="has-text-centered">
                                         <button class="button" @click="editShortcut(index)">
@@ -174,7 +174,7 @@ export const shortcutSettingsComponent = Vue.extend({
                     </div>
                 </div>
             </div>
-            <shortcut-editing-modal :translations="translations"/>
+            <shortcut-editing-modal :translations="translations"></shortcut-editing-modal>
         </div>
     `,
 });

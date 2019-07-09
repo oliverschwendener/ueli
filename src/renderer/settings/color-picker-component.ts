@@ -44,7 +44,7 @@ export const colorPickerComponent = Vue.extend({
                 </div>
                 <div class="message-body">
                     <div class="field">
-                        <chrome-picker :value="color" @input="updateValue"/>
+                        <chrome-picker :value="color" @input="updateValue"></chrome-picker>
                     </div>
                     <div class="field is-grouped is-grouped-right">
                         <div class="control">

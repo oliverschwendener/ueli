@@ -76,7 +76,7 @@ export const settingsComponent = Vue.extend({
     },
     template: `
         <div class="settings container is-fluid">
-            <settings-loading-overlay/>
+            <settings-loading-overlay></settings-loading-overlay>
             <div class="settings__sidebar menu">
                 <div class="settings__sidebar-header-container">
                     <img class="settings__sidebar-header-image" src="./assets/ueli.svg">
@@ -90,7 +90,7 @@ export const settingsComponent = Vue.extend({
                         v-for="generalSettingMenuItem in generalSettingMenuItems"
                         :item="generalSettingMenuItem"
                         :translations="translations"
-                        />
+                        ></setting-menu-item>
                 </ul>
                 <div class="menu-label">
                     {{ translations.pluginSettingsMenuSection }}
@@ -100,7 +100,7 @@ export const settingsComponent = Vue.extend({
                         v-for="pluginSettingMenuItem in pluginSettingMenuItems"
                         :item="pluginSettingMenuItem"
                         :translations="translations"
-                        />
+                        ></setting-menu-item>
                 </ul>
             </div>
             <div class="settings__notification notification" :class="notificationClass">
@@ -108,27 +108,27 @@ export const settingsComponent = Vue.extend({
                 {{ notification.message }}
             </div>
             <div class="settings__setting">
-                <general-settings :config="config" :translations="translations"/>
-                <appearance-settings :config="config" :translations="translations"/>
-                <color-theme-settings :config="config" :translations="translations"/>
-                <search-engine-settings :config="config" :translations="translations"/>
-                <application-search-settings :config="config" :translations="translations"/>
-                <shortcut-settings :config="config" :translations="translations"/>
-                <mdfind-settings :config="config" :translations="translations"/>
-                <everthing-settings :config="config" :translations="translations"/>
-                <translation-settings :config="config" :translations="translations"/>
-                <websearch-settings :config="config" :translations="translations"/>
-                <filebrowser-settings :config="config" :translations="translations"/>
-                <operating-system-commands-settings :config="config" :translations="translations"/>
-                <operating-system-settings-settings :config="config" :translations="translations"/>
-                <calculator-settings :config="config" :translations="translations"/>
-                <url-settings :config="config" :translations="translations"/>
-                <email-settings :config="config" :translations="translations"/>
-                <currency-converter-settings :config="config" :translations="translations"/>
-                <workflow-settings :config="config" :translations="translations"/>
-                <commandline-settings :config="config" :translations="translations"/>
-                <simple-folder-search-settings :config="config" :translations="translations"/>
-                <user-confirmation :translations="translations"/>
+                <general-settings :config="config" :translations="translations"></general-settings>
+                <appearance-settings :config="config" :translations="translations"></appearance-settings>
+                <color-theme-settings :config="config" :translations="translations"></color-theme-settings>
+                <search-engine-settings :config="config" :translations="translations"></search-engine-settings>
+                <application-search-settings :config="config" :translations="translations"></application-search-settings>
+                <shortcut-settings :config="config" :translations="translations"></shortcut-settings>
+                <mdfind-settings :config="config" :translations="translations"></mdfind-settings>
+                <everthing-settings :config="config" :translations="translations"></everthing-settings>
+                <translation-settings :config="config" :translations="translations"></translation-settings>
+                <websearch-settings :config="config" :translations="translations"></websearch-settings>
+                <filebrowser-settings :config="config" :translations="translations"></filebrowser-settings>
+                <operating-system-commands-settings :config="config" :translations="translations"></operating-system-commands-settings>
+                <operating-system-settings-settings :config="config" :translations="translations"></operating-system-settings-settings>
+                <calculator-settings :config="config" :translations="translations"></calculator-settings>
+                <url-settings :config="config" :translations="translations"></url-settings>
+                <email-settings :config="config" :translations="translations"></email-settings>
+                <currency-converter-settings :config="config" :translations="translations"></currency-converter-settings>
+                <workflow-settings :config="config" :translations="translations"></workflow-settings>
+                <commandline-settings :config="config" :translations="translations"></commandline-settings>
+                <simple-folder-search-settings :config="config" :translations="translations"></simple-folder-search-settings>
+                <user-confirmation :translations="translations"></user-confirmation>
             </div>
         </div>
     `,
