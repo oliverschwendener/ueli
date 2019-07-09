@@ -62,6 +62,9 @@ export const germanTranslationSet: TranslationSet = {
     generalSettingsImportFileFilterJsonFiles: "JSON Dateien",
     generalSettingsImportErrorInvalidConfig: "Einstellungsimport fehlgeschlagen: Dateiinhalt scheint ungültig zu sein",
     generalSettingsResetAllSettings: "Alle Einstellungen auf Standard zurücksetzen",
+    generalSettingsResetWarning: "Du bist dabei alle allgemeinen Einstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
+    generalSettingsResetAllSettingsWarning: "Du bist dabei ALLE Einstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
+    generalSettingsClearExecutionLogWarning: "Du bist dabei den Ausführungslog zu löschen. Willst du fortfahren?",
     clearExecutionLog: "Ausführungslog löschen",
     openDebugLog: "Debug log öffnen",
     openTempFolder: "Temporärer Ordner öffnen",
@@ -97,10 +100,12 @@ export const germanTranslationSet: TranslationSet = {
     appearanceSettingsUserInputHeight: "Eingabefeld (in Pixel)",
     appearanceSettingsShowDescriptionOnAllSearchResults: "Beschreibung bei allen Suchresultaten anzeigen",
     appearanceSettingsShowSearchIcon: "Suchsymbol in der Suchleiste anzeigen",
+    appearanceSettingsResetWarningMessage: "Du bist dabei alle Erscheiungsbildeinstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
 
     colorThemeSettings: "Farbschema",
     colorThemeSettingsImportColorTheme: "Farbschema importieren",
     colorThemeSettingsExportColorTheme: "Farbschema exportieren",
+    colorThemeSettingsResetWarning: "Du bist dabei alle Farbschemaeinstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
     colorThemeExportSucceeded: "Erfolgreich Farbschema exportiert",
     colorThemeExportFailed: "Farbschemaexport fehlgeschlagen",
     colorThemeImportSucceeded: "Erfolgreich Farbschema importiert",
@@ -133,8 +138,6 @@ export const germanTranslationSet: TranslationSet = {
     applicationSearchSettingsNotAFolderErrorMessage: `"{{value}}" ist kein Ordner`,
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}}" existiert nicht`,
     applicationSearchSettingsFolderValidationError: `Während der Validierung von "{{value}}" ist ein Fehler aufgetreten`,
-    applicationSearchSettingsResetWarningMessage: "You are about to reset all application search settings to default. Do you want to proceed?",
-    applicationSearchSettingsResetWarningTitle: "Reset application search settings?",
 
     searchEngineSettings: "Suchmaschine",
     searchEngineSettingsDescription: `Die Suchmaschine wird für vorindexierte Inhalte benutzt, z.B. Programme, Shortcuts und Betriebssystembefehle und -einstellungen.`,
@@ -143,6 +146,7 @@ export const germanTranslationSet: TranslationSet = {
     searchEngineSettingsStrict: "Strikt",
     searchEngineSettingsFuzzy: "Fuzzy",
     searchEngineSettingsMaxSearchResults: "Maximale Suchergebnisse",
+    searchEngineSettingsResetWarning: "Du bist dabei alle Suchmaschineneinstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
 
     shortcutSettings: "Shortcuts",
     shortcutSettingsDescription: `Dieses Plugin erlaubt es dir Dateien und Webseiten schnell zu öffnen indem du eigene Shorctus erstellst.`,
@@ -293,4 +297,6 @@ export const germanTranslationSet: TranslationSet = {
     showFullFilePath: "Vollständiger Dateipfad anzeigen",
     yes: "Ja",
     no: "Nein",
+    resetToDefault: "Auf Standard zurücksetzen?",
+    resetPluginSettingsToDefaultWarning: "Du bist dabei alle Einstellungen dieses Plugins auf Standard zurückzusetzen. Willst du fortfahren?",
 };

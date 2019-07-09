@@ -15,6 +15,7 @@ import { FileHelpers } from "../../common/helpers/file-helpers";
 import { isValidUserConfig, mergeUserConfigWithDefault } from "../../common/helpers/config-helpers";
 import { defaultUserConfigOptions } from "../../common/config/default-user-config-options";
 import { GeneralSettings } from "./general-settings";
+import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 
 export const generalSettingsComponent = Vue.extend({
     data() {
@@ -29,7 +30,16 @@ export const generalSettingsComponent = Vue.extend({
     },
     methods: {
         clearExecutionLog() {
-            vueEventDispatcher.$emit(VueEventChannels.clearExecutionLogConfirmed);
+            const translations: TranslationSet = this.translations;
+            const userConfirmationDialogParams: UserConfirmationDialogParams = {
+                callback: () => {
+                    vueEventDispatcher.$emit(VueEventChannels.clearExecutionLogConfirmed);
+                },
+                message: translations.generalSettingsClearExecutionLogWarning,
+                modalTitle: translations.clearExecutionLog,
+                type: UserConfirmationDialogType.Default,
+            };
+            vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         dropdownTrigger() {
             this.dropdownVisible = !this.dropdownVisible;
@@ -139,21 +149,39 @@ export const generalSettingsComponent = Vue.extend({
             vueEventDispatcher.$emit(VueEventChannels.openTempFolderRequested);
         },
         resetAll() {
-            const config: UserConfigOptions = this.config;
-            config.generalOptions = cloneDeep(defaultGeneralOptions);
-            this.updateConfig();
+            const translations: TranslationSet = this.translations;
+            const userConfirmationDialogParams: UserConfirmationDialogParams = {
+                callback: () => {
+                    const config: UserConfigOptions = this.config;
+                    config.generalOptions = cloneDeep(defaultGeneralOptions);
+                    this.updateConfig();
+                },
+                message: translations.generalSettingsResetWarning,
+                modalTitle: translations.resetToDefault,
+                type: UserConfirmationDialogType.Default,
+            };
+            vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         resetAllSettingsToDefault() {
-            this.config = cloneDeep(defaultUserConfigOptions);
-            this.updateConfig();
-            this.dropdownVisible = false;
+            const translations: TranslationSet = this.translations;
+            const userConfirmationDialogParams: UserConfirmationDialogParams = {
+                callback: () => {
+                    this.config = cloneDeep(defaultUserConfigOptions);
+                    this.updateConfig(true);
+                    this.dropdownVisible = false;
+                },
+                message: translations.generalSettingsResetAllSettingsWarning,
+                modalTitle: translations.resetToDefault,
+                type: UserConfirmationDialogType.Error,
+            };
+            vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
-        updateConfig() {
+        updateConfig(needsIndexRefresh?: boolean) {
             const config: UserConfigOptions = this.config;
             if (config.generalOptions.rememberWindowPosition) {
                 config.generalOptions.showAlwaysOnPrimaryDisplay = false;
             }
-            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
+            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, needsIndexRefresh);
         },
     },
     mounted() {

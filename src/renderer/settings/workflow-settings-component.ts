@@ -10,6 +10,8 @@ import { WorkflowExecutionArgumentType } from "../../main/plugins/workflow-plugi
 import { Workflow } from "../../main/plugins/workflow-plugin/workflow";
 import { ModalEditMode } from "./modals/modal-edit-mode";
 import { getWorkflowExecutionArgumentTypeIcon, getWorkflowExecutionArgumentTypeClass } from "./helpers";
+import { TranslationSet } from "../../common/translation/translation-set";
+import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 
 const defaultNewWorkflow: Workflow = {
     description: "",
@@ -62,9 +64,18 @@ export const workflowSettingsComponent = Vue.extend({
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
         },
         resetAll() {
-            const config: UserConfigOptions = this.config;
-            config.workflowOptions = cloneDeep(defaultWorkflowOptions);
-            this.updateConfig();
+            const translations: TranslationSet = this.translations;
+            const userConfirmationDialogParams: UserConfirmationDialogParams = {
+                callback: () => {
+                    const config: UserConfigOptions = this.config;
+                    config.workflowOptions = cloneDeep(defaultWorkflowOptions);
+                    this.updateConfig();
+                },
+                message: translations.resetPluginSettingsToDefaultWarning,
+                modalTitle: translations.resetToDefault,
+                type: UserConfirmationDialogType.Default,
+            };
+            vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         getExecutionArgumentTypeIcon(type: WorkflowExecutionArgumentType): string {
             return getWorkflowExecutionArgumentTypeIcon(type);

@@ -39,7 +39,7 @@ import { fileBrowserSettingsComponent } from "./settings/filebrowser-settings-co
 import { operatingSystemCommandsSettingsComponent } from "./settings/operating-system-commands-settings-component";
 import { calculatorSettingsComponent } from "./settings/calculator-settings-component";
 import { urlSettingsComponent } from "./settings/url-settings-component";
-import { emailSettingsComponent } from "./settings/email-settings";
+import { emailSettingsComponent } from "./settings/email-settings-component";
 import { NotificationType } from "../common/notification-type";
 import { currencyConverterSettingsComponent } from "./settings/currency-converter-settings-component";
 import { workflowSettingsComponent } from "./settings/workflow-settings-component";
@@ -51,7 +51,7 @@ import { simpleFolderSearchSettingsComponent } from "./settings/simple-folder-se
 import { GeneralOptions } from "../common/config/general-options";
 import { simpleFolderSearchEditingModalComponent } from "./settings/modals/simple-folder-search-editing-modal-component";
 import { operatingSystemSettingsSettingsComponent } from "./settings/operating-system-settings-settings-component";
-import { userConfirmationDialog } from "./settings/modals/user-confirmation";
+import { userConfirmationDialog } from "./settings/modals/user-confirmation-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);

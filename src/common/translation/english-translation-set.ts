@@ -62,6 +62,9 @@ export const englishTranslationSet: TranslationSet = {
     generalSettingsImportFileFilterJsonFiles: "JSON files",
     generalSettingsImportErrorInvalidConfig: "Settings import failed: file content seems to be invalid",
     generalSettingsResetAllSettings: "Reset all settings to default",
+    generalSettingsResetWarning: "You are about to reset all general settings to default. Do you want to proceed?",
+    generalSettingsResetAllSettingsWarning: "You are about to reset ALL settings to default. Do you want to proceed?",
+    generalSettingsClearExecutionLogWarning: "You are about to clear the execution log. Do you want to proceed?",
     clearExecutionLog: "Clear execution log",
     openDebugLog: "Open debug log",
     openTempFolder: "Open temp folder",
@@ -97,10 +100,12 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsUserInputHeight: "User input height (in pixels)",
     appearanceSettingsShowDescriptionOnAllSearchResults: "Show description on all search results",
     appearanceSettingsShowSearchIcon: "Show search icon in search field",
+    appearanceSettingsResetWarningMessage: "You are about to reset all appearance settings to default. Do you want to proceed?",
 
     colorThemeSettings: "Color Theme",
     colorThemeSettingsImportColorTheme: "Import color theme",
     colorThemeSettingsExportColorTheme: "Export color theme",
+    colorThemeSettingsResetWarning: "You are about to reset all color theme settings to default. Do you want to proceed?",
     colorThemeExportSucceeded: "Color theme successfully exported",
     colorThemeExportFailed: "Color theme export failed",
     colorThemeImportSucceeded: "Color theme successfully imported",
@@ -133,8 +138,6 @@ export const englishTranslationSet: TranslationSet = {
     applicationSearchSettingsNotAFolderErrorMessage: `"{{value}} is not a folder"`,
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}} does not exist"`,
     applicationSearchSettingsFolderValidationError: `An error occured while trying to validate "{{value}}"`,
-    applicationSearchSettingsResetWarningMessage: "You are about to reset all application search settings to default. Do you want to proceed?",
-    applicationSearchSettingsResetWarningTitle: "Reset application search settings?",
 
     searchEngineSettings: "Search engine",
     searchEngineSettingsDescription: `The search engine is used for preindexed items like applications, shortcuts and operating system settings/commands.`,
@@ -143,6 +146,7 @@ export const englishTranslationSet: TranslationSet = {
     searchEngineSettingsStrict: "Strict",
     searchEngineSettingsFuzzy: "Fuzzy",
     searchEngineSettingsMaxSearchResults: "Max search results",
+    searchEngineSettingsResetWarning: "You are about to reset all search engine settings to default. Do you want to proceed?",
 
     shortcutSettings: "Shortcuts",
     shortcutSettingsDescription: `This plugin enables you to quickly open files or websites by setting up your own shortcuts.`,
@@ -293,4 +297,6 @@ export const englishTranslationSet: TranslationSet = {
     showFullFilePath: "Show full file path",
     yes: "Yes",
     no: "No",
+    resetToDefault: "Reset to default?",
+    resetPluginSettingsToDefaultWarning: "You are about to reset all settings of this plugin to default. Do you want to proceed?",
 };

@@ -59,6 +59,9 @@ export interface TranslationSet {
     generalSettingsImportFileFilterJsonFiles: string;
     generalSettingsImportErrorInvalidConfig: string;
     generalSettingsResetAllSettings: string;
+    generalSettingsResetWarning: string;
+    generalSettingsResetAllSettingsWarning: string;
+    generalSettingsClearExecutionLogWarning: string;
     clearExecutionLog: string;
     openDebugLog: string;
     openTempFolder: string;
@@ -94,10 +97,12 @@ export interface TranslationSet {
     appearanceSettingsUserInputHeight: string;
     appearanceSettingsShowDescriptionOnAllSearchResults: string;
     appearanceSettingsShowSearchIcon: string;
+    appearanceSettingsResetWarningMessage: string;
 
     colorThemeSettings: string;
     colorThemeSettingsImportColorTheme: string;
     colorThemeSettingsExportColorTheme: string;
+    colorThemeSettingsResetWarning: string;
     colorThemeExportSucceeded: string;
     colorThemeExportFailed: string;
     colorThemeImportSucceeded: string;
@@ -130,8 +135,6 @@ export interface TranslationSet {
     applicationSearchSettingsNotAFolderErrorMessage: string;
     applicationSearchSettingsDoesNotExistErrorMessage: string;
     applicationSearchSettingsFolderValidationError: string;
-    applicationSearchSettingsResetWarningMessage: string;
-    applicationSearchSettingsResetWarningTitle: string;
 
     searchEngineSettings: string;
     searchEngineSettingsDescription: string;
@@ -140,6 +143,7 @@ export interface TranslationSet {
     searchEngineSettingsStrict: string;
     searchEngineSettingsFuzzy: string;
     searchEngineSettingsMaxSearchResults: string;
+    searchEngineSettingsResetWarning: string;
 
     shortcutSettings: string;
     shortcutSettingsDescription: string;
@@ -290,4 +294,6 @@ export interface TranslationSet {
     showFullFilePath: string;
     yes: string;
     no: string;
+    resetToDefault: string;
+    resetPluginSettingsToDefaultWarning: string;
 }

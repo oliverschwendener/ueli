@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
-import { UserConfirmationDialogParams } from "./user-confirmation-dialog-params";
+import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./user-confirmation-dialog-params";
 
 export const userConfirmationDialog = Vue.extend({
     data() {
@@ -10,6 +10,7 @@ export const userConfirmationDialog = Vue.extend({
             isActive: false,
             message: "",
             title: "",
+            type: UserConfirmationDialogType.Default,
         };
     },
     methods: {
@@ -24,6 +25,16 @@ export const userConfirmationDialog = Vue.extend({
             this.message = "";
             this.title = "";
             this.confirmCallback = undefined;
+            this.type = "";
+        },
+        getMessageTypeClass(type: UserConfirmationDialogType): string {
+            switch (type) {
+                case UserConfirmationDialogType.Error:
+                    return "is-danger";
+                case UserConfirmationDialogType.Default:
+                default:
+                    return "";
+            }
         },
     },
     mounted() {
@@ -32,6 +43,10 @@ export const userConfirmationDialog = Vue.extend({
             this.message = params.message;
             this.title = params.modalTitle;
             this.confirmCallback = params.callback;
+
+            if (params.type) {
+                this.type = params.type;
+            }
         });
     },
     props: ["translations"],
@@ -39,7 +54,7 @@ export const userConfirmationDialog = Vue.extend({
     <div class="modal" :class="{ 'is-active' : isActive }">
         <div class="modal-background" @click="onDeny"></div>
         <div class="modal-card">
-            <div class="message">
+            <div class="message" :class="getMessageTypeClass(type)">
                 <div class="message-header">
                     <p>{{ title }}</p>
                     <button class="delete" aria-label="delete" @click="onDeny"></button>

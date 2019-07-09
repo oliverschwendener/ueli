@@ -9,6 +9,8 @@ import { defaultNewWebSearchEngine } from "../../main/plugins/websearch-plugin/w
 import { WebSearchEngine } from "../../main/plugins/websearch-plugin/web-search-engine";
 import { ModalEditMode } from "./modals/modal-edit-mode";
 import { defaultWebSearchIcon } from "../../common/icon/default-icons";
+import { TranslationSet } from "../../common/translation/translation-set";
+import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 
 export const webSearchSettingsComponent = Vue.extend({
     data() {
@@ -28,14 +30,18 @@ export const webSearchSettingsComponent = Vue.extend({
             vueEventDispatcher.$emit(VueEventChannels.openWebSearchEditingModal, cloneDeep(defaultNewWebSearchEngine), ModalEditMode.Add);
         },
         resetAll() {
-            const config: UserConfigOptions = this.config;
-            config.websearchOptions = cloneDeep(defaultWebSearchOptions);
-            this.updateConfig();
-        },
-        resetWebsearchEngines() {
-            const config: UserConfigOptions = this.config;
-            config.websearchOptions.webSearchEngines = cloneDeep(defaultWebSearchOptions.webSearchEngines);
-            this.updateConfig();
+            const translations: TranslationSet = this.translations;
+            const userConfirmationDialogParams: UserConfirmationDialogParams = {
+                callback: () => {
+                    const config: UserConfigOptions = this.config;
+                    config.websearchOptions = cloneDeep(defaultWebSearchOptions);
+                    this.updateConfig();
+                },
+                message: translations.resetPluginSettingsToDefaultWarning,
+                modalTitle: translations.resetToDefault,
+                type: UserConfirmationDialogType.Default,
+            };
+            vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         toggleEnabled() {
             const config: UserConfigOptions = this.config;
@@ -103,11 +109,6 @@ export const webSearchSettingsComponent = Vue.extend({
                     <div class="title is-5">
                         {{ translations.websearchEngines }}
                     </div>
-                    <button class="button" @click="resetWebsearchEngines">
-                        <span class="icon">
-                            <i class="fas fa-undo-alt"></i>
-                        </span>
-                    </button>
                 </div>
                 <div class="table-container">
                     <table v-if="config.websearchOptions.webSearchEngines.length > 0" class="table is-striped is-fullwidth">

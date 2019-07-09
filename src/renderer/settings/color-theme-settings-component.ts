@@ -14,6 +14,7 @@ import { ColorThemeOptions } from "../../common/config/color-theme-options";
 import { isValidColorTheme } from "../../common/helpers/color-theme-helpers";
 import { showNotification } from "../notifications";
 import { colorThemes } from "../color-themes/color-themes";
+import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 
 export const colorThemeSettingsComponent = Vue.extend({
     data() {
@@ -27,9 +28,18 @@ export const colorThemeSettingsComponent = Vue.extend({
     },
     methods: {
         resetAll() {
-            const config: UserConfigOptions = this.config;
-            config.colorThemeOptions = cloneDeep(defaultColorThemeOptions);
-            this.updateConfig();
+            const translations: TranslationSet = this.translations;
+            const userConfirmationDialogParams: UserConfirmationDialogParams = {
+                callback: () => {
+                    const config: UserConfigOptions = this.config;
+                    config.colorThemeOptions = cloneDeep(defaultColorThemeOptions);
+                    this.updateConfig();
+                },
+                message: translations.colorThemeSettingsResetWarning,
+                modalTitle: translations.resetToDefault,
+                type: UserConfirmationDialogType.Default,
+            };
+            vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         resetUserInputBackgroundColor() {
             const config: UserConfigOptions = this.config;

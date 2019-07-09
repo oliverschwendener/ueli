@@ -8,6 +8,7 @@ import { defaultEverythingSearchOptions } from "../../common/config/default-ever
 import { platform } from "os";
 import { getFilePath } from "../dialogs";
 import { TranslationSet } from "../../common/translation/translation-set";
+import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 
 export const everythingSettingsComponent = Vue.extend({
     data() {
@@ -23,9 +24,19 @@ export const everythingSettingsComponent = Vue.extend({
             this.updateConfig();
         },
         resetAll() {
-            const config: UserConfigOptions = this.config;
-            config.everythingSearchOptions = cloneDeep(defaultEverythingSearchOptions);
-            this.updateConfig();
+
+            const translations: TranslationSet = this.translations;
+            const userConfirmationDialogParams: UserConfirmationDialogParams = {
+                callback: () => {
+                    const config: UserConfigOptions = this.config;
+                    config.everythingSearchOptions = cloneDeep(defaultEverythingSearchOptions);
+                    this.updateConfig();
+                },
+                message: translations.resetPluginSettingsToDefaultWarning,
+                modalTitle: translations.resetToDefault,
+                type: UserConfirmationDialogType.Default,
+            };
+            vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         resetPathToEs() {
             const config: UserConfigOptions = this.config;

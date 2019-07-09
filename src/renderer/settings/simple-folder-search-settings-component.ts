@@ -7,6 +7,8 @@ import { cloneDeep } from "lodash";
 import { defaultSimpleFolderSearchOptions } from "../../common/config/default-simple-folder-search-options";
 import { SimpleFolderSearchFolderOption } from "../../common/config/simple-folder-search-options";
 import { ModalEditMode } from "./modals/modal-edit-mode";
+import { TranslationSet } from "../../common/translation/translation-set";
+import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 
 export const simpleFolderSearchSettingsComponent = Vue.extend({
     data() {
@@ -30,9 +32,18 @@ export const simpleFolderSearchSettingsComponent = Vue.extend({
             this.updateConfig(true);
         },
         resetAll() {
-            const config: UserConfigOptions = this.config;
-            config.simpleFolderSearchOptions = cloneDeep(defaultSimpleFolderSearchOptions);
-            this.updateConfig(true);
+            const translations: TranslationSet = this.translations;
+            const userConfirmationDialogParams: UserConfirmationDialogParams = {
+                callback: () => {
+                    const config: UserConfigOptions = this.config;
+                    config.simpleFolderSearchOptions = cloneDeep(defaultSimpleFolderSearchOptions);
+                    this.updateConfig(true);
+                },
+                message: translations.resetPluginSettingsToDefaultWarning,
+                modalTitle: translations.resetToDefault,
+                type: UserConfirmationDialogType.Default,
+            };
+            vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         toggleEnabled() {
             const config: UserConfigOptions = this.config;

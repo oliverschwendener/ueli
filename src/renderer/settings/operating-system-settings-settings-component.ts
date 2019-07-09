@@ -5,6 +5,8 @@ import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultOperatingSystemSettingsOptions } from "../../common/config/default-operating-system-settings-options";
 import { cloneDeep } from "lodash";
+import { TranslationSet } from "../../common/translation/translation-set";
+import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 
 export const operatingSystemSettingsSettingsComponent = Vue.extend({
     data() {
@@ -20,9 +22,18 @@ export const operatingSystemSettingsSettingsComponent = Vue.extend({
             this.updateConfig();
         },
         resetAll() {
-            const config: UserConfigOptions = this.config;
-            config.operatingSystemSettingsOptions = cloneDeep(defaultOperatingSystemSettingsOptions);
-            this.updateConfig();
+            const translations: TranslationSet = this.translations;
+            const userConfirmationDialogParams: UserConfirmationDialogParams = {
+                callback: () => {
+                    const config: UserConfigOptions = this.config;
+                    config.operatingSystemSettingsOptions = cloneDeep(defaultOperatingSystemSettingsOptions);
+                    this.updateConfig();
+                },
+                message: translations.resetPluginSettingsToDefaultWarning,
+                modalTitle: translations.resetToDefault,
+                type: UserConfirmationDialogType.Default,
+            };
+            vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         updateConfig() {
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);

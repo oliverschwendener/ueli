@@ -5,6 +5,8 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { cloneDeep } from "lodash";
 import { PluginSettings } from "./plugin-settings";
+import { TranslationSet } from "../../common/translation/translation-set";
+import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 
 export const emailSettingsComponent = Vue.extend({
     data() {
@@ -20,9 +22,18 @@ export const emailSettingsComponent = Vue.extend({
             this.updateConfig();
         },
         resetAll() {
-            const config: UserConfigOptions = this.config;
-            config.emailOptions = cloneDeep(defaultEmailOptions);
-            this.updateConfig();
+            const translations: TranslationSet = this.translations;
+            const userConfirmationDialogParams: UserConfirmationDialogParams = {
+                callback: () => {
+                    const config: UserConfigOptions = this.config;
+                    config.emailOptions = cloneDeep(defaultEmailOptions);
+                    this.updateConfig();
+                },
+                message: translations.resetPluginSettingsToDefaultWarning,
+                modalTitle: translations.resetToDefault,
+                type: UserConfirmationDialogType.Default,
+            };
+            vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         updateConfig() {
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);

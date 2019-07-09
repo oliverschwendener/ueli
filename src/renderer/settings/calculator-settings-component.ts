@@ -5,6 +5,8 @@ import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultCalculatorOptions } from "../../common/config/default-calculator-options";
 import { cloneDeep } from "lodash";
+import { TranslationSet } from "../../common/translation/translation-set";
+import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 
 export const calculatorSettingsComponent = Vue.extend({
     data() {
@@ -20,9 +22,18 @@ export const calculatorSettingsComponent = Vue.extend({
             this.updateConfig();
         },
         resetAll() {
-            const config: UserConfigOptions = this.config;
-            config.calculatorOptions = cloneDeep(defaultCalculatorOptions);
-            this.updateConfig();
+            const translations: TranslationSet = this.translations;
+            const userConfirmationDialogParams: UserConfirmationDialogParams = {
+                callback: () => {
+                    const config: UserConfigOptions = this.config;
+                    config.calculatorOptions = cloneDeep(defaultCalculatorOptions);
+                    this.updateConfig();
+                },
+                message: translations.resetPluginSettingsToDefaultWarning,
+                modalTitle: translations.resetToDefault,
+                type: UserConfirmationDialogType.Default,
+            };
+            vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         updateConfig() {
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);

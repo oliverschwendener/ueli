@@ -5,6 +5,8 @@ import { UserConfigOptions } from "../../common/config/user-config-options";
 import { cloneDeep } from "lodash";
 import { defaultSearchEngineOptions } from "../../common/config/default-search-engine-options";
 import { GeneralSettings } from "./general-settings";
+import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
+import { TranslationSet } from "../../common/translation/translation-set";
 
 export const searchEngineSettingsComponent = Vue.extend({
     data() {
@@ -15,9 +17,18 @@ export const searchEngineSettingsComponent = Vue.extend({
     },
     methods: {
         resetAll() {
-            const config: UserConfigOptions = this.config;
-            config.searchEngineOptions = cloneDeep(defaultSearchEngineOptions);
-            this.updateConfig();
+            const translations: TranslationSet = this.translations;
+            const userConfirmationDialogParams: UserConfirmationDialogParams = {
+                callback: () => {
+                    const config: UserConfigOptions = this.config;
+                    config.searchEngineOptions = cloneDeep(defaultSearchEngineOptions);
+                    this.updateConfig();
+                },
+                message: translations.searchEngineSettingsResetWarning,
+                modalTitle: translations.resetToDefault,
+                type: UserConfirmationDialogType.Default,
+            };
+            vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         updateConfig() {
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);

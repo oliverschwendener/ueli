@@ -6,6 +6,8 @@ import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultTranslationOptions } from "../../common/config/default-translation-options";
 import { cloneDeep } from "lodash";
 import { TranslationLanguage } from "../../main/plugins/translation-plugin/translation-language";
+import { TranslationSet } from "../../common/translation/translation-set";
+import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 
 export const translationSettingsComponent = Vue.extend({
     data() {
@@ -18,9 +20,18 @@ export const translationSettingsComponent = Vue.extend({
     },
     methods: {
         resetAll() {
-            const config: UserConfigOptions = this.config;
-            config.translationOptions = cloneDeep(defaultTranslationOptions);
-            this.updateConfig();
+            const translations: TranslationSet = this.translations;
+            const userConfirmationDialogParams: UserConfirmationDialogParams = {
+                callback: () => {
+                    const config: UserConfigOptions = this.config;
+                    config.translationOptions = cloneDeep(defaultTranslationOptions);
+                    this.updateConfig();
+                },
+                message: translations.resetPluginSettingsToDefaultWarning,
+                modalTitle: translations.resetToDefault,
+                type: UserConfirmationDialogType.Default,
+            };
+            vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         toggleEnabled() {
             const config: UserConfigOptions = this.config;
