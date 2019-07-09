@@ -24,7 +24,6 @@
     --search-results--item-height: 50px;
     --search-results--item-side-padding: 15px;
     --search-results--item-icon-size: 30px;
-    --search-results--item-icon-color: #fff;
     --search-results--item-info-container-padding: 10px;
 
     --scrollbar--size: 8px;
@@ -175,7 +174,11 @@ body {
 .search-results__item-icon--svg {
     width: 100%;
     height: 100%;
-    fill: var(--search-results--item-icon-color);
+    fill: var(--search-results--item-name-text-color);
+}
+
+.search-results__item-icon--svg.active {
+    fill: var(--search-results--item-active-text-color);
 }
 
 .search-results__item-icon-overlay {

@@ -27,12 +27,13 @@ export const searchResultsComponent = Vue.extend({
             const searchResults: SearchResultItemViewModel[] = this.searchResults;
             return searchResults.find((s): boolean => s.active);
         },
-        getIcon(icon: Icon) {
+        getIcon(icon: Icon, active: boolean) {
+            const activeClass = active ? "active" : "";
             switch (icon.type) {
                 case IconType.URL:
-                    return `<img class="search-results__item-icon--url" src="${icon.parameter}">`;
+                    return `<img class="search-results__item-icon--url ${activeClass}" src="${icon.parameter}">`;
                 case IconType.SVG:
-                    return `<div class="search-results__item-icon--svg">${icon.parameter}</div>`;
+                    return `<div class="search-results__item-icon--svg ${activeClass}">${icon.parameter}</div>`;
             }
         },
         update(searchResults: SearchResultItem[]) {
@@ -152,7 +153,7 @@ export const searchResultsComponent = Vue.extend({
             <div :id="searchResult.id" class="search-results__item" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
                 <div class="search-results__item-icon-container">
                     <div class="search-results__item-icon-overlay" :class="{ 'active' : searchResult.active }"></div>
-                    <div class="search-results__item-icon" v-html="getIcon(searchResult.icon)"></div>
+                    <div class="search-results__item-icon" v-html="getIcon(searchResult.icon, searchResult.active)"></div>
                 </div>
                 <div class="search-results__item-info-container">
                     <div class="search-results__item-name" :class="{ 'active' : searchResult.active }">{{ searchResult.name }}</div>
