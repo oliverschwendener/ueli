@@ -131,26 +131,28 @@ export const applicationSearchSettingsComponent = Vue.extend({
                         </div>
                         <button class="button" @click="resetApplicationFoldersToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
-                    <table v-if="config.applicationSearchOptions.applicationFolders.length > 0" class="table is-striped is-fullwidth">
-                        <thead>
-                            <tr>
-                                <th>{{ translations.applicationSearchSettingsFolderPath }}</th>
-                                <th class="has-text-right">{{ translations.applicationSearchSettingsRemoveAction }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="applicationFolder in config.applicationSearchOptions.applicationFolders">
-                                <td>{{ applicationFolder }}</td>
-                                <td class="has-text-right">
-                                    <button class="button is-danger" @click="removeApplicationFolder(applicationFolder)">
-                                        <span class="icon">
-                                            <i class="fas fa-trash"></i>
-                                        </span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-container">
+                        <table v-if="config.applicationSearchOptions.applicationFolders.length > 0" class="table is-striped is-fullwidth">
+                            <thead>
+                                <tr>
+                                    <th>{{ translations.applicationSearchSettingsFolderPath }}</th>
+                                    <th class="has-text-right">{{ translations.applicationSearchSettingsRemoveAction }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="applicationFolder in config.applicationSearchOptions.applicationFolders">
+                                    <td>{{ applicationFolder }}</td>
+                                    <td class="has-text-right">
+                                        <button class="button is-danger" @click="removeApplicationFolder(applicationFolder)">
+                                            <span class="icon">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <div>
                         <button class="button is-success" @click="onAddFolderClick">
                             <span class="icon"><i class="fas fa-plus"></i></span>
@@ -167,26 +169,28 @@ export const applicationSearchSettingsComponent = Vue.extend({
                         </div>
                         <button class="button" @click="resetApplicationFileExtensionsToDefault"><span class="icon"><i class="fas fa-undo-alt"></i></span></button>
                     </div>
-                    <table class="table is-striped is-fullwidth">
-                        <thead>
-                            <tr>
-                                <th>{{ translations.applicationSearchSettingsApplicationFileExtension }}</th>
-                                <th class="has-text-right">{{ translations.applicationSearchSettingsRemoveAction }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="applicationFileExtension in config.applicationSearchOptions.applicationFileExtensions">
-                                <td>{{ applicationFileExtension }}</td>
-                                <td class="has-text-right">
-                                    <button class="button is-danger" @click="removeApplicationFileExtension(applicationFileExtension)">
-                                        <span class="icon">
-                                            <i class="fas fa-trash"></i>
-                                        </span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="table is-striped is-fullwidth">
+                            <thead>
+                                <tr>
+                                    <th>{{ translations.applicationSearchSettingsApplicationFileExtension }}</th>
+                                    <th class="has-text-right">{{ translations.applicationSearchSettingsRemoveAction }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="applicationFileExtension in config.applicationSearchOptions.applicationFileExtensions">
+                                    <td>{{ applicationFileExtension }}</td>
+                                    <td class="has-text-right">
+                                        <button class="button is-danger" @click="removeApplicationFileExtension(applicationFileExtension)">
+                                            <span class="icon">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <div>
                         <button class="button is-success" @click="onAddFileExtensionClick">
                             <span class="icon"><i class="fas fa-plus"></i></span>
