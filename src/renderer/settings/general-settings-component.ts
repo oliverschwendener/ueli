@@ -256,7 +256,7 @@ export const generalSettingsComponent = Vue.extend({
                                 <div class="field is-grouped is-grouped-right">
                                     <div class="control">
                                         <div class="select">
-                                            <select v-model="config.generalOptions.language" @change="updateConfig">
+                                            <select v-model="config.generalOptions.language" @change="updateConfig()">
                                                 <option v-for="availableLanguage in availableLanguages">{{ availableLanguage }}</option>
                                             </select>
                                         </div>
@@ -270,7 +270,7 @@ export const generalSettingsComponent = Vue.extend({
                             <div class="settings__option-content">
                                 <div class="field has-addons has-addons-right vertical-center">
                                     <div class="control">
-                                        <input id="autoStartCheckbox" type="checkbox" name="autoStartCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.autostart" @change="updateConfig">
+                                        <input id="autoStartCheckbox" type="checkbox" name="autoStartCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.autostart" @change="updateConfig()">
                                         <label for="autoStartCheckbox"></label>
                                     </div>
                                 </div>
@@ -282,7 +282,7 @@ export const generalSettingsComponent = Vue.extend({
                             <div class="settings__option-content">
                                 <div class="field has-addons has-addons-right vertical-center">
                                     <div class="control">
-                                        <input id="showTrayIconCheckbox" type="checkbox" name="showTrayIconCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.showTrayIcon" @change="updateConfig">
+                                        <input id="showTrayIconCheckbox" type="checkbox" name="showTrayIconCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.showTrayIcon" @change="updateConfig()">
                                         <label for="showTrayIconCheckbox"></label>
                                     </div>
                                 </div>
@@ -294,7 +294,7 @@ export const generalSettingsComponent = Vue.extend({
                             <div class="settings__option-content">
                                 <div class="field has-addons has-addons-right vertical-center">
                                     <div class="control">
-                                        <input id="clearCachesOnExit" type="checkbox" name="clearCachesOnExit" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.clearCachesOnExit" @change="updateConfig">
+                                        <input id="clearCachesOnExit" type="checkbox" name="clearCachesOnExit" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.clearCachesOnExit" @change="updateConfig()">
                                         <label for="clearCachesOnExit"></label>
                                     </div>
                                 </div>
@@ -307,7 +307,7 @@ export const generalSettingsComponent = Vue.extend({
                                 <div class="field has-addons has-addons-right">
                                     <div class="control">
                                         <div class="select">
-                                            <select v-model="config.generalOptions.hotKey.modifier" @change="updateConfig">
+                                            <select v-model="config.generalOptions.hotKey.modifier" @change="updateConfig()">
                                                 <option v-for="globalHotKeyModifier in globalHotKeyModifiers" :value="globalHotKeyModifier">
                                                     {{ getTranslatedGlobalHotKeyModifier(globalHotKeyModifier) }}
                                                 </option>
@@ -323,7 +323,7 @@ export const generalSettingsComponent = Vue.extend({
                                     </div>
                                     <div class="control">
                                         <div class="select">
-                                            <select v-model="config.generalOptions.hotKey.key" @change="updateConfig">
+                                            <select v-model="config.generalOptions.hotKey.key" @change="updateConfig()">
                                                 <option v-for="globalHotKeyKey in globalHotKeyKeys" :value="globalHotKeyKey">
                                                     {{ getTranslatedGlobalHotKeyKey(globalHotKeyKey) }}
                                                 </option>
@@ -339,7 +339,7 @@ export const generalSettingsComponent = Vue.extend({
                             <div class="settings__option-content">
                                 <div class="field is-grouped is-grouped-right">
                                     <div class="control">
-                                        <input id="rescanEnabledCheckbox" type="checkbox" name="rescanEnabledCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.rescanEnabled" @change="updateConfig">
+                                        <input id="rescanEnabledCheckbox" type="checkbox" name="rescanEnabledCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.rescanEnabled" @change="updateConfig()">
                                         <label for="rescanEnabledCheckbox"></label>
                                     </div>
                                 </div>
@@ -351,7 +351,7 @@ export const generalSettingsComponent = Vue.extend({
                             <div class="settings__option-content">
                                 <div class="field is-grouped is-grouped-right">
                                     <div class="control">
-                                        <input class="input" type="number" min="10" v-model="config.generalOptions.rescanIntervalInSeconds" @change="updateConfig">
+                                        <input class="input" type="number" min="10" v-model="config.generalOptions.rescanIntervalInSeconds" @change="updateConfig()">
                                     </div>
                                 </div>
                             </div>
@@ -362,7 +362,7 @@ export const generalSettingsComponent = Vue.extend({
                             <div class="settings__option-content">
                                 <div class="field has-addons has-addons-right vertical-center">
                                     <div class="control">
-                                        <input id="rememberWindowPositionCheckbox" type="checkbox" name="rememberWindowPositionCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.rememberWindowPosition" @change="updateConfig">
+                                        <input id="rememberWindowPositionCheckbox" type="checkbox" name="rememberWindowPositionCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.rememberWindowPosition" @change="updateConfig()">
                                         <label for="rememberWindowPositionCheckbox"></label>
                                     </div>
                                 </div>
@@ -374,7 +374,7 @@ export const generalSettingsComponent = Vue.extend({
                             <div class="settings__option-content">
                                 <div class="field has-addons has-addons-right vertical-center">
                                     <div class="control">
-                                        <input id="showAlwaysOnPrimaryDisplayCheckbox" type="checkbox" name="showAlwaysOnPrimaryDisplayCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.showAlwaysOnPrimaryDisplay" @change="updateConfig">
+                                        <input id="showAlwaysOnPrimaryDisplayCheckbox" type="checkbox" name="showAlwaysOnPrimaryDisplayCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.showAlwaysOnPrimaryDisplay" @change="updateConfig()">
                                         <label for="showAlwaysOnPrimaryDisplayCheckbox"></label>
                                     </div>
                                 </div>
@@ -386,7 +386,7 @@ export const generalSettingsComponent = Vue.extend({
                             <div class="settings__option-content">
                                 <div class="field has-addons has-addons-right vertical-center">
                                     <div class="control">
-                                        <input id="logExecutionCheckbox" type="checkbox" name="logExecutionCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.logExecution" @change="updateConfig">
+                                        <input id="logExecutionCheckbox" type="checkbox" name="logExecutionCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.logExecution" @change="updateConfig()">
                                         <label for="logExecutionCheckbox"></label>
                                     </div>
                                 </div>
@@ -398,7 +398,7 @@ export const generalSettingsComponent = Vue.extend({
                             <div class="settings__option-content">
                                 <div class="field has-addons has-addons-right vertical-center">
                                     <div class="control">
-                                        <input id="persistentUserInput" type="checkbox" name="persistentUserInput" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.persistentUserInput" @change="updateConfig">
+                                        <input id="persistentUserInput" type="checkbox" name="persistentUserInput" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.persistentUserInput" @change="updateConfig()">
                                         <label for="persistentUserInput"></label>
                                     </div>
                                 </div>

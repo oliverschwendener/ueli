@@ -127,7 +127,7 @@ const app = new Vue({
             ipcRenderer.send(IpcChannels.favoritesRequested);
         });
 
-        vueEventDispatcher.$on(VueEventChannels.configUpdated, (updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) => {
+        vueEventDispatcher.$on(VueEventChannels.configUpdated, (updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean) => {
             if (needsIndexRefresh) {
                 vueEventDispatcher.$emit(VueEventChannels.loadingStarted);
             }

@@ -149,7 +149,7 @@ function getMaxWindowHeight(maxSearchResultsPerPage: number, searchResultHeight:
     return Number(maxSearchResultsPerPage) * Number(searchResultHeight) + Number(userInputHeight);
 }
 
-function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) {
+function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean) {
     if (updatedConfig.generalOptions.language !== config.generalOptions.language) {
         onLanguageChange(updatedConfig);
     }
@@ -335,6 +335,7 @@ function onMainWindowMoved() {
 
 function createMainWindow() {
     mainWindow = new BrowserWindow({
+        backgroundColor: "#00000000",
         center: true,
         frame: false,
         height: getMaxWindowHeight(
@@ -462,7 +463,7 @@ function sendErrorToRenderer(err: string, webcontents: WebContents) {
 }
 
 function registerAllIpcListeners() {
-    ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: UserConfigOptions, needsIndexRefresh: boolean) => {
+    ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean) => {
         updateConfig(updatedConfig, needsIndexRefresh);
     });
 
