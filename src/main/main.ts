@@ -24,10 +24,11 @@ import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-help
 import { isValidHotKey } from "../common/global-hot-key/global-hot-key-helpers";
 import { NotificationType } from "../common/notification-type";
 import { UserInputHistoryManager } from "./user-input-history-manager";
-import { isWindows } from "../common/helpers/operating-system-helpers";
+import { isWindows, isMacOs } from "../common/helpers/operating-system-helpers";
 import { executeFilePathWindows, executeFilePathMacOs } from "./executors/file-path-executor";
 import { WindowPosition } from "../common/window-position";
 import { UpdateCheckResult } from "../common/update-check-result";
+import { executeUrlMacOs } from "./executors/url-executor";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -38,6 +39,7 @@ const currentOperatingSystem = isWindows(platform()) ? OperatingSystem.Windows :
 const filePathExecutor = currentOperatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
 const windowIconFilePath = join(__dirname, "..", "assets", "ueli-white-on-black-logo-circle.png");
 const userInputHistoryManager = new UserInputHistoryManager();
+const releaseUrl = "https://github.com/oliverschwendener/ueli/releases/latest";
 
 autoUpdater.autoDownload = false;
 
@@ -633,8 +635,12 @@ function registerAllIpcListeners() {
     });
 
     ipcMain.on(IpcChannels.downloadUpdate, (event: Electron.Event) => {
-        logger.debug("Downloading updated");
-        autoUpdater.downloadUpdate();
+        if (isWindows(platform())) {
+            logger.debug("Downloading updated");
+            autoUpdater.downloadUpdate();
+        } else if (isMacOs(platform())) {
+            executeUrlMacOs(releaseUrl);
+        }
     });
 }
 
@@ -672,7 +678,9 @@ autoUpdater.on("error", (error) => {
     }
 });
 
-autoUpdater.on("update-downloaded", () => {
-    logger.debug("Update downloaded");
-    autoUpdater.quitAndInstall();
-});
+if (isWindows(platform())) {
+    autoUpdater.on("update-downloaded", () => {
+        logger.debug("Update downloaded");
+        autoUpdater.quitAndInstall();
+    });
+}

@@ -18,6 +18,8 @@ import { GeneralSettings } from "./general-settings";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { UpdateCheckResult } from "../../common/update-check-result";
 import { isDev } from "../../common/is-dev";
+import { isWindows } from "../../common/helpers/operating-system-helpers";
+import { platform } from "os";
 
 interface UpdateStatus {
     checking: boolean;
@@ -208,12 +210,14 @@ export const generalSettingsComponent = Vue.extend({
         },
         downloadUpdate() {
             vueEventDispatcher.$emit(VueEventChannels.downloadUpdate);
-            const updateStatus: UpdateStatus = this.updateStatus;
-            updateStatus.checking = false;
-            updateStatus.downloading = true;
-            updateStatus.errorOnUpdateCheck = false;
-            updateStatus.latestVersionRunning = false;
-            updateStatus.updateAvailable = false;
+            if (isWindows(platform())) {
+                const updateStatus: UpdateStatus = this.updateStatus;
+                updateStatus.checking = false;
+                updateStatus.downloading = true;
+                updateStatus.errorOnUpdateCheck = false;
+                updateStatus.latestVersionRunning = false;
+                updateStatus.updateAvailable = false;
+            }
         },
         changeUpdateStatus(result: UpdateCheckResult) {
             const updateStatus: UpdateStatus = this.updateStatus;
