@@ -52,6 +52,7 @@ import { GeneralOptions } from "../common/config/general-options";
 import { simpleFolderSearchEditingModalComponent } from "./settings/modals/simple-folder-search-editing-modal-component";
 import { operatingSystemSettingsSettingsComponent } from "./settings/operating-system-settings-settings-component";
 import { userConfirmationDialog } from "./settings/modals/user-confirmation-component";
+import { UpdateCheckResult } from "../common/update-check-result";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -153,6 +154,14 @@ const app = new Vue({
             ipcRenderer.send(IpcChannels.selectInputHistoryItem, direction);
         });
 
+        vueEventDispatcher.$on(VueEventChannels.checkForUpdate, () => {
+            ipcRenderer.send(IpcChannels.checkForUpdate);
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.downloadUpdate, () => {
+            ipcRenderer.send(IpcChannels.downloadUpdate);
+        });
+
         ipcRenderer.on(IpcChannels.appearanceOptionsUpdated, (event: Electron.Event, updatedAppearanceOptions: AppearanceOptions) => {
             vueEventDispatcher.$emit(VueEventChannels.appearanceOptionsUpdated, updatedAppearanceOptions);
         });
@@ -195,6 +204,10 @@ const app = new Vue({
 
         ipcRenderer.on(IpcChannels.refreshIndexesCompleted, (event: Electron.Event, message: string) => {
             vueEventDispatcher.$emit(VueEventChannels.loadingCompleted);
+        });
+
+        ipcRenderer.on(IpcChannels.checkForUpdateResponse, (event: Electron.Event, updateCheckResult: UpdateCheckResult) => {
+            vueEventDispatcher.$emit(VueEventChannels.checkForUpdateResponse, updateCheckResult);
         });
     },
     methods: {

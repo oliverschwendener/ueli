@@ -30,4 +30,7 @@ export enum IpcChannels {
     openTempFolderRequested = "open-temp-folder-requested",
     notification = "notification",
     selectInputHistoryItem = "select-input-history-item",
+    checkForUpdate = " check-for-update",
+    checkForUpdateResponse = "check-for-update-response",
+    downloadUpdate = "download-update",
 }

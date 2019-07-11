@@ -1,4 +1,5 @@
 import { app, BrowserWindow, ipcMain, globalShortcut, dialog, Tray, Menu, screen, MenuItemConstructorOptions, WebContents } from "electron";
+import { autoUpdater } from "electron-updater";
 import { join } from "path";
 import { IpcChannels } from "../common/ipc-channels";
 import { SearchResultItem } from "../common/search-result-item";
@@ -26,6 +27,7 @@ import { UserInputHistoryManager } from "./user-input-history-manager";
 import { isWindows } from "../common/helpers/operating-system-helpers";
 import { executeFilePathWindows, executeFilePathMacOs } from "./executors/file-path-executor";
 import { WindowPosition } from "../common/window-position";
+import { UpdateCheckResult } from "../common/update-check-result";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -36,6 +38,8 @@ const currentOperatingSystem = isWindows(platform()) ? OperatingSystem.Windows :
 const filePathExecutor = currentOperatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
 const windowIconFilePath = join(__dirname, "..", "assets", "ueli-white-on-black-logo-circle.png");
 const userInputHistoryManager = new UserInputHistoryManager();
+
+autoUpdater.autoDownload = false;
 
 if (currentOperatingSystem === OperatingSystem.macOS) {
     app.dock.hide();
@@ -451,8 +455,9 @@ function openSettings() {
         settingsWindow.setMenu(null);
         settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
         settingsWindow.on("close", onSettingsClose);
+        settingsWindow.webContents.openDevTools();
         if (isDev()) {
-            settingsWindow.webContents.openDevTools();
+            //
         }
     } else {
         settingsWindow.focus();
@@ -617,6 +622,20 @@ function registerAllIpcListeners() {
                 break;
         }
     });
+
+    ipcMain.on(IpcChannels.checkForUpdate, (event: Electron.Event) => {
+        logger.debug("Check for updates");
+        if (isDev()) {
+            //
+        } else {
+            autoUpdater.checkForUpdates();
+        }
+    });
+
+    ipcMain.on(IpcChannels.downloadUpdate, (event: Electron.Event) => {
+        logger.debug("Downloading updated");
+        autoUpdater.downloadUpdate();
+    });
 }
 
 app.on("ready", () => {
@@ -631,3 +650,29 @@ app.on("ready", () => {
 
 app.on("window-all-closed", quitApp);
 app.on("quit", app.quit);
+
+autoUpdater.on("update-available", () => {
+    logger.debug("Update check result: update available");
+    if (settingsWindow && !settingsWindow.isDestroyed()) {
+        settingsWindow.webContents.send(IpcChannels.checkForUpdateResponse, UpdateCheckResult.UpdateAvailable);
+    }
+});
+
+autoUpdater.on("update-not-available", () => {
+    logger.debug("Update check result: update not available");
+    if (settingsWindow && !settingsWindow.isDestroyed()) {
+        settingsWindow.webContents.send(IpcChannels.checkForUpdateResponse, UpdateCheckResult.NoUpdateAvailable);
+    }
+});
+
+autoUpdater.on("error", (error) => {
+    logger.error(`Update check result: ${error}`);
+    if (settingsWindow && !settingsWindow.isDestroyed()) {
+        settingsWindow.webContents.send(IpcChannels.checkForUpdateResponse, UpdateCheckResult.Error);
+    }
+});
+
+autoUpdater.on("update-downloaded", () => {
+    logger.debug("Update downloaded");
+    autoUpdater.quitAndInstall();
+});

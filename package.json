@@ -1,7 +1,7 @@
 {
   "name": "ueli",
   "productName": "ueli",
-  "version": "7.2.5",
+  "version": "7.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -34,7 +34,8 @@
     "lint:fix": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json --fix",
     "test": "./node_modules/.bin/jest --config jest.json --silent .",
     "tsc:validate": "./node_modules/.bin/tsc --noEmit",
-    "package:dir": "./node_modules/.bin/electron-builder --dir --config electron-builder-config.yml --publish never"
+    "package:dir": "./node_modules/.bin/electron-builder --dir --config electron-builder-config.yml --publish never",
+    "package": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish never"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
@@ -46,6 +47,7 @@
     "electron": "^5.0.5",
     "electron-builder": "^20.40.2",
     "electron-store": "^3.2.0",
+    "electron-updater": "^4.0.14",
     "fuse.js": "^3.4.4",
     "jest": "^24.8.0",
     "lodash": "^4.17.11",

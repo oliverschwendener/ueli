@@ -16,6 +16,24 @@ import { isValidUserConfig, mergeUserConfigWithDefault } from "../../common/help
 import { defaultUserConfigOptions } from "../../common/config/default-user-config-options";
 import { GeneralSettings } from "./general-settings";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
+import { UpdateCheckResult } from "../../common/update-check-result";
+import { isDev } from "../../common/is-dev";
+
+interface UpdateStatus {
+    checking: boolean;
+    downloading: boolean;
+    errorOnUpdateCheck: boolean;
+    latestVersionRunning: boolean;
+    updateAvailable: boolean;
+}
+
+const initialUpdateStatus: UpdateStatus = {
+    checking: true,
+    downloading: false,
+    errorOnUpdateCheck: false,
+    latestVersionRunning: false,
+    updateAvailable: false,
+};
 
 export const generalSettingsComponent = Vue.extend({
     data() {
@@ -24,7 +42,9 @@ export const generalSettingsComponent = Vue.extend({
             dropdownVisible: false,
             globalHotKeyKeys: Object.values(GlobalHotKeyKey).map((key) => key),
             globalHotKeyModifiers: Object.values(GlobalHotKeyModifier).map((modifier) => modifier),
+            isDev: isDev(),
             settingName: GeneralSettings.General,
+            updateStatus: cloneDeep(initialUpdateStatus),
             visible: false,
         };
     },
@@ -183,6 +203,42 @@ export const generalSettingsComponent = Vue.extend({
             }
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, needsIndexRefresh);
         },
+        checkForUpdate() {
+            vueEventDispatcher.$emit(VueEventChannels.checkForUpdate);
+        },
+        downloadUpdate() {
+            vueEventDispatcher.$emit(VueEventChannels.downloadUpdate);
+            const updateStatus: UpdateStatus = this.updateStatus;
+            updateStatus.checking = false;
+            updateStatus.downloading = true;
+            updateStatus.errorOnUpdateCheck = false;
+            updateStatus.latestVersionRunning = false;
+            updateStatus.updateAvailable = false;
+        },
+        changeUpdateStatus(result: UpdateCheckResult) {
+            const updateStatus: UpdateStatus = this.updateStatus;
+            if (result === UpdateCheckResult.Error) {
+                updateStatus.checking = false;
+                updateStatus.downloading = false;
+                updateStatus.errorOnUpdateCheck = true;
+                updateStatus.latestVersionRunning = false;
+                updateStatus.updateAvailable = false;
+            }
+            if (result === UpdateCheckResult.NoUpdateAvailable) {
+                updateStatus.checking = false;
+                updateStatus.downloading = false;
+                updateStatus.errorOnUpdateCheck = false;
+                updateStatus.latestVersionRunning = true;
+                updateStatus.updateAvailable = false;
+            }
+            if (result === UpdateCheckResult.UpdateAvailable) {
+                updateStatus.checking = false;
+                updateStatus.downloading = false;
+                updateStatus.errorOnUpdateCheck = false;
+                updateStatus.latestVersionRunning = false;
+                updateStatus.updateAvailable = true;
+            }
+        },
     },
     mounted() {
         vueEventDispatcher.$on(VueEventChannels.showSetting, (settingName: string) => {
@@ -192,6 +248,14 @@ export const generalSettingsComponent = Vue.extend({
                 this.visible = false;
             }
         });
+
+        vueEventDispatcher.$on(VueEventChannels.checkForUpdateResponse, (updateCheckResult: UpdateCheckResult) => {
+            this.changeUpdateStatus(updateCheckResult);
+        });
+
+        setTimeout(() => {
+            this.checkForUpdate();
+        }, 500);
     },
     props: ["config", "translations"],
     template: `
@@ -412,6 +476,31 @@ export const generalSettingsComponent = Vue.extend({
                                     <div class="control">
                                         <input id="hideMainWindowOnBlur" type="checkbox" name="hideMainWindowOnBlur" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.hideMainWindowOnBlur" @change="updateConfig()">
                                         <label for="hideMainWindowOnBlur"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings__option">
+                            <div class="settings__option-name">Update</div>
+                            <div class="settings__option-content">
+                                <div class="field has-addons has-addons-right vertical-center">
+                                    <div class="control">
+                                        <button class="button" v-if="updateStatus.checking" disabled>
+                                            Checking..
+                                        </button>
+                                        <button class="button" :disabled="isDev" v-if="updateStatus.updateAvailable" @click="downloadUpdate">
+                                            Download update
+                                        </button>
+                                        <button class="button" disabled v-if="updateStatus.downloading">
+                                            Downloading...
+                                        </button>
+                                        <button class="button" v-if="updateStatus.latestVersionRunning" disabled>
+                                            You are running the latest version!
+                                        </button>
+                                        <button class="button" v-if="updateStatus.errorOnUpdateCheck" disabled>
+                                            Error while checking for update
+                                        </button>
                                     </div>
                                 </div>
                             </div>

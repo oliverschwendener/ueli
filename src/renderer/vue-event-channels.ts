@@ -44,4 +44,7 @@ export enum VueEventChannels {
     openSimpleFolderSearchEditingModal = "open-simple-folder-search-editing-modal",
     simpleFolderSearchOptionSaved = "simple-folder-search-option-saved",
     settingsConfirmation = "settings-confirmation",
+    checkForUpdate = "check-for-update",
+    checkForUpdateResponse = "check-for-update-response",
+    downloadUpdate = "download-update",
 }
