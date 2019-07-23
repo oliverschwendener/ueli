@@ -628,7 +628,9 @@ function registerAllIpcListeners() {
     ipcMain.on(IpcChannels.checkForUpdate, (event: Electron.Event) => {
         logger.debug("Check for updates");
         if (isDev()) {
-            //
+            if (settingsWindow && !settingsWindow.isDestroyed()) {
+                settingsWindow.webContents.send(IpcChannels.checkForUpdateResponse, UpdateCheckResult.NoUpdateAvailable);
+            }
         } else {
             autoUpdater.checkForUpdates();
         }
