@@ -8,7 +8,7 @@ import { ModalEditMode } from "./modal-edit-mode";
 import { WorkflowExecutionArgumentType } from "../../../main/plugins/workflow-plugin/workflow-execution-argument-type";
 import { getWorkflowExecutionArgumentTypeIcon, getWorkflowExecutionArgumentTypeClass, getWorkflowExecutionArgumentTypeTranslation } from "../helpers";
 import { WorkflowExecutionStep } from "../../../main/plugins/workflow-plugin/workflow-execution-argument";
-import { getFileAndFolderPaths } from "../../dialogs";
+import { getFilePath, getFolderPath } from "../../dialogs";
 import { isValidExecutionStep, isValidWorkflow } from "../../../main/plugins/workflow-plugin/workflow-helpers";
 import { NotificationType } from "../../../common/notification-type";
 import { defaultWorkflowIcon } from "../../../common/icon/default-icons";
@@ -107,16 +107,18 @@ export const workflowEditingModal = Vue.extend({
             executionStep.executionArgument = "";
         },
         openFile() {
-            getFileAndFolderPaths()
-                .then((filePaths) => {
-                    if (filePaths && filePaths.length > 0) {
-                        const executionStep: WorkflowExecutionStep = this.newWorkflowExecutionStep;
-                        executionStep.executionArgument = filePaths[0];
-                    }
-                })
-                .catch((err) => {
-                    // do nothing if no file or folder selected
-                });
+            getFilePath()
+                .then((filePath) => this.handleFileOrFolderSelected(filePath))
+                .catch((err) => { /* do nothing if no file selected*/ });
+        },
+        openFolder() {
+            getFolderPath()
+                .then((folderPath) => this.handleFileOrFolderSelected(folderPath))
+                .catch((err) => { /* do nothing if no folder selected*/ });
+        },
+        handleFileOrFolderSelected(filePath: string) {
+            const executionStep: WorkflowExecutionStep = this.newWorkflowExecutionStep;
+            executionStep.executionArgument = filePath;
         },
         removeExecutionStep(index: number) {
             const workflow: Workflow = this.workflow;
@@ -223,7 +225,14 @@ export const workflowEditingModal = Vue.extend({
                             </div>
                             <div class="control" v-if="newWorkflowExecutionStep.executionArgumentType === executionArgumentTypeFilePath">
                                 <button class="button" @click="openFile">
-                                    <span class="icon">
+                                    <span class="icon tooltip" :data-tooltip="translations.chooseFile">
+                                        <i class="fas fa-file"></i>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="control" v-if="newWorkflowExecutionStep.executionArgumentType === executionArgumentTypeFilePath">
+                                <button class="button" @click="openFolder">
+                                    <span class="icon tooltip" :data-tooltip="translations.chooseFolder">
                                         <i class="fas fa-folder"></i>
                                     </span>
                                 </button>

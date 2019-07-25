@@ -555,15 +555,7 @@ function registerAllIpcListeners() {
         });
     });
 
-    ipcMain.on(IpcChannels.folderAndFilePathsRequested, (event: Electron.Event) => {
-        dialog.showOpenDialog(settingsWindow, {
-            properties: ["openFile", "openDirectory"],
-        }, (filePaths: string[]) => {
-            event.sender.send(IpcChannels.folderAndFilePathsResult, filePaths);
-        });
-    });
-
-    ipcMain.on(IpcChannels.filePathRequested, (event: Electron.Event, filters: Electron.FileFilter[]) => {
+    ipcMain.on(IpcChannels.filePathRequested, (event: Electron.Event, filters?: Electron.FileFilter[]) => {
         dialog.showOpenDialog(settingsWindow, {
             filters,
             properties: ["openFile"],

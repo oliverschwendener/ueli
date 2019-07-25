@@ -14,7 +14,7 @@ export function getFolderPath(): Promise<string> {
     });
 }
 
-export function getFilePath(filters: Electron.FileFilter[]): Promise<string> {
+export function getFilePath(filters?: Electron.FileFilter[]): Promise<string> {
     return new Promise((resolve, reject) => {
         ipcRenderer.send(IpcChannels.filePathRequested, filters);
         ipcRenderer.once(IpcChannels.filePathResult, (event: Electron.Event, filePaths: string[]) => {
@@ -22,19 +22,6 @@ export function getFilePath(filters: Electron.FileFilter[]): Promise<string> {
                 resolve(filePaths[0]);
             } else {
                 reject("No files selected");
-            }
-        });
-    });
-}
-
-export function getFileAndFolderPaths(): Promise<string[]> {
-    return new Promise((resolve, reject) => {
-        ipcRenderer.send(IpcChannels.folderAndFilePathsRequested);
-        ipcRenderer.once(IpcChannels.folderAndFilePathsResult, (event: Electron.Event, foldersAndFiles: string[]) => {
-            if (foldersAndFiles && foldersAndFiles.length > 0) {
-                resolve(foldersAndFiles);
-            } else {
-                reject("No files and folders selected");
             }
         });
     });

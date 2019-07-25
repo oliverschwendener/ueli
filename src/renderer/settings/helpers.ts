@@ -30,7 +30,7 @@ export function getWorkflowExecutionArgumentTypeTranslation(type: WorkflowExecut
         case WorkflowExecutionArgumentType.CommandlineTool:
             return translationSet.wofkflowExecutionArgumentTypeCommandlineTool;
         case WorkflowExecutionArgumentType.FilePath:
-            return translationSet.wofkflowExecutionArgumentTypeFilePath;
+            return translationSet.filePath;
         case WorkflowExecutionArgumentType.URL:
             return translationSet.workflowExecutionArgumentTypeUrl;
     }

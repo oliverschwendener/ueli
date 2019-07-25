@@ -12,7 +12,7 @@ import { isValidWindowsFilePath, isValidMacOsFilePath } from "../../../common/he
 import { isWindows } from "../../../common/helpers/operating-system-helpers";
 import { isEqual } from "lodash";
 import { showNotification } from "../../notifications";
-import { getFileAndFolderPaths } from "../../dialogs";
+import { getFilePath, getFolderPath } from "../../dialogs";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { join } from "path";
 import { ModalEditMode } from "./modal-edit-mode";
@@ -59,7 +59,7 @@ export const shortcutEditingModal = Vue.extend({
                 case ShortcutType.Url:
                     return translations.shortcutSettingsTypeUrl;
                 case ShortcutType.FilePath:
-                    return translations.shortcutSettingsTypeFilePath;
+                    return translations.filePath;
                 case ShortcutType.CommandlineTool:
                     return translations.shortcutSettingsTypeCommandlineTool;
             }
@@ -93,7 +93,7 @@ export const shortcutEditingModal = Vue.extend({
                 case ShortcutType.Url:
                     return "URL";
                 case ShortcutType.FilePath:
-                    return translations.shortcutSettingsEditModalFilePath;
+                    return translations.filePath;
                 case ShortcutType.CommandlineTool:
                     return translations.shortcutSettingsEditModalCommand;
                 default:
@@ -105,7 +105,7 @@ export const shortcutEditingModal = Vue.extend({
             let placeholder = "";
             switch (shortcutType) {
                 case ShortcutType.FilePath:
-                    placeholder = `${join(homedir(), "Downloads")}`;
+                    placeholder = `${join(homedir(), "Downloads", "file.txt")}`;
                     break;
                 case ShortcutType.Url:
                     placeholder = "https://google.com";
@@ -121,7 +121,7 @@ export const shortcutEditingModal = Vue.extend({
             let placeholder = "";
             switch (shortcutType) {
                 case ShortcutType.FilePath:
-                    placeholder = "Downloads";
+                    placeholder = "file.txt";
                     break;
                 case ShortcutType.Url:
                     placeholder = "Google";
@@ -135,17 +135,19 @@ export const shortcutEditingModal = Vue.extend({
         onBackgroundClick() {
             this.resetModal();
         },
-        openFolderDialog() {
-            getFileAndFolderPaths()
-                .then((filePaths) => {
-                    if (filePaths && filePaths.length > 0) {
-                        const shortcut: Shortcut = this.shortcut;
-                        shortcut.executionArgument = filePaths[0];
-                    }
-                })
-                .catch((err) => {
-                    // do nothing if no file or folder selected
-                });
+        openFile() {
+            getFilePath()
+                .then((filePath) => this.handleFileOrFolderSelected(filePath))
+                .catch((err) => { /* do nothing if no file selected */ });
+        },
+        openFolder() {
+            getFolderPath()
+                .then((folderPath) => this.handleFileOrFolderSelected(folderPath))
+                .catch((err) => { /* do nothing if no folder selected */ });
+        },
+        handleFileOrFolderSelected(filePath: string) {
+            const shortcut: Shortcut = this.shortcut;
+            shortcut.executionArgument = filePath;
         },
         resetModal(): void {
             this.shortcut = cloneDeep(defaultNewShortcut);
@@ -167,7 +169,7 @@ export const shortcutEditingModal = Vue.extend({
     template: `
         <div class="modal" :class="{ 'is-active' : visible }">
             <div class="modal-background" @click="onBackgroundClick"></div>
-            <div class="modal-content">
+            <div class="modal-content overflow-visible">
                 <div class="message">
                     <div class="message-header">
                         <p>{{ getModalTitle() }}</p>
@@ -204,8 +206,17 @@ export const shortcutEditingModal = Vue.extend({
                                 <input class="input" type="text" :placeholder="getShorcutTypeExecutionArgumentPlaceholder(shortcut.type)" v-model="shortcut.executionArgument">
                             </div>
                             <div v-if="shortcut.type === shortcutTypeFilePath" class="control">
-                                <button class="button" @click="openFolderDialog" autofocus>
-                                    <span class="icon"><i class="fas fa-folder"></i></span>
+                                <button class="button" @click="openFile" autofocus>
+                                    <span class="icon tooltip" :data-tooltip="translations.chooseFile">
+                                        <i class="fas fa-file"></i>
+                                    </span>
+                                </button>
+                            </div>
+                            <div v-if="shortcut.type === shortcutTypeFilePath" class="control">
+                                <button class="button" @click="openFolder" autofocus>
+                                    <span class="icon tooltip" :data-tooltip="translations.chooseFolder">
+                                        <i  class="fas fa-folder"></i>
+                                    </span>
                                 </button>
                             </div>
                         </div>

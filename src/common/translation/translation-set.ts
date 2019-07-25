@@ -63,6 +63,11 @@ export interface TranslationSet {
     generalSettingsResetAllSettingsWarning: string;
     generalSettingsClearExecutionLogWarning: string;
     generalSettingsHideMainWindowOnBlur: string;
+    generalSettingsCheckingForUpdate: string;
+    generalSettingsDownloadUpdate: string;
+    generalSettingsDownloadingUpdate: string;
+    generalSettingsLatestVersion: string;
+    generalSettingsErrorWhileCheckingForUpdate: string;
     clearExecutionLog: string;
     openDebugLog: string;
     openTempFolder: string;
@@ -162,12 +167,10 @@ export interface TranslationSet {
     shortcutSettingsEditModalSvgString: string;
     shortcutSettingsEditModalGoogleWebsite: string;
     shortcutSettingsEditModalDownloadsFolder: string;
-    shortcutSettingsEditModalFilePath: string;
     shortcutSettingsEditModalCommand: string;
     shortcutSettingsInvalidShortcutErrorMessage: string;
     shortcutSettingsTagPlaceholder: string;
     shortcutSettingsTypeUrl: string;
-    shortcutSettingsTypeFilePath: string;
     shortcutSettingsTypeCommandlineTool: string;
     shortcutSettingsEditModalCommandLinetoolDescription: string;
 
@@ -269,7 +272,6 @@ export interface TranslationSet {
     workflowExecutionSteps: string;
     workflowExecutionArgumentType: string;
     wofkflowExecutionArgumentTypeCommandlineTool: string;
-    wofkflowExecutionArgumentTypeFilePath: string;
     workflowExecutionArgumentTypeUrl: string;
     workflowInvalidExecutionStep: string;
     workflowInvalidWorkflow: string;
@@ -298,4 +300,8 @@ export interface TranslationSet {
     no: string;
     resetToDefault: string;
     resetPluginSettingsToDefaultWarning: string;
+    filePath: string;
+    folderPath: string;
+    chooseFile: string;
+    chooseFolder: string;
 }
