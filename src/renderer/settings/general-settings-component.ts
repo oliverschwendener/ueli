@@ -491,19 +491,19 @@ export const generalSettingsComponent = Vue.extend({
                                 <div class="field has-addons has-addons-right vertical-center">
                                     <div class="control">
                                         <button class="button" v-if="updateStatus.checking" disabled>
-                                            Checking..
+                                            {{ translations.generalSettingsCheckingForUpdate }}...
                                         </button>
                                         <button class="button" :disabled="isDev" v-if="updateStatus.updateAvailable" @click="downloadUpdate">
-                                            Download update
+                                            {{ translations.generalSettingsDownloadUpdate }}
                                         </button>
                                         <button class="button" disabled v-if="updateStatus.downloading">
-                                            Downloading...
+                                            {{ translations.generalSettingsDownloadingUpdate }}...
                                         </button>
                                         <button class="button" v-if="updateStatus.latestVersionRunning" disabled>
-                                            You are running the latest version!
+                                            {{ translations.generalSettingsLatestVersion }}
                                         </button>
                                         <button class="button" v-if="updateStatus.errorOnUpdateCheck" disabled>
-                                            Error while checking for update
+                                            {{ translations.generalSettingsErrorWhileCheckingForUpdate }}
                                         </button>
                                     </div>
                                 </div>
