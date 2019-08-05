@@ -174,7 +174,7 @@ export class FileHelpers {
                 resolve([fileStat.filePath]);
             } else if (isDirectory) {
                 this.readFilesFromFolderRecursively(fileStat.filePath)
-                    .then((f) => resolve(f))
+                    .then((filePaths) => resolve(filePaths))
                     .catch((err) => reject(err));
             } else {
                 resolve([]);
