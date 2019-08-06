@@ -164,10 +164,6 @@ export class SearchEngine {
         return this.favoriteManager.clearExecutionLog();
     }
 
-    public getLogger(): Logger {
-        return this.logger;
-    }
-
     private getSearchPluginsResult(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             const pluginPromises = this.searchPlugins

@@ -1,30 +1,27 @@
 import { Logger } from "./logger";
 import * as Winston from "winston";
-import { ueliTempFolder } from "../helpers/ueli-helpers";
+import { dirname, basename } from "path";
+import { logFormat } from "../helpers/logger-helpers";
 
 export class ProductionLogger implements Logger {
     private readonly logger: Winston.Logger;
+    private readonly filePath: string;
     private readonly fileOpener: (filePath: string) => Promise<void>;
 
-    constructor(fileOpener: (filePath: string, privileged?: boolean) => Promise<void>) {
+    constructor(filePath: string, fileOpener: (filePath: string, privileged?: boolean) => Promise<void>) {
+        this.filePath = filePath;
         this.fileOpener = fileOpener;
 
-        const { combine, timestamp, printf } = Winston.format;
-
-        // tslint:disable-next-line: no-shadowed-variable
-        const myFormat = printf(({ level, message, timestamp }) => `${timestamp} ${level}: ${message}`);
+        const { combine, timestamp } = Winston.format;
 
         this.logger = Winston.createLogger({
             defaultMeta: { service: "user-service" },
-            format: combine(
-                timestamp(),
-                myFormat,
-            ),
+            format: combine(timestamp(), logFormat),
             level: "debug",
             transports: [
                 new Winston.transports.File({
-                    dirname: ueliTempFolder,
-                    filename: "debug.log",
+                    dirname: dirname(filePath),
+                    filename: basename(filePath),
                     level: "debug",
                     maxFiles: 1,
                     maxsize: 1000000,
@@ -45,6 +42,6 @@ export class ProductionLogger implements Logger {
     }
 
     public openLog(): Promise<void> {
-        return this.fileOpener("debug.log");
+        return this.fileOpener(this.filePath);
     }
 }

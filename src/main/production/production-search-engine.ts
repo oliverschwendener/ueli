@@ -32,7 +32,6 @@ import { ElectronStoreFavoriteRepository } from "../favorites/electron-store-fav
 import { CurrencyConverterPlugin } from "../plugins/currency-converter-plugin/currency-converter-plugin";
 import { executeCommand } from "../executors/command-executor";
 import { WorkflowPlugin } from "../plugins/workflow-plugin/workflow-plugin";
-import { ProductionLogger } from "../../common/logger/production-logger";
 import { CommandlinePlugin } from "../plugins/commandline-plugin/commandline-plugin";
 import { windowsCommandLineExecutor, macOsCommandLineExecutor } from "../executors/commandline-executor";
 import { OperatingSystemSettingsPlugin } from "../plugins/operating-system-settings-plugin/operating-system-settings-plugin";
@@ -40,6 +39,7 @@ import { MacOsOperatingSystemSettingRepository } from "../plugins/operating-syst
 import { executeWindowsOperatingSystemSetting, executeMacOSOperatingSystemSetting } from "../executors/operating-system-setting-executor";
 import { WindowsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/windows-operating-system-setting-repository";
 import { SimpleFolderSearchPlugin } from "../plugins/simple-folder-search-plugin/simple-folder-search-plugin";
+import { Logger } from "../../common/logger/logger";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -50,7 +50,7 @@ const commandlineExecutor = isWindows(platform()) ? windowsCommandLineExecutor :
 const operatingSystemSettingsRepository = isWindows(platform()) ? new WindowsOperatingSystemSettingRepository() : new MacOsOperatingSystemSettingRepository();
 const operatingSystemSettingExecutor = isWindows(platform()) ? executeWindowsOperatingSystemSetting : executeMacOSOperatingSystemSetting;
 
-export const getProductionSearchEngine = (config: UserConfigOptions, translationSet: TranslationSet): SearchEngine => {
+export const getProductionSearchEngine = (config: UserConfigOptions, translationSet: TranslationSet, logger: Logger): SearchEngine => {
     const operatingSystemCommandRepository = isWindows(platform())
         ? new WindowsOperatingSystemCommandRepository(translationSet)
         : new MacOsOperatingSystemCommandRepository(translationSet);
@@ -140,7 +140,7 @@ export const getProductionSearchEngine = (config: UserConfigOptions, translation
         fallbackPlugins,
         config,
         translationSet,
-        new ProductionLogger(filePathExecutor),
+        logger,
         new ElectronStoreFavoriteRepository(),
     );
 };

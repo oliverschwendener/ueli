@@ -18,7 +18,7 @@ import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
 import { defaultGeneralOptions } from "../common/config/default-general-options";
 import { getErrorSearchResultItem } from "../common/error-search-result-item";
 import { FileHelpers } from "./../common/helpers/file-helpers";
-import { ueliTempFolder } from "../common/helpers/ueli-helpers";
+import { ueliTempFolder, logFilePath } from "../common/helpers/ueli-helpers";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
 import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-helpers";
 import { isValidHotKey } from "../common/global-hot-key/global-hot-key-helpers";
@@ -29,11 +29,14 @@ import { executeFilePathWindows, executeFilePathMacOs } from "./executors/file-p
 import { WindowPosition } from "../common/window-position";
 import { UpdateCheckResult } from "../common/update-check-result";
 import { executeUrlMacOs } from "./executors/url-executor";
+import { ProductionLogger } from "../common/logger/production-logger";
+import { DevLogger } from "../common/logger/dev-logger";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
 }
 
+const isInDevelopment = isDev();
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
 const currentOperatingSystem = isWindows(platform()) ? OperatingSystem.Windows : OperatingSystem.macOS;
 const filePathExecutor = currentOperatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
@@ -54,8 +57,10 @@ let lastWindowPosition: WindowPosition;
 
 let config = configRepository.getConfig();
 let translationSet = getTranslationSet(config.generalOptions.language);
-let searchEngine = getProductionSearchEngine(config, translationSet);
-const logger = searchEngine.getLogger();
+const logger = isInDevelopment
+    ? new DevLogger()
+    : new ProductionLogger(logFilePath, filePathExecutor);
+let searchEngine = getProductionSearchEngine(config, translationSet, logger);
 
 let rescanInterval = config.generalOptions.rescanEnabled
     ? setInterval(() => refreshAllIndexes(), Number(config.generalOptions.rescanIntervalInSeconds) * 1000)
@@ -80,7 +85,7 @@ function refreshAllIndexes() {
             logger.error(err);
             notifyRenderer(err, NotificationType.Error);
         })
-        .then(() => {
+        .finally(() => {
             BrowserWindow.getAllWindows().forEach((window) => {
                 window.webContents.send(IpcChannels.refreshIndexesCompleted);
             });
@@ -251,7 +256,7 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
 
 function reloadApp() {
     updateMainWindowSize(0, config.appearanceOptions);
-    searchEngine = getProductionSearchEngine(config, translationSet);
+    searchEngine = getProductionSearchEngine(config, translationSet, logger);
     mainWindow.reload();
 }
 
@@ -273,9 +278,9 @@ function beforeQuitApp(): Promise<void> {
 
 function quitApp() {
     beforeQuitApp()
-        .then()
+        .then(() => { /* Do nothing */ })
         .catch((err) => logger.error(err))
-        .then(() => {
+        .finally(() => {
             if (rescanInterval) {
                 clearInterval(rescanInterval);
             }
@@ -285,7 +290,7 @@ function quitApp() {
 }
 
 function updateAutoStartOptions(userConfig: UserConfigOptions) {
-    if (!isDev()) {
+    if (!isInDevelopment) {
         app.setLoginItemSettings({
             args: [],
             openAtLogin: userConfig.generalOptions.autostart,
@@ -389,7 +394,7 @@ function startApp() {
 }
 
 function setKeyboardShortcuts() {
-    if (currentOperatingSystem === OperatingSystem.macOS && !isDev()) {
+    if (currentOperatingSystem === OperatingSystem.macOS && !isInDevelopment) {
         const template = [
             {
                 label: "ueli",
@@ -458,8 +463,8 @@ function openSettings() {
         settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
         settingsWindow.on("close", onSettingsClose);
         settingsWindow.webContents.openDevTools();
-        if (isDev()) {
-            //
+        if (isInDevelopment) {
+            settingsWindow.webContents.openDevTools();
         }
     } else {
         settingsWindow.focus();
@@ -475,10 +480,18 @@ function updateSearchResults(results: SearchResultItem[], webcontents: WebConten
     webcontents.send(IpcChannels.searchResponse, results);
 }
 
-function sendErrorToRenderer(err: string, webcontents: WebContents) {
-    updateMainWindowSize(1, config.appearanceOptions);
-    const noResultFound = getErrorSearchResultItem(translationSet.generalErrorTitle, translationSet.generalErrorDescription);
-    webcontents.send(IpcChannels.searchResponse, [noResultFound]);
+function noSearchResultsFound() {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+        updateMainWindowSize(1, config.appearanceOptions);
+        const noResultFound = getErrorSearchResultItem(translationSet.generalErrorTitle, translationSet.generalErrorDescription);
+        mainWindow.webContents.send(IpcChannels.searchResponse, [noResultFound]);
+    }
+}
+
+function sendMessageToSettingsWindow(ipcChannel: IpcChannels, message: string) {
+    if (settingsWindow && !settingsWindow.isDestroyed()) {
+        settingsWindow.webContents.send(ipcChannel, message);
+    }
 }
 
 function registerAllIpcListeners() {
@@ -491,7 +504,7 @@ function registerAllIpcListeners() {
             .then((result) => updateSearchResults(result, event.sender))
             .catch((err) => {
                 logger.error(err);
-                sendErrorToRenderer(err, event.sender);
+                noSearchResultsFound();
             });
     });
 
@@ -500,7 +513,7 @@ function registerAllIpcListeners() {
             .then((result) => updateSearchResults(result, event.sender))
             .catch((err) => {
                 logger.error(err);
-                sendErrorToRenderer(err, event.sender);
+                noSearchResultsFound();
             });
     });
 
@@ -526,7 +539,7 @@ function registerAllIpcListeners() {
             .then(() => hideMainWindow())
             .catch((err) => {
                 logger.error(err);
-                sendErrorToRenderer(err, event.sender);
+                noSearchResultsFound();
             });
     });
 
@@ -535,7 +548,7 @@ function registerAllIpcListeners() {
             .then((result) => updateSearchResults(result.results, event.sender, result.updatedUserInput))
             .catch((err) => {
                 logger.error(err);
-                sendErrorToRenderer(err, event.sender);
+                noSearchResultsFound();
             });
     });
 
@@ -577,7 +590,9 @@ function registerAllIpcListeners() {
     });
 
     ipcMain.on(IpcChannels.openDebugLogRequested, (event: Electron.Event) => {
-        logger.openLog();
+        logger.openLog()
+            .then(() => { /* do nothing */ })
+            .catch((err) => notifyRenderer(err, NotificationType.Error));
     });
 
     ipcMain.on(IpcChannels.openTempFolderRequested, (event: Electron.Event) => {
@@ -619,10 +634,8 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.checkForUpdate, (event: Electron.Event) => {
         logger.debug("Check for updates");
-        if (isDev()) {
-            if (settingsWindow && !settingsWindow.isDestroyed()) {
-                settingsWindow.webContents.send(IpcChannels.checkForUpdateResponse, UpdateCheckResult.NoUpdateAvailable);
-            }
+        if (isInDevelopment) {
+            sendMessageToSettingsWindow(IpcChannels.checkForUpdateResponse, UpdateCheckResult.NoUpdateAvailable);
         } else {
             autoUpdater.checkForUpdates();
         }
@@ -653,23 +666,17 @@ app.on("quit", app.quit);
 
 autoUpdater.on("update-available", () => {
     logger.debug("Update check result: update available");
-    if (settingsWindow && !settingsWindow.isDestroyed()) {
-        settingsWindow.webContents.send(IpcChannels.checkForUpdateResponse, UpdateCheckResult.UpdateAvailable);
-    }
+    sendMessageToSettingsWindow(IpcChannels.checkForUpdateResponse, UpdateCheckResult.UpdateAvailable);
 });
 
 autoUpdater.on("update-not-available", () => {
     logger.debug("Update check result: update not available");
-    if (settingsWindow && !settingsWindow.isDestroyed()) {
-        settingsWindow.webContents.send(IpcChannels.checkForUpdateResponse, UpdateCheckResult.NoUpdateAvailable);
-    }
+    sendMessageToSettingsWindow(IpcChannels.checkForUpdateResponse, UpdateCheckResult.NoUpdateAvailable);
 });
 
 autoUpdater.on("error", (error) => {
     logger.error(`Update check result: ${error}`);
-    if (settingsWindow && !settingsWindow.isDestroyed()) {
-        settingsWindow.webContents.send(IpcChannels.checkForUpdateResponse, UpdateCheckResult.Error);
-    }
+    sendMessageToSettingsWindow(IpcChannels.checkForUpdateResponse, UpdateCheckResult.Error);
 });
 
 if (isWindows(platform())) {
