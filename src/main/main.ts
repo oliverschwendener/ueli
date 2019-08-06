@@ -462,7 +462,6 @@ function openSettings() {
         settingsWindow.setMenu(null);
         settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
         settingsWindow.on("close", onSettingsClose);
-        settingsWindow.webContents.openDevTools();
         if (isInDevelopment) {
             settingsWindow.webContents.openDevTools();
         }
