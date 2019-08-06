@@ -25,7 +25,7 @@ export class ApplicationIconService {
                     const deletionPromises = files.map((file) => FileHelpers.deleteFile(join(applicationIconLocation, file)));
                     Promise.all(deletionPromises)
                         .then(() => resolve())
-                        .catch((deletionError) => reject(deletionError));
+                        .catch((err) => reject(err));
                 })
                 .catch((err) => reject(err));
         });
