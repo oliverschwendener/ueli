@@ -2,7 +2,7 @@ import { ApplicationSearchPlugin } from "../plugins/application-search-plugin/ap
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { FileApplicationRepository } from "../plugins/application-search-plugin/file-application-repository";
 import { ApplicationIconService } from "../plugins/application-search-plugin/application-icon-service";
-import { generateWindowsAppIcons } from "../plugins/application-search-plugin/application-icon-helpers";
+import { generateWindowsAppIcons } from "../plugins/application-search-plugin/windows-app-icon-generator";
 import { generateMacAppIcons } from "../plugins/application-search-plugin/mac-os-app-icon-generator";
 import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/ueli-command-search-plugin";
 import { ShortcutsSearchPlugin } from "../plugins/shortcuts-search-plugin/shortcuts-search-plugin";
