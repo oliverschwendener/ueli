@@ -6,16 +6,19 @@ import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { ApplicationIconService } from "./application-icon-service";
 import { getApplicationIconFilePath } from "./application-icon-helpers";
 import { uniq } from "lodash";
+import { Logger } from "../../../common/logger/logger";
 
 export class FileApplicationRepository implements ApplicationRepository {
     private readonly applicationIconService: ApplicationIconService;
+    private readonly logger: Logger;
     private config: ApplicationSearchOptions;
     private applications: Application[];
 
-    constructor(applicationIconService: ApplicationIconService, config: ApplicationSearchOptions) {
+    constructor(applicationIconService: ApplicationIconService, config: ApplicationSearchOptions, logger: Logger) {
         this.applicationIconService = applicationIconService;
         this.applications = [];
         this.config = config;
+        this.logger = logger;
     }
 
     public getAll(): Promise<Application[]> {
@@ -41,10 +44,18 @@ export class FileApplicationRepository implements ApplicationRepository {
                             .filter((file) => this.filterByApplicationFileExtensions(file))
                             .map((applicationFile): Application => this.createApplicationFromFilePath(applicationFile));
 
-                        this.applicationIconService.generateAppIcons(applications);
-                        applications.forEach((application) => application.icon = getApplicationIconFilePath(application));
-                        this.applications = applications;
-                        resolve();
+                        this.applicationIconService.generateAppIcons(applications)
+                            .then(() => {
+                                // do nothing
+                            })
+                            .catch((err) => {
+                                this.logger.error(err);
+                            })
+                            .finally(() => {
+                                applications.forEach((application) => application.icon = getApplicationIconFilePath(application));
+                                this.applications = applications;
+                                resolve();
+                            });
                     })
                     .catch((err) => reject(err));
             }

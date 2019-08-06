@@ -69,6 +69,7 @@ export const getProductionSearchEngine = (config: UserConfigOptions, translation
             new FileApplicationRepository(
                 new ApplicationIconService(appIconGenerator),
                 config.applicationSearchOptions,
+                logger,
                 ),
             filePathExecutor,
             filePathLocationExecutor,
