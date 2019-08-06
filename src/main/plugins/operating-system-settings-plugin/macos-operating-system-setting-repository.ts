@@ -2,10 +2,10 @@ import { OperatingSystemSetting } from "./operating-system-setting";
 import { OperatingSystemSettingRepository } from "./operating-system-setting-repository";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { FileHelpers } from "../../../common/helpers/file-helpers";
-import { applicationIconLocation } from "../application-search-plugin/application-icon-helpers";
-import { convert } from "app2png";
-import { basename, join, extname } from "path";
+import { getApplicationIconFilePath } from "../application-search-plugin/application-icon-helpers";
+import { basename, extname } from "path";
 import { IconType } from "../../../common/icon/icon-type";
+import { generateMacAppIcons } from "../application-search-plugin/mac-os-app-icon-generator";
 
 export class MacOsOperatingSystemSettingRepository implements OperatingSystemSettingRepository {
     private readonly basePath = "/System/Library/PreferencePanes";
@@ -14,8 +14,8 @@ export class MacOsOperatingSystemSettingRepository implements OperatingSystemSet
     constructor() {
         FileHelpers.readFilesFromFolder(this.basePath)
             .then((filePaths) => {
-                Promise.all(filePaths.map((filePath) => this.buildOperatingSystemSetting(filePath)))
-                    .then((results) => this.all = results)
+                generateMacAppIcons(filePaths)
+                    .then(() => this.all = filePaths.map((filePath) => this.buildOperatingSystemSetting(filePath)))
                     .catch((err) => this.all = []);
             })
             .catch((err) => {
@@ -29,20 +29,13 @@ export class MacOsOperatingSystemSettingRepository implements OperatingSystemSet
         });
     }
 
-    private buildOperatingSystemSetting(filePath: string): Promise<OperatingSystemSetting> {
-        return new Promise((resolve, reject) => {
-            const iconFilePath = join(applicationIconLocation, `${basename(filePath)}.png`);
-            convert(filePath, iconFilePath)
-                .then(() => {
-                    resolve({
-                        description: filePath,
-                        executionArgument: filePath,
-                        icon: { parameter: iconFilePath, type: IconType.URL },
-                        name: basename(filePath).replace(extname(filePath), ""),
-                        tags: [],
-                    });
-                })
-                .catch((err) => reject(err));
-        });
+    private buildOperatingSystemSetting(filePath: string): OperatingSystemSetting {
+        return {
+            description: filePath,
+            executionArgument: filePath,
+            icon: { parameter: getApplicationIconFilePath(filePath), type: IconType.URL },
+            name: basename(filePath).replace(extname(filePath), ""),
+            tags: [],
+        };
     }
 }

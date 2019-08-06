@@ -1,18 +1,17 @@
 import { Application } from "./application";
-import { join } from "path";
 import { applicationIconLocation } from "./application-icon-helpers";
 import { FileHelpers } from "../../../common/helpers/file-helpers";
 
 export class ApplicationIconService {
-    private readonly generateIcons: (applications: Application[]) => Promise<void>;
+    private readonly generateIcons: (applicationFilePaths: string[]) => Promise<void>;
 
-    constructor(generateIcons: (applications: Application[]) => Promise<void>) {
+    constructor(generateIcons: (applicationFilePaths: string[]) => Promise<void>) {
         this.generateIcons = generateIcons;
     }
 
     public generateAppIcons(applications: Application[]): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.generateIcons(applications)
+            this.generateIcons(applications.map((app) => app.filePath))
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });
@@ -22,7 +21,7 @@ export class ApplicationIconService {
         return new Promise((resolve, reject) => {
             FileHelpers.readFilesFromFolder(applicationIconLocation)
                 .then((files) => {
-                    const deletionPromises = files.map((file) => FileHelpers.deleteFile(join(applicationIconLocation, file)));
+                    const deletionPromises = files.map((file) => FileHelpers.deleteFile(file));
                     Promise.all(deletionPromises)
                         .then(() => resolve())
                         .catch((err) => reject(err));

@@ -49,5 +49,6 @@
   },
   "include": [
     "./src/**/*.ts",
+    "./src/declarations.d.ts"
   ],
 }

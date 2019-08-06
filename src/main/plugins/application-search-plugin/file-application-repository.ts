@@ -52,7 +52,7 @@ export class FileApplicationRepository implements ApplicationRepository {
                                 this.logger.error(err);
                             })
                             .finally(() => {
-                                applications.forEach((application) => application.icon = getApplicationIconFilePath(application));
+                                applications.forEach((application) => application.icon = getApplicationIconFilePath(application.filePath));
                                 this.applications = applications;
                                 resolve();
                             });
