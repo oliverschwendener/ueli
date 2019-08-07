@@ -37,6 +37,7 @@ export class WorkflowPlugin implements SearchPlugin {
                     hideMainWindowAfterExecution: true,
                     icon: workflow.icon || defaultWorkflowIcon,
                     name: workflow.name,
+                    needsUserConfirmationBeforeExecution: workflow.needsUserConfirmationBeforeExecution,
                     originPluginType: this.pluginType,
                     searchable: workflow.tags.concat([workflow.name]),
                 };

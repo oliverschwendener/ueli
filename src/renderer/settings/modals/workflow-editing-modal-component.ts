@@ -27,6 +27,7 @@ const initialWorkflow: Workflow = {
     ],
     icon: cloneDeep(defaultWorkflowIcon),
     name: "",
+    needsUserConfirmationBeforeExecution: false,
     tags: [],
 };
 
@@ -182,6 +183,18 @@ export const workflowEditingModal = Vue.extend({
                                     type="text"
                                     :placeholder="translations.workflowDescriptionPlaceholder"
                                     v-model="workflow.description">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">
+                                {{ translations.workflowNeedsUserConfirmationBeforeExecution }}
+                            </label>
+                            <div class="control">
+                                <input class="is-checkradio" id="userConfirmationCheckbox" type="checkbox" name="userConfirmationCheckbox" v-model="workflow.needsUserConfirmationBeforeExecution">
+                                <label for="userConfirmationCheckbox"></label>
+                                <div class="field">
+                                    <input class="is-checkradio is-block is-success" id="userConfirmationCheckbox" type="checkbox" name="userConfirmationCheckbox" checked="checked">
+                                </div>
                             </div>
                         </div>
                         <div class="field">

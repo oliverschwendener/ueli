@@ -7,4 +7,5 @@ export interface Workflow {
     tags: string[];
     icon: Icon;
     executionSteps: WorkflowExecutionStep[];
+    needsUserConfirmationBeforeExecution: boolean;
 }

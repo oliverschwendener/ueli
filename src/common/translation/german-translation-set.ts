@@ -279,6 +279,7 @@ export const germanTranslationSet: TranslationSet = {
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "Ungültiger Ausführungsschritt",
     workflowInvalidWorkflow: "Ungültiger Workflow",
+    workflowNeedsUserConfirmationBeforeExecution: "Braucht Bestätigung vor der Ausführung",
 
     commandline: "Kommandozeile",
     commandlinePrefix: "Präfix",

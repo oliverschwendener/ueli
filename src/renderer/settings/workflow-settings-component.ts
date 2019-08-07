@@ -18,6 +18,7 @@ const defaultNewWorkflow: Workflow = {
     executionSteps: [],
     icon: defaultWorkflowIcon,
     name: "",
+    needsUserConfirmationBeforeExecution: false,
     tags: [],
 };
 
@@ -132,6 +133,7 @@ export const workflowSettingsComponent = Vue.extend({
                             <tr>
                                 <th>{{ translations.workflowName }}</th>
                                 <th>{{ translations.workflowDescription }}</th>
+                                <th class="has-text-centered">{{ translations.workflowNeedsUserConfirmationBeforeExecution }}</th>
                                 <th>{{ translations.workflowTags }}</th>
                                 <th class="has-text-centered">{{ translations.workflowIcon }}</th>
                                 <th>{{ translations.workflowExecutionSteps }}</th>
@@ -143,6 +145,7 @@ export const workflowSettingsComponent = Vue.extend({
                             <tr v-for="(workflow, index) in config.workflowOptions.workflows">
                                 <td>{{ workflow.name }}</td>
                                 <td>{{ workflow.description }}</td>
+                                <td class="has-text-centered"><i v-if="workflow.needsUserConfirmationBeforeExecution" class="fas fa-check"></i></td>
                                 <td>
                                     <div v-if="workflow.tags.length > 0" class="tags">
                                         <span v-for="tag in workflow.tags" class="tag is-light">{{ tag }}</span>

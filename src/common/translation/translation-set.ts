@@ -276,6 +276,7 @@ export interface TranslationSet {
     workflowExecutionArgumentTypeUrl: string;
     workflowInvalidExecutionStep: string;
     workflowInvalidWorkflow: string;
+    workflowNeedsUserConfirmationBeforeExecution: string;
 
     commandline: string;
     commandlinePrefix: string;
