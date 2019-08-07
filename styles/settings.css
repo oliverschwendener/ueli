@@ -174,10 +174,6 @@ html {
     z-index: 5;
 }
 
-.overflow-visible {
-    overflow: visible;
-}
-
 /* Overwrite color picker styling */
 .vc-chrome {
     width: 100% !important;

@@ -47,6 +47,7 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
                         ? shortcut.icon
                         : defaultShortcutIcon,
                     name: shortcut.name,
+                    needsUserConfirmationBeforeExecution: shortcut.needsUserConfirmationBeforeExecution,
                     originPluginType: this.pluginType,
                     searchable: [shortcut.name].concat(shortcut.tags),
                     supportsOpenLocation: true,

@@ -11,6 +11,7 @@ export const defaultNewShortcut: Shortcut = {
         type: IconType.URL,
     },
     name: "",
+    needsUserConfirmationBeforeExecution: false,
     tags: [],
     type: ShortcutType.Url,
 };

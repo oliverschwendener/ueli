@@ -176,6 +176,7 @@ export const germanTranslationSet: TranslationSet = {
     shortcutSettingsTypeUrl: "URL",
     shortcutSettingsTypeCommandlineTool: "Kommandozeilenprogramm",
     shortcutSettingsEditModalCommandLinetoolDescription: "Datei mit Visual Studio Code bearbeiten",
+    shortcutSettingsNeedsUserConfirmation: "Braucht eine Bestätigung vor der Ausführung",
 
     translationSettingsTranslation: "Übersetzung",
     translationSettingsDescription: `Dieses Plugin erlaubt es dir schnell Wörter und kurze Sätze zu übersetzen. Es benutzt eine inoffizielle API (https://github.com/imankulov/linguee-api) für Linguee (https://github.com/imankulov/linguee-api) und kann daher instabil sein.`,

@@ -5,6 +5,7 @@ export interface Shortcut {
     name: string;
     description: string;
     executionArgument: string;
+    needsUserConfirmationBeforeExecution: boolean;
     icon: Icon;
     tags: string[];
     type: ShortcutType;

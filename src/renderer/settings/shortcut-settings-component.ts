@@ -139,6 +139,7 @@ export const shortcutSettingsComponent = Vue.extend({
                                     <th>{{ translations.shortcutSettingsTableName }}</th>
                                     <th class="is-expanded">{{ translations.shortcutSettingsTableExecutionArgument }}</th>
                                     <th>{{ translations.shortcutSettingsTableDescription }}</th>
+                                    <th class="has-text-centered">{{ translations.shortcutSettingsNeedsUserConfirmation }}</th>
                                     <th>{{ translations.shortcutSettingsTableTags }}</th>
                                     <th class="has-text-centered">{{ translations.shortcutSettingsTableIcon }}</th>
                                     <th class="has-text-centered">{{ translations.shortcutSettingsTableEdit }}</th>
@@ -155,6 +156,7 @@ export const shortcutSettingsComponent = Vue.extend({
                                     <td>{{ shortcut.name }}</td>
                                     <td>{{ shortcut.executionArgument }}</td>
                                     <td>{{ shortcut.description }}</td>
+                                    <td class="has-text-centered"><i v-if="shortcut.needsUserConfirmationBeforeExecution" class="fas fa-check"></i></td>
                                     <td>
                                         <div v-if="shortcut.tags.length > 0" class="tags">
                                             <span v-for="tag in shortcut.tags" class="tag is-light">{{ tag }}</span>

@@ -169,7 +169,7 @@ export const shortcutEditingModal = Vue.extend({
     template: `
         <div class="modal" :class="{ 'is-active' : visible }">
             <div class="modal-background" @click="onBackgroundClick"></div>
-            <div class="modal-content overflow-visible">
+            <div class="modal-content">
                 <div class="message">
                     <div class="message-header">
                         <p>{{ getModalTitle() }}</p>
@@ -226,6 +226,18 @@ export const shortcutEditingModal = Vue.extend({
                             </label>
                             <div class="control">
                                 <input class="input" type="text" :placeholder="getShorcutTypeDescriptionPlaceholder(shortcut.type)" v-model="shortcut.description">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">
+                                {{ translations.shortcutSettingsNeedsUserConfirmation }}
+                            </label>
+                            <div class="control">
+                                <input class="is-checkradio" id="userConfirmationCheckbox" type="checkbox" name="userConfirmationCheckbox" v-model="shortcut.needsUserConfirmationBeforeExecution">
+                                <label for="userConfirmationCheckbox"></label>
+                                <div class="field">
+                                    <input class="is-checkradio is-block is-success" id="userConfirmationCheckbox" type="checkbox" name="userConfirmationCheckbox" checked="checked">
+                                </div>
                             </div>
                         </div>
                         <tags-editing :tags="shortcut.tags" :field-title="translations.shortcutSettingsTableTags" :translations="translations"></tags-editing>
