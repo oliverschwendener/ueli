@@ -30,7 +30,6 @@ export const germanTranslationSet: TranslationSet = {
     successfullyRefreshedIndexes: "Erfolgreich alle Indexe aktualisiert",
     successfullyClearedCaches: "Erfolgreich alle Zwischenspeicher gelöscht",
     successfullyUpdatedconfig: "Erfolgreich Einstellungen aktualisiert",
-    successfullyClearedCachesBeforeExit: "Erfolgreich alle Zwischenspeicher vor dem Beenden gelöscht",
     successfullyClearedExecutionLog: "Erfolgreich den Ausführungslog gelöscht",
 
     commandlineSearchResultDescription: "{{command}} ausführen",

@@ -77,9 +77,8 @@ function notifyRenderer(message: string, notificationType: NotificationType) {
 function refreshAllIndexes() {
     searchEngine.refreshIndexes()
         .then(() => {
-            const message = translationSet.successfullyRefreshedIndexes;
-            logger.debug(message);
-            notifyRenderer(message, NotificationType.Info);
+            logger.debug("Successfully refreshed all indexes");
+            notifyRenderer(translationSet.successfullyRefreshedIndexes, NotificationType.Info);
         })
         .catch((err) => {
             logger.error(err);
@@ -94,7 +93,10 @@ function refreshAllIndexes() {
 
 function clearAllCaches() {
     searchEngine.clearCaches()
-        .then(() => logger.debug(translationSet.successfullyClearedCaches))
+        .then(() => {
+            logger.debug("Successfully cleared caches");
+            notifyRenderer(translationSet.successfullyClearedCaches, NotificationType.Info);
+        })
         .catch((err) => logger.error(err));
 }
 
@@ -266,7 +268,7 @@ function beforeQuitApp(): Promise<void> {
         if (config.generalOptions.clearCachesOnExit) {
             searchEngine.clearCaches()
                 .then(() => {
-                    logger.debug(translationSet.successfullyClearedCachesBeforeExit);
+                    logger.debug("Successfully cleared all caches before app quit");
                     resolve();
                 })
                 .catch((err) => reject(err));

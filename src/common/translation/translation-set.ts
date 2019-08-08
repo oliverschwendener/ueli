@@ -27,7 +27,6 @@ export interface TranslationSet {
     successfullyRefreshedIndexes: string;
     successfullyClearedCaches: string;
     successfullyUpdatedconfig: string;
-    successfullyClearedCachesBeforeExit: string;
     successfullyClearedExecutionLog: string;
 
     commandlineSearchResultDescription: string;

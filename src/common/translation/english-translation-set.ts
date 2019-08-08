@@ -30,7 +30,6 @@ export const englishTranslationSet: TranslationSet = {
     successfullyRefreshedIndexes: "Successfully refreshed indexes",
     successfullyClearedCaches: "Successfully cleared caches",
     successfullyUpdatedconfig: "Successfully updated config",
-    successfullyClearedCachesBeforeExit: "Successfully cleared caches before exit",
     successfullyClearedExecutionLog: "Successfully cleared execution log",
 
     commandlineSearchResultDescription: "Execute {{command}}",
