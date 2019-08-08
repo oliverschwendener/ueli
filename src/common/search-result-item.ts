@@ -17,6 +17,7 @@ export interface SearchResultItem {
 export interface SearchResultItemViewModel extends SearchResultItem {
     active: boolean;
     id: string;
+    resultNumber: number;
 }
 
 export function createSearchResultItemViewModel(searchResult: SearchResultItem, counter: number): SearchResultItemViewModel {
@@ -30,6 +31,7 @@ export function createSearchResultItemViewModel(searchResult: SearchResultItem, 
         name: searchResult.name,
         needsUserConfirmationBeforeExecution: searchResult.needsUserConfirmationBeforeExecution,
         originPluginType: searchResult.originPluginType,
+        resultNumber: counter,
         searchable: searchResult.searchable,
         supportsAutocompletion: searchResult.supportsAutocompletion,
         supportsOpenLocation: searchResult.supportsOpenLocation,

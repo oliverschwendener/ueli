@@ -106,6 +106,7 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsUserInputHeight: "User input height (in pixels)",
     appearanceSettingsShowDescriptionOnAllSearchResults: "Show description on all search results",
     appearanceSettingsShowSearchIcon: "Show search icon in search field",
+    appearanceSettingsShowSearchResultNumbers: "Show search result numbers",
     appearanceSettingsResetWarningMessage: "You are about to reset all appearance settings to default. Do you want to proceed?",
 
     colorThemeSettings: "Color Theme",

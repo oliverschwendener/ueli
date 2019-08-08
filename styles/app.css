@@ -25,6 +25,7 @@
     --search-results--item-side-padding: 15px;
     --search-results--item-icon-size: 30px;
     --search-results--item-info-container-padding: 10px;
+    --search-results--item-search-result-number-font-size: 14px;
 
     --scrollbar--size: 8px;
     --scrollbar--foreground-color: #3d444f;
@@ -202,6 +203,16 @@ body {
     display: flex;
     flex-direction: column;
     max-width: calc(100% - var(--search-results--item-icon-size));  
+}
+
+.search-results__item-number-container {
+    color: var(--search-results--item-name-text-color);
+    font-size: var(--search-results--item-search-result-number-font-size);
+    opacity: 0.5;
+}
+
+.search-results__item-number-container.active {
+    color: var(--search-results--item-active-text-color);
 }
 
 .search-results__item-name,

@@ -103,6 +103,7 @@ export interface TranslationSet {
     appearanceSettingsUserInputHeight: string;
     appearanceSettingsShowDescriptionOnAllSearchResults: string;
     appearanceSettingsShowSearchIcon: string;
+    appearanceSettingsShowSearchResultNumbers: string;
     appearanceSettingsResetWarningMessage: string;
 
     colorThemeSettings: string;

@@ -3,6 +3,7 @@ export interface AppearanceOptions {
     searchResultHeight: number;
     showDescriptionOnAllSearchResults: boolean;
     showSearchIcon: boolean;
+    showSearchResultNumbers: boolean;
     smoothScrolling: boolean;
     userInputHeight: number;
     windowWidth: number;

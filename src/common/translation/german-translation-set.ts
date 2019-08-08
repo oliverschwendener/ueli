@@ -106,6 +106,7 @@ export const germanTranslationSet: TranslationSet = {
     appearanceSettingsUserInputHeight: "Eingabefeld (in Pixel)",
     appearanceSettingsShowDescriptionOnAllSearchResults: "Beschreibung bei allen Suchresultaten anzeigen",
     appearanceSettingsShowSearchIcon: "Suchsymbol in der Suchleiste anzeigen",
+    appearanceSettingsShowSearchResultNumbers: "Nummern für Suchergebnisse anzeigen",
     appearanceSettingsResetWarningMessage: "Du bist dabei alle Erscheiungsbildeinstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
 
     colorThemeSettings: "Farbschema",
