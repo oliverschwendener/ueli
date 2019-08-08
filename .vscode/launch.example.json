@@ -20,10 +20,8 @@
       "name": "Jest Tests",
       "program": "${workspaceRoot}/node_modules/jest/bin/jest",
       "args": [
-        "--runInBand",
         "--config",
-        "jest.json",
-        "src/tests"
+        "jest.json"
       ],
       "console": "internalConsole",
       "internalConsoleOptions": "neverOpen"
