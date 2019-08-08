@@ -1,4 +1,4 @@
-import { TestableUserInputHistoryManager } from "./testable-user-input-history-manager";
+import { TestableUserInputHistoryManager } from "../tests/testable-user-input-history-manager";
 
 describe(TestableUserInputHistoryManager.name, (): void => {
     describe("addItem", (): void => {

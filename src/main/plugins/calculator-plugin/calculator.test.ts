@@ -1,5 +1,5 @@
-import { Calculator } from "./../main/plugins/calculator-plugin/calculator";
-import { InputOutputCombination } from "./test-helper";
+import { Calculator } from "./calculator";
+import { InputOutputCombination } from "../../../tests/test-helper";
 
 describe(Calculator.name, () => {
     describe(Calculator.calculate.name, () => {

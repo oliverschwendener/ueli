@@ -1,16 +1,16 @@
-import { SearchEngine } from "../main/search-engine";
-import { SearchPlugin } from "../main/search-plugin";
+import { SearchEngine } from "./search-engine";
+import { SearchPlugin } from "./search-plugin";
 import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
 import { UserConfigOptions } from "../common/config/user-config-options";
 import { englishTranslationSet } from "../common/translation/english-translation-set";
-import { FakeSearchPlugin } from "./fake-search-plugin";
+import { FakeSearchPlugin } from "../tests/fake-search-plugin";
 import { SearchResultItem } from "../common/search-result-item";
-import { PluginType } from "../main/plugin-type";
-import { dummyIcon } from "./dummy-icon";
-import { TestLogger } from "./test-logger";
-import { ExecutionPlugin } from "../main/execution-plugin";
+import { PluginType } from "./plugin-type";
+import { dummyIcon } from "../tests/dummy-icon";
+import { TestLogger } from "../tests/test-logger";
+import { ExecutionPlugin } from "./execution-plugin";
 import { TranslationSet } from "../common/translation/translation-set";
-import { FakeFavoriteRepository } from "./fake-favorite-repository";
+import { FakeFavoriteRepository } from "../tests/fake-favorite-repository";
 
 describe(SearchEngine.name, () => {
     const fakeFavoritesRepository = new FakeFavoriteRepository([]);
