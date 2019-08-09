@@ -12,7 +12,7 @@ import { getFolderPath, getFilePath } from "../dialogs";
 import { NotificationType } from "../../common/notification-type";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { FileHelpers } from "../../common/helpers/file-helpers";
-import { isValidUserConfig, mergeUserConfigWithDefault } from "../../common/helpers/config-helpers";
+import { isValidJson, mergeUserConfigWithDefault } from "../../common/helpers/config-helpers";
 import { defaultUserConfigOptions } from "../../common/config/default-user-config-options";
 import { GeneralSettings } from "./general-settings";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
@@ -148,7 +148,7 @@ export const generalSettingsComponent = Vue.extend({
                 .then((filePath) => {
                     FileHelpers.readFile(filePath)
                         .then((fileContent) => {
-                            if (isValidUserConfig(fileContent)) {
+                            if (isValidJson(fileContent)) {
                                 const userConfig: UserConfigOptions = JSON.parse(fileContent);
                                 const config: UserConfigOptions = mergeUserConfigWithDefault(userConfig, defaultUserConfigOptions);
                                 this.config = config;

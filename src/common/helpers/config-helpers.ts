@@ -14,7 +14,7 @@ export function mergeUserConfigWithDefault(userConfig: any, defaultUserConfig: U
     return result;
 }
 
-export function isValidUserConfig(userConfig: string): boolean {
+export function isValidJson(userConfig: string): boolean {
     try {
         JSON.parse(userConfig);
         return true;
