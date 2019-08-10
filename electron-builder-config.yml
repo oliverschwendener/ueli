@@ -11,9 +11,15 @@ files:
 
 win:
   icon: ./img/icons/win/ueli-white-on-black-logo-circle.ico
-  target:
-    - nsis
-    - zip
+  target: 
+    - target: nsis
+      arch:
+        - x64
+        - ia32
+    - target: zip
+      arch:
+        - x64
+        - ia32
   publish:
     - github
 
