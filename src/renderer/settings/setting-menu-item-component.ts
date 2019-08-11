@@ -54,6 +54,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.everythingSearch;
                 case SettingOsSpecific.MdFind:
                     return translations.mdfindSearch;
+                case SettingOsSpecific.Uwp:
+                    return "UWP";
                 default:
                     return item;
             }

@@ -128,6 +128,7 @@ export const settingsComponent = Vue.extend({
                 <workflow-settings :config="config" :translations="translations"></workflow-settings>
                 <commandline-settings :config="config" :translations="translations"></commandline-settings>
                 <simple-folder-search-settings :config="config" :translations="translations"></simple-folder-search-settings>
+                <uwp-settings :config="config" :translations="translations"></uwp-settings>
                 <user-confirmation :translations="translations"></user-confirmation>
             </div>
         </div>

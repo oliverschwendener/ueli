@@ -17,5 +17,6 @@ export enum PluginType {
     Workflow = "workflow-plugin",
     Commandline = "commandline-plugin",
     SimpleFolderSearch = "simple-folder-search-plugin",
+    Uwp = "uwp",
     Test = "test-plugin",
 }

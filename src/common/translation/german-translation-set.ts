@@ -293,6 +293,8 @@ export const germanTranslationSet: TranslationSet = {
     simpleFolderSearchAddFolder: "Ordner hinzufügen",
     simpleFolderSearchEditFolder: "Ordner bearbeiten",
 
+    uwpSettingsDescription: "Dieses Plugin erlaubt es dir vorinstallierte UWP-Apps zu finden.",
+
     cancel: "Abbrechen",
     save: "Speichern",
     add: "Hinzufügen",

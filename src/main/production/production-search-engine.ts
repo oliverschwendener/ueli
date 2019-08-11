@@ -41,6 +41,8 @@ import { executeWindowsOperatingSystemSetting, executeMacOSOperatingSystemSettin
 import { WindowsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/windows-operating-system-setting-repository";
 import { SimpleFolderSearchPlugin } from "../plugins/simple-folder-search-plugin/simple-folder-search-plugin";
 import { Logger } from "../../common/logger/logger";
+import { UwpPlugin } from "../plugins/uwp-plugin/uwp-plugin";
+import { InMemoryUwpAppRepository } from "../plugins/uwp-plugin/inmemory-uwp-app-repository";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -127,6 +129,7 @@ export const getProductionSearchEngine = (config: UserConfigOptions, translation
                 config.everythingSearchOptions,
                 filePathExecutor,
                 filePathLocationExecutor));
+        searchPlugins.push(new UwpPlugin(config.uwpSearchOptions, new InMemoryUwpAppRepository(), executeCommand));
     }
     if (isMacOs(platform())) {
         executionPlugins.push(

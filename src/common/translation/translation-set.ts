@@ -290,6 +290,8 @@ export interface TranslationSet {
     simpleFolderSearchAddFolder: string;
     simpleFolderSearchEditFolder: string;
 
+    uwpSettingsDescription: string;
+
     cancel: string;
     save: string;
     add: string;
