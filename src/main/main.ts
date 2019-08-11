@@ -31,6 +31,7 @@ import { UpdateCheckResult } from "../common/update-check-result";
 import { executeUrlMacOs } from "./executors/url-executor";
 import { ProductionLogger } from "../common/logger/production-logger";
 import { DevLogger } from "../common/logger/dev-logger";
+import { windowIconWindows, windowIconMacOs } from "./helpers/window-icon-helpers";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -39,8 +40,10 @@ if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
 const isInDevelopment = isDev();
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
 const currentOperatingSystem = isWindows(platform()) ? OperatingSystem.Windows : OperatingSystem.macOS;
-const filePathExecutor = currentOperatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
-const windowIconFilePath = join(__dirname, "..", "assets", "ueli-white-on-black-logo-circle.png");
+const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
+const trayIconFilePath = isWindows(platform()) ? trayIconPathWindows : trayIconPathMacOs;
+const windowIconFilePath = isWindows(platform()) ? windowIconWindows : windowIconMacOs;
+
 const userInputHistoryManager = new UserInputHistoryManager();
 const releaseUrl = "https://github.com/oliverschwendener/ueli/releases/latest";
 
@@ -303,9 +306,6 @@ function updateAutoStartOptions(userConfig: UserConfigOptions) {
 
 function createTrayIcon() {
     if (config.generalOptions.showTrayIcon) {
-        const trayIconFilePath = currentOperatingSystem === OperatingSystem.Windows
-            ? trayIconPathWindows
-            : trayIconPathMacOs;
         trayIcon = new Tray(trayIconFilePath);
         updateTrayIconContextMenu();
     }
