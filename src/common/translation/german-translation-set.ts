@@ -244,6 +244,8 @@ export const germanTranslationSet: TranslationSet = {
     windowsSignoutDescription: "Aktuellen Benutzer abmelden",
     windowsLock: "Sperren",
     windowsLockDescription: "Computer sperren",
+    windowsSleep: "Ruhezustand",
+    windowsSleepDescription: "Computer in Ruhezustand versetzen",
 
     calcuator: "Rechner",
     calculatorCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",

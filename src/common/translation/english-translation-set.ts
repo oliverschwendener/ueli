@@ -244,6 +244,8 @@ export const englishTranslationSet: TranslationSet = {
     windowsSignoutDescription: "Sign out current user",
     windowsLock: "Lock",
     windowsLockDescription: "Lock computer",
+    windowsSleep: "Sleep",
+    windowsSleepDescription: "Put computer to sleep",
 
     calcuator: "Calculator",
     calculatorCopyToClipboard: "Press enter to copy to clipboard",
