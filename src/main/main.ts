@@ -121,8 +121,12 @@ function showMainWindow() {
             const windowBounds: Electron.Rectangle = {
                 height: Math.round(Number(config.appearanceOptions.userInputHeight)),
                 width: Math.round(Number(config.appearanceOptions.windowWidth)),
-                x: config.generalOptions.rememberWindowPosition ? lastWindowPosition.x : calculateX(display),
-                y: config.generalOptions.rememberWindowPosition ? lastWindowPosition.y : calculateY(display),
+                x: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.x
+                    ? lastWindowPosition.x
+                    : calculateX(display),
+                    y: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.y
+                    ? lastWindowPosition.y
+                    : calculateY(display),
             };
             mainWindow.setBounds(windowBounds);
             mainWindow.show();
@@ -346,7 +350,7 @@ function destroyTrayIcon() {
     }
 }
 
-function onMainWindowMoved() {
+function onMainWindowMove() {
     if (mainWindow && !mainWindow.isDestroyed()) {
         const currentPosition = mainWindow.getPosition();
         if (currentPosition.length === 2) {
@@ -379,7 +383,7 @@ function createMainWindow() {
     });
     mainWindow.on("blur", onBlur);
     mainWindow.on("closed", quitApp);
-    mainWindow.on("moved", onMainWindowMoved);
+    mainWindow.on("move", onMainWindowMove);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
 }
 
