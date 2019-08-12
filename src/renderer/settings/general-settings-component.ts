@@ -20,6 +20,7 @@ import { UpdateCheckResult } from "../../common/update-check-result";
 import { isDev } from "../../common/is-dev";
 import { isWindows } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
+import { version } from "../../../package.json";
 
 interface UpdateStatus {
     checking: boolean;
@@ -37,9 +38,17 @@ const initialUpdateStatus: UpdateStatus = {
     updateAvailable: false,
 };
 
+const appInfo = {
+    electron: process.versions.electron,
+    node: process.versions.node,
+    ueli: version,
+    v8: process.versions.v8,
+};
+
 export const generalSettingsComponent = Vue.extend({
     data() {
         return {
+            appInfo,
             availableLanguages: Object.values(Language).map((language) => language),
             dropdownVisible: false,
             globalHotKeyKeys: Object.values(GlobalHotKeyKey).map((key) => key),
@@ -510,6 +519,43 @@ export const generalSettingsComponent = Vue.extend({
                             </div>
                         </div>
 
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="settings__options-container">
+                        <div class="settings__option">
+                            <div class="settings__option-name">
+                                ueli
+                            </div>
+                            <div class="settings__option-content has-text-right">
+                                {{ appInfo.ueli }}
+                            </div>
+                        </div>
+                        <div class="settings__option">
+                            <div class="settings__option-name">
+                                Electron
+                            </div>
+                            <div class="settings__option-content has-text-right">
+                                {{ appInfo.electron }}
+                            </div>
+                        </div>
+                        <div class="settings__option">
+                            <div class="settings__option-name">
+                                Node
+                            </div>
+                            <div class="settings__option-content has-text-right">
+                                {{ appInfo.node }}
+                            </div>
+                        </div>
+                        <div class="settings__option">
+                            <div class="settings__option-name">
+                                V8
+                            </div>
+                            <div class="settings__option-content has-text-right">
+                                {{ appInfo.v8 }}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
