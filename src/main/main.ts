@@ -327,6 +327,10 @@ function updateTrayIconContextMenu() {
                 label: translationSet.trayIconSettings,
             },
             {
+                click: refreshAllIndexes,
+                label: translationSet.ueliCommandRefreshIndexes,
+            },
+            {
                 click: quitApp,
                 label: translationSet.trayIconQuit,
             },
