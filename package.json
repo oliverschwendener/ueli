@@ -35,7 +35,8 @@
     "test": "./node_modules/.bin/jest --config jest.json --silent .",
     "tsc:validate": "./node_modules/.bin/tsc --noEmit",
     "package:dir": "./node_modules/.bin/electron-builder --dir --config electron-builder-config.yml --publish never",
-    "package": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish never"
+    "package": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish never",
+    "package:publish": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish onTag"
   },
   "devDependencies": {
     "@types/jest": "^24.0.17",
