@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Electron Main",
       "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
-      "program": "${workspaceRoot}/src/ts/main.ts",
+      "program": "${workspaceRoot}/src/main/main.ts",
       "protocol": "inspector",
       "sourceMaps": true,
       "cwd": "${workspaceRoot}",
@@ -15,33 +15,24 @@
       ]
     },
     {
-      "name": "Electron Renderer",
-      "type": "chrome",
-      "request": "launch",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
-      "windows": {
-        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
-      },
-      "runtimeArgs": [
-        "${workspaceRoot}/bundle/main.js",
-        "--remote-debugging-port=9222"
-      ],
-      "port": 9222,
-      "webRoot": "${workspaceRoot}"
-    },
-    {
       "type": "node",
       "request": "launch",
       "name": "Jest Tests",
       "program": "${workspaceRoot}/node_modules/jest/bin/jest",
       "args": [
-        "--runInBand",
         "--config",
-        "jest.json",
-        "src/tests"
+        "jest.json"
       ],
       "console": "internalConsole",
       "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Electron Renderer",
+      "port": 9223,
+      "webRoot": "${workspaceFolder}",
+      "timeout": 10000
     }
   ]
 }

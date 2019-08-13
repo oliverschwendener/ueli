@@ -1,7 +1,7 @@
 {
   "name": "ueli",
   "productName": "ueli",
-  "version": "7.2.8",
+  "version": "7.2.7",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -29,48 +29,44 @@
   "scripts": {
     "bundle": "./node_modules/.bin/webpack",
     "bundle:watch": "./node_modules/.bin/webpack --watch",
-    "start": "./node_modules/.bin/electron . --enable-logging",
+    "start": "./node_modules/.bin/electron . --remote-debugging-port=9223",
     "lint": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json",
     "lint:fix": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json --fix",
-    "test": "./node_modules/.bin/jest --config jest.json --silent ./src/tests",
-    "coverage": "./node_modules/.bin/coveralls < ./coverage/lcov.info",
-    "package:publish": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish onTag",
-    "package:dir": "./node_modules/.bin/electron-builder --dir --config electron-builder-config.yml --publish never"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint && yarn test && yarn bundle",
-      "pre-push": "yarn lint && yarn test && yarn bundle"
-    }
+    "test": "./node_modules/.bin/jest --config jest.json --silent .",
+    "tsc:validate": "./node_modules/.bin/tsc --noEmit",
+    "package:dir": "./node_modules/.bin/electron-builder --dir --config electron-builder-config.yml --publish never",
+    "package": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish never"
   },
   "devDependencies": {
-    "@types/electron-is-dev": "^0.3.0",
-    "@types/jest": "^23.3.1",
-    "@types/mathjs": "^4.4.1",
+    "@types/jest": "^24.0.17",
+    "@types/lodash": "^4.14.136",
+    "@types/mathjs": "^5.0.1",
     "@types/node-powershell": "^3.1.0",
-    "app2png": "^1.0.0",
-    "coveralls": "^3.0.2",
-    "electron": "^2.0.8",
-    "electron-builder": "^20.28.3",
-    "electron-is-dev": "^0.3.0",
+    "@types/vue-color": "^2.4.2",
+    "axios": "^0.19.0",
+    "electron": "^5.0.9",
+    "electron-builder": "^21.2.0",
     "electron-store": "^3.2.0",
-    "electron-updater": "^3.1.2",
-    "extract-loader": "^3.0.0",
-    "file-loader": "^2.0.0",
-    "fuse.js": "^3.2.1",
-    "husky": "^0.15.0-rc.8",
-    "jest": "^23.5.0",
-    "mathjs": "^5.1.1",
-    "node-powershell": "^3.3.1",
-    "ts-jest": "^23.1.4",
-    "ts-loader": "^4.5.0",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
-    "typescript": "^3.0.3",
-    "vue": "^2.5.17",
-    "webpack": "^4.32.2",
-    "webpack-cli": "^3.3.2",
-    "webpack-merge": "^4.2.1",
-    "windows-system-icon": "^0.0.5"
+    "electron-updater": "^4.0.14",
+    "fuse.js": "^3.4.4",
+    "jest": "^24.8.0",
+    "lodash": "^4.17.15",
+    "mathjs": "^5.10.3",
+    "node-powershell": "^4.0.0",
+    "simple-plist": "^1.0.0",
+    "ts-jest": "^24.0.2",
+    "ts-loader": "^6.0.4",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.3",
+    "vue": "^2.6.10",
+    "vue-color": "^2.7.0",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6",
+    "winston": "^3.2.1"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.10.1",
+    "bulma": "^0.7.5",
+    "bulma-extensions": "^6.2.7"
   }
 }
