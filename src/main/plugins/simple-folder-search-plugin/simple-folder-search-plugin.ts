@@ -14,7 +14,7 @@ import { OpenLocationPlugin } from "../../open-location-plugin";
 export class SimpleFolderSearchPlugin implements SearchPlugin, OpenLocationPlugin {
     public pluginType = PluginType.SimpleFolderSearch;
     private config: SimpleFolderSearchOptions;
-    private items: SearchResultItem[];
+    private items: FileIconDataResult[];
     private readonly filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>;
     private readonly filePathLocationExecutor: (filePath: string) => Promise<void>;
 
@@ -31,7 +31,7 @@ export class SimpleFolderSearchPlugin implements SearchPlugin, OpenLocationPlugi
 
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve) => {
-            resolve(this.items);
+            resolve(this.items.map((item) => this.buildSearchResultItem(item)));
         });
     }
 
@@ -64,7 +64,7 @@ export class SimpleFolderSearchPlugin implements SearchPlugin, OpenLocationPlugi
                         } else {
                             Promise.all(iconPromises)
                             .then((iconResults) => {
-                                this.items = iconResults.map((iconResult): SearchResultItem => this.buildSearchResultItem(iconResult));
+                                this.items = iconResults;
                                 resolve();
                             })
                             .catch((err) => reject(err));
@@ -100,18 +100,18 @@ export class SimpleFolderSearchPlugin implements SearchPlugin, OpenLocationPlugi
         });
     }
 
-    private buildSearchResultItem(iconResult: FileIconDataResult): SearchResultItem {
+    private buildSearchResultItem(item: FileIconDataResult): SearchResultItem {
         return {
-            description: createFilePathDescription(iconResult.filePath, {
+            description: createFilePathDescription(item.filePath, {
                 showFullFilePath: this.config.showFullFilePath,
             }),
-            executionArgument: iconResult.filePath,
+            executionArgument: item.filePath,
             hideMainWindowAfterExecution: true,
-            icon: iconResult.icon,
-            name: basename(iconResult.filePath),
+            icon: item.icon,
+            name: basename(item.filePath),
             needsUserConfirmationBeforeExecution: false,
             originPluginType: this.pluginType,
-            searchable: [basename(iconResult.filePath)],
+            searchable: [basename(item.filePath)],
             supportsOpenLocation: true,
         };
     }
