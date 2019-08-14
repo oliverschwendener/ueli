@@ -1,10 +1,10 @@
-![logo](./assets/readme-header.png)
+![logo](assets/readme-header.png)
 
 # ueli
 
 This is a keystroke launcher for Windows and macOS.
 
-![example-image](./assets/example-image.png)
+![example-image](assets/example-image.png)
 
 ## Table of contents
 
@@ -42,31 +42,31 @@ This is a keystroke launcher for Windows and macOS.
 
 This plugin is searching for applications on your computer. You can specify the folders where your applications are installed and which file extension should be used to recognize an application.
 
-![app-search](./assets/feature-app-search.png)
+![app-search](assets/feature-app-search.png)
 
 ### Calculator
 
 This Plugin lets you quickly do simple calculations.
 
-![calculator](./assets/feature-calculator.png)
+![calculator](assets/feature-calculator.png)
 
 ### Commandline
 
 This plugin enables you to quickly execute commandline commands.
 
-![commandline](./assets/feature-commandline.png)
+![commandline](assets/feature-commandline.png)
 
 ### Currency Converter
 
 This plugin enables you to quickly convert currencies. The latest conversion rates are provided by https://exchangeratesapi.io/.
 
-![currency-converter](./assets/feature-currency-converter.png)
+![currency-converter](assets/feature-currency-converter.png)
 
 ### Email
 
 This plugin enables you to quickly start writing an email by typing in an email address.
 
-![email](./assets/feature-email.png)
+![email](assets/feature-email.png)
 
 ### Everything (Windows only)
 
@@ -75,77 +75,77 @@ This feature enables you to use [Everything Search](https://www.voidtools.com) t
 1. Install "Everything" and the "Everything Command-line interface" from [https://www.voidtools.com/downloads](https://www.voidtools.com/downloads).
 2. Specify the file path to `es.exe` in ueli's settings.
 
-![everything](./assets/feature-everything.png)
+![everything](assets/feature-everything.png)
 
 ### mdfind (macOS only)
 
 This plugin enables you to use the native macOS search to find files and folders on your local file system.
 
-![mdfind](./assets/feature-mdfind.png)
+![mdfind](assets/feature-mdfind.png)
 
 ### File Browser
 
 This plugin enables you to browse through your local file system. To start you have to enter a valid absolute filepath.
 
-![file-browser](./assets/feature-file-browser.png)
+![file-browser](assets/feature-file-browser.png)
 
 ### Operating System Commands
 
 Operating system commands are simple commands to control your operating system e.g. to shutdown or restart your computer.
 
-![operating-system-commands](./assets/feature-operating-system-commands.png)
+![operating-system-commands](assets/feature-operating-system-commands.png)
 
 ### Operating System Settings
 
 This plugin enables you to quickly find operating system settings.
 
-![operating-system-settings](./assets/feature-operating-system-settings.png)
+![operating-system-settings](assets/feature-operating-system-settings.png)
 
 ### Shortcuts
 
 This plugin enables you to quickly open files or websites by setting up your own shortcuts.
 
-![shortcuts](./assets/feature-shortcuts.png)
+![shortcuts](assets/feature-shortcuts.png)
 
 ### Simple Folder Search
 
 This plugin enables you to quickly search for files or folders.
 
-![simple-folder-search](./assets/feature-simple-folder-search.png)
+![simple-folder-search](assets/feature-simple-folder-search.png)
 
 ### Translation
 
 This plugin enables you to quickly translate words or short sentences. It uses an unofficial [API](https://github.com/imankulov/linguee-api) for [Linguee](https://linguee.de) and may be unstable.
 
-![translation](./assets/feature-translation.png)
+![translation](assets/feature-translation.png)
 
 ### UWP (Windows only)
 
 This plugin enables you to find preinstalled UWP apps.
 
-![uwp](./assets/feature-uwp.png)
+![uwp](assets/feature-uwp.png)
 
 ### URL
 
 This plugin enables you to quickly open websites by typing in a URL.
 
-![url](./assets/feature-url.png)
+![url](assets/feature-url.png)
 
 ### Web Search
 
 This plugin enables you to quickly search the internet with your favorite web search engine by setting up your own web search engines.
 
-![web-search](./assets/feature-web-search.png)
+![web-search](assets/feature-web-search.png)
 
 ### Workflow
 
 This plugin enables you to quickly execute multiple things at once.
 
-![workflow](./assets/feature-workflow.png)
+![workflow](assets/feature-workflow.png)
 
 ## Settings
 
-![settings](./assets/settings.png)
+![settings](assets/settings.png)
 
 To open the settings simply search for "Settings" or press `Ctrl+i` on Windows or `Cmd+,` on macOS. Here you can start configuring the app to your needs by enabling/disabling features or changing the settings.
 
