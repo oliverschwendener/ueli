@@ -182,6 +182,11 @@ body {
     fill: var(--search-results--item-active-text-color);
 }
 
+.search-results__item-icon--svg > svg {
+    width: var(--search-results--item-icon-size);
+    height: var(--search-results--item-icon-size);
+}
+
 .search-results__item-icon-overlay {
     background-color: var(--search-results--background-color);
     opacity: 0.25;
