@@ -43,9 +43,11 @@ const currentOperatingSystem = isWindows(platform()) ? OperatingSystem.Windows :
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
 const trayIconFilePath = isWindows(platform()) ? trayIconPathWindows : trayIconPathMacOs;
 const windowIconFilePath = isWindows(platform()) ? windowIconWindows : windowIconMacOs;
-
 const userInputHistoryManager = new UserInputHistoryManager();
 const releaseUrl = "https://github.com/oliverschwendener/ueli/releases/latest";
+const windowsPowerShellPath = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0";
+
+addPowershellToPathVariableIfMissing();
 
 autoUpdater.autoDownload = false;
 
@@ -658,6 +660,14 @@ function registerAllIpcListeners() {
             executeUrlMacOs(releaseUrl);
         }
     });
+}
+
+function addPowershellToPathVariableIfMissing() {
+    if (process.env.PATH) {
+        if (process.env.PATH.indexOf(windowsPowerShellPath) < 0) {
+            process.env.PATH += `;${windowsPowerShellPath}`;
+        }
+    }
 }
 
 app.on("ready", () => {
