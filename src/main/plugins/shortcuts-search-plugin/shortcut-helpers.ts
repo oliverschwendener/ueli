@@ -1,7 +1,7 @@
 import { Shortcut } from "./shortcut";
 import { ShortcutType } from "./shortcut-type";
 import { IconType } from "../../../common/icon/icon-type";
-import { isValidIconParameter } from "../../../common/icon/icon-helpers";
+import { isValidIcon } from "../../../common/icon/icon-helpers";
 
 export const defaultNewShortcut: Shortcut = {
     description: "",
@@ -23,7 +23,7 @@ export function isValidShortcuType(shortcutType: ShortcutType): boolean {
 export function isValidShortcutToAdd(shortcut: Shortcut, filePathValidator: (filePath: string) => boolean): boolean {
     let iconCondition = true;
     if (shortcut.icon.parameter && shortcut.icon.parameter.length > 0) {
-        iconCondition = isValidIconParameter(shortcut.icon);
+        iconCondition = isValidIcon(shortcut.icon);
     }
 
     return shortcut !== undefined
