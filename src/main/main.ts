@@ -682,6 +682,7 @@ app.on("ready", () => {
 
 app.on("window-all-closed", quitApp);
 app.on("quit", app.quit);
+app.commandLine.appendSwitch("force-color-profile", "srgb");
 
 autoUpdater.on("update-available", () => {
     logger.debug("Update check result: update available");
