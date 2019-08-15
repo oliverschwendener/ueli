@@ -47,12 +47,14 @@ const userInputHistoryManager = new UserInputHistoryManager();
 const releaseUrl = "https://github.com/oliverschwendener/ueli/releases/latest";
 const windowsPowerShellPath = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0";
 
-addPowershellToPathVariableIfMissing();
-
 autoUpdater.autoDownload = false;
 
 if (currentOperatingSystem === OperatingSystem.macOS) {
     app.dock.hide();
+}
+
+if (currentOperatingSystem === OperatingSystem.Windows) {
+    addPowershellToPathVariableIfMissing();
 }
 
 let trayIcon: Tray;
