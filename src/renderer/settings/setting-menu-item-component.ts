@@ -50,6 +50,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.commandline;
                 case PluginSettings.SimpleFolderSearch:
                     return translations.simpleFolderSearch;
+                case PluginSettings.ColorConverter:
+                    return translations.colorConverter;
                 case SettingOsSpecific.Everything:
                     return translations.everythingSearch;
                 case SettingOsSpecific.MdFind:

@@ -6,6 +6,7 @@ import { isValidIcon } from "../../common/icon/icon-helpers";
 export const iconComponent = Vue.extend({
     data() {
         return {
+            iconTypeColor: IconType.Color,
             iconTypeSvg: IconType.SVG,
             iconTypeUrl: IconType.URL,
         };
@@ -18,12 +19,19 @@ export const iconComponent = Vue.extend({
                 return this.defaulticon;
             }
         },
+        getBackgroundColor(icon: Icon): string {
+            if (icon.type === IconType.Color) {
+                return `background-color: ${icon.parameter}`;
+            }
+            return "";
+        },
     },
     props: ["icon", "defaulticon"],
     template: `
         <div class="settings-table__icon-container">
             <img v-if="getIcon(icon).type === iconTypeUrl" :src="getIcon(icon).parameter" class="settings-table__icon-url">
-            <div v-else="getIcon(icon).type === iconTypeSvg" v-html="getIcon(icon).parameter" class="settings-table__icon-svg"></div>
+            <div v-if="getIcon(icon).type === iconTypeSvg" v-html="getIcon(icon).parameter" class="settings-table__icon-svg"></div>
+            <div v-if="getIcon(icon).type === iconTypeColor" :style="getBackgroundColor(icon)" class="settings-table__icon-color"></div>
         </div>
     `,
 });

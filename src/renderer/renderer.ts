@@ -54,6 +54,7 @@ import { operatingSystemSettingsSettingsComponent } from "./settings/operating-s
 import { userConfirmationDialog } from "./settings/modals/user-confirmation-component";
 import { UpdateCheckResult } from "../common/update-check-result";
 import { uwpSettingsComponent } from "./settings/uwp-settings-component";
+import { colorConverterSettingsComponent } from "./settings/color-converter-settings-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -94,6 +95,7 @@ Vue.component("simple-folder-search-settings", simpleFolderSearchSettingsCompone
 Vue.component("simple-folder-search-editing", simpleFolderSearchEditingModalComponent);
 Vue.component("user-confirmation", userConfirmationDialog);
 Vue.component("uwp-settings", uwpSettingsComponent);
+Vue.component("color-converter-setttings", colorConverterSettingsComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 

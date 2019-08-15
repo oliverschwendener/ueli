@@ -165,6 +165,7 @@ export interface TranslationSet {
     shortcutSettingsAddShortcut: string;
     shortcutSettingsEditModalImageUrl: string;
     shortcutSettingsEditModalSvgString: string;
+    shortcutSettingsEditModalColor: string;
     shortcutSettingsEditModalGoogleWebsite: string;
     shortcutSettingsEditModalDownloadsFolder: string;
     shortcutSettingsEditModalCommand: string;
@@ -294,6 +295,10 @@ export interface TranslationSet {
 
     uwpSettingsDescription: string;
 
+    colorConverter: string;
+    colorConverterDescription: string;
+    colorConverterShowColorPreview: string;
+
     cancel: string;
     save: string;
     add: string;
@@ -301,6 +306,7 @@ export interface TranslationSet {
     edit: string;
     forExample: string;
     iconType: string;
+    iconTypeColor: string;
     showFullFilePath: string;
     yes: string;
     no: string;

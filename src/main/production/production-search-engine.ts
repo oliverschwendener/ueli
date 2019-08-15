@@ -43,6 +43,7 @@ import { SimpleFolderSearchPlugin } from "../plugins/simple-folder-search-plugin
 import { Logger } from "../../common/logger/logger";
 import { UwpPlugin } from "../plugins/uwp-plugin/uwp-plugin";
 import { InMemoryUwpAppRepository } from "../plugins/uwp-plugin/inmemory-uwp-app-repository";
+import { ColorConverterPlugin } from "../plugins/color-converter-plugin/color-converter-plugin";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -111,12 +112,13 @@ export const getProductionSearchEngine = (config: UserConfigOptions, translation
             filePathExecutor,
             filePathLocationExecutor,
             getFileIconDataUrl),
-        new TranslationPlugin(config.translationOptions),
+        new TranslationPlugin(config.translationOptions, electronClipboardCopier),
         new CalculatorPlugin(config.calculatorOptions, translationSet, electronClipboardCopier),
         new UrlPlugin(config.urlOptions, translationSet, urlExecutor),
         new EmailPlugin(config.emailOptions, translationSet, urlExecutor),
         new CurrencyConverterPlugin(config.currencyConverterOptions, translationSet, electronClipboardCopier),
         new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor),
+        new ColorConverterPlugin(config.colorConverterOptions, electronClipboardCopier),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [

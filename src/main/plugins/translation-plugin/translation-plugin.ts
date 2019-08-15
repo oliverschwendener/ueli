@@ -2,7 +2,6 @@ import { ExecutionPlugin } from "../../execution-plugin";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { PluginType } from "../../plugin-type";
-import { clipboard } from "electron";
 import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { defaultErrorIcon, defaultTranslatorIcon } from "../../../common/icon/default-icons";
 import { LingueeTranslator } from "./linguee-translator";
@@ -12,16 +11,15 @@ export class TranslationPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.TranslationPlugin;
     private config: TranslationOptions;
     private delay: NodeJS.Timeout | number;
+    private readonly clipboardCopier: (value: string) => Promise<void>;
 
-    constructor(config: TranslationOptions) {
+    constructor(config: TranslationOptions, clipboardCopier: (value: string) => Promise<void>) {
         this.config = config;
+        this.clipboardCopier = clipboardCopier;
     }
 
     public execute(searchResultItem: SearchResultItem): Promise<void> {
-        return new Promise((resolve) => {
-            clipboard.writeText(searchResultItem.executionArgument);
-            resolve();
-        });
+        return this.clipboardCopier(searchResultItem.executionArgument);
     }
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {

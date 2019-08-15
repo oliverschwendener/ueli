@@ -168,6 +168,7 @@ export const germanTranslationSet: TranslationSet = {
     shortcutSettingsAddShortcut: "Shortcut hinzufügen",
     shortcutSettingsEditModalImageUrl: "Bild URL",
     shortcutSettingsEditModalSvgString: "SVG Zeichenkette",
+    shortcutSettingsEditModalColor: "Farbe",
     shortcutSettingsEditModalGoogleWebsite: "Google Webseite",
     shortcutSettingsEditModalDownloadsFolder: "Downloads Ordner",
     shortcutSettingsEditModalCommand: "Befehl",
@@ -297,6 +298,10 @@ export const germanTranslationSet: TranslationSet = {
 
     uwpSettingsDescription: "Dieses Plugin erlaubt es dir vorinstallierte UWP-Apps zu finden.",
 
+    colorConverter: "Farbkonverter",
+    colorConverterDescription: "Dieses Plugin erlaubt es dir Farben in verschiedene Formate zu konvertieren.",
+    colorConverterShowColorPreview: "Farbvorschau anzeigen",
+
     cancel: "Abbrechen",
     save: "Speichern",
     add: "Hinzufügen",
@@ -304,6 +309,7 @@ export const germanTranslationSet: TranslationSet = {
     edit: "Bearbeiten",
     forExample: "Zum Beispiel",
     iconType: "Icontyp",
+    iconTypeColor: "Farbe",
     showFullFilePath: "Vollständiger Dateipfad anzeigen",
     yes: "Ja",
     no: "Nein",

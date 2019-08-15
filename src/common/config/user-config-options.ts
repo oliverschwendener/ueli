@@ -19,6 +19,7 @@ import { CommandlineOptions } from "./commandline-options";
 import { OperatingSystemSettingsOptions } from "./operating-system-settings-options";
 import { SimpleFolderSearchOptions } from "./simple-folder-search-options";
 import { UwpSearchOptions } from "./uwp-search-options";
+import { ColorConverterOptions } from "./color-converter-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -41,5 +42,6 @@ export interface UserConfigOptions {
     workflowOptions: WorkflowOptions;
     commandlineOptions: CommandlineOptions;
     simpleFolderSearchOptions: SimpleFolderSearchOptions;
+    colorConverterOptions: ColorConverterOptions;
     uwpSearchOptions: UwpSearchOptions;
 }

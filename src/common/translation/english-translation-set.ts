@@ -168,6 +168,7 @@ export const englishTranslationSet: TranslationSet = {
     shortcutSettingsAddShortcut: "Add shortcut",
     shortcutSettingsEditModalImageUrl: "Image URL",
     shortcutSettingsEditModalSvgString: "SVG string",
+    shortcutSettingsEditModalColor: "Color",
     shortcutSettingsEditModalGoogleWebsite: "Google website",
     shortcutSettingsEditModalDownloadsFolder: "Downloads folder",
     shortcutSettingsEditModalCommand: "Command",
@@ -297,6 +298,10 @@ export const englishTranslationSet: TranslationSet = {
 
     uwpSettingsDescription: "This plugin enables you to find preinstalled UWP apps.",
 
+    colorConverter: "Color converter",
+    colorConverterDescription: "This plugin enables you to quickly convert colors into different formats.",
+    colorConverterShowColorPreview: "Show color preview",
+
     cancel: "Cancel",
     save: "Save",
     add: "Add",
@@ -304,6 +309,7 @@ export const englishTranslationSet: TranslationSet = {
     edit: "Edit",
     forExample: "For example",
     iconType: "Icon type",
+    iconTypeColor: "Color",
     showFullFilePath: "Show full file path",
     yes: "Yes",
     no: "No",

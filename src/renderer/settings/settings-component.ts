@@ -129,6 +129,7 @@ export const settingsComponent = Vue.extend({
                 <commandline-settings :config="config" :translations="translations"></commandline-settings>
                 <simple-folder-search-settings :config="config" :translations="translations"></simple-folder-search-settings>
                 <uwp-settings :config="config" :translations="translations"></uwp-settings>
+                <color-converter-setttings :config="config" :translations="translations"></color-converter-setttings>
                 <user-confirmation :translations="translations"></user-confirmation>
             </div>
         </div>

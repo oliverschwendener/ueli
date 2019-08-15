@@ -20,11 +20,13 @@ import { defaultCommandlineOptions } from "./default-commandline-options";
 import { defaultOperatingSystemSettingsOptions } from "./default-operating-system-settings-options";
 import { defaultSimpleFolderSearchOptions } from "./default-simple-folder-search-options";
 import { defaultUwpSearchOptions } from "./default-uwp-search-options";
+import { defaultColorConverterOptions } from "./default-color-converter-options";
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
     applicationSearchOptions: defaultApplicationSearchOptions,
     calculatorOptions: defaultCalculatorOptions,
+    colorConverterOptions: defaultColorConverterOptions,
     colorThemeOptions: defaultColorThemeOptions,
     commandlineOptions: defaultCommandlineOptions,
     currencyConverterOptions: defaultCurrencyConverterOptions,

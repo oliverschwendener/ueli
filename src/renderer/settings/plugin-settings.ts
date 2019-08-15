@@ -13,4 +13,5 @@ export enum PluginSettings {
     Workflow = "Workflow",
     Commandline = "Commandline",
     SimpleFolderSearch = "Simple Folder Search",
+    ColorConverter = "Color Converter",
 }

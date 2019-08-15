@@ -34,6 +34,8 @@ export const searchResultsComponent = Vue.extend({
                     return `<img class="search-results__item-icon--url ${activeClass}" src="${icon.parameter}">`;
                 case IconType.SVG:
                     return `<div class="search-results__item-icon--svg ${activeClass}">${icon.parameter}</div>`;
+                case IconType.Color:
+                    return `<div class="search-results__item-icon--color" style="background-color: ${icon.parameter};"></div>`;
             }
         },
         update(searchResults: SearchResultItem[]) {
