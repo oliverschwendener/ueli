@@ -3,7 +3,6 @@ import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
 import { Shortcut } from "../../../main/plugins/shortcuts-search-plugin/shortcut";
 import { ShortcutType } from "../../../main/plugins/shortcuts-search-plugin/shortcut-type";
-import { IconType } from "../../../common/icon/icon-type";
 import { platform, homedir } from "os";
 import { cloneDeep } from "lodash";
 import { defaultNewShortcut, isValidShortcutToAdd } from "../../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
@@ -27,9 +26,6 @@ export const shortcutEditingModal = Vue.extend({
         return {
             autofocus: true,
             editMode: ModalEditMode.Add,
-            iconTypeSvg: IconType.SVG,
-            iconTypeUrl: IconType.URL,
-            iconTypes: Object.values(IconType).sort(),
             saveIndex: undefined,
             shortcut: cloneDeep(defaultNewShortcut),
             shortcutTypeFilePath: ShortcutType.FilePath,

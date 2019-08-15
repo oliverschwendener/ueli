@@ -6,7 +6,6 @@ import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { cloneDeep } from "lodash";
 import { defaultNewShortcut } from "../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
-import { IconType } from "../../common/icon/icon-type";
 import { Shortcut } from "../../main/plugins/shortcuts-search-plugin/shortcut";
 import { ShortcutType } from "../../main/plugins/shortcuts-search-plugin/shortcut-type";
 import { ModalEditMode } from "./modals/modal-edit-mode";
@@ -18,8 +17,6 @@ export const shortcutSettingsComponent = Vue.extend({
     data() {
         return {
             defaultShortcutIcon,
-            iconTypeSvg: IconType.SVG,
-            iconTypeUrl: IconType.URL,
             settingName: PluginSettings.Shortcuts,
             visible: false,
         };
