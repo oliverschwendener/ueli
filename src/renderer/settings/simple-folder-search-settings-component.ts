@@ -119,8 +119,8 @@ export const simpleFolderSearchSettingsComponent = Vue.extend({
                             <thead>
                                 <tr>
                                     <th>{{ translations.simpleFolderSearchFolderPath }}</th>
-                                    <th>{{ translations.simpleFolderSearchExcludeHiddenFiles }}</th>
                                     <th>{{ translations.simpleFolderSearchRecursive }}</th>
+                                    <th>{{ translations.simpleFolderSearchExcludeHiddenFiles }}</th>
                                     <th class="has-text-centered">{{ translations.edit }}</th>
                                     <th class="has-text-centered">{{ translations.remove }}</th>
                                 </tr>
