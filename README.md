@@ -10,6 +10,7 @@ This is a keystroke launcher for Windows and macOS.
 
 * [Installation](#installation)
 * [Features](#features)
+* [Keyboard shortcuts](#keyboard-shortcuts)
 * [Settings](#settings)
 * [Updating](#updating)
 * [Privacy](#privacy)
@@ -142,6 +143,23 @@ This plugin enables you to quickly search the internet with your favorite web se
 This plugin enables you to quickly execute multiple things at once.
 
 ![workflow](assets/feature-workflow.png)
+
+## Keyboard shortcuts
+
+|Keyboard shortcut|Description|
+|---|---|
+|<kbd>Enter</kbd>|Execute selected search result|
+|<kbd>Shift</kbd> <kbd>Enter</kbd>|Execute selected program as admin (Windows only)|
+|<kbd>Tab</kbd>|Autocomplete file path|
+|<kbd>Ctrl</kbd> <kbd>o</kbd>|Open the selected program or file at it's location (Windows)|
+|<kbd>Cmd</kbd> <kbd>o</kbd>|Open the selected program or file at it's location (macOS)|
+|<kbd>↑</kbd>|Scroll up|
+|<kbd>↓</kbd>|Scroll down|
+|<kbd>Ctrl</kbd> <kbd>i</kbd>|Open settings (Windows)|
+|<kbd>Cmd</kbd> <kbd>,</kbd>|Open settings (macOS)|
+|<kbd>Shift</kbd> <kbd>↑</kbd>|Browse user input history up|
+|<kbd>Shift</kbd> <kbd>↓</kbd>|Browse user input history down|
+|<kbd>Ctrl</kbd> <kbd>l</kbd>|Set focus on user input|
 
 ## Settings
 
