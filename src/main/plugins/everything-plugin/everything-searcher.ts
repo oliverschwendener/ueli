@@ -14,7 +14,7 @@ export class EverythingSearcher {
         pluginType: PluginType): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             const searchTerm = userInput.replace(everythingSearchOptions.prefix, "").trim();
-            const command = `${everythingSearchOptions.pathToEs} -max-results ${everythingSearchOptions.maxSearchResults} ${searchTerm}`;
+            const command = `"${everythingSearchOptions.pathToEs}" -max-results ${everythingSearchOptions.maxSearchResults} ${searchTerm}`;
             exec(command, (everythingError, stdout, stderr) => {
                 if (everythingError) {
                     reject(everythingError);
