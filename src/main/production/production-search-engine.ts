@@ -54,7 +54,7 @@ const commandlineExecutor = isWindows(platform()) ? windowsCommandLineExecutor :
 const operatingSystemSettingsRepository = isWindows(platform()) ? new WindowsOperatingSystemSettingRepository() : new MacOsOperatingSystemSettingRepository();
 const operatingSystemSettingExecutor = isWindows(platform()) ? executeWindowsOperatingSystemSetting : executeMacOSOperatingSystemSetting;
 
-export const getProductionSearchEngine = (config: UserConfigOptions, translationSet: TranslationSet, logger: Logger): SearchEngine => {
+export function getProductionSearchEngine(config: UserConfigOptions, translationSet: TranslationSet, logger: Logger): SearchEngine {
     const operatingSystemCommandRepository = isWindows(platform())
         ? new WindowsOperatingSystemCommandRepository(translationSet)
         : new MacOsOperatingSystemCommandRepository(translationSet);
@@ -150,4 +150,4 @@ export const getProductionSearchEngine = (config: UserConfigOptions, translation
         logger,
         new ElectronStoreFavoriteRepository(),
     );
-};
+}

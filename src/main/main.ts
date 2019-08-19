@@ -11,7 +11,6 @@ import { isDev } from "../common/is-dev";
 import { UeliCommand } from "./plugins/ueli-command-search-plugin/ueli-command";
 import { UeliCommandExecutionArgument } from "./plugins/ueli-command-search-plugin/ueli-command-execution-argument";
 import { platform } from "os";
-import { OperatingSystem } from "../common/operating-system";
 import { getProductionSearchEngine } from "./production/production-search-engine";
 import { cloneDeep } from "lodash";
 import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
@@ -37,9 +36,7 @@ if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
 }
 
-const isInDevelopment = isDev();
 const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
-const currentOperatingSystem = isWindows(platform()) ? OperatingSystem.Windows : OperatingSystem.macOS;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
 const trayIconFilePath = isWindows(platform()) ? trayIconPathWindows : trayIconPathMacOs;
 const windowIconFilePath = isWindows(platform()) ? windowIconWindows : windowIconMacOs;
@@ -49,11 +46,11 @@ const windowsPowerShellPath = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0";
 
 autoUpdater.autoDownload = false;
 
-if (currentOperatingSystem === OperatingSystem.macOS) {
+if (isMacOs(platform())) {
     app.dock.hide();
 }
 
-if (currentOperatingSystem === OperatingSystem.Windows) {
+if (isWindows(platform())) {
     addPowershellToPathVariableIfMissing();
 }
 
@@ -64,7 +61,7 @@ let lastWindowPosition: WindowPosition;
 
 let config = configRepository.getConfig();
 let translationSet = getTranslationSet(config.generalOptions.language);
-const logger = isInDevelopment
+const logger = isDev()
     ? new DevLogger()
     : new ProductionLogger(logFilePath, filePathExecutor);
 let searchEngine = getProductionSearchEngine(config, translationSet, logger);
@@ -303,7 +300,7 @@ function quitApp() {
 }
 
 function updateAutoStartOptions(userConfig: UserConfigOptions) {
-    if (!isInDevelopment) {
+    if (!isDev()) {
         app.setLoginItemSettings({
             args: [],
             openAtLogin: userConfig.generalOptions.autostart,
@@ -399,7 +396,7 @@ function startApp() {
     createTrayIcon();
     createMainWindow();
 
-    const recenter = currentOperatingSystem === OperatingSystem.macOS;
+    const recenter = isMacOs(platform());
     updateMainWindowSize(0, config.appearanceOptions, recenter);
     registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
     updateAutoStartOptions(config);
@@ -408,7 +405,7 @@ function startApp() {
 }
 
 function setKeyboardShortcuts() {
-    if (currentOperatingSystem === OperatingSystem.macOS && !isInDevelopment) {
+    if (isMacOs(platform()) && !isDev()) {
         const template = [
             {
                 label: "ueli",
@@ -450,13 +447,13 @@ function onLanguageChange(updatedConfig: UserConfigOptions) {
 }
 
 function onSettingsOpen() {
-    if (currentOperatingSystem === OperatingSystem.macOS) {
+    if (isMacOs(platform())) {
         app.dock.show();
     }
 }
 
 function onSettingsClose() {
-    if (currentOperatingSystem === OperatingSystem.macOS) {
+    if (isMacOs(platform())) {
         app.dock.hide();
     }
 }
@@ -476,7 +473,7 @@ function openSettings() {
         settingsWindow.setMenu(null);
         settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
         settingsWindow.on("close", onSettingsClose);
-        if (isInDevelopment) {
+        if (isDev()) {
             settingsWindow.webContents.openDevTools();
         }
     } else {
@@ -647,7 +644,7 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.checkForUpdate, (event: Electron.Event) => {
         logger.debug("Check for updates");
-        if (isInDevelopment) {
+        if (isDev()) {
             sendMessageToSettingsWindow(IpcChannels.checkForUpdateResponse, UpdateCheckResult.NoUpdateAvailable);
         } else {
             autoUpdater.checkForUpdates();
