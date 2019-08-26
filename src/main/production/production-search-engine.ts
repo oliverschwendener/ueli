@@ -101,7 +101,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
             filePathExecutor,
             filePathLocationExecutor,
         ),
-        new BrowserBookmarksPlugin(urlExecutor),
+        new BrowserBookmarksPlugin(config.browserBookmarksOptions, urlExecutor),
     ];
 
     const webSearchPlugin = new WebSearchPlugin(config.websearchOptions, translationSet, urlExecutor);

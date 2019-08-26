@@ -8,13 +8,16 @@ import { homedir } from "os";
 import { defaultBookmarkIcon } from "../../../common/icon/default-icons";
 import { isValidUrl } from "../../../common/helpers/url-helpers";
 import { Bookmark } from "./bookmark";
+import { BrowserBookmarksOptions } from "../../../common/config/browser-bookmarks-options";
 
 export class BrowserBookmarksPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.BrowserBookmarks;
     private readonly urlExecutor: (url: string) => Promise<void>;
     private bookmarks: Bookmark[];
+    private config: BrowserBookmarksOptions;
 
-    constructor(urlExecutor: (url: string) => Promise<void>) {
+    constructor(config: BrowserBookmarksOptions, urlExecutor: (url: string) => Promise<void>) {
+        this.config = config;
         this.urlExecutor = urlExecutor;
         this.bookmarks = [];
     }
@@ -43,7 +46,7 @@ export class BrowserBookmarksPlugin implements SearchPlugin {
     }
 
     public isEnabled(): boolean {
-        return true;
+        return this.config.isEnabled;
     }
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
@@ -52,6 +55,7 @@ export class BrowserBookmarksPlugin implements SearchPlugin {
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
         return new Promise((resolve) => {
+            this.config = updatedConfig.browserBookmarksOptions;
             resolve();
         });
     }

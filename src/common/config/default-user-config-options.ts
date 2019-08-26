@@ -21,10 +21,12 @@ import { defaultOperatingSystemSettingsOptions } from "./default-operating-syste
 import { defaultSimpleFolderSearchOptions } from "./default-simple-folder-search-options";
 import { defaultUwpSearchOptions } from "./default-uwp-search-options";
 import { defaultColorConverterOptions } from "./default-color-converter-options";
+import { defaultBrowserBookmarksOptions } from "./default-browser-bookmarks-options";
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
     applicationSearchOptions: defaultApplicationSearchOptions,
+    browserBookmarksOptions: defaultBrowserBookmarksOptions,
     calculatorOptions: defaultCalculatorOptions,
     colorConverterOptions: defaultColorConverterOptions,
     colorThemeOptions: defaultColorThemeOptions,

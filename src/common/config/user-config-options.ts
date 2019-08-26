@@ -20,6 +20,7 @@ import { OperatingSystemSettingsOptions } from "./operating-system-settings-opti
 import { SimpleFolderSearchOptions } from "./simple-folder-search-options";
 import { UwpSearchOptions } from "./uwp-search-options";
 import { ColorConverterOptions } from "./color-converter-options";
+import { BrowserBookmarksOptions } from "./browser-bookmarks-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -44,4 +45,5 @@ export interface UserConfigOptions {
     simpleFolderSearchOptions: SimpleFolderSearchOptions;
     colorConverterOptions: ColorConverterOptions;
     uwpSearchOptions: UwpSearchOptions;
+    browserBookmarksOptions: BrowserBookmarksOptions;
 }
