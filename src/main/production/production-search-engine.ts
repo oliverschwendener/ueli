@@ -44,6 +44,7 @@ import { Logger } from "../../common/logger/logger";
 import { UwpPlugin } from "../plugins/uwp-plugin/uwp-plugin";
 import { InMemoryUwpAppRepository } from "../plugins/uwp-plugin/inmemory-uwp-app-repository";
 import { ColorConverterPlugin } from "../plugins/color-converter-plugin/color-converter-plugin";
+import { BrowserBookmarksPlugin } from "../plugins/browser-bookmarks-plugin/browser-bookmarks-plugin";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -100,6 +101,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
             filePathExecutor,
             filePathLocationExecutor,
         ),
+        new BrowserBookmarksPlugin(urlExecutor),
     ];
 
     const webSearchPlugin = new WebSearchPlugin(config.websearchOptions, translationSet, urlExecutor);
