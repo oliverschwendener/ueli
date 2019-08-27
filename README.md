@@ -57,6 +57,12 @@ This plugin enables you to quickly execute commandline commands.
 
 ![commandline](assets/feature-commandline.png)
 
+### Color Converter
+
+This plugin enables you to quickly convert colors into different formats.
+
+![color-converter](assets/feature-color-converter.png)
+
 ### Currency Converter
 
 This plugin enables you to quickly convert currencies. The latest conversion rates are provided by https://exchangeratesapi.io/.
