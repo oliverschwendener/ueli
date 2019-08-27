@@ -160,6 +160,7 @@ function hideMainWindow() {
         setTimeout(() => {
             updateMainWindowSize(0, config.appearanceOptions);
             if (mainWindow && !mainWindow.isDestroyed()) {
+                app.hide();
                 mainWindow.hide();
             }
         }, 25);
