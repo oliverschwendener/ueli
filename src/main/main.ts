@@ -160,15 +160,7 @@ function hideMainWindow() {
         setTimeout(() => {
             updateMainWindowSize(0, config.appearanceOptions);
             if (mainWindow && !mainWindow.isDestroyed()) {
-                if (isMacOs(platform())) {
-                    app.hide();
-                    mainWindow.hide();
-                } else if (isWindows(platform())) {
-                    mainWindow.minimize();
-                    mainWindow.hide();
-                } else {
-                    mainWindow.hide();
-                }
+                mainWindow.hide();
             }
         }, 25);
     }
