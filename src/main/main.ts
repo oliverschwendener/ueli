@@ -154,16 +154,30 @@ function onBlur() {
 }
 
 function hideMainWindow() {
-    if (mainWindow && !mainWindow.isDestroyed()) {
-        mainWindow.webContents.send(IpcChannels.mainWindowHasBeenHidden);
+    if (!isMainWindowOpen()) {
+        return;
+    }
 
-        setTimeout(() => {
-            updateMainWindowSize(0, config.appearanceOptions);
-            if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send(IpcChannels.mainWindowHasBeenHidden);
+
+    setTimeout(() => {
+        updateMainWindowSize(0, config.appearanceOptions);
+        if (isMainWindowOpen()) {
+            if (isMacOs(platform())) {
+                // As app.hide() hides all app windows, invoke it only when the settings are not open
+                if (!isSettingsWindowOpen()) {
+                    app.hide();
+                }
+
+                mainWindow.hide();
+            } else if (isWindows(platform())) {
+                mainWindow.minimize();
+                mainWindow.hide();
+            } else {
                 mainWindow.hide();
             }
-        }, 25);
-    }
+        }
+    }, 25);
 }
 
 function toggleMainWindow() {
