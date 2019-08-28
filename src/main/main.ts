@@ -111,7 +111,7 @@ function registerGlobalKeyboardShortcut(toggleAction: () => void, newHotKey: Glo
 }
 
 function showMainWindow() {
-    if (mainWindow && !mainWindow.isDestroyed()) {
+    if (isMainWindowOpen()) {
         if (mainWindow.isVisible()) {
             mainWindow.focus();
         } else {
@@ -248,7 +248,7 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
 }
 
 function updateMainWindowSize(searchResultCount: number, appearanceOptions: AppearanceOptions, center?: boolean) {
-    if (mainWindow && !mainWindow.isDestroyed()) {
+    if (isMainWindowOpen()) {
         mainWindow.setResizable(true);
         const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
             ? Math.round(getMaxWindowHeight(
@@ -356,7 +356,7 @@ function destroyTrayIcon() {
 }
 
 function onMainWindowMove() {
-    if (mainWindow && !mainWindow.isDestroyed()) {
+    if (isMainWindowOpen()) {
         const currentPosition = mainWindow.getPosition();
         if (currentPosition.length === 2) {
             lastWindowPosition = {
@@ -432,14 +432,22 @@ function setKeyboardShortcuts() {
     }
 }
 
+function isMainWindowOpen() {
+  return !!(mainWindow && !mainWindow.isDestroyed());
+}
+
+function isSettingsWindowOpen() {
+    return !!(settingsWindow && !settingsWindow.isDestroyed());
+}
+
 function onLanguageChange(updatedConfig: UserConfigOptions) {
     translationSet = getTranslationSet(updatedConfig.generalOptions.language);
 
-    if (settingsWindow && !settingsWindow.isDestroyed()) {
+    if (isSettingsWindowOpen()) {
         settingsWindow.setTitle(translationSet.settings);
     }
 
-    if (mainWindow && !mainWindow.isDestroyed()) {
+    if (isMainWindowOpen()) {
         mainWindow.webContents.send(IpcChannels.languageUpdated, translationSet);
     }
 
@@ -491,7 +499,7 @@ function updateSearchResults(results: SearchResultItem[], webcontents: WebConten
 }
 
 function noSearchResultsFound() {
-    if (mainWindow && !mainWindow.isDestroyed()) {
+    if (isMainWindowOpen()) {
         updateMainWindowSize(1, config.appearanceOptions);
         const noResultFound = getErrorSearchResultItem(translationSet.generalErrorTitle, translationSet.generalErrorDescription);
         mainWindow.webContents.send(IpcChannels.searchResponse, [noResultFound]);
@@ -499,7 +507,7 @@ function noSearchResultsFound() {
 }
 
 function sendMessageToSettingsWindow(ipcChannel: IpcChannels, message: string) {
-    if (settingsWindow && !settingsWindow.isDestroyed()) {
+    if (isSettingsWindowOpen()) {
         settingsWindow.webContents.send(ipcChannel, message);
     }
 }
