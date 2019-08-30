@@ -377,9 +377,12 @@ function createMainWindow() {
             config.appearanceOptions.searchResultHeight,
             config.appearanceOptions.userInputHeight),
         icon: windowIconFilePath,
+        maximizable: false,
+        minimizable: false,
         resizable: false,
         show: false,
         skipTaskbar: true,
+        titleBarStyle: "customButtonsOnHover",
         transparent: true,
         webPreferences: {
             nodeIntegration: true,
