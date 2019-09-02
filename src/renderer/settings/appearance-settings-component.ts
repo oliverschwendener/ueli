@@ -150,6 +150,18 @@ export const appearanceSettingsComponent = Vue.extend({
                         </div>
                     </div>
 
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsAllowTransparentBackground }} ({{ translations.restartRequired }})</div>
+                        <div class="settings__option-content">
+                            <div class="field has-addons has-addons-right vertical-center">
+                                <div class="control">
+                                    <input id="allowTransparentBackgroundCheckbox" type="checkbox" name="allowTransparentBackgroundCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.appearanceOptions.allowTransparentBackground" @change="updateConfig">
+                                    <label for="allowTransparentBackgroundCheckbox"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

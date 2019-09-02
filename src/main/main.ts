@@ -369,7 +369,9 @@ function onMainWindowMove() {
 
 function createMainWindow() {
     mainWindow = new BrowserWindow({
-        backgroundColor: "#00000000",
+        backgroundColor: config.appearanceOptions.allowTransparentBackground === true
+            ? "#00000000"
+            : undefined,
         center: true,
         frame: false,
         height: getMaxWindowHeight(
@@ -383,7 +385,7 @@ function createMainWindow() {
         show: false,
         skipTaskbar: true,
         titleBarStyle: "customButtonsOnHover",
-        transparent: true,
+        transparent: config.appearanceOptions.allowTransparentBackground === true,
         webPreferences: {
             nodeIntegration: true,
         },
