@@ -107,6 +107,7 @@ export const germanTranslationSet: TranslationSet = {
     appearanceSettingsShowSearchIcon: "Suchsymbol in der Suchleiste anzeigen",
     appearanceSettingsShowSearchResultNumbers: "Nummern für Suchergebnisse anzeigen",
     appearanceSettingsResetWarningMessage: "Du bist dabei alle Erscheiungsbildeinstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
+    appearanceSettingsAllowTransparentBackground: "Transparenter Hintergrund erlauben",
 
     colorThemeSettings: "Farbschema",
     colorThemeSettingsImportColorTheme: "Farbschema importieren",
@@ -319,4 +320,5 @@ export const germanTranslationSet: TranslationSet = {
     folderPath: "Ordnerpfad",
     chooseFile: "Datei auswählen",
     chooseFolder: "Ordner auswählen",
+    restartRequired: "Neustart erforderlich",
 };

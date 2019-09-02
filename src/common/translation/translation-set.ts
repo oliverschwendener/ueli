@@ -104,6 +104,7 @@ export interface TranslationSet {
     appearanceSettingsShowSearchIcon: string;
     appearanceSettingsShowSearchResultNumbers: string;
     appearanceSettingsResetWarningMessage: string;
+    appearanceSettingsAllowTransparentBackground: string;
 
     colorThemeSettings: string;
     colorThemeSettingsImportColorTheme: string;
@@ -316,4 +317,5 @@ export interface TranslationSet {
     folderPath: string;
     chooseFile: string;
     chooseFolder: string;
+    restartRequired: string;
 }

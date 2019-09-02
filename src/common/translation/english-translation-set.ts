@@ -107,6 +107,7 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsShowSearchIcon: "Show search icon in search field",
     appearanceSettingsShowSearchResultNumbers: "Show search result numbers",
     appearanceSettingsResetWarningMessage: "You are about to reset all appearance settings to default. Do you want to proceed?",
+    appearanceSettingsAllowTransparentBackground: "Allow transparent background",
 
     colorThemeSettings: "Color Theme",
     colorThemeSettingsImportColorTheme: "Import color theme",
@@ -319,4 +320,5 @@ export const englishTranslationSet: TranslationSet = {
     folderPath: "Folder path",
     chooseFile: "Choose file",
     chooseFolder: "Choose folder",
+    restartRequired: "Restart required",
 };
