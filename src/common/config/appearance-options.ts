@@ -7,4 +7,5 @@ export interface AppearanceOptions {
     smoothScrolling: boolean;
     userInputHeight: number;
     windowWidth: number;
+    allowTransparentBackground: boolean;
 }

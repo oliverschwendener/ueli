@@ -7,10 +7,13 @@ import { defaultAppearanceOptions } from "../../common/config/default-appearance
 import { GeneralSettings } from "./general-settings";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { TranslationSet } from "../../common/translation/translation-set";
+import { isWindows } from "../../common/helpers/operating-system-helpers";
+import { platform } from "os";
 
 export const appearanceSettingsComponent = Vue.extend({
     data() {
         return {
+            isWindows: isWindows(platform()),
             settingName: GeneralSettings.Appearance,
             visible: false,
         };
@@ -145,6 +148,18 @@ export const appearanceSettingsComponent = Vue.extend({
                                 <div class="control">
                                     <input id="showSearchResultNumbersCheckbox" type="checkbox" name="showSearchResultNumbersCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.appearanceOptions.showSearchResultNumbers" @change="updateConfig">
                                     <label for="showSearchResultNumbersCheckbox"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings__option" v-if="isWindows">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsAllowTransparentBackground }} ({{ translations.restartRequired }})</div>
+                        <div class="settings__option-content">
+                            <div class="field has-addons has-addons-right vertical-center">
+                                <div class="control">
+                                    <input id="allowTransparentBackgroundCheckbox" type="checkbox" name="allowTransparentBackgroundCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.appearanceOptions.allowTransparentBackground" @change="updateConfig">
+                                    <label for="allowTransparentBackgroundCheckbox"></label>
                                 </div>
                             </div>
                         </div>

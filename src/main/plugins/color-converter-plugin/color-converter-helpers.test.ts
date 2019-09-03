@@ -1,4 +1,4 @@
-import { isValidColorCode } from "./color-converter-helpers";
+import { isValidColorCode, toHex } from "./color-converter-helpers";
 
 describe(isValidColorCode.name, () => {
     it("should return true if value is a valid hex code", () => {
@@ -40,6 +40,54 @@ describe(isValidColorCode.name, () => {
         invalidColorCodes.forEach((invalidColorCode) => {
             const actual = isValidColorCode(invalidColorCode);
             expect(actual).toBe(false);
+        });
+    });
+});
+
+describe(toHex.name, () => {
+    it("should correctly convert a color to a hex value", () => {
+        const colors = [
+            {
+                input: "#fff",
+                output: "#FFFFFF",
+            },
+            {
+                input: "#ffffff",
+                output: "#FFFFFF",
+            },
+            {
+                input: "rgb(255,255,255,1)",
+                output: "#FFFFFF",
+            },
+            {
+                input: "rgba(255,255,255,0.5)",
+                output: "#FFFFFF",
+            },
+        ];
+
+        colors.forEach((color) => {
+            const actual = toHex(color.input, "");
+            expect(actual).toBe(color.output);
+        });
+    });
+
+    it("should return the specified default when failing to parse the color value", () => {
+        const defaultColor = "#FF00DD";
+        const colors = [
+            "#f",
+            "#",
+            "rg(25,25,25,0)",
+            "(255,255,255,1)",
+            "hex(255,255,255,1)",
+            "asdfasdf",
+            "",
+            "{whatever}",
+            "1234",
+        ];
+
+        colors.forEach((color) => {
+            const actual = toHex(color, defaultColor);
+            expect(actual).toBe(defaultColor);
         });
     });
 });
