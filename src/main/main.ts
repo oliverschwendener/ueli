@@ -408,12 +408,14 @@ function mainWindowNeedsToBeTransparent(userConfigOptions: UserConfigOptions): b
 }
 
 function getMainWindowBackgroundColor(userConfigOptions: UserConfigOptions): string {
+    const transparent = "#00000000";
+
     if (isMacOs(platform())) {
-        return "#00000000";
+        return transparent;
     }
 
     return userConfigOptions.appearanceOptions.allowTransparentBackground === true
-        ? "#00000000"
+        ? transparent
         : toHex(userConfigOptions.colorThemeOptions.searchResultsBackgroundColor, "#FFFFFF");
 }
 
@@ -421,8 +423,7 @@ function startApp() {
     createTrayIcon();
     createMainWindow();
 
-    const recenter = isMacOs(platform());
-    updateMainWindowSize(0, config.appearanceOptions, recenter);
+    updateMainWindowSize(0, config.appearanceOptions, isMacOs(platform()));
     registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
     updateAutoStartOptions(config);
     setKeyboardShortcuts();
