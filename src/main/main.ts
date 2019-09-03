@@ -31,6 +31,7 @@ import { executeUrlMacOs } from "./executors/url-executor";
 import { ProductionLogger } from "../common/logger/production-logger";
 import { DevLogger } from "../common/logger/dev-logger";
 import { windowIconWindows, windowIconMacOs } from "./helpers/window-icon-helpers";
+import { toHex } from "./plugins/color-converter-plugin/color-converter-helpers";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -220,6 +221,9 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
     }
 
     if (JSON.stringify(updatedConfig.colorThemeOptions) !== JSON.stringify(config.colorThemeOptions)) {
+        if (updatedConfig.colorThemeOptions.searchResultsBackgroundColor !== config.colorThemeOptions.searchResultsBackgroundColor) {
+            mainWindow.setBackgroundColor(getMainWindowBackgroundColor(updatedConfig));
+        }
         mainWindow.webContents.send(IpcChannels.colorThemeOptionsUpdated, updatedConfig.colorThemeOptions);
     }
 
@@ -369,9 +373,7 @@ function onMainWindowMove() {
 
 function createMainWindow() {
     mainWindow = new BrowserWindow({
-        backgroundColor: config.appearanceOptions.allowTransparentBackground === true
-            ? "#00000000"
-            : undefined,
+        backgroundColor: getMainWindowBackgroundColor(config),
         center: true,
         frame: false,
         height: getMaxWindowHeight(
@@ -385,7 +387,7 @@ function createMainWindow() {
         show: false,
         skipTaskbar: true,
         titleBarStyle: "customButtonsOnHover",
-        transparent: config.appearanceOptions.allowTransparentBackground === true,
+        transparent: mainWindowNeedsToBeTransparent(config),
         webPreferences: {
             nodeIntegration: true,
         },
@@ -395,6 +397,24 @@ function createMainWindow() {
     mainWindow.on("closed", quitApp);
     mainWindow.on("move", onMainWindowMove);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
+}
+
+function mainWindowNeedsToBeTransparent(userConfigOptions: UserConfigOptions): boolean {
+    if (isMacOs(platform())) {
+        return true;
+    }
+
+    return userConfigOptions.appearanceOptions.allowTransparentBackground === true;
+}
+
+function getMainWindowBackgroundColor(userConfigOptions: UserConfigOptions): string {
+    if (isMacOs(platform())) {
+        return "#00000000";
+    }
+
+    return userConfigOptions.appearanceOptions.allowTransparentBackground === true
+        ? "#00000000"
+        : toHex(userConfigOptions.colorThemeOptions.searchResultsBackgroundColor, "#FFFFFF");
 }
 
 function startApp() {

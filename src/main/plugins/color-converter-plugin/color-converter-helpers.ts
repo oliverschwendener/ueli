@@ -12,3 +12,11 @@ export function isValidColorCode(value: string): boolean {
         return false;
     }
 }
+
+export function toHex(value: string, defaultColor: string): string {
+    try {
+        return color(value).hex();
+    } catch {
+        return defaultColor;
+    }
+}

@@ -7,10 +7,13 @@ import { defaultAppearanceOptions } from "../../common/config/default-appearance
 import { GeneralSettings } from "./general-settings";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { TranslationSet } from "../../common/translation/translation-set";
+import { isWindows } from "../../common/helpers/operating-system-helpers";
+import { platform } from "os";
 
 export const appearanceSettingsComponent = Vue.extend({
     data() {
         return {
+            isWindows: isWindows(platform()),
             settingName: GeneralSettings.Appearance,
             visible: false,
         };
@@ -150,7 +153,7 @@ export const appearanceSettingsComponent = Vue.extend({
                         </div>
                     </div>
 
-                    <div class="settings__option">
+                    <div class="settings__option" v-if="isWindows">
                         <div class="settings__option-name">{{ translations.appearanceSettingsAllowTransparentBackground }} ({{ translations.restartRequired }})</div>
                         <div class="settings__option-content">
                             <div class="field has-addons has-addons-right vertical-center">
