@@ -73,7 +73,7 @@ let rescanInterval = config.generalOptions.rescanEnabled
 
 function notifyRenderer(message: string, notificationType: NotificationType) {
     BrowserWindow.getAllWindows().forEach((window) => {
-        if (window !== undefined && !window.isDestroyed()) {
+        if (windowExists(window)) {
             window.webContents.send(IpcChannels.notification, message, notificationType);
         }
     });
@@ -112,7 +112,7 @@ function registerGlobalKeyboardShortcut(toggleAction: () => void, newHotKey: Glo
 }
 
 function showMainWindow() {
-    if (mainWindow && !mainWindow.isDestroyed()) {
+    if (windowExists(mainWindow)) {
         if (mainWindow.isVisible()) {
             mainWindow.focus();
         } else {
@@ -155,12 +155,12 @@ function onBlur() {
 }
 
 function hideMainWindow() {
-    if (mainWindow && !mainWindow.isDestroyed()) {
+    if (windowExists(mainWindow)) {
         mainWindow.webContents.send(IpcChannels.mainWindowHasBeenHidden);
 
         setTimeout(() => {
             updateMainWindowSize(0, config.appearanceOptions);
-            if (mainWindow && !mainWindow.isDestroyed()) {
+            if (windowExists(mainWindow)) {
                 mainWindow.hide();
             }
         }, 25);
@@ -252,7 +252,7 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
 }
 
 function updateMainWindowSize(searchResultCount: number, appearanceOptions: AppearanceOptions, center?: boolean) {
-    if (mainWindow && !mainWindow.isDestroyed()) {
+    if (windowExists(mainWindow)) {
         mainWindow.setResizable(true);
         const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
             ? Math.round(getMaxWindowHeight(
@@ -360,7 +360,7 @@ function destroyTrayIcon() {
 }
 
 function onMainWindowMove() {
-    if (mainWindow && !mainWindow.isDestroyed()) {
+    if (windowExists(mainWindow)) {
         const currentPosition = mainWindow.getPosition();
         if (currentPosition.length === 2) {
             lastWindowPosition = {
@@ -408,12 +408,14 @@ function mainWindowNeedsToBeTransparent(userConfigOptions: UserConfigOptions): b
 }
 
 function getMainWindowBackgroundColor(userConfigOptions: UserConfigOptions): string {
+    const transparent = "#00000000";
+
     if (isMacOs(platform())) {
-        return "#00000000";
+        return transparent;
     }
 
     return userConfigOptions.appearanceOptions.allowTransparentBackground === true
-        ? "#00000000"
+        ? transparent
         : toHex(userConfigOptions.colorThemeOptions.searchResultsBackgroundColor, "#FFFFFF");
 }
 
@@ -421,8 +423,7 @@ function startApp() {
     createTrayIcon();
     createMainWindow();
 
-    const recenter = isMacOs(platform());
-    updateMainWindowSize(0, config.appearanceOptions, recenter);
+    updateMainWindowSize(0, config.appearanceOptions, isMacOs(platform()));
     registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
     updateAutoStartOptions(config);
     setKeyboardShortcuts();
@@ -460,11 +461,11 @@ function setKeyboardShortcuts() {
 function onLanguageChange(updatedConfig: UserConfigOptions) {
     translationSet = getTranslationSet(updatedConfig.generalOptions.language);
 
-    if (settingsWindow && !settingsWindow.isDestroyed()) {
+    if (windowExists(settingsWindow)) {
         settingsWindow.setTitle(translationSet.settings);
     }
 
-    if (mainWindow && !mainWindow.isDestroyed()) {
+    if (windowExists(mainWindow)) {
         mainWindow.webContents.send(IpcChannels.languageUpdated, translationSet);
     }
 
@@ -516,7 +517,7 @@ function updateSearchResults(results: SearchResultItem[], webcontents: WebConten
 }
 
 function noSearchResultsFound() {
-    if (mainWindow && !mainWindow.isDestroyed()) {
+    if (windowExists(mainWindow)) {
         updateMainWindowSize(1, config.appearanceOptions);
         const noResultFound = getErrorSearchResultItem(translationSet.generalErrorTitle, translationSet.generalErrorDescription);
         mainWindow.webContents.send(IpcChannels.searchResponse, [noResultFound]);
@@ -524,9 +525,13 @@ function noSearchResultsFound() {
 }
 
 function sendMessageToSettingsWindow(ipcChannel: IpcChannels, message: string) {
-    if (settingsWindow && !settingsWindow.isDestroyed()) {
+    if (windowExists(settingsWindow)) {
         settingsWindow.webContents.send(ipcChannel, message);
     }
+}
+
+function windowExists(window: BrowserWindow): boolean {
+    return window && !window.isDestroyed();
 }
 
 function registerAllIpcListeners() {
