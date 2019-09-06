@@ -8,6 +8,7 @@ import { ShortcutType } from "./shortcut-type";
 import { isValidIcon } from "./../../../common/icon/icon-helpers";
 import { defaultShortcutIcon } from "../../../common/icon/default-icons";
 import { OpenLocationPlugin } from "../../open-location-plugin";
+import { StringHelpers } from "../../../common/helpers/string-helpers";
 
 interface ExecutionArgumentDecodeResult {
     shortcutType: ShortcutType;
@@ -38,23 +39,7 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
 
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve) => {
-            const result = this.config.shortcuts.map((shortcut): SearchResultItem => {
-                return {
-                    description: shortcut.description,
-                    executionArgument: this.encodeExecutionArgument(shortcut),
-                    hideMainWindowAfterExecution: true,
-                    icon: isValidIcon(shortcut.icon)
-                        ? shortcut.icon
-                        : defaultShortcutIcon,
-                    name: shortcut.name,
-                    needsUserConfirmationBeforeExecution: shortcut.needsUserConfirmationBeforeExecution,
-                    originPluginType: this.pluginType,
-                    searchable: [shortcut.name].concat(shortcut.tags),
-                    supportsOpenLocation: true,
-                };
-            });
-
-            resolve(result);
+            resolve(this.config.shortcuts.map((shortcut): SearchResultItem => this.createSearchResultItem(shortcut)));
         });
     }
 
@@ -134,5 +119,23 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
         }
 
         throw new Error(`Unknown shortcut type; ${executionArgument}`);
+    }
+
+    private createSearchResultItem(shortcut: Shortcut): SearchResultItem {
+        return {
+            description: StringHelpers.stringIsWhiteSpace(shortcut.description)
+                ? shortcut.executionArgument
+                : shortcut.description,
+            executionArgument: this.encodeExecutionArgument(shortcut),
+            hideMainWindowAfterExecution: true,
+            icon: isValidIcon(shortcut.icon)
+                ? shortcut.icon
+                : defaultShortcutIcon,
+            name: shortcut.name,
+            needsUserConfirmationBeforeExecution: shortcut.needsUserConfirmationBeforeExecution,
+            originPluginType: this.pluginType,
+            searchable: [shortcut.name].concat(shortcut.tags),
+            supportsOpenLocation: true,
+        };
     }
 }
