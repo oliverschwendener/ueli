@@ -113,9 +113,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
                     {{ translations.applicationSearchSettings }}
                 </span>
                 <div>
-                    <button class="button" :class="{ 'is-success' : config.applicationSearchOptions.enabled }" @click="toggleEnabled">
-                        <span class="icon"><i class="fas fa-power-off"></i></span>
-                    </button>
+                    <plugin-toggle :is-enabled="config.applicationSearchOptions.enabled" :toggled="toggleEnabled"/>
                     <button v-if="config.applicationSearchOptions.enabled" class="button" @click="resetAll">
                         <span class="icon"><i class="fas fa-undo-alt"></i></span>
                     </button>

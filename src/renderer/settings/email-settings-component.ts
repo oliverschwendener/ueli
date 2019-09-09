@@ -56,9 +56,7 @@ export const emailSettingsComponent = Vue.extend({
                 {{ translations.email }}
             </span>
             <div>
-                <button class="button" :class="{ 'is-success' : config.emailOptions.isEnabled }" @click="toggleEnabled">
-                    <span class="icon"><i class="fas fa-power-off"></i></span>
-                </button>
+                <plugin-toggle :is-enabled="config.emailOptions.isEnabled" :toggled="toggleEnabled"/>
                 <button v-if="config.emailOptions.isEnabled" class="button" @click="resetAll">
                     <span class="icon"><i class="fas fa-undo-alt"></i></span>
                 </button>

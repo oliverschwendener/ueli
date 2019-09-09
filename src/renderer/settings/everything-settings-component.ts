@@ -91,9 +91,7 @@ export const everythingSettingsComponent = Vue.extend({
                     {{ translations.everythingSearch }}
                 </span>
                 <div>
-                    <button class="button" :class="{ 'is-success' : config.everythingSearchOptions.enabled }" @click="toggleEnabled">
-                        <span class="icon"><i class="fas fa-power-off"></i></span>
-                    </button>
+                    <plugin-toggle :is-enabled="config.everythingSearchOptions.enabled" :toggled="toggleEnabled"/>
                     <button v-if="config.applicationSearchOptions.enabled" class="button" @click="resetAll">
                         <span class="icon"><i class="fas fa-undo-alt"></i></span>
                     </button>

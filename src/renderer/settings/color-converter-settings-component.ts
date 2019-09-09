@@ -45,9 +45,7 @@ export const colorConverterSettingsComponent = Vue.extend({
                 {{ translations.colorConverter }}
             </span>
             <div>
-                <button class="button" :class="{ 'is-success' : config.colorConverterOptions.isEnabled }" @click="toggleEnabled">
-                    <span class="icon"><i class="fas fa-power-off"></i></span>
-                </button>
+                <plugin-toggle :is-enabled="config.colorConverterOptions.isEnabled" :toggled="toggleEnabled"/>
                 <button class="button" @click="resetAll">
                     <span class="icon">
                         <i class="fas fa-undo-alt"></i>
@@ -57,7 +55,7 @@ export const colorConverterSettingsComponent = Vue.extend({
         </div>
         <p class="settings__setting-description" v-html="translations.colorConverterDescription"></p>
         <div class="settings__setting-content">
-            <div v-if="!config.urlOptions.isEnabled" class="settings__setting-disabled-overlay"></div>
+            <div v-if="!config.colorConverterOptions.isEnabled" class="settings__setting-disabled-overlay"></div>
             <div class="box">
                 <div class="settings__option-container">
 

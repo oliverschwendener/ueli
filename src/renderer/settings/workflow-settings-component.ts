@@ -110,9 +110,7 @@ export const workflowSettingsComponent = Vue.extend({
                 {{ translations.workflows }}
             </span>
             <div>
-                <button class="button" :class="{ 'is-success' : config.workflowOptions.isEnabled }" @click="toggleEnabled">
-                    <span class="icon"><i class="fas fa-power-off"></i></span>
-                </button>
+                <plugin-toggle :is-enabled="config.workflowOptions.isEnabled" :toggled="toggleEnabled"/>
                 <button v-if="config.workflowOptions.isEnabled" class="button" @click="resetAll">
                     <span class="icon"><i class="fas fa-undo-alt"></i></span>
                 </button>

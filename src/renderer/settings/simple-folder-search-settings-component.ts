@@ -83,11 +83,7 @@ export const simpleFolderSearchSettingsComponent = Vue.extend({
                     {{ translations.simpleFolderSearch }}
                 </span>
                 <div>
-                    <button class="button" :class="{ 'is-success' : config.simpleFolderSearchOptions.isEnabled }" @click="toggleEnabled">
-                        <span class="icon">
-                            <i class="fas fa-power-off"></i>
-                        </span>
-                    </button>
+                    <plugin-toggle :is-enabled="config.simpleFolderSearchOptions.isEnabled" :toggled="toggleEnabled"/>
                     <button class="button" @click="resetAll">
                         <span class="icon"><i class="fas fa-undo-alt"></i></span>
                     </button>

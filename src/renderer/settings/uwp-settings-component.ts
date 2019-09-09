@@ -46,9 +46,7 @@ export const uwpSettingsComponent = Vue.extend({
                     UWP
                 </span>
                 <div>
-                    <button class="button" :class="{ 'is-success' : config.uwpSearchOptions.isEnabled }" @click="toggleEnabled">
-                        <span class="icon"><i class="fas fa-power-off"></i></span>
-                    </button>
+                    <plugin-toggle :is-enabled="config.uwpSearchOptions.isEnabled" :toggled="toggleEnabled"/>
                     <button class="button" @click="resetAll">
                         <span class="icon">
                             <i class="fas fa-undo-alt"></i>

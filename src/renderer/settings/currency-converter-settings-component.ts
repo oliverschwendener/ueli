@@ -56,9 +56,7 @@ export const currencyConverterSettingsComponent = Vue.extend({
                 {{ translations.currencyConverter }}
             </span>
             <div>
-                <button class="button" :class="{ 'is-success' : config.currencyConverterOptions.isEnabled }" @click="toggleEnabled">
-                    <span class="icon"><i class="fas fa-power-off"></i></span>
-                </button>
+                <plugin-toggle :is-enabled="config.currencyConverterOptions.isEnabled" :toggled="toggleEnabled"/>
                 <button v-if="config.currencyConverterOptions.isEnabled" class="button" @click="resetAll">
                     <span class="icon"><i class="fas fa-undo-alt"></i></span>
                 </button>

@@ -71,9 +71,7 @@ export const fileBrowserSettingsComponent = Vue.extend({
                 {{ translations.fileBrowser }}
             </span>
             <div>
-                <button class="button" :class="{ 'is-success' : config.fileBrowserOptions.isEnabled }" @click="toggleEnabled">
-                    <span class="icon"><i class="fas fa-power-off"></i></span>
-                </button>
+                <plugin-toggle :is-enabled="config.fileBrowserOptions.isEnabled" :toggled="toggleEnabled"/>
                 <button class="button" @click="resetAll">
                     <span class="icon"><i class="fas fa-undo-alt"></i></span>
                 </button>
