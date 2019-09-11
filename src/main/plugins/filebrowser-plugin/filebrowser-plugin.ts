@@ -7,7 +7,6 @@ import { FileBrowserOptions } from "../../../common/config/filebrowser-options";
 import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { basename, dirname, sep } from "path";
 import { existsSync } from "fs";
-import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { FileIconDataResult } from "../../../common/icon/generate-file-icon";
 import { defaultFileIcon, defaultFolderIcon } from "../../../common/icon/default-icons";
 import { Icon } from "../../../common/icon/icon";
@@ -66,16 +65,10 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin, AutoCompleti
         return this.fileLocationExecutor(searchResultItem.executionArgument);
     }
 
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            const updatedUserInput = searchResultItem.executionArgument.endsWith(sep)
-                ? searchResultItem.executionArgument
-                : `${searchResultItem.executionArgument}${sep}`;
-
-            this.handleFilePath(updatedUserInput)
-                .then((results) => resolve({ results, updatedUserInput }))
-                .catch((err) => reject(err));
-        });
+    public autoComplete(searchResultItem: SearchResultItem): string {
+        return searchResultItem.executionArgument.endsWith(sep)
+            ? searchResultItem.executionArgument
+            : `${searchResultItem.executionArgument}${sep}`;
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {

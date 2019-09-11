@@ -57,9 +57,7 @@ export const mdfindSettingsComponent = Vue.extend({
                     {{ translations.mdfindSearch }}
                 </span>
                 <div>
-                    <button class="button" :class="{ 'is-success' : config.mdfindOptions.enabled }" @click="toggleEnabled">
-                        <span class="icon"><i class="fas fa-power-off"></i></span>
-                    </button>
+                    <plugin-toggle :is-enabled="config.mdfindOptions.enabled" :toggled="toggleEnabled"/>
                     <button v-if="config.mdfindOptions.enabled" class="button" @click="resetAll">
                         <span class="icon"><i class="fas fa-undo-alt"></i></span>
                     </button>

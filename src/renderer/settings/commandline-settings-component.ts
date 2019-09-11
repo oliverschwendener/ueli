@@ -56,11 +56,7 @@ export const commandlineSettingsComponent = Vue.extend({
                     {{ translations.commandline }}
                 </span>
                 <div>
-                    <button class="button" :class="{ 'is-success' : config.commandlineOptions.isEnabled }" @click="toggleEnabled">
-                        <span class="icon">
-                            <i class="fas fa-power-off"></i>
-                        </span>
-                    </button>
+                    <plugin-toggle :is-enabled="config.commandlineOptions.isEnabled" :toggled="toggleEnabled"/>
                     <button class="button" @click="resetAll">
                         <span class="icon">
                             <i class="fas fa-undo-alt"></i>
@@ -70,7 +66,7 @@ export const commandlineSettingsComponent = Vue.extend({
             </div>
             <p class="settings__setting-description" v-html="translations.commandlineSettingsDescription"></p>
             <div class="settings__setting-content">
-
+                <div v-if="!config.commandlineOptions.isEnabled" class="settings__setting-disabled-overlay"></div>
                 <div class="box">
                     <div class="settings__options-container">
 

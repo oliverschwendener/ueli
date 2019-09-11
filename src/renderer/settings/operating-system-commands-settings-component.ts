@@ -56,9 +56,7 @@ export const operatingSystemCommandsSettingsComponent = Vue.extend({
                 {{ translations.operatingSystemCommands }}
             </span>
             <div>
-                <button class="button" :class="{ 'is-success' : config.operatingSystemCommandsOptions.isEnabled }" @click="toggleEnabled">
-                    <span class="icon"><i class="fas fa-power-off"></i></span>
-                </button>
+                <plugin-toggle :is-enabled="config.operatingSystemCommandsOptions.isEnabled" :toggled="toggleEnabled"/>
                 <button class="button" @click="resetAll">
                     <span class="icon">
                         <i class="fas fa-undo-alt"></i>

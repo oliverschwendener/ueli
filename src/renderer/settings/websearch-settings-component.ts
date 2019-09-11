@@ -93,9 +93,7 @@ export const webSearchSettingsComponent = Vue.extend({
                 {{ translations.websearch }}
             </span>
             <div>
-                <button class="button" :class="{ 'is-success' : config.websearchOptions.isEnabled }" @click="toggleEnabled">
-                    <span class="icon"><i class="fas fa-power-off"></i></span>
-                </button>
+                <plugin-toggle :is-enabled="config.websearchOptions.isEnabled" :toggled="toggleEnabled"/>
                 <button v-if="config.websearchOptions.isEnabled" class="button" @click="resetAll">
                     <span class="icon"><i class="fas fa-undo-alt"></i></span>
                 </button>

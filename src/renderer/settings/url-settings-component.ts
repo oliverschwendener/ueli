@@ -57,9 +57,7 @@ export const urlSettingsComponent = Vue.extend({
                 {{ translations.url }}
             </span>
             <div>
-                <button class="button" :class="{ 'is-success' : config.urlOptions.isEnabled }" @click="toggleEnabled">
-                    <span class="icon"><i class="fas fa-power-off"></i></span>
-                </button>
+                <plugin-toggle :is-enabled="config.urlOptions.isEnabled" :toggled="toggleEnabled"/>
                 <button v-if="config.urlOptions.isEnabled" class="button" @click="resetAll">
                     <span class="icon"><i class="fas fa-undo-alt"></i></span>
                 </button>

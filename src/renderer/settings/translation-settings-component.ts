@@ -59,9 +59,7 @@ export const translationSettingsComponent = Vue.extend({
                     {{ translations.translationSettingsTranslation }}
                 </span>
                 <div>
-                    <button class="button" :class="{ 'is-success' : config.translationOptions.enabled }" @click="toggleEnabled">
-                        <span class="icon"><i class="fas fa-power-off"></i></span>
-                    </button>
+                    <plugin-toggle :is-enabled="config.translationOptions.enabled" :toggled="toggleEnabled"/>
                     <button v-if="config.translationOptions.enabled" class="button" @click="resetAll">
                         <span class="icon"><i class="fas fa-undo-alt"></i></span>
                     </button>

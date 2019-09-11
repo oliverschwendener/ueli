@@ -55,6 +55,7 @@ import { userConfirmationDialog } from "./settings/modals/user-confirmation-comp
 import { UpdateCheckResult } from "../common/update-check-result";
 import { uwpSettingsComponent } from "./settings/uwp-settings-component";
 import { colorConverterSettingsComponent } from "./settings/color-converter-settings-component";
+import { pluginToggle } from "./settings/elements/plugin-toggle";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -96,6 +97,7 @@ Vue.component("simple-folder-search-editing", simpleFolderSearchEditingModalComp
 Vue.component("user-confirmation", userConfirmationDialog);
 Vue.component("uwp-settings", uwpSettingsComponent);
 Vue.component("color-converter-setttings", colorConverterSettingsComponent);
+Vue.component("plugin-toggle", pluginToggle);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 
@@ -212,6 +214,10 @@ const app = new Vue({
 
         ipcRenderer.on(IpcChannels.checkForUpdateResponse, (event: Electron.Event, updateCheckResult: UpdateCheckResult) => {
             vueEventDispatcher.$emit(VueEventChannels.checkForUpdateResponse, updateCheckResult);
+        });
+
+        ipcRenderer.on(IpcChannels.autoCompleteResponse, (event: Electron.Event, updatedUserInput: string) => {
+            vueEventDispatcher.$emit(VueEventChannels.autoCompletionResponse, updatedUserInput);
         });
     },
     methods: {
