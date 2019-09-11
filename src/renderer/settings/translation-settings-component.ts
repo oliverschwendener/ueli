@@ -3,7 +3,7 @@ import { PluginSettings } from "./plugin-settings";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { defaultTranslationOptions } from "../../common/config/default-translation-options";
+import { defaultTranslationOptions } from "../../common/config/translation-options";
 import { cloneDeep } from "lodash";
 import { TranslationLanguage } from "../../main/plugins/translation-plugin/translation-language";
 import { TranslationSet } from "../../common/translation/translation-set";

@@ -1,6 +1,6 @@
 import { SearchEngine } from "./search-engine";
 import { SearchPlugin } from "./search-plugin";
-import { defaultUserConfigOptions } from "../common/config/default-user-config-options";
+import { defaultUserConfigOptions } from "../common/config/user-config-options";
 import { UserConfigOptions } from "../common/config/user-config-options";
 import { englishTranslationSet } from "../common/translation/english-translation-set";
 import { FakeSearchPlugin } from "../tests/fake-search-plugin";

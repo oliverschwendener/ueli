@@ -1,5 +1,5 @@
 import { isValidJson, mergeUserConfigWithDefault } from "./config-helpers";
-import { defaultUserConfigOptions } from "../config/default-user-config-options";
+import { defaultUserConfigOptions } from "../config/user-config-options";
 import { UserConfigOptions } from "../config/user-config-options";
 
 describe(isValidJson.name, () => {

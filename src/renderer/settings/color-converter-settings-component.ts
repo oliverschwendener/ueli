@@ -3,7 +3,7 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { defaultColorConverterOptions } from "../../common/config/default-color-converter-options";
+import { defaultColorConverterOptions } from "../../common/config/color-converter-options";
 import { cloneDeep } from "lodash";
 
 export const colorConverterSettingsComponent = Vue.extend({

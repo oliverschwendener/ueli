@@ -1,3 +1,5 @@
+import { homedir } from "os";
+
 export interface SimpleFolderSearchOptions {
     isEnabled: boolean;
     folders: SimpleFolderSearchFolderOption[];
@@ -9,3 +11,15 @@ export interface SimpleFolderSearchFolderOption {
     recursive: boolean;
     excludeHiddenFiles: boolean;
 }
+
+export const defaultSimpleFolderSearchOptions: SimpleFolderSearchOptions = {
+    folders: [
+        {
+            excludeHiddenFiles: true,
+            folderPath: homedir(),
+            recursive: false,
+        },
+    ],
+    isEnabled: true,
+    showFullFilePath: true,
+};

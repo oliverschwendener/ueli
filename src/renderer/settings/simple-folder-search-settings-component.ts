@@ -4,7 +4,7 @@ import { VueEventChannels } from "../vue-event-channels";
 import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { cloneDeep } from "lodash";
-import { defaultSimpleFolderSearchOptions } from "../../common/config/default-simple-folder-search-options";
+import { defaultSimpleFolderSearchOptions } from "../../common/config/simple-folder-search-options";
 import { SimpleFolderSearchFolderOption } from "../../common/config/simple-folder-search-options";
 import { ModalEditMode } from "./modals/modal-edit-mode";
 import { TranslationSet } from "../../common/translation/translation-set";

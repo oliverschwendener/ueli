@@ -3,7 +3,6 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { defaultWorkflowOptions } from "../../common/config/default-workflow-options";
 import { cloneDeep } from "lodash";
 import { defaultWorkflowIcon } from "../../common/icon/default-icons";
 import { WorkflowExecutionArgumentType } from "../../main/plugins/workflow-plugin/workflow-execution-argument-type";
@@ -12,6 +11,7 @@ import { ModalEditMode } from "./modals/modal-edit-mode";
 import { getWorkflowExecutionArgumentTypeIcon, getWorkflowExecutionArgumentTypeClass } from "./helpers";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
+import { defaultWorkflowOptions } from "../../common/config/workflow-options";
 
 const defaultNewWorkflow: Workflow = {
     description: "",

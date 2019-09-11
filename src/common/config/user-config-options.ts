@@ -1,25 +1,25 @@
-import { ApplicationSearchOptions } from "../../main/plugins/application-search-plugin/application-search-options";
-import { GeneralOptions } from "./general-options";
-import { SearchEngineOptions } from "./search-engine-options";
-import { AppearanceOptions } from "./appearance-options";
-import { ShortcutOptions } from "./shortcuts-options";
-import { EverythingSearchOptions } from "./everything-search-options";
-import { MdFindOptions } from "./mdfind-options";
-import { TranslationOptions } from "./translation-options";
-import { WebSearchOptions } from "./websearch-options";
-import { ColorThemeOptions } from "./color-theme-options";
-import { FileBrowserOptions } from "./filebrowser-options";
-import { OperatingSystemCommandsOptions } from "./operating-system-commands-options";
-import { CalculatorOptions } from "./calculator-options";
-import { UrlOptions } from "./url-options";
-import { EmailOptions } from "./email-options";
-import { CurrencyConverterOptions } from "./currency-converter-options";
-import { WorkflowOptions } from "./workflow-options";
-import { CommandlineOptions } from "./commandline-options";
-import { OperatingSystemSettingsOptions } from "./operating-system-settings-options";
-import { SimpleFolderSearchOptions } from "./simple-folder-search-options";
-import { UwpSearchOptions } from "./uwp-search-options";
-import { ColorConverterOptions } from "./color-converter-options";
+import { GeneralOptions, defaultGeneralOptions } from "./general-options";
+import { SearchEngineOptions, defaultSearchEngineOptions } from "./search-engine-options";
+import { AppearanceOptions, defaultAppearanceOptions } from "./appearance-options";
+import { ShortcutOptions, defaultShortcutOptions } from "./shortcuts-options";
+import { EverythingSearchOptions, defaultEverythingSearchOptions } from "./everything-search-options";
+import { MdFindOptions, defaultMdfindOptions } from "./mdfind-options";
+import { TranslationOptions, defaultTranslationOptions } from "./translation-options";
+import { WebSearchOptions, defaultWebSearchOptions } from "./websearch-options";
+import { ColorThemeOptions, defaultColorThemeOptions } from "./color-theme-options";
+import { FileBrowserOptions, defaultFileBrowserOptions } from "./filebrowser-options";
+import { OperatingSystemCommandsOptions, defaultOperatingSystemCommandsOptions } from "./operating-system-commands-options";
+import { CalculatorOptions, defaultCalculatorOptions } from "./calculator-options";
+import { UrlOptions, defaultUrlOptions } from "./url-options";
+import { EmailOptions, defaultEmailOptions } from "./email-options";
+import { CurrencyConverterOptions, defaultCurrencyConverterOptions } from "./currency-converter-options";
+import { WorkflowOptions, defaultWorkflowOptions } from "./workflow-options";
+import { CommandlineOptions, defaultCommandlineOptions } from "./commandline-options";
+import { OperatingSystemSettingsOptions, defaultOperatingSystemSettingsOptions } from "./operating-system-settings-options";
+import { SimpleFolderSearchOptions, defaultSimpleFolderSearchOptions } from "./simple-folder-search-options";
+import { UwpSearchOptions, defaultUwpSearchOptions } from "./uwp-search-options";
+import { ColorConverterOptions, defaultColorConverterOptions } from "./color-converter-options";
+import { ApplicationSearchOptions, defaultApplicationSearchOptions } from "./application-search-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -45,3 +45,28 @@ export interface UserConfigOptions {
     colorConverterOptions: ColorConverterOptions;
     uwpSearchOptions: UwpSearchOptions;
 }
+
+export const defaultUserConfigOptions: UserConfigOptions = {
+    appearanceOptions: defaultAppearanceOptions,
+    applicationSearchOptions: defaultApplicationSearchOptions,
+    calculatorOptions: defaultCalculatorOptions,
+    colorConverterOptions: defaultColorConverterOptions,
+    colorThemeOptions: defaultColorThemeOptions,
+    commandlineOptions: defaultCommandlineOptions,
+    currencyConverterOptions: defaultCurrencyConverterOptions,
+    emailOptions: defaultEmailOptions,
+    everythingSearchOptions: defaultEverythingSearchOptions,
+    fileBrowserOptions: defaultFileBrowserOptions,
+    generalOptions: defaultGeneralOptions,
+    mdfindOptions: defaultMdfindOptions,
+    operatingSystemCommandsOptions: defaultOperatingSystemCommandsOptions,
+    operatingSystemSettingsOptions: defaultOperatingSystemSettingsOptions,
+    searchEngineOptions: defaultSearchEngineOptions,
+    shortcutOptions: defaultShortcutOptions,
+    simpleFolderSearchOptions: defaultSimpleFolderSearchOptions,
+    translationOptions: defaultTranslationOptions,
+    urlOptions: defaultUrlOptions,
+    uwpSearchOptions: defaultUwpSearchOptions,
+    websearchOptions: defaultWebSearchOptions,
+    workflowOptions: defaultWorkflowOptions,
+};

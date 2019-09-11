@@ -2,7 +2,7 @@ import Vue from "vue";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
-import { defaultCurrencyConverterOptions } from "../../common/config/default-currency-converter-options";
+import { defaultCurrencyConverterOptions } from "../../common/config/currency-converter-options";
 import { cloneDeep } from "lodash";
 import { PluginSettings } from "./plugin-settings";
 import { TranslationSet } from "../../common/translation/translation-set";

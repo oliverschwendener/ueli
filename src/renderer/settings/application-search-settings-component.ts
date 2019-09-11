@@ -2,13 +2,13 @@ import Vue from "vue";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { VueEventChannels } from "../vue-event-channels";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
-import { defaultApplicationSearchOptions } from "../../main/plugins/application-search-plugin/default-application-search-plugin-options";
 import { cloneDeep } from "lodash";
 import { PluginSettings } from "./plugin-settings";
 import { NotificationType } from "../../common/notification-type";
 import { showNotification } from "../notifications";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { TranslationSet } from "../../common/translation/translation-set";
+import { defaultApplicationSearchOptions } from "../../common/config/application-search-options";
 
 export const applicationSearchSettingsComponent = Vue.extend({
     data() {

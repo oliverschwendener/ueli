@@ -2,7 +2,7 @@ import Vue from "vue";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { defaultColorThemeOptions } from "../../common/config/default-color-theme-options";
+import { defaultColorThemeOptions } from "../../common/config/color-theme-options";
 import { cloneDeep } from "lodash";
 import { GeneralSettings } from "./general-settings";
 import { getFolderPath, getFilePath } from "../dialogs";

@@ -1,7 +1,7 @@
 import { ApplicationRepository } from "./application-repository";
 import { Application } from "./application";
 import { basename, extname } from "path";
-import { ApplicationSearchOptions } from "./application-search-options";
+import { ApplicationSearchOptions } from "../../../common/config/application-search-options";
 import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { ApplicationIconService } from "./application-icon-service";
 import { getApplicationIconFilePath } from "./application-icon-helpers";
