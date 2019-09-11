@@ -3,7 +3,7 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { cloneDeep } from "lodash";
-import { defaultSearchEngineOptions } from "../../common/config/default-search-engine-options";
+import { defaultSearchEngineOptions } from "../../common/config/search-engine-options";
 import { GeneralSettings } from "./general-settings";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { TranslationSet } from "../../common/translation/translation-set";

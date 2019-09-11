@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { defaultEmailOptions } from "../../common/config/default-email-options";
+import { defaultEmailOptions } from "../../common/config/email-options";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { cloneDeep } from "lodash";

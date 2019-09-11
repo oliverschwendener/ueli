@@ -3,7 +3,7 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { defaultWebSearchOptions } from "../../common/config/default-websearch-options";
+import { defaultWebSearchOptions } from "../../common/config/websearch-options";
 import { cloneDeep } from "lodash";
 import { defaultNewWebSearchEngine } from "../../main/plugins/websearch-plugin/web-search-helpers";
 import { WebSearchEngine } from "../../main/plugins/websearch-plugin/web-search-engine";

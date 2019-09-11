@@ -3,7 +3,7 @@ import { SettingOsSpecific } from "./settings-os-specific";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { defaultUwpSearchOptions } from "../../common/config/default-uwp-search-options";
+import { defaultUwpSearchOptions } from "../../common/config/uwp-search-options";
 import { cloneDeep } from "lodash";
 import { platform } from "os";
 

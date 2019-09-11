@@ -1,5 +1,5 @@
 import { Application } from "./application";
-import { ApplicationSearchOptions } from "./application-search-options";
+import { ApplicationSearchOptions } from "../../../common/config/application-search-options";
 
 export interface ApplicationRepository {
     getAll(): Promise<Application[]>;

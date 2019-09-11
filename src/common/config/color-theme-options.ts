@@ -1,3 +1,5 @@
+import { atomOneDark } from "../../renderer/color-themes/color-themes";
+
 export interface ColorThemeOptions {
     name: string;
 
@@ -16,3 +18,5 @@ export interface ColorThemeOptions {
     scrollbarForegroundColor: string;
     scrollbarBackgroundColor: string;
 }
+
+export const defaultColorThemeOptions = atomOneDark;

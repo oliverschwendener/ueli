@@ -6,3 +6,12 @@ export interface ColorConverterOptions {
     hslEnabled: boolean;
     showColorPreview: boolean;
 }
+
+export const defaultColorConverterOptions: ColorConverterOptions = {
+    hexEnabled: true,
+    hslEnabled: true,
+    isEnabled: true,
+    rgbEnabled: true,
+    rgbaEnabled: true,
+    showColorPreview: false,
+};

@@ -4,3 +4,8 @@ export interface ShortcutOptions {
     isEnabled: boolean;
     shortcuts: Shortcut[];
 }
+
+export const defaultShortcutOptions: ShortcutOptions = {
+    isEnabled: false,
+    shortcuts: [],
+};

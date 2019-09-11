@@ -4,7 +4,7 @@ import { VueEventChannels } from "../vue-event-channels";
 import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { cloneDeep } from "lodash";
-import { defaultFileBrowserOptions } from "../../common/config/default-filebrowser-options";
+import { defaultFileBrowserOptions } from "../../common/config/filebrowser-options";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 

@@ -1,5 +1,11 @@
-import { ApplicationSearchOptions } from "./application-search-options";
 import { homedir, platform } from "os";
+
+export interface ApplicationSearchOptions {
+    applicationFolders: string[];
+    applicationFileExtensions: string[];
+    enabled: boolean;
+    showFullFilePath: boolean;
+}
 
 const win: ApplicationSearchOptions = {
     applicationFileExtensions: [".lnk", ".appref-ms", ".url", ".exe"],

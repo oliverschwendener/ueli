@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { PluginSettings } from "./plugin-settings";
-import { defaultShortcutOptions } from "../../common/config/default-shortcuts-options";
+import { defaultShortcutOptions } from "../../common/config/shortcuts-options";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";

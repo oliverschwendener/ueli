@@ -4,7 +4,7 @@ import { VueEventChannels } from "../vue-event-channels";
 import { SettingOsSpecific } from "./settings-os-specific";
 import { platform } from "os";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { defaultMdfindOptions } from "../../common/config/default-mdfind-options";
+import { defaultMdfindOptions } from "../../common/config/mdfind-options";
 import { cloneDeep } from "lodash";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
