@@ -20,8 +20,7 @@ import { SimpleFolderSearchOptions, defaultSimpleFolderSearchOptions } from "./s
 import { UwpSearchOptions, defaultUwpSearchOptions } from "./uwp-search-options";
 import { ColorConverterOptions, defaultColorConverterOptions } from "./color-converter-options";
 import { ApplicationSearchOptions, defaultApplicationSearchOptions } from "./application-search-options";
-import { BrowserBookmarksOptions } from "./browser-bookmarks-options";
-import { defaultBrowserBookmarksOptions } from "./default-browser-bookmarks-options";
+import { BrowserBookmarksOptions, defaultBrowserBookmarksOptions } from "./browser-bookmarks-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
