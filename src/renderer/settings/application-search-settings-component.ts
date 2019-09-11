@@ -2,13 +2,13 @@ import Vue from "vue";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { VueEventChannels } from "../vue-event-channels";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
-import { cloneDeep } from "lodash";
 import { PluginSettings } from "./plugin-settings";
 import { NotificationType } from "../../common/notification-type";
 import { showNotification } from "../notifications";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { defaultApplicationSearchOptions } from "../../common/config/application-search-options";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const applicationSearchSettingsComponent = Vue.extend({
     data() {
@@ -65,7 +65,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.applicationSearchOptions = cloneDeep(defaultApplicationSearchOptions);
+                    config.applicationSearchOptions = deepCopy(defaultApplicationSearchOptions);
                     this.updateConfig(true);
                 },
                 message: translations.resetPluginSettingsToDefaultWarning,
@@ -76,12 +76,12 @@ export const applicationSearchSettingsComponent = Vue.extend({
         },
         resetApplicationFoldersToDefault() {
             const config: UserConfigOptions = this.config;
-            config.applicationSearchOptions.applicationFolders = cloneDeep(defaultApplicationSearchOptions.applicationFolders);
+            config.applicationSearchOptions.applicationFolders = deepCopy(defaultApplicationSearchOptions.applicationFolders);
             this.updateConfig(true);
         },
         resetApplicationFileExtensionsToDefault() {
             const config: UserConfigOptions = this.config;
-            config.applicationSearchOptions.applicationFileExtensions = cloneDeep(defaultApplicationSearchOptions.applicationFileExtensions);
+            config.applicationSearchOptions.applicationFileExtensions = deepCopy(defaultApplicationSearchOptions.applicationFileExtensions);
             this.updateConfig(true);
         },
         updateConfig(needsIndexRefresh: boolean) {

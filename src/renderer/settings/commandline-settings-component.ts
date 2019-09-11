@@ -4,9 +4,9 @@ import { VueEventChannels } from "../vue-event-channels";
 import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultCommandlineOptions } from "../../common/config/commandline-options";
-import { cloneDeep } from "lodash";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const commandlineSettingsComponent = Vue.extend({
     data() {
@@ -21,7 +21,7 @@ export const commandlineSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.commandlineOptions = cloneDeep(defaultCommandlineOptions);
+                    config.commandlineOptions = deepCopy(defaultCommandlineOptions);
                     this.updateConfig();
                 },
                 message: translations.resetPluginSettingsToDefaultWarning,

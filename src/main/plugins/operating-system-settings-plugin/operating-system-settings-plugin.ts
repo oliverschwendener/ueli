@@ -36,7 +36,7 @@ export class OperatingSystemSettingsPlugin implements SearchPlugin {
                             icon: operatingSystemSetting.icon,
                             name: operatingSystemSetting.name,
                             originPluginType: this.pluginType,
-                            searchable: operatingSystemSetting.tags.concat([operatingSystemSetting.name]),
+                            searchable: [operatingSystemSetting.name, ...operatingSystemSetting.tags],
                         };
                     });
 

@@ -2,7 +2,6 @@ import Vue from "vue";
 import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
 import { SimpleFolderSearchOptions, SimpleFolderSearchFolderOption } from "../../../common/config/simple-folder-search-options";
-import { cloneDeep } from "lodash";
 import { ModalEditMode } from "./modal-edit-mode";
 import { NotificationType } from "../../../common/notification-type";
 import { existsSync, lstatSync } from "fs";
@@ -10,6 +9,7 @@ import { getFolderPath } from "../../dialogs";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { homedir } from "os";
 import { join } from "path";
+import { deepCopy } from "../../../common/helpers/object-helpers";
 
 const initialFolderOptions: SimpleFolderSearchFolderOption = {
     excludeHiddenFiles: false,
@@ -27,7 +27,7 @@ export const simpleFolderSearchEditingModalComponent = Vue.extend({
     data() {
         return {
             editMode: ModalEditMode.Add,
-            options: cloneDeep(initialFolderOptions),
+            options: deepCopy(initialFolderOptions),
             saveIndex: undefined,
             visible: false,
         };
@@ -45,7 +45,7 @@ export const simpleFolderSearchEditingModalComponent = Vue.extend({
         },
         closeModal() {
             this.editMode = ModalEditMode.Add;
-            this.options = cloneDeep(initialFolderOptions);
+            this.options = deepCopy(initialFolderOptions);
             this.saveIndex = 0;
             this.visible = false;
         },

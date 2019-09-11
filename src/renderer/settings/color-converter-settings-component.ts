@@ -4,7 +4,7 @@ import { VueEventChannels } from "../vue-event-channels";
 import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultColorConverterOptions } from "../../common/config/color-converter-options";
-import { cloneDeep } from "lodash";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const colorConverterSettingsComponent = Vue.extend({
     data() {
@@ -21,7 +21,7 @@ export const colorConverterSettingsComponent = Vue.extend({
         },
         resetAll() {
             const config: UserConfigOptions = this.config;
-            config.colorConverterOptions = cloneDeep(defaultColorConverterOptions);
+            config.colorConverterOptions = deepCopy(defaultColorConverterOptions);
             this.updateConfig();
         },
         updateConfig() {

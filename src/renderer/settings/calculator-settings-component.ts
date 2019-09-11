@@ -4,9 +4,9 @@ import { VueEventChannels } from "../vue-event-channels";
 import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultCalculatorOptions } from "../../common/config/calculator-options";
-import { cloneDeep } from "lodash";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const calculatorSettingsComponent = Vue.extend({
     data() {
@@ -26,7 +26,7 @@ export const calculatorSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.calculatorOptions = cloneDeep(defaultCalculatorOptions);
+                    config.calculatorOptions = deepCopy(defaultCalculatorOptions);
                     this.updateConfig();
                 },
                 message: translations.resetPluginSettingsToDefaultWarning,

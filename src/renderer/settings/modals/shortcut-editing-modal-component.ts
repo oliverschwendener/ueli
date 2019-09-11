@@ -4,17 +4,16 @@ import { VueEventChannels } from "../../vue-event-channels";
 import { Shortcut } from "../../../main/plugins/shortcuts-search-plugin/shortcut";
 import { ShortcutType } from "../../../main/plugins/shortcuts-search-plugin/shortcut-type";
 import { platform, homedir } from "os";
-import { cloneDeep } from "lodash";
 import { defaultNewShortcut, isValidShortcutToAdd } from "../../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
 import { NotificationType } from "../../../common/notification-type";
 import { isValidWindowsFilePath, isValidMacOsFilePath } from "../../../common/helpers/file-path-validators";
 import { isWindows } from "../../../common/helpers/operating-system-helpers";
-import { isEqual } from "lodash";
 import { showNotification } from "../../notifications";
 import { getFilePath, getFolderPath } from "../../dialogs";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { join } from "path";
 import { ModalEditMode } from "./modal-edit-mode";
+import { deepCopy, isEqual } from "../../../common/helpers/object-helpers";
 
 export const shortcutEditingModal = Vue.extend({
     computed: {
@@ -27,7 +26,7 @@ export const shortcutEditingModal = Vue.extend({
             autofocus: true,
             editMode: ModalEditMode.Add,
             saveIndex: undefined,
-            shortcut: cloneDeep(defaultNewShortcut),
+            shortcut: deepCopy(defaultNewShortcut),
             shortcutTypeFilePath: ShortcutType.FilePath,
             shortcutTypeUrl: ShortcutType.Url,
             shortcutTypes: Object.values(ShortcutType).sort(),
@@ -46,7 +45,7 @@ export const shortcutEditingModal = Vue.extend({
             }
         },
         closeButtonClick() {
-            this.shortcut = cloneDeep(defaultNewShortcut);
+            this.shortcut = deepCopy(defaultNewShortcut);
             this.visible = false;
         },
         getShortcutType(shortcutType: ShortcutType): string {
@@ -146,7 +145,7 @@ export const shortcutEditingModal = Vue.extend({
             shortcut.executionArgument = filePath;
         },
         resetModal(): void {
-            this.shortcut = cloneDeep(defaultNewShortcut);
+            this.shortcut = deepCopy(defaultNewShortcut);
             this.saveIndex = undefined;
             this.visible = false;
         },
@@ -156,7 +155,7 @@ export const shortcutEditingModal = Vue.extend({
             this.visible = true;
             this.editMode = editMode;
             this.shortcut = shortcut;
-            this.initialShortcut = cloneDeep(shortcut);
+            this.initialShortcut = deepCopy(shortcut);
             this.saveIndex = saveIndex;
             this.autofocus = true;
         });

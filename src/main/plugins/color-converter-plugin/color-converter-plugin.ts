@@ -8,7 +8,7 @@ import { UserConfigOptions } from "../../../common/config/user-config-options";
 import * as color from "color";
 import { defaultColorConverterIcon } from "../../../common/icon/default-icons";
 import { IconType } from "../../../common/icon/icon-type";
-import { StringHelpers } from "../../../common/helpers/string-helpers";
+import { replaceWhitespace } from "../../../common/helpers/string-helpers";
 
 export class ColorConverterPlugin implements ExecutionPlugin {
     public pluginType: PluginType.ColorConverter;
@@ -45,7 +45,7 @@ export class ColorConverterPlugin implements ExecutionPlugin {
     }
 
     private buildSearchResult(value: string): SearchResultItem[] {
-        const converted = color(StringHelpers.replaceWhitespace(value.trim(), ""));
+        const converted = color(replaceWhitespace(value.trim(), ""));
         const result: SearchResultItem[] = [];
 
         if (this.config.hexEnabled) {

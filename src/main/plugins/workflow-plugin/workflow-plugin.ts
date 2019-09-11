@@ -39,7 +39,7 @@ export class WorkflowPlugin implements SearchPlugin {
                     name: workflow.name,
                     needsUserConfirmationBeforeExecution: workflow.needsUserConfirmationBeforeExecution,
                     originPluginType: this.pluginType,
-                    searchable: workflow.tags.concat([workflow.name]),
+                    searchable: [...workflow.tags, workflow.name],
                 };
             });
 

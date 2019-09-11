@@ -3,7 +3,6 @@ import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
 import { Workflow } from "../../../main/plugins/workflow-plugin/workflow";
 import { TranslationSet } from "../../../common/translation/translation-set";
-import { isEqual, cloneDeep } from "lodash";
 import { ModalEditMode } from "./modal-edit-mode";
 import { WorkflowExecutionArgumentType } from "../../../main/plugins/workflow-plugin/workflow-execution-argument-type";
 import { getWorkflowExecutionArgumentTypeIcon, getWorkflowExecutionArgumentTypeClass, getWorkflowExecutionArgumentTypeTranslation } from "../helpers";
@@ -14,6 +13,7 @@ import { NotificationType } from "../../../common/notification-type";
 import { defaultWorkflowIcon } from "../../../common/icon/default-icons";
 import { homedir, platform } from "os";
 import { isWindows } from "../../../common/helpers/operating-system-helpers";
+import { deepCopy, isEqual } from "../../../common/helpers/object-helpers";
 
 const initialNewWorkflowExecutionStep: WorkflowExecutionStep = {
     executionArgument: "",
@@ -23,9 +23,9 @@ const initialNewWorkflowExecutionStep: WorkflowExecutionStep = {
 const initialWorkflow: Workflow = {
     description: "",
     executionSteps: [
-        cloneDeep(initialNewWorkflowExecutionStep),
+        deepCopy(initialNewWorkflowExecutionStep),
     ],
-    icon: cloneDeep(defaultWorkflowIcon),
+    icon: deepCopy(defaultWorkflowIcon),
     name: "",
     needsUserConfirmationBeforeExecution: false,
     tags: [],
@@ -42,11 +42,11 @@ export const workflowEditingModal = Vue.extend({
             editMode: ModalEditMode.Add,
             executionArgumentTypeFilePath: WorkflowExecutionArgumentType.FilePath,
             executionArgumentTypes: Object.values(WorkflowExecutionArgumentType).sort(),
-            initialWorkflow: cloneDeep(initialWorkflow),
-            newWorkflowExecutionStep: cloneDeep(initialNewWorkflowExecutionStep),
+            initialWorkflow: deepCopy(initialWorkflow),
+            newWorkflowExecutionStep: deepCopy(initialNewWorkflowExecutionStep),
             saveIndex: undefined,
             visible: false,
-            workflow: cloneDeep(initialWorkflow),
+            workflow: deepCopy(initialWorkflow),
         };
     },
     methods: {
@@ -72,7 +72,7 @@ export const workflowEditingModal = Vue.extend({
             }
         },
         closeModal() {
-            this.workflow = cloneDeep(initialWorkflow);
+            this.workflow = deepCopy(initialWorkflow);
             this.visible = false;
         },
         getExecutionArgumentTypeIcon(type: WorkflowExecutionArgumentType): string {
@@ -126,7 +126,7 @@ export const workflowEditingModal = Vue.extend({
             workflow.executionSteps.splice(index, 1);
         },
         resetNewExecutionStep() {
-            this.newWorkflowExecutionStep = cloneDeep(initialNewWorkflowExecutionStep);
+            this.newWorkflowExecutionStep = deepCopy(initialNewWorkflowExecutionStep);
         },
         saveButtonClick() {
             if (isValidWorkflow(this.workflow)) {
@@ -143,7 +143,7 @@ export const workflowEditingModal = Vue.extend({
             this.visible = true;
             this.editMode = editMode;
             this.workflow = workflow;
-            this.initialWorkflow = cloneDeep(workflow);
+            this.initialWorkflow = deepCopy(workflow);
             this.saveIndex = saveIndex;
         });
     },

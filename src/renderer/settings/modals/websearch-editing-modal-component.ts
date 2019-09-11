@@ -2,11 +2,11 @@ import Vue from "vue";
 import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
 import { WebSearchEngine } from "../../../main/plugins/websearch-plugin/web-search-engine";
-import { cloneDeep, isEqual } from "lodash";
 import { defaultNewWebSearchEngine, isValidWebSearchEngineToAdd } from "../../../main/plugins/websearch-plugin/web-search-helpers";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { NotificationType } from "../../../common/notification-type";
 import { ModalEditMode } from "./modal-edit-mode";
+import { isEqual, deepCopy } from "../../../common/helpers/object-helpers";
 
 export const websearchEditingModal = Vue.extend({
     computed: {
@@ -18,7 +18,7 @@ export const websearchEditingModal = Vue.extend({
         return {
             autofocus: true,
             visible: false,
-            websearchEngine: cloneDeep(defaultNewWebSearchEngine),
+            websearchEngine: deepCopy(defaultNewWebSearchEngine),
         };
     },
     methods: {
@@ -66,7 +66,7 @@ export const websearchEditingModal = Vue.extend({
             this.visible = true;
             this.websearchEngine = websearchEngine;
             this.editMode = editMode;
-            this.initalWebSearchEngine = cloneDeep(websearchEngine);
+            this.initalWebSearchEngine = deepCopy(websearchEngine);
             this.saveIndex = saveIndex;
             this.autofocus = true;
         });

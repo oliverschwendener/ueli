@@ -4,7 +4,6 @@ import { defaultShortcutOptions } from "../../common/config/shortcuts-options";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { cloneDeep } from "lodash";
 import { defaultNewShortcut } from "../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
 import { Shortcut } from "../../main/plugins/shortcuts-search-plugin/shortcut";
 import { ShortcutType } from "../../main/plugins/shortcuts-search-plugin/shortcut-type";
@@ -12,6 +11,7 @@ import { ModalEditMode } from "./modals/modal-edit-mode";
 import { defaultShortcutIcon } from "../../common/icon/default-icons";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const shortcutSettingsComponent = Vue.extend({
     data() {
@@ -23,11 +23,11 @@ export const shortcutSettingsComponent = Vue.extend({
     },
     methods: {
         addButtonClick() {
-            vueEventDispatcher.$emit(VueEventChannels.openShortcutEditingModal, cloneDeep(defaultNewShortcut), ModalEditMode.Add);
+            vueEventDispatcher.$emit(VueEventChannels.openShortcutEditingModal, deepCopy(defaultNewShortcut), ModalEditMode.Add);
         },
         addShortcut(shortcut: Shortcut) {
             const config: UserConfigOptions = this.config;
-            config.shortcutOptions.shortcuts.push(cloneDeep(shortcut));
+            config.shortcutOptions.shortcuts.push(deepCopy(shortcut));
             this.updateConfig();
         },
         deleteShortcut(id: number) {
@@ -36,14 +36,14 @@ export const shortcutSettingsComponent = Vue.extend({
             this.updateConfig();
         },
         updateShortcut(shortcut: Shortcut, index: number) {
-            const config: UserConfigOptions = cloneDeep(this.config);
-            config.shortcutOptions.shortcuts[index] = cloneDeep(shortcut);
-            this.config = cloneDeep(config);
+            const config: UserConfigOptions = deepCopy(this.config);
+            config.shortcutOptions.shortcuts[index] = deepCopy(shortcut);
+            this.config = deepCopy(config);
             this.updateConfig();
         },
         editShortcut(index: number): void {
             const config: UserConfigOptions = this.config;
-            const shortcut: Shortcut = cloneDeep(config.shortcutOptions.shortcuts[index]);
+            const shortcut: Shortcut = deepCopy(config.shortcutOptions.shortcuts[index]);
             vueEventDispatcher.$emit(VueEventChannels.openShortcutEditingModal, shortcut, ModalEditMode.Edit, index);
         },
         getShortcutTypeIconClass(shorcutType: ShortcutType): string {
@@ -73,7 +73,7 @@ export const shortcutSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.shortcutOptions = cloneDeep(defaultShortcutOptions);
+                    config.shortcutOptions = deepCopy(defaultShortcutOptions);
                     this.updateConfig();
                 },
                 message: translations.resetPluginSettingsToDefaultWarning,

@@ -3,10 +3,10 @@ import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultEmailOptions } from "../../common/config/email-options";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
-import { cloneDeep } from "lodash";
 import { PluginSettings } from "./plugin-settings";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const emailSettingsComponent = Vue.extend({
     data() {
@@ -26,7 +26,7 @@ export const emailSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.emailOptions = cloneDeep(defaultEmailOptions);
+                    config.emailOptions = deepCopy(defaultEmailOptions);
                     this.updateConfig();
                 },
                 message: translations.resetPluginSettingsToDefaultWarning,

@@ -3,10 +3,10 @@ import { UserConfigOptions } from "../../common/config/user-config-options";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { defaultCurrencyConverterOptions } from "../../common/config/currency-converter-options";
-import { cloneDeep } from "lodash";
 import { PluginSettings } from "./plugin-settings";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const currencyConverterSettingsComponent = Vue.extend({
     data() {
@@ -26,7 +26,7 @@ export const currencyConverterSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.currencyConverterOptions = cloneDeep(defaultCurrencyConverterOptions);
+                    config.currencyConverterOptions = deepCopy(defaultCurrencyConverterOptions);
                     this.updateConfig();
                 },
                 message: translations.resetPluginSettingsToDefaultWarning,

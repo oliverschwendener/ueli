@@ -1,8 +1,8 @@
 import { UserConfigOptions } from "../config/user-config-options";
-import { cloneDeep } from "lodash";
+import { deepCopy } from "./object-helpers";
 
 export function mergeUserConfigWithDefault(userConfig: any, defaultUserConfig: UserConfigOptions): UserConfigOptions {
-    const result: any = cloneDeep(defaultUserConfig);
+    const result: any = deepCopy(defaultUserConfig);
 
     Object.keys(defaultUserConfig).forEach((key: string) => {
         const merged = userConfig !== undefined && userConfig.hasOwnProperty(key)

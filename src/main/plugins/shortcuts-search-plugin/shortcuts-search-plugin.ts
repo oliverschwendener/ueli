@@ -8,7 +8,7 @@ import { ShortcutType } from "./shortcut-type";
 import { isValidIcon } from "./../../../common/icon/icon-helpers";
 import { defaultShortcutIcon } from "../../../common/icon/default-icons";
 import { OpenLocationPlugin } from "../../open-location-plugin";
-import { StringHelpers } from "../../../common/helpers/string-helpers";
+import { stringIsWhiteSpace } from "../../../common/helpers/string-helpers";
 
 interface ExecutionArgumentDecodeResult {
     shortcutType: ShortcutType;
@@ -123,7 +123,7 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
 
     private createSearchResultItem(shortcut: Shortcut): SearchResultItem {
         return {
-            description: StringHelpers.stringIsWhiteSpace(shortcut.description)
+            description: stringIsWhiteSpace(shortcut.description)
                 ? shortcut.executionArgument
                 : shortcut.description,
             executionArgument: this.encodeExecutionArgument(shortcut),
@@ -134,7 +134,7 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
             name: shortcut.name,
             needsUserConfirmationBeforeExecution: shortcut.needsUserConfirmationBeforeExecution,
             originPluginType: this.pluginType,
-            searchable: [shortcut.name].concat(shortcut.tags),
+            searchable: [shortcut.name, ...shortcut.tags],
             supportsOpenLocation: true,
         };
     }

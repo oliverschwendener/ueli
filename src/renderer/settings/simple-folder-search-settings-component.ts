@@ -3,12 +3,12 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { cloneDeep } from "lodash";
 import { defaultSimpleFolderSearchOptions } from "../../common/config/simple-folder-search-options";
 import { SimpleFolderSearchFolderOption } from "../../common/config/simple-folder-search-options";
 import { ModalEditMode } from "./modals/modal-edit-mode";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const simpleFolderSearchSettingsComponent = Vue.extend({
     data() {
@@ -36,7 +36,7 @@ export const simpleFolderSearchSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.simpleFolderSearchOptions = cloneDeep(defaultSimpleFolderSearchOptions);
+                    config.simpleFolderSearchOptions = deepCopy(defaultSimpleFolderSearchOptions);
                     this.updateConfig(true);
                 },
                 message: translations.resetPluginSettingsToDefaultWarning,

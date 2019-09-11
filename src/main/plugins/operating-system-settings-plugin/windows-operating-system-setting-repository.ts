@@ -697,21 +697,20 @@ const windowsCortanaSettings: OperatingSystemSetting[] = [
     },
 ];
 
-const base = [] as OperatingSystemSetting[];
-
-const allOperatingSystemSettings: OperatingSystemSetting[] = base
-    .concat(windowsAccountSettings)
-    .concat(windowsAppSettings)
-    .concat(windowsCortanaSettings)
-    .concat(windowsDeviceSettings)
-    .concat(windowsEaseOfAccessSettings)
-    .concat(windowsGeneralSettings)
-    .concat(windowsGetGamingSettings)
-    .concat(windowsNetworkSettings)
-    .concat(windowsPersonalizationSettings)
-    .concat(windowsPrivacySettings)
-    .concat(windowsTimeAndLanguageSettings)
-    .concat(windowsUpdateAndSecuritySettings);
+const allOperatingSystemSettings = [
+    ...windowsAccountSettings,
+    ...windowsAppSettings,
+    ...windowsCortanaSettings,
+    ...windowsDeviceSettings,
+    ...windowsEaseOfAccessSettings,
+    ...windowsGeneralSettings,
+    ...windowsGetGamingSettings,
+    ...windowsNetworkSettings,
+    ...windowsPersonalizationSettings,
+    ...windowsPrivacySettings,
+    ...windowsTimeAndLanguageSettings,
+    ...windowsUpdateAndSecuritySettings,
+];
 
 export class WindowsOperatingSystemSettingRepository implements OperatingSystemSettingRepository {
     public getAll(): Promise<OperatingSystemSetting[]> {

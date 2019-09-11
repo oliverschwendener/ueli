@@ -3,12 +3,12 @@ import { SettingOsSpecific } from "./settings-os-specific";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { cloneDeep } from "lodash";
 import { defaultEverythingSearchOptions } from "../../common/config/everything-search-options";
 import { platform } from "os";
 import { getFilePath } from "../dialogs";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const everythingSettingsComponent = Vue.extend({
     data() {
@@ -29,7 +29,7 @@ export const everythingSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.everythingSearchOptions = cloneDeep(defaultEverythingSearchOptions);
+                    config.everythingSearchOptions = deepCopy(defaultEverythingSearchOptions);
                     this.updateConfig();
                 },
                 message: translations.resetPluginSettingsToDefaultWarning,

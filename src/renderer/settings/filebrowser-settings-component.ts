@@ -3,10 +3,10 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { cloneDeep } from "lodash";
 import { defaultFileBrowserOptions } from "../../common/config/filebrowser-options";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const fileBrowserSettingsComponent = Vue.extend({
     data() {
@@ -22,7 +22,7 @@ export const fileBrowserSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.fileBrowserOptions = cloneDeep(defaultFileBrowserOptions);
+                    config.fileBrowserOptions = deepCopy(defaultFileBrowserOptions);
                     this.updateConfig();
                 },
                 message: translations.resetPluginSettingsToDefaultWarning,

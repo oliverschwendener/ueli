@@ -12,7 +12,6 @@ import { UeliCommand } from "./plugins/ueli-command-search-plugin/ueli-command";
 import { UeliCommandExecutionArgument } from "./plugins/ueli-command-search-plugin/ueli-command-execution-argument";
 import { platform } from "os";
 import { getProductionSearchEngine } from "./production/production-search-engine";
-import { cloneDeep } from "lodash";
 import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
 import { defaultGeneralOptions } from "../common/config/general-options";
 import { getErrorSearchResultItem } from "../common/error-search-result-item";
@@ -32,12 +31,13 @@ import { ProductionLogger } from "../common/logger/production-logger";
 import { DevLogger } from "../common/logger/dev-logger";
 import { windowIconWindows, windowIconMacOs } from "./helpers/window-icon-helpers";
 import { toHex } from "./plugins/color-converter-plugin/color-converter-helpers";
+import { deepCopy } from "../common/helpers/object-helpers";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
 }
 
-const configRepository = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions));
+const configRepository = new ElectronStoreConfigRepository(deepCopy(defaultUserConfigOptions));
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
 const trayIconFilePath = isWindows(platform()) ? trayIconPathWindows : trayIconPathMacOs;
 const windowIconFilePath = isWindows(platform()) ? windowIconWindows : windowIconMacOs;

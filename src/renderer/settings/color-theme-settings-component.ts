@@ -3,7 +3,6 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultColorThemeOptions } from "../../common/config/color-theme-options";
-import { cloneDeep } from "lodash";
 import { GeneralSettings } from "./general-settings";
 import { getFolderPath, getFilePath } from "../dialogs";
 import { join } from "path";
@@ -15,6 +14,7 @@ import { isValidColorTheme } from "../../common/helpers/color-theme-helpers";
 import { showNotification } from "../notifications";
 import { colorThemes } from "../color-themes/color-themes";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const colorThemeSettingsComponent = Vue.extend({
     data() {
@@ -32,7 +32,7 @@ export const colorThemeSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.colorThemeOptions = cloneDeep(defaultColorThemeOptions);
+                    config.colorThemeOptions = deepCopy(defaultColorThemeOptions);
                     this.updateConfig();
                 },
                 message: translations.colorThemeSettingsResetWarning,
@@ -104,7 +104,7 @@ export const colorThemeSettingsComponent = Vue.extend({
             const colorTheme = colorThemes.find((c) => c.name === name);
             if (colorTheme) {
                 const config: UserConfigOptions = this.config;
-                config.colorThemeOptions = cloneDeep(colorTheme);
+                config.colorThemeOptions = deepCopy(colorTheme);
                 this.updateConfig();
             } else {
                 showNotification("No color theme preset found", NotificationType.Error);

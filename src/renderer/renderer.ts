@@ -20,7 +20,6 @@ import { userStylesComponent } from "./user-styles-component";
 import { AppearanceOptions } from "../common/config/appearance-options";
 import { shortcutSettingsComponent } from "./settings/shortcut-settings-component";
 import { shortcutEditingModal } from "./settings/modals/shortcut-editing-modal-component";
-import { cloneDeep } from "lodash";
 import { newApplicationFolderModalComponent } from "./settings/modals/new-application-folder-modal-component";
 import { newApplicationFileExtensionModalComponent } from "./settings/modals/new-application-fileextension-modal-component";
 import { mdfindSettingsComponent } from "./settings/mdfind-settings-component";
@@ -56,6 +55,7 @@ import { UpdateCheckResult } from "../common/update-check-result";
 import { uwpSettingsComponent } from "./settings/uwp-settings-component";
 import { colorConverterSettingsComponent } from "./settings/color-converter-settings-component";
 import { pluginToggle } from "./settings/elements/plugin-toggle";
+import { deepCopy } from "../common/helpers/object-helpers";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -99,7 +99,7 @@ Vue.component("uwp-settings", uwpSettingsComponent);
 Vue.component("color-converter-setttings", colorConverterSettingsComponent);
 Vue.component("plugin-toggle", pluginToggle);
 
-const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
+const initialConfig = new ElectronStoreConfigRepository(deepCopy(defaultUserConfigOptions)).getConfig();
 
 const app = new Vue({
     data: {

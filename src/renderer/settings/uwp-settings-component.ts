@@ -4,8 +4,8 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultUwpSearchOptions } from "../../common/config/uwp-search-options";
-import { cloneDeep } from "lodash";
 import { platform } from "os";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const uwpSettingsComponent = Vue.extend({
     data() {
@@ -22,7 +22,7 @@ export const uwpSettingsComponent = Vue.extend({
         },
         resetAll() {
             const config: UserConfigOptions = this.config;
-            config.uwpSearchOptions = cloneDeep(defaultUwpSearchOptions);
+            config.uwpSearchOptions = deepCopy(defaultUwpSearchOptions);
             this.updateConfig();
         },
         updateConfig() {

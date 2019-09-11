@@ -2,13 +2,13 @@ import Vue from "vue";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { cloneDeep } from "lodash";
 import { defaultAppearanceOptions } from "../../common/config/appearance-options";
 import { GeneralSettings } from "./general-settings";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { isWindows } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const appearanceSettingsComponent = Vue.extend({
     data() {
@@ -24,7 +24,7 @@ export const appearanceSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.appearanceOptions = cloneDeep(defaultAppearanceOptions);
+                    config.appearanceOptions = deepCopy(defaultAppearanceOptions);
                     this.updateConfig();
                 },
                 message: translations.appearanceSettingsResetWarningMessage,

@@ -2,11 +2,11 @@ import Vue from "vue";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { cloneDeep } from "lodash";
 import { defaultSearchEngineOptions } from "../../common/config/search-engine-options";
 import { GeneralSettings } from "./general-settings";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { TranslationSet } from "../../common/translation/translation-set";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const searchEngineSettingsComponent = Vue.extend({
     data() {
@@ -21,7 +21,7 @@ export const searchEngineSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.searchEngineOptions = cloneDeep(defaultSearchEngineOptions);
+                    config.searchEngineOptions = deepCopy(defaultSearchEngineOptions);
                     this.updateConfig();
                 },
                 message: translations.searchEngineSettingsResetWarning,

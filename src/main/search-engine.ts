@@ -239,10 +239,10 @@ export class SearchEngine {
     }
 
     private getAllPlugins(): UeliPlugin[] {
-        let allPlugins: UeliPlugin[] = [];
-        allPlugins = allPlugins.concat(this.searchPlugins);
-        allPlugins = allPlugins.concat(this.executionPlugins);
-        return allPlugins;
+        return [
+            ...this.searchPlugins,
+            ...this.executionPlugins,
+        ];
     }
 
     private pluginSupportsOpenLocation(plugin: any): plugin is OpenLocationPlugin {

@@ -2,7 +2,7 @@ import { ExecutionPlugin } from "../../execution-plugin";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { PluginType } from "../../plugin-type";
-import { StringHelpers } from "../../../common/helpers/string-helpers";
+import { capitalize } from "../../../common/helpers/string-helpers";
 import { defaultErrorIcon, defaultTranslatorIcon } from "../../../common/icon/default-icons";
 import { LingueeTranslator } from "./linguee-translator";
 import { TranslationOptions } from "../../../common/config/translation-options";
@@ -63,7 +63,7 @@ export class TranslationPlugin implements ExecutionPlugin {
                 .then((translations) => {
                     const result = translations.map((t): SearchResultItem => {
                         return {
-                            description: `${StringHelpers.capitalize(t.word_type.pos)}`,
+                            description: `${capitalize(t.word_type.pos)}`,
                             executionArgument: t.text,
                             hideMainWindowAfterExecution: true,
                             icon: defaultTranslatorIcon,

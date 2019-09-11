@@ -5,8 +5,8 @@ import { ApplicationSearchOptions } from "../../../common/config/application-sea
 import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { ApplicationIconService } from "./application-icon-service";
 import { getApplicationIconFilePath } from "./application-icon-helpers";
-import { uniq } from "lodash";
 import { Logger } from "../../../common/logger/logger";
+import { unique } from "../../../common/helpers/string-helpers";
 
 export class FileApplicationRepository implements ApplicationRepository {
     private readonly applicationIconService: ApplicationIconService;
@@ -40,7 +40,7 @@ export class FileApplicationRepository implements ApplicationRepository {
                             resolve();
                         }
 
-                        const applications = uniq(files)
+                        const applications = unique(files)
                             .filter((file) => this.filterByApplicationFileExtensions(file))
                             .map((applicationFile): Application => this.createApplicationFromFilePath(applicationFile));
 

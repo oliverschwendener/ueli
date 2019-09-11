@@ -5,9 +5,9 @@ import { SettingOsSpecific } from "./settings-os-specific";
 import { platform } from "os";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultMdfindOptions } from "../../common/config/mdfind-options";
-import { cloneDeep } from "lodash";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const mdfindSettingsComponent = Vue.extend({
     data() {
@@ -22,7 +22,7 @@ export const mdfindSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.mdfindOptions = cloneDeep(defaultMdfindOptions);
+                    config.mdfindOptions = deepCopy(defaultMdfindOptions);
                     this.updateConfig();
                 },
                 message: translations.resetPluginSettingsToDefaultWarning,

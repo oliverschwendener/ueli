@@ -2,7 +2,6 @@ import Vue from "vue";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { cloneDeep } from "lodash";
 import { join } from "path";
 import { defaultGeneralOptions } from "../../common/config/general-options";
 import { GlobalHotKeyModifier } from "../../common/global-hot-key/global-hot-key-modifier";
@@ -21,6 +20,7 @@ import { isDev } from "../../common/is-dev";
 import { isWindows } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
 import { version } from "../../../package.json";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 interface UpdateStatus {
     checking: boolean;
@@ -55,7 +55,7 @@ export const generalSettingsComponent = Vue.extend({
             globalHotKeyModifiers: Object.values(GlobalHotKeyModifier).map((modifier) => modifier),
             isDev: isDev(),
             settingName: GeneralSettings.General,
-            updateStatus: cloneDeep(initialUpdateStatus),
+            updateStatus: deepCopy(initialUpdateStatus),
             visible: false,
         };
     },
@@ -184,7 +184,7 @@ export const generalSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.generalOptions = cloneDeep(defaultGeneralOptions);
+                    config.generalOptions = deepCopy(defaultGeneralOptions);
                     this.updateConfig();
                 },
                 message: translations.generalSettingsResetWarning,
@@ -197,7 +197,7 @@ export const generalSettingsComponent = Vue.extend({
             const translations: TranslationSet = this.translations;
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
-                    this.config = cloneDeep(defaultUserConfigOptions);
+                    this.config = deepCopy(defaultUserConfigOptions);
                     this.updateConfig(true);
                     this.dropdownVisible = false;
                 },

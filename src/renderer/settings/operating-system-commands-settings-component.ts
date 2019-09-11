@@ -4,9 +4,9 @@ import { VueEventChannels } from "../vue-event-channels";
 import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultOperatingSystemCommandsOptions } from "../../common/config/operating-system-commands-options";
-import { cloneDeep } from "lodash";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 export const operatingSystemCommandsSettingsComponent = Vue.extend({
     data() {
@@ -26,7 +26,7 @@ export const operatingSystemCommandsSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.operatingSystemCommandsOptions = cloneDeep(defaultOperatingSystemCommandsOptions);
+                    config.operatingSystemCommandsOptions = deepCopy(defaultOperatingSystemCommandsOptions);
                     this.updateConfig();
                 },
                 message: translations.resetPluginSettingsToDefaultWarning,

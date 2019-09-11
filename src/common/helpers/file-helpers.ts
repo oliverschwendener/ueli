@@ -86,9 +86,7 @@ export class FileHelpers {
                     Promise.all(statPromises)
                         .then((statLists) => {
                             let fileStats: FileStat[] = [];
-                            statLists.forEach((statList) => {
-                                fileStats = fileStats.concat(statList);
-                            });
+                            statLists.forEach((statList) => fileStats = fileStats.concat(statList));
 
                             const fileHandles = fileStats.map((fileStat) => {
                                 return this.handleFileStat(fileStat);

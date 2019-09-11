@@ -1,8 +1,8 @@
 import * as color from "color";
-import { StringHelpers } from "../../../common/helpers/string-helpers";
+import { replaceWhitespace } from "../../../common/helpers/string-helpers";
 
 export function isValidColorCode(value: string): boolean {
-    value = StringHelpers.replaceWhitespace(value.trim(), "");
+    value = replaceWhitespace(value.trim(), "");
     try {
         color(value);
         return value.startsWith("#")

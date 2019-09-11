@@ -3,7 +3,6 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { cloneDeep } from "lodash";
 import { defaultWorkflowIcon } from "../../common/icon/default-icons";
 import { WorkflowExecutionArgumentType } from "../../main/plugins/workflow-plugin/workflow-execution-argument-type";
 import { Workflow } from "../../main/plugins/workflow-plugin/workflow";
@@ -12,6 +11,7 @@ import { getWorkflowExecutionArgumentTypeIcon, getWorkflowExecutionArgumentTypeC
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { defaultWorkflowOptions } from "../../common/config/workflow-options";
+import { deepCopy } from "../../common/helpers/object-helpers";
 
 const defaultNewWorkflow: Workflow = {
     description: "",
@@ -33,22 +33,22 @@ export const workflowSettingsComponent = Vue.extend({
     methods: {
         addWorkflow(workflow: Workflow) {
             const config: UserConfigOptions = this.config;
-            config.workflowOptions.workflows.push(cloneDeep(workflow));
+            config.workflowOptions.workflows.push(deepCopy(workflow));
             this.updateConfig();
         },
         updateWorkflow(workflow: Workflow, saveIndex: number) {
             const config: UserConfigOptions = this.config;
-            const newWorkflowOptions = cloneDeep(config.workflowOptions);
-            newWorkflowOptions.workflows[saveIndex] = cloneDeep(workflow);
-            config.workflowOptions = cloneDeep(newWorkflowOptions);
+            const newWorkflowOptions = deepCopy(config.workflowOptions);
+            newWorkflowOptions.workflows[saveIndex] = deepCopy(workflow);
+            config.workflowOptions = deepCopy(newWorkflowOptions);
             this.updateConfig();
         },
         addButtonClick() {
-            vueEventDispatcher.$emit(VueEventChannels.openWorkflowEditingModal, cloneDeep(defaultNewWorkflow), ModalEditMode.Add);
+            vueEventDispatcher.$emit(VueEventChannels.openWorkflowEditingModal, deepCopy(defaultNewWorkflow), ModalEditMode.Add);
         },
         editWorkflow(index: number) {
             const config: UserConfigOptions = this.config;
-            const workflow: Workflow = cloneDeep(config.workflowOptions.workflows[index]);
+            const workflow: Workflow = deepCopy(config.workflowOptions.workflows[index]);
             vueEventDispatcher.$emit(VueEventChannels.openWorkflowEditingModal, workflow, ModalEditMode.Edit, index);
         },
         deleteWorkflow(index: number) {
@@ -69,7 +69,7 @@ export const workflowSettingsComponent = Vue.extend({
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {
                     const config: UserConfigOptions = this.config;
-                    config.workflowOptions = cloneDeep(defaultWorkflowOptions);
+                    config.workflowOptions = deepCopy(defaultWorkflowOptions);
                     this.updateConfig();
                 },
                 message: translations.resetPluginSettingsToDefaultWarning,
