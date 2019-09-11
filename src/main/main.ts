@@ -584,12 +584,8 @@ function registerAllIpcListeners() {
     });
 
     ipcMain.on(IpcChannels.autoComplete, (event: Electron.Event, searchResultItem: SearchResultItem) => {
-        searchEngine.autoComplete(searchResultItem)
-            .then((result) => updateSearchResults(result.results, event.sender, result.updatedUserInput))
-            .catch((err) => {
-                logger.error(err);
-                noSearchResultsFound();
-            });
+        const updatedUserInput = searchEngine.autoComplete(searchResultItem);
+        event.sender.send(IpcChannels.autoCompleteResponse, updatedUserInput);
     });
 
     ipcMain.on(IpcChannels.reloadApp, () => {

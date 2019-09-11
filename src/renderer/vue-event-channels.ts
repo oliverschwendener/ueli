@@ -6,6 +6,7 @@ export enum VueEventChannels {
     mainWindowHasBeenHidden = "execution-succeeded",
     handleExecution = "handle-execution",
     handleAutoCompletion = "handle-auto-completion",
+    autoCompletionResponse = "auto-completion-result",
     mainWindowHasBeenShown = "main-window-has-been-shown",
     focusOnInput = "focus-on-input",
     userInputChange = "user-input-change",

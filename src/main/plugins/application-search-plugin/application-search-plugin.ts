@@ -6,7 +6,6 @@ import { Application } from "./application";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { ApplicationSearchOptions } from "./application-search-options";
 import { IconType } from "../../../common/icon/icon-type";
-import { AutoCompletionResult } from "../../../common/auto-completion-result";
 import { createFilePathDescription } from "../../helpers/file-path-helpers";
 import { OpenLocationPlugin } from "../../open-location-plugin";
 
@@ -57,12 +56,6 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
             this.openApplicationLocation(searchResultItem.executionArgument)
                 .then(() => resolve())
                 .catch((err) => reject(err));
-        });
-    }
-
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            reject("Autocompletion not supported");
         });
     }
 

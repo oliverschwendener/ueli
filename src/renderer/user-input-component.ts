@@ -137,6 +137,10 @@ export const userInputComponent = Vue.extend({
             const config: UserConfigOptions = this.config;
             config.generalOptions = updatedGeneralOptions;
         });
+
+        vueEventDispatcher.$on(VueEventChannels.autoCompletionResponse, (updatedUserInput: string) => {
+            this.userInput = updatedUserInput;
+        });
     },
     template: `
         <div class="user-input">

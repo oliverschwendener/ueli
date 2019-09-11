@@ -215,6 +215,10 @@ const app = new Vue({
         ipcRenderer.on(IpcChannels.checkForUpdateResponse, (event: Electron.Event, updateCheckResult: UpdateCheckResult) => {
             vueEventDispatcher.$emit(VueEventChannels.checkForUpdateResponse, updateCheckResult);
         });
+
+        ipcRenderer.on(IpcChannels.autoCompleteResponse, (event: Electron.Event, updatedUserInput: string) => {
+            vueEventDispatcher.$emit(VueEventChannels.autoCompletionResponse, updatedUserInput);
+        });
     },
     methods: {
         mainWindowGlobalKeyPress(event: KeyboardEvent) {

@@ -7,7 +7,6 @@ import { UeliPlugin } from "./ueli-plugin";
 import { TranslationSet } from "../common/translation/translation-set";
 import { getNoSearchResultsFoundResultItem } from "./no-search-results-found-result-item";
 import { Logger } from "../common/logger/logger";
-import { AutoCompletionResult } from "../common/auto-completion-result";
 import { FavoriteRepository } from "./favorites/favorite-repository";
 import { FavoriteManager } from "./favorites/favorites-manager";
 import { OpenLocationPlugin } from "./open-location-plugin";
@@ -118,17 +117,13 @@ export class SearchEngine {
         });
     }
 
-    public autoComplete(searchResultItem: SearchResultItem): Promise<AutoCompletionResult> {
-        return new Promise((resolve, reject) => {
-            const originPlugin = this.getAllPlugins().find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
-            if (originPlugin && this.pluginSupportsAutocompletion(originPlugin)) {
-                originPlugin.autoComplete(searchResultItem)
-                    .then((result) => resolve(result))
-                    .catch((err) => reject(err));
-            } else {
-                reject("Error while trying to autocomplete. No plugin found for the search result item");
-            }
-        });
+    public autoComplete(searchResultItem: SearchResultItem): string {
+        const originPlugin = this.getAllPlugins().find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+        if (originPlugin && this.pluginSupportsAutocompletion(originPlugin)) {
+            return originPlugin.autoComplete(searchResultItem);
+        } else {
+            throw new Error("Error while trying to autocomplete. No plugin found for the search result item");
+        }
     }
 
     public refreshIndexes(): Promise<void> {
