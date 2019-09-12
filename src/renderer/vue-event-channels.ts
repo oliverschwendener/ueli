@@ -18,8 +18,6 @@ export enum VueEventChannels {
     configUpdated = "config-updated",
     notification = "push-notification",
     showSetting = "show-setting",
-    loadingStarted = "loading-started",
-    loadingCompleted = "loading-completed",
     appearanceOptionsUpdated = "user-styles-udpated",
     generalOptionsUpdated = "general-options-updated",
     colorThemeOptionsUpdated = "color-theme-options-updated",
@@ -48,4 +46,6 @@ export enum VueEventChannels {
     checkForUpdate = "check-for-update",
     checkForUpdateResponse = "check-for-update-response",
     downloadUpdate = "download-update",
+    refreshIndexesStarted = "refresh-indexes-started",
+    refreshIndexesFinished = "refresh-indexes-finished",
 }

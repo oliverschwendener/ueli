@@ -6,7 +6,6 @@ import { ExecutionPlugin } from "./execution-plugin";
 import { UeliPlugin } from "./ueli-plugin";
 import { TranslationSet } from "../common/translation/translation-set";
 import { getNoSearchResultsFoundResultItem } from "./no-search-results-found-result-item";
-import { Logger } from "../common/logger/logger";
 import { FavoriteRepository } from "./favorites/favorite-repository";
 import { FavoriteManager } from "./favorites/favorites-manager";
 import { OpenLocationPlugin } from "./open-location-plugin";
@@ -24,7 +23,6 @@ export class SearchEngine {
     private translationSet: TranslationSet;
     private config: UserConfigOptions;
     private readonly favoriteManager: FavoriteManager;
-    private readonly logger: Logger;
 
     constructor(
         plugins: SearchPlugin[],
@@ -32,18 +30,13 @@ export class SearchEngine {
         fallbackPlugins: ExecutionPlugin[],
         config: UserConfigOptions,
         translationSet: TranslationSet,
-        logger: Logger,
         favoriteRepository: FavoriteRepository) {
         this.translationSet = translationSet;
         this.config = config;
         this.searchPlugins = plugins;
         this.executionPlugins = executionPlugins;
         this.fallbackPlugins = fallbackPlugins;
-        this.logger = logger;
         this.favoriteManager = new FavoriteManager(favoriteRepository, translationSet);
-        this.refreshIndexes()
-            .then(() => this.logger.debug(translationSet.successfullyRefreshedIndexes))
-            .catch((err) => this.logger.error(err));
     }
 
     public  getSearchResults(userInput: string): Promise<SearchResultItem[]> {

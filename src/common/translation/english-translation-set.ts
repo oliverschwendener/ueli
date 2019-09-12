@@ -11,6 +11,8 @@ export const englishTranslationSet: TranslationSet = {
     noSearchResultsFoundDescription: "",
     noSearchResultsFoundTitle: "No search results found",
 
+    refreshingIndexesPending: "Refreshing indexes",
+
     ueliCommandClearCaches: "Clear caches",
     ueliCommandClearCachesDescription: "Clears all caches of all plugins",
     ueliCommandEditSettingsFile: "Edit settings file",

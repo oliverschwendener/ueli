@@ -80,6 +80,7 @@ function notifyRenderer(message: string, notificationType: NotificationType) {
 }
 
 function refreshAllIndexes() {
+    onIndexRefreshStarted();
     searchEngine.refreshIndexes()
         .then(() => {
             logger.debug("Successfully refreshed all indexes");
@@ -89,11 +90,15 @@ function refreshAllIndexes() {
             logger.error(err);
             notifyRenderer(err, NotificationType.Error);
         })
-        .finally(() => {
-            BrowserWindow.getAllWindows().forEach((window) => {
-                window.webContents.send(IpcChannels.refreshIndexesCompleted);
-            });
-        });
+        .finally(onIndexRefreshFinished);
+}
+
+function onIndexRefreshStarted() {
+    BrowserWindow.getAllWindows().forEach((window) => window.webContents.send(IpcChannels.refreshIndexesStarted));
+}
+
+function onIndexRefreshFinished() {
+    BrowserWindow.getAllWindows().forEach((window) => window.webContents.send(IpcChannels.refreshIndexesCompleted));
 }
 
 function clearAllCaches() {
@@ -422,12 +427,12 @@ function getMainWindowBackgroundColor(userConfigOptions: UserConfigOptions): str
 function startApp() {
     createTrayIcon();
     createMainWindow();
-
     updateMainWindowSize(0, config.appearanceOptions, isMacOs(platform()));
     registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
     updateAutoStartOptions(config);
     setKeyboardShortcuts();
     registerAllIpcListeners();
+    refreshAllIndexes();
 }
 
 function setKeyboardShortcuts() {

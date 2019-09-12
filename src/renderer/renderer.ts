@@ -136,7 +136,7 @@ const app = new Vue({
 
         vueEventDispatcher.$on(VueEventChannels.configUpdated, (updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean) => {
             if (needsIndexRefresh) {
-                vueEventDispatcher.$emit(VueEventChannels.loadingStarted);
+                vueEventDispatcher.$emit(VueEventChannels.refreshIndexesStarted);
             }
 
             this.translations = getTranslationSet(updatedConfig.generalOptions.language);
@@ -208,8 +208,12 @@ const app = new Vue({
             vueEventDispatcher.$emit(VueEventChannels.notification, message, type);
         });
 
+        ipcRenderer.on(IpcChannels.refreshIndexesStarted, (event: Electron.Event) => {
+            vueEventDispatcher.$emit(VueEventChannels.refreshIndexesStarted);
+        });
+
         ipcRenderer.on(IpcChannels.refreshIndexesCompleted, (event: Electron.Event, message: string) => {
-            vueEventDispatcher.$emit(VueEventChannels.loadingCompleted);
+            vueEventDispatcher.$emit(VueEventChannels.refreshIndexesFinished);
         });
 
         ipcRenderer.on(IpcChannels.checkForUpdateResponse, (event: Electron.Event, updateCheckResult: UpdateCheckResult) => {

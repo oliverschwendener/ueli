@@ -7,14 +7,12 @@ import { FakeSearchPlugin } from "../tests/fake-search-plugin";
 import { SearchResultItem } from "../common/search-result-item";
 import { PluginType } from "./plugin-type";
 import { dummyIcon } from "../tests/dummy-icon";
-import { TestLogger } from "../tests/test-logger";
 import { ExecutionPlugin } from "./execution-plugin";
 import { TranslationSet } from "../common/translation/translation-set";
 import { FakeFavoriteRepository } from "../tests/fake-favorite-repository";
 
 describe(SearchEngine.name, () => {
     const fakeFavoritesRepository = new FakeFavoriteRepository([]);
-    const logger = new TestLogger();
     it("should find search results when searching for the exact name", (done) => {
         const items: SearchResultItem[] = [
             {
@@ -38,7 +36,7 @@ describe(SearchEngine.name, () => {
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, englishTranslationSet, logger, fakeFavoritesRepository);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, englishTranslationSet, fakeFavoritesRepository);
 
         searchEngine.getSearchResults("Google Chrome")
             .then((searchResults) => {
@@ -73,7 +71,7 @@ describe(SearchEngine.name, () => {
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger, fakeFavoritesRepository);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, fakeFavoritesRepository);
 
         searchEngine.getSearchResults("blabla")
             .then((searchResults) => {
@@ -108,7 +106,7 @@ describe(SearchEngine.name, () => {
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger, fakeFavoritesRepository);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, fakeFavoritesRepository);
 
         searchEngine.getSearchResults("gOoGlE ChRoMe")
             .then((searchResults) => {
@@ -146,7 +144,7 @@ describe(SearchEngine.name, () => {
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger, fakeFavoritesRepository);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, fakeFavoritesRepository);
 
         searchEngine.getSearchResults("gglchrm")
             .then((searchResults) => {
@@ -184,7 +182,7 @@ describe(SearchEngine.name, () => {
         } as UserConfigOptions;
         const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, logger, fakeFavoritesRepository);
+        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, fakeFavoritesRepository);
 
         searchEngine.getSearchResults("gglchrm")
             .then((searchResults) => {
@@ -228,7 +226,6 @@ describe(SearchEngine.name, () => {
             fallbackPlugins,
             config,
             translationSet,
-            logger,
             favoritesRepository,
         );
         searchEngine.getSearchResults("a")

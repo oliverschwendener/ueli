@@ -147,7 +147,6 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         fallbackPlugins,
         config,
         translationSet,
-        logger,
         new ElectronStoreFavoriteRepository(),
     );
 }

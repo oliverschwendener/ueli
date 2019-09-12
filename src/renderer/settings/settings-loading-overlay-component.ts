@@ -11,7 +11,7 @@ export const settingsLoadingOverlayComponent = Vue.extend({
         };
     },
     mounted() {
-        vueEventDispatcher.$on(VueEventChannels.loadingStarted, () => {
+        vueEventDispatcher.$on(VueEventChannels.refreshIndexesStarted, () => {
             this.loading = true;
 
             setTimeout(() => {
@@ -21,7 +21,7 @@ export const settingsLoadingOverlayComponent = Vue.extend({
             }, 250);
         });
 
-        vueEventDispatcher.$on(VueEventChannels.loadingCompleted, () => {
+        vueEventDispatcher.$on(VueEventChannels.refreshIndexesFinished, () => {
             this.loading = false;
             this.showLoader = false;
         });

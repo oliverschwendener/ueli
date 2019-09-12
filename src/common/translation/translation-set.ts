@@ -8,6 +8,8 @@ export interface TranslationSet {
     noSearchResultsFoundTitle: string;
     noSearchResultsFoundDescription: string;
 
+    refreshingIndexesPending: string;
+
     ueliCommandExitDescription: string;
     ueliCommandExit: string;
     ueliCommandReloadDescription: string;

@@ -9,6 +9,7 @@ export enum IpcChannels {
     mainWindowHasBeenShown = "main-window-has-been-shown",
     mainWindowHideRequested = "main-window-hide-requested",
     userInputUpdated = "user-input-updated",
+    refreshIndexesStarted = "refresh-indexes-started",
     refreshIndexesCompleted = "refresh-indexes-completed",
     reloadApp = "reload-app",
     openSettingsWindow = "open-settings-window",
