@@ -1,7 +1,6 @@
 import { ApplicationRepository } from "./application-repository";
 import { Application } from "./application";
 import { ApplicationSearchOptions } from "../../../common/config/application-search-options";
-import * as Powershell from "node-powershell";
 import { normalize, basename, extname } from "path";
 import { Icon } from "../../../common/icon/icon";
 import { ApplicationIconService } from "./application-icon-service";
@@ -64,11 +63,6 @@ export class WindowsApplicationRepository implements ApplicationRepository {
                 resolve([]);
             }
 
-            const ps = new Powershell({
-                executionPolicy: "Bypass",
-                noProfile: true,
-            });
-
             const extensionFilter = this.config.applicationFileExtensions.map((e) => `*${e}`).join(", ");
             const getChildItem = `Get-ChildItem -Path $_ -include ${extensionFilter} -Recurse -File | % { $_.FullName }`;
             const folders = this.config.applicationFolders.map((applicationFolder) => `'${applicationFolder}'`).join(",");
@@ -84,11 +78,6 @@ export class WindowsApplicationRepository implements ApplicationRepository {
                     resolve(filePaths);
                 })
                 .catch((err) => reject(err));
-
-            ps.addCommand(powershellScript);
-            ps.invoke()
-
-                .finally(ps.dispose);
         });
     }
 
