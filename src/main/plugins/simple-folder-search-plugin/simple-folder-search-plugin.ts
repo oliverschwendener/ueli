@@ -5,26 +5,29 @@ import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { SimpleFolderSearchOptions } from "../../../common/config/simple-folder-search-options";
 import { basename } from "path";
-import { FileHelpers } from "../../../common/helpers/file-helpers";
-import { getFileIconDataUrl, FileIconDataResult } from "../../../common/icon/generate-file-icon";
-import { defaultFileIcon, defaultFolderIcon } from "../../../common/icon/default-icons";
+import { FileIconDataResult, getFileIconDataUrl } from "../../../common/icon/generate-file-icon";
 import { createFilePathDescription } from "../../helpers/file-path-helpers";
 import { OpenLocationPlugin } from "../../open-location-plugin";
+import { FileSearchOption } from "../../executors/file-searchers";
+import { defaultFileIcon, defaultFolderIcon } from "../../../common/icon/default-icons";
 
 export class SimpleFolderSearchPlugin implements SearchPlugin, OpenLocationPlugin {
     public pluginType = PluginType.SimpleFolderSearch;
     private config: SimpleFolderSearchOptions;
     private items: FileIconDataResult[];
+    private readonly fileSearcher: (options: FileSearchOption) => Promise<string[]>;
     private readonly filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>;
     private readonly filePathLocationExecutor: (filePath: string) => Promise<void>;
 
     constructor(
         config: SimpleFolderSearchOptions,
+        fileSearcher: (options: FileSearchOption) => Promise<string[]>,
         filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>,
         filePathLocationExecutor: (filePath: string) => Promise<void>,
         ) {
         this.config = config;
         this.items = [];
+        this.fileSearcher = fileSearcher;
         this.filePathExecutor = filePathExecutor;
         this.filePathLocationExecutor = filePathLocationExecutor;
     }
@@ -37,38 +40,27 @@ export class SimpleFolderSearchPlugin implements SearchPlugin, OpenLocationPlugi
 
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            const handleEmptyResult = () => {
-                this.items = [];
-                resolve();
-            };
-
             if (this.config.folders.length === 0) {
-                handleEmptyResult();
+                resolve();
             } else {
-                const filePromises = this.config.folders.map((folderOption) => {
-                    return folderOption.recursive
-                        ? FileHelpers.readFilesFromFolderRecursively(folderOption.folderPath, folderOption.excludeHiddenFiles)
-                        : FileHelpers.readFilesFromFolder(folderOption.folderPath, folderOption.excludeHiddenFiles);
+                const searchPromises = this.config.folders.map((folder) => {
+                    return this.fileSearcher({
+                        blacklist: [],
+                        folderPath: folder.folderPath,
+                        recursive: folder.recursive,
+                    });
                 });
 
-                Promise.all(filePromises)
-                    .then((filePathLists) => {
-                        const iconPromises = filePathLists.length > 0
-                            ? filePathLists
-                                .reduce((all, filePathList) => all = all.concat(filePathList))
-                                .map((file) => getFileIconDataUrl(file, defaultFileIcon, defaultFolderIcon))
-                            : [];
-
-                        if (iconPromises.length === 0) {
-                            handleEmptyResult();
-                        } else {
-                            Promise.all(iconPromises)
-                            .then((iconResults) => {
-                                this.items = iconResults;
+                Promise.all(searchPromises)
+                    .then((resultLists) => {
+                        const results = resultLists.reduce((all, resultList) => all = all.concat(resultList));
+                        const iconPromises = results.map((r) => getFileIconDataUrl(r, defaultFileIcon, defaultFolderIcon));
+                        Promise.all(iconPromises)
+                            .then((fileIconDataResults) => {
+                                this.items = fileIconDataResults;
                                 resolve();
                             })
                             .catch((err) => reject(err));
-                        }
                     })
                     .catch((err) => reject(err));
             }

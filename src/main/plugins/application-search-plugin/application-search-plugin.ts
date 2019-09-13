@@ -31,13 +31,11 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
                 resolve();
             } else {
                 this.applicationRepository.getAll()
-                .then((applications) => {
-                    const searchResultItemPromises = applications.map((application) => this.createSearchResultItemFromApplication(application));
-                    Promise.all(searchResultItemPromises)
-                        .then((searchResultItems) => resolve(searchResultItems))
-                        .catch((err) => reject(err));
-                })
-                .catch((err) => reject(err));
+                    .then((applications) => {
+                        const result = applications.map((application) => this.createSearchResultItemFromApplication(application));
+                        resolve(result);
+                    })
+                    .catch((err) => reject(err));
             }
         });
     }
@@ -91,20 +89,18 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
         return this.config.enabled;
     }
 
-    private createSearchResultItemFromApplication(application: Application): Promise<SearchResultItem> {
-        return new Promise((resolve) => {
-            resolve({
-                description: createFilePathDescription(application.filePath, {
-                    showFullFilePath: this.config.showFullFilePath,
-                }),
-                executionArgument: application.filePath,
-                hideMainWindowAfterExecution: true,
-                icon: application.icon,
-                name: application.name,
-                originPluginType: this.pluginType,
-                searchable: [application.name],
-                supportsOpenLocation: true,
-            });
-        });
+    private createSearchResultItemFromApplication(application: Application): SearchResultItem {
+        return {
+            description: createFilePathDescription(application.filePath, {
+                showFullFilePath: this.config.showFullFilePath,
+            }),
+            executionArgument: application.filePath,
+            hideMainWindowAfterExecution: true,
+            icon: application.icon,
+            name: application.name,
+            originPluginType: this.pluginType,
+            searchable: [application.name],
+            supportsOpenLocation: true,
+        };
     }
 }

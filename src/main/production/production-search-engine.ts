@@ -1,9 +1,5 @@
 import { ApplicationSearchPlugin } from "../plugins/application-search-plugin/application-search-plugin";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { FileApplicationRepository } from "../plugins/application-search-plugin/file-application-repository";
-import { ApplicationIconService } from "../plugins/application-search-plugin/application-icon-service";
-import { generateWindowsAppIcons } from "../plugins/application-search-plugin/windows-app-icon-generator";
-import { generateMacAppIcons } from "../plugins/application-search-plugin/mac-os-app-icon-generator";
 import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/ueli-command-search-plugin";
 import { ShortcutsSearchPlugin } from "../plugins/shortcuts-search-plugin/shortcuts-search-plugin";
 import { isWindows, isMacOs } from "../../common/helpers/operating-system-helpers";
@@ -44,14 +40,16 @@ import { Logger } from "../../common/logger/logger";
 import { UwpPlugin } from "../plugins/uwp-plugin/uwp-plugin";
 import { InMemoryUwpAppRepository } from "../plugins/uwp-plugin/inmemory-uwp-app-repository";
 import { ColorConverterPlugin } from "../plugins/color-converter-plugin/color-converter-plugin";
-import { defaultWindowsAppIcon, defaultMacOsAppIcon } from "../../common/icon/default-icons";
+import { WindowsApplicationRepository } from "../plugins/application-search-plugin/windows-application-repository";
+import { defaultWindowsAppIcon } from "../../common/icon/default-icons";
+import { ApplicationIconService } from "../plugins/application-search-plugin/application-icon-service";
+import { generateWindowsAppIcons } from "../plugins/application-search-plugin/windows-app-icon-generator";
+import { windowsFileSearcher as powershellFileSearcher } from "../executors/file-searchers";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
 const filePathLocationExecutor = isWindows(platform()) ? executeFilePathLocationWindows : executeFilePathLocationMacOs;
 const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
-const appIconGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
-const defaultAppicon = isWindows(platform()) ? defaultWindowsAppIcon : defaultMacOsAppIcon;
 const commandlineExecutor = isWindows(platform()) ? windowsCommandLineExecutor : macOsCommandLineExecutor;
 const operatingSystemSettingsRepository = isWindows(platform()) ? new WindowsOperatingSystemSettingRepository() : new MacOsOperatingSystemSettingRepository();
 const operatingSystemSettingExecutor = isWindows(platform()) ? executeWindowsOperatingSystemSetting : executeMacOSOperatingSystemSetting;
@@ -72,12 +70,11 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
             ),
         new ApplicationSearchPlugin(
             config.applicationSearchOptions,
-            new FileApplicationRepository(
-                new ApplicationIconService(appIconGenerator),
-                defaultAppicon,
+            new WindowsApplicationRepository(
                 config.applicationSearchOptions,
-                logger,
-                ),
+                defaultWindowsAppIcon,
+                new ApplicationIconService(generateWindowsAppIcons, logger),
+            ),
             filePathExecutor,
             filePathLocationExecutor,
             ),
@@ -100,6 +97,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         ),
         new SimpleFolderSearchPlugin(
             config.simpleFolderSearchOptions,
+            powershellFileSearcher,
             filePathExecutor,
             filePathLocationExecutor,
         ),

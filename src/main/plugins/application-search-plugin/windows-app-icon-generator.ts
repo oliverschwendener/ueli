@@ -15,8 +15,8 @@ export function generateWindowsAppIcons(applicationFilePaths: string[]): Promise
         }
 
         FileHelpers.fileExists(applicationIconLocation)
-            .then((fileExists) => {
-                if (!fileExists) {
+            .then((fileExistsResult) => {
+                if (!fileExistsResult.fileExists) {
                     FileHelpers.createFolderSync(applicationIconLocation);
                 }
 

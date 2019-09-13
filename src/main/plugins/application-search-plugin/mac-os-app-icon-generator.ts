@@ -14,8 +14,8 @@ export function generateMacAppIcons(applicationFilePaths: string[]): Promise<voi
         }
 
         FileHelpers.fileExists(applicationIconLocation)
-            .then((fileExists) => {
-                if (!fileExists) {
+            .then((fileExistsResult) => {
+                if (!fileExistsResult.fileExists) {
                     FileHelpers.createFolderSync(applicationIconLocation);
                 }
 

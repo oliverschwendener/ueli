@@ -53,7 +53,7 @@ export const newApplicationFolderModalComponent = Vue.extend({
             return new Promise((resolve, reject) => {
                 FileHelpers.fileExists(folderPath)
                     .then((fileExists) => {
-                        if (fileExists) {
+                        if (fileExists.fileExists) {
                             FileHelpers.getStats(folderPath)
                                 .then((stats) => {
                                     if (stats.stats.isDirectory()) {

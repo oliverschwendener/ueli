@@ -11,8 +11,8 @@ export interface FileIconDataResult {
 export function getFileIconDataUrl(filePath: string, defaultFileIcon: Icon, folderIcon?: Icon): Promise<FileIconDataResult> {
     return new Promise((resolve, reject) => {
         FileHelpers.fileExists(filePath)
-            .then((fileExists) => {
-                if (fileExists) {
+            .then((fileExistsResult) => {
+                if (fileExistsResult.fileExists) {
                     app.getFileIcon(filePath, (err, icon) => {
                         const defaultResult = {
                             filePath,
