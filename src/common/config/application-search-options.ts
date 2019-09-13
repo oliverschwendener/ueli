@@ -5,6 +5,7 @@ export interface ApplicationSearchOptions {
     applicationFileExtensions: string[];
     enabled: boolean;
     showFullFilePath: boolean;
+    useNativeIcons: boolean;
 }
 
 const win: ApplicationSearchOptions = {
@@ -16,6 +17,7 @@ const win: ApplicationSearchOptions = {
     ],
     enabled: true,
     showFullFilePath: false,
+    useNativeIcons: true,
 };
 
 const darwin: ApplicationSearchOptions = {
@@ -27,6 +29,7 @@ const darwin: ApplicationSearchOptions = {
     ],
     enabled: true,
     showFullFilePath: false,
+    useNativeIcons: true,
 };
 
 export const defaultApplicationSearchOptions = platform() === "win32"

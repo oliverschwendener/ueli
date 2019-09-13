@@ -11,7 +11,7 @@ export const userInputComponent = Vue.extend({
         return {
             loadingCompleted: true,
             loadingVisible: false,
-            refreshIndexesIsPending: true,
+            refreshIndexesIsPending: false,
             userConfirmationDialogVisible: false,
             userInput: "",
         };

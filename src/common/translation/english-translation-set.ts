@@ -148,6 +148,7 @@ export const englishTranslationSet: TranslationSet = {
     applicationSearchSettingsNotAFolderErrorMessage: `"{{value}} is not a folder"`,
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}} does not exist"`,
     applicationSearchSettingsFolderValidationError: `An error occured while trying to validate "{{value}}"`,
+    applicationSearchSettingsUseNativeIcons: "Use native icons (turned off might result to better performance)",
 
     searchEngineSettings: "Search engine",
     searchEngineSettingsDescription: `The search engine is used for preindexed items like applications, shortcuts and operating system settings/commands.`,

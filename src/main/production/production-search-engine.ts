@@ -44,12 +44,14 @@ import { Logger } from "../../common/logger/logger";
 import { UwpPlugin } from "../plugins/uwp-plugin/uwp-plugin";
 import { InMemoryUwpAppRepository } from "../plugins/uwp-plugin/inmemory-uwp-app-repository";
 import { ColorConverterPlugin } from "../plugins/color-converter-plugin/color-converter-plugin";
+import { defaultWindowsAppIcon, defaultMacOsAppIcon } from "../../common/icon/default-icons";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
 const filePathLocationExecutor = isWindows(platform()) ? executeFilePathLocationWindows : executeFilePathLocationMacOs;
 const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const appIconGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
+const defaultAppicon = isWindows(platform()) ? defaultWindowsAppIcon : defaultMacOsAppIcon;
 const commandlineExecutor = isWindows(platform()) ? windowsCommandLineExecutor : macOsCommandLineExecutor;
 const operatingSystemSettingsRepository = isWindows(platform()) ? new WindowsOperatingSystemSettingRepository() : new MacOsOperatingSystemSettingRepository();
 const operatingSystemSettingExecutor = isWindows(platform()) ? executeWindowsOperatingSystemSetting : executeMacOSOperatingSystemSetting;
@@ -72,6 +74,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
             config.applicationSearchOptions,
             new FileApplicationRepository(
                 new ApplicationIconService(appIconGenerator),
+                defaultAppicon,
                 config.applicationSearchOptions,
                 logger,
                 ),

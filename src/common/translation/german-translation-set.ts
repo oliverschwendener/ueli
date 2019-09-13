@@ -148,6 +148,7 @@ export const germanTranslationSet: TranslationSet = {
     applicationSearchSettingsNotAFolderErrorMessage: `"{{value}}" ist kein Ordner`,
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}}" existiert nicht`,
     applicationSearchSettingsFolderValidationError: `Während der Validierung von "{{value}}" ist ein Fehler aufgetreten`,
+    applicationSearchSettingsUseNativeIcons: "Native Icons verwenden (deaktiviert führt evt. zu besserer Performance)",
 
     searchEngineSettings: "Suchmaschine",
     searchEngineSettingsDescription: `Die Suchmaschine wird für vorindexierte Inhalte benutzt, z.B. Programme, Shortcuts und Betriebssystembefehle und -einstellungen.`,

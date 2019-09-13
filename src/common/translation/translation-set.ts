@@ -145,6 +145,7 @@ export interface TranslationSet {
     applicationSearchSettingsNotAFolderErrorMessage: string;
     applicationSearchSettingsDoesNotExistErrorMessage: string;
     applicationSearchSettingsFolderValidationError: string;
+    applicationSearchSettingsUseNativeIcons: string;
 
     searchEngineSettings: string;
     searchEngineSettingsDescription: string;

@@ -7,15 +7,18 @@ import { ApplicationIconService } from "./application-icon-service";
 import { getApplicationIconFilePath } from "./application-icon-helpers";
 import { Logger } from "../../../common/logger/logger";
 import { unique } from "../../../common/helpers/string-helpers";
+import { Icon } from "../../../common/icon/icon";
 
 export class FileApplicationRepository implements ApplicationRepository {
     private readonly applicationIconService: ApplicationIconService;
     private readonly logger: Logger;
+    private readonly defaultAppIcon: Icon;
     private config: ApplicationSearchOptions;
     private applications: Application[];
 
-    constructor(applicationIconService: ApplicationIconService, config: ApplicationSearchOptions, logger: Logger) {
+    constructor(applicationIconService: ApplicationIconService, defaultAppIcon: Icon, config: ApplicationSearchOptions, logger: Logger) {
         this.applicationIconService = applicationIconService;
+        this.defaultAppIcon = defaultAppIcon;
         this.applications = [];
         this.config = config;
         this.logger = logger;
@@ -44,7 +47,8 @@ export class FileApplicationRepository implements ApplicationRepository {
                             .filter((file) => this.filterByApplicationFileExtensions(file))
                             .map((applicationFile): Application => this.createApplicationFromFilePath(applicationFile));
 
-                        this.applicationIconService.generateAppIcons(applications)
+                        if (this.config.useNativeIcons) {
+                            this.applicationIconService.generateAppIcons(applications)
                             .then(() => {
                                 // do nothing
                             })
@@ -56,6 +60,10 @@ export class FileApplicationRepository implements ApplicationRepository {
                                 this.applications = applications;
                                 resolve();
                             });
+                        } else {
+                            this.applications = applications;
+                            resolve();
+                        }
                     })
                     .catch((err) => reject(err));
             }
@@ -80,7 +88,7 @@ export class FileApplicationRepository implements ApplicationRepository {
     private createApplicationFromFilePath(filePath: string): Application {
         return {
             filePath,
-            icon: "",
+            icon: this.defaultAppIcon.parameter,
             name: basename(filePath).replace(extname(filePath), ""),
         };
     }

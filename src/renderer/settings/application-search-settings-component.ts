@@ -209,6 +209,18 @@ export const applicationSearchSettingsComponent = Vue.extend({
                                 </div>
                             </div>
                         </div>
+
+                        <div class="settings__option">
+                            <div class="settings__option-name">{{ translations.applicationSearchSettingsUseNativeIcons }}</div>
+                            <div class="settings__option-content">
+                                <div class="field is-grouped is-grouped-right">
+                                    <div class="control">
+                                        <input id="useNativeIconsCheckbox" type="checkbox" name="useNativeIconsCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.applicationSearchOptions.useNativeIcons" @change="updateConfig(true)">
+                                        <label for="useNativeIconsCheckbox"></label><input id="useNativeIconsCheckbox" type="checkbox" name="useNativeIconsCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.autostart" @change="updateConfig()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
