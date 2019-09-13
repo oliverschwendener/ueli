@@ -1,23 +1,29 @@
 import { ApplicationRepository } from "./application-repository";
 import { Application } from "./application";
 import { ApplicationSearchOptions } from "../../../common/config/application-search-options";
-import { normalize, basename, extname } from "path";
+import { basename, extname } from "path";
 import { Icon } from "../../../common/icon/icon";
 import { ApplicationIconService } from "./application-icon-service";
 import { getApplicationIconFilePath } from "./application-icon-helpers";
 import { IconType } from "../../../common/icon/icon-type";
-import { executeCommandWithOutput } from "../../executors/command-executor";
 
-export class WindowsApplicationRepository implements ApplicationRepository {
+export class ProductionApplicationRepository implements ApplicationRepository {
     private applications: Application[];
     private readonly defaultAppIcon: Icon;
     private readonly appIconService: ApplicationIconService;
+    private readonly searchApplications: (options: ApplicationSearchOptions) => Promise<string[]>;
     private config: ApplicationSearchOptions;
 
-    constructor(config: ApplicationSearchOptions, defaultAppIcon: Icon, appIconService: ApplicationIconService) {
+    constructor(
+        config: ApplicationSearchOptions,
+        defaultAppIcon: Icon,
+        appIconService: ApplicationIconService,
+        searchApplications: (options: ApplicationSearchOptions) => Promise<string[]>,
+    ) {
         this.config = config;
         this.defaultAppIcon = defaultAppIcon;
         this.appIconService = appIconService,
+        this.searchApplications = searchApplications;
         this.applications = [];
     }
 
@@ -27,7 +33,7 @@ export class WindowsApplicationRepository implements ApplicationRepository {
 
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.getAllFilePaths()
+            this.searchApplications(this.config)
                 .then((filePaths) => {
                     this.applications = filePaths.map((filePath) => this.createApplicationFromFilePath(filePath));
 
@@ -47,37 +53,17 @@ export class WindowsApplicationRepository implements ApplicationRepository {
     }
 
     public clearCache(): Promise<void> {
-        return Promise.reject("not implemented");
+        return new Promise((resolve, reject) => {
+            this.appIconService.clearCache()
+                .then(() => resolve())
+                .catch((err) => reject(err));
+        });
     }
 
     public updateConfig(updatedConfig: ApplicationSearchOptions): Promise<void> {
         return new Promise((resolve) => {
             this.config = updatedConfig;
             resolve();
-        });
-    }
-
-    private getAllFilePaths(): Promise<string[]> {
-        return new Promise((resolve, reject) => {
-            if (this.config.applicationFolders.length === 0 || this.config.applicationFileExtensions.length === 0) {
-                resolve([]);
-            }
-
-            const extensionFilter = this.config.applicationFileExtensions.map((e) => `*${e}`).join(", ");
-            const getChildItem = `Get-ChildItem -Path $_ -include ${extensionFilter} -Recurse -File | % { $_.FullName }`;
-            const folders = this.config.applicationFolders.map((applicationFolder) => `'${applicationFolder}'`).join(",");
-            const powershellScript = `${folders} | %{ ${getChildItem} }`;
-
-            executeCommandWithOutput(`powershell -Command "& { ${powershellScript} }"`)
-                .then((data) => {
-                    const filePaths = data
-                        .split("\n")
-                        .map((f) => normalize(f).trim())
-                        .filter((f) => f.length > 1);
-
-                    resolve(filePaths);
-                })
-                .catch((err) => reject(err));
         });
     }
 

@@ -46,6 +46,9 @@ function convertIcnsToPng(icnsFilePath: string, outFilePath: string): Promise<vo
 }
 
 function getIcnsFilePath(applicationFilePath: string, parsedPlistContent: any): string {
+    if (!parsedPlistContent) {
+        return defaultIcnsFilePath;
+    }
     if (parsedPlistContent.CFBundleIconFile) {
         if (!parsedPlistContent.CFBundleIconFile.endsWith(".icns")) {
             parsedPlistContent.CFBundleIconFile += ".icns";
@@ -59,14 +62,19 @@ function getIcnsFilePath(applicationFilePath: string, parsedPlistContent: any): 
     }
 }
 
-function getPlistContent(applicationFilePath: string): Promise<any> {
+function getPlistContent(applicationFilePath: string): Promise<any | undefined> {
     return new Promise((resolve, reject) => {
-        plist.readFile(join(applicationFilePath, "Contents", "Info.plist"), (err: string, data: any) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(data);
-            }
-        });
+        const plistFilePath = join(applicationFilePath, "Contents", "Info.plist");
+        if (!existsSync(plistFilePath)) {
+            resolve(undefined);
+        } else {
+            plist.readFile(plistFilePath, (err: string, data: any) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        }
     });
 }

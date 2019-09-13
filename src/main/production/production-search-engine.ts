@@ -40,11 +40,13 @@ import { Logger } from "../../common/logger/logger";
 import { UwpPlugin } from "../plugins/uwp-plugin/uwp-plugin";
 import { InMemoryUwpAppRepository } from "../plugins/uwp-plugin/inmemory-uwp-app-repository";
 import { ColorConverterPlugin } from "../plugins/color-converter-plugin/color-converter-plugin";
-import { WindowsApplicationRepository } from "../plugins/application-search-plugin/windows-application-repository";
-import { defaultWindowsAppIcon } from "../../common/icon/default-icons";
+import { ProductionApplicationRepository } from "../plugins/application-search-plugin/production-application-repository";
+import { defaultWindowsAppIcon, defaultMacOsAppIcon } from "../../common/icon/default-icons";
 import { ApplicationIconService } from "../plugins/application-search-plugin/application-icon-service";
 import { generateWindowsAppIcons } from "../plugins/application-search-plugin/windows-app-icon-generator";
-import { windowsFileSearcher as powershellFileSearcher } from "../executors/file-searchers";
+import { windowsFileSearcher as powershellFileSearcher, macosFileSearcher } from "../executors/file-searchers";
+import { searchWindowsApplications, searchMacApplications } from "../executors/application-searcher";
+import { generateMacAppIcons } from "../plugins/application-search-plugin/mac-os-app-icon-generator";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -53,6 +55,10 @@ const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
 const commandlineExecutor = isWindows(platform()) ? windowsCommandLineExecutor : macOsCommandLineExecutor;
 const operatingSystemSettingsRepository = isWindows(platform()) ? new WindowsOperatingSystemSettingRepository() : new MacOsOperatingSystemSettingRepository();
 const operatingSystemSettingExecutor = isWindows(platform()) ? executeWindowsOperatingSystemSetting : executeMacOSOperatingSystemSetting;
+const applicationSearcher = isWindows(platform()) ? searchWindowsApplications : searchMacApplications;
+const appIconGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
+const defaultAppIcon = isWindows(platform()) ? defaultWindowsAppIcon : defaultMacOsAppIcon;
+const fileSearcher = isWindows(platform()) ? powershellFileSearcher : macosFileSearcher;
 
 export function getProductionSearchEngine(config: UserConfigOptions, translationSet: TranslationSet, logger: Logger): SearchEngine {
     const operatingSystemCommandRepository = isWindows(platform())
@@ -70,10 +76,11 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
             ),
         new ApplicationSearchPlugin(
             config.applicationSearchOptions,
-            new WindowsApplicationRepository(
+            new ProductionApplicationRepository(
                 config.applicationSearchOptions,
-                defaultWindowsAppIcon,
-                new ApplicationIconService(generateWindowsAppIcons, logger),
+                defaultAppIcon,
+                new ApplicationIconService(appIconGenerator, logger),
+                applicationSearcher,
             ),
             filePathExecutor,
             filePathLocationExecutor,
@@ -97,7 +104,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         ),
         new SimpleFolderSearchPlugin(
             config.simpleFolderSearchOptions,
-            powershellFileSearcher,
+            fileSearcher,
             filePathExecutor,
             filePathLocationExecutor,
         ),
