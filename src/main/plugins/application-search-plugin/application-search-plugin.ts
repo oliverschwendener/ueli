@@ -5,7 +5,6 @@ import { PluginType } from "../../plugin-type";
 import { Application } from "./application";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { ApplicationSearchOptions } from "../../../common/config/application-search-options";
-import { IconType } from "../../../common/icon/icon-type";
 import { createFilePathDescription } from "../../helpers/file-path-helpers";
 import { OpenLocationPlugin } from "../../open-location-plugin";
 
@@ -100,10 +99,7 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
                 }),
                 executionArgument: application.filePath,
                 hideMainWindowAfterExecution: true,
-                icon: {
-                    parameter: application.icon,
-                    type: IconType.URL,
-                },
+                icon: application.icon,
                 name: application.name,
                 originPluginType: this.pluginType,
                 searchable: [application.name],

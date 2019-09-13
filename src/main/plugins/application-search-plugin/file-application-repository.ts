@@ -8,6 +8,7 @@ import { getApplicationIconFilePath } from "./application-icon-helpers";
 import { Logger } from "../../../common/logger/logger";
 import { unique } from "../../../common/helpers/string-helpers";
 import { Icon } from "../../../common/icon/icon";
+import { IconType } from "../../../common/icon/icon-type";
 
 export class FileApplicationRepository implements ApplicationRepository {
     private readonly applicationIconService: ApplicationIconService;
@@ -56,13 +57,16 @@ export class FileApplicationRepository implements ApplicationRepository {
                                 this.logger.error(err);
                             })
                             .finally(() => {
-                                applications.forEach((application) => application.icon = getApplicationIconFilePath(application.filePath));
+                                applications.forEach((application) => application.icon = {
+                                    parameter: getApplicationIconFilePath(application.filePath),
+                                    type: IconType.URL,
+                                });
                                 this.applications = applications;
                                 resolve();
                             });
                         } else {
                             this.applications = applications;
-                            resolve();
+                            this.clearCache().finally(resolve);
                         }
                     })
                     .catch((err) => reject(err));
@@ -88,7 +92,7 @@ export class FileApplicationRepository implements ApplicationRepository {
     private createApplicationFromFilePath(filePath: string): Application {
         return {
             filePath,
-            icon: this.defaultAppIcon.parameter,
+            icon: this.defaultAppIcon,
             name: basename(filePath).replace(extname(filePath), ""),
         };
     }
