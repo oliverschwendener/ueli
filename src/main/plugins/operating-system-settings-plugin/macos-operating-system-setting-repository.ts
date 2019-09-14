@@ -1,25 +1,24 @@
 import { OperatingSystemSetting } from "./operating-system-setting";
 import { OperatingSystemSettingRepository } from "./operating-system-setting-repository";
 import { TranslationSet } from "../../../common/translation/translation-set";
-import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { getApplicationIconFilePath } from "../application-search-plugin/application-icon-helpers";
-import { basename, extname } from "path";
+import { basename, extname, normalize } from "path";
 import { IconType } from "../../../common/icon/icon-type";
 import { generateMacAppIcons } from "../application-search-plugin/mac-os-app-icon-generator";
+import { executeCommandWithOutput } from "../../executors/command-executor";
 
 export class MacOsOperatingSystemSettingRepository implements OperatingSystemSettingRepository {
-    private readonly basePath = "/System/Library/PreferencePanes";
     private all: OperatingSystemSetting[];
 
     constructor() {
-        FileHelpers.readFilesFromFolder(this.basePath)
+        this.getFilePaths()
             .then((filePaths) => {
                 generateMacAppIcons(filePaths)
                     .then(() => this.all = filePaths.map((filePath) => this.buildOperatingSystemSetting(filePath)))
                     .catch((err) => this.all = []);
             })
             .catch((err) => {
-                throw new Error(`Error while reading macos operating system commands: ${err}`);
+                throw new Error(`Error while reading macos system preferences: ${err}`);
             });
     }
 
@@ -37,5 +36,20 @@ export class MacOsOperatingSystemSettingRepository implements OperatingSystemSet
             name: basename(filePath).replace(extname(filePath), ""),
             tags: [],
         };
+    }
+
+    private getFilePaths(): Promise<string[]> {
+        return new Promise((resolve, reject) => {
+            executeCommandWithOutput(`mdfind "kind:preferences"`)
+                .then((data) => {
+                    const result = data
+                        .split("\n")
+                        .map((l) => normalize(l).trim())
+                        .filter((l) => l.length > 2);
+
+                    resolve(result);
+                })
+                .catch((err) => reject(err));
+        });
     }
 }
