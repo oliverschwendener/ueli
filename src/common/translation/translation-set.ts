@@ -248,6 +248,8 @@ export interface TranslationSet {
     windowsLockDescription: string;
     windowsSleep: string;
     windowsSleepDescription: string;
+    windowsHibernation: string;
+    windowsHibernationDescription: string;
 
     calcuator: string;
     calculatorCopyToClipboard: string;

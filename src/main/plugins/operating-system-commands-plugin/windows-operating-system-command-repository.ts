@@ -70,11 +70,21 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                 description: this.translationSet.windowsSleepDescription,
                 executionArgument: `powershell -C "$m='[DllImport(\\\"Powrprof.dll\\\",SetLastError=true)]static extern bool SetSuspendState(bool hibernate,bool forceCritical,bool disableWakeEvent);public static void PowerSleep(){SetSuspendState(false,false,false); }';add-type -name Import -member $m -namespace Dll; [Dll.Import]::PowerSleep();"`,
                 icon: {
-                    parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1"><g id="surface1"><path d="M 5 5 L 5 27 L 27 27 L 27 5 Z M 7 7 L 25 7 L 25 25 L 7 25 Z M 13 11 L 13 21 L 15 21 L 15 11 Z M 17 11 L 17 21 L 19 21 L 19 11 Z "></path></g></svg>`,
+                    parameter: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 5 4 L 5 6 L 13.15625 6 L 5.3125 13.75 L 5 14.0625 L 5 16 L 16 16 L 16 14 L 7.90625 14 L 15.6875 6.3125 L 16 6.03125 L 16 4 Z M 18 10 L 18 12 L 24.15625 12 L 18.3125 17.75 L 18 18.0625 L 18 20 L 27 20 L 27 18 L 20.90625 18 L 26.6875 12.3125 L 27 12.03125 L 27 10 Z M 8 19 L 8 21 L 13.15625 21 L 8.3125 25.75 L 8 26.0625 L 8 28 L 16 28 L 16 26 L 10.90625 26 L 15.6875 21.3125 L 16 21.03125 L 16 19 Z"></path></svg>`,
                     type: IconType.SVG,
                 },
                 name: this.translationSet.windowsSleep,
                 searchable: [this.translationSet.windowsSleep],
+            },
+            {
+                description: this.translationSet.windowsHibernationDescription,
+                executionArgument: "shutdown /h",
+                icon: {
+                    parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1"><g id="surface1"><path d="M 5 5 L 5 27 L 27 27 L 27 5 Z M 7 7 L 25 7 L 25 25 L 7 25 Z M 13 11 L 13 21 L 15 21 L 15 11 Z M 17 11 L 17 21 L 19 21 L 19 11 Z "></path></g></svg>`,
+                    type: IconType.SVG,
+                },
+                name: this.translationSet.windowsHibernation,
+                searchable: [this.translationSet.windowsHibernation],
             },
         ];
     }
