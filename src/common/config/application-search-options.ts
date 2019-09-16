@@ -1,4 +1,5 @@
 import { homedir, platform } from "os";
+import { isWindows } from "../helpers/operating-system-helpers";
 
 export interface ApplicationSearchOptions {
     applicationFolders: string[];
@@ -8,7 +9,7 @@ export interface ApplicationSearchOptions {
     useNativeIcons: boolean;
 }
 
-const win: ApplicationSearchOptions = {
+const windowsApplicationSearchOptions: ApplicationSearchOptions = {
     applicationFileExtensions: [".lnk", ".appref-ms", ".url", ".exe"],
     applicationFolders: [
         "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs",
@@ -20,7 +21,7 @@ const win: ApplicationSearchOptions = {
     useNativeIcons: true,
 };
 
-const darwin: ApplicationSearchOptions = {
+const macOsApplicationSearchOptions: ApplicationSearchOptions = {
     applicationFileExtensions: [".app"],
     applicationFolders: [
         "/Applications",
@@ -32,6 +33,6 @@ const darwin: ApplicationSearchOptions = {
     useNativeIcons: true,
 };
 
-export const defaultApplicationSearchOptions = platform() === "win32"
-    ? win
-    : darwin;
+export const defaultApplicationSearchOptions = isWindows(platform())
+    ? windowsApplicationSearchOptions
+    : macOsApplicationSearchOptions;
