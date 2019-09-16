@@ -25,12 +25,19 @@ export class ApplicationIconService {
                         return false;
                     });
 
-                    this.generateIcons(applicationsToGenerateIcons.map((application) => application.filePath))
-                        .then(() => {
-                            this.logger.debug(`Generated ${applicationsToGenerateIcons.length} app icons to ${applicationIconLocation}`);
-                            resolve();
-                        })
-                        .catch((err) => reject(err));
+                    if (applicationsToGenerateIcons.length === 0) {
+                        this.logger.debug(`Skipping app icon generation. All app icons already exist`);
+                        resolve();
+                    } else {
+                        this.logger.debug(`${applications.length - applicationsToGenerateIcons.length}/${applications.length} app icons alredy exist`);
+                        this.logger.debug(`Started to generate ${applicationsToGenerateIcons.length} app icons to ${applicationIconLocation}`);
+                        this.generateIcons(applicationsToGenerateIcons.map((application) => application.filePath))
+                            .then(() => {
+                                this.logger.debug(`Successfully generated ${applicationsToGenerateIcons.length} icons`);
+                                resolve();
+                            })
+                            .catch((err) => reject(err));
+                    }
                 })
                 .catch((err) => reject(err));
         });
