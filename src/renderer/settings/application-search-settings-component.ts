@@ -9,10 +9,13 @@ import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./moda
 import { TranslationSet } from "../../common/translation/translation-set";
 import { defaultApplicationSearchOptions } from "../../common/config/application-search-options";
 import { deepCopy } from "../../common/helpers/object-helpers";
+import { isWindows } from "../../common/helpers/operating-system-helpers";
+import { platform } from "os";
 
 export const applicationSearchSettingsComponent = Vue.extend({
     data() {
         return {
+            isWindows: isWindows(platform()),
             settingName: PluginSettings.ApplicationSearch,
             visible: false,
         };
@@ -160,7 +163,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
                         </button>
                     </div>
                 </div>
-                <div class="settings__setting-content-item box">
+                <div class="settings__setting-content-item box" v-if="isWindows">
                     <div class="settings__setting-content-item-title">
                         <div class="title is-5">
                             {{ translations.applicationSearchSettingsApplicationFileExtensions }}
