@@ -25,10 +25,11 @@ export class ApplicationIconService {
                         return false;
                     });
 
-                    this.logger.debug(`Generating ${applicationsToGenerateIcons.length} app icons to ${applicationIconLocation}`);
-
                     this.generateIcons(applicationsToGenerateIcons.map((application) => application.filePath))
-                        .then(() => resolve())
+                        .then(() => {
+                            this.logger.debug(`Generated ${applicationsToGenerateIcons.length} app icons to ${applicationIconLocation}`);
+                            resolve();
+                        })
                         .catch((err) => reject(err));
                 })
                 .catch((err) => reject(err));
@@ -41,7 +42,10 @@ export class ApplicationIconService {
                 .then((files) => {
                     const deletionPromises = files.map((file) => FileHelpers.deleteFile(file));
                     Promise.all(deletionPromises)
-                        .then(() => resolve())
+                        .then(() => {
+                            this.logger.debug(`Deleted ${files.length} app icons in ${applicationIconLocation}`);
+                            resolve();
+                        })
                         .catch((err) => reject(err));
                 })
                 .catch((err) => reject(err));
