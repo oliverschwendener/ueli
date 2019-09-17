@@ -236,6 +236,10 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
         mainWindow.webContents.send(IpcChannels.generalOptionsUpdated, updatedConfig.generalOptions);
     }
 
+    if (updatedConfig.generalOptions.allowWindowMove !== config.generalOptions.allowWindowMove) {
+        mainWindow.setMovable(updatedConfig.generalOptions.allowWindowMove);
+    }
+
     config = updatedConfig;
 
     updateTrayIcon(updatedConfig);
@@ -388,6 +392,7 @@ function createMainWindow() {
         icon: windowIconFilePath,
         maximizable: false,
         minimizable: false,
+        movable: config.generalOptions.allowWindowMove,
         resizable: false,
         show: false,
         skipTaskbar: true,

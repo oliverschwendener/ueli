@@ -4,6 +4,7 @@ import { GlobalHotKeyKey } from "../global-hot-key/global-hot-key-key";
 import { GlobalHotKeyModifier } from "../global-hot-key/global-hot-key-modifier";
 
 export interface GeneralOptions {
+    allowWindowMove: boolean;
     autostart: boolean;
     clearCachesOnExit: boolean;
     hideMainWindowOnBlur: boolean;
@@ -19,6 +20,7 @@ export interface GeneralOptions {
 }
 
 export const defaultGeneralOptions: GeneralOptions = {
+    allowWindowMove: true,
     autostart: true,
     clearCachesOnExit: false,
     hideMainWindowOnBlur: true,

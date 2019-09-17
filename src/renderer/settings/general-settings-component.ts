@@ -435,6 +435,18 @@ export const generalSettingsComponent = Vue.extend({
                         </div>
 
                         <div class="settings__option">
+                            <div class="settings__option-name">Allow window move</div>
+                            <div class="settings__option-content">
+                                <div class="field has-addons has-addons-right vertical-center">
+                                    <div class="control">
+                                        <input id="allowWindowMoveToggle" type="checkbox" name="allowWindowMoveToggle" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.allowWindowMove" @change="updateConfig()">
+                                        <label for="allowWindowMoveToggle"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings__option" v-if="config.generalOptions.allowWindowMove">
                             <div class="settings__option-name">{{ translations.generalSettingsRememberWindowPosition }}</div>
                             <div class="settings__option-content">
                                 <div class="field has-addons has-addons-right vertical-center">
