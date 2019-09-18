@@ -255,6 +255,10 @@ $ yarn package
 * [Zazu App](http://zazuapp.org/)
 * [Cerebro](https://cerebroapp.com/)
 
+## Thanks
+
+Thanks to [David Gabathuler](https://davidgabathuler.ch) for the logo!
+
 ## License
 
 Copyright (c) Oliver Schwendener. All rights reserved.
