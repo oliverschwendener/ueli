@@ -45,8 +45,8 @@ export class SearchEngine {
                 resolve([]);
             } else {
                 const matchingExecutionPlugin = this.executionPlugins
-                    .filter((e) => e.isEnabled())
-                    .find((e) => e.isValidUserInput(userInput));
+                    .filter((plugin) => plugin.isEnabled())
+                    .find((plugin) => plugin.isValidUserInput(userInput));
 
                 if (matchingExecutionPlugin !== undefined) {
                     matchingExecutionPlugin.getSearchResults(userInput)
@@ -73,7 +73,7 @@ export class SearchEngine {
         return new Promise((resolve) => {
             const result = this.favoriteManager.getAllFavorites()
                 .sort((a, b) => b.executionCount - a.executionCount)
-                .map((f) => f.item);
+                .map((favorite) => favorite.item);
 
             resolve(result);
         });
@@ -81,7 +81,10 @@ export class SearchEngine {
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
-            const originPlugin = this.getAllPlugins().find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+            const originPlugin = this.getAllPlugins()
+                .filter((plugin) => plugin.isEnabled())
+                .find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+
             if (originPlugin !== undefined) {
                 originPlugin.execute(searchResultItem, privileged)
                     .then(() => {
@@ -99,7 +102,10 @@ export class SearchEngine {
 
     public openLocation(searchResultItem: SearchResultItem): Promise<void> {
         return new Promise((resolve, reject) => {
-            const originPlugin = this.getAllPlugins().find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+            const originPlugin = this.getAllPlugins()
+                .filter((plugin) => plugin.isEnabled())
+                .find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+
             if (originPlugin && this.pluginSupportsOpenLocation(originPlugin)) {
                 originPlugin.openLocation(searchResultItem)
                     .then(() => resolve())
@@ -111,7 +117,10 @@ export class SearchEngine {
     }
 
     public autoComplete(searchResultItem: SearchResultItem): string {
-        const originPlugin = this.getAllPlugins().find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+        const originPlugin = this.getAllPlugins()
+            .filter((plugin) => plugin.isEnabled())
+            .find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+
         if (originPlugin && this.pluginSupportsAutocompletion(originPlugin)) {
             return originPlugin.autoComplete(searchResultItem);
         } else {
@@ -207,7 +216,7 @@ export class SearchEngine {
                 Promise.all(fallbackPluginPromises)
                     .then((resultLists) => {
                         const result = resultLists.length > 0
-                            ? resultLists.reduce((all, r) => all = all.concat(r))
+                            ? resultLists.reduce((all, resultList) => all = all.concat(resultList))
                             : [];
 
                         resolve(this.beforeResolve(userInput, result));
