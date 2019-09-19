@@ -39,7 +39,7 @@ export const translationSettingsComponent = Vue.extend({
             this.updateConfig();
         },
         updateConfig() {
-            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, false);
+            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
         },
     },
     mounted() {

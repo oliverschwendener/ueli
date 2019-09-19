@@ -32,6 +32,7 @@ import { DevLogger } from "../common/logger/dev-logger";
 import { windowIconWindows, windowIconMacOs } from "./helpers/window-icon-helpers";
 import { toHex } from "./plugins/color-converter-plugin/color-converter-helpers";
 import { deepCopy } from "../common/helpers/object-helpers";
+import { PluginType } from "./plugin-type";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -81,9 +82,23 @@ function notifyRenderer(message: string, notificationType: NotificationType) {
 
 function refreshAllIndexes() {
     onIndexRefreshStarted();
-    searchEngine.refreshIndexes()
+    searchEngine.refreshAllIndexes()
         .then(() => {
             logger.debug("Successfully refreshed all indexes");
+            notifyRenderer(translationSet.successfullyRefreshedIndexes, NotificationType.Info);
+        })
+        .catch((err) => {
+            logger.error(err);
+            notifyRenderer(err, NotificationType.Error);
+        })
+        .finally(onIndexRefreshFinished);
+}
+
+function refreshIndexOfPlugin(pluginType: PluginType) {
+    onIndexRefreshStarted();
+    searchEngine.refreshIndexByPlugin(pluginType)
+        .then(() => {
+            logger.debug(`Successfully refresh index of plugin ${pluginType.toString()}`);
             notifyRenderer(translationSet.successfullyRefreshedIndexes, NotificationType.Info);
         })
         .catch((err) => {
@@ -188,7 +203,7 @@ function getMaxWindowHeight(maxSearchResultsPerPage: number, searchResultHeight:
     return Number(maxSearchResultsPerPage) * Number(searchResultHeight) + Number(userInputHeight);
 }
 
-function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean) {
+function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean, pluginType?: PluginType) {
     if (updatedConfig.generalOptions.language !== config.generalOptions.language) {
         onLanguageChange(updatedConfig);
     }
@@ -250,7 +265,11 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
             searchEngine.updateConfig(updatedConfig, translationSet)
                 .then(() => {
                     if (needsIndexRefresh) {
-                        refreshAllIndexes();
+                        if (pluginType) {
+                            refreshIndexOfPlugin(pluginType);
+                        } else {
+                            refreshAllIndexes();
+                        }
                     } else {
                         notifyRenderer(translationSet.successfullyUpdatedconfig, NotificationType.Info);
                     }
@@ -545,8 +564,8 @@ function windowExists(window: BrowserWindow): boolean {
 }
 
 function registerAllIpcListeners() {
-    ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean) => {
-        updateConfig(updatedConfig, needsIndexRefresh);
+    ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean, pluginType?: PluginType) => {
+        updateConfig(updatedConfig, needsIndexRefresh, pluginType);
     });
 
     ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {

@@ -266,11 +266,52 @@ describe(SearchEngine.name, () => {
             favoritesRepository,
         );
 
-        searchEngine.refreshIndexes()
+        searchEngine.refreshAllIndexes()
             .then(() => {
                 const refreshedPlugins = fakePlugins.filter((plugin) => plugin.getIndexRefreshCount() > 0);
                 const enabledPlugins = fakePlugins.filter((plugin) => plugin.isEnabled());
                 expect(refreshedPlugins.length).toBe(enabledPlugins.length);
+                done();
+            })
+            .catch((err) => done(err));
+    });
+
+    it("should only refresh index of given plugin", (done) => {
+        const config = {
+            generalOptions: {
+                logExecution: true,
+            },
+            searchEngineOptions: {
+                fuzzyness: 0.4,
+            },
+        } as UserConfigOptions;
+        const translationSet = {} as TranslationSet;
+        const favoritesRepository = new FakeFavoriteRepository([]);
+        const fakePlugins = [
+            new FakeSearchPlugin(PluginType.Test, [], true),
+            new FakeSearchPlugin(PluginType.ApplicationSearchPlugin, [], true),
+            new FakeSearchPlugin(PluginType.Commandline, [], false),
+            new FakeSearchPlugin(PluginType.CurrencyConverter, [], false),
+        ];
+        const searchPlugins: SearchPlugin[] = fakePlugins;
+        const executionPlugins: ExecutionPlugin[] = [];
+        const fallbackPlugins: ExecutionPlugin[] = [];
+        const searchEngine = new SearchEngine(
+            searchPlugins,
+            executionPlugins,
+            fallbackPlugins,
+            config,
+            translationSet,
+            favoritesRepository,
+        );
+
+        searchEngine.refreshIndexByPlugin(PluginType.Test)
+            .then(() => {
+                const refreshedPlugins = fakePlugins.filter((plugin) => plugin.getIndexRefreshCount() > 0);
+                expect(refreshedPlugins.length).toBe(1);
+                refreshedPlugins.forEach((plugin) => {
+                    expect(plugin.pluginType.toString()).toBe(PluginType.Test.toString());
+                });
                 done();
             })
             .catch((err) => done(err));

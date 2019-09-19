@@ -11,6 +11,7 @@ import { defaultApplicationSearchOptions } from "../../common/config/application
 import { deepCopy } from "../../common/helpers/object-helpers";
 import { isWindows } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
+import { PluginType } from "../../main/plugin-type";
 
 export const applicationSearchSettingsComponent = Vue.extend({
     data() {
@@ -88,7 +89,7 @@ export const applicationSearchSettingsComponent = Vue.extend({
             this.updateConfig(true);
         },
         updateConfig(needsIndexRefresh: boolean) {
-            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, needsIndexRefresh);
+            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, needsIndexRefresh, PluginType.ApplicationSearchPlugin);
         },
     },
     mounted() {

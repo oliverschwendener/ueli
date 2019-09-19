@@ -10,6 +10,7 @@ import { FavoriteRepository } from "./favorites/favorite-repository";
 import { FavoriteManager } from "./favorites/favorites-manager";
 import { OpenLocationPlugin } from "./open-location-plugin";
 import { AutoCompletionPlugin } from "./auto-completion-plugin";
+import { PluginType } from "./plugin-type";
 
 interface FuseResult {
     item: SearchResultItem;
@@ -128,11 +129,24 @@ export class SearchEngine {
         }
     }
 
-    public refreshIndexes(): Promise<void> {
+    public refreshAllIndexes(): Promise<void> {
         return new Promise((resolve, reject) => {
             Promise.all(this.searchPlugins.filter((plugin) => plugin.isEnabled()).map((plugin) => plugin.refreshIndex()))
                 .then(() => resolve())
                 .catch((err) => reject(err));
+        });
+    }
+
+    public refreshIndexByPlugin(pluginType: PluginType): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const pluginToRefreshIndexes = this.searchPlugins.find((plugin) => plugin.pluginType === pluginType);
+            if (pluginToRefreshIndexes) {
+                pluginToRefreshIndexes.refreshIndex()
+                    .then(() => resolve())
+                    .catch((err) => reject(err));
+            } else {
+                reject(`Plugin ${pluginType.toString()} not found`);
+            }
         });
     }
 

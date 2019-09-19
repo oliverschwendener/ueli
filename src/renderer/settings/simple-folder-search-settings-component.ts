@@ -9,6 +9,7 @@ import { ModalEditMode } from "./modals/modal-edit-mode";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { deepCopy } from "../../common/helpers/object-helpers";
+import { PluginType } from "../../main/plugin-type";
 
 export const simpleFolderSearchSettingsComponent = Vue.extend({
     data() {
@@ -51,7 +52,7 @@ export const simpleFolderSearchSettingsComponent = Vue.extend({
             this.updateConfig(true);
         },
         updateConfig(forceRefreshIndex: boolean) {
-            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, forceRefreshIndex);
+            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, forceRefreshIndex, PluginType.SimpleFolderSearch);
         },
     },
     mounted() {

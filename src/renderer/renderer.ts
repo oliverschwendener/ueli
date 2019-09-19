@@ -56,6 +56,7 @@ import { uwpSettingsComponent } from "./settings/uwp-settings-component";
 import { colorConverterSettingsComponent } from "./settings/color-converter-settings-component";
 import { pluginToggle } from "./settings/elements/plugin-toggle";
 import { deepCopy } from "../common/helpers/object-helpers";
+import { PluginType } from "../main/plugin-type";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -134,14 +135,14 @@ const app = new Vue({
             ipcRenderer.send(IpcChannels.favoritesRequested);
         });
 
-        vueEventDispatcher.$on(VueEventChannels.configUpdated, (updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean) => {
+        vueEventDispatcher.$on(VueEventChannels.configUpdated, (updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean, pluginType?: PluginType) => {
             if (needsIndexRefresh) {
                 vueEventDispatcher.$emit(VueEventChannels.refreshIndexesStarted);
             }
 
             this.translations = getTranslationSet(updatedConfig.generalOptions.language);
             this.config = updatedConfig;
-            ipcRenderer.send(IpcChannels.configUpdated, updatedConfig, needsIndexRefresh);
+            ipcRenderer.send(IpcChannels.configUpdated, updatedConfig, needsIndexRefresh, pluginType);
         });
 
         vueEventDispatcher.$on(VueEventChannels.clearExecutionLogConfirmed, () => {

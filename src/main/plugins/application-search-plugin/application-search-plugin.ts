@@ -54,9 +54,13 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
 
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.applicationRepository.refreshIndex()
-                .then(() => resolve())
-                .catch((err) => reject(err));
+            if (this.config.enabled) {
+                this.applicationRepository.refreshIndex()
+                    .then(() => resolve())
+                    .catch((err) => reject(err));
+            } else {
+                resolve();
+            }
         });
     }
 
