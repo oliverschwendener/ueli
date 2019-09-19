@@ -236,4 +236,86 @@ describe(SearchEngine.name, () => {
             })
             .catch((err) => done(err));
     });
+
+    it("should only refresh indexes of enabled plugins", (done) => {
+        const config = {
+            generalOptions: {
+                logExecution: true,
+            },
+            searchEngineOptions: {
+                fuzzyness: 0.4,
+            },
+        } as UserConfigOptions;
+        const translationSet = {} as TranslationSet;
+        const favoritesRepository = new FakeFavoriteRepository([]);
+        const fakePlugins = [
+            new FakeSearchPlugin(PluginType.Test, [], true),
+            new FakeSearchPlugin(PluginType.Test, [], true),
+            new FakeSearchPlugin(PluginType.Test, [], false),
+            new FakeSearchPlugin(PluginType.Test, [], false),
+        ];
+        const searchPlugins: SearchPlugin[] = fakePlugins;
+        const executionPlugins: ExecutionPlugin[] = [];
+        const fallbackPlugins: ExecutionPlugin[] = [];
+        const searchEngine = new SearchEngine(
+            searchPlugins,
+            executionPlugins,
+            fallbackPlugins,
+            config,
+            translationSet,
+            favoritesRepository,
+        );
+
+        searchEngine.refreshIndexes()
+            .then(() => {
+                const refreshedPlugins = fakePlugins.filter((plugin) => plugin.getIndexRefreshCount() > 0);
+                const enabledPlugins = fakePlugins.filter((plugin) => plugin.isEnabled());
+                expect(refreshedPlugins.length).toBe(enabledPlugins.length);
+                done();
+            })
+            .catch((err) => done(err));
+    });
+
+    it("should only search entries of enabled plugins", (done) => {
+        const config = {
+            generalOptions: {
+                logExecution: true,
+            },
+            searchEngineOptions: {
+                fuzzyness: 0.4,
+            },
+        } as UserConfigOptions;
+        const translationSet = {} as TranslationSet;
+        const items = [
+            { name: "abc", executionArgument: "abc", searchable: ["abc"] },
+            { name: "abcd", executionArgument: "abcd", searchable: ["abcd"] },
+            { name: "abcde", executionArgument: "abcde", searchable: ["abcde"] },
+        ] as SearchResultItem[];
+        const favoritesRepository = new FakeFavoriteRepository([]);
+        const searchPlugins: SearchPlugin[] = [
+            new FakeSearchPlugin(PluginType.Test, items, true),
+            new FakeSearchPlugin(PluginType.Test, items, true),
+            new FakeSearchPlugin(PluginType.Test, items, false),
+            new FakeSearchPlugin(PluginType.Test, items, false),
+        ];
+        const executionPlugins: ExecutionPlugin[] = [];
+        const fallbackPlugins: ExecutionPlugin[] = [];
+        const searchEngine = new SearchEngine(
+            searchPlugins,
+            executionPlugins,
+            fallbackPlugins,
+            config,
+            translationSet,
+            favoritesRepository,
+        );
+
+        searchEngine.getSearchResults("abc")
+            .then((searchResultItems) => {
+                const actual = searchResultItems.length;
+                const expected = searchPlugins.filter((plugin) => plugin.isEnabled()).length * items.length;
+                expect(actual).toBe(expected);
+                done();
+            })
+            .catch((err) => done(err));
+    });
 });

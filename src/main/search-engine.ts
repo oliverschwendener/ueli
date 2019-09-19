@@ -121,7 +121,7 @@ export class SearchEngine {
 
     public refreshIndexes(): Promise<void> {
         return new Promise((resolve, reject) => {
-            Promise.all(this.searchPlugins.map((plugin) => plugin.refreshIndex()))
+            Promise.all(this.searchPlugins.filter((plugin) => plugin.isEnabled()).map((plugin) => plugin.refreshIndex()))
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });

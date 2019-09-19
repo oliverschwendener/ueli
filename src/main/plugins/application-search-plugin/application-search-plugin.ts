@@ -27,16 +27,12 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
 
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            if (!this.isEnabled()) {
-                resolve();
-            } else {
-                this.applicationRepository.getAll()
-                    .then((applications) => {
-                        const result = applications.map((application) => this.createSearchResultItemFromApplication(application));
-                        resolve(result);
-                    })
-                    .catch((err) => reject(err));
-            }
+            this.applicationRepository.getAll()
+                .then((applications) => {
+                    const result = applications.map((application) => this.createSearchResultItemFromApplication(application));
+                    resolve(result);
+                })
+                .catch((err) => reject(err));
         });
     }
 
@@ -58,13 +54,9 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
 
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            if (!this.isEnabled()) {
-                resolve();
-            } else {
-                this.applicationRepository.refreshIndex()
-                    .then(() => resolve())
-                    .catch((err) => reject(err));
-            }
+            this.applicationRepository.refreshIndex()
+                .then(() => resolve())
+                .catch((err) => reject(err));
         });
     }
 

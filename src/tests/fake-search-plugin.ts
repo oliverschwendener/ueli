@@ -8,11 +8,13 @@ export class FakeSearchPlugin implements SearchPlugin {
     public pluginType: PluginType;
     private readonly items: SearchResultItem[];
     private readonly enabled: boolean;
+    private indexRefreshCount: number;
 
     constructor(pluginType: PluginType, items: SearchResultItem[], enabled: boolean) {
         this.pluginType = pluginType;
         this.items = items;
         this.enabled = enabled;
+        this.indexRefreshCount = 0;
     }
 
     public getAll(): Promise<SearchResultItem[]> {
@@ -23,7 +25,8 @@ export class FakeSearchPlugin implements SearchPlugin {
 
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            reject("Method not implemented.");
+            this.indexRefreshCount++;
+            resolve();
         });
     }
 
@@ -47,5 +50,9 @@ export class FakeSearchPlugin implements SearchPlugin {
         return new Promise((resolve, reject) => {
             reject("Method not implemented.");
         });
+    }
+
+    public getIndexRefreshCount() {
+        return this.indexRefreshCount;
     }
 }
