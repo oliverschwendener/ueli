@@ -5,6 +5,8 @@ import { WebSearchOptions } from "../../../common/config/websearch-options";
 import { ExecutionPlugin } from "../../execution-plugin";
 import { WebSearchEngine } from "./web-search-engine";
 import { TranslationSet } from "../../../common/translation/translation-set";
+import { defaultWebSearchIcon } from "../../../common/icon/default-icons";
+import { isValidIcon } from "../../../common/icon/icon-helpers";
 
 export class WebSearchPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.WebSearchPlugin;
@@ -40,7 +42,7 @@ export class WebSearchPlugin implements ExecutionPlugin {
                         description: this.buildDescription(webSearchEngine, userInput),
                         executionArgument: this.buildExecutionArgument(webSearchEngine, userInput),
                         hideMainWindowAfterExecution: true,
-                        icon: webSearchEngine.icon,
+                        icon: isValidIcon(webSearchEngine.icon) ? webSearchEngine.icon : defaultWebSearchIcon,
                         name: webSearchEngine.name,
                         originPluginType: this.pluginType,
                         searchable: [],
