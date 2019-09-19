@@ -4,19 +4,18 @@ import { defaultShortcutOptions } from "../../common/config/shortcuts-options";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { defaultNewShortcut } from "../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
+import { defaultNewShortcut, getDefaultShortcutIcon } from "../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
 import { Shortcut } from "../../main/plugins/shortcuts-search-plugin/shortcut";
 import { ShortcutType } from "../../main/plugins/shortcuts-search-plugin/shortcut-type";
 import { ModalEditMode } from "./modals/modal-edit-mode";
-import { defaultShortcutIcon } from "../../common/icon/default-icons";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { deepCopy } from "../../common/helpers/object-helpers";
+import { Icon } from "../../common/icon/icon";
 
 export const shortcutSettingsComponent = Vue.extend({
     data() {
         return {
-            defaultShortcutIcon,
             settingName: PluginSettings.Shortcuts,
             visible: false,
         };
@@ -45,6 +44,9 @@ export const shortcutSettingsComponent = Vue.extend({
             const config: UserConfigOptions = this.config;
             const shortcut: Shortcut = deepCopy(config.shortcutOptions.shortcuts[index]);
             vueEventDispatcher.$emit(VueEventChannels.openShortcutEditingModal, shortcut, ModalEditMode.Edit, index);
+        },
+        getDefaultIcon(shortcut: Shortcut): Icon {
+            return getDefaultShortcutIcon(shortcut);
         },
         getShortcutTypeIconClass(shorcutType: ShortcutType): string {
             switch (shorcutType) {
@@ -158,7 +160,7 @@ export const shortcutSettingsComponent = Vue.extend({
                                         </div>
                                     </td>
                                     <td class="has-text-centered">
-                                        <icon :icon="shortcut.icon" :defaulticon="defaultShortcutIcon"></icon>
+                                        <icon :icon="shortcut.icon" :defaulticon="getDefaultIcon(shortcut)"></icon>
                                     </td>
                                     <td class="has-text-centered">
                                         <button class="button" @click="editShortcut(index)">

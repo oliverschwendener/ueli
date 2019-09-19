@@ -6,9 +6,9 @@ import { ShortcutOptions } from "../../../common/config/shortcuts-options";
 import { Shortcut } from "./shortcut";
 import { ShortcutType } from "./shortcut-type";
 import { isValidIcon } from "./../../../common/icon/icon-helpers";
-import { defaultShortcutIcon } from "../../../common/icon/default-icons";
 import { OpenLocationPlugin } from "../../open-location-plugin";
 import { stringIsWhiteSpace } from "../../../common/helpers/string-helpers";
+import { getDefaultShortcutIcon } from "./shortcut-helpers";
 
 interface ExecutionArgumentDecodeResult {
     shortcutType: ShortcutType;
@@ -130,7 +130,7 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
             hideMainWindowAfterExecution: true,
             icon: isValidIcon(shortcut.icon)
                 ? shortcut.icon
-                : defaultShortcutIcon,
+                : getDefaultShortcutIcon(shortcut),
             name: shortcut.name,
             needsUserConfirmationBeforeExecution: shortcut.needsUserConfirmationBeforeExecution,
             originPluginType: this.pluginType,
