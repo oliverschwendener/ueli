@@ -15,26 +15,14 @@ jobs:
       uses: actions/setup-node@v1
       with:
         version: ${{ matrix.node_version }}
-      env:
-        NODE_ENV: production
 
-    - name: Install dependencies
+    - name: Build & package app
       run: |
         yarn install
-        
-    - name: Validate and lint TypeScript files
-      run: |
         yarn tsc:validate
         yarn lint
-        
-    - name: Bundle files
-      run: |
-        yarn bundle
-        
-    - name: Run tests
-      run: |
         yarn test
-        
-    - name: Package and publish app
-      run: |
         yarn package:publish
+      env:
+        NODE_ENV: "production"
+
