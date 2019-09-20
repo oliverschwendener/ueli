@@ -21,7 +21,7 @@ jobs:
         yarn install
         
     - name: Validate and lint TypeScript files
-      runt: |
+      run: |
         yarn tsc:validate
         yarn lint
         
