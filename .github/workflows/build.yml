@@ -2,7 +2,7 @@ on: [push]
 
 jobs:
   test:
-    name: Test, lint and build the app on node ${{ matrix.node_version }} on ${{ matrix.os }}
+    name: Build & package app using node ${{ matrix.node_version }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
