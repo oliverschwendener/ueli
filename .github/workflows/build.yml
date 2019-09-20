@@ -16,13 +16,25 @@ jobs:
       with:
         version: ${{ matrix.node_version }}
 
-    - name: Build & package app
+    - name: Install dependencies
       run: |
         yarn install
+
+    - name: Validate & lint TypeScript files
+      run: |
         yarn tsc:validate
         yarn lint
-        yarn test
-        yarn package:publish
+
+    - name: Bundle files
+      run: |
+        yarn bundle
       env:
         NODE_ENV: production
 
+    - name: Run tests
+      run: |
+        yarn test
+
+    - name: Package & publish app
+      run: |
+        yarn package:publish
