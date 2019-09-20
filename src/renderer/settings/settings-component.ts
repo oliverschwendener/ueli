@@ -88,8 +88,10 @@ export const settingsComponent = Vue.extend({
                 <ul class="menu-list">
                     <setting-menu-item
                         v-for="generalSettingMenuItem in generalSettingMenuItems"
+                        :key="generalSettingMenuItem"
                         :item="generalSettingMenuItem"
                         :translations="translations"
+                        :config="config"
                         ></setting-menu-item>
                 </ul>
                 <div class="menu-label">
@@ -98,8 +100,10 @@ export const settingsComponent = Vue.extend({
                 <ul class="menu-list">
                     <setting-menu-item
                         v-for="pluginSettingMenuItem in pluginSettingMenuItems"
+                        :key="pluginSettingMenuItem"
                         :item="pluginSettingMenuItem"
                         :translations="translations"
+                        :config="config"
                         ></setting-menu-item>
                 </ul>
             </div>

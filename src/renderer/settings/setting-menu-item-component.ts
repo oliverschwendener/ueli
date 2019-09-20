@@ -5,6 +5,8 @@ import { PluginSettings } from "./plugin-settings";
 import { SettingOsSpecific } from "./settings-os-specific";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { GeneralSettings } from "./general-settings";
+import { UserConfigOptions } from "../../common/config/user-config-options";
+import { platform } from "os";
 
 export const settingMenuItemComponent = Vue.extend({
     data() {
@@ -76,6 +78,59 @@ export const settingMenuItemComponent = Vue.extend({
                     return "";
             }
         },
+        isEnabled(item: GeneralSettings | PluginSettings | SettingOsSpecific): boolean {
+            const config: UserConfigOptions = this.config;
+            switch (item) {
+                case PluginSettings.ApplicationSearch:
+                    return config.applicationSearchOptions.enabled;
+                case PluginSettings.Calculator:
+                    return config.calculatorOptions.isEnabled;
+                case PluginSettings.ColorConverter:
+                    return config.colorConverterOptions.isEnabled;
+                case PluginSettings.Commandline:
+                    return config.commandlineOptions.isEnabled;
+                case PluginSettings.CurrencyConverter:
+                    return config.currencyConverterOptions.isEnabled;
+                case PluginSettings.Email:
+                    return config.emailOptions.isEnabled;
+                case PluginSettings.FileBrowser:
+                    return config.fileBrowserOptions.isEnabled;
+                case PluginSettings.OperatingSystemCommands:
+                    return config.operatingSystemCommandsOptions.isEnabled;
+                case PluginSettings.OperatingSystemSettings:
+                    return config.operatingSystemSettingsOptions.isEnabled;
+                case PluginSettings.Shortcuts:
+                    return config.shortcutOptions.isEnabled;
+                case PluginSettings.SimpleFolderSearch:
+                    return config.simpleFolderSearchOptions.isEnabled;
+                case PluginSettings.Translation:
+                    return config.translationOptions.enabled;
+                case PluginSettings.Url:
+                    return config.urlOptions.isEnabled;
+                case PluginSettings.WebSearch:
+                    return config.websearchOptions.isEnabled;
+                case PluginSettings.Workflow:
+                    return config.workflowOptions.isEnabled;
+                case SettingOsSpecific.Everything.replace(`${platform()}:`, ""):
+                    return config.everythingSearchOptions.enabled;
+                case SettingOsSpecific.MdFind.replace(`${platform()}:`, ""):
+                    return config.mdfindOptions.enabled;
+                case SettingOsSpecific.Uwp.replace(`${platform()}:`, ""):
+                    return config.uwpSearchOptions.isEnabled;
+                default:
+                    return false;
+            }
+        },
+        isPluginSetting(item: GeneralSettings | PluginSettings | SettingOsSpecific): boolean {
+            const allPluginSettings = [
+                ...Object.values(PluginSettings)
+                    .map((setting) => setting.toString()),
+                ...Object.values(SettingOsSpecific)
+                    .map((setting) => setting.toString().replace(`${platform()}:`, "")),
+            ];
+
+            return allPluginSettings.find((setting) => setting === item) !== undefined;
+        },
         showSetting() {
             vueEventDispatcher.$emit(VueEventChannels.showSetting, this.item);
         },
@@ -85,12 +140,19 @@ export const settingMenuItemComponent = Vue.extend({
             this.isActive = this.item === item;
         });
     },
-    props: ["item", "translations"],
+    props: ["item", "translations", "config"],
     template: `
         <li @click="showSetting">
             <a :class="{ 'is-active' : isActive }">
-                <span v-if="getItemIcon(item).length > 0" class="icon" v-html="getItemIcon(item)"></span>
-                <span>{{ getItemName(item) }}</span>
+                <div class="settings__sidebar-name-container">
+                    <span v-if="getItemIcon(item).length > 0" class="icon" v-html="getItemIcon(item)"></span>
+                    <span class="settings__sidebar-name">
+                        {{ getItemName(item) }}
+                    </span>
+                    <span v-if="isPluginSetting(item)" class="is-size-7" :class="{ 'has-text-success' : isEnabled(item), 'has-text-danger' : !isEnabled(item) }">
+                        <i class="fas fa-circle"></i>
+                    </span>
+                </div>
             </a>
         </li>
     `,
