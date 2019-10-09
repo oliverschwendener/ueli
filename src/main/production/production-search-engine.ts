@@ -47,6 +47,7 @@ import { generateWindowsAppIcons } from "../plugins/application-search-plugin/wi
 import { windowsFileSearcher as powershellFileSearcher, macosFileSearcher } from "../executors/file-searchers";
 import { searchWindowsApplications, searchMacApplications } from "../executors/application-searcher";
 import { generateMacAppIcons } from "../plugins/application-search-plugin/mac-os-app-icon-generator";
+import { DictionaryPlugin } from "../plugins/dictionary-plugin/dictionary-plugin";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -127,6 +128,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         new CurrencyConverterPlugin(config.currencyConverterOptions, translationSet, electronClipboardCopier),
         new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor),
         new ColorConverterPlugin(config.colorConverterOptions, electronClipboardCopier),
+        new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [

@@ -20,12 +20,14 @@ import { SimpleFolderSearchOptions, defaultSimpleFolderSearchOptions } from "./s
 import { UwpSearchOptions, defaultUwpSearchOptions } from "./uwp-search-options";
 import { ColorConverterOptions, defaultColorConverterOptions } from "./color-converter-options";
 import { ApplicationSearchOptions, defaultApplicationSearchOptions } from "./application-search-options";
+import { defaultDictionaryOptions, DictionaryOptions } from "./dictionary-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
     colorThemeOptions: ColorThemeOptions;
     applicationSearchOptions: ApplicationSearchOptions;
     everythingSearchOptions: EverythingSearchOptions;
+    dictionaryOptions: DictionaryOptions;
     mdfindOptions: MdFindOptions;
     searchEngineOptions: SearchEngineOptions;
     shortcutOptions: ShortcutOptions;
@@ -54,6 +56,7 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     colorThemeOptions: defaultColorThemeOptions,
     commandlineOptions: defaultCommandlineOptions,
     currencyConverterOptions: defaultCurrencyConverterOptions,
+    dictionaryOptions: defaultDictionaryOptions,
     emailOptions: defaultEmailOptions,
     everythingSearchOptions: defaultEverythingSearchOptions,
     fileBrowserOptions: defaultFileBrowserOptions,

@@ -19,5 +19,6 @@ export enum PluginType {
     SimpleFolderSearch = "simple-folder-search-plugin",
     Uwp = "uwp",
     ColorConverter = "color-converter",
+    Dictionary = "dictionary",
     Test = "test-plugin",
 }
