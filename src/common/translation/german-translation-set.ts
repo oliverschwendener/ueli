@@ -303,6 +303,9 @@ export const germanTranslationSet: TranslationSet = {
     colorConverterDescription: "Dieses Plugin erlaubt es dir Farben in verschiedene Formate zu konvertieren.",
     colorConverterShowColorPreview: "Farbvorschau anzeigen",
 
+    browserBookmarks: "Browser Lesezeichen",
+    browserBookmarksDescription: "Dieses Plugin erlaubt es dir die Lesezeichen deines Browser zu durchsuchen.",
+    browserBookmarksBrowser: "Browser",
     browserBookmark: "Lesezeichen",
 
     cancel: "Abbrechen",

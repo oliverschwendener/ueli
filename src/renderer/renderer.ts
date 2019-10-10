@@ -56,6 +56,7 @@ import { UpdateCheckResult } from "../common/update-check-result";
 import { uwpSettingsComponent } from "./settings/uwp-settings-component";
 import { colorConverterSettingsComponent } from "./settings/color-converter-settings-component";
 import { pluginToggle } from "./settings/elements/plugin-toggle";
+import { browserBookmarkSettingsComponent } from "./settings/browser-bookmark-settings-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -98,6 +99,7 @@ Vue.component("user-confirmation", userConfirmationDialog);
 Vue.component("uwp-settings", uwpSettingsComponent);
 Vue.component("color-converter-setttings", colorConverterSettingsComponent);
 Vue.component("plugin-toggle", pluginToggle);
+Vue.component("browser-bookmark-settings", browserBookmarkSettingsComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(cloneDeep(defaultUserConfigOptions)).getConfig();
 

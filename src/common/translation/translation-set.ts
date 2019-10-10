@@ -300,6 +300,9 @@ export interface TranslationSet {
     colorConverterDescription: string;
     colorConverterShowColorPreview: string;
 
+    browserBookmarks: string;
+    browserBookmarksBrowser: string;
+    browserBookmarksDescription: string;
     browserBookmark: string;
 
     cancel: string;

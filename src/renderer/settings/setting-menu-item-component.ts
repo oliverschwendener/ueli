@@ -52,6 +52,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.simpleFolderSearch;
                 case PluginSettings.ColorConverter:
                     return translations.colorConverter;
+                case PluginSettings.BrowserBookmarks:
+                    return translations.browserBookmarks;
                 case SettingOsSpecific.Everything:
                     return translations.everythingSearch;
                 case SettingOsSpecific.MdFind:

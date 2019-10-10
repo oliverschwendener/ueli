@@ -14,14 +14,21 @@ export class GoogleChromeBookmarkRepository implements BrowserBookmarkRepository
 
     public getBrowserBookmarks(): Promise<BrowserBookmark[]> {
         return new Promise((resolve, reject) => {
-            FileHelpers.readFile(this.bookmarkFilePath)
-                .then((data) => {
-                    const jsonParsed = JSON.parse(data);
-                    const bookmarks: BrowserBookmark[] = this.getBookmarksFromObject(jsonParsed.roots.bookmark_bar);
-
-                    resolve(bookmarks);
+            FileHelpers.fileExists(this.bookmarkFilePath)
+                .then((exists) => {
+                    if (exists) {
+                        FileHelpers.readFile(this.bookmarkFilePath)
+                            .then((data) => {
+                                const jsonParsed = JSON.parse(data);
+                                const bookmarks: BrowserBookmark[] = this.getBookmarksFromObject(jsonParsed.roots.bookmark_bar);
+                                resolve(bookmarks);
+                            })
+                            .catch((err) => reject(`Can't read bookmarks file: ${err}`));
+                    } else {
+                        reject(`Bookmark file (${this.bookmarkFilePath}) does not exist`);
+                    }
                 })
-                .catch((err) => reject(`Can't read bookmarks file: ${err}`));
+                .catch((err) => reject(err));
         });
     }
 

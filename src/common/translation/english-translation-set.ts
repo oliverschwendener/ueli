@@ -303,6 +303,9 @@ export const englishTranslationSet: TranslationSet = {
     colorConverterDescription: "This plugin enables you to quickly convert colors into different formats.",
     colorConverterShowColorPreview: "Show color preview",
 
+    browserBookmarks: "Browser Bookmarks",
+    browserBookmarksDescription: "This plugin enables you to search your browser bookmarks.",
+    browserBookmarksBrowser: "Browser",
     browserBookmark: "Bookmark",
 
     cancel: "Cancel",
