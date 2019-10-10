@@ -21,6 +21,7 @@ import { UwpSearchOptions, defaultUwpSearchOptions } from "./uwp-search-options"
 import { ColorConverterOptions, defaultColorConverterOptions } from "./color-converter-options";
 import { ApplicationSearchOptions, defaultApplicationSearchOptions } from "./application-search-options";
 import { defaultDictionaryOptions, DictionaryOptions } from "./dictionary-options";
+import { BrowserBookmarksOptions, defaultBrowserBookmarksOptions } from "./browser-bookmarks-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -46,11 +47,13 @@ export interface UserConfigOptions {
     simpleFolderSearchOptions: SimpleFolderSearchOptions;
     colorConverterOptions: ColorConverterOptions;
     uwpSearchOptions: UwpSearchOptions;
+    browserBookmarksOptions: BrowserBookmarksOptions;
 }
 
 export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
     applicationSearchOptions: defaultApplicationSearchOptions,
+    browserBookmarksOptions: defaultBrowserBookmarksOptions,
     calculatorOptions: defaultCalculatorOptions,
     colorConverterOptions: defaultColorConverterOptions,
     colorThemeOptions: defaultColorThemeOptions,

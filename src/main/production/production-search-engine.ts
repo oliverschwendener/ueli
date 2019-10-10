@@ -3,7 +3,7 @@ import { UserConfigOptions } from "../../common/config/user-config-options";
 import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/ueli-command-search-plugin";
 import { ShortcutsSearchPlugin } from "../plugins/shortcuts-search-plugin/shortcuts-search-plugin";
 import { isWindows, isMacOs } from "../../common/helpers/operating-system-helpers";
-import { platform } from "os";
+import { platform, homedir } from "os";
 import { executeUrlMacOs, executeUrlWindows } from "../executors/url-executor";
 import { executeFilePathWindows, executeFilePathMacOs } from "../executors/file-path-executor";
 import { SearchEngine } from "../search-engine";
@@ -48,6 +48,8 @@ import { windowsFileSearcher as powershellFileSearcher, macosFileSearcher } from
 import { searchWindowsApplications, searchMacApplications } from "../executors/application-searcher";
 import { generateMacAppIcons } from "../plugins/application-search-plugin/mac-os-app-icon-generator";
 import { DictionaryPlugin } from "../plugins/dictionary-plugin/dictionary-plugin";
+import { BrowserBookmarksPlugin } from "../plugins/browser-bookmarks-plugin/browser-bookmarks-plugin";
+import { GoogleChromeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/google-chrome-bookmark-repository";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -60,6 +62,9 @@ const applicationSearcher = isWindows(platform()) ? searchWindowsApplications : 
 const appIconGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
 const defaultAppIcon = isWindows(platform()) ? defaultWindowsAppIcon : defaultMacOsAppIcon;
 const fileSearcher = isWindows(platform()) ? powershellFileSearcher : macosFileSearcher;
+const chromeBookmarksFilePath = isWindows(platform())
+    ? `${homedir()}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks`
+    : `${homedir()}/Library/Application\ Support/Google/Chrome/Default/Bookmarks`;
 
 export function getProductionSearchEngine(config: UserConfigOptions, translationSet: TranslationSet, logger: Logger): SearchEngine {
     const operatingSystemCommandRepository = isWindows(platform())
@@ -74,23 +79,26 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
             filePathExecutor,
             filePathLocationExecutor,
             executeCommand,
-            ),
+        ),
         new ApplicationSearchPlugin(
             config.applicationSearchOptions,
             new ProductionApplicationRepository(
                 config.applicationSearchOptions,
                 defaultAppIcon,
-                new ApplicationIconService(appIconGenerator, logger),
+                new ApplicationIconService(
+                    appIconGenerator,
+                    logger,
+                ),
                 applicationSearcher,
             ),
             filePathExecutor,
             filePathLocationExecutor,
-            ),
+        ),
         new OperatingSystemCommandsPlugin(
             config.operatingSystemCommandsOptions,
             operatingSystemCommandRepository,
             executeCommand,
-            ),
+        ),
         new OperatingSystemSettingsPlugin(
             config.operatingSystemSettingsOptions,
             translationSet,
@@ -109,6 +117,12 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
             filePathExecutor,
             filePathLocationExecutor,
         ),
+        new BrowserBookmarksPlugin(
+            config.browserBookmarksOptions,
+            translationSet,
+            [new GoogleChromeBookmarkRepository(chromeBookmarksFilePath)],
+            urlExecutor,
+        ),
     ];
 
     const webSearchPlugin = new WebSearchPlugin(config.websearchOptions, translationSet, urlExecutor);
@@ -120,7 +134,8 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
             filePathValidator,
             filePathExecutor,
             filePathLocationExecutor,
-            getFileIconDataUrl),
+            getFileIconDataUrl,
+        ),
         new TranslationPlugin(config.translationOptions, electronClipboardCopier),
         new CalculatorPlugin(config.calculatorOptions, translationSet, electronClipboardCopier),
         new UrlPlugin(config.urlOptions, translationSet, urlExecutor),
@@ -140,15 +155,25 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
             new EverythingPlugin(
                 config.everythingSearchOptions,
                 filePathExecutor,
-                filePathLocationExecutor));
-        searchPlugins.push(new UwpPlugin(config.uwpSearchOptions, new InMemoryUwpAppRepository(), executeCommand));
+                filePathLocationExecutor,
+            ),
+        );
+        searchPlugins.push(
+            new UwpPlugin(
+                config.uwpSearchOptions,
+                new InMemoryUwpAppRepository(),
+                executeCommand,
+            ),
+        );
     }
     if (isMacOs(platform())) {
         executionPlugins.push(
             new MdFindPlugin(
                 config.mdfindOptions,
                 filePathExecutor,
-                filePathLocationExecutor));
+                filePathLocationExecutor,
+            ),
+        );
     }
 
     return new SearchEngine(

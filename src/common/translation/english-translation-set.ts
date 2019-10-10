@@ -314,6 +314,11 @@ export const englishTranslationSet: TranslationSet = {
     dictionaryMinSearchTermLength: "Min search term length",
     dictionaryDebounceDelay: "Debounce delay (in milliseconds)",
 
+    browserBookmarks: "Browser Bookmarks",
+    browserBookmarksDescription: "This plugin enables you to search your browser bookmarks.",
+    browserBookmarksBrowser: "Browser",
+    browserBookmark: "Bookmark",
+
     cancel: "Cancel",
     save: "Save",
     add: "Add",

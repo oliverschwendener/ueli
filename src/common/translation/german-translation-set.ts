@@ -314,6 +314,11 @@ export const germanTranslationSet: TranslationSet = {
     dictionaryMinSearchTermLength: "Minimum Suchbegrifflänge",
     dictionaryDebounceDelay: "Debounce Verzögerung (in Millisekunden)",
 
+    browserBookmarks: "Browser Lesezeichen",
+    browserBookmarksDescription: "Dieses Plugin erlaubt es dir die Lesezeichen deines Browser zu durchsuchen.",
+    browserBookmarksBrowser: "Browser",
+    browserBookmark: "Lesezeichen",
+
     cancel: "Abbrechen",
     save: "Speichern",
     add: "Hinzufügen",

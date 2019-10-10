@@ -136,6 +136,7 @@ export const settingsComponent = Vue.extend({
                 <uwp-settings :config="config" :translations="translations"></uwp-settings>
                 <color-converter-setttings :config="config" :translations="translations"></color-converter-setttings>
                 <user-confirmation :translations="translations"></user-confirmation>
+                <browser-bookmark-settings :config="config" :translations="translations"></browser-bookmark-settings>
             </div>
         </div>
     `,

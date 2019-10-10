@@ -14,5 +14,6 @@ export enum PluginSettings {
     Commandline = "Commandline",
     SimpleFolderSearch = "Simple Folder Search",
     ColorConverter = "Color Converter",
+    BrowserBookmarks = "Browser Bookmarks",
     Dictionary = "Dictionary",
 }

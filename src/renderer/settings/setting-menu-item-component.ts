@@ -20,42 +20,44 @@ export const settingMenuItemComponent = Vue.extend({
             switch (item) {
                 case GeneralSettings.Appearance:
                     return translations.appearanceSettings;
-                case GeneralSettings.ColorTheme:
-                    return translations.colorThemeSettings;
                 case GeneralSettings.General:
                     return translations.generalSettings;
                 case GeneralSettings.SearchEngine:
                     return translations.searchEngineSettings;
                 case PluginSettings.ApplicationSearch:
                     return translations.applicationSearchSettings;
-                case PluginSettings.Shortcuts:
-                    return translations.shortcutSettings;
-                case PluginSettings.Translation:
-                    return translations.translationSettingsTranslation;
-                case PluginSettings.WebSearch:
-                    return translations.websearch;
+                case PluginSettings.BrowserBookmarks:
+                    return translations.browserBookmarks;
+                case PluginSettings.Calculator:
+                    return translations.calcuator;
+                case PluginSettings.ColorConverter:
+                    return translations.colorConverter;
+                case GeneralSettings.ColorTheme:
+                    return translations.colorThemeSettings;
+                case PluginSettings.CurrencyConverter:
+                    return translations.currencyConverter;
+                case PluginSettings.Commandline:
+                    return translations.commandline;
+                case PluginSettings.Dictionary:
+                    return translations.dictionary;
+                case PluginSettings.Email:
+                    return translations.email;
                 case PluginSettings.FileBrowser:
                     return translations.fileBrowser;
                 case PluginSettings.OperatingSystemCommands:
                     return translations.operatingSystemCommands;
                 case PluginSettings.OperatingSystemSettings:
                     return translations.operatingSystemSettings;
-                case PluginSettings.Calculator:
-                    return translations.calcuator;
-                case PluginSettings.Url:
-                    return translations.url;
-                case PluginSettings.Email:
-                    return translations.email;
-                case PluginSettings.CurrencyConverter:
-                    return translations.currencyConverter;
-                case PluginSettings.Commandline:
-                    return translations.commandline;
+                case PluginSettings.Shortcuts:
+                    return translations.shortcutSettings;
                 case PluginSettings.SimpleFolderSearch:
                     return translations.simpleFolderSearch;
-                case PluginSettings.ColorConverter:
-                    return translations.colorConverter;
-                case PluginSettings.Dictionary:
-                    return translations.dictionary;
+                case PluginSettings.Translation:
+                    return translations.translationSettingsTranslation;
+                case PluginSettings.Url:
+                    return translations.url;
+                case PluginSettings.WebSearch:
+                    return translations.websearch;
                 case SettingOsSpecific.Everything:
                     return translations.everythingSearch;
                 case SettingOsSpecific.MdFind:
@@ -85,6 +87,8 @@ export const settingMenuItemComponent = Vue.extend({
             switch (item) {
                 case PluginSettings.ApplicationSearch:
                     return config.applicationSearchOptions.enabled;
+                case PluginSettings.BrowserBookmarks:
+                    return config.browserBookmarksOptions.isEnabled;
                 case PluginSettings.Calculator:
                     return config.calculatorOptions.isEnabled;
                 case PluginSettings.ColorConverter:

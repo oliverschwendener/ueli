@@ -311,6 +311,11 @@ export interface TranslationSet {
     dictionaryMinSearchTermLength: string;
     dictionaryDebounceDelay: string;
 
+    browserBookmarks: string;
+    browserBookmarksBrowser: string;
+    browserBookmarksDescription: string;
+    browserBookmark: string;
+
     cancel: string;
     save: string;
     add: string;

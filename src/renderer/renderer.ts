@@ -58,6 +58,7 @@ import { pluginToggle } from "./settings/elements/plugin-toggle";
 import { deepCopy } from "../common/helpers/object-helpers";
 import { PluginType } from "../main/plugin-type";
 import { dictionarySettingsComponent } from "./settings/dictionary-settings-component";
+import { browserBookmarkSettingsComponent } from "./settings/browser-bookmark-settings-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -101,6 +102,7 @@ Vue.component("user-confirmation", userConfirmationDialog);
 Vue.component("uwp-settings", uwpSettingsComponent);
 Vue.component("color-converter-setttings", colorConverterSettingsComponent);
 Vue.component("plugin-toggle", pluginToggle);
+Vue.component("browser-bookmark-settings", browserBookmarkSettingsComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(deepCopy(defaultUserConfigOptions)).getConfig();
 
