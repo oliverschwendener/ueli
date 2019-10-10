@@ -29,8 +29,8 @@ export class DictionaryPlugin implements ExecutionPlugin {
 
     public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
         const searchTerm = this.getSearchTerm(userInput);
-        return userInput.startsWith("dict?")
-            && searchTerm.length > 2;
+        return userInput.startsWith(this.config.prefix)
+            && searchTerm.length >= this.config.minSearchTermLength;
     }
 
     public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
@@ -42,11 +42,9 @@ export class DictionaryPlugin implements ExecutionPlugin {
 
             this.delay = setTimeout(() => {
                 DictionarySearcher.search(searchTerm)
-                    .then((definitions) => {
-                        resolve(this.buildSearchResults(definitions));
-                    })
+                    .then((definitions) => resolve(this.buildSearchResults(definitions)))
                     .catch((err) => reject(err));
-            }, 150);
+            }, this.config.debounceDelay);
         });
     }
 
@@ -66,7 +64,7 @@ export class DictionaryPlugin implements ExecutionPlugin {
     }
 
     private getSearchTerm(userInput: string): string {
-        return userInput.replace("dict?", "");
+        return userInput.replace(this.config.prefix, "");
     }
 
     private buildSearchResults(definitions: Definition[]): SearchResultItem[] {
