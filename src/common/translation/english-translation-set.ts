@@ -308,6 +308,12 @@ export const englishTranslationSet: TranslationSet = {
     colorConverterDescription: "This plugin enables you to quickly convert colors into different formats.",
     colorConverterShowColorPreview: "Show color preview",
 
+    dictionary: "Dictionary",
+    dictionaryDescription: "This plugin enables you to quickly look up the definition and synonyms of words. It uses an unofficial Google Dictionary API (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+    dictionaryPrefix: "Prefix",
+    dictionaryMinSearchTermLength: "Min search term length",
+    dictionaryDebounceDelay: "Debounce delay (in milliseconds)",
+
     cancel: "Cancel",
     save: "Save",
     add: "Add",

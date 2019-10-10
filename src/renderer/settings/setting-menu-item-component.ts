@@ -54,6 +54,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.simpleFolderSearch;
                 case PluginSettings.ColorConverter:
                     return translations.colorConverter;
+                case PluginSettings.Dictionary:
+                    return translations.dictionary;
                 case SettingOsSpecific.Everything:
                     return translations.everythingSearch;
                 case SettingOsSpecific.MdFind:
@@ -91,6 +93,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return config.commandlineOptions.isEnabled;
                 case PluginSettings.CurrencyConverter:
                     return config.currencyConverterOptions.isEnabled;
+                case PluginSettings.Dictionary:
+                    return config.dictionaryOptions.isEnabled;
                 case PluginSettings.Email:
                     return config.emailOptions.isEnabled;
                 case PluginSettings.FileBrowser:

@@ -305,6 +305,12 @@ export interface TranslationSet {
     colorConverterDescription: string;
     colorConverterShowColorPreview: string;
 
+    dictionary: string;
+    dictionaryDescription: string;
+    dictionaryPrefix: string;
+    dictionaryMinSearchTermLength: string;
+    dictionaryDebounceDelay: string;
+
     cancel: string;
     save: string;
     add: string;

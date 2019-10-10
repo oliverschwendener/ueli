@@ -57,6 +57,7 @@ import { colorConverterSettingsComponent } from "./settings/color-converter-sett
 import { pluginToggle } from "./settings/elements/plugin-toggle";
 import { deepCopy } from "../common/helpers/object-helpers";
 import { PluginType } from "../main/plugin-type";
+import { dictionarySettingsComponent } from "./settings/dictionary-settings-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -87,6 +88,7 @@ Vue.component("filebrowser-settings", fileBrowserSettingsComponent);
 Vue.component("operating-system-commands-settings", operatingSystemCommandsSettingsComponent);
 Vue.component("operating-system-settings-settings", operatingSystemSettingsSettingsComponent);
 Vue.component("calculator-settings", calculatorSettingsComponent);
+Vue.component("dictionary-settings", dictionarySettingsComponent);
 Vue.component("url-settings", urlSettingsComponent);
 Vue.component("email-settings", emailSettingsComponent);
 Vue.component("currency-converter-settings", currencyConverterSettingsComponent);
