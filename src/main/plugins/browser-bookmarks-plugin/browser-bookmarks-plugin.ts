@@ -3,36 +3,43 @@ import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
-import { FileHelpers } from "../../../common/helpers/file-helpers";
-import { homedir } from "os";
 import { defaultBookmarkIcon } from "../../../common/icon/default-icons";
-import { isValidUrl } from "../../../common/helpers/url-helpers";
-import { Bookmark } from "./bookmark";
+import { BrowserBookmark } from "./browser-bookmark";
 import { BrowserBookmarksOptions } from "../../../common/config/browser-bookmarks-options";
+import { BrowserBookmarkRepository } from "./browser-bookmark-repository";
 
 export class BrowserBookmarksPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.BrowserBookmarks;
-    private readonly urlExecutor: (url: string) => Promise<void>;
-    private bookmarks: Bookmark[];
-    private config: BrowserBookmarksOptions;
 
-    constructor(config: BrowserBookmarksOptions, urlExecutor: (url: string) => Promise<void>) {
+    private config: BrowserBookmarksOptions;
+    private translations: TranslationSet;
+    private readonly browserBookmarkRepositories: BrowserBookmarkRepository[];
+    private readonly urlExecutor: (url: string) => Promise<void>;
+    private browserBookmarks: BrowserBookmark[];
+
+    constructor(
+        config: BrowserBookmarksOptions,
+        translations: TranslationSet,
+        browserBookmarkRepositories: BrowserBookmarkRepository[],
+        urlExecutor: (url: string) => Promise<void>) {
         this.config = config;
+        this.translations = translations;
+        this.browserBookmarkRepositories = browserBookmarkRepositories;
         this.urlExecutor = urlExecutor;
-        this.bookmarks = [];
+        this.browserBookmarks = [];
     }
 
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve) => {
-            resolve(this.bookmarks.map((bookmark) => this.buildSearchResultItem(bookmark)));
+            resolve(this.browserBookmarks.map((bookmark) => this.buildSearchResultItem(bookmark)));
         });
     }
 
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.getBookmarks()
+            this.getBrowserBookmarks()
                 .then((result) => {
-                    this.bookmarks = result;
+                    this.browserBookmarks = result;
                     resolve();
                 })
                 .catch((err) => reject(err));
@@ -54,61 +61,47 @@ export class BrowserBookmarksPlugin implements SearchPlugin {
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig.browserBookmarksOptions;
-            resolve();
-        });
-    }
-
-    private getBookmarks(): Promise<Bookmark[]> {
         return new Promise((resolve, reject) => {
-            FileHelpers.readFile(`${homedir()}/Library/Application\ Support/Google/Chrome/Default/Bookmarks`)
-                .then((data) => {
-                    const jsonParsed = JSON.parse(data);
-                    const bookmarks: Bookmark[] = this.getBookmarksFromObject(jsonParsed.roots.bookmark_bar);
-
-                    resolve(bookmarks);
-                })
-                .catch((err) => reject(`Can't read bookmarks file: ${err}`));
-        });
-    }
-
-    private getBookmarksFromObject(data: any): any[] {
-        let result: any[] = [];
-
-        Object.entries(data).forEach(([key, v]) => {
-            const value = v as any;
-            if (key === "children") {
-                const folders = value.filter((entry: any) => {
-                    return entry.type
-                        && entry.type === "folder";
-                });
-
-                const bookmarks = value.filter((entry: any) => {
-                    return entry.type
-                        && entry.type === "url"
-                        && entry.url
-                        && isValidUrl(entry.url);
-                });
-
-                result = result.concat(bookmarks);
-                folders.forEach((folder: any) => result = result.concat(this.getBookmarksFromObject(folder)));
+            this.translations = translationSet;
+            if (updatedConfig.browserBookmarksOptions.browser !== this.config.browser) {
+                this.config = updatedConfig.browserBookmarksOptions;
+                this.refreshIndex()
+                    .then(() => resolve())
+                    .catch((err) => reject(err));
+            } else {
+                this.config = updatedConfig.browserBookmarksOptions;
+                resolve();
             }
         });
-
-        return result;
     }
 
-    private buildSearchResultItem(bookmark: Bookmark): SearchResultItem {
+    private getBrowserBookmarks(): Promise<BrowserBookmark[]> {
+        return this.getMatchingBrowserBookmarkRepository().getBrowserBookmarks();
+    }
+
+    private getMatchingBrowserBookmarkRepository(): BrowserBookmarkRepository {
+        const matchingBookmarkRepository = this.browserBookmarkRepositories
+            .find((bookmarkRepository) => bookmarkRepository.browser === this.config.browser);
+
+        if (matchingBookmarkRepository) {
+            return matchingBookmarkRepository;
+        }
+
+        throw new Error(`Unsupported browser: ${this.config.browser}`);
+    }
+
+    private buildSearchResultItem(browserBookmark: BrowserBookmark): SearchResultItem {
         return {
-            description: bookmark.name ? bookmark.url : "Google Chrome Bookmark",
-            executionArgument: bookmark.url,
+            description: browserBookmark.name
+                ? browserBookmark.url
+                : `${this.config.browser} ${this.translations.browserBookmark}`,
+            executionArgument: browserBookmark.url,
             hideMainWindowAfterExecution: true,
             icon: defaultBookmarkIcon,
-            name: bookmark.name || bookmark.url,
+            name: browserBookmark.name || browserBookmark.url,
             needsUserConfirmationBeforeExecution: false,
             originPluginType: this.pluginType,
-            searchable: [bookmark.name, bookmark.url],
+            searchable: [browserBookmark.name, browserBookmark.url],
         };
     }
 }

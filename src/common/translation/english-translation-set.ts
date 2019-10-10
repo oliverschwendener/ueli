@@ -303,6 +303,8 @@ export const englishTranslationSet: TranslationSet = {
     colorConverterDescription: "This plugin enables you to quickly convert colors into different formats.",
     colorConverterShowColorPreview: "Show color preview",
 
+    browserBookmark: "Bookmark",
+
     cancel: "Cancel",
     save: "Save",
     add: "Add",

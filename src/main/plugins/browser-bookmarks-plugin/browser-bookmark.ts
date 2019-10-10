@@ -1,4 +1,4 @@
-export interface Bookmark {
+export interface BrowserBookmark {
     name: string;
     url: string;
 }

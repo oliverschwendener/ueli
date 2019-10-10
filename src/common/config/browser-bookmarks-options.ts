@@ -1,8 +1,4 @@
-export enum Browser {
-    GoogleChrome = "Google Chrome",
-    MozillaFirefox = "Mozilla Firefox",
-    Safari = "Safari",
-}
+import { Browser } from "../../main/plugins/browser-bookmarks-plugin/browser";
 
 export interface BrowserBookmarksOptions {
     isEnabled: boolean;
@@ -11,5 +7,5 @@ export interface BrowserBookmarksOptions {
 
 export const defaultBrowserBookmarksOptions: BrowserBookmarksOptions = {
     browser: Browser.GoogleChrome,
-    isEnabled: false,
+    isEnabled: true,
 };
