@@ -29,7 +29,7 @@ export class TranslationPlugin implements ExecutionPlugin {
             const target = this.config.targetLanguage;
             const url = `https://linguee-api.herokuapp.com/api?q=${textToTranslate}&src=${source}&dst=${target}`;
 
-            if (this.delay !== undefined) {
+            if (this.delay) {
                 clearTimeout(this.delay as number);
             }
 
