@@ -120,7 +120,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         new BrowserBookmarksPlugin(
             config.browserBookmarksOptions,
             translationSet,
-            [new GoogleChromeBookmarkRepository(chromeBookmarksFilePath)],
+            [new GoogleChromeBookmarkRepository(chromeBookmarksFilePath, config.browserBookmarksOptions.useFavicons)],
             urlExecutor,
         ),
     ];

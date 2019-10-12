@@ -3,7 +3,6 @@ import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
-import { defaultBookmarkIcon } from "../../../common/icon/default-icons";
 import { BrowserBookmark } from "./browser-bookmark";
 import { BrowserBookmarksOptions } from "../../../common/config/browser-bookmarks-options";
 import { BrowserBookmarkRepository } from "./browser-bookmark-repository";
@@ -63,7 +62,17 @@ export class BrowserBookmarksPlugin implements SearchPlugin {
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
         return new Promise((resolve, reject) => {
             this.translations = translationSet;
-            if (updatedConfig.browserBookmarksOptions.browser !== this.config.browser) {
+
+            const browserChanged = updatedConfig.browserBookmarksOptions.browser !== this.config.browser;
+            const useFaviconsOptionChanged = updatedConfig.browserBookmarksOptions.useFavicons !== this.config.useFavicons;
+
+            if (useFaviconsOptionChanged) {
+                this.browserBookmarkRepositories.forEach((browserBookmarkRepository) => {
+                    browserBookmarkRepository.updateUseFaviconOption(updatedConfig.browserBookmarksOptions.useFavicons);
+                });
+            }
+
+            if (useFaviconsOptionChanged || browserChanged) {
                 this.config = updatedConfig.browserBookmarksOptions;
                 this.refreshIndex()
                     .then(() => resolve())
@@ -97,7 +106,7 @@ export class BrowserBookmarksPlugin implements SearchPlugin {
                 : `${this.config.browser} ${this.translations.browserBookmark}`,
             executionArgument: browserBookmark.url,
             hideMainWindowAfterExecution: true,
-            icon: defaultBookmarkIcon,
+            icon: browserBookmark.icon,
             name: browserBookmark.name || browserBookmark.url,
             needsUserConfirmationBeforeExecution: false,
             originPluginType: this.pluginType,

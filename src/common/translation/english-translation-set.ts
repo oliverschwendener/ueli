@@ -317,6 +317,7 @@ export const englishTranslationSet: TranslationSet = {
     browserBookmarks: "Browser Bookmarks",
     browserBookmarksDescription: "This plugin enables you to search your browser bookmarks.",
     browserBookmarksBrowser: "Browser",
+    browserBookmarksUseFavicons: "Use favicons",
     browserBookmark: "Bookmark",
 
     cancel: "Cancel",

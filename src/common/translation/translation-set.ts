@@ -314,6 +314,7 @@ export interface TranslationSet {
     browserBookmarks: string;
     browserBookmarksBrowser: string;
     browserBookmarksDescription: string;
+    browserBookmarksUseFavicons: string;
     browserBookmark: string;
 
     cancel: string;
