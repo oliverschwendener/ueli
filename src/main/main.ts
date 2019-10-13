@@ -299,6 +299,7 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
 function reloadApp() {
     updateMainWindowSize(0, config.appearanceOptions);
     searchEngine = getProductionSearchEngine(config, translationSet, logger);
+    refreshAllIndexes();
     mainWindow.reload();
 }
 

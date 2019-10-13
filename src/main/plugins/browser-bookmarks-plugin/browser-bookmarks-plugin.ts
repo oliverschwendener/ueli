@@ -64,15 +64,8 @@ export class BrowserBookmarksPlugin implements SearchPlugin {
             this.translations = translationSet;
 
             const browserChanged = updatedConfig.browserBookmarksOptions.browser !== this.config.browser;
-            const useFaviconsOptionChanged = updatedConfig.browserBookmarksOptions.useFavicons !== this.config.useFavicons;
 
-            if (useFaviconsOptionChanged) {
-                this.browserBookmarkRepositories.forEach((browserBookmarkRepository) => {
-                    browserBookmarkRepository.updateUseFaviconOption(updatedConfig.browserBookmarksOptions.useFavicons);
-                });
-            }
-
-            if (useFaviconsOptionChanged || browserChanged) {
+            if (browserChanged) {
                 this.config = updatedConfig.browserBookmarksOptions;
                 this.refreshIndex()
                     .then(() => resolve())
@@ -106,7 +99,7 @@ export class BrowserBookmarksPlugin implements SearchPlugin {
                 : `${this.config.browser} ${this.translations.browserBookmark}`,
             executionArgument: browserBookmark.url,
             hideMainWindowAfterExecution: true,
-            icon: browserBookmark.icon,
+            icon: this.getMatchingBrowserBookmarkRepository().defaultIcon,
             name: browserBookmark.name || browserBookmark.url,
             needsUserConfirmationBeforeExecution: false,
             originPluginType: this.pluginType,
