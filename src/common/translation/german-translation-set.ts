@@ -66,6 +66,7 @@ export const germanTranslationSet: TranslationSet = {
     generalSettingsResetWarning: "Du bist dabei alle allgemeinen Einstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
     generalSettingsResetAllSettingsWarning: "Du bist dabei ALLE Einstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
     generalSettingsClearExecutionLogWarning: "Du bist dabei den Ausführungslog zu löschen. Willst du fortfahren?",
+    generalSettingsHideMainWindowAfterExecution: "Fenster nach Ausführung verstecken",
     generalSettingsHideMainWindowOnBlur: "Fenster verstecken, wenn es den Fokus verliert",
     generalSettingsCheckingForUpdate: "Überprüfen",
     generalSettingsDownloadUpdate: "Update herunterladen",

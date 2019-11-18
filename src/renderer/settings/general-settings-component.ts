@@ -498,6 +498,18 @@ export const generalSettingsComponent = Vue.extend({
                         </div>
 
                         <div class="settings__option">
+                            <div class="settings__option-name">{{ translations.generalSettingsHideMainWindowAfterExecution }}</div>
+                            <div class="settings__option-content">
+                                <div class="field has-addons has-addons-right vertical-center">
+                                    <div class="control">
+                                        <input id="hideMainWindowAfterExecution" type="checkbox" name="hideMainWindowAfterExecution" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.hideMainWindowAfterExecution" @change="updateConfig()">
+                                        <label for="hideMainWindowAfterExecution"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings__option">
                             <div class="settings__option-name">{{ translations.generalSettingsHideMainWindowOnBlur }}</div>
                             <div class="settings__option-content">
                                 <div class="field has-addons has-addons-right vertical-center">

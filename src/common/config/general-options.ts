@@ -7,6 +7,7 @@ export interface GeneralOptions {
     allowWindowMove: boolean;
     autostart: boolean;
     clearCachesOnExit: boolean;
+    hideMainWindowAfterExecution: boolean;
     hideMainWindowOnBlur: boolean;
     hotKey: GlobalHotKey;
     language: Language;
@@ -23,6 +24,7 @@ export const defaultGeneralOptions: GeneralOptions = {
     allowWindowMove: true,
     autostart: true,
     clearCachesOnExit: false,
+    hideMainWindowAfterExecution: true,
     hideMainWindowOnBlur: true,
     hotKey: {
         key: GlobalHotKeyKey.Space,
