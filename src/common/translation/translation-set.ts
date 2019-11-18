@@ -63,6 +63,7 @@ export interface TranslationSet {
     generalSettingsResetWarning: string;
     generalSettingsResetAllSettingsWarning: string;
     generalSettingsClearExecutionLogWarning: string;
+    generalSettingsHideMainWindowAfterExecution: string;
     generalSettingsHideMainWindowOnBlur: string;
     generalSettingsCheckingForUpdate: string;
     generalSettingsDownloadUpdate: string;

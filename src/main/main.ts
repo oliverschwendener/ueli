@@ -191,10 +191,10 @@ function hideMainWindow() {
 
 function toggleMainWindow() {
     if (mainWindow.isVisible()) {
-        if (!config.generalOptions.hideMainWindowOnBlur) {
-            showMainWindow();
-        } else {
+        if (mainWindow.isFocused()) {
             hideMainWindow();
+        } else {
+            showMainWindow();
         }
     } else {
         showMainWindow();
@@ -597,7 +597,7 @@ function registerAllIpcListeners() {
         searchEngine.execute(searchResultItem, privileged)
             .then(() => {
                 userInputHistoryManager.addItem(userInput);
-                if (searchResultItem.hideMainWindowAfterExecution) {
+                if (searchResultItem.hideMainWindowAfterExecution && config.generalOptions.hideMainWindowAfterExecution) {
                     hideMainWindow();
                 } else {
                     updateMainWindowSize(0, config.appearanceOptions);

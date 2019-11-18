@@ -66,6 +66,7 @@ export const russianTranslationSet: TranslationSet = {
     generalSettingsResetWarning: "Вы хотите вернуть все основные настройки по умолчанию. Вы уверены?",
     generalSettingsResetAllSettingsWarning: "Вы хотите вернуть ВСЕ настройки по умолчанию. Вы уверены?",
     generalSettingsClearExecutionLogWarning: "Вы хотите очистить лог выполнения. Вы уверены?",
+    generalSettingsHideMainWindowAfterExecution: "Hide window after execution",
     generalSettingsHideMainWindowOnBlur: "Скрывать окно при потере фокуса",
     generalSettingsCheckingForUpdate: "Проверка доступности обновления",
     generalSettingsDownloadUpdate: "Скачать обновление",
