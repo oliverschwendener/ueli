@@ -2,6 +2,7 @@ import { TranslationSet } from "./translation-set";
 import { Language } from "./language";
 import { englishTranslationSet } from "./english-translation-set";
 import { germanTranslationSet } from "./german-translation-set";
+import { russianTranslationSet } from "./russian-translation-set";
 
 export function getTranslationSet(language: Language): TranslationSet {
     switch (language) {
@@ -9,6 +10,8 @@ export function getTranslationSet(language: Language): TranslationSet {
             return englishTranslationSet;
         case Language.Deutsch:
             return germanTranslationSet;
+        case Language.Russian:
+            return russianTranslationSet;
         default:
             return englishTranslationSet;
     }
