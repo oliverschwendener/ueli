@@ -7,7 +7,7 @@ export function getTranslationSet(language: Language): TranslationSet {
     switch (language) {
         case Language.English:
             return englishTranslationSet;
-        case Language.Deutsch:
+        case Language.German:
             return germanTranslationSet;
         default:
             return englishTranslationSet;
