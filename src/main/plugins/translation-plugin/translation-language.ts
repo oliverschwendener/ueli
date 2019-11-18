@@ -4,4 +4,5 @@ export enum TranslationLanguage {
     Spanish = "es",
     French = "fr",
     Portuguese = "pt",
+    Russian = "ru",
 }

@@ -33,11 +33,13 @@ import { windowIconWindows, windowIconMacOs } from "./helpers/window-icon-helper
 import { toHex } from "./plugins/color-converter-plugin/color-converter-helpers";
 import { deepCopy } from "../common/helpers/object-helpers";
 import { PluginType } from "./plugin-type";
+import { getRescanIntervalInMilliseconds } from "./helpers/rescan-interval-helpers";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
 }
 
+const minimumRefreshIntervalInSeconds = 10;
 const configRepository = new ElectronStoreConfigRepository(deepCopy(defaultUserConfigOptions));
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
 const trayIconFilePath = isWindows(platform()) ? trayIconPathWindows : trayIconPathMacOs;
@@ -69,7 +71,7 @@ const logger = isDev()
 let searchEngine = getProductionSearchEngine(config, translationSet, logger);
 
 let rescanInterval = config.generalOptions.rescanEnabled
-    ? setInterval(() => refreshAllIndexes(), Number(config.generalOptions.rescanIntervalInSeconds) * 1000)
+    ? setInterval(() => refreshAllIndexes(), getRescanIntervalInMilliseconds(Number(config.generalOptions.rescanIntervalInSeconds), minimumRefreshIntervalInSeconds))
     : undefined;
 
 function notifyRenderer(message: string, notificationType: NotificationType) {
@@ -216,7 +218,7 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
         if (rescanInterval) {
             clearInterval(rescanInterval);
         }
-        rescanInterval = setInterval(() => refreshAllIndexes(), updatedConfig.generalOptions.rescanIntervalInSeconds * 1000);
+        rescanInterval = setInterval(() => refreshAllIndexes(), getRescanIntervalInMilliseconds(Number(updatedConfig.generalOptions.rescanIntervalInSeconds), minimumRefreshIntervalInSeconds));
     }
 
     if (!updatedConfig.generalOptions.rescanEnabled) {

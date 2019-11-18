@@ -212,6 +212,9 @@ export const generalSettingsComponent = Vue.extend({
             if (config.generalOptions.rememberWindowPosition) {
                 config.generalOptions.showAlwaysOnPrimaryDisplay = false;
             }
+            if (config.generalOptions.rescanIntervalInSeconds < 10) {
+                config.generalOptions.rescanIntervalInSeconds = 10;
+            }
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, needsIndexRefresh);
         },
         checkForUpdate() {

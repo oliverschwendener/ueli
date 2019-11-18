@@ -18,10 +18,11 @@
       "type": "node",
       "request": "launch",
       "name": "Jest Tests",
-      "program": "${workspaceRoot}/node_modules/jest/bin/jest",
+      "program": "${workspaceRoot}/node_modules/.bin/jest",
       "args": [
         "--config",
-        "jest.json"
+        "jest.json",
+        "--runInBand"
       ],
       "console": "internalConsole",
       "internalConsoleOptions": "neverOpen"

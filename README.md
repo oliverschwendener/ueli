@@ -214,8 +214,6 @@ $ yarn bundle
 $ yarn start
 ```
 
-> Note: there is also a watch task $ yarn bundle:watch which watches the typescript files and bundles them automatically if there are any changes.
-
 ### Debug
 
 For debugging Visual Studio Code is recommended.

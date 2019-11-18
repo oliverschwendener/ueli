@@ -29,7 +29,7 @@ export class ApplicationIconService {
                         this.logger.debug(`Skipping app icon generation. All app icons already exist`);
                         resolve();
                     } else {
-                        this.logger.debug(`${applications.length - applicationsToGenerateIcons.length}/${applications.length} app icons alredy exist`);
+                        this.logger.debug(`${applications.length - applicationsToGenerateIcons.length}/${applications.length} app icons already exist`);
                         this.logger.debug(`Started to generate ${applicationsToGenerateIcons.length} app icons to ${applicationIconLocation}`);
                         this.generateIcons(applicationsToGenerateIcons.map((application) => application.filePath))
                             .then(() => {
