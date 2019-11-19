@@ -321,11 +321,11 @@ export const germanTranslationSet: TranslationSet = {
     browserBookmark: "Lesezeichen",
 
     // PLEASE TRANSLATE THIS
-    spellCheck: 'Spell checker',
-    spellCheckDescription: 'This plugin enables you to quickly check spelling of words.',
-    spellCheckDebounceDelay: 'Debounce delay (in milliseconds)',
-    spellCheckMinSearchTermLength: 'Min search term length',
-    spellCheckPrefix: 'Prefix',
+    spellCheck: "Spell checker",
+    spellCheckDescription: "This plugin enables you to quickly check spelling of words.",
+    spellCheckDebounceDelay: "Debounce delay (in milliseconds)",
+    spellCheckMinSearchTermLength: "Min search term length",
+    spellCheckPrefix: "Prefix",
 
     cancel: "Abbrechen",
     save: "Speichern",

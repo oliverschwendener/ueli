@@ -317,11 +317,11 @@ export interface TranslationSet {
     browserBookmarksUseFavicons: string;
     browserBookmark: string;
 
-    spellCheck: string,
-    spellCheckDescription: string,
-    spellCheckDebounceDelay: string,
-    spellCheckMinSearchTermLength: string,
-    spellCheckPrefix: string,
+    spellCheck: string;
+    spellCheckDescription: string;
+    spellCheckDebounceDelay: string;
+    spellCheckMinSearchTermLength: string;
+    spellCheckPrefix: string;
 
     cancel: string;
     save: string;

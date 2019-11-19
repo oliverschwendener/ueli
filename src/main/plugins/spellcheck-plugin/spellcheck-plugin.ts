@@ -12,7 +12,7 @@ interface SpellcheckResult {
 }
 
 export class SpellcheckPlugin implements ExecutionPlugin {
-    public pluginType = PluginType.Dictionary;
+    public pluginType = PluginType.Spellcheck;
     private config: SpellcheckOptions;
     private readonly clipboardCopier: (value: string) => Promise<void>;
     private delay: NodeJS.Timeout | number;
@@ -27,7 +27,7 @@ export class SpellcheckPlugin implements ExecutionPlugin {
 
         return userInput.startsWith(this.config.prefix)
         && (searchTerm.length >= this.config.minSearchTermLength)
-        && (searchTerm.indexOf(' ') == -1); // only one word
+        && (searchTerm.indexOf(" ") === -1); // only one word
     }
 
     public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
@@ -64,34 +64,24 @@ export class SpellcheckPlugin implements ExecutionPlugin {
         return userInput.replace(this.config.prefix, "");
     }
 
-    private buildSearchResults(word_spellcheck: any): SearchResultItem[] {
-        const SpellcheckResults: SpellcheckResult[] = [];
+    private buildSearchResults(wordSpellcheck: any): SearchResultItem[] {
+        const spellcheckResults: SpellcheckResult[] = [];
 
-        if(word_spellcheck.length) {
-            const suggestions: string[] = word_spellcheck[0].s;
+        if (wordSpellcheck.length) {
+            const suggestions: string[] = wordSpellcheck[0].s;
 
             suggestions.forEach((suggestion: string) => {
-                SpellcheckResults.push({
-                    suggestion: suggestion,
+                spellcheckResults.push({
+                    suggestion,
                 });
             });
         } else {
             return [];
         }
 
-        // else {
-            // as I know, ueli have no api for returnments like
-            // `✔ zero errors found`
-            // it'll be greate to create him
-
-            // SpellcheckResults.push({
-            //     suggestion: 'errors not found!',
-            // });
-        // }
-
-        return SpellcheckResults.map((result): SearchResultItem => {
+        return spellcheckResults.map((result): SearchResultItem => {
             return {
-                description: '',
+                description: "",
                 executionArgument: result.suggestion,
                 hideMainWindowAfterExecution: true,
                 icon: defaultSpellcheckIcon,

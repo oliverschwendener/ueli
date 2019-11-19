@@ -192,7 +192,7 @@ export const russianTranslationSet: TranslationSet = {
     translationSettingsTargetLanguage: "Язык перевода",
 
     everythingSearch: "Поиск с Everything",
-    everythingSearchSettingDescription: `Этот плагин позволяет использовать Everything для поиска файлов и папок на вашем компьютере. Для этого вы должны установить "Everything" и "интерфейс Everything для командной строки" from https://www.voidtools.com/ru-ru/downloads/. После установить, необходимо указать путь до файла 'es.exe' ниже.`,
+    everythingSearchSettingDescription: `Этот плагин позволяет использовать Everything для поиска файлов и папок на вашем компьютере. Для этого вы должны установить "Everything" и "интерфейс Everything для командной строки" from https://www.voidtools.com/ru-ru/downloads/. После установить, необходимо указать путь до файла "es.exe" ниже.`,
     everythingSearchPathToBinary: `Путь к "es.exe"`,
     everythingSearchPrefix: "Префикс",
     everythingSearchMaxSearchResults: "Максимальное кол-во результатов",
@@ -320,11 +320,11 @@ export const russianTranslationSet: TranslationSet = {
     browserBookmarksUseFavicons: "Использовать избранное",
     browserBookmark: "Закладка",
 
-    spellCheck: 'Проверка орфографии',
-    spellCheckDescription: 'Этот плагин позволяет быстро проверять слова на наличие орфографических ошибок.',
-    spellCheckDebounceDelay: 'Задержка между запросами (в миллисекундах)',
-    spellCheckMinSearchTermLength: 'Минимальная длинна запроса',
-    spellCheckPrefix: 'Префикс',
+    spellCheck: "Проверка орфографии",
+    spellCheckDescription: "Этот плагин позволяет быстро проверять слова на наличие орфографических ошибок.",
+    spellCheckDebounceDelay: "Задержка между запросами (в миллисекундах)",
+    spellCheckMinSearchTermLength: "Минимальная длинна запроса",
+    spellCheckPrefix: "Префикс",
 
     cancel: "Отмена",
     save: "Сохранить",

@@ -43,7 +43,7 @@ export const spellCheckSettingsComponent = Vue.extend({
     template: `
         <div v-if="isVisible">
             <div class="settings__setting-title title is-3">
-                <span>{{ translations.dictionary }}</span>
+                <span>{{ translations.spellchecker }}</span>
                 <div>
                     <plugin-toggle :is-enabled="config.spellcheckOptions.isEnabled" :toggled="toggleEnabled"/>
                     <button class="button" @click="resetAll">

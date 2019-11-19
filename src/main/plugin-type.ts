@@ -20,6 +20,7 @@ export enum PluginType {
     Uwp = "uwp",
     ColorConverter = "color-converter",
     Dictionary = "dictionary",
+    Spellcheck = "spellcheck",
     BrowserBookmarks = "browser-bookmarks",
     Test = "test-plugin",
 }
