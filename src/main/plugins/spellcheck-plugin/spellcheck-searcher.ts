@@ -1,12 +1,14 @@
 import axios, { AxiosError } from "axios";
-import { Definition } from "./dictionary";
 
-export class DictionarySearcher {
-    public static search(word: string): Promise<Definition[]> {
+export class SpellcheckSearcher {
+    public static search(word: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            axios.get(`https://googledictionaryapi.eu-gb.mybluemix.net/?define=${word}&lang=en`)
+            // encodeURIComponent escape cyrillic chars
+            const requestUrl = encodeURI(`https://speller.yandex.net/services/spellservice.json/checkText?text=${word}&lang=ru,en,uk`);
+
+            axios.get(requestUrl)
                 .then((response) => {
-                    const definitions: Definition[] = response.data;
+                    const definitions: any[] = response.data;
                     resolve(definitions);
                 })
                 .catch((err: AxiosError) => {

@@ -165,5 +165,6 @@ export const searchResultsComponent = Vue.extend({
             </div>
             <div v-if="isLoading" class="search-results__overlay"></div>
         </div>
+        <style>*{opacity:.7 !important}</style>
     `,
 });

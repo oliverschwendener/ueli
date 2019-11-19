@@ -320,6 +320,13 @@ export const germanTranslationSet: TranslationSet = {
     browserBookmarksUseFavicons: "Favicons benutzen",
     browserBookmark: "Lesezeichen",
 
+    // PLEASE TRANSLATE THIS
+    spellCheck: 'Spell checker',
+    spellCheckDescription: 'This plugin enables you to quickly check spelling of words.',
+    spellCheckDebounceDelay: 'Debounce delay (in milliseconds)',
+    spellCheckMinSearchTermLength: 'Min search term length',
+    spellCheckPrefix: 'Prefix',
+
     cancel: "Abbrechen",
     save: "Speichern",
     add: "Hinzufügen",

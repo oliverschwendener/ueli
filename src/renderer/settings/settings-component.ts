@@ -137,6 +137,7 @@ export const settingsComponent = Vue.extend({
                 <color-converter-setttings :config="config" :translations="translations"></color-converter-setttings>
                 <user-confirmation :translations="translations"></user-confirmation>
                 <browser-bookmark-settings :config="config" :translations="translations"></browser-bookmark-settings>
+                <spellcheck-settings :config="config" :translations="translations"></spellcheck-settings>
             </div>
         </div>
     `,

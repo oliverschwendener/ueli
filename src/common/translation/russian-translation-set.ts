@@ -320,6 +320,12 @@ export const russianTranslationSet: TranslationSet = {
     browserBookmarksUseFavicons: "Использовать избранное",
     browserBookmark: "Закладка",
 
+    spellCheck: 'Проверка орфографии',
+    spellCheckDescription: 'Этот плагин позволяет быстро проверять слова на наличие орфографических ошибок.',
+    spellCheckDebounceDelay: 'Задержка между запросами (в миллисекундах)',
+    spellCheckMinSearchTermLength: 'Минимальная длинна запроса',
+    spellCheckPrefix: 'Префикс',
+
     cancel: "Отмена",
     save: "Сохранить",
     add: "Добавить",

@@ -48,6 +48,7 @@ import { windowsFileSearcher as powershellFileSearcher, macosFileSearcher } from
 import { searchWindowsApplications, searchMacApplications } from "../executors/application-searcher";
 import { generateMacAppIcons } from "../plugins/application-search-plugin/mac-os-app-icon-generator";
 import { DictionaryPlugin } from "../plugins/dictionary-plugin/dictionary-plugin";
+import { SpellcheckPlugin } from "../plugins/spellcheck-plugin/spellcheck-plugin";
 import { BrowserBookmarksPlugin } from "../plugins/browser-bookmarks-plugin/browser-bookmarks-plugin";
 import { GoogleChromeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/google-chrome-bookmark-repository";
 
@@ -144,6 +145,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor),
         new ColorConverterPlugin(config.colorConverterOptions, electronClipboardCopier),
         new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier),
+        new SpellcheckPlugin(config.spellcheckOptions, electronClipboardCopier),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [

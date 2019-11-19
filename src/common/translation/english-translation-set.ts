@@ -320,6 +320,13 @@ export const englishTranslationSet: TranslationSet = {
     browserBookmarksUseFavicons: "Use favicons",
     browserBookmark: "Bookmark",
 
+    // pls translate this rightly if this needs
+    spellCheck: 'Spell checker',
+    spellCheckDescription: 'This plugin enables you to quickly check spelling of words.',
+    spellCheckDebounceDelay: 'Debounce delay (in milliseconds)',
+    spellCheckMinSearchTermLength: 'Min search term length',
+    spellCheckPrefix: 'Prefix',
+
     cancel: "Cancel",
     save: "Save",
     add: "Add",

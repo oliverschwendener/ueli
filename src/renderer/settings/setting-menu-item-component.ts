@@ -40,6 +40,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.commandline;
                 case PluginSettings.Dictionary:
                     return translations.dictionary;
+                case PluginSettings.SpellCheck:
+                    return translations.spellCheck;
                 case PluginSettings.Email:
                     return translations.email;
                 case PluginSettings.FileBrowser:
@@ -99,6 +101,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return config.currencyConverterOptions.isEnabled;
                 case PluginSettings.Dictionary:
                     return config.dictionaryOptions.isEnabled;
+                case PluginSettings.SpellCheck:
+                    return config.spellcheckOptions.isEnabled;
                 case PluginSettings.Email:
                     return config.emailOptions.isEnabled;
                 case PluginSettings.FileBrowser:

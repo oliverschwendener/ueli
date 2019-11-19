@@ -21,6 +21,7 @@ import { UwpSearchOptions, defaultUwpSearchOptions } from "./uwp-search-options"
 import { ColorConverterOptions, defaultColorConverterOptions } from "./color-converter-options";
 import { ApplicationSearchOptions, defaultApplicationSearchOptions } from "./application-search-options";
 import { defaultDictionaryOptions, DictionaryOptions } from "./dictionary-options";
+import { defaultSpellcheckOptions, SpellcheckOptions } from "./spellcheck-options";
 import { BrowserBookmarksOptions, defaultBrowserBookmarksOptions } from "./browser-bookmarks-options";
 
 export interface UserConfigOptions {
@@ -29,6 +30,7 @@ export interface UserConfigOptions {
     applicationSearchOptions: ApplicationSearchOptions;
     everythingSearchOptions: EverythingSearchOptions;
     dictionaryOptions: DictionaryOptions;
+    spellcheckOptions: SpellcheckOptions;
     mdfindOptions: MdFindOptions;
     searchEngineOptions: SearchEngineOptions;
     shortcutOptions: ShortcutOptions;
@@ -60,6 +62,7 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     commandlineOptions: defaultCommandlineOptions,
     currencyConverterOptions: defaultCurrencyConverterOptions,
     dictionaryOptions: defaultDictionaryOptions,
+    spellcheckOptions: defaultSpellcheckOptions,
     emailOptions: defaultEmailOptions,
     everythingSearchOptions: defaultEverythingSearchOptions,
     fileBrowserOptions: defaultFileBrowserOptions,
