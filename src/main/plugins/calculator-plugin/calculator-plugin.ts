@@ -56,6 +56,13 @@ export class CalculatorPlugin implements ExecutionPlugin {
     }
 
     private getInputNumber(userInput: string): string {
-        return userInput.replace(",", ".");
+        const inputWithoutCommas: string = userInput.replace(/,/g, ".");
+
+        if (inputWithoutCommas.indexOf("(") === -1 && inputWithoutCommas.indexOf(")") === -1) {
+            return inputWithoutCommas;
+        } else {
+            // replace all `.` to `,` in brackets
+            return inputWithoutCommas.replace(/(\(.*?)\.(.*?\))/g, "$1,$2");
+        }
     }
 }
