@@ -133,6 +133,23 @@ function registerGlobalKeyboardShortcut(toggleAction: () => void, newHotKey: Glo
     globalShortcut.register(`${newHotKey.modifier ? `${newHotKey.modifier}+` : ``}${newHotKey.key}`, toggleAction);
 }
 
+function calculateX(display: Electron.Display): number {
+    return Math.round(Number(display.bounds.x + (display.bounds.width / 2) - (config.appearanceOptions.windowWidth / 2)));
+}
+
+function calculateY(display: Electron.Display): number {
+    return Math.round(Number(display.bounds.y + (display.bounds.height / 2) - (getMaxWindowHeight(
+        config.appearanceOptions.maxSearchResultsPerPage,
+        config.appearanceOptions.searchResultHeight,
+        config.appearanceOptions.userInputHeight) / 2)));
+}
+
+function onBlur() {
+    if (config.generalOptions.hideMainWindowOnBlur) {
+        hideMainWindow();
+    }
+}
+
 function showMainWindow() {
     if (windowExists(mainWindow)) {
         if (mainWindow.isVisible()) {
@@ -152,27 +169,12 @@ function showMainWindow() {
                     ? lastWindowPosition.y
                     : calculateY(display),
             };
+            app.show();
             mainWindow.setBounds(windowBounds);
             mainWindow.show();
+            mainWindow.focus();
         }
         mainWindow.webContents.send(IpcChannels.mainWindowHasBeenShown);
-    }
-}
-
-function calculateX(display: Electron.Display): number {
-    return Math.round(Number(display.bounds.x + (display.bounds.width / 2) - (config.appearanceOptions.windowWidth / 2)));
-}
-
-function calculateY(display: Electron.Display): number {
-    return Math.round(Number(display.bounds.y + (display.bounds.height / 2) - (getMaxWindowHeight(
-        config.appearanceOptions.maxSearchResultsPerPage,
-        config.appearanceOptions.searchResultHeight,
-        config.appearanceOptions.userInputHeight) / 2)));
-}
-
-function onBlur() {
-    if (config.generalOptions.hideMainWindowOnBlur) {
-        hideMainWindow();
     }
 }
 
@@ -184,6 +186,10 @@ function hideMainWindow() {
             updateMainWindowSize(0, config.appearanceOptions);
             if (windowExists(mainWindow)) {
                 mainWindow.hide();
+
+                if (!settingsWindow || (settingsWindow && settingsWindow.isDestroyed()) || (settingsWindow && !settingsWindow.isDestroyed() && !settingsWindow.isVisible())) {
+                    app.hide();
+                }
             }
         }, 25);
     }
