@@ -23,7 +23,6 @@ export function isValidWebSearchEngineToAdd(websearchEngine: WebSearchEngine): b
     return websearchEngine !== undefined
         && websearchEngine.name.length > 0
         && websearchEngine.url.length > 0
-        && (websearchEngine.url.startsWith("http://") || websearchEngine.url.startsWith("https://"))
         && websearchEngine.url.indexOf("{{query}}") > -1
         && iconCondition;
 }
