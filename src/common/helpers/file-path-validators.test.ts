@@ -5,10 +5,10 @@ const validWindowsFilePaths = [
     "C:\\temp",
     "D:\\hello\\spaces are allowed\\and.this.is.also.valid",
     "C:/Users/Oliver",
+    "\\\\Share\\My Folder",
 ];
 
 const invalidWindowsFilePaths = [
-    "\\Program Files",
     "Program Files",
     "C:Program Files",
     "C::\\Program Files",
