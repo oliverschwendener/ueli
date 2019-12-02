@@ -169,7 +169,9 @@ function showMainWindow() {
                     ? lastWindowPosition.y
                     : calculateY(display),
             };
-            app.show();
+            if (isMacOs(platform())) {
+                app.show();
+            }
             mainWindow.setBounds(windowBounds);
             mainWindow.show();
             mainWindow.focus();
@@ -187,8 +189,12 @@ function hideMainWindow() {
             if (windowExists(mainWindow)) {
                 mainWindow.hide();
 
-                if (!settingsWindow || (settingsWindow && settingsWindow.isDestroyed()) || (settingsWindow && !settingsWindow.isDestroyed() && !settingsWindow.isVisible())) {
-                    app.hide();
+                if (isMacOs(platform())) {
+                    if (!settingsWindow
+                        || (settingsWindow && settingsWindow.isDestroyed())
+                        || (settingsWindow && !settingsWindow.isDestroyed() && !settingsWindow.isVisible())) {
+                        app.hide();
+                    }
                 }
             }
         }, 25);
