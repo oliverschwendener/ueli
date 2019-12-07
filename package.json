@@ -60,8 +60,8 @@
     "typescript": "^3.5.3",
     "vue": "^2.6.10",
     "vue-color": "^2.7.0",
-    "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
     "winston": "^3.2.1"
   },
   "dependencies": {
