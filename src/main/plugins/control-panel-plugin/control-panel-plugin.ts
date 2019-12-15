@@ -15,7 +15,7 @@ export class ControlPanelPlugin implements SearchPlugin {
     public pluginType = PluginType.ControlPanel;
     private controlPanelItems: ControlPanelItem[] = [];
 
-    constructor(private config: ControlPanelOptions, private logger: Logger) {}
+    constructor(private config: ControlPanelOptions, private readonly logger: Logger) {}
 
     public isEnabled(): boolean {
         return this.config.isEnabled;
@@ -24,7 +24,7 @@ export class ControlPanelPlugin implements SearchPlugin {
     public async execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         const shell = new Powershell({});
         shell.addCommand(`powershell -Command "Show-ControlPanelItem -Name '${searchResultItem.executionArgument}'"`);
-        shell.invoke().catch(reason => this.logger.error('Opening control panel item failed: ' + reason));
+        shell.invoke().catch((reason) => this.logger.error("Opening control panel item failed: " + reason));
     }
 
     public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
