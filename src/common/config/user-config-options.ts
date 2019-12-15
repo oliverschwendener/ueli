@@ -22,6 +22,7 @@ import { ColorConverterOptions, defaultColorConverterOptions } from "./color-con
 import { ApplicationSearchOptions, defaultApplicationSearchOptions } from "./application-search-options";
 import { defaultDictionaryOptions, DictionaryOptions } from "./dictionary-options";
 import { BrowserBookmarksOptions, defaultBrowserBookmarksOptions } from "./browser-bookmarks-options";
+import { ControlPanelOptions, defaultControlPanelOptions } from "./control-panel-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -48,6 +49,7 @@ export interface UserConfigOptions {
     colorConverterOptions: ColorConverterOptions;
     uwpSearchOptions: UwpSearchOptions;
     browserBookmarksOptions: BrowserBookmarksOptions;
+    controlPanelOptions: ControlPanelOptions;
 }
 
 export const defaultUserConfigOptions: UserConfigOptions = {
@@ -58,6 +60,7 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     colorConverterOptions: defaultColorConverterOptions,
     colorThemeOptions: defaultColorThemeOptions,
     commandlineOptions: defaultCommandlineOptions,
+    controlPanelOptions: defaultControlPanelOptions,
     currencyConverterOptions: defaultCurrencyConverterOptions,
     dictionaryOptions: defaultDictionaryOptions,
     emailOptions: defaultEmailOptions,

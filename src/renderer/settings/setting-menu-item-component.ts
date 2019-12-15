@@ -38,6 +38,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.currencyConverter;
                 case PluginSettings.Commandline:
                     return translations.commandline;
+                case PluginSettings.ControlPanel:
+                    return translations.controlPanel;
                 case PluginSettings.Dictionary:
                     return translations.dictionary;
                 case PluginSettings.Email:
@@ -95,6 +97,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return config.colorConverterOptions.isEnabled;
                 case PluginSettings.Commandline:
                     return config.commandlineOptions.isEnabled;
+                case PluginSettings.ControlPanel:
+                    return config.controlPanelOptions.isEnabled;
                 case PluginSettings.CurrencyConverter:
                     return config.currencyConverterOptions.isEnabled;
                 case PluginSettings.Dictionary:

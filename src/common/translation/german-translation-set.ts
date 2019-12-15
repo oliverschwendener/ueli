@@ -339,4 +339,7 @@ export const germanTranslationSet: TranslationSet = {
     chooseFile: "Datei auswählen",
     chooseFolder: "Ordner auswählen",
     restartRequired: "Neustart erforderlich",
+
+    controlPanel: "Systemsteuerung",
+    controlPanelSettingsDescription: "Dieses Plugin erlaubt es dir, Elemente der Systemsteuerung schnell zu finden.",
 };

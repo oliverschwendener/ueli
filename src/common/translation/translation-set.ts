@@ -336,4 +336,7 @@ export interface TranslationSet {
     chooseFile: string;
     chooseFolder: string;
     restartRequired: string;
+
+    controlPanel: string;
+    controlPanelSettingsDescription: string;
 }

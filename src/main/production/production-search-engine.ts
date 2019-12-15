@@ -50,6 +50,7 @@ import { generateMacAppIcons } from "../plugins/application-search-plugin/mac-os
 import { DictionaryPlugin } from "../plugins/dictionary-plugin/dictionary-plugin";
 import { BrowserBookmarksPlugin } from "../plugins/browser-bookmarks-plugin/browser-bookmarks-plugin";
 import { GoogleChromeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/google-chrome-bookmark-repository";
+import { ControlPanelPlugin } from "../plugins/control-panel-plugin/control-panel-plugin";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -165,6 +166,10 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
                 executeCommand,
             ),
         );
+        searchPlugins.push(
+            new ControlPanelPlugin(
+                config.controlPanelOptions,
+                logger));
     }
     if (isMacOs(platform())) {
         executionPlugins.push(

@@ -339,4 +339,7 @@ export const englishTranslationSet: TranslationSet = {
     chooseFile: "Choose file",
     chooseFolder: "Choose folder",
     restartRequired: "Restart required",
+
+    controlPanel: "Control Panel",
+    controlPanelSettingsDescription: "This plugin enables you to quickly find control panel items.",
 };
