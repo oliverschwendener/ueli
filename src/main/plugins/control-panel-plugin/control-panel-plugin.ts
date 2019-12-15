@@ -24,7 +24,9 @@ export class ControlPanelPlugin implements SearchPlugin {
     public async execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         const shell = new Powershell({});
         shell.addCommand(`powershell -Command "Show-ControlPanelItem -Name '${searchResultItem.executionArgument}'"`);
-        shell.invoke().catch((reason) => this.logger.error("Opening control panel item failed: " + reason));
+        shell.invoke()
+            .catch((reason) => this.logger.error("Opening control panel item failed: " + reason))
+            .finally(() => shell.dispose());
     }
 
     public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
