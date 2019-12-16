@@ -13,9 +13,15 @@ import * as Powershell from "node-powershell";
 
 export class ControlPanelPlugin implements SearchPlugin {
     public pluginType = PluginType.ControlPanel;
-    private controlPanelItems: ControlPanelItem[] = [];
+    private controlPanelItems: ControlPanelItem[];
+    private config: ControlPanelOptions;
+    private readonly logger: Logger;
 
-    constructor(private config: ControlPanelOptions, private readonly logger: Logger) {}
+    constructor(config: ControlPanelOptions, logger: Logger) {
+        this.config = config;
+        this.logger = logger;
+        this.controlPanelItems = [];
+    }
 
     public isEnabled(): boolean {
         return this.config.isEnabled;
