@@ -38,8 +38,6 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.currencyConverter;
                 case PluginSettings.Commandline:
                     return translations.commandline;
-                case PluginSettings.ControlPanel:
-                    return translations.controlPanel;
                 case PluginSettings.Dictionary:
                     return translations.dictionary;
                 case PluginSettings.Email:
@@ -60,6 +58,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.url;
                 case PluginSettings.WebSearch:
                     return translations.websearch;
+                case SettingOsSpecific.ControlPanel:
+                    return translations.controlPanel;
                 case SettingOsSpecific.Everything:
                     return translations.everythingSearch;
                 case SettingOsSpecific.MdFind:
@@ -97,8 +97,6 @@ export const settingMenuItemComponent = Vue.extend({
                     return config.colorConverterOptions.isEnabled;
                 case PluginSettings.Commandline:
                     return config.commandlineOptions.isEnabled;
-                case PluginSettings.ControlPanel:
-                    return config.controlPanelOptions.isEnabled;
                 case PluginSettings.CurrencyConverter:
                     return config.currencyConverterOptions.isEnabled;
                 case PluginSettings.Dictionary:
@@ -123,6 +121,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return config.websearchOptions.isEnabled;
                 case PluginSettings.Workflow:
                     return config.workflowOptions.isEnabled;
+                case SettingOsSpecific.ControlPanel.replace(`${platform()}:`, ""):
+                    return config.controlPanelOptions.isEnabled;
                 case SettingOsSpecific.Everything.replace(`${platform()}:`, ""):
                     return config.everythingSearchOptions.enabled;
                 case SettingOsSpecific.MdFind.replace(`${platform()}:`, ""):

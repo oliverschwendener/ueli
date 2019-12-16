@@ -1,17 +1,18 @@
 import Vue from "vue";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
-import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { deepCopy } from "../../common/helpers/object-helpers";
 import { defaultControlPanelOptions } from "../../common/config/control-panel-options";
+import { SettingOsSpecific } from "./settings-os-specific";
+import { platform } from "os";
 
 export const controlPanelSettingsComponent = Vue.extend({
     data() {
         return {
-            settingName: PluginSettings.ControlPanel,
+            settingName: SettingOsSpecific.ControlPanel.replace(`${platform()}:`, ""),
             visible: false,
         };
     },
