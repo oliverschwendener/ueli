@@ -70,12 +70,16 @@ export class ControlPanelPlugin implements SearchPlugin {
 
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            ControlPanelItemsRetriever.RetrieveControlPanelItems(this.controlPanelItems)
+            if (this.config.isEnabled) {
+                ControlPanelItemsRetriever.RetrieveControlPanelItems(this.controlPanelItems)
                 .then((controlPanelItems) => {
                     this.controlPanelItems = controlPanelItems;
                     resolve();
                 })
                 .catch((resaon) => reject(resaon));
+            } else {
+                resolve();
+            }
         });
     }
 
