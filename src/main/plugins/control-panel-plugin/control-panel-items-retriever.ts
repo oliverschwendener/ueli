@@ -3,55 +3,59 @@ import { ControlPanelItem } from "./control-panel-item";
 import * as Powershell from "node-powershell";
 
 export class ControlPanelItemsRetriever {
-    public static async RetrieveControlPanelItems(alreadyKnownItems: ControlPanelItem[]): Promise<ControlPanelItem[]> {
-        const controlPanelItemsJson = await this.executeCommandWithUtf8Output('powershell -Command "Get-ControlPanelItem | ConvertTo-Json"');
-        const controlPanelItems: ControlPanelItem[] = JSON.parse(controlPanelItemsJson);
+    public static RetrieveControlPanelItems(alreadyKnownItems: ControlPanelItem[]): Promise<ControlPanelItem[]> {
+        return new Promise((resolve, reject) => {
+            this.executeCommandWithUtf8Output('powershell -Command "Get-ControlPanelItem | ConvertTo-Json"')
+                .then((controlPanelItemsJson) => {
+                    const controlPanelItems: ControlPanelItem[] = JSON.parse(controlPanelItemsJson);
 
-        const alreadyKnownItemsStillPresent = controlPanelItems.filter((item) => alreadyKnownItems.some((i) => i.Name === item.Name));
-        const newControlPanelItems = controlPanelItems.filter((item) => !alreadyKnownItems.some((i) => i.Name === item.Name));
+                    const alreadyKnownItemsStillPresent = controlPanelItems.filter((item) => alreadyKnownItems.some((i) => i.Name === item.Name));
+                    const newControlPanelItems = controlPanelItems.filter((item) => !alreadyKnownItems.some((i) => i.Name === item.Name));
 
-        const iconSize = 128;
-        const getIconsCommand = `
-$iconExtractorCode = '${this.iconExtractorCode}';
-$iconExtractorType = Add-Type -TypeDefinition $iconExtractorCode -PassThru -ReferencedAssemblies 'System.Drawing.dll';
-$ErrorActionPreference = "SilentlyContinue";
+                    const iconSize = 128;
+                    const getIconsCommand = `
+            $iconExtractorCode = '${this.iconExtractorCode}';
+            $iconExtractorType = Add-Type -TypeDefinition $iconExtractorCode -PassThru -ReferencedAssemblies 'System.Drawing.dll';
+            $ErrorActionPreference = "SilentlyContinue";
 
-Get-Item -Path "Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ControlPanel\\NameSpace\\*" |
-    Select-Object -ExpandProperty Name |
-    ForEach-Object {
-        if ($_.substring($_.lastindexof("\\") + 1) -match "{.+}") { return $Matches[0] }
-        else { return $null }
-    } |
-    Where-Object { $_ -ne $null } |
-    ForEach-Object {
-        $defaultIconValue = Get-ItemPropertyValue -Path "Registry::HKEY_CLASSES_ROOT\\CLSID\\$_\\DefaultIcon" -Name "(default)";
-        $defaultIconValueSplit = $defaultIconValue.Split(',');
-        $iconPath = $defaultIconValueSplit[0];
-        $iconIndex = if ($defaultIconValueSplit.Length -gt 1) { $defaultIconValueSplit[1] } else { $null };
-        $iconBase64 = $iconExtractorType[0]::GetIconAsBase64($iconPath, ${iconSize}, $iconIndex);
-        @{
-            applicationName = Get-ItemPropertyValue -Path "Registry::HKEY_CLASSES_ROOT\\CLSID\\$_" -Name "System.ApplicationName";
-            iconBase64 = $iconBase64;
-        };
-    } |
-    ConvertTo-Json
-        `;
-        let controlPanelItemIcons: Array<{ applicationName: string, iconBase64: string }> = [];
-        const shell = new Powershell({});
-        try {
-            await shell.addCommand(getIconsCommand);
-            const controlPanelItemIconsJson = await shell.invoke();
-            controlPanelItemIcons = JSON.parse(controlPanelItemIconsJson);
-        } finally {
-            await shell.dispose();
-        }
-        for (const icon of controlPanelItemIcons) {
-            const item = newControlPanelItems.find((i) => i.CanonicalName === icon.applicationName);
-            if (item != null && icon.iconBase64 != null) {
-                item.IconBase64 = icon.iconBase64;
-            }
-        }
-        return alreadyKnownItemsStillPresent.concat(newControlPanelItems);
+            Get-Item -Path "Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ControlPanel\\NameSpace\\*" |
+                Select-Object -ExpandProperty Name |
+                ForEach-Object {
+                    if ($_.substring($_.lastindexof("\\") + 1) -match "{.+}") { return $Matches[0] }
+                    else { return $null }
+                } |
+                Where-Object { $_ -ne $null } |
+                ForEach-Object {
+                    $defaultIconValue = Get-ItemPropertyValue -Path "Registry::HKEY_CLASSES_ROOT\\CLSID\\$_\\DefaultIcon" -Name "(default)";
+                    $defaultIconValueSplit = $defaultIconValue.Split(',');
+                    $iconPath = $defaultIconValueSplit[0];
+                    $iconIndex = if ($defaultIconValueSplit.Length -gt 1) { $defaultIconValueSplit[1] } else { $null };
+                    $iconBase64 = $iconExtractorType[0]::GetIconAsBase64($iconPath, ${iconSize}, $iconIndex);
+                    @{
+                        applicationName = Get-ItemPropertyValue -Path "Registry::HKEY_CLASSES_ROOT\\CLSID\\$_" -Name "System.ApplicationName";
+                        iconBase64 = $iconBase64;
+                    };
+                } |
+                ConvertTo-Json
+                    `;
+                    const shell = new Powershell({});
+                    shell.addCommand(getIconsCommand)
+                        .then(() => shell.invoke())
+                        .then(
+                            (controlPanelItemIconsJson) => {
+                                const controlPanelItemIcons: Array<{ applicationName: string, iconBase64: string }> = JSON.parse(controlPanelItemIconsJson);
+                                for (const icon of controlPanelItemIcons) {
+                                    const item = newControlPanelItems.find((i) => i.CanonicalName === icon.applicationName);
+                                    if (item != null && icon.iconBase64 != null) {
+                                        item.IconBase64 = icon.iconBase64;
+                                    }
+                                }
+                                resolve(alreadyKnownItemsStillPresent.concat(newControlPanelItems));
+                            })
+                        .finally(() => shell.dispose())
+                        .catch((reason) => reject(reason));
+                }).catch((reason) => reject(reason));
+        });
     }
 
     private static readonly iconExtractorCode = `

@@ -60,7 +60,14 @@ export class ControlPanelPlugin implements SearchPlugin {
     }
 
     public async refreshIndex(): Promise<void> {
-        this.controlPanelItems = await ControlPanelItemsRetriever.RetrieveControlPanelItems(this.controlPanelItems);
+        return new Promise((resolve, reject) => {
+            ControlPanelItemsRetriever.RetrieveControlPanelItems(this.controlPanelItems)
+                .then((controlPanelItems) => {
+                    this.controlPanelItems = controlPanelItems;
+                    resolve();
+                })
+                .catch((resaon) => reject(resaon));
+        });
     }
 
     public async clearCache(): Promise<void> {
