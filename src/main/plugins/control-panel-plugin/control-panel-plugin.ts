@@ -27,39 +27,48 @@ export class ControlPanelPlugin implements SearchPlugin {
         return this.config.isEnabled;
     }
 
-    public async execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        const shell = new Powershell({});
-        shell.addCommand(`powershell -Command "Show-ControlPanelItem -Name '${searchResultItem.executionArgument}'"`);
-        shell.invoke()
-            .catch((reason) => this.logger.error("Opening control panel item failed: " + reason))
-            .finally(() => shell.dispose());
+    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+        return new Promise((resolve) => {
+            const shell = new Powershell({});
+            shell.addCommand(`powershell -Command "Show-ControlPanelItem -Name '${searchResultItem.executionArgument}'"`)
+                .then(() => shell.invoke())
+                .catch((reason) => this.logger.error("Opening control panel item failed: " + reason))
+                .finally(() => shell.dispose());
+            resolve();
+        });
     }
 
-    public async updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        this.config = updatedConfig.controlPanelOptions;
+    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+        return new Promise((resolve) => {
+            this.config = updatedConfig.controlPanelOptions;
+            resolve();
+        });
     }
 
-    public async getAll(): Promise<SearchResultItem[]> {
-        return this.controlPanelItems.map((item) => ({
-            description: item.Description,
-            executionArgument: item.Name,
-            hideMainWindowAfterExecution: true,
-            icon: {
-                parameter: item.IconBase64
-                    ? `data:image/png;base64,${item.IconBase64}`
-                    : defaultControlPanelIcon,
-                type: IconType.URL,
-            },
-            name: item.Name,
-            needsUserConfirmationBeforeExecution: false,
-            originPluginType: PluginType.ControlPanel,
-            searchable: [item.Name, item.Description],
-            supportsAutocompletion: true,
-            supportsOpenLocation: false,
-        }));
+    public getAll(): Promise<SearchResultItem[]> {
+        return new Promise((resolve) => {
+            const searchResultItems = this.controlPanelItems.map((item) => ({
+                description: item.Description,
+                executionArgument: item.Name,
+                hideMainWindowAfterExecution: true,
+                icon: {
+                    parameter: item.IconBase64
+                        ? `data:image/png;base64,${item.IconBase64}`
+                        : defaultControlPanelIcon,
+                    type: IconType.URL,
+                },
+                name: item.Name,
+                needsUserConfirmationBeforeExecution: false,
+                originPluginType: PluginType.ControlPanel,
+                searchable: [item.Name, item.Description],
+                supportsAutocompletion: true,
+                supportsOpenLocation: false,
+            }));
+            resolve(searchResultItems);
+        });
     }
 
-    public async refreshIndex(): Promise<void> {
+    public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
             ControlPanelItemsRetriever.RetrieveControlPanelItems(this.controlPanelItems)
                 .then((controlPanelItems) => {
@@ -70,7 +79,9 @@ export class ControlPanelPlugin implements SearchPlugin {
         });
     }
 
-    public async clearCache(): Promise<void> {
-        // not necessary
+    public clearCache(): Promise<void> {
+        return new Promise((resolve) => {
+            resolve();
+        });
     }
 }
