@@ -8,18 +8,15 @@ import { ControlPanelOptions } from "../../../common/config/control-panel-option
 import { ControlPanelItem } from "./control-panel-item";
 import { defaultControlPanelIcon } from "../../../common/icon/default-icons";
 import { ControlPanelItemsRetriever } from "./control-panel-items-retriever";
-import { Logger } from "../../../common/logger/logger";
 import * as Powershell from "node-powershell";
 
 export class ControlPanelPlugin implements SearchPlugin {
     public pluginType = PluginType.ControlPanel;
     private controlPanelItems: ControlPanelItem[];
     private config: ControlPanelOptions;
-    private readonly logger: Logger;
 
-    constructor(config: ControlPanelOptions, logger: Logger) {
+    constructor(config: ControlPanelOptions) {
         this.config = config;
-        this.logger = logger;
         this.controlPanelItems = [];
     }
 
@@ -28,13 +25,13 @@ export class ControlPanelPlugin implements SearchPlugin {
     }
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             const shell = new Powershell({});
             shell.addCommand(`powershell -Command "Show-ControlPanelItem -Name '${searchResultItem.executionArgument}'"`)
                 .then(() => shell.invoke())
-                .catch((reason) => this.logger.error("Opening control panel item failed: " + reason))
+                .then(() => resolve())
+                .catch((reason) => reject(reason))
                 .finally(() => shell.dispose());
-            resolve();
         });
     }
 

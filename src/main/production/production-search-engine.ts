@@ -168,8 +168,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         );
         searchPlugins.push(
             new ControlPanelPlugin(
-                config.controlPanelOptions,
-                logger));
+                config.controlPanelOptions));
     }
     if (isMacOs(platform())) {
         executionPlugins.push(
