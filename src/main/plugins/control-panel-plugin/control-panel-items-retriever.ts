@@ -9,7 +9,7 @@ export class ControlPanelItemsRetriever {
                 .then((controlPanelItemsJson) => {
                     const controlPanelItems: ControlPanelItem[] = JSON.parse(controlPanelItemsJson);
 
-                    const alreadyKnownItemsStillPresent = controlPanelItems.filter((item) => alreadyKnownItems.some((i) => i.Name === item.Name));
+                    const alreadyKnownItemsStillPresent = alreadyKnownItems.filter((item) => controlPanelItems.some((i) => i.Name === item.Name));
                     const newControlPanelItems = controlPanelItems.filter((item) => !alreadyKnownItems.some((i) => i.Name === item.Name));
 
                     const iconSize = 128;
