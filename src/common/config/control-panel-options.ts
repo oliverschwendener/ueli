@@ -3,5 +3,5 @@ export interface ControlPanelOptions {
 }
 
 export const defaultControlPanelOptions: ControlPanelOptions = {
-    isEnabled: true,
+    isEnabled: false,
 };
