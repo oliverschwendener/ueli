@@ -8,6 +8,7 @@ import { deepCopy } from "../../common/helpers/object-helpers";
 import { defaultControlPanelOptions } from "../../common/config/control-panel-options";
 import { SettingOsSpecific } from "./settings-os-specific";
 import { platform } from "os";
+import { PluginType } from "../../main/plugin-type";
 
 export const controlPanelSettingsComponent = Vue.extend({
     data() {
@@ -37,7 +38,7 @@ export const controlPanelSettingsComponent = Vue.extend({
             vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         updateConfig() {
-            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
+            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, true, PluginType.ControlPanel);
         },
     },
     mounted() {
