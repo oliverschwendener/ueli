@@ -339,4 +339,7 @@ export const russianTranslationSet: TranslationSet = {
     chooseFile: "Выбрать файл",
     chooseFolder: "Выбрать папку",
     restartRequired: "Необходима перезагрузка",
+
+    controlPanel: "панель управления",
+    controlPanelSettingsDescription: "Этот плагин позволяет быстро находить элементы панели управления.",
 };

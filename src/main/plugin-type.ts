@@ -22,4 +22,5 @@ export enum PluginType {
     Dictionary = "dictionary",
     BrowserBookmarks = "browser-bookmarks",
     Test = "test-plugin",
+    ControlPanel = "control-panel-plugin",
 }
