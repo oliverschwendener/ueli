@@ -157,6 +157,7 @@ export const russianTranslationSet: TranslationSet = {
     searchEngineSettingsFuzzynessDescription: "0 = точный, 1 = не точный",
     searchEngineSettingsStrict: "Точный",
     searchEngineSettingsFuzzy: "Не точный",
+    searchEngineSettingsBlacklist: "Черный список",
     searchEngineSettingsMaxSearchResults: "Максимальное число результатов",
     searchEngineSettingsResetWarning: "Вы хотите вернуть все настройки по умолчанию. Вы уверены?",
 

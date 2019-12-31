@@ -154,6 +154,7 @@ export interface TranslationSet {
     searchEngineSettingsFuzzynessDescription: string;
     searchEngineSettingsStrict: string;
     searchEngineSettingsFuzzy: string;
+    searchEngineSettingsBlacklist: string;
     searchEngineSettingsMaxSearchResults: string;
     searchEngineSettingsResetWarning: string;
 

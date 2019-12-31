@@ -11,6 +11,7 @@ import { FavoriteManager } from "./favorites/favorites-manager";
 import { OpenLocationPlugin } from "./open-location-plugin";
 import { AutoCompletionPlugin } from "./auto-completion-plugin";
 import { PluginType } from "./plugin-type";
+import { SearchEngineOptions } from "../common/config/search-engine-options";
 
 interface FuseResult {
     item: SearchResultItem;
@@ -22,19 +23,22 @@ export class SearchEngine {
     private readonly executionPlugins: ExecutionPlugin[];
     private readonly fallbackPlugins: ExecutionPlugin[];
     private translationSet: TranslationSet;
-    private config: UserConfigOptions;
+    private config: SearchEngineOptions;
+    private logExecution: boolean;
     private readonly favoriteManager: FavoriteManager;
 
     constructor(
-        plugins: SearchPlugin[],
+        searchPlugins: SearchPlugin[],
         executionPlugins: ExecutionPlugin[],
         fallbackPlugins: ExecutionPlugin[],
-        config: UserConfigOptions,
+        config: SearchEngineOptions,
+        logExecution: boolean,
         translationSet: TranslationSet,
         favoriteRepository: FavoriteRepository) {
         this.translationSet = translationSet;
         this.config = config;
-        this.searchPlugins = plugins;
+        this.logExecution = logExecution,
+        this.searchPlugins = searchPlugins;
         this.executionPlugins = executionPlugins;
         this.fallbackPlugins = fallbackPlugins;
         this.favoriteManager = new FavoriteManager(favoriteRepository, translationSet);
@@ -89,7 +93,7 @@ export class SearchEngine {
             if (originPlugin !== undefined) {
                 originPlugin.execute(searchResultItem, privileged)
                     .then(() => {
-                        if (this.config.generalOptions.logExecution) {
+                        if (this.logExecution) {
                             this.favoriteManager.increaseCount(searchResultItem);
                         }
                         resolve();
@@ -163,7 +167,8 @@ export class SearchEngine {
             this.translationSet = translationSet;
             this.favoriteManager.updateTranslationSet(translationSet);
 
-            this.config = updatedConfig;
+            this.config = updatedConfig.searchEngineOptions;
+            this.logExecution = updatedConfig.generalOptions.logExecution;
 
             Promise.all(this.getAllPlugins().map((plugin) => plugin.updateConfig(updatedConfig, translationSet)))
                 .then(() => resolve())
@@ -195,12 +200,12 @@ export class SearchEngine {
                         maxPatternLength: 32,
                         minMatchCharLength: 1,
                         shouldSort: true,
-                        threshold: this.config.searchEngineOptions.fuzzyness,
+                        threshold: this.config.fuzzyness,
                     });
 
                     const fuseResult = fuse.search(userInput) as any[];
 
-                    if (this.config.generalOptions.logExecution) {
+                    if (this.logExecution) {
                         fuseResult.forEach((fuseResultItem: FuseResult) => {
                             const favorite = this.favoriteManager.getAllFavorites()
                                 .find((f) => f.item.executionArgument === fuseResultItem.item.executionArgument);
@@ -212,7 +217,7 @@ export class SearchEngine {
 
                     const sorted = fuseResult.sort((a: FuseResult, b: FuseResult) => a.score  - b.score);
                     const filtered = sorted.map((item: FuseResult): SearchResultItem => item.item);
-                    const sliced = filtered.slice(0, this.config.searchEngineOptions.maxSearchResults);
+                    const sliced = filtered.slice(0, this.config.maxSearchResults);
 
                     resolve(sliced);
                 })
@@ -251,7 +256,21 @@ export class SearchEngine {
             searchResults.push(result);
         }
 
+        if (this.config.blackList && this.config.blackList.length > 0) {
+            searchResults = this.filterResultsByBlackList(searchResults, this.config.blackList);
+        }
+
         return(searchResults);
+    }
+
+    private filterResultsByBlackList(items: SearchResultItem[], blackList: string[]) {
+        return items.filter((item) => {
+            return blackList.every((blackListKeyword) => !this.searchResultItemContainsBlackListKeyword(item, blackListKeyword));
+        });
+    }
+
+    private searchResultItemContainsBlackListKeyword(searchResultItem: SearchResultItem, blackListKeyword: string): boolean {
+        return searchResultItem.name.toLowerCase().indexOf(blackListKeyword.toLowerCase()) > -1;
     }
 
     private getAllPlugins(): UeliPlugin[] {

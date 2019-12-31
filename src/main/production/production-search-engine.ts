@@ -184,7 +184,8 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         searchPlugins,
         executionPlugins,
         fallbackPlugins,
-        config,
+        config.searchEngineOptions,
+        config.generalOptions.logExecution,
         translationSet,
         new ElectronStoreFavoriteRepository(),
     );

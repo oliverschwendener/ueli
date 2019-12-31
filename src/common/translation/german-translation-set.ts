@@ -157,6 +157,7 @@ export const germanTranslationSet: TranslationSet = {
     searchEngineSettingsFuzzynessDescription: "0 = strikt, 1 = fuzzy",
     searchEngineSettingsStrict: "Strikt",
     searchEngineSettingsFuzzy: "Fuzzy",
+    searchEngineSettingsBlacklist: "Blacklist",
     searchEngineSettingsMaxSearchResults: "Maximale Suchergebnisse",
     searchEngineSettingsResetWarning: "Du bist dabei alle Suchmaschineneinstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
 

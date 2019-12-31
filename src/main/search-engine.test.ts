@@ -1,7 +1,5 @@
 import { SearchEngine } from "./search-engine";
 import { SearchPlugin } from "./search-plugin";
-import { defaultUserConfigOptions } from "../common/config/user-config-options";
-import { UserConfigOptions } from "../common/config/user-config-options";
 import { englishTranslationSet } from "../common/translation/english-translation-set";
 import { FakeSearchPlugin } from "../tests/fake-search-plugin";
 import { SearchResultItem } from "../common/search-result-item";
@@ -10,6 +8,7 @@ import { dummyIcon } from "../tests/dummy-icon";
 import { ExecutionPlugin } from "./execution-plugin";
 import { TranslationSet } from "../common/translation/translation-set";
 import { FakeFavoriteRepository } from "../tests/fake-favorite-repository";
+import { defaultSearchEngineOptions, SearchEngineOptions } from "../common/config/search-engine-options";
 
 describe(SearchEngine.name, () => {
     const fakeFavoritesRepository = new FakeFavoriteRepository([]);
@@ -29,14 +28,16 @@ describe(SearchEngine.name, () => {
         const searchPlugins: SearchPlugin[] = [
             new FakeSearchPlugin(PluginType.Test, items, true),
         ];
-        const userConfig = {
-            generalOptions: {
-                logExecution: false,
-            },
-        } as UserConfigOptions;
-        const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, englishTranslationSet, fakeFavoritesRepository);
+        const searchEngine = new SearchEngine(
+            searchPlugins,
+            [],
+            [],
+            defaultSearchEngineOptions,
+            false,
+            englishTranslationSet,
+            fakeFavoritesRepository,
+        );
 
         searchEngine.getSearchResults("Google Chrome")
             .then((searchResults) => {
@@ -64,14 +65,16 @@ describe(SearchEngine.name, () => {
         const searchPlugins: SearchPlugin[] = [
             new FakeSearchPlugin(PluginType.Test, items, true),
         ];
-        const userConfig = {
-            generalOptions: {
-                logExecution: false,
-            },
-        } as UserConfigOptions;
-        const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, fakeFavoritesRepository);
+        const searchEngine = new SearchEngine(
+            searchPlugins,
+            [],
+            [],
+            defaultSearchEngineOptions,
+            false,
+            translationSet,
+            fakeFavoritesRepository,
+        );
 
         searchEngine.getSearchResults("blabla")
             .then((searchResults) => {
@@ -99,14 +102,16 @@ describe(SearchEngine.name, () => {
         const searchPlugins: SearchPlugin[] = [
             new FakeSearchPlugin(PluginType.Test, items, true),
         ];
-        const userConfig = {
-            generalOptions: {
-                logExecution: false,
-            },
-        } as UserConfigOptions;
-        const config = Object.assign({}, defaultUserConfigOptions, userConfig);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, fakeFavoritesRepository);
+        const searchEngine = new SearchEngine(
+            searchPlugins,
+            [],
+            [],
+            defaultSearchEngineOptions,
+            false,
+            translationSet,
+            fakeFavoritesRepository,
+        );
 
         searchEngine.getSearchResults("gOoGlE ChRoMe")
             .then((searchResults) => {
@@ -134,17 +139,18 @@ describe(SearchEngine.name, () => {
         const searchPlugins: SearchPlugin[] = [
             new FakeSearchPlugin(PluginType.Test, items, true),
         ];
-        const userConfig = {
-            generalOptions: {
-                logExecution: false,
-            },
-            searchEngineOptions: {
-                fuzzyness: 0.8,
-            },
-        } as UserConfigOptions;
-        const config = Object.assign({}, defaultUserConfigOptions, userConfig);
+        const userOptions = { fuzzyness: 0.8 } as SearchEngineOptions;
+        const config = Object.assign({}, defaultSearchEngineOptions, userOptions);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, fakeFavoritesRepository);
+        const searchEngine = new SearchEngine(
+            searchPlugins,
+            [],
+            [],
+            config,
+            false,
+            translationSet,
+            fakeFavoritesRepository,
+        );
 
         searchEngine.getSearchResults("gglchrm")
             .then((searchResults) => {
@@ -172,17 +178,18 @@ describe(SearchEngine.name, () => {
         const searchPlugins: SearchPlugin[] = [
             new FakeSearchPlugin(PluginType.Test, items, true),
         ];
-        const userConfig = {
-            generalOptions: {
-                logExecution: false,
-            },
-            searchEngineOptions: {
-                fuzzyness: 0.2,
-            },
-        } as UserConfigOptions;
-        const config = Object.assign({}, defaultUserConfigOptions, userConfig);
+        const userOptions = { fuzzyness: 0.2 } as SearchEngineOptions;
+        const config = Object.assign({}, defaultSearchEngineOptions, userOptions);
 
-        const searchEngine = new SearchEngine(searchPlugins, [], [], config, translationSet, fakeFavoritesRepository);
+        const searchEngine = new SearchEngine(
+            searchPlugins,
+            [],
+            [],
+            config,
+            false,
+            translationSet,
+            fakeFavoritesRepository,
+        );
 
         searchEngine.getSearchResults("gglchrm")
             .then((searchResults) => {
@@ -194,14 +201,7 @@ describe(SearchEngine.name, () => {
     });
 
     it("should list frequently accessed items higher", (done) => {
-        const config = {
-            generalOptions: {
-                logExecution: true,
-            },
-            searchEngineOptions: {
-                fuzzyness: 0.4,
-            },
-        } as UserConfigOptions;
+        const logExecution = true;
         const translationSet = {} as TranslationSet;
         const items = [
             { name: "abc", executionArgument: "abc", searchable: ["abc"] },
@@ -224,7 +224,8 @@ describe(SearchEngine.name, () => {
             searchPlugins,
             executionPlugins,
             fallbackPlugins,
-            config,
+            defaultSearchEngineOptions,
+            logExecution,
             translationSet,
             favoritesRepository,
         );
@@ -238,14 +239,6 @@ describe(SearchEngine.name, () => {
     });
 
     it("should only refresh indexes of enabled plugins", (done) => {
-        const config = {
-            generalOptions: {
-                logExecution: true,
-            },
-            searchEngineOptions: {
-                fuzzyness: 0.4,
-            },
-        } as UserConfigOptions;
         const translationSet = {} as TranslationSet;
         const favoritesRepository = new FakeFavoriteRepository([]);
         const fakePlugins = [
@@ -261,7 +254,8 @@ describe(SearchEngine.name, () => {
             searchPlugins,
             executionPlugins,
             fallbackPlugins,
-            config,
+            defaultSearchEngineOptions,
+            false,
             translationSet,
             favoritesRepository,
         );
@@ -277,14 +271,6 @@ describe(SearchEngine.name, () => {
     });
 
     it("should only refresh index of given plugin", (done) => {
-        const config = {
-            generalOptions: {
-                logExecution: true,
-            },
-            searchEngineOptions: {
-                fuzzyness: 0.4,
-            },
-        } as UserConfigOptions;
         const translationSet = {} as TranslationSet;
         const favoritesRepository = new FakeFavoriteRepository([]);
         const fakePlugins = [
@@ -300,7 +286,8 @@ describe(SearchEngine.name, () => {
             searchPlugins,
             executionPlugins,
             fallbackPlugins,
-            config,
+            defaultSearchEngineOptions,
+            false,
             translationSet,
             favoritesRepository,
         );
@@ -318,14 +305,6 @@ describe(SearchEngine.name, () => {
     });
 
     it("should only search entries of enabled plugins", (done) => {
-        const config = {
-            generalOptions: {
-                logExecution: true,
-            },
-            searchEngineOptions: {
-                fuzzyness: 0.4,
-            },
-        } as UserConfigOptions;
         const translationSet = {} as TranslationSet;
         const items = [
             { name: "abc", executionArgument: "abc", searchable: ["abc"] },
@@ -345,7 +324,8 @@ describe(SearchEngine.name, () => {
             searchPlugins,
             executionPlugins,
             fallbackPlugins,
-            config,
+            defaultSearchEngineOptions,
+            false,
             translationSet,
             favoritesRepository,
         );
@@ -354,6 +334,45 @@ describe(SearchEngine.name, () => {
             .then((searchResultItems) => {
                 const actual = searchResultItems.length;
                 const expected = searchPlugins.filter((plugin) => plugin.isEnabled()).length * items.length;
+                expect(actual).toBe(expected);
+                done();
+            })
+            .catch((err) => done(err));
+    });
+
+    it("should filter out entries of blacklist", (done) => {
+        const translationSet = {} as TranslationSet;
+        const blackList = ["abcdef"];
+        const userOptions = {
+            blackList,
+        } as SearchEngineOptions;
+
+        const config = Object.assign({}, defaultSearchEngineOptions, userOptions);
+
+        const items = [
+            { name: "abc", searchable: ["abc"] },
+            { name: "abcd", searchable: ["abcd"] },
+            { name: "abcde", searchable: ["abcde"] },
+            { name: "abcdef", searchable: ["abcdef"] },
+            { name: "abcdefg", searchable: ["abcdefg"] },
+        ] as SearchResultItem[];
+
+        const favoritesRepository = new FakeFavoriteRepository([]);
+        const searchPlugins = [new FakeSearchPlugin(PluginType.Test, items, true)];
+        const searchEngine = new SearchEngine(
+            searchPlugins,
+            [],
+            [],
+            config,
+            false,
+            translationSet,
+            favoritesRepository,
+        );
+
+        searchEngine.getSearchResults("abc")
+            .then((results) => {
+                const actual = results.length;
+                const expected = 3;
                 expect(actual).toBe(expected);
                 done();
             })
