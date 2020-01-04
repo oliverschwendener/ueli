@@ -7,10 +7,14 @@ import { defaultCommandlineOptions } from "../../common/config/commandline-optio
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { deepCopy } from "../../common/helpers/object-helpers";
+import { isWindows } from "../../common/helpers/operating-system-helpers";
+import { platform } from "os";
+import { WindowsShell, MacOsShell } from "../../main/plugins/commandline-plugin/shells";
 
 export const commandlineSettingsComponent = Vue.extend({
     data() {
         return {
+            availableShells: Object.values(isWindows(platform()) ? WindowsShell : MacOsShell).map((shell) => shell.toString()),
             settingName: PluginSettings.Commandline,
             visible: false,
         };
@@ -76,6 +80,21 @@ export const commandlineSettingsComponent = Vue.extend({
                                 <div class="field is-grouped is-grouped-right">
                                     <div class="control">
                                         <input class="input font-mono" v-model="config.commandlineOptions.prefix" @change="updateConfig">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings__option">
+                            <div class="settings__option-name">shell</div>
+                            <div class="settings__option-content">
+                                <div class="field is-grouped is-grouped-right">
+                                    <div class="control">
+                                        <div class="select">
+                                            <select v-model="config.commandlineOptions.shell" @change="updateConfig">
+                                                <option v-for="availableShell in availableShells">{{ availableShell }}</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
