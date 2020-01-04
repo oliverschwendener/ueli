@@ -292,6 +292,7 @@ export interface TranslationSet {
     commandline: string;
     commandlinePrefix: string;
     commandlineSettingsDescription: string;
+    commandlineShell: string;
 
     simpleFolderSearch: string;
     simpleFolderSearchDescription: string;

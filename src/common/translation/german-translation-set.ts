@@ -295,6 +295,7 @@ export const germanTranslationSet: TranslationSet = {
     commandline: "Kommandozeile",
     commandlinePrefix: "Präfix",
     commandlineSettingsDescription: "Dieses Plugin erlaubt es dir schnell Kommandozeilenbefehle auszuführen.",
+    commandlineShell: "Shell",
 
     simpleFolderSearch: "Einfache Ordnersuche",
     simpleFolderSearchDescription: "Dieses Plugin erlaubt es dir, schnell Dateien und Ordner zu finden.",

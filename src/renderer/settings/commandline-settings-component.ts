@@ -86,7 +86,7 @@ export const commandlineSettingsComponent = Vue.extend({
                         </div>
 
                         <div class="settings__option">
-                            <div class="settings__option-name">shell</div>
+                            <div class="settings__option-name">{{ translations.commandlineShell }}</div>
                             <div class="settings__option-content">
                                 <div class="field is-grouped is-grouped-right">
                                     <div class="control">

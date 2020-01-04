@@ -295,6 +295,7 @@ export const russianTranslationSet: TranslationSet = {
     commandline: "Командная строка",
     commandlinePrefix: "Префикс",
     commandlineSettingsDescription: "Этот плагин позволяет быстро выполнять консольные команды.",
+    commandlineShell: "Shell",
 
     simpleFolderSearch: "Простой поиск по директориям",
     simpleFolderSearchDescription: "Этот плагин позволяет быстро искать файлы или папки в указанных директориях.",
