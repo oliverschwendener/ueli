@@ -609,7 +609,6 @@ function registerAllIpcListeners() {
         searchEngine.execute(searchResultItem, privileged)
             .then(() => {
                 userInputHistoryManager.addItem(userInput);
-                
             })
             .catch((err) => logger.error(err));
         if (searchResultItem.hideMainWindowAfterExecution && config.generalOptions.hideMainWindowAfterExecution) {
