@@ -74,10 +74,6 @@ export class DictionaryPlugin implements ExecutionPlugin {
             const keys = Object.keys(definition.meaning);
             keys.forEach((key) => {
                 definition.meaning[key]
-                    .filter((entry: any) => {
-                        return entry.definition
-                            && entry.example;
-                    })
                     .forEach((entry: any) => {
                         dictionaryResults.push({
                             definition: entry.definition,
