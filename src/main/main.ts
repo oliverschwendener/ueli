@@ -609,13 +609,14 @@ function registerAllIpcListeners() {
         searchEngine.execute(searchResultItem, privileged)
             .then(() => {
                 userInputHistoryManager.addItem(userInput);
-                if (searchResultItem.hideMainWindowAfterExecution && config.generalOptions.hideMainWindowAfterExecution) {
-                    hideMainWindow();
-                } else {
-                    updateMainWindowSize(0, config.appearanceOptions);
-                }
+                
             })
             .catch((err) => logger.error(err));
+        if (searchResultItem.hideMainWindowAfterExecution && config.generalOptions.hideMainWindowAfterExecution) {
+            hideMainWindow();
+        } else {
+            updateMainWindowSize(0, config.appearanceOptions);
+        }
     });
 
     ipcMain.on(IpcChannels.openSearchResultLocation, (event: Electron.Event, searchResultItem: SearchResultItem) => {
