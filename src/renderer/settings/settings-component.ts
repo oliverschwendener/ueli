@@ -38,12 +38,11 @@ export const settingsComponent = Vue.extend({
                 type: undefined,
                 visible: false,
             },
-            pluginSettingMenuItems: Object.values(PluginSettings)
-                .concat(Object
-                    .values(SettingOsSpecific)
-                    .filter((setting: string) => setting.startsWith(platform()))
-                    .map((setting: string) => setting.replace(`${platform()}:`, "")))
-                .sort(),
+            pluginSettingMenuItems: Object.values<string>(PluginSettings)
+              .concat(Object.values(SettingOsSpecific)
+                .filter((setting: string) => setting.startsWith(platform()))
+                .map((setting: string) => setting.replace(`${platform()}:`, "")))
+              .sort(),
         };
     },
     methods: {
