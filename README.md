@@ -45,11 +45,27 @@ This plugin is searching for applications on your computer. You can specify the 
 
 ![app-search](assets/feature-app-search.png)
 
+### Browser bookmarks
+
+This plugin enables you to search your browser bookmarks. 
+
+Currently supported browsers:
+
+- Google Chrome
+
+![browser-bookmarks](assets/feature-browser-bookmarks.png)
+
 ### Calculator
 
 This Plugin lets you quickly do simple calculations.
 
 ![calculator](assets/feature-calculator.png)
+
+### Color Converter
+
+This plugin enables you to quickly convert colors into different formats.
+
+![color-converter](assets/feature-color-converter.png)
 
 ### Commandline
 
@@ -57,11 +73,11 @@ This plugin enables you to quickly execute commandline commands.
 
 ![commandline](assets/feature-commandline.png)
 
-### Color Converter
+### Control panel (Windows only)
 
-This plugin enables you to quickly convert colors into different formats.
+This plugin enables you to quickly find control panel items.
 
-![color-converter](assets/feature-color-converter.png)
+![control-panel](assets/feature-control-panel.png)
 
 ### Currency Converter
 
