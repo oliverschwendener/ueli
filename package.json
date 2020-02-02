@@ -13,7 +13,7 @@
     "email": "oliver.schwendener@hotmail.com",
     "url": "https://github.com/oliverschwendener"
   },
-  "description": "This is a keystroke launcher for Windows and macOS.",
+  "description": "A keystroke launcher for Windows and macOS",
   "os": [
     "win32",
     "darwin"
