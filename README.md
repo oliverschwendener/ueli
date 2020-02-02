@@ -2,7 +2,7 @@
 
 # ueli
 
-A keystroke launcher for Windows and macOS.
+This is a keystroke launcher for Windows and macOS.
 
 ![example-image](assets/example-image.png)
 
