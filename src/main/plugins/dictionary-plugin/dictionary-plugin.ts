@@ -11,7 +11,6 @@ import { capitalize } from "../../../common/helpers/string-helpers";
 
 interface DictionaryResult {
     definition: string;
-    example: string;
     type: string;
     synonyms: string[];
 }
@@ -74,10 +73,12 @@ export class DictionaryPlugin implements ExecutionPlugin {
             const keys = Object.keys(definition.meaning);
             keys.forEach((key) => {
                 definition.meaning[key]
+                    .filter((entry:any)=>{
+                        return entry.definition
+                    })
                     .forEach((entry: any) => {
                         dictionaryResults.push({
                             definition: entry.definition,
-                            example: entry.example,
                             synonyms: entry.synonyms ? entry.synonyms : [],
                             type: capitalize(key),
                         });
