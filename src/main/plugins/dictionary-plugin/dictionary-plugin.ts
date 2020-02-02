@@ -74,7 +74,7 @@ export class DictionaryPlugin implements ExecutionPlugin {
             keys.forEach((key) => {
                 definition.meaning[key]
                     .filter((entry: any) => {
-                        return entry.definition
+                        return entry.definition;
                     })
                     .forEach((entry: any) => {
                         dictionaryResults.push({
