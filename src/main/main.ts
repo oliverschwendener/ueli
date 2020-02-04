@@ -611,11 +611,11 @@ function registerAllIpcListeners() {
                 userInputHistoryManager.addItem(userInput);
             })
             .catch((err) => logger.error(err));
-            if (searchResultItem.hideMainWindowAfterExecution && config.generalOptions.hideMainWindowAfterExecution) {
-                hideMainWindow();
-            } else {
-                updateMainWindowSize(0, config.appearanceOptions);
-            }
+        if (searchResultItem.hideMainWindowAfterExecution && config.generalOptions.hideMainWindowAfterExecution) {
+            hideMainWindow();
+        } else {
+            updateMainWindowSize(0, config.appearanceOptions);
+        }
     });
 
     ipcMain.on(IpcChannels.openSearchResultLocation, (event: Electron.Event, searchResultItem: SearchResultItem) => {
