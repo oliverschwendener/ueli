@@ -26,7 +26,6 @@ import { isWindows, isMacOs } from "../common/helpers/operating-system-helpers";
 import { executeFilePathWindows, executeFilePathMacOs } from "./executors/file-path-executor";
 import { WindowPosition } from "../common/window-position";
 import { UpdateCheckResult } from "../common/update-check-result";
-import { executeUrlMacOs } from "./executors/url-executor";
 import { ProductionLogger } from "../common/logger/production-logger";
 import { DevLogger } from "../common/logger/dev-logger";
 import { windowIconWindows, windowIconMacOs } from "./helpers/window-icon-helpers";
@@ -34,6 +33,7 @@ import { toHex } from "./plugins/color-converter-plugin/color-converter-helpers"
 import { deepCopy } from "../common/helpers/object-helpers";
 import { PluginType } from "./plugin-type";
 import { getRescanIntervalInMilliseconds } from "./helpers/rescan-interval-helpers";
+import { openUrlInBrowser } from "./executors/url-executor";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -726,7 +726,9 @@ function registerAllIpcListeners() {
             logger.debug("Downloading updated");
             autoUpdater.downloadUpdate();
         } else if (isMacOs(platform())) {
-            executeUrlMacOs(releaseUrl);
+            openUrlInBrowser(releaseUrl)
+                .then(() => { /* do nothing */ })
+                .catch((err) => logger.error(err));
         }
     });
 }
