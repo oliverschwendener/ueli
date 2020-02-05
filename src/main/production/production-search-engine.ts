@@ -163,7 +163,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
             new UwpPlugin(
                 config.uwpSearchOptions,
                 new InMemoryUwpAppRepository(),
-                executeCommand,
+                filePathExecutor,
             ),
         );
         searchPlugins.push(

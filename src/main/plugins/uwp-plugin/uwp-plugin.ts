@@ -11,16 +11,16 @@ export class UwpPlugin implements SearchPlugin {
     public pluginType = PluginType.Uwp;
     private config: UwpSearchOptions;
     private readonly uwpAppRepository: UwpAppRepository;
-    private readonly commandExecutor: (executionArgument: string) => Promise<void>;
+    private readonly filePathExecutor: (executionArgument: string, privileged: boolean) => Promise<void>;
 
     constructor(
         config: UwpSearchOptions,
         uwpAppRepository: UwpAppRepository,
-        commandExecutor: (executionArgument: string) => Promise<void>,
+        filePathExecutor: (executionArgument: string, privileged: boolean) => Promise<void>,
         ) {
         this.config = config;
         this.uwpAppRepository = uwpAppRepository;
-        this.commandExecutor = commandExecutor;
+        this.filePathExecutor = filePathExecutor;
     }
 
     public getAll(): Promise<SearchResultItem[]> {
@@ -42,7 +42,7 @@ export class UwpPlugin implements SearchPlugin {
         return this.config.isEnabled;
     }
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        return this.commandExecutor(`start ${searchResultItem.executionArgument}`);
+        return this.filePathExecutor(searchResultItem.executionArgument, false);
     }
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
         return new Promise((resolve) => {
