@@ -27,6 +27,7 @@ const macOsApplicationSearchOptions: ApplicationSearchOptions = {
         "/Applications",
         "/System/Library/CoreServices",
         `${homedir()}/Applications`,
+        "/System/Applications",
     ],
     enabled: true,
     showFullFilePath: false,
