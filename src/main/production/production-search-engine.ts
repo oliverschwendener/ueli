@@ -4,7 +4,7 @@ import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/u
 import { ShortcutsSearchPlugin } from "../plugins/shortcuts-search-plugin/shortcuts-search-plugin";
 import { isWindows, isMacOs } from "../../common/helpers/operating-system-helpers";
 import { platform, homedir } from "os";
-import { executeUrlMacOs, executeUrlWindows } from "../executors/url-executor";
+import { openUrlInBrowser } from "../executors/url-executor";
 import { executeFilePathWindows, executeFilePathMacOs } from "../executors/file-path-executor";
 import { SearchEngine } from "../search-engine";
 import { EverythingPlugin } from "../plugins/everything-plugin/everthing-plugin";
@@ -12,7 +12,7 @@ import { SearchPlugin } from "../search-plugin";
 import { ExecutionPlugin } from "../execution-plugin";
 import { MdFindPlugin } from "../plugins/mdfind-plugin/mdfind-plugin";
 import { TranslationPlugin } from "../plugins/translation-plugin/translation-plugin";
-import { executeFilePathLocationMacOs, executeFilePathLocationWindows } from "../executors/file-path-location-executor";
+import { openFileLocation } from "../executors/file-path-location-executor";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { WebSearchPlugin } from "../plugins/websearch-plugin/websearch-plugin";
 import { FileBrowserExecutionPlugin } from "../plugins/filebrowser-plugin/filebrowser-plugin";
@@ -54,8 +54,8 @@ import { ControlPanelPlugin } from "../plugins/control-panel-plugin/control-pane
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
-const filePathLocationExecutor = isWindows(platform()) ? executeFilePathLocationWindows : executeFilePathLocationMacOs;
-const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
+const filePathLocationExecutor = openFileLocation;
+const urlExecutor = openUrlInBrowser;
 const commandlineExecutor = isWindows(platform()) ? windowsCommandLineExecutor : macOsCommandLineExecutor;
 const operatingSystemSettingsRepository = isWindows(platform()) ? new WindowsOperatingSystemSettingRepository() : new MacOsOperatingSystemSettingRepository();
 const operatingSystemSettingExecutor = isWindows(platform()) ? executeWindowsOperatingSystemSetting : executeMacOSOperatingSystemSetting;
@@ -163,7 +163,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
             new UwpPlugin(
                 config.uwpSearchOptions,
                 new InMemoryUwpAppRepository(),
-                executeCommand,
+                filePathExecutor,
             ),
         );
         searchPlugins.push(
