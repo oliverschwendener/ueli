@@ -1,15 +1,27 @@
 import { executeCommand } from "./command-executor";
+import { shell } from "electron";
 
 export function executeFilePathWindows(filePath: string, privileged: boolean): Promise<void> {
     return privileged
         ? executeFilePathWindowsAsPrivileged(filePath)
-        : executeCommand(`start explorer "${filePath}"`);
+        : openFile(filePath);
 }
 
 export function executeFilePathMacOs(filePath: string, privileged: boolean): Promise<void> {
     return privileged
         ? executeFilePathMacOsAsPrivileged(filePath)
-        : executeCommand(`open "${filePath}"`);
+        : openFile(filePath);
+}
+
+function openFile(filePath: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        const result = shell.openItem(filePath);
+        if (result) {
+            resolve();
+        } else {
+            reject(`Failed to open: ${filePath}`);
+        }
+    });
 }
 
 function executeFilePathWindowsAsPrivileged(filePath: string): Promise<void> {
