@@ -217,7 +217,11 @@ export class SearchEngine {
 
                     const sorted = fuseResult.sort((a: FuseResult, b: FuseResult) => a.score  - b.score);
                     const filtered = sorted.map((item: FuseResult): SearchResultItem => item.item);
-                    const sliced = filtered.slice(0, this.config.maxSearchResults);
+                    let sliced = filtered.slice(0, this.config.maxSearchResults);
+
+                    if (this.config.blackList && this.config.blackList.length > 0) {
+                        sliced = this.filterResultsByBlackList(sliced, this.config.blackList);
+                    }
 
                     resolve(sliced);
                 })
@@ -254,10 +258,6 @@ export class SearchEngine {
                 this.translationSet.noSearchResultsFoundDescription,
             );
             searchResults.push(result);
-        }
-
-        if (this.config.blackList && this.config.blackList.length > 0) {
-            searchResults = this.filterResultsByBlackList(searchResults, this.config.blackList);
         }
 
         return(searchResults);

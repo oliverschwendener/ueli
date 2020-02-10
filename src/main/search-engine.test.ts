@@ -2,6 +2,7 @@ import { SearchEngine } from "./search-engine";
 import { SearchPlugin } from "./search-plugin";
 import { englishTranslationSet } from "../common/translation/english-translation-set";
 import { FakeSearchPlugin } from "../tests/fake-search-plugin";
+import { FakeExecutionPlugin } from "../tests/fake-execution-plugin";
 import { SearchResultItem } from "../common/search-result-item";
 import { PluginType } from "./plugin-type";
 import { dummyIcon } from "../tests/dummy-icon";
@@ -340,12 +341,10 @@ describe(SearchEngine.name, () => {
             .catch((err) => done(err));
     });
 
-    it("should filter out entries of blacklist", (done) => {
+    it("should filter out blacklist entries of search plugin items", (done) => {
         const translationSet = {} as TranslationSet;
-        const blackList = ["abcdef"];
-        const userOptions = {
-            blackList,
-        } as SearchEngineOptions;
+        const blackList = ["abcde"];
+        const userOptions = { blackList } as SearchEngineOptions;
 
         const config = Object.assign({}, defaultSearchEngineOptions, userOptions);
 
@@ -371,9 +370,42 @@ describe(SearchEngine.name, () => {
 
         searchEngine.getSearchResults("abc")
             .then((results) => {
-                const actual = results.length;
-                const expected = 3;
-                expect(actual).toBe(expected);
+                expect(results.length).toBe(2);
+                done();
+            })
+            .catch((err) => done(err));
+    });
+
+    it("should not filter out blacklist entries of execution plugin items", (done) => {
+        const translationSet = {} as TranslationSet;
+        const blackList = ["abc"];
+        const userOptions = { blackList } as SearchEngineOptions;
+
+        const config = Object.assign({}, defaultSearchEngineOptions, userOptions);
+
+        const items = [
+            { name: "abc", searchable: ["abc"] },
+            { name: "abcd", searchable: ["abcd"] },
+            { name: "abcde", searchable: ["abcde"] },
+            { name: "abcdef", searchable: ["abcdef"] },
+            { name: "abcdefg", searchable: ["abcdefg"] },
+        ] as SearchResultItem[];
+
+        const favoritesRepository = new FakeFavoriteRepository([]);
+        const executionPlugins = [new FakeExecutionPlugin(true, true, items)];
+        const searchEngine = new SearchEngine(
+            [],
+            executionPlugins,
+            [],
+            config,
+            false,
+            translationSet,
+            favoritesRepository,
+        );
+
+        searchEngine.getSearchResults("abc")
+            .then((results) => {
+                expect(results.length).toBe(items.length);
                 done();
             })
             .catch((err) => done(err));
