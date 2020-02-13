@@ -169,8 +169,12 @@ function showMainWindow() {
                     ? lastWindowPosition.y
                     : calculateY(display),
             };
+            // this is a workaround to restore the focus on the previously focussed window
             if (isMacOs(platform())) {
                 app.show();
+            }
+            if (isWindows(platform())) {
+                mainWindow.restore();
             }
             mainWindow.setBounds(windowBounds);
             mainWindow.show();
@@ -187,8 +191,13 @@ function hideMainWindow() {
         setTimeout(() => {
             updateMainWindowSize(0, config.appearanceOptions);
             if (windowExists(mainWindow)) {
+                // this is a workaround to restore the focus on the previously focussed window
+                if (isWindows(platform())) {
+                    mainWindow.minimize();
+                }
                 mainWindow.hide();
 
+                // this is a workaround to restore the focus on the previously focussed window
                 if (isMacOs(platform())) {
                     if (!settingsWindow
                         || (settingsWindow && settingsWindow.isDestroyed())
