@@ -18,6 +18,7 @@ export interface GeneralOptions {
     rescanIntervalInSeconds: number;
     showAlwaysOnPrimaryDisplay: boolean;
     showTrayIcon: boolean;
+    showOnAllWorkSpaces: boolean;
 }
 
 export const defaultGeneralOptions: GeneralOptions = {
@@ -37,5 +38,6 @@ export const defaultGeneralOptions: GeneralOptions = {
     rescanEnabled: true,
     rescanIntervalInSeconds: 300,
     showAlwaysOnPrimaryDisplay: false,
+    showOnAllWorkSpaces: true,
     showTrayIcon: true,
 };
