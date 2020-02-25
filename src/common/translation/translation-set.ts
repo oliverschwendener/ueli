@@ -47,8 +47,8 @@ export interface TranslationSet {
     generalSettingsLogExecution: string;
     generalSettingsPersistentUserInput: string;
     generalSettingsAutostartApp: string;
-    generalSettingsShowTrayIcon: string;
     generalSettingsShowOnAllWorkSpaces: string;
+    generalSettingsShowTrayIcon: string;
     generalSettingsClearCachesOnExit: string;
     generalSettingsHotKey: string;
     generalSettingsRescanIntervalEnabled: string;
