@@ -446,6 +446,11 @@ function createMainWindow() {
         },
         width: config.appearanceOptions.windowWidth,
     });
+
+    if (isMacOs(platform())) {
+        mainWindow.setVisibleOnAllWorkspaces(true, {visibleOnFullScreen: true});
+    }
+
     mainWindow.on("blur", onBlur);
     mainWindow.on("closed", quitApp);
     mainWindow.on("move", onMainWindowMove);
