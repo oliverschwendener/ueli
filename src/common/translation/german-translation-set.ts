@@ -51,6 +51,7 @@ export const germanTranslationSet: TranslationSet = {
     generalSettingsPersistentUserInput: "Persistente Benutzereingabe",
     generalSettingsAutostartApp: "App bei Systemstart starten",
     generalSettingsShowTrayIcon: "Symbol im Systemtray anzeigen",
+    generalSettingsShowOnAllWorkSpaces: "In allen Arbeitsbereichen anzeigen",
     generalSettingsClearCachesOnExit: "Zwischenspeicher beim Beenden löschen",
     generalSettingsHotKey: "Hot Key",
     generalSettingsRescanIntervalEnabled: "Periodischer Rescan aktiviert",
