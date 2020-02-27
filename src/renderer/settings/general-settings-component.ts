@@ -522,20 +522,6 @@ export const generalSettingsComponent = Vue.extend({
                         </div>
 
                         <div class="settings__option">
-                            <div class="settings__option-name">{{ translations.generalSettingsShowOnAllWorkSpaces }}</div>
-                            <div class="settings__option-content">
-                                <div class="field has-addons has-addons-right vertical-center">
-                                    <div class="control">
-                                        <input id="showOnAllWorkSpaces" type="checkbox" name="showTrayOnAllWorkSpaces" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.showOnAllWorkSpaces" @change="updateConfig()">
-                                        <label for="showOnAllWorkSpaces"></label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="settings__option">
                             <div class="settings__option-name">Update</div>
                             <div class="settings__option-content">
                                 <div class="field has-addons has-addons-right vertical-center">

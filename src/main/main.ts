@@ -280,10 +280,6 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
 
     config = updatedConfig;
 
-    if (updatedConfig.generalOptions.showOnAllWorkSpaces !== config.generalOptions.showOnAllWorkSpaces) {
-        updateWindowVisibleOnAllWorkspaces(updatedConfig.generalOptions.showOnAllWorkSpaces);
-    }
-
     updateTrayIcon(updatedConfig);
     updateAutoStartOptions(updatedConfig);
 
@@ -451,19 +447,12 @@ function createMainWindow() {
         width: config.appearanceOptions.windowWidth,
     });
 
-    updateWindowVisibleOnAllWorkspaces(config.generalOptions.showOnAllWorkSpaces);
+    mainWindow.setVisibleOnAllWorkspaces(true, {visibleOnFullScreen: true});
 
     mainWindow.on("blur", onBlur);
     mainWindow.on("closed", quitApp);
     mainWindow.on("move", onMainWindowMove);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
-}
-
-function updateWindowVisibleOnAllWorkspaces(visible: boolean) {
-    if (isMacOs(platform())) {
-        mainWindow.setVisibleOnAllWorkspaces(visible, {visibleOnFullScreen: visible});
-        mainWindow.reload();
-    }
 }
 
 function mainWindowNeedsToBeTransparent(userConfigOptions: UserConfigOptions): boolean {

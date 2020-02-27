@@ -51,7 +51,6 @@ export const russianTranslationSet: TranslationSet = {
     generalSettingsPersistentUserInput: "Сохранять пользовательский ввод",
     generalSettingsAutostartApp: "Запускать ueli вместе с Windows",
     generalSettingsShowTrayIcon: "Показывать иконку в трее",
-    generalSettingsShowOnAllWorkSpaces: "Показать во всех рабочих пространствах",
     generalSettingsClearCachesOnExit: "Очищать кэш при выходе",
     generalSettingsHotKey: "Горячая главиша",
     generalSettingsRescanIntervalEnabled: "Переодическое сканирование включено",
