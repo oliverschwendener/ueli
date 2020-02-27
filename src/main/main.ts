@@ -446,6 +446,9 @@ function createMainWindow() {
         },
         width: config.appearanceOptions.windowWidth,
     });
+
+    mainWindow.setVisibleOnAllWorkspaces(true, {visibleOnFullScreen: true});
+
     mainWindow.on("blur", onBlur);
     mainWindow.on("closed", quitApp);
     mainWindow.on("move", onMainWindowMove);
