@@ -6,11 +6,11 @@ export class DevLogger implements Logger {
     private readonly logger: Winston.Logger;
 
     constructor() {
-        const { combine, timestamp } = Winston.format;
+        const { combine, timestamp, errors } = Winston.format;
 
         this.logger = Winston.createLogger({
             defaultMeta: { service: "user-service" },
-            format: combine(timestamp(), logFormat),
+            format: combine(errors({stack: true}), timestamp(), logFormat),
             level: "debug",
             transports: [
                 new Winston.transports.Console({ level: "debug" }),
