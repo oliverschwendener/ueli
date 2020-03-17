@@ -249,14 +249,14 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
     }
 
     if (Number(updatedConfig.appearanceOptions.windowWidth) !== Number(config.appearanceOptions.windowWidth)) {
-        mainWindow.setResizable(true);
+        mainWindow.resizable = true;
         mainWindow.setSize(Number(updatedConfig.appearanceOptions.windowWidth), getMaxWindowHeight(
             updatedConfig.appearanceOptions.maxSearchResultsPerPage,
             updatedConfig.appearanceOptions.searchResultHeight,
             updatedConfig.appearanceOptions.userInputHeight));
         updateMainWindowSize(0, updatedConfig.appearanceOptions);
         mainWindow.center();
-        mainWindow.setResizable(false);
+        mainWindow.resizable = false;
     }
 
     if (JSON.stringify(updatedConfig.appearanceOptions) !== JSON.stringify(config.appearanceOptions)) {
@@ -304,7 +304,7 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
 
 function updateMainWindowSize(searchResultCount: number, appearanceOptions: AppearanceOptions, center?: boolean) {
     if (windowExists(mainWindow)) {
-        mainWindow.setResizable(true);
+        mainWindow.resizable = true;
         const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
             ? Math.round(getMaxWindowHeight(
                 appearanceOptions.maxSearchResultsPerPage,
@@ -315,7 +315,7 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
         if (center) {
             mainWindow.center();
         }
-        mainWindow.setResizable(false);
+        mainWindow.resizable = false;
     }
 }
 
@@ -447,7 +447,7 @@ function createMainWindow() {
         width: config.appearanceOptions.windowWidth,
     });
 
-    mainWindow.setVisibleOnAllWorkspaces(true, {visibleOnFullScreen: true});
+    mainWindow.setVisibleOnAllWorkspaces(true);
 
     mainWindow.on("blur", onBlur);
     mainWindow.on("closed", quitApp);
