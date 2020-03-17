@@ -2,10 +2,10 @@ import { shell } from "electron";
 
 export function openFileLocation(filePath: string): Promise<void> {
     return new Promise((resolve, reject) => {
-        const success = shell.showItemInFolder(filePath);
-        if (success) {
+        try {
+            shell.showItemInFolder(filePath);
             resolve();
-        } else {
+        } catch (error) {
             reject(`Could not open the location of ${filePath}`);
         }
     });

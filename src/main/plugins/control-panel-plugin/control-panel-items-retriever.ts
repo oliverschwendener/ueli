@@ -43,7 +43,7 @@ export class ControlPanelItemsRetriever {
                         .then(() => shell.invoke())
                         .then(
                             (controlPanelItemIconsJson) => {
-                                const controlPanelItemIcons: Array<{ applicationName: string, iconBase64: string }> = JSON.parse(controlPanelItemIconsJson);
+                                const controlPanelItemIcons: { applicationName: string, iconBase64: string }[] = JSON.parse(controlPanelItemIconsJson);
                                 for (const icon of controlPanelItemIcons) {
                                     const item = newControlPanelItems.find((i) => i.CanonicalName === icon.applicationName);
                                     if (item != null && icon.iconBase64 != null) {

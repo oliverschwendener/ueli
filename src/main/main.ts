@@ -595,7 +595,7 @@ function registerAllIpcListeners() {
         updateConfig(updatedConfig, needsIndexRefresh, pluginType);
     });
 
-    ipcMain.on(IpcChannels.search, (event: Electron.Event, userInput: string) => {
+    ipcMain.on(IpcChannels.search, (event: Electron.IpcMainEvent, userInput: string) => {
         searchEngine.getSearchResults(userInput)
             .then((result) => updateSearchResults(result, event.sender))
             .catch((err) => {
@@ -604,7 +604,7 @@ function registerAllIpcListeners() {
             });
     });
 
-    ipcMain.on(IpcChannels.favoritesRequested, (event: Electron.Event) => {
+    ipcMain.on(IpcChannels.favoritesRequested, (event: Electron.IpcMainEvent) => {
         searchEngine.getFavorites()
             .then((result) => updateSearchResults(result, event.sender))
             .catch((err) => {
@@ -639,7 +639,7 @@ function registerAllIpcListeners() {
             });
     });
 
-    ipcMain.on(IpcChannels.autoComplete, (event: Electron.Event, searchResultItem: SearchResultItem) => {
+    ipcMain.on(IpcChannels.autoComplete, (event: Electron.IpcMainEvent, searchResultItem: SearchResultItem) => {
         const updatedUserInput = searchEngine.autoComplete(searchResultItem);
         event.sender.send(IpcChannels.autoCompleteResponse, updatedUserInput);
     });
@@ -652,27 +652,19 @@ function registerAllIpcListeners() {
         openSettings();
     });
 
-    ipcMain.on(IpcChannels.folderPathRequested, (event: Electron.Event) => {
-        dialog.showOpenDialog(settingsWindow, {
-            properties: ["openDirectory"],
-        }, (folderPaths: string[]) => {
-            event.sender.send(IpcChannels.folderPathResult, folderPaths);
-        });
+    ipcMain.on(IpcChannels.folderPathRequested, (event: Electron.IpcMainEvent) => {
+        dialog.showOpenDialog(settingsWindow, { properties: ["openDirectory"] })
+            .then((folderPaths) => event.sender.send(IpcChannels.folderPathResult, folderPaths))
+            .catch(() => event.sender.send(IpcChannels.folderPathResult, []));
     });
 
-    ipcMain.on(IpcChannels.filePathRequested, (event: Electron.Event, filters?: Electron.FileFilter[]) => {
-        dialog.showOpenDialog(settingsWindow, {
-            filters,
-            properties: ["openFile"],
-        }, (filePaths: string[]) => {
-            if (!filePaths) {
-                filePaths = [];
-            }
-            event.sender.send(IpcChannels.filePathResult, filePaths);
-        });
+    ipcMain.on(IpcChannels.filePathRequested, (event: Electron.IpcMainEvent, filters?: Electron.FileFilter[]) => {
+        dialog.showOpenDialog(settingsWindow, { filters, properties: ["openFile"] })
+            .then((filePaths) => event.sender.send(IpcChannels.filePathResult, filePaths))
+            .catch(() => event.sender.send(IpcChannels.filePathResult, []));
     });
 
-    ipcMain.on(IpcChannels.clearExecutionLogConfirmed, (event: Electron.Event) => {
+    ipcMain.on(IpcChannels.clearExecutionLogConfirmed, () => {
         searchEngine.clearExecutionLog()
             .then(() => notifyRenderer(translationSet.successfullyClearedExecutionLog, NotificationType.Info))
             .catch((err) => {
@@ -681,24 +673,26 @@ function registerAllIpcListeners() {
             });
     });
 
-    ipcMain.on(IpcChannels.openDebugLogRequested, (event: Electron.Event) => {
+    ipcMain.on(IpcChannels.openDebugLogRequested, () => {
         logger.openLog()
             .then(() => { /* do nothing */ })
             .catch((err) => notifyRenderer(err, NotificationType.Error));
     });
 
-    ipcMain.on(IpcChannels.openTempFolderRequested, (event: Electron.Event) => {
+    ipcMain.on(IpcChannels.openTempFolderRequested, () => {
         filePathExecutor(ueliTempFolder, false);
     });
 
-    ipcMain.on(IpcChannels.selectInputHistoryItem, (event: Electron.Event, direction: string) => {
+    ipcMain.on(IpcChannels.selectInputHistoryItem, (event: Electron.IpcMainEvent, direction: string) => {
         const newUserInput = direction === "next"
             ? userInputHistoryManager.getNext()
             : userInputHistoryManager.getPrevious();
         event.sender.send(IpcChannels.userInputUpdated, newUserInput, true);
     });
 
-    ipcMain.on(IpcChannels.ueliCommandExecuted, (command: UeliCommand) => {
+    ipcMain.on(IpcChannels.ueliCommandExecuted, (command: any) => {
+        command = command as UeliCommand;
+
         switch (command.executionArgument) {
             case UeliCommandExecutionArgument.Exit:
                 quitApp();
@@ -724,7 +718,7 @@ function registerAllIpcListeners() {
         }
     });
 
-    ipcMain.on(IpcChannels.checkForUpdate, (event: Electron.Event) => {
+    ipcMain.on(IpcChannels.checkForUpdate, () => {
         logger.debug("Check for updates");
         if (isDev()) {
             sendMessageToSettingsWindow(IpcChannels.checkForUpdateResponse, UpdateCheckResult.NoUpdateAvailable);
@@ -733,7 +727,7 @@ function registerAllIpcListeners() {
         }
     });
 
-    ipcMain.on(IpcChannels.downloadUpdate, (event: Electron.Event) => {
+    ipcMain.on(IpcChannels.downloadUpdate, () => {
         if (isWindows(platform())) {
             logger.debug("Downloading updated");
             autoUpdater.downloadUpdate();

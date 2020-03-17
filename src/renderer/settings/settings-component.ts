@@ -39,8 +39,10 @@ export const settingsComponent = Vue.extend({
                 visible: false,
             },
             pluginSettingMenuItems: Object.values(PluginSettings)
+                .map((setting) => setting.toString())
                 .concat(Object
                     .values(SettingOsSpecific)
+                    .map((setting) => setting.toString())
                     .filter((setting: string) => setting.startsWith(platform()))
                     .map((setting: string) => setting.replace(`${platform()}:`, "")))
                 .sort(),
