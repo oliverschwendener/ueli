@@ -105,6 +105,7 @@ body {
     box-sizing: border-box;
     font-size: var(--user-input--font-size);
     font-weight: var(--user-input--font-weight);
+    font-family: var(--font-family);
     color: var(--user-input--color);
     -webkit-app-region: no-drag;
 }

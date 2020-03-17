@@ -17,6 +17,8 @@ export const userStylesComponent = Vue.extend({
     },
     template: `<style>
         :root {
+            --font-family: {{ appearance.fontFamily }};
+
             --user-input--height: {{ appearance.userInputHeight }}px;
             --search-results--item-height: {{ appearance.searchResultHeight }}px;
 

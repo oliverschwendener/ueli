@@ -111,6 +111,7 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsShowSearchResultNumbers: "Show search result numbers",
     appearanceSettingsResetWarningMessage: "You are about to reset all appearance settings to default. Do you want to proceed?",
     appearanceSettingsAllowTransparentBackground: "Allow transparent background",
+    appearanceSettingsFontFamily: "Font family",
 
     colorThemeSettings: "Color Theme",
     colorThemeSettingsImportColorTheme: "Import color theme",

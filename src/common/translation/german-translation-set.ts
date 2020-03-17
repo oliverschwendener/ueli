@@ -111,6 +111,7 @@ export const germanTranslationSet: TranslationSet = {
     appearanceSettingsShowSearchResultNumbers: "Nummern für Suchergebnisse anzeigen",
     appearanceSettingsResetWarningMessage: "Du bist dabei alle Erscheiungsbildeinstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
     appearanceSettingsAllowTransparentBackground: "Transparenter Hintergrund erlauben",
+    appearanceSettingsFontFamily: "Schriftart",
 
     colorThemeSettings: "Farbschema",
     colorThemeSettingsImportColorTheme: "Farbschema importieren",

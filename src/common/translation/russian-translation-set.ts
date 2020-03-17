@@ -111,6 +111,7 @@ export const russianTranslationSet: TranslationSet = {
     appearanceSettingsShowSearchResultNumbers: "Показывать кол-во результатов",
     appearanceSettingsResetWarningMessage: "Вы хотите восстановить настройки внешнего вида по умолчанию. Вы уверены?",
     appearanceSettingsAllowTransparentBackground: "Прозрачность фона",
+    appearanceSettingsFontFamily: "семейство шрифтов",
 
     colorThemeSettings: "Цветовые темы",
     colorThemeSettingsImportColorTheme: "Импортировать тему",

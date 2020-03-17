@@ -108,6 +108,7 @@ export interface TranslationSet {
     appearanceSettingsShowSearchResultNumbers: string;
     appearanceSettingsResetWarningMessage: string;
     appearanceSettingsAllowTransparentBackground: string;
+    appearanceSettingsFontFamily: string;
 
     colorThemeSettings: string;
     colorThemeSettingsImportColorTheme: string;
