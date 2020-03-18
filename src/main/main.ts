@@ -654,13 +654,13 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.folderPathRequested, (event: Electron.IpcMainEvent) => {
         dialog.showOpenDialog(settingsWindow, { properties: ["openDirectory"] })
-            .then((folderPaths) => event.sender.send(IpcChannels.folderPathResult, folderPaths))
+            .then((result) => event.sender.send(IpcChannels.folderPathResult, result.filePaths))
             .catch(() => event.sender.send(IpcChannels.folderPathResult, []));
     });
 
     ipcMain.on(IpcChannels.filePathRequested, (event: Electron.IpcMainEvent, filters?: Electron.FileFilter[]) => {
         dialog.showOpenDialog(settingsWindow, { filters, properties: ["openFile"] })
-            .then((filePaths) => event.sender.send(IpcChannels.filePathResult, filePaths))
+            .then((result) => event.sender.send(IpcChannels.filePathResult, result.filePaths))
             .catch(() => event.sender.send(IpcChannels.filePathResult, []));
     });
 
