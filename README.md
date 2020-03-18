@@ -4,7 +4,7 @@
 
 This is a keystroke launcher for Windows and macOS.
 
-![example-image](assets/example-image.png)
+![example-image](assets/feature-app-search.png)
 
 ## Table of contents
 
@@ -84,6 +84,12 @@ This plugin enables you to quickly find control panel items.
 This plugin enables you to quickly convert currencies. The latest conversion rates are provided by https://exchangeratesapi.io/.
 
 ![currency-converter](assets/feature-currency-converter.png)
+
+### Dictionary
+
+This plugin enables you to quickly look up the definition and synonyms of words. It uses an unofficial Google Dictionary API (https://googledictionaryapi.eu-gb.mybluemix.net/)
+
+![dictionary](assets/feature-dictionary.png)
 
 ### Email
 
