@@ -82,21 +82,7 @@ export const searchResultsComponent = Vue.extend({
             if (userInput !== undefined && userInput) {
                 const htmlElement = document.getElementById(index);
                 if (htmlElement !== undefined && htmlElement !== null) {
-                    const outputContainer = document.getElementById(this.containerId);
-                    if (outputContainer !== undefined && outputContainer !== null) {
-                        const elementIsOutOfViewBottom = ((htmlElement.offsetTop - userInput.clientHeight) > (outputContainer.scrollTop + outputContainer.clientHeight - htmlElement.clientHeight));
-                        const elementIsOutOfViewTop = htmlElement.offsetTop - userInput.clientHeight < outputContainer.scrollTop;
-                        if (elementIsOutOfViewBottom) {
-                            const scrollTo = htmlElement.offsetTop - userInput.clientHeight + 30;
-                            outputContainer.scrollTo({ top: scrollTo, behavior: scrollBehavior });
-                        } else if (elementIsOutOfViewTop) {
-                            let scrollTo = htmlElement.offsetTop - outputContainer.clientHeight + 50;
-                            if (scrollTo < 0) {
-                                scrollTo = 0;
-                            }
-                            outputContainer.scrollTo({ top: scrollTo, behavior: scrollBehavior });
-                        }
-                    }
+                    htmlElement.scrollIntoView({ block: "nearest", behavior: scrollBehavior })
                 }
             }
         },
