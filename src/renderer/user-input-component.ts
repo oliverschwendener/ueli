@@ -62,6 +62,15 @@ export const userInputComponent = Vue.extend({
             if (event.key.toLowerCase() === "o" && (event.ctrlKey || event.metaKey)) {
                 vueEventDispatcher.$emit(VueEventChannels.openSearchResultLocationKeyPress);
             }
+            const keyIntger = parseInt(event.key, 10);
+
+            if (event.ctrlKey && !isNaN(keyIntger) && (keyIntger > 0 && keyIntger <= 9)) {
+                event.preventDefault();
+                const userConfirmed: boolean = this.userConfirmationDialogVisible;
+                const privileged: boolean = event.shiftKey;
+                vueEventDispatcher.$emit(VueEventChannels.ctrlNumberExecute, this.userInput, keyIntger - 1, privileged, userConfirmed);
+            }
+
         },
         resetUserInput(): void {
             this.userInput = "";

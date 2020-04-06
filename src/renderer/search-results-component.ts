@@ -137,6 +137,16 @@ export const searchResultsComponent = Vue.extend({
                 }
             }
         });
+        vueEventDispatcher.$on(VueEventChannels.ctrlNumberExecute, (userInput: string, index: number, privileged: boolean, userConfirmed?: boolean) => {
+            const chosenItem = this.searchResults[index];
+            if (chosenItem && chosenItem.originPluginType !== PluginType.None) {
+                if (chosenItem.needsUserConfirmationBeforeExecution && !userConfirmed) {
+                    vueEventDispatcher.$emit(VueEventChannels.userConfirmationRequested);
+                } else {
+                    vueEventDispatcher.$emit(VueEventChannels.handleExecution, userInput, chosenItem, privileged);
+                }
+            }
+        });
         vueEventDispatcher.$on(VueEventChannels.openSearchResultLocationKeyPress, () => {
             const activeItem: SearchResultItemViewModel = this.getActiveSearchResultItem();
             if (activeItem && activeItem.supportsOpenLocation && activeItem.originPluginType !== PluginType.None) {
