@@ -38,7 +38,6 @@ import { WindowsOperatingSystemSettingRepository } from "../plugins/operating-sy
 import { SimpleFolderSearchPlugin } from "../plugins/simple-folder-search-plugin/simple-folder-search-plugin";
 import { Logger } from "../../common/logger/logger";
 import { UwpPlugin } from "../plugins/uwp-plugin/uwp-plugin";
-import { InMemoryUwpAppRepository } from "../plugins/uwp-plugin/inmemory-uwp-app-repository";
 import { ColorConverterPlugin } from "../plugins/color-converter-plugin/color-converter-plugin";
 import { ProductionApplicationRepository } from "../plugins/application-search-plugin/production-application-repository";
 import { defaultWindowsAppIcon, defaultMacOsAppIcon } from "../../common/icon/default-icons";
@@ -162,7 +161,6 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         searchPlugins.push(
             new UwpPlugin(
                 config.uwpSearchOptions,
-                new InMemoryUwpAppRepository(),
                 filePathExecutor,
             ),
         );

@@ -6,6 +6,7 @@ import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultUwpSearchOptions } from "../../common/config/uwp-search-options";
 import { platform } from "os";
 import { deepCopy } from "../../common/helpers/object-helpers";
+import { PluginType } from "../../main/plugin-type";
 
 export const uwpSettingsComponent = Vue.extend({
     data() {
@@ -26,7 +27,7 @@ export const uwpSettingsComponent = Vue.extend({
             this.updateConfig();
         },
         updateConfig() {
-            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
+            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, true, PluginType.Uwp);
         },
     },
     props: ["config", "translations"],
