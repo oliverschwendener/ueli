@@ -38,7 +38,6 @@ export class UwpPlugin implements SearchPlugin {
     }
 
     public clearCache(): Promise<void> {
-        this.uwpApps = [];
         return new Promise((resolve) => resolve());
     }
 
