@@ -22,11 +22,11 @@ This is a keystroke launcher for Windows and macOS.
 
 ### Installer / Zip
 
-* Download the latest version [here](https://github.com/oliverschwendener/ueli/releases)
+* Download the latest version from here: https://ueli.app/#/download
 * Run the installer or unzip
 * Run the application
 
-> Note: because the executables are not signed Windows will probably prevent you from executing the installer or the program itself. You can click "Run anyway" to install/run the program.
+> Note: because the executables are not signed Windows and macOS will probably prevent you from executing the installer or the program itself.
 
 ### Installing via chocolatey repository
 
