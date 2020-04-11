@@ -1,5 +1,3 @@
-![logo](assets/readme-header.png)
-
 # ueli
 
 This is a keystroke launcher for Windows and macOS.
