@@ -9,6 +9,7 @@ export class UwpAppsRetriever {
             const command = this.getUwpAppsCommand
                 .replace(/\n/g, " ").replace(/\"/g, "\\\"")
                 .replace("%alreadyKnownAppIds%", alreadyKnownAppIds);
+
             this.executeCommandWithUtf8Output(`powershell -Command "${command}"`)
                 .then((resultString) => {
                     const result = JSON.parse(resultString) as { NewApps: any[], RemovedAppIds: string[] };

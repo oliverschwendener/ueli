@@ -25,10 +25,10 @@ export class UwpPlugin implements SearchPlugin {
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve) => resolve(this.uwpApps.map((app) => this.createSearchResult(app))));
     }
+
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            UwpAppsRetriever
-                .getAll(this.uwpApps)
+            UwpAppsRetriever.getAll(this.uwpApps)
                 .then((apps) => {
                     this.uwpApps = apps;
                     resolve();
@@ -36,16 +36,20 @@ export class UwpPlugin implements SearchPlugin {
                 .catch((error) => reject(error));
         });
     }
+
     public clearCache(): Promise<void> {
         this.uwpApps = [];
         return new Promise((resolve) => resolve());
     }
+
     public isEnabled(): boolean {
         return this.config.isEnabled;
     }
+
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return this.filePathExecutor(searchResultItem.executionArgument, false);
     }
+
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
         return new Promise((resolve) => {
             this.config = updatedConfig.uwpSearchOptions;
