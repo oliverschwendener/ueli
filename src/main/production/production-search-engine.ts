@@ -50,6 +50,7 @@ import { DictionaryPlugin } from "../plugins/dictionary-plugin/dictionary-plugin
 import { BrowserBookmarksPlugin } from "../plugins/browser-bookmarks-plugin/browser-bookmarks-plugin";
 import { GoogleChromeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/google-chrome-bookmark-repository";
 import { ControlPanelPlugin } from "../plugins/control-panel-plugin/control-panel-plugin";
+import { getAllUwpApps } from "../plugins/uwp-plugin/uwp-apps-retriever";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -162,6 +163,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
             new UwpPlugin(
                 config.uwpSearchOptions,
                 filePathExecutor,
+                getAllUwpApps
             ),
         );
         searchPlugins.push(
