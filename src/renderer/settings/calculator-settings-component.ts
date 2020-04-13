@@ -3,16 +3,19 @@ import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { PluginSettings } from "./plugin-settings";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { defaultCalculatorOptions } from "../../common/config/calculator-options";
+import { defaultCalculatorOptions, CalculatorOptions } from "../../common/config/calculator-options";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { deepCopy } from "../../common/helpers/object-helpers";
+import { NotificationType } from "../../common/notification-type";
 
 export const calculatorSettingsComponent = Vue.extend({
     data() {
         return {
             settingName: PluginSettings.Calculator,
             visible: false,
+            decimalSeparator: ".",
+            argumentSeparator: ",",
         };
     },
     methods: {
@@ -27,6 +30,8 @@ export const calculatorSettingsComponent = Vue.extend({
                 callback: () => {
                     const config: UserConfigOptions = this.config;
                     config.calculatorOptions = deepCopy(defaultCalculatorOptions);
+                    this.decimalSeparator = defaultCalculatorOptions.decimalSeparator;
+                    this.argumentSeparator = defaultCalculatorOptions.argumentSeparator;
                     this.updateConfig();
                 },
                 message: translations.resetPluginSettingsToDefaultWarning,
@@ -36,12 +41,27 @@ export const calculatorSettingsComponent = Vue.extend({
             vueEventDispatcher.$emit(VueEventChannels.settingsConfirmation, userConfirmationDialogParams);
         },
         updateConfig() {
-            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
+            const translations: TranslationSet = this.translations;
+            if (!this.decimalSeparator)
+                vueEventDispatcher.$emit(VueEventChannels.notification, translations.calculatorDecimalSeparatorMustNotBeEmpty, NotificationType.Error);
+            else if (!this.argumentSeparator)
+                vueEventDispatcher.$emit(VueEventChannels.notification, translations.calculatorArgumentSeparatorMustNotBeEmpty, NotificationType.Error);
+            else if (this.decimalSeparator === this.argumentSeparator)
+                vueEventDispatcher.$emit(VueEventChannels.notification, translations.calculatorDecimalSeparatorMustNotEqualArgumentSeparator, NotificationType.Error);
+            else {
+                const calcConfig: CalculatorOptions = this.config.calculatorOptions;
+                calcConfig.decimalSeparator = this.decimalSeparator;
+                calcConfig.argumentSeparator = this.argumentSeparator;
+                vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
+            }
         },
     },
     mounted() {
         vueEventDispatcher.$on(VueEventChannels.showSetting, (settingName: string) => {
             if (settingName === this.settingName) {
+                const calcConfig: CalculatorOptions = this.config.calculatorOptions;
+                this.decimalSeparator = calcConfig.decimalSeparator;
+                this.argumentSeparator = calcConfig.argumentSeparator;
                 this.visible = true;
             } else {
                 this.visible = false;
@@ -78,6 +98,40 @@ export const calculatorSettingsComponent = Vue.extend({
                                             class="input"
                                             min="1"
                                             v-model="config.calculatorOptions.precision"
+                                            @change="updateConfig"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings__option">
+                            <div class="settings__option-name">{{ translations.calculatorDecimalSeparator }}</div>
+                            <div class="settings__option-content">
+                                <div class="field is-grouped is-grouped-right">
+                                    <div class="control">
+                                        <input
+                                            type="text"
+                                            class="input"
+                                            maxlength="1"
+                                            v-model="decimalSeparator"
+                                            @change="updateConfig"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings__option">
+                            <div class="settings__option-name">{{ translations.calculatorArgumentSeparator }}</div>
+                            <div class="settings__option-content">
+                                <div class="field is-grouped is-grouped-right">
+                                    <div class="control">
+                                        <input
+                                            type="text"
+                                            class="input"
+                                            maxlength="1"
+                                            v-model="argumentSeparator"
                                             @change="updateConfig"
                                         >
                                     </div>

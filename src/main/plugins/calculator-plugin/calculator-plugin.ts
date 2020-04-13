@@ -20,12 +20,12 @@ export class CalculatorPlugin implements ExecutionPlugin {
     }
 
     public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
-        return Calculator.isValidInput(userInput);
+        return Calculator.isValidInput(userInput, this.config.decimalSeparator, this.config.argumentSeparator);
     }
 
     public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            const result = Calculator.calculate(userInput, Number(this.config.precision));
+            const result = Calculator.calculate(userInput, Number(this.config.precision), this.config.decimalSeparator, this.config.argumentSeparator);
             resolve([{
                 description: this.translationSet.calculatorCopyToClipboard,
                 executionArgument: result,

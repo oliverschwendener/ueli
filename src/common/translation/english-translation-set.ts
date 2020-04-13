@@ -261,6 +261,11 @@ export const englishTranslationSet: TranslationSet = {
     calculatorCopyToClipboard: "Press enter to copy to clipboard",
     calculatorDescription: "This Plugin lets you quickly do simple calculations.",
     calculatorPrecision: "Precision",
+    calculatorDecimalSeparator: "Decimal separator",
+    calculatorArgumentSeparator: "Argument separator",
+    calculatorDecimalSeparatorMustNotBeEmpty: "You must enter a decimal separator",
+    calculatorArgumentSeparatorMustNotBeEmpty: "You must enter an argument separator",
+    calculatorDecimalSeparatorMustNotEqualArgumentSeparator: "Decimal separator must not equal argument separator",
 
     openUrlWithBrowser: "Open with web browser",
     url: "URL",

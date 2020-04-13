@@ -258,6 +258,11 @@ export interface TranslationSet {
     calculatorCopyToClipboard: string;
     calculatorDescription: string;
     calculatorPrecision: string;
+    calculatorDecimalSeparator: string;
+    calculatorArgumentSeparator: string;
+    calculatorDecimalSeparatorMustNotBeEmpty: string;
+    calculatorArgumentSeparatorMustNotBeEmpty: string;
+    calculatorDecimalSeparatorMustNotEqualArgumentSeparator: string;
 
     openUrlWithBrowser: string;
     url: string;
