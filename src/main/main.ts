@@ -617,7 +617,7 @@ function registerAllIpcListeners() {
         hideMainWindow();
     });
 
-    ipcMain.on(IpcChannels.execute, (event: Electron.Event, userInput: string, searchResultItem: SearchResultItem, privileged: boolean) => {
+    ipcMain.on(IpcChannels.execute, (event, userInput: string, searchResultItem: SearchResultItem, privileged: boolean) => {
         searchEngine.execute(searchResultItem, privileged)
             .then(() => {
                 userInputHistoryManager.addItem(userInput);
@@ -627,7 +627,8 @@ function registerAllIpcListeners() {
                     updateMainWindowSize(0, config.appearanceOptions);
                 }
             })
-            .catch((err) => logger.error(err));
+            .catch((err) => logger.error(err))
+            .finally(() => event.sender.send(IpcChannels.executionFinished));
     });
 
     ipcMain.on(IpcChannels.openSearchResultLocation, (event: Electron.Event, searchResultItem: SearchResultItem) => {
