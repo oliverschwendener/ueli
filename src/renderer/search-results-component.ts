@@ -52,6 +52,56 @@ export const searchResultsComponent = Vue.extend({
 
             this.searchResults = viewModel;
         },
+        handleSearchResultPageBrowsing(direction: BrowseDirection): void {
+            const searchResults: SearchResultItemViewModel[] = this.searchResults;
+            if (searchResults.length === 0 )
+                return;
+
+            const activeSearchResult = searchResults.find(r => r.active);
+            if (activeSearchResult === undefined)
+                return;
+
+            const activeSearchResultIndex = searchResults.indexOf(activeSearchResult);
+            const firstVisibleSearchResultIndex = this.getIndexOfFirstVisibleSearchResult();
+            const lastVisibleSearchResultIndex = this.getIndexOfLastVisibleSearchResult();
+
+            let nextActiveIndex = 0;
+            const appearanceOptions: AppearanceOptions = this.appearance;
+            if (direction === BrowseDirection.Next) {
+                nextActiveIndex = activeSearchResultIndex >= firstVisibleSearchResultIndex && activeSearchResultIndex < lastVisibleSearchResultIndex
+                    ? lastVisibleSearchResultIndex
+                    : activeSearchResultIndex + appearanceOptions.maxSearchResultsPerPage;
+            } else {
+                nextActiveIndex = activeSearchResultIndex > firstVisibleSearchResultIndex && activeSearchResultIndex <= lastVisibleSearchResultIndex
+                    ? firstVisibleSearchResultIndex
+                    : activeSearchResultIndex - appearanceOptions.maxSearchResultsPerPage;
+            }
+
+            if (nextActiveIndex < 0)
+                nextActiveIndex = 0;
+            else if (nextActiveIndex >= searchResults.length)
+                nextActiveIndex = searchResults.length - 1;
+
+            activeSearchResult.active = false;
+            searchResults[nextActiveIndex].active = true;
+            this.scrollIntoView(searchResults[nextActiveIndex].id);
+        },
+        getIndexOfFirstVisibleSearchResult(): number {
+            const searchResultsContainer = document.getElementById(this.containerId);
+            if (searchResultsContainer == null)
+                return 0;
+
+            const appearanceOptions: AppearanceOptions = this.appearance;
+            return Math.ceil(searchResultsContainer.scrollTop / appearanceOptions.searchResultHeight);
+        },
+        getIndexOfLastVisibleSearchResult(): number {
+            const searchResultsContainer = document.getElementById(this.containerId);
+            if (searchResultsContainer == null)
+                return 0;
+
+            const appearanceOptions: AppearanceOptions = this.appearance;
+            return Math.floor((searchResultsContainer.scrollTop + searchResultsContainer.clientHeight) / appearanceOptions.searchResultHeight) - 1;
+        },
         handleSearchResultBrowsing(direction: BrowseDirection): void {
             const searchResults: SearchResultItemViewModel[] = this.searchResults;
             if (searchResults.length === 0 ) {
@@ -72,32 +122,23 @@ export const searchResultsComponent = Vue.extend({
                 }
             }
 
-            this.searchResults[nextActiveIndex].active = true;
-            this.scrollIntoView(this.searchResults[nextActiveIndex].id);
+            searchResults[nextActiveIndex].active = true;
+            this.scrollIntoView(searchResults[nextActiveIndex].id);
         },
-        scrollIntoView(index: string) {
+        scrollIntoView(elementId: string) {
             const appearanceOptions: AppearanceOptions = this.appearance;
             const scrollBehavior = appearanceOptions.smoothScrolling ? "smooth" : "auto";
-            const userInput = document.getElementById("user-input");
-            if (userInput !== undefined && userInput) {
-                const htmlElement = document.getElementById(index);
-                if (htmlElement !== undefined && htmlElement !== null) {
-                    const outputContainer = document.getElementById(this.containerId);
-                    if (outputContainer !== undefined && outputContainer !== null) {
-                        const elementIsOutOfViewBottom = ((htmlElement.offsetTop - userInput.clientHeight) > (outputContainer.scrollTop + outputContainer.clientHeight - htmlElement.clientHeight));
-                        const elementIsOutOfViewTop = htmlElement.offsetTop - userInput.clientHeight < outputContainer.scrollTop;
-                        if (elementIsOutOfViewBottom) {
-                            const scrollTo = htmlElement.offsetTop - userInput.clientHeight + 30;
-                            outputContainer.scrollTo({ top: scrollTo, behavior: scrollBehavior });
-                        } else if (elementIsOutOfViewTop) {
-                            let scrollTo = htmlElement.offsetTop - outputContainer.clientHeight + 50;
-                            if (scrollTo < 0) {
-                                scrollTo = 0;
-                            }
-                            outputContainer.scrollTo({ top: scrollTo, behavior: scrollBehavior });
-                        }
-                    }
-                }
+            const htmlElement = document.getElementById(elementId);
+            const searchResultsContainer = document.getElementById(this.containerId);
+            if (!htmlElement || !searchResultsContainer)
+                return;
+
+            const elementIsOutOfViewBottom =
+                (htmlElement.offsetTop + htmlElement.clientHeight) > (searchResultsContainer.scrollTop + searchResultsContainer.clientHeight);
+            const elementIsOutOfViewTop = htmlElement.offsetTop < searchResultsContainer.scrollTop;
+            if (elementIsOutOfViewBottom || elementIsOutOfViewTop) {
+                const scrollTo = Math.floor(htmlElement.offsetTop / searchResultsContainer.clientHeight) * searchResultsContainer.clientHeight;
+                searchResultsContainer.scrollTo({ top: scrollTo, behavior: scrollBehavior });
             }
         },
     },
@@ -126,6 +167,12 @@ export const searchResultsComponent = Vue.extend({
         });
         vueEventDispatcher.$on(VueEventChannels.selectPreviousItem, () => {
             this.handleSearchResultBrowsing(BrowseDirection.Previous);
+        });
+        vueEventDispatcher.$on(VueEventChannels.pageDownPress, () => {
+            this.handleSearchResultPageBrowsing(BrowseDirection.Next);
+        });
+        vueEventDispatcher.$on(VueEventChannels.pageUpPress, () => {
+            this.handleSearchResultPageBrowsing(BrowseDirection.Previous);
         });
         vueEventDispatcher.$on(VueEventChannels.enterPress, (userInput: string, privileged: boolean, userConfirmed?: boolean) => {
             const activeItem: SearchResultItemViewModel = this.getActiveSearchResultItem();

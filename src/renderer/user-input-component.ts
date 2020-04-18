@@ -43,6 +43,16 @@ export const userInputComponent = Vue.extend({
                 }
             }
 
+            if (event.key === "PageUp") {
+                event.preventDefault();
+                vueEventDispatcher.$emit(VueEventChannels.pageUpPress);
+            }
+
+            if (event.key === "PageDown") {
+                event.preventDefault();
+                vueEventDispatcher.$emit(VueEventChannels.pageDownPress);
+            }
+
             if (event.key.toLowerCase() === "f" && (event.ctrlKey || event.metaKey)) {
                 event.preventDefault();
                 vueEventDispatcher.$emit(VueEventChannels.favoritesRequested);
