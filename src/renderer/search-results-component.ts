@@ -48,6 +48,7 @@ export const searchResultsComponent = Vue.extend({
 
             if (viewModel.length > 0) {
                 viewModel[0].active = true;
+                this.scrollIntoView(viewModel[0].id);
             }
 
             this.searchResults = viewModel;
