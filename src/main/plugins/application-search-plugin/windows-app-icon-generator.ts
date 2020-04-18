@@ -46,7 +46,7 @@ function generateIcons(icons: Icon[], followShortcuts?: boolean): Promise<void> 
         ps.addCommand(`Add-Type -AssemblyName System.Drawing`);
 
         icons.forEach((icon) => {
-            ps.addCommand(`$fileExists = Test-Path -Path "${icon.inputFilePath}";`);
+            ps.addCommand(`$fileExists = Test-Path -LiteralPath "${icon.inputFilePath}";`);
             ps.addCommand(`if($fileExists) { $icon = [System.Drawing.Icon]::ExtractAssociatedIcon("${icon.inputFilePath}"); }`);
             ps.addCommand(`if($fileExists) { $bitmap = $icon.ToBitmap().save("${icon.outputFilePath}", [System.Drawing.Imaging.ImageFormat]::${icon.outputFormat}); }`);
         });
