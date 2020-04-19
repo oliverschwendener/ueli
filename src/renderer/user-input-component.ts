@@ -180,6 +180,7 @@ export const userInputComponent = Vue.extend({
             <input
                 :disabled="userInputDisabled"
                 ref="userInput"
+                id="user-input"
                 class="user-input__input"
                 type="text"
                 v-model="userInput"
