@@ -4,7 +4,6 @@ import { DictionaryOptions } from "../../../common/config/dictionary-options";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
-import { DictionarySearcher } from "./dictionary-searcher";
 import { Definition } from "./dictionary";
 import { defaultDictionaryIcon } from "../../../common/icon/default-icons";
 import { capitalize } from "../../../common/helpers/string-helpers";
@@ -19,11 +18,17 @@ export class DictionaryPlugin implements ExecutionPlugin {
     public pluginType = PluginType.Dictionary;
     private config: DictionaryOptions;
     private readonly clipboardCopier: (value: string) => Promise<void>;
+    private readonly definitionRetriever: (word: string) => Promise<Definition[]>;
     private delay: NodeJS.Timeout | number;
 
-    constructor(config: DictionaryOptions, clipboardCopier: (value: string) => Promise<void>) {
+    constructor(
+        config: DictionaryOptions,
+        clipboardCopier: (value: string) => Promise<void>,
+        definitionRetriever: (word: string) => Promise<Definition[]>,
+    ) {
         this.config = config;
         this.clipboardCopier = clipboardCopier;
+        this.definitionRetriever = definitionRetriever;
     }
 
     public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
@@ -40,7 +45,7 @@ export class DictionaryPlugin implements ExecutionPlugin {
             }
 
             this.delay = setTimeout(() => {
-                DictionarySearcher.search(searchTerm)
+                this.definitionRetriever(searchTerm)
                     .then((definitions) => resolve(this.buildSearchResults(definitions)))
                     .catch((err) => reject(err));
             }, this.config.debounceDelay);

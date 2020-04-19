@@ -51,6 +51,7 @@ import { BrowserBookmarksPlugin } from "../plugins/browser-bookmarks-plugin/brow
 import { GoogleChromeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/google-chrome-bookmark-repository";
 import { ControlPanelPlugin } from "../plugins/control-panel-plugin/control-panel-plugin";
 import { getAllUwpApps } from "../plugins/uwp-plugin/uwp-apps-retriever";
+import { getGoogleDictionaryDefinitions } from "../plugins/dictionary-plugin/dictionary-searcher";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -144,7 +145,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         new CurrencyConverterPlugin(config.currencyConverterOptions, translationSet, electronClipboardCopier),
         new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor),
         new ColorConverterPlugin(config.colorConverterOptions, electronClipboardCopier),
-        new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier),
+        new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier, getGoogleDictionaryDefinitions),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [
