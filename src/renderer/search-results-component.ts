@@ -54,7 +54,7 @@ export const searchResultsComponent = Vue.extend({
         },
         handleSearchResultBrowsing(direction: BrowseDirection): void {
             const searchResults: SearchResultItemViewModel[] = this.searchResults;
-            if (searchResults.length === 0 ) {
+            if (searchResults.length === 0) {
                 return;
             }
 
@@ -134,6 +134,16 @@ export const searchResultsComponent = Vue.extend({
                     vueEventDispatcher.$emit(VueEventChannels.userConfirmationRequested);
                 } else {
                     vueEventDispatcher.$emit(VueEventChannels.handleExecution, userInput, activeItem, privileged);
+                }
+            }
+        });
+        vueEventDispatcher.$on(VueEventChannels.ctrlNumberExecute, (userInput: string, index: number, privileged: boolean, userConfirmed?: boolean) => {
+            const chosenItem = this.searchResults[index];
+            if (chosenItem && chosenItem.originPluginType !== PluginType.None) {
+                if (chosenItem.needsUserConfirmationBeforeExecution && !userConfirmed) {
+                    vueEventDispatcher.$emit(VueEventChannels.userConfirmationRequested);
+                } else {
+                    vueEventDispatcher.$emit(VueEventChannels.handleExecution, userInput, chosenItem, privileged);
                 }
             }
         });
