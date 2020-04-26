@@ -9,8 +9,9 @@ export function searchWindowsApplications(applicationSearchOptions: ApplicationS
         }
 
         const utf8Encoding = "[Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8";
+        const ignoreErrors = "$ErrorActionPreference = 'SilentlyContinue'";
         const extensionFilter = applicationSearchOptions.applicationFileExtensions.map((e) => `*${e}`).join(", ");
-        const getChildItem = `${utf8Encoding}; Get-ChildItem -Path $_ -include ${extensionFilter} -Recurse -File | % { $_.FullName }`;
+        const getChildItem = `${utf8Encoding}; ${ignoreErrors}; Get-ChildItem -Path $_ -include ${extensionFilter} -Recurse -File | % { $_.FullName }`;
         const folders = applicationSearchOptions.applicationFolders.map((applicationFolder) => `'${applicationFolder}'`).join(",");
         const powershellScript = `${folders} | %{ ${getChildItem} }`;
 
