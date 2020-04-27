@@ -66,16 +66,23 @@ export const userInputComponent = Vue.extend({
             const keyIntger = parseInt(event.key, 10);
             const numbersEquivalent = "!@#$%\^*(".split("");
             if (event.ctrlKey) {
-                event.preventDefault();
+                vueEventDispatcher.$emit(VueEventChannels.ctrlPressed, true)
                 let privileged: boolean;
                 const userConfirmed: boolean = this.userConfirmationDialogVisible;
                 if (!isNaN(keyIntger) && (keyIntger > 0 && keyIntger <= 9)) {
+                    event.preventDefault();
                     privileged = false;
                     vueEventDispatcher.$emit(VueEventChannels.ctrlNumberExecute, this.userInput, keyIntger - 1, privileged, userConfirmed);
                 } else if (numbersEquivalent.includes(event.key)) {
+                    event.preventDefault();
                     privileged = true;
                     vueEventDispatcher.$emit(VueEventChannels.ctrlNumberExecute, this.userInput, numbersEquivalent.indexOf(event.key), privileged, userConfirmed);
                 }
+            }
+        },
+        keyPressUp(event: KeyboardEvent): void {
+            if (event.key === "Control") {
+                vueEventDispatcher.$emit(VueEventChannels.ctrlPressed, false)
             }
         },
         resetUserInput(): void {
@@ -200,6 +207,7 @@ export const userInputComponent = Vue.extend({
                 type="text"
                 v-model="userInput"
                 @keydown="keyPress"
+                @keyup="keyPressUp"
             >
             <div class="user-input__user-confirmation-container" :class="{ 'visible' : userConfirmationDialogVisible }">
                 <svg class="user-input__user-confirmation-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1">

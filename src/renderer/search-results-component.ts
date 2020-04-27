@@ -20,6 +20,7 @@ export const searchResultsComponent = Vue.extend({
             isLoading: false,
             loadingCompleted: true,
             searchResults: [],
+            ctrlPressed: false,
         };
     },
     methods: {
@@ -159,6 +160,9 @@ export const searchResultsComponent = Vue.extend({
                 vueEventDispatcher.$emit(VueEventChannels.handleAutoCompletion, activeItem);
             }
         });
+        vueEventDispatcher.$on(VueEventChannels.ctrlPressed, (value: boolean) => {
+            this.ctrlPressed = value
+        });
     },
     template: `
         <div class="search-results" :class="{ 'scroll-disabled' : isLoading }" :id="containerId">
@@ -171,7 +175,7 @@ export const searchResultsComponent = Vue.extend({
                     <div class="search-results__item-name" :class="{ 'active' : searchResult.active }">{{ searchResult.name }}</div>
                     <div class="search-results__item-description" :class="{ 'visible' : searchResult.active || appearance.showDescriptionOnAllSearchResults, 'active' : searchResult.active }">{{ searchResult.description }}</div>
                 </div>
-                <div v-if="appearance.showSearchResultNumbers" class="search-results__item-number-container" :class="{ 'active' : searchResult.active }">#{{ searchResult.resultNumber }}</div>
+                <div v-if="appearance.showSearchResultNumbers || ctrlPressed" class="search-results__item-number-container" :class="{ 'active' : searchResult.active }">#{{ searchResult.resultNumber }}</div>
             </div>
             <div v-if="isLoading" class="search-results__overlay"></div>
         </div>
