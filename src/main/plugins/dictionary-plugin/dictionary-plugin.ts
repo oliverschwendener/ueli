@@ -8,6 +8,7 @@ import { DictionarySearcher } from "./dictionary-searcher";
 import { Definition } from "./dictionary";
 import { defaultDictionaryIcon } from "../../../common/icon/default-icons";
 import { capitalize } from "../../../common/helpers/string-helpers";
+import AwesomeDebouncePromise from "awesome-debounce-promise";
 
 interface DictionaryResult {
     definition: string;
@@ -19,11 +20,12 @@ export class DictionaryPlugin implements ExecutionPlugin {
     public pluginType = PluginType.Dictionary;
     private config: DictionaryOptions;
     private readonly clipboardCopier: (value: string) => Promise<void>;
-    private delay: NodeJS.Timeout | number;
+    private readonly debouncedDictionarySearch: (word: string) => Promise<Definition[]>;
 
     constructor(config: DictionaryOptions, clipboardCopier: (value: string) => Promise<void>) {
         this.config = config;
         this.clipboardCopier = clipboardCopier;
+        this.debouncedDictionarySearch = AwesomeDebouncePromise(DictionarySearcher.search, this.config.debounceDelay);
     }
 
     public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
@@ -35,15 +37,9 @@ export class DictionaryPlugin implements ExecutionPlugin {
     public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
         const searchTerm = this.getSearchTerm(userInput);
         return new Promise((resolve, reject) => {
-            if (this.delay) {
-                clearTimeout(this.delay as number);
-            }
-
-            this.delay = setTimeout(() => {
-                DictionarySearcher.search(searchTerm)
-                    .then((definitions) => resolve(this.buildSearchResults(definitions)))
-                    .catch((err) => reject(err));
-            }, this.config.debounceDelay);
+            this.debouncedDictionarySearch(searchTerm)
+                .then((definitions) => resolve(this.buildSearchResults(definitions)))
+                .catch((err) => reject(err));
         });
     }
 
