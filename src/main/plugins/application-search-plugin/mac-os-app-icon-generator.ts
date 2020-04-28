@@ -23,7 +23,7 @@ export function generateMacAppIcons(applicationFilePaths: string[]): Promise<voi
                     FileHelpers.createFolderSync(applicationIconLocation);
                 }
 
-                Promise.all(applicationFilePaths.map((application) => generateMacAppIcon(application)))
+                Promise.all (applicationFilePaths.map((application) => generateMacAppIcon(application)))
                     .then(() => resolve())
                     .catch((err) => reject(err));
             })
@@ -39,7 +39,7 @@ function generateMacAppIcon(applicationFilePath: string): Promise<void> {
                 const outPngFilePath = getApplicationIconFilePath(applicationFilePath);
                 convertIcnsToPng(icnsFilePath, outPngFilePath)
                     .then(() => resolve())
-                    .catch((err) => reject(err));
+                    .catch(() => convertIcnsToPng(defaultIcnsFilePath,outPngFilePath).then(()=> resolve).catch((err)=> reject(err)) );
             })
             .catch((err) => reject(err));
     });

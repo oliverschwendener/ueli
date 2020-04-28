@@ -4,7 +4,6 @@ import { DictionaryOptions } from "../../../common/config/dictionary-options";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
-import { DictionarySearcher } from "./dictionary-searcher";
 import { Definition } from "./dictionary";
 import { defaultDictionaryIcon } from "../../../common/icon/default-icons";
 import { capitalize } from "../../../common/helpers/string-helpers";
@@ -22,7 +21,11 @@ export class DictionaryPlugin implements ExecutionPlugin {
     private readonly clipboardCopier: (value: string) => Promise<void>;
     private readonly debouncedDictionarySearch: (word: string) => Promise<Definition[]>;
 
-    constructor(config: DictionaryOptions, clipboardCopier: (value: string) => Promise<void>) {
+    constructor(
+        config: DictionaryOptions,
+        clipboardCopier: (value: string) => Promise<void>,
+        definitionRetriever: (word: string) => Promise<Definition[]>,
+    ) {
         this.config = config;
         this.clipboardCopier = clipboardCopier;
         this.debouncedDictionarySearch = AwesomeDebouncePromise(DictionarySearcher.search, this.config.debounceDelay);
@@ -40,6 +43,7 @@ export class DictionaryPlugin implements ExecutionPlugin {
             this.debouncedDictionarySearch(searchTerm)
                 .then((definitions) => resolve(this.buildSearchResults(definitions)))
                 .catch((err) => reject(err));
+
         });
     }
 
