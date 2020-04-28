@@ -60,6 +60,10 @@ export const websearchEditingModal = Vue.extend({
             const translations: TranslationSet = this.translations;
             return `${translations.forExample}: "https://google.com/search?q={{query}}"`;
         },
+        getSuggestionUrlPlaceholder(): string {
+            const translations: TranslationSet = this.translations;
+            return `${translations.forExample}: https://www.google.com/complete/search?client=chrome&q={{query}}`;
+        },
     },
     mounted() {
         vueEventDispatcher.$on(VueEventChannels.openWebSearchEditingModal, (websearchEngine: WebSearchEngine, editMode: ModalEditMode, saveIndex?: number) => {
@@ -107,6 +111,15 @@ export const websearchEditingModal = Vue.extend({
                         </label>
                         <div class="control is-expanded">
                             <input class="input" type="url" v-model="websearchEngine.url" :placeholder="getUrlPlaceholder()">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">
+                            {{ translations.websearchSuggestionUrl }}
+                        </label>
+                        <div class="control is-expanded">
+                            <input class="input" type="url" v-model="websearchEngine.suggestionUrl" :placeholder="getSuggestionUrlPlaceholder()">
                         </div>
                     </div>
 

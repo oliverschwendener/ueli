@@ -215,6 +215,7 @@ export const germanTranslationSet: TranslationSet = {
     websearchName: "Name",
     websearchPrefix: "Präfix",
     websearchUrl: "URL",
+    websearchSuggestionUrl: "Vorschlag URL",
     websearchIcon: "Icon",
     websearchPriority: "Priorität",
     websearchIsFallback: "Fallback",

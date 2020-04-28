@@ -27,6 +27,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             name: "DuckDuckGo",
             prefix: "d?",
             priority: 1,
+            suggestionUrl: "https://ac.duckduckgo.com/ac/?q={{query}}&type=list",
             url: "https://duckduckgo.com/?q={{query}}",
         },
         {
@@ -46,6 +47,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             name: "Google",
             prefix: "g?",
             priority: 2,
+            suggestionUrl: "https://www.google.com/complete/search?client=opera&q={{query}}",
             url: "https://google.com/search?q={{query}}",
         },
         {
@@ -69,6 +71,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             name: "Google Images",
             prefix: "gi?",
             priority: 3,
+            suggestionUrl: "https://www.google.com/complete/search?ds=i&output=firefox&q={{query}}",
             url: "https://www.google.com/search?tbm=isch&q={{query}}",
         },
         {
@@ -85,6 +88,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             name: "Wikipedia",
             prefix: "w?",
             priority: 4,
+            suggestionUrl: "https://en.wikipedia.org/w/api.php?action=opensearch&search={{query}}",
             url: "https://en.wikipedia.org/wiki/{{query}}",
         },
         {
@@ -102,6 +106,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             name: "YouTube",
             prefix: "yt?",
             priority: 5,
+            suggestionUrl: "https://www.google.com/complete/search?ds=yt&output=firefox&q={{query}}",
             url: "https://www.youtube.com/results?search_query={{query}}",
         },
         {
@@ -114,6 +119,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             name: "Bing",
             prefix: "b?",
             priority: 6,
+            suggestionUrl: "https://www.bing.com/osjson.aspx?query={{query}}",
             url: "https://www.bing.com/search?q={{query}}",
         },
     ],

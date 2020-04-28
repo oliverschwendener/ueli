@@ -12,6 +12,7 @@ export const defaultNewWebSearchEngine: WebSearchEngine = {
     name: "",
     prefix: "",
     priority: 0,
+    suggestionUrl: "",
     url: "",
 };
 

@@ -7,6 +7,7 @@ import { WebSearchEngine } from "./web-search-engine";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { defaultWebSearchIcon } from "../../../common/icon/default-icons";
 import { isValidIcon } from "../../../common/icon/icon-helpers";
+import axios from "axios";
 
 export class WebSearchPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.WebSearchPlugin;
@@ -22,7 +23,8 @@ export class WebSearchPlugin implements ExecutionPlugin {
 
     public getSearchResults(userInput: string, fallback?: boolean): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            const searchResults = this.config.webSearchEngines
+            const searchResults: SearchResultItem[] = [];
+            const webSearchEnginesArray = this.config.webSearchEngines
                 .filter((webSearchEngine) => {
                     return fallback
                         ? webSearchEngine.isFallback
@@ -36,20 +38,46 @@ export class WebSearchPlugin implements ExecutionPlugin {
                         return -1;
                     }
                     return 0;
-                })
-                .map((webSearchEngine): SearchResultItem => {
-                    return {
-                        description: this.buildDescription(webSearchEngine, userInput),
-                        executionArgument: this.buildExecutionArgument(webSearchEngine, userInput),
+                });
+            const promises = webSearchEnginesArray.map((webSearchEngine) => {
+                return axios({ method: "GET", url: webSearchEngine.suggestionUrl.replace("{{query}}", this.getSearchTerm(webSearchEngine, userInput)) });
+            });
+
+            axios.all(promises).then(axios.spread((...responses) => {
+                let responseCounter = 0;
+                responses.forEach((res) => {
+                    const results = res.data[1];
+                    searchResults.push({
+                        description: this.buildDescription(webSearchEnginesArray[responseCounter], userInput),
+                        executionArgument: this.buildExecutionArgument(webSearchEnginesArray[responseCounter], userInput),
                         hideMainWindowAfterExecution: true,
-                        icon: isValidIcon(webSearchEngine.icon) ? webSearchEngine.icon : defaultWebSearchIcon,
-                        name: webSearchEngine.name,
+                        icon: isValidIcon(webSearchEnginesArray[responseCounter].icon) ? webSearchEnginesArray[responseCounter].icon : defaultWebSearchIcon,
+                        name: userInput.replace(webSearchEnginesArray[responseCounter].prefix, ""),
                         originPluginType: this.pluginType,
                         searchable: [],
-                    };
-                });
+                    });
+                    results.some((suggestion: string) => {
+                        searchResults.push(
+                            {
 
-            resolve(searchResults);
+                                description: this.buildDescription(webSearchEnginesArray[responseCounter], suggestion),
+                                executionArgument: this.buildExecutionArgument(webSearchEnginesArray[responseCounter], suggestion),
+                                hideMainWindowAfterExecution: true,
+                                icon: isValidIcon(webSearchEnginesArray[responseCounter].icon) ? webSearchEnginesArray[responseCounter].icon : defaultWebSearchIcon,
+                                name: suggestion,
+                                originPluginType: this.pluginType,
+                                searchable: [],
+                            });
+                        if (results.length > 8) {
+                            return suggestion === results[7];
+                        }
+                    });
+                    responseCounter++;
+                });
+                resolve(searchResults);
+            })).catch((errors) => {
+                resolve(searchResults);
+            });
         });
     }
 
