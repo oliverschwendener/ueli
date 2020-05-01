@@ -92,6 +92,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
                     logger,
                 ),
                 applicationSearcher,
+                logger,
             ),
             filePathExecutor,
             filePathLocationExecutor,
