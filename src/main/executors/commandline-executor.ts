@@ -26,6 +26,10 @@ export const macOsCommandLineExecutor = (command: string, shell: MacOsShell): Pr
 
 export const windowsCommandLineExecutor = (command: string, shell: WindowsShell): Promise<void> => {
     switch (shell) {
+        case WindowsShell.WSL:
+            return executeCommand(`start wsl.exe sh -c "${command}; exec $SHELL"`);
+        case WindowsShell.PowerShellCore:
+            return executeCommand(`start pwsh.exe -NoExit -Command "&${command}"`);
         case WindowsShell.Powershell:
             return executeCommand(`start powershell -NoExit -Command "&${command}"`);
         case WindowsShell.Cmd:
