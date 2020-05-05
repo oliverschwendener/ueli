@@ -5,5 +5,5 @@ export enum GlobalHotKeyModifier {
     Command = "Command",
     Option = "Option",
     AltGr = "AltGr",
-	Super = "Super",
+    Super = "Super",
 }
