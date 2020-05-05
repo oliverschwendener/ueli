@@ -29,6 +29,7 @@
   "scripts": {
     "bundle": "./node_modules/.bin/webpack",
     "start": "./node_modules/.bin/electron . --remote-debugging-port=9223",
+    "serve": "./node_modules/.bin/webpack --watch --progress",
     "lint": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json",
     "lint:fix": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json --fix",
     "test": "./node_modules/.bin/jest --config jest.json --silent .",
@@ -46,6 +47,7 @@
     "color": "^3.1.2",
     "electron": "^8.1.1",
     "electron-builder": "^22.4.1",
+    "electron-hot-reload": "^0.1.4",
     "electron-store": "^5.1.1",
     "electron-updater": "^4.0.14",
     "fuse.js": "^5.0.3-beta",

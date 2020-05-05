@@ -34,6 +34,11 @@ import { deepCopy } from "../common/helpers/object-helpers";
 import { PluginType } from "./plugin-type";
 import { getRescanIntervalInMilliseconds } from "./helpers/rescan-interval-helpers";
 import { openUrlInBrowser } from "./executors/url-executor";
+import { enableHotReload } from "./helpers/hot-reload-helper";
+
+if (process.env.NODE_ENV === "development") {
+    enableHotReload();
+}
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
