@@ -175,6 +175,10 @@ const app = new Vue({
             ipcRenderer.send(IpcChannels.downloadUpdate);
         });
 
+        ipcRenderer.on(IpcChannels.executionFinished, (event) => {
+            vueEventDispatcher.$emit(VueEventChannels.executionFinished);
+        });
+
         ipcRenderer.on(IpcChannels.appearanceOptionsUpdated, (event: Electron.Event, updatedAppearanceOptions: AppearanceOptions) => {
             vueEventDispatcher.$emit(VueEventChannels.appearanceOptionsUpdated, updatedAppearanceOptions);
         });

@@ -9,12 +9,19 @@ import { GeneralOptions } from "../common/config/general-options";
 export const userInputComponent = Vue.extend({
     data() {
         return {
+            executionIsPending: false,
             loadingCompleted: true,
             loadingVisible: false,
             refreshIndexesIsPending: false,
             userConfirmationDialogVisible: false,
             userInput: "",
         };
+    },
+    computed: {
+        userInputDisabled(): boolean {
+            return this.refreshIndexesIsPending
+                || this.executionIsPending;
+        },
     },
     methods: {
         keyPress(event: KeyboardEvent) {
@@ -60,10 +67,8 @@ export const userInputComponent = Vue.extend({
             this.userInput = "";
         },
         setFocusOnInput(): void {
-            const userInput = document.getElementById("user-input");
-            if (userInput) {
-                userInput.focus();
-            }
+            const $userInput = this.$refs.userInput as HTMLInputElement;
+            $userInput.focus();
         },
         selectUserInput(): void {
             this.setFocusOnInput();
@@ -124,7 +129,16 @@ export const userInputComponent = Vue.extend({
         });
 
         vueEventDispatcher.$on(VueEventChannels.handleExecution, () => {
-            this.userInput = "";
+            this.executionIsPending = true;
+            this.loadingCompleted = false;
+            this.loadingVisible = true;
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.executionFinished, () => {
+            this.executionIsPending = false;
+            this.loadingCompleted = true;
+            this.loadingVisible = false;
+            setTimeout(() => this.setFocusOnInput(), 50);
         });
 
         vueEventDispatcher.$on(VueEventChannels.appearanceOptionsUpdated, (updatedAppearanceOptions: AppearanceOptions) => {
@@ -163,7 +177,15 @@ export const userInputComponent = Vue.extend({
                     </g>
                 </svg>
             </div>
-            <input autofocus :disabled="refreshIndexesIsPending" id="user-input" class="user-input__input" type="text" v-model="userInput" @keydown="keyPress">
+            <input
+                :disabled="userInputDisabled"
+                ref="userInput"
+                id="user-input"
+                class="user-input__input"
+                type="text"
+                v-model="userInput"
+                @keydown="keyPress"
+            >
             <div class="user-input__user-confirmation-container" :class="{ 'visible' : userConfirmationDialogVisible }">
                 <svg class="user-input__user-confirmation-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1">
                     <g id="surface1">

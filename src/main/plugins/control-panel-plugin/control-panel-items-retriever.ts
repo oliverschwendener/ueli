@@ -26,13 +26,13 @@ export class ControlPanelItemsRetriever {
                 } |
                 Where-Object { $_ -ne $null } |
                 ForEach-Object {
-                    $defaultIconValue = Get-ItemPropertyValue -Path "Registry::HKEY_CLASSES_ROOT\\CLSID\\$_\\DefaultIcon" -Name "(default)";
+                    $defaultIconValue = Get-ItemProperty -Path "Registry::HKEY_CLASSES_ROOT\\CLSID\\$_\\DefaultIcon" | Select-Object -ExpandProperty "(default)";
                     $defaultIconValueSplit = $defaultIconValue.Split(',');
                     $iconPath = $defaultIconValueSplit[0];
                     $iconIndex = if ($defaultIconValueSplit.Length -gt 1) { $defaultIconValueSplit[1] } else { $null };
                     $iconBase64 = $iconExtractorType[0]::GetIconAsBase64($iconPath, ${iconSize}, $iconIndex);
                     @{
-                        applicationName = Get-ItemPropertyValue -Path "Registry::HKEY_CLASSES_ROOT\\CLSID\\$_" -Name "System.ApplicationName";
+                        applicationName = Get-ItemProperty -Path "Registry::HKEY_CLASSES_ROOT\\CLSID\\$_" | Select-Object -ExpandProperty "System.ApplicationName";
                         iconBase64 = $iconBase64;
                     };
                 } |
