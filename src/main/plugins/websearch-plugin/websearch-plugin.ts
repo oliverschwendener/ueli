@@ -7,7 +7,7 @@ import { WebSearchEngine } from "./web-search-engine";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { defaultWebSearchIcon } from "../../../common/icon/default-icons";
 import { isValidIcon } from "../../../common/icon/icon-helpers";
-import axios from "axios";
+import axios, { AxiosPromise } from "axios";
 
 export class WebSearchPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.WebSearchPlugin;
@@ -24,7 +24,7 @@ export class WebSearchPlugin implements ExecutionPlugin {
     public getSearchResults(userInput: string, fallback?: boolean): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             const searchResults: SearchResultItem[] = [];
-            const webSearchEnginesArray = this.config.webSearchEngines
+            const webSearchEngines = this.config.webSearchEngines
                 .filter((webSearchEngine) => {
                     return fallback
                         ? webSearchEngine.isFallback
@@ -39,43 +39,47 @@ export class WebSearchPlugin implements ExecutionPlugin {
                     }
                     return 0;
                 });
-            const promises = webSearchEnginesArray.map((webSearchEngine) => {
-                return axios({ method: "GET", url: webSearchEngine.suggestionUrl.replace("{{query}}", this.getSearchTerm(webSearchEngine, userInput)) });
+            webSearchEngines.forEach((webSearchEngine, index) => {
+                searchResults.push({
+                    description: this.buildDescription(webSearchEngines[index], userInput),
+                    executionArgument: this.buildExecutionArgument(webSearchEngines[index], userInput),
+                    hideMainWindowAfterExecution: true,
+                    icon: isValidIcon(webSearchEngines[index].icon) ? webSearchEngines[index].icon : defaultWebSearchIcon,
+                    name: userInput.replace(webSearchEngines[index].prefix, ""),
+                    originPluginType: this.pluginType,
+                    searchable: [],
+                });
+            })
+
+            const emptyPromise = Promise.resolve({ data: ["", []] })
+            const promises = webSearchEngines.map((webSearchEngine) => {
+                return webSearchEngine.suggestionUrl
+                    ? axios({ method: "GET", url: webSearchEngine.suggestionUrl.replace("{{query}}", this.getSearchTerm(webSearchEngine, userInput)) })
+                    : emptyPromise;
             });
 
-            axios.all(promises).then(axios.spread((...responses) => {
-                let responseCounter = 0;
-                responses.forEach((res) => {
-                    const results = res.data[1];
-                    searchResults.push({
-                        description: this.buildDescription(webSearchEnginesArray[responseCounter], userInput),
-                        executionArgument: this.buildExecutionArgument(webSearchEnginesArray[responseCounter], userInput),
-                        hideMainWindowAfterExecution: true,
-                        icon: isValidIcon(webSearchEnginesArray[responseCounter].icon) ? webSearchEnginesArray[responseCounter].icon : defaultWebSearchIcon,
-                        name: userInput.replace(webSearchEnginesArray[responseCounter].prefix, ""),
-                        originPluginType: this.pluginType,
-                        searchable: [],
-                    });
+            Promise.all(promises as AxiosPromise[]).then(responses => {
+                let resultsInsterted = 0;
+                responses.forEach((response, index) => {
+                    const results = response.data[1];
+                    const currentResponseResults: SearchResultItem[] = [];
                     results.some((suggestion: string) => {
-                        searchResults.push(
-                            {
-
-                                description: this.buildDescription(webSearchEnginesArray[responseCounter], suggestion),
-                                executionArgument: this.buildExecutionArgument(webSearchEnginesArray[responseCounter], suggestion),
-                                hideMainWindowAfterExecution: true,
-                                icon: isValidIcon(webSearchEnginesArray[responseCounter].icon) ? webSearchEnginesArray[responseCounter].icon : defaultWebSearchIcon,
-                                name: suggestion,
-                                originPluginType: this.pluginType,
-                                searchable: [],
-                            });
-                        if (results.length > 8) {
-                            return suggestion === results[7];
-                        }
+                        currentResponseResults.push({
+                            description: this.buildDescription(webSearchEngines[index], suggestion),
+                            executionArgument: this.buildExecutionArgument(webSearchEngines[index], suggestion),
+                            hideMainWindowAfterExecution: true,
+                            icon: isValidIcon(webSearchEngines[index].icon) ? webSearchEngines[index].icon : defaultWebSearchIcon,
+                            name: suggestion,
+                            originPluginType: this.pluginType,
+                            searchable: [],
+                        })
+                        return suggestion === results[7];
                     });
-                    responseCounter++;
+                    searchResults.splice(index + 1 + resultsInsterted, 0, ...currentResponseResults);
+                    resultsInsterted += currentResponseResults.length;
                 });
                 resolve(searchResults);
-            })).catch((errors) => {
+            }).catch((errors) => {
                 resolve(searchResults);
             });
         });
