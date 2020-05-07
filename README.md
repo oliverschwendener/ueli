@@ -128,6 +128,12 @@ This plugin enables you to quickly find operating system settings.
 
 ![operating-system-settings](assets/feature-operating-system-settings.png)
 
+### Reminder
+
+This plugin enables you to set reminders.
+
+![remindersettings](assets/feature-reminder.png)
+
 ### Shortcuts
 
 This plugin enables you to quickly open files or websites by setting up your own shortcuts.

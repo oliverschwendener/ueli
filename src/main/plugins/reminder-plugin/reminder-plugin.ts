@@ -50,7 +50,7 @@ export class ReminderPlugin implements ExecutionPlugin {
                     executionArgument: `${command}`,
                     hideMainWindowAfterExecution: true,
                     icon: defaultReminderIcon,
-                    name: `${this.translationSet.reminder}: ${userInput}`,
+                    name: `${this.translationSet.reminder}: ${command}`,
                     originPluginType: this.pluginType,
                     searchable: [],
                 };
