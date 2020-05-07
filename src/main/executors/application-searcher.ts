@@ -36,7 +36,7 @@ export function searchMacApplications(applicationSearchOptions: ApplicationSearc
                 return `^${applicationFolder.replace("\\", "\\\\").replace("/", "\\/")}`;
             }).join("|");
 
-            executeCommandWithOutput(`mdfind "kind:apps" | egrep "${folderRegex}"`)
+            executeCommandWithOutput(`mdfind kMDItemContentTypeTree=com.apple.application-bundle | egrep "${folderRegex}"`)
                 .then((data) => {
                     const filePaths = data
                         .split("\n")
