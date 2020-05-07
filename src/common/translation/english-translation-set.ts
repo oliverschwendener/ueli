@@ -345,4 +345,8 @@ export const englishTranslationSet: TranslationSet = {
 
     controlPanel: "Control Panel",
     controlPanelSettingsDescription: "This plugin enables you to quickly find control panel items.",
+
+    reminder: "Reminder",
+    reminderPrefix: "Prefix",
+    reminderSettingsDescription: "This plugin enables you to set reminders",
 };

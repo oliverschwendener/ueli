@@ -345,4 +345,8 @@ export const russianTranslationSet: TranslationSet = {
 
     controlPanel: "панель управления",
     controlPanelSettingsDescription: "Этот плагин позволяет быстро находить элементы панели управления.",
+
+    reminder: "напоминание",
+    reminderPrefix: "Префикс",
+    reminderSettingsDescription: "Этот плагин позволяет устанавливать напоминания\n",
 };

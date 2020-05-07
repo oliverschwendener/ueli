@@ -18,6 +18,7 @@ export enum PluginType {
     Commandline = "commandline-plugin",
     SimpleFolderSearch = "simple-folder-search-plugin",
     Uwp = "uwp",
+    Reminder = "reminder-plugin",
     ColorConverter = "color-converter",
     Dictionary = "dictionary",
     BrowserBookmarks = "browser-bookmarks",

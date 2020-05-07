@@ -64,6 +64,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.everythingSearch;
                 case SettingOsSpecific.MdFind:
                     return translations.mdfindSearch;
+                case PluginSettings.Reminder:
+                    return translations.reminder;
                 case SettingOsSpecific.Uwp:
                     return "UWP";
                 default:
@@ -121,6 +123,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return config.websearchOptions.isEnabled;
                 case PluginSettings.Workflow:
                     return config.workflowOptions.isEnabled;
+                case PluginSettings.Reminder:
+                    return config.reminderOptions.isEnabled;
                 case SettingOsSpecific.ControlPanel.replace(`${platform()}:`, ""):
                     return config.controlPanelOptions.isEnabled;
                 case SettingOsSpecific.Everything.replace(`${platform()}:`, ""):

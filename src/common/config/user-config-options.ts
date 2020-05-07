@@ -18,6 +18,7 @@ import { CommandlineOptions, defaultCommandlineOptions } from "./commandline-opt
 import { OperatingSystemSettingsOptions, defaultOperatingSystemSettingsOptions } from "./operating-system-settings-options";
 import { SimpleFolderSearchOptions, defaultSimpleFolderSearchOptions } from "./simple-folder-search-options";
 import { UwpSearchOptions, defaultUwpSearchOptions } from "./uwp-search-options";
+import { ReminderOptions, defaultReminderOptions } from "./reminder-options";
 import { ColorConverterOptions, defaultColorConverterOptions } from "./color-converter-options";
 import { ApplicationSearchOptions, defaultApplicationSearchOptions } from "./application-search-options";
 import { defaultDictionaryOptions, DictionaryOptions } from "./dictionary-options";
@@ -48,6 +49,7 @@ export interface UserConfigOptions {
     simpleFolderSearchOptions: SimpleFolderSearchOptions;
     colorConverterOptions: ColorConverterOptions;
     uwpSearchOptions: UwpSearchOptions;
+    reminderOptions:ReminderOptions;
     browserBookmarksOptions: BrowserBookmarksOptions;
     controlPanelOptions: ControlPanelOptions;
 }
@@ -76,6 +78,7 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     translationOptions: defaultTranslationOptions,
     urlOptions: defaultUrlOptions,
     uwpSearchOptions: defaultUwpSearchOptions,
+    reminderOptions:defaultReminderOptions,
     websearchOptions: defaultWebSearchOptions,
     workflowOptions: defaultWorkflowOptions,
 };
