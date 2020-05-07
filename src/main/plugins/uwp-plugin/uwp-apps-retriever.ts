@@ -9,7 +9,7 @@ export function getAllUwpApps(alreadyKnownApps: UwpApplication[]): Promise<UwpAp
             .replace(/\n/g, " ").replace(/\"/g, "\\\"")
             .replace("%alreadyKnownAppIds%", alreadyKnownAppIds);
 
-        executeCommandWithUtf8Output(`powershell -Command "${command}"`)
+        executeCommandWithUtf8Output(`powershell -NonInteractive -NoProfile -Command "${command}"`)
             .then((resultString) => {
                 const result = JSON.parse(resultString) as { NewApps: any[], RemovedAppIds: string[] };
                 const allCurrentApps = alreadyKnownApps

@@ -27,7 +27,7 @@ export class ControlPanelPlugin implements SearchPlugin {
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
             const shell = new Powershell({});
-            shell.addCommand(`powershell -Command "Show-ControlPanelItem -Name '${searchResultItem.executionArgument}'"`)
+            shell.addCommand(`powershell -NonInteractive -NoProfile -Command "Show-ControlPanelItem -Name '${searchResultItem.executionArgument}'"`)
                 .then(() => shell.invoke())
                 .then(() => resolve())
                 .catch((reason) => reject(reason))
