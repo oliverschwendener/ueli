@@ -261,6 +261,8 @@ export const englishTranslationSet: TranslationSet = {
     calculatorCopyToClipboard: "Press enter to copy to clipboard",
     calculatorDescription: "This Plugin lets you quickly do simple calculations.",
     calculatorPrecision: "Precision",
+    calculatorSeparator:"Separator",
+
 
     openUrlWithBrowser: "Open with web browser",
     url: "URL",
@@ -275,6 +277,8 @@ export const englishTranslationSet: TranslationSet = {
     currencyConverterDescription: "This plugin enables you to quickly convert currencies. The latest conversion rates are provided by https://exchangeratesapi.io/.",
     currencyConverterPrecision: "Precision",
     currencyConverterCopyToClipboard: "Press enter to copy to clipboard",
+    currencyConverterSeparator:"Separator",
+
 
     workflows: "Workflows",
     workflowSettingsDescription: "This plugin enables you to quickly execute multiple things at once.",

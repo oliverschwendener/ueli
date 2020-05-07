@@ -31,7 +31,7 @@ export class CalculatorPlugin implements ExecutionPlugin {
                 executionArgument: result,
                 hideMainWindowAfterExecution: true,
                 icon: defaultCalculatorIcon,
-                name: `= ${result}`,
+                name: `= ${this.thousands_separators(result)}`,
                 originPluginType: this.pluginType,
                 searchable: [],
             }]);
@@ -52,5 +52,11 @@ export class CalculatorPlugin implements ExecutionPlugin {
             this.translationSet = translationSet;
             resolve();
         });
+    }
+
+    thousands_separators(num: string) {
+        const numParts = num.toString().split(".");
+        numParts[0] = numParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, this.config.separator);
+        return numParts.join(".");
     }
 }

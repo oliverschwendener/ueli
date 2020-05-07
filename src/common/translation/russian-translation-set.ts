@@ -261,6 +261,7 @@ export const russianTranslationSet: TranslationSet = {
     calculatorCopyToClipboard: "Нажмите enter, чтобы скопировать",
     calculatorDescription: "Этот плагин позволяет быстро выполнять простые математические рассчеты.",
     calculatorPrecision: "Точность",
+    calculatorSeparator:"калькулятор",
 
     openUrlWithBrowser: "Открыть в браузере",
     url: "URL",
@@ -275,6 +276,8 @@ export const russianTranslationSet: TranslationSet = {
     currencyConverterDescription: "Этот плагин позволяет быстро конвертировать валюты. Актуальные курсы валют предоставлены https://exchangeratesapi.io/.",
     currencyConverterPrecision: "Точность",
     currencyConverterCopyToClipboard: "Нажмите enter, чтобы скопировать",
+    currencyConverterSeparator:"калькулятор",
+
 
     workflows: "Быстрое выполнение",
     workflowSettingsDescription: "Этот плагин позволяет выполнять выполнять несколько шагов одним действием.",

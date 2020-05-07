@@ -47,7 +47,7 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
                         executionArgument: converted.toString(),
                         hideMainWindowAfterExecution: true,
                         icon: defaultCurrencyExchangeIcon,
-                        name: `= ${converted} ${conversion.target}`,
+                        name: `= ${this.thousands_separators(converted.toString())} ${conversion.target}`,
                         originPluginType: this.pluginType,
                         searchable: [],
                     };
@@ -63,6 +63,12 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return this.clipboardCopier(searchResultItem.executionArgument);
+    }
+
+    thousands_separators(num: string) {
+        const numParts = num.toString().split(".");
+        numParts[0] = numParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, this.config.separator);
+        return numParts.join(".");
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {

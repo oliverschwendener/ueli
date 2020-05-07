@@ -85,6 +85,17 @@ export const calculatorSettingsComponent = Vue.extend({
                             </div>
                         </div>
 
+                        <div class="settings__option">
+                            <div class="settings__option-name">{{ translations.calculatorSeparator }}</div>
+                            <div class="settings__option-content">
+                                <div class="field is-grouped is-grouped-right">
+                                    <div class="control">
+                                        <input class="input font-mono" v-model="config.calculatorOptions.separator" @change="updateConfig">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
