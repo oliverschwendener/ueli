@@ -348,5 +348,5 @@ export const germanTranslationSet: TranslationSet = {
 
     reminder: "Erinnerung",
     reminderPrefix: "Präfix",
-    reminderSettingsDescription: "Mit diesem Plugin können Sie Erinnerungen festlegen\n",
+    reminderSettingsDescription: "Mit diesem Plugin können Sie Erinnerungen festlegen",
 };

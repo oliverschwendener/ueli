@@ -348,5 +348,5 @@ export const russianTranslationSet: TranslationSet = {
 
     reminder: "напоминание",
     reminderPrefix: "Префикс",
-    reminderSettingsDescription: "Этот плагин позволяет устанавливать напоминания\n",
+    reminderSettingsDescription: "Этот плагин позволяет устанавливать напоминания",
 };
