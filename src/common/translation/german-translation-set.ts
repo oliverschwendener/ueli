@@ -261,7 +261,7 @@ export const germanTranslationSet: TranslationSet = {
     calculatorCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",
     calculatorDescription: "Dieses Plugin erlaubt es dir schnell einfache Rechnungen zu machen.",
     calculatorPrecision: "Präzision",
-    calculatorSeparator:"Taschenrechner",
+    calculatorSeparator: "Taschenrechner",
 
 
     openUrlWithBrowser: "Im Webbrowser öffnen",
@@ -277,7 +277,7 @@ export const germanTranslationSet: TranslationSet = {
     currencyConverterDescription: "Dieses Plugin erlaubt es dir schnell Währungsumrechnungen zu machen. Aktuelle Wechselkurse werden von https://exchangeratesapi.io/ bereit gestellt.",
     currencyConverterPrecision: "Präzision",
     currencyConverterCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",
-    currencyConverterSeparator:"Taschenrechner",
+    currencyConverterSeparator: "Taschenrechner",
 
 
     workflows: "Workflows",

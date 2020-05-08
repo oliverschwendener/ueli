@@ -6,7 +6,7 @@ import { TranslationSet } from "../../../common/translation/translation-set";
 import { Calculator } from "./calculator";
 import { CalculatorOptions } from "../../../common/config/calculator-options";
 import { defaultCalculatorIcon } from "../../../common/icon/default-icons";
-
+import { formatNumberSeparator } from "../../helpers/number-formatter-helpers"
 export class CalculatorPlugin implements ExecutionPlugin {
     public pluginType = PluginType.Calculator;
     private config: CalculatorOptions;
@@ -31,7 +31,7 @@ export class CalculatorPlugin implements ExecutionPlugin {
                 executionArgument: result,
                 hideMainWindowAfterExecution: true,
                 icon: defaultCalculatorIcon,
-                name: `= ${this.thousands_separators(result)}`,
+                name: `= ${formatNumberSeparator(result, this.config.separator)}`,
                 originPluginType: this.pluginType,
                 searchable: [],
             }]);
@@ -54,9 +54,4 @@ export class CalculatorPlugin implements ExecutionPlugin {
         });
     }
 
-    thousands_separators(num: string) {
-        const numParts = num.toString().split(".");
-        numParts[0] = numParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, this.config.separator);
-        return numParts.join(".");
-    }
 }

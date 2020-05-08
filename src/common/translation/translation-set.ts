@@ -257,8 +257,8 @@ export interface TranslationSet {
     calcuator: string;
     calculatorCopyToClipboard: string;
     calculatorDescription: string;
-    calculatorPrecision: string
-    calculatorSeparator:string;
+    calculatorPrecision: string;
+    calculatorSeparator: string;
 
 
     openUrlWithBrowser: string;
@@ -274,7 +274,7 @@ export interface TranslationSet {
     currencyConverterDescription: string;
     currencyConverterPrecision: string;
     currencyConverterCopyToClipboard: string;
-    currencyConverterSeparator:string;
+    currencyConverterSeparator: string;
 
     workflows: string;
     workflowSettingsDescription: string;

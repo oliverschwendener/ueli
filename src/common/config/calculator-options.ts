@@ -1,7 +1,7 @@
 export interface CalculatorOptions {
     precision: number;
     isEnabled: boolean;
-    separator:string;
+    separator: string;
 }
 
 export const defaultCalculatorOptions: CalculatorOptions = {

@@ -8,6 +8,7 @@ import { CurrencyConverterOptions } from "../../../common/config/currency-conver
 import { CurrencyConverter } from "./currency-converter";
 import { CurrencyConversion } from "./currency-conversion";
 import { defaultCurrencyExchangeIcon } from "../../../common/icon/default-icons";
+import {formatNumberSeparator} from "../../helpers/number-formatter-helpers";
 
 export class CurrencyConverterPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.CurrencyConverter;
@@ -47,7 +48,7 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
                         executionArgument: converted.toString(),
                         hideMainWindowAfterExecution: true,
                         icon: defaultCurrencyExchangeIcon,
-                        name: `= ${this.thousands_separators(converted.toString())} ${conversion.target}`,
+                        name: `= ${formatNumberSeparator(converted.toString(), this.config.separator)} ${conversion.target}`,
                         originPluginType: this.pluginType,
                         searchable: [],
                     };
@@ -65,11 +66,7 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
         return this.clipboardCopier(searchResultItem.executionArgument);
     }
 
-    thousands_separators(num: string) {
-        const numParts = num.toString().split(".");
-        numParts[0] = numParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, this.config.separator);
-        return numParts.join(".");
-    }
+
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
         return new Promise((resolve) => {
