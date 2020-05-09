@@ -261,8 +261,8 @@ export const russianTranslationSet: TranslationSet = {
     calculatorCopyToClipboard: "Нажмите enter, чтобы скопировать",
     calculatorDescription: "Этот плагин позволяет быстро выполнять простые математические рассчеты.",
     calculatorPrecision: "Точность",
-    calculatorDecimalSeparator: "Decimal separator",
-    calculatorArgumentSeparator: "Argument separator",
+    calculatorDecimalSeparator: "Десятичный разделитель",
+    calculatorArgumentSeparator: "сепаратор Аргумент",
     calculatorDecimalSeparatorMustNotEqualArgumentSeparator: "Десятичный разделитель не должен быть равнозначен разделителю аргументов.",
 
     openUrlWithBrowser: "Открыть в браузере",
