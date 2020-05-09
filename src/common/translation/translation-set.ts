@@ -260,8 +260,6 @@ export interface TranslationSet {
     calculatorPrecision: string;
     calculatorDecimalSeparator: string;
     calculatorArgumentSeparator: string;
-    calculatorDecimalSeparatorMustNotBeEmpty: string;
-    calculatorArgumentSeparatorMustNotBeEmpty: string;
     calculatorDecimalSeparatorMustNotEqualArgumentSeparator: string;
 
     openUrlWithBrowser: string;

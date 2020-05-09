@@ -263,8 +263,6 @@ export const russianTranslationSet: TranslationSet = {
     calculatorPrecision: "Точность",
     calculatorDecimalSeparator: "Decimal separator",
     calculatorArgumentSeparator: "Argument separator",
-    calculatorDecimalSeparatorMustNotBeEmpty: "Вы должны ввести десятичный разделитель",
-    calculatorArgumentSeparatorMustNotBeEmpty: "Вы должны ввести разделитель аргументов",
     calculatorDecimalSeparatorMustNotEqualArgumentSeparator: "Десятичный разделитель не должен быть равнозначен разделителю аргументов.",
 
     openUrlWithBrowser: "Открыть в браузере",

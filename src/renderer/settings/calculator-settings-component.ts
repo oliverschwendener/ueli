@@ -42,11 +42,7 @@ export const calculatorSettingsComponent = Vue.extend({
         },
         updateConfig() {
             const translations: TranslationSet = this.translations;
-            if (!this.decimalSeparator)
-                vueEventDispatcher.$emit(VueEventChannels.notification, translations.calculatorDecimalSeparatorMustNotBeEmpty, NotificationType.Error);
-            else if (!this.argumentSeparator)
-                vueEventDispatcher.$emit(VueEventChannels.notification, translations.calculatorArgumentSeparatorMustNotBeEmpty, NotificationType.Error);
-            else if (this.decimalSeparator === this.argumentSeparator)
+            if (this.decimalSeparator === this.argumentSeparator)
                 vueEventDispatcher.$emit(VueEventChannels.notification, translations.calculatorDecimalSeparatorMustNotEqualArgumentSeparator, NotificationType.Error);
             else {
                 const calcConfig: CalculatorOptions = this.config.calculatorOptions;
@@ -54,6 +50,14 @@ export const calculatorSettingsComponent = Vue.extend({
                 calcConfig.argumentSeparator = this.argumentSeparator;
                 vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
             }
+        },
+        setDecimalSeparator(separator: string) {
+            this.decimalSeparator = separator;
+            this.updateConfig();
+        },
+        setArgumentSeparator(separator: string) {
+            this.argumentSeparator = separator;
+            this.updateConfig();
         },
     },
     mounted() {
@@ -109,14 +113,14 @@ export const calculatorSettingsComponent = Vue.extend({
                             <div class="settings__option-name">{{ translations.calculatorDecimalSeparator }}</div>
                             <div class="settings__option-content">
                                 <div class="field is-grouped is-grouped-right">
-                                    <div class="control">
-                                        <input
-                                            type="text"
-                                            class="input"
-                                            maxlength="1"
-                                            v-model="decimalSeparator"
-                                            @change="updateConfig"
-                                        >
+                                    <div class="buttons has-addons">
+                                        <button class="button"
+                                            :class="{ 'is-success' : decimalSeparator == '.' }"
+                                            @click="setDecimalSeparator('.')">.</button>
+                                        <button class="button"
+                                            :class="{ 'is-success' : decimalSeparator == ',' && argumentSeparator != ',',
+                                                'is-danger': decimalSeparator == ',' && argumentSeparator == ',' }"
+                                            @click="setDecimalSeparator(',')">,</button>
                                     </div>
                                 </div>
                             </div>
@@ -126,14 +130,14 @@ export const calculatorSettingsComponent = Vue.extend({
                             <div class="settings__option-name">{{ translations.calculatorArgumentSeparator }}</div>
                             <div class="settings__option-content">
                                 <div class="field is-grouped is-grouped-right">
-                                    <div class="control">
-                                        <input
-                                            type="text"
-                                            class="input"
-                                            maxlength="1"
-                                            v-model="argumentSeparator"
-                                            @change="updateConfig"
-                                        >
+                                    <div class="buttons has-addons">
+                                        <button class="button"
+                                            :class="{ 'is-success' : argumentSeparator == ',' && decimalSeparator != ',',
+                                                'is-danger': argumentSeparator == ',' && decimalSeparator == ',' }"
+                                            @click="setArgumentSeparator(',')">,</button>
+                                        <button class="button"
+                                            :class="{ 'is-success' : argumentSeparator == ';' }"
+                                            @click="setArgumentSeparator(';')">;</button>
                                     </div>
                                 </div>
                             </div>

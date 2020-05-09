@@ -263,8 +263,6 @@ export const englishTranslationSet: TranslationSet = {
     calculatorPrecision: "Precision",
     calculatorDecimalSeparator: "Decimal separator",
     calculatorArgumentSeparator: "Argument separator",
-    calculatorDecimalSeparatorMustNotBeEmpty: "You must enter a decimal separator",
-    calculatorArgumentSeparatorMustNotBeEmpty: "You must enter an argument separator",
     calculatorDecimalSeparatorMustNotEqualArgumentSeparator: "Decimal separator must not equal argument separator",
 
     openUrlWithBrowser: "Open with web browser",

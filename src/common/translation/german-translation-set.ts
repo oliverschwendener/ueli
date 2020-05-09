@@ -263,9 +263,7 @@ export const germanTranslationSet: TranslationSet = {
     calculatorPrecision: "Präzision",
     calculatorDecimalSeparator: "Dezimaltrennzeichen",
     calculatorArgumentSeparator: "Argumenttrennzeichen",
-    calculatorDecimalSeparatorMustNotBeEmpty: "Es muss ein Dezimaltrennzeichen eingegeben werden",
-    calculatorArgumentSeparatorMustNotBeEmpty: "Es muss ein Argumenttrennzeichen eingegeben werden",
-    calculatorDecimalSeparatorMustNotEqualArgumentSeparator: "Dezimaltrennzeichen und Argumenttrennzeichen dürfen nicht gleich sein",
+    calculatorDecimalSeparatorMustNotEqualArgumentSeparator: "Dezimal- und Argumenttrennzeichen dürfen nicht gleich sein",
 
     openUrlWithBrowser: "Im Webbrowser öffnen",
     url: "URL",
