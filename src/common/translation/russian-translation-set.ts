@@ -333,6 +333,7 @@ export const russianTranslationSet: TranslationSet = {
     remove: "Удалить",
     edit: "Изменить",
     forExample: "Например",
+    example: "Пример",
     iconType: "Тип иконки",
     iconTypeColor: "Цвет",
     showFullFilePath: "Показать полный путь",

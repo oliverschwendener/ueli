@@ -333,6 +333,7 @@ export const englishTranslationSet: TranslationSet = {
     remove: "Remove",
     edit: "Edit",
     forExample: "For example",
+    example: "Example",
     iconType: "Icon type",
     iconTypeColor: "Color",
     showFullFilePath: "Show full file path",

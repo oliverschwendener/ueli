@@ -333,6 +333,7 @@ export const germanTranslationSet: TranslationSet = {
     remove: "Entfernen",
     edit: "Bearbeiten",
     forExample: "Zum Beispiel",
+    example: "Beispiel",
     iconType: "Icontyp",
     iconTypeColor: "Farbe",
     showFullFilePath: "Vollständiger Dateipfad anzeigen",

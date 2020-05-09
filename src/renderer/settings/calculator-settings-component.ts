@@ -16,6 +16,8 @@ export const calculatorSettingsComponent = Vue.extend({
             visible: false,
             decimalSeparator: ".",
             argumentSeparator: ",",
+            savedDecimalSeparator: ".",
+            savedArgumentSeparator: ",",
         };
     },
     methods: {
@@ -48,6 +50,8 @@ export const calculatorSettingsComponent = Vue.extend({
                 const calcConfig: CalculatorOptions = this.config.calculatorOptions;
                 calcConfig.decimalSeparator = this.decimalSeparator;
                 calcConfig.argumentSeparator = this.argumentSeparator;
+                this.savedDecimalSeparator = calcConfig.decimalSeparator;
+                this.savedArgumentSeparator = calcConfig.argumentSeparator;
                 vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
             }
         },
@@ -66,6 +70,8 @@ export const calculatorSettingsComponent = Vue.extend({
                 const calcConfig: CalculatorOptions = this.config.calculatorOptions;
                 this.decimalSeparator = calcConfig.decimalSeparator;
                 this.argumentSeparator = calcConfig.argumentSeparator;
+                this.savedDecimalSeparator = calcConfig.decimalSeparator;
+                this.savedArgumentSeparator = calcConfig.argumentSeparator;
                 this.visible = true;
             } else {
                 this.visible = false;
@@ -142,6 +148,8 @@ export const calculatorSettingsComponent = Vue.extend({
                                 </div>
                             </div>
                         </div>
+
+                        <div>{{ translations.example }}: sum(1{{config.calculatorOptions.decimalSeparator}}2{{config.calculatorOptions.argumentSeparator}} 3) = 4{{config.calculatorOptions.decimalSeparator}}2</div>
 
                     </div>
                 </div>

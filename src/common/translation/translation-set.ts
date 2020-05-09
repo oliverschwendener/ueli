@@ -330,6 +330,7 @@ export interface TranslationSet {
     remove: string;
     edit: string;
     forExample: string;
+    example: string;
     iconType: string;
     iconTypeColor: string;
     showFullFilePath: string;
