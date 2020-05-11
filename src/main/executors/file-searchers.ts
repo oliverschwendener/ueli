@@ -19,7 +19,7 @@ export function windowsFileSearcher(option: FileSearchOption): Promise<string[]>
         const recursive = option.recursive ? "-Recurse" : "";
         const powershellScript = `Get-ChildItem -Path '${option.folderPath}' ${recursive} | Where { ${excludes} } | % { $_.FullName } | Select-Object -First 1000`;
 
-        executeCommandWithOutput(`powershell -Command "& { ${powershellScript} }"`)
+        executeCommandWithOutput(`powershell -NonInteractive -NoProfile -Command "& { ${powershellScript} }"`)
             .then((data) => {
                 const result = data
                     .split("\n")
