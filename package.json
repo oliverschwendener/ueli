@@ -7,9 +7,6 @@
     "type": "git",
     "url": "https://github.com/oliverschwendener/ueli"
   },
-  "build": {
-    "appId": "ueli.com"
-  },
   "homepage": "https://ueli.app",
   "author": {
     "name": "Oliver Schwendener",
