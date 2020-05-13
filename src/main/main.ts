@@ -34,6 +34,7 @@ import { deepCopy } from "../common/helpers/object-helpers";
 import { PluginType } from "./plugin-type";
 import { getRescanIntervalInMilliseconds } from "./helpers/rescan-interval-helpers";
 import { openUrlInBrowser } from "./executors/url-executor";
+import { nodeEmitter } from "./helpers/node-event-emitter";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -603,6 +604,10 @@ function registerAllIpcListeners() {
                 noSearchResultsFound();
             });
     });
+
+    nodeEmitter.on(IpcChannels.updateCurrentResults, (searchResults) => {
+        updateSearchResults(searchResults, mainWindow.webContents)
+    })
 
     ipcMain.on(IpcChannels.favoritesRequested, (event: Electron.IpcMainEvent) => {
         searchEngine.getFavorites()
