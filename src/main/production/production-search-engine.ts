@@ -127,7 +127,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         ),
     ];
 
-    const webSearchPlugin = new WebSearchPlugin(config.websearchOptions, translationSet, urlExecutor);
+    const webSearchPlugin = new WebSearchPlugin(config.websearchOptions, translationSet, logger, urlExecutor);
 
     const executionPlugins: ExecutionPlugin[] = [
         webSearchPlugin,

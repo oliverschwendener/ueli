@@ -7,18 +7,21 @@ import { WebSearchEngine } from "./web-search-engine";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { defaultWebSearchIcon } from "../../../common/icon/default-icons";
 import { isValidIcon } from "../../../common/icon/icon-helpers";
-import axios, { AxiosPromise } from "axios";
+import axios from "axios";
+import { Logger } from "../../../common/logger/logger";
 
 export class WebSearchPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.WebSearchPlugin;
     private config: WebSearchOptions;
     private translationSet: TranslationSet;
     private readonly urlExecutor: (url: string) => Promise<void>;
+    private readonly logger: Logger;
 
-    constructor(userConfig: WebSearchOptions, translationSet: TranslationSet, urlExecutor: (url: string) => Promise<void>) {
+    constructor(userConfig: WebSearchOptions, translationSet: TranslationSet, logger: Logger, urlExecutor: (url: string) => Promise<void>) {
         this.config = userConfig;
         this.translationSet = translationSet;
         this.urlExecutor = urlExecutor;
+        this.logger = logger;
     }
 
     public getSearchResults(userInput: string, fallback?: boolean): Promise<SearchResultItem[]> {
@@ -39,6 +42,7 @@ export class WebSearchPlugin implements ExecutionPlugin {
                     }
                     return 0;
                 });
+
             webSearchEngines.forEach((webSearchEngine, index) => {
                 searchResults.push({
                     description: this.buildDescription(webSearchEngines[index], userInput),
@@ -51,38 +55,51 @@ export class WebSearchPlugin implements ExecutionPlugin {
                 });
             })
 
-            const emptyPromise = Promise.resolve({ data: ["", []] })
-            const promises = webSearchEngines.map((webSearchEngine) => {
-                return webSearchEngine.suggestionUrl
-                    ? axios({ method: "GET", url: webSearchEngine.suggestionUrl.replace("{{query}}", this.getSearchTerm(webSearchEngine, userInput)) })
-                    : emptyPromise;
-            });
-
-            Promise.all(promises as AxiosPromise[]).then(responses => {
+            const suggestionPromises = webSearchEngines.map(webSearchEngine => this.suggestionResolver(webSearchEngine, userInput))
+            Promise.all(suggestionPromises).then(responses => {
                 let resultsInsterted = 0;
                 responses.forEach((response, index) => {
-                    const results = response.data[1];
-                    const currentResponseResults: SearchResultItem[] = [];
-                    results.some((suggestion: string) => {
-                        currentResponseResults.push({
-                            description: this.buildDescription(webSearchEngines[index], suggestion),
-                            executionArgument: this.buildExecutionArgument(webSearchEngines[index], suggestion),
-                            hideMainWindowAfterExecution: true,
-                            icon: isValidIcon(webSearchEngines[index].icon) ? webSearchEngines[index].icon : defaultWebSearchIcon,
-                            name: suggestion,
-                            originPluginType: this.pluginType,
-                            searchable: [],
-                        })
-                        return suggestion === results[7];
-                    });
-                    searchResults.splice(index + 1 + resultsInsterted, 0, ...currentResponseResults);
-                    resultsInsterted += currentResponseResults.length;
+                    searchResults.splice(index + 1 + resultsInsterted, 0, ...response);
+                    resultsInsterted += response.length;
                 });
                 resolve(searchResults);
-            }).catch((errors) => {
-                resolve(searchResults);
+            }).catch((error) => {
+                reject(error);
             });
         });
+    }
+
+    private suggestionResolver(webSearchEngine: WebSearchEngine, userInput: string): Promise<SearchResultItem[]> {
+        return new Promise((resolve, reject) => {
+            if (webSearchEngine.suggestionUrl) {
+                axios.get(webSearchEngine.suggestionUrl.replace("{{query}}", this.getSearchTerm(webSearchEngine, userInput)))
+                    .then((response => {
+                        const suggestionsResults: SearchResultItem[] = [];
+                        const suggestionsData = response.data[1];
+
+                        suggestionsData.some((suggestion: string) => {
+                            suggestionsResults.push({
+                                description: this.buildDescription(webSearchEngine, suggestion),
+                                executionArgument: this.buildExecutionArgument(webSearchEngine, suggestion),
+                                hideMainWindowAfterExecution: true,
+                                icon: isValidIcon(webSearchEngine.icon) ? webSearchEngine.icon : defaultWebSearchIcon,
+                                name: suggestion,
+                                originPluginType: this.pluginType,
+                                searchable: [],
+                            })
+
+                            return suggestion === suggestionsData[7];
+                        })
+                        resolve(suggestionsResults)
+                    }))
+                    .catch(error => {
+                        this.logger.error(error)
+                        resolve([])
+                    })
+            } else {
+                resolve([])
+            }
+        })
     }
 
     public isValidUserInput(userInput: string, fallback?: boolean): boolean {
