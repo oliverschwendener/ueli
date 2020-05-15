@@ -48,7 +48,7 @@ export const englishTranslationSet: TranslationSet = {
     generalSettings: "General",
     generalSettingsLanguage: "Language",
     generalSettingsLogExecution: "Log execution",
-    generalSettingsPersistentUserInput: "Peristent user input",
+    generalSettingsPersistentUserInput: "Persistent user input",
     generalSettingsAutostartApp: "Autostart app on system startup",
     generalSettingsShowTrayIcon: "Show tray icon",
     generalSettingsClearCachesOnExit: "Clear caches on quit",
