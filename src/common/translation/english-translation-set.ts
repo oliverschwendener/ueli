@@ -297,6 +297,7 @@ export const englishTranslationSet: TranslationSet = {
     commandlinePrefix: "Prefix",
     commandlineSettingsDescription: "This plugin enables you to quickly execute commandline commands.",
     commandlineShell: "Shell",
+    commandlineCloseAfterExecution: "Close after execution",
 
     simpleFolderSearch: "Simple folder search",
     simpleFolderSearchDescription: "This plugin enables you to quickly search for files or folders",

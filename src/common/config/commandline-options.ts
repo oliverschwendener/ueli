@@ -6,18 +6,21 @@ export interface CommandlineOptions {
     isEnabled: boolean;
     prefix: string;
     shell: WindowsShell|MacOsShell;
+    closeAfterExecution: boolean;
 }
 
 const defaultMacOsCommandlineOptions: CommandlineOptions = {
     isEnabled: true,
     prefix: ">",
     shell: MacOsShell.Terminal,
+    closeAfterExecution: false,
 };
 
 const defaultWindowsCommandlineOptions: CommandlineOptions = {
     isEnabled: true,
     prefix: ">",
     shell: WindowsShell.Cmd,
+    closeAfterExecution: false,
 };
 
 export const defaultCommandlineOptions: CommandlineOptions = isWindows(platform())

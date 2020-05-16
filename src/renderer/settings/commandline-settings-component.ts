@@ -100,6 +100,18 @@ export const commandlineSettingsComponent = Vue.extend({
                             </div>
                         </div>
 
+                        <div class="settings__option">
+                        <div class="settings__option-name">{{translations.commandlineCloseAfterExecution}}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input id="closeAfterExecution" type="checkbox" name="closeAfterExecution" class="switch is-rounded is-success" checked="checked" v-model="config.commandlineOptions.closeAfterExecution" @change="updateConfig()">
+                                    <label for="closeAfterExecution"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     </div>
                 </div>
 

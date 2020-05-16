@@ -5,7 +5,7 @@ const unsupportedShellRejection = (shell: WindowsShell|MacOsShell) => {
     return Promise.reject(`Unsupported shell: ${shell.toString()}`);
 };
 
-export const macOsCommandLineExecutor = (command: string, shell: MacOsShell): Promise<void> => {
+export const macOsCommandLineExecutor = (command: string, exit: boolean, shell: MacOsShell): Promise<void> => {
     let osaScript: string;
     switch (shell) {
         case MacOsShell.Terminal:
@@ -24,16 +24,16 @@ export const macOsCommandLineExecutor = (command: string, shell: MacOsShell): Pr
     return executeCommand(`osascript -e '${osaScript}'`);
 };
 
-export const windowsCommandLineExecutor = (command: string, shell: WindowsShell): Promise<void> => {
+export const windowsCommandLineExecutor = (command: string, exit: boolean, shell: WindowsShell): Promise<void> => {
     switch (shell) {
         case WindowsShell.WSL:
-            return executeCommand(`start wsl.exe sh -c "${command}; exec $SHELL"`);
+            return executeCommand(`start wsl.exe sh -c "${command}; exec $SHELL;${exit ? ";exit" : ""}"`);
         case WindowsShell.PowerShellCore:
-            return executeCommand(`start pwsh.exe -NoExit -Command "&${command}"`);
+            return executeCommand(`start pwsh.exe ${exit ? "" : " -NoExit"} -Command "&${command}"`);
         case WindowsShell.Powershell:
-            return executeCommand(`start powershell -NoExit -Command "&${command}"`);
+            return executeCommand(`start powershell ${exit ? "" : " -NoExit"} -Command "&${command}"`);
         case WindowsShell.Cmd:
-            return executeCommand(`start cmd.exe /k "${command}"`);
+            return executeCommand(`start cmd.exe /k "${command} ${exit ? "&exit" : ""}`);
         default:
             return unsupportedShellRejection(shell);
     }

@@ -294,6 +294,7 @@ export interface TranslationSet {
     commandlinePrefix: string;
     commandlineSettingsDescription: string;
     commandlineShell: string;
+    commandlineCloseAfterExecution: string;
 
     simpleFolderSearch: string;
     simpleFolderSearchDescription: string;

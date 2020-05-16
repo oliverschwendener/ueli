@@ -9,14 +9,14 @@ import { WindowsShell, MacOsShell } from "./shells";
 
 export class CommandlinePlugin implements ExecutionPlugin {
     public pluginType = PluginType.Commandline;
-    private readonly commandlineExecutor: (command: string, shell: WindowsShell|MacOsShell) => Promise<void>;
+    private readonly commandlineExecutor: (command: string, exit: boolean, shell: WindowsShell|MacOsShell) => Promise<void>;
     private config: CommandlineOptions;
     private translationSet: TranslationSet;
 
     constructor(
         config: CommandlineOptions,
         translationSet: TranslationSet,
-        commandlineExecutor: (command: string, shell: WindowsShell|MacOsShell) => Promise<void>,
+        commandlineExecutor: (command: string, exit: boolean, shell: WindowsShell|MacOsShell) => Promise<void>,
     ) {
         this.config = config;
         this.translationSet = translationSet;
@@ -49,7 +49,7 @@ export class CommandlinePlugin implements ExecutionPlugin {
     }
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        return this.commandlineExecutor(searchResultItem.executionArgument, this.config.shell);
+        return this.commandlineExecutor(searchResultItem.executionArgument, this.config.closeAfterExecution, this.config.shell);
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
