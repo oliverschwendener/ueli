@@ -738,6 +738,12 @@ function registerAllIpcListeners() {
                 .catch((err) => logger.error(err));
         }
     });
+
+    ipcMain.on(IpcChannels.executeUrl, (event, userInput: string) => {
+        openUrlInBrowser(`${config.urlOptions.defaultProtocol}://${userInput}.com`)
+            .then(() => { /* do nothing */ })
+            .catch((err) => logger.error(err));
+    })
 }
 
 function addPowershellToPathVariableIfMissing() {

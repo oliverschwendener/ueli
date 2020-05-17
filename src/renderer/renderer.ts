@@ -175,6 +175,10 @@ const app = new Vue({
             ipcRenderer.send(IpcChannels.downloadUpdate);
         });
 
+        vueEventDispatcher.$on(VueEventChannels.executeUrl, (userInput: string) => {
+            ipcRenderer.send(IpcChannels.executeUrl, userInput);
+        });
+
         ipcRenderer.on(IpcChannels.executionFinished, (event) => {
             vueEventDispatcher.$emit(VueEventChannels.executionFinished);
         });
