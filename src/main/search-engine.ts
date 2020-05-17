@@ -144,8 +144,8 @@ export class SearchEngine {
 
     public refreshIndexByPlugin(pluginType: PluginType): Promise<void> {
         return new Promise((resolve, reject) => {
-            const pluginToRefreshIndexes = this.searchPlugins.find((plugin) => plugin.pluginType === pluginType);
-            if (pluginToRefreshIndexes) {
+            const pluginToRefreshIndexes = this.searchPlugins.find((plugin) => plugin.pluginType === pluginType) || this.executionPlugins.find((plugin)=>plugin.pluginType===pluginType);
+            if (pluginToRefreshIndexes && pluginToRefreshIndexes.refreshIndex) {
                 pluginToRefreshIndexes.refreshIndex()
                     .then(() => resolve())
                     .catch((err) => reject(err));

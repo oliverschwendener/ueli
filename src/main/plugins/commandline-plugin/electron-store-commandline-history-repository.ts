@@ -11,6 +11,12 @@ export class ElectronStoreCommandlineHistoryRepository implements CommandlineHis
         this.store = new Store();
         this.history = this.store.get(this.historyStoreKey) || [];
     }
+    refreshIndex(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.history = this.store.get(this.historyStoreKey) || [];
+            resolve();
+        })
+    }
     getAll(): SearchResultItem[] {
         return this.history.length !== 0 ? this.history : [];
     }

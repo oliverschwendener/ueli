@@ -51,6 +51,18 @@ export class CommandlinePlugin implements ExecutionPlugin {
         });
     }
 
+    public refreshIndex(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (this.config.isEnabled) {
+                this.history.refreshIndex()
+                    .then(() => resolve())
+                    .catch((err) => reject(err));
+            } else {
+                resolve();
+            }
+        });
+    }
+
     public isEnabled(): boolean {
         return this.config.isEnabled;
     }

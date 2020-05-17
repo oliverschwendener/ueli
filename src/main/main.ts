@@ -676,7 +676,10 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.commandlineClearHistory, () => {
         searchEngine.clearCommandlineHistory()
-            .then(() => notifyRenderer(translationSet.successfullyClearedCommandlineHistory, NotificationType.Info))
+            .then(() => {
+                refreshIndexOfPlugin(PluginType.Commandline);
+                notifyRenderer(translationSet.successfullyClearedCommandlineHistory, NotificationType.Info);
+            })
             .catch((err) => {
                 logger.error(err)
                 notifyRenderer(err, NotificationType.Error);
