@@ -33,6 +33,7 @@ export const germanTranslationSet: TranslationSet = {
     successfullyClearedCaches: "Erfolgreich alle Zwischenspeicher gelöscht",
     successfullyUpdatedconfig: "Erfolgreich Einstellungen aktualisiert",
     successfullyClearedExecutionLog: "Erfolgreich den Ausführungslog gelöscht",
+    successfullyClearedCommandlineHistory: "Befehlszeilenverlauf erfolgreich gelöscht",
 
     commandlineSearchResultDescription: "{{command}} ausführen",
 
@@ -297,6 +298,7 @@ export const germanTranslationSet: TranslationSet = {
     commandlinePrefix: "Präfix",
     commandlineSettingsDescription: "Dieses Plugin erlaubt es dir schnell Kommandozeilenbefehle auszuführen.",
     commandlineShell: "Shell",
+    commandlineClearHistory: "Verlauf löschen",
 
     simpleFolderSearch: "Einfache Ordnersuche",
     simpleFolderSearchDescription: "Dieses Plugin erlaubt es dir, schnell Dateien und Ordner zu finden.",

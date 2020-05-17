@@ -36,4 +36,5 @@ export enum IpcChannels {
     checkForUpdate = " check-for-update",
     checkForUpdateResponse = "check-for-update-response",
     downloadUpdate = "download-update",
+    commandlineClearHistory = "commandline-clear-history",
 }

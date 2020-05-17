@@ -175,6 +175,10 @@ const app = new Vue({
             ipcRenderer.send(IpcChannels.downloadUpdate);
         });
 
+        vueEventDispatcher.$on(VueEventChannels.commandlineClearHistory, () => {
+            ipcRenderer.send(IpcChannels.commandlineClearHistory)
+        })
+
         ipcRenderer.on(IpcChannels.executionFinished, (event) => {
             vueEventDispatcher.$emit(VueEventChannels.executionFinished);
         });

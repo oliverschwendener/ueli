@@ -674,6 +674,15 @@ function registerAllIpcListeners() {
             });
     });
 
+    ipcMain.on(IpcChannels.commandlineClearHistory, () => {
+        searchEngine.clearCommandlineHistory()
+            .then(() => notifyRenderer(translationSet.successfullyClearedCommandlineHistory, NotificationType.Info))
+            .catch((err) => {
+                logger.error(err)
+                notifyRenderer(err, NotificationType.Error);
+            });
+    })
+
     ipcMain.on(IpcChannels.openDebugLogRequested, () => {
         logger.openLog()
             .then(() => { /* do nothing */ })

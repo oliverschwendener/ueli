@@ -12,6 +12,7 @@ import { OpenLocationPlugin } from "./open-location-plugin";
 import { AutoCompletionPlugin } from "./auto-completion-plugin";
 import { PluginType } from "./plugin-type";
 import { SearchEngineOptions } from "../common/config/search-engine-options";
+import { ElectronStoreCommandlineHistoryRepository } from "./plugins/commandline-plugin/electron-store-commandline-history-repository";
 
 interface FuseResult {
     item: SearchResultItem;
@@ -178,6 +179,10 @@ export class SearchEngine {
 
     public clearExecutionLog(): Promise<void> {
         return this.favoriteManager.clearExecutionLog();
+    }
+
+    public clearCommandlineHistory(): Promise<void> {
+        return new ElectronStoreCommandlineHistoryRepository().clearAll();
     }
 
     private getSearchPluginsResult(userInput: string): Promise<SearchResultItem[]> {

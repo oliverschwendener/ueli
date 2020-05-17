@@ -42,6 +42,9 @@ export const commandlineSettingsComponent = Vue.extend({
         updateConfig() {
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
         },
+        clearHistory() {
+            vueEventDispatcher.$emit(VueEventChannels.commandlineClearHistory)
+        }
     },
     mounted() {
         vueEventDispatcher.$on(VueEventChannels.showSetting, (settingName: string) => {
@@ -96,6 +99,16 @@ export const commandlineSettingsComponent = Vue.extend({
                                             </select>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings__option">
+                            <div class="settings__option-content"
+                                <div class="control">
+                                    <button class="button is-danger" @click="clearHistory" >
+                                        {{ translations.commandlineClearHistory }}
+                                    </button>
                                 </div>
                             </div>
                         </div>

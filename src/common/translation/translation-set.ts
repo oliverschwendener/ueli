@@ -30,6 +30,7 @@ export interface TranslationSet {
     successfullyClearedCaches: string;
     successfullyUpdatedconfig: string;
     successfullyClearedExecutionLog: string;
+    successfullyClearedCommandlineHistory: string;
 
     commandlineSearchResultDescription: string;
 
@@ -294,6 +295,7 @@ export interface TranslationSet {
     commandlinePrefix: string;
     commandlineSettingsDescription: string;
     commandlineShell: string;
+    commandlineClearHistory: string;
 
     simpleFolderSearch: string;
     simpleFolderSearchDescription: string;

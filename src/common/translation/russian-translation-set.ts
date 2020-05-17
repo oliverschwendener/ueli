@@ -33,6 +33,7 @@ export const russianTranslationSet: TranslationSet = {
     successfullyClearedCaches: "Кэш успешно отчищен",
     successfullyUpdatedconfig: "Конфиг успешно обновлен",
     successfullyClearedExecutionLog: "Лог выполнения успешно очищен",
+    successfullyClearedCommandlineHistory: "Успешно очищенная история командной строки",
 
     commandlineSearchResultDescription: "Выполнить {{command}}",
 
@@ -297,6 +298,7 @@ export const russianTranslationSet: TranslationSet = {
     commandlinePrefix: "Префикс",
     commandlineSettingsDescription: "Этот плагин позволяет быстро выполнять консольные команды.",
     commandlineShell: "Shell",
+    commandlineClearHistory:"Чистая история",
 
     simpleFolderSearch: "Простой поиск по директориям",
     simpleFolderSearchDescription: "Этот плагин позволяет быстро искать файлы или папки в указанных директориях.",
