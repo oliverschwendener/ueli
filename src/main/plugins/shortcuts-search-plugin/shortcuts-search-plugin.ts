@@ -56,6 +56,8 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
                 return this.urlExecutor(decodeResult.executionArgument);
             case ShortcutType.FilePath:
                 return this.filePathExecutor(decodeResult.executionArgument, privileged);
+            case ShortcutType.FolderPath:
+                return this.filePathExecutor(decodeResult.executionArgument, false);
             case ShortcutType.CommandlineTool:
                 return this.commandlineExtecutor(decodeResult.executionArgument);
             default:

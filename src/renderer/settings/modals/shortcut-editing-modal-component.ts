@@ -28,6 +28,7 @@ export const shortcutEditingModal = Vue.extend({
             saveIndex: undefined,
             shortcut: deepCopy(defaultNewShortcut),
             shortcutTypeFilePath: ShortcutType.FilePath,
+            shortcutTypeFolderPath: ShortcutType.FolderPath,
             shortcutTypeUrl: ShortcutType.Url,
             shortcutTypes: Object.values(ShortcutType).sort(),
             visible: false,
@@ -55,6 +56,8 @@ export const shortcutEditingModal = Vue.extend({
                     return translations.shortcutSettingsTypeUrl;
                 case ShortcutType.FilePath:
                     return translations.filePath;
+                case ShortcutType.FolderPath:
+                    return translations.folderPath;
                 case ShortcutType.CommandlineTool:
                     return translations.shortcutSettingsTypeCommandlineTool;
             }
@@ -76,6 +79,9 @@ export const shortcutEditingModal = Vue.extend({
                 case ShortcutType.FilePath:
                     placeholder = translations.shortcutSettingsEditModalDownloadsFolder;
                     break;
+                case ShortcutType.FolderPath:
+                    placeholder = translations.shortcutSettingsEditModalDownloadsFolder;
+                    break;
                 case ShortcutType.CommandlineTool:
                     placeholder = translations.shortcutSettingsEditModalCommandLinetoolDescription;
                     break;
@@ -89,6 +95,8 @@ export const shortcutEditingModal = Vue.extend({
                     return "URL";
                 case ShortcutType.FilePath:
                     return translations.filePath;
+                case ShortcutType.FolderPath:
+                    return translations.folderPath;
                 case ShortcutType.CommandlineTool:
                     return translations.shortcutSettingsEditModalCommand;
                 default:
@@ -101,6 +109,9 @@ export const shortcutEditingModal = Vue.extend({
             switch (shortcutType) {
                 case ShortcutType.FilePath:
                     placeholder = `${join(homedir(), "Downloads", "file.txt")}`;
+                    break;
+                case ShortcutType.FolderPath:
+                    placeholder = `${join(homedir(), "Downloads")}`;
                     break;
                 case ShortcutType.Url:
                     placeholder = "https://google.com";
@@ -117,6 +128,9 @@ export const shortcutEditingModal = Vue.extend({
             switch (shortcutType) {
                 case ShortcutType.FilePath:
                     placeholder = "file.txt";
+                    break;
+                case ShortcutType.FolderPath:
+                    placeholder = "folder";
                     break;
                 case ShortcutType.Url:
                     placeholder = "Google";
@@ -196,7 +210,7 @@ export const shortcutEditingModal = Vue.extend({
                         <div class="field">
                             <label class="label">{{ getShorcutTypeExecutionArgumentDescription(shortcut.type) }}</label>
                         </div>
-                        <div class="field" :class="{ 'has-addons' : shortcut.type === shortcutTypeFilePath }">
+                        <div class="field" :class="{ 'has-addons' : shortcut.type === shortcutTypeFilePath || shortcut.type === shortcutTypeFolderPath }">
                             <div class="control is-expanded">
                                 <input class="input" type="text" :placeholder="getShorcutTypeExecutionArgumentPlaceholder(shortcut.type)" v-model="shortcut.executionArgument">
                             </div>
@@ -207,7 +221,7 @@ export const shortcutEditingModal = Vue.extend({
                                     </span>
                                 </button>
                             </div>
-                            <div v-if="shortcut.type === shortcutTypeFilePath" class="control">
+                            <div v-if="shortcut.type === shortcutTypeFilePath || shortcut.type === shortcutTypeFolderPath" class="control">
                                 <button class="button" @click="openFolder" autofocus>
                                     <span class="icon tooltip" :data-tooltip="translations.chooseFolder">
                                         <i  class="fas fa-folder"></i>

@@ -2,7 +2,7 @@ import { Shortcut } from "./shortcut";
 import { ShortcutType } from "./shortcut-type";
 import { IconType } from "../../../common/icon/icon-type";
 import { isValidIcon } from "../../../common/icon/icon-helpers";
-import { defaultTerminalIcon, defaultUrlIcon, defaultShortcutIcon } from "../../../common/icon/default-icons";
+import { defaultTerminalIcon, defaultUrlIcon, defaultShortcutIcon, defaultFolderIcon } from "../../../common/icon/default-icons";
 
 export const defaultNewShortcut: Shortcut = {
     description: "",
@@ -39,6 +39,8 @@ export function isValidShortcutExecutionArgument(shortcut: Shortcut, filePathVal
             return isValidShorcutUrl(shortcut.executionArgument);
         case ShortcutType.FilePath:
             return isValidShortcutFilePath(shortcut.executionArgument, filePathValidator);
+        case ShortcutType.FolderPath:
+            return isValidShortcutFilePath(shortcut.executionArgument, filePathValidator);
         case ShortcutType.CommandlineTool:
             return isValidShortcutCommand(shortcut.executionArgument);
     }
@@ -51,6 +53,8 @@ export function getDefaultShortcutIcon(shortcut: Shortcut) {
         case ShortcutType.Url:
             return defaultUrlIcon;
         case ShortcutType.FilePath:
+        case ShortcutType.FolderPath:
+            return defaultFolderIcon;
         default:
             return defaultShortcutIcon;
     }

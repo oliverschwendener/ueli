@@ -54,6 +54,8 @@ export const shortcutSettingsComponent = Vue.extend({
                     return "fas fa-globe-europe";
                 case ShortcutType.FilePath:
                     return "fas fa-file";
+                case ShortcutType.FolderPath:
+                    return "fas fa-folder";
                 case ShortcutType.CommandlineTool:
                     return "fas fa-terminal";
             }
@@ -63,6 +65,8 @@ export const shortcutSettingsComponent = Vue.extend({
                 case ShortcutType.Url:
                     return "is-primary";
                 case ShortcutType.FilePath:
+                    return "is-info";
+                case ShortcutType.FolderPath:
                     return "is-info";
                 case ShortcutType.CommandlineTool:
                     return "is-link";
