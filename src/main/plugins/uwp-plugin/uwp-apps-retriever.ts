@@ -32,7 +32,7 @@ filter ArrayToHash
 }
 
 [string[]]$alreadyKnownAppIds = %alreadyKnownAppIds%;
-$alreadyKnownAppIdsSet = New-Object System.Collections.Generic.HashSet[string] ($alreadyKnownAppIds);
+$alreadyKnownAppIdsSet = New-Object System.Collections.Generic.HashSet[string] (,$alreadyKnownAppIds);
 
 $currentStartApps = Get-StartApps | Where-Object { $_.AppID.Contains("!") };
 $currentStartAppIds = $currentStartApps | Select-Object -ExpandProperty AppID;
