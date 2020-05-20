@@ -8,7 +8,9 @@ export class UserInputHistoryManager {
     }
 
     public addItem(userInput: string): void {
-        this.history.push(userInput);
+        if (this.history[this.history.length - 1] !== userInput) {
+            this.history.push(userInput);
+        }
         this.index = this.history.length;
     }
 
