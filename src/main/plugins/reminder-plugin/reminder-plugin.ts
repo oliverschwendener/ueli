@@ -30,7 +30,6 @@ export class ReminderPlugin implements ExecutionPlugin {
                 const task = parseReminder(command);
                 return task != null;
             } catch (e) {
-                console.log(e.toString())
                 return false
             }
         }else{
