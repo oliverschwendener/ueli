@@ -1,6 +1,6 @@
 export interface ReminderOptions {
     isEnabled: boolean;
-    prefix:string;
+    prefix: string;
 }
 
 export const defaultReminderOptions: ReminderOptions = {
