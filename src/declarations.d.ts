@@ -5,3 +5,4 @@ declare module "simple-plist" {
 }
 
 declare module "chrono-node";
+declare module "node-schedule";
