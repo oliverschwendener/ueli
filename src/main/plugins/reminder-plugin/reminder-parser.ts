@@ -1,7 +1,6 @@
-//based on :https://github.com/bkeepers/parse-reminder/blob/master/index.js
+// based on :https://github.com/bkeepers/parse-reminder/blob/master/index.js
 
-const chrono = require('chrono-node');
-
+import {chrono} from 'chrono-node';
 
 export function parseReminder(expression: string) {
 
