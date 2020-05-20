@@ -232,7 +232,7 @@ body {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    max-width: calc(100% - var(--search-results--item-icon-size));  
+    max-width: calc(100% - var(--search-results--item-icon-size) * 2);
 }
 
 .search-results__item-number-container {
