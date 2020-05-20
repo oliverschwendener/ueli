@@ -25,12 +25,9 @@ export class ReminderPlugin implements ExecutionPlugin {
 
     public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
         if ( userInput.startsWith(this.config.prefix) && userInput.length > this.config.prefix.length) {
-            console.log((userInput));
             const command = userInput.replace(this.config.prefix, '').trim();
-            console.log(command)
             try {
                 const task = parseReminder(command);
-                console.log(task)
                 return task != null;
             } catch (e) {
                 console.log(e.toString())
