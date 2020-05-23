@@ -8,7 +8,7 @@ import { ControlPanelOptions } from "../../../common/config/control-panel-option
 import { ControlPanelItem } from "./control-panel-item";
 import { defaultControlPanelIcon } from "../../../common/icon/default-icons";
 import { ControlPanelItemsRetriever } from "./control-panel-items-retriever";
-import * as Powershell from "node-powershell";
+import { executeCommand } from "../../executors/command-executor";
 
 export class ControlPanelPlugin implements SearchPlugin {
     public pluginType = PluginType.ControlPanel;
@@ -26,12 +26,9 @@ export class ControlPanelPlugin implements SearchPlugin {
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
-            const shell = new Powershell({});
-            shell.addCommand(`powershell -NonInteractive -NoProfile -Command "Show-ControlPanelItem -Name '${searchResultItem.executionArgument}'"`)
-                .then(() => shell.invoke())
+            executeCommand(`powershell -NonInteractive -NoProfile -Command "Show-ControlPanelItem -Name '${searchResultItem.executionArgument}'"`)
                 .then(() => resolve())
-                .catch((reason) => reject(reason))
-                .finally(() => shell.dispose());
+                .catch((reason) => reject(reason));
         });
     }
 
