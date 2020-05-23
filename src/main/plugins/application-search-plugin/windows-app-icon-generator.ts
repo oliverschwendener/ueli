@@ -43,16 +43,29 @@ function generateIcons(icons: Icon[], followShortcuts?: boolean): Promise<void> 
             noProfile: true,
         });
 
-        ps.addCommand(`Add-Type -AssemblyName System.Drawing`);
+        const iconsJsonBase64 = Buffer.from(JSON.stringify(icons)).toString('base64');
 
-        icons.forEach((icon) => {
-            ps.addCommand(`$fileExists = Test-Path -LiteralPath "${icon.inputFilePath}";`);
-            ps.addCommand(`if($fileExists) { $icon = [System.Drawing.Icon]::ExtractAssociatedIcon("${icon.inputFilePath}"); }`);
-            ps.addCommand(`if($fileExists) { $bitmap = $icon.ToBitmap().save("${icon.outputFilePath}", [System.Drawing.Imaging.ImageFormat]::${icon.outputFormat}); }`);
-        });
+        const powershellCommand = `
+            $ErrorActionPreference = "Continue";
+            Add-Type -AssemblyName System.Drawing;
+            $iconsBase64 = "${iconsJsonBase64}";
+            $iconsJson = [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($iconsBase64));
+            $icons = $iconsJson | ConvertFrom-Json;
+            $icons |
+                Where-Object { Test-Path -LiteralPath $_.inputFilePath } |
+                ForEach-Object {
+                    $icon = $null;
+                    $icon = [System.Drawing.Icon]::ExtractAssociatedIcon($_.inputFilePath);
+                    if ($icon -ne $null) {
+                        $outputFormat = $_.outputFormat;
+                        $bitmap = $icon.ToBitmap().Save($_.outputFilePath, [System.Drawing.Imaging.ImageFormat]::$outputFormat);
+                    }
+                }
+        `;
 
-        ps.invoke()
-            .then(() => resolve())
+        ps.addCommand(powershellCommand)
+            .then(() => ps.invoke())
+            .then((r) => resolve())
             .catch((err) => reject(err))
             .finally(() => ps.dispose());
     });
