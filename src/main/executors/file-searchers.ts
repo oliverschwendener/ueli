@@ -17,7 +17,8 @@ export function windowsFileSearcher(option: FileSearchOption): Promise<string[]>
                 .join(" -and ")
             : `$_.FullName.Length -gt 0`;
         const recursive = option.recursive ? "-Recurse" : "";
-        const powershellScript = `Get-ChildItem -Path '${option.folderPath}' ${recursive} | Where { ${excludes} } | % { $_.FullName } | Select-Object -First 1000`;
+        const utf8Encoding = "[Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8";
+        const powershellScript = `${utf8Encoding}; Get-ChildItem -Path '${option.folderPath}' ${recursive} | Where { ${excludes} } | % { $_.FullName } | Select-Object -First 1000`;
 
         executeCommandWithOutput(`powershell -NonInteractive -NoProfile -Command "& { ${powershellScript} }"`)
             .then((data) => {
