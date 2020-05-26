@@ -22,6 +22,8 @@ import { platform } from "os";
 import { version } from "../../../package.json";
 import { deepCopy } from "../../common/helpers/object-helpers";
 
+const appIsInDevelopment = isDev(process.execPath);
+
 interface UpdateStatus {
     checking: boolean;
     downloading: boolean;
@@ -49,11 +51,11 @@ export const generalSettingsComponent = Vue.extend({
     data() {
         return {
             appInfo,
+            appIsInDevelopment,
             availableLanguages: Object.values(Language).map((language) => language),
             dropdownVisible: false,
             globalHotKeyKeys: Object.values(GlobalHotKeyKey).map((key) => key),
             globalHotKeyModifiers: Object.values(GlobalHotKeyModifier).map((modifier) => modifier),
-            isDev: isDev(),
             settingName: GeneralSettings.General,
             updateStatus: deepCopy(initialUpdateStatus),
             visible: false,
@@ -529,7 +531,7 @@ export const generalSettingsComponent = Vue.extend({
                                         <button class="button" v-if="updateStatus.checking" disabled>
                                             {{ translations.generalSettingsCheckingForUpdate }}...
                                         </button>
-                                        <button class="button" :disabled="isDev" v-if="updateStatus.updateAvailable" @click="downloadUpdate">
+                                        <button class="button" :disabled="appIsInDevelopment" v-if="updateStatus.updateAvailable" @click="downloadUpdate">
                                             {{ translations.generalSettingsDownloadUpdate }}
                                         </button>
                                         <button class="button" disabled v-if="updateStatus.downloading">
