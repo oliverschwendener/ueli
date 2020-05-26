@@ -52,6 +52,7 @@ import { GoogleChromeBookmarkRepository } from "../plugins/browser-bookmarks-plu
 import { ControlPanelPlugin } from "../plugins/control-panel-plugin/control-panel-plugin";
 import { getAllUwpApps } from "../plugins/uwp-plugin/uwp-apps-retriever";
 import { getGoogleDictionaryDefinitions } from "../plugins/dictionary-plugin/google-dictionary-definition-retriever";
+import { everythingSearcher } from "../plugins/everything-plugin/everything-searcher";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -159,6 +160,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
                 config.everythingSearchOptions,
                 filePathExecutor,
                 filePathLocationExecutor,
+                everythingSearcher
             ),
         );
         searchPlugins.push(
