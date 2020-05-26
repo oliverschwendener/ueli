@@ -1,5 +1,4 @@
 export enum PluginType {
-    None = "none",
     ApplicationSearchPlugin = "application-search-plugin",
     UeliCommandSearchPlugin = "ueli-command-search-plugin",
     ShortcutsSearchPlugin = "shortcuts-search-plugin",
@@ -21,6 +20,11 @@ export enum PluginType {
     ColorConverter = "color-converter",
     Dictionary = "dictionary",
     BrowserBookmarks = "browser-bookmarks",
-    Test = "test-plugin",
     ControlPanel = "control-panel-plugin",
+
+    // This is used for generic search results which do not have a specific plugin as a source
+    None = "none",
+
+    // This is only used in unit tests
+    Test = "test-plugin",
 }
