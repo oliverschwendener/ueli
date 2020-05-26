@@ -31,7 +31,7 @@ export function searchWindowsApplications(applicationSearchOptions: ApplicationS
     });
 }
 
-export function searchMacApplications(applicationSearchOptions: ApplicationSearchOptions): Promise<string[]> {
+export function searchMacApplications(applicationSearchOptions: ApplicationSearchOptions, logger: Logger): Promise<string[]> {
     return new Promise((resolve, reject) => {
         if (applicationSearchOptions.applicationFolders.length === 0) {
             resolve([]);
