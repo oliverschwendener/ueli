@@ -49,7 +49,8 @@ export class CommandlinePlugin implements ExecutionPlugin {
     }
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        return this.commandlineExecutor(searchResultItem.executionArgument, this.config.shell);
+        this.commandlineExecutor(searchResultItem.executionArgument, this.config.shell);
+        return Promise.resolve();
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
