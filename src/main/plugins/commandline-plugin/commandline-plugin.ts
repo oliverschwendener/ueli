@@ -45,7 +45,7 @@ export class CommandlinePlugin implements ExecutionPlugin {
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         this.commandlineExecutor(searchResultItem.executionArgument, this.config.shell)
-            .then(() => {/* do nothing */ })
+            .then(() => { /* do nothing */ })
             .catch(error => this.logger.error(error));
         return Promise.resolve();
     }
