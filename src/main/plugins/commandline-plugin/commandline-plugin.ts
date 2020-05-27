@@ -47,6 +47,10 @@ export class CommandlinePlugin implements ExecutionPlugin {
         this.commandlineExecutor(searchResultItem.executionArgument, this.config.shell)
             .then(() => { /* do nothing */ })
             .catch(error => this.logger.error(error));
+
+        // We resolve the execution promise here before the actual execution has been resolved.
+        // In case that there is an interactive shell which listens to user input the execution promise resolves only after the shell is closed.
+        // See here: https://github.com/oliverschwendener/ueli/issues/395
         return Promise.resolve();
     }
 
