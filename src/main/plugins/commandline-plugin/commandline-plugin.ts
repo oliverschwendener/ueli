@@ -10,22 +10,13 @@ import { Logger } from "../../../common/logger/logger";
 
 export class CommandlinePlugin implements ExecutionPlugin {
     public pluginType = PluginType.Commandline;
-    private readonly commandlineExecutor: (command: string, shell: WindowsShell|MacOsShell) => Promise<void>;
-    private config: CommandlineOptions;
-    private translationSet: TranslationSet;
-    private readonly logger: Logger;
 
     constructor(
-        config: CommandlineOptions,
-        translationSet: TranslationSet,
-        commandlineExecutor: (command: string, shell: WindowsShell|MacOsShell) => Promise<void>,
-        logger: Logger,
-    ) {
-        this.config = config;
-        this.translationSet = translationSet;
-        this.commandlineExecutor = commandlineExecutor;
-        this.logger = logger;
-    }
+        private config: CommandlineOptions,
+        private translationSet: TranslationSet,
+        private readonly commandlineExecutor: (command: string, shell: WindowsShell|MacOsShell) => Promise<void>,
+        private readonly logger: Logger,
+    ) {}
 
     public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
         return userInput.startsWith(this.config.prefix)
