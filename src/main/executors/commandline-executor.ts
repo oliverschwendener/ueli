@@ -1,5 +1,5 @@
-import { executeCommand } from "./command-executor";
-import { MacOsShell, WindowsShell } from "../plugins/commandline-plugin/shells";
+import {executeCommand} from "./command-executor";
+import {MacOsShell, WindowsShell} from "../plugins/commandline-plugin/shells";
 
 const unsupportedShellRejection = (shell: WindowsShell|MacOsShell) => {
     return Promise.reject(`Unsupported shell: ${shell.toString()}`);
@@ -14,6 +14,20 @@ export const macOsCommandLineExecutor = (command: string, shell: MacOsShell): Pr
                     if not (exists window 1) then reopen
                         activate
                     do script "${command}" in window 1
+                end tell
+                `;
+            break;
+        case MacOsShell.iTerm:
+            osaScript = `
+                tell application "iTerm"
+                    if not (exists window 1) then reopen
+                        activate
+                    tell current window
+                        create tab with default profile
+                    end tell
+                    tell first session of current tab of current window
+                        write text "${command}"
+                    end tell
                 end tell
                 `;
             break;
