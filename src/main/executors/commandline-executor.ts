@@ -1,7 +1,7 @@
 import {executeCommand} from "./command-executor";
 import {MacOsShell, WindowsShell} from "../plugins/commandline-plugin/shells";
 
-const unsupportedShellRejection = (shell: WindowsShell|MacOsShell) => {
+const unsupportedShellRejection = (shell: WindowsShell | MacOsShell) => {
     return Promise.reject(`Unsupported shell: ${shell.toString()}`);
 };
 
@@ -27,9 +27,9 @@ export const macOsCommandLineExecutor = (command: string, shell: MacOsShell): Pr
                             create tab with default profile
                         end tell
                     end if
-                    
+
                     activate
-                    
+
                     tell first session of current tab of current window
                         write text "${command}"
                     end tell
