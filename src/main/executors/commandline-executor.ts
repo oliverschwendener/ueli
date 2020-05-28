@@ -20,11 +20,16 @@ export const macOsCommandLineExecutor = (command: string, shell: MacOsShell): Pr
         case MacOsShell.iTerm:
             osaScript = `
                 tell application "iTerm"
-                    if not (exists window 1) then reopen
-                        activate
-                    tell current window
-                        create tab with default profile
-                    end tell
+                    if not (exists window 1) then
+                        reopen
+                    else
+                        tell current window
+                            create tab with default profile
+                        end tell
+                    end if
+                    
+                    activate
+                    
                     tell first session of current tab of current window
                         write text "${command}"
                     end tell
