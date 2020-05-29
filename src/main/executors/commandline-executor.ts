@@ -1,5 +1,5 @@
-import {executeCommand} from "./command-executor";
-import {MacOsShell, WindowsShell} from "../plugins/commandline-plugin/shells";
+import { executeCommand } from "./command-executor";
+import { MacOsShell, WindowsShell } from "../plugins/commandline-plugin/shells";
 
 const unsupportedShellRejection = (shell: WindowsShell | MacOsShell) => {
     return Promise.reject(`Unsupported shell: ${shell.toString()}`);
