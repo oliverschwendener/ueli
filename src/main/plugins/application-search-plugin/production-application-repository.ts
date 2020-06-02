@@ -6,24 +6,28 @@ import { Icon } from "../../../common/icon/icon";
 import { ApplicationIconService } from "./application-icon-service";
 import { getApplicationIconFilePath } from "./application-icon-helpers";
 import { IconType } from "../../../common/icon/icon-type";
+import { Logger } from "../../../common/logger/logger";
 
 export class ProductionApplicationRepository implements ApplicationRepository {
     private applications: Application[];
     private readonly defaultAppIcon: Icon;
     private readonly appIconService: ApplicationIconService;
-    private readonly searchApplications: (options: ApplicationSearchOptions) => Promise<string[]>;
+    private readonly searchApplications: (options: ApplicationSearchOptions, logger: Logger) => Promise<string[]>;
     private config: ApplicationSearchOptions;
+    private readonly logger: Logger;
 
     constructor(
         config: ApplicationSearchOptions,
         defaultAppIcon: Icon,
         appIconService: ApplicationIconService,
-        searchApplications: (options: ApplicationSearchOptions) => Promise<string[]>,
+        searchApplications: (options: ApplicationSearchOptions, logger: Logger) => Promise<string[]>,
+        logger: Logger,
     ) {
         this.config = config;
         this.defaultAppIcon = defaultAppIcon;
         this.appIconService = appIconService,
         this.searchApplications = searchApplications;
+        this.logger = logger;
         this.applications = [];
     }
 
@@ -33,7 +37,7 @@ export class ProductionApplicationRepository implements ApplicationRepository {
 
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.searchApplications(this.config)
+            this.searchApplications(this.config, this.logger)
                 .then((filePaths) => {
                     this.applications = filePaths.map((filePath) => this.createApplicationFromFilePath(filePath));
 

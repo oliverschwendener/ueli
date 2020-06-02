@@ -7,4 +7,5 @@ export enum WindowsShell {
 
 export enum MacOsShell {
     Terminal = "Terminal",
+    iTerm = "iTerm"
 }

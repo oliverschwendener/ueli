@@ -52,6 +52,8 @@ import { GoogleChromeBookmarkRepository } from "../plugins/browser-bookmarks-plu
 import { ControlPanelPlugin } from "../plugins/control-panel-plugin/control-panel-plugin";
 import { getAllUwpApps } from "../plugins/uwp-plugin/uwp-apps-retriever";
 import { getGoogleDictionaryDefinitions } from "../plugins/dictionary-plugin/google-dictionary-definition-retriever";
+import { everythingSearcher } from "../plugins/everything-plugin/everything-searcher";
+import { mdfindSearcher } from "../plugins/mdfind-plugin/mdfind-searcher";
 
 const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -92,6 +94,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
                     logger,
                 ),
                 applicationSearcher,
+                logger,
             ),
             filePathExecutor,
             filePathLocationExecutor,
@@ -143,7 +146,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         new UrlPlugin(config.urlOptions, translationSet, urlExecutor),
         new EmailPlugin(config.emailOptions, translationSet, urlExecutor),
         new CurrencyConverterPlugin(config.currencyConverterOptions, translationSet, electronClipboardCopier),
-        new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor),
+        new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor, logger),
         new ColorConverterPlugin(config.colorConverterOptions, electronClipboardCopier),
         new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier, getGoogleDictionaryDefinitions),
     ];
@@ -158,6 +161,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
                 config.everythingSearchOptions,
                 filePathExecutor,
                 filePathLocationExecutor,
+                everythingSearcher
             ),
         );
         searchPlugins.push(
@@ -177,6 +181,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
                 config.mdfindOptions,
                 filePathExecutor,
                 filePathLocationExecutor,
+                mdfindSearcher
             ),
         );
     }

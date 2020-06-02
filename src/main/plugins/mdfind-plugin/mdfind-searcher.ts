@@ -7,51 +7,54 @@ import { PluginType } from "../../plugin-type";
 import { Icon } from "../../../common/icon/icon";
 import { defaultFolderIcon } from "../../../common/icon/default-icons";
 
-export class MdFindSearcher {
-    public static search(searchTerm: string, mdfindOptions: MdFindOptions, pluginType: PluginType, defaultIcon: Icon): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
-            exec(`mdfind -name ${searchTerm} | head -n ${mdfindOptions.maxSearchResults}`, (mdfindError, stdout, stderr) => {
-                if (mdfindError) {
-                    reject(mdfindError);
-                } else if (stderr) {
-                    reject(stderr);
-                } else {
-                    const filePaths = stdout
-                        .split("\n")
-                        .map((f) => normalize(f).trim())
-                        .filter((f) => f !== ".");
+export function mdfindSearcher(
+    searchTerm: string,
+    mdfindOptions: MdFindOptions,
+    pluginType: PluginType,
+    defaultIcon: Icon
+): Promise<SearchResultItem[]> {
+    return new Promise((resolve, reject) => {
+        exec(`mdfind -name ${searchTerm} | head -n ${mdfindOptions.maxSearchResults}`, (mdfindError, stdout, stderr) => {
+            if (mdfindError) {
+                reject(mdfindError);
+            } else if (stderr) {
+                reject(stderr);
+            } else {
+                const filePaths = stdout
+                    .split("\n")
+                    .map((f) => normalize(f).trim())
+                    .filter((f) => f !== ".");
 
-                    this.handleFilePaths(filePaths, pluginType, defaultIcon)
-                        .then((result) => resolve(result))
-                        .catch((err) => reject(err));
-                }
-            });
-        });
-    }
-
-    private static handleFilePaths(filePaths: string[], pluginType: PluginType, defaultIcon: Icon): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
-            if (filePaths.length === 0) {
-                resolve([]);
+                handleFilePaths(filePaths, pluginType, defaultIcon)
+                    .then((result) => resolve(result))
+                    .catch((err) => reject(err));
             }
-
-            Promise.all(filePaths.map((f) => getFileIconDataUrl(f, defaultIcon, defaultFolderIcon)))
-                .then((icons) => {
-                    const results = icons.map((icon): SearchResultItem => {
-                        return {
-                            description: icon.filePath,
-                            executionArgument: icon.filePath,
-                            hideMainWindowAfterExecution: true,
-                            icon: icon.icon,
-                            name: basename(icon.filePath),
-                            originPluginType: pluginType,
-                            searchable: [],
-                            supportsOpenLocation: true,
-                        };
-                    });
-                    resolve(results);
-                })
-                .catch((iconError) => reject(iconError));
         });
-    }
+    });
+}
+
+function handleFilePaths(filePaths: string[], pluginType: PluginType, defaultIcon: Icon): Promise<SearchResultItem[]> {
+    return new Promise((resolve, reject) => {
+        if (filePaths.length === 0) {
+            resolve([]);
+        }
+
+        Promise.all(filePaths.map((f) => getFileIconDataUrl(f, defaultIcon, defaultFolderIcon)))
+            .then((icons) => {
+                const results = icons.map((icon): SearchResultItem => {
+                    return {
+                        description: icon.filePath,
+                        executionArgument: icon.filePath,
+                        hideMainWindowAfterExecution: true,
+                        icon: icon.icon,
+                        name: basename(icon.filePath),
+                        originPluginType: pluginType,
+                        searchable: [],
+                        supportsOpenLocation: true,
+                    };
+                });
+                resolve(results);
+            })
+            .catch((iconError) => reject(iconError));
+    });
 }

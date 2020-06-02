@@ -1,4 +1,4 @@
 export enum OperatingSystem {
-    macOS,
-    Windows,
+    macOS = "macOS",
+    Windows = "Windows",
 }

@@ -39,6 +39,7 @@ if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
 }
 
+const appIsInDevelopment = isDev(process.execPath);
 const minimumRefreshIntervalInSeconds = 10;
 const configRepository = new ElectronStoreConfigRepository(deepCopy(defaultUserConfigOptions));
 const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
@@ -65,7 +66,7 @@ let lastWindowPosition: WindowPosition;
 
 let config = configRepository.getConfig();
 let translationSet = getTranslationSet(config.generalOptions.language);
-const logger = isDev()
+const logger = appIsInDevelopment
     ? new DevLogger()
     : new ProductionLogger(logFilePath, filePathExecutor);
 let searchEngine = getProductionSearchEngine(config, translationSet, logger);
@@ -356,7 +357,7 @@ function quitApp() {
 }
 
 function updateAutoStartOptions(userConfig: UserConfigOptions) {
-    if (!isDev()) {
+    if (!appIsInDevelopment) {
         app.setLoginItemSettings({
             args: [],
             openAtLogin: userConfig.generalOptions.autostart,
@@ -487,7 +488,7 @@ function startApp() {
 }
 
 function setKeyboardShortcuts() {
-    if (isMacOs(platform()) && !isDev()) {
+    if (isMacOs(platform()) && !appIsInDevelopment) {
         const template = [
             {
                 label: "ueli",
@@ -555,7 +556,7 @@ function openSettings() {
         settingsWindow.setMenu(null);
         settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
         settingsWindow.on("close", onSettingsClose);
-        if (isDev()) {
+        if (appIsInDevelopment) {
             settingsWindow.webContents.openDevTools();
         }
     } else {
@@ -721,7 +722,7 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.checkForUpdate, () => {
         logger.debug("Check for updates");
-        if (isDev()) {
+        if (appIsInDevelopment) {
             sendMessageToSettingsWindow(IpcChannels.checkForUpdateResponse, UpdateCheckResult.NoUpdateAvailable);
         } else {
             autoUpdater.checkForUpdates();
