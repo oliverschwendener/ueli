@@ -1,5 +1,5 @@
-import { isWindows, isMacOs, getCurrentOperatingSystem } from "./operating-system-helpers";
-import { OperatingSystem } from "../operating-system";
+import { isWindows, isMacOs, getCurrentOperatingSystem, getOperatingSystemVersion } from "./operating-system-helpers";
+import { OperatingSystem, OperatingSystemVersion } from "../operating-system";
 
 const windowsPlatformIdentifier = "win32";
 const invalidWindowsPlatformIdentifiers = [
@@ -93,5 +93,124 @@ describe(getCurrentOperatingSystem, () => {
         });
 
         expect(errorCounter).toBe(unsupportedPlatformIdentifiers.length);
+    });
+});
+
+describe(getOperatingSystemVersion, () => {
+    it("should return the correct macOS version by the given darwin kernel version", () => {
+        const versions = [
+            {
+                kernelVersion: "14.x.x",
+                macOsVersion: OperatingSystemVersion.MacOsYosemite,
+            },
+            {
+                kernelVersion: "15.x.x",
+                macOsVersion: OperatingSystemVersion.MacOsElCapitan,
+            },
+            {
+                kernelVersion: "16.x.x",
+                macOsVersion: OperatingSystemVersion.MacOsSierra,
+            },
+            {
+                kernelVersion: "17.x.x",
+                macOsVersion: OperatingSystemVersion.MacOsHighSierra,
+            },
+            {
+                kernelVersion: "18.x.x",
+                macOsVersion: OperatingSystemVersion.MacOsMojave,
+            },
+            {
+                kernelVersion: "19.x.x",
+                macOsVersion: OperatingSystemVersion.MacOsCatalina,
+            },
+        ];
+
+        versions.forEach((version) => {
+            expect(getOperatingSystemVersion(OperatingSystem.macOS, version.kernelVersion)).toBe(version.macOsVersion);
+        });
+    });
+
+    it("should throw an error when passing in an unsupported darwin kernel version", () => {
+        const unsupportedKernelVersions = [
+            "",
+            " ",
+            "          ",
+            "1",
+            "abc",
+            "10.x.x",
+            "11",
+            "12",
+            "13",
+        ];
+
+        let errorCounter = 0;
+
+        unsupportedKernelVersions.forEach((unsupportedKernelVersion) => {
+            try {
+                getOperatingSystemVersion(OperatingSystem.macOS, unsupportedKernelVersion);
+            } catch (error) {
+                errorCounter++;
+            }
+        });
+
+        expect(errorCounter).toBe(unsupportedKernelVersions.length);
+    });
+
+    it("should return the correct Windows version by the given windows release", () => {
+        const versions = [
+            {
+                release: "10.x.x",
+                windowsVersion: OperatingSystemVersion.Windows10,
+            },
+            {
+                release: "6.3",
+                windowsVersion: OperatingSystemVersion.Windows8_1,
+            },
+            {
+                release: "6.2",
+                windowsVersion: OperatingSystemVersion.Windows8,
+            },
+            {
+                release: "6.1",
+                windowsVersion: OperatingSystemVersion.Windows7,
+            },
+        ];
+
+        versions.forEach((version) => {
+            expect(getOperatingSystemVersion(OperatingSystem.Windows, version.release)).toBe(version.windowsVersion);
+        });
+    });
+
+    it("should throw an error when passing in an invalid windows release", () => {
+        let errorCounter = 0;
+
+        const invalidWindowsReleases = [
+            "",
+            " ",
+            "      ",
+            "1",
+            "2",
+            "5",
+            "6",
+            "61",
+            "62",
+            "63",
+            "6_3",
+            "10",
+            "10_",
+            "11",
+            "abc",
+            "undefined",
+        ];
+
+        invalidWindowsReleases.forEach((invalidWindowsRelease) => {
+            try {
+                getOperatingSystemVersion(OperatingSystem.Windows, invalidWindowsRelease);
+            } catch (error) {
+                errorCounter++
+            }
+        });
+
+        expect(errorCounter).toBe(invalidWindowsReleases.length);
     });
 });
