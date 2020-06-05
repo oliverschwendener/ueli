@@ -2,8 +2,7 @@ import { ApplicationSearchPlugin } from "../plugins/application-search-plugin/ap
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/ueli-command-search-plugin";
 import { ShortcutsSearchPlugin } from "../plugins/shortcuts-search-plugin/shortcuts-search-plugin";
-import { isWindows, isMacOs } from "../../common/helpers/operating-system-helpers";
-import { platform, homedir } from "os";
+import { homedir } from "os";
 import { openUrlInBrowser } from "../executors/url-executor";
 import { executeFilePathWindows, executeFilePathMacOs } from "../executors/file-path-executor";
 import { SearchEngine } from "../search-engine";
@@ -54,24 +53,30 @@ import { getAllUwpApps } from "../plugins/uwp-plugin/uwp-apps-retriever";
 import { getGoogleDictionaryDefinitions } from "../plugins/dictionary-plugin/google-dictionary-definition-retriever";
 import { everythingSearcher } from "../plugins/everything-plugin/everything-searcher";
 import { mdfindSearcher } from "../plugins/mdfind-plugin/mdfind-searcher";
+import { OperatingSystem } from "../../common/operating-system";
 
-const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
-const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
-const filePathLocationExecutor = openFileLocation;
-const urlExecutor = openUrlInBrowser;
-const commandlineExecutor = isWindows(platform()) ? windowsCommandLineExecutor : macOsCommandLineExecutor;
-const operatingSystemSettingsRepository = isWindows(platform()) ? new WindowsOperatingSystemSettingRepository() : new MacOsOperatingSystemSettingRepository();
-const operatingSystemSettingExecutor = isWindows(platform()) ? executeWindowsOperatingSystemSetting : executeMacOSOperatingSystemSetting;
-const applicationSearcher = isWindows(platform()) ? searchWindowsApplications : searchMacApplications;
-const appIconGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
-const defaultAppIcon = isWindows(platform()) ? defaultWindowsAppIcon : defaultMacOsAppIcon;
-const fileSearcher = isWindows(platform()) ? powershellFileSearcher : macosFileSearcher;
-const chromeBookmarksFilePath = isWindows(platform())
-    ? `${homedir()}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks`
-    : `${homedir()}/Library/Application\ Support/Google/Chrome/Default/Bookmarks`;
+export function getProductionSearchEngine(
+    operatingSystem: OperatingSystem,
+    config: UserConfigOptions,
+    translationSet: TranslationSet,
+    logger: Logger,
+): SearchEngine {
+    const filePathValidator = operatingSystem === OperatingSystem.Windows ? isValidWindowsFilePath : isValidMacOsFilePath;
+    const filePathExecutor = operatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
+    const filePathLocationExecutor = openFileLocation;
+    const urlExecutor = openUrlInBrowser;
+    const commandlineExecutor = operatingSystem === OperatingSystem.Windows ? windowsCommandLineExecutor : macOsCommandLineExecutor;
+    const operatingSystemSettingsRepository = operatingSystem === OperatingSystem.Windows ? new WindowsOperatingSystemSettingRepository() : new MacOsOperatingSystemSettingRepository();
+    const operatingSystemSettingExecutor = operatingSystem === OperatingSystem.Windows ? executeWindowsOperatingSystemSetting : executeMacOSOperatingSystemSetting;
+    const applicationSearcher = operatingSystem === OperatingSystem.Windows ? searchWindowsApplications : searchMacApplications;
+    const appIconGenerator = operatingSystem === OperatingSystem.Windows ? generateWindowsAppIcons : generateMacAppIcons;
+    const defaultAppIcon = operatingSystem === OperatingSystem.Windows ? defaultWindowsAppIcon : defaultMacOsAppIcon;
+    const fileSearcher = operatingSystem === OperatingSystem.Windows ? powershellFileSearcher : macosFileSearcher;
+    const chromeBookmarksFilePath = operatingSystem === OperatingSystem.Windows
+        ? `${homedir()}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks`
+        : `${homedir()}/Library/Application\ Support/Google/Chrome/Default/Bookmarks`;
 
-export function getProductionSearchEngine(config: UserConfigOptions, translationSet: TranslationSet, logger: Logger): SearchEngine {
-    const operatingSystemCommandRepository = isWindows(platform())
+    const operatingSystemCommandRepository = operatingSystem === OperatingSystem.Windows
         ? new WindowsOperatingSystemCommandRepository(translationSet)
         : new MacOsOperatingSystemCommandRepository(translationSet);
 
@@ -155,7 +160,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         webSearchPlugin,
     ];
 
-    if (isWindows(platform())) {
+    if (operatingSystem === OperatingSystem.Windows) {
         executionPlugins.push(
             new EverythingPlugin(
                 config.everythingSearchOptions,
@@ -175,7 +180,7 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
             new ControlPanelPlugin(
                 config.controlPanelOptions));
     }
-    if (isMacOs(platform())) {
+    if (operatingSystem === OperatingSystem.macOS) {
         executionPlugins.push(
             new MdFindPlugin(
                 config.mdfindOptions,

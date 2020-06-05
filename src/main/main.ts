@@ -22,7 +22,7 @@ import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-help
 import { isValidHotKey } from "../common/global-hot-key/global-hot-key-helpers";
 import { NotificationType } from "../common/notification-type";
 import { UserInputHistoryManager } from "./user-input-history-manager";
-import { isWindows, isMacOs } from "../common/helpers/operating-system-helpers";
+import { getCurrentOperatingSystem } from "../common/helpers/operating-system-helpers";
 import { executeFilePathWindows, executeFilePathMacOs } from "./executors/file-path-executor";
 import { WindowPosition } from "../common/window-position";
 import { UpdateCheckResult } from "../common/update-check-result";
@@ -34,28 +34,30 @@ import { deepCopy } from "../common/helpers/object-helpers";
 import { PluginType } from "./plugin-type";
 import { getRescanIntervalInMilliseconds } from "./helpers/rescan-interval-helpers";
 import { openUrlInBrowser } from "./executors/url-executor";
+import { OperatingSystem } from "../common/operating-system";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
 }
 
+const operatingSystem = getCurrentOperatingSystem(platform());
 const appIsInDevelopment = isDev(process.execPath);
 const minimumRefreshIntervalInSeconds = 10;
 const configRepository = new ElectronStoreConfigRepository(deepCopy(defaultUserConfigOptions));
-const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
-const trayIconFilePath = isWindows(platform()) ? trayIconPathWindows : trayIconPathMacOs;
-const windowIconFilePath = isWindows(platform()) ? windowIconWindows : windowIconMacOs;
+const filePathExecutor = operatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
+const trayIconFilePath = operatingSystem === OperatingSystem.Windows ? trayIconPathWindows : trayIconPathMacOs;
+const windowIconFilePath = operatingSystem === OperatingSystem.Windows ? windowIconWindows : windowIconMacOs;
 const userInputHistoryManager = new UserInputHistoryManager();
 const releaseUrl = "https://github.com/oliverschwendener/ueli/releases/latest";
 const windowsPowerShellPath = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0";
 
 autoUpdater.autoDownload = false;
 
-if (isMacOs(platform())) {
+if (operatingSystem === OperatingSystem.macOS) {
     app.dock.hide();
 }
 
-if (isWindows(platform())) {
+if (operatingSystem === OperatingSystem.Windows) {
     addPowershellToPathVariableIfMissing();
 }
 
@@ -69,7 +71,7 @@ let translationSet = getTranslationSet(config.generalOptions.language);
 const logger = appIsInDevelopment
     ? new DevLogger()
     : new ProductionLogger(logFilePath, filePathExecutor);
-let searchEngine = getProductionSearchEngine(config, translationSet, logger);
+let searchEngine = getProductionSearchEngine(operatingSystem, config, translationSet, logger);
 
 let rescanInterval = config.generalOptions.rescanEnabled
     ? setInterval(() => refreshAllIndexes(), getRescanIntervalInMilliseconds(Number(config.generalOptions.rescanIntervalInSeconds), minimumRefreshIntervalInSeconds))
@@ -171,10 +173,10 @@ function showMainWindow() {
                     : calculateY(display),
             };
             // this is a workaround to restore the focus on the previously focussed window
-            if (isMacOs(platform())) {
+            if (operatingSystem === OperatingSystem.macOS) {
                 app.show();
             }
-            if (isWindows(platform())) {
+            if (operatingSystem === OperatingSystem.Windows) {
                 mainWindow.restore();
             }
             mainWindow.setBounds(windowBounds);
@@ -193,13 +195,13 @@ function hideMainWindow() {
             updateMainWindowSize(0, config.appearanceOptions);
             if (windowExists(mainWindow)) {
                 // this is a workaround to restore the focus on the previously focussed window
-                if (isWindows(platform())) {
+                if (operatingSystem === OperatingSystem.Windows) {
                     mainWindow.minimize();
                 }
                 mainWindow.hide();
 
                 // this is a workaround to restore the focus on the previously focussed window
-                if (isMacOs(platform())) {
+                if (operatingSystem === OperatingSystem.macOS) {
                     if (!settingsWindow
                         || (settingsWindow && settingsWindow.isDestroyed())
                         || (settingsWindow && !settingsWindow.isDestroyed() && !settingsWindow.isVisible())) {
@@ -322,7 +324,7 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
 
 function reloadApp() {
     updateMainWindowSize(0, config.appearanceOptions);
-    searchEngine = getProductionSearchEngine(config, translationSet, logger);
+    searchEngine = getProductionSearchEngine(operatingSystem, config, translationSet, logger);
     refreshAllIndexes();
     mainWindow.reload();
 }
@@ -457,7 +459,7 @@ function createMainWindow() {
 }
 
 function mainWindowNeedsToBeTransparent(userConfigOptions: UserConfigOptions): boolean {
-    if (isMacOs(platform())) {
+    if (operatingSystem === OperatingSystem.macOS) {
         return true;
     }
 
@@ -467,7 +469,7 @@ function mainWindowNeedsToBeTransparent(userConfigOptions: UserConfigOptions): b
 function getMainWindowBackgroundColor(userConfigOptions: UserConfigOptions): string {
     const transparent = "#00000000";
 
-    if (isMacOs(platform())) {
+    if (operatingSystem === OperatingSystem.macOS) {
         return transparent;
     }
 
@@ -479,7 +481,7 @@ function getMainWindowBackgroundColor(userConfigOptions: UserConfigOptions): str
 function startApp() {
     createTrayIcon();
     createMainWindow();
-    updateMainWindowSize(0, config.appearanceOptions, isMacOs(platform()));
+    updateMainWindowSize(0, config.appearanceOptions, operatingSystem === OperatingSystem.macOS);
     registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
     updateAutoStartOptions(config);
     setKeyboardShortcuts();
@@ -488,7 +490,7 @@ function startApp() {
 }
 
 function setKeyboardShortcuts() {
-    if (isMacOs(platform()) && !appIsInDevelopment) {
+    if (operatingSystem === OperatingSystem.macOS && !appIsInDevelopment) {
         const template = [
             {
                 label: "ueli",
@@ -530,13 +532,13 @@ function onLanguageChange(updatedConfig: UserConfigOptions) {
 }
 
 function onSettingsOpen() {
-    if (isMacOs(platform())) {
+    if (operatingSystem === OperatingSystem.macOS) {
         app.dock.show();
     }
 }
 
 function onSettingsClose() {
-    if (isMacOs(platform())) {
+    if (operatingSystem === OperatingSystem.macOS) {
         app.dock.hide();
     }
 }
@@ -730,10 +732,10 @@ function registerAllIpcListeners() {
     });
 
     ipcMain.on(IpcChannels.downloadUpdate, () => {
-        if (isWindows(platform())) {
+        if (operatingSystem === OperatingSystem.Windows) {
             logger.debug("Downloading updated");
             autoUpdater.downloadUpdate();
-        } else if (isMacOs(platform())) {
+        } else if (operatingSystem === OperatingSystem.macOS) {
             openUrlInBrowser(releaseUrl)
                 .then(() => { /* do nothing */ })
                 .catch((err) => logger.error(err));
@@ -778,7 +780,7 @@ autoUpdater.on("error", (error) => {
     sendMessageToSettingsWindow(IpcChannels.checkForUpdateResponse, UpdateCheckResult.Error);
 });
 
-if (isWindows(platform())) {
+if (operatingSystem === OperatingSystem.Windows) {
     autoUpdater.on("update-downloaded", () => {
         logger.debug("Update downloaded");
         autoUpdater.quitAndInstall();

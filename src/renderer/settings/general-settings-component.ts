@@ -17,11 +17,13 @@ import { GeneralSettings } from "./general-settings";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { UpdateCheckResult } from "../../common/update-check-result";
 import { isDev } from "../../common/is-dev";
-import { isWindows } from "../../common/helpers/operating-system-helpers";
+import { getCurrentOperatingSystem } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
 import { version } from "../../../package.json";
 import { deepCopy } from "../../common/helpers/object-helpers";
+import { OperatingSystem } from "../../common/operating-system";
 
+const operatingSystem = getCurrentOperatingSystem(platform());
 const appIsInDevelopment = isDev(process.execPath);
 
 interface UpdateStatus {
@@ -224,7 +226,7 @@ export const generalSettingsComponent = Vue.extend({
         },
         downloadUpdate() {
             vueEventDispatcher.$emit(VueEventChannels.downloadUpdate);
-            if (isWindows(platform())) {
+            if (operatingSystem === OperatingSystem.Windows) {
                 const updateStatus: UpdateStatus = this.updateStatus;
                 updateStatus.checking = false;
                 updateStatus.downloading = true;

@@ -9,14 +9,17 @@ import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./moda
 import { TranslationSet } from "../../common/translation/translation-set";
 import { defaultApplicationSearchOptions } from "../../common/config/application-search-options";
 import { deepCopy } from "../../common/helpers/object-helpers";
-import { isWindows } from "../../common/helpers/operating-system-helpers";
+import { getCurrentOperatingSystem } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
 import { PluginType } from "../../main/plugin-type";
+import { OperatingSystem } from "../../common/operating-system";
+
+const operatingSystem = getCurrentOperatingSystem(platform());
 
 export const applicationSearchSettingsComponent = Vue.extend({
     data() {
         return {
-            isWindows: isWindows(platform()),
+            isWindows: operatingSystem === OperatingSystem.Windows,
             settingName: PluginSettings.ApplicationSearch,
             visible: false,
         };

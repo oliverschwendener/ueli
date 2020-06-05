@@ -6,14 +6,17 @@ import { defaultAppearanceOptions } from "../../common/config/appearance-options
 import { GeneralSettings } from "./general-settings";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { TranslationSet } from "../../common/translation/translation-set";
-import { isWindows } from "../../common/helpers/operating-system-helpers";
+import { getCurrentOperatingSystem } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
 import { deepCopy } from "../../common/helpers/object-helpers";
+import { OperatingSystem } from "../../common/operating-system";
+
+const operatingSystem = getCurrentOperatingSystem(platform());
 
 export const appearanceSettingsComponent = Vue.extend({
     data() {
         return {
-            isWindows: isWindows(platform()),
+            isWindows: operatingSystem === OperatingSystem.Windows,
             settingName: GeneralSettings.Appearance,
             visible: false,
         };

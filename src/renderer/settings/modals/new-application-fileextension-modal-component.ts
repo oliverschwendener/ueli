@@ -3,9 +3,12 @@ import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
 import { showNotification } from "../../notifications";
 import { NotificationType } from "../../../common/notification-type";
-import { isWindows } from "../../../common/helpers/operating-system-helpers";
+import { getCurrentOperatingSystem } from "../../../common/helpers/operating-system-helpers";
 import { platform } from "os";
 import { TranslationSet } from "../../../common/translation/translation-set";
+import { OperatingSystem } from "../../../common/operating-system";
+
+const operatingSystem = getCurrentOperatingSystem(platform());
 
 export const newApplicationFileExtensionModalComponent = Vue.extend({
     data() {
@@ -20,7 +23,7 @@ export const newApplicationFileExtensionModalComponent = Vue.extend({
             this.visible = false;
         },
         getPlaceholder(): string {
-            const ext = isWindows(platform())
+            const ext = operatingSystem === OperatingSystem.Windows
                 ? ".lnk"
                 : ".app";
 

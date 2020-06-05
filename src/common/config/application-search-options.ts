@@ -1,5 +1,6 @@
 import { homedir, platform } from "os";
-import { isWindows } from "../helpers/operating-system-helpers";
+import { getCurrentOperatingSystem } from "../helpers/operating-system-helpers";
+import { OperatingSystem } from "../operating-system";
 
 export interface ApplicationSearchOptions {
     applicationFolders: string[];
@@ -33,6 +34,6 @@ const macOsApplicationSearchOptions: ApplicationSearchOptions = {
     useNativeIcons: true,
 };
 
-export const defaultApplicationSearchOptions = isWindows(platform())
+export const defaultApplicationSearchOptions = getCurrentOperatingSystem(platform()) === OperatingSystem.Windows
     ? windowsApplicationSearchOptions
     : macOsApplicationSearchOptions;

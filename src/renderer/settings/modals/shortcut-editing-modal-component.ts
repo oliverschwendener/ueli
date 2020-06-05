@@ -7,13 +7,16 @@ import { platform, homedir } from "os";
 import { defaultNewShortcut, isValidShortcutToAdd } from "../../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
 import { NotificationType } from "../../../common/notification-type";
 import { isValidWindowsFilePath, isValidMacOsFilePath } from "../../../common/helpers/file-path-validators";
-import { isWindows } from "../../../common/helpers/operating-system-helpers";
+import { getCurrentOperatingSystem } from "../../../common/helpers/operating-system-helpers";
 import { showNotification } from "../../notifications";
 import { getFilePath, getFolderPath } from "../../dialogs";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { join } from "path";
 import { ModalEditMode } from "./modal-edit-mode";
 import { deepCopy, isEqual } from "../../../common/helpers/object-helpers";
+import { OperatingSystem } from "../../../common/operating-system";
+
+const operatingSystem = getCurrentOperatingSystem(platform());
 
 export const shortcutEditingModal = Vue.extend({
     computed: {
@@ -36,7 +39,7 @@ export const shortcutEditingModal = Vue.extend({
     methods: {
         saveButtonClick(): void {
             const translations: TranslationSet = this.translations;
-            const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
+            const filePathValidator = operatingSystem === OperatingSystem.Windows ? isValidWindowsFilePath : isValidMacOsFilePath;
             if (isValidShortcutToAdd(this.shortcut, filePathValidator)) {
                 vueEventDispatcher.$emit(VueEventChannels.shortcutEdited, this.shortcut, this.editMode, this.saveIndex);
                 this.resetModal();

@@ -1,4 +1,4 @@
-import { isWindows, isMacOs, getCurrentOperatingSystem, getOperatingSystemVersion } from "./operating-system-helpers";
+import { getCurrentOperatingSystem, getOperatingSystemVersion } from "./operating-system-helpers";
 import { OperatingSystem, OperatingSystemVersion } from "../operating-system";
 
 const windowsPlatformIdentifier = "win32";
@@ -29,30 +29,6 @@ const invalidMacOsPlatformIdentifiers = [
     "apple",
     "shit",
 ];
-
-describe(isWindows, () => {
-    it(`should return true when passing in win32`, () => {
-        expect(isWindows(windowsPlatformIdentifier)).toBe(true);
-    });
-
-    it("should return false when passing in a non windows platform identifier", () => {
-        invalidWindowsPlatformIdentifiers.forEach((invalidWindowsPlatformIdentifier) => {
-            expect(isWindows(invalidWindowsPlatformIdentifier)).toBe(false);
-        });
-    });
-});
-
-describe(isMacOs, () => {
-    it("should return true when passing in darwin", () => {
-        expect(isMacOs(macOsPlatformIdentifier)).toBe(true);
-    });
-
-    it("should return false when passing in a non macOS platform identifier", () => {
-        invalidMacOsPlatformIdentifiers.forEach((invalidMacOsPlatformIdentifier) => {
-            expect(isMacOs(invalidMacOsPlatformIdentifier)).toBe(false);
-        });
-    });
-});
 
 describe(getCurrentOperatingSystem, () => {
     it(`it should return ${OperatingSystem.Windows} when passing in win32`, () => {

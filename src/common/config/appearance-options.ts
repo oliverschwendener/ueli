@@ -1,5 +1,6 @@
 import { platform } from "os";
-import { isWindows } from "../helpers/operating-system-helpers";
+import { getCurrentOperatingSystem } from "../helpers/operating-system-helpers";
+import { OperatingSystem } from "../operating-system";
 
 export interface AppearanceOptions {
     maxSearchResultsPerPage: number;
@@ -14,7 +15,7 @@ export interface AppearanceOptions {
     fontFamily: string;
 }
 
-const defaultFontFamily = isWindows(platform())
+const defaultFontFamily = getCurrentOperatingSystem(platform()) === OperatingSystem.Windows
     ? `"Segoe UI", Roboto, "Segoe UI Emoji", "Segoe UI Symbol"`
     : `-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif, "Apple Color Emoji`;
 
