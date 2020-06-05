@@ -153,8 +153,7 @@ export const searchResultsComponent = Vue.extend({
     template: `
         <div class="search-results" :class="{ 'scroll-disabled' : isLoading }" :id="containerId">
             <div :id="searchResult.id" class="search-results__item" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
-                <div class="search-results__item-icon-container">
-                    <div class="search-results__item-icon-overlay" :class="{ 'active' : searchResult.active }"></div>
+                <div class="search-results__item-icon-container" :class="{ 'active' : searchResult.active }">
                     <div class="search-results__item-icon" v-html="getIcon(searchResult.icon, searchResult.active)"></div>
                 </div>
                 <div class="search-results__item-info-container">
