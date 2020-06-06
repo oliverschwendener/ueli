@@ -2,8 +2,13 @@ import { normalize } from "path";
 import { ApplicationSearchOptions } from "../../common/config/application-search-options";
 import { executeCommandWithOutput } from "./command-executor";
 import { Logger } from "../../common/logger/logger";
+import { OperatingSystemVersion } from "../../common/operating-system";
 
-export function searchWindowsApplications(applicationSearchOptions: ApplicationSearchOptions, logger: Logger): Promise<string[]> {
+export function searchWindowsApplications(
+    applicationSearchOptions: ApplicationSearchOptions,
+    logger: Logger,
+    operatingSystemVersion: OperatingSystemVersion,
+): Promise<string[]> {
     return new Promise((resolve, reject) => {
         if (applicationSearchOptions.applicationFolders.length === 0 || applicationSearchOptions.applicationFileExtensions.length === 0) {
             resolve([]);
@@ -31,7 +36,11 @@ export function searchWindowsApplications(applicationSearchOptions: ApplicationS
     });
 }
 
-export function searchMacApplications(applicationSearchOptions: ApplicationSearchOptions, logger: Logger): Promise<string[]> {
+export function searchMacApplications(
+    applicationSearchOptions: ApplicationSearchOptions,
+    logger: Logger,
+    macOsVersion: OperatingSystemVersion,
+): Promise<string[]> {
     return new Promise((resolve, reject) => {
         if (applicationSearchOptions.applicationFolders.length === 0) {
             resolve([]);
@@ -40,7 +49,7 @@ export function searchMacApplications(applicationSearchOptions: ApplicationSearc
                 return `^${applicationFolder.replace("\\", "\\\\").replace("/", "\\/")}`;
             }).join("|");
 
-            executeCommandWithOutput(`mdfind "kind:apps" | egrep "${folderRegex}"`)
+            executeCommandWithOutput(`${getMacOsApplicationSearcherCommand(macOsVersion)} | egrep "${folderRegex}"`)
                 .then((data) => {
                     const filePaths = data
                         .split("\n")
@@ -52,4 +61,17 @@ export function searchMacApplications(applicationSearchOptions: ApplicationSearc
                 .catch((err) => reject(err));
         }
     });
+}
+
+export function getMacOsApplicationSearcherCommand(macOsVersion: OperatingSystemVersion): string {
+    switch (macOsVersion) {
+        case OperatingSystemVersion.MacOsYosemite:
+        case OperatingSystemVersion.MacOsElCapitan:
+        case OperatingSystemVersion.MacOsSierra:
+        case OperatingSystemVersion.MacOsHighSierra:
+        case OperatingSystemVersion.MacOsMojave:
+            return `mdfind "kind:apps"`;
+        default:
+            return "mdfind kMDItemContentTypeTree=com.apple.application-bundle";
+    }
 }

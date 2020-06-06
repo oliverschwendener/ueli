@@ -53,10 +53,11 @@ import { getAllUwpApps } from "../plugins/uwp-plugin/uwp-apps-retriever";
 import { getGoogleDictionaryDefinitions } from "../plugins/dictionary-plugin/google-dictionary-definition-retriever";
 import { everythingSearcher } from "../plugins/everything-plugin/everything-searcher";
 import { mdfindSearcher } from "../plugins/mdfind-plugin/mdfind-searcher";
-import { OperatingSystem } from "../../common/operating-system";
+import { OperatingSystem, OperatingSystemVersion } from "../../common/operating-system";
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
+    operatingSystemVersion: OperatingSystemVersion,
     config: UserConfigOptions,
     translationSet: TranslationSet,
     logger: Logger,
@@ -100,6 +101,7 @@ export function getProductionSearchEngine(
                 ),
                 applicationSearcher,
                 logger,
+                operatingSystemVersion
             ),
             filePathExecutor,
             filePathLocationExecutor,

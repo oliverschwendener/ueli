@@ -10,7 +10,7 @@ import { AppearanceOptions } from "../common/config/appearance-options";
 import { isDev } from "../common/is-dev";
 import { UeliCommand } from "./plugins/ueli-command-search-plugin/ueli-command";
 import { UeliCommandExecutionArgument } from "./plugins/ueli-command-search-plugin/ueli-command-execution-argument";
-import { platform } from "os";
+import { platform, release } from "os";
 import { getProductionSearchEngine } from "./production/production-search-engine";
 import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
 import { defaultGeneralOptions } from "../common/config/general-options";
@@ -22,7 +22,7 @@ import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-help
 import { isValidHotKey } from "../common/global-hot-key/global-hot-key-helpers";
 import { NotificationType } from "../common/notification-type";
 import { UserInputHistoryManager } from "./user-input-history-manager";
-import { getCurrentOperatingSystem } from "../common/helpers/operating-system-helpers";
+import { getCurrentOperatingSystem, getOperatingSystemVersion } from "../common/helpers/operating-system-helpers";
 import { executeFilePathWindows, executeFilePathMacOs } from "./executors/file-path-executor";
 import { WindowPosition } from "../common/window-position";
 import { UpdateCheckResult } from "../common/update-check-result";
@@ -41,6 +41,7 @@ if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
 }
 
 const operatingSystem = getCurrentOperatingSystem(platform());
+const operatingSystemVersion = getOperatingSystemVersion(operatingSystem, release());
 const appIsInDevelopment = isDev(process.execPath);
 const minimumRefreshIntervalInSeconds = 10;
 const configRepository = new ElectronStoreConfigRepository(deepCopy(defaultUserConfigOptions));
@@ -71,7 +72,7 @@ let translationSet = getTranslationSet(config.generalOptions.language);
 const logger = appIsInDevelopment
     ? new DevLogger()
     : new ProductionLogger(logFilePath, filePathExecutor);
-let searchEngine = getProductionSearchEngine(operatingSystem, config, translationSet, logger);
+let searchEngine = getProductionSearchEngine(operatingSystem, operatingSystemVersion, config, translationSet, logger);
 
 let rescanInterval = config.generalOptions.rescanEnabled
     ? setInterval(() => refreshAllIndexes(), getRescanIntervalInMilliseconds(Number(config.generalOptions.rescanIntervalInSeconds), minimumRefreshIntervalInSeconds))
@@ -324,7 +325,13 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
 
 function reloadApp() {
     updateMainWindowSize(0, config.appearanceOptions);
-    searchEngine = getProductionSearchEngine(operatingSystem, config, translationSet, logger);
+    searchEngine = getProductionSearchEngine(
+        operatingSystem,
+        operatingSystemVersion,
+        config,
+        translationSet,
+        logger,
+    );
     refreshAllIndexes();
     mainWindow.reload();
 }
