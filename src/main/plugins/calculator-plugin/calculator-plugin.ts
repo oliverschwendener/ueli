@@ -31,7 +31,7 @@ export class CalculatorPlugin implements ExecutionPlugin {
                 executionArgument: result,
                 hideMainWindowAfterExecution: true,
                 icon: defaultCalculatorIcon,
-                name: `= ${result}`,
+                name: `= ${Intl.NumberFormat().format(Number(result))}`,
                 originPluginType: this.pluginType,
                 searchable: [],
             }]);
