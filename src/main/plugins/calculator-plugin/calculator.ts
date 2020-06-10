@@ -11,10 +11,11 @@ export class Calculator {
         if (blackListInputs.find((b) => input === b) !== undefined) {
             return false;
         }
-
+        
+        input = this.removeCommas(input);
+        
         let result;
         try {
-            input = this.removeCommas(input);
             // Mathjs throws an error when input cannot be evaluated
             result = mathjs.eval(input);
         } catch (e) {
