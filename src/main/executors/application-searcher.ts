@@ -23,7 +23,7 @@ export function searchWindowsApplications(
         const createResult = `$result = (@{ errors = @($error | ForEach-Object { $_.Exception.Message }); applications = $applications } | ConvertTo-Json)`;
         const printResult = "Write-Host $result";
         const powershellScript = `${utf8Encoding}; ${ignoreErrors}; ${createApplicationsArray}; ${folders} | %{ ${getChildItem} }; ${createResult}; ${printResult};`;
-        const command = `powershell -Command "& { ${powershellScript} }"`;
+        const command = `powershell -NonInteractive -NoProfile -Command "& { ${powershellScript} }"`;
         executeCommandWithOutput(command)
             .then((resultOutput: string) => {
                 const result : { errors: string[], applications: string[] } = JSON.parse(resultOutput);
