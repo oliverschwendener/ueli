@@ -11,9 +11,9 @@ export class Calculator {
         if (blackListInputs.find((b) => input === b) !== undefined) {
             return false;
         }
-        
+
         input = this.removeCommas(input);
-        
+
         let result;
         try {
             // Mathjs throws an error when input cannot be evaluated
