@@ -22,7 +22,7 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
     private readonly urlExecutor: (url: string) => Promise<void>;
     private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
     private readonly filePathLocationExecutor: (filePath: string) => Promise<void>;
-    private readonly commandlineExtecutor: (command: string) => Promise<void>;
+    private readonly commandlineExecutor: (command: string) => Promise<void>;
     private readonly logger: Logger;
 
 
@@ -38,7 +38,7 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
         this.urlExecutor = urlExecutor;
         this.filePathExecutor = filePathExecutor;
         this.filePathLocationExecutor = filePathLocationExecutor;
-        this.commandlineExtecutor = commandlineExecutor;
+        this.commandlineExecutor = commandlineExecutor;
         this.logger = logger;
     }
 
@@ -62,7 +62,7 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
             case ShortcutType.FilePath:
                 return this.filePathExecutor(decodeResult.executionArgument, privileged);
             case ShortcutType.CommandlineTool:
-                this.commandlineExtecutor(decodeResult.executionArgument)
+                this.commandlineExecutor(decodeResult.executionArgument)
                     .then(() => { /* do nothing */ })
                     .catch(error => this.logger.error(error));
 
