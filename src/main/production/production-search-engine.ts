@@ -89,6 +89,7 @@ export function getProductionSearchEngine(
             filePathExecutor,
             filePathLocationExecutor,
             executeCommand,
+            logger
         ),
         new ApplicationSearchPlugin(
             config.applicationSearchOptions,
@@ -122,6 +123,7 @@ export function getProductionSearchEngine(
             filePathExecutor,
             urlExecutor,
             executeCommand,
+            logger
         ),
         new SimpleFolderSearchPlugin(
             config.simpleFolderSearchOptions,
