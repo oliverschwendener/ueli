@@ -21,6 +21,7 @@ export enum PluginType {
     Dictionary = "dictionary",
     BrowserBookmarks = "browser-bookmarks",
     ControlPanel = "control-panel-plugin",
+    ProcessKiller = "process-killer-plugin",
 
     // This is used for generic search results which do not have a specific plugin as a source
     None = "none",

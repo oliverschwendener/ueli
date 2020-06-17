@@ -342,4 +342,9 @@ export interface TranslationSet {
 
     controlPanel: string;
     controlPanelSettingsDescription: string;
+
+    processKiller: string;
+    processKillerPrefix: string;
+    processKillerSettingsDescription: string;
+    processKillerDescription: string;
 }

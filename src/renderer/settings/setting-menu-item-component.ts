@@ -64,6 +64,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.everythingSearch;
                 case SettingOsSpecific.MdFind:
                     return translations.mdfindSearch;
+                case SettingOsSpecific.ProcessKiller:
+                    return translations.processKiller;
                 case SettingOsSpecific.Uwp:
                     return "UWP";
                 default:
@@ -129,6 +131,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return config.mdfindOptions.enabled;
                 case SettingOsSpecific.Uwp.replace(`${platform()}:`, ""):
                     return config.uwpSearchOptions.isEnabled;
+                case SettingOsSpecific.ProcessKiller.replace(`${platform()}:`, ""):
+                    return config.processKillerOptions.isEnabled;
                 default:
                     return false;
             }

@@ -345,4 +345,9 @@ export const englishTranslationSet: TranslationSet = {
 
     controlPanel: "Control Panel",
     controlPanelSettingsDescription: "This plugin enables you to quickly find control panel items.",
+
+    processKiller: "Process Killer",
+    processKillerPrefix: "Prefix",
+    processKillerSettingsDescription: "This plugin enables you to kill running processes.",
+    processKillerDescription: "Kill {{process}}",
 };

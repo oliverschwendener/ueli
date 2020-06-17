@@ -345,4 +345,9 @@ export const russianTranslationSet: TranslationSet = {
 
     controlPanel: "панель управления",
     controlPanelSettingsDescription: "Этот плагин позволяет быстро находить элементы панели управления.",
+
+    processKiller: "Технологический убийца",
+    processKillerPrefix: "Префикс",
+    processKillerSettingsDescription: "Этот плагин позволяет убивать запущенные процессы.",
+    processKillerDescription: "убийство {{process}}",
 };

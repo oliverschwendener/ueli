@@ -345,4 +345,9 @@ export const germanTranslationSet: TranslationSet = {
 
     controlPanel: "Systemsteuerung",
     controlPanelSettingsDescription: "Dieses Plugin erlaubt es dir, Elemente der Systemsteuerung schnell zu finden.",
+
+    processKiller: "Prozesskiller",
+    processKillerPrefix: "Präfix",
+    processKillerSettingsDescription: "Dieses Plugin ermöglicht es Ihnen, die laufenden Prozesse zu töten.",
+    processKillerDescription: "töten {{process}}",
 };

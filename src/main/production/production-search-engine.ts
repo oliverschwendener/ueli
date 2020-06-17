@@ -55,6 +55,7 @@ import { everythingSearcher } from "../plugins/everything-plugin/everything-sear
 import { mdfindSearcher } from "../plugins/mdfind-plugin/mdfind-searcher";
 import { OperatingSystem, OperatingSystemVersion } from "../../common/operating-system";
 import { BraveBookmarkRepository } from "../plugins/browser-bookmarks-plugin/brave-bookmark-repository";
+import { ProcessKillerPlugin } from "../plugins/process-killer-plugin/process-killer-plugin";
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
@@ -137,8 +138,8 @@ export function getProductionSearchEngine(
             config.browserBookmarksOptions,
             translationSet,
             [
-              new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
-              new BraveBookmarkRepository(braveBookmarksFilePath),
+                new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
+                new BraveBookmarkRepository(braveBookmarksFilePath),
             ],
             urlExecutor,
         ),
@@ -177,6 +178,9 @@ export function getProductionSearchEngine(
                 filePathLocationExecutor,
                 everythingSearcher
             ),
+        );
+        executionPlugins.push(
+            new ProcessKillerPlugin(config.processKillerOptions, translationSet)
         );
         searchPlugins.push(
             new UwpPlugin(
