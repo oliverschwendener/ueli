@@ -27,7 +27,13 @@ export class GoogleChromeBookmarkRepository implements BrowserBookmarkRepository
                         FileHelpers.readFile(this.bookmarkFilePath)
                             .then((data) => {
                                 const jsonParsed = JSON.parse(data);
-                                const bookmarks: BrowserBookmark[] = this.getBookmarksFromObject(jsonParsed.roots.bookmark_bar);
+                                const rootsCombined = Object.values(jsonParsed.roots).reduce((combined: any, value: any) => {
+                                    if (value && value.children) {
+                                        combined.children = combined.children.concat(value.children)
+                                    }
+                                    return combined
+                                }, { children: [] } as object)
+                                const bookmarks: BrowserBookmark[] = this.getBookmarksFromObject(rootsCombined);
                                 resolve(bookmarks);
                             })
                             .catch((err) => reject(`Can't read bookmarks file: ${err}`));
