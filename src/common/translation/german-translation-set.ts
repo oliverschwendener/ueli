@@ -241,8 +241,8 @@ export const germanTranslationSet: TranslationSet = {
     macOsRestartDescription: "Computer neu starten",
     macOsLogout: "Abmelden",
     macOsLogoutDescription: "Aktuellen Benutzer abmelden",
-    macOsSleepDescription: "TBD",
-    macOsSleep: "TBD",
+    macOsSleepDescription: "Ruhemodus",
+    macOsSleep: "Ruhemodus aktivieren",
     macOsLock: "Sperren",
     macOsLockDescription: "Computer sperren",
 
