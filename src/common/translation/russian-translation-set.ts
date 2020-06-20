@@ -241,6 +241,8 @@ export const russianTranslationSet: TranslationSet = {
     macOsRestartDescription: "Перезагрузить компьютер",
     macOsLogout: "Выйти",
     macOsLogoutDescription: "Выйти из учетной записи текущего пользователя",
+    macOsSleep: "TBD",
+    macOsSleepDescription: "TBD",
     macOsLock: "Заблокировать",
     macOsLockDescription: "Заблокировать компьютер",
 
