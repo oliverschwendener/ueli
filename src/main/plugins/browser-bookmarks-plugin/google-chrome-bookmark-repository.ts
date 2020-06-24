@@ -32,7 +32,7 @@ export class GoogleChromeBookmarkRepository implements BrowserBookmarkRepository
                                         combined.children = combined.children.concat(value.children)
                                     }
                                     return combined
-                                }, { children: [] } as object)
+                                }, { children: [] })
                                 const bookmarks: BrowserBookmark[] = this.getBookmarksFromObject(rootsCombined);
                                 resolve(bookmarks);
                             })
