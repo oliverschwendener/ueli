@@ -393,7 +393,7 @@ export const generalSettingsComponent = Vue.extend({
                                     <div class="control">
                                         <div class="select">
                                             <select v-model="config.generalOptions.hotKey.firstModifier" @change="updateConfig()">
-                                                <option v-for="globalHotKeyModifier in globalHotKeyModifiers" :value="globalHotKeyModifier">
+                                                <option v-for="globalHotKeyModifier in globalHotKeyModifiers.filter(key => key != config.generalOptions.hotKey.secondModifier)" :value="globalHotKeyModifier">
                                                     {{ getTranslatedGlobalHotKeyModifier(globalHotKeyModifier) }}
                                                 </option>
                                             </select>
@@ -409,7 +409,7 @@ export const generalSettingsComponent = Vue.extend({
                                     <div class="control">
                                         <div class="select">
                                             <select v-model="config.generalOptions.hotKey.secondModifier" @change="updateConfig()">
-                                                <option v-for="globalHotKeyModifier in globalHotKeyModifiers" :value="globalHotKeyModifier">
+                                                <option v-for="globalHotKeyModifier in globalHotKeyModifiers.filter(key => key != config.generalOptions.hotKey.firstModifier)" :value="globalHotKeyModifier">
                                                     {{ getTranslatedGlobalHotKeyModifier(globalHotKeyModifier) }}
                                                 </option>
                                             </select>
