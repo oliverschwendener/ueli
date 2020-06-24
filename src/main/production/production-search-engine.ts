@@ -54,6 +54,7 @@ import { getGoogleDictionaryDefinitions } from "../plugins/dictionary-plugin/goo
 import { everythingSearcher } from "../plugins/everything-plugin/everything-searcher";
 import { mdfindSearcher } from "../plugins/mdfind-plugin/mdfind-searcher";
 import { OperatingSystem, OperatingSystemVersion } from "../../common/operating-system";
+import { BraveBookmarkRepository } from "../plugins/browser-bookmarks-plugin/brave-bookmark-repository";
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
@@ -76,6 +77,9 @@ export function getProductionSearchEngine(
     const chromeBookmarksFilePath = operatingSystem === OperatingSystem.Windows
         ? `${homedir()}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks`
         : `${homedir()}/Library/Application\ Support/Google/Chrome/Default/Bookmarks`;
+    const braveBookmarksFilePath = operatingSystem === OperatingSystem.Windows
+        ? `${homedir()}\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Bookmarks`
+        : `${homedir()}/Library/Application\ Support/BraveSoftware/Brave-Browser/Default/Bookmarks`;
 
     const operatingSystemCommandRepository = operatingSystem === OperatingSystem.Windows
         ? new WindowsOperatingSystemCommandRepository(translationSet)
@@ -132,7 +136,10 @@ export function getProductionSearchEngine(
         new BrowserBookmarksPlugin(
             config.browserBookmarksOptions,
             translationSet,
-            [new GoogleChromeBookmarkRepository(chromeBookmarksFilePath)],
+            [
+              new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
+              new BraveBookmarkRepository(braveBookmarksFilePath),
+            ],
             urlExecutor,
         ),
     ];
