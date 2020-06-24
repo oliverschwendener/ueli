@@ -1,18 +1,17 @@
 import Vue from "vue";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
-import { UserConfigOptions } from "../../common/config/user-config-options";
+import { defaultUserConfigOptions, UserConfigOptions } from "../../common/config/user-config-options";
 import { join } from "path";
 import { defaultGeneralOptions } from "../../common/config/general-options";
 import { GlobalHotKeyModifier } from "../../common/global-hot-key/global-hot-key-modifier";
 import { GlobalHotKeyKey } from "../../common/global-hot-key/global-hot-key-key";
 import { Language } from "../../common/translation/language";
-import { getFolderPath, getFilePath } from "../dialogs";
+import { getFilePath, getFolderPath } from "../dialogs";
 import { NotificationType } from "../../common/notification-type";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { FileHelpers } from "../../common/helpers/file-helpers";
 import { isValidJson, mergeUserConfigWithDefault } from "../../common/helpers/config-helpers";
-import { defaultUserConfigOptions } from "../../common/config/user-config-options";
 import { GeneralSettings } from "./general-settings";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { UpdateCheckResult } from "../../common/update-check-result";
@@ -108,6 +107,8 @@ export const generalSettingsComponent = Vue.extend({
                     return translations.hotkeyModifierOption;
                 case GlobalHotKeyModifier.Shift:
                     return translations.hotkeyModifierShift;
+                case GlobalHotKeyModifier.Super:
+                    return translations.hotkeyModifierSuper;
                 default:
                     return hotkeyModifier;
             }
@@ -391,7 +392,23 @@ export const generalSettingsComponent = Vue.extend({
                                 <div class="field has-addons has-addons-right">
                                     <div class="control">
                                         <div class="select">
-                                            <select v-model="config.generalOptions.hotKey.modifier" @change="updateConfig()">
+                                            <select v-model="config.generalOptions.hotKey.firstModifier" @change="updateConfig()">
+                                                <option v-for="globalHotKeyModifier in globalHotKeyModifiers" :value="globalHotKeyModifier">
+                                                    {{ getTranslatedGlobalHotKeyModifier(globalHotKeyModifier) }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="control">
+                                        <button class="button is-static">
+                                            <span class="icon">
+                                                <i class="fa fa-plus"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="control">
+                                        <div class="select">
+                                            <select v-model="config.generalOptions.hotKey.secondModifier" @change="updateConfig()">
                                                 <option v-for="globalHotKeyModifier in globalHotKeyModifiers" :value="globalHotKeyModifier">
                                                     {{ getTranslatedGlobalHotKeyModifier(globalHotKeyModifier) }}
                                                 </option>

@@ -99,6 +99,7 @@ export const turkishTranslationSet: TranslationSet = {
     hotkeyModifierControl: "Ctrl",
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
+    hotkeyModifierSuper: "Super",
 
     appearanceSettings: "Görünüm",
     appearanceSettingsWindowWidth: "Pencere genişliği (piksel olarak)",

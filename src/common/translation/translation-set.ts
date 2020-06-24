@@ -96,6 +96,7 @@ export interface TranslationSet {
     hotkeyModifierControl: string;
     hotkeyModifierOption: string;
     hotkeyModifierShift: string;
+    hotkeyModifierSuper: string;
 
     appearanceSettings: string;
     appearanceSettingsWindowWidth: string;

@@ -1,11 +1,21 @@
-import { app, BrowserWindow, ipcMain, globalShortcut, dialog, Tray, Menu, screen, MenuItemConstructorOptions, WebContents } from "electron";
+import {
+    app,
+    BrowserWindow,
+    dialog,
+    globalShortcut,
+    ipcMain,
+    Menu,
+    MenuItemConstructorOptions,
+    screen,
+    Tray,
+    WebContents
+} from "electron";
 import { autoUpdater } from "electron-updater";
 import { join } from "path";
 import { IpcChannels } from "../common/ipc-channels";
 import { SearchResultItem } from "../common/search-result-item";
-import { UserConfigOptions } from "../common/config/user-config-options";
+import { defaultUserConfigOptions, UserConfigOptions } from "../common/config/user-config-options";
 import { ElectronStoreConfigRepository } from "../common/config/electron-store-config-repository";
-import { defaultUserConfigOptions } from "../common/config/user-config-options";
 import { AppearanceOptions } from "../common/config/appearance-options";
 import { isDev } from "../common/is-dev";
 import { UeliCommand } from "./plugins/ueli-command-search-plugin/ueli-command";
@@ -15,26 +25,28 @@ import { getProductionSearchEngine } from "./production/production-search-engine
 import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
 import { defaultGeneralOptions } from "../common/config/general-options";
 import { getErrorSearchResultItem } from "../common/error-search-result-item";
-import { FileHelpers } from "./../common/helpers/file-helpers";
-import { ueliTempFolder, logFilePath } from "../common/helpers/ueli-helpers";
+import { FileHelpers } from "../common/helpers/file-helpers";
+import { logFilePath, ueliTempFolder } from "../common/helpers/ueli-helpers";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
-import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-helpers";
+import { trayIconPathMacOs, trayIconPathWindows } from "./helpers/tray-icon-helpers";
 import { isValidHotKey } from "../common/global-hot-key/global-hot-key-helpers";
 import { NotificationType } from "../common/notification-type";
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { getCurrentOperatingSystem, getOperatingSystemVersion } from "../common/helpers/operating-system-helpers";
-import { executeFilePathWindows, executeFilePathMacOs } from "./executors/file-path-executor";
+import { executeFilePathMacOs, executeFilePathWindows } from "./executors/file-path-executor";
 import { WindowPosition } from "../common/window-position";
 import { UpdateCheckResult } from "../common/update-check-result";
 import { ProductionLogger } from "../common/logger/production-logger";
 import { DevLogger } from "../common/logger/dev-logger";
-import { windowIconWindows, windowIconMacOs } from "./helpers/window-icon-helpers";
+import { windowIconMacOs, windowIconWindows } from "./helpers/window-icon-helpers";
 import { toHex } from "./plugins/color-converter-plugin/color-converter-helpers";
 import { deepCopy } from "../common/helpers/object-helpers";
 import { PluginType } from "./plugin-type";
 import { getRescanIntervalInMilliseconds } from "./helpers/rescan-interval-helpers";
 import { openUrlInBrowser } from "./executors/url-executor";
 import { OperatingSystem } from "../common/operating-system";
+import { GlobalHotKeyModifier } from "../common/global-hot-key/global-hot-key-modifier";
+import { GlobalHotKeyKey } from "../common/global-hot-key/global-hot-key-key";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -134,7 +146,22 @@ function clearAllCaches() {
 function registerGlobalKeyboardShortcut(toggleAction: () => void, newHotKey: GlobalHotKey) {
     newHotKey = isValidHotKey(newHotKey) ? newHotKey : defaultGeneralOptions.hotKey;
     globalShortcut.unregisterAll();
-    globalShortcut.register(`${newHotKey.modifier ? `${newHotKey.modifier}+` : ``}${newHotKey.key}`, toggleAction);
+
+    const hotKeyParts: (GlobalHotKeyKey | GlobalHotKeyModifier)[] = [];
+
+    // Add first key modifier, if any
+    if (newHotKey.firstModifier && newHotKey.firstModifier !== GlobalHotKeyModifier.None) {
+        hotKeyParts.push(newHotKey.firstModifier);
+    }
+
+    // Add second key modifier, if any
+    if (newHotKey.secondModifier && newHotKey.secondModifier !== GlobalHotKeyModifier.None) {
+        hotKeyParts.push(newHotKey.secondModifier);
+    }
+
+    // Add actual key
+    hotKeyParts.push(newHotKey.key);
+    globalShortcut.register(hotKeyParts.join("+"), toggleAction);
 }
 
 function calculateX(display: Electron.Display): number {
@@ -169,7 +196,7 @@ function showMainWindow() {
                 x: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.x
                     ? lastWindowPosition.x
                     : calculateX(display),
-                    y: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.y
+                y: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.y
                     ? lastWindowPosition.y
                     : calculateY(display),
             };

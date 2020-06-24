@@ -1,4 +1,5 @@
 export enum GlobalHotKeyModifier {
+    None = "-",
     Alt = "Alt",
     Shift = "Shift",
     Control = "Control",

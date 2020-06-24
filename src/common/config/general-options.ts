@@ -28,7 +28,8 @@ export const defaultGeneralOptions: GeneralOptions = {
     hideMainWindowOnBlur: true,
     hotKey: {
         key: GlobalHotKeyKey.Space,
-        modifier: GlobalHotKeyModifier.Alt,
+        firstModifier: GlobalHotKeyModifier.Alt,
+        secondModifier: GlobalHotKeyModifier.None,
     },
     language: Language.English,
     logExecution: true,
