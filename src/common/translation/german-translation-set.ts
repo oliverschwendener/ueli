@@ -112,6 +112,10 @@ export const germanTranslationSet: TranslationSet = {
     appearanceSettingsResetWarningMessage: "Du bist dabei alle Erscheiungsbildeinstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
     appearanceSettingsAllowTransparentBackground: "Transparenter Hintergrund erlauben",
     appearanceSettingsFontFamily: "Schriftart",
+    appearanceSettingsUserInputRadius: "Benutzereingabe Randradius",
+    appearanceSettingsUserInputBottomMargin: "Uesr-Eingabe unterer Rand (in Pixel)",
+    appearanceSettingsSearchResultsRadius: "Suchergebnisse Rahmenradius",
+    appearanceSettingsScrollbarRadius: "Randradius der Bildlaufleiste",
 
     colorThemeSettings: "Farbschema",
     colorThemeSettingsImportColorTheme: "Farbschema importieren",

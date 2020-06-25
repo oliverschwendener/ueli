@@ -96,6 +96,46 @@ export const appearanceSettingsComponent = Vue.extend({
                             </div>
                         </div>
                     </div>
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsUserInputRadius }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="text" class="input" v-model="config.appearanceOptions.userInputBorderRadius" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsUserInputBottomMargin }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="number" step="1" class="input" v-model="config.appearanceOptions.userInputBottomMargin" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsSearchResultsRadius }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="text" class="input" v-model="config.appearanceOptions.searchResultsBorderRadius" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsScrollbarRadius }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="text" class="input" v-model="config.appearanceOptions.scrollbarBorderRadius" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="settings__option">
                         <div class="settings__option-name">{{ translations.appearanceSettingsSmoothScrolling }}</div>

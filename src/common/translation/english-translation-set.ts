@@ -112,6 +112,10 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsResetWarningMessage: "You are about to reset all appearance settings to default. Do you want to proceed?",
     appearanceSettingsAllowTransparentBackground: "Allow transparent background",
     appearanceSettingsFontFamily: "Font family",
+    appearanceSettingsUserInputRadius: "User input border radius",
+    appearanceSettingsUserInputBottomMargin: "Uesr input bottom margin (in pixels)",
+    appearanceSettingsSearchResultsRadius: "Search results border radius",
+    appearanceSettingsScrollbarRadius: "Scrollbar border radius",
 
     colorThemeSettings: "Color Theme",
     colorThemeSettingsImportColorTheme: "Import color theme",

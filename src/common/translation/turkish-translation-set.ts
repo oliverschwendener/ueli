@@ -112,6 +112,10 @@ export const turkishTranslationSet: TranslationSet = {
     appearanceSettingsResetWarningMessage: "Tüm görünüm ayarlarını varsayılan değerlerine geri yüklemek üzeresiniz. Devam etmek istiyor musunuz?",
     appearanceSettingsAllowTransparentBackground: "Saydam arka plana izin ver",
     appearanceSettingsFontFamily: "Font ailesi",
+    appearanceSettingsUserInputRadius: "Kullanıcı giriş kenarlığı yarıçapı",
+    appearanceSettingsUserInputBottomMargin: "Uesr giriş alt kenar boşluğu (piksel olarak)",
+    appearanceSettingsSearchResultsRadius: "Arama sonuçları kenarlık yarıçapı",
+    appearanceSettingsScrollbarRadius: "Kaydırma çubuğu kenarlık yarıçapı",
 
     colorThemeSettings: "Renk teması",
     colorThemeSettingsImportColorTheme: "Renk temasını içe aktar",

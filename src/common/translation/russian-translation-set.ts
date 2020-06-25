@@ -112,6 +112,10 @@ export const russianTranslationSet: TranslationSet = {
     appearanceSettingsResetWarningMessage: "Вы хотите восстановить настройки внешнего вида по умолчанию. Вы уверены?",
     appearanceSettingsAllowTransparentBackground: "Прозрачность фона",
     appearanceSettingsFontFamily: "семейство шрифтов",
+    appearanceSettingsUserInputRadius: "Пользовательский радиус границы ввода",
+    appearanceSettingsUserInputBottomMargin: "Нижнее поле ввода Uesr (в пикселях)",
+    appearanceSettingsSearchResultsRadius: "Радиус границы результатов поиска",
+    appearanceSettingsScrollbarRadius: "Радиус полосы прокрутки",
 
     colorThemeSettings: "Цветовые темы",
     colorThemeSettingsImportColorTheme: "Импортировать тему",

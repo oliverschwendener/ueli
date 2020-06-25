@@ -13,6 +13,10 @@ export interface AppearanceOptions {
     windowWidth: number;
     allowTransparentBackground: boolean;
     fontFamily: string;
+    userInputBorderRadius: string;
+    userInputBottomMargin: number;
+    searchResultsBorderRadius: string;
+    scrollbarBorderRadius: string;
 }
 
 const defaultFontFamily = getCurrentOperatingSystem(platform()) === OperatingSystem.Windows
@@ -30,4 +34,8 @@ export const defaultAppearanceOptions: AppearanceOptions = {
     smoothScrolling: true,
     userInputHeight: 60,
     windowWidth: 600,
+    userInputBorderRadius: "0px",
+    userInputBottomMargin: 0,
+    searchResultsBorderRadius: "0px",
+    scrollbarBorderRadius: "0px"
 };

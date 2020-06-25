@@ -11,6 +11,8 @@
     --user-input--loader-speed: 1.4s;
     --user-input--loader-dot-size: 8px;
     --user-input--icon-size: 28px;
+    --user-input--radius: 0px;
+    --user-input--bottom-margin: 0px;
 
     --search-results--background-color: #272c34;
     --search-results--item-active-background-color: #3d4452;
@@ -26,10 +28,12 @@
     --search-results--item-icon-size: 30px;
     --search-results--item-info-container-padding: 10px;
     --search-results--item-search-result-number-font-size: 14px;
+    --search-results--radius: 0px;
 
     --scrollbar--size: 8px;
     --scrollbar--foreground-color: #3d444f;
     --scrollbar--background-color: #1f2328;
+    --scrollbar--radius: 0px;
 }
 
 body {
@@ -55,6 +59,8 @@ body {
     padding: 0 var(--user-input--side-padding);
     box-sizing: border-box;
     overflow: hidden;
+    border-radius: var(--user-input--radius);
+    margin-bottom: var(--user-input--bottom-margin);
     -webkit-app-region: drag;
 }
 
@@ -143,10 +149,11 @@ body {
 
 .search-results {
     background-color: var(--search-results--background-color);
-    height: calc(100vh - var(--user-input--height));
+    height: calc(100vh - var(--user-input--height) - var(--user-input--bottom-margin));
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
+    border-radius: var(--search-results--radius);
 }
 
 .search-results.scroll-disabled {
@@ -223,7 +230,7 @@ body {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    max-width: calc(100% - var(--search-results--item-icon-size));  
+    max-width: calc(100% - var(--search-results--item-icon-size));
 }
 
 .search-results__item-number-container {
@@ -290,6 +297,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
     background: var(--scrollbar--foreground-color);
+    border-radius: var(--scrollbar--radius);
 }
 
 ::-webkit-scrollbar-track {
