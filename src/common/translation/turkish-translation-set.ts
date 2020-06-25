@@ -345,4 +345,9 @@ export const turkishTranslationSet: TranslationSet = {
 
     controlPanel: "Kontrol Paneli",
     controlPanelSettingsDescription: "Bu eklenti, kontrol paneli öğelerini hızlı bir şekilde bulmanızı sağlar.",
+
+    processKiller: "İşlem Katili",
+    processKillerPrefix: "Önek",
+    processKillerSettingsDescription: "Bu eklenti, çalışan işlemleri öldürmenizi sağlar.",
+    processKillerDescription: "Öldürmek {{process}}",
 };
