@@ -241,6 +241,8 @@ export const turkishTranslationSet: TranslationSet = {
     macOsRestartDescription: "Bilgisayarı yeniden başlat",
     macOsLogout: "Oturumunu Kapat",
     macOsLogoutDescription: "Mevcut kullanıcının oturumunu kapat",
+    macOsSleep: 'Uyumak',
+    macOsSleepDescription: 'Uyku bilgisayar',
     macOsLock: "Kilitle",
     macOsLockDescription: "Bilgisayarı kilitle",
 

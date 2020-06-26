@@ -238,6 +238,8 @@ export interface TranslationSet {
     macOsRestartDescription: string;
     macOsLogout: string;
     macOsLogoutDescription: string;
+    macOsSleep: string;
+    macOsSleepDescription: string;
     macOsLock: string;
     macOsLockDescription: string;
 
