@@ -116,6 +116,7 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsUserInputBottomMargin: "User input bottom margin (in pixels)",
     appearanceSettingsSearchResultsBorderRadius: "Search results border radius",
     appearanceSettingsScrollbarBorderRadius: "Scrollbar border radius",
+    appearanceSettingsBorderRadiusDescription: "This is a css value, so you need to add 'px' like this '10px' or separate corners like this '10px 0px 10px 5px'",
 
     colorThemeSettings: "Color Theme",
     colorThemeSettingsImportColorTheme: "Import color theme",

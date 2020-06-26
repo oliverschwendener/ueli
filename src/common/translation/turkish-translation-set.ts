@@ -116,6 +116,8 @@ export const turkishTranslationSet: TranslationSet = {
     appearanceSettingsUserInputBottomMargin: "Kullanıcı girişi alt kenar boşluğu (piksel olarak)",
     appearanceSettingsSearchResultsBorderRadius: "Arama sonuçları kenarlık yarıçapı",
     appearanceSettingsScrollbarBorderRadius: "Kaydırma çubuğu kenarlık yarıçapı",
+    appearanceSettingsBorderRadiusDescription: "Bu bir css değeridir, bu nedenle bu '10px' gibi 'px' veya '10px 0px 10px 5px' gibi ayrı köşeler eklemeniz gerekir",
+
 
     colorThemeSettings: "Renk teması",
     colorThemeSettingsImportColorTheme: "Renk temasını içe aktar",

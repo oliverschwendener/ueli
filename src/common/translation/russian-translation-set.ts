@@ -116,6 +116,8 @@ export const russianTranslationSet: TranslationSet = {
     appearanceSettingsUserInputBottomMargin: "Нижнее поле пользовательского ввода (в пикселях)",
     appearanceSettingsSearchResultsBorderRadius: "Радиус границы результатов поиска",
     appearanceSettingsScrollbarBorderRadius: "Радиус полосы прокрутки",
+    appearanceSettingsBorderRadiusDescription: "Это значение CSS, поэтому вам нужно добавить «px», например, «10px» или отдельные углы, например «10px 0px 10px 5px».",
+
 
     colorThemeSettings: "Цветовые темы",
     colorThemeSettingsImportColorTheme: "Импортировать тему",

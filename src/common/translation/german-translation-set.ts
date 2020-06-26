@@ -116,6 +116,8 @@ export const germanTranslationSet: TranslationSet = {
     appearanceSettingsUserInputBottomMargin: "Benutzereingabe unterer Rand (in Pixel)",
     appearanceSettingsSearchResultsBorderRadius: "Suchergebnisse Rahmenradius",
     appearanceSettingsScrollbarBorderRadius: "Randradius der Bildlaufleiste",
+    appearanceSettingsBorderRadiusDescription: "Dies ist ein CSS-Wert, daher müssen Sie 'px' wie diesen '10px' oder separate Ecken wie diesen '10px 0px 10px 5px' hinzufügen.",
+
 
     colorThemeSettings: "Farbschema",
     colorThemeSettingsImportColorTheme: "Farbschema importieren",

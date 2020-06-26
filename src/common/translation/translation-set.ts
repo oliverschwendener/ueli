@@ -113,6 +113,7 @@ export interface TranslationSet {
     appearanceSettingsUserInputBottomMargin: string;
     appearanceSettingsSearchResultsBorderRadius: string;
     appearanceSettingsScrollbarBorderRadius: string;
+    appearanceSettingsBorderRadiusDescription: string;
 
     colorThemeSettings: string;
     colorThemeSettingsImportColorTheme: string;
