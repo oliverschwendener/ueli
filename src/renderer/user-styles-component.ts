@@ -24,12 +24,12 @@ export const userStylesComponent = Vue.extend({
 
             --user-input--background-color: {{ colortheme.userInputBackgroundColor }};
             --user-input--color: {{ colortheme.userInputTextColor }};
-            --user-input--radius: {{appearance.userInputBorderRadius}};
+            --user-input--border-radius: {{appearance.userInputBorderRadius}};
             --user-input--bottom-margin: {{appearance.userInputBottomMargin}}px;
 
 
             --search-results--background-color: {{ colortheme.searchResultsBackgroundColor }};
-            --search-results--radius: {{appearance.searchResultsBorderRadius}};
+            --search-results--border-radius: {{appearance.searchResultsBorderRadius}};
 
             --search-results--item-active-background-color: {{ colortheme.searchResultsItemActiveBackgroundColor }};
             --search-results--item-active-text-color: {{ colortheme.searchResultsItemActiveTextColor }};
@@ -40,7 +40,7 @@ export const userStylesComponent = Vue.extend({
 
             --scrollbar--foreground-color: {{ colortheme.scrollbarForegroundColor }};
             --scrollbar--background-color: {{ colortheme.scrollbarBackgroundColor }};
-            --scrollbar--radius: {{appearance.scrollbarBorderRadius}};
+            --scrollbar--border-radius: {{appearance.scrollbarBorderRadius}};
         }
     </style>`,
 });

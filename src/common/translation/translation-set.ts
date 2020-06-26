@@ -109,10 +109,10 @@ export interface TranslationSet {
     appearanceSettingsResetWarningMessage: string;
     appearanceSettingsAllowTransparentBackground: string;
     appearanceSettingsFontFamily: string;
-    appearanceSettingsUserInputRadius: string;
+    appearanceSettingsUserInputBorderRadius: string;
     appearanceSettingsUserInputBottomMargin: string;
-    appearanceSettingsSearchResultsRadius: string;
-    appearanceSettingsScrollbarRadius: string;
+    appearanceSettingsSearchResultsBorderRadius: string;
+    appearanceSettingsScrollbarBorderRadius: string;
 
     colorThemeSettings: string;
     colorThemeSettingsImportColorTheme: string;
