@@ -15,7 +15,7 @@ export const colorPickerComponent = Vue.extend({
             this.visible = false;
         },
         updateValue(value: any) {
-            this.color = value.hex;
+            this.color = value.hex8;
         },
         saveColor() {
             vueEventDispatcher.$emit(VueEventChannels.saveColor, this.pickerId, this.color);
