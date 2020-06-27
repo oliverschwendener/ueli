@@ -348,6 +348,6 @@ export const germanTranslationSet: TranslationSet = {
 
     processKiller: "Prozesskiller",
     processKillerPrefix: "Präfix",
-    processKillerSettingsDescription: "Dieses Plugin ermöglicht es Ihnen, die laufenden Prozesse zu töten.",
+    processKillerSettingsDescription: "Dieses Plugin ermöglicht es dir, laufende Prozesse zu töten.",
     processKillerDescription: "töten {{process}}",
 };
