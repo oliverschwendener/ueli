@@ -150,7 +150,7 @@ function calculateY(display: Electron.Display): number {
 
 function onBlur() {
     if (config.generalOptions.hideMainWindowOnBlur) {
-        hideMainWindow();
+        hideMainWindowWithReturnFocus(true);
     }
 }
 
@@ -169,7 +169,7 @@ function showMainWindow() {
                 x: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.x
                     ? lastWindowPosition.x
                     : calculateX(display),
-                    y: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.y
+                y: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.y
                     ? lastWindowPosition.y
                     : calculateY(display),
             };
@@ -188,21 +188,22 @@ function showMainWindow() {
     }
 }
 
-function hideMainWindow() {
+function hideMainWindowWithReturnFocus(returnFocus: boolean) {
     if (windowExists(mainWindow)) {
         mainWindow.webContents.send(IpcChannels.mainWindowHasBeenHidden);
 
         setTimeout(() => {
             updateMainWindowSize(0, config.appearanceOptions);
             if (windowExists(mainWindow)) {
-                // this is a workaround to restore the focus on the previously focussed window
-                if (operatingSystem === OperatingSystem.Windows) {
+                if (returnFocus && operatingSystem === OperatingSystem.Windows) {
+                    // Restores focus on the previously focussed window
                     mainWindow.minimize();
                 }
+
                 mainWindow.hide();
 
-                // this is a workaround to restore the focus on the previously focussed window
-                if (operatingSystem === OperatingSystem.macOS) {
+                if (returnFocus && operatingSystem === OperatingSystem.macOS) {
+                    // Restores focus on the previously focussed window
                     if (!settingsWindow
                         || (settingsWindow && settingsWindow.isDestroyed())
                         || (settingsWindow && !settingsWindow.isDestroyed() && !settingsWindow.isVisible())) {
@@ -217,7 +218,7 @@ function hideMainWindow() {
 function toggleMainWindow() {
     if (mainWindow.isVisible()) {
         if (mainWindow.isFocused()) {
-            hideMainWindow();
+            hideMainWindowWithReturnFocus(true);
         } else {
             showMainWindow();
         }
@@ -301,7 +302,7 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
                         notifyRenderer(translationSet.successfullyUpdatedconfig, NotificationType.Info);
                     }
                 })
-                .catch((err) =>  logger.error(err));
+                .catch((err) => logger.error(err));
         })
         .catch((err) => logger.error(err));
 }
@@ -624,7 +625,7 @@ function registerAllIpcListeners() {
     });
 
     ipcMain.on(IpcChannels.mainWindowHideRequested, () => {
-        hideMainWindow();
+        hideMainWindowWithReturnFocus(true);
     });
 
     ipcMain.on(IpcChannels.execute, (event, userInput: string, searchResultItem: SearchResultItem, privileged: boolean) => {
@@ -632,7 +633,7 @@ function registerAllIpcListeners() {
             .then(() => {
                 userInputHistoryManager.addItem(userInput);
                 if (searchResultItem.hideMainWindowAfterExecution && config.generalOptions.hideMainWindowAfterExecution) {
-                    hideMainWindow();
+                    hideMainWindowWithReturnFocus(false);
                 } else {
                     updateMainWindowSize(0, config.appearanceOptions);
                 }
@@ -643,7 +644,7 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.openSearchResultLocation, (event: Electron.Event, searchResultItem: SearchResultItem) => {
         searchEngine.openLocation(searchResultItem)
-            .then(() => hideMainWindow())
+            .then(() => hideMainWindowWithReturnFocus(false))
             .catch((err) => {
                 logger.error(err);
                 noSearchResultsFound();
