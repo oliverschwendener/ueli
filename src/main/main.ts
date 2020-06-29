@@ -644,7 +644,7 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.openSearchResultLocation, (event: Electron.Event, searchResultItem: SearchResultItem) => {
         searchEngine.openLocation(searchResultItem)
-            .then(() => hideMainWindowWithReturnFocus(false))
+            .then(() => hideMainWindowWithReturnFocus(true))
             .catch((err) => {
                 logger.error(err);
                 noSearchResultsFound();
