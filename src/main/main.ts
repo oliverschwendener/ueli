@@ -145,7 +145,8 @@ function calculateY(display: Electron.Display): number {
     return Math.round(Number(display.bounds.y + (display.bounds.height / 2) - (getMaxWindowHeight(
         config.appearanceOptions.maxSearchResultsPerPage,
         config.appearanceOptions.searchResultHeight,
-        config.appearanceOptions.userInputHeight) / 2)));
+        config.appearanceOptions.userInputHeight,
+        config.appearanceOptions.userInputBottomMargin) / 2)));
 }
 
 function onBlur() {
@@ -164,12 +165,12 @@ function showMainWindow() {
                 ? screen.getPrimaryDisplay()
                 : screen.getDisplayNearestPoint(mousePosition);
             const windowBounds: Electron.Rectangle = {
-                height: Math.round(Number(config.appearanceOptions.userInputHeight)),
+                height: Math.round(Number(config.appearanceOptions.userInputHeight) + Number(config.appearanceOptions.userInputBottomMargin)),
                 width: Math.round(Number(config.appearanceOptions.windowWidth)),
                 x: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.x
                     ? lastWindowPosition.x
                     : calculateX(display),
-                    y: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.y
+                y: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.y
                     ? lastWindowPosition.y
                     : calculateY(display),
             };
@@ -226,8 +227,8 @@ function toggleMainWindow() {
     }
 }
 
-function getMaxWindowHeight(maxSearchResultsPerPage: number, searchResultHeight: number, userInputHeight: number): number {
-    return Number(maxSearchResultsPerPage) * Number(searchResultHeight) + Number(userInputHeight);
+function getMaxWindowHeight(maxSearchResultsPerPage: number, searchResultHeight: number, userInputHeight: number, userInputBottomMargin: number): number {
+    return Number(maxSearchResultsPerPage) * Number(searchResultHeight) + Number(userInputHeight) + Number(userInputBottomMargin);
 }
 
 function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean, pluginType?: PluginType) {
@@ -257,7 +258,8 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
         mainWindow.setSize(Number(updatedConfig.appearanceOptions.windowWidth), getMaxWindowHeight(
             updatedConfig.appearanceOptions.maxSearchResultsPerPage,
             updatedConfig.appearanceOptions.searchResultHeight,
-            updatedConfig.appearanceOptions.userInputHeight));
+            updatedConfig.appearanceOptions.userInputHeight,
+            updatedConfig.appearanceOptions.userInputBottomMargin));
         updateMainWindowSize(0, updatedConfig.appearanceOptions);
         mainWindow.center();
         mainWindow.resizable = false;
@@ -301,7 +303,7 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
                         notifyRenderer(translationSet.successfullyUpdatedconfig, NotificationType.Info);
                     }
                 })
-                .catch((err) =>  logger.error(err));
+                .catch((err) => logger.error(err));
         })
         .catch((err) => logger.error(err));
 }
@@ -312,8 +314,8 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
         const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
             ? Math.round(getMaxWindowHeight(
                 appearanceOptions.maxSearchResultsPerPage,
-                appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight))
-            : Math.round((Number(searchResultCount) * Number(appearanceOptions.searchResultHeight)) + Number(appearanceOptions.userInputHeight));
+                appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight, appearanceOptions.userInputBottomMargin))
+            : Math.round((Number(searchResultCount) * Number(appearanceOptions.searchResultHeight)) + Number(appearanceOptions.userInputHeight) + Number(appearanceOptions.userInputBottomMargin));
 
         mainWindow.setSize(Number(appearanceOptions.windowWidth), Number(windowHeight));
         if (center) {
@@ -441,7 +443,8 @@ function createMainWindow() {
         height: getMaxWindowHeight(
             config.appearanceOptions.maxSearchResultsPerPage,
             config.appearanceOptions.searchResultHeight,
-            config.appearanceOptions.userInputHeight),
+            config.appearanceOptions.userInputHeight,
+            config.appearanceOptions.userInputBottomMargin),
         icon: windowIconFilePath,
         maximizable: false,
         minimizable: false,

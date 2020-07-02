@@ -112,6 +112,12 @@ export const russianTranslationSet: TranslationSet = {
     appearanceSettingsResetWarningMessage: "Вы хотите восстановить настройки внешнего вида по умолчанию. Вы уверены?",
     appearanceSettingsAllowTransparentBackground: "Прозрачность фона",
     appearanceSettingsFontFamily: "семейство шрифтов",
+    appearanceSettingsUserInputBorderRadius: "Пользовательский радиус границы ввода",
+    appearanceSettingsUserInputBottomMargin: "Нижнее поле пользовательского ввода (в пикселях)",
+    appearanceSettingsSearchResultsBorderRadius: "Радиус границы результатов поиска",
+    appearanceSettingsScrollbarBorderRadius: "Радиус полосы прокрутки",
+    appearanceSettingsBorderRadiusDescription: "Это значение CSS, поэтому вам нужно добавить «px», например, «10px» или отдельные углы, например «10px 0px 10px 5px».",
+
 
     colorThemeSettings: "Цветовые темы",
     colorThemeSettingsImportColorTheme: "Импортировать тему",
