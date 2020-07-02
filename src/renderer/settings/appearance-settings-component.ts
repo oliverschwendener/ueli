@@ -96,6 +96,55 @@ export const appearanceSettingsComponent = Vue.extend({
                             </div>
                         </div>
                     </div>
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsUserInputBorderRadius }}</div>
+                         <span class="icon tooltip is-tooltip-multiline" :data-tooltip="translations.appearanceSettingsBorderRadiusDescription">
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="text" class="input" v-model="config.appearanceOptions.userInputBorderRadius" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsUserInputBottomMargin }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="number" step="1" class="input" v-model="config.appearanceOptions.userInputBottomMargin" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsSearchResultsBorderRadius }}</div>
+                         <span class="icon tooltip is-tooltip-multiline" :data-tooltip="translations.appearanceSettingsBorderRadiusDescription">
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="text" class="input" v-model="config.appearanceOptions.searchResultsBorderRadius" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsScrollbarBorderRadius }}</div>
+                        <span class="icon tooltip is-tooltip-multiline" :data-tooltip="translations.appearanceSettingsBorderRadiusDescription">
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="text" class="input" v-model="config.appearanceOptions.scrollbarBorderRadius" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="settings__option">
                         <div class="settings__option-name">{{ translations.appearanceSettingsSmoothScrolling }}</div>

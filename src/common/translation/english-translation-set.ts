@@ -112,6 +112,11 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsResetWarningMessage: "You are about to reset all appearance settings to default. Do you want to proceed?",
     appearanceSettingsAllowTransparentBackground: "Allow transparent background",
     appearanceSettingsFontFamily: "Font family",
+    appearanceSettingsUserInputBorderRadius: "User input border radius",
+    appearanceSettingsUserInputBottomMargin: "User input bottom margin (in pixels)",
+    appearanceSettingsSearchResultsBorderRadius: "Search results border radius",
+    appearanceSettingsScrollbarBorderRadius: "Scrollbar border radius",
+    appearanceSettingsBorderRadiusDescription: "This is a css value, so you need to add 'px' like this '10px' or separate corners like this '10px 0px 10px 5px'",
 
     colorThemeSettings: "Color Theme",
     colorThemeSettingsImportColorTheme: "Import color theme",
@@ -241,6 +246,8 @@ export const englishTranslationSet: TranslationSet = {
     macOsRestartDescription: "Restart computer",
     macOsLogout: "Log out",
     macOsLogoutDescription: "Log out current user",
+    macOsSleep: "Sleep",
+    macOsSleepDescription: "Sleep computer",
     macOsLock: "Lock",
     macOsLockDescription: "Lock computer",
 
