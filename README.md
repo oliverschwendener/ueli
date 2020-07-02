@@ -50,6 +50,7 @@ This plugin enables you to search your browser bookmarks.
 Currently supported browsers:
 
 - Google Chrome
+- Brave
 
 ![browser-bookmarks](assets/feature-browser-bookmarks.png)
 
