@@ -12,8 +12,11 @@ import { isValidExecutionStep, isValidWorkflow } from "../../../main/plugins/wor
 import { NotificationType } from "../../../common/notification-type";
 import { defaultWorkflowIcon } from "../../../common/icon/default-icons";
 import { homedir, platform } from "os";
-import { isWindows } from "../../../common/helpers/operating-system-helpers";
+import { getCurrentOperatingSystem } from "../../../common/helpers/operating-system-helpers";
 import { deepCopy, isEqual } from "../../../common/helpers/object-helpers";
+import { OperatingSystem } from "../../../common/operating-system";
+
+const operatingSystem = getCurrentOperatingSystem(platform());
 
 const initialNewWorkflowExecutionStep: WorkflowExecutionStep = {
     executionArgument: "",
@@ -97,7 +100,7 @@ export const workflowEditingModal = Vue.extend({
                     executionStepPlaceholder = homedir();
                     break;
                 case WorkflowExecutionArgumentType.CommandlineTool:
-                    executionStepPlaceholder = isWindows(platform()) ? "ping 1.1.1.1 -t" : "ping 1.1.1.1";
+                    executionStepPlaceholder = operatingSystem === OperatingSystem.Windows ? "ping 1.1.1.1 -t" : "ping 1.1.1.1";
                     break;
             }
 

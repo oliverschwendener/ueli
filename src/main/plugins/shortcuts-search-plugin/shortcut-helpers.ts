@@ -17,7 +17,7 @@ export const defaultNewShortcut: Shortcut = {
     type: ShortcutType.Url,
 };
 
-export function isValidShortcuType(shortcutType: ShortcutType): boolean {
+export function isValidShortcutType(shortcutType: ShortcutType): boolean {
     return Object.values(ShortcutType).find((s) => s === shortcutType) !== undefined;
 }
 
@@ -29,14 +29,14 @@ export function isValidShortcutToAdd(shortcut: Shortcut, filePathValidator: (fil
 
     return shortcut !== undefined
         && isValidShortcutExecutionArgument(shortcut, filePathValidator)
-        && isValidShortcuType(shortcut.type)
+        && isValidShortcutType(shortcut.type)
         && iconCondition;
 }
 
 export function isValidShortcutExecutionArgument(shortcut: Shortcut, filePathValidator: (filePath: string) => boolean): boolean {
     switch (shortcut.type) {
         case ShortcutType.Url:
-            return isValidShorcutUrl(shortcut.executionArgument);
+            return isValidShortcutUrl(shortcut.executionArgument);
         case ShortcutType.FilePath:
             return isValidShortcutFilePath(shortcut.executionArgument, filePathValidator);
         case ShortcutType.CommandlineTool:
@@ -56,7 +56,7 @@ export function getDefaultShortcutIcon(shortcut: Shortcut) {
     }
 }
 
-function isValidShorcutUrl(url: string): boolean {
+function isValidShortcutUrl(url: string): boolean {
     return url !== undefined
         && (url.startsWith("https://") || url.startsWith("http://"));
 }

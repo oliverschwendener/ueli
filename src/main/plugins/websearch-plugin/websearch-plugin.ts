@@ -92,7 +92,7 @@ export class WebSearchPlugin implements ExecutionPlugin {
     }
 
     private buildExecutionArgument(webSearchEngine: WebSearchEngine, userInput: string): string {
-        return webSearchEngine.url.replace("{{query}}", this.getSearchTerm(webSearchEngine, userInput));
+        return webSearchEngine.url.replace(/{{query}}/g, this.getSearchTerm(webSearchEngine, userInput));
     }
 
     private userInputMatches(userInput: string, fallback?: boolean): boolean {

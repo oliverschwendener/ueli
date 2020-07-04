@@ -50,6 +50,7 @@ This plugin enables you to search your browser bookmarks.
 Currently supported browsers:
 
 - Google Chrome
+- Brave
 
 ![browser-bookmarks](assets/feature-browser-bookmarks.png)
 
@@ -187,6 +188,8 @@ This plugin enables you to quickly execute multiple things at once.
 |<kbd>Cmd</kbd> <kbd>o</kbd>|Open the selected program or file at it's location (macOS)|
 |<kbd>↑</kbd>|Scroll up|
 |<kbd>↓</kbd>|Scroll down|
+|<kbd>Ctrl or Cmd</kbd> <kbd>p</kbd>|Scroll up|
+|<kbd>Ctrl or Cmd</kbd> <kbd>n</kbd>|Scroll down|
 |<kbd>Ctrl</kbd> <kbd>i</kbd>|Open settings (Windows)|
 |<kbd>Cmd</kbd> <kbd>,</kbd>|Open settings (macOS)|
 |<kbd>Shift</kbd> <kbd>↑</kbd>|Browse user input history up|

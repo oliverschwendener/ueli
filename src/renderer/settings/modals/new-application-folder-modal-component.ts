@@ -5,9 +5,12 @@ import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { NotificationType } from "../../../common/notification-type";
 import { getFolderPath } from "../../dialogs";
 import { showNotification } from "../../notifications";
-import { isWindows } from "../../../common/helpers/operating-system-helpers";
+import { getCurrentOperatingSystem } from "../../../common/helpers/operating-system-helpers";
 import { platform } from "os";
 import { TranslationSet } from "../../../common/translation/translation-set";
+import { OperatingSystem } from "../../../common/operating-system";
+
+const operatingSystem = getCurrentOperatingSystem(platform());
 
 export const newApplicationFolderModalComponent = Vue.extend({
     data() {
@@ -23,7 +26,7 @@ export const newApplicationFolderModalComponent = Vue.extend({
         },
         getPlaceholder(): string {
             const translations: TranslationSet = this.translations;
-            const folderPath = isWindows(platform())
+            const folderPath = operatingSystem === OperatingSystem.Windows
                 ? "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs"
                 : "/Applications";
 

@@ -5,7 +5,7 @@ import * as Powershell from "node-powershell";
 export class ControlPanelItemsRetriever {
     public static RetrieveControlPanelItems(alreadyKnownItems: ControlPanelItem[]): Promise<ControlPanelItem[]> {
         return new Promise((resolve, reject) => {
-            this.executeCommandWithUtf8Output('powershell -Command "Get-ControlPanelItem | ConvertTo-Json"')
+            this.executeCommandWithUtf8Output('powershell -NonInteractive -NoProfile -Command "Get-ControlPanelItem | ConvertTo-Json"')
                 .then((controlPanelItemsJson) => {
                     const controlPanelItems: ControlPanelItem[] = JSON.parse(controlPanelItemsJson);
 

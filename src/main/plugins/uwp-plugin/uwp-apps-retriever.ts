@@ -9,7 +9,7 @@ export function getAllUwpApps(alreadyKnownApps: UwpApplication[]): Promise<UwpAp
             .replace(/\n/g, " ").replace(/\"/g, "\\\"")
             .replace("%alreadyKnownAppIds%", alreadyKnownAppIds);
 
-        executeCommandWithUtf8Output(`powershell -Command "${command}"`)
+        executeCommandWithUtf8Output(`powershell -NonInteractive -NoProfile -Command "${command}"`)
             .then((resultString) => {
                 const result = JSON.parse(resultString) as { NewApps: any[], RemovedAppIds: string[] };
                 const allCurrentApps = alreadyKnownApps
@@ -32,7 +32,7 @@ filter ArrayToHash
 }
 
 [string[]]$alreadyKnownAppIds = %alreadyKnownAppIds%;
-$alreadyKnownAppIdsSet = New-Object System.Collections.Generic.HashSet[string] ($alreadyKnownAppIds);
+$alreadyKnownAppIdsSet = New-Object System.Collections.Generic.HashSet[string] (,$alreadyKnownAppIds);
 
 $currentStartApps = Get-StartApps | Where-Object { $_.AppID.Contains("!") };
 $currentStartAppIds = $currentStartApps | Select-Object -ExpandProperty AppID;

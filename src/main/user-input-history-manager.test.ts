@@ -15,6 +15,26 @@ describe(TestableUserInputHistoryManager.name, (): void => {
             expect(actual[0]).toBe(userInput);
             expect(manager.getIndex()).toBe(1);
         });
+
+        it("should only add an item if it's not the same as the previous", (): void => {
+
+            const manager = new TestableUserInputHistoryManager();
+
+            const userInput1 = "test1";
+            const userInput2 = "test2";
+
+            manager.addItem(userInput1);
+            manager.addItem(userInput1);
+            manager.addItem(userInput2);
+
+            const actual = manager.getHistory();
+
+            expect(actual.length).toBe(2);
+            expect(actual[0]).toBe(userInput1);
+            expect(actual[1]).toBe(userInput2);
+            expect(manager.getIndex()).toBe(2);
+
+        });
     });
 
     describe("getPrevious", (): void => {

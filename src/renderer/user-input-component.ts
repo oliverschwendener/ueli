@@ -25,7 +25,9 @@ export const userInputComponent = Vue.extend({
     },
     methods: {
         keyPress(event: KeyboardEvent) {
-            if (event.key === "ArrowUp") {
+            const ctrlOrMeta = event.ctrlKey || event.metaKey;
+
+            if (event.key === "ArrowUp" || (ctrlOrMeta && event.key.toLowerCase() === "p")) {
                 event.preventDefault();
                 if (event.shiftKey) {
                     vueEventDispatcher.$emit(VueEventChannels.selectInputHistoryItem, "previous");
@@ -34,7 +36,7 @@ export const userInputComponent = Vue.extend({
                 }
             }
 
-            if (event.key === "ArrowDown") {
+            if (event.key === "ArrowDown" || (ctrlOrMeta && event.key.toLowerCase() === "n")) {
                 event.preventDefault();
                 if (event.shiftKey) {
                     vueEventDispatcher.$emit(VueEventChannels.selectInputHistoryItem, "next");
@@ -43,7 +45,7 @@ export const userInputComponent = Vue.extend({
                 }
             }
 
-            if (event.key.toLowerCase() === "f" && (event.ctrlKey || event.metaKey)) {
+            if (event.key.toLowerCase() === "f" && ctrlOrMeta) {
                 event.preventDefault();
                 vueEventDispatcher.$emit(VueEventChannels.favoritesRequested);
             }
@@ -59,7 +61,7 @@ export const userInputComponent = Vue.extend({
                 vueEventDispatcher.$emit(VueEventChannels.tabPress);
             }
 
-            if (event.key.toLowerCase() === "o" && (event.ctrlKey || event.metaKey)) {
+            if (event.key.toLowerCase() === "o" && ctrlOrMeta) {
                 vueEventDispatcher.$emit(VueEventChannels.openSearchResultLocationKeyPress);
             }
         },

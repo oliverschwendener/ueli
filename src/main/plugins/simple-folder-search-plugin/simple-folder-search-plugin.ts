@@ -10,8 +10,9 @@ import { createFilePathDescription } from "../../helpers/file-path-helpers";
 import { OpenLocationPlugin } from "../../open-location-plugin";
 import { FileSearchOption } from "../../executors/file-searchers";
 import { defaultFileIcon, defaultFolderIcon } from "../../../common/icon/default-icons";
+import { AutoCompletionPlugin } from "../../auto-completion-plugin";
 
-export class SimpleFolderSearchPlugin implements SearchPlugin, OpenLocationPlugin {
+export class SimpleFolderSearchPlugin implements SearchPlugin, AutoCompletionPlugin, OpenLocationPlugin {
     public pluginType = PluginType.SimpleFolderSearch;
     private config: SimpleFolderSearchOptions;
     private items: FileIconDataResult[];
@@ -24,7 +25,7 @@ export class SimpleFolderSearchPlugin implements SearchPlugin, OpenLocationPlugi
         fileSearcher: (options: FileSearchOption) => Promise<string[]>,
         filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>,
         filePathLocationExecutor: (filePath: string) => Promise<void>,
-        ) {
+    ) {
         this.config = config;
         this.items = [];
         this.fileSearcher = fileSearcher;
@@ -72,6 +73,9 @@ export class SimpleFolderSearchPlugin implements SearchPlugin, OpenLocationPlugi
             resolve();
         });
     }
+    public autoComplete(searchResultItem: SearchResultItem): string {
+        return searchResultItem.executionArgument;
+    }
 
     public isEnabled(): boolean {
         return this.config.isEnabled;
@@ -105,6 +109,7 @@ export class SimpleFolderSearchPlugin implements SearchPlugin, OpenLocationPlugi
             originPluginType: this.pluginType,
             searchable: [basename(item.filePath)],
             supportsOpenLocation: true,
+            supportsAutocompletion: true,
         };
     }
 }
