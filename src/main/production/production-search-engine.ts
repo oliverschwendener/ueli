@@ -52,7 +52,7 @@ import { ControlPanelPlugin } from "../plugins/control-panel-plugin/control-pane
 import { getAllUwpApps } from "../plugins/uwp-plugin/uwp-apps-retriever";
 import { getGoogleDictionaryDefinitions } from "../plugins/dictionary-plugin/google-dictionary-definition-retriever";
 import {ReminderPlugin} from "../plugins/reminder-plugin/reminder-plugin";
-import { everythingSearcher } from "../plugins/everything-plugin/everything-searcher";
+import {everythingSearcher} from "../plugins/everything-plugin/everything-searcher";
 import { mdfindSearcher } from "../plugins/mdfind-plugin/mdfind-searcher";
 import { OperatingSystem, OperatingSystemVersion } from "../../common/operating-system";
 import { BraveBookmarkRepository } from "../plugins/browser-bookmarks-plugin/brave-bookmark-repository";
@@ -162,7 +162,6 @@ export function getProductionSearchEngine(
         new EmailPlugin(config.emailOptions, translationSet, urlExecutor),
         new CurrencyConverterPlugin(config.currencyConverterOptions, translationSet, electronClipboardCopier),
         new ReminderPlugin(config.reminderOptions, translationSet,),
-        new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor),
         new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor, logger),
         new ColorConverterPlugin(config.colorConverterOptions, electronClipboardCopier),
         new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier, getGoogleDictionaryDefinitions),
@@ -178,6 +177,7 @@ export function getProductionSearchEngine(
                 config.everythingSearchOptions,
                 filePathExecutor,
                 filePathLocationExecutor,
+                everythingSearcher
             ),
         );
         searchPlugins.push(

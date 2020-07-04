@@ -353,4 +353,8 @@ export const turkishTranslationSet: TranslationSet = {
 
     controlPanel: "Kontrol Paneli",
     controlPanelSettingsDescription: "Bu eklenti, kontrol paneli öğelerini hızlı bir şekilde bulmanızı sağlar.",
+
+    reminder: "Hatırlatma",
+    reminderPrefix: "Önek",
+    reminderSettingsDescription: "Bu eklenti hatırlatıcı ayarlamanızı sağlar",
 };

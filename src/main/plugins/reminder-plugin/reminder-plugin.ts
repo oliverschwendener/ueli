@@ -5,11 +5,9 @@ import {TranslationSet} from "../../../common/translation/translation-set";
 import {UserConfigOptions} from "../../../common/config/user-config-options";
 import {ReminderOptions} from "../../../common/config/reminder-options";
 import {defaultReminderIcon} from "../../../common/icon/default-icons";
-import {join} from "path";
 import {parseReminder} from "./reminder-parser";
 import {scheduleJob} from 'node-schedule';
-
-import {Notification} from "electron";
+import {NotificationHelper} from '../../helpers/notifications-helper'
 
 
 export class ReminderPlugin implements ExecutionPlugin {
@@ -69,11 +67,7 @@ export class ReminderPlugin implements ExecutionPlugin {
             const task = parseReminder(searchResultItem.executionArgument);
             if (task!=null){
                 scheduleJob(task.when, () => {
-                    new Notification( {
-                        title:"UELI",
-                        body:  task.what,
-                        icon:join(__dirname,'../img/icons/win/icon-transparent.ico'),
-                    }).show();
+                    NotificationHelper(task.what)
                 })
                 resolve()
             }
