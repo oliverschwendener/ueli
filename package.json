@@ -44,7 +44,7 @@
     "@types/vue-color": "^2.4.2",
     "axios": "^0.19.0",
     "color": "^3.1.2",
-    "electron": "^8.1.1",
+    "electron": "^8.2.4",
     "electron-builder": "^22.4.1",
     "electron-store": "^5.1.1",
     "electron-updater": "^4.0.14",
