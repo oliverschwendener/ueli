@@ -460,7 +460,7 @@ function createMainWindow() {
         width: config.appearanceOptions.windowWidth,
     });
 
-    mainWindow.setVisibleOnAllWorkspaces(true);
+    mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
     mainWindow.on("blur", onBlur);
     mainWindow.on("closed", quitApp);
