@@ -118,6 +118,9 @@ export const russianTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Радиус полосы прокрутки",
     appearanceSettingsBorderRadiusDescription: "Это значение CSS, поэтому вам нужно добавить «px», например, «10px» или отдельные углы, например «10px 0px 10px 5px».",
 
+    settingsUserInputTitle: "Пользовательский ввод",
+    settingsSearchResultsBoxTitle: "Окно результатов поиска",
+    settingsScrollbarTitle: "Полоса прокрутки",
 
     colorThemeSettings: "Цветовые темы",
     colorThemeSettingsImportColorTheme: "Импортировать тему",

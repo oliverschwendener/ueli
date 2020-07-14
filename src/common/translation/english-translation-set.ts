@@ -118,6 +118,10 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Scrollbar border radius",
     appearanceSettingsBorderRadiusDescription: "This is a css value, so you need to add 'px' like this '10px' or separate corners like this '10px 0px 10px 5px'",
 
+    settingsUserInputTitle: "User input",
+    settingsSearchResultsBoxTitle: "Search results box",
+    settingsScrollbarTitle: "Scrollbar",
+
     colorThemeSettings: "Color Theme",
     colorThemeSettingsImportColorTheme: "Import color theme",
     colorThemeSettingsExportColorTheme: "Export color theme",
