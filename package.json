@@ -1,7 +1,7 @@
 {
   "name": "ueli",
   "productName": "ueli",
-  "version": "8.5.0",
+  "version": "8.8.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -32,31 +32,30 @@
     "lint": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json",
     "lint:fix": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json --fix",
     "test": "./node_modules/.bin/jest --config jest.json --silent .",
-    "tsc:validate": "./node_modules/.bin/tsc --noEmit",
     "package:dir": "./node_modules/.bin/electron-builder --dir --config electron-builder-config.yml --publish never",
     "package": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish never",
     "package:publish": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish onTag"
   },
   "devDependencies": {
     "@types/color": "^3.0.0",
-    "@types/jest": "^24.0.25",
+    "@types/jest": "^25.1.4",
     "@types/mathjs": "^5.0.1",
     "@types/node-powershell": "^3.1.0",
     "@types/vue-color": "^2.4.2",
     "axios": "^0.19.0",
     "color": "^3.1.2",
-    "electron": "^5.0.9",
-    "electron-builder": "^21.2.0",
-    "electron-store": "^3.2.0",
+    "electron": "^8.2.4",
+    "electron-builder": "^22.4.1",
+    "electron-store": "^5.1.1",
     "electron-updater": "^4.0.14",
-    "fuse.js": "^3.4.4",
-    "jest": "^24.9.0",
+    "fuse.js": "^5.0.3-beta",
+    "jest": "^25.1.0",
     "mathjs": "^5.10.3",
     "node-powershell": "^4.0.0",
     "simple-plist": "^1.0.0",
-    "ts-jest": "^24.2.0",
+    "ts-jest": "^25.2.1",
     "ts-loader": "^6.0.4",
-    "tslint": "^5.18.0",
+    "tslint": "^6.1.0",
     "typescript": "^3.5.3",
     "vue": "^2.6.10",
     "vue-color": "^2.7.0",
@@ -66,7 +65,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.10.1",
-    "bulma": "^0.7.5",
+    "bulma": "^0.8.0",
     "bulma-extensions": "^6.2.7"
   }
 }

@@ -1,7 +1,7 @@
 import { Icon } from "../../../common/icon/icon";
 
 export interface UwpApplication {
-    executionArgument: string;
+    appId: string;
     icon: Icon;
     name: string;
 }

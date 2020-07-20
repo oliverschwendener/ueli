@@ -6,22 +6,17 @@ import { TranslationSet } from "../../../common/translation/translation-set";
 import { defaultTerminalIcon } from "../../../common/icon/default-icons";
 import { CommandlineOptions } from "../../../common/config/commandline-options";
 import { WindowsShell, MacOsShell } from "./shells";
+import { Logger } from "../../../common/logger/logger";
 
 export class CommandlinePlugin implements ExecutionPlugin {
     public pluginType = PluginType.Commandline;
-    private readonly commandlineExecutor: (command: string, shell: WindowsShell|MacOsShell) => Promise<void>;
-    private config: CommandlineOptions;
-    private translationSet: TranslationSet;
 
     constructor(
-        config: CommandlineOptions,
-        translationSet: TranslationSet,
-        commandlineExecutor: (command: string, shell: WindowsShell|MacOsShell) => Promise<void>,
-    ) {
-        this.config = config;
-        this.translationSet = translationSet;
-        this.commandlineExecutor = commandlineExecutor;
-    }
+        private config: CommandlineOptions,
+        private translationSet: TranslationSet,
+        private readonly commandlineExecutor: (command: string, shell: WindowsShell|MacOsShell) => Promise<void>,
+        private readonly logger: Logger,
+    ) {}
 
     public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
         return userInput.startsWith(this.config.prefix)
@@ -49,7 +44,14 @@ export class CommandlinePlugin implements ExecutionPlugin {
     }
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        return this.commandlineExecutor(searchResultItem.executionArgument, this.config.shell);
+        this.commandlineExecutor(searchResultItem.executionArgument, this.config.shell)
+            .then(() => { /* do nothing */ })
+            .catch(error => this.logger.error(error));
+
+        // We resolve the execution promise here before the actual execution has been resolved.
+        // In case that there is an interactive shell which listens to user input the execution promise resolves only after the shell is closed.
+        // See here: https://github.com/oliverschwendener/ueli/issues/395
+        return Promise.resolve();
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {

@@ -5,6 +5,7 @@ export enum IpcChannels {
     autoComplete = "autocomplete",
     autoCompleteResponse = "autocomplete-response",
     openSearchResultLocation = "open-search-result-location",
+    executionFinished = "execution-finished",
     mainWindowHasBeenHidden = "main-window-has-been-hidden",
     mainWindowHasBeenShown = "main-window-has-been-shown",
     mainWindowHideRequested = "main-window-hide-requested",

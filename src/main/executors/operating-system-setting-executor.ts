@@ -1,10 +1,9 @@
-import { executeFilePathMacOs } from "./file-path-executor";
-import { executeCommand } from "./command-executor";
+import { executeFilePathMacOs, executeFilePathWindows } from "./file-path-executor";
 
 export function executeMacOSOperatingSystemSetting(executionArgument: string): Promise<void> {
     return executeFilePathMacOs(executionArgument, false);
 }
 
 export function executeWindowsOperatingSystemSetting(executionArgument: string): Promise<void> {
-    return executeCommand(`start ${executionArgument}`);
+    return executeFilePathWindows(executionArgument, false);
 }

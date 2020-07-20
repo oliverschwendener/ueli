@@ -1,11 +1,19 @@
 import { ColorThemeOptions } from "../config/color-theme-options";
+import { isValidColorCode } from "../../main/plugins/color-converter-plugin/color-converter-helpers";
 
 export function isValidColorTheme(colorThemeOptions: ColorThemeOptions): boolean {
-    return Object
-        .values(colorThemeOptions)
-        .every((value) => isValidHexColor(value));
-}
+    const colorValues = [
+        colorThemeOptions.scrollbarBackgroundColor,
+        colorThemeOptions.scrollbarForegroundColor,
+        colorThemeOptions.searchResultsBackgroundColor,
+        colorThemeOptions.searchResultsItemActiveBackgroundColor,
+        colorThemeOptions.searchResultsItemActiveDescriptionColor,
+        colorThemeOptions.searchResultsItemActiveTextColor,
+        colorThemeOptions.searchResultsItemDescriptionTextColor,
+        colorThemeOptions.searchResultsItemNameTextcolor,
+        colorThemeOptions.userInputBackgroundColor,
+        colorThemeOptions.userInputTextColor,
+    ];
 
-function isValidHexColor(value: string): boolean {
-    return new RegExp(/#[a-fA-F0-9]{3,6}/).test(value);
+    return colorValues.every((colorValue) => isValidColorCode(colorValue));
 }

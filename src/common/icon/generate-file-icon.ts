@@ -9,18 +9,17 @@ export interface FileIconDataResult {
 }
 
 export function getFileIconDataUrl(filePath: string, defaultFileIcon: Icon, folderIcon?: Icon): Promise<FileIconDataResult> {
+    const defaultResult = {
+        filePath,
+        icon: defaultFileIcon,
+    };
+
     return new Promise((resolve, reject) => {
         FileHelpers.fileExists(filePath)
             .then((fileExistsResult) => {
                 if (fileExistsResult.fileExists) {
-                    app.getFileIcon(filePath, (err, icon) => {
-                        const defaultResult = {
-                            filePath,
-                            icon: defaultFileIcon,
-                        };
-                        if (err) {
-                            resolve(defaultResult);
-                        } else {
+                    app.getFileIcon(filePath)
+                        .then((icon) => {
                             FileHelpers.getStats(filePath)
                                 .then((stats) => {
                                     const isDirectory = stats.stats.isDirectory() && !filePath.endsWith(".app");
@@ -32,8 +31,8 @@ export function getFileIconDataUrl(filePath: string, defaultFileIcon: Icon, fold
                                     });
                                 })
                                 .catch(() => resolve(defaultResult));
-                        }
-                    });
+                        })
+                        .catch(() => resolve(defaultResult));
                 } else {
                     resolve({
                         filePath,

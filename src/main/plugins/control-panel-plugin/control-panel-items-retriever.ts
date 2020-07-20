@@ -5,7 +5,7 @@ import * as Powershell from "node-powershell";
 export class ControlPanelItemsRetriever {
     public static RetrieveControlPanelItems(alreadyKnownItems: ControlPanelItem[]): Promise<ControlPanelItem[]> {
         return new Promise((resolve, reject) => {
-            this.executeCommandWithUtf8Output('powershell -Command "Get-ControlPanelItem | ConvertTo-Json"')
+            this.executeCommandWithUtf8Output('powershell -NonInteractive -NoProfile -Command "Get-ControlPanelItem | ConvertTo-Json"')
                 .then((controlPanelItemsJson) => {
                     const controlPanelItems: ControlPanelItem[] = JSON.parse(controlPanelItemsJson);
 
@@ -26,13 +26,13 @@ export class ControlPanelItemsRetriever {
                 } |
                 Where-Object { $_ -ne $null } |
                 ForEach-Object {
-                    $defaultIconValue = Get-ItemPropertyValue -Path "Registry::HKEY_CLASSES_ROOT\\CLSID\\$_\\DefaultIcon" -Name "(default)";
+                    $defaultIconValue = Get-ItemProperty -Path "Registry::HKEY_CLASSES_ROOT\\CLSID\\$_\\DefaultIcon" | Select-Object -ExpandProperty "(default)";
                     $defaultIconValueSplit = $defaultIconValue.Split(',');
                     $iconPath = $defaultIconValueSplit[0];
                     $iconIndex = if ($defaultIconValueSplit.Length -gt 1) { $defaultIconValueSplit[1] } else { $null };
                     $iconBase64 = $iconExtractorType[0]::GetIconAsBase64($iconPath, ${iconSize}, $iconIndex);
                     @{
-                        applicationName = Get-ItemPropertyValue -Path "Registry::HKEY_CLASSES_ROOT\\CLSID\\$_" -Name "System.ApplicationName";
+                        applicationName = Get-ItemProperty -Path "Registry::HKEY_CLASSES_ROOT\\CLSID\\$_" | Select-Object -ExpandProperty "System.ApplicationName";
                         iconBase64 = $iconBase64;
                     };
                 } |
@@ -43,7 +43,7 @@ export class ControlPanelItemsRetriever {
                         .then(() => shell.invoke())
                         .then(
                             (controlPanelItemIconsJson) => {
-                                const controlPanelItemIcons: Array<{ applicationName: string, iconBase64: string }> = JSON.parse(controlPanelItemIconsJson);
+                                const controlPanelItemIcons: { applicationName: string, iconBase64: string }[] = JSON.parse(controlPanelItemIconsJson);
                                 for (const icon of controlPanelItemIcons) {
                                     const item = newControlPanelItems.find((i) => i.CanonicalName === icon.applicationName);
                                     if (item != null && icon.iconBase64 != null) {

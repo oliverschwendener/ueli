@@ -17,13 +17,19 @@ export const userStylesComponent = Vue.extend({
     },
     template: `<style>
         :root {
+            --font-family: {{ appearance.fontFamily }};
+
             --user-input--height: {{ appearance.userInputHeight }}px;
             --search-results--item-height: {{ appearance.searchResultHeight }}px;
 
             --user-input--background-color: {{ colortheme.userInputBackgroundColor }};
             --user-input--color: {{ colortheme.userInputTextColor }};
+            --user-input--border-radius: {{appearance.userInputBorderRadius}};
+            --user-input--bottom-margin: {{appearance.userInputBottomMargin}}px;
+
 
             --search-results--background-color: {{ colortheme.searchResultsBackgroundColor }};
+            --search-results--border-radius: {{appearance.searchResultsBorderRadius}};
 
             --search-results--item-active-background-color: {{ colortheme.searchResultsItemActiveBackgroundColor }};
             --search-results--item-active-text-color: {{ colortheme.searchResultsItemActiveTextColor }};
@@ -33,7 +39,8 @@ export const userStylesComponent = Vue.extend({
             --search-results--item-description-text-color: {{ colortheme.searchResultsItemDescriptionTextColor }};
 
             --scrollbar--foreground-color: {{ colortheme.scrollbarForegroundColor }};
-            --scrollbar--background-color:{{ colortheme.scrollbarBackgroundColor }};
+            --scrollbar--background-color: {{ colortheme.scrollbarBackgroundColor }};
+            --scrollbar--border-radius: {{appearance.scrollbarBorderRadius}};
         }
     </style>`,
 });

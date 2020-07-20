@@ -2,9 +2,8 @@ import { ApplicationSearchPlugin } from "../plugins/application-search-plugin/ap
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/ueli-command-search-plugin";
 import { ShortcutsSearchPlugin } from "../plugins/shortcuts-search-plugin/shortcuts-search-plugin";
-import { isWindows, isMacOs } from "../../common/helpers/operating-system-helpers";
-import { platform, homedir } from "os";
-import { executeUrlMacOs, executeUrlWindows } from "../executors/url-executor";
+import { homedir } from "os";
+import { openUrlInBrowser } from "../executors/url-executor";
 import { executeFilePathWindows, executeFilePathMacOs } from "../executors/file-path-executor";
 import { SearchEngine } from "../search-engine";
 import { EverythingPlugin } from "../plugins/everything-plugin/everthing-plugin";
@@ -12,7 +11,7 @@ import { SearchPlugin } from "../search-plugin";
 import { ExecutionPlugin } from "../execution-plugin";
 import { MdFindPlugin } from "../plugins/mdfind-plugin/mdfind-plugin";
 import { TranslationPlugin } from "../plugins/translation-plugin/translation-plugin";
-import { executeFilePathLocationMacOs, executeFilePathLocationWindows } from "../executors/file-path-location-executor";
+import { openFileLocation } from "../executors/file-path-location-executor";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { WebSearchPlugin } from "../plugins/websearch-plugin/websearch-plugin";
 import { FileBrowserExecutionPlugin } from "../plugins/filebrowser-plugin/filebrowser-plugin";
@@ -38,7 +37,6 @@ import { WindowsOperatingSystemSettingRepository } from "../plugins/operating-sy
 import { SimpleFolderSearchPlugin } from "../plugins/simple-folder-search-plugin/simple-folder-search-plugin";
 import { Logger } from "../../common/logger/logger";
 import { UwpPlugin } from "../plugins/uwp-plugin/uwp-plugin";
-import { InMemoryUwpAppRepository } from "../plugins/uwp-plugin/inmemory-uwp-app-repository";
 import { ColorConverterPlugin } from "../plugins/color-converter-plugin/color-converter-plugin";
 import { ProductionApplicationRepository } from "../plugins/application-search-plugin/production-application-repository";
 import { defaultWindowsAppIcon, defaultMacOsAppIcon } from "../../common/icon/default-icons";
@@ -51,24 +49,39 @@ import { DictionaryPlugin } from "../plugins/dictionary-plugin/dictionary-plugin
 import { BrowserBookmarksPlugin } from "../plugins/browser-bookmarks-plugin/browser-bookmarks-plugin";
 import { GoogleChromeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/google-chrome-bookmark-repository";
 import { ControlPanelPlugin } from "../plugins/control-panel-plugin/control-panel-plugin";
+import { getAllUwpApps } from "../plugins/uwp-plugin/uwp-apps-retriever";
+import { getGoogleDictionaryDefinitions } from "../plugins/dictionary-plugin/google-dictionary-definition-retriever";
+import { everythingSearcher } from "../plugins/everything-plugin/everything-searcher";
+import { mdfindSearcher } from "../plugins/mdfind-plugin/mdfind-searcher";
+import { OperatingSystem, OperatingSystemVersion } from "../../common/operating-system";
+import { BraveBookmarkRepository } from "../plugins/browser-bookmarks-plugin/brave-bookmark-repository";
 
-const filePathValidator = isWindows(platform()) ? isValidWindowsFilePath : isValidMacOsFilePath;
-const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
-const filePathLocationExecutor = isWindows(platform()) ? executeFilePathLocationWindows : executeFilePathLocationMacOs;
-const urlExecutor = isWindows(platform()) ? executeUrlWindows : executeUrlMacOs;
-const commandlineExecutor = isWindows(platform()) ? windowsCommandLineExecutor : macOsCommandLineExecutor;
-const operatingSystemSettingsRepository = isWindows(platform()) ? new WindowsOperatingSystemSettingRepository() : new MacOsOperatingSystemSettingRepository();
-const operatingSystemSettingExecutor = isWindows(platform()) ? executeWindowsOperatingSystemSetting : executeMacOSOperatingSystemSetting;
-const applicationSearcher = isWindows(platform()) ? searchWindowsApplications : searchMacApplications;
-const appIconGenerator = isWindows(platform()) ? generateWindowsAppIcons : generateMacAppIcons;
-const defaultAppIcon = isWindows(platform()) ? defaultWindowsAppIcon : defaultMacOsAppIcon;
-const fileSearcher = isWindows(platform()) ? powershellFileSearcher : macosFileSearcher;
-const chromeBookmarksFilePath = isWindows(platform())
-    ? `${homedir()}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks`
-    : `${homedir()}/Library/Application\ Support/Google/Chrome/Default/Bookmarks`;
+export function getProductionSearchEngine(
+    operatingSystem: OperatingSystem,
+    operatingSystemVersion: OperatingSystemVersion,
+    config: UserConfigOptions,
+    translationSet: TranslationSet,
+    logger: Logger,
+): SearchEngine {
+    const filePathValidator = operatingSystem === OperatingSystem.Windows ? isValidWindowsFilePath : isValidMacOsFilePath;
+    const filePathExecutor = operatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
+    const filePathLocationExecutor = openFileLocation;
+    const urlExecutor = openUrlInBrowser;
+    const commandlineExecutor = operatingSystem === OperatingSystem.Windows ? windowsCommandLineExecutor : macOsCommandLineExecutor;
+    const operatingSystemSettingsRepository = operatingSystem === OperatingSystem.Windows ? new WindowsOperatingSystemSettingRepository() : new MacOsOperatingSystemSettingRepository();
+    const operatingSystemSettingExecutor = operatingSystem === OperatingSystem.Windows ? executeWindowsOperatingSystemSetting : executeMacOSOperatingSystemSetting;
+    const applicationSearcher = operatingSystem === OperatingSystem.Windows ? searchWindowsApplications : searchMacApplications;
+    const appIconGenerator = operatingSystem === OperatingSystem.Windows ? generateWindowsAppIcons : generateMacAppIcons;
+    const defaultAppIcon = operatingSystem === OperatingSystem.Windows ? defaultWindowsAppIcon : defaultMacOsAppIcon;
+    const fileSearcher = operatingSystem === OperatingSystem.Windows ? powershellFileSearcher : macosFileSearcher;
+    const chromeBookmarksFilePath = operatingSystem === OperatingSystem.Windows
+        ? `${homedir()}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks`
+        : `${homedir()}/Library/Application\ Support/Google/Chrome/Default/Bookmarks`;
+    const braveBookmarksFilePath = operatingSystem === OperatingSystem.Windows
+        ? `${homedir()}\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Bookmarks`
+        : `${homedir()}/Library/Application\ Support/BraveSoftware/Brave-Browser/Default/Bookmarks`;
 
-export function getProductionSearchEngine(config: UserConfigOptions, translationSet: TranslationSet, logger: Logger): SearchEngine {
-    const operatingSystemCommandRepository = isWindows(platform())
+    const operatingSystemCommandRepository = operatingSystem === OperatingSystem.Windows
         ? new WindowsOperatingSystemCommandRepository(translationSet)
         : new MacOsOperatingSystemCommandRepository(translationSet);
 
@@ -91,6 +104,8 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
                     logger,
                 ),
                 applicationSearcher,
+                logger,
+                operatingSystemVersion
             ),
             filePathExecutor,
             filePathLocationExecutor,
@@ -121,7 +136,10 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         new BrowserBookmarksPlugin(
             config.browserBookmarksOptions,
             translationSet,
-            [new GoogleChromeBookmarkRepository(chromeBookmarksFilePath)],
+            [
+              new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
+              new BraveBookmarkRepository(braveBookmarksFilePath),
+            ],
             urlExecutor,
         ),
     ];
@@ -142,40 +160,42 @@ export function getProductionSearchEngine(config: UserConfigOptions, translation
         new UrlPlugin(config.urlOptions, translationSet, urlExecutor),
         new EmailPlugin(config.emailOptions, translationSet, urlExecutor),
         new CurrencyConverterPlugin(config.currencyConverterOptions, translationSet, electronClipboardCopier),
-        new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor),
+        new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor, logger),
         new ColorConverterPlugin(config.colorConverterOptions, electronClipboardCopier),
-        new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier),
+        new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier, getGoogleDictionaryDefinitions),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [
         webSearchPlugin,
     ];
 
-    if (isWindows(platform())) {
+    if (operatingSystem === OperatingSystem.Windows) {
         executionPlugins.push(
             new EverythingPlugin(
                 config.everythingSearchOptions,
                 filePathExecutor,
                 filePathLocationExecutor,
+                everythingSearcher
             ),
         );
         searchPlugins.push(
             new UwpPlugin(
                 config.uwpSearchOptions,
-                new InMemoryUwpAppRepository(),
-                executeCommand,
+                filePathExecutor,
+                getAllUwpApps
             ),
         );
         searchPlugins.push(
             new ControlPanelPlugin(
                 config.controlPanelOptions));
     }
-    if (isMacOs(platform())) {
+    if (operatingSystem === OperatingSystem.macOS) {
         executionPlugins.push(
             new MdFindPlugin(
                 config.mdfindOptions,
                 filePathExecutor,
                 filePathLocationExecutor,
+                mdfindSearcher
             ),
         );
     }

@@ -1,10 +1,8 @@
-![logo](assets/readme-header.png)
-
 # ueli
 
 This is a keystroke launcher for Windows and macOS.
 
-![example-image](assets/example-image.png)
+![example-image](assets/feature-app-search.png)
 
 ## Table of contents
 
@@ -24,11 +22,11 @@ This is a keystroke launcher for Windows and macOS.
 
 ### Installer / Zip
 
-* Download the latest version [here](https://github.com/oliverschwendener/ueli/releases)
+* Download the latest version from here: https://ueli.app/#/download
 * Run the installer or unzip
 * Run the application
 
-> Note: because the executables are not signed Windows will probably prevent you from executing the installer or the program itself. You can click "Run anyway" to install/run the program.
+> Note: because the executables are not signed Windows and macOS will probably prevent you from executing the installer or the program itself.
 
 ### Installing via chocolatey repository
 
@@ -45,17 +43,22 @@ This plugin is searching for applications on your computer. You can specify the 
 
 ![app-search](assets/feature-app-search.png)
 
+### Browser bookmarks
+
+This plugin enables you to search your browser bookmarks. 
+
+Currently supported browsers:
+
+- Google Chrome
+- Brave
+
+![browser-bookmarks](assets/feature-browser-bookmarks.png)
+
 ### Calculator
 
 This Plugin lets you quickly do simple calculations.
 
 ![calculator](assets/feature-calculator.png)
-
-### Commandline
-
-This plugin enables you to quickly execute commandline commands.
-
-![commandline](assets/feature-commandline.png)
 
 ### Color Converter
 
@@ -63,11 +66,29 @@ This plugin enables you to quickly convert colors into different formats.
 
 ![color-converter](assets/feature-color-converter.png)
 
+### Commandline
+
+This plugin enables you to quickly execute commandline commands.
+
+![commandline](assets/feature-commandline.png)
+
+### Control panel (Windows only)
+
+This plugin enables you to quickly find control panel items.
+
+![control-panel](assets/feature-control-panel.png)
+
 ### Currency Converter
 
 This plugin enables you to quickly convert currencies. The latest conversion rates are provided by https://exchangeratesapi.io/.
 
 ![currency-converter](assets/feature-currency-converter.png)
+
+### Dictionary
+
+This plugin enables you to quickly look up the definition and synonyms of words. It uses an unofficial Google Dictionary API (https://googledictionaryapi.eu-gb.mybluemix.net/)
+
+![dictionary](assets/feature-dictionary.png)
 
 ### Email
 
@@ -161,6 +182,8 @@ This plugin enables you to quickly execute multiple things at once.
 |<kbd>Cmd</kbd> <kbd>o</kbd>|Open the selected program or file at it's location (macOS)|
 |<kbd>↑</kbd>|Scroll up|
 |<kbd>↓</kbd>|Scroll down|
+|<kbd>Ctrl or Cmd</kbd> <kbd>p</kbd>|Scroll up|
+|<kbd>Ctrl or Cmd</kbd> <kbd>n</kbd>|Scroll down|
 |<kbd>Ctrl</kbd> <kbd>i</kbd>|Open settings (Windows)|
 |<kbd>Cmd</kbd> <kbd>,</kbd>|Open settings (macOS)|
 |<kbd>Shift</kbd> <kbd>↑</kbd>|Browse user input history up|
@@ -188,6 +211,7 @@ For better search results ueli is keeping track of the applications, files and f
 
 * ([#37](https://github.com/oliverschwendener/ueli/issues/37)) Window starts to move while typing when custom scaling in Windows is set.
 * ([#92](https://github.com/oliverschwendener/ueli/issues/92)) If you see an error that says `spawn powershell.exe ENOENT` check if powershell is installed (should be installed in all recent Versions of Windows by default) and check if powershell is in the PATH variable.
+* ([#278](https://github.com/oliverschwendener/ueli/issues/278)) If you're on macOS Catalina you might miss some system apps (for example: Books or QuickTime Player). Try adding `/System/Applications` to your application search settings.
 
 For more check [here](https://github.com/oliverschwendener/ueli/issues).
 

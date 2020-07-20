@@ -4,14 +4,12 @@ import { DictionaryOptions } from "../../../common/config/dictionary-options";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
-import { DictionarySearcher } from "./dictionary-searcher";
 import { Definition } from "./dictionary";
 import { defaultDictionaryIcon } from "../../../common/icon/default-icons";
 import { capitalize } from "../../../common/helpers/string-helpers";
 
 interface DictionaryResult {
     definition: string;
-    example: string;
     type: string;
     synonyms: string[];
 }
@@ -20,11 +18,17 @@ export class DictionaryPlugin implements ExecutionPlugin {
     public pluginType = PluginType.Dictionary;
     private config: DictionaryOptions;
     private readonly clipboardCopier: (value: string) => Promise<void>;
+    private readonly definitionRetriever: (word: string) => Promise<Definition[]>;
     private delay: NodeJS.Timeout | number;
 
-    constructor(config: DictionaryOptions, clipboardCopier: (value: string) => Promise<void>) {
+    constructor(
+        config: DictionaryOptions,
+        clipboardCopier: (value: string) => Promise<void>,
+        definitionRetriever: (word: string) => Promise<Definition[]>,
+    ) {
         this.config = config;
         this.clipboardCopier = clipboardCopier;
+        this.definitionRetriever = definitionRetriever;
     }
 
     public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
@@ -41,7 +45,7 @@ export class DictionaryPlugin implements ExecutionPlugin {
             }
 
             this.delay = setTimeout(() => {
-                DictionarySearcher.search(searchTerm)
+                this.definitionRetriever(searchTerm)
                     .then((definitions) => resolve(this.buildSearchResults(definitions)))
                     .catch((err) => reject(err));
             }, this.config.debounceDelay);
@@ -75,13 +79,11 @@ export class DictionaryPlugin implements ExecutionPlugin {
             keys.forEach((key) => {
                 definition.meaning[key]
                     .filter((entry: any) => {
-                        return entry.definition
-                            && entry.example;
+                        return entry.definition;
                     })
                     .forEach((entry: any) => {
                         dictionaryResults.push({
                             definition: entry.definition,
-                            example: entry.example,
                             synonyms: entry.synonyms ? entry.synonyms : [],
                             type: capitalize(key),
                         });

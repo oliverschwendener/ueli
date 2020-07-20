@@ -108,6 +108,12 @@ export interface TranslationSet {
     appearanceSettingsShowSearchResultNumbers: string;
     appearanceSettingsResetWarningMessage: string;
     appearanceSettingsAllowTransparentBackground: string;
+    appearanceSettingsFontFamily: string;
+    appearanceSettingsUserInputBorderRadius: string;
+    appearanceSettingsUserInputBottomMargin: string;
+    appearanceSettingsSearchResultsBorderRadius: string;
+    appearanceSettingsScrollbarBorderRadius: string;
+    appearanceSettingsBorderRadiusDescription: string;
 
     colorThemeSettings: string;
     colorThemeSettingsImportColorTheme: string;
@@ -237,6 +243,8 @@ export interface TranslationSet {
     macOsRestartDescription: string;
     macOsLogout: string;
     macOsLogoutDescription: string;
+    macOsSleep: string;
+    macOsSleepDescription: string;
     macOsLock: string;
     macOsLockDescription: string;
 

@@ -9,6 +9,7 @@ import { GeneralOptions } from "../common/config/general-options";
 export const userInputComponent = Vue.extend({
     data() {
         return {
+            executionIsPending: false,
             loadingCompleted: true,
             loadingVisible: false,
             refreshIndexesIsPending: false,
@@ -16,9 +17,17 @@ export const userInputComponent = Vue.extend({
             userInput: "",
         };
     },
+    computed: {
+        userInputDisabled(): boolean {
+            return this.refreshIndexesIsPending
+                || this.executionIsPending;
+        },
+    },
     methods: {
         keyPress(event: KeyboardEvent) {
-            if (event.key === "ArrowUp") {
+            const ctrlOrMeta = event.ctrlKey || event.metaKey;
+
+            if (event.key === "ArrowUp" || (ctrlOrMeta && event.key.toLowerCase() === "p")) {
                 event.preventDefault();
                 if (event.shiftKey) {
                     vueEventDispatcher.$emit(VueEventChannels.selectInputHistoryItem, "previous");
@@ -27,7 +36,7 @@ export const userInputComponent = Vue.extend({
                 }
             }
 
-            if (event.key === "ArrowDown") {
+            if (event.key === "ArrowDown" || (ctrlOrMeta && event.key.toLowerCase() === "n")) {
                 event.preventDefault();
                 if (event.shiftKey) {
                     vueEventDispatcher.$emit(VueEventChannels.selectInputHistoryItem, "next");
@@ -36,7 +45,7 @@ export const userInputComponent = Vue.extend({
                 }
             }
 
-            if (event.key.toLowerCase() === "f" && (event.ctrlKey || event.metaKey)) {
+            if (event.key.toLowerCase() === "f" && ctrlOrMeta) {
                 event.preventDefault();
                 vueEventDispatcher.$emit(VueEventChannels.favoritesRequested);
             }
@@ -52,7 +61,7 @@ export const userInputComponent = Vue.extend({
                 vueEventDispatcher.$emit(VueEventChannels.tabPress);
             }
 
-            if (event.key.toLowerCase() === "o" && (event.ctrlKey || event.metaKey)) {
+            if (event.key.toLowerCase() === "o" && ctrlOrMeta) {
                 vueEventDispatcher.$emit(VueEventChannels.openSearchResultLocationKeyPress);
             }
         },
@@ -60,10 +69,8 @@ export const userInputComponent = Vue.extend({
             this.userInput = "";
         },
         setFocusOnInput(): void {
-            const userInput = document.getElementById("user-input");
-            if (userInput) {
-                userInput.focus();
-            }
+            const $userInput = this.$refs.userInput as HTMLInputElement;
+            $userInput.focus();
         },
         selectUserInput(): void {
             this.setFocusOnInput();
@@ -124,7 +131,16 @@ export const userInputComponent = Vue.extend({
         });
 
         vueEventDispatcher.$on(VueEventChannels.handleExecution, () => {
-            this.userInput = "";
+            this.executionIsPending = true;
+            this.loadingCompleted = false;
+            this.loadingVisible = true;
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.executionFinished, () => {
+            this.executionIsPending = false;
+            this.loadingCompleted = true;
+            this.loadingVisible = false;
+            setTimeout(() => this.setFocusOnInput(), 50);
         });
 
         vueEventDispatcher.$on(VueEventChannels.appearanceOptionsUpdated, (updatedAppearanceOptions: AppearanceOptions) => {
@@ -163,7 +179,15 @@ export const userInputComponent = Vue.extend({
                     </g>
                 </svg>
             </div>
-            <input autofocus :disabled="refreshIndexesIsPending" id="user-input" class="user-input__input" type="text" v-model="userInput" @keydown="keyPress">
+            <input
+                :disabled="userInputDisabled"
+                ref="userInput"
+                id="user-input"
+                class="user-input__input"
+                type="text"
+                v-model="userInput"
+                @keydown="keyPress"
+            >
             <div class="user-input__user-confirmation-container" :class="{ 'visible' : userConfirmationDialogVisible }">
                 <svg class="user-input__user-confirmation-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1">
                     <g id="surface1">

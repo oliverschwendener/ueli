@@ -4,7 +4,7 @@ import { SearchResultItem } from "../../common/search-result-item";
 import Store = require("electron-store");
 
 export class ElectronStoreFavoriteRepository implements FavoriteRepository {
-    private readonly store: Store<Favorite[]>;
+    private readonly store: Store;
     private readonly favoritesStoreKey = "favorites";
     private favorites: Favorite[];
 

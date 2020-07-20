@@ -6,14 +6,17 @@ import { defaultAppearanceOptions } from "../../common/config/appearance-options
 import { GeneralSettings } from "./general-settings";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { TranslationSet } from "../../common/translation/translation-set";
-import { isWindows } from "../../common/helpers/operating-system-helpers";
+import { getCurrentOperatingSystem } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
 import { deepCopy } from "../../common/helpers/object-helpers";
+import { OperatingSystem } from "../../common/operating-system";
+
+const operatingSystem = getCurrentOperatingSystem(platform());
 
 export const appearanceSettingsComponent = Vue.extend({
     data() {
         return {
-            isWindows: isWindows(platform()),
+            isWindows: operatingSystem === OperatingSystem.Windows,
             settingName: GeneralSettings.Appearance,
             visible: false,
         };
@@ -93,6 +96,55 @@ export const appearanceSettingsComponent = Vue.extend({
                             </div>
                         </div>
                     </div>
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsUserInputBorderRadius }}</div>
+                         <span class="icon tooltip is-tooltip-multiline" :data-tooltip="translations.appearanceSettingsBorderRadiusDescription">
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="text" class="input" v-model="config.appearanceOptions.userInputBorderRadius" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsUserInputBottomMargin }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="number" step="1" class="input" v-model="config.appearanceOptions.userInputBottomMargin" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsSearchResultsBorderRadius }}</div>
+                         <span class="icon tooltip is-tooltip-multiline" :data-tooltip="translations.appearanceSettingsBorderRadiusDescription">
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="text" class="input" v-model="config.appearanceOptions.searchResultsBorderRadius" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsScrollbarBorderRadius }}</div>
+                        <span class="icon tooltip is-tooltip-multiline" :data-tooltip="translations.appearanceSettingsBorderRadiusDescription">
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="text" class="input" v-model="config.appearanceOptions.scrollbarBorderRadius" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="settings__option">
                         <div class="settings__option-name">{{ translations.appearanceSettingsSmoothScrolling }}</div>
@@ -160,6 +212,17 @@ export const appearanceSettingsComponent = Vue.extend({
                                 <div class="control">
                                     <input id="allowTransparentBackgroundCheckbox" type="checkbox" name="allowTransparentBackgroundCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.appearanceOptions.allowTransparentBackground" @change="updateConfig">
                                     <label for="allowTransparentBackgroundCheckbox"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsFontFamily }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="text" class="input" v-model="config.appearanceOptions.fontFamily" @change="updateConfig">
                                 </div>
                             </div>
                         </div>

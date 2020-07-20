@@ -3,10 +3,10 @@ export enum VueEventChannels {
     tabPress = "tab-press",
     openSearchResultLocationKeyPress = "open-search-result-location-key-press",
     handleOpenLocation = "handle-open-location",
-    mainWindowHasBeenHidden = "execution-succeeded",
     handleExecution = "handle-execution",
     handleAutoCompletion = "handle-auto-completion",
     autoCompletionResponse = "auto-completion-result",
+    mainWindowHasBeenHidden = "main-window-has-been-hidden",
     mainWindowHasBeenShown = "main-window-has-been-shown",
     focusOnInput = "focus-on-input",
     userInputChange = "user-input-change",
@@ -48,4 +48,5 @@ export enum VueEventChannels {
     downloadUpdate = "download-update",
     refreshIndexesStarted = "refresh-indexes-started",
     refreshIndexesFinished = "refresh-indexes-finished",
+    executionFinished = "execution-finished",
 }
