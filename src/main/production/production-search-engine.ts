@@ -143,7 +143,7 @@ export function getProductionSearchEngine(
             [
               new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
               new BraveBookmarkRepository(braveBookmarksFilePath),
-              new VivaldiBookmarkRepository(vivaldiBookmarksFilePath)
+              new VivaldiBookmarkRepository(vivaldiBookmarksFilePath),
             ],
             urlExecutor,
         ),
