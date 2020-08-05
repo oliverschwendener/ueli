@@ -151,7 +151,7 @@ function calculateY(display: Electron.Display): number {
 
 function onBlur() {
     if (config.generalOptions.hideMainWindowOnBlur) {
-        hideMainWindow();
+        hideMainWindowWithReturnFocus(true);
     }
 }
 
@@ -189,24 +189,23 @@ function showMainWindow() {
     }
 }
 
-function hideMainWindow() {
+function hideMainWindowWithReturnFocus(returnFocus: boolean) {
     if (windowExists(mainWindow)) {
         mainWindow.webContents.send(IpcChannels.mainWindowHasBeenHidden);
 
         setTimeout(() => {
             updateMainWindowSize(0, config.appearanceOptions);
-            if (windowExists(mainWindow)) {
+            if (returnFocus && windowExists(mainWindow)) {
                 // this is a workaround to restore the focus on the previously focussed window
                 if (operatingSystem === OperatingSystem.Windows) {
                     mainWindow.minimize();
                 }
+
                 mainWindow.hide();
 
                 // this is a workaround to restore the focus on the previously focussed window
-                if (operatingSystem === OperatingSystem.macOS) {
-                    if (!settingsWindow
-                        || (settingsWindow && settingsWindow.isDestroyed())
-                        || (settingsWindow && !settingsWindow.isDestroyed() && !settingsWindow.isVisible())) {
+                if (returnFocus && operatingSystem === OperatingSystem.macOS) {
+                    if (!settingsWindow || settingsWindow.isDestroyed() || !settingsWindow.isVisible()) {
                         app.hide();
                     }
                 }
@@ -218,7 +217,7 @@ function hideMainWindow() {
 function toggleMainWindow() {
     if (mainWindow.isVisible()) {
         if (mainWindow.isFocused()) {
-            hideMainWindow();
+            hideMainWindowWithReturnFocus(true);
         } else {
             showMainWindow();
         }
@@ -627,7 +626,7 @@ function registerAllIpcListeners() {
     });
 
     ipcMain.on(IpcChannels.mainWindowHideRequested, () => {
-        hideMainWindow();
+        hideMainWindowWithReturnFocus(true);
     });
 
     ipcMain.on(IpcChannels.execute, (event, userInput: string, searchResultItem: SearchResultItem, privileged: boolean) => {
@@ -635,7 +634,7 @@ function registerAllIpcListeners() {
             .then(() => {
                 userInputHistoryManager.addItem(userInput);
                 if (searchResultItem.hideMainWindowAfterExecution && config.generalOptions.hideMainWindowAfterExecution) {
-                    hideMainWindow();
+                    hideMainWindowWithReturnFocus(false);
                 } else {
                     updateMainWindowSize(0, config.appearanceOptions);
                 }
@@ -646,7 +645,7 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.openSearchResultLocation, (event: Electron.Event, searchResultItem: SearchResultItem) => {
         searchEngine.openLocation(searchResultItem)
-            .then(() => hideMainWindow())
+            .then(() => hideMainWindowWithReturnFocus(true))
             .catch((err) => {
                 logger.error(err);
                 noSearchResultsFound();
