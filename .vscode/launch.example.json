@@ -6,6 +6,9 @@
       "request": "launch",
       "name": "Electron Main",
       "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+      },
       "program": "${workspaceRoot}/src/main/main.ts",
       "protocol": "inspector",
       "sourceMaps": true,
