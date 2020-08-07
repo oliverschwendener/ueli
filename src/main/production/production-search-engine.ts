@@ -55,6 +55,7 @@ import { everythingSearcher } from "../plugins/everything-plugin/everything-sear
 import { mdfindSearcher } from "../plugins/mdfind-plugin/mdfind-searcher";
 import { OperatingSystem, OperatingSystemVersion } from "../../common/operating-system";
 import { BraveBookmarkRepository } from "../plugins/browser-bookmarks-plugin/brave-bookmark-repository";
+import { PhoneticConverterPlugin } from "../plugins/phonetic-converter-plugin/phonetic-converter-plugin";
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
@@ -163,6 +164,7 @@ export function getProductionSearchEngine(
         new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor, logger),
         new ColorConverterPlugin(config.colorConverterOptions, electronClipboardCopier),
         new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier, getGoogleDictionaryDefinitions),
+        new PhoneticConverterPlugin(config.phoneticConverterOptions, electronClipboardCopier),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [
