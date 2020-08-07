@@ -67,6 +67,11 @@ export const defaultTerminalIcon: Icon = {
     type: IconType.SVG,
 };
 
+export const defaultPhoneticIcon: Icon = {
+    parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1"><g id="surface1"><path style=" fill:#CFD8DC;" d="M 41 6 L 7 6 C 6.398438 6 6 6.398438 6 7 L 6 42 L 42 42 L 42 7 C 42 6.398438 41.601563 6 41 6 Z "></path><path style=" fill:#263238;" d="M 8 13 L 40 13 L 40 40 L 8 40 Z "></path><path style=" fill:#CFD8DC;" d="M 22 20 L 18 34.5 L 21 34.5 L 24 23 L 27 34.5 L 30 34.5 L 26 20 Z "></path><path style=" fill:#CFD8DC;" d="M 20 29 L 28 29 L 28 31.5 L 20 31.5 Z "></path><path style=" fill:#5eb7e0;" d="M 13 30 L 18 30 L 17.5 32 L 13 32 Z "></path><path style=" fill:#5eb7e0;" d="M 11.5 26 L 19 26 L 18.5 28 L 11.5 28 Z "></path><path style=" fill:#5eb7e0;" d="M 10 22 L 20 22 L 19.5 24 L 10 24 Z "></path><path style=" fill:#5eb7e0;" d="M 30 30 L 36 30 L 36 32 L 30.5 32 Z "></path><path style=" fill:#5eb7e0;" d="M 29 26 L 37 26 L 37 28 L 29.5 28 Z "></path><path style=" fill:#5eb7e0;" d="M 28 22 L 38 22 L 38 24 L 28.5 24 Z "></path></g></svg>`,
+    type: IconType.SVG,
+};
+
 export const defaultShortcutIcon: Icon = {
     parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1"><g id="surface1"><path style="fill:#3498DB;" d="M 43 19 L 29 31 L 29 7 Z "></path><path style="fill:#3498DB;" d="M 5 27 L 5 40 L 13 40 L 13 27 C 13 24.792969 14.792969 23 17 23 L 34 23 L 34 15 L 17 15 C 10.382813 15 5 20.382813 5 27 "></path></g></svg>`,
     type: IconType.SVG,
