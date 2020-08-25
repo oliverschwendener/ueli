@@ -99,6 +99,10 @@ describe(getOperatingSystemVersion, () => {
                 kernelVersion: "19.x.x",
                 macOsVersion: OperatingSystemVersion.MacOsCatalina,
             },
+            {
+                kernelVersion: "20.x.x",
+                macOsVersion: OperatingSystemVersion.MacOsBigSur,
+            },
         ];
 
         versions.forEach((version) => {
@@ -117,6 +121,8 @@ describe(getOperatingSystemVersion, () => {
             "11",
             "12",
             "13",
+            "21",
+            "22",
         ];
 
         let errorCounter = 0;
