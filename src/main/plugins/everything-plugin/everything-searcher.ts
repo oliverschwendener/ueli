@@ -14,14 +14,14 @@ export function everythingSearcher(
     return new Promise((resolve, reject) => {
         const searchTerm = userInput.replace(everythingSearchOptions.prefix, "").trim();
         const utf8Encoding = "cmd /c chcp 65001>nul &&";
-        const command = `${utf8Encoding} "${everythingSearchOptions.pathToEs}" -max-results ${everythingSearchOptions.maxSearchResults} ${searchTerm}`;
+        const command = `${utf8Encoding} "${everythingSearchOptions.pathToEs}" -max-results ${everythingSearchOptions.maxSearchResults} ${getEverythingSearchTerm(searchTerm)}`;
         exec(command, (everythingError, stdout, stderr) => {
             if (everythingError) {
                 reject(everythingError);
             } else if (stderr) {
                 reject(stderr);
             } else {
-                const filePaths =  stdout.trim()
+                const filePaths = stdout.trim()
                     .split("\n")
                     .map((line) => normalize(line).trim())
                     .filter((f) => f !== ".");
@@ -51,4 +51,16 @@ export function everythingSearcher(
             }
         });
     });
+}
+
+function getEverythingSearchTerm(searchTerm: string): string {
+    return [...searchTerm]
+        .map((char) => {
+            if (["\\", "&", "|", ">", "<", "^"].includes(char)) {
+                return `^${char}`;
+            } else {
+                return char;
+            }
+        })
+        .join("");
 }
