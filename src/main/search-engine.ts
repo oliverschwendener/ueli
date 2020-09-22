@@ -192,7 +192,7 @@ export class SearchEngine {
                         ? pluginsResults.reduce((a, r) => a = a.concat(r))
                         : [];
 
-                    const fuse = new Fuse(all, {
+                    const fuse = new Fuse.default(all, {
                         distance: 100,
                         includeScore: true,
                         keys: ["searchable"],

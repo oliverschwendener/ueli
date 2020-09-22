@@ -155,7 +155,7 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin, AutoCompleti
         let sortedResutls: SearchResultItem[] = [];
 
         if (searchTerm) {
-            const fuse = new Fuse(unsortedResults, {
+            const fuse = new Fuse.default(unsortedResults, {
                 distance: 100,
                 includeScore: true,
                 keys: ["searchable"],
