@@ -10,24 +10,24 @@ jobs:
     
     steps:
       - name: Checkout the PR
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
         
       - name: Setup Node.js
-      - uses: actions/setup-node@v1.4.3
+        uses: actions/setup-node@v1.4.3
         
       - name: Install dependencies
-      - run: yarn install
+        run: yarn install
         
       - name: Run Lint
-      - run: yarn lint
+        run: yarn lint
       
       - name: Bundle Ueli
-      - run: yarn bundle
+        run: yarn bundle
       
       - name: Run tests
-      - run: yarn test
+        run: yarn test
       
       - name: Package Ueli
-      - run: yarn package:publish
+        run: yarn package:publish
       
        
