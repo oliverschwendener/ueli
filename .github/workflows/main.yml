@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ dev ]
+    
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout the PR
+      - uses: actions/checkout@v2
+        
+      - name: Setup Node.js
+      - uses: actions/setup-node@v1.4.3
+        
+      - name: Install dependencies
+      - run: yarn install
+        
+      - name: Run Lint
+      - run: yarn lint
+      
+      - name: Bundle Ueli
+      - run: yarn bundle
+      
+      - name: Run tests
+      - run: yarn test
+      
+      - name: Package Ueli
+      - run: yarn package:publish
+      
+       
