@@ -52,7 +52,7 @@
     "jest": "^26.4.2",
     "mathjs": "^5.10.3",
     "node-powershell": "^4.0.0",
-    "simple-plist": "^1.0.0",
+    "simple-plist": "^1.1.0",
     "ts-jest": "^26.4.0",
     "ts-loader": "^6.0.4",
     "tslint": "^6.1.0",
