@@ -42,7 +42,7 @@
     "@types/mathjs": "^5.0.1",
     "@types/node-powershell": "^3.1.0",
     "@types/vue-color": "^2.4.2",
-    "axios": "^0.19.0",
+    "axios": "^0.20.0",
     "color": "^3.1.2",
     "electron": "^8.2.4",
     "electron-builder": "^22.4.1",
