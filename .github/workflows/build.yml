@@ -1,0 +1,47 @@
+name: Build
+on: [push]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
+        node_version: ['12.x']
+
+    runs-on: ${{ matrix.os }}
+    name: Build on ${{ matrix.os }} with Node ${{ matrix.node_version }}
+    steps:
+      - name: Checkout current commit/branch/tag
+        uses: actions/checkout@v1
+
+      - name: Setup Node ${{ matrix.node_version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - name: Show exact node version
+        run: node --version
+
+      - name: Show exact yarn version
+        run: yarn --version
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Lint TypeScript files
+        run: yarn lint
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Bundle files
+        run: yarn bundle
+        env:
+          NODE_ENV: production
+
+      - name: Publish new release
+        if: startsWith(github.ref, 'refs/tags')
+        run: yarn package:publish
+        env:
+          CI: true
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
