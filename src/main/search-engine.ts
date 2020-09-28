@@ -197,7 +197,6 @@ export class SearchEngine {
                         includeScore: true,
                         keys: ["searchable"],
                         location: 0,
-                        maxPatternLength: 32,
                         minMatchCharLength: 1,
                         shouldSort: true,
                         threshold: this.config.fuzzyness,
