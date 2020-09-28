@@ -456,6 +456,7 @@ function createMainWindow() {
         transparent: mainWindowNeedsToBeTransparent(config),
         webPreferences: {
             nodeIntegration: true,
+            enableRemoteModule: true,
         },
         width: config.appearanceOptions.windowWidth,
     });
@@ -562,6 +563,7 @@ function openSettings() {
             title: translationSet.settings,
             webPreferences: {
                 nodeIntegration: true,
+                enableRemoteModule: true,
             },
             width: 1000,
         });
