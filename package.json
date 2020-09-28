@@ -34,7 +34,7 @@
     "test": "./node_modules/.bin/jest --config jest.json --silent .",
     "package:dir": "./node_modules/.bin/electron-builder --dir --config electron-builder-config.yml --publish never",
     "package": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish never",
-    "package:publish": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish onTag"
+    "package:publish": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish always"
   },
   "devDependencies": {
     "@types/color": "^3.0.0",
