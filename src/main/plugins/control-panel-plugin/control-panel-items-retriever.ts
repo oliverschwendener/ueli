@@ -1,6 +1,6 @@
 import { executeCommandWithOutput } from "../../executors/command-executor";
 import { ControlPanelItem } from "./control-panel-item";
-import * as Powershell from "node-powershell";
+import Powershell from "node-powershell";
 
 export class ControlPanelItemsRetriever {
     public static RetrieveControlPanelItems(alreadyKnownItems: ControlPanelItem[]): Promise<ControlPanelItem[]> {

@@ -1,4 +1,4 @@
-import * as Fuse from "fuse.js";
+import Fuse from "fuse.js";
 import { SearchResultItem } from "../common/search-result-item";
 import { SearchPlugin } from "./search-plugin";
 import { UserConfigOptions } from "../common/config/user-config-options";

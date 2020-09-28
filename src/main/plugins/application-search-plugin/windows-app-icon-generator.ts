@@ -1,6 +1,6 @@
 import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { applicationIconLocation, getApplicationIconFilePath } from "./application-icon-helpers";
-import * as Shell from "node-powershell";
+import Shell from "node-powershell";
 
 interface Icon {
     inputFilePath: string;
