@@ -59,8 +59,8 @@
     "typescript": "^4.0.3",
     "vue": "^2.6.12",
     "vue-color": "^2.7.1",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
     "winston": "^3.2.1"
   },
   "dependencies": {
