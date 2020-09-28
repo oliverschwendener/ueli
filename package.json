@@ -64,7 +64,7 @@
     "winston": "^3.2.1"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.10.1",
+    "@fortawesome/fontawesome-free": "^5.14.0",
     "bulma": "^0.8.0",
     "bulma-extensions": "^6.2.7"
   }
