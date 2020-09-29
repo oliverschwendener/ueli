@@ -118,6 +118,10 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Posuvník border radius",
     appearanceSettingsBorderRadiusDescription: "Toto je hodnota CSS, takže musíte přidat 'px' jako např. '10px' nebo oddělit rohy, např. '10px 0px 10px 5px'",
 
+    settingsUserInputTitle: "Vstup uživatele",
+    settingsSearchResultsBoxTitle: "Pole výsledků hledání",
+    settingsScrollbarTitle: "Posuvník",
+
     colorThemeSettings: "Barevné schéma",
     colorThemeSettingsImportColorTheme: "Importovat barevné schéma",
     colorThemeSettingsExportColorTheme: "Exportovat barevné schéma",

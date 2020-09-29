@@ -118,6 +118,10 @@ export const portugueseTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Raio da borda da barra de rolagem",
     appearanceSettingsBorderRadiusDescription: "Este é um valor em css, então você precisa adicionar 'px' da seguinte forma '10px', ou separar os lados deste jeito '10px 0px 10px 5px'",
 
+    settingsUserInputTitle: "Entrada do usuário",
+    settingsSearchResultsBoxTitle: "Caixa de resultados de pesquisa ",
+    settingsScrollbarTitle: "Barra de rolagem",
+
     colorThemeSettings: "Tema de cores",
     colorThemeSettingsImportColorTheme: "Importar tema de cores",
     colorThemeSettingsExportColorTheme: "Exportar tema de cores",
