@@ -35,6 +35,7 @@ import { PluginType } from "./plugin-type";
 import { getRescanIntervalInMilliseconds } from "./helpers/rescan-interval-helpers";
 import { openUrlInBrowser } from "./executors/url-executor";
 import { OperatingSystem } from "../common/operating-system";
+import { enableHotRealod } from "./hot-reload";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -51,6 +52,10 @@ const windowIconFilePath = operatingSystem === OperatingSystem.Windows ? windowI
 const userInputHistoryManager = new UserInputHistoryManager();
 const releaseUrl = "https://github.com/oliverschwendener/ueli/releases/latest";
 const windowsPowerShellPath = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0";
+
+if (appIsInDevelopment) {
+    enableHotRealod();
+}
 
 autoUpdater.autoDownload = false;
 

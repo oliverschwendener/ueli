@@ -28,6 +28,7 @@
   "main": "./bundle/main.js",
   "scripts": {
     "bundle": "./node_modules/.bin/webpack",
+    "dev": "node ./dev.js",
     "start": "./node_modules/.bin/electron . --remote-debugging-port=9223",
     "lint": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json",
     "lint:fix": "./node_modules/.bin/tslint --project tsconfig.json --config tslint.json --fix",
