@@ -1,4 +1,4 @@
-import * as mathjs from "mathjs";
+import mathjs from "mathjs";
 
 export class Calculator {
     public static isValidInput(input: string): boolean {

@@ -55,6 +55,7 @@ import { everythingSearcher } from "../plugins/everything-plugin/everything-sear
 import { mdfindSearcher } from "../plugins/mdfind-plugin/mdfind-searcher";
 import { OperatingSystem, OperatingSystemVersion } from "../../common/operating-system";
 import { BraveBookmarkRepository } from "../plugins/browser-bookmarks-plugin/brave-bookmark-repository";
+import { VivaldiBookmarkRepository } from '../plugins/browser-bookmarks-plugin/vivaldi-bookmark-repository';
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
@@ -80,6 +81,9 @@ export function getProductionSearchEngine(
     const braveBookmarksFilePath = operatingSystem === OperatingSystem.Windows
         ? `${homedir()}\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Bookmarks`
         : `${homedir()}/Library/Application\ Support/BraveSoftware/Brave-Browser/Default/Bookmarks`;
+    const vivaldiBookmarksFilePath = operatingSystem === OperatingSystem.Windows
+        ? `${homedir()}\\AppData\\Local\\Vivaldi\\User Data\\Default\\Bookmarks`
+        : `${homedir()}/Library/Application\ Support/Vivaldi/Default/Bookmarks`;
 
     const operatingSystemCommandRepository = operatingSystem === OperatingSystem.Windows
         ? new WindowsOperatingSystemCommandRepository(translationSet)
@@ -139,6 +143,7 @@ export function getProductionSearchEngine(
             [
               new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
               new BraveBookmarkRepository(braveBookmarksFilePath),
+              new VivaldiBookmarkRepository(vivaldiBookmarksFilePath),
             ],
             urlExecutor,
         ),

@@ -15,7 +15,7 @@ export function executeFilePathMacOs(filePath: string, privileged: boolean): Pro
 
 function openFile(filePath: string): Promise<void> {
     return new Promise((resolve, reject) => {
-        const result = shell.openItem(filePath);
+        const result = shell.openPath(filePath);
         if (result) {
             resolve();
         } else {
