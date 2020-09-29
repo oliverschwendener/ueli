@@ -43,13 +43,13 @@ export class WebSearchPlugin implements ExecutionPlugin {
                     return 0;
                 });
 
-            webSearchEngines.forEach((webSearchEngine, index) => {
+            webSearchEngines.forEach((webSearchEngine) => {
                 searchResults.push({
-                    description: this.buildDescription(webSearchEngines[index], userInput),
-                    executionArgument: this.buildExecutionArgument(webSearchEngines[index], userInput),
+                    description: this.buildDescription(webSearchEngine, userInput),
+                    executionArgument: this.buildExecutionArgument(webSearchEngine, userInput),
                     hideMainWindowAfterExecution: true,
-                    icon: isValidIcon(webSearchEngines[index].icon) ? webSearchEngines[index].icon : defaultWebSearchIcon,
-                    name: userInput.replace(webSearchEngines[index].prefix, ""),
+                    icon: isValidIcon(webSearchEngine.icon) ? webSearchEngine.icon : defaultWebSearchIcon,
+                    name: userInput.replace(webSearchEngine.prefix, ""),
                     originPluginType: this.pluginType,
                     searchable: [],
                 });
@@ -77,7 +77,7 @@ export class WebSearchPlugin implements ExecutionPlugin {
                         const suggestionsResults: SearchResultItem[] = [];
                         const suggestionsData = response.data[1];
 
-                        suggestionsData.some((suggestion: string) => {
+                        suggestionsData.some((suggestion: string,index:number) => {
                             suggestionsResults.push({
                                 description: this.buildDescription(webSearchEngine, suggestion),
                                 executionArgument: this.buildExecutionArgument(webSearchEngine, suggestion),
@@ -88,7 +88,7 @@ export class WebSearchPlugin implements ExecutionPlugin {
                                 searchable: [],
                             })
 
-                            return suggestion === suggestionsData[7];
+                            return index === 7;
                         })
                         resolve(suggestionsResults)
                     }))
