@@ -64,7 +64,7 @@ export const appearanceSettingsComponent = Vue.extend({
             <div class="box">
                 <div class="settings__options-container">
 
-                    <div class="settings__setting-content-item-title">
+                    <div class="settings__setting-content-item-title mb-4">
                         <div class="title is-5">
                             {{ translations.settingsUserInputTitle }}
                         </div>
@@ -123,7 +123,7 @@ export const appearanceSettingsComponent = Vue.extend({
             <div class="box">
                 <div class="settings__options-container">
 
-                    <div class="settings__setting-content-item-title">
+                    <div class="settings__setting-content-item-title mb-4">
                         <div class="title is-5">
                             {{ translations.settingsSearchResultsBoxTitle }}
                         </div>
@@ -208,7 +208,7 @@ export const appearanceSettingsComponent = Vue.extend({
             <div class="box">
                 <div class="settings__options-container">
 
-                    <div class="settings__setting-content-item-title">
+                    <div class="settings__setting-content-item-title mb-4">
                         <div class="title is-5">
                             {{ translations.settingsGeneralTitle }}
                         </div>
