@@ -61,15 +61,80 @@ export const appearanceSettingsComponent = Vue.extend({
             </button>
         </div>
         <div class="settings__setting-content">
-            <div class=" box">
+            <div class="box">
                 <div class="settings__options-container">
 
+                    <div class="settings__setting-content-item-title mb-4">
+                        <div class="title is-5">
+                            {{ translations.settingsUserInputTitle }}
+                        </div>
+                    </div>
+
                     <div class="settings__option">
-                        <div class="settings__option-name">{{ translations.appearanceSettingsWindowWidth }}</div>
+                        <div class="settings__option-name">{{ translations.appearanceSettingsUserInputHeight }}</div>
                         <div class="settings__option-content">
                             <div class="field is-grouped is-grouped-right">
                                 <div class="control">
-                                    <input type="number" step="1" class="input" v-model="config.appearanceOptions.windowWidth" @change="updateConfig">
+                                    <input type="number" step="1" class="input" v-model="config.appearanceOptions.userInputHeight" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsUserInputBorderRadius }}</div>
+                         <span class="icon tooltip is-tooltip-multiline" :data-tooltip="translations.appearanceSettingsBorderRadiusDescription">
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="text" class="input" v-model="config.appearanceOptions.userInputBorderRadius" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsUserInputBottomMargin }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="number" step="1" class="input" v-model="config.appearanceOptions.userInputBottomMargin" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsShowSearchIcon }}</div>
+                        <div class="settings__option-content">
+                            <div class="field has-addons has-addons-right vertical-center">
+                                <div class="control">
+                                    <input id="showSearchIconCheckbox" type="checkbox" name="showSearchIconCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.appearanceOptions.showSearchIcon" @change="updateConfig">
+                                    <label for="showSearchIconCheckbox"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div class="settings__options-container">
+            </div class="box">
+            <div class="box">
+                <div class="settings__options-container">
+
+                    <div class="settings__setting-content-item-title mb-4">
+                        <div class="title is-5">
+                            {{ translations.settingsSearchResultsBoxTitle }}
+                        </div>
+                    </div>
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsSearchResultHeight }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="number" step="1" class="input" v-model="config.appearanceOptions.searchResultHeight" @change="updateConfig">
                                 </div>
                             </div>
                         </div>
@@ -87,39 +152,6 @@ export const appearanceSettingsComponent = Vue.extend({
                     </div>
 
                     <div class="settings__option">
-                        <div class="settings__option-name">{{ translations.appearanceSettingsSearchResultHeight }}</div>
-                        <div class="settings__option-content">
-                            <div class="field is-grouped is-grouped-right">
-                                <div class="control">
-                                    <input type="number" step="1" class="input" v-model="config.appearanceOptions.searchResultHeight" @change="updateConfig">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="settings__option">
-                        <div class="settings__option-name">{{ translations.appearanceSettingsUserInputBorderRadius }}</div>
-                         <span class="icon tooltip is-tooltip-multiline" :data-tooltip="translations.appearanceSettingsBorderRadiusDescription">
-                                <i class="fa fa-info-circle"></i>
-                            </span>
-                        <div class="settings__option-content">
-                            <div class="field is-grouped is-grouped-right">
-                                <div class="control">
-                                    <input type="text" class="input" v-model="config.appearanceOptions.userInputBorderRadius" @change="updateConfig">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="settings__option">
-                        <div class="settings__option-name">{{ translations.appearanceSettingsUserInputBottomMargin }}</div>
-                        <div class="settings__option-content">
-                            <div class="field is-grouped is-grouped-right">
-                                <div class="control">
-                                    <input type="number" step="1" class="input" v-model="config.appearanceOptions.userInputBottomMargin" @change="updateConfig">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="settings__option">
                         <div class="settings__option-name">{{ translations.appearanceSettingsSearchResultsBorderRadius }}</div>
                          <span class="icon tooltip is-tooltip-multiline" :data-tooltip="translations.appearanceSettingsBorderRadiusDescription">
                                 <i class="fa fa-info-circle"></i>
@@ -132,6 +164,7 @@ export const appearanceSettingsComponent = Vue.extend({
                             </div>
                         </div>
                     </div>
+
                     <div class="settings__option">
                         <div class="settings__option-name">{{ translations.appearanceSettingsScrollbarBorderRadius }}</div>
                         <span class="icon tooltip is-tooltip-multiline" :data-tooltip="translations.appearanceSettingsBorderRadiusDescription">
@@ -141,29 +174,6 @@ export const appearanceSettingsComponent = Vue.extend({
                             <div class="field is-grouped is-grouped-right">
                                 <div class="control">
                                     <input type="text" class="input" v-model="config.appearanceOptions.scrollbarBorderRadius" @change="updateConfig">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="settings__option">
-                        <div class="settings__option-name">{{ translations.appearanceSettingsSmoothScrolling }}</div>
-                        <div class="settings__option-content">
-                            <div class="field has-addons has-addons-right vertical-center">
-                                <div class="control">
-                                    <input id="smoothScrollingCheckBox" type="checkbox" name="smoothScrollingCheckBox" class="switch is-rounded is-success" checked="checked" v-model="config.appearanceOptions.smoothScrolling" @change="updateConfig">
-                                    <label for="smoothScrollingCheckBox"></label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="settings__option">
-                        <div class="settings__option-name">{{ translations.appearanceSettingsUserInputHeight }}</div>
-                        <div class="settings__option-content">
-                            <div class="field is-grouped is-grouped-right">
-                                <div class="control">
-                                    <input type="number" step="1" class="input" v-model="config.appearanceOptions.userInputHeight" @change="updateConfig">
                                 </div>
                             </div>
                         </div>
@@ -182,24 +192,46 @@ export const appearanceSettingsComponent = Vue.extend({
                     </div>
 
                     <div class="settings__option">
-                        <div class="settings__option-name">{{ translations.appearanceSettingsShowSearchIcon }}</div>
-                        <div class="settings__option-content">
-                            <div class="field has-addons has-addons-right vertical-center">
-                                <div class="control">
-                                    <input id="showSearchIconCheckbox" type="checkbox" name="showSearchIconCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.appearanceOptions.showSearchIcon" @change="updateConfig">
-                                    <label for="showSearchIconCheckbox"></label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="settings__option">
                         <div class="settings__option-name">{{ translations.appearanceSettingsShowSearchResultNumbers }}</div>
                         <div class="settings__option-content">
                             <div class="field has-addons has-addons-right vertical-center">
                                 <div class="control">
                                     <input id="showSearchResultNumbersCheckbox" type="checkbox" name="showSearchResultNumbersCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.appearanceOptions.showSearchResultNumbers" @change="updateConfig">
                                     <label for="showSearchResultNumbersCheckbox"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div class="settings__options-container">
+            </div class="box">
+            <div class="box">
+                <div class="settings__options-container">
+
+                    <div class="settings__setting-content-item-title mb-4">
+                        <div class="title is-5">
+                            {{ translations.settingsGeneralTitle }}
+                        </div>
+                    </div>
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsWindowWidth }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="number" step="1" class="input" v-model="config.appearanceOptions.windowWidth" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.appearanceSettingsSmoothScrolling }}</div>
+                        <div class="settings__option-content">
+                            <div class="field has-addons has-addons-right vertical-center">
+                                <div class="control">
+                                    <input id="smoothScrollingCheckBox" type="checkbox" name="smoothScrollingCheckBox" class="switch is-rounded is-success" checked="checked" v-model="config.appearanceOptions.smoothScrolling" @change="updateConfig">
+                                    <label for="smoothScrollingCheckBox"></label>
                                 </div>
                             </div>
                         </div>
@@ -228,9 +260,8 @@ export const appearanceSettingsComponent = Vue.extend({
                         </div>
                     </div>
 
-                </div>
-            </div>
-
+                </div class="settings__options-container">
+            </div class="box">
         </div>
     </div>
     `,
