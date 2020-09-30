@@ -118,6 +118,11 @@ export const germanTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Randradius der Bildlaufleiste",
     appearanceSettingsBorderRadiusDescription: "Es handelt sich um einen CSS-Wert, daher musst Du ein 'px' wie bei '10px' oder getrennt wie '10px 0px 10px 5px' hinzufügen.",
 
+    settingsUserInputTitle: "Benutzereingabe",
+    settingsSearchResultsBoxTitle: "Suchergebnisfeld",
+    settingsScrollbarTitle: "Bildlaufleiste",
+    settingsGeneralTitle: "Allgemein",
+    
     colorThemeSettings: "Farbschema",
     colorThemeSettingsImportColorTheme: "Farbschema importieren",
     colorThemeSettingsExportColorTheme: "Farbschema exportieren",
