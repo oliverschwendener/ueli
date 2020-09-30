@@ -121,6 +121,7 @@ export const turkishTranslationSet: TranslationSet = {
     settingsUserInputTitle: "Kullanıcı girişi",
     settingsSearchResultsBoxTitle: "Arama sonuçları kutusu",
     settingsScrollbarTitle: "Kaydırma çubuğu",
+    settingsGeneralTitle: "Genel",
 
     colorThemeSettings: "Renk teması",
     colorThemeSettingsImportColorTheme: "Renk temasını içe aktar",

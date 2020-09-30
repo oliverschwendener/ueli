@@ -121,6 +121,7 @@ export const englishTranslationSet: TranslationSet = {
     settingsUserInputTitle: "Vstup uživatele",
     settingsSearchResultsBoxTitle: "Pole výsledků hledání",
     settingsScrollbarTitle: "Posuvník",
+    settingsGeneralTitle: "Obecné",
 
     colorThemeSettings: "Barevné schéma",
     colorThemeSettingsImportColorTheme: "Importovat barevné schéma",

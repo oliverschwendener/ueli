@@ -121,6 +121,7 @@ export const russianTranslationSet: TranslationSet = {
     settingsUserInputTitle: "Пользовательский ввод",
     settingsSearchResultsBoxTitle: "Окно результатов поиска",
     settingsScrollbarTitle: "Полоса прокрутки",
+    settingsGeneralTitle: "Основное",
 
     colorThemeSettings: "Цветовые темы",
     colorThemeSettingsImportColorTheme: "Импортировать тему",

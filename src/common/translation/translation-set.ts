@@ -118,6 +118,7 @@ export interface TranslationSet {
     settingsUserInputTitle: string;
     settingsSearchResultsBoxTitle: string;
     settingsScrollbarTitle: string;
+    settingsGeneralTitle: string;
 
     colorThemeSettings: string;
     colorThemeSettingsImportColorTheme: string;

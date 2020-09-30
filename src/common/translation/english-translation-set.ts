@@ -121,6 +121,7 @@ export const englishTranslationSet: TranslationSet = {
     settingsUserInputTitle: "User input",
     settingsSearchResultsBoxTitle: "Search results box",
     settingsScrollbarTitle: "Scrollbar",
+    settingsGeneralTitle: "General",
 
     colorThemeSettings: "Color Theme",
     colorThemeSettingsImportColorTheme: "Import color theme",

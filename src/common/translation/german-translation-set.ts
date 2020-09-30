@@ -121,6 +121,7 @@ export const germanTranslationSet: TranslationSet = {
     settingsUserInputTitle: "Benutzereingabe",
     settingsSearchResultsBoxTitle: "Suchergebnisfeld",
     settingsScrollbarTitle: "Scrollleiste",
+    settingsGeneralTitle: "Allgemein",
 
     colorThemeSettings: "Farbschema",
     colorThemeSettingsImportColorTheme: "Farbschema importieren",

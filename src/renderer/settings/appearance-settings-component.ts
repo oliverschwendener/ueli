@@ -208,6 +208,12 @@ export const appearanceSettingsComponent = Vue.extend({
             <div class="box">
                 <div class="settings__options-container">
 
+                    <div class="settings__setting-content-item-title">
+                        <div class="title is-5">
+                            {{ translations.settingsGeneralTitle }}
+                        </div>
+                    </div>
+
                     <div class="settings__option">
                         <div class="settings__option-name">{{ translations.appearanceSettingsWindowWidth }}</div>
                         <div class="settings__option-content">
