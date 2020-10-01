@@ -115,6 +115,11 @@ export interface TranslationSet {
     appearanceSettingsScrollbarBorderRadius: string;
     appearanceSettingsBorderRadiusDescription: string;
 
+    settingsUserInputTitle: string;
+    settingsSearchResultsBoxTitle: string;
+    settingsScrollbarTitle: string;
+    settingsGeneralTitle: string;
+
     colorThemeSettings: string;
     colorThemeSettingsImportColorTheme: string;
     colorThemeSettingsExportColorTheme: string;

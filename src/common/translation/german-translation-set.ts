@@ -120,6 +120,11 @@ export const germanTranslationSet: TranslationSet = {
 
     settingsUserInputTitle: "Benutzereingabe",
     settingsSearchResultsBoxTitle: "Suchergebnisfeld",
+    settingsScrollbarTitle: "Scrollleiste",
+    settingsGeneralTitle: "Allgemein",
+
+    settingsUserInputTitle: "Benutzereingabe",
+    settingsSearchResultsBoxTitle: "Suchergebnisfeld",
     settingsScrollbarTitle: "Bildlaufleiste",
     settingsGeneralTitle: "Allgemein",
     

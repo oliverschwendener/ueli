@@ -118,6 +118,10 @@ export const turkishTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Kaydırma çubuğu kenarlık yarıçapı",
     appearanceSettingsBorderRadiusDescription: "Bu bir css değeridir, bu nedenle bu '10px' gibi 'px' veya '10px 0px 10px 5px' gibi ayrı köşeler eklemeniz gerekir",
 
+    settingsUserInputTitle: "Kullanıcı girişi",
+    settingsSearchResultsBoxTitle: "Arama sonuçları kutusu",
+    settingsScrollbarTitle: "Kaydırma çubuğu",
+    settingsGeneralTitle: "Genel",
 
     colorThemeSettings: "Renk teması",
     colorThemeSettingsImportColorTheme: "Renk temasını içe aktar",
