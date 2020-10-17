@@ -112,6 +112,16 @@ export const russianTranslationSet: TranslationSet = {
     appearanceSettingsResetWarningMessage: "Вы хотите восстановить настройки внешнего вида по умолчанию. Вы уверены?",
     appearanceSettingsAllowTransparentBackground: "Прозрачность фона",
     appearanceSettingsFontFamily: "семейство шрифтов",
+    appearanceSettingsUserInputBorderRadius: "Пользовательский радиус границы ввода",
+    appearanceSettingsUserInputBottomMargin: "Нижнее поле пользовательского ввода (в пикселях)",
+    appearanceSettingsSearchResultsBorderRadius: "Радиус границы результатов поиска",
+    appearanceSettingsScrollbarBorderRadius: "Радиус полосы прокрутки",
+    appearanceSettingsBorderRadiusDescription: "Это значение CSS, поэтому вам нужно добавить «px», например, «10px» или отдельные углы, например «10px 0px 10px 5px».",
+
+    settingsUserInputTitle: "Пользовательский ввод",
+    settingsSearchResultsBoxTitle: "Окно результатов поиска",
+    settingsScrollbarTitle: "Полоса прокрутки",
+    settingsGeneralTitle: "Основное",
 
     colorThemeSettings: "Цветовые темы",
     colorThemeSettingsImportColorTheme: "Импортировать тему",
@@ -241,6 +251,8 @@ export const russianTranslationSet: TranslationSet = {
     macOsRestartDescription: "Перезагрузить компьютер",
     macOsLogout: "Выйти",
     macOsLogoutDescription: "Выйти из учетной записи текущего пользователя",
+    macOsSleep: "спать",
+    macOsSleepDescription: "спать компьютер",
     macOsLock: "Заблокировать",
     macOsLockDescription: "Заблокировать компьютер",
 

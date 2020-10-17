@@ -1,5 +1,3 @@
-![logo](assets/readme-header.png)
-
 # ueli
 
 This is a keystroke launcher for Windows and macOS.
@@ -24,11 +22,11 @@ This is a keystroke launcher for Windows and macOS.
 
 ### Installer / Zip
 
-* Download the latest version [here](https://github.com/oliverschwendener/ueli/releases)
+* Download the latest version from here: https://ueli.app/#/download
 * Run the installer or unzip
 * Run the application
 
-> Note: because the executables are not signed Windows will probably prevent you from executing the installer or the program itself. You can click "Run anyway" to install/run the program.
+> Note: because the executables are not signed Windows and macOS will probably prevent you from executing the installer or the program itself.
 
 ### Installing via chocolatey repository
 
@@ -47,11 +45,13 @@ This plugin is searching for applications on your computer. You can specify the 
 
 ### Browser bookmarks
 
-This plugin enables you to search your browser bookmarks. 
+This plugin enables you to search your browser bookmarks.
 
 Currently supported browsers:
 
 - Google Chrome
+- Brave
+- Vivaldi
 
 ![browser-bookmarks](assets/feature-browser-bookmarks.png)
 
@@ -183,6 +183,8 @@ This plugin enables you to quickly execute multiple things at once.
 |<kbd>Cmd</kbd> <kbd>o</kbd>|Open the selected program or file at it's location (macOS)|
 |<kbd>↑</kbd>|Scroll up|
 |<kbd>↓</kbd>|Scroll down|
+|<kbd>Ctrl or Cmd</kbd> <kbd>p</kbd>|Scroll up|
+|<kbd>Ctrl or Cmd</kbd> <kbd>n</kbd>|Scroll down|
 |<kbd>Ctrl</kbd> <kbd>i</kbd>|Open settings (Windows)|
 |<kbd>Cmd</kbd> <kbd>,</kbd>|Open settings (macOS)|
 |<kbd>Shift</kbd> <kbd>↑</kbd>|Browse user input history up|
@@ -198,7 +200,7 @@ To open the settings simply search for "Settings" or press `Ctrl+i` on Windows o
 
 ## Updating
 
-The check if any updates are available open the settings. Under "General Settings" you can check if an update is available or not. 
+The check if any updates are available open the settings. Under "General Settings" you can check if an update is available or not.
 
 On Windows you can directly update the app. On macOS you have to manually download the newest release and replace the existing app.
 
@@ -210,6 +212,7 @@ For better search results ueli is keeping track of the applications, files and f
 
 * ([#37](https://github.com/oliverschwendener/ueli/issues/37)) Window starts to move while typing when custom scaling in Windows is set.
 * ([#92](https://github.com/oliverschwendener/ueli/issues/92)) If you see an error that says `spawn powershell.exe ENOENT` check if powershell is installed (should be installed in all recent Versions of Windows by default) and check if powershell is in the PATH variable.
+* ([#278](https://github.com/oliverschwendener/ueli/issues/278)) If you're on macOS Catalina you might miss some system apps (for example: Books or QuickTime Player). Try adding `/System/Applications` to your application search settings.
 
 For more check [here](https://github.com/oliverschwendener/ueli/issues).
 

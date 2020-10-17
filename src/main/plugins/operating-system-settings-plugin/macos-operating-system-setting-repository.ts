@@ -8,7 +8,7 @@ import { generateMacAppIcons } from "../application-search-plugin/mac-os-app-ico
 import { executeCommandWithOutput } from "../../executors/command-executor";
 
 export class MacOsOperatingSystemSettingRepository implements OperatingSystemSettingRepository {
-    private all: OperatingSystemSetting[];
+    private all: OperatingSystemSetting[] = [];
 
     constructor() {
         this.getFilePaths()

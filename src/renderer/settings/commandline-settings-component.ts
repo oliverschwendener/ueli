@@ -7,14 +7,17 @@ import { defaultCommandlineOptions } from "../../common/config/commandline-optio
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { deepCopy } from "../../common/helpers/object-helpers";
-import { isWindows } from "../../common/helpers/operating-system-helpers";
+import { getCurrentOperatingSystem } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
 import { WindowsShell, MacOsShell } from "../../main/plugins/commandline-plugin/shells";
+import { OperatingSystem } from "../../common/operating-system";
+
+const operatingSystem = getCurrentOperatingSystem(platform());
 
 export const commandlineSettingsComponent = Vue.extend({
     data() {
         return {
-            availableShells: Object.values(isWindows(platform()) ? WindowsShell : MacOsShell).map((shell) => shell.toString()),
+            availableShells: Object.values(operatingSystem === OperatingSystem.Windows ? WindowsShell : MacOsShell).map((shell) => shell.toString()),
             settingName: PluginSettings.Commandline,
             visible: false,
         };

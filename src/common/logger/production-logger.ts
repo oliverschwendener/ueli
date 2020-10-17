@@ -1,5 +1,5 @@
 import { Logger } from "./logger";
-import * as Winston from "winston";
+import Winston from "winston";
 import { dirname, basename } from "path";
 import { logFormat } from "../helpers/logger-helpers";
 

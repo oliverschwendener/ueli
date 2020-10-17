@@ -10,7 +10,7 @@ import { AppearanceOptions } from "../common/config/appearance-options";
 import { isDev } from "../common/is-dev";
 import { UeliCommand } from "./plugins/ueli-command-search-plugin/ueli-command";
 import { UeliCommandExecutionArgument } from "./plugins/ueli-command-search-plugin/ueli-command-execution-argument";
-import { platform } from "os";
+import { platform, release } from "os";
 import { getProductionSearchEngine } from "./production/production-search-engine";
 import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
 import { defaultGeneralOptions } from "../common/config/general-options";
@@ -22,7 +22,7 @@ import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-help
 import { isValidHotKey } from "../common/global-hot-key/global-hot-key-helpers";
 import { NotificationType } from "../common/notification-type";
 import { UserInputHistoryManager } from "./user-input-history-manager";
-import { isWindows, isMacOs } from "../common/helpers/operating-system-helpers";
+import { getCurrentOperatingSystem, getOperatingSystemVersion } from "../common/helpers/operating-system-helpers";
 import { executeFilePathWindows, executeFilePathMacOs } from "./executors/file-path-executor";
 import { WindowPosition } from "../common/window-position";
 import { UpdateCheckResult } from "../common/update-check-result";
@@ -34,27 +34,31 @@ import { deepCopy } from "../common/helpers/object-helpers";
 import { PluginType } from "./plugin-type";
 import { getRescanIntervalInMilliseconds } from "./helpers/rescan-interval-helpers";
 import { openUrlInBrowser } from "./executors/url-executor";
+import { OperatingSystem } from "../common/operating-system";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
 }
 
+const operatingSystem = getCurrentOperatingSystem(platform());
+const operatingSystemVersion = getOperatingSystemVersion(operatingSystem, release());
+const appIsInDevelopment = isDev(process.execPath);
 const minimumRefreshIntervalInSeconds = 10;
 const configRepository = new ElectronStoreConfigRepository(deepCopy(defaultUserConfigOptions));
-const filePathExecutor = isWindows(platform()) ? executeFilePathWindows : executeFilePathMacOs;
-const trayIconFilePath = isWindows(platform()) ? trayIconPathWindows : trayIconPathMacOs;
-const windowIconFilePath = isWindows(platform()) ? windowIconWindows : windowIconMacOs;
+const filePathExecutor = operatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
+const trayIconFilePath = operatingSystem === OperatingSystem.Windows ? trayIconPathWindows : trayIconPathMacOs;
+const windowIconFilePath = operatingSystem === OperatingSystem.Windows ? windowIconWindows : windowIconMacOs;
 const userInputHistoryManager = new UserInputHistoryManager();
 const releaseUrl = "https://github.com/oliverschwendener/ueli/releases/latest";
 const windowsPowerShellPath = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0";
 
 autoUpdater.autoDownload = false;
 
-if (isMacOs(platform())) {
+if (operatingSystem === OperatingSystem.macOS) {
     app.dock.hide();
 }
 
-if (isWindows(platform())) {
+if (operatingSystem === OperatingSystem.Windows) {
     addPowershellToPathVariableIfMissing();
 }
 
@@ -65,10 +69,10 @@ let lastWindowPosition: WindowPosition;
 
 let config = configRepository.getConfig();
 let translationSet = getTranslationSet(config.generalOptions.language);
-const logger = isDev()
+const logger = appIsInDevelopment
     ? new DevLogger()
     : new ProductionLogger(logFilePath, filePathExecutor);
-let searchEngine = getProductionSearchEngine(config, translationSet, logger);
+let searchEngine = getProductionSearchEngine(operatingSystem, operatingSystemVersion, config, translationSet, logger);
 
 let rescanInterval = config.generalOptions.rescanEnabled
     ? setInterval(() => refreshAllIndexes(), getRescanIntervalInMilliseconds(Number(config.generalOptions.rescanIntervalInSeconds), minimumRefreshIntervalInSeconds))
@@ -141,7 +145,8 @@ function calculateY(display: Electron.Display): number {
     return Math.round(Number(display.bounds.y + (display.bounds.height / 2) - (getMaxWindowHeight(
         config.appearanceOptions.maxSearchResultsPerPage,
         config.appearanceOptions.searchResultHeight,
-        config.appearanceOptions.userInputHeight) / 2)));
+        config.appearanceOptions.userInputHeight,
+        config.appearanceOptions.userInputBottomMargin) / 2)));
 }
 
 function onBlur() {
@@ -160,20 +165,20 @@ function showMainWindow() {
                 ? screen.getPrimaryDisplay()
                 : screen.getDisplayNearestPoint(mousePosition);
             const windowBounds: Electron.Rectangle = {
-                height: Math.round(Number(config.appearanceOptions.userInputHeight)),
+                height: Math.round(Number(config.appearanceOptions.userInputHeight) + Number(config.appearanceOptions.userInputBottomMargin)),
                 width: Math.round(Number(config.appearanceOptions.windowWidth)),
                 x: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.x
                     ? lastWindowPosition.x
                     : calculateX(display),
-                    y: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.y
+                y: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.y
                     ? lastWindowPosition.y
                     : calculateY(display),
             };
             // this is a workaround to restore the focus on the previously focussed window
-            if (isMacOs(platform())) {
+            if (operatingSystem === OperatingSystem.macOS) {
                 app.show();
             }
-            if (isWindows(platform())) {
+            if (operatingSystem === OperatingSystem.Windows) {
                 mainWindow.restore();
             }
             mainWindow.setBounds(windowBounds);
@@ -192,13 +197,13 @@ function hideMainWindow() {
             updateMainWindowSize(0, config.appearanceOptions);
             if (windowExists(mainWindow)) {
                 // this is a workaround to restore the focus on the previously focussed window
-                if (isWindows(platform())) {
+                if (operatingSystem === OperatingSystem.Windows) {
                     mainWindow.minimize();
                 }
                 mainWindow.hide();
 
                 // this is a workaround to restore the focus on the previously focussed window
-                if (isMacOs(platform())) {
+                if (operatingSystem === OperatingSystem.macOS) {
                     if (!settingsWindow
                         || (settingsWindow && settingsWindow.isDestroyed())
                         || (settingsWindow && !settingsWindow.isDestroyed() && !settingsWindow.isVisible())) {
@@ -222,8 +227,8 @@ function toggleMainWindow() {
     }
 }
 
-function getMaxWindowHeight(maxSearchResultsPerPage: number, searchResultHeight: number, userInputHeight: number): number {
-    return Number(maxSearchResultsPerPage) * Number(searchResultHeight) + Number(userInputHeight);
+function getMaxWindowHeight(maxSearchResultsPerPage: number, searchResultHeight: number, userInputHeight: number, userInputBottomMargin: number): number {
+    return Number(maxSearchResultsPerPage) * Number(searchResultHeight) + Number(userInputHeight) + Number(userInputBottomMargin);
 }
 
 function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean, pluginType?: PluginType) {
@@ -253,7 +258,8 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
         mainWindow.setSize(Number(updatedConfig.appearanceOptions.windowWidth), getMaxWindowHeight(
             updatedConfig.appearanceOptions.maxSearchResultsPerPage,
             updatedConfig.appearanceOptions.searchResultHeight,
-            updatedConfig.appearanceOptions.userInputHeight));
+            updatedConfig.appearanceOptions.userInputHeight,
+            updatedConfig.appearanceOptions.userInputBottomMargin));
         updateMainWindowSize(0, updatedConfig.appearanceOptions);
         mainWindow.center();
         mainWindow.resizable = false;
@@ -297,7 +303,7 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
                         notifyRenderer(translationSet.successfullyUpdatedconfig, NotificationType.Info);
                     }
                 })
-                .catch((err) =>  logger.error(err));
+                .catch((err) => logger.error(err));
         })
         .catch((err) => logger.error(err));
 }
@@ -308,8 +314,8 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
         const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
             ? Math.round(getMaxWindowHeight(
                 appearanceOptions.maxSearchResultsPerPage,
-                appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight))
-            : Math.round((Number(searchResultCount) * Number(appearanceOptions.searchResultHeight)) + Number(appearanceOptions.userInputHeight));
+                appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight, appearanceOptions.userInputBottomMargin))
+            : Math.round((Number(searchResultCount) * Number(appearanceOptions.searchResultHeight)) + Number(appearanceOptions.userInputHeight) + Number(appearanceOptions.userInputBottomMargin));
 
         mainWindow.setSize(Number(appearanceOptions.windowWidth), Number(windowHeight));
         if (center) {
@@ -321,7 +327,13 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
 
 function reloadApp() {
     updateMainWindowSize(0, config.appearanceOptions);
-    searchEngine = getProductionSearchEngine(config, translationSet, logger);
+    searchEngine = getProductionSearchEngine(
+        operatingSystem,
+        operatingSystemVersion,
+        config,
+        translationSet,
+        logger,
+    );
     refreshAllIndexes();
     mainWindow.reload();
 }
@@ -356,7 +368,7 @@ function quitApp() {
 }
 
 function updateAutoStartOptions(userConfig: UserConfigOptions) {
-    if (!isDev()) {
+    if (!appIsInDevelopment) {
         app.setLoginItemSettings({
             args: [],
             openAtLogin: userConfig.generalOptions.autostart,
@@ -431,7 +443,8 @@ function createMainWindow() {
         height: getMaxWindowHeight(
             config.appearanceOptions.maxSearchResultsPerPage,
             config.appearanceOptions.searchResultHeight,
-            config.appearanceOptions.userInputHeight),
+            config.appearanceOptions.userInputHeight,
+            config.appearanceOptions.userInputBottomMargin),
         icon: windowIconFilePath,
         maximizable: false,
         minimizable: false,
@@ -443,11 +456,12 @@ function createMainWindow() {
         transparent: mainWindowNeedsToBeTransparent(config),
         webPreferences: {
             nodeIntegration: true,
+            enableRemoteModule: true,
         },
         width: config.appearanceOptions.windowWidth,
     });
 
-    mainWindow.setVisibleOnAllWorkspaces(true);
+    mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
     mainWindow.on("blur", onBlur);
     mainWindow.on("closed", quitApp);
@@ -456,7 +470,7 @@ function createMainWindow() {
 }
 
 function mainWindowNeedsToBeTransparent(userConfigOptions: UserConfigOptions): boolean {
-    if (isMacOs(platform())) {
+    if (operatingSystem === OperatingSystem.macOS) {
         return true;
     }
 
@@ -466,7 +480,7 @@ function mainWindowNeedsToBeTransparent(userConfigOptions: UserConfigOptions): b
 function getMainWindowBackgroundColor(userConfigOptions: UserConfigOptions): string {
     const transparent = "#00000000";
 
-    if (isMacOs(platform())) {
+    if (operatingSystem === OperatingSystem.macOS) {
         return transparent;
     }
 
@@ -478,7 +492,7 @@ function getMainWindowBackgroundColor(userConfigOptions: UserConfigOptions): str
 function startApp() {
     createTrayIcon();
     createMainWindow();
-    updateMainWindowSize(0, config.appearanceOptions, isMacOs(platform()));
+    updateMainWindowSize(0, config.appearanceOptions, operatingSystem === OperatingSystem.macOS);
     registerGlobalKeyboardShortcut(toggleMainWindow, config.generalOptions.hotKey);
     updateAutoStartOptions(config);
     setKeyboardShortcuts();
@@ -487,7 +501,7 @@ function startApp() {
 }
 
 function setKeyboardShortcuts() {
-    if (isMacOs(platform()) && !isDev()) {
+    if (operatingSystem === OperatingSystem.macOS && !appIsInDevelopment) {
         const template = [
             {
                 label: "ueli",
@@ -529,13 +543,13 @@ function onLanguageChange(updatedConfig: UserConfigOptions) {
 }
 
 function onSettingsOpen() {
-    if (isMacOs(platform())) {
+    if (operatingSystem === OperatingSystem.macOS) {
         app.dock.show();
     }
 }
 
 function onSettingsClose() {
-    if (isMacOs(platform())) {
+    if (operatingSystem === OperatingSystem.macOS) {
         app.dock.hide();
     }
 }
@@ -549,13 +563,14 @@ function openSettings() {
             title: translationSet.settings,
             webPreferences: {
                 nodeIntegration: true,
+                enableRemoteModule: true,
             },
             width: 1000,
         });
         settingsWindow.setMenu(null);
         settingsWindow.loadFile(join(__dirname, "..", "settings.html"));
         settingsWindow.on("close", onSettingsClose);
-        if (isDev()) {
+        if (appIsInDevelopment) {
             settingsWindow.webContents.openDevTools();
         }
     } else {
@@ -721,7 +736,7 @@ function registerAllIpcListeners() {
 
     ipcMain.on(IpcChannels.checkForUpdate, () => {
         logger.debug("Check for updates");
-        if (isDev()) {
+        if (appIsInDevelopment) {
             sendMessageToSettingsWindow(IpcChannels.checkForUpdateResponse, UpdateCheckResult.NoUpdateAvailable);
         } else {
             autoUpdater.checkForUpdates();
@@ -729,10 +744,10 @@ function registerAllIpcListeners() {
     });
 
     ipcMain.on(IpcChannels.downloadUpdate, () => {
-        if (isWindows(platform())) {
+        if (operatingSystem === OperatingSystem.Windows) {
             logger.debug("Downloading updated");
             autoUpdater.downloadUpdate();
-        } else if (isMacOs(platform())) {
+        } else if (operatingSystem === OperatingSystem.macOS) {
             openUrlInBrowser(releaseUrl)
                 .then(() => { /* do nothing */ })
                 .catch((err) => logger.error(err));
@@ -777,7 +792,7 @@ autoUpdater.on("error", (error) => {
     sendMessageToSettingsWindow(IpcChannels.checkForUpdateResponse, UpdateCheckResult.Error);
 });
 
-if (isWindows(platform())) {
+if (operatingSystem === OperatingSystem.Windows) {
     autoUpdater.on("update-downloaded", () => {
         logger.debug("Update downloaded");
         autoUpdater.quitAndInstall();

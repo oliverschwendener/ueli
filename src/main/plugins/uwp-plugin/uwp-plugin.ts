@@ -48,7 +48,7 @@ export class UwpPlugin implements SearchPlugin {
     }
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        return this.filePathExecutor(searchResultItem.executionArgument, false);
+        return this.filePathExecutor(searchResultItem.executionArgument, privileged);
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {

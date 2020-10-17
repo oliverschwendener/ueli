@@ -10,7 +10,7 @@ import { existsSync } from "fs";
 import { FileIconDataResult } from "../../../common/icon/generate-file-icon";
 import { defaultFileIcon, defaultFolderIcon } from "../../../common/icon/default-icons";
 import { Icon } from "../../../common/icon/icon";
-import Fuse = require("fuse.js");
+import Fuse from "fuse.js";
 import { createFilePathDescription } from "../../helpers/file-path-helpers";
 import { OpenLocationPlugin } from "../../open-location-plugin";
 import { AutoCompletionPlugin } from "../../auto-completion-plugin";
@@ -160,7 +160,6 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin, AutoCompleti
                 includeScore: true,
                 keys: ["searchable"],
                 location: 0,
-                maxPatternLength: 32,
                 minMatchCharLength: 1,
                 shouldSort: true,
                 threshold: 0.4,
