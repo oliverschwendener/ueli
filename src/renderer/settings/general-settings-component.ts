@@ -526,6 +526,22 @@ export const generalSettingsComponent = Vue.extend({
                         </div>
 
                         <div class="settings__option">
+                            <div class="settings__option-name">{{ translations.generalSettingsDecimalSeparator }}</div>
+                            <div class="settings__option-content">
+                                <div class="field is-grouped is-grouped-right">
+                                    <div class="buttons has-addons">
+                                        <button class="button"
+                                            :class="{ 'is-success': config.generalOptions.decimalSeparator == '.' }"
+                                            @click="config.generalOptions.decimalSeparator = '.'; updateConfig();">.</button>
+                                        <button class="button"
+                                            :class="{ 'is-success': config.generalOptions.decimalSeparator == ',' }"
+                                            @click="config.generalOptions.decimalSeparator = ','; updateConfig();">,</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings__option">
                             <div class="settings__option-name">Update</div>
                             <div class="settings__option-content">
                                 <div class="field has-addons has-addons-right vertical-center">
