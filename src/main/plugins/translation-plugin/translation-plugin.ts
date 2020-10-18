@@ -10,7 +10,7 @@ import { TranslationOptions } from "../../../common/config/translation-options";
 export class TranslationPlugin implements ExecutionPlugin {
     public readonly pluginType = PluginType.TranslationPlugin;
     private config: TranslationOptions;
-    private delay: NodeJS.Timeout | number;
+    private delay: NodeJS.Timeout | number | undefined;
     private readonly clipboardCopier: (value: string) => Promise<void>;
 
     constructor(config: TranslationOptions, clipboardCopier: (value: string) => Promise<void>) {

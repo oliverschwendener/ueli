@@ -11,7 +11,7 @@ import { IconType } from "../../../common/icon/icon-type";
 import { replaceWhitespace } from "../../../common/helpers/string-helpers";
 
 export class ColorConverterPlugin implements ExecutionPlugin {
-    public pluginType: PluginType.ColorConverter;
+    public pluginType = PluginType.ColorConverter;
     private config: ColorConverterOptions;
     private readonly clipboardCopier: (value: string) => Promise<void>;
 
