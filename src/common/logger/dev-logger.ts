@@ -1,5 +1,5 @@
 import { Logger } from "./logger";
-import * as Winston from "winston";
+import Winston from "winston";
 import { logFormat } from "../helpers/logger-helpers";
 
 export class DevLogger implements Logger {

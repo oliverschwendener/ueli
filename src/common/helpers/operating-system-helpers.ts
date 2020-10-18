@@ -49,6 +49,8 @@ function getMacOsVersion(operatingSystemRelease: string): OperatingSystemVersion
             return OperatingSystemVersion.MacOsMojave;
         case "19":
             return OperatingSystemVersion.MacOsCatalina;
+        case "20":
+            return OperatingSystemVersion.MacOsBigSur;
         default:
             throw new Error(`Unsupported macOS version: ${operatingSystemRelease}`);
     }

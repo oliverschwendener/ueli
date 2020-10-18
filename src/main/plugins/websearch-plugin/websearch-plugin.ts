@@ -13,16 +13,23 @@ export class WebSearchPlugin implements ExecutionPlugin {
     private config: WebSearchOptions;
     private translationSet: TranslationSet;
     private readonly urlExecutor: (url: string) => Promise<void>;
+    private readonly suggestionResolver: (url: string) => Promise<any>;
 
-    constructor(userConfig: WebSearchOptions, translationSet: TranslationSet, urlExecutor: (url: string) => Promise<void>) {
+    constructor(
+        userConfig: WebSearchOptions,
+        translationSet: TranslationSet,
+        urlExecutor: (url: string) => Promise<void>,
+        suggestionResolver: (url: string) => Promise<any>,
+    ) {
         this.config = userConfig;
         this.translationSet = translationSet;
         this.urlExecutor = urlExecutor;
+        this.suggestionResolver = suggestionResolver;
     }
 
     public getSearchResults(userInput: string, fallback?: boolean): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            const searchResults = this.config.webSearchEngines
+            const webSearchEngines = this.config.webSearchEngines
                 .filter((webSearchEngine) => {
                     return fallback
                         ? webSearchEngine.isFallback
@@ -36,20 +43,33 @@ export class WebSearchPlugin implements ExecutionPlugin {
                         return -1;
                     }
                     return 0;
-                })
-                .map((webSearchEngine): SearchResultItem => {
-                    return {
-                        description: this.buildDescription(webSearchEngine, userInput),
-                        executionArgument: this.buildExecutionArgument(webSearchEngine, userInput),
-                        hideMainWindowAfterExecution: true,
-                        icon: isValidIcon(webSearchEngine.icon) ? webSearchEngine.icon : defaultWebSearchIcon,
-                        name: webSearchEngine.name,
-                        originPluginType: this.pluginType,
-                        searchable: [],
-                    };
                 });
 
-            resolve(searchResults);
+            const suggestionWebSearchEngines = webSearchEngines.filter((webSearchEngine) => {
+                return webSearchEngine.suggestionUrl !== undefined;
+            });
+
+            this.getSuggestions(suggestionWebSearchEngines, userInput)
+                .then((suggestions) => {
+                    const results: SearchResultItem[] = [];
+
+                    for (const webSearchEngine of webSearchEngines) {
+                        results.push({
+                            description: this.buildDescription(webSearchEngine, userInput),
+                            executionArgument: this.buildExecutionArgument(webSearchEngine, userInput),
+                            hideMainWindowAfterExecution: true,
+                            icon: isValidIcon(webSearchEngine.icon) ? webSearchEngine.icon : defaultWebSearchIcon,
+                            name: webSearchEngine.name,
+                            originPluginType: this.pluginType,
+                            searchable: [],
+                        });
+                    }
+
+                    suggestions.forEach((suggestion) => results.push(suggestion));
+
+                    resolve(results);
+                })
+                .catch((error) => reject(error));
         });
     }
 
@@ -92,7 +112,7 @@ export class WebSearchPlugin implements ExecutionPlugin {
     }
 
     private buildExecutionArgument(webSearchEngine: WebSearchEngine, userInput: string): string {
-        return webSearchEngine.url.replace(/{{query}}/g, this.getSearchTerm(webSearchEngine, userInput));
+        return this.replaceQueryInUrl(this.getSearchTerm(webSearchEngine, userInput), webSearchEngine.url);
     }
 
     private userInputMatches(userInput: string, fallback?: boolean): boolean {
@@ -101,5 +121,60 @@ export class WebSearchPlugin implements ExecutionPlugin {
                 ? websearchEngine.isFallback
                 : userInput.startsWith(websearchEngine.prefix);
         });
+    }
+
+    private getSuggestions(webSearchEngines: WebSearchEngine[], userInput: string): Promise<SearchResultItem[]> {
+        return new Promise((resolve, reject) => {
+            const promises = webSearchEngines.map((webSearchEngine) => this.getSuggestionsByWebSearchEngine(webSearchEngine, userInput));
+
+            Promise.all(promises)
+                .then((lists) => {
+                    const result: SearchResultItem[] = [];
+
+                    lists.forEach((list) => {
+                        list.forEach((item) => result.push(item));
+                    });
+
+                    resolve(result);
+                })
+                .catch((error) => reject(error));
+        });
+    }
+
+    private getSuggestionsByWebSearchEngine(websearchEngine: WebSearchEngine, userInput: string): Promise<SearchResultItem[]> {
+        const searchTerm = this.getSearchTerm(websearchEngine, userInput);
+
+        return new Promise((resolve, reject) => {
+            if (websearchEngine.suggestionUrl && searchTerm) {
+                const suggestionUrl = this.replaceQueryInUrl(searchTerm, websearchEngine.suggestionUrl);
+
+                this.suggestionResolver(suggestionUrl)
+                    .then((response) => {
+                        const suggestions: string[] = response[1];
+
+                        const searchResultItems = suggestions.map((suggestion): SearchResultItem => {
+                            return {
+                                description: this.buildDescription(websearchEngine, suggestion),
+                                executionArgument: this.buildExecutionArgument(websearchEngine, suggestion),
+                                hideMainWindowAfterExecution: true,
+                                icon: isValidIcon(websearchEngine.icon) ? websearchEngine.icon : defaultWebSearchIcon,
+                                name: suggestion,
+                                originPluginType: this.pluginType,
+                                searchable: [],
+                            };
+                        });
+
+                        resolve(searchResultItems);
+                    })
+                    .catch((error) => reject(error));
+            } else {
+                resolve([]);
+            }
+
+        });
+    }
+
+    private replaceQueryInUrl(query: string, url: string): string {
+        return url.replace(/{{query}}/g, query);
     }
 }

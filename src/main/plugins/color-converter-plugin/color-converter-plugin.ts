@@ -5,13 +5,13 @@ import { isValidColorCode } from "./color-converter-helpers";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
-import * as color from "color";
+import color from "color";
 import { defaultColorConverterIcon } from "../../../common/icon/default-icons";
 import { IconType } from "../../../common/icon/icon-type";
 import { replaceWhitespace } from "../../../common/helpers/string-helpers";
 
 export class ColorConverterPlugin implements ExecutionPlugin {
-    public pluginType: PluginType.ColorConverter;
+    public pluginType = PluginType.ColorConverter;
     private config: ColorConverterOptions;
     private readonly clipboardCopier: (value: string) => Promise<void>;
 

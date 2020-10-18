@@ -41,6 +41,16 @@ describe(Calculator.name, () => {
             });
         });
 
+        it("should use specified decimal and argument separators", () => {
+            const calculation = "sum(1,2; 3)";
+            const decimalSeparator = ",";
+            const argumentSeparator = ";";
+
+            const actual = Calculator.calculate(calculation, 10, decimalSeparator, argumentSeparator);
+
+            expect(actual).toBe("4,2");
+        });
+
         it("should use default precision if specified precision is outside of allowed range", () => {
             const calculation = "1/3";
             const invalidPrecisions = [

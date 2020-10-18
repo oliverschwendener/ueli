@@ -28,6 +28,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             prefix: "d?",
             priority: 1,
             url: "https://duckduckgo.com/?q={{query}}",
+            suggestionUrl: "https://ac.duckduckgo.com/ac/?q={{query}}&type=list",
         },
         {
             encodeSearchTerm: true,
@@ -47,6 +48,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             prefix: "g?",
             priority: 2,
             url: "https://google.com/search?q={{query}}",
+            suggestionUrl: "https://www.google.com/complete/search?client=opera&q={{query}}",
         },
         {
             encodeSearchTerm: true,
@@ -70,6 +72,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             prefix: "gi?",
             priority: 3,
             url: "https://www.google.com/search?tbm=isch&q={{query}}",
+            suggestionUrl: "https://www.google.com/complete/search?ds=i&output=firefox&q={{query}}",
         },
         {
             encodeSearchTerm: true,
@@ -86,6 +89,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             prefix: "w?",
             priority: 4,
             url: "https://en.wikipedia.org/wiki/{{query}}",
+            suggestionUrl: "https://en.wikipedia.org/w/api.php?action=opensearch&search={{query}}",
         },
         {
             encodeSearchTerm: true,
@@ -103,6 +107,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             prefix: "yt?",
             priority: 5,
             url: "https://www.youtube.com/results?search_query={{query}}",
+            suggestionUrl: "https://www.google.com/complete/search?ds=yt&output=firefox&q={{query}}",
         },
         {
             encodeSearchTerm: true,
@@ -115,6 +120,7 @@ export const defaultWebSearchOptions: WebSearchOptions = {
             prefix: "b?",
             priority: 6,
             url: "https://www.bing.com/search?q={{query}}",
+            suggestionUrl: "https://www.bing.com/osjson.aspx?query={{query}}",
         },
     ],
 };

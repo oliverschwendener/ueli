@@ -1,4 +1,4 @@
-import * as color from "color";
+import color from "color";
 import { replaceWhitespace } from "../../../common/helpers/string-helpers";
 
 export function isValidColorCode(value: string): boolean {
