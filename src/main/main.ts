@@ -723,6 +723,7 @@ function registerAllIpcListeners() {
                 openSettings();
                 break;
             case UeliCommandExecutionArgument.RefreshIndexes:
+                mainWindow.webContents.send(IpcChannels.userInputUpdated, '', false);
                 refreshAllIndexes();
                 break;
             case UeliCommandExecutionArgument.ClearCaches:
