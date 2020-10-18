@@ -55,21 +55,25 @@ function generateIcons(icons: Icon[], followShortcuts?: boolean): Promise<void> 
             $icons |
             Where-Object { Test-Path -LiteralPath $_.inputFilePath } |
             ForEach-Object {
-                    $path;
-                    if($_.inputFilePath -match '.lnk$'){
-                        $path = $Shell.CreateShortcut($_.inputFilePath).targetpath;
-                        if($path -ne ""){
-                            if ((Test-Path -Path $path -PathType Container ) -or ($path -match '.url$')) {
-                                $path = $_.inputFilePath;
-                            }
-                        }else{
-                            $path = $_.inputFilePath;
+                    $originalPath = $_.inputFilePath;
+                    Try {
+                        $path = $Shell.CreateShortcut($originalPath).TargetPath;
+
+                        # fallback to $originalPath if $path is a directory or url
+                        if ((Test-Path -Path $path -PathType Container ) -or ($path -match '.url$')) {
+                            $path = $originalPath;
                         }
-                    }else{
-                        $path = $_.inputFilePath;
+                    } Catch {
+                        $path = $originalPath
                     }
+
                     $icon = $null;
-                    $icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path);
+                    Try {
+                        $icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path);
+                    } Catch {
+                        $icon = [System.Drawing.Icon]::ExtractAssociatedIcon($originalPath);
+                    }
+
                     if ($icon -ne $null) {
                         $outputFormat = $_.outputFormat;
                         $bitmap = $icon.ToBitmap().Save($_.outputFilePath, [System.Drawing.Imaging.ImageFormat]::$outputFormat);
