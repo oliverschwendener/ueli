@@ -65,6 +65,7 @@ export interface TranslationSet {
     generalSettingsClearExecutionLogWarning: string;
     generalSettingsHideMainWindowAfterExecution: string;
     generalSettingsHideMainWindowOnBlur: string;
+    generalSettingsDecimalSeparator: string;
     generalSettingsCheckingForUpdate: string;
     generalSettingsDownloadUpdate: string;
     generalSettingsDownloadingUpdate: string;
@@ -339,6 +340,7 @@ export interface TranslationSet {
     remove: string;
     edit: string;
     forExample: string;
+    example: string;
     iconType: string;
     iconTypeColor: string;
     showFullFilePath: string;
