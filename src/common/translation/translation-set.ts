@@ -223,6 +223,7 @@ export interface TranslationSet {
     websearchName: string;
     websearchPrefix: string;
     websearchUrl: string;
+    websearchSuggestionUrl: string;
     websearchIcon: string;
     websearchPriority: string;
     websearchIsFallback: string;

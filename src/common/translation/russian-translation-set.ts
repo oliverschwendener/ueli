@@ -226,6 +226,7 @@ export const russianTranslationSet: TranslationSet = {
     websearchName: "Имя",
     websearchPrefix: "Префикс",
     websearchUrl: "URL",
+    websearchSuggestionUrl: "Предложение URL",
     websearchIcon: "Иконка",
     websearchPriority: "Приоритет",
     websearchIsFallback: "Запасная",

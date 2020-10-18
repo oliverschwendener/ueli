@@ -226,6 +226,7 @@ export const englishTranslationSet: TranslationSet = {
     websearchName: "Název",
     websearchPrefix: "Předpona",
     websearchUrl: "URL",
+    websearchSuggestionUrl: "Návrh URL",
     websearchIcon: "Ikona",
     websearchPriority: "Priorita",
     websearchIsFallback: "Záloha",

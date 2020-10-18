@@ -226,6 +226,7 @@ export const portugueseTranslationSet: TranslationSet = {
     websearchName: "Nome",
     websearchPrefix: "Prefixo",
     websearchUrl: "URL",
+    websearchSuggestionUrl: "Sugestão URL",
     websearchIcon: "Ícone",
     websearchPriority: "Prioridade",
     websearchIsFallback: "Contingência",

@@ -226,6 +226,7 @@ export const turkishTranslationSet: TranslationSet = {
     websearchName: "Ad",
     websearchPrefix: "Ön ek",
     websearchUrl: "URL",
+    websearchSuggestionUrl: "Öneri URL",
     websearchIcon: "İkon",
     websearchPriority: "Öncelik",
     websearchIsFallback: "Yedek",

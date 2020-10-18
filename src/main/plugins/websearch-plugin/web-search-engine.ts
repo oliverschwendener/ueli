@@ -8,4 +8,5 @@ export interface WebSearchEngine {
     priority: number;
     isFallback: boolean;
     encodeSearchTerm: boolean;
+    suggestionUrl?: string;
 }
