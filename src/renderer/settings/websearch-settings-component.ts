@@ -112,6 +112,7 @@ export const webSearchSettingsComponent = Vue.extend({
                     <table v-if="config.websearchOptions.webSearchEngines.length > 0" class="table is-striped is-fullwidth">
                         <thead>
                             <tr>
+                                <th class="has-text-centered">{{ translations.edit }}</th>
                                 <th>{{ translations.websearchName }}</th>
                                 <th>{{ translations.websearchPrefix }}</th>
                                 <th>{{ translations.websearchUrl }}</th>
@@ -120,12 +121,18 @@ export const webSearchSettingsComponent = Vue.extend({
                                 <th class="has-text-centered">{{ translations.websearchPriority }}</th>
                                 <th class="has-text-centered">{{ translations.websearchIsFallback }}</th>
                                 <th class="has-text-centered">{{ translations.websearchEncodeSearchTerm }}</th>
-                                <th class="has-text-centered">{{ translations.edit }}</th>
                                 <th class="has-text-centered">{{ translations.remove }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(websearchEngine, index) in config.websearchOptions.webSearchEngines">
+                                <td class="has-text-centered">
+                                    <button class="button" @click="editWebsearchEngine(index)">
+                                        <span class="icon">
+                                            <i class="fas fa-edit"></i>
+                                        </span>
+                                    </button>
+                                </td>
                                 <td>{{ websearchEngine.name }}</td>
                                 <td class="font-mono">{{ websearchEngine.prefix }}</td>
                                 <td>{{ websearchEngine.url }}</td>
@@ -134,13 +141,6 @@ export const webSearchSettingsComponent = Vue.extend({
                                 <td class="has-text-centered">{{ websearchEngine.priority }}</td>
                                 <td class="has-text-centered"><i v-if="websearchEngine.isFallback" class="fas fa-check"></i></td>
                                 <td class="has-text-centered"><i v-if="websearchEngine.encodeSearchTerm" class="fas fa-check"></i></td>
-                                <td class="has-text-centered">
-                                    <button class="button" @click="editWebsearchEngine(index)">
-                                        <span class="icon">
-                                            <i class="fas fa-edit"></i>
-                                        </span>
-                                    </button>
-                                </td>
                                 <td class="has-text-centered">
                                     <button class="button is-danger" @click="removeWebsearchEngine(index)">
                                         <span class="icon">
