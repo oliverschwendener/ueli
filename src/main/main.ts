@@ -62,6 +62,12 @@ if (operatingSystem === OperatingSystem.Windows) {
     addPowershellToPathVariableIfMissing();
 }
 
+if (operatingSystem === OperatingSystem.Windows) {
+    // Fix to prevent the app to flash twice on Windows
+    // https://github.com/electron/electron/issues/22691
+    app.commandLine.appendSwitch("wm-window-animations-disabled");
+}
+
 let trayIcon: Tray;
 let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow;
