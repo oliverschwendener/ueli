@@ -330,10 +330,12 @@ export interface TranslationSet {
     dictionaryDebounceDelay: string;
 
     browserBookmarks: string;
-    browserBookmarksBrowser: string;
     browserBookmarksDescription: string;
     browserBookmarksUseFavicons: string;
     browserBookmark: string;
+    browserBookmarkRemoveAction: string;
+    browserBookmarksFile: string;
+    browserBookmarksAddNewBookmarksFile: string;
 
     cancel: string;
     save: string;

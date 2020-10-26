@@ -122,7 +122,7 @@ export const portugueseTranslationSet: TranslationSet = {
     settingsUserInputTitle: "Entrada do usuário",
     settingsSearchResultsBoxTitle: "Caixa de resultados de pesquisa ",
     settingsScrollbarTitle: "Barra de rolagem",
-    settingsGeneralTitle:"Geral",
+    settingsGeneralTitle: "Geral",
 
     colorThemeSettings: "Tema de cores",
     colorThemeSettingsImportColorTheme: "Importar tema de cores",
@@ -334,9 +334,11 @@ export const portugueseTranslationSet: TranslationSet = {
 
     browserBookmarks: "Favoritos do navegador",
     browserBookmarksDescription: "Este plugin te habilita a procurar em seus favoritos de navegador.",
-    browserBookmarksBrowser: "Navegador",
     browserBookmarksUseFavicons: "Usar favicons",
     browserBookmark: "Favoritos",
+    browserBookmarkRemoveAction: "Retirar",
+    browserBookmarksFile: "Arquivo de favoritos",
+    browserBookmarksAddNewBookmarksFile: "Adicionar arquivo de favorito",
 
     cancel: "Cancelar",
     save: "Salvar",

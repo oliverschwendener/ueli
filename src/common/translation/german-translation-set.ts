@@ -334,9 +334,11 @@ export const germanTranslationSet: TranslationSet = {
 
     browserBookmarks: "Browser Lesezeichen",
     browserBookmarksDescription: "Dieses Plugin erlaubt es dir die Lesezeichen deines Browser zu durchsuchen.",
-    browserBookmarksBrowser: "Browser",
     browserBookmarksUseFavicons: "Favicons benutzen",
     browserBookmark: "Lesezeichen",
+    browserBookmarkRemoveAction: "Entfernen",
+    browserBookmarksFile: "Lesezeichen-Datei",
+    browserBookmarksAddNewBookmarksFile: "Lesezeichendatei hinzufügen",
 
     cancel: "Abbrechen",
     save: "Speichern",

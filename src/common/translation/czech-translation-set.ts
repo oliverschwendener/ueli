@@ -334,9 +334,11 @@ export const englishTranslationSet: TranslationSet = {
 
     browserBookmarks: "Záložky prohlížeče",
     browserBookmarksDescription: "This plugin enables you to search your browser bookmarks.",
-    browserBookmarksBrowser: "Prohlížeč",
     browserBookmarksUseFavicons: "Používat favicons",
     browserBookmark: "Záložka",
+    browserBookmarkRemoveAction: "Odstranit",
+    browserBookmarksFile: "Soubor záložek",
+    browserBookmarksAddNewBookmarksFile: "Přidejte soubor záložek",
 
     cancel: "Zrušit",
     save: "Uložit",

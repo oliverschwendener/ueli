@@ -334,9 +334,11 @@ export const russianTranslationSet: TranslationSet = {
 
     browserBookmarks: "Закладки браузера",
     browserBookmarksDescription: "Этот плагин позволяет искать по закладкам в браузере.",
-    browserBookmarksBrowser: "Браузер",
     browserBookmarksUseFavicons: "Использовать избранное",
     browserBookmark: "Закладка",
+    browserBookmarkRemoveAction: "Удалить",
+    browserBookmarksFile: "Файл закладок",
+    browserBookmarksAddNewBookmarksFile: "Добавить файл закладок",
 
     cancel: "Отмена",
     save: "Сохранить",

@@ -334,9 +334,11 @@ export const turkishTranslationSet: TranslationSet = {
 
     browserBookmarks: "Tarayıcı Yer İşaretleri",
     browserBookmarksDescription: "Bu eklenti tarayıcı yer işaretlerinizi aramanızı sağlar.",
-    browserBookmarksBrowser: "Tarayıcı",
     browserBookmarksUseFavicons: "Yer imi ikonunu kullan",
     browserBookmark: "Yer imi",
+    browserBookmarkRemoveAction: "Kaldırmak",
+    browserBookmarksFile: "Yer İşaretleri Dosyası",
+    browserBookmarksAddNewBookmarksFile: "Yer imi dosyası ekle",
 
     cancel: "İptal",
     save: "Kaydet",
