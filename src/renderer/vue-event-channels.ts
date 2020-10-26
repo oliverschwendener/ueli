@@ -49,4 +49,6 @@ export enum VueEventChannels {
     refreshIndexesStarted = "refresh-indexes-started",
     refreshIndexesFinished = "refresh-indexes-finished",
     executionFinished = "execution-finished",
+    bookmarksFileAdded = "bookmarks-file-added",
+    openNewBookmarksFileModal = "open-new-bookmarks-file-modal"
 }

@@ -1,11 +1,14 @@
-import { Browser } from "../../main/plugins/browser-bookmarks-plugin/browser";
-
+import { OperatingSystem } from "../operating-system";
+import { getCurrentOperatingSystem } from "../helpers/operating-system-helpers";
+import { homedir, platform } from "os";
 export interface BrowserBookmarksOptions {
     isEnabled: boolean;
-    browser: Browser;
+    bookmarksFiles: string[];
 }
 
 export const defaultBrowserBookmarksOptions: BrowserBookmarksOptions = {
-    browser: Browser.GoogleChrome,
+    bookmarksFiles: [getCurrentOperatingSystem(platform()) === OperatingSystem.Windows
+        ? `${homedir()}\\AppData\\Local\\Vivaldi\\User Data\\Default\\Bookmarks`
+        : `${homedir()}/Library/Application\ Support/Vivaldi/Default/Bookmarks`],
     isEnabled: true,
 };

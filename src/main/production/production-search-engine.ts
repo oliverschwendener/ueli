@@ -2,7 +2,6 @@ import { ApplicationSearchPlugin } from "../plugins/application-search-plugin/ap
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/ueli-command-search-plugin";
 import { ShortcutsSearchPlugin } from "../plugins/shortcuts-search-plugin/shortcuts-search-plugin";
-import { homedir } from "os";
 import { openUrlInBrowser } from "../executors/url-executor";
 import { executeFilePathWindows, executeFilePathMacOs } from "../executors/file-path-executor";
 import { SearchEngine } from "../search-engine";
@@ -47,15 +46,12 @@ import { searchWindowsApplications, searchMacApplications } from "../executors/a
 import { generateMacAppIcons } from "../plugins/application-search-plugin/mac-os-app-icon-generator";
 import { DictionaryPlugin } from "../plugins/dictionary-plugin/dictionary-plugin";
 import { BrowserBookmarksPlugin } from "../plugins/browser-bookmarks-plugin/browser-bookmarks-plugin";
-import { GoogleChromeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/google-chrome-bookmark-repository";
 import { ControlPanelPlugin } from "../plugins/control-panel-plugin/control-panel-plugin";
 import { getAllUwpApps } from "../plugins/uwp-plugin/uwp-apps-retriever";
 import { getGoogleDictionaryDefinitions } from "../plugins/dictionary-plugin/google-dictionary-definition-retriever";
 import { everythingSearcher } from "../plugins/everything-plugin/everything-searcher";
 import { mdfindSearcher } from "../plugins/mdfind-plugin/mdfind-searcher";
 import { OperatingSystem, OperatingSystemVersion } from "../../common/operating-system";
-import { BraveBookmarkRepository } from "../plugins/browser-bookmarks-plugin/brave-bookmark-repository";
-import { VivaldiBookmarkRepository } from '../plugins/browser-bookmarks-plugin/vivaldi-bookmark-repository';
 import { getWebearchSuggestions } from "../executors/websearch-suggestion-resolver";
 
 export function getProductionSearchEngine(
@@ -76,15 +72,6 @@ export function getProductionSearchEngine(
     const appIconGenerator = operatingSystem === OperatingSystem.Windows ? generateWindowsAppIcons : generateMacAppIcons;
     const defaultAppIcon = operatingSystem === OperatingSystem.Windows ? defaultWindowsAppIcon : defaultMacOsAppIcon;
     const fileSearcher = operatingSystem === OperatingSystem.Windows ? powershellFileSearcher : macosFileSearcher;
-    const chromeBookmarksFilePath = operatingSystem === OperatingSystem.Windows
-        ? `${homedir()}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks`
-        : `${homedir()}/Library/Application\ Support/Google/Chrome/Default/Bookmarks`;
-    const braveBookmarksFilePath = operatingSystem === OperatingSystem.Windows
-        ? `${homedir()}\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Bookmarks`
-        : `${homedir()}/Library/Application\ Support/BraveSoftware/Brave-Browser/Default/Bookmarks`;
-    const vivaldiBookmarksFilePath = operatingSystem === OperatingSystem.Windows
-        ? `${homedir()}\\AppData\\Local\\Vivaldi\\User Data\\Default\\Bookmarks`
-        : `${homedir()}/Library/Application\ Support/Vivaldi/Default/Bookmarks`;
 
     const operatingSystemCommandRepository = operatingSystem === OperatingSystem.Windows
         ? new WindowsOperatingSystemCommandRepository(translationSet)
@@ -141,11 +128,6 @@ export function getProductionSearchEngine(
         new BrowserBookmarksPlugin(
             config.browserBookmarksOptions,
             translationSet,
-            [
-              new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
-              new BraveBookmarkRepository(braveBookmarksFilePath),
-              new VivaldiBookmarkRepository(vivaldiBookmarksFilePath),
-            ],
             urlExecutor,
         ),
     ];
