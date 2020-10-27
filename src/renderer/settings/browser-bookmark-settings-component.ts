@@ -116,6 +116,17 @@ export const browserBookmarkSettingsComponent = Vue.extend({
                             </span>
                         </button>
                     </div>
+                    <div class="settings__option mt-4">
+                            <div class="settings__option-name">{{ translations.browserBookmarksUseFavicons }}</div>
+                            <div class="settings__option-content">
+                                <div class="field is-grouped is-grouped-right">
+                                    <div class="control">
+                                        <input id="useFaviconsCheckbox" type="checkbox" name="useFaviconsCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.browserBookmarksOptions.useFavicons" @change="updateConfig()">
+                                        <label for="useFaviconsCheckbox"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
             <new-bookmarks-file-modal :translations="translations"></new-bookmarks-file-modal>

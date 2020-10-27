@@ -4,6 +4,7 @@ import { homedir, platform } from "os";
 export interface BrowserBookmarksOptions {
     isEnabled: boolean;
     bookmarksFiles: string[];
+    useFavicons: boolean;
 }
 
 export const defaultBrowserBookmarksOptions: BrowserBookmarksOptions = {
@@ -11,4 +12,5 @@ export const defaultBrowserBookmarksOptions: BrowserBookmarksOptions = {
         ? `${homedir()}\\AppData\\Local\\Vivaldi\\User Data\\Default\\Bookmarks`
         : `${homedir()}/Library/Application\ Support/Vivaldi/Default/Bookmarks`],
     isEnabled: true,
+    useFavicons: false
 };

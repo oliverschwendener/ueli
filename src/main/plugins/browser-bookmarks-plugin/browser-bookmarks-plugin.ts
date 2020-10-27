@@ -9,6 +9,7 @@ import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { isValidUrl } from "../../../common/helpers/url-helpers";
 import { defaultBookmarkIcon } from "../../../common/icon/default-icons";
 import { existsSync } from "fs";
+import { IconType } from "../../../common/icon/icon-type";
 
 export class BrowserBookmarksPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.BrowserBookmarks;
@@ -133,7 +134,10 @@ export class BrowserBookmarksPlugin implements SearchPlugin {
                 : `${this.translations.browserBookmark}`,
             executionArgument: browserBookmark.url,
             hideMainWindowAfterExecution: true,
-            icon: defaultBookmarkIcon,
+            icon: this.config.useFavicons ? {
+                parameter: `https://i.olsh.me/icon?url=${browserBookmark.url}&size=80..120..200`,
+                type: IconType.URL
+            } : defaultBookmarkIcon,
             name: browserBookmark.name || browserBookmark.url,
             needsUserConfirmationBeforeExecution: false,
             originPluginType: this.pluginType,
