@@ -5,4 +5,5 @@ export enum Language {
     Russian = "Русский",
     Czech = "Česky",
     Turkish = "Türkçe",
+    Chinese = "简体中文"
 }
