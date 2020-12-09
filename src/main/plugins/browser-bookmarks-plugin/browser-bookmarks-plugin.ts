@@ -135,7 +135,7 @@ export class BrowserBookmarksPlugin implements SearchPlugin {
             executionArgument: browserBookmark.url,
             hideMainWindowAfterExecution: true,
             icon: this.config.useFavicons ? {
-                parameter: `https://i.olsh.me/icon?url=${browserBookmark.url}&size=80..120..200`,
+                parameter: `${browserBookmark.url}${browserBookmark.url.endsWith("/") ? "" : "/"}favicon.ico`,
                 type: IconType.URL
             } : defaultBookmarkIcon,
             name: browserBookmark.name || browserBookmark.url,
