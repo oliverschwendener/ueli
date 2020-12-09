@@ -63,20 +63,14 @@ export const userInputComponent = Vue.extend({
                 vueEventDispatcher.$emit(VueEventChannels.openSearchResultLocationKeyPress);
             }
 
-            const keyIntger = parseInt(event.key, 10);
-            const numbersEquivalent = "!@#$%\^*(".split("");
             if (event.ctrlKey) {
                 vueEventDispatcher.$emit(VueEventChannels.ctrlPressed, true)
-                let privileged: boolean;
+                const privileged: boolean = event.shiftKey;
                 const userConfirmed: boolean = this.userConfirmationDialogVisible;
-                if (!isNaN(keyIntger) && (keyIntger > 0 && keyIntger <= 9)) {
+                const keyCodes: string[] = ["Digit1", "Digit2","Digit3","Digit4","Digit5","Digit6","Digit7","Digit8","Digit9",];
+                if (keyCodes.includes(event.code)) {
                     event.preventDefault();
-                    privileged = false;
-                    vueEventDispatcher.$emit(VueEventChannels.ctrlNumberExecute, this.userInput, keyIntger - 1, privileged, userConfirmed);
-                } else if (numbersEquivalent.includes(event.key)) {
-                    event.preventDefault();
-                    privileged = true;
-                    vueEventDispatcher.$emit(VueEventChannels.ctrlNumberExecute, this.userInput, numbersEquivalent.indexOf(event.key), privileged, userConfirmed);
+                    vueEventDispatcher.$emit(VueEventChannels.ctrlNumberExecute, this.userInput, keyCodes.indexOf(event.code), privileged, userConfirmed);
                 }
             }
         },
