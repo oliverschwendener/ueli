@@ -143,6 +143,12 @@ export const userInputComponent = Vue.extend({
             setTimeout(() => this.setFocusOnInput(), 50);
         });
 
+        vueEventDispatcher.$on(VueEventChannels.mouseClick, (index: number, shiftKey: boolean) => {
+            const privileged: boolean = shiftKey;
+            const userConfirmed: boolean = this.userConfirmationDialogVisible;
+            vueEventDispatcher.$emit(VueEventChannels.executeMouseClick, this.userInput, index, privileged, userConfirmed);
+        });
+
         vueEventDispatcher.$on(VueEventChannels.appearanceOptionsUpdated, (updatedAppearanceOptions: AppearanceOptions) => {
             const config: UserConfigOptions = this.config;
             config.appearanceOptions = updatedAppearanceOptions;

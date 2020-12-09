@@ -49,4 +49,6 @@ export enum VueEventChannels {
     refreshIndexesStarted = "refresh-indexes-started",
     refreshIndexesFinished = "refresh-indexes-finished",
     executionFinished = "execution-finished",
+    mouseClick = "mouse-click",
+    executeMouseClick = "execute-mouse-click",
 }
