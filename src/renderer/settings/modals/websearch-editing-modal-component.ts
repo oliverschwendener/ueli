@@ -110,6 +110,15 @@ export const websearchEditingModal = Vue.extend({
                         </div>
                     </div>
 
+                    <div class="field">
+                        <label class="label">
+                            {{ translations.websearchSuggestionUrl }}
+                        </label>
+                        <div class="control is-expanded">
+                            <input class="input" type="url" v-model="websearchEngine.suggestionUrl" placeholder="Suggestion URL">
+                        </div>
+                    </div>
+
                     <icon-editing :icon="websearchEngine.icon" :translations="translations"></icon-editing>
 
                     <div class="field">

@@ -18,6 +18,7 @@ export interface GeneralOptions {
     rescanIntervalInSeconds: number;
     showAlwaysOnPrimaryDisplay: boolean;
     showTrayIcon: boolean;
+    decimalSeparator: string;
 }
 
 export const defaultGeneralOptions: GeneralOptions = {
@@ -39,4 +40,5 @@ export const defaultGeneralOptions: GeneralOptions = {
     rescanIntervalInSeconds: 300,
     showAlwaysOnPrimaryDisplay: false,
     showTrayIcon: true,
+    decimalSeparator: ".",
 };

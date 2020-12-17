@@ -9,7 +9,7 @@ import { Icon } from "../../../common/icon/icon";
 
 export class MdFindPlugin implements ExecutionPlugin, OpenLocationPlugin {
     public readonly pluginType = PluginType.MdFindExecutionPlugin;
-    private searchDelay: NodeJS.Timeout | number;
+    private searchDelay: NodeJS.Timeout | number | undefined;
 
     constructor(
         private config: MdFindOptions,

@@ -3,7 +3,7 @@ import { Definition } from "./dictionary";
 
 export function getGoogleDictionaryDefinitions(word: string): Promise<Definition[]> {
     return new Promise((resolve, reject) => {
-        axios.get(`https://googledictionaryapi.eu-gb.mybluemix.net/?define=${word}&lang=en`)
+        axios.get(`https://api.dictionaryapi.dev/api/v1/entries/en/${word}`)
             .then((response) => {
                 const definitions: Definition[] = response.data;
                 resolve(definitions);

@@ -53,6 +53,8 @@ export const windowsCommandLineExecutor = (command: string, shell: WindowsShell)
             return executeCommand(`start powershell -NoExit -Command "&${command}"`);
         case WindowsShell.Cmd:
             return executeCommand(`start cmd.exe /k "${command}"`);
+        case WindowsShell.PowerShellInWT:
+            return executeCommand(`start wt.exe powershell -NoExit -Command "&${command}"`);
         default:
             return unsupportedShellRejection(shell);
     }

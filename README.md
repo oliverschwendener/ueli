@@ -45,11 +45,13 @@ This plugin is searching for applications on your computer. You can specify the 
 
 ### Browser bookmarks
 
-This plugin enables you to search your browser bookmarks. 
+This plugin enables you to search your browser bookmarks.
 
 Currently supported browsers:
 
 - Google Chrome
+- Brave
+- Vivaldi
 
 ![browser-bookmarks](assets/feature-browser-bookmarks.png)
 
@@ -198,7 +200,7 @@ To open the settings simply search for "Settings" or press `Ctrl+i` on Windows o
 
 ## Updating
 
-The check if any updates are available open the settings. Under "General Settings" you can check if an update is available or not. 
+The check if any updates are available open the settings. Under "General Settings" you can check if an update is available or not.
 
 On Windows you can directly update the app. On macOS you have to manually download the newest release and replace the existing app.
 

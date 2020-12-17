@@ -1,6 +1,6 @@
-export class ControlPanelItem {
-    public Name: string;
-    public CanonicalName: string;
-    public Description: string;
-    public IconBase64: string;
+export interface ControlPanelItem {
+    Name: string;
+    CanonicalName: string;
+    Description: string;
+    IconBase64: string;
 }

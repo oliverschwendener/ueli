@@ -204,12 +204,7 @@ html {
     justify-content: center;
 }
 
-.vc-chrome-hue-wrap {
-    margin-bottom: 0 !important;
-}
-
 /* Hide color picker's text input (hex, rgba, etc.) */
-.vc-chrome-alpha-wrap,
 .vc-chrome-fields-wrap {
     display: none !important;
 }

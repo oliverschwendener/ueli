@@ -19,7 +19,7 @@ export class DictionaryPlugin implements ExecutionPlugin {
     private config: DictionaryOptions;
     private readonly clipboardCopier: (value: string) => Promise<void>;
     private readonly definitionRetriever: (word: string) => Promise<Definition[]>;
-    private delay: NodeJS.Timeout | number;
+    private delay: NodeJS.Timeout | number | undefined;
 
     constructor(
         config: DictionaryOptions,

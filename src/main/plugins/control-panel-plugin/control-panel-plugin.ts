@@ -55,7 +55,7 @@ export class ControlPanelPlugin implements SearchPlugin {
                 needsUserConfirmationBeforeExecution: false,
                 originPluginType: PluginType.ControlPanel,
                 searchable: [item.Name, item.Description],
-                supportsAutocompletion: true,
+                supportsAutocompletion: false,
                 supportsOpenLocation: false,
             }));
             resolve(searchResultItems);

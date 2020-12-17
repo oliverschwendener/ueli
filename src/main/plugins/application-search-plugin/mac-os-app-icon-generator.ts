@@ -1,6 +1,6 @@
 import { join } from "path";
 import { FileHelpers } from "../../../common/helpers/file-helpers";
-import * as plist from "simple-plist";
+import plist from "simple-plist";
 import { applicationIconLocation, getApplicationIconFilePath } from "./application-icon-helpers";
 import { existsSync } from "fs";
 import { executeCommand } from "../../executors/command-executor";
