@@ -56,6 +56,7 @@ import { mdfindSearcher } from "../plugins/mdfind-plugin/mdfind-searcher";
 import { OperatingSystem, OperatingSystemVersion } from "../../common/operating-system";
 import { BraveBookmarkRepository } from "../plugins/browser-bookmarks-plugin/brave-bookmark-repository";
 import { VivaldiBookmarkRepository } from '../plugins/browser-bookmarks-plugin/vivaldi-bookmark-repository';
+import { EdgeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/edge-bookmark-repository";
 import { getWebearchSuggestions } from "../executors/websearch-suggestion-resolver";
 
 export function getProductionSearchEngine(
@@ -85,6 +86,9 @@ export function getProductionSearchEngine(
     const vivaldiBookmarksFilePath = operatingSystem === OperatingSystem.Windows
         ? `${homedir()}\\AppData\\Local\\Vivaldi\\User Data\\Default\\Bookmarks`
         : `${homedir()}/Library/Application\ Support/Vivaldi/Default/Bookmarks`;
+    const edgeBookmarksFilePath = operatingSystem === OperatingSystem.Windows
+        ? `${homedir()}\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Bookmarks`
+        : `${homedir()}/Library/Application\ Support/Microsoft/Edge/Default/Bookmarks`;
 
     const operatingSystemCommandRepository = operatingSystem === OperatingSystem.Windows
         ? new WindowsOperatingSystemCommandRepository(translationSet)
@@ -145,6 +149,7 @@ export function getProductionSearchEngine(
               new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
               new BraveBookmarkRepository(braveBookmarksFilePath),
               new VivaldiBookmarkRepository(vivaldiBookmarksFilePath),
+              new EdgeBookmarkRepository(edgeBookmarksFilePath),
             ],
             urlExecutor,
         ),

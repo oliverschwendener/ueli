@@ -52,6 +52,7 @@ Currently supported browsers:
 - Google Chrome
 - Brave
 - Vivaldi
+- Microsoft Edge
 
 ![browser-bookmarks](assets/feature-browser-bookmarks.png)
 
