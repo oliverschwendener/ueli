@@ -100,6 +100,7 @@ export const spanishTranslationSet: TranslationSet = {
     hotkeyModifierControl: "Ctrl",
     hotkeyModifierOption: "Opción",
     hotkeyModifierShift: "Mayúsculas",
+    hotkeyModifierSuper: "Super",
 
     appearanceSettings: "Apariencia",
     appearanceSettingsWindowWidth: "Ancho de la ventana (en píxeles)",

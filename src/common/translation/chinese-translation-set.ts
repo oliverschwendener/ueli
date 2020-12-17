@@ -100,6 +100,7 @@ export const chineseTranslationSet: TranslationSet = {
     hotkeyModifierControl: "Ctrl",
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
+    hotkeyModifierSuper: "Super",
 
     appearanceSettings: "外观",
     appearanceSettingsWindowWidth: "窗口宽度（像素）",
