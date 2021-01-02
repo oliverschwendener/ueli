@@ -25,12 +25,13 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
     }
 
     public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
+        const keywords = ["in", "to"];
         const words = userInput.trim().split(" ");
         if (words.length === 4) {
             try {
-                return !isNaN(this.getNumber(words[0]))
+                return keywords.includes(words[2].toLowerCase())
+                    && !isNaN(this.getNumber(words[0]))
                     && this.isCurrencyCode(words[1])
-                    && words[2] === "in"
                     && this.isCurrencyCode(words[3]);
             } catch (err) {
                 return false;
