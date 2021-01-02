@@ -100,7 +100,7 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
     }
 
     private buildCurrencyConversion(userInput: string): CurrencyConversion {
-        const words = userInput.split(" ");
+        const words = userInput.trim().split(" ");
         return {
             base: Object.values(CurrencyCode).find((c: CurrencyCode) => c.toLowerCase() === words[1].toLowerCase()) || CurrencyCode.EUR,
             target: Object.values(CurrencyCode).find((c: CurrencyCode) => c.toLowerCase() === words[3].toLowerCase()) || CurrencyCode.USD,
