@@ -48,8 +48,10 @@ export class ControlPanelPlugin implements SearchPlugin {
                 icon: {
                     parameter: item.IconBase64
                         ? `data:image/png;base64,${item.IconBase64}`
-                        : defaultControlPanelIcon,
-                    type: IconType.URL,
+                        : defaultControlPanelIcon.parameter,
+                    type: item.IconBase64
+                        ? IconType.URL
+                        : defaultControlPanelIcon.type
                 },
                 name: item.Name,
                 needsUserConfirmationBeforeExecution: false,

@@ -30,7 +30,7 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                 description: this.translationSet.windowsShutdownDescription,
                 executionArgument: `shutdown -s -t 0`,
                 icon: {
-                    parameter: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal" d="M 14.984375 2.9863281 A 1.0001 1.0001 0 0 0 14 4 L 14 15 A 1.0001 1.0001 0 1 0 16 15 L 16 4 A 1.0001 1.0001 0 0 0 14.984375 2.9863281 z M 9.9960938 4.2128906 A 1.0001 1.0001 0 0 0 9.5449219 4.328125 C 5.6645289 6.3141271 3 10.347825 3 15 C 3 21.615466 8.3845336 27 15 27 C 21.615466 27 27 21.615466 27 15 C 27 10.347825 24.335471 6.3141271 20.455078 4.328125 A 1.0001544 1.0001544 0 1 0 19.544922 6.109375 C 22.780529 7.7653729 25 11.110175 25 15 C 25 20.534534 20.534534 25 15 25 C 9.4654664 25 5 20.534534 5 15 C 5 11.110175 7.2194712 7.7653729 10.455078 6.109375 A 1.0001 1.0001 0 0 0 9.9960938 4.2128906 z" font-weight="400" font-family="sans-serif" white-space="normal" overflow="visible"></path></svg>`,
+                    parameter: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m15 4v12h2v-12zm-3 .7c-4.7 1.7-8 6.1-8 11.3 0 6.6 5.4 12 12 12s12-5.4 12-12c0-5.2-3.3-9.6-8-11.3v2.1c3.5 1.6 6 5.1 6 9.2 0 5.5-4.5 10-10 10s-10-4.5-10-10c0-4.1 2.5-7.6 6-9.1z"/></svg>`,
                     type: IconType.SVG,
                 },
                 name: this.translationSet.windowsShutdown,
@@ -40,7 +40,7 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                 description: this.translationSet.windowsRestartDescription,
                 executionArgument: `shutdown -r -t 0`,
                 icon: {
-                    parameter: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M 2 2 L 4.9394531 4.9394531 C 3.1262684 6.7482143 2 9.2427079 2 12 C 2 17.514 6.486 22 12 22 C 17.514 22 22 17.514 22 12 C 22 6.486 17.514 2 12 2 L 12 4 C 16.411 4 20 7.589 20 12 C 20 16.411 16.411 20 12 20 C 7.589 20 4 16.411 4 12 C 4 9.7940092 4.9004767 7.7972757 6.3496094 6.3496094 L 9 9 L 9 2 L 2 2 z"></path></svg>`,
+                    parameter: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m16 4c-4.1 0-7.8 2.1-10 5.4v-2.5h-2v6.4h6v-2h-2.8c1.7-3.2 5-5.3 8.8-5.3 5.5 0 10 4.5 10 10s-4.5 10-10 10c-4.6 0-8.6-3.2-9.7-7.6l-1.9.5c1.3 5.3 6.1 9.1 11.6 9.1 6.6 0 12-5.4 12-12s-5.4-12-12-12z"/></svg>`,
                     type: IconType.SVG,
                 },
                 name: this.translationSet.windowsRestart,
@@ -50,7 +50,7 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                 description: this.translationSet.windowsSignoutDescription,
                 executionArgument: `shutdown /l`,
                 icon: {
-                    parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" version="1.1"><g id="surface1"><path d="M 6 0 C 4.34375 0 3 1.34375 3 3 L 3 23 C 3 24.65625 4.34375 26 6 26 L 20 26 C 21.65625 26 23 24.65625 23 23 L 23 17.8125 L 21 19.5625 L 21 23 C 21 23.550781 20.550781 24 20 24 L 6 24 C 5.449219 24 5 23.550781 5 23 L 5 3 C 5 2.449219 5.449219 2 6 2 L 20 2 C 20.550781 2 21 2.449219 21 3 L 21 6.4375 L 23 8.1875 L 23 3 C 23 1.34375 21.65625 0 20 0 Z M 16.5 6.46875 C 16.25 6.542969 16 6.796875 16 7.46875 L 16 10 L 10 10 C 9.449219 10 9 10.449219 9 11 L 9 15 C 9 15.550781 9.449219 16 10 16 L 16 16 L 16 18.5 C 16 19.78125 17 19.5 17 19.5 L 24.5 13 L 17 6.5 C 17 6.5 16.75 6.394531 16.5 6.46875 Z "></path></g></svg>`,
+                    parameter: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m4 4v24h14v-2h-12v-20h12v-2zm18 6-1.5 1.3 3.6 3.7h-13.1v2h13.1l-3.6 3.7 1.5 1.3 6-6z"/></svg>`,
                     type: IconType.SVG,
                 },
                 name: this.translationSet.windowsSignout,
@@ -60,7 +60,7 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                 description: this.translationSet.windowsLockDescription,
                 executionArgument: `rundll32 user32.dll,LockWorkStation`,
                 icon: {
-                    parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1"><g id="surface1"><path d="M 16 3 C 12.15625 3 9 6.15625 9 10 L 9 13 L 6 13 L 6 29 L 26 29 L 26 13 L 23 13 L 23 10 C 23 6.15625 19.84375 3 16 3 Z M 16 5 C 18.753906 5 21 7.246094 21 10 L 21 13 L 11 13 L 11 10 C 11 7.246094 13.246094 5 16 5 Z M 8 15 L 24 15 L 24 27 L 8 27 Z "></path></g></svg>`,
+                    parameter: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m16 3c-3.8 0-7 3.2-7 7v3h-3v16h20v-16h-3v-3c0-3.8-3.2-7-7-7zm0 2c2.8 0 5 2.2 5 5v3h-10v-3c0-2.8 2.2-5 5-5zm-8 10h16v12h-16z"/></svg>`,
                     type: IconType.SVG,
                 },
                 name: this.translationSet.windowsLock,
@@ -70,7 +70,7 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                 description: this.translationSet.windowsSleepDescription,
                 executionArgument: `powershell -NonInteractive -NoProfile -C "$m='[DllImport(\\\"Powrprof.dll\\\",SetLastError=true)]static extern bool SetSuspendState(bool hibernate,bool forceCritical,bool disableWakeEvent);public static void PowerSleep(){SetSuspendState(false,false,false); }';add-type -name Import -member $m -namespace Dll; [Dll.Import]::PowerSleep();"`,
                 icon: {
-                    parameter: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 5 4 L 5 6 L 13.15625 6 L 5.3125 13.75 L 5 14.0625 L 5 16 L 16 16 L 16 14 L 7.90625 14 L 15.6875 6.3125 L 16 6.03125 L 16 4 Z M 18 10 L 18 12 L 24.15625 12 L 18.3125 17.75 L 18 18.0625 L 18 20 L 27 20 L 27 18 L 20.90625 18 L 26.6875 12.3125 L 27 12.03125 L 27 10 Z M 8 19 L 8 21 L 13.15625 21 L 8.3125 25.75 L 8 26.0625 L 8 28 L 16 28 L 16 26 L 10.90625 26 L 15.6875 21.3125 L 16 21.03125 L 16 19 Z"></path></svg>`,
+                    parameter: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m5 4v2h8.2l-8.2 8v2h11v-2h-8.1l8.1-8v-2zm13 6v2h6.2l-6.2 6v2h9v-2h-6.1l6.1-6v-2zm-10 9v2h5.2l-5.2 5v2h8v-2h-5.1l5.1-5v-2z"/></svg>`,
                     type: IconType.SVG,
                 },
                 name: this.translationSet.windowsSleep,
@@ -80,7 +80,7 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                 description: this.translationSet.windowsHibernationDescription,
                 executionArgument: "shutdown /h",
                 icon: {
-                    parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1"><g id="surface1"><path d="M 5 5 L 5 27 L 27 27 L 27 5 Z M 7 7 L 25 7 L 25 25 L 7 25 Z M 13 11 L 13 21 L 15 21 L 15 11 Z M 17 11 L 17 21 L 19 21 L 19 11 Z "></path></g></svg>`,
+                    parameter: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m5 5v22h22v-22zm2 2h18v18h-18zm6 4v10h2v-10zm4 0v10h2v-10z"/></svg>`,
                     type: IconType.SVG,
                 },
                 name: this.translationSet.windowsHibernation,
