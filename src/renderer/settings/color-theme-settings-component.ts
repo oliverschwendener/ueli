@@ -343,6 +343,68 @@ export const colorThemeSettingsComponent = Vue.extend({
                         </div>
                     </div>
                 </div>
+                
+                <div class="settings__option">
+                    <div class="settings__option-name">{{ translations.colorThemeSearchResutlsItemNameTextColor }}</div>
+                    <div class="settings__option-content">
+                        <div class="field has-addons has-addons-right">
+                            <div class="control">
+                                <button
+                                    class="button preview-button"
+                                    :style="getPreviewColor(config.colorThemeOptions.searchResultsItemNameTextcolor)"
+                                    @click="editColor('searchResultsItemNameTextcolor', config.colorThemeOptions.searchResultsItemNameTextcolor)"
+                                    >
+                                </button>
+                            </div>
+                            <div class="control">
+                                <input
+                                    class="input font-mono"
+                                    type="text"
+                                    v-model="config.colorThemeOptions.searchResultsItemNameTextcolor"
+                                    @change="updateConfig"
+                                    >
+                            </div>
+                            <div class="control">
+                                <button class="button" @click="resetSearchResultsItemNameTextColor">
+                                    <span class="icon">
+                                        <i class="fas fa-undo-alt"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings__option">
+                    <div class="settings__option-name">{{ translations.colorThemeSearchResultsItemDescriptionTextColor }}</div>
+                    <div class="settings__option-content">
+                        <div class="field has-addons has-addons-right">
+                            <div class="control">
+                                <button
+                                    class="button preview-button"
+                                    :style="getPreviewColor(config.colorThemeOptions.searchResultsItemDescriptionTextColor)"
+                                    @click="editColor('searchResultsItemDescriptionTextColor', config.colorThemeOptions.searchResultsItemDescriptionTextColor)"
+                                    >
+                                </button>
+                            </div>
+                            <div class="control">
+                                <input
+                                    class="input font-mono"
+                                    type="text"
+                                    v-model="config.colorThemeOptions.searchResultsItemDescriptionTextColor"
+                                    @change="updateConfig"
+                                    >
+                            </div>
+                            <div class="control">
+                                <button class="button" @click="resetSearchResultsItemDescriptionTextColor">
+                                    <span class="icon">
+                                        <i class="fas fa-undo-alt"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="settings__option">
                     <div class="settings__option-name">{{ translations.colorThemeSearchResultsItemActiveBackgroundColor }}</div>
@@ -437,67 +499,6 @@ export const colorThemeSettingsComponent = Vue.extend({
                     </div>
                 </div>
 
-                <div class="settings__option">
-                    <div class="settings__option-name">{{ translations.colorThemeSearchResutlsItemNameTextColor }}</div>
-                    <div class="settings__option-content">
-                        <div class="field has-addons has-addons-right">
-                            <div class="control">
-                                <button
-                                    class="button preview-button"
-                                    :style="getPreviewColor(config.colorThemeOptions.searchResultsItemNameTextcolor)"
-                                    @click="editColor('searchResultsItemNameTextcolor', config.colorThemeOptions.searchResultsItemNameTextcolor)"
-                                    >
-                                </button>
-                            </div>
-                            <div class="control">
-                                <input
-                                    class="input font-mono"
-                                    type="text"
-                                    v-model="config.colorThemeOptions.searchResultsItemNameTextcolor"
-                                    @change="updateConfig"
-                                    >
-                            </div>
-                            <div class="control">
-                                <button class="button" @click="resetSearchResultsItemNameTextColor">
-                                    <span class="icon">
-                                        <i class="fas fa-undo-alt"></i>
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="settings__option">
-                    <div class="settings__option-name">{{ translations.colorThemeSearchResultsItemDescriptionTextColor }}</div>
-                    <div class="settings__option-content">
-                        <div class="field has-addons has-addons-right">
-                            <div class="control">
-                                <button
-                                    class="button preview-button"
-                                    :style="getPreviewColor(config.colorThemeOptions.searchResultsItemDescriptionTextColor)"
-                                    @click="editColor('searchResultsItemDescriptionTextColor', config.colorThemeOptions.searchResultsItemDescriptionTextColor)"
-                                    >
-                                </button>
-                            </div>
-                            <div class="control">
-                                <input
-                                    class="input font-mono"
-                                    type="text"
-                                    v-model="config.colorThemeOptions.searchResultsItemDescriptionTextColor"
-                                    @change="updateConfig"
-                                    >
-                            </div>
-                            <div class="control">
-                                <button class="button" @click="resetSearchResultsItemDescriptionTextColor">
-                                    <span class="icon">
-                                        <i class="fas fa-undo-alt"></i>
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </div class="settings__options-container">
         </div class="box">
