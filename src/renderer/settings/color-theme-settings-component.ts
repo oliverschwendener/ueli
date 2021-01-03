@@ -343,7 +343,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="settings__option">
                     <div class="settings__option-name">{{ translations.colorThemeSearchResutlsItemNameTextColor }}</div>
                     <div class="settings__option-content">
