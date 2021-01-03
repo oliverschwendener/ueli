@@ -58,7 +58,7 @@ export const defaultCurrencyExchangeIcon: Icon = {
 };
 
 export const defaultWorkflowIcon: Icon = {
-    parameter: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m3 5v22h26v-22zm2 2h22v2h-22zm0 4h22v14h-22z"/><path d="m14.7 13-1.3.5.6 1.6c-.4.3-.7.6-.9.9l-1.6-.6-.5 1.3 1.6.7c-.1.2-.1.4-.1.6s0 .4.1.6l-1.6.7.5 1.3 1.6-.6c.3.4.6.7.9.9l-.6 1.6 1.3.5.7-1.6c.2 0 .4.1.6.1s.4 0 .6-.1l.7 1.6 1.3-.5-.6-1.6c.4-.3.7-.6.9-.9l1.6.6.5-1.3-1.6-.7c.1-.2.1-.4.1-.6s0-.4-.1-.6l1.6-.7-.5-1.3-1.6.6c-.3-.3-.6-.6-.9-.9l.6-1.6-1.3-.5-.7 1.6c-.2-.1-.4-.1-.6-.1s-.4 0-.6.1zm1.3 3c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"/></svg>`,
+    parameter: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m3 3v10h10v-10zm2 2h6v6h-6z"/><path d="m8 19-4-4h2l1 1v-3h2v3l1-1h2z"/><path d="m8 19c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3c0-1.6 1.3-3 3-3z"/><path d="m24 19-5 5 5 5 5-5zm0 2.5 2.5 2.5-2.5 2.5-2.5-2.5z"/><path d="m15 20v2l1 1h-3.1a5 5 0 0 1 .1 1 5 5 0 0 1 -.1 1h3.1l-1 1v2l4-4z"/><path d="m24 13-4 4h2l1-1v4l1-1 1 1v-4l1 1h2z"/><path d="m24 3c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3z"/></svg>`,
     type: IconType.SVG,
 };
 
@@ -83,8 +83,8 @@ export const defaultTranslatorIcon = {
 };
 
 export const defaultWindowsOperatingSystemSettingIcon = {
-  parameter: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m13.5 6.4-10.5 1.6v7h10.5z"/><path d="m29 4-13.5 2.1v8.9h13.5z"/><path d="m3 17v7l10.5 1.6v-8.6z"/><path d="m15.5 17v8.9l13.5 2.1v-11z"/></svg>`,
-  type: IconType.SVG,
+    parameter: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m13.5 6.4-10.5 1.6v7h10.5z"/><path d="m29 4-13.5 2.1v8.9h13.5z"/><path d="m3 17v7l10.5 1.6v-8.6z"/><path d="m15.5 17v8.9l13.5 2.1v-11z"/></svg>`,
+    type: IconType.SVG,
 };
 
 export const defaultDictionaryIcon: Icon = {
@@ -98,6 +98,6 @@ export const defaultBookmarkIcon: Icon = {
 };
 
 export const defaultControlPanelIcon = {
-  parameter: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m17 4c-1.7 0-3 1.3-3 3h-10v2h10c0 1.7 1.3 3 3 3s3-1.3 3-3h8v-2h-8c0-1.7-1.3-3-3-3zm0 2c.6 0 1 .4 1 1v2c0 .6-.4 1-1 1s-1-.4-1-1v-2c0-.6.4-1 1-1z"/><path d="m10 12c-1.7 0-3 1.3-3 3h-3v2h3c0 1.7 1.3 3 3 3s3-1.3 3-3h15v-2h-15c0-1.7-1.3-3-3-3zm0 2c.6 0 1 .4 1 1v2c0 .6-.4 1-1 1s-1-.4-1-1v-2c0-.6.4-1 1-1z"/><path d="m22 20c-1.7 0-3 1.3-3 3h-15v2h15c0 1.7 1.3 3 3 3s3-1.3 3-3h3v-2h-3c0-1.7-1.3-3-3-3zm0 2c.6 0 1 .4 1 1v2c0 .6-.4 1-1 1s-1-.4-1-1v-2c0-.6.4-1 1-1z"/></svg>`,
-  type: IconType.SVG
+    parameter: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m17 4c-1.7 0-3 1.3-3 3h-10v2h10c0 1.7 1.3 3 3 3s3-1.3 3-3h8v-2h-8c0-1.7-1.3-3-3-3zm0 2c.6 0 1 .4 1 1v2c0 .6-.4 1-1 1s-1-.4-1-1v-2c0-.6.4-1 1-1z"/><path d="m10 12c-1.7 0-3 1.3-3 3h-3v2h3c0 1.7 1.3 3 3 3s3-1.3 3-3h15v-2h-15c0-1.7-1.3-3-3-3zm0 2c.6 0 1 .4 1 1v2c0 .6-.4 1-1 1s-1-.4-1-1v-2c0-.6.4-1 1-1z"/><path d="m22 20c-1.7 0-3 1.3-3 3h-15v2h15c0 1.7 1.3 3 3 3s3-1.3 3-3h3v-2h-3c0-1.7-1.3-3-3-3zm0 2c.6 0 1 .4 1 1v2c0 .6-.4 1-1 1s-1-.4-1-1v-2c0-.6.4-1 1-1z"/></svg>`,
+    type: IconType.SVG
 };
