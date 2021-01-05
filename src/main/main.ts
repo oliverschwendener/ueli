@@ -15,7 +15,7 @@ import { getProductionSearchEngine } from "./production/production-search-engine
 import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
 import { defaultGeneralOptions } from "../common/config/general-options";
 import { getErrorSearchResultItem } from "../common/error-search-result-item";
-import { FileHelpers } from "./../common/helpers/file-helpers";
+import { FileHelpers } from "../common/helpers/file-helpers";
 import { ueliTempFolder, logFilePath } from "../common/helpers/ueli-helpers";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
 import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-helpers";

@@ -58,7 +58,7 @@ export const defaultCurrencyExchangeIcon: Icon = {
 };
 
 export const defaultWorkflowIcon: Icon = {
-    parameter: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m3 3v10h10v-10zm2 2h6v6h-6z"/><path d="m8 19-4-4h2l1 1v-3h2v3l1-1h2z"/><path d="m8 19c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3c0-1.6 1.3-3 3-3z"/><path d="m24 19-5 5 5 5 5-5zm0 2.5 2.5 2.5-2.5 2.5-2.5-2.5z"/><path d="m15 20v2l1 1h-3.1a5 5 0 0 1 .1 1 5 5 0 0 1 -.1 1h3.1l-1 1v2l4-4z"/><path d="m24 13-4 4h2l1-1v4l1-1 1 1v-4l1 1h2z"/><path d="m24 3c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3z"/></svg>`,
+    parameter: `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m2 2v10h10v-10zm2 2h6v6h-6z"/><path d="m7 20-4-4h3v-4h2v4h3z"/><path d="m7 20c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3c0-1.6 1.3-3 3-3z"/><path d="m25 20-5 5 5 5 5-5zm0 2.5 2.5 2.5-2.5 2.5-2.5-2.5z"/><path d="m16 21v3h-4.1c.1.7.1 1.4 0 2h4.1v3l4-4z"/><path d="m25 12-4 4h3v5l1-1 1 1v-5h3z"/><path d="m25 2c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3c0-1.6 1.3-3 3-3z"/></svg>`,
     type: IconType.SVG,
 };
 
