@@ -36,7 +36,7 @@ export class ProductionApplicationRepository implements ApplicationRepository {
     ) {
         this.config = config;
         this.defaultAppIcon = defaultAppIcon;
-        this.appIconService = appIconService,
+        this.appIconService = appIconService;
         this.searchApplications = searchApplications;
         this.logger = logger;
         this.operatingSystemVersion = operatingSystemVersion;
