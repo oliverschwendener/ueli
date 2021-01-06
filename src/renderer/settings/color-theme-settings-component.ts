@@ -302,8 +302,8 @@ export const colorThemeSettingsComponent = Vue.extend({
                     </div>
                 </div>
 
-            </div class="settings__options-container">
-        </div class="box">
+            </div>
+        </div>
         <div class="box">
             <div class="settings__options-container">
 
@@ -500,8 +500,8 @@ export const colorThemeSettingsComponent = Vue.extend({
                 </div>
 
 
-            </div class="settings__options-container">
-        </div class="box">
+            </div>
+        </div>
         <div class="box">
             <div class="settings__options-container">
 
@@ -572,8 +572,8 @@ export const colorThemeSettingsComponent = Vue.extend({
                         </div>
                     </div>
                 </div>
-            </div class="settings__options-container">
-        </div class="box">
+            </div>
+        </div>
 
         <color-picker :translations="translations"></color-picker>
     </div>
