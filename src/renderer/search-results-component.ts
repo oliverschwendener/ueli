@@ -102,7 +102,6 @@ export const searchResultsComponent = Vue.extend({
         },
 
         handleMouseClick(index: number, enabled: number, event: MouseEvent) {
-            //const appearanceOptions: AppearanceOptions = this.appearance;
             if (enabled > 0) {
                 if (
                     (enabled === 1 && event.type === 'click') ||
