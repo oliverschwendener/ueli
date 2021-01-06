@@ -12,15 +12,7 @@ import { TranslationSet } from "../../../common/translation/translation-set";
 export class UeliCommandSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.UeliCommandSearchPlugin;
     private translationSet: TranslationSet;
-    private readonly icon = `
-    <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-        viewBox="0 0 600 600" xml:space="preserve">
-        <path d="M59,121.6l81.3-46.9c5.9-3.4,13.1-3.4,18.9,0l80.8,46.9c5.8,3.4,9.4,9.6,9.4,16.4v187.2c0,14.6,15.8,23.7,28.4,16.4l62.4-36
-            c5.9-3.4,9.5-9.6,9.5-16.4l0-209c0-6.8,3.6-13,9.5-16.4l81-46.8c5.9-3.4,13.1-3.4,18.9,0l81,46.8c5.9,3.4,9.5,9.6,9.5,16.4v324.4
-            c0,6.8-3.6,13-9.5,16.4L259.2,583.1c-5.9,3.4-13.1,3.4-18.9,0L59,478.4c-5.9-3.4-9.5-9.6-9.5-16.4V137.9
-            C49.6,131.2,53.2,124.9,59,121.6z"/>
-    </svg>
-    `;
+    private readonly icon = `<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m18.8 4.4c-.3.2-.5.5-.5.9v10.2c0 .4-.2.7-.5.9l-2.8 1.7c-.7.4-1.5-.1-1.5-.9v-9.1c0-.4-.2-.7-.5-.9l-3.7-2.3c-.3-.2-.7-.2-1 0l-3.8 2.3c-.3.2-.5.5-.5.9v15.8c0 .4.2.7.5.9l8.6 5.1c.3.2.7.2 1 0l13.4-7.9c.3-.2.5-.5.5-.9v-15.9c0-.4-.2-.7-.5-.9l-3.8-2.2c-.2-.1-.6-.1-.8 0z"/></svg>`;
 
     constructor(translationSet: TranslationSet) {
         this.translationSet = translationSet;
