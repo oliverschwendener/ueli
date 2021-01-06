@@ -101,6 +101,11 @@ export const turkishTranslationSet: TranslationSet = {
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
 
+    mouseSupport: "Mouse support",
+    mouseSupportDoubleClick: "Double click",
+    mouseSupportSingleClick: "Single click",
+    mouseSupportDisabled: "Disabled",
+
     appearanceSettings: "Görünüm",
     appearanceSettingsWindowWidth: "Pencere genişliği (piksel olarak)",
     appearanceSettingsMaxSearchResultsPerPage: "Sayfa başına maksimum arama sonucu",

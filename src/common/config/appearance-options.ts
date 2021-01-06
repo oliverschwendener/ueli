@@ -17,6 +17,7 @@ export interface AppearanceOptions {
     userInputBottomMargin: number;
     searchResultsBorderRadius: string;
     scrollbarBorderRadius: string;
+    enableMouseSupport: number,
 }
 
 const defaultFontFamily = getCurrentOperatingSystem(platform()) === OperatingSystem.Windows
@@ -37,5 +38,6 @@ export const defaultAppearanceOptions: AppearanceOptions = {
     userInputBorderRadius: "0px",
     userInputBottomMargin: 0,
     searchResultsBorderRadius: "0px",
-    scrollbarBorderRadius: "0px"
+    scrollbarBorderRadius: "0px",
+    enableMouseSupport: 0,
 };

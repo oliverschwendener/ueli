@@ -101,6 +101,11 @@ export const englishTranslationSet: TranslationSet = {
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
 
+    mouseSupport: "Mouse support",
+    mouseSupportDoubleClick: "Double click",
+    mouseSupportSingleClick: "Single click",
+    mouseSupportDisabled: "Disabled",
+
     appearanceSettings: "Appearance",
     appearanceSettingsWindowWidth: "Window width (in pixels)",
     appearanceSettingsMaxSearchResultsPerPage: "Max search results per page",

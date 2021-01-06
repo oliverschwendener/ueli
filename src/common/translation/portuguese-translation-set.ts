@@ -101,6 +101,11 @@ export const portugueseTranslationSet: TranslationSet = {
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
 
+    mouseSupport: "Mouse support",
+    mouseSupportDoubleClick: "Double click",
+    mouseSupportSingleClick: "Single click",
+    mouseSupportDisabled: "Disabled",
+
     appearanceSettings: "Aparência",
     appearanceSettingsWindowWidth: "Largura da janela (em pixels)",
     appearanceSettingsMaxSearchResultsPerPage: "Número máximo de resultados por página",

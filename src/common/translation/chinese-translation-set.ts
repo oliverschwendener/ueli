@@ -101,6 +101,11 @@ export const chineseTranslationSet: TranslationSet = {
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
 
+    mouseSupport: "Mouse support",
+    mouseSupportDoubleClick: "Double click",
+    mouseSupportSingleClick: "Single click",
+    mouseSupportDisabled: "Disabled",
+
     appearanceSettings: "外观",
     appearanceSettingsWindowWidth: "窗口宽度（像素）",
     appearanceSettingsMaxSearchResultsPerPage: "每页最大搜索结果",

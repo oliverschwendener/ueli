@@ -31,7 +31,7 @@ export const searchResultsComponent = Vue.extend({
             const activeClass = active ? "active" : "";
             switch (icon.type) {
                 case IconType.URL:
-                    return `<img class="search-results__item-icon--url ${activeClass}" src="${icon.parameter}">`;
+                    return `<img alt="icon" class="search-results__item-icon--url ${activeClass}" src="${icon.parameter}">`;
                 case IconType.SVG:
                     return `<div class="search-results__item-icon--svg ${activeClass}">${icon.parameter}</div>`;
                 case IconType.Color:
@@ -100,6 +100,24 @@ export const searchResultsComponent = Vue.extend({
                 }
             }
         },
+
+        handleMouseClick(index: number, enabled: number, event: MouseEvent) {
+            //const appearanceOptions: AppearanceOptions = this.appearance;
+            if (enabled > 0) {
+                if (
+                    (enabled === 1 && event.type === 'click') ||
+                    (enabled === 2 && event.type === 'dbclick')
+                ) {
+                    vueEventDispatcher.$emit(VueEventChannels.mouseClick, index, event.shiftKey);
+                    return;
+                }
+            }
+            const htmlElement = document.getElementById('user-input');
+            if (htmlElement) {
+                event.preventDefault();
+                htmlElement.focus();
+            }
+        },
     },
     props: ["appearance"],
     mounted() {
@@ -137,6 +155,16 @@ export const searchResultsComponent = Vue.extend({
                 }
             }
         });
+        vueEventDispatcher.$on(VueEventChannels.executeMouseClick, (userInput: string, index: number, privileged: boolean, userConfirmed?: boolean) => {
+            const clickedItem: SearchResultItem = this.searchResults[index];
+            if (clickedItem && clickedItem.originPluginType !== PluginType.None) {
+                if (clickedItem.needsUserConfirmationBeforeExecution && !userConfirmed) {
+                    vueEventDispatcher.$emit(VueEventChannels.userConfirmationRequested);
+                } else {
+                    vueEventDispatcher.$emit(VueEventChannels.handleExecution, userInput, clickedItem, privileged);
+                }
+            }
+        });
         vueEventDispatcher.$on(VueEventChannels.openSearchResultLocationKeyPress, () => {
             const activeItem: SearchResultItemViewModel = this.getActiveSearchResultItem();
             if (activeItem && activeItem.supportsOpenLocation && activeItem.originPluginType !== PluginType.None) {
@@ -152,7 +180,13 @@ export const searchResultsComponent = Vue.extend({
     },
     template: `
         <div class="search-results" :class="{ 'scroll-disabled' : isLoading }" :id="containerId">
-            <div :id="searchResult.id" class="search-results__item" :class="{ 'active' : searchResult.active }" v-for="searchResult in searchResults">
+            <div
+                v-for="(searchResult, index) in searchResults"
+                @dblclick="handleMouseClick(index, appearance.enableMouseSupport, $event)"
+                @click="handleMouseClick(index, appearance.enableMouseSupport, $event)"
+                :id="searchResult.id" class="search-results__item"
+                :class="{ 'active' : searchResult.active, 'has-mouse-support' : appearance.enableMouseSupport }"
+            >
                 <div class="search-results__item-icon-container" :class="{ 'active' : searchResult.active }">
                     <div class="search-results__item-icon" v-html="getIcon(searchResult.icon, searchResult.active)"></div>
                 </div>

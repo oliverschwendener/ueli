@@ -19,6 +19,7 @@ export const appearanceSettingsComponent = Vue.extend({
             isWindows: operatingSystem === OperatingSystem.Windows,
             settingName: GeneralSettings.Appearance,
             visible: false,
+            globalMouseClicks: [0, 1, 2],
         };
     },
     methods: {
@@ -38,6 +39,19 @@ export const appearanceSettingsComponent = Vue.extend({
         },
         updateConfig() {
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
+        },
+        getTranslatedGlobalMouseSupportClicks(supports: number): string {
+            const translations: TranslationSet = this.translations;
+            switch (supports) {
+                case 0:
+                    return translations.mouseSupportDisabled;
+                case 1:
+                    return translations.mouseSupportSingleClick;
+                case 2:
+                    return translations.mouseSupportDoubleClick;
+                default:
+                    return "disabled";
+            }
         },
     },
     mounted() {
@@ -118,8 +132,8 @@ export const appearanceSettingsComponent = Vue.extend({
                         </div>
                     </div>
 
-                </div class="settings__options-container">
-            </div class="box">
+                </div>
+            </div>
             <div class="box">
                 <div class="settings__options-container">
 
@@ -180,6 +194,23 @@ export const appearanceSettingsComponent = Vue.extend({
                     </div>
 
                     <div class="settings__option">
+                        <div class="settings__option-name">{{ translations.mouseSupport }}</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <div class="select">
+                                      <select v-model="config.appearanceOptions.enableMouseSupport" @change="updateConfig()">
+                                          <option v-for="globalMouseClick in globalMouseClicks" :value="globalMouseClick">
+                                            {{ getTranslatedGlobalMouseSupportClicks(globalMouseClick) }}
+                                          </option>
+                                      </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings__option">
                         <div class="settings__option-name">{{ translations.appearanceSettingsShowDescriptionOnAllSearchResults }}</div>
                         <div class="settings__option-content">
                             <div class="field has-addons has-addons-right vertical-center">
@@ -203,8 +234,8 @@ export const appearanceSettingsComponent = Vue.extend({
                         </div>
                     </div>
 
-                </div class="settings__options-container">
-            </div class="box">
+                </div>
+            </div>
             <div class="box">
                 <div class="settings__options-container">
 
@@ -260,8 +291,8 @@ export const appearanceSettingsComponent = Vue.extend({
                         </div>
                     </div>
 
-                </div class="settings__options-container">
-            </div class="box">
+                </div>
+            </div>
         </div>
     </div>
     `,

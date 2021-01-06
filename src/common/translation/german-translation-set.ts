@@ -101,6 +101,11 @@ export const germanTranslationSet: TranslationSet = {
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
 
+    mouseSupport: "Maus-Unterstützung",
+    mouseSupportDoubleClick: "Doppelklick",
+    mouseSupportSingleClick: "Einfacher Klick",
+    mouseSupportDisabled: "Deaktiviert",
+
     appearanceSettings: "Erscheinungsbild",
     appearanceSettingsWindowWidth: "Fensterbreite (in Pixel)",
     appearanceSettingsMaxSearchResultsPerPage: "Anzahl Ergebnisse (pro Seite)",
