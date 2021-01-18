@@ -26,5 +26,5 @@ export function getTranslationSet(language: Language): TranslationSet {
             return chineseTranslationSet;
         default:
             return englishTranslationSet;
-    }∫
+    }
 }

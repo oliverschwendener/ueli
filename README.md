@@ -52,6 +52,7 @@ Currently supported browsers:
 - Google Chrome
 - Brave
 - Vivaldi
+- SideKick
 
 ![browser-bookmarks](assets/feature-browser-bookmarks.png)
 
