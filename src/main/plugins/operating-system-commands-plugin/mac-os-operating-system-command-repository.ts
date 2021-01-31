@@ -48,7 +48,7 @@ export class MacOsOperatingSystemCommandRepository implements OperatingSystemCom
                     type: IconType.SVG,
                 },
                 name: this.translationSet.macOsRestart,
-                searchable: [this.translationSet.macOsRestart],
+                searchable: [this.translationSet.macOsRestart,'reboot'],
             },
             {
                 description: this.translationSet.macOsLogoutDescription,
