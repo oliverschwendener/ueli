@@ -64,6 +64,22 @@ export const userInputComponent = Vue.extend({
             if (event.key.toLowerCase() === "o" && ctrlOrMeta) {
                 vueEventDispatcher.$emit(VueEventChannels.openSearchResultLocationKeyPress);
             }
+
+            if (event.ctrlKey) {
+                vueEventDispatcher.$emit(VueEventChannels.ctrlPressed, true)
+                const privileged: boolean = event.shiftKey;
+                const userConfirmed: boolean = this.userConfirmationDialogVisible;
+                const keyCodes: string[] = ["Digit1", "Digit2","Digit3","Digit4","Digit5","Digit6","Digit7","Digit8","Digit9",];
+                if (keyCodes.includes(event.code)) {
+                    event.preventDefault();
+                    vueEventDispatcher.$emit(VueEventChannels.ctrlNumberExecute, this.userInput, keyCodes.indexOf(event.code), privileged, userConfirmed);
+                }
+            }
+        },
+        keyPressUp(event: KeyboardEvent): void {
+            if (event.key === "Control") {
+                vueEventDispatcher.$emit(VueEventChannels.ctrlPressed, false)
+            }
         },
         resetUserInput(): void {
             this.userInput = "";
@@ -187,6 +203,7 @@ export const userInputComponent = Vue.extend({
                 type="text"
                 v-model="userInput"
                 @keydown="keyPress"
+                @keyup="keyPressUp"
             >
             <div class="user-input__user-confirmation-container" :class="{ 'visible' : userConfirmationDialogVisible }">
                 <svg class="user-input__user-confirmation-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1">
