@@ -8,6 +8,7 @@ import { WorkflowExecutionStep } from "./workflow-execution-argument";
 import { WorkflowExecutionArgumentType } from "./workflow-execution-argument-type";
 import { Workflow } from "./workflow";
 import { defaultWorkflowIcon } from "../../../common/icon/default-icons";
+import { Logger } from "../../../common/logger/logger";
 
 export class WorkflowPlugin implements SearchPlugin {
     public pluginType = PluginType.Workflow;
@@ -15,17 +16,20 @@ export class WorkflowPlugin implements SearchPlugin {
     private readonly filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>;
     private readonly urlExecutor: (url: string) => Promise<void>;
     private readonly commandlineExecutor: (command: string) => Promise<void>;
+    private readonly logger: Logger;
 
     constructor(
         config: WorkflowOptions,
         filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>,
         urlExecutor: (url: string) => Promise<void>,
         commandlineExecutor: (command: string) => Promise<void>,
+        logger: Logger,
     ) {
         this.config = config;
         this.filePathExecutor = filePathExecutor;
         this.urlExecutor = urlExecutor;
         this.commandlineExecutor = commandlineExecutor;
+        this.logger = logger;
     }
 
     public getAll(): Promise<SearchResultItem[]> {
@@ -88,7 +92,14 @@ export class WorkflowPlugin implements SearchPlugin {
     private handleExecutionStep(executionStep: WorkflowExecutionStep): Promise<void> {
         switch (executionStep.executionArgumentType) {
             case WorkflowExecutionArgumentType.CommandlineTool:
-                return this.commandlineExecutor(executionStep.executionArgument);
+                this.commandlineExecutor(executionStep.executionArgument)
+                    .then(() => { /* do nothing */ })
+                    .catch(error => this.logger.error(error));
+
+                // We resolve the execution promise here before the actual execution has been resolved.
+                // In case that there is an interactive shell which listens to user input the execution promise resolves only after the shell is closed.
+                // See here: https://github.com/oliverschwendener/ueli/issues/433
+                return Promise.resolve();
             case WorkflowExecutionArgumentType.FilePath:
                 return this.filePathExecutor(executionStep.executionArgument);
             case WorkflowExecutionArgumentType.URL:

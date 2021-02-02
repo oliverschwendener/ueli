@@ -50,12 +50,30 @@ function generateIcons(icons: Icon[], followShortcuts?: boolean): Promise<void> 
             Add-Type -AssemblyName System.Drawing;
             $iconsBase64 = "${iconsJsonBase64}";
             $iconsJson = [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($iconsBase64));
+            $Shell = New-Object -ComObject WScript.Shell;
             $icons = $iconsJson | ConvertFrom-Json;
             $icons |
-                Where-Object { Test-Path -LiteralPath $_.inputFilePath } |
-                ForEach-Object {
+            Where-Object { Test-Path -LiteralPath $_.inputFilePath } |
+            ForEach-Object {
+                    $originalPath = $_.inputFilePath;
+                    Try {
+                        $path = $Shell.CreateShortcut($originalPath).TargetPath;
+
+                        # fallback to $originalPath if $path is a directory or url
+                        if ((Test-Path -Path $path -PathType Container ) -or ($path -match '.url$')) {
+                            $path = $originalPath;
+                        }
+                    } Catch {
+                        $path = $originalPath
+                    }
+
                     $icon = $null;
-                    $icon = [System.Drawing.Icon]::ExtractAssociatedIcon($_.inputFilePath);
+                    Try {
+                        $icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path);
+                    } Catch {
+                        $icon = [System.Drawing.Icon]::ExtractAssociatedIcon($originalPath);
+                    }
+
                     if ($icon -ne $null) {
                         $outputFormat = $_.outputFormat;
                         $bitmap = $icon.ToBitmap().Save($_.outputFilePath, [System.Drawing.Imaging.ImageFormat]::$outputFormat);
