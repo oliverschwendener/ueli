@@ -9,6 +9,7 @@ import { isValidIcon } from "./../../../common/icon/icon-helpers";
 import { OpenLocationPlugin } from "../../open-location-plugin";
 import { stringIsWhiteSpace } from "../../../common/helpers/string-helpers";
 import { getDefaultShortcutIcon } from "./shortcut-helpers";
+import { Logger } from "../../../common/logger/logger";
 
 interface ExecutionArgumentDecodeResult {
     shortcutType: ShortcutType;
@@ -21,7 +22,9 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
     private readonly urlExecutor: (url: string) => Promise<void>;
     private readonly filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>;
     private readonly filePathLocationExecutor: (filePath: string) => Promise<void>;
-    private readonly commandlineExtecutor: (command: string) => Promise<void>;
+    private readonly commandlineExecutor: (command: string) => Promise<void>;
+    private readonly logger: Logger;
+
 
     constructor(
         config: ShortcutOptions,
@@ -29,12 +32,14 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
         filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>,
         filePathLocationExecutor: (filePath: string) => Promise<void>,
         commandlineExecutor: (command: string) => Promise<void>,
-        ) {
+        logger: Logger,
+    ) {
         this.config = config;
         this.urlExecutor = urlExecutor;
         this.filePathExecutor = filePathExecutor;
         this.filePathLocationExecutor = filePathLocationExecutor;
-        this.commandlineExtecutor = commandlineExecutor;
+        this.commandlineExecutor = commandlineExecutor;
+        this.logger = logger;
     }
 
     public getAll(): Promise<SearchResultItem[]> {
@@ -57,7 +62,14 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
             case ShortcutType.FilePath:
                 return this.filePathExecutor(decodeResult.executionArgument, privileged);
             case ShortcutType.CommandlineTool:
-                return this.commandlineExtecutor(decodeResult.executionArgument);
+                this.commandlineExecutor(decodeResult.executionArgument)
+                    .then(() => { /* do nothing */ })
+                    .catch(error => this.logger.error(error));
+
+                // We resolve the execution promise here before the actual execution has been resolved.
+                // In case that there is an interactive shell which listens to user input the execution promise resolves only after the shell is closed.
+                // See here: https://github.com/oliverschwendener/ueli/issues/433
+                return Promise.resolve();
             default:
                 return this.getUnsupportedShortcutTypePromise(decodeResult.shortcutType);
         }
