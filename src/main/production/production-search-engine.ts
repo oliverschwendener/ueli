@@ -88,7 +88,7 @@ export function getProductionSearchEngine(
         : `${homedir()}/Library/Application\ Support/Vivaldi/Default/Bookmarks`;
     const edgeBookmarksFilePath = operatingSystem === OperatingSystem.Windows
         ? `${homedir()}\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Bookmarks`
-        : `${homedir()}/Library/Application\ Support/Microsoft/Edge/Default/Bookmarks`;
+        : `${homedir()}/Library/Application\ Support/Microsoft Edge/Default/Bookmarks`;
 
     const operatingSystemCommandRepository = operatingSystem === OperatingSystem.Windows
         ? new WindowsOperatingSystemCommandRepository(translationSet)
