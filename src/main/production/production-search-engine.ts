@@ -154,7 +154,7 @@ export function getProductionSearchEngine(
               new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
               new BraveBookmarkRepository(braveBookmarksFilePath),
               new VivaldiBookmarkRepository(vivaldiBookmarksFilePath),
-              new SideKickBookmarkRepository(sideKickBookmarkFilePath)
+              new SideKickBookmarkRepository(sideKickBookmarkFilePath),
               new EdgeBookmarkRepository(edgeBookmarksFilePath),
             ],
             urlExecutor,
