@@ -47,7 +47,7 @@
     "electron": "^11.2.3",
     "electron-builder": "^22.9.1",
     "electron-store": "^5.1.1",
-    "electron-updater": "^4.0.14",
+    "electron-updater": "^4.3.5",
     "fuse.js": "^6.4.1",
     "jest": "^26.4.2",
     "mathjs": "^5.10.3",
