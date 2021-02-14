@@ -666,7 +666,7 @@ function registerAllIpcListeners() {
         event.sender.send(IpcChannels.autoCompleteResponse, updatedUserInput);
     });
 
-    ipcMain.on(IpcChannels.refreshIndexes, () => {
+    ipcMain.on(IpcChannels.indexRefreshRequested, () => {
         refreshAllIndexes();
     });
 

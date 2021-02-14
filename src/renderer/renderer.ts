@@ -254,7 +254,7 @@ const app = new Vue({
             }
 
             if (event.key === "F5") {
-                ipcRenderer.send(IpcChannels.refreshIndexes);
+                ipcRenderer.send(IpcChannels.indexRefreshRequested);
             }
         },
     },
