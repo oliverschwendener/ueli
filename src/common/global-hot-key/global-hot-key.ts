@@ -3,6 +3,6 @@ import { GlobalHotKeyKey } from "./global-hot-key-key";
 
 export interface GlobalHotKey {
     key: GlobalHotKeyKey;
-    firstModifier?: GlobalHotKeyModifier;
+    modifier?: GlobalHotKeyModifier;
     secondModifier?: GlobalHotKeyModifier;
 }

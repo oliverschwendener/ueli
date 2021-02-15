@@ -146,8 +146,8 @@ function registerGlobalKeyboardShortcut(toggleAction: () => void, newHotKey: Glo
     const hotKeyParts: (GlobalHotKeyKey | GlobalHotKeyModifier)[] = [];
 
     // Add first key modifier, if any
-    if (newHotKey.firstModifier && newHotKey.firstModifier !== GlobalHotKeyModifier.None) {
-        hotKeyParts.push(newHotKey.firstModifier);
+    if (newHotKey.modifier && newHotKey.modifier !== GlobalHotKeyModifier.None) {
+        hotKeyParts.push(newHotKey.modifier);
     }
 
     // Add second key modifier, if any
