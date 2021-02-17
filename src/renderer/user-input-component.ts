@@ -19,8 +19,7 @@ export const userInputComponent = Vue.extend({
     },
     computed: {
         userInputDisabled(): boolean {
-            return this.refreshIndexesIsPending
-                || this.executionIsPending;
+            return this.executionIsPending;
         },
     },
     methods: {
@@ -174,7 +173,6 @@ export const userInputComponent = Vue.extend({
     },
     template: `
         <div class="user-input">
-            <div v-if="refreshIndexesIsPending" class="user-input-blocker-container">{{ translations.refreshingIndexesPending }}...</div>
             <div v-if="config.appearanceOptions.showSearchIcon" class="user-input__search-icon-container">
                 <svg v-if="loadingVisible" class="user-input__search-icon spinning" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                     <path d="m16 3c-7.2 0-13 5.9-13 13 0 7.2 5.8 13 13 13s13-5.8 13-13h-2c0 6.1-4.9 11-11 11s-11-4.9-11-11 4.9-11 11-11z"></path>
@@ -192,6 +190,9 @@ export const userInputComponent = Vue.extend({
                 v-model="userInput"
                 @keydown="keyPress"
             >
+            <div class="user-input__user-confirmation-container" :class="{ 'visible' : refreshIndexesIsPending && !userConfirmationDialogVisible }">
+                <span>{{ translations.refreshingIndexesPending }}...</span>
+            </div>
             <div class="user-input__user-confirmation-container" :class="{ 'visible' : userConfirmationDialogVisible }">
                 <svg class="user-input__user-confirmation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                     <g style="fill:#f44336">

@@ -666,6 +666,10 @@ function registerAllIpcListeners() {
         event.sender.send(IpcChannels.autoCompleteResponse, updatedUserInput);
     });
 
+    ipcMain.on(IpcChannels.indexRefreshRequested, () => {
+        refreshAllIndexes();
+    });
+
     ipcMain.on(IpcChannels.reloadApp, () => {
         reloadApp();
     });
@@ -729,6 +733,7 @@ function registerAllIpcListeners() {
                 openSettings();
                 break;
             case UeliCommandExecutionArgument.RefreshIndexes:
+                mainWindow.webContents.send(IpcChannels.userInputUpdated, '', false);
                 refreshAllIndexes();
                 break;
             case UeliCommandExecutionArgument.ClearCaches:
