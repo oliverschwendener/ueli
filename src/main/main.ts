@@ -24,7 +24,6 @@ import { NotificationType } from "../common/notification-type";
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { getCurrentOperatingSystem, getOperatingSystemVersion } from "../common/helpers/operating-system-helpers";
 import { executeFilePathWindows, executeFilePathMacOs } from "./executors/file-path-executor";
-import { WindowPosition } from "../common/window-position";
 import { UpdateCheckResult } from "../common/update-check-result";
 import { ProductionLogger } from "../common/logger/production-logger";
 import { DevLogger } from "../common/logger/dev-logger";
@@ -68,12 +67,14 @@ if (operatingSystem === OperatingSystem.Windows) {
     app.commandLine.appendSwitch("wm-window-animations-disabled");
 }
 
+let config = configRepository.getConfig();
+
 let trayIcon: Tray;
 let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow;
-let lastWindowPosition: WindowPosition;
+let lastWindowPosition = config.generalOptions.lastWindowPosition;
 
-let config = configRepository.getConfig();
+
 let translationSet = getTranslationSet(config.generalOptions.language);
 const logger = appIsInDevelopment
     ? new DevLogger()
@@ -437,6 +438,9 @@ function onMainWindowMove() {
                 x: currentPosition[0],
                 y: currentPosition[1],
             };
+
+            config.generalOptions.lastWindowPosition = lastWindowPosition;
+            updateConfig(config);
         }
     }
 }
@@ -471,7 +475,7 @@ function createMainWindow() {
 
     mainWindow.on("blur", onBlur);
     mainWindow.on("closed", quitApp);
-    mainWindow.on("move", onMainWindowMove);
+    mainWindow.on("moved", onMainWindowMove);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
 }
 
