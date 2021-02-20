@@ -5,5 +5,5 @@ import { GlobalHotKeyModifier } from "./global-hot-key-modifier";
 export function isValidHotKey(hotKey: GlobalHotKey) {
     return Object.values(GlobalHotKeyModifier).includes(hotKey.modifier!) &&
         Object.values(GlobalHotKeyModifier).includes(hotKey.secondModifier!) &&
-        Object.values(GlobalHotKeyKey).includes(hotKey.key || "");
+        Object.values(GlobalHotKeyKey).includes(hotKey.key);
 }
