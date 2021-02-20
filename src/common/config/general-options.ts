@@ -30,6 +30,7 @@ export const defaultGeneralOptions: GeneralOptions = {
     hotKey: {
         key: GlobalHotKeyKey.Space,
         modifier: GlobalHotKeyModifier.Alt,
+        secondModifier: GlobalHotKeyModifier.None,
     },
     language: Language.English,
     logExecution: true,

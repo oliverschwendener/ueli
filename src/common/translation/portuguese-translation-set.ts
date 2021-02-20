@@ -100,6 +100,7 @@ export const portugueseTranslationSet: TranslationSet = {
     hotkeyModifierControl: "Ctrl",
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
+    hotkeyModifierSuper: "Super",
 
     appearanceSettings: "Aparência",
     appearanceSettingsWindowWidth: "Largura da janela (em pixels)",

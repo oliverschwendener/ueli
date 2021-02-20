@@ -100,6 +100,7 @@ export const englishTranslationSet: TranslationSet = {
     hotkeyModifierControl: "Ctrl",
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
+    hotkeyModifierSuper: "Super",
 
     appearanceSettings: "Vzhled",
     appearanceSettingsWindowWidth: "Šířka okna (v pixelech)",

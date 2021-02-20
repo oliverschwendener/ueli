@@ -5,6 +5,9 @@
 !.vscode/launch.example.json
 !.vscode/extensions.json
 
+# IntelliJ
+.idea/
+
 #Bundled files
 bundle/
 
