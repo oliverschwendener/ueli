@@ -34,6 +34,8 @@ import { PluginType } from "./plugin-type";
 import { getRescanIntervalInMilliseconds } from "./helpers/rescan-interval-helpers";
 import { openUrlInBrowser } from "./executors/url-executor";
 import { OperatingSystem } from "../common/operating-system";
+import { GlobalHotKeyModifier } from "../common/global-hot-key/global-hot-key-modifier";
+import { GlobalHotKeyKey } from "../common/global-hot-key/global-hot-key-key";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -141,7 +143,22 @@ function clearAllCaches() {
 function registerGlobalKeyboardShortcut(toggleAction: () => void, newHotKey: GlobalHotKey) {
     newHotKey = isValidHotKey(newHotKey) ? newHotKey : defaultGeneralOptions.hotKey;
     globalShortcut.unregisterAll();
-    globalShortcut.register(`${newHotKey.modifier ? `${newHotKey.modifier}+` : ``}${newHotKey.key}`, toggleAction);
+
+    const hotKeyParts: (GlobalHotKeyKey | GlobalHotKeyModifier)[] = [];
+
+    // Add first key modifier, if any
+    if (newHotKey.modifier && newHotKey.modifier !== GlobalHotKeyModifier.None) {
+        hotKeyParts.push(newHotKey.modifier);
+    }
+
+    // Add second key modifier, if any
+    if (newHotKey.secondModifier && newHotKey.secondModifier !== GlobalHotKeyModifier.None) {
+        hotKeyParts.push(newHotKey.secondModifier);
+    }
+
+    // Add actual key
+    hotKeyParts.push(newHotKey.key);
+    globalShortcut.register(hotKeyParts.join("+"), toggleAction);
 }
 
 function calculateX(display: Electron.Display): number {

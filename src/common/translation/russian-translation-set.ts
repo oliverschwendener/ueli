@@ -100,6 +100,7 @@ export const russianTranslationSet: TranslationSet = {
     hotkeyModifierControl: "Ctrl",
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
+    hotkeyModifierSuper: "Super",
 
     appearanceSettings: "Внешний вид",
     appearanceSettingsWindowWidth: "Ширина окна (в пикселях)",
