@@ -100,6 +100,7 @@ export const germanTranslationSet: TranslationSet = {
     hotkeyModifierControl: "Strg",
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
+    hotkeyModifierSuper: "Super",
 
     appearanceSettings: "Erscheinungsbild",
     appearanceSettingsWindowWidth: "Fensterbreite (in Pixel)",
