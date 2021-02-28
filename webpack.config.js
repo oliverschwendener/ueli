@@ -27,6 +27,9 @@ const mainConfig = {
     target: "electron-main",
     node: false,
     devtool,
+    externals: {
+        'sqlite3': 'commonjs sqlite3'
+    }
 }
 
 const rendererConfig = {
@@ -53,6 +56,9 @@ const rendererConfig = {
     target: "electron-renderer",
     node: false,
     devtool,
+    externals: {
+        'sqlite3': 'commonjs sqlite3'
+    }
 };
 
 module.exports = [

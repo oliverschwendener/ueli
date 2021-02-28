@@ -4,4 +4,5 @@ export enum Browser {
     Vivaldi = "Vivaldi",
     SideKick = "SideKick",
     Edge = "Microsoft Edge",
+    Firefox = "Firefox",
 }
