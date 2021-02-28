@@ -8,7 +8,7 @@ export function executeCommand(command: string): Promise<void> {
     });
 }
 
-export function executeCommandWithOutput(command: string): Promise<string> { 
+export function executeCommandWithOutput(command: string): Promise<string> {
     return new Promise((resolve, reject) => {
         exec(command, (err, stdout, stderr) => {
             if (err) {
