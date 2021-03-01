@@ -32,9 +32,9 @@ export class FileHelpers {
         });
     }
 
-    public static readFilesFromFolder(folerPath: string, excludeHiddenFiles?: boolean): Promise<string[]> {
+    public static readFilesFromFolder(folderPath: string, excludeHiddenFiles?: boolean): Promise<string[]> {
         return new Promise((resolve, reject) => {
-            readdir(folerPath, (err, files) => {
+            readdir(folderPath, (err, files) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -46,7 +46,7 @@ export class FileHelpers {
                                 return true;
                             }
                         })
-                        .map((file) => join(folerPath, file));
+                        .map((file) => join(folderPath, file));
 
                     resolve(result);
                 }
