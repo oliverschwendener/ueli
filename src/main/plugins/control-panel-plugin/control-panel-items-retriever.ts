@@ -38,7 +38,7 @@ export class ControlPanelItemsRetriever {
                 } |
                 ConvertTo-Json
                     `;
-                    const shell = new Powershell({});
+                    const shell = new Powershell({ noProfile: true });
                     shell.addCommand(getIconsCommand)
                         .then(() => shell.invoke())
                         .then(
