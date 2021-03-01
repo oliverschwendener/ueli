@@ -28,7 +28,7 @@ export class FirefoxBookmarkRepository implements BrowserBookmarkRepository {
     }
 
     private getDatabaseFilePath(): Promise<string> {
-        const profilesIniFilePath = this.userDataFolderPath + path.sep + 'profiles.ini';
+        const profilesIniFilePath = `${this.userDataFolderPath}${path.sep}profiles.ini`;
         return new Promise((resolve, reject) => FileHelpers.readFile(profilesIniFilePath)
             .then(fileContent => {
                 const profiles: { [name: string]: { Default: string, Path: string, IsRelative: string } } = ini.parse(fileContent);
@@ -39,7 +39,7 @@ export class FirefoxBookmarkRepository implements BrowserBookmarkRepository {
                 }
                 if (profile) {
                     const absoluteProfilePath = this.getAbsoluteProfilePath(profile);
-                    resolve(absoluteProfilePath + path.sep + 'places.sqlite');
+                    resolve(`${absoluteProfilePath}${path.sep}places.sqlite`);
                 } else {
                     reject('Profile not found');
                 }
