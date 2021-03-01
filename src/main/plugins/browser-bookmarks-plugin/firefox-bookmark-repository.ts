@@ -16,11 +16,7 @@ export class FirefoxBookmarkRepository implements BrowserBookmarkRepository {
         type: IconType.SVG
     };
 
-    private readonly userDataFolderPath: string;
-
-    constructor(userDataFolderPath: string) {
-        this.userDataFolderPath = userDataFolderPath;
-    }
+    constructor(private readonly userDataFolderPath: string) {}
 
     public getBrowserBookmarks(): Promise<BrowserBookmark[]> {
         return this.getDatabaseFilePath()
