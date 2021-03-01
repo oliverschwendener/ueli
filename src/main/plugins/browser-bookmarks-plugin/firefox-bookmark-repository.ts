@@ -1,3 +1,4 @@
+import { IncomingMessage } from "electron";
 import * as ini from "ini";
 import * as path from "path";
 import { open } from "sqlite";
@@ -27,11 +28,14 @@ export class FirefoxBookmarkRepository implements BrowserBookmarkRepository {
         const profilesIniFilePath = `${this.userDataFolderPath}${path.sep}profiles.ini`;
         return new Promise((resolve, reject) => FileHelpers.readFile(profilesIniFilePath)
             .then(fileContent => {
-                const profiles: { [name: string]: { Default: string, Path: string, IsRelative: string } } = ini.parse(fileContent);
+                const profilesObject = ini.parse(fileContent);
+                const profiles: { Default: string, Path: string, IsRelative: string }[] = Object.keys(profilesObject)
+                    .filter(iniSection => iniSection.startsWith('Profile'))
+                    .map(iniSection => profilesObject[iniSection]);
 
-                let profile = Object.values(profiles).find(p => p.Default === '1');
+                let profile = profiles.find(p => p.Default === '1');
                 if (!profile) {
-                    profile = Object.values(profiles).find(p => p.Path);
+                    profile = profiles.find(p => p.Path);
                 }
                 if (profile) {
                     const absoluteProfilePath = this.getAbsoluteProfilePath(profile);
