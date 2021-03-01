@@ -1,4 +1,3 @@
-import { IncomingMessage } from "electron";
 import * as ini from "ini";
 import * as path from "path";
 import { open } from "sqlite";
