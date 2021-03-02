@@ -27,18 +27,10 @@ export class FirefoxBookmarkRepository implements BrowserBookmarkRepository {
         const profilesIniFilePath = `${this.userDataFolderPath}${path.sep}profiles.ini`;
         return new Promise((resolve, reject) => FileHelpers.readFile(profilesIniFilePath)
             .then(fileContent => {
-                const profilesObject = ini.parse(fileContent);
-                const profiles: { Default: string, Path: string, IsRelative: string }[] = Object.keys(profilesObject)
-                    .filter(iniSection => iniSection.startsWith('Profile'))
-                    .map(iniSection => profilesObject[iniSection]);
-
-                let profile = profiles.find(p => p.Default === '1');
-                if (!profile) {
-                    profile = profiles.find(p => p.Path);
-                }
-                if (profile) {
-                    const absoluteProfilePath = this.getAbsoluteProfilePath(profile);
-                    resolve(`${absoluteProfilePath}${path.sep}places.sqlite`);
+                const profilesIni = ini.parse(fileContent);
+                const profilePath = this.getAbsoluteProfilePath(profilesIni);
+                if (profilePath) {
+                    resolve(`${profilePath}${path.sep}places.sqlite`);
                 } else {
                     reject('Profile not found');
                 }
@@ -46,7 +38,24 @@ export class FirefoxBookmarkRepository implements BrowserBookmarkRepository {
         );
     }
 
-    private getAbsoluteProfilePath(profile: { Path: string, IsRelative: string }): string {
+    private getAbsoluteProfilePath(profilesIni: { [key: string]: any }): string | undefined {
+        const profiles: { Default: string, Path: string, IsRelative: string }[] = Object.keys(profilesIni)
+            .filter(iniSection => iniSection.startsWith('Profile'))
+            .map(iniSection => profilesIni[iniSection]);
+
+        let profile: { Default: string, Path: string, IsRelative: string } | undefined;
+        if (profilesIni.InstallE7CF176E110C211B?.Default) {
+            profile = profiles.find(p => p.Path === profilesIni.InstallE7CF176E110C211B.Default);
+        }
+        if (!profile) {
+            profile = profiles.find(p => p.Default === '1');
+        }
+        if (!profile) {
+            profile = profiles.find(p => p.Path);
+        }
+        if (!profile?.Path) {
+            return undefined;
+        }
         return profile.IsRelative
             ? this.userDataFolderPath + path.sep + profile.Path.replaceAll('/', path.sep)
             : profile.Path;
