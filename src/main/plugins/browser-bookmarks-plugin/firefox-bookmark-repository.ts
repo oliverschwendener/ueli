@@ -44,8 +44,9 @@ export class FirefoxBookmarkRepository implements BrowserBookmarkRepository {
             .map(iniSection => profilesIni[iniSection]);
 
         let profile: { Default: string, Path: string, IsRelative: string } | undefined;
-        if (profilesIni.InstallE7CF176E110C211B?.Default) {
-            profile = profiles.find(p => p.Path === profilesIni.InstallE7CF176E110C211B.Default);
+        const installSectionName = Object.keys(profilesIni).find(s => s.startsWith('Install'));
+        if (installSectionName && profilesIni[installSectionName]?.Default) {
+            profile = profiles.find(p => p.Path === profilesIni[installSectionName]?.Default);
         }
         if (!profile) {
             profile = profiles.find(p => p.Default === '1');
