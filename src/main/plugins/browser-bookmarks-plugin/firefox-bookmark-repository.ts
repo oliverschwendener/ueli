@@ -57,7 +57,7 @@ export class FirefoxBookmarkRepository implements BrowserBookmarkRepository {
             return undefined;
         }
         return profile.IsRelative
-            ? this.userDataFolderPath + path.sep + profile.Path.replaceAll('/', path.sep)
+            ? `${this.userDataFolderPath}${path.sep}${profile.Path.replaceAll('/', path.sep)}`
             : profile.Path;
     }
 
