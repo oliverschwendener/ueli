@@ -76,7 +76,7 @@ export const germanTranslationSet: TranslationSet = {
     generalSettingsErrorWhileCheckingForUpdate: "Während der Prüfung auf Updates ist ein Fehler aufgetreten",
     clearExecutionLog: "Ausführungslog löschen",
     openDebugLog: "Debug-Log öffnen",
-    openTempFolder: "Temporäreren Ordner öffnen",
+    openTempFolder: "Temporären Ordner öffnen",
 
     hotkeyKeyBackspace: "Rücktaste",
     hotkeyKeyDelete: "Entfernen",
