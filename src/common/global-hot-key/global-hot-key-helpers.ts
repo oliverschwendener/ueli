@@ -3,6 +3,7 @@ import { GlobalHotKeyKey } from "./global-hot-key-key";
 import { GlobalHotKeyModifier } from "./global-hot-key-modifier";
 
 export function isValidHotKey(hotKey: GlobalHotKey) {
-    return Object.keys(GlobalHotKeyKey).find((k) => k === hotKey.key) !== undefined
-        && (hotKey.modifier ? Object.keys(GlobalHotKeyModifier).find((m) => m === hotKey.modifier) : true);
+    return Object.values(GlobalHotKeyModifier).includes(hotKey.modifier!) &&
+        Object.values(GlobalHotKeyModifier).includes(hotKey.secondModifier!) &&
+        Object.values(GlobalHotKeyKey).includes(hotKey.key);
 }

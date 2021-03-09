@@ -1,15 +1,15 @@
 import { UwpApplication } from "./uwp-application";
-import { executeCommandWithOutput } from "../../executors/command-executor";
+import { spawnPowershellCommandWithOutput } from "../../executors/command-executor";
 import { IconType } from "../../../common/icon/icon-type";
 
 export function getAllUwpApps(alreadyKnownApps: UwpApplication[]): Promise<UwpApplication[]> {
     return new Promise((resolve, reject) => {
-        const alreadyKnownAppIds = alreadyKnownApps.length === 0 ? "@()" : alreadyKnownApps.map((a) => `\\"${a.appId}\\"`).join(",");
+        const alreadyKnownAppIds = alreadyKnownApps.length === 0 ? "@()" : alreadyKnownApps.map((a) => `"${a.appId}"`).join(",");
         const command = getUwpAppsCommand
-            .replace(/\n/g, " ").replace(/\"/g, "\\\"")
+            .replace(/\n/g, " ")
             .replace("%alreadyKnownAppIds%", alreadyKnownAppIds);
 
-        executeCommandWithUtf8Output(`powershell -NonInteractive -NoProfile -Command "${command}"`)
+        spawnPowershellCommandWithOutput(command)
             .then((resultString) => {
                 const result = JSON.parse(resultString) as { NewApps: any[], RemovedAppIds: string[] };
                 const allCurrentApps = alreadyKnownApps
@@ -23,6 +23,7 @@ export function getAllUwpApps(alreadyKnownApps: UwpApplication[]): Promise<UwpAp
 
 const getUwpAppsCommand = `
 $ErrorActionPreference = 'SilentlyContinue';
+[System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8;
 
 filter ArrayToHash
 {
@@ -139,8 +140,4 @@ function convertNewAppToUwpApplication(newApp: { AppId: string; DisplayName: str
         },
         name: newApp.DisplayName,
     };
-}
-
-function executeCommandWithUtf8Output(command: string): Promise<string> {
-    return executeCommandWithOutput(`cmd /c chcp 65001>nul && ${command}`);
 }

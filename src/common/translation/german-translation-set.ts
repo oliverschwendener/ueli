@@ -100,6 +100,7 @@ export const germanTranslationSet: TranslationSet = {
     hotkeyModifierControl: "Strg",
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
+    hotkeyModifierSuper: "Super",
 
     mouseSupport: "Maus-Unterstützung",
     mouseSupportDoubleClick: "Doppelklick",

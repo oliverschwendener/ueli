@@ -105,10 +105,10 @@ export class WebSearchPlugin implements ExecutionPlugin {
             .replace("{{search_term}}", searchTerm);
     }
 
-    private getSearchTerm(webSearchEngine: WebSearchEngine, userInput: string, doNotEncode = false): string {
+    private getSearchTerm(webSearchEngine: WebSearchEngine, userInput: string, skipEncoding = false): string {
         let searchTerm = userInput.replace(webSearchEngine.prefix, "");
 
-        if (webSearchEngine.encodeSearchTerm && !doNotEncode) {
+        if (webSearchEngine.encodeSearchTerm && !skipEncoding) {
             searchTerm = encodeURIComponent(searchTerm);
         }
 

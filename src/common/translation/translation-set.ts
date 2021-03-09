@@ -97,6 +97,7 @@ export interface TranslationSet {
     hotkeyModifierControl: string;
     hotkeyModifierOption: string;
     hotkeyModifierShift: string;
+    hotkeyModifierSuper: string;
 
     mouseSupport: string,
     mouseSupportDoubleClick: string,

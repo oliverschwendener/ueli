@@ -1,4 +1,5 @@
 import { UserConfigOptions } from "../config/user-config-options";
+import { GlobalHotKeyModifier } from "../global-hot-key/global-hot-key-modifier";
 import { deepCopy } from "./object-helpers";
 
 export function mergeUserConfigWithDefault(userConfig: any, defaultUserConfig: UserConfigOptions): UserConfigOptions {
@@ -10,6 +11,10 @@ export function mergeUserConfigWithDefault(userConfig: any, defaultUserConfig: U
             : result[key];
         result[key] = merged;
     });
+
+    if(!result.generalOptions.hotKey.secondModifier) {
+        result.generalOptions.hotKey.secondModifier = GlobalHotKeyModifier.None;
+    }
 
     return result;
 }

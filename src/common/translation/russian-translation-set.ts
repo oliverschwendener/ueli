@@ -100,6 +100,7 @@ export const russianTranslationSet: TranslationSet = {
     hotkeyModifierControl: "Ctrl",
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
+    hotkeyModifierSuper: "Super",
 
     mouseSupport: "Mouse support",
     mouseSupportDoubleClick: "Double click",

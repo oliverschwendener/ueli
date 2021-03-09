@@ -59,6 +59,7 @@ import { SideKickBookmarkRepository } from "../plugins/browser-bookmarks-plugin/
 import { VivaldiBookmarkRepository } from '../plugins/browser-bookmarks-plugin/vivaldi-bookmark-repository';
 import { EdgeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/edge-bookmark-repository";
 import { getWebearchSuggestions } from "../executors/websearch-suggestion-resolver";
+import { FirefoxBookmarkRepository } from "../plugins/browser-bookmarks-plugin/firefox-bookmark-repository";
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
@@ -93,6 +94,9 @@ export function getProductionSearchEngine(
     const edgeBookmarksFilePath = operatingSystem === OperatingSystem.Windows
         ? `${homedir()}\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Bookmarks`
         : `${homedir()}/Library/Application\ Support/Microsoft Edge/Default/Bookmarks`;
+    const firefoxUserDataFolderPath = operatingSystem === OperatingSystem.Windows
+        ? `${homedir()}\\AppData\\Roaming\\Mozilla\\Firefox`
+        : `${homedir()}/Library/Application\ Support/Firefox`;
 
     const operatingSystemCommandRepository = operatingSystem === OperatingSystem.Windows
         ? new WindowsOperatingSystemCommandRepository(translationSet)
@@ -155,6 +159,7 @@ export function getProductionSearchEngine(
               new VivaldiBookmarkRepository(vivaldiBookmarksFilePath),
               new SideKickBookmarkRepository(sideKickBookmarkFilePath),
               new EdgeBookmarkRepository(edgeBookmarksFilePath),
+              new FirefoxBookmarkRepository(firefoxUserDataFolderPath),
             ],
             urlExecutor,
         ),

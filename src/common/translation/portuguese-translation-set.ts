@@ -100,6 +100,7 @@ export const portugueseTranslationSet: TranslationSet = {
     hotkeyModifierControl: "Ctrl",
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
+    hotkeyModifierSuper: "Super",
 
     mouseSupport: "Mouse support",
     mouseSupportDoubleClick: "Double click",
