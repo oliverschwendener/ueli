@@ -212,7 +212,7 @@ export const germanTranslationSet: TranslationSet = {
     translationSettingsTargetLanguage: "Zielsprache",
 
     everythingSearch: "Everything Search",
-    everythingSearchSettingDescription: `Dieses Plugin erlaubt es dir lokale Dateien und Ordner mit 'Everthing Search' zu finden. Du musst 'Everything' und 'Everything Command-line Interface' von https://www.voidtools.com/downloads/ installieren. Nachdem beides installiert ist musst du den Dateipfad zur 'es.exe' unten angeben.`,
+    everythingSearchSettingDescription: `Dieses Plugin erlaubt es dir lokale Dateien und Ordner mit 'Everything Search' zu finden. Du musst 'Everything' und 'Everything Command-line Interface' von https://www.voidtools.com/downloads/ installieren. Nachdem beides installiert ist musst du den Dateipfad zur 'es.exe' unten angeben.`,
     everythingSearchPathToBinary: `Dateipfad zu 'es.exe'`,
     everythingSearchPrefix: "Präfix",
     everythingSearchMaxSearchResults: "Anzahl an Ergebnissen",
@@ -353,7 +353,7 @@ export const germanTranslationSet: TranslationSet = {
     example: "Beispiel",
     iconType: "Icontyp",
     iconTypeColor: "Farbe",
-    showFullFilePath: "Vollständiger Dateipfad anzeigen",
+    showFullFilePath: "Vollständigen Dateipfad anzeigen",
     yes: "Ja",
     no: "Nein",
     resetToDefault: "Auf Standard zurücksetzen?",
