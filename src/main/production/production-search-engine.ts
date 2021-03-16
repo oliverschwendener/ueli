@@ -60,6 +60,7 @@ import { VivaldiBookmarkRepository } from '../plugins/browser-bookmarks-plugin/v
 import { EdgeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/edge-bookmark-repository";
 import { getWebearchSuggestions } from "../executors/websearch-suggestion-resolver";
 import { FirefoxBookmarkRepository } from "../plugins/browser-bookmarks-plugin/firefox-bookmark-repository";
+import { ChromiumBookmarkRepository } from "../plugins/browser-bookmarks-plugin/chromium-bookmark-repository";
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
@@ -97,6 +98,9 @@ export function getProductionSearchEngine(
     const firefoxUserDataFolderPath = operatingSystem === OperatingSystem.Windows
         ? `${homedir()}\\AppData\\Roaming\\Mozilla\\Firefox`
         : `${homedir()}/Library/Application\ Support/Firefox`;
+    const chromiumBookmarksFilePath = operatingSystem === OperatingSystem.Windows
+        ? `${homedir()}\\AppData\\Local\\Chromium\\User Data\\Default\\Bookmarks`
+        : `${homedir()}/Library/Application\ Support/Chromium/Default/Bookmarks`;
 
     const operatingSystemCommandRepository = operatingSystem === OperatingSystem.Windows
         ? new WindowsOperatingSystemCommandRepository(translationSet)
@@ -154,12 +158,13 @@ export function getProductionSearchEngine(
             config.browserBookmarksOptions,
             translationSet,
             [
-              new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
               new BraveBookmarkRepository(braveBookmarksFilePath),
-              new VivaldiBookmarkRepository(vivaldiBookmarksFilePath),
-              new SideKickBookmarkRepository(sideKickBookmarkFilePath),
+              new ChromiumBookmarkRepository(chromiumBookmarksFilePath),
               new EdgeBookmarkRepository(edgeBookmarksFilePath),
               new FirefoxBookmarkRepository(firefoxUserDataFolderPath),
+              new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
+              new SideKickBookmarkRepository(sideKickBookmarkFilePath),
+              new VivaldiBookmarkRepository(vivaldiBookmarksFilePath),
             ],
             urlExecutor,
         ),
