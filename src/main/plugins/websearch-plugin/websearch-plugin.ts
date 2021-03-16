@@ -7,8 +7,9 @@ import { WebSearchEngine } from "./web-search-engine";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { defaultWebSearchIcon } from "../../../common/icon/default-icons";
 import { isValidIcon } from "../../../common/icon/icon-helpers";
+import { AutoCompletionPlugin } from "../../auto-completion-plugin";
 
-export class WebSearchPlugin implements ExecutionPlugin {
+export class WebSearchPlugin implements ExecutionPlugin, AutoCompletionPlugin {
     public readonly pluginType = PluginType.WebSearchPlugin;
     private config: WebSearchOptions;
     private translationSet: TranslationSet;
@@ -81,6 +82,20 @@ export class WebSearchPlugin implements ExecutionPlugin {
 
     public execute(searchResultItem: SearchResultItem): Promise<void> {
         return this.urlExecutor(searchResultItem.executionArgument);
+    }
+
+    public autoComplete(searchResultItem: SearchResultItem): string {
+        const searchUrl = searchResultItem.executionArgument.match(/^([^:]+:\/\/[^\/]+)\//) ?
+            RegExp.$1 :
+            searchResultItem.executionArgument;
+
+        const foundWebSearchEngine = this.config.webSearchEngines.find((websearchEngine) => {
+            return websearchEngine.url.includes(searchUrl);
+        });
+
+        const prefix = foundWebSearchEngine ? foundWebSearchEngine.prefix : "";
+
+        return `${prefix}${searchResultItem.name} `;
     }
 
     public isEnabled() {
@@ -169,6 +184,7 @@ export class WebSearchPlugin implements ExecutionPlugin {
                                 name: suggestion,
                                 originPluginType: this.pluginType,
                                 searchable: [],
+                                supportsAutocompletion: true,
                             };
                         });
 
