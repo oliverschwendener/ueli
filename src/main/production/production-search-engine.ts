@@ -144,9 +144,10 @@ export function getProductionSearchEngine(
         ),
         new WorkflowPlugin(
             config.workflowOptions,
+            config.commandlineOptions,
             filePathExecutor,
             urlExecutor,
-            executeCommand,
+            commandlineExecutor,
         ),
         new SimpleFolderSearchPlugin(
             config.simpleFolderSearchOptions,
