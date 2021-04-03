@@ -1,5 +1,4 @@
 const path = require("path");
-const webpack = require("webpack");
 
 const mode = process.env.NODE_ENV === "production" ? "production" : "development";
 const devtool = process.env.NODE_ENV === "production" ? undefined : "source-map";
