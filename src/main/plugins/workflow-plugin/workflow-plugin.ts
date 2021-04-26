@@ -14,7 +14,7 @@ import { CommandlineOptions } from "../../../common/config/commandline-options";
 export class WorkflowPlugin implements SearchPlugin {
     public pluginType = PluginType.Workflow;
     private config: WorkflowOptions;
-    private commandlineOptions: CommandlineOptions;
+    private readonly commandlineOptions: CommandlineOptions;
     private readonly filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>;
     private readonly urlExecutor: (url: string) => Promise<void>;
     private readonly commandlineExecutor: (command: string, shell: WindowsShell | MacOsShell) => Promise<void>;
@@ -35,18 +35,20 @@ export class WorkflowPlugin implements SearchPlugin {
 
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve) => {
-            const result = this.config.workflows.map((workflow): SearchResultItem => {
-                return {
-                    description: workflow.description,
-                    executionArgument: this.encodeExecutionArguments(workflow),
-                    hideMainWindowAfterExecution: true,
-                    icon: workflow.icon || defaultWorkflowIcon,
-                    name: workflow.name,
-                    needsUserConfirmationBeforeExecution: workflow.needsUserConfirmationBeforeExecution,
-                    originPluginType: this.pluginType,
-                    searchable: [...workflow.tags, workflow.name],
-                };
-            });
+            const result = this.config.workflows.map(
+                (workflow): SearchResultItem => {
+                    return {
+                        description: workflow.description,
+                        executionArgument: this.encodeExecutionArguments(workflow),
+                        hideMainWindowAfterExecution: true,
+                        icon: workflow.icon || defaultWorkflowIcon,
+                        name: workflow.name,
+                        needsUserConfirmationBeforeExecution: workflow.needsUserConfirmationBeforeExecution,
+                        originPluginType: this.pluginType,
+                        searchable: [...workflow.tags, workflow.name],
+                    };
+                },
+            );
 
             resolve(result);
         });
@@ -66,8 +68,9 @@ export class WorkflowPlugin implements SearchPlugin {
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
-            const promises = this.decodeExecutionArgument(searchResultItem.executionArgument).executionSteps
-                .map((executionArgument) => this.handleExecutionStep(executionArgument));
+            const promises = this.decodeExecutionArgument(
+                searchResultItem.executionArgument,
+            ).executionSteps.map((executionArgument) => this.handleExecutionStep(executionArgument));
 
             Promise.all(promises)
                 .then(() => resolve())
