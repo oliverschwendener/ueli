@@ -142,10 +142,13 @@ export const userInputComponent = Vue.extend({
             setTimeout(() => this.setFocusOnInput(), 50);
         });
 
-        vueEventDispatcher.$on(VueEventChannels.appearanceOptionsUpdated, (updatedAppearanceOptions: AppearanceOptions) => {
-            const config: UserConfigOptions = this.config;
-            config.appearanceOptions = updatedAppearanceOptions;
-        });
+        vueEventDispatcher.$on(
+            VueEventChannels.appearanceOptionsUpdated,
+            (updatedAppearanceOptions: AppearanceOptions) => {
+                const config: UserConfigOptions = this.config;
+                config.appearanceOptions = updatedAppearanceOptions;
+            },
+        );
 
         vueEventDispatcher.$on(VueEventChannels.generalOptionsUpdated, (updatedGeneralOptions: GeneralOptions) => {
             const config: UserConfigOptions = this.config;

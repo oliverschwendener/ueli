@@ -32,9 +32,7 @@ export class WebSearchPlugin implements ExecutionPlugin, AutoCompletionPlugin {
         return new Promise((resolve, reject) => {
             const webSearchEngines = this.config.webSearchEngines
                 .filter((webSearchEngine) => {
-                    return fallback
-                        ? webSearchEngine.isFallback
-                        : userInput.startsWith(webSearchEngine.prefix);
+                    return fallback ? webSearchEngine.isFallback : userInput.startsWith(webSearchEngine.prefix);
                 })
                 .sort((a, b) => {
                     if (a.priority > b.priority) {
@@ -75,9 +73,7 @@ export class WebSearchPlugin implements ExecutionPlugin, AutoCompletionPlugin {
     }
 
     public isValidUserInput(userInput: string, fallback?: boolean): boolean {
-        return userInput !== undefined
-            && userInput.length > 0
-            && this.userInputMatches(userInput, fallback);
+        return userInput !== undefined && userInput.length > 0 && this.userInputMatches(userInput, fallback);
     }
 
     public execute(searchResultItem: SearchResultItem): Promise<void> {
@@ -85,9 +81,9 @@ export class WebSearchPlugin implements ExecutionPlugin, AutoCompletionPlugin {
     }
 
     public autoComplete(searchResultItem: SearchResultItem): string {
-        const searchUrl = searchResultItem.executionArgument.match(/^([^:]+:\/\/[^\/]+)\//) ?
-            RegExp.$1 :
-            searchResultItem.executionArgument;
+        const searchUrl = searchResultItem.executionArgument.match(/^([^:]+:\/\/[^\/]+)\//)
+            ? RegExp.$1
+            : searchResultItem.executionArgument;
 
         const foundWebSearchEngine = this.config.webSearchEngines.find((websearchEngine) => {
             return websearchEngine.url.includes(searchUrl);
@@ -111,7 +107,10 @@ export class WebSearchPlugin implements ExecutionPlugin, AutoCompletionPlugin {
     }
 
     private buildDescriptionFromUserInput(webSearchEngine: WebSearchEngine, userInput: string): string {
-        return this.buildDescriptionFromSearchTerm(webSearchEngine, this.getSearchTerm(webSearchEngine, userInput, true));
+        return this.buildDescriptionFromSearchTerm(
+            webSearchEngine,
+            this.getSearchTerm(webSearchEngine, userInput, true),
+        );
     }
 
     private buildDescriptionFromSearchTerm(webSearchEngine: WebSearchEngine, searchTerm: string): string {
@@ -131,7 +130,10 @@ export class WebSearchPlugin implements ExecutionPlugin, AutoCompletionPlugin {
     }
 
     private buildExecutionArgumentFromUserInput(webSearchEngine: WebSearchEngine, userInput: string): string {
-        return this.buildExecutionArgumentFromSearchTerm(webSearchEngine, this.getSearchTerm(webSearchEngine, userInput));
+        return this.buildExecutionArgumentFromSearchTerm(
+            webSearchEngine,
+            this.getSearchTerm(webSearchEngine, userInput),
+        );
     }
 
     private buildExecutionArgumentFromSearchTerm(webSearchEngine: WebSearchEngine, searchTerm: string): string {
@@ -140,15 +142,15 @@ export class WebSearchPlugin implements ExecutionPlugin, AutoCompletionPlugin {
 
     private userInputMatches(userInput: string, fallback?: boolean): boolean {
         return this.config.webSearchEngines.some((websearchEngine) => {
-            return fallback
-                ? websearchEngine.isFallback
-                : userInput.startsWith(websearchEngine.prefix);
+            return fallback ? websearchEngine.isFallback : userInput.startsWith(websearchEngine.prefix);
         });
     }
 
     private getSuggestions(webSearchEngines: WebSearchEngine[], userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            const promises = webSearchEngines.map((webSearchEngine) => this.getSuggestionsByWebSearchEngine(webSearchEngine, userInput));
+            const promises = webSearchEngines.map((webSearchEngine) =>
+                this.getSuggestionsByWebSearchEngine(webSearchEngine, userInput),
+            );
 
             Promise.all(promises)
                 .then((lists) => {
@@ -164,7 +166,10 @@ export class WebSearchPlugin implements ExecutionPlugin, AutoCompletionPlugin {
         });
     }
 
-    private getSuggestionsByWebSearchEngine(websearchEngine: WebSearchEngine, userInput: string): Promise<SearchResultItem[]> {
+    private getSuggestionsByWebSearchEngine(
+        websearchEngine: WebSearchEngine,
+        userInput: string,
+    ): Promise<SearchResultItem[]> {
         const searchTerm = this.getSearchTerm(websearchEngine, userInput);
 
         return new Promise((resolve, reject) => {
@@ -175,18 +180,25 @@ export class WebSearchPlugin implements ExecutionPlugin, AutoCompletionPlugin {
                     .then((response) => {
                         const suggestions: string[] = response[1];
 
-                        const searchResultItems = suggestions.map((suggestion): SearchResultItem => {
-                            return {
-                                description: this.buildDescriptionFromSearchTerm(websearchEngine, suggestion),
-                                executionArgument: this.buildExecutionArgumentFromSearchTerm(websearchEngine, suggestion),
-                                hideMainWindowAfterExecution: true,
-                                icon: isValidIcon(websearchEngine.icon) ? websearchEngine.icon : defaultWebSearchIcon,
-                                name: suggestion,
-                                originPluginType: this.pluginType,
-                                searchable: [],
-                                supportsAutocompletion: true,
-                            };
-                        });
+                        const searchResultItems = suggestions.map(
+                            (suggestion): SearchResultItem => {
+                                return {
+                                    description: this.buildDescriptionFromSearchTerm(websearchEngine, suggestion),
+                                    executionArgument: this.buildExecutionArgumentFromSearchTerm(
+                                        websearchEngine,
+                                        suggestion,
+                                    ),
+                                    hideMainWindowAfterExecution: true,
+                                    icon: isValidIcon(websearchEngine.icon)
+                                        ? websearchEngine.icon
+                                        : defaultWebSearchIcon,
+                                    name: suggestion,
+                                    originPluginType: this.pluginType,
+                                    searchable: [],
+                                    supportsAutocompletion: true,
+                                };
+                            },
+                        );
 
                         resolve(searchResultItems);
                     })
@@ -194,7 +206,6 @@ export class WebSearchPlugin implements ExecutionPlugin, AutoCompletionPlugin {
             } else {
                 resolve([]);
             }
-
         });
     }
 

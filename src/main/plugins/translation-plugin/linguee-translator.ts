@@ -20,14 +20,15 @@ interface TranslationResponse {
 export class LingueeTranslator {
     public static getTranslations(url: string): Promise<Translation[]> {
         return new Promise((resolve, reject) => {
-            axios.get(url)
+            axios
+                .get(url)
                 .then((response) => {
                     const data = response.data as TranslationResponse;
                     let translations: Translation[] = [];
                     if (data.exact_matches) {
                         data.exact_matches
                             .map((exactMatch) => exactMatch.translations)
-                            .forEach((t) => translations = translations.concat(t));
+                            .forEach((t) => (translations = translations.concat(t)));
                     }
                     resolve(translations);
                 })

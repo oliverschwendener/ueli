@@ -26,18 +26,7 @@ describe(unique.name, () => {
         const b = "b";
         const c = "c";
 
-        const arrayWithDuplicates = [
-            a,
-            b,
-            b,
-            b,
-            c,
-            c,
-            c,
-            c,
-            c,
-            c,
-        ];
+        const arrayWithDuplicates = [a, b, b, b, c, c, c, c, c, c];
 
         const expected = [a, b, c];
         const actual = unique(arrayWithDuplicates);

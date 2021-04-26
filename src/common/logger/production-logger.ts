@@ -16,7 +16,7 @@ export class ProductionLogger implements Logger {
 
         this.logger = Winston.createLogger({
             defaultMeta: { service: "user-service" },
-            format: combine(errors({stack: true}), timestamp(), logFormat),
+            format: combine(errors({ stack: true }), timestamp(), logFormat),
             level: "debug",
             transports: [
                 new Winston.transports.File({

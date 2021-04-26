@@ -46,8 +46,10 @@ export class TranslationPlugin implements ExecutionPlugin {
     }
 
     public isValidUserInput(userInput: string) {
-        return userInput.startsWith(this.config.prefix)
-            && userInput.replace(this.config.prefix, "").length >= this.config.minSearchTermLength;
+        return (
+            userInput.startsWith(this.config.prefix) &&
+            userInput.replace(this.config.prefix, "").length >= this.config.minSearchTermLength
+        );
     }
 
     public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
@@ -61,17 +63,19 @@ export class TranslationPlugin implements ExecutionPlugin {
         return new Promise((resolve, reject) => {
             LingueeTranslator.getTranslations(url)
                 .then((translations) => {
-                    const result = translations.map((t): SearchResultItem => {
-                        return {
-                            description: `${capitalize(t.word_type.pos)}`,
-                            executionArgument: t.text,
-                            hideMainWindowAfterExecution: true,
-                            icon: defaultTranslatorIcon,
-                            name: t.text,
-                            originPluginType: this.pluginType,
-                            searchable: [],
-                        };
-                    });
+                    const result = translations.map(
+                        (t): SearchResultItem => {
+                            return {
+                                description: `${capitalize(t.word_type.pos)}`,
+                                executionArgument: t.text,
+                                hideMainWindowAfterExecution: true,
+                                icon: defaultTranslatorIcon,
+                                name: t.text,
+                                originPluginType: this.pluginType,
+                                searchable: [],
+                            };
+                        },
+                    );
                     if (result.length > 0) {
                         resolve(result);
                     } else {
@@ -79,7 +83,7 @@ export class TranslationPlugin implements ExecutionPlugin {
                     }
                 })
                 .catch((err) => resolve([this.getErrorResult(err.response.data.message, err.message)]));
-            });
+        });
     }
 
     private getErrorResult(errorMessage: string, details?: string): SearchResultItem {

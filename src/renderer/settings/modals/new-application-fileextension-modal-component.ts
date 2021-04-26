@@ -23,26 +23,29 @@ export const newApplicationFileExtensionModalComponent = Vue.extend({
             this.visible = false;
         },
         getPlaceholder(): string {
-            const ext = operatingSystem === OperatingSystem.Windows
-                ? ".lnk"
-                : ".app";
+            const ext = operatingSystem === OperatingSystem.Windows ? ".lnk" : ".app";
 
             return `${this.translations.forExample}: "${ext}"`;
         },
         saveButtonClick() {
             const translations: TranslationSet = this.translations;
             const applicationFileExtension: string = this.newApplicationFileExtension;
-            const isValidApplicationFileExtension = applicationFileExtension !== undefined
-                && applicationFileExtension.startsWith(".")
-                && applicationFileExtension.replace(".", "").length > 0;
+            const isValidApplicationFileExtension =
+                applicationFileExtension !== undefined &&
+                applicationFileExtension.startsWith(".") &&
+                applicationFileExtension.replace(".", "").length > 0;
 
             if (isValidApplicationFileExtension) {
                 vueEventDispatcher.$emit(VueEventChannels.applicationFileExtensionAdded, applicationFileExtension);
                 this.closeModal();
             } else {
                 showNotification(
-                    translations.applicationSearchSettingsInvalidFileExtensionErrorMessage.replace("{{value}}", applicationFileExtension),
-                    NotificationType.Error);
+                    translations.applicationSearchSettingsInvalidFileExtensionErrorMessage.replace(
+                        "{{value}}",
+                        applicationFileExtension,
+                    ),
+                    NotificationType.Error,
+                );
             }
         },
     },

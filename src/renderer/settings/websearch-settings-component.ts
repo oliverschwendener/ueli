@@ -24,10 +24,19 @@ export const webSearchSettingsComponent = Vue.extend({
         editWebsearchEngine(index: number) {
             const config: UserConfigOptions = this.config;
             const webSearchEngine = config.websearchOptions.webSearchEngines[index];
-            vueEventDispatcher.$emit(VueEventChannels.openWebSearchEditingModal, deepCopy(webSearchEngine), ModalEditMode.Edit, index);
+            vueEventDispatcher.$emit(
+                VueEventChannels.openWebSearchEditingModal,
+                deepCopy(webSearchEngine),
+                ModalEditMode.Edit,
+                index,
+            );
         },
         onAddWebsearchEngineClick() {
-            vueEventDispatcher.$emit(VueEventChannels.openWebSearchEditingModal, deepCopy(defaultNewWebSearchEngine), ModalEditMode.Add);
+            vueEventDispatcher.$emit(
+                VueEventChannels.openWebSearchEditingModal,
+                deepCopy(defaultNewWebSearchEngine),
+                ModalEditMode.Add,
+            );
         },
         resetAll() {
             const translations: TranslationSet = this.translations;
@@ -77,13 +86,16 @@ export const webSearchSettingsComponent = Vue.extend({
             }
         });
 
-        vueEventDispatcher.$on(VueEventChannels.websearchEngineEdited, (websearchEngine: WebSearchEngine, editMode: ModalEditMode, saveIndex?: number) => {
-            if (editMode === ModalEditMode.Add) {
-                this.addWebsearchEngine(websearchEngine);
-            } else if (editMode === ModalEditMode.Edit) {
-                this.updateWebsearchEngine(websearchEngine, saveIndex);
-            }
-        });
+        vueEventDispatcher.$on(
+            VueEventChannels.websearchEngineEdited,
+            (websearchEngine: WebSearchEngine, editMode: ModalEditMode, saveIndex?: number) => {
+                if (editMode === ModalEditMode.Add) {
+                    this.addWebsearchEngine(websearchEngine);
+                } else if (editMode === ModalEditMode.Edit) {
+                    this.updateWebsearchEngine(websearchEngine, saveIndex);
+                }
+            },
+        );
     },
     props: ["config", "translations"],
     template: `

@@ -75,9 +75,9 @@ export class ColorConverterPlugin implements ExecutionPlugin {
             hideMainWindowAfterExecution: true,
             icon: this.config.showColorPreview
                 ? {
-                    parameter: colorValue,
-                    type: IconType.Color,
-                }
+                      parameter: colorValue,
+                      type: IconType.Color,
+                  }
                 : defaultColorConverterIcon,
             name: colorValue,
             originPluginType: this.pluginType,

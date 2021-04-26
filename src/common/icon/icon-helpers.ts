@@ -4,16 +4,17 @@ import { isValidColorCode } from "../../main/plugins/color-converter-plugin/colo
 import { TranslationSet } from "../translation/translation-set";
 
 export function isValidIconType(iconType: IconType | string): boolean {
-    return iconType !== undefined
-        && Object.values(IconType).some((i) => i === iconType);
+    return iconType !== undefined && Object.values(IconType).some((i) => i === iconType);
 }
 
 export function isValidIcon(icon: Icon): boolean {
-    return icon !== undefined
-        && this.isValidIconType(icon.type)
-        && icon.parameter !== undefined
-        && icon.parameter.length > 0
-        && isValidIconParameter(icon);
+    return (
+        icon !== undefined &&
+        this.isValidIconType(icon.type) &&
+        icon.parameter !== undefined &&
+        icon.parameter.length > 0 &&
+        isValidIconParameter(icon)
+    );
 }
 
 export function getIconTypeLabel(iconType: IconType, translations: TranslationSet): string {
@@ -33,8 +34,7 @@ function isValidIconParameter(icon: Icon): boolean {
     }
 
     if (icon.type === IconType.SVG) {
-        return icon.parameter.trim().startsWith("<svg")
-            && icon.parameter.trim().endsWith("</svg>");
+        return icon.parameter.trim().startsWith("<svg") && icon.parameter.trim().endsWith("</svg>");
     }
 
     if (icon.type === IconType.URL) {

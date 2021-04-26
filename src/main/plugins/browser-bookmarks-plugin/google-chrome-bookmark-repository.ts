@@ -27,12 +27,15 @@ export class GoogleChromeBookmarkRepository implements BrowserBookmarkRepository
                         FileHelpers.readFile(this.bookmarkFilePath)
                             .then((data) => {
                                 const jsonParsed = JSON.parse(data);
-                                const rootsCombined = Object.values(jsonParsed.roots).reduce((combined: any, value: any) => {
-                                    if (value && value.children) {
-                                        combined.children = combined.children.concat(value.children)
-                                    }
-                                    return combined
-                                }, { children: [] })
+                                const rootsCombined = Object.values(jsonParsed.roots).reduce(
+                                    (combined: any, value: any) => {
+                                        if (value && value.children) {
+                                            combined.children = combined.children.concat(value.children);
+                                        }
+                                        return combined;
+                                    },
+                                    { children: [] },
+                                );
                                 const bookmarks: BrowserBookmark[] = this.getBookmarksFromObject(rootsCombined);
                                 resolve(bookmarks);
                             })
@@ -52,19 +55,15 @@ export class GoogleChromeBookmarkRepository implements BrowserBookmarkRepository
             const value = v as any;
             if (key === "children") {
                 const folders = value.filter((entry: any) => {
-                    return entry.type
-                        && entry.type === "folder";
+                    return entry.type && entry.type === "folder";
                 });
 
                 const bookmarks = value.filter((entry: any) => {
-                    return entry.type
-                        && entry.type === "url"
-                        && entry.url
-                        && isValidUrl(entry.url);
+                    return entry.type && entry.type === "url" && entry.url && isValidUrl(entry.url);
                 });
 
                 result = result.concat(bookmarks);
-                folders.forEach((folder: any) => result = result.concat(this.getBookmarksFromObject(folder)));
+                folders.forEach((folder: any) => (result = result.concat(this.getBookmarksFromObject(folder))));
             }
         });
 

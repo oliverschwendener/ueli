@@ -1,7 +1,10 @@
 import Vue from "vue";
 import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
-import { SimpleFolderSearchOptions, SimpleFolderSearchFolderOption } from "../../../common/config/simple-folder-search-options";
+import {
+    SimpleFolderSearchOptions,
+    SimpleFolderSearchFolderOption,
+} from "../../../common/config/simple-folder-search-options";
 import { ModalEditMode } from "./modal-edit-mode";
 import { NotificationType } from "../../../common/notification-type";
 import { existsSync, lstatSync } from "fs";
@@ -18,9 +21,7 @@ const initialFolderOptions: SimpleFolderSearchFolderOption = {
 };
 
 const folderPathValidator = (folderPath: string): boolean => {
-    return folderPath.length > 0
-        && existsSync(folderPath)
-        && lstatSync(folderPath).isDirectory();
+    return folderPath.length > 0 && existsSync(folderPath) && lstatSync(folderPath).isDirectory();
 };
 
 export const simpleFolderSearchEditingModalComponent = Vue.extend({
@@ -62,7 +63,12 @@ export const simpleFolderSearchEditingModalComponent = Vue.extend({
         saveButtonClick() {
             const options: SimpleFolderSearchFolderOption = this.options;
             if (folderPathValidator(options.folderPath)) {
-                vueEventDispatcher.$emit(VueEventChannels.simpleFolderSearchOptionSaved, this.options, this.editMode, this.saveIndex);
+                vueEventDispatcher.$emit(
+                    VueEventChannels.simpleFolderSearchOptionSaved,
+                    this.options,
+                    this.editMode,
+                    this.saveIndex,
+                );
                 this.closeModal();
             } else {
                 vueEventDispatcher.$emit(VueEventChannels.notification, "Invalid folder path", NotificationType.Error);
@@ -78,21 +84,24 @@ export const simpleFolderSearchEditingModalComponent = Vue.extend({
         },
     },
     mounted() {
-        vueEventDispatcher.$on(VueEventChannels.openSimpleFolderSearchEditingModal, (folderOptions?: SimpleFolderSearchOptions, editMode?: ModalEditMode, saveIndex?: number) => {
-            if (editMode) {
-                this.editMode = editMode;
-            }
+        vueEventDispatcher.$on(
+            VueEventChannels.openSimpleFolderSearchEditingModal,
+            (folderOptions?: SimpleFolderSearchOptions, editMode?: ModalEditMode, saveIndex?: number) => {
+                if (editMode) {
+                    this.editMode = editMode;
+                }
 
-            if (folderOptions) {
-                this.options = folderOptions;
-            }
+                if (folderOptions) {
+                    this.options = folderOptions;
+                }
 
-            if (saveIndex) {
-                this.saveIndex = saveIndex;
-            }
+                if (saveIndex) {
+                    this.saveIndex = saveIndex;
+                }
 
-            this.visible = true;
-        });
+                this.visible = true;
+            },
+        );
     },
     props: ["translations"],
     template: `

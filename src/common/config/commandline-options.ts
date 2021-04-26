@@ -6,7 +6,7 @@ import { OperatingSystem } from "../operating-system";
 export interface CommandlineOptions {
     isEnabled: boolean;
     prefix: string;
-    shell: WindowsShell|MacOsShell;
+    shell: WindowsShell | MacOsShell;
 }
 
 const defaultMacOsCommandlineOptions: CommandlineOptions = {
@@ -21,6 +21,7 @@ const defaultWindowsCommandlineOptions: CommandlineOptions = {
     shell: WindowsShell.Cmd,
 };
 
-export const defaultCommandlineOptions: CommandlineOptions = getCurrentOperatingSystem(platform()) === OperatingSystem.Windows
-    ? defaultWindowsCommandlineOptions
-    : defaultMacOsCommandlineOptions;
+export const defaultCommandlineOptions: CommandlineOptions =
+    getCurrentOperatingSystem(platform()) === OperatingSystem.Windows
+        ? defaultWindowsCommandlineOptions
+        : defaultMacOsCommandlineOptions;

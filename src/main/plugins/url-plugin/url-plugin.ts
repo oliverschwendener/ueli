@@ -29,11 +29,12 @@ export class UrlPlugin implements ExecutionPlugin {
             const urlStartsWithHttps = userInput.startsWith("https://");
             const urlStartsWithDoubleSlashes = userInput.startsWith("//");
 
-            const url = !urlStartsWithHttp && !urlStartsWithHttps
-                ? urlStartsWithDoubleSlashes
-                    ? `${this.config.defaultProtocol}:${userInput}`
-                    : `${this.config.defaultProtocol}://${userInput}`
-                : userInput;
+            const url =
+                !urlStartsWithHttp && !urlStartsWithHttps
+                    ? urlStartsWithDoubleSlashes
+                        ? `${this.config.defaultProtocol}:${userInput}`
+                        : `${this.config.defaultProtocol}://${userInput}`
+                    : userInput;
 
             const result: SearchResultItem = {
                 description: this.translationSet.openUrlWithBrowser,

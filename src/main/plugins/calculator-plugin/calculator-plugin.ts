@@ -15,7 +15,11 @@ export class CalculatorPlugin implements ExecutionPlugin {
     private translationSet: TranslationSet;
     private readonly clipboardCopier: (value: string) => Promise<void>;
 
-    constructor(config: UserConfigOptions, translationSet: TranslationSet, clipboardCopier: (value: string) => Promise<void>) {
+    constructor(
+        config: UserConfigOptions,
+        translationSet: TranslationSet,
+        clipboardCopier: (value: string) => Promise<void>,
+    ) {
         this.config = config.calculatorOptions;
         this.generalConfig = config.generalOptions;
         this.translationSet = translationSet;
@@ -27,24 +31,31 @@ export class CalculatorPlugin implements ExecutionPlugin {
     }
 
     private getArgumentSeparator() {
-        if (this.generalConfig.decimalSeparator !== ',') {
-            return ',';
+        if (this.generalConfig.decimalSeparator !== ",") {
+            return ",";
         }
-        return ';';
+        return ";";
     }
 
     public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            const result = Calculator.calculate(userInput, Number(this.config.precision), this.generalConfig.decimalSeparator, this.getArgumentSeparator());
-            resolve([{
-                description: this.translationSet.calculatorCopyToClipboard,
-                executionArgument: result,
-                hideMainWindowAfterExecution: true,
-                icon: defaultCalculatorIcon,
-                name: `= ${result}`,
-                originPluginType: this.pluginType,
-                searchable: [],
-            }]);
+            const result = Calculator.calculate(
+                userInput,
+                Number(this.config.precision),
+                this.generalConfig.decimalSeparator,
+                this.getArgumentSeparator(),
+            );
+            resolve([
+                {
+                    description: this.translationSet.calculatorCopyToClipboard,
+                    executionArgument: result,
+                    hideMainWindowAfterExecution: true,
+                    icon: defaultCalculatorIcon,
+                    name: `= ${result}`,
+                    originPluginType: this.pluginType,
+                    searchable: [],
+                },
+            ]);
         });
     }
 

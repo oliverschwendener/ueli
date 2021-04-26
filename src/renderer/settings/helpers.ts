@@ -25,7 +25,10 @@ export function getWorkflowExecutionArgumentTypeClass(type: WorkflowExecutionArg
     }
 }
 
-export function getWorkflowExecutionArgumentTypeTranslation(type: WorkflowExecutionArgumentType, translationSet: TranslationSet): string {
+export function getWorkflowExecutionArgumentTypeTranslation(
+    type: WorkflowExecutionArgumentType,
+    translationSet: TranslationSet,
+): string {
     switch (type) {
         case WorkflowExecutionArgumentType.CommandlineTool:
             return translationSet.wofkflowExecutionArgumentTypeCommandlineTool;

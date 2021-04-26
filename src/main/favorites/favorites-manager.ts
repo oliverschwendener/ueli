@@ -31,11 +31,11 @@ export class FavoriteManager {
         return all.length > 0
             ? all
             : [
-                {
-                    executionCount: 1,
-                    item: getNoFavoritesSearchResult(this.translationSet),
-                },
-            ];
+                  {
+                      executionCount: 1,
+                      item: getNoFavoritesSearchResult(this.translationSet),
+                  },
+              ];
     }
 
     public clearExecutionLog(): Promise<void> {

@@ -1,27 +1,16 @@
 {
     "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended"
-    ],
+    "extends": ["tslint:recommended"],
     "jsRules": {},
     "rules": {
         "ordered-imports": false,
         "max-line-length": false, // due to hardcoded svg icons
-        "interface-name": [
-            true,
-            "never-prefix"
-        ],
-        "indent": [
-            true,
-            "spaces",
-            4
-        ],
+        "interface-name": [true, "never-prefix"],
+        "indent": [true, "spaces", 4],
         "prefer-readonly": true
     },
     "rulesDirectory": [],
     "linterOptions": {
-        "exclude": [
-            "./package.json"
-        ]
+        "exclude": ["./package.json"]
     }
 }

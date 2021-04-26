@@ -33,8 +33,7 @@ export class DictionaryPlugin implements ExecutionPlugin {
 
     public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
         const searchTerm = this.getSearchTerm(userInput);
-        return userInput.startsWith(this.config.prefix)
-            && searchTerm.length >= this.config.minSearchTermLength;
+        return userInput.startsWith(this.config.prefix) && searchTerm.length >= this.config.minSearchTermLength;
     }
 
     public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
@@ -91,23 +90,23 @@ export class DictionaryPlugin implements ExecutionPlugin {
             });
         });
 
-        return dictionaryResults.map((result): SearchResultItem => {
-            return {
-                description: result.definition,
-                executionArgument: result.definition,
-                hideMainWindowAfterExecution: true,
-                icon: defaultDictionaryIcon,
-                name: this.buildName(result),
-                originPluginType: this.pluginType,
-                searchable: [],
-            };
-        });
+        return dictionaryResults.map(
+            (result): SearchResultItem => {
+                return {
+                    description: result.definition,
+                    executionArgument: result.definition,
+                    hideMainWindowAfterExecution: true,
+                    icon: defaultDictionaryIcon,
+                    name: this.buildName(result),
+                    originPluginType: this.pluginType,
+                    searchable: [],
+                };
+            },
+        );
     }
 
     private buildName(result: DictionaryResult): string {
-        const suffix = result.synonyms.length > 0
-            ? ` - ${result.synonyms.join(", ")}`
-            : "";
+        const suffix = result.synonyms.length > 0 ? ` - ${result.synonyms.join(", ")}` : "";
 
         return `[${result.type}]${suffix}`;
     }

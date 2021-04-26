@@ -24,11 +24,11 @@ export function executeCommandWithOutput(command: string): Promise<string> {
 
 export function spawnPowershellCommandWithOutput(command: string): Promise<string> {
     return new Promise((resolve, reject) => {
-        let stdout = '';
-        let stderr = '';
-        const process = spawn('powershell.exe', ['-NoProfile', '-NonInteractive', '-c', command]);
-        process.on('error', (error) => reject(error));
-        process.on('exit', (code) => {
+        let stdout = "";
+        let stderr = "";
+        const process = spawn("powershell.exe", ["-NoProfile", "-NonInteractive", "-c", command]);
+        process.on("error", (error) => reject(error));
+        process.on("exit", (code) => {
             if (code === 0) {
                 resolve(stdout);
             } else {
@@ -39,7 +39,7 @@ export function spawnPowershellCommandWithOutput(command: string): Promise<strin
                 }
             }
         });
-        process.stdout.on('data', (chunk: string) => stdout += chunk);
-        process.stderr.on('data', (chunk: string) => stderr += chunk);
+        process.stdout.on("data", (chunk: string) => (stdout += chunk));
+        process.stderr.on("data", (chunk: string) => (stderr += chunk));
     });
 }

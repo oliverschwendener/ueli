@@ -10,14 +10,19 @@ export function searchWindowsApplications(
     operatingSystemVersion: OperatingSystemVersion,
 ): Promise<string[]> {
     return new Promise((resolve, reject) => {
-        if (applicationSearchOptions.applicationFolders.length === 0 || applicationSearchOptions.applicationFileExtensions.length === 0) {
+        if (
+            applicationSearchOptions.applicationFolders.length === 0 ||
+            applicationSearchOptions.applicationFileExtensions.length === 0
+        ) {
             resolve([]);
         }
 
         const utf8Encoding = "[Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8";
         const ignoreErrors = "$ErrorActionPreference = 'SilentlyContinue'";
-        const createApplicationsArray = "$applications = New-Object Collections.Generic.List[String]"
-        const folders = applicationSearchOptions.applicationFolders.map((applicationFolder) => `'${applicationFolder}'`).join(",");
+        const createApplicationsArray = "$applications = New-Object Collections.Generic.List[String]";
+        const folders = applicationSearchOptions.applicationFolders
+            .map((applicationFolder) => `'${applicationFolder}'`)
+            .join(",");
         const extensionFilter = applicationSearchOptions.applicationFileExtensions.map((e) => `*${e}`).join(", ");
         const getChildItem = `Get-ChildItem -Path $_ -include ${extensionFilter} -Recurse -File | % { $applications.Add($_.FullName) }`;
         const createResult = `$result = (@{ errors = @($error | ForEach-Object { $_.Exception.Message }); applications = $applications } | ConvertTo-Json)`;
@@ -26,9 +31,9 @@ export function searchWindowsApplications(
         const command = `powershell -NonInteractive -NoProfile -Command "& { ${powershellScript} }"`;
         executeCommandWithOutput(command)
             .then((resultOutput: string) => {
-                const result : { errors: string[], applications: string[] } = JSON.parse(resultOutput);
+                const result: { errors: string[]; applications: string[] } = JSON.parse(resultOutput);
                 if (result.errors && result.errors.length > 0) {
-                    logger.error('Errors occurred while searching for applications:\n' + result.errors.join("\n"));
+                    logger.error("Errors occurred while searching for applications:\n" + result.errors.join("\n"));
                 }
                 resolve(result.applications);
             })
@@ -45,9 +50,11 @@ export function searchMacApplications(
         if (applicationSearchOptions.applicationFolders.length === 0) {
             resolve([]);
         } else {
-            const folderRegex = applicationSearchOptions.applicationFolders.map((applicationFolder) => {
-                return `^${applicationFolder.replace("\\", "\\\\").replace("/", "\\/")}`;
-            }).join("|");
+            const folderRegex = applicationSearchOptions.applicationFolders
+                .map((applicationFolder) => {
+                    return `^${applicationFolder.replace("\\", "\\\\").replace("/", "\\/")}`;
+                })
+                .join("|");
 
             executeCommandWithOutput(`${getMacOsApplicationSearcherCommand(macOsVersion)} | egrep "${folderRegex}"`)
                 .then((data) => {

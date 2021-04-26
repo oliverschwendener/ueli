@@ -13,7 +13,7 @@ export const calculatorSettingsComponent = Vue.extend({
         return {
             settingName: PluginSettings.Calculator,
             visible: false,
-            argumentSeparator: ',',
+            argumentSeparator: ",",
         };
     },
     methods: {
@@ -40,10 +40,10 @@ export const calculatorSettingsComponent = Vue.extend({
             vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
         },
         getArgumentSeparator() {
-            if (this.config.generalOptions.decimalSeparator !== ',') {
-                return ',';
+            if (this.config.generalOptions.decimalSeparator !== ",") {
+                return ",";
             }
-            return ';';
+            return ";";
         },
     },
     mounted() {

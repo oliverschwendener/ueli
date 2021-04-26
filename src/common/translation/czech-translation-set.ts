@@ -111,14 +111,16 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsShowDescriptionOnAllSearchResults: "Popis zobrazit u všech výsledků vyhledávání",
     appearanceSettingsShowSearchIcon: "Zobrazit ikonu vyhledávání",
     appearanceSettingsShowSearchResultNumbers: "Zobrazovat číslá výsledků vyhledávání",
-    appearanceSettingsResetWarningMessage: "Chystáte se obnovit všechna nastavení vzhledu na výchozí. Chcete pokračovat?",
+    appearanceSettingsResetWarningMessage:
+        "Chystáte se obnovit všechna nastavení vzhledu na výchozí. Chcete pokračovat?",
     appearanceSettingsAllowTransparentBackground: "Průhledné pozadí",
     appearanceSettingsFontFamily: "Rodina fontů",
     appearanceSettingsUserInputBorderRadius: "Vstup uživatele border radius",
     appearanceSettingsUserInputBottomMargin: "Vstup uživatele bottom margin (v pixelech)",
     appearanceSettingsSearchResultsBorderRadius: "Výsledky vyhledávání border radius",
     appearanceSettingsScrollbarBorderRadius: "Posuvník border radius",
-    appearanceSettingsBorderRadiusDescription: "Toto je hodnota CSS, takže musíte přidat 'px' jako např. '10px' nebo oddělit rohy, např. '10px 0px 10px 5px'",
+    appearanceSettingsBorderRadiusDescription:
+        "Toto je hodnota CSS, takže musíte přidat 'px' jako např. '10px' nebo oddělit rohy, např. '10px 0px 10px 5px'",
 
     settingsUserInputTitle: "Vstup uživatele",
     settingsSearchResultsBoxTitle: "Pole výsledků hledání",
@@ -172,7 +174,8 @@ export const englishTranslationSet: TranslationSet = {
     searchEngineSettingsFuzzy: "Fuzzy",
     searchEngineSettingsBlacklist: "Blacklist",
     searchEngineSettingsMaxSearchResults: "Max výsledků vyhledávání",
-    searchEngineSettingsResetWarning: "Chystáte se obnovit všechna nastavení vyhledávače na výchozí hodnoty. Chcete pokračovat?",
+    searchEngineSettingsResetWarning:
+        "Chystáte se obnovit všechna nastavení vyhledávače na výchozí hodnoty. Chcete pokračovat?",
 
     shortcutSettings: "Shortcuts",
     shortcutSettingsDescription: `Tento plugin umožňuje rychle otevírat soubory nebo webové stránky nastavením vlastních zkratek.`,
@@ -214,7 +217,8 @@ export const englishTranslationSet: TranslationSet = {
     everythingSearchPathToBinaryFilterName: "Spustitelné soubory",
 
     mdfindSearch: "mdfind",
-    mdfindSettingsDescription: "Tento plugin umožňuje použít nativní vyhledávání v systému MacOS k nalezení souborů a složek v místním systému souborů.",
+    mdfindSettingsDescription:
+        "Tento plugin umožňuje použít nativní vyhledávání v systému MacOS k nalezení souborů a složek v místním systému souborů.",
     mdfindSearchDebounceDelay: "Zpoždění (v milisekundách)",
     mdfindSearchPrefix: "Předpona",
     mdfindSearchMaxSearchResults: "Max. výsledků vyhledávání",
@@ -287,7 +291,8 @@ export const englishTranslationSet: TranslationSet = {
     openNewMail: "Otevřít nový email",
 
     currencyConverter: "Převodník měn",
-    currencyConverterDescription: "Tento plugin umožňuje rychle převádět měny. Nejnovější kurzy jsou uvedeny na adrese https://exchangeratesapi.io/.",
+    currencyConverterDescription:
+        "Tento plugin umožňuje rychle převádět měny. Nejnovější kurzy jsou uvedeny na adrese https://exchangeratesapi.io/.",
     currencyConverterPrecision: "Přesnost",
     currencyConverterCopyToClipboard: "Stisknutím klávesy Enter zkopírujete do schránky",
 
@@ -328,7 +333,8 @@ export const englishTranslationSet: TranslationSet = {
     colorConverterShowColorPreview: "Zobrazit barevný náhled",
 
     dictionary: "Slovník",
-    dictionaryDescription: "Tento plugin umožňuje rychle vyhledat definici a synonyma slov. Používá neoficiální rozhraní Google Dictionary API (https://googledicunteapi.eu-gb.mybluemix.net/)",
+    dictionaryDescription:
+        "Tento plugin umožňuje rychle vyhledat definici a synonyma slov. Používá neoficiální rozhraní Google Dictionary API (https://googledicunteapi.eu-gb.mybluemix.net/)",
     dictionaryPrefix: "Předpona",
     dictionaryMinSearchTermLength: "Minimální délka hledaného výrazu",
     dictionaryDebounceDelay: "Zpoždění (v milisekundách)",
@@ -352,7 +358,8 @@ export const englishTranslationSet: TranslationSet = {
     yes: "Ano",
     no: "Ne",
     resetToDefault: "Resetovat na výchozí hodnoty?",
-    resetPluginSettingsToDefaultWarning: "Chystáte se obnovit všechna nastavení tohoto pluginu na výchozí hodnoty. Chcete pokračovat?",
+    resetPluginSettingsToDefaultWarning:
+        "Chystáte se obnovit všechna nastavení tohoto pluginu na výchozí hodnoty. Chcete pokračovat?",
     filePath: "Cesta k souboru",
     folderPath: "Cesta ke složce",
     chooseFile: "Vyberte soubor",

@@ -15,8 +15,7 @@ export function replaceWhitespace(original: string, replaceWith: string): string
 }
 
 export function stringIsWhiteSpace(value: string): boolean {
-    return value === undefined
-        || value.trim().length === 0;
+    return value === undefined || value.trim().length === 0;
 }
 
 export function unique(values: string[]): string[] {

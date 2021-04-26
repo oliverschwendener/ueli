@@ -8,8 +8,6 @@ export function createFilePathDescription(filePath: string, options?: FilePathOp
         return filePath;
     } else {
         const parentDirectoryName = basename(dirname(filePath));
-        return parentDirectoryName
-            ? `${parentDirectoryName} ▸ ${basename(filePath)}`
-            : basename(filePath);
+        return parentDirectoryName ? `${parentDirectoryName} ▸ ${basename(filePath)}` : basename(filePath);
     }
 }

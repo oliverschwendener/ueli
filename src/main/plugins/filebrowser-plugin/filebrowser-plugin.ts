@@ -21,14 +21,22 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin, AutoCompleti
     private readonly filePathValidator: (filePath: string) => boolean;
     private readonly filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>;
     private readonly fileLocationExecutor: (filePath: string) => Promise<void>;
-    private readonly fileIconGenerator: (filePath: string, defaultFileIcon: Icon, defaultFolderIcon: Icon) => Promise<FileIconDataResult>;
+    private readonly fileIconGenerator: (
+        filePath: string,
+        defaultFileIcon: Icon,
+        defaultFolderIcon: Icon,
+    ) => Promise<FileIconDataResult>;
 
     constructor(
         config: FileBrowserOptions,
         filePathValidator: (filePath: string) => boolean,
         filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>,
         fileLocationExecutor: (filePath: string) => Promise<void>,
-        fileIconGenerator: (filePath: string, defaultFileIcon: Icon, defaultFolderIcon: Icon) => Promise<FileIconDataResult>,
+        fileIconGenerator: (
+            filePath: string,
+            defaultFileIcon: Icon,
+            defaultFolderIcon: Icon,
+        ) => Promise<FileIconDataResult>,
     ) {
         this.config = config;
         this.filePathValidator = filePathValidator;
@@ -81,26 +89,30 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin, AutoCompleti
     private handleFilePath(filePath: string, searchTerm?: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             FileHelpers.getStats(filePath)
-            .then((stats) => {
-                if (stats.stats.isDirectory() && !stats.stats.isSymbolicLink()) {
-                    FileHelpers.readFilesFromFolder(filePath)
-                        .then((filePaths) => {
-                            this.buildSearchResults(filePaths, filePath, searchTerm)
-                                .then((results) => resolve(results))
-                                .catch((err) => reject(err));
-                        })
-                        .catch((err) => reject(err));
-                } else if (stats.stats.isFile() && !stats.stats.isSymbolicLink()) {
-                    resolve([]);
-                } else {
-                    resolve([]);
-                }
-            })
-            .catch((err) => reject(err));
+                .then((stats) => {
+                    if (stats.stats.isDirectory() && !stats.stats.isSymbolicLink()) {
+                        FileHelpers.readFilesFromFolder(filePath)
+                            .then((filePaths) => {
+                                this.buildSearchResults(filePaths, filePath, searchTerm)
+                                    .then((results) => resolve(results))
+                                    .catch((err) => reject(err));
+                            })
+                            .catch((err) => reject(err));
+                    } else if (stats.stats.isFile() && !stats.stats.isSymbolicLink()) {
+                        resolve([]);
+                    } else {
+                        resolve([]);
+                    }
+                })
+                .catch((err) => reject(err));
         });
     }
 
-    private buildSearchResults(filePaths: string[], parentFolder: string, searchTerm?: string): Promise<SearchResultItem[]> {
+    private buildSearchResults(
+        filePaths: string[],
+        parentFolder: string,
+        searchTerm?: string,
+    ): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             const unsortedResults = filePaths
                 .filter((filePath) => {
@@ -119,27 +131,33 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin, AutoCompleti
                         return true;
                     }
                 })
-                .map((filePath): SearchResultItem => {
-                    return {
-                        description: createFilePathDescription(filePath, {
-                            showFullFilePath: this.config.showFullFilePath,
-                        }),
-                        executionArgument: filePath,
-                        hideMainWindowAfterExecution: true,
-                        icon: defaultFileIcon,
-                        name: basename(filePath),
-                        originPluginType: this.pluginType,
-                        searchable: [basename(filePath)],
-                        supportsAutocompletion: true,
-                        supportsOpenLocation: true,
-                    };
-                });
+                .map(
+                    (filePath): SearchResultItem => {
+                        return {
+                            description: createFilePathDescription(filePath, {
+                                showFullFilePath: this.config.showFullFilePath,
+                            }),
+                            executionArgument: filePath,
+                            hideMainWindowAfterExecution: true,
+                            icon: defaultFileIcon,
+                            name: basename(filePath),
+                            originPluginType: this.pluginType,
+                            searchable: [basename(filePath)],
+                            supportsAutocompletion: true,
+                            supportsOpenLocation: true,
+                        };
+                    },
+                );
 
-            const promises = unsortedResults.map((unsortedResult) => this.fileIconGenerator(unsortedResult.executionArgument, defaultFileIcon, defaultFolderIcon));
+            const promises = unsortedResults.map((unsortedResult) =>
+                this.fileIconGenerator(unsortedResult.executionArgument, defaultFileIcon, defaultFolderIcon),
+            );
             Promise.all(promises)
                 .then((iconResults) => {
                     unsortedResults.forEach((unsortedResult) => {
-                        const icon = iconResults.find((iconResult) => iconResult.filePath === unsortedResult.executionArgument);
+                        const icon = iconResults.find(
+                            (iconResult) => iconResult.filePath === unsortedResult.executionArgument,
+                        );
                         if (icon) {
                             unsortedResult.icon = icon.icon;
                         }

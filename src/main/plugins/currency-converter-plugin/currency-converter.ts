@@ -6,10 +6,13 @@ export class CurrencyConverter {
     public static convert(conversion: CurrencyConversion, precision: number): Promise<number> {
         return new Promise((resolve, reject) => {
             const url = `https://api.exchangerate.host/convert?from=${conversion.base.toUpperCase()}&to=${conversion.target.toUpperCase()}`;
-            axios.get(url, { timeout: 5000 })
+            axios
+                .get(url, { timeout: 5000 })
                 .then((response: AxiosResponse) => {
-                    if (!response.status.toString().startsWith('2')) {
-                        reject(`Unable to get exchange rate. Response status: ${response.status} (${response.statusText})`);
+                    if (!response.status.toString().startsWith("2")) {
+                        reject(
+                            `Unable to get exchange rate. Response status: ${response.status} (${response.statusText})`,
+                        );
                         return;
                     }
                     const conversionResult: ConversionApiResult = response.data;

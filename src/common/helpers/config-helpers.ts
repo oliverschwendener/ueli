@@ -6,13 +6,14 @@ export function mergeUserConfigWithDefault(userConfig: any, defaultUserConfig: U
     const result: any = deepCopy(defaultUserConfig);
 
     Object.keys(defaultUserConfig).forEach((key: string) => {
-        const merged = userConfig !== undefined && userConfig.hasOwnProperty(key)
-            ? Object.assign(result[key], userConfig[key])
-            : result[key];
+        const merged =
+            userConfig !== undefined && userConfig.hasOwnProperty(key)
+                ? Object.assign(result[key], userConfig[key])
+                : result[key];
         result[key] = merged;
     });
 
-    if(!result.generalOptions.hotKey.secondModifier) {
+    if (!result.generalOptions.hotKey.secondModifier) {
         result.generalOptions.hotKey.secondModifier = GlobalHotKeyModifier.None;
     }
 

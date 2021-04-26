@@ -23,10 +23,7 @@ describe(isValidJson.name, () => {
     });
 
     it("should return false if invalid json is passed in", () => {
-        const invalidElements = [
-            "blabla",
-            "{'1kc$$asdf90c",
-        ];
+        const invalidElements = ["blabla", "{'1kc$$asdf90c"];
 
         invalidElements.forEach((invalidElement) => {
             const actual = isValidJson(invalidElement);
@@ -51,6 +48,8 @@ describe(mergeUserConfigWithDefault.name, () => {
 
         const actual = mergeUserConfigWithDefault(object, defaultUserConfigOptions);
         expect(actual.urlOptions.defaultProtocol).toBe("ftp");
-        expect(actual.fileBrowserOptions.maxSearchResults).toBe(defaultUserConfigOptions.fileBrowserOptions.maxSearchResults);
+        expect(actual.fileBrowserOptions.maxSearchResults).toBe(
+            defaultUserConfigOptions.fileBrowserOptions.maxSearchResults,
+        );
     });
 });

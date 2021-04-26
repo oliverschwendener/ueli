@@ -44,7 +44,11 @@ export const workflowSettingsComponent = Vue.extend({
             this.updateConfig();
         },
         addButtonClick() {
-            vueEventDispatcher.$emit(VueEventChannels.openWorkflowEditingModal, deepCopy(defaultNewWorkflow), ModalEditMode.Add);
+            vueEventDispatcher.$emit(
+                VueEventChannels.openWorkflowEditingModal,
+                deepCopy(defaultNewWorkflow),
+                ModalEditMode.Add,
+            );
         },
         editWorkflow(index: number) {
             const config: UserConfigOptions = this.config;
@@ -94,13 +98,16 @@ export const workflowSettingsComponent = Vue.extend({
             }
         });
 
-        vueEventDispatcher.$on(VueEventChannels.workflowEdited, (workflow: Workflow, editMode: ModalEditMode, saveIndex?: number) => {
-            if (editMode === ModalEditMode.Add) {
-                this.addWorkflow(workflow);
-            } else if (editMode === ModalEditMode.Edit) {
-                this.updateWorkflow(workflow, saveIndex);
-            }
-        });
+        vueEventDispatcher.$on(
+            VueEventChannels.workflowEdited,
+            (workflow: Workflow, editMode: ModalEditMode, saveIndex?: number) => {
+                if (editMode === ModalEditMode.Add) {
+                    this.addWorkflow(workflow);
+                } else if (editMode === ModalEditMode.Edit) {
+                    this.updateWorkflow(workflow, saveIndex);
+                }
+            },
+        );
     },
     props: ["config", "translations"],
     template: `

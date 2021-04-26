@@ -5,9 +5,9 @@ describe(isDev, () => {
         const processExecPaths = [
             "electron",
             "electron.exe",
-            "C:\\Users\\ueli\\projects\\ueli\\node_modules\\.bin\electron.exe",
-            "C:\\Users\\ueli\\projects\\ueli\\node_modules\\.bin\electron",
-            "/Users/ueli/project/ueli/node_modules/.bin/electron"
+            "C:\\Users\\ueli\\projects\\ueli\\node_modules\\.bin\\electron.exe",
+            "C:\\Users\\ueli\\projects\\ueli\\node_modules\\.bin\\electron",
+            "/Users/ueli/project/ueli/node_modules/.bin/electron",
         ];
 
         processExecPaths.forEach((processExecPath) => {

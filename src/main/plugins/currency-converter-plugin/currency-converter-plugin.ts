@@ -17,7 +17,11 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
     private translationSet: TranslationSet;
     private readonly clipboardCopier: (value: string) => Promise<void>;
 
-    constructor(config: UserConfigOptions, translationSet: TranslationSet, clipboardCopier: (value: string) => Promise<void>) {
+    constructor(
+        config: UserConfigOptions,
+        translationSet: TranslationSet,
+        clipboardCopier: (value: string) => Promise<void>,
+    ) {
         this.config = config.currencyConverterOptions;
         this.generalConfig = config.generalOptions;
         this.translationSet = translationSet;
@@ -29,10 +33,12 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
         const words = userInput.trim().split(" ");
         if (words.length === 4) {
             try {
-                return keywords.includes(words[2].toLowerCase())
-                    && !isNaN(this.getNumber(words[0]))
-                    && this.isCurrencyCode(words[1])
-                    && this.isCurrencyCode(words[3]);
+                return (
+                    keywords.includes(words[2].toLowerCase()) &&
+                    !isNaN(this.getNumber(words[0])) &&
+                    this.isCurrencyCode(words[1]) &&
+                    this.isCurrencyCode(words[3])
+                );
             } catch (err) {
                 return false;
             }
@@ -63,17 +69,17 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
     }
 
     private getNumber(numericStringValue: string): number {
-        if (this.generalConfig.decimalSeparator === '.') {
+        if (this.generalConfig.decimalSeparator === ".") {
             return Number(numericStringValue);
         }
-        return Number(numericStringValue.replaceAll(this.generalConfig.decimalSeparator, '.'));
+        return Number(numericStringValue.replaceAll(this.generalConfig.decimalSeparator, "."));
     }
 
     private convertToString(numericValue: number): string {
-        if (this.generalConfig.decimalSeparator === '.') {
+        if (this.generalConfig.decimalSeparator === ".") {
             return numericValue.toString();
         }
-        return numericValue.toString().replace('.', this.generalConfig.decimalSeparator);
+        return numericValue.toString().replace(".", this.generalConfig.decimalSeparator);
     }
 
     public isEnabled(): boolean {
@@ -94,16 +100,18 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
     }
 
     private isCurrencyCode(value: string): boolean {
-        return Object
-            .values(CurrencyCode)
-            .some((c: CurrencyCode) => c.toLowerCase() === value.toLowerCase());
+        return Object.values(CurrencyCode).some((c: CurrencyCode) => c.toLowerCase() === value.toLowerCase());
     }
 
     private buildCurrencyConversion(userInput: string): CurrencyConversion {
         const words = userInput.trim().split(" ");
         return {
-            base: Object.values(CurrencyCode).find((c: CurrencyCode) => c.toLowerCase() === words[1].toLowerCase()) || CurrencyCode.EUR,
-            target: Object.values(CurrencyCode).find((c: CurrencyCode) => c.toLowerCase() === words[3].toLowerCase()) || CurrencyCode.USD,
+            base:
+                Object.values(CurrencyCode).find((c: CurrencyCode) => c.toLowerCase() === words[1].toLowerCase()) ||
+                CurrencyCode.EUR,
+            target:
+                Object.values(CurrencyCode).find((c: CurrencyCode) => c.toLowerCase() === words[3].toLowerCase()) ||
+                CurrencyCode.USD,
             value: this.getNumber(words[0]),
         };
     }

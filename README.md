@@ -6,34 +6,34 @@ This is a keystroke launcher for Windows and macOS.
 
 ## Table of contents
 
-* [Installation](#installation)
-* [Features](#features)
-* [Keyboard shortcuts](#keyboard-shortcuts)
-* [Settings](#settings)
-* [Updating](#updating)
-* [Privacy](#privacy)
-* [Known bugs](#known-bugs)
-* [Development](#development)
-* [Alternatives](#alternatives)
-* [License](#license)
-* [Release notes](https://github.com/oliverschwendener/ueli/releases)
+-   [Installation](#installation)
+-   [Features](#features)
+-   [Keyboard shortcuts](#keyboard-shortcuts)
+-   [Settings](#settings)
+-   [Updating](#updating)
+-   [Privacy](#privacy)
+-   [Known bugs](#known-bugs)
+-   [Development](#development)
+-   [Alternatives](#alternatives)
+-   [License](#license)
+-   [Release notes](https://github.com/oliverschwendener/ueli/releases)
 
 ## Installation
 
 ### Installer / Zip
 
-* Download the latest version from here: https://ueli.app/#/download
-* Run the installer or unzip
-* Run the application
+-   Download the latest version from here: https://ueli.app/#/download
+-   Run the installer or unzip
+-   Run the application
 
 > Note: because the executables are not signed Windows and macOS will probably prevent you from executing the installer or the program itself.
 
 ### Installing via chocolatey repository
 
-* Open a powershell with administration rights (Right click on your start button and click `Windows PowerShell (Admin)`
-* Type `choco install ueli`
-* Accept the upcoming prompt by entering `y` or run above command with `-y` switch
-* Run the application
+-   Open a powershell with administration rights (Right click on your start button and click `Windows PowerShell (Admin)`
+-   Type `choco install ueli`
+-   Accept the upcoming prompt by entering `y` or run above command with `-y` switch
+-   Run the application
 
 ## Features
 
@@ -49,11 +49,11 @@ This plugin enables you to search your browser bookmarks.
 
 Currently supported browsers:
 
-- Google Chrome
-- Brave
-- Vivaldi
-- SideKick
-- Microsoft Edge
+-   Google Chrome
+-   Brave
+-   Vivaldi
+-   SideKick
+-   Microsoft Edge
 
 ![browser-bookmarks](assets/feature-browser-bookmarks.png)
 
@@ -176,29 +176,28 @@ This plugin enables you to quickly execute multiple things at once.
 
 ## Keyboard shortcuts
 
-|Keyboard shortcut|Description|
-|---|---|
-|<kbd>Enter</kbd>|Execute selected search result|
-|<kbd>Shift</kbd> <kbd>Enter</kbd>|Execute selected program as admin (Windows only)|
-|<kbd>Tab</kbd>|Autocomplete file path|
-|<kbd>Ctrl</kbd> <kbd>o</kbd>|Open the selected program or file at it's location (Windows)|
-|<kbd>Cmd</kbd> <kbd>o</kbd>|Open the selected program or file at it's location (macOS)|
-|<kbd>↑</kbd>|Scroll up|
-|<kbd>↓</kbd>|Scroll down|
-|<kbd>Ctrl or Cmd</kbd> <kbd>p</kbd>|Scroll up|
-|<kbd>Ctrl or Cmd</kbd> <kbd>n</kbd>|Scroll down|
-|<kbd>Ctrl</kbd> <kbd>i</kbd>|Open settings (Windows)|
-|<kbd>Cmd</kbd> <kbd>,</kbd>|Open settings (macOS)|
-|<kbd>Shift</kbd> <kbd>↑</kbd>|Browse user input history up|
-|<kbd>Shift</kbd> <kbd>↓</kbd>|Browse user input history down|
-|<kbd>Ctrl</kbd> <kbd>l</kbd>|Set focus on user input|
+| Keyboard shortcut                   | Description                                                  |
+| ----------------------------------- | ------------------------------------------------------------ |
+| <kbd>Enter</kbd>                    | Execute selected search result                               |
+| <kbd>Shift</kbd> <kbd>Enter</kbd>   | Execute selected program as admin (Windows only)             |
+| <kbd>Tab</kbd>                      | Autocomplete file path                                       |
+| <kbd>Ctrl</kbd> <kbd>o</kbd>        | Open the selected program or file at it's location (Windows) |
+| <kbd>Cmd</kbd> <kbd>o</kbd>         | Open the selected program or file at it's location (macOS)   |
+| <kbd>↑</kbd>                        | Scroll up                                                    |
+| <kbd>↓</kbd>                        | Scroll down                                                  |
+| <kbd>Ctrl or Cmd</kbd> <kbd>p</kbd> | Scroll up                                                    |
+| <kbd>Ctrl or Cmd</kbd> <kbd>n</kbd> | Scroll down                                                  |
+| <kbd>Ctrl</kbd> <kbd>i</kbd>        | Open settings (Windows)                                      |
+| <kbd>Cmd</kbd> <kbd>,</kbd>         | Open settings (macOS)                                        |
+| <kbd>Shift</kbd> <kbd>↑</kbd>       | Browse user input history up                                 |
+| <kbd>Shift</kbd> <kbd>↓</kbd>       | Browse user input history down                               |
+| <kbd>Ctrl</kbd> <kbd>l</kbd>        | Set focus on user input                                      |
 
 ## Settings
 
 ![settings](assets/settings.png)
 
 To open the settings simply search for "Settings" or press `Ctrl+i` on Windows or `Cmd+,` on macOS. Here you can start configuring the app to your needs by enabling/disabling features or changing the settings.
-
 
 ## Updating
 
@@ -212,9 +211,9 @@ For better search results ueli is keeping track of the applications, files and f
 
 ## Known bugs
 
-* ([#37](https://github.com/oliverschwendener/ueli/issues/37)) Window starts to move while typing when custom scaling in Windows is set.
-* ([#92](https://github.com/oliverschwendener/ueli/issues/92)) If you see an error that says `spawn powershell.exe ENOENT` check if powershell is installed (should be installed in all recent Versions of Windows by default) and check if powershell is in the PATH variable.
-* ([#278](https://github.com/oliverschwendener/ueli/issues/278)) If you're on macOS Catalina you might miss some system apps (for example: Books or QuickTime Player). Try adding `/System/Applications` to your application search settings.
+-   ([#37](https://github.com/oliverschwendener/ueli/issues/37)) Window starts to move while typing when custom scaling in Windows is set.
+-   ([#92](https://github.com/oliverschwendener/ueli/issues/92)) If you see an error that says `spawn powershell.exe ENOENT` check if powershell is installed (should be installed in all recent Versions of Windows by default) and check if powershell is in the PATH variable.
+-   ([#278](https://github.com/oliverschwendener/ueli/issues/278)) If you're on macOS Catalina you might miss some system apps (for example: Books or QuickTime Player). Try adding `/System/Applications` to your application search settings.
 
 For more check [here](https://github.com/oliverschwendener/ueli/issues).
 
@@ -222,9 +221,9 @@ For more check [here](https://github.com/oliverschwendener/ueli/issues).
 
 ### Requirements
 
-* Git
-* Node 12.x.x
-* Yarn
+-   Git
+-   Node 12.x.x
+-   Yarn
 
 ### Setup
 
@@ -271,14 +270,14 @@ $ yarn package
 
 ## Alternatives
 
-* [khanhas/ueli](https://github.com/khanhas/ueli)
-* [Launchy](https://www.launchy.net/)
-* [Wox](https://github.com/Wox-launcher/Wox)
-* [Keypirinha](http://keypirinha.com/)
-* [Alfred](https://www.alfredapp.com/)
-* [Hain](https://github.com/hainproject/hain)
-* [Zazu App](http://zazuapp.org/)
-* [Cerebro](https://cerebroapp.com/)
+-   [khanhas/ueli](https://github.com/khanhas/ueli)
+-   [Launchy](https://www.launchy.net/)
+-   [Wox](https://github.com/Wox-launcher/Wox)
+-   [Keypirinha](http://keypirinha.com/)
+-   [Alfred](https://www.alfredapp.com/)
+-   [Hain](https://github.com/hainproject/hain)
+-   [Zazu App](http://zazuapp.org/)
+-   [Cerebro](https://cerebroapp.com/)
 
 ## Thanks
 

@@ -27,7 +27,11 @@ export const applicationSearchSettingsComponent = Vue.extend({
     methods: {
         addApplicationFileExtension(applicationFileExtension: string) {
             const config: UserConfigOptions = this.config;
-            if (config.applicationSearchOptions.applicationFileExtensions.find((a) => a === applicationFileExtension) !== undefined) {
+            if (
+                config.applicationSearchOptions.applicationFileExtensions.find(
+                    (a) => a === applicationFileExtension,
+                ) !== undefined
+            ) {
                 showNotification(`"${applicationFileExtension}" already exists in your list`, NotificationType.Info);
             } else {
                 config.applicationSearchOptions.applicationFileExtensions.push(applicationFileExtension);
@@ -36,7 +40,8 @@ export const applicationSearchSettingsComponent = Vue.extend({
         },
         addApplicationFolder(folderPath: string) {
             const config: UserConfigOptions = this.config;
-            const folderAlreadyExistsInList = config.applicationSearchOptions.applicationFolders.find((a) => a === folderPath) !== undefined;
+            const folderAlreadyExistsInList =
+                config.applicationSearchOptions.applicationFolders.find((a) => a === folderPath) !== undefined;
             if (folderAlreadyExistsInList) {
                 showNotification(`Folder "${folderPath}" already exists in your list`, NotificationType.Info);
             } else {
@@ -57,7 +62,9 @@ export const applicationSearchSettingsComponent = Vue.extend({
         },
         removeApplicationFileExtension(applicationFileExtension: string) {
             const config: UserConfigOptions = this.config;
-            const indexToRemove = config.applicationSearchOptions.applicationFileExtensions.indexOf(applicationFileExtension);
+            const indexToRemove = config.applicationSearchOptions.applicationFileExtensions.indexOf(
+                applicationFileExtension,
+            );
             config.applicationSearchOptions.applicationFileExtensions.splice(indexToRemove, 1);
             this.updateConfig(true);
         },
@@ -83,16 +90,25 @@ export const applicationSearchSettingsComponent = Vue.extend({
         },
         resetApplicationFoldersToDefault() {
             const config: UserConfigOptions = this.config;
-            config.applicationSearchOptions.applicationFolders = deepCopy(defaultApplicationSearchOptions.applicationFolders);
+            config.applicationSearchOptions.applicationFolders = deepCopy(
+                defaultApplicationSearchOptions.applicationFolders,
+            );
             this.updateConfig(true);
         },
         resetApplicationFileExtensionsToDefault() {
             const config: UserConfigOptions = this.config;
-            config.applicationSearchOptions.applicationFileExtensions = deepCopy(defaultApplicationSearchOptions.applicationFileExtensions);
+            config.applicationSearchOptions.applicationFileExtensions = deepCopy(
+                defaultApplicationSearchOptions.applicationFileExtensions,
+            );
             this.updateConfig(true);
         },
         updateConfig(needsIndexRefresh: boolean) {
-            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, needsIndexRefresh, PluginType.ApplicationSearchPlugin);
+            vueEventDispatcher.$emit(
+                VueEventChannels.configUpdated,
+                this.config,
+                needsIndexRefresh,
+                PluginType.ApplicationSearchPlugin,
+            );
         },
     },
     mounted() {

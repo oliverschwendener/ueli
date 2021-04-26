@@ -14,7 +14,7 @@ const invalidWindowsPlatformIdentifiers = [
     "Windows 10",
     "MS windows",
     "1234",
-    "gugus"
+    "gugus",
 ];
 
 const macOsPlatformIdentifier = "darwin";
@@ -37,20 +37,12 @@ describe(getCurrentOperatingSystem, () => {
 
     it(`it should return ${OperatingSystem.macOS} when passing in darwin`, () => {
         expect(getCurrentOperatingSystem(macOsPlatformIdentifier)).toBe(OperatingSystem.macOS);
-    })
+    });
 
     it("should throw an error when passing in an unsupported platform identifier", () => {
         let errorCounter = 0;
 
-        const unsupportedPlatformIdentifiers = [
-            "linux",
-            "freebsd",
-            "openbsd",
-            "sunos",
-            "bsd",
-            "aix",
-            "whatever",
-        ];
+        const unsupportedPlatformIdentifiers = ["linux", "freebsd", "openbsd", "sunos", "bsd", "aix", "whatever"];
 
         invalidWindowsPlatformIdentifiers.forEach((invalidWindowsPlatformIdentifier) => {
             unsupportedPlatformIdentifiers.push(invalidWindowsPlatformIdentifier);
@@ -111,19 +103,7 @@ describe(getOperatingSystemVersion, () => {
     });
 
     it("should throw an error when passing in an unsupported darwin kernel version", () => {
-        const unsupportedKernelVersions = [
-            "",
-            " ",
-            "          ",
-            "1",
-            "abc",
-            "10.x.x",
-            "11",
-            "12",
-            "13",
-            "21",
-            "22",
-        ];
+        const unsupportedKernelVersions = ["", " ", "          ", "1", "abc", "10.x.x", "11", "12", "13", "21", "22"];
 
         let errorCounter = 0;
 
@@ -189,7 +169,7 @@ describe(getOperatingSystemVersion, () => {
             try {
                 getOperatingSystemVersion(OperatingSystem.Windows, invalidWindowsRelease);
             } catch (error) {
-                errorCounter++
+                errorCounter++;
             }
         });
 

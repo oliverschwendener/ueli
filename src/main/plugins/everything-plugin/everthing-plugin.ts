@@ -1,4 +1,3 @@
-
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { PluginType } from "../../plugin-type";
@@ -20,7 +19,7 @@ export class EverythingPlugin implements ExecutionPlugin, OpenLocationPlugin {
             everythingSearchOptions: EverythingSearchOptions,
             defaultFileIcon: Icon,
             defaultFolderIcon: Icon,
-            pluginType: PluginType
+            pluginType: PluginType,
         ) => Promise<SearchResultItem[]>,
     ) {}
 
@@ -29,8 +28,7 @@ export class EverythingPlugin implements ExecutionPlugin, OpenLocationPlugin {
     }
 
     public isValidUserInput(userInput: string): boolean {
-        return userInput.startsWith(this.config.prefix)
-            && userInput.replace(this.config.prefix, "").length > 0;
+        return userInput.startsWith(this.config.prefix) && userInput.replace(this.config.prefix, "").length > 0;
     }
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {

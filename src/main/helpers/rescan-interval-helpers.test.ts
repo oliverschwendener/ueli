@@ -1,14 +1,7 @@
 import { getRescanIntervalInMilliseconds } from "./rescan-interval-helpers";
 
 describe(getRescanIntervalInMilliseconds.name, () => {
-    const rescanIntervalsInSeconds = [
-        0,
-        5,
-        10,
-        30,
-        1000,
-        12341.1234,
-    ];
+    const rescanIntervalsInSeconds = [0, 5, 10, 30, 1000, 12341.1234];
 
     it("should correctly convert seconds to milliseconds", () => {
         rescanIntervalsInSeconds.forEach((rescanIntervalInSeconds) => {
@@ -22,9 +15,7 @@ describe(getRescanIntervalInMilliseconds.name, () => {
         const minimum = 20;
 
         rescanIntervalsInSeconds.forEach((rescanIntervalInSeconds) => {
-            const expected = rescanIntervalInSeconds < minimum
-                ? minimum * 1000
-                : rescanIntervalInSeconds * 1000;
+            const expected = rescanIntervalInSeconds < minimum ? minimum * 1000 : rescanIntervalInSeconds * 1000;
 
             const actual = getRescanIntervalInMilliseconds(rescanIntervalInSeconds, minimum);
 

@@ -61,10 +61,12 @@ export const turkishTranslationSet: TranslationSet = {
     generalSettingsSuccessfullyExportedSettings: "Ayarlar başarıyla dışa aktarıldı",
     generalSettingsImportSettings: "Ayarları içe aktar",
     generalSettingsImportFileFilterJsonFiles: "JSON dosyaları",
-    generalSettingsImportErrorInvalidConfig: "Ayarların içe aktarılması başarısız oldu: dosya içeriği geçersiz görünüyor",
+    generalSettingsImportErrorInvalidConfig:
+        "Ayarların içe aktarılması başarısız oldu: dosya içeriği geçersiz görünüyor",
     generalSettingsResetAllSettings: "Tüm ayarları varsayılana sıfırla",
     generalSettingsResetWarning: "Tüm genel ayarları varsayılana sıfırlamak üzeresiniz. Devam etmek istiyor musunuz?",
-    generalSettingsResetAllSettingsWarning: "Bütün ayarları varsayılana sıfırlamak üzeresiniz. Devam etmek istiyor musunuz?",
+    generalSettingsResetAllSettingsWarning:
+        "Bütün ayarları varsayılana sıfırlamak üzeresiniz. Devam etmek istiyor musunuz?",
     generalSettingsClearExecutionLogWarning: "Yürütme günlüğünü silmek üzeresiniz. Devam etmek istiyor musunuz?",
     generalSettingsHideMainWindowAfterExecution: "Yürütmeden sonra pencereyi gizle",
     generalSettingsHideMainWindowOnBlur: "Odak kaybolduğunda pencereyi gizle",
@@ -111,14 +113,16 @@ export const turkishTranslationSet: TranslationSet = {
     appearanceSettingsShowDescriptionOnAllSearchResults: "Tüm arama sonuçlarında açıklama göster",
     appearanceSettingsShowSearchIcon: "Arama alanında arama simgesini göster",
     appearanceSettingsShowSearchResultNumbers: "Arama sonucu numaralarını göster",
-    appearanceSettingsResetWarningMessage: "Tüm görünüm ayarlarını varsayılan değerlerine geri yüklemek üzeresiniz. Devam etmek istiyor musunuz?",
+    appearanceSettingsResetWarningMessage:
+        "Tüm görünüm ayarlarını varsayılan değerlerine geri yüklemek üzeresiniz. Devam etmek istiyor musunuz?",
     appearanceSettingsAllowTransparentBackground: "Saydam arka plana izin ver",
     appearanceSettingsFontFamily: "Font ailesi",
     appearanceSettingsUserInputBorderRadius: "Kullanıcı giriş kenarlığı yarıçapı",
     appearanceSettingsUserInputBottomMargin: "Kullanıcı girişi alt kenar boşluğu (piksel olarak)",
     appearanceSettingsSearchResultsBorderRadius: "Arama sonuçları kenarlık yarıçapı",
     appearanceSettingsScrollbarBorderRadius: "Kaydırma çubuğu kenarlık yarıçapı",
-    appearanceSettingsBorderRadiusDescription: "Bu bir css değeridir, bu nedenle bu '10px' gibi 'px' veya '10px 0px 10px 5px' gibi ayrı köşeler eklemeniz gerekir",
+    appearanceSettingsBorderRadiusDescription:
+        "Bu bir css değeridir, bu nedenle bu '10px' gibi 'px' veya '10px 0px 10px 5px' gibi ayrı köşeler eklemeniz gerekir",
 
     settingsUserInputTitle: "Kullanıcı girişi",
     settingsSearchResultsBoxTitle: "Arama sonuçları kutusu",
@@ -128,7 +132,8 @@ export const turkishTranslationSet: TranslationSet = {
     colorThemeSettings: "Renk teması",
     colorThemeSettingsImportColorTheme: "Renk temasını içe aktar",
     colorThemeSettingsExportColorTheme: "Renk temasını dışa aktar",
-    colorThemeSettingsResetWarning: "Tüm renk teması ayarlarını varsayılan değerlerine geri yüklemek üzeresiniz. Devam etmek istiyor musunuz?",
+    colorThemeSettingsResetWarning:
+        "Tüm renk teması ayarlarını varsayılan değerlerine geri yüklemek üzeresiniz. Devam etmek istiyor musunuz?",
     colorThemeExportSucceeded: "Renk teması başarıyla dışa aktarıldı",
     colorThemeExportFailed: "Renk teması dışa aktarma başarısız oldu",
     colorThemeImportSucceeded: "Renk teması başarıyla içe aktarıldı",
@@ -162,7 +167,8 @@ export const turkishTranslationSet: TranslationSet = {
     applicationSearchSettingsNotAFolderErrorMessage: `"{{value}} bir klasör değil"`,
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}} mevcut değil"`,
     applicationSearchSettingsFolderValidationError: `"{{value}}" doğrulamaya çalışılırken bir hata oluştu`,
-    applicationSearchSettingsUseNativeIcons: "Yerel simgeler kullanın (kapalı olduğunda daha iyi performans sağlayabilir)",
+    applicationSearchSettingsUseNativeIcons:
+        "Yerel simgeler kullanın (kapalı olduğunda daha iyi performans sağlayabilir)",
 
     searchEngineSettings: "Arama motoru",
     searchEngineSettingsDescription: `Arama motoru, uygulamalar, kısayollar ve işletim sistemi ayarları / komutları gibi önceden indekslenmiş öğeler için kullanılır.`,
@@ -172,7 +178,8 @@ export const turkishTranslationSet: TranslationSet = {
     searchEngineSettingsFuzzy: "Benzer",
     searchEngineSettingsBlacklist: "Kara liste",
     searchEngineSettingsMaxSearchResults: "Maks arama sonuçları",
-    searchEngineSettingsResetWarning: "Tüm arama motoru ayarlarını varsayılan değerlerine geri yüklemek üzeresiniz. Devam etmek istiyor musunuz?",
+    searchEngineSettingsResetWarning:
+        "Tüm arama motoru ayarlarını varsayılan değerlerine geri yüklemek üzeresiniz. Devam etmek istiyor musunuz?",
 
     shortcutSettings: "Kısayollar",
     shortcutSettingsDescription: `Bu eklenti, kendi kısayollarınızı ayarlayarak dosyaları veya web sitelerini hızlı bir şekilde açmanızı sağlar.`,
@@ -214,7 +221,8 @@ export const turkishTranslationSet: TranslationSet = {
     everythingSearchPathToBinaryFilterName: "Yürütülebilir dosyalar",
 
     mdfindSearch: "mdfind arama",
-    mdfindSettingsDescription: "Bu eklenti, yerel dosya sisteminizdeki dosyaları ve klasörleri bulmak için yerel macOS aramasını kullanmanızı sağlar.",
+    mdfindSettingsDescription:
+        "Bu eklenti, yerel dosya sisteminizdeki dosyaları ve klasörleri bulmak için yerel macOS aramasını kullanmanızı sağlar.",
     mdfindSearchDebounceDelay: "Hata gecikmesi (milisaniye cinsinden)",
     mdfindSearchPrefix: "Ön ek",
     mdfindSearchMaxSearchResults: "Maks arama sonuçları",
@@ -246,7 +254,8 @@ export const turkishTranslationSet: TranslationSet = {
     operatingSystemCommandsSettingsDescription: `İşletim sistemi komutları, işletim sisteminizi kontrol etmek için basit komutlardır; örneğin bilgisayarı kapat veya yeniden başlat`,
 
     operatingSystemSettings: "İşletim sistemi ayarları",
-    operatingSystemSettingsSettingsDescription: "Bu eklenti, işletim sistemi ayarlarını hızlı bir şekilde bulmanızı sağlar.",
+    operatingSystemSettingsSettingsDescription:
+        "Bu eklenti, işletim sistemi ayarlarını hızlı bir şekilde bulmanızı sağlar.",
 
     macOsShutdown: "Bilgisayarı Kapat",
     macOsShutdownDescription: "Bilgisayarı Kapat",
@@ -254,8 +263,8 @@ export const turkishTranslationSet: TranslationSet = {
     macOsRestartDescription: "Bilgisayarı yeniden başlat",
     macOsLogout: "Oturumunu Kapat",
     macOsLogoutDescription: "Mevcut kullanıcının oturumunu kapat",
-    macOsSleep: 'Uyumak',
-    macOsSleepDescription: 'Uyku bilgisayar',
+    macOsSleep: "Uyumak",
+    macOsSleepDescription: "Uyku bilgisayar",
     macOsLock: "Kilitle",
     macOsLockDescription: "Bilgisayarı kilitle",
 
@@ -283,11 +292,13 @@ export const turkishTranslationSet: TranslationSet = {
     urlDefaultProtocol: "Varsayılan protokol",
 
     email: "E-posta",
-    emailSettingsDescription: "Bu eklenti, bir e-posta adresi yazarak hızlı bir şekilde e-posta yazmaya başlamanıza olanak tanır.",
+    emailSettingsDescription:
+        "Bu eklenti, bir e-posta adresi yazarak hızlı bir şekilde e-posta yazmaya başlamanıza olanak tanır.",
     openNewMail: "Yeni e-posta aç",
 
     currencyConverter: "Döviz Çevirici",
-    currencyConverterDescription: "Bu eklenti para birimlerini hızlıca dönüştürmenizi sağlar. En son dönüşüm oranları https://exchangeratesapi.io/ tarafından sağlanmaktadır..",
+    currencyConverterDescription:
+        "Bu eklenti para birimlerini hızlıca dönüştürmenizi sağlar. En son dönüşüm oranları https://exchangeratesapi.io/ tarafından sağlanmaktadır..",
     currencyConverterPrecision: "Hassas",
     currencyConverterCopyToClipboard: "Panoya kopyalamak için enter tuşuna basın",
 
@@ -328,7 +339,8 @@ export const turkishTranslationSet: TranslationSet = {
     colorConverterShowColorPreview: "Renk önizlemesini göster",
 
     dictionary: "Sözlük",
-    dictionaryDescription: "Bu eklenti, kelimelerin tanımını ve eş anlamlılarını hızlı bir şekilde aramanızı sağlar. Resmi olmayan bir Google Sözlük API'i kullanıyor (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+    dictionaryDescription:
+        "Bu eklenti, kelimelerin tanımını ve eş anlamlılarını hızlı bir şekilde aramanızı sağlar. Resmi olmayan bir Google Sözlük API'i kullanıyor (https://googledictionaryapi.eu-gb.mybluemix.net/)",
     dictionaryPrefix: "Ön ek",
     dictionaryMinSearchTermLength: "Minimum arama terimi uzunluğu",
     dictionaryDebounceDelay: "Hata gecikmesi (milisaniye cinsinden)",
@@ -352,7 +364,8 @@ export const turkishTranslationSet: TranslationSet = {
     yes: "Evet",
     no: "Hayır",
     resetToDefault: "Varsayılana sıfırla?",
-    resetPluginSettingsToDefaultWarning: "Bu eklentinin tüm ayarlarını varsayılan değerlerine geri yüklemek üzeresiniz. Devam etmek istiyor musunuz?",
+    resetPluginSettingsToDefaultWarning:
+        "Bu eklentinin tüm ayarlarını varsayılan değerlerine geri yüklemek üzeresiniz. Devam etmek istiyor musunuz?",
     filePath: "Dosya yolu",
     folderPath: "Klasör yolu",
     chooseFile: "Dosya seçin",

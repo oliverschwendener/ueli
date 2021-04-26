@@ -24,7 +24,6 @@ export const everythingSettingsComponent = Vue.extend({
             this.updateConfig();
         },
         resetAll() {
-
             const translations: TranslationSet = this.translations;
             const userConfirmationDialogParams: UserConfirmationDialogParams = {
                 callback: () => {

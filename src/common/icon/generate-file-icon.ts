@@ -8,7 +8,11 @@ export interface FileIconDataResult {
     icon: Icon;
 }
 
-export function getFileIconDataUrl(filePath: string, defaultFileIcon: Icon, folderIcon?: Icon): Promise<FileIconDataResult> {
+export function getFileIconDataUrl(
+    filePath: string,
+    defaultFileIcon: Icon,
+    folderIcon?: Icon,
+): Promise<FileIconDataResult> {
     const defaultResult = {
         filePath,
         icon: defaultFileIcon,
@@ -25,9 +29,10 @@ export function getFileIconDataUrl(filePath: string, defaultFileIcon: Icon, fold
                                     const isDirectory = stats.stats.isDirectory() && !filePath.endsWith(".app");
                                     resolve({
                                         filePath,
-                                        icon: isDirectory && folderIcon
-                                            ? folderIcon
-                                            : { parameter: icon.toDataURL(), type: IconType.URL },
+                                        icon:
+                                            isDirectory && folderIcon
+                                                ? folderIcon
+                                                : { parameter: icon.toDataURL(), type: IconType.URL },
                                     });
                                 })
                                 .catch(() => resolve(defaultResult));

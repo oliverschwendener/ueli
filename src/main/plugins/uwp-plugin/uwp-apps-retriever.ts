@@ -4,16 +4,18 @@ import { IconType } from "../../../common/icon/icon-type";
 
 export function getAllUwpApps(alreadyKnownApps: UwpApplication[]): Promise<UwpApplication[]> {
     return new Promise((resolve, reject) => {
-        const alreadyKnownAppIds = alreadyKnownApps.length === 0 ? "@()" : alreadyKnownApps.map((a) => `"${a.appId}"`).join(",");
-        const command = getUwpAppsCommand
-            .replace(/\n/g, " ")
-            .replace("%alreadyKnownAppIds%", alreadyKnownAppIds);
+        const alreadyKnownAppIds =
+            alreadyKnownApps.length === 0 ? "@()" : alreadyKnownApps.map((a) => `"${a.appId}"`).join(",");
+        const command = getUwpAppsCommand.replace(/\n/g, " ").replace("%alreadyKnownAppIds%", alreadyKnownAppIds);
 
         spawnPowershellCommandWithOutput(command)
             .then((resultString) => {
-                const result = JSON.parse(resultString) as { NewApps: any[], RemovedAppIds: string[] };
+                const result = JSON.parse(resultString) as { NewApps: any[]; RemovedAppIds: string[] };
                 const allCurrentApps = alreadyKnownApps
-                    .filter((alreadyKnownApp) => !result.RemovedAppIds || !result.RemovedAppIds.includes(alreadyKnownApp.appId))
+                    .filter(
+                        (alreadyKnownApp) =>
+                            !result.RemovedAppIds || !result.RemovedAppIds.includes(alreadyKnownApp.appId),
+                    )
                     .concat(result.NewApps.map(convertNewAppToUwpApplication));
                 resolve(allCurrentApps);
             })
@@ -131,7 +133,11 @@ return [PSCustomObject]@{
     RemovedAppIds = @($removedAppIds);
 } | ConvertTo-Json`;
 
-function convertNewAppToUwpApplication(newApp: { AppId: string; DisplayName: string; LogoBase64: string; }): UwpApplication {
+function convertNewAppToUwpApplication(newApp: {
+    AppId: string;
+    DisplayName: string;
+    LogoBase64: string;
+}): UwpApplication {
     return {
         appId: newApp.AppId,
         icon: {

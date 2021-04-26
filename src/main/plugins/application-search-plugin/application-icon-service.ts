@@ -14,11 +14,15 @@ export class ApplicationIconService {
 
     public generateAppIcons(applications: Application[]): Promise<void> {
         return new Promise((resolve, reject) => {
-            const fileExistPromises = applications.map((application) => FileHelpers.fileExists(getApplicationIconFilePath(application.filePath)));
+            const fileExistPromises = applications.map((application) =>
+                FileHelpers.fileExists(getApplicationIconFilePath(application.filePath)),
+            );
             Promise.all(fileExistPromises)
                 .then((fileExistResults) => {
                     const applicationsToGenerateIcons = applications.filter((application) => {
-                        const fileExistsResult = fileExistResults.find((f) => f.filePath === getApplicationIconFilePath(application.filePath));
+                        const fileExistsResult = fileExistResults.find(
+                            (f) => f.filePath === getApplicationIconFilePath(application.filePath),
+                        );
                         if (fileExistsResult) {
                             return !fileExistsResult.fileExists;
                         }
@@ -29,8 +33,14 @@ export class ApplicationIconService {
                         this.logger.debug(`Skipping app icon generation. All app icons already exist`);
                         resolve();
                     } else {
-                        this.logger.debug(`${applications.length - applicationsToGenerateIcons.length}/${applications.length} app icons already exist`);
-                        this.logger.debug(`Started to generate ${applicationsToGenerateIcons.length} app icons to ${applicationIconLocation}`);
+                        this.logger.debug(
+                            `${applications.length - applicationsToGenerateIcons.length}/${
+                                applications.length
+                            } app icons already exist`,
+                        );
+                        this.logger.debug(
+                            `Started to generate ${applicationsToGenerateIcons.length} app icons to ${applicationIconLocation}`,
+                        );
                         this.generateIcons(applicationsToGenerateIcons.map((application) => application.filePath))
                             .then(() => {
                                 this.logger.debug(`Successfully generated ${applicationsToGenerateIcons.length} icons`);

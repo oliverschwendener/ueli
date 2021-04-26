@@ -17,7 +17,8 @@ export class OperatingSystemSettingsPlugin implements SearchPlugin {
         config: OperatingSystemSettingsOptions,
         translationSet: TranslationSet,
         operatingSystemSettingRepository: OperatingSystemSettingRepository,
-        operatingSystemSettingExecutor: (executionArgument: string) => Promise<void>) {
+        operatingSystemSettingExecutor: (executionArgument: string) => Promise<void>,
+    ) {
         this.config = config;
         this.translationSet = translationSet;
         this.operatingSystemSettingRepository = operatingSystemSettingRepository;
@@ -26,19 +27,22 @@ export class OperatingSystemSettingsPlugin implements SearchPlugin {
 
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            this.operatingSystemSettingRepository.getAll(this.translationSet)
+            this.operatingSystemSettingRepository
+                .getAll(this.translationSet)
                 .then((operatingSystemSettings) => {
-                    const result = operatingSystemSettings.map((operatingSystemSetting): SearchResultItem => {
-                        return {
-                            description: operatingSystemSetting.description,
-                            executionArgument: operatingSystemSetting.executionArgument,
-                            hideMainWindowAfterExecution: true,
-                            icon: operatingSystemSetting.icon,
-                            name: operatingSystemSetting.name,
-                            originPluginType: this.pluginType,
-                            searchable: [operatingSystemSetting.name, ...operatingSystemSetting.tags],
-                        };
-                    });
+                    const result = operatingSystemSettings.map(
+                        (operatingSystemSetting): SearchResultItem => {
+                            return {
+                                description: operatingSystemSetting.description,
+                                executionArgument: operatingSystemSetting.executionArgument,
+                                hideMainWindowAfterExecution: true,
+                                icon: operatingSystemSetting.icon,
+                                name: operatingSystemSetting.name,
+                                originPluginType: this.pluginType,
+                                searchable: [operatingSystemSetting.name, ...operatingSystemSetting.tags],
+                            };
+                        },
+                    );
 
                     resolve(result);
                 })

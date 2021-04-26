@@ -9,58 +9,55 @@ const mainConfig = {
     entry: path.join(__dirname, "src", "main", "main.ts"),
     output: {
         filename: "[name].js",
-        path: path.join(__dirname, "bundle")
+        path: path.join(__dirname, "bundle"),
     },
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
                 loader: "ts-loader",
-            }
+            },
         ],
     },
     resolve: {
-        extensions: [".ts", ".js"]
+        extensions: [".ts", ".js"],
     },
     mode,
     target: "electron-main",
     node: false,
     devtool,
     externals: {
-        'sqlite3': 'commonjs sqlite3'
-    }
-}
+        sqlite3: "commonjs sqlite3",
+    },
+};
 
 const rendererConfig = {
     entry: path.join(__dirname, "src", "renderer", "renderer.ts"),
     output: {
         filename: "renderer.js",
-        path: path.join(__dirname, "bundle")
+        path: path.join(__dirname, "bundle"),
     },
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
                 loader: "ts-loader",
-            }
+            },
         ],
     },
     resolve: {
         alias: {
-            "vue$": "vue/dist/vue.esm.js"
+            vue$: "vue/dist/vue.esm.js",
         },
-        extensions: [".ts", ".js"]
+        extensions: [".ts", ".js"],
     },
     mode,
     target: "electron-renderer",
     node: false,
     devtool,
     externals: {
-        'sqlite3': 'commonjs sqlite3'
-    }
+        sqlite3: "commonjs sqlite3",
+    },
 };
 
-module.exports = [
-    mainConfig,
-    rendererConfig
-];
+module.exports = [mainConfig, rendererConfig];

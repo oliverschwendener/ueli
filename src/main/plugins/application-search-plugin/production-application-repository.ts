@@ -29,15 +29,14 @@ export class ProductionApplicationRepository implements ApplicationRepository {
         searchApplications: (
             options: ApplicationSearchOptions,
             logger: Logger,
-            operatingSystemVersion: OperatingSystemVersion
+            operatingSystemVersion: OperatingSystemVersion,
         ) => Promise<string[]>,
         logger: Logger,
         operatingSystemVersion: OperatingSystemVersion,
     ) {
         this.config = config;
         this.defaultAppIcon = defaultAppIcon;
-        this.appIconService = appIconService,
-        this.searchApplications = searchApplications;
+        (this.appIconService = appIconService), (this.searchApplications = searchApplications);
         this.logger = logger;
         this.operatingSystemVersion = operatingSystemVersion;
         this.applications = [];
@@ -54,7 +53,8 @@ export class ProductionApplicationRepository implements ApplicationRepository {
                     const applications = filePaths.map((filePath) => this.createApplicationFromFilePath(filePath));
 
                     if (this.config.useNativeIcons) {
-                        this.appIconService.generateAppIcons(applications)
+                        this.appIconService
+                            .generateAppIcons(applications)
                             .then(() => {
                                 this.onSuccessfullyGeneratedAppIcons(applications);
                                 this.applications = applications;
@@ -72,7 +72,8 @@ export class ProductionApplicationRepository implements ApplicationRepository {
 
     public clearCache(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.appIconService.clearCache()
+            this.appIconService
+                .clearCache()
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });
@@ -94,9 +95,12 @@ export class ProductionApplicationRepository implements ApplicationRepository {
     }
 
     private onSuccessfullyGeneratedAppIcons(applications: Application[]) {
-        applications.forEach((application) => application.icon = {
-            parameter: getApplicationIconFilePath(application.filePath),
-            type: IconType.URL,
-        });
+        applications.forEach(
+            (application) =>
+                (application.icon = {
+                    parameter: getApplicationIconFilePath(application.filePath),
+                    type: IconType.URL,
+                }),
+        );
     }
 }

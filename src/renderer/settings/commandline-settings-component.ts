@@ -17,7 +17,9 @@ const operatingSystem = getCurrentOperatingSystem(platform());
 export const commandlineSettingsComponent = Vue.extend({
     data() {
         return {
-            availableShells: Object.values(operatingSystem === OperatingSystem.Windows ? WindowsShell : MacOsShell).map((shell) => shell.toString()),
+            availableShells: Object.values(
+                operatingSystem === OperatingSystem.Windows ? WindowsShell : MacOsShell,
+            ).map((shell) => shell.toString()),
             settingName: PluginSettings.Commandline,
             visible: false,
         };

@@ -16,7 +16,7 @@ export class UwpPlugin implements SearchPlugin {
     constructor(
         config: UwpSearchOptions,
         filePathExecutor: (executionArgument: string, privileged: boolean) => Promise<void>,
-        uwpAppsRetriever: (alreadyKnownApps: UwpApplication[]) => Promise<UwpApplication[]>
+        uwpAppsRetriever: (alreadyKnownApps: UwpApplication[]) => Promise<UwpApplication[]>,
     ) {
         this.config = config;
         this.filePathExecutor = filePathExecutor;

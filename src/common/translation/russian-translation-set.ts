@@ -118,7 +118,8 @@ export const russianTranslationSet: TranslationSet = {
     appearanceSettingsUserInputBottomMargin: "Нижнее поле пользовательского ввода (в пикселях)",
     appearanceSettingsSearchResultsBorderRadius: "Радиус границы результатов поиска",
     appearanceSettingsScrollbarBorderRadius: "Радиус полосы прокрутки",
-    appearanceSettingsBorderRadiusDescription: "Это значение CSS, поэтому вам нужно добавить «px», например, «10px» или отдельные углы, например «10px 0px 10px 5px».",
+    appearanceSettingsBorderRadiusDescription:
+        "Это значение CSS, поэтому вам нужно добавить «px», например, «10px» или отдельные углы, например «10px 0px 10px 5px».",
 
     settingsUserInputTitle: "Пользовательский ввод",
     settingsSearchResultsBoxTitle: "Окно результатов поиска",
@@ -162,7 +163,8 @@ export const russianTranslationSet: TranslationSet = {
     applicationSearchSettingsNotAFolderErrorMessage: `"{{value}} не папка"`,
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}} не существует"`,
     applicationSearchSettingsFolderValidationError: `Произошла ошибка в ходе проверки "{{value}}"`,
-    applicationSearchSettingsUseNativeIcons: "Использовать нативные иконки (выключение может повысить производительность)",
+    applicationSearchSettingsUseNativeIcons:
+        "Использовать нативные иконки (выключение может повысить производительность)",
 
     searchEngineSettings: "Система поиска",
     searchEngineSettingsDescription: `Система поиска необходима для индексации результатов как ярлыки, файлы и т.д.`,
@@ -214,7 +216,8 @@ export const russianTranslationSet: TranslationSet = {
     everythingSearchPathToBinaryFilterName: "Выполняемые файлы",
 
     mdfindSearch: "Поиск mdfind",
-    mdfindSettingsDescription: "Этот плагин позволяет использовать встроенные средства macOS для поиска файлов и папков на вашем компьютере.",
+    mdfindSettingsDescription:
+        "Этот плагин позволяет использовать встроенные средства macOS для поиска файлов и папков на вашем компьютере.",
     mdfindSearchDebounceDelay: "Задержка между запросами (в миллисекундах)",
     mdfindSearchPrefix: "Префикс",
     mdfindSearchMaxSearchResults: "Максимальное кол-во результатов",
@@ -287,7 +290,8 @@ export const russianTranslationSet: TranslationSet = {
     openNewMail: "Открыть новое письмо",
 
     currencyConverter: "Конвертация валют",
-    currencyConverterDescription: "Этот плагин позволяет быстро конвертировать валюты. Актуальные курсы валют предоставлены https://exchangeratesapi.io/.",
+    currencyConverterDescription:
+        "Этот плагин позволяет быстро конвертировать валюты. Актуальные курсы валют предоставлены https://exchangeratesapi.io/.",
     currencyConverterPrecision: "Точность",
     currencyConverterCopyToClipboard: "Нажмите enter, чтобы скопировать",
 
@@ -328,7 +332,8 @@ export const russianTranslationSet: TranslationSet = {
     colorConverterShowColorPreview: "Показывать превью цвета",
 
     dictionary: "Словарь",
-    dictionaryDescription: "Этот плагин позволяет быстро искать значения слов и синонимы к ним. Он использует неофициальное API Google Dictionary (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+    dictionaryDescription:
+        "Этот плагин позволяет быстро искать значения слов и синонимы к ним. Он использует неофициальное API Google Dictionary (https://googledictionaryapi.eu-gb.mybluemix.net/)",
     dictionaryPrefix: "Префикс",
     dictionaryMinSearchTermLength: "Минимальная длинна запроса",
     dictionaryDebounceDelay: "Задержка между запросами (в миллисекундах)",
@@ -352,7 +357,8 @@ export const russianTranslationSet: TranslationSet = {
     yes: "Да",
     no: "Нет",
     resetToDefault: "Вернуть настройки по умолчанию?",
-    resetPluginSettingsToDefaultWarning: "Вы хотите восстановить все настройки по умолчанию для этого плагина. Вы уверены?",
+    resetPluginSettingsToDefaultWarning:
+        "Вы хотите восстановить все настройки по умолчанию для этого плагина. Вы уверены?",
     filePath: "Путь до файла",
     folderPath: "Путь до папки",
     chooseFile: "Выбрать файл",

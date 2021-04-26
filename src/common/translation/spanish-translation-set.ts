@@ -61,10 +61,12 @@ export const spanishTranslationSet: TranslationSet = {
     generalSettingsSuccessfullyExportedSettings: "Se exportó la configuración con éxito",
     generalSettingsImportSettings: "Importar configuración",
     generalSettingsImportFileFilterJsonFiles: "Archivos JSON",
-    generalSettingsImportErrorInvalidConfig: "La importación de la configuración falló: el contenido del archivo parece inválido",
+    generalSettingsImportErrorInvalidConfig:
+        "La importación de la configuración falló: el contenido del archivo parece inválido",
     generalSettingsResetAllSettings: "Resetear todas las opciones a los valores por defecto",
     generalSettingsResetWarning: "Vas a resetear la configuración a los valores por defecto. ¿Quieres proceder?",
-    generalSettingsResetAllSettingsWarning: "Vas a resetear TODAS las opciones a los valores por defecto. ¿Quieres proceder?",
+    generalSettingsResetAllSettingsWarning:
+        "Vas a resetear TODAS las opciones a los valores por defecto. ¿Quieres proceder?",
     generalSettingsClearExecutionLogWarning: "Vas a borrar el log de ejecución. ¿Quieres proceder?",
     generalSettingsHideMainWindowAfterExecution: "Ocultar ventana después de la ejecución",
     generalSettingsHideMainWindowOnBlur: "Ocultar ventana cuando se pierda el foco",
@@ -111,14 +113,16 @@ export const spanishTranslationSet: TranslationSet = {
     appearanceSettingsShowDescriptionOnAllSearchResults: "Mostrar descripción en todos los resultados",
     appearanceSettingsShowSearchIcon: "Mostrar icono en el campo de búsqueda",
     appearanceSettingsShowSearchResultNumbers: "Mostrar número de resultados de búsqueda",
-    appearanceSettingsResetWarningMessage: "Vas a resetear todas las opciones de apariencia a los datos por defecto. ¿Quieres proceder?",
+    appearanceSettingsResetWarningMessage:
+        "Vas a resetear todas las opciones de apariencia a los datos por defecto. ¿Quieres proceder?",
     appearanceSettingsAllowTransparentBackground: "Permitir fondo transparente",
     appearanceSettingsFontFamily: "Fuente tipográfica",
     appearanceSettingsUserInputBorderRadius: "Radio del borde del campo de entrada",
     appearanceSettingsUserInputBottomMargin: "Margen inferior del campo de entrada (en píxeles)",
     appearanceSettingsSearchResultsBorderRadius: "Radio del borde del campo de entrada de los resultados de búsqueda",
     appearanceSettingsScrollbarBorderRadius: "Radio de borde de la barra de scroll",
-    appearanceSettingsBorderRadiusDescription: "Esto es un valor CSS, así que necesitas añadir 'px' de esta manera '10px' o así para esquinas separadas '10px 0px 10px 5px'",
+    appearanceSettingsBorderRadiusDescription:
+        "Esto es un valor CSS, así que necesitas añadir 'px' de esta manera '10px' o así para esquinas separadas '10px 0px 10px 5px'",
 
     settingsUserInputTitle: "Campo de entrada",
     settingsSearchResultsBoxTitle: "Caja de resultados de búsqueda",
@@ -128,7 +132,8 @@ export const spanishTranslationSet: TranslationSet = {
     colorThemeSettings: "Tema de color",
     colorThemeSettingsImportColorTheme: "Importar tema de color",
     colorThemeSettingsExportColorTheme: "Exportar tema de color",
-    colorThemeSettingsResetWarning: "Vas a resetear todas las opciones de temas de color a la opción por defecto. ¿Quieres proceder?",
+    colorThemeSettingsResetWarning:
+        "Vas a resetear todas las opciones de temas de color a la opción por defecto. ¿Quieres proceder?",
     colorThemeExportSucceeded: "Tema de color exportado con éxito",
     colorThemeExportFailed: "La exportación del tema de color falló",
     colorThemeImportSucceeded: "Tema de color importado con éxito",
@@ -140,7 +145,8 @@ export const spanishTranslationSet: TranslationSet = {
     colorThemeSearchResultsBackgroundColor: "Color de fondo de los resultados de búsqueda",
     colorThemeSearchResultsItemActiveBackgroundColor: "Color de fondo del resultado de búsqueda activo",
     colorThemeSearchResultsItemActiveTextColor: "Color de texto del resultado de búsqueda activo",
-    colorThemeSearchResultsItemActiveDescriptionColor: "Color de texto de la descripción del resultado de búsqueda activo",
+    colorThemeSearchResultsItemActiveDescriptionColor:
+        "Color de texto de la descripción del resultado de búsqueda activo",
     colorThemeSearchResutlsItemNameTextColor: "Color de texto del nombre de los resultados de búsqueda",
     colorThemeSearchResultsItemDescriptionTextColor: "Color de texto de la descripción de los resultados de búsqueda",
     colorThemeScrollbarForegroundColor: "Color destacado de la barra de scroll",
@@ -162,7 +168,8 @@ export const spanishTranslationSet: TranslationSet = {
     applicationSearchSettingsNotAFolderErrorMessage: `"{{value}} no es un directorio"`,
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}} no existe"`,
     applicationSearchSettingsFolderValidationError: `Ha ocurrido un error mientras se trataba de validar "{{value}}"`,
-    applicationSearchSettingsUseNativeIcons: "Usar iconos nativos (desactivarlo puede resultar en un mayor rendimiento)",
+    applicationSearchSettingsUseNativeIcons:
+        "Usar iconos nativos (desactivarlo puede resultar en un mayor rendimiento)",
 
     searchEngineSettings: "Motor de búsqueda",
     searchEngineSettingsDescription: `El motor de búsqueda se usa para preindexar elementos como aplicaciones, accesos directos y opciones/comandos del sistema operativo.`,
@@ -172,7 +179,8 @@ export const spanishTranslationSet: TranslationSet = {
     searchEngineSettingsFuzzy: "Fuzzy",
     searchEngineSettingsBlacklist: "Lista de prohibidos",
     searchEngineSettingsMaxSearchResults: "Resultados de búsqueda máx",
-    searchEngineSettingsResetWarning: "Vas a resetear todas las opciones de motor de búsqueda a la opción por defecto. ¿Quieres proceder?",
+    searchEngineSettingsResetWarning:
+        "Vas a resetear todas las opciones de motor de búsqueda a la opción por defecto. ¿Quieres proceder?",
 
     shortcutSettings: "Accesos directos",
     shortcutSettingsDescription: `Este plugin te permite abrir de forma rápida archivos y sitios web a partir de tus propios accesos directos.`,
@@ -214,7 +222,8 @@ export const spanishTranslationSet: TranslationSet = {
     everythingSearchPathToBinaryFilterName: "Ficheros ejecutables",
 
     mdfindSearch: "Búsqueda mdfind",
-    mdfindSettingsDescription: "Este plugin te permite usar la búsqueda nativa de macOS para encontrar archivos y directorios en tu sistema de ficheros.",
+    mdfindSettingsDescription:
+        "Este plugin te permite usar la búsqueda nativa de macOS para encontrar archivos y directorios en tu sistema de ficheros.",
     mdfindSearchDebounceDelay: "Retraso de rebote (en milisegundos)",
     mdfindSearchPrefix: "Prefijo",
     mdfindSearchMaxSearchResults: "Resultados de búsqueda máx",
@@ -246,7 +255,8 @@ export const spanishTranslationSet: TranslationSet = {
     operatingSystemCommandsSettingsDescription: `Los comandos del sistema operativo son comandos simples para controlar tu sistema operativo. Por ejemplo, apagar o reiniciar tu equipo.`,
 
     operatingSystemSettings: "Configuración del sistema operativo",
-    operatingSystemSettingsSettingsDescription: "Este plugin te permite buscar de forma rápida en la configuración del sistema operativo.",
+    operatingSystemSettingsSettingsDescription:
+        "Este plugin te permite buscar de forma rápida en la configuración del sistema operativo.",
 
     macOsShutdown: "Apagar",
     macOsShutdownDescription: "Apagar equipo",
@@ -283,11 +293,13 @@ export const spanishTranslationSet: TranslationSet = {
     urlDefaultProtocol: "Protocolo por defecto",
 
     email: "Email",
-    emailSettingsDescription: "Este plugin te permite comenzar a escribir un email de forma rápida introduciendo una dirección de email.",
+    emailSettingsDescription:
+        "Este plugin te permite comenzar a escribir un email de forma rápida introduciendo una dirección de email.",
     openNewMail: "Abrir nuevo email",
 
     currencyConverter: "Conversor de divisa",
-    currencyConverterDescription: "Este plugin te permite convertir divisa de forma rápida. Los últimos ratios de conversión están provistos por https://exchangeratesapi.io/.",
+    currencyConverterDescription:
+        "Este plugin te permite convertir divisa de forma rápida. Los últimos ratios de conversión están provistos por https://exchangeratesapi.io/.",
     currencyConverterPrecision: "Precisión",
     currencyConverterCopyToClipboard: "Presiona enter para copiar al portapapeles",
 
@@ -328,7 +340,8 @@ export const spanishTranslationSet: TranslationSet = {
     colorConverterShowColorPreview: "Mostrar previsualización de color",
 
     dictionary: "Diccionario",
-    dictionaryDescription: "Este plugin te permite buscar de forma rápida en las deficiones y sinónimos de palabras. Usa un API no oficial de Google Dictionary (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+    dictionaryDescription:
+        "Este plugin te permite buscar de forma rápida en las deficiones y sinónimos de palabras. Usa un API no oficial de Google Dictionary (https://googledictionaryapi.eu-gb.mybluemix.net/)",
     dictionaryPrefix: "Prefijo",
     dictionaryMinSearchTermLength: "Longitud mínima del término de búsqueda",
     dictionaryDebounceDelay: "Retraso de rebote (en milisegundos)",
@@ -352,7 +365,8 @@ export const spanishTranslationSet: TranslationSet = {
     yes: "Sí",
     no: "No",
     resetToDefault: "¿Resetear al valor por defecto?",
-    resetPluginSettingsToDefaultWarning: "Vas a resetear todas las opciones de este plugin a los valores por defecto. ¿Quieres proceder?",
+    resetPluginSettingsToDefaultWarning:
+        "Vas a resetear todas las opciones de este plugin a los valores por defecto. ¿Quieres proceder?",
     filePath: "Ruta de archivo",
     folderPath: "Ruta de directorio",
     chooseFile: "Elige un archivo",

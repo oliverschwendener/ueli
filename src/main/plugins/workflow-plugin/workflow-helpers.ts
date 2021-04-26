@@ -7,11 +7,13 @@ import { isArray } from "util";
 import { isValidIcon } from "../../../common/icon/icon-helpers";
 
 export function isValidWorkflow(workflow: Workflow): boolean {
-    return workflow.name.length > 0
-        && isValidIcon(workflow.icon)
-        && workflow.executionSteps.length > 0
-        && !workflow.executionSteps.some((executionStep) => !isValidExecutionStep(executionStep))
-        && isArray(workflow.tags);
+    return (
+        workflow.name.length > 0 &&
+        isValidIcon(workflow.icon) &&
+        workflow.executionSteps.length > 0 &&
+        !workflow.executionSteps.some((executionStep) => !isValidExecutionStep(executionStep)) &&
+        isArray(workflow.tags)
+    );
 }
 
 export function isValidExecutionStep(executionStep: WorkflowExecutionStep): boolean {

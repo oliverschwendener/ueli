@@ -135,10 +135,8 @@ export const settingMenuItemComponent = Vue.extend({
         },
         isPluginSetting(item: GeneralSettings | PluginSettings | SettingOsSpecific): boolean {
             const allPluginSettings = [
-                ...Object.values(PluginSettings)
-                    .map((setting) => setting.toString()),
-                ...Object.values(SettingOsSpecific)
-                    .map((setting) => setting.toString().replace(`${platform()}:`, "")),
+                ...Object.values(PluginSettings).map((setting) => setting.toString()),
+                ...Object.values(SettingOsSpecific).map((setting) => setting.toString().replace(`${platform()}:`, "")),
             ];
 
             return allPluginSettings.find((setting) => setting === item) !== undefined;

@@ -27,13 +27,18 @@ export function isValidShortcutToAdd(shortcut: Shortcut, filePathValidator: (fil
         iconCondition = isValidIcon(shortcut.icon);
     }
 
-    return shortcut !== undefined
-        && isValidShortcutExecutionArgument(shortcut, filePathValidator)
-        && isValidShortcutType(shortcut.type)
-        && iconCondition;
+    return (
+        shortcut !== undefined &&
+        isValidShortcutExecutionArgument(shortcut, filePathValidator) &&
+        isValidShortcutType(shortcut.type) &&
+        iconCondition
+    );
 }
 
-export function isValidShortcutExecutionArgument(shortcut: Shortcut, filePathValidator: (filePath: string) => boolean): boolean {
+export function isValidShortcutExecutionArgument(
+    shortcut: Shortcut,
+    filePathValidator: (filePath: string) => boolean,
+): boolean {
     switch (shortcut.type) {
         case ShortcutType.Url:
             return isValidShortcutUrl(shortcut.executionArgument);
@@ -57,8 +62,7 @@ export function getDefaultShortcutIcon(shortcut: Shortcut) {
 }
 
 function isValidShortcutUrl(url: string): boolean {
-    return url !== undefined
-        && (url.startsWith("https://") || url.startsWith("http://"));
+    return url !== undefined && (url.startsWith("https://") || url.startsWith("http://"));
 }
 
 function isValidShortcutFilePath(filePath: string, filePathValidator: (filePath: string) => boolean): boolean {

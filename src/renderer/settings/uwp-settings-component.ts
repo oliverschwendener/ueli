@@ -35,7 +35,7 @@ export const uwpSettingsComponent = Vue.extend({
         vueEventDispatcher.$on(VueEventChannels.showSetting, (settingName: string) => {
             if (this.settingName === settingName) {
                 this.visible = true;
-            } else  {
+            } else {
                 this.visible = false;
             }
         });

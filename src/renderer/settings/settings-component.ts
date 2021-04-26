@@ -25,9 +25,7 @@ export const settingsComponent = Vue.extend({
                     break;
             }
 
-            return this.notification.visible
-                ? `visible ${typeClass}`
-                : typeClass;
+            return this.notification.visible ? `visible ${typeClass}` : typeClass;
         },
     },
     data() {
@@ -40,11 +38,12 @@ export const settingsComponent = Vue.extend({
             },
             pluginSettingMenuItems: Object.values(PluginSettings)
                 .map((setting) => setting.toString())
-                .concat(Object
-                    .values(SettingOsSpecific)
-                    .map((setting) => setting.toString())
-                    .filter((setting: string) => setting.startsWith(platform()))
-                    .map((setting: string) => setting.replace(`${platform()}:`, "")))
+                .concat(
+                    Object.values(SettingOsSpecific)
+                        .map((setting) => setting.toString())
+                        .filter((setting: string) => setting.startsWith(platform()))
+                        .map((setting: string) => setting.replace(`${platform()}:`, "")),
+                )
                 .sort(),
         };
     },
@@ -63,9 +62,11 @@ export const settingsComponent = Vue.extend({
                 visible: true,
             };
 
-            autoHideErrorMessageTimeout = Number(setTimeout(() => {
-                this.removeNotification();
-            }, autoHideErrorMessageDelayInMilliseconds));
+            autoHideErrorMessageTimeout = Number(
+                setTimeout(() => {
+                    this.removeNotification();
+                }, autoHideErrorMessageDelayInMilliseconds),
+            );
         },
     },
     props: ["config", "translations"],

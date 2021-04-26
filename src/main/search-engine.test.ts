@@ -26,9 +26,7 @@ describe(SearchEngine.name, () => {
             },
         ];
 
-        const searchPlugins: SearchPlugin[] = [
-            new FakeSearchPlugin(PluginType.Test, items, true),
-        ];
+        const searchPlugins: SearchPlugin[] = [new FakeSearchPlugin(PluginType.Test, items, true)];
 
         const searchEngine = new SearchEngine(
             searchPlugins,
@@ -40,7 +38,8 @@ describe(SearchEngine.name, () => {
             fakeFavoritesRepository,
         );
 
-        searchEngine.getSearchResults("Google Chrome")
+        searchEngine
+            .getSearchResults("Google Chrome")
             .then((searchResults) => {
                 expect(searchResults.length).toBe(1);
                 expect(searchResults[0].name).toBe("Google Chrome");
@@ -63,9 +62,7 @@ describe(SearchEngine.name, () => {
         ];
         const translationSet = englishTranslationSet;
 
-        const searchPlugins: SearchPlugin[] = [
-            new FakeSearchPlugin(PluginType.Test, items, true),
-        ];
+        const searchPlugins: SearchPlugin[] = [new FakeSearchPlugin(PluginType.Test, items, true)];
 
         const searchEngine = new SearchEngine(
             searchPlugins,
@@ -77,7 +74,8 @@ describe(SearchEngine.name, () => {
             fakeFavoritesRepository,
         );
 
-        searchEngine.getSearchResults("blabla")
+        searchEngine
+            .getSearchResults("blabla")
             .then((searchResults) => {
                 expect(searchResults.length).toBe(1);
                 expect(searchResults[0].name).toBe(translationSet.noSearchResultsFoundTitle);
@@ -100,9 +98,7 @@ describe(SearchEngine.name, () => {
         ];
         const translationSet = englishTranslationSet;
 
-        const searchPlugins: SearchPlugin[] = [
-            new FakeSearchPlugin(PluginType.Test, items, true),
-        ];
+        const searchPlugins: SearchPlugin[] = [new FakeSearchPlugin(PluginType.Test, items, true)];
 
         const searchEngine = new SearchEngine(
             searchPlugins,
@@ -114,7 +110,8 @@ describe(SearchEngine.name, () => {
             fakeFavoritesRepository,
         );
 
-        searchEngine.getSearchResults("gOoGlE ChRoMe")
+        searchEngine
+            .getSearchResults("gOoGlE ChRoMe")
             .then((searchResults) => {
                 expect(searchResults.length).toBe(1);
                 expect(searchResults[0].name).toBe("Google Chrome");
@@ -137,9 +134,7 @@ describe(SearchEngine.name, () => {
         ];
         const translationSet = englishTranslationSet;
 
-        const searchPlugins: SearchPlugin[] = [
-            new FakeSearchPlugin(PluginType.Test, items, true),
-        ];
+        const searchPlugins: SearchPlugin[] = [new FakeSearchPlugin(PluginType.Test, items, true)];
         const userOptions = { fuzzyness: 0.8 } as SearchEngineOptions;
         const config = Object.assign({}, defaultSearchEngineOptions, userOptions);
 
@@ -153,7 +148,8 @@ describe(SearchEngine.name, () => {
             fakeFavoritesRepository,
         );
 
-        searchEngine.getSearchResults("gglchrm")
+        searchEngine
+            .getSearchResults("gglchrm")
             .then((searchResults) => {
                 expect(searchResults.length).toBe(1);
                 expect(searchResults[0].name).toBe("Google Chrome");
@@ -176,9 +172,7 @@ describe(SearchEngine.name, () => {
         ];
         const translationSet = englishTranslationSet;
 
-        const searchPlugins: SearchPlugin[] = [
-            new FakeSearchPlugin(PluginType.Test, items, true),
-        ];
+        const searchPlugins: SearchPlugin[] = [new FakeSearchPlugin(PluginType.Test, items, true)];
         const userOptions = { fuzzyness: 0.2 } as SearchEngineOptions;
         const config = Object.assign({}, defaultSearchEngineOptions, userOptions);
 
@@ -192,7 +186,8 @@ describe(SearchEngine.name, () => {
             fakeFavoritesRepository,
         );
 
-        searchEngine.getSearchResults("gglchrm")
+        searchEngine
+            .getSearchResults("gglchrm")
             .then((searchResults) => {
                 expect(searchResults.length).toBe(1);
                 expect(searchResults[0].name).toBe(translationSet.noSearchResultsFoundTitle);
@@ -216,9 +211,7 @@ describe(SearchEngine.name, () => {
             { executionCount: 0, item: items[2] },
             { executionCount: 10, item: items[3] },
         ]);
-        const searchPlugins: SearchPlugin[] = [
-            new FakeSearchPlugin(PluginType.Test, items, true),
-        ];
+        const searchPlugins: SearchPlugin[] = [new FakeSearchPlugin(PluginType.Test, items, true)];
         const executionPlugins: ExecutionPlugin[] = [];
         const fallbackPlugins: ExecutionPlugin[] = [];
         const searchEngine = new SearchEngine(
@@ -230,7 +223,8 @@ describe(SearchEngine.name, () => {
             translationSet,
             favoritesRepository,
         );
-        searchEngine.getSearchResults("a")
+        searchEngine
+            .getSearchResults("a")
             .then((result) => {
                 expect(result.length).toBe(4);
                 expect(result[0].name).toBe("abcdef");
@@ -261,7 +255,8 @@ describe(SearchEngine.name, () => {
             favoritesRepository,
         );
 
-        searchEngine.refreshAllIndexes()
+        searchEngine
+            .refreshAllIndexes()
             .then(() => {
                 const refreshedPlugins = fakePlugins.filter((plugin) => plugin.getIndexRefreshCount() > 0);
                 const enabledPlugins = fakePlugins.filter((plugin) => plugin.isEnabled());
@@ -293,7 +288,8 @@ describe(SearchEngine.name, () => {
             favoritesRepository,
         );
 
-        searchEngine.refreshIndexByPlugin(PluginType.Test)
+        searchEngine
+            .refreshIndexByPlugin(PluginType.Test)
             .then(() => {
                 const refreshedPlugins = fakePlugins.filter((plugin) => plugin.getIndexRefreshCount() > 0);
                 expect(refreshedPlugins.length).toBe(1);
@@ -331,7 +327,8 @@ describe(SearchEngine.name, () => {
             favoritesRepository,
         );
 
-        searchEngine.getSearchResults("abc")
+        searchEngine
+            .getSearchResults("abc")
             .then((searchResultItems) => {
                 const actual = searchResultItems.length;
                 const expected = searchPlugins.filter((plugin) => plugin.isEnabled()).length * items.length;
@@ -368,7 +365,8 @@ describe(SearchEngine.name, () => {
             favoritesRepository,
         );
 
-        searchEngine.getSearchResults("abc")
+        searchEngine
+            .getSearchResults("abc")
             .then((results) => {
                 expect(results.length).toBe(2);
                 done();
@@ -403,7 +401,8 @@ describe(SearchEngine.name, () => {
             favoritesRepository,
         );
 
-        searchEngine.getSearchResults("abc")
+        searchEngine
+            .getSearchResults("abc")
             .then((results) => {
                 expect(results.length).toBe(items.length);
                 done();

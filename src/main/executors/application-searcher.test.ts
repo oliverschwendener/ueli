@@ -8,7 +8,7 @@ describe(getMacOsApplicationSearcherCommand, () => {
             OperatingSystemVersion.MacOsElCapitan,
             OperatingSystemVersion.MacOsSierra,
             OperatingSystemVersion.MacOsHighSierra,
-            OperatingSystemVersion.MacOsMojave
+            OperatingSystemVersion.MacOsMojave,
         ];
 
         macOsVersions.forEach((macOsVersion) => {
@@ -19,6 +19,6 @@ describe(getMacOsApplicationSearcherCommand, () => {
     it("should return 'mdfind kMDItemContentTypeTree=com.apple.application-bundle' on macOS 10.15 (Catalina) and newer", () => {
         const expected = "mdfind kMDItemContentTypeTree=com.apple.application-bundle";
         const actual = getMacOsApplicationSearcherCommand(OperatingSystemVersion.MacOsCatalina);
-        expect(actual).toBe(expected)
+        expect(actual).toBe(expected);
     });
 });

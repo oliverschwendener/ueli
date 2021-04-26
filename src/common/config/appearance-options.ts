@@ -19,9 +19,10 @@ export interface AppearanceOptions {
     scrollbarBorderRadius: string;
 }
 
-const defaultFontFamily = getCurrentOperatingSystem(platform()) === OperatingSystem.Windows
-    ? `"Segoe UI", Roboto, "Segoe UI Emoji", "Segoe UI Symbol"`
-    : `-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif, "Apple Color Emoji`;
+const defaultFontFamily =
+    getCurrentOperatingSystem(platform()) === OperatingSystem.Windows
+        ? `"Segoe UI", Roboto, "Segoe UI Emoji", "Segoe UI Symbol"`
+        : `-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif, "Apple Color Emoji`;
 
 export const defaultAppearanceOptions: AppearanceOptions = {
     allowTransparentBackground: false,
@@ -37,5 +38,5 @@ export const defaultAppearanceOptions: AppearanceOptions = {
     userInputBorderRadius: "0px",
     userInputBottomMargin: 0,
     searchResultsBorderRadius: "0px",
-    scrollbarBorderRadius: "0px"
+    scrollbarBorderRadius: "0px",
 };
