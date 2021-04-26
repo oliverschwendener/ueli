@@ -14,20 +14,20 @@ import { CommandlineOptions } from "../../../common/config/commandline-options";
 export class WorkflowPlugin implements SearchPlugin {
     public pluginType = PluginType.Workflow;
     private config: WorkflowOptions;
-    private commandConfig: CommandlineOptions;
+    private commandlineOptions: CommandlineOptions;
     private readonly filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>;
     private readonly urlExecutor: (url: string) => Promise<void>;
     private readonly commandlineExecutor: (command: string, shell: WindowsShell | MacOsShell) => Promise<void>;
 
     constructor(
         config: WorkflowOptions,
-        commandConfig: CommandlineOptions,
+        commandlineOptions: CommandlineOptions,
         filePathExecutor: (filePath: string, privileged?: boolean) => Promise<void>,
         urlExecutor: (url: string) => Promise<void>,
         commandlineExecutor: (command: string, shell: WindowsShell | MacOsShell) => Promise<void>,
     ) {
         this.config = config;
-        this.commandConfig = commandConfig;
+        this.commandlineOptions = commandlineOptions;
         this.filePathExecutor = filePathExecutor;
         this.urlExecutor = urlExecutor;
         this.commandlineExecutor = commandlineExecutor;
@@ -93,7 +93,7 @@ export class WorkflowPlugin implements SearchPlugin {
     private handleExecutionStep(executionStep: WorkflowExecutionStep): Promise<void> {
         switch (executionStep.executionArgumentType) {
             case WorkflowExecutionArgumentType.CommandlineTool:
-                return this.commandlineExecutor(executionStep.executionArgument, this.commandConfig.shell);
+                return this.commandlineExecutor(executionStep.executionArgument, this.commandlineOptions.shell);
             case WorkflowExecutionArgumentType.FilePath:
                 return this.filePathExecutor(executionStep.executionArgument);
             case WorkflowExecutionArgumentType.URL:
