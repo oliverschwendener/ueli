@@ -1,4 +1,4 @@
-import mathjs from "mathjs";
+import { create, all, evaluate, typeOf } from "mathjs";
 
 export class Calculator {
     public static isValidInput(
@@ -19,7 +19,7 @@ export class Calculator {
         let result;
         try {
             // Mathjs throws an error when input cannot be evaluated
-            result = mathjs.eval(this.normalizeInput(input, decimalSeparator, argumentSeparator));
+            result = evaluate(this.normalizeInput(input, decimalSeparator, argumentSeparator));
         } catch (e) {
             return false;
         }
@@ -44,23 +44,37 @@ export class Calculator {
         argumentSeparator: string = ",",
     ): string {
         precision = Number(precision);
+
         if (precision > 64 || precision < 0) {
             precision = 16;
         }
-        mathjs.config({ number: "BigNumber", precision });
-        const result: string = mathjs.eval(this.normalizeInput(input, decimalSeparator, argumentSeparator)).toString();
+
+        const math = this.math(precision);
+
+        if (!math.evaluate) {
+            throw new Error("Failed to instanciate math js static");
+        }
+
+        const result: string = math
+            .evaluate(this.normalizeInput(input, decimalSeparator, argumentSeparator))
+            .toString();
+
         return result.replace(new RegExp(",|\\.", "g"), (match) =>
             match === "." ? decimalSeparator : argumentSeparator,
         );
     }
 
     private static isValidMathType(input: any): boolean {
-        const mathType = mathjs.typeof(input);
+        const mathType = typeOf(input);
 
         if ((mathType === "Unit" && input.value === null) || mathType === "Function") {
             return false;
         }
 
         return true;
+    }
+
+    private static math(precision: number): Partial<math.MathJsStatic> {
+        return create(all, { precision, number: "BigNumber" });
     }
 }
