@@ -1,23 +1,28 @@
-import axios from "axios";
-import { CurrencyConversion } from "./currency-conversion";
+import axios, { AxiosResponse } from "axios";
 import { ConversionApiResult } from "./conversion-api-result";
+import { CurrencyConversion } from "./currency-conversion";
 
 export class CurrencyConverter {
     public static convert(conversion: CurrencyConversion, precision: number): Promise<number> {
         return new Promise((resolve, reject) => {
-            axios.get(`https://api.exchangeratesapi.io/latest?base=${conversion.base.toUpperCase()}`, {
-                timeout: 5000,
-            })
-                .then((response) => {
-                    const apiResult: ConversionApiResult = response.data;
-                    const targetKey = Object.keys(apiResult.rates).find((r) => r.toLowerCase() === conversion.target.toLowerCase());
-                    if (targetKey) {
-                        const rate = Number(apiResult.rates[targetKey]);
-                        const converted = Number.parseFloat(`${conversion.value * rate}`).toFixed(Number(precision));
-                        resolve(Number(converted));
-                    } else {
-                        reject(`No conversion rate found for ${conversion.target}`);
+            const url = `https://api.exchangerate.host/convert?from=${conversion.base.toUpperCase()}&to=${conversion.target.toUpperCase()}`;
+            axios
+                .get(url, { timeout: 5000 })
+                .then((response: AxiosResponse) => {
+                    if (!response.status.toString().startsWith("2")) {
+                        reject(
+                            `Unable to get exchange rate. Response status: ${response.status} (${response.statusText})`,
+                        );
+                        return;
                     }
+                    const conversionResult: ConversionApiResult = response.data;
+                    if (!conversionResult.success || conversionResult.result == null) {
+                        reject(`Unable to get exchange rate. Result: ${conversionResult}`);
+                        return;
+                    }
+                    const rate = conversionResult.result;
+                    const converted = Number.parseFloat(`${conversion.value * rate}`).toFixed(Number(precision));
+                    resolve(Number(converted));
                 })
                 .catch((err) => reject(err));
         });

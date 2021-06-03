@@ -5,7 +5,8 @@ import { applicationIconLocation, getApplicationIconFilePath } from "./applicati
 import { existsSync } from "fs";
 import { executeCommand } from "../../executors/command-executor";
 
-const defaultIcnsFilePath = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericApplicationIcon.icns";
+const defaultIcnsFilePath =
+    "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericApplicationIcon.icns";
 
 interface InfoPlist {
     CFBundleIconFile?: string;
@@ -23,7 +24,7 @@ export function generateMacAppIcons(applicationFilePaths: string[]): Promise<voi
                     FileHelpers.createFolderSync(applicationIconLocation);
                 }
 
-                Promise.all (applicationFilePaths.map((application) => generateMacAppIcon(application)))
+                Promise.all(applicationFilePaths.map((application) => generateMacAppIcon(application)))
                     .then(() => resolve())
                     .catch((err) => reject(err));
             })
@@ -39,7 +40,11 @@ function generateMacAppIcon(applicationFilePath: string): Promise<void> {
                 const outPngFilePath = getApplicationIconFilePath(applicationFilePath);
                 convertIcnsToPng(icnsFilePath, outPngFilePath)
                     .then(() => resolve())
-                    .catch(() => convertIcnsToPng(defaultIcnsFilePath,outPngFilePath).then(()=> resolve).catch((err)=> reject(err)) );
+                    .catch(() =>
+                        convertIcnsToPng(defaultIcnsFilePath, outPngFilePath)
+                            .then(() => resolve)
+                            .catch((err) => reject(err)),
+                    );
             })
             .catch((err) => reject(err));
     });
@@ -58,9 +63,7 @@ function getIcnsFilePath(applicationFilePath: string, parsedPlistContent: InfoPl
             parsedPlistContent.CFBundleIconFile += ".icns";
         }
         const icnsFilePath = join(applicationFilePath, "Contents", "Resources", parsedPlistContent.CFBundleIconFile);
-        return existsSync(icnsFilePath)
-            ? icnsFilePath
-            : defaultIcnsFilePath;
+        return existsSync(icnsFilePath) ? icnsFilePath : defaultIcnsFilePath;
     } else {
         return defaultIcnsFilePath;
     }
@@ -77,7 +80,7 @@ function getPlistContent(applicationFilePath: string): Promise<InfoPlist | undef
         } else {
             plist.readFile(plistFilePath, (err, data) => {
                 if (err) {
-                    onError()
+                    onError();
                 } else {
                     onSuccess(data);
                 }

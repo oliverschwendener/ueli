@@ -4,9 +4,5 @@
     },
     "verbose": true,
     "testRegex": "((test|spec))\\.ts$",
-    "moduleFileExtensions": [
-        "ts",
-        "js",
-        "json"
-    ]
+    "moduleFileExtensions": ["ts", "js", "json"]
 }

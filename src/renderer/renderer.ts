@@ -119,37 +119,49 @@ const app = new Vue({
             ipcRenderer.send(IpcChannels.search, userInput);
         });
 
-        vueEventDispatcher.$on(VueEventChannels.handleExecution, (userInput: string, searchResultIem: SearchResultItem | undefined, privileged: boolean) => {
-            if (searchResultIem !== undefined) {
-                ipcRenderer.send(IpcChannels.execute, userInput, searchResultIem, privileged);
-            }
-        });
+        vueEventDispatcher.$on(
+            VueEventChannels.handleExecution,
+            (userInput: string, searchResultIem: SearchResultItem | undefined, privileged: boolean) => {
+                if (searchResultIem !== undefined) {
+                    ipcRenderer.send(IpcChannels.execute, userInput, searchResultIem, privileged);
+                }
+            },
+        );
 
-        vueEventDispatcher.$on(VueEventChannels.handleOpenLocation, (searchResultItem: SearchResultItem | undefined) => {
-            if (searchResultItem !== undefined) {
-                ipcRenderer.send(IpcChannels.openSearchResultLocation, searchResultItem);
-            }
-        });
+        vueEventDispatcher.$on(
+            VueEventChannels.handleOpenLocation,
+            (searchResultItem: SearchResultItem | undefined) => {
+                if (searchResultItem !== undefined) {
+                    ipcRenderer.send(IpcChannels.openSearchResultLocation, searchResultItem);
+                }
+            },
+        );
 
-        vueEventDispatcher.$on(VueEventChannels.handleAutoCompletion, (searchResultItem: SearchResultItem | undefined) => {
-            if (searchResultItem !== undefined) {
-                ipcRenderer.send(IpcChannels.autoComplete, searchResultItem);
-            }
-        });
+        vueEventDispatcher.$on(
+            VueEventChannels.handleAutoCompletion,
+            (searchResultItem: SearchResultItem | undefined) => {
+                if (searchResultItem !== undefined) {
+                    ipcRenderer.send(IpcChannels.autoComplete, searchResultItem);
+                }
+            },
+        );
 
         vueEventDispatcher.$on(VueEventChannels.favoritesRequested, () => {
             ipcRenderer.send(IpcChannels.favoritesRequested);
         });
 
-        vueEventDispatcher.$on(VueEventChannels.configUpdated, (updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean, pluginType?: PluginType) => {
-            if (needsIndexRefresh) {
-                vueEventDispatcher.$emit(VueEventChannels.refreshIndexesStarted);
-            }
+        vueEventDispatcher.$on(
+            VueEventChannels.configUpdated,
+            (updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean, pluginType?: PluginType) => {
+                if (needsIndexRefresh) {
+                    vueEventDispatcher.$emit(VueEventChannels.refreshIndexesStarted);
+                }
 
-            this.translations = getTranslationSet(updatedConfig.generalOptions.language);
-            this.config = updatedConfig;
-            ipcRenderer.send(IpcChannels.configUpdated, updatedConfig, needsIndexRefresh, pluginType);
-        });
+                this.translations = getTranslationSet(updatedConfig.generalOptions.language);
+                this.config = updatedConfig;
+                ipcRenderer.send(IpcChannels.configUpdated, updatedConfig, needsIndexRefresh, pluginType);
+            },
+        );
 
         vueEventDispatcher.$on(VueEventChannels.clearExecutionLogConfirmed, () => {
             ipcRenderer.send(IpcChannels.clearExecutionLogConfirmed);
@@ -179,21 +191,30 @@ const app = new Vue({
             vueEventDispatcher.$emit(VueEventChannels.executionFinished);
         });
 
-        ipcRenderer.on(IpcChannels.appearanceOptionsUpdated, (event: Electron.Event, updatedAppearanceOptions: AppearanceOptions) => {
-            vueEventDispatcher.$emit(VueEventChannels.appearanceOptionsUpdated, updatedAppearanceOptions);
-        });
+        ipcRenderer.on(
+            IpcChannels.appearanceOptionsUpdated,
+            (event: Electron.Event, updatedAppearanceOptions: AppearanceOptions) => {
+                vueEventDispatcher.$emit(VueEventChannels.appearanceOptionsUpdated, updatedAppearanceOptions);
+            },
+        );
 
-        ipcRenderer.on(IpcChannels.generalOptionsUpdated, (event: Electron.Event, updatedGeneralOptions: GeneralOptions) => {
-            vueEventDispatcher.$emit(VueEventChannels.generalOptionsUpdated, updatedGeneralOptions);
-        });
+        ipcRenderer.on(
+            IpcChannels.generalOptionsUpdated,
+            (event: Electron.Event, updatedGeneralOptions: GeneralOptions) => {
+                vueEventDispatcher.$emit(VueEventChannels.generalOptionsUpdated, updatedGeneralOptions);
+            },
+        );
 
         ipcRenderer.on(IpcChannels.languageUpdated, (event: Electron.Event, updatedTranslationSet: TranslationSet) => {
             this.translations = updatedTranslationSet;
         });
 
-        ipcRenderer.on(IpcChannels.colorThemeOptionsUpdated, (event: Electron.Event, updatedColorThemeOptions: ColorThemeOptions) => {
-            vueEventDispatcher.$emit(VueEventChannels.colorThemeOptionsUpdated, updatedColorThemeOptions);
-        });
+        ipcRenderer.on(
+            IpcChannels.colorThemeOptionsUpdated,
+            (event: Electron.Event, updatedColorThemeOptions: ColorThemeOptions) => {
+                vueEventDispatcher.$emit(VueEventChannels.colorThemeOptionsUpdated, updatedColorThemeOptions);
+            },
+        );
 
         ipcRenderer.on(IpcChannels.searchResponse, (event: Electron.Event, searchResults: SearchResultItem[]) => {
             vueEventDispatcher.$emit(VueEventChannels.searchResultsUpdated, searchResults);
@@ -211,9 +232,12 @@ const app = new Vue({
             vueEventDispatcher.$emit(VueEventChannels.mainWindowHasBeenShown);
         });
 
-        ipcRenderer.on(IpcChannels.userInputUpdated, (event: Electron.Event, updatedUserInput: string, selectText?: boolean) => {
-            vueEventDispatcher.$emit(VueEventChannels.userInputUpdated, updatedUserInput, selectText);
-        });
+        ipcRenderer.on(
+            IpcChannels.userInputUpdated,
+            (event: Electron.Event, updatedUserInput: string, selectText?: boolean) => {
+                vueEventDispatcher.$emit(VueEventChannels.userInputUpdated, updatedUserInput, selectText);
+            },
+        );
 
         ipcRenderer.on(IpcChannels.notification, (event: Electron.Event, message: string, type?: NotificationType) => {
             vueEventDispatcher.$emit(VueEventChannels.notification, message, type);
@@ -227,9 +251,12 @@ const app = new Vue({
             vueEventDispatcher.$emit(VueEventChannels.refreshIndexesFinished);
         });
 
-        ipcRenderer.on(IpcChannels.checkForUpdateResponse, (event: Electron.Event, updateCheckResult: UpdateCheckResult) => {
-            vueEventDispatcher.$emit(VueEventChannels.checkForUpdateResponse, updateCheckResult);
-        });
+        ipcRenderer.on(
+            IpcChannels.checkForUpdateResponse,
+            (event: Electron.Event, updateCheckResult: UpdateCheckResult) => {
+                vueEventDispatcher.$emit(VueEventChannels.checkForUpdateResponse, updateCheckResult);
+            },
+        );
 
         ipcRenderer.on(IpcChannels.autoCompleteResponse, (event: Electron.Event, updatedUserInput: string) => {
             vueEventDispatcher.$emit(VueEventChannels.autoCompletionResponse, updatedUserInput);
@@ -251,6 +278,10 @@ const app = new Vue({
 
             if (event.key === "Escape") {
                 ipcRenderer.send(IpcChannels.mainWindowHideRequested);
+            }
+
+            if (event.key === "F5") {
+                ipcRenderer.send(IpcChannels.indexRefreshRequested);
             }
         },
     },

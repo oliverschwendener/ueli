@@ -8,6 +8,9 @@ export const powershellScriptFilePath = join(ueliTempFolder, "generate-icons.ps1
 
 export function getApplicationIconFilePath(applicationFilePath: string): string {
     const hash = createHash("md5").update(`${applicationFilePath}`).digest("hex");
-    const fileName = `${replaceWhitespace(basename(applicationFilePath).replace(extname(applicationFilePath), "").toLowerCase(), "-")}-${hash}`;
+    const fileName = `${replaceWhitespace(
+        basename(applicationFilePath).replace(extname(applicationFilePath), "").toLowerCase(),
+        "-",
+    )}-${hash}`;
     return `${join(applicationIconLocation, fileName)}.png`;
 }

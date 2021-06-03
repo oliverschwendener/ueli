@@ -24,10 +24,19 @@ export const webSearchSettingsComponent = Vue.extend({
         editWebsearchEngine(index: number) {
             const config: UserConfigOptions = this.config;
             const webSearchEngine = config.websearchOptions.webSearchEngines[index];
-            vueEventDispatcher.$emit(VueEventChannels.openWebSearchEditingModal, deepCopy(webSearchEngine), ModalEditMode.Edit, index);
+            vueEventDispatcher.$emit(
+                VueEventChannels.openWebSearchEditingModal,
+                deepCopy(webSearchEngine),
+                ModalEditMode.Edit,
+                index,
+            );
         },
         onAddWebsearchEngineClick() {
-            vueEventDispatcher.$emit(VueEventChannels.openWebSearchEditingModal, deepCopy(defaultNewWebSearchEngine), ModalEditMode.Add);
+            vueEventDispatcher.$emit(
+                VueEventChannels.openWebSearchEditingModal,
+                deepCopy(defaultNewWebSearchEngine),
+                ModalEditMode.Add,
+            );
         },
         resetAll() {
             const translations: TranslationSet = this.translations;
@@ -77,13 +86,16 @@ export const webSearchSettingsComponent = Vue.extend({
             }
         });
 
-        vueEventDispatcher.$on(VueEventChannels.websearchEngineEdited, (websearchEngine: WebSearchEngine, editMode: ModalEditMode, saveIndex?: number) => {
-            if (editMode === ModalEditMode.Add) {
-                this.addWebsearchEngine(websearchEngine);
-            } else if (editMode === ModalEditMode.Edit) {
-                this.updateWebsearchEngine(websearchEngine, saveIndex);
-            }
-        });
+        vueEventDispatcher.$on(
+            VueEventChannels.websearchEngineEdited,
+            (websearchEngine: WebSearchEngine, editMode: ModalEditMode, saveIndex?: number) => {
+                if (editMode === ModalEditMode.Add) {
+                    this.addWebsearchEngine(websearchEngine);
+                } else if (editMode === ModalEditMode.Edit) {
+                    this.updateWebsearchEngine(websearchEngine, saveIndex);
+                }
+            },
+        );
     },
     props: ["config", "translations"],
     template: `
@@ -112,26 +124,20 @@ export const webSearchSettingsComponent = Vue.extend({
                     <table v-if="config.websearchOptions.webSearchEngines.length > 0" class="table is-striped is-fullwidth">
                         <thead>
                             <tr>
+                                <th class="has-text-centered">{{ translations.edit }}</th>
+                                <th class="has-text-centered">{{ translations.remove }}</th>
                                 <th>{{ translations.websearchName }}</th>
                                 <th>{{ translations.websearchPrefix }}</th>
                                 <th>{{ translations.websearchUrl }}</th>
+                                <th>{{ translations.websearchSuggestionUrl }}</th>
                                 <th class="has-text-centered">{{ translations.websearchIcon }}</th>
                                 <th class="has-text-centered">{{ translations.websearchPriority }}</th>
                                 <th class="has-text-centered">{{ translations.websearchIsFallback }}</th>
                                 <th class="has-text-centered">{{ translations.websearchEncodeSearchTerm }}</th>
-                                <th class="has-text-centered">{{ translations.edit }}</th>
-                                <th class="has-text-centered">{{ translations.remove }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(websearchEngine, index) in config.websearchOptions.webSearchEngines">
-                                <td>{{ websearchEngine.name }}</td>
-                                <td class="font-mono">{{ websearchEngine.prefix }}</td>
-                                <td>{{ websearchEngine.url }}</td>
-                                <td class="has-text-centered"><icon :icon="websearchEngine.icon" :defaulticon="defaultWebSearchIcon"></icon></td>
-                                <td class="has-text-centered">{{ websearchEngine.priority }}</td>
-                                <td class="has-text-centered"><i v-if="websearchEngine.isFallback" class="fas fa-check"></i></td>
-                                <td class="has-text-centered"><i v-if="websearchEngine.encodeSearchTerm" class="fas fa-check"></i></td>
                                 <td class="has-text-centered">
                                     <button class="button" @click="editWebsearchEngine(index)">
                                         <span class="icon">
@@ -146,6 +152,14 @@ export const webSearchSettingsComponent = Vue.extend({
                                         </span>
                                     </button>
                                 </td>
+                                <td>{{ websearchEngine.name }}</td>
+                                <td class="font-mono">{{ websearchEngine.prefix }}</td>
+                                <td>{{ websearchEngine.url }}</td>
+                                <td>{{ websearchEngine.suggestionUrl }}</td>
+                                <td class="has-text-centered"><icon :icon="websearchEngine.icon" :defaulticon="defaultWebSearchIcon"></icon></td>
+                                <td class="has-text-centered">{{ websearchEngine.priority }}</td>
+                                <td class="has-text-centered"><i v-if="websearchEngine.isFallback" class="fas fa-check"></i></td>
+                                <td class="has-text-centered"><i v-if="websearchEngine.encodeSearchTerm" class="fas fa-check"></i></td>
                             </tr>
                         </tbody>
                     </table>

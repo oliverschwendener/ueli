@@ -12,12 +12,7 @@ describe(isValidIconType.name, () => {
     });
 
     it("should return false if passing in an invalid icon type", () => {
-        const invalidIconTypes = [
-            "",
-            "abca",
-            "Color",
-            "svg",
-        ];
+        const invalidIconTypes = ["", "abca", "Color", "svg"];
 
         invalidIconTypes.forEach((invalidIconType) => {
             const actual = isValidIconType(invalidIconType);

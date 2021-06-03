@@ -14,8 +14,8 @@ export class MacOsOperatingSystemSettingRepository implements OperatingSystemSet
         this.getFilePaths()
             .then((filePaths) => {
                 generateMacAppIcons(filePaths)
-                    .then(() => this.all = filePaths.map((filePath) => this.buildOperatingSystemSetting(filePath)))
-                    .catch((err) => this.all = []);
+                    .then(() => (this.all = filePaths.map((filePath) => this.buildOperatingSystemSetting(filePath))))
+                    .catch((err) => (this.all = []));
             })
             .catch((err) => {
                 throw new Error(`Error while reading macos system preferences: ${err}`);

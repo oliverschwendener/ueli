@@ -20,7 +20,10 @@ export interface SearchResultItemViewModel extends SearchResultItem {
     resultNumber: number;
 }
 
-export function createSearchResultItemViewModel(searchResult: SearchResultItem, counter: number): SearchResultItemViewModel {
+export function createSearchResultItemViewModel(
+    searchResult: SearchResultItem,
+    counter: number,
+): SearchResultItemViewModel {
     return {
         active: false,
         description: searchResult.description,

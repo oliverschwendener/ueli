@@ -9,12 +9,7 @@ export const validWindowsFilePaths = [
     "D:\\hello\\spaces are allowed\\and.this.is.also.valid",
 ];
 
-export const invalidWindowsFilePaths = [
-    "\\Program Files",
-    "Program Files",
-    "C:Program Files",
-    "C::\\Program Files",
-];
+export const invalidWindowsFilePaths = ["\\Program Files", "Program Files", "C:Program Files", "C::\\Program Files"];
 
 export const validMacOsFilePaths = [
     "/",
@@ -23,17 +18,9 @@ export const validMacOsFilePaths = [
     "/and.this.is/valid-as/well",
 ];
 
-export const invalidMacOsFilePaths = [
-    "\\this is invalid",
-    "Applications/Gugus",
-    "-/Gugus",
-];
+export const invalidMacOsFilePaths = ["\\this is invalid", "Applications/Gugus", "-/Gugus"];
 
-export const validEmailAddresses = [
-    "darth.vader@empire.com",
-    "jabba-the-hutt@hutts.com",
-    "lukeskywalker@rebels.com",
-];
+export const validEmailAddresses = ["darth.vader@empire.com", "jabba-the-hutt@hutts.com", "lukeskywalker@rebels.com"];
 
 export const invalidEmailAddresses = [
     null,

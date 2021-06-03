@@ -7,9 +7,7 @@ export interface FileBrowserOptions {
 }
 
 export const defaultFileBrowserOptions: FileBrowserOptions = {
-    blackList: [
-        "desktop.ini",
-    ],
+    blackList: ["desktop.ini"],
     isEnabled: false,
     maxSearchResults: 100,
     showFullFilePath: true,

@@ -57,8 +57,4 @@ export const atomOneDark: ColorThemeOptions = {
     scrollbarForegroundColor: "#3d444f",
 };
 
-export const colorThemes: ColorThemeOptions[] = [
-    atomOneDark,
-    dark,
-    light,
-];
+export const colorThemes: ColorThemeOptions[] = [atomOneDark, dark, light];

@@ -5,12 +5,18 @@ import Powershell from "node-powershell";
 export class ControlPanelItemsRetriever {
     public static RetrieveControlPanelItems(alreadyKnownItems: ControlPanelItem[]): Promise<ControlPanelItem[]> {
         return new Promise((resolve, reject) => {
-            this.executeCommandWithUtf8Output('powershell -NonInteractive -NoProfile -Command "Get-ControlPanelItem | ConvertTo-Json"')
+            this.executeCommandWithUtf8Output(
+                'powershell -NonInteractive -NoProfile -Command "Get-ControlPanelItem | ConvertTo-Json"',
+            )
                 .then((controlPanelItemsJson) => {
                     const controlPanelItems: ControlPanelItem[] = JSON.parse(controlPanelItemsJson);
 
-                    const alreadyKnownItemsStillPresent = alreadyKnownItems.filter((item) => controlPanelItems.some((i) => i.Name === item.Name));
-                    const newControlPanelItems = controlPanelItems.filter((item) => !alreadyKnownItems.some((i) => i.Name === item.Name));
+                    const alreadyKnownItemsStillPresent = alreadyKnownItems.filter((item) =>
+                        controlPanelItems.some((i) => i.Name === item.Name),
+                    );
+                    const newControlPanelItems = controlPanelItems.filter(
+                        (item) => !alreadyKnownItems.some((i) => i.Name === item.Name),
+                    );
 
                     const iconSize = 128;
                     const getIconsCommand = `
@@ -38,23 +44,26 @@ export class ControlPanelItemsRetriever {
                 } |
                 ConvertTo-Json
                     `;
-                    const shell = new Powershell({});
-                    shell.addCommand(getIconsCommand)
+                    const shell = new Powershell({ noProfile: true });
+                    shell
+                        .addCommand(getIconsCommand)
                         .then(() => shell.invoke())
-                        .then(
-                            (controlPanelItemIconsJson) => {
-                                const controlPanelItemIcons: { applicationName: string, iconBase64: string }[] = JSON.parse(controlPanelItemIconsJson);
-                                for (const icon of controlPanelItemIcons) {
-                                    const item = newControlPanelItems.find((i) => i.CanonicalName === icon.applicationName);
-                                    if (item != null && icon.iconBase64 != null) {
-                                        item.IconBase64 = icon.iconBase64;
-                                    }
+                        .then((controlPanelItemIconsJson) => {
+                            const controlPanelItemIcons: { applicationName: string; iconBase64: string }[] = JSON.parse(
+                                controlPanelItemIconsJson,
+                            );
+                            for (const icon of controlPanelItemIcons) {
+                                const item = newControlPanelItems.find((i) => i.CanonicalName === icon.applicationName);
+                                if (item != null && icon.iconBase64 != null) {
+                                    item.IconBase64 = icon.iconBase64;
                                 }
-                                resolve(alreadyKnownItemsStillPresent.concat(newControlPanelItems));
-                            })
+                            }
+                            resolve(alreadyKnownItemsStillPresent.concat(newControlPanelItems));
+                        })
                         .finally(() => shell.dispose())
                         .catch((reason) => reject(reason));
-                }).catch((reason) => reject(reason));
+                })
+                .catch((reason) => reject(reason));
         });
     }
 

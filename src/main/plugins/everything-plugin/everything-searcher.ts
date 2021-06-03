@@ -9,8 +9,10 @@ import { PluginType } from "../../plugin-type";
 export function everythingSearcher(
     userInput: string,
     everythingSearchOptions: EverythingSearchOptions,
-    defaultFileIcon: Icon, defaultFolderIcon: Icon,
-    pluginType: PluginType): Promise<SearchResultItem[]> {
+    defaultFileIcon: Icon,
+    defaultFolderIcon: Icon,
+    pluginType: PluginType,
+): Promise<SearchResultItem[]> {
     return new Promise((resolve, reject) => {
         const searchTerm = userInput.replace(everythingSearchOptions.prefix, "").trim();
         const utf8Encoding = "cmd /c chcp 65001>nul &&";
@@ -21,7 +23,8 @@ export function everythingSearcher(
             } else if (stderr) {
                 reject(stderr);
             } else {
-                const filePaths =  stdout.trim()
+                const filePaths = stdout
+                    .trim()
                     .split("\n")
                     .map((line) => normalize(line).trim())
                     .filter((f) => f !== ".");
@@ -30,21 +33,25 @@ export function everythingSearcher(
                     resolve([]);
                 }
 
-                const iconPromises = filePaths.map((filePath) => getFileIconDataUrl(filePath, defaultFileIcon, defaultFolderIcon));
+                const iconPromises = filePaths.map((filePath) =>
+                    getFileIconDataUrl(filePath, defaultFileIcon, defaultFolderIcon),
+                );
                 Promise.all(iconPromises)
                     .then((icons) => {
-                        const results = icons.map((icon): SearchResultItem => {
-                            return {
-                                description: icon.filePath,
-                                executionArgument: icon.filePath,
-                                hideMainWindowAfterExecution: true,
-                                icon: icon.icon,
-                                name: basename(icon.filePath),
-                                originPluginType: pluginType,
-                                searchable: [],
-                                supportsOpenLocation: true,
-                            };
-                        });
+                        const results = icons.map(
+                            (icon): SearchResultItem => {
+                                return {
+                                    description: icon.filePath,
+                                    executionArgument: icon.filePath,
+                                    hideMainWindowAfterExecution: true,
+                                    icon: icon.icon,
+                                    name: basename(icon.filePath),
+                                    originPluginType: pluginType,
+                                    searchable: [],
+                                    supportsOpenLocation: true,
+                                };
+                            },
+                        );
                         resolve(results);
                     })
                     .catch((err) => reject(err));

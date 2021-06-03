@@ -11,25 +11,28 @@ export function mdfindSearcher(
     searchTerm: string,
     mdfindOptions: MdFindOptions,
     pluginType: PluginType,
-    defaultIcon: Icon
+    defaultIcon: Icon,
 ): Promise<SearchResultItem[]> {
     return new Promise((resolve, reject) => {
-        exec(`mdfind -name ${searchTerm} | head -n ${mdfindOptions.maxSearchResults}`, (mdfindError, stdout, stderr) => {
-            if (mdfindError) {
-                reject(mdfindError);
-            } else if (stderr) {
-                reject(stderr);
-            } else {
-                const filePaths = stdout
-                    .split("\n")
-                    .map((f) => normalize(f).trim())
-                    .filter((f) => f !== ".");
+        exec(
+            `mdfind -name ${searchTerm} | head -n ${mdfindOptions.maxSearchResults}`,
+            (mdfindError, stdout, stderr) => {
+                if (mdfindError) {
+                    reject(mdfindError);
+                } else if (stderr) {
+                    reject(stderr);
+                } else {
+                    const filePaths = stdout
+                        .split("\n")
+                        .map((f) => normalize(f).trim())
+                        .filter((f) => f !== ".");
 
-                handleFilePaths(filePaths, pluginType, defaultIcon)
-                    .then((result) => resolve(result))
-                    .catch((err) => reject(err));
-            }
-        });
+                    handleFilePaths(filePaths, pluginType, defaultIcon)
+                        .then((result) => resolve(result))
+                        .catch((err) => reject(err));
+                }
+            },
+        );
     });
 }
 
@@ -41,18 +44,20 @@ function handleFilePaths(filePaths: string[], pluginType: PluginType, defaultIco
 
         Promise.all(filePaths.map((f) => getFileIconDataUrl(f, defaultIcon, defaultFolderIcon)))
             .then((icons) => {
-                const results = icons.map((icon): SearchResultItem => {
-                    return {
-                        description: icon.filePath,
-                        executionArgument: icon.filePath,
-                        hideMainWindowAfterExecution: true,
-                        icon: icon.icon,
-                        name: basename(icon.filePath),
-                        originPluginType: pluginType,
-                        searchable: [],
-                        supportsOpenLocation: true,
-                    };
-                });
+                const results = icons.map(
+                    (icon): SearchResultItem => {
+                        return {
+                            description: icon.filePath,
+                            executionArgument: icon.filePath,
+                            hideMainWindowAfterExecution: true,
+                            icon: icon.icon,
+                            name: basename(icon.filePath),
+                            originPluginType: pluginType,
+                            searchable: [],
+                            supportsOpenLocation: true,
+                        };
+                    },
+                );
                 resolve(results);
             })
             .catch((iconError) => reject(iconError));

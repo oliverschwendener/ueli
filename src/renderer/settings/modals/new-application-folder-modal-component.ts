@@ -26,17 +26,17 @@ export const newApplicationFolderModalComponent = Vue.extend({
         },
         getPlaceholder(): string {
             const translations: TranslationSet = this.translations;
-            const folderPath = operatingSystem === OperatingSystem.Windows
-                ? "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs"
-                : "/Applications";
+            const folderPath =
+                operatingSystem === OperatingSystem.Windows
+                    ? "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs"
+                    : "/Applications";
 
             return `${translations.forExample}: "${folderPath}"`;
         },
         openFolderDialog() {
-            getFolderPath()
-                .then((folderPath) => {
-                    this.newApplicationFolder = folderPath;
-                });
+            getFolderPath().then((folderPath) => {
+                this.newApplicationFolder = folderPath;
+            });
         },
         saveButtonClick() {
             const validator: (filePath: string) => Promise<void> = this.validateFolderPath;
@@ -49,9 +49,18 @@ export const newApplicationFolderModalComponent = Vue.extend({
         },
         validateFolderPath(folderPath: string): Promise<void> {
             const translations: TranslationSet = this.translations;
-            const notAFolderError = translations.applicationSearchSettingsNotAFolderErrorMessage.replace("{{value}}", folderPath);
-            const folderDoesNotExistError = translations.applicationSearchSettingsDoesNotExistErrorMessage.replace("{{value}}", folderPath);
-            const genericError = translations.applicationSearchSettingsFolderValidationError.replace("{{value}}", folderPath);
+            const notAFolderError = translations.applicationSearchSettingsNotAFolderErrorMessage.replace(
+                "{{value}}",
+                folderPath,
+            );
+            const folderDoesNotExistError = translations.applicationSearchSettingsDoesNotExistErrorMessage.replace(
+                "{{value}}",
+                folderPath,
+            );
+            const genericError = translations.applicationSearchSettingsFolderValidationError.replace(
+                "{{value}}",
+                folderPath,
+            );
 
             return new Promise((resolve, reject) => {
                 FileHelpers.fileExists(folderPath)

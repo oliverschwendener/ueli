@@ -16,13 +16,16 @@ export const defaultNewWebSearchEngine: WebSearchEngine = {
 };
 
 export function isValidWebSearchEngineToAdd(websearchEngine: WebSearchEngine): boolean {
-    const iconCondition = websearchEngine.icon.parameter && websearchEngine.icon.parameter.length > 0
-        ? isValidIcon(websearchEngine.icon)
-        : true;
+    const iconCondition =
+        websearchEngine.icon.parameter && websearchEngine.icon.parameter.length > 0
+            ? isValidIcon(websearchEngine.icon)
+            : true;
 
-    return websearchEngine !== undefined
-        && websearchEngine.name.length > 0
-        && websearchEngine.url.length > 0
-        && websearchEngine.url.indexOf("{{query}}") > -1
-        && iconCondition;
+    return (
+        websearchEngine !== undefined &&
+        websearchEngine.name.length > 0 &&
+        websearchEngine.url.length > 0 &&
+        websearchEngine.url.indexOf("{{query}}") > -1 &&
+        iconCondition
+    );
 }

@@ -25,7 +25,12 @@ export const simpleFolderSearchSettingsComponent = Vue.extend({
         editFolder(index: number) {
             const config: UserConfigOptions = this.config;
             const folderOptions = config.simpleFolderSearchOptions.folders[index];
-            vueEventDispatcher.$emit(VueEventChannels.openSimpleFolderSearchEditingModal, folderOptions, ModalEditMode.Edit, index);
+            vueEventDispatcher.$emit(
+                VueEventChannels.openSimpleFolderSearchEditingModal,
+                folderOptions,
+                ModalEditMode.Edit,
+                index,
+            );
         },
         removeFolder(index: number) {
             const config: UserConfigOptions = this.config;
@@ -52,7 +57,12 @@ export const simpleFolderSearchSettingsComponent = Vue.extend({
             this.updateConfig(true);
         },
         updateConfig(forceRefreshIndex: boolean) {
-            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, forceRefreshIndex, PluginType.SimpleFolderSearch);
+            vueEventDispatcher.$emit(
+                VueEventChannels.configUpdated,
+                this.config,
+                forceRefreshIndex,
+                PluginType.SimpleFolderSearch,
+            );
         },
     },
     mounted() {
@@ -64,17 +74,20 @@ export const simpleFolderSearchSettingsComponent = Vue.extend({
             }
         });
 
-        vueEventDispatcher.$on(VueEventChannels.simpleFolderSearchOptionSaved, (folderOptions: SimpleFolderSearchFolderOption, editMode: ModalEditMode, saveIndex?: number) => {
-            const config: UserConfigOptions = this.config;
-            if (editMode === ModalEditMode.Edit) {
-                if (saveIndex) {
-                    config.simpleFolderSearchOptions.folders[saveIndex] = folderOptions;
+        vueEventDispatcher.$on(
+            VueEventChannels.simpleFolderSearchOptionSaved,
+            (folderOptions: SimpleFolderSearchFolderOption, editMode: ModalEditMode, saveIndex?: number) => {
+                const config: UserConfigOptions = this.config;
+                if (editMode === ModalEditMode.Edit) {
+                    if (saveIndex) {
+                        config.simpleFolderSearchOptions.folders[saveIndex] = folderOptions;
+                    }
+                } else if (editMode === ModalEditMode.Add) {
+                    config.simpleFolderSearchOptions.folders.push(folderOptions);
                 }
-            } else if (editMode === ModalEditMode.Add) {
-                config.simpleFolderSearchOptions.folders.push(folderOptions);
-            }
-            this.updateConfig(true);
-        });
+                this.updateConfig(true);
+            },
+        );
     },
     props: ["config", "translations"],
     template: `

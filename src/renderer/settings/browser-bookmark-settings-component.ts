@@ -6,6 +6,7 @@ import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultBrowserBookmarksOptions } from "../../common/config/browser-bookmarks-options";
 import { Browser } from "../../main/plugins/browser-bookmarks-plugin/browser";
 import { deepCopy } from "../../common/helpers/object-helpers";
+import { PluginType } from "../../main/plugin-type";
 
 export const browserBookmarkSettingsComponent = Vue.extend({
     data() {
@@ -30,7 +31,7 @@ export const browserBookmarkSettingsComponent = Vue.extend({
         },
 
         updateConfig() {
-            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config);
+            vueEventDispatcher.$emit(VueEventChannels.configUpdated, this.config, true, PluginType.BrowserBookmarks);
         },
     },
 

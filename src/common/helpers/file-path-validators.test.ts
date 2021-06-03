@@ -8,24 +8,11 @@ const validWindowsFilePaths = [
     "\\\\Share\\My Folder",
 ];
 
-const invalidWindowsFilePaths = [
-    "Program Files",
-    "C:Program Files",
-    "C::\\Program Files",
-];
+const invalidWindowsFilePaths = ["Program Files", "C:Program Files", "C::\\Program Files"];
 
-const validMacOsFilePaths = [
-    "/",
-    "/Users/Hansueli",
-    "/Spaces are allowed as well",
-    "/and.this.is/valid-as/well",
-];
+const validMacOsFilePaths = ["/", "/Users/Hansueli", "/Spaces are allowed as well", "/and.this.is/valid-as/well"];
 
-const invalidMacOsFilePaths = [
-    "\\this is invalid",
-    "Applications/Gugus",
-    "-/Gugus",
-];
+const invalidMacOsFilePaths = ["\\this is invalid", "Applications/Gugus", "-/Gugus"];
 
 describe(isValidWindowsFilePath.name, () => {
     it("should return true if given string is a valid file path", () => {

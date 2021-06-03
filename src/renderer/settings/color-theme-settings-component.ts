@@ -53,32 +53,38 @@ export const colorThemeSettingsComponent = Vue.extend({
         },
         resetSearchResultsBackgroundColor() {
             const config: UserConfigOptions = this.config;
-            config.colorThemeOptions.searchResultsBackgroundColor = defaultColorThemeOptions.searchResultsBackgroundColor;
+            config.colorThemeOptions.searchResultsBackgroundColor =
+                defaultColorThemeOptions.searchResultsBackgroundColor;
             this.updateConfig();
         },
         resetSearchResultsItemActiveBackgroundColor() {
             const config: UserConfigOptions = this.config;
-            config.colorThemeOptions.searchResultsItemActiveBackgroundColor = defaultColorThemeOptions.searchResultsItemActiveBackgroundColor;
+            config.colorThemeOptions.searchResultsItemActiveBackgroundColor =
+                defaultColorThemeOptions.searchResultsItemActiveBackgroundColor;
             this.updateConfig();
         },
         resetSearchResultsItemActiveTextColor() {
             const config: UserConfigOptions = this.config;
-            config.colorThemeOptions.searchResultsItemActiveTextColor = defaultColorThemeOptions.searchResultsItemActiveTextColor;
+            config.colorThemeOptions.searchResultsItemActiveTextColor =
+                defaultColorThemeOptions.searchResultsItemActiveTextColor;
             this.updateConfig();
         },
         resetSearchResultsItemActiveDescriptionColor() {
             const config: UserConfigOptions = this.config;
-            config.colorThemeOptions.searchResultsItemActiveDescriptionColor = defaultColorThemeOptions.searchResultsItemActiveDescriptionColor;
+            config.colorThemeOptions.searchResultsItemActiveDescriptionColor =
+                defaultColorThemeOptions.searchResultsItemActiveDescriptionColor;
             this.updateConfig();
         },
         resetSearchResultsItemNameTextColor() {
             const config: UserConfigOptions = this.config;
-            config.colorThemeOptions.searchResultsItemNameTextcolor = defaultColorThemeOptions.searchResultsItemNameTextcolor;
+            config.colorThemeOptions.searchResultsItemNameTextcolor =
+                defaultColorThemeOptions.searchResultsItemNameTextcolor;
             this.updateConfig();
         },
         resetSearchResultsItemDescriptionTextColor() {
             const config: UserConfigOptions = this.config;
-            config.colorThemeOptions.searchResultsItemDescriptionTextColor = defaultColorThemeOptions.searchResultsItemDescriptionTextColor;
+            config.colorThemeOptions.searchResultsItemDescriptionTextColor =
+                defaultColorThemeOptions.searchResultsItemDescriptionTextColor;
             this.updateConfig();
         },
         resetScrollbarForegroundColor() {
@@ -136,14 +142,32 @@ export const colorThemeSettingsComponent = Vue.extend({
                                 const colorThemeOptions = JSON.parse(fileContent) as ColorThemeOptions;
                                 if (isValidColorTheme(colorThemeOptions)) {
                                     const config: UserConfigOptions = this.config;
-                                    config.colorThemeOptions = Object.assign({}, config.colorThemeOptions, colorThemeOptions);
+                                    config.colorThemeOptions = Object.assign(
+                                        {},
+                                        config.colorThemeOptions,
+                                        colorThemeOptions,
+                                    );
                                     this.updateConfig();
-                                    vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeImportSucceeded, NotificationType.Info);
+                                    vueEventDispatcher.$emit(
+                                        VueEventChannels.notification,
+                                        translations.colorThemeImportSucceeded,
+                                        NotificationType.Info,
+                                    );
                                 } else {
-                                    vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeInvalidColorTheme, NotificationType.Error);
+                                    vueEventDispatcher.$emit(
+                                        VueEventChannels.notification,
+                                        translations.colorThemeInvalidColorTheme,
+                                        NotificationType.Error,
+                                    );
                                 }
                             })
-                            .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeImportFailed, NotificationType.Error));
+                            .catch((err) =>
+                                vueEventDispatcher.$emit(
+                                    VueEventChannels.notification,
+                                    translations.colorThemeImportFailed,
+                                    NotificationType.Error,
+                                ),
+                            );
                     }
                 })
                 .catch((err) => {
@@ -159,8 +183,20 @@ export const colorThemeSettingsComponent = Vue.extend({
                         const fileContent = JSON.stringify(config.colorThemeOptions);
                         const filePath = join(folderPath, "ueli-color-theme.json");
                         FileHelpers.writeFile(filePath, fileContent)
-                            .then(() => vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeExportSucceeded, NotificationType.Info))
-                            .catch(() => vueEventDispatcher.$emit(VueEventChannels.notification, translations.colorThemeExportFailed, NotificationType.Error));
+                            .then(() =>
+                                vueEventDispatcher.$emit(
+                                    VueEventChannels.notification,
+                                    translations.colorThemeExportSucceeded,
+                                    NotificationType.Info,
+                                ),
+                            )
+                            .catch(() =>
+                                vueEventDispatcher.$emit(
+                                    VueEventChannels.notification,
+                                    translations.colorThemeExportFailed,
+                                    NotificationType.Error,
+                                ),
+                            );
                     }
                 })
                 .catch((err) => {

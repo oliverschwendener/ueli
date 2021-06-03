@@ -26,7 +26,9 @@ export class ControlPanelPlugin implements SearchPlugin {
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
-            executeCommand(`powershell -NonInteractive -NoProfile -Command "Show-ControlPanelItem -Name '${searchResultItem.executionArgument}'"`)
+            executeCommand(
+                `powershell -NonInteractive -NoProfile -Command "Show-ControlPanelItem -Name '${searchResultItem.executionArgument}'"`,
+            )
                 .then(() => resolve())
                 .catch((reason) => reject(reason));
         });
@@ -46,9 +48,7 @@ export class ControlPanelPlugin implements SearchPlugin {
                 executionArgument: item.Name,
                 hideMainWindowAfterExecution: true,
                 icon: {
-                    parameter: item.IconBase64
-                        ? `data:image/png;base64,${item.IconBase64}`
-                        : defaultControlPanelIcon,
+                    parameter: item.IconBase64 ? `data:image/png;base64,${item.IconBase64}` : defaultControlPanelIcon,
                     type: IconType.URL,
                 },
                 name: item.Name,
@@ -65,11 +65,11 @@ export class ControlPanelPlugin implements SearchPlugin {
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
             ControlPanelItemsRetriever.RetrieveControlPanelItems(this.controlPanelItems)
-            .then((controlPanelItems) => {
-                this.controlPanelItems = controlPanelItems;
-                resolve();
-            })
-            .catch((resaon) => reject(resaon));
+                .then((controlPanelItems) => {
+                    this.controlPanelItems = controlPanelItems;
+                    resolve();
+                })
+                .catch((resaon) => reject(resaon));
         });
     }
 

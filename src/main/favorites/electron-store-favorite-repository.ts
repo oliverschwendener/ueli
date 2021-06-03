@@ -11,9 +11,7 @@ export class ElectronStoreFavoriteRepository implements FavoriteRepository {
     constructor() {
         this.store = new Store({ name: "favorites" });
 
-        this.favorites = this.migrateUserConfigFavorites()
-            || this.store.get(this.favoritesStoreKey)
-            || [];
+        this.favorites = this.migrateUserConfigFavorites() || this.store.get(this.favoritesStoreKey) || [];
     }
 
     private migrateUserConfigFavorites(): Favorite[] | undefined {

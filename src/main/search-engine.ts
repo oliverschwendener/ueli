@@ -34,17 +34,17 @@ export class SearchEngine {
         config: SearchEngineOptions,
         logExecution: boolean,
         translationSet: TranslationSet,
-        favoriteRepository: FavoriteRepository) {
+        favoriteRepository: FavoriteRepository,
+    ) {
         this.translationSet = translationSet;
         this.config = config;
-        this.logExecution = logExecution,
-        this.searchPlugins = searchPlugins;
+        (this.logExecution = logExecution), (this.searchPlugins = searchPlugins);
         this.executionPlugins = executionPlugins;
         this.fallbackPlugins = fallbackPlugins;
         this.favoriteManager = new FavoriteManager(favoriteRepository, translationSet);
     }
 
-    public  getSearchResults(userInput: string): Promise<SearchResultItem[]> {
+    public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             if (userInput === undefined || userInput.length === 0) {
                 resolve([]);
@@ -54,7 +54,8 @@ export class SearchEngine {
                     .find((plugin) => plugin.isValidUserInput(userInput));
 
                 if (matchingExecutionPlugin !== undefined) {
-                    matchingExecutionPlugin.getSearchResults(userInput)
+                    matchingExecutionPlugin
+                        .getSearchResults(userInput)
                         .then((executionPluginResults) => {
                             this.beforeSolveSearchResults(userInput, executionPluginResults)
                                 .then((result) => resolve(result))
@@ -76,7 +77,8 @@ export class SearchEngine {
 
     public getFavorites(): Promise<SearchResultItem[]> {
         return new Promise((resolve) => {
-            const result = this.favoriteManager.getAllFavorites()
+            const result = this.favoriteManager
+                .getAllFavorites()
                 .sort((a, b) => b.executionCount - a.executionCount)
                 .map((favorite) => favorite.item);
 
@@ -91,7 +93,8 @@ export class SearchEngine {
                 .find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
 
             if (originPlugin !== undefined) {
-                originPlugin.execute(searchResultItem, privileged)
+                originPlugin
+                    .execute(searchResultItem, privileged)
                     .then(() => {
                         if (this.logExecution) {
                             this.favoriteManager.increaseCount(searchResultItem);
@@ -112,7 +115,8 @@ export class SearchEngine {
                 .find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
 
             if (originPlugin && this.pluginSupportsOpenLocation(originPlugin)) {
-                originPlugin.openLocation(searchResultItem)
+                originPlugin
+                    .openLocation(searchResultItem)
                     .then(() => resolve())
                     .catch((err) => reject(err));
             } else {
@@ -135,7 +139,9 @@ export class SearchEngine {
 
     public refreshAllIndexes(): Promise<void> {
         return new Promise((resolve, reject) => {
-            Promise.all(this.searchPlugins.filter((plugin) => plugin.isEnabled()).map((plugin) => plugin.refreshIndex()))
+            Promise.all(
+                this.searchPlugins.filter((plugin) => plugin.isEnabled()).map((plugin) => plugin.refreshIndex()),
+            )
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });
@@ -145,7 +151,8 @@ export class SearchEngine {
         return new Promise((resolve, reject) => {
             const pluginToRefreshIndexes = this.searchPlugins.find((plugin) => plugin.pluginType === pluginType);
             if (pluginToRefreshIndexes) {
-                pluginToRefreshIndexes.refreshIndex()
+                pluginToRefreshIndexes
+                    .refreshIndex()
                     .then(() => resolve())
                     .catch((err) => reject(err));
             } else {
@@ -188,9 +195,7 @@ export class SearchEngine {
 
             Promise.all(pluginPromises)
                 .then((pluginsResults) => {
-                    const all = pluginsResults.length > 0
-                        ? pluginsResults.reduce((a, r) => a = a.concat(r))
-                        : [];
+                    const all = pluginsResults.length > 0 ? pluginsResults.reduce((a, r) => (a = a.concat(r))) : [];
 
                     const fuse = new Fuse(all, {
                         distance: 100,
@@ -206,7 +211,8 @@ export class SearchEngine {
 
                     if (this.logExecution) {
                         fuseResult.forEach((fuseResultItem: FuseResult) => {
-                            const favorite = this.favoriteManager.getAllFavorites()
+                            const favorite = this.favoriteManager
+                                .getAllFavorites()
                                 .find((f) => f.item.executionArgument === fuseResultItem.item.executionArgument);
                             if (favorite && favorite.executionCount !== 0) {
                                 fuseResultItem.score /= favorite.executionCount * 3;
@@ -214,7 +220,7 @@ export class SearchEngine {
                         });
                     }
 
-                    const sorted = fuseResult.sort((a: FuseResult, b: FuseResult) => a.score  - b.score);
+                    const sorted = fuseResult.sort((a: FuseResult, b: FuseResult) => a.score - b.score);
                     const filtered = sorted.map((item: FuseResult): SearchResultItem => item.item);
                     let sliced = filtered.slice(0, this.config.maxSearchResults);
 
@@ -228,7 +234,10 @@ export class SearchEngine {
         });
     }
 
-    private beforeSolveSearchResults(userInput: string, searchResults: SearchResultItem[]): Promise<SearchResultItem[]> {
+    private beforeSolveSearchResults(
+        userInput: string,
+        searchResults: SearchResultItem[],
+    ): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             if (this.fallbackPlugins.length > 0 && searchResults.length === 0) {
                 const fallbackPluginPromises = this.fallbackPlugins
@@ -237,9 +246,10 @@ export class SearchEngine {
 
                 Promise.all(fallbackPluginPromises)
                     .then((resultLists) => {
-                        const result = resultLists.length > 0
-                            ? resultLists.reduce((all, resultList) => all = all.concat(resultList))
-                            : [];
+                        const result =
+                            resultLists.length > 0
+                                ? resultLists.reduce((all, resultList) => (all = all.concat(resultList)))
+                                : [];
 
                         resolve(this.beforeResolve(userInput, result));
                     })
@@ -259,24 +269,26 @@ export class SearchEngine {
             searchResults.push(result);
         }
 
-        return(searchResults);
+        return searchResults;
     }
 
     private filterResultsByBlackList(items: SearchResultItem[], blackList: string[]) {
         return items.filter((item) => {
-            return blackList.every((blackListKeyword) => !this.searchResultItemContainsBlackListKeyword(item, blackListKeyword));
+            return blackList.every(
+                (blackListKeyword) => !this.searchResultItemContainsBlackListKeyword(item, blackListKeyword),
+            );
         });
     }
 
-    private searchResultItemContainsBlackListKeyword(searchResultItem: SearchResultItem, blackListKeyword: string): boolean {
+    private searchResultItemContainsBlackListKeyword(
+        searchResultItem: SearchResultItem,
+        blackListKeyword: string,
+    ): boolean {
         return searchResultItem.name.toLowerCase().indexOf(blackListKeyword.toLowerCase()) > -1;
     }
 
     private getAllPlugins(): UeliPlugin[] {
-        return [
-            ...this.searchPlugins,
-            ...this.executionPlugins,
-        ];
+        return [...this.searchPlugins, ...this.executionPlugins];
     }
 
     private pluginSupportsOpenLocation(plugin: any): plugin is OpenLocationPlugin {

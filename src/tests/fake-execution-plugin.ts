@@ -1,4 +1,4 @@
-import { ExecutionPlugin } from "../main/execution-plugin";
+import { ExecutionPlugin } from "../main/execution-plugin";
 import { SearchResultItem } from "../common/search-result-item";
 import { PluginType } from "../main/plugin-type";
 import { UserConfigOptions } from "../common/config/user-config-options";
@@ -11,11 +11,7 @@ export class FakeExecutionPlugin implements ExecutionPlugin {
     private readonly enabled: boolean;
     private readonly searchResults: SearchResultItem[];
 
-    constructor(
-        isEnabled: boolean,
-        isValidUserInput: boolean,
-        searchResults: SearchResultItem[],
-    ) {
+    constructor(isEnabled: boolean, isValidUserInput: boolean, searchResults: SearchResultItem[]) {
         this.enabled = isEnabled;
         this.validUserInput = isValidUserInput;
         this.searchResults = searchResults;

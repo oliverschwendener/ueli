@@ -54,8 +54,10 @@ export class SimpleFolderSearchPlugin implements SearchPlugin, AutoCompletionPlu
 
                 Promise.all(searchPromises)
                     .then((resultLists) => {
-                        const results = resultLists.reduce((all, resultList) => all = all.concat(resultList));
-                        const iconPromises = results.map((r) => getFileIconDataUrl(r, defaultFileIcon, defaultFolderIcon));
+                        const results = resultLists.reduce((all, resultList) => (all = all.concat(resultList)));
+                        const iconPromises = results.map((r) =>
+                            getFileIconDataUrl(r, defaultFileIcon, defaultFolderIcon),
+                        );
                         Promise.all(iconPromises)
                             .then((fileIconDataResults) => {
                                 this.items = fileIconDataResults;

@@ -5,9 +5,7 @@ export function isValidColorCode(value: string): boolean {
     value = replaceWhitespace(value.trim(), "");
     try {
         color(value);
-        return value.startsWith("#")
-            || value.startsWith("rgb(")
-            || value.startsWith("rgba(");
+        return value.startsWith("#") || value.startsWith("rgb(") || value.startsWith("rgba(");
     } catch {
         return false;
     }

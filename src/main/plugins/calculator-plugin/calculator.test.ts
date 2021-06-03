@@ -41,14 +41,19 @@ describe(Calculator.name, () => {
             });
         });
 
+        it("should use specified decimal and argument separators", () => {
+            const calculation = "sum(1,2; 3)";
+            const decimalSeparator = ",";
+            const argumentSeparator = ";";
+
+            const actual = Calculator.calculate(calculation, 10, decimalSeparator, argumentSeparator);
+
+            expect(actual).toBe("4,2");
+        });
+
         it("should use default precision if specified precision is outside of allowed range", () => {
             const calculation = "1/3";
-            const invalidPrecisions = [
-                -1,
-                65,
-                91243,
-                -243,
-            ];
+            const invalidPrecisions = [-1, 65, 91243, -243];
             const expected = "0.3333333333333333";
 
             invalidPrecisions.forEach((invalidPrecision) => {
@@ -60,10 +65,7 @@ describe(Calculator.name, () => {
 
     describe(Calculator.isValidInput.name, () => {
         it("should return true if input is valid", () => {
-            const validInputs = [
-                "1 + 2",
-                "(7 * pi / 53 ^2) * sqrt(9)",
-            ];
+            const validInputs = ["1 + 2", "(7 * pi / 53 ^2) * sqrt(9)"];
 
             validInputs.forEach((validInput) => {
                 const actual = Calculator.isValidInput(validInput);
@@ -72,11 +74,7 @@ describe(Calculator.name, () => {
         });
 
         it("should return false when input is invalid", () => {
-            const invalidInputs: string[] = [
-                "1 + 2_",
-                "abc",
-                "",
-            ];
+            const invalidInputs: string[] = ["1 + 2_", "abc", ""];
 
             invalidInputs.forEach((invalidInput) => {
                 const actual = Calculator.isValidInput(invalidInput);

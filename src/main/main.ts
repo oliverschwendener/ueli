@@ -1,4 +1,15 @@
-import { app, BrowserWindow, ipcMain, globalShortcut, dialog, Tray, Menu, screen, MenuItemConstructorOptions, WebContents } from "electron";
+import {
+    app,
+    BrowserWindow,
+    ipcMain,
+    globalShortcut,
+    dialog,
+    Tray,
+    Menu,
+    screen,
+    MenuItemConstructorOptions,
+    WebContents,
+} from "electron";
 import { autoUpdater } from "electron-updater";
 import { join } from "path";
 import { IpcChannels } from "../common/ipc-channels";
@@ -24,7 +35,6 @@ import { NotificationType } from "../common/notification-type";
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { getCurrentOperatingSystem, getOperatingSystemVersion } from "../common/helpers/operating-system-helpers";
 import { executeFilePathWindows, executeFilePathMacOs } from "./executors/file-path-executor";
-import { WindowPosition } from "../common/window-position";
 import { UpdateCheckResult } from "../common/update-check-result";
 import { ProductionLogger } from "../common/logger/production-logger";
 import { DevLogger } from "../common/logger/dev-logger";
@@ -35,6 +45,8 @@ import { PluginType } from "./plugin-type";
 import { getRescanIntervalInMilliseconds } from "./helpers/rescan-interval-helpers";
 import { openUrlInBrowser } from "./executors/url-executor";
 import { OperatingSystem } from "../common/operating-system";
+import { GlobalHotKeyModifier } from "../common/global-hot-key/global-hot-key-modifier";
+import { GlobalHotKeyKey } from "../common/global-hot-key/global-hot-key-key";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -62,20 +74,31 @@ if (operatingSystem === OperatingSystem.Windows) {
     addPowershellToPathVariableIfMissing();
 }
 
+if (operatingSystem === OperatingSystem.Windows) {
+    // Fix to prevent the app to flash twice on Windows
+    // https://github.com/electron/electron/issues/22691
+    app.commandLine.appendSwitch("wm-window-animations-disabled");
+}
+
+let config = configRepository.getConfig();
+
 let trayIcon: Tray;
 let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow;
-let lastWindowPosition: WindowPosition;
+let lastWindowPosition = config.generalOptions.lastWindowPosition;
 
-let config = configRepository.getConfig();
 let translationSet = getTranslationSet(config.generalOptions.language);
-const logger = appIsInDevelopment
-    ? new DevLogger()
-    : new ProductionLogger(logFilePath, filePathExecutor);
+const logger = appIsInDevelopment ? new DevLogger() : new ProductionLogger(logFilePath, filePathExecutor);
 let searchEngine = getProductionSearchEngine(operatingSystem, operatingSystemVersion, config, translationSet, logger);
 
 let rescanInterval = config.generalOptions.rescanEnabled
-    ? setInterval(() => refreshAllIndexes(), getRescanIntervalInMilliseconds(Number(config.generalOptions.rescanIntervalInSeconds), minimumRefreshIntervalInSeconds))
+    ? setInterval(
+          () => refreshAllIndexes(),
+          getRescanIntervalInMilliseconds(
+              Number(config.generalOptions.rescanIntervalInSeconds),
+              minimumRefreshIntervalInSeconds,
+          ),
+      )
     : undefined;
 
 function notifyRenderer(message: string, notificationType: NotificationType) {
@@ -88,7 +111,8 @@ function notifyRenderer(message: string, notificationType: NotificationType) {
 
 function refreshAllIndexes() {
     onIndexRefreshStarted();
-    searchEngine.refreshAllIndexes()
+    searchEngine
+        .refreshAllIndexes()
         .then(() => {
             logger.debug("Successfully refreshed all indexes");
             notifyRenderer(translationSet.successfullyRefreshedIndexes, NotificationType.Info);
@@ -102,7 +126,8 @@ function refreshAllIndexes() {
 
 function refreshIndexOfPlugin(pluginType: PluginType) {
     onIndexRefreshStarted();
-    searchEngine.refreshIndexByPlugin(pluginType)
+    searchEngine
+        .refreshIndexByPlugin(pluginType)
         .then(() => {
             logger.debug(`Successfully refresh index of plugin ${pluginType.toString()}`);
             notifyRenderer(translationSet.successfullyRefreshedIndexes, NotificationType.Info);
@@ -123,7 +148,8 @@ function onIndexRefreshFinished() {
 }
 
 function clearAllCaches() {
-    searchEngine.clearCaches()
+    searchEngine
+        .clearCaches()
         .then(() => {
             logger.debug("Successfully cleared caches");
             notifyRenderer(translationSet.successfullyClearedCaches, NotificationType.Info);
@@ -134,19 +160,42 @@ function clearAllCaches() {
 function registerGlobalKeyboardShortcut(toggleAction: () => void, newHotKey: GlobalHotKey) {
     newHotKey = isValidHotKey(newHotKey) ? newHotKey : defaultGeneralOptions.hotKey;
     globalShortcut.unregisterAll();
-    globalShortcut.register(`${newHotKey.modifier ? `${newHotKey.modifier}+` : ``}${newHotKey.key}`, toggleAction);
+
+    const hotKeyParts: (GlobalHotKeyKey | GlobalHotKeyModifier)[] = [];
+
+    // Add first key modifier, if any
+    if (newHotKey.modifier && newHotKey.modifier !== GlobalHotKeyModifier.None) {
+        hotKeyParts.push(newHotKey.modifier);
+    }
+
+    // Add second key modifier, if any
+    if (newHotKey.secondModifier && newHotKey.secondModifier !== GlobalHotKeyModifier.None) {
+        hotKeyParts.push(newHotKey.secondModifier);
+    }
+
+    // Add actual key
+    hotKeyParts.push(newHotKey.key);
+    globalShortcut.register(hotKeyParts.join("+"), toggleAction);
 }
 
 function calculateX(display: Electron.Display): number {
-    return Math.round(Number(display.bounds.x + (display.bounds.width / 2) - (config.appearanceOptions.windowWidth / 2)));
+    return Math.round(Number(display.bounds.x + display.bounds.width / 2 - config.appearanceOptions.windowWidth / 2));
 }
 
 function calculateY(display: Electron.Display): number {
-    return Math.round(Number(display.bounds.y + (display.bounds.height / 2) - (getMaxWindowHeight(
-        config.appearanceOptions.maxSearchResultsPerPage,
-        config.appearanceOptions.searchResultHeight,
-        config.appearanceOptions.userInputHeight,
-        config.appearanceOptions.userInputBottomMargin) / 2)));
+    return Math.round(
+        Number(
+            display.bounds.y +
+                display.bounds.height / 2 -
+                getMaxWindowHeight(
+                    config.appearanceOptions.maxSearchResultsPerPage,
+                    config.appearanceOptions.searchResultHeight,
+                    config.appearanceOptions.userInputHeight,
+                    config.appearanceOptions.userInputBottomMargin,
+                ) /
+                    2,
+        ),
+    );
 }
 
 function onBlur() {
@@ -165,14 +214,19 @@ function showMainWindow() {
                 ? screen.getPrimaryDisplay()
                 : screen.getDisplayNearestPoint(mousePosition);
             const windowBounds: Electron.Rectangle = {
-                height: Math.round(Number(config.appearanceOptions.userInputHeight) + Number(config.appearanceOptions.userInputBottomMargin)),
+                height: Math.round(
+                    Number(config.appearanceOptions.userInputHeight) +
+                        Number(config.appearanceOptions.userInputBottomMargin),
+                ),
                 width: Math.round(Number(config.appearanceOptions.windowWidth)),
-                x: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.x
-                    ? lastWindowPosition.x
-                    : calculateX(display),
-                y: config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.y
-                    ? lastWindowPosition.y
-                    : calculateY(display),
+                x:
+                    config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.x
+                        ? lastWindowPosition.x
+                        : calculateX(display),
+                y:
+                    config.generalOptions.rememberWindowPosition && lastWindowPosition && lastWindowPosition.y
+                        ? lastWindowPosition.y
+                        : calculateY(display),
             };
             // this is a workaround to restore the focus on the previously focussed window
             if (operatingSystem === OperatingSystem.macOS) {
@@ -204,9 +258,11 @@ function hideMainWindow() {
 
                 // this is a workaround to restore the focus on the previously focussed window
                 if (operatingSystem === OperatingSystem.macOS) {
-                    if (!settingsWindow
-                        || (settingsWindow && settingsWindow.isDestroyed())
-                        || (settingsWindow && !settingsWindow.isDestroyed() && !settingsWindow.isVisible())) {
+                    if (
+                        !settingsWindow ||
+                        (settingsWindow && settingsWindow.isDestroyed()) ||
+                        (settingsWindow && !settingsWindow.isDestroyed() && !settingsWindow.isVisible())
+                    ) {
                         app.hide();
                     }
                 }
@@ -227,8 +283,17 @@ function toggleMainWindow() {
     }
 }
 
-function getMaxWindowHeight(maxSearchResultsPerPage: number, searchResultHeight: number, userInputHeight: number, userInputBottomMargin: number): number {
-    return Number(maxSearchResultsPerPage) * Number(searchResultHeight) + Number(userInputHeight) + Number(userInputBottomMargin);
+function getMaxWindowHeight(
+    maxSearchResultsPerPage: number,
+    searchResultHeight: number,
+    userInputHeight: number,
+    userInputBottomMargin: number,
+): number {
+    return (
+        Number(maxSearchResultsPerPage) * Number(searchResultHeight) +
+        Number(userInputHeight) +
+        Number(userInputBottomMargin)
+    );
 }
 
 function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean, pluginType?: PluginType) {
@@ -244,7 +309,13 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
         if (rescanInterval) {
             clearInterval(rescanInterval);
         }
-        rescanInterval = setInterval(() => refreshAllIndexes(), getRescanIntervalInMilliseconds(Number(updatedConfig.generalOptions.rescanIntervalInSeconds), minimumRefreshIntervalInSeconds));
+        rescanInterval = setInterval(
+            () => refreshAllIndexes(),
+            getRescanIntervalInMilliseconds(
+                Number(updatedConfig.generalOptions.rescanIntervalInSeconds),
+                minimumRefreshIntervalInSeconds,
+            ),
+        );
     }
 
     if (!updatedConfig.generalOptions.rescanEnabled) {
@@ -255,11 +326,15 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
 
     if (Number(updatedConfig.appearanceOptions.windowWidth) !== Number(config.appearanceOptions.windowWidth)) {
         mainWindow.resizable = true;
-        mainWindow.setSize(Number(updatedConfig.appearanceOptions.windowWidth), getMaxWindowHeight(
-            updatedConfig.appearanceOptions.maxSearchResultsPerPage,
-            updatedConfig.appearanceOptions.searchResultHeight,
-            updatedConfig.appearanceOptions.userInputHeight,
-            updatedConfig.appearanceOptions.userInputBottomMargin));
+        mainWindow.setSize(
+            Number(updatedConfig.appearanceOptions.windowWidth),
+            getMaxWindowHeight(
+                updatedConfig.appearanceOptions.maxSearchResultsPerPage,
+                updatedConfig.appearanceOptions.searchResultHeight,
+                updatedConfig.appearanceOptions.userInputHeight,
+                updatedConfig.appearanceOptions.userInputBottomMargin,
+            ),
+        );
         updateMainWindowSize(0, updatedConfig.appearanceOptions);
         mainWindow.center();
         mainWindow.resizable = false;
@@ -270,7 +345,10 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
     }
 
     if (JSON.stringify(updatedConfig.colorThemeOptions) !== JSON.stringify(config.colorThemeOptions)) {
-        if (updatedConfig.colorThemeOptions.searchResultsBackgroundColor !== config.colorThemeOptions.searchResultsBackgroundColor) {
+        if (
+            updatedConfig.colorThemeOptions.searchResultsBackgroundColor !==
+            config.colorThemeOptions.searchResultsBackgroundColor
+        ) {
             mainWindow.setBackgroundColor(getMainWindowBackgroundColor(updatedConfig));
         }
         mainWindow.webContents.send(IpcChannels.colorThemeOptionsUpdated, updatedConfig.colorThemeOptions);
@@ -289,9 +367,11 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
     updateTrayIcon(updatedConfig);
     updateAutoStartOptions(updatedConfig);
 
-    configRepository.saveConfig(updatedConfig)
+    configRepository
+        .saveConfig(updatedConfig)
         .then(() => {
-            searchEngine.updateConfig(updatedConfig, translationSet)
+            searchEngine
+                .updateConfig(updatedConfig, translationSet)
                 .then(() => {
                     if (needsIndexRefresh) {
                         if (pluginType) {
@@ -311,11 +391,21 @@ function updateConfig(updatedConfig: UserConfigOptions, needsIndexRefresh?: bool
 function updateMainWindowSize(searchResultCount: number, appearanceOptions: AppearanceOptions, center?: boolean) {
     if (windowExists(mainWindow)) {
         mainWindow.resizable = true;
-        const windowHeight = searchResultCount > appearanceOptions.maxSearchResultsPerPage
-            ? Math.round(getMaxWindowHeight(
-                appearanceOptions.maxSearchResultsPerPage,
-                appearanceOptions.searchResultHeight, appearanceOptions.userInputHeight, appearanceOptions.userInputBottomMargin))
-            : Math.round((Number(searchResultCount) * Number(appearanceOptions.searchResultHeight)) + Number(appearanceOptions.userInputHeight) + Number(appearanceOptions.userInputBottomMargin));
+        const windowHeight =
+            searchResultCount > appearanceOptions.maxSearchResultsPerPage
+                ? Math.round(
+                      getMaxWindowHeight(
+                          appearanceOptions.maxSearchResultsPerPage,
+                          appearanceOptions.searchResultHeight,
+                          appearanceOptions.userInputHeight,
+                          appearanceOptions.userInputBottomMargin,
+                      ),
+                  )
+                : Math.round(
+                      Number(searchResultCount) * Number(appearanceOptions.searchResultHeight) +
+                          Number(appearanceOptions.userInputHeight) +
+                          Number(appearanceOptions.userInputBottomMargin),
+                  );
 
         mainWindow.setSize(Number(appearanceOptions.windowWidth), Number(windowHeight));
         if (center) {
@@ -327,13 +417,7 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
 
 function reloadApp() {
     updateMainWindowSize(0, config.appearanceOptions);
-    searchEngine = getProductionSearchEngine(
-        operatingSystem,
-        operatingSystemVersion,
-        config,
-        translationSet,
-        logger,
-    );
+    searchEngine = getProductionSearchEngine(operatingSystem, operatingSystemVersion, config, translationSet, logger);
     refreshAllIndexes();
     mainWindow.reload();
 }
@@ -342,7 +426,8 @@ function beforeQuitApp(): Promise<void> {
     return new Promise((resolve, reject) => {
         destroyTrayIcon();
         if (config.generalOptions.clearCachesOnExit) {
-            searchEngine.clearCaches()
+            searchEngine
+                .clearCaches()
                 .then(() => {
                     logger.debug("Successfully cleared all caches before app quit");
                     resolve();
@@ -356,7 +441,9 @@ function beforeQuitApp(): Promise<void> {
 
 function quitApp() {
     beforeQuitApp()
-        .then(() => { /* Do nothing */ })
+        .then(() => {
+            /* Do nothing */
+        })
         .catch((err) => logger.error(err))
         .finally(() => {
             if (rescanInterval) {
@@ -386,24 +473,26 @@ function createTrayIcon() {
 
 function updateTrayIconContextMenu() {
     if (trayIcon && !trayIcon.isDestroyed()) {
-        trayIcon.setContextMenu(Menu.buildFromTemplate([
-            {
-                click: showMainWindow,
-                label: translationSet.trayIconShow,
-            },
-            {
-                click: openSettings,
-                label: translationSet.trayIconSettings,
-            },
-            {
-                click: refreshAllIndexes,
-                label: translationSet.ueliCommandRefreshIndexes,
-            },
-            {
-                click: quitApp,
-                label: translationSet.trayIconQuit,
-            },
-        ]));
+        trayIcon.setContextMenu(
+            Menu.buildFromTemplate([
+                {
+                    click: showMainWindow,
+                    label: translationSet.trayIconShow,
+                },
+                {
+                    click: openSettings,
+                    label: translationSet.trayIconSettings,
+                },
+                {
+                    click: refreshAllIndexes,
+                    label: translationSet.ueliCommandRefreshIndexes,
+                },
+                {
+                    click: quitApp,
+                    label: translationSet.trayIconQuit,
+                },
+            ]),
+        );
     }
 }
 
@@ -431,6 +520,9 @@ function onMainWindowMove() {
                 x: currentPosition[0],
                 y: currentPosition[1],
             };
+
+            config.generalOptions.lastWindowPosition = lastWindowPosition;
+            updateConfig(config);
         }
     }
 }
@@ -444,7 +536,8 @@ function createMainWindow() {
             config.appearanceOptions.maxSearchResultsPerPage,
             config.appearanceOptions.searchResultHeight,
             config.appearanceOptions.userInputHeight,
-            config.appearanceOptions.userInputBottomMargin),
+            config.appearanceOptions.userInputBottomMargin,
+        ),
         icon: windowIconFilePath,
         maximizable: false,
         minimizable: false,
@@ -465,7 +558,7 @@ function createMainWindow() {
 
     mainWindow.on("blur", onBlur);
     mainWindow.on("closed", quitApp);
-    mainWindow.on("move", onMainWindowMove);
+    mainWindow.on("moved", onMainWindowMove);
     mainWindow.loadFile(join(__dirname, "..", "main.html"));
 }
 
@@ -590,7 +683,10 @@ function updateSearchResults(results: SearchResultItem[], webcontents: WebConten
 function noSearchResultsFound() {
     if (windowExists(mainWindow)) {
         updateMainWindowSize(1, config.appearanceOptions);
-        const noResultFound = getErrorSearchResultItem(translationSet.generalErrorTitle, translationSet.generalErrorDescription);
+        const noResultFound = getErrorSearchResultItem(
+            translationSet.generalErrorTitle,
+            translationSet.generalErrorDescription,
+        );
         mainWindow.webContents.send(IpcChannels.searchResponse, [noResultFound]);
     }
 }
@@ -606,12 +702,21 @@ function windowExists(window: BrowserWindow): boolean {
 }
 
 function registerAllIpcListeners() {
-    ipcMain.on(IpcChannels.configUpdated, (event: Electron.Event, updatedConfig: UserConfigOptions, needsIndexRefresh?: boolean, pluginType?: PluginType) => {
-        updateConfig(updatedConfig, needsIndexRefresh, pluginType);
-    });
+    ipcMain.on(
+        IpcChannels.configUpdated,
+        (
+            event: Electron.Event,
+            updatedConfig: UserConfigOptions,
+            needsIndexRefresh?: boolean,
+            pluginType?: PluginType,
+        ) => {
+            updateConfig(updatedConfig, needsIndexRefresh, pluginType);
+        },
+    );
 
     ipcMain.on(IpcChannels.search, (event: Electron.IpcMainEvent, userInput: string) => {
-        searchEngine.getSearchResults(userInput)
+        searchEngine
+            .getSearchResults(userInput)
             .then((result) => updateSearchResults(result, event.sender))
             .catch((err) => {
                 logger.error(err);
@@ -620,7 +725,8 @@ function registerAllIpcListeners() {
     });
 
     ipcMain.on(IpcChannels.favoritesRequested, (event: Electron.IpcMainEvent) => {
-        searchEngine.getFavorites()
+        searchEngine
+            .getFavorites()
             .then((result) => updateSearchResults(result, event.sender))
             .catch((err) => {
                 logger.error(err);
@@ -632,22 +738,30 @@ function registerAllIpcListeners() {
         hideMainWindow();
     });
 
-    ipcMain.on(IpcChannels.execute, (event, userInput: string, searchResultItem: SearchResultItem, privileged: boolean) => {
-        searchEngine.execute(searchResultItem, privileged)
-            .then(() => {
-                userInputHistoryManager.addItem(userInput);
-                if (searchResultItem.hideMainWindowAfterExecution && config.generalOptions.hideMainWindowAfterExecution) {
-                    hideMainWindow();
-                } else {
-                    updateMainWindowSize(0, config.appearanceOptions);
-                }
-            })
-            .catch((err) => logger.error(err))
-            .finally(() => event.sender.send(IpcChannels.executionFinished));
-    });
+    ipcMain.on(
+        IpcChannels.execute,
+        (event, userInput: string, searchResultItem: SearchResultItem, privileged: boolean) => {
+            searchEngine
+                .execute(searchResultItem, privileged)
+                .then(() => {
+                    userInputHistoryManager.addItem(userInput);
+                    if (
+                        searchResultItem.hideMainWindowAfterExecution &&
+                        config.generalOptions.hideMainWindowAfterExecution
+                    ) {
+                        hideMainWindow();
+                    } else {
+                        updateMainWindowSize(0, config.appearanceOptions);
+                    }
+                })
+                .catch((err) => logger.error(err))
+                .finally(() => event.sender.send(IpcChannels.executionFinished));
+        },
+    );
 
     ipcMain.on(IpcChannels.openSearchResultLocation, (event: Electron.Event, searchResultItem: SearchResultItem) => {
-        searchEngine.openLocation(searchResultItem)
+        searchEngine
+            .openLocation(searchResultItem)
             .then(() => hideMainWindow())
             .catch((err) => {
                 logger.error(err);
@@ -660,6 +774,10 @@ function registerAllIpcListeners() {
         event.sender.send(IpcChannels.autoCompleteResponse, updatedUserInput);
     });
 
+    ipcMain.on(IpcChannels.indexRefreshRequested, () => {
+        refreshAllIndexes();
+    });
+
     ipcMain.on(IpcChannels.reloadApp, () => {
         reloadApp();
     });
@@ -669,19 +787,22 @@ function registerAllIpcListeners() {
     });
 
     ipcMain.on(IpcChannels.folderPathRequested, (event: Electron.IpcMainEvent) => {
-        dialog.showOpenDialog(settingsWindow, { properties: ["openDirectory"] })
+        dialog
+            .showOpenDialog(settingsWindow, { properties: ["openDirectory"] })
             .then((result) => event.sender.send(IpcChannels.folderPathResult, result.filePaths))
             .catch(() => event.sender.send(IpcChannels.folderPathResult, []));
     });
 
     ipcMain.on(IpcChannels.filePathRequested, (event: Electron.IpcMainEvent, filters?: Electron.FileFilter[]) => {
-        dialog.showOpenDialog(settingsWindow, { filters, properties: ["openFile"] })
+        dialog
+            .showOpenDialog(settingsWindow, { filters, properties: ["openFile"] })
             .then((result) => event.sender.send(IpcChannels.filePathResult, result.filePaths))
             .catch(() => event.sender.send(IpcChannels.filePathResult, []));
     });
 
     ipcMain.on(IpcChannels.clearExecutionLogConfirmed, () => {
-        searchEngine.clearExecutionLog()
+        searchEngine
+            .clearExecutionLog()
             .then(() => notifyRenderer(translationSet.successfullyClearedExecutionLog, NotificationType.Info))
             .catch((err) => {
                 logger.error(err);
@@ -690,8 +811,11 @@ function registerAllIpcListeners() {
     });
 
     ipcMain.on(IpcChannels.openDebugLogRequested, () => {
-        logger.openLog()
-            .then(() => { /* do nothing */ })
+        logger
+            .openLog()
+            .then(() => {
+                /* do nothing */
+            })
             .catch((err) => notifyRenderer(err, NotificationType.Error));
     });
 
@@ -700,9 +824,8 @@ function registerAllIpcListeners() {
     });
 
     ipcMain.on(IpcChannels.selectInputHistoryItem, (event: Electron.IpcMainEvent, direction: string) => {
-        const newUserInput = direction === "next"
-            ? userInputHistoryManager.getNext()
-            : userInputHistoryManager.getPrevious();
+        const newUserInput =
+            direction === "next" ? userInputHistoryManager.getNext() : userInputHistoryManager.getPrevious();
         event.sender.send(IpcChannels.userInputUpdated, newUserInput, true);
     });
 
@@ -723,6 +846,7 @@ function registerAllIpcListeners() {
                 openSettings();
                 break;
             case UeliCommandExecutionArgument.RefreshIndexes:
+                mainWindow.webContents.send(IpcChannels.userInputUpdated, "", false);
                 refreshAllIndexes();
                 break;
             case UeliCommandExecutionArgument.ClearCaches:
@@ -749,7 +873,9 @@ function registerAllIpcListeners() {
             autoUpdater.downloadUpdate();
         } else if (operatingSystem === OperatingSystem.macOS) {
             openUrlInBrowser(releaseUrl)
-                .then(() => { /* do nothing */ })
+                .then(() => {
+                    /* do nothing */
+                })
                 .catch((err) => logger.error(err));
         }
     });

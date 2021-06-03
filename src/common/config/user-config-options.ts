@@ -8,14 +8,20 @@ import { TranslationOptions, defaultTranslationOptions } from "./translation-opt
 import { WebSearchOptions, defaultWebSearchOptions } from "./websearch-options";
 import { ColorThemeOptions, defaultColorThemeOptions } from "./color-theme-options";
 import { FileBrowserOptions, defaultFileBrowserOptions } from "./filebrowser-options";
-import { OperatingSystemCommandsOptions, defaultOperatingSystemCommandsOptions } from "./operating-system-commands-options";
+import {
+    OperatingSystemCommandsOptions,
+    defaultOperatingSystemCommandsOptions,
+} from "./operating-system-commands-options";
 import { CalculatorOptions, defaultCalculatorOptions } from "./calculator-options";
 import { UrlOptions, defaultUrlOptions } from "./url-options";
 import { EmailOptions, defaultEmailOptions } from "./email-options";
 import { CurrencyConverterOptions, defaultCurrencyConverterOptions } from "./currency-converter-options";
 import { WorkflowOptions, defaultWorkflowOptions } from "./workflow-options";
 import { CommandlineOptions, defaultCommandlineOptions } from "./commandline-options";
-import { OperatingSystemSettingsOptions, defaultOperatingSystemSettingsOptions } from "./operating-system-settings-options";
+import {
+    OperatingSystemSettingsOptions,
+    defaultOperatingSystemSettingsOptions,
+} from "./operating-system-settings-options";
 import { SimpleFolderSearchOptions, defaultSimpleFolderSearchOptions } from "./simple-folder-search-options";
 import { UwpSearchOptions, defaultUwpSearchOptions } from "./uwp-search-options";
 import { ColorConverterOptions, defaultColorConverterOptions } from "./color-converter-options";

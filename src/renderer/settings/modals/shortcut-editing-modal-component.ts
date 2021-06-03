@@ -4,7 +4,10 @@ import { VueEventChannels } from "../../vue-event-channels";
 import { Shortcut } from "../../../main/plugins/shortcuts-search-plugin/shortcut";
 import { ShortcutType } from "../../../main/plugins/shortcuts-search-plugin/shortcut-type";
 import { platform, homedir } from "os";
-import { defaultNewShortcut, isValidShortcutToAdd } from "../../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
+import {
+    defaultNewShortcut,
+    isValidShortcutToAdd,
+} from "../../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
 import { NotificationType } from "../../../common/notification-type";
 import { isValidWindowsFilePath, isValidMacOsFilePath } from "../../../common/helpers/file-path-validators";
 import { getCurrentOperatingSystem } from "../../../common/helpers/operating-system-helpers";
@@ -39,7 +42,8 @@ export const shortcutEditingModal = Vue.extend({
     methods: {
         saveButtonClick(): void {
             const translations: TranslationSet = this.translations;
-            const filePathValidator = operatingSystem === OperatingSystem.Windows ? isValidWindowsFilePath : isValidMacOsFilePath;
+            const filePathValidator =
+                operatingSystem === OperatingSystem.Windows ? isValidWindowsFilePath : isValidMacOsFilePath;
             if (isValidShortcutToAdd(this.shortcut, filePathValidator)) {
                 vueEventDispatcher.$emit(VueEventChannels.shortcutEdited, this.shortcut, this.editMode, this.saveIndex);
                 this.resetModal();
@@ -136,12 +140,16 @@ export const shortcutEditingModal = Vue.extend({
         openFile() {
             getFilePath()
                 .then((filePath) => this.handleFileOrFolderSelected(filePath))
-                .catch((err) => { /* do nothing if no file selected */ });
+                .catch((err) => {
+                    /* do nothing if no file selected */
+                });
         },
         openFolder() {
             getFolderPath()
                 .then((folderPath) => this.handleFileOrFolderSelected(folderPath))
-                .catch((err) => { /* do nothing if no folder selected */ });
+                .catch((err) => {
+                    /* do nothing if no folder selected */
+                });
         },
         handleFileOrFolderSelected(filePath: string) {
             const shortcut: Shortcut = this.shortcut;
@@ -154,14 +162,17 @@ export const shortcutEditingModal = Vue.extend({
         },
     },
     mounted() {
-        vueEventDispatcher.$on(VueEventChannels.openShortcutEditingModal, (shortcut: Shortcut, editMode: ModalEditMode, saveIndex?: number) => {
-            this.visible = true;
-            this.editMode = editMode;
-            this.shortcut = shortcut;
-            this.initialShortcut = deepCopy(shortcut);
-            this.saveIndex = saveIndex;
-            this.autofocus = true;
-        });
+        vueEventDispatcher.$on(
+            VueEventChannels.openShortcutEditingModal,
+            (shortcut: Shortcut, editMode: ModalEditMode, saveIndex?: number) => {
+                this.visible = true;
+                this.editMode = editMode;
+                this.shortcut = shortcut;
+                this.initialShortcut = deepCopy(shortcut);
+                this.saveIndex = saveIndex;
+                this.autofocus = true;
+            },
+        );
     },
     props: ["translations"],
     template: `

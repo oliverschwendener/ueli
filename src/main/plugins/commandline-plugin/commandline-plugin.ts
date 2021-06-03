@@ -14,13 +14,12 @@ export class CommandlinePlugin implements ExecutionPlugin {
     constructor(
         private config: CommandlineOptions,
         private translationSet: TranslationSet,
-        private readonly commandlineExecutor: (command: string, shell: WindowsShell|MacOsShell) => Promise<void>,
+        private readonly commandlineExecutor: (command: string, shell: WindowsShell | MacOsShell) => Promise<void>,
         private readonly logger: Logger,
     ) {}
 
     public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
-        return userInput.startsWith(this.config.prefix)
-            && userInput.length > this.config.prefix.length;
+        return userInput.startsWith(this.config.prefix) && userInput.length > this.config.prefix.length;
     }
 
     public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
@@ -45,8 +44,10 @@ export class CommandlinePlugin implements ExecutionPlugin {
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         this.commandlineExecutor(searchResultItem.executionArgument, this.config.shell)
-            .then(() => { /* do nothing */ })
-            .catch(error => this.logger.error(error));
+            .then(() => {
+                /* do nothing */
+            })
+            .catch((error) => this.logger.error(error));
 
         // We resolve the execution promise here before the actual execution has been resolved.
         // In case that there is an interactive shell which listens to user input the execution promise resolves only after the shell is closed.

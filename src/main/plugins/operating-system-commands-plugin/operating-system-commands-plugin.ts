@@ -15,7 +15,8 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
     constructor(
         config: OperatingSystemCommandsOptions,
         operatingSystemCommandRepository: OperatingSystemCommandRepository,
-        commandExecutor: (command: string) => Promise<void>) {
+        commandExecutor: (command: string) => Promise<void>,
+    ) {
         this.config = config;
         this.operatingSystemCommandRepository = operatingSystemCommandRepository;
         this.commandExecutor = commandExecutor;
@@ -23,23 +24,26 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
 
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            this.operatingSystemCommandRepository.getAll()
+            this.operatingSystemCommandRepository
+                .getAll()
                 .then((commands) => {
                     if (commands.length === 0) {
                         resolve([]);
                     } else {
-                        const result = commands.map((command): SearchResultItem => {
-                            return {
-                                description: command.description,
-                                executionArgument: command.executionArgument,
-                                hideMainWindowAfterExecution: true,
-                                icon: command.icon,
-                                name: command.name,
-                                needsUserConfirmationBeforeExecution: true,
-                                originPluginType: this.pluginType,
-                                searchable: command.searchable,
-                            };
-                        });
+                        const result = commands.map(
+                            (command): SearchResultItem => {
+                                return {
+                                    description: command.description,
+                                    executionArgument: command.executionArgument,
+                                    hideMainWindowAfterExecution: true,
+                                    icon: command.icon,
+                                    name: command.name,
+                                    needsUserConfirmationBeforeExecution: true,
+                                    originPluginType: this.pluginType,
+                                    searchable: command.searchable,
+                                };
+                            },
+                        );
                         resolve(result);
                     }
                 })
@@ -70,7 +74,8 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
         return new Promise((resolve, reject) => {
             this.config = updatedConfig.operatingSystemCommandsOptions;
-            this.operatingSystemCommandRepository.updateConfig(updatedConfig, translationSet)
+            this.operatingSystemCommandRepository
+                .updateConfig(updatedConfig, translationSet)
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });

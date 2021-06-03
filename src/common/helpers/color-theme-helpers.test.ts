@@ -2,24 +2,9 @@ import { isValidColorTheme } from "./color-theme-helpers";
 import { ColorThemeOptions } from "../config/color-theme-options";
 
 describe(isValidColorTheme, () => {
-    const validHexCodes = [
-        "#fff",
-        "#FFF",
-        "#000",
-        "#000000",
-        "#00FFAA",
-    ];
+    const validHexCodes = ["#fff", "#FFF", "#000", "#000000", "#00FFAA"];
 
-    const invalidHexCodes = [
-        "fff",
-        "FFF",
-        "#F",
-        "#FF",
-        "#FFFFFFF",
-        "01324",
-        "",
-        "#FFFFFG"
-    ];
+    const invalidHexCodes = ["fff", "FFF", "#F", "#FF", "#FFFFFFF", "01324", "", "#FFFFFG"];
 
     it("should return true when given color theme contains valid hex values", () => {
         validHexCodes.forEach((validHexCode) => {

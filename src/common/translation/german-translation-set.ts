@@ -63,11 +63,14 @@ export const germanTranslationSet: TranslationSet = {
     generalSettingsImportFileFilterJsonFiles: "JSON Dateien",
     generalSettingsImportErrorInvalidConfig: "Einstellungsimport fehlgeschlagen: Dateiinhalt scheint ungültig zu sein",
     generalSettingsResetAllSettings: "Alle Einstellungen auf Standard zurücksetzen",
-    generalSettingsResetWarning: "Du bist dabei alle allgemeinen Einstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
-    generalSettingsResetAllSettingsWarning: "Du bist dabei ALLE Einstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
+    generalSettingsResetWarning:
+        "Du bist dabei alle allgemeinen Einstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
+    generalSettingsResetAllSettingsWarning:
+        "Du bist dabei ALLE Einstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
     generalSettingsClearExecutionLogWarning: "Du bist dabei den Ausführungslog zu löschen. Willst du fortfahren?",
     generalSettingsHideMainWindowAfterExecution: "Fenster nach Ausführung verstecken",
     generalSettingsHideMainWindowOnBlur: "Fenster verstecken, wenn es den Fokus verliert",
+    generalSettingsDecimalSeparator: "Dezimaltrennzeichen",
     generalSettingsCheckingForUpdate: "Überprüfen",
     generalSettingsDownloadUpdate: "Update herunterladen",
     generalSettingsDownloadingUpdate: "Update wird heruntergeladen",
@@ -99,6 +102,7 @@ export const germanTranslationSet: TranslationSet = {
     hotkeyModifierControl: "Strg",
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
+    hotkeyModifierSuper: "Super",
 
     appearanceSettings: "Erscheinungsbild",
     appearanceSettingsWindowWidth: "Fensterbreite (in Pixel)",
@@ -109,14 +113,16 @@ export const germanTranslationSet: TranslationSet = {
     appearanceSettingsShowDescriptionOnAllSearchResults: "Beschreibung bei allen Suchresultaten anzeigen",
     appearanceSettingsShowSearchIcon: "Suchsymbol in der Suchleiste anzeigen",
     appearanceSettingsShowSearchResultNumbers: "Nummern für Suchergebnisse anzeigen",
-    appearanceSettingsResetWarningMessage: "Du bist dabei alle Erscheiungsbildeinstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
+    appearanceSettingsResetWarningMessage:
+        "Du bist dabei alle Erscheiungsbildeinstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
     appearanceSettingsAllowTransparentBackground: "Transparenter Hintergrund erlauben",
     appearanceSettingsFontFamily: "Schriftart",
     appearanceSettingsUserInputBorderRadius: "Benutzereingabe Randradius",
     appearanceSettingsUserInputBottomMargin: "Benutzereingabe unterer Rand (in Pixel)",
     appearanceSettingsSearchResultsBorderRadius: "Suchergebnisse Rahmenradius",
     appearanceSettingsScrollbarBorderRadius: "Randradius der Bildlaufleiste",
-    appearanceSettingsBorderRadiusDescription: "Dies ist ein CSS-Wert, daher müssen Sie 'px' wie diesen '10px' oder separate Ecken wie diesen '10px 0px 10px 5px' hinzufügen.",
+    appearanceSettingsBorderRadiusDescription:
+        "Dies ist ein CSS-Wert, daher müssen Sie 'px' wie diesen '10px' oder separate Ecken wie diesen '10px 0px 10px 5px' hinzufügen.",
 
     settingsUserInputTitle: "Benutzereingabe",
     settingsSearchResultsBoxTitle: "Suchergebnisfeld",
@@ -126,7 +132,8 @@ export const germanTranslationSet: TranslationSet = {
     colorThemeSettings: "Farbschema",
     colorThemeSettingsImportColorTheme: "Farbschema importieren",
     colorThemeSettingsExportColorTheme: "Farbschema exportieren",
-    colorThemeSettingsResetWarning: "Du bist dabei alle Farbschemaeinstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
+    colorThemeSettingsResetWarning:
+        "Du bist dabei alle Farbschemaeinstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
     colorThemeExportSucceeded: "Erfolgreich Farbschema exportiert",
     colorThemeExportFailed: "Farbschemaexport fehlgeschlagen",
     colorThemeImportSucceeded: "Erfolgreich Farbschema importiert",
@@ -170,7 +177,8 @@ export const germanTranslationSet: TranslationSet = {
     searchEngineSettingsFuzzy: "Fuzzy",
     searchEngineSettingsBlacklist: "Blacklist",
     searchEngineSettingsMaxSearchResults: "Maximale Suchergebnisse",
-    searchEngineSettingsResetWarning: "Du bist dabei alle Suchmaschineneinstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
+    searchEngineSettingsResetWarning:
+        "Du bist dabei alle Suchmaschineneinstellungen auf Standard zurückzusetzen. Willst du fortfahren?",
 
     shortcutSettings: "Shortcuts",
     shortcutSettingsDescription: `Dieses Plugin erlaubt es dir Dateien und Webseiten schnell zu öffnen indem du eigene Shorctus erstellst.`,
@@ -212,7 +220,8 @@ export const germanTranslationSet: TranslationSet = {
     everythingSearchPathToBinaryFilterName: "Ausführbare Dateien",
 
     mdfindSearch: "mdfind Suche",
-    mdfindSettingsDescription: "Dieses Plugin erlaubt es dir mithilfe der nativen macOS-Suche Dateien und Ordner in deinem lokalen Dateisystem zu finden.",
+    mdfindSettingsDescription:
+        "Dieses Plugin erlaubt es dir mithilfe der nativen macOS-Suche Dateien und Ordner in deinem lokalen Dateisystem zu finden.",
     mdfindSearchDebounceDelay: "Debounce Verzögerung (in Millisekunden)",
     mdfindSearchPrefix: "Präfix",
     mdfindSearchMaxSearchResults: "Maximale Suchergebnisse",
@@ -225,6 +234,7 @@ export const germanTranslationSet: TranslationSet = {
     websearchName: "Name",
     websearchPrefix: "Präfix",
     websearchUrl: "URL",
+    websearchSuggestionUrl: "Vorschlag URL",
     websearchIcon: "Icon",
     websearchPriority: "Priorität",
     websearchIsFallback: "Fallback",
@@ -243,7 +253,8 @@ export const germanTranslationSet: TranslationSet = {
     operatingSystemCommandsSettingsDescription: `Betriebssystembefehle sind simple Befehle um das Betriebssystem zu steuern, z.B. Herunterfahren, Neustart.`,
 
     operatingSystemSettings: "Betriebssystemeinstellungen",
-    operatingSystemSettingsSettingsDescription: "Dieses Plugin erlaubt es dir schnell nach Betriebssystemeinstellungen zu suchen.",
+    operatingSystemSettingsSettingsDescription:
+        "Dieses Plugin erlaubt es dir schnell nach Betriebssystemeinstellungen zu suchen.",
 
     macOsShutdown: "Ausschalten",
     macOsShutdownDescription: "Computer ausschalten",
@@ -280,11 +291,13 @@ export const germanTranslationSet: TranslationSet = {
     urlDefaultProtocol: "Standardprotokoll",
 
     email: "Email",
-    emailSettingsDescription: "Dieses Plugin erlaubt es dir schnell Email zu schreiben indem du eine Emailadresse eingibst",
+    emailSettingsDescription:
+        "Dieses Plugin erlaubt es dir schnell Email zu schreiben indem du eine Emailadresse eingibst",
     openNewMail: "Neues Email öffnen",
 
     currencyConverter: "Währungsumrechnung",
-    currencyConverterDescription: "Dieses Plugin erlaubt es dir schnell Währungsumrechnungen zu machen. Aktuelle Wechselkurse werden von https://exchangeratesapi.io/ bereit gestellt.",
+    currencyConverterDescription:
+        "Dieses Plugin erlaubt es dir schnell Währungsumrechnungen zu machen. Aktuelle Wechselkurse werden von https://exchangeratesapi.io/ bereit gestellt.",
     currencyConverterPrecision: "Präzision",
     currencyConverterCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",
 
@@ -325,7 +338,8 @@ export const germanTranslationSet: TranslationSet = {
     colorConverterShowColorPreview: "Farbvorschau anzeigen",
 
     dictionary: "Wörterbuch",
-    dictionaryDescription: "Dieses Plugin erlaubt es dir die Definition und Synonyme eines Wortes nachzuschlagen. Es benutzt eine inoffizielle API für Google Dictionary (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+    dictionaryDescription:
+        "Dieses Plugin erlaubt es dir die Definition und Synonyme eines Wortes nachzuschlagen. Es benutzt eine inoffizielle API für Google Dictionary (https://googledictionaryapi.eu-gb.mybluemix.net/)",
     dictionaryPrefix: "Präfix",
     dictionaryMinSearchTermLength: "Minimum Suchbegrifflänge",
     dictionaryDebounceDelay: "Debounce Verzögerung (in Millisekunden)",
@@ -342,13 +356,15 @@ export const germanTranslationSet: TranslationSet = {
     remove: "Entfernen",
     edit: "Bearbeiten",
     forExample: "Zum Beispiel",
+    example: "Beispiel",
     iconType: "Icontyp",
     iconTypeColor: "Farbe",
     showFullFilePath: "Vollständiger Dateipfad anzeigen",
     yes: "Ja",
     no: "Nein",
     resetToDefault: "Auf Standard zurücksetzen?",
-    resetPluginSettingsToDefaultWarning: "Du bist dabei alle Einstellungen dieses Plugins auf Standard zurückzusetzen. Willst du fortfahren?",
+    resetPluginSettingsToDefaultWarning:
+        "Du bist dabei alle Einstellungen dieses Plugins auf Standard zurückzusetzen. Willst du fortfahren?",
     filePath: "Dateipfad",
     folderPath: "Ordnerpfad",
     chooseFile: "Datei auswählen",

@@ -17,7 +17,6 @@ describe(TestableUserInputHistoryManager.name, (): void => {
         });
 
         it("should only add an item if it's not the same as the previous", (): void => {
-
             const manager = new TestableUserInputHistoryManager();
 
             const userInput1 = "test1";
@@ -33,17 +32,12 @@ describe(TestableUserInputHistoryManager.name, (): void => {
             expect(actual[0]).toBe(userInput1);
             expect(actual[1]).toBe(userInput2);
             expect(manager.getIndex()).toBe(2);
-
         });
     });
 
     describe("getPrevious", (): void => {
         it("should return the previous item", (): void => {
-            const history = [
-                "test-1",
-                "test-2",
-                "test-3",
-            ];
+            const history = ["test-1", "test-2", "test-3"];
 
             const manager = new TestableUserInputHistoryManager();
             manager.setHistory(history);
@@ -55,11 +49,7 @@ describe(TestableUserInputHistoryManager.name, (): void => {
         });
 
         it("should return the first item when the curren item is already the first", (): void => {
-            const history = [
-                "test-1",
-                "test-2",
-                "test-3",
-            ];
+            const history = ["test-1", "test-2", "test-3"];
 
             const manager = new TestableUserInputHistoryManager();
             manager.setHistory(history);
@@ -86,11 +76,7 @@ describe(TestableUserInputHistoryManager.name, (): void => {
 
     describe("getNext", (): void => {
         it("should return the next item", (): void => {
-            const history = [
-                "test-1",
-                "test-2",
-                "test-3",
-            ];
+            const history = ["test-1", "test-2", "test-3"];
 
             const manager = new TestableUserInputHistoryManager();
             manager.setHistory(history);
@@ -104,11 +90,7 @@ describe(TestableUserInputHistoryManager.name, (): void => {
         });
 
         it("should return an empty string when current item is the last", (): void => {
-            const history = [
-                "test-1",
-                "test-2",
-                "test-3",
-            ];
+            const history = ["test-1", "test-2", "test-3"];
 
             const manager = new TestableUserInputHistoryManager();
             manager.setHistory(history);

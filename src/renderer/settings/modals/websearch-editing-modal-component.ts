@@ -2,7 +2,10 @@ import Vue from "vue";
 import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
 import { WebSearchEngine } from "../../../main/plugins/websearch-plugin/web-search-engine";
-import { defaultNewWebSearchEngine, isValidWebSearchEngineToAdd } from "../../../main/plugins/websearch-plugin/web-search-helpers";
+import {
+    defaultNewWebSearchEngine,
+    isValidWebSearchEngineToAdd,
+} from "../../../main/plugins/websearch-plugin/web-search-helpers";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { NotificationType } from "../../../common/notification-type";
 import { ModalEditMode } from "./modal-edit-mode";
@@ -33,9 +36,18 @@ export const websearchEditingModal = Vue.extend({
             const translations: TranslationSet = this.translations;
             if (isValidWebSearchEngineToAdd(websearchEngine)) {
                 this.visible = false;
-                vueEventDispatcher.$emit(VueEventChannels.websearchEngineEdited, this.websearchEngine, this.editMode, this.saveIndex);
+                vueEventDispatcher.$emit(
+                    VueEventChannels.websearchEngineEdited,
+                    this.websearchEngine,
+                    this.editMode,
+                    this.saveIndex,
+                );
             } else {
-                vueEventDispatcher.$emit(VueEventChannels.notification, translations.websearchInvalidWebsearchEngine, NotificationType.Error);
+                vueEventDispatcher.$emit(
+                    VueEventChannels.notification,
+                    translations.websearchInvalidWebsearchEngine,
+                    NotificationType.Error,
+                );
             }
         },
         getModalTitle(): string {
@@ -62,14 +74,17 @@ export const websearchEditingModal = Vue.extend({
         },
     },
     mounted() {
-        vueEventDispatcher.$on(VueEventChannels.openWebSearchEditingModal, (websearchEngine: WebSearchEngine, editMode: ModalEditMode, saveIndex?: number) => {
-            this.visible = true;
-            this.websearchEngine = websearchEngine;
-            this.editMode = editMode;
-            this.initalWebSearchEngine = deepCopy(websearchEngine);
-            this.saveIndex = saveIndex;
-            this.autofocus = true;
-        });
+        vueEventDispatcher.$on(
+            VueEventChannels.openWebSearchEditingModal,
+            (websearchEngine: WebSearchEngine, editMode: ModalEditMode, saveIndex?: number) => {
+                this.visible = true;
+                this.websearchEngine = websearchEngine;
+                this.editMode = editMode;
+                this.initalWebSearchEngine = deepCopy(websearchEngine);
+                this.saveIndex = saveIndex;
+                this.autofocus = true;
+            },
+        );
     },
     props: ["translations"],
     template: `
@@ -107,6 +122,15 @@ export const websearchEditingModal = Vue.extend({
                         </label>
                         <div class="control is-expanded">
                             <input class="input" type="url" v-model="websearchEngine.url" :placeholder="getUrlPlaceholder()">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">
+                            {{ translations.websearchSuggestionUrl }}
+                        </label>
+                        <div class="control is-expanded">
+                            <input class="input" type="url" v-model="websearchEngine.suggestionUrl" placeholder="Suggestion URL">
                         </div>
                     </div>
 

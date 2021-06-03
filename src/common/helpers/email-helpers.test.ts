@@ -1,10 +1,6 @@
 import { isValidEmailAddress } from "./email-helpers";
 
-const validEmailAddresses = [
-    "darth.vader@empire.com",
-    "jabba-the-hutt@hutts.com",
-    "lukeskywalker@rebels.com",
-];
+const validEmailAddresses = ["darth.vader@empire.com", "jabba-the-hutt@hutts.com", "lukeskywalker@rebels.com"];
 
 const invalidEmailAddresses = [
     null,

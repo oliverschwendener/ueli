@@ -4,7 +4,10 @@ import { defaultShortcutOptions } from "../../common/config/shortcuts-options";
 import { vueEventDispatcher } from "../vue-event-dispatcher";
 import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
-import { defaultNewShortcut, getDefaultShortcutIcon } from "../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
+import {
+    defaultNewShortcut,
+    getDefaultShortcutIcon,
+} from "../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
 import { Shortcut } from "../../main/plugins/shortcuts-search-plugin/shortcut";
 import { ShortcutType } from "../../main/plugins/shortcuts-search-plugin/shortcut-type";
 import { ModalEditMode } from "./modals/modal-edit-mode";
@@ -22,7 +25,11 @@ export const shortcutSettingsComponent = Vue.extend({
     },
     methods: {
         addButtonClick() {
-            vueEventDispatcher.$emit(VueEventChannels.openShortcutEditingModal, deepCopy(defaultNewShortcut), ModalEditMode.Add);
+            vueEventDispatcher.$emit(
+                VueEventChannels.openShortcutEditingModal,
+                deepCopy(defaultNewShortcut),
+                ModalEditMode.Add,
+            );
         },
         addShortcut(shortcut: Shortcut) {
             const config: UserConfigOptions = this.config;
@@ -102,13 +109,16 @@ export const shortcutSettingsComponent = Vue.extend({
             }
         });
 
-        vueEventDispatcher.$on(VueEventChannels.shortcutEdited, (shortcut: Shortcut, editMode: ModalEditMode, saveIndex?: number) => {
-            if (editMode === ModalEditMode.Add) {
-                this.addShortcut(shortcut);
-            } else if (editMode === ModalEditMode.Edit && saveIndex !== undefined) {
-                this.updateShortcut(shortcut, saveIndex);
-            }
-        });
+        vueEventDispatcher.$on(
+            VueEventChannels.shortcutEdited,
+            (shortcut: Shortcut, editMode: ModalEditMode, saveIndex?: number) => {
+                if (editMode === ModalEditMode.Add) {
+                    this.addShortcut(shortcut);
+                } else if (editMode === ModalEditMode.Edit && saveIndex !== undefined) {
+                    this.updateShortcut(shortcut, saveIndex);
+                }
+            },
+        );
     },
     props: ["config", "translations"],
     template: `

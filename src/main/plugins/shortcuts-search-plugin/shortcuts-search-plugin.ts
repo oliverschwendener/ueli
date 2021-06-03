@@ -29,7 +29,7 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
         filePathExecutor: (filePath: string, privileged: boolean) => Promise<void>,
         filePathLocationExecutor: (filePath: string) => Promise<void>,
         commandlineExecutor: (command: string) => Promise<void>,
-        ) {
+    ) {
         this.config = config;
         this.urlExecutor = urlExecutor;
         this.filePathExecutor = filePathExecutor;
@@ -71,7 +71,9 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
                     .then(() => resolve())
                     .catch((err) => reject(err));
             } else {
-                reject(`Error while trying to open file location. "${decodeResult.executionArgument}" is not a valid file path`);
+                reject(
+                    `Error while trying to open file location. "${decodeResult.executionArgument}" is not a valid file path`,
+                );
             }
         });
     }
@@ -123,14 +125,10 @@ export class ShortcutsSearchPlugin implements SearchPlugin, OpenLocationPlugin {
 
     private createSearchResultItem(shortcut: Shortcut): SearchResultItem {
         return {
-            description: stringIsWhiteSpace(shortcut.description)
-                ? shortcut.executionArgument
-                : shortcut.description,
+            description: stringIsWhiteSpace(shortcut.description) ? shortcut.executionArgument : shortcut.description,
             executionArgument: this.encodeExecutionArgument(shortcut),
             hideMainWindowAfterExecution: true,
-            icon: isValidIcon(shortcut.icon)
-                ? shortcut.icon
-                : getDefaultShortcutIcon(shortcut),
+            icon: isValidIcon(shortcut.icon) ? shortcut.icon : getDefaultShortcutIcon(shortcut),
             name: shortcut.name,
             needsUserConfirmationBeforeExecution: shortcut.needsUserConfirmationBeforeExecution,
             originPluginType: this.pluginType,

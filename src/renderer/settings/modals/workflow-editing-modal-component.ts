@@ -5,7 +5,11 @@ import { Workflow } from "../../../main/plugins/workflow-plugin/workflow";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { ModalEditMode } from "./modal-edit-mode";
 import { WorkflowExecutionArgumentType } from "../../../main/plugins/workflow-plugin/workflow-execution-argument-type";
-import { getWorkflowExecutionArgumentTypeIcon, getWorkflowExecutionArgumentTypeClass, getWorkflowExecutionArgumentTypeTranslation } from "../helpers";
+import {
+    getWorkflowExecutionArgumentTypeIcon,
+    getWorkflowExecutionArgumentTypeClass,
+    getWorkflowExecutionArgumentTypeTranslation,
+} from "../helpers";
 import { WorkflowExecutionStep } from "../../../main/plugins/workflow-plugin/workflow-execution-argument";
 import { getFilePath, getFolderPath } from "../../dialogs";
 import { isValidExecutionStep, isValidWorkflow } from "../../../main/plugins/workflow-plugin/workflow-helpers";
@@ -25,9 +29,7 @@ const initialNewWorkflowExecutionStep: WorkflowExecutionStep = {
 
 const initialWorkflow: Workflow = {
     description: "",
-    executionSteps: [
-        deepCopy(initialNewWorkflowExecutionStep),
-    ],
+    executionSteps: [deepCopy(initialNewWorkflowExecutionStep)],
     icon: deepCopy(defaultWorkflowIcon),
     name: "",
     needsUserConfirmationBeforeExecution: false,
@@ -61,7 +63,11 @@ export const workflowEditingModal = Vue.extend({
                 this.resetNewExecutionStep();
             } else {
                 const translations: TranslationSet = this.translations;
-                vueEventDispatcher.$emit(VueEventChannels.notification, translations.workflowInvalidExecutionStep, NotificationType.Error);
+                vueEventDispatcher.$emit(
+                    VueEventChannels.notification,
+                    translations.workflowInvalidExecutionStep,
+                    NotificationType.Error,
+                );
             }
         },
         getModalTitle(): string {
@@ -100,7 +106,8 @@ export const workflowEditingModal = Vue.extend({
                     executionStepPlaceholder = homedir();
                     break;
                 case WorkflowExecutionArgumentType.CommandlineTool:
-                    executionStepPlaceholder = operatingSystem === OperatingSystem.Windows ? "ping 1.1.1.1 -t" : "ping 1.1.1.1";
+                    executionStepPlaceholder =
+                        operatingSystem === OperatingSystem.Windows ? "ping 1.1.1.1 -t" : "ping 1.1.1.1";
                     break;
             }
 
@@ -113,12 +120,16 @@ export const workflowEditingModal = Vue.extend({
         openFile() {
             getFilePath()
                 .then((filePath) => this.handleFileOrFolderSelected(filePath))
-                .catch((err) => { /* do nothing if no file selected*/ });
+                .catch((err) => {
+                    /* do nothing if no file selected*/
+                });
         },
         openFolder() {
             getFolderPath()
                 .then((folderPath) => this.handleFileOrFolderSelected(folderPath))
-                .catch((err) => { /* do nothing if no folder selected*/ });
+                .catch((err) => {
+                    /* do nothing if no folder selected*/
+                });
         },
         handleFileOrFolderSelected(filePath: string) {
             const executionStep: WorkflowExecutionStep = this.newWorkflowExecutionStep;
@@ -137,18 +148,25 @@ export const workflowEditingModal = Vue.extend({
                 this.closeModal();
             } else {
                 const translations: TranslationSet = this.translations;
-                vueEventDispatcher.$emit(VueEventChannels.notification, translations.workflowInvalidWorkflow, NotificationType.Error);
+                vueEventDispatcher.$emit(
+                    VueEventChannels.notification,
+                    translations.workflowInvalidWorkflow,
+                    NotificationType.Error,
+                );
             }
         },
     },
     mounted() {
-        vueEventDispatcher.$on(VueEventChannels.openWorkflowEditingModal, (workflow: Workflow, editMode: ModalEditMode, saveIndex?: number) => {
-            this.visible = true;
-            this.editMode = editMode;
-            this.workflow = workflow;
-            this.initialWorkflow = deepCopy(workflow);
-            this.saveIndex = saveIndex;
-        });
+        vueEventDispatcher.$on(
+            VueEventChannels.openWorkflowEditingModal,
+            (workflow: Workflow, editMode: ModalEditMode, saveIndex?: number) => {
+                this.visible = true;
+                this.editMode = editMode;
+                this.workflow = workflow;
+                this.initialWorkflow = deepCopy(workflow);
+                this.saveIndex = saveIndex;
+            },
+        );
     },
     props: ["translations"],
     template: `

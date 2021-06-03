@@ -9,7 +9,7 @@ import { Icon } from "../../../common/icon/icon";
 
 export class MdFindPlugin implements ExecutionPlugin, OpenLocationPlugin {
     public readonly pluginType = PluginType.MdFindExecutionPlugin;
-    private searchDelay: NodeJS.Timeout | number;
+    private searchDelay: NodeJS.Timeout | number | undefined;
 
     constructor(
         private config: MdFindOptions,
@@ -17,15 +17,14 @@ export class MdFindPlugin implements ExecutionPlugin, OpenLocationPlugin {
         private readonly filePathLocationExecutor: (filePath: string) => Promise<void>,
         private readonly mdfindSearcher: (
             searchTerm: string,
-        mdfindOptions: MdFindOptions,
-        pluginType: PluginType,
-        defaultIcon: Icon
-        ) => Promise<SearchResultItem[]>
+            mdfindOptions: MdFindOptions,
+            pluginType: PluginType,
+            defaultIcon: Icon,
+        ) => Promise<SearchResultItem[]>,
     ) {}
 
     public isValidUserInput(userInput: string): boolean {
-        return userInput.startsWith(this.config.prefix)
-            && userInput.replace(this.config.prefix, "").length > 0;
+        return userInput.startsWith(this.config.prefix) && userInput.replace(this.config.prefix, "").length > 0;
     }
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {

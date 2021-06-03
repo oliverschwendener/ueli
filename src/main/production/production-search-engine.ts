@@ -32,7 +32,10 @@ import { CommandlinePlugin } from "../plugins/commandline-plugin/commandline-plu
 import { windowsCommandLineExecutor, macOsCommandLineExecutor } from "../executors/commandline-executor";
 import { OperatingSystemSettingsPlugin } from "../plugins/operating-system-settings-plugin/operating-system-settings-plugin";
 import { MacOsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/macos-operating-system-setting-repository";
-import { executeWindowsOperatingSystemSetting, executeMacOSOperatingSystemSetting } from "../executors/operating-system-setting-executor";
+import {
+    executeWindowsOperatingSystemSetting,
+    executeMacOSOperatingSystemSetting,
+} from "../executors/operating-system-setting-executor";
 import { WindowsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/windows-operating-system-setting-repository";
 import { SimpleFolderSearchPlugin } from "../plugins/simple-folder-search-plugin/simple-folder-search-plugin";
 import { Logger } from "../../common/logger/logger";
@@ -55,7 +58,12 @@ import { everythingSearcher } from "../plugins/everything-plugin/everything-sear
 import { mdfindSearcher } from "../plugins/mdfind-plugin/mdfind-searcher";
 import { OperatingSystem, OperatingSystemVersion } from "../../common/operating-system";
 import { BraveBookmarkRepository } from "../plugins/browser-bookmarks-plugin/brave-bookmark-repository";
-import { VivaldiBookmarkRepository } from '../plugins/browser-bookmarks-plugin/vivaldi-bookmark-repository';
+import { SideKickBookmarkRepository } from "../plugins/browser-bookmarks-plugin/sidekick-bookmark-repository";
+import { VivaldiBookmarkRepository } from "../plugins/browser-bookmarks-plugin/vivaldi-bookmark-repository";
+import { EdgeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/edge-bookmark-repository";
+import { getWebearchSuggestions } from "../executors/websearch-suggestion-resolver";
+import { FirefoxBookmarkRepository } from "../plugins/browser-bookmarks-plugin/firefox-bookmark-repository";
+import { ChromiumBookmarkRepository } from "../plugins/browser-bookmarks-plugin/chromium-bookmark-repository";
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
@@ -64,30 +72,61 @@ export function getProductionSearchEngine(
     translationSet: TranslationSet,
     logger: Logger,
 ): SearchEngine {
-    const filePathValidator = operatingSystem === OperatingSystem.Windows ? isValidWindowsFilePath : isValidMacOsFilePath;
-    const filePathExecutor = operatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
+    const filePathValidator =
+        operatingSystem === OperatingSystem.Windows ? isValidWindowsFilePath : isValidMacOsFilePath;
+    const filePathExecutor =
+        operatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
     const filePathLocationExecutor = openFileLocation;
     const urlExecutor = openUrlInBrowser;
-    const commandlineExecutor = operatingSystem === OperatingSystem.Windows ? windowsCommandLineExecutor : macOsCommandLineExecutor;
-    const operatingSystemSettingsRepository = operatingSystem === OperatingSystem.Windows ? new WindowsOperatingSystemSettingRepository() : new MacOsOperatingSystemSettingRepository();
-    const operatingSystemSettingExecutor = operatingSystem === OperatingSystem.Windows ? executeWindowsOperatingSystemSetting : executeMacOSOperatingSystemSetting;
-    const applicationSearcher = operatingSystem === OperatingSystem.Windows ? searchWindowsApplications : searchMacApplications;
-    const appIconGenerator = operatingSystem === OperatingSystem.Windows ? generateWindowsAppIcons : generateMacAppIcons;
+    const commandlineExecutor =
+        operatingSystem === OperatingSystem.Windows ? windowsCommandLineExecutor : macOsCommandLineExecutor;
+    const operatingSystemSettingsRepository =
+        operatingSystem === OperatingSystem.Windows
+            ? new WindowsOperatingSystemSettingRepository()
+            : new MacOsOperatingSystemSettingRepository();
+    const operatingSystemSettingExecutor =
+        operatingSystem === OperatingSystem.Windows
+            ? executeWindowsOperatingSystemSetting
+            : executeMacOSOperatingSystemSetting;
+    const applicationSearcher =
+        operatingSystem === OperatingSystem.Windows ? searchWindowsApplications : searchMacApplications;
+    const appIconGenerator =
+        operatingSystem === OperatingSystem.Windows ? generateWindowsAppIcons : generateMacAppIcons;
     const defaultAppIcon = operatingSystem === OperatingSystem.Windows ? defaultWindowsAppIcon : defaultMacOsAppIcon;
     const fileSearcher = operatingSystem === OperatingSystem.Windows ? powershellFileSearcher : macosFileSearcher;
-    const chromeBookmarksFilePath = operatingSystem === OperatingSystem.Windows
-        ? `${homedir()}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks`
-        : `${homedir()}/Library/Application\ Support/Google/Chrome/Default/Bookmarks`;
-    const braveBookmarksFilePath = operatingSystem === OperatingSystem.Windows
-        ? `${homedir()}\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Bookmarks`
-        : `${homedir()}/Library/Application\ Support/BraveSoftware/Brave-Browser/Default/Bookmarks`;
-    const vivaldiBookmarksFilePath = operatingSystem === OperatingSystem.Windows
-        ? `${homedir()}\\AppData\\Local\\Vivaldi\\User Data\\Default\\Bookmarks`
-        : `${homedir()}/Library/Application\ Support/Vivaldi/Default/Bookmarks`;
+    const chromeBookmarksFilePath =
+        operatingSystem === OperatingSystem.Windows
+            ? `${homedir()}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks`
+            : `${homedir()}/Library/Application\ Support/Google/Chrome/Default/Bookmarks`;
+    const braveBookmarksFilePath =
+        operatingSystem === OperatingSystem.Windows
+            ? `${homedir()}\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Bookmarks`
+            : `${homedir()}/Library/Application\ Support/BraveSoftware/Brave-Browser/Default/Bookmarks`;
+    const vivaldiBookmarksFilePath =
+        operatingSystem === OperatingSystem.Windows
+            ? `${homedir()}\\AppData\\Local\\Vivaldi\\User Data\\Default\\Bookmarks`
+            : `${homedir()}/Library/Application\ Support/Vivaldi/Default/Bookmarks`;
+    const sideKickBookmarkFilePath =
+        operatingSystem === OperatingSystem.Windows
+            ? `${homedir()}\\AppData\\Local\\Sidekick\\User Data\\Default\\Bookmarks`
+            : `${homedir()}/Library/Application\ Support/Sidekick/Default/Bookmarks`;
+    const edgeBookmarksFilePath =
+        operatingSystem === OperatingSystem.Windows
+            ? `${homedir()}\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Bookmarks`
+            : `${homedir()}/Library/Application\ Support/Microsoft Edge/Default/Bookmarks`;
+    const firefoxUserDataFolderPath =
+        operatingSystem === OperatingSystem.Windows
+            ? `${homedir()}\\AppData\\Roaming\\Mozilla\\Firefox`
+            : `${homedir()}/Library/Application\ Support/Firefox`;
+    const chromiumBookmarksFilePath =
+        operatingSystem === OperatingSystem.Windows
+            ? `${homedir()}\\AppData\\Local\\Chromium\\User Data\\Default\\Bookmarks`
+            : `${homedir()}/Library/Application\ Support/Chromium/Default/Bookmarks`;
 
-    const operatingSystemCommandRepository = operatingSystem === OperatingSystem.Windows
-        ? new WindowsOperatingSystemCommandRepository(translationSet)
-        : new MacOsOperatingSystemCommandRepository(translationSet);
+    const operatingSystemCommandRepository =
+        operatingSystem === OperatingSystem.Windows
+            ? new WindowsOperatingSystemCommandRepository(translationSet)
+            : new MacOsOperatingSystemCommandRepository(translationSet);
 
     const searchPlugins: SearchPlugin[] = [
         new UeliCommandSearchPlugin(translationSet),
@@ -103,13 +142,10 @@ export function getProductionSearchEngine(
             new ProductionApplicationRepository(
                 config.applicationSearchOptions,
                 defaultAppIcon,
-                new ApplicationIconService(
-                    appIconGenerator,
-                    logger,
-                ),
+                new ApplicationIconService(appIconGenerator, logger),
                 applicationSearcher,
                 logger,
-                operatingSystemVersion
+                operatingSystemVersion,
             ),
             filePathExecutor,
             filePathLocationExecutor,
@@ -127,9 +163,10 @@ export function getProductionSearchEngine(
         ),
         new WorkflowPlugin(
             config.workflowOptions,
+            config.commandlineOptions,
             filePathExecutor,
             urlExecutor,
-            executeCommand,
+            commandlineExecutor,
         ),
         new SimpleFolderSearchPlugin(
             config.simpleFolderSearchOptions,
@@ -141,15 +178,24 @@ export function getProductionSearchEngine(
             config.browserBookmarksOptions,
             translationSet,
             [
-              new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
-              new BraveBookmarkRepository(braveBookmarksFilePath),
-              new VivaldiBookmarkRepository(vivaldiBookmarksFilePath),
+                new BraveBookmarkRepository(braveBookmarksFilePath),
+                new ChromiumBookmarkRepository(chromiumBookmarksFilePath),
+                new EdgeBookmarkRepository(edgeBookmarksFilePath),
+                new FirefoxBookmarkRepository(firefoxUserDataFolderPath),
+                new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
+                new SideKickBookmarkRepository(sideKickBookmarkFilePath),
+                new VivaldiBookmarkRepository(vivaldiBookmarksFilePath),
             ],
             urlExecutor,
         ),
     ];
 
-    const webSearchPlugin = new WebSearchPlugin(config.websearchOptions, translationSet, urlExecutor);
+    const webSearchPlugin = new WebSearchPlugin(
+        config.websearchOptions,
+        translationSet,
+        urlExecutor,
+        getWebearchSuggestions,
+    );
 
     const executionPlugins: ExecutionPlugin[] = [
         webSearchPlugin,
@@ -161,18 +207,16 @@ export function getProductionSearchEngine(
             getFileIconDataUrl,
         ),
         new TranslationPlugin(config.translationOptions, electronClipboardCopier),
-        new CalculatorPlugin(config.calculatorOptions, translationSet, electronClipboardCopier),
+        new CalculatorPlugin(config, translationSet, electronClipboardCopier),
         new UrlPlugin(config.urlOptions, translationSet, urlExecutor),
         new EmailPlugin(config.emailOptions, translationSet, urlExecutor),
-        new CurrencyConverterPlugin(config.currencyConverterOptions, translationSet, electronClipboardCopier),
+        new CurrencyConverterPlugin(config, translationSet, electronClipboardCopier),
         new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor, logger),
         new ColorConverterPlugin(config.colorConverterOptions, electronClipboardCopier),
         new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier, getGoogleDictionaryDefinitions),
     ];
 
-    const fallbackPlugins: ExecutionPlugin[] = [
-        webSearchPlugin,
-    ];
+    const fallbackPlugins: ExecutionPlugin[] = [webSearchPlugin];
 
     if (operatingSystem === OperatingSystem.Windows) {
         executionPlugins.push(
@@ -180,28 +224,15 @@ export function getProductionSearchEngine(
                 config.everythingSearchOptions,
                 filePathExecutor,
                 filePathLocationExecutor,
-                everythingSearcher
+                everythingSearcher,
             ),
         );
-        searchPlugins.push(
-            new UwpPlugin(
-                config.uwpSearchOptions,
-                filePathExecutor,
-                getAllUwpApps
-            ),
-        );
-        searchPlugins.push(
-            new ControlPanelPlugin(
-                config.controlPanelOptions));
+        searchPlugins.push(new UwpPlugin(config.uwpSearchOptions, filePathExecutor, getAllUwpApps));
+        searchPlugins.push(new ControlPanelPlugin(config.controlPanelOptions));
     }
     if (operatingSystem === OperatingSystem.macOS) {
         executionPlugins.push(
-            new MdFindPlugin(
-                config.mdfindOptions,
-                filePathExecutor,
-                filePathLocationExecutor,
-                mdfindSearcher
-            ),
+            new MdFindPlugin(config.mdfindOptions, filePathExecutor, filePathLocationExecutor, mdfindSearcher),
         );
     }
 

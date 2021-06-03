@@ -20,13 +20,15 @@ export function generateWindowsAppIcons(applicationFilePaths: string[]): Promise
                     FileHelpers.createFolderSync(applicationIconLocation);
                 }
 
-                const icons = applicationFilePaths.map((applicationFilePath): Icon => {
-                    return {
-                        inputFilePath: applicationFilePath,
-                        outputFilePath: getApplicationIconFilePath(applicationFilePath),
-                        outputFormat: "Png",
-                    };
-                });
+                const icons = applicationFilePaths.map(
+                    (applicationFilePath): Icon => {
+                        return {
+                            inputFilePath: applicationFilePath,
+                            outputFilePath: getApplicationIconFilePath(applicationFilePath),
+                            outputFormat: "Png",
+                        };
+                    },
+                );
 
                 generateIcons(icons)
                     .then(() => resolve())
@@ -43,7 +45,7 @@ function generateIcons(icons: Icon[], followShortcuts?: boolean): Promise<void> 
             noProfile: true,
         });
 
-        const iconsJsonBase64 = Buffer.from(JSON.stringify(icons)).toString('base64');
+        const iconsJsonBase64 = Buffer.from(JSON.stringify(icons)).toString("base64");
 
         const powershellCommand = `
             $ErrorActionPreference = "Continue";

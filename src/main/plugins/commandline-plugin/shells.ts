@@ -3,10 +3,10 @@ export enum WindowsShell {
     Powershell = "Powershell",
     PowerShellCore = "PowerShell Core",
     WSL = "WSL",
-    PowerShellInWT = "Powershell in Windows Terminal"
+    PowerShellInWT = "Powershell in Windows Terminal",
 }
 
 export enum MacOsShell {
     Terminal = "Terminal",
-    iTerm = "iTerm"
+    iTerm = "iTerm",
 }

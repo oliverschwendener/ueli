@@ -20,7 +20,8 @@ export class BrowserBookmarksPlugin implements SearchPlugin {
         config: BrowserBookmarksOptions,
         translations: TranslationSet,
         browserBookmarkRepositories: BrowserBookmarkRepository[],
-        urlExecutor: (url: string) => Promise<void>) {
+        urlExecutor: (url: string) => Promise<void>,
+    ) {
         this.config = config;
         this.translations = translations;
         this.browserBookmarkRepositories = browserBookmarkRepositories;
@@ -82,8 +83,9 @@ export class BrowserBookmarksPlugin implements SearchPlugin {
     }
 
     private getMatchingBrowserBookmarkRepository(): BrowserBookmarkRepository {
-        const matchingBookmarkRepository = this.browserBookmarkRepositories
-            .find((bookmarkRepository) => bookmarkRepository.browser === this.config.browser);
+        const matchingBookmarkRepository = this.browserBookmarkRepositories.find(
+            (bookmarkRepository) => bookmarkRepository.browser === this.config.browser,
+        );
 
         if (matchingBookmarkRepository) {
             return matchingBookmarkRepository;

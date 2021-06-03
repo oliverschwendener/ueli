@@ -86,8 +86,16 @@ export const generalSettingsComponent = Vue.extend({
                     const translations: TranslationSet = this.translations;
                     const settingsFilePath = join(filePath, "ueli.config.json");
                     FileHelpers.writeFile(settingsFilePath, JSON.stringify(config, undefined, 2))
-                        .then(() => vueEventDispatcher.$emit(VueEventChannels.notification, translations.generalSettingsSuccessfullyExportedSettings, NotificationType.Info))
-                        .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, NotificationType.Error));
+                        .then(() =>
+                            vueEventDispatcher.$emit(
+                                VueEventChannels.notification,
+                                translations.generalSettingsSuccessfullyExportedSettings,
+                                NotificationType.Info,
+                            ),
+                        )
+                        .catch((err) =>
+                            vueEventDispatcher.$emit(VueEventChannels.notification, err, NotificationType.Error),
+                        );
                 })
                 .catch((err) => {
                     // do nothing when no folder selected
@@ -108,6 +116,8 @@ export const generalSettingsComponent = Vue.extend({
                     return translations.hotkeyModifierOption;
                 case GlobalHotKeyModifier.Shift:
                     return translations.hotkeyModifierShift;
+                case GlobalHotKeyModifier.Super:
+                    return translations.hotkeyModifierSuper;
                 default:
                     return hotkeyModifier;
             }
@@ -163,15 +173,24 @@ export const generalSettingsComponent = Vue.extend({
                         .then((fileContent) => {
                             if (isValidJson(fileContent)) {
                                 const userConfig: UserConfigOptions = JSON.parse(fileContent);
-                                const config: UserConfigOptions = mergeUserConfigWithDefault(userConfig, defaultUserConfigOptions);
+                                const config: UserConfigOptions = mergeUserConfigWithDefault(
+                                    userConfig,
+                                    defaultUserConfigOptions,
+                                );
                                 this.config = config;
                                 this.updateConfig();
                             } else {
-                                vueEventDispatcher.$emit(VueEventChannels.notification, translations.generalSettingsImportErrorInvalidConfig, NotificationType.Error);
+                                vueEventDispatcher.$emit(
+                                    VueEventChannels.notification,
+                                    translations.generalSettingsImportErrorInvalidConfig,
+                                    NotificationType.Error,
+                                );
                             }
                         })
-                        .catch((err) => vueEventDispatcher.$emit(VueEventChannels.notification, err, NotificationType.Error))
-                        .then(() => this.dropdownVisible = false);
+                        .catch((err) =>
+                            vueEventDispatcher.$emit(VueEventChannels.notification, err, NotificationType.Error),
+                        )
+                        .then(() => (this.dropdownVisible = false));
                 })
                 .catch((err) => {
                     // do nothing if no file selected
@@ -392,7 +411,23 @@ export const generalSettingsComponent = Vue.extend({
                                     <div class="control">
                                         <div class="select">
                                             <select v-model="config.generalOptions.hotKey.modifier" @change="updateConfig()">
-                                                <option v-for="globalHotKeyModifier in globalHotKeyModifiers" :value="globalHotKeyModifier">
+                                                <option v-for="globalHotKeyModifier in globalHotKeyModifiers.filter(key => key != config.generalOptions.hotKey.secondModifier)" :value="globalHotKeyModifier">
+                                                    {{ getTranslatedGlobalHotKeyModifier(globalHotKeyModifier) }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="control">
+                                        <button class="button is-static">
+                                            <span class="icon">
+                                                <i class="fa fa-plus"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="control">
+                                        <div class="select">
+                                            <select v-model="config.generalOptions.hotKey.secondModifier" @change="updateConfig()">
+                                                <option v-for="globalHotKeyModifier in globalHotKeyModifiers.filter(key => key != config.generalOptions.hotKey.modifier)" :value="globalHotKeyModifier">
                                                     {{ getTranslatedGlobalHotKeyModifier(globalHotKeyModifier) }}
                                                 </option>
                                             </select>
@@ -520,6 +555,22 @@ export const generalSettingsComponent = Vue.extend({
                                     <div class="control">
                                         <input id="hideMainWindowOnBlur" type="checkbox" name="hideMainWindowOnBlur" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.hideMainWindowOnBlur" @change="updateConfig()">
                                         <label for="hideMainWindowOnBlur"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings__option">
+                            <div class="settings__option-name">{{ translations.generalSettingsDecimalSeparator }}</div>
+                            <div class="settings__option-content">
+                                <div class="field is-grouped is-grouped-right">
+                                    <div class="buttons has-addons">
+                                        <button class="button"
+                                            :class="{ 'is-success': config.generalOptions.decimalSeparator == '.' }"
+                                            @click="config.generalOptions.decimalSeparator = '.'; updateConfig();">.</button>
+                                        <button class="button"
+                                            :class="{ 'is-success': config.generalOptions.decimalSeparator == ',' }"
+                                            @click="config.generalOptions.decimalSeparator = ','; updateConfig();">,</button>
                                     </div>
                                 </div>
                             </div>

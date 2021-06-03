@@ -11,7 +11,10 @@ export function getCurrentOperatingSystem(platform: string): OperatingSystem {
     }
 }
 
-export function getOperatingSystemVersion(operatingSystem: OperatingSystem, operatingSystemRelease: string): OperatingSystemVersion {
+export function getOperatingSystemVersion(
+    operatingSystem: OperatingSystem,
+    operatingSystemRelease: string,
+): OperatingSystemVersion {
     switch (operatingSystem) {
         case OperatingSystem.macOS:
             return getMacOsVersion(operatingSystemRelease);

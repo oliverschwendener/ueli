@@ -29,15 +29,14 @@ export class ProductionApplicationRepository implements ApplicationRepository {
         searchApplications: (
             options: ApplicationSearchOptions,
             logger: Logger,
-            operatingSystemVersion: OperatingSystemVersion
+            operatingSystemVersion: OperatingSystemVersion,
         ) => Promise<string[]>,
         logger: Logger,
         operatingSystemVersion: OperatingSystemVersion,
     ) {
         this.config = config;
         this.defaultAppIcon = defaultAppIcon;
-        this.appIconService = appIconService,
-        this.searchApplications = searchApplications;
+        (this.appIconService = appIconService), (this.searchApplications = searchApplications);
         this.logger = logger;
         this.operatingSystemVersion = operatingSystemVersion;
         this.applications = [];
@@ -51,16 +50,19 @@ export class ProductionApplicationRepository implements ApplicationRepository {
         return new Promise((resolve, reject) => {
             this.searchApplications(this.config, this.logger, this.operatingSystemVersion)
                 .then((filePaths) => {
-                    this.applications = filePaths.map((filePath) => this.createApplicationFromFilePath(filePath));
+                    const applications = filePaths.map((filePath) => this.createApplicationFromFilePath(filePath));
 
                     if (this.config.useNativeIcons) {
-                        this.appIconService.generateAppIcons(this.applications)
+                        this.appIconService
+                            .generateAppIcons(applications)
                             .then(() => {
-                                this.onSuccessfullyGeneratedAppIcons();
+                                this.onSuccessfullyGeneratedAppIcons(applications);
+                                this.applications = applications;
                                 resolve();
                             })
                             .catch((err) => reject(err));
                     } else {
+                        this.applications = applications;
                         resolve();
                     }
                 })
@@ -70,7 +72,8 @@ export class ProductionApplicationRepository implements ApplicationRepository {
 
     public clearCache(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.appIconService.clearCache()
+            this.appIconService
+                .clearCache()
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });
@@ -91,10 +94,13 @@ export class ProductionApplicationRepository implements ApplicationRepository {
         };
     }
 
-    private onSuccessfullyGeneratedAppIcons() {
-        this.applications.forEach((application) => application.icon = {
-            parameter: getApplicationIconFilePath(application.filePath),
-            type: IconType.URL,
-        });
+    private onSuccessfullyGeneratedAppIcons(applications: Application[]) {
+        applications.forEach(
+            (application) =>
+                (application.icon = {
+                    parameter: getApplicationIconFilePath(application.filePath),
+                    type: IconType.URL,
+                }),
+        );
     }
 }

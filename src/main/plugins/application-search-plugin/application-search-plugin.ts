@@ -15,10 +15,12 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
     private readonly executeApplication: (executionArgument: string, privileged?: boolean) => Promise<void>;
     private readonly openApplicationLocation: (filePath: string) => Promise<void>;
 
-    constructor(config: ApplicationSearchOptions,
-                applicationRepository: ApplicationRepository,
-                executeApplication: (executionArgument: string, privileged: boolean) => Promise<void>,
-                openApplicationLocation: (filePath: string) => Promise<void>) {
+    constructor(
+        config: ApplicationSearchOptions,
+        applicationRepository: ApplicationRepository,
+        executeApplication: (executionArgument: string, privileged: boolean) => Promise<void>,
+        openApplicationLocation: (filePath: string) => Promise<void>,
+    ) {
         this.config = config;
         this.applicationRepository = applicationRepository;
         this.executeApplication = executeApplication;
@@ -27,9 +29,12 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
 
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
-            this.applicationRepository.getAll()
+            this.applicationRepository
+                .getAll()
                 .then((applications) => {
-                    const result = applications.map((application) => this.createSearchResultItemFromApplication(application));
+                    const result = applications.map((application) =>
+                        this.createSearchResultItemFromApplication(application),
+                    );
                     resolve(result);
                 })
                 .catch((err) => reject(err));
@@ -55,7 +60,8 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
     public refreshIndex(): Promise<void> {
         return new Promise((resolve, reject) => {
             if (this.config.enabled) {
-                this.applicationRepository.refreshIndex()
+                this.applicationRepository
+                    .refreshIndex()
                     .then(() => resolve())
                     .catch((err) => reject(err));
             } else {
@@ -66,7 +72,8 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
 
     public clearCache(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.applicationRepository.clearCache()
+            this.applicationRepository
+                .clearCache()
                 .then(() => resolve())
                 .catch((err) => reject(`Error while trying to clear application repository cache: ${err}`));
         });
@@ -75,7 +82,8 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
     public updateConfig(config: UserConfigOptions): Promise<void> {
         return new Promise((resolve, reject) => {
             this.config = config.applicationSearchOptions;
-            this.applicationRepository.updateConfig(config.applicationSearchOptions)
+            this.applicationRepository
+                .updateConfig(config.applicationSearchOptions)
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });

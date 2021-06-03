@@ -7,13 +7,19 @@ import { ColorThemeOptions } from "../common/config/color-theme-options";
 export const userStylesComponent = Vue.extend({
     props: ["appearance", "colortheme"],
     mounted() {
-        vueEventDispatcher.$on(VueEventChannels.appearanceOptionsUpdated, (updatedAppearanceOptions: AppearanceOptions) => {
-            this.appearance = updatedAppearanceOptions;
-        });
+        vueEventDispatcher.$on(
+            VueEventChannels.appearanceOptionsUpdated,
+            (updatedAppearanceOptions: AppearanceOptions) => {
+                this.appearance = updatedAppearanceOptions;
+            },
+        );
 
-        vueEventDispatcher.$on(VueEventChannels.colorThemeOptionsUpdated, (updatedColorThemeOptions: ColorThemeOptions) => {
-            this.colortheme = updatedColorThemeOptions;
-        });
+        vueEventDispatcher.$on(
+            VueEventChannels.colorThemeOptionsUpdated,
+            (updatedColorThemeOptions: ColorThemeOptions) => {
+                this.colortheme = updatedColorThemeOptions;
+            },
+        );
     },
     template: `<style>
         :root {

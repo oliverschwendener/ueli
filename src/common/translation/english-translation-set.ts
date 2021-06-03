@@ -68,6 +68,7 @@ export const englishTranslationSet: TranslationSet = {
     generalSettingsClearExecutionLogWarning: "You are about to clear the execution log. Do you want to proceed?",
     generalSettingsHideMainWindowAfterExecution: "Hide window after execution",
     generalSettingsHideMainWindowOnBlur: "Hide window when focus is lost",
+    generalSettingsDecimalSeparator: "Decimal separator",
     generalSettingsCheckingForUpdate: "Checking if update is available",
     generalSettingsDownloadUpdate: "Download update",
     generalSettingsDownloadingUpdate: "Downloading update",
@@ -99,6 +100,7 @@ export const englishTranslationSet: TranslationSet = {
     hotkeyModifierControl: "Ctrl",
     hotkeyModifierOption: "Option",
     hotkeyModifierShift: "Shift",
+    hotkeyModifierSuper: "Super",
 
     appearanceSettings: "Appearance",
     appearanceSettingsWindowWidth: "Window width (in pixels)",
@@ -109,14 +111,16 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsShowDescriptionOnAllSearchResults: "Show description on all search results",
     appearanceSettingsShowSearchIcon: "Show search icon in search field",
     appearanceSettingsShowSearchResultNumbers: "Show search result numbers",
-    appearanceSettingsResetWarningMessage: "You are about to reset all appearance settings to default. Do you want to proceed?",
+    appearanceSettingsResetWarningMessage:
+        "You are about to reset all appearance settings to default. Do you want to proceed?",
     appearanceSettingsAllowTransparentBackground: "Allow transparent background",
     appearanceSettingsFontFamily: "Font family",
     appearanceSettingsUserInputBorderRadius: "User input border radius",
     appearanceSettingsUserInputBottomMargin: "User input bottom margin (in pixels)",
     appearanceSettingsSearchResultsBorderRadius: "Search results border radius",
     appearanceSettingsScrollbarBorderRadius: "Scrollbar border radius",
-    appearanceSettingsBorderRadiusDescription: "This is a css value, so you need to add 'px' like this '10px' or separate corners like this '10px 0px 10px 5px'",
+    appearanceSettingsBorderRadiusDescription:
+        "This is a css value, so you need to add 'px' like this '10px' or separate corners like this '10px 0px 10px 5px'",
 
     settingsUserInputTitle: "User input",
     settingsSearchResultsBoxTitle: "Search results box",
@@ -126,7 +130,8 @@ export const englishTranslationSet: TranslationSet = {
     colorThemeSettings: "Color Theme",
     colorThemeSettingsImportColorTheme: "Import color theme",
     colorThemeSettingsExportColorTheme: "Export color theme",
-    colorThemeSettingsResetWarning: "You are about to reset all color theme settings to default. Do you want to proceed?",
+    colorThemeSettingsResetWarning:
+        "You are about to reset all color theme settings to default. Do you want to proceed?",
     colorThemeExportSucceeded: "Color theme successfully exported",
     colorThemeExportFailed: "Color theme export failed",
     colorThemeImportSucceeded: "Color theme successfully imported",
@@ -170,7 +175,8 @@ export const englishTranslationSet: TranslationSet = {
     searchEngineSettingsFuzzy: "Fuzzy",
     searchEngineSettingsBlacklist: "Blacklist",
     searchEngineSettingsMaxSearchResults: "Max search results",
-    searchEngineSettingsResetWarning: "You are about to reset all search engine settings to default. Do you want to proceed?",
+    searchEngineSettingsResetWarning:
+        "You are about to reset all search engine settings to default. Do you want to proceed?",
 
     shortcutSettings: "Shortcuts",
     shortcutSettingsDescription: `This plugin enables you to quickly open files or websites by setting up your own shortcuts.`,
@@ -212,7 +218,8 @@ export const englishTranslationSet: TranslationSet = {
     everythingSearchPathToBinaryFilterName: "Executable files",
 
     mdfindSearch: "mdfind search",
-    mdfindSettingsDescription: "This plugin enables you to use the native macOS search to find files and folders on your local file system.",
+    mdfindSettingsDescription:
+        "This plugin enables you to use the native macOS search to find files and folders on your local file system.",
     mdfindSearchDebounceDelay: "Debounce delay (in milliseconds)",
     mdfindSearchPrefix: "Prefix",
     mdfindSearchMaxSearchResults: "Max search results",
@@ -225,6 +232,7 @@ export const englishTranslationSet: TranslationSet = {
     websearchName: "Name",
     websearchPrefix: "Prefix",
     websearchUrl: "URL",
+    websearchSuggestionUrl: "Suggestion URL",
     websearchIcon: "Icon",
     websearchPriority: "Priority",
     websearchIsFallback: "Fallback",
@@ -280,11 +288,13 @@ export const englishTranslationSet: TranslationSet = {
     urlDefaultProtocol: "Default protocol",
 
     email: "Email",
-    emailSettingsDescription: "This plugin enables you to quickly start writing an email by typing in an email address.",
+    emailSettingsDescription:
+        "This plugin enables you to quickly start writing an email by typing in an email address.",
     openNewMail: "Open new email",
 
     currencyConverter: "Currency Converter",
-    currencyConverterDescription: "This plugin enables you to quickly convert currencies. The latest conversion rates are provided by https://exchangeratesapi.io/.",
+    currencyConverterDescription:
+        "This plugin enables you to quickly convert currencies. The latest conversion rates are provided by https://exchangeratesapi.io/.",
     currencyConverterPrecision: "Precision",
     currencyConverterCopyToClipboard: "Press enter to copy to clipboard",
 
@@ -325,7 +335,8 @@ export const englishTranslationSet: TranslationSet = {
     colorConverterShowColorPreview: "Show color preview",
 
     dictionary: "Dictionary",
-    dictionaryDescription: "This plugin enables you to quickly look up the definition and synonyms of words. It uses an unofficial Google Dictionary API (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+    dictionaryDescription:
+        "This plugin enables you to quickly look up the definition and synonyms of words. It uses an unofficial Google Dictionary API (https://googledictionaryapi.eu-gb.mybluemix.net/)",
     dictionaryPrefix: "Prefix",
     dictionaryMinSearchTermLength: "Min search term length",
     dictionaryDebounceDelay: "Debounce delay (in milliseconds)",
@@ -342,13 +353,15 @@ export const englishTranslationSet: TranslationSet = {
     remove: "Remove",
     edit: "Edit",
     forExample: "For example",
+    example: "Example",
     iconType: "Icon type",
     iconTypeColor: "Color",
     showFullFilePath: "Show full file path",
     yes: "Yes",
     no: "No",
     resetToDefault: "Reset to default?",
-    resetPluginSettingsToDefaultWarning: "You are about to reset all settings of this plugin to default. Do you want to proceed?",
+    resetPluginSettingsToDefaultWarning:
+        "You are about to reset all settings of this plugin to default. Do you want to proceed?",
     filePath: "File path",
     folderPath: "Folder path",
     chooseFile: "Choose file",

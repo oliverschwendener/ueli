@@ -39,7 +39,9 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
 
     public execute(searchResultItem: SearchResultItem): Promise<void> {
         return new Promise((resolve, reject) => {
-            const ueliCommand = this.getAllCommands().find((command) => command.executionArgument === searchResultItem.executionArgument);
+            const ueliCommand = this.getAllCommands().find(
+                (command) => command.executionArgument === searchResultItem.executionArgument,
+            );
             if (ueliCommand) {
                 ipcMain.emit(IpcChannels.ueliCommandExecuted, ueliCommand);
                 resolve();
