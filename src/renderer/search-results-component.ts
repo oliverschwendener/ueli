@@ -68,14 +68,15 @@ export const searchResultsComponent = Vue.extend({
 
             let nextActiveIndex = 0;
             const appearanceOptions: AppearanceOptions = this.appearance;
+            const maxSearchResultsPerPage = Number(appearanceOptions.maxSearchResultsPerPage);
             if (direction === BrowseDirection.Next) {
                 nextActiveIndex = activeSearchResultIndex >= firstVisibleSearchResultIndex && activeSearchResultIndex < lastVisibleSearchResultIndex
                     ? lastVisibleSearchResultIndex
-                    : activeSearchResultIndex + appearanceOptions.maxSearchResultsPerPage;
+                    : activeSearchResultIndex + maxSearchResultsPerPage;
             } else {
                 nextActiveIndex = activeSearchResultIndex > firstVisibleSearchResultIndex && activeSearchResultIndex <= lastVisibleSearchResultIndex
                     ? firstVisibleSearchResultIndex
-                    : activeSearchResultIndex - appearanceOptions.maxSearchResultsPerPage;
+                    : activeSearchResultIndex - maxSearchResultsPerPage;
             }
 
             if (nextActiveIndex < 0)
