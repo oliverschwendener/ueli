@@ -1,4 +1,5 @@
 import * as path from "path";
+import * as fs from "fs";
 import { BrowserHistoryRepository } from "./browser-history-repository";
 import { BrowserHistory } from "./browser-history";
 import { Browser } from "./browser";
@@ -15,9 +16,14 @@ export class GoogleChromeHistoryRepository implements BrowserHistoryRepository {
     };
 
     private readonly historyUserDataFolderPath: string;
+    private readonly originalDatabaseFilePath: string;
+    private readonly ueliDatabaseFilePath: string;
 
     constructor(historyUserDataFolderPath: string) {
         this.historyUserDataFolderPath = historyUserDataFolderPath;
+        this.originalDatabaseFilePath = `${this.historyUserDataFolderPath}${path.sep}History`;
+        this.ueliDatabaseFilePath = `${this.historyUserDataFolderPath}${path.sep}UeliHistory`;
+        this.copyDatabaseFile();
     }
 
     public async getBrowserHistories(): Promise<BrowserHistory[]> {
@@ -26,8 +32,16 @@ export class GoogleChromeHistoryRepository implements BrowserHistoryRepository {
         return histories;
     }
 
+    public copyDatabaseFile(): void {
+        fs.copyFile(this.originalDatabaseFilePath, this.ueliDatabaseFilePath, (err) => {
+            if (err) {
+                throw err;
+            }
+        });
+    }
+
     private async getDatabaseFilePath(): Promise<string> {
-        const databaseFilePath = `${this.historyUserDataFolderPath}${path.sep}History`;
+        const databaseFilePath = this.ueliDatabaseFilePath;
         return databaseFilePath;
     }
 
