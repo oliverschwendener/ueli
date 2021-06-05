@@ -1,10 +1,11 @@
+import * as path from "path";
 import { BrowserHistoryRepository } from "./browser-history-repository";
 import { BrowserHistory } from "./browser-history";
-import { FileHelpers } from "../../../common/helpers/file-helpers";
-import { isValidUrl } from "../../../common/helpers/url-helpers";
 import { Browser } from "./browser";
 import { IconType } from "../../../common/icon/icon-type";
 import { Icon } from "../../../common/icon/icon";
+import { open } from "sqlite";
+import { Database } from "sqlite3";
 
 export class GoogleChromeHistoryRepository implements BrowserHistoryRepository {
     public browser = Browser.GoogleChrome;
@@ -13,18 +14,27 @@ export class GoogleChromeHistoryRepository implements BrowserHistoryRepository {
         type: IconType.SVG,
     };
 
-    private readonly historyFilePath: string;
+    private readonly historyUserDataFolderPath: string;
 
-    constructor(historyFilePath: string) {
-        this.historyFilePath = historyFilePath;
+    constructor(historyUserDataFolderPath: string) {
+        this.historyUserDataFolderPath = historyUserDataFolderPath;
     }
 
     public async getBrowserHistories(): Promise<BrowserHistory[]> {
-        const histories: BrowserHistory[] = [];
+        const databaseFilePath = await this.getDatabaseFilePath();
+        const histories: BrowserHistory[] = await this.getHistories(databaseFilePath);
         return histories;
-        // return new Promise((resolve, reject) => {
-        //     const histories: BrowserHistory[] = [];
-        //     resolve(histories);
-        // });
+    }
+
+    private async getDatabaseFilePath(): Promise<string> {
+        const databaseFilePath = `${this.historyUserDataFolderPath}${path.sep}History`;
+        return databaseFilePath;
+    }
+
+    private async getHistories(databaseFilePath: string): Promise<BrowserHistory[]> {
+        const db = await open({ filename: databaseFilePath, driver: Database });
+        const records = await db.all("SELECT url, title FROM urls ORDER BY last_visit_time DESC  LIMIT 100");
+        const histories = records.map((h) => ({ name: h.title, url: h.url }));
+        return histories;
     }
 }

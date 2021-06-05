@@ -20,6 +20,7 @@ export enum PluginType {
     ColorConverter = "color-converter",
     Dictionary = "dictionary",
     BrowserBookmarks = "browser-bookmarks",
+    BrowserHistories = "browser-histories",
     ControlPanel = "control-panel-plugin",
 
     // This is used for generic search results which do not have a specific plugin as a source

@@ -29,6 +29,7 @@ import { ApplicationSearchOptions, defaultApplicationSearchOptions } from "./app
 import { defaultDictionaryOptions, DictionaryOptions } from "./dictionary-options";
 import { BrowserBookmarksOptions, defaultBrowserBookmarksOptions } from "./browser-bookmarks-options";
 import { ControlPanelOptions, defaultControlPanelOptions } from "./control-panel-options";
+import { BrowserHistoryOptions, defaultBrowserHistoryOptions } from "./browser-histories-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -55,6 +56,7 @@ export interface UserConfigOptions {
     colorConverterOptions: ColorConverterOptions;
     uwpSearchOptions: UwpSearchOptions;
     browserBookmarksOptions: BrowserBookmarksOptions;
+    browserHistoryOptions: BrowserHistoryOptions;
     controlPanelOptions: ControlPanelOptions;
 }
 
@@ -62,6 +64,7 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     appearanceOptions: defaultAppearanceOptions,
     applicationSearchOptions: defaultApplicationSearchOptions,
     browserBookmarksOptions: defaultBrowserBookmarksOptions,
+    browserHistoryOptions: defaultBrowserHistoryOptions,
     calculatorOptions: defaultCalculatorOptions,
     colorConverterOptions: defaultColorConverterOptions,
     colorThemeOptions: defaultColorThemeOptions,

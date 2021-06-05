@@ -64,6 +64,8 @@ import { EdgeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/edge
 import { getWebearchSuggestions } from "../executors/websearch-suggestion-resolver";
 import { FirefoxBookmarkRepository } from "../plugins/browser-bookmarks-plugin/firefox-bookmark-repository";
 import { ChromiumBookmarkRepository } from "../plugins/browser-bookmarks-plugin/chromium-bookmark-repository";
+import { BrowserHistoriesPlugin } from "../plugins/browser-histories-plugin/browser-histories-plugin";
+import { GoogleChromeHistoryRepository } from "../plugins/browser-histories-plugin/google-chrome-history-repository";
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
@@ -122,6 +124,11 @@ export function getProductionSearchEngine(
         operatingSystem === OperatingSystem.Windows
             ? `${homedir()}\\AppData\\Local\\Chromium\\User Data\\Default\\Bookmarks`
             : `${homedir()}/Library/Application\ Support/Chromium/Default/Bookmarks`;
+
+    const googleChromeHistoryUserDataFolderPath =
+        operatingSystem === OperatingSystem.Windows
+            ? `${homedir()}\\AppData\\Local\\Google\\Chrome\\User Data\\Default`
+            : `${homedir()}/Library/Application\ Support/Google/Chrome/Default`;
 
     const operatingSystemCommandRepository =
         operatingSystem === OperatingSystem.Windows
@@ -186,6 +193,12 @@ export function getProductionSearchEngine(
                 new SideKickBookmarkRepository(sideKickBookmarkFilePath),
                 new VivaldiBookmarkRepository(vivaldiBookmarksFilePath),
             ],
+            urlExecutor,
+        ),
+        new BrowserHistoriesPlugin(
+            config.browserHistoryOptions,
+            translationSet,
+            [new GoogleChromeHistoryRepository(googleChromeHistoryUserDataFolderPath)],
             urlExecutor,
         ),
     ];
