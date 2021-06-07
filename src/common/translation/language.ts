@@ -7,4 +7,5 @@ export enum Language {
     Turkish = "Türkçe",
     Spanish = "Español",
     Chinese = "简体中文",
+    Korean = "한국어",
 }
