@@ -58,13 +58,15 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.url;
                 case PluginSettings.WebSearch:
                     return translations.websearch;
-                case SettingOsSpecific.ControlPanel:
+                case PluginSettings.Workflow:
+                    return translations.workflows;
+                case SettingOsSpecific.ControlPanel.replace(`${platform()}:`, ""):
                     return translations.controlPanel;
-                case SettingOsSpecific.Everything:
+                case SettingOsSpecific.Everything.replace(`${platform()}:`, ""):
                     return translations.everythingSearch;
-                case SettingOsSpecific.MdFind:
+                case SettingOsSpecific.MdFind.replace(`${platform()}:`, ""):
                     return translations.mdfindSearch;
-                case SettingOsSpecific.Uwp:
+                case SettingOsSpecific.Uwp.replace(`${platform()}:`, ""):
                     return "UWP";
                 default:
                     return item;

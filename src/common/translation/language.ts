@@ -8,4 +8,5 @@ export enum Language {
     Spanish = "Español",
     Chinese = "简体中文",
     Korean = "한국어",
+    Japanese = "日本語",
 }
