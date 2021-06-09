@@ -168,7 +168,7 @@ export const japaneseTranslationSet: TranslationSet = {
     applicationSearchSettingsUseNativeIcons: "ネイティブなアイコンを使用 (無効にするとパフォーマンスが向上するかも)",
 
     searchEngineSettings: "検索エンジン",
-    searchEngineSettingsDescription: `検索エンジンはアプリケーション、ショートカット及びオペレーティングシステムの設定・コマンドのように事前にインデックスが作成された項目の対して利用されます。`,
+    searchEngineSettingsDescription: `検索エンジンはアプリケーション、ショートカット及びオペレーティングシステムの設定・コマンドのように事前にインデックスが作成された項目に対して利用されます。`,
     searchEngineSettingsFuzzyness: "曖昧度",
     searchEngineSettingsFuzzynessDescription: "0 = 厳密, 1 = 曖昧",
     searchEngineSettingsStrict: "厳密",
@@ -203,7 +203,7 @@ export const japaneseTranslationSet: TranslationSet = {
     shortcutSettingsNeedsUserConfirmation: "実行前に確認が必要",
 
     translationSettingsTranslation: "翻訳",
-    translationSettingsDescription: `このプラグインは素早く単語あるいは短文を素早く本に訳することができます。Linguee (https://linguee.de) の非公式 API (https://github.com/imankulov/linguee-api) を使用しており、不安定になる可能性があります。`,
+    translationSettingsDescription: `このプラグインは単語あるいは短文を素早く翻訳することができます。Linguee (https://linguee.de) の非公式 API (https://github.com/imankulov/linguee-api) を使用しており、不安定になる可能性があります。`,
     translationSettingsDebounceDelay: "デバウンス遅延 (ミリ秒)",
     translationSettingsMinSearchTermLength: "検索語の最小長さ",
     translationSettingsPrefix: "プレフィックス",
