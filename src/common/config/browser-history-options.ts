@@ -1,4 +1,4 @@
-import { Browser } from "../../main/plugins/browser-bookmarks-plugin/browser";
+import { Browser } from "../../main/plugins/browser-history-plugin/browser";
 
 export interface BrowserHistoryOptions {
     isEnabled: boolean;

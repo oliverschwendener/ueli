@@ -29,7 +29,7 @@ import { ApplicationSearchOptions, defaultApplicationSearchOptions } from "./app
 import { defaultDictionaryOptions, DictionaryOptions } from "./dictionary-options";
 import { BrowserBookmarksOptions, defaultBrowserBookmarksOptions } from "./browser-bookmarks-options";
 import { ControlPanelOptions, defaultControlPanelOptions } from "./control-panel-options";
-import { BrowserHistoryOptions, defaultBrowserHistoryOptions } from "./browser-histories-options";
+import { BrowserHistoryOptions, defaultBrowserHistoryOptions } from "./browser-history-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;

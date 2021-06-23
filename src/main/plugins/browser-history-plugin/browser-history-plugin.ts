@@ -3,18 +3,18 @@ import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
-import { BrowserHistory } from "./browser-history";
-import { BrowserHistoryOptions } from "../../../common/config/browser-histories-options";
+import { BrowserHistoryEntry } from "./browser-history-entry";
+import { BrowserHistoryOptions } from "../../../common/config/browser-history-options";
 import { BrowserHistoryRepository } from "./browser-history-repository";
 
-export class BrowserHistoriesPlugin implements SearchPlugin {
-    public readonly pluginType = PluginType.BrowserHistories;
+export class BrowserHistoryPlugin implements SearchPlugin {
+    public readonly pluginType = PluginType.BrowserHistory;
 
     private config: BrowserHistoryOptions;
     private translations: TranslationSet;
     private readonly browserHistoryRepositories: BrowserHistoryRepository[];
     private readonly urlExecutor: (url: string) => Promise<void>;
-    private browserHistories: BrowserHistory[];
+    private browserHistory: BrowserHistoryEntry[];
 
     constructor(
         config: BrowserHistoryOptions,
@@ -26,16 +26,16 @@ export class BrowserHistoriesPlugin implements SearchPlugin {
         this.translations = translations;
         this.browserHistoryRepositories = browserHistoryRepositories;
         this.urlExecutor = urlExecutor;
-        this.browserHistories = [];
+        this.browserHistory = [];
     }
 
     public async getAll(): Promise<SearchResultItem[]> {
-        return await this.browserHistories.map((history) => this.buildSearchResultItem(history));
+        return await this.browserHistory.map((history) => this.buildSearchResultItem(history));
     }
 
     public async refreshIndex(): Promise<void> {
-        const histories = await this.getBrowserHistories();
-        this.browserHistories = histories;
+        const history = await this.getBrowserHistory();
+        this.browserHistory = history;
     }
 
     public async clearCache(): Promise<void> {
@@ -68,8 +68,8 @@ export class BrowserHistoriesPlugin implements SearchPlugin {
         });
     }
 
-    private async getBrowserHistories(): Promise<BrowserHistory[]> {
-        return this.getMatchingBrowserHistoryRepository().getBrowserHistories();
+    private async getBrowserHistory(): Promise<BrowserHistoryEntry[]> {
+        return this.getMatchingBrowserHistoryRepository().getBrowserHistory();
     }
 
     private getMatchingBrowserHistoryRepository(): BrowserHistoryRepository {
@@ -82,18 +82,18 @@ export class BrowserHistoriesPlugin implements SearchPlugin {
         throw new Error(`Unsupported browser: ${this.config.browser}`);
     }
 
-    private buildSearchResultItem(browserHistory: BrowserHistory): SearchResultItem {
+    private buildSearchResultItem(browserHistoryEntry: BrowserHistoryEntry): SearchResultItem {
         return {
-            description: browserHistory.name
-                ? browserHistory.url
+            description: browserHistoryEntry.name
+                ? browserHistoryEntry.url
                 : `${this.config.browser} ${this.translations.browserBookmark}`,
-            executionArgument: browserHistory.url,
+            executionArgument: browserHistoryEntry.url,
             hideMainWindowAfterExecution: true,
             icon: this.getMatchingBrowserHistoryRepository().defaultIcon,
-            name: browserHistory.name || browserHistory.url,
+            name: browserHistoryEntry.name || browserHistoryEntry.url,
             needsUserConfirmationBeforeExecution: false,
             originPluginType: this.pluginType,
-            searchable: [browserHistory.name, browserHistory.url],
+            searchable: [browserHistoryEntry.name, browserHistoryEntry.url],
         };
     }
 }

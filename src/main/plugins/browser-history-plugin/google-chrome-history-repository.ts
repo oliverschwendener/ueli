@@ -1,7 +1,7 @@
 import * as path from "path";
 import * as fs from "fs";
 import { BrowserHistoryRepository } from "./browser-history-repository";
-import { BrowserHistory } from "./browser-history";
+import { BrowserHistoryEntry } from "./browser-history-entry";
 import { Browser } from "./browser";
 import { IconType } from "../../../common/icon/icon-type";
 import { Icon } from "../../../common/icon/icon";
@@ -26,10 +26,10 @@ export class GoogleChromeHistoryRepository implements BrowserHistoryRepository {
         this.copyDatabaseFile();
     }
 
-    public async getBrowserHistories(): Promise<BrowserHistory[]> {
+    public async getBrowserHistory(): Promise<BrowserHistoryEntry[]> {
         const databaseFilePath = await this.getDatabaseFilePath();
-        const histories: BrowserHistory[] = await this.getHistories(databaseFilePath);
-        return histories;
+        const history: BrowserHistoryEntry[] = await this.getHistory(databaseFilePath);
+        return history;
     }
 
     public copyDatabaseFile(): void {
@@ -45,10 +45,10 @@ export class GoogleChromeHistoryRepository implements BrowserHistoryRepository {
         return databaseFilePath;
     }
 
-    private async getHistories(databaseFilePath: string): Promise<BrowserHistory[]> {
+    private async getHistory(databaseFilePath: string): Promise<BrowserHistoryEntry[]> {
         const db = await open({ filename: databaseFilePath, driver: Database });
         const records = await db.all("SELECT url, title FROM urls ORDER BY last_visit_time DESC  LIMIT 100");
-        const histories = records.map((h) => ({ name: h.title, url: h.url }));
-        return histories;
+        const history = records.map((h) => ({ name: h.title, url: h.url }));
+        return history;
     }
 }

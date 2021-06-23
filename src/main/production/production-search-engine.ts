@@ -64,8 +64,8 @@ import { EdgeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/edge
 import { getWebearchSuggestions } from "../executors/websearch-suggestion-resolver";
 import { FirefoxBookmarkRepository } from "../plugins/browser-bookmarks-plugin/firefox-bookmark-repository";
 import { ChromiumBookmarkRepository } from "../plugins/browser-bookmarks-plugin/chromium-bookmark-repository";
-import { BrowserHistoriesPlugin } from "../plugins/browser-histories-plugin/browser-histories-plugin";
-import { GoogleChromeHistoryRepository } from "../plugins/browser-histories-plugin/google-chrome-history-repository";
+import { BrowserHistoryPlugin } from "../plugins/browser-history-plugin/browser-history-plugin";
+import { GoogleChromeHistoryRepository } from "../plugins/browser-history-plugin/google-chrome-history-repository";
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
@@ -195,7 +195,7 @@ export function getProductionSearchEngine(
             ],
             urlExecutor,
         ),
-        new BrowserHistoriesPlugin(
+        new BrowserHistoryPlugin(
             config.browserHistoryOptions,
             translationSet,
             [new GoogleChromeHistoryRepository(googleChromeHistoryUserDataFolderPath)],
