@@ -43,7 +43,7 @@ export const defaultCalculatorIcon: Icon = {
 };
 
 export const defaultUrlIcon: Icon = {
-    parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve"><path style="fill:#455A64;" d="M42,19H6V9c0-1.657,1.343-3,3-3h30c1.657,0,3,1.343,3,3V19z"></path><path style="fill:#BBDEFB;" d="M6,16h36v23c0,1.657-1.343,3-3,3H9c-1.657,0-3-1.343-3-3V16z"></path><circle style="fill:#8BC34A;" cx="11" cy="11" r="2"></circle><circle style="fill:#FFEB3B;" cx="17" cy="11" r="2"></circle><path style="fill:#FAFAFA;" d="M39,12c0,0.553-0.447,1-1,1H23c-0.553,0-1-0.447-1-1v-2c0-0.553,0.447-1,1-1h15c0.553,0,1,0.447,1,1  V12z"></path><path style="fill:#3F51B5;" d="M30.924,33.235l-5.507-8c-0.182-0.293-0.666-0.293-0.848,0l-5.507,8  c-0.097,0.153-0.088,0.348,0,0.507S19.318,34,19.5,34H23c0,7.375-2.377,10.49-9,10c1.604,0.667,3.712,0.986,5.125,0.996  C25.482,45.041,27,39.921,27,34h3.5c0.182,0,0.35-0.099,0.438-0.258S31.021,33.388,30.924,33.235z"></path></svg>`,
+    parameter: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#0096ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`,
     type: IconType.SVG,
 };
 
@@ -73,7 +73,7 @@ export const defaultShortcutIcon: Icon = {
 };
 
 export const defaultWebSearchIcon: Icon = {
-    parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1"><g id="surface1"><path style=" fill:#616161;" d="M 29.179688 31.988281 L 32.007813 29.160156 L 44.03125 41.183594 L 41.203125 44.011719 Z "></path><path style=" fill:#616161;" d="M 36 20 C 36 28.835938 28.835938 36 20 36 C 11.164063 36 4 28.835938 4 20 C 4 11.164063 11.164063 4 20 4 C 28.835938 4 36 11.164063 36 20 Z "></path><path style=" fill:#37474F;" d="M 32.457031 35.339844 L 35.285156 32.511719 L 43.980469 41.210938 L 41.152344 44.039063 Z "></path><path style=" fill:#64B5F6;" d="M 33 20 C 33 27.179688 27.179688 33 20 33 C 12.820313 33 7 27.179688 7 20 C 7 12.820313 12.820313 7 20 7 C 27.179688 7 33 12.820313 33 20 Z "></path><path style=" fill:#BBDEFB;" d="M 26.898438 14.199219 C 25.199219 12.199219 22.699219 11 20 11 C 17.300781 11 14.800781 12.199219 13.101563 14.199219 C 12.699219 14.601563 12.800781 15.300781 13.199219 15.601563 C 13.601563 16 14.300781 15.898438 14.601563 15.5 C 16 13.898438 17.898438 13 20 13 C 22.101563 13 24 13.898438 25.398438 15.5 C 25.601563 15.699219 25.898438 15.898438 26.199219 15.898438 C 26.398438 15.898438 26.699219 15.800781 26.800781 15.699219 C 27.199219 15.300781 27.199219 14.601563 26.898438 14.199219 Z "></path></g></svg>`,
+    parameter: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#0096ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`,
     type: IconType.SVG,
 };
 
