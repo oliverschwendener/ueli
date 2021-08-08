@@ -281,6 +281,17 @@ export const russianTranslationSet: TranslationSet = {
     windowsHibernation: "Гибернация",
     windowsHibernationDescription: "Войти в режим гибернации",
 
+    linuxShutdown: "Выключить",
+    linuxShutdownDescription: "Выключить компьютер",
+    linuxRestart: "Перезагрузить",
+    linuxRestartDescription: "Перезагрузить компьютер",
+    linuxLogout: "Выйти",
+    linuxLogoutDescription: "Выйти из учетной записи текущего пользователя",
+    linuxSleep: "спать",
+    linuxSleepDescription: "спать компьютер",
+    linuxLock: "Заблокировать",
+    linuxLockDescription: "Заблокировать компьютер",
+
     calcuator: "Калькулятор",
     calculatorCopyToClipboard: "Нажмите enter, чтобы скопировать",
     calculatorDescription: "Этот плагин позволяет быстро выполнять простые математические рассчеты.",

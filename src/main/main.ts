@@ -38,7 +38,7 @@ import { FileHelpers } from "./../common/helpers/file-helpers";
 import { executeFilePathMacOs, executeFilePathWindows } from "./executors/file-path-executor";
 import { openUrlInBrowser } from "./executors/url-executor";
 import { getRescanIntervalInMilliseconds } from "./helpers/rescan-interval-helpers";
-import { trayIconPathMacOs, trayIconPathWindows } from "./helpers/tray-icon-helpers";
+import { trayIconPathMacOs, trayIconPathWindows, trayIconPathLinux } from "./helpers/tray-icon-helpers";
 import { windowIconMacOs, windowIconWindows } from "./helpers/window-icon-helpers";
 import { PluginType } from "./plugin-type";
 import { toHex } from "./plugins/color-converter-plugin/color-converter-helpers";
@@ -56,9 +56,29 @@ const operatingSystemVersion = getOperatingSystemVersion(operatingSystem, releas
 const appIsInDevelopment = isDev(process.execPath);
 const minimumRefreshIntervalInSeconds = 10;
 const configRepository = new ElectronStoreConfigRepository(deepCopy(defaultUserConfigOptions));
-const filePathExecutor = operatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
-const trayIconFilePath = operatingSystem === OperatingSystem.Windows ? trayIconPathWindows : trayIconPathMacOs;
-const windowIconFilePath = operatingSystem === OperatingSystem.Windows ? windowIconWindows : windowIconMacOs;
+
+// TODO: check for unsupported
+const osIconsMapping = {
+    [OperatingSystem.Linux]: {
+        windowsIconPath: windowIconLinux,
+        trayIconPath: trayIconPathLinux,
+        filePathExecutor: executeFilePathLinux,
+    },
+    [OperatingSystem.Windows]: {
+        windowsIconPath: windowIconWindows,
+        trayIconPath: trayIconPathWindows,
+        filePathExecutor: executeFilePathWindows,
+    },
+    [OperatingSystem.macOS]: {
+        windowsIconPath: windowIconMacOs,
+        trayIconPath: trayIconPathMacOs,
+        filePathExecutor: executeFilePathMacOs,
+    }
+}
+const filePathExecutor = osIconsMapping[operatingSystem].filePathExecutor;
+const trayIconFilePath = osIconsMapping[operatingSystem].trayIconPath;
+const windowIconFilePath = osIconsMapping[operatingSystem].windowsIconPath;
+
 const userInputHistoryManager = new UserInputHistoryManager();
 const releaseUrl = "https://github.com/oliverschwendener/ueli/releases/latest";
 const windowsPowerShellPath = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0";

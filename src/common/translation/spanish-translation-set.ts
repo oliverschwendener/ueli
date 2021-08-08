@@ -288,6 +288,17 @@ export const spanishTranslationSet: TranslationSet = {
     windowsHibernation: "Hibernar",
     windowsHibernationDescription: "Poner equipo a hibernar",
 
+    linuxShutdown: "Apagar",
+    linuxShutdownDescription: "Apagar equipo",
+    linuxRestart: "Reiniciar",
+    linuxRestartDescription: "Reiniciar equipo",
+    linuxLogout: "Cerrar sesión",
+    linuxLogoutDescription: "Cerrar sesión del usuario actual",
+    linuxSleep: "Reposo",
+    linuxSleepDescription: "Poner equipo en reposo",
+    linuxLock: "Bloquear",
+    linuxLockDescription: "Bloquear equipo",
+
     calcuator: "Calculadora",
     calculatorCopyToClipboard: "Presiona enter para copiar al portapapeles",
     calculatorDescription: "Este plugin te permite resolver de forma rápida cálculos simples.",

@@ -276,6 +276,17 @@ export interface TranslationSet {
     windowsHibernation: string;
     windowsHibernationDescription: string;
 
+    linuxShutdown: string;
+    linuxShutdownDescription: string;
+    linuxRestart: string;
+    linuxRestartDescription: string;
+    linuxLogout: string;
+    linuxLogoutDescription: string;
+    linuxSleep: string;
+    linuxSleepDescription: string;
+    linuxLock: string;
+    linuxLockDescription: string;
+
     calcuator: string;
     calculatorCopyToClipboard: string;
     calculatorDescription: string;

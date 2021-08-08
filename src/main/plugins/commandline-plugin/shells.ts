@@ -11,3 +11,9 @@ export enum MacOsShell {
     Terminal = "Terminal",
     iTerm = "iTerm",
 }
+
+export enum LinuxShell {
+    GnomeTerminal = "Gnome Terminal",
+    Alacritty = "Alacritty",
+    Bash = "bash",
+}

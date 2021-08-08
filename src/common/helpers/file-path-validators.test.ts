@@ -1,4 +1,4 @@
-import { isValidMacOsFilePath, isValidWindowsFilePath } from "./file-path-validators";
+import { isValidWindowsFilePath, isValidUnixFilePath } from "./file-path-validators";
 
 const validWindowsFilePaths = [
     "C:\\Program Files (x86)\\Some Folder\\some-file.ext",
@@ -30,17 +30,17 @@ describe(isValidWindowsFilePath.name, () => {
     });
 });
 
-describe(isValidMacOsFilePath.name, () => {
+describe(isValidUnixFilePath.name, () => {
     it("should return true if given string is a valid file path", () => {
         validMacOsFilePaths.forEach((validMacOsFilePath) => {
-            const actual = isValidMacOsFilePath(validMacOsFilePath);
+            const actual = isValidUnixFilePath(validMacOsFilePath);
             expect(actual).toBe(true);
         });
     });
 
     it("should return false if given string is an invalid file path", () => {
         invalidMacOsFilePaths.forEach((invalidMacOsFilePath) => {
-            const actual = isValidMacOsFilePath(invalidMacOsFilePath);
+            const actual = isValidUnixFilePath(invalidMacOsFilePath);
             expect(actual).toBe(false);
         });
     });

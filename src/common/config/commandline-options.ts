@@ -1,12 +1,12 @@
 import { getCurrentOperatingSystem } from "../helpers/operating-system-helpers";
 import { platform } from "os";
-import { MacOsShell, WindowsShell } from "../../main/plugins/commandline-plugin/shells";
+import { WindowsShell, MacOsShell, LinuxShell } from "../../main/plugins/commandline-plugin/shells";
 import { OperatingSystem } from "../operating-system";
 
 export interface CommandlineOptions {
     isEnabled: boolean;
     prefix: string;
-    shell: WindowsShell | MacOsShell;
+    shell: WindowsShell | MacOsShell | LinuxShell;
 }
 
 const defaultMacOsCommandlineOptions: CommandlineOptions = {
@@ -21,7 +21,20 @@ const defaultWindowsCommandlineOptions: CommandlineOptions = {
     shell: WindowsShell.Cmd,
 };
 
+const defaultLinuxCommandlineOptions: CommandlineOptions = {
+    isEnabled: true,
+    prefix: ">",
+    shell: LinuxShell.GnomeTerminal,
+}
+
+const defaultCommandlineOptionsMapping = {
+    [OperatingSystem.Windows]: defaultWindowsCommandlineOptions,
+    [OperatingSystem.Linux]: defaultLinuxCommandlineOptions,
+    [OperatingSystem.macOS]: defaultMacOsCommandlineOptions,
+}
+
+const currentOs = getCurrentOperatingSystem(platform());
+// const currentOsVersion = getCurrentOperatingSystemVersion(currentOs, release())
+
 export const defaultCommandlineOptions: CommandlineOptions =
-    getCurrentOperatingSystem(platform()) === OperatingSystem.Windows
-        ? defaultWindowsCommandlineOptions
-        : defaultMacOsCommandlineOptions;
+    defaultCommandlineOptionsMapping[currentOs]

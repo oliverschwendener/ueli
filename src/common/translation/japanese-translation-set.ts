@@ -281,6 +281,17 @@ export const japaneseTranslationSet: TranslationSet = {
     windowsHibernation: "休止",
     windowsHibernationDescription: "コンピューターを休止状態にする",
 
+    linuxShutdown: "シャットダウン",
+    linuxShutdownDescription: "コンピューターをシャットダウンする",
+    linuxRestart: "再起動",
+    linuxRestartDescription: "コンピューターを再起動する",
+    linuxLogout: "ログアウト",
+    linuxLogoutDescription: "現在のユーザーをログアウトする",
+    linuxSleep: "スリープ",
+    linuxSleepDescription: "コンピューターをスリープする",
+    linuxLock: "ロック",
+    linuxLockDescription: "コンピュータをロックする",
+
     calcuator: "計算機",
     calculatorCopyToClipboard: "エンターを押下してクリップボードにコピー",
     calculatorDescription: "このプラグインで簡単な計算を素早く行うことができます。",

@@ -46,7 +46,8 @@ export class ApplicationIconService {
                                 this.logger.debug(`Successfully generated ${applicationsToGenerateIcons.length} icons`);
                                 resolve();
                             })
-                            .catch((err) => reject(err));
+                            .catch(
+                                (err) => reject(err));
                     }
                 })
                 .catch((err) => reject(err));
