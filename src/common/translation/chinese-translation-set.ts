@@ -272,6 +272,17 @@ export const chineseTranslationSet: TranslationSet = {
     windowsHibernation: "休眠",
     windowsHibernationDescription: "储存当前内存信息到硬盘并断电",
 
+    linuxShutdown: "关机",
+    linuxShutdownDescription: "关闭计算机",
+    linuxRestart: "重启",
+    linuxRestartDescription: "重新启动计算机",
+    linuxLogout: "注销",
+    linuxLogoutDescription: "注销当前用户",
+    linuxSleep: "锁定",
+    linuxSleepDescription: "注销当前用户",
+    linuxLock: "锁定",
+    linuxLockDescription: "锁定计算机",
+
     calcuator: "计算器",
     calculatorCopyToClipboard: "按 Enter 复制到剪贴板",
     calculatorDescription: "这个插件可以快速做一些简单计算",

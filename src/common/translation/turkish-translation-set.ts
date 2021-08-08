@@ -281,6 +281,17 @@ export const turkishTranslationSet: TranslationSet = {
     windowsHibernation: "Hazırda",
     windowsHibernationDescription: "Bilgisayarı hazırda bekletme moduna geçir",
 
+    linuxShutdown: "Bilgisayarı Kapat",
+    linuxShutdownDescription: "Bilgisayarı Kapat",
+    linuxRestart: "Yeniden başlat",
+    linuxRestartDescription: "Bilgisayarı yeniden başlat",
+    linuxLogout: "Oturumunu Kapat",
+    linuxLogoutDescription: "Mevcut kullanıcının oturumunu kapat",
+    linuxSleep: "Uyumak",
+    linuxSleepDescription: "Uyku bilgisayar",
+    linuxLock: "Kilitle",
+    linuxLockDescription: "Bilgisayarı kilitle",
+
     calcuator: "Hesap makinesi",
     calculatorCopyToClipboard: "Panoya kopyalamak için enter tuşuna basın",
     calculatorDescription: "Bu eklenti hızlı bir şekilde basit hesaplamalar yapmanızı sağlar.",

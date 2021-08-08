@@ -9,17 +9,20 @@ import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./moda
 import { deepCopy } from "../../common/helpers/object-helpers";
 import { getCurrentOperatingSystem } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
-import { WindowsShell, MacOsShell } from "../../main/plugins/commandline-plugin/shells";
+import { WindowsShell, MacOsShell, LinuxShell } from "../../main/plugins/commandline-plugin/shells";
 import { OperatingSystem } from "../../common/operating-system";
 
 const operatingSystem = getCurrentOperatingSystem(platform());
 
 export const commandlineSettingsComponent = Vue.extend({
     data() {
+        const OsShellMapping = {
+            [OperatingSystem.Windows]: WindowsShell,
+            [OperatingSystem.Linux]: LinuxShell,
+            [OperatingSystem.macOS]: MacOsShell,
+        };
         return {
-            availableShells: Object.values(
-                operatingSystem === OperatingSystem.Windows ? WindowsShell : MacOsShell,
-            ).map((shell) => shell.toString()),
+            availableShells: Object.values(OsShellMapping[operatingSystem]).map((shell) => shell.toString()),
             settingName: PluginSettings.Commandline,
             visible: false,
         };

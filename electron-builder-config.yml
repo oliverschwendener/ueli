@@ -23,6 +23,12 @@ win:
     publish:
         - github
 
+linux:
+    icon: ./img/icons/win/icon-black.ico
+    target:
+        - target: AppImage
+          arch:
+              - x64
 mac:
     icon: ./img/icons/mac/icon-white-circle.icns
     category: public.app-category.utilities

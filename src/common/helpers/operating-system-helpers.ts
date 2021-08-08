@@ -6,6 +6,8 @@ export function getCurrentOperatingSystem(platform: string): OperatingSystem {
             return OperatingSystem.Windows;
         case "darwin":
             return OperatingSystem.macOS;
+        case "linux":
+            return OperatingSystem.Linux;
         default:
             throw new Error(`Platform "${platform}" is not supported`);
     }
@@ -20,6 +22,8 @@ export function getOperatingSystemVersion(
             return getMacOsVersion(operatingSystemRelease);
         case OperatingSystem.Windows:
             return getWindowsVersion(operatingSystemRelease);
+        case OperatingSystem.Linux:
+            return getLinuxVersion();
     }
 }
 
@@ -56,5 +60,16 @@ function getMacOsVersion(operatingSystemRelease: string): OperatingSystemVersion
             return OperatingSystemVersion.MacOsBigSur;
         default:
             throw new Error(`Unsupported macOS version: ${operatingSystemRelease}`);
+    }
+}
+
+// For Linux we case more about desktop environment then OS version since most specific comes from it
+function getLinuxVersion(): OperatingSystemVersion {
+    const desktopEnvironment = process.env["XDG_CURRENT_DESKTOP"]
+    switch (desktopEnvironment) {
+        case "GNOME":
+            return OperatingSystemVersion.LinuxGnome;
+        default:
+            throw new Error(`Unsupported Linux desktop environment: ${desktopEnvironment}`);
     }
 }

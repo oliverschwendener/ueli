@@ -1,7 +1,7 @@
 import { executeCommand } from "./command-executor";
-import { MacOsShell, WindowsShell } from "../plugins/commandline-plugin/shells";
+import { MacOsShell, WindowsShell, LinuxShell } from "../plugins/commandline-plugin/shells";
 
-const unsupportedShellRejection = (shell: WindowsShell | MacOsShell) => {
+const unsupportedShellRejection = (shell: WindowsShell | MacOsShell | LinuxShell) => {
     return Promise.reject(`Unsupported shell: ${shell.toString()}`);
 };
 
@@ -59,3 +59,17 @@ export const windowsCommandLineExecutor = (command: string, shell: WindowsShell)
             return unsupportedShellRejection(shell);
     }
 };
+
+export const linuxCommandLineExecutor = (command: string, shell: LinuxShell): Promise<void> => {
+    switch (shell) {
+        case LinuxShell.GnomeTerminal:
+            return executeCommand(`gnome-terminal -- $SHELL -c "${command}; exec $SHELL"`);
+        case LinuxShell.Alacritty:
+            return executeCommand(`alacritty -e $SHELL -c "${command}; exec $SHELL"`);
+        // This will not keep a shell open. Use only for silent execution.
+        case LinuxShell.Bash:
+            return executeCommand(`bash -c "${command}"`)
+        default:
+            return unsupportedShellRejection(shell);
+    }
+}

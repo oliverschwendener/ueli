@@ -20,6 +20,7 @@ const windowsApplicationSearchOptions: ApplicationSearchOptions = {
     enabled: true,
     showFullFilePath: false,
     useNativeIcons: true,
+
 };
 
 const macOsApplicationSearchOptions: ApplicationSearchOptions = {
@@ -30,7 +31,19 @@ const macOsApplicationSearchOptions: ApplicationSearchOptions = {
     useNativeIcons: true,
 };
 
+const linuxApplicationSearchOptions : ApplicationSearchOptions = {
+    applicationFileExtensions: [".desktop"],
+    applicationFolders: ["/usr/share/applications", `${homedir()}/.local/share/applications`],
+    enabled: true,
+    showFullFilePath: false,
+    useNativeIcons: true,
+}
+
+const applicationSearchMapping = {
+    [OperatingSystem.Linux]: linuxApplicationSearchOptions,
+    [OperatingSystem.Windows]: windowsApplicationSearchOptions,
+    [OperatingSystem.macOS]: macOsApplicationSearchOptions,
+}
+
 export const defaultApplicationSearchOptions =
-    getCurrentOperatingSystem(platform()) === OperatingSystem.Windows
-        ? windowsApplicationSearchOptions
-        : macOsApplicationSearchOptions;
+    applicationSearchMapping[getCurrentOperatingSystem(platform())];

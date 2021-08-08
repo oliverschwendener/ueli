@@ -276,6 +276,17 @@ export const englishTranslationSet: TranslationSet = {
     macOsSleep: "Režim spánku",
     macOsSleepDescription: "Uspat mac",
 
+    linuxShutdown: "Vypnout",
+    linuxShutdownDescription: "Vypnout mac",
+    linuxRestart: "Restartovat",
+    linuxRestartDescription: "Restartovat mac",
+    linuxLogout: "Odhlásit se",
+    linuxLogoutDescription: "Odhlásit aktuálního uživatele",
+    linuxLock: "Zamknout",
+    linuxLockDescription: "Zamknout mac",
+    linuxSleep: "Režim spánku",
+    linuxSleepDescription: "Uspat mac",
+
     calcuator: "Kalkulačka",
     calculatorCopyToClipboard: "Stisknutím klávesy Enter zkopírujete do schránky",
     calculatorDescription: "Tento plugin vám umožňuje rychle provádět jednoduché výpočty.",

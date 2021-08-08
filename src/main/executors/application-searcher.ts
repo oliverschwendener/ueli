@@ -1,8 +1,10 @@
-import { normalize } from "path";
+import { normalize, extname } from "path";
 import { ApplicationSearchOptions } from "../../common/config/application-search-options";
 import { executeCommandWithOutput } from "./command-executor";
 import { Logger } from "../../common/logger/logger";
 import { OperatingSystemVersion } from "../../common/operating-system";
+import { FileHelpers } from "../../common/helpers/file-helpers";
+
 
 export function searchWindowsApplications(
     applicationSearchOptions: ApplicationSearchOptions,
@@ -64,6 +66,29 @@ export function searchMacApplications(
                         .filter((f) => f.length > 2);
 
                     resolve(filePaths);
+                })
+                .catch((err) => reject(err));
+        }
+    });
+}
+
+export function searchLinuxApplications(
+    applicationSearchOptions: ApplicationSearchOptions,
+    logger: Logger,
+    operatingSystemVersion: OperatingSystemVersion,
+): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+        if (applicationSearchOptions.applicationFolders.length === 0) {
+            resolve([]);
+        } else {
+            const appFilePromises = applicationSearchOptions.applicationFolders
+                .map(folder => FileHelpers.readFilesFromFolder(folder))
+            Promise.all(appFilePromises)
+                .then((applicationFilePaths) => {
+                    const desktopAppFiles = applicationFilePaths
+                        .flat()
+                        .filter((f) => applicationSearchOptions.applicationFileExtensions.includes(extname(f)));
+                    resolve(desktopAppFiles);
                 })
                 .catch((err) => reject(err));
         }

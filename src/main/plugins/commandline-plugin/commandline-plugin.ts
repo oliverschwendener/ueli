@@ -5,7 +5,7 @@ import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { defaultTerminalIcon } from "../../../common/icon/default-icons";
 import { CommandlineOptions } from "../../../common/config/commandline-options";
-import { WindowsShell, MacOsShell } from "./shells";
+import { WindowsShell, MacOsShell, LinuxShell } from "./shells";
 import { Logger } from "../../../common/logger/logger";
 
 export class CommandlinePlugin implements ExecutionPlugin {
@@ -14,7 +14,7 @@ export class CommandlinePlugin implements ExecutionPlugin {
     constructor(
         private config: CommandlineOptions,
         private translationSet: TranslationSet,
-        private readonly commandlineExecutor: (command: string, shell: WindowsShell | MacOsShell) => Promise<void>,
+        private readonly commandlineExecutor: (command: string, shell: WindowsShell | MacOsShell | LinuxShell) => Promise<void>,
         private readonly logger: Logger,
     ) {}
 

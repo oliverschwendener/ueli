@@ -9,7 +9,7 @@ import {
     isValidShortcutToAdd,
 } from "../../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
 import { NotificationType } from "../../../common/notification-type";
-import { isValidWindowsFilePath, isValidMacOsFilePath } from "../../../common/helpers/file-path-validators";
+import { isValidWindowsFilePath, isValidUnixFilePath } from "../../../common/helpers/file-path-validators";
 import { getCurrentOperatingSystem } from "../../../common/helpers/operating-system-helpers";
 import { showNotification } from "../../notifications";
 import { getFilePath, getFolderPath } from "../../dialogs";
@@ -43,7 +43,7 @@ export const shortcutEditingModal = Vue.extend({
         saveButtonClick(): void {
             const translations: TranslationSet = this.translations;
             const filePathValidator =
-                operatingSystem === OperatingSystem.Windows ? isValidWindowsFilePath : isValidMacOsFilePath;
+                operatingSystem === OperatingSystem.Windows ? isValidWindowsFilePath : isValidUnixFilePath;
             if (isValidShortcutToAdd(this.shortcut, filePathValidator)) {
                 vueEventDispatcher.$emit(VueEventChannels.shortcutEdited, this.shortcut, this.editMode, this.saveIndex);
                 this.resetModal();

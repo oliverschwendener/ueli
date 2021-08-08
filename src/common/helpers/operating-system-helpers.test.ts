@@ -27,7 +27,6 @@ const invalidMacOsPlatformIdentifiers = [
     "mac operating system",
     "macintosh",
     "apple",
-    "shit",
 ];
 
 describe(getCurrentOperatingSystem, () => {
@@ -42,7 +41,7 @@ describe(getCurrentOperatingSystem, () => {
     it("should throw an error when passing in an unsupported platform identifier", () => {
         let errorCounter = 0;
 
-        const unsupportedPlatformIdentifiers = ["linux", "freebsd", "openbsd", "sunos", "bsd", "aix", "whatever"];
+        const unsupportedPlatformIdentifiers = ["freebsd", "openbsd", "sunos", "bsd", "aix", "whatever"];
 
         invalidWindowsPlatformIdentifiers.forEach((invalidWindowsPlatformIdentifier) => {
             unsupportedPlatformIdentifiers.push(invalidWindowsPlatformIdentifier);

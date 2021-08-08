@@ -274,6 +274,17 @@ export const koreanTranslationSet: TranslationSet = {
     windowsHibernation: "최대 절전 모드",
     windowsHibernationDescription: "컴퓨터를 최대 절전 모드로 설정합니다",
 
+    linuxShutdown: "시스템 종료",
+    linuxShutdownDescription: "컴퓨터를 종료합니다",
+    linuxRestart: "재시동",
+    linuxRestartDescription: "컴퓨터를 재시작합니다",
+    linuxLogout: "로그아웃",
+    linuxLogoutDescription: "현재 사용자 로그아웃",
+    linuxSleep: "잠자기",
+    linuxSleepDescription: "컴퓨터 잠자기",
+    linuxLock: "잠금",
+    linuxLockDescription: "컴퓨터 잠금",
+
     calcuator: "계산기",
     calculatorCopyToClipboard: "Enter를 눌러 계산 결과를 클립보드에 복사",
     calculatorDescription: "이 플러그인을 사용하면 간단한 계산을 신속하게 수행할 수 있습니다.",

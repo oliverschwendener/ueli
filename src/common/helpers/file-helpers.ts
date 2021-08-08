@@ -1,4 +1,4 @@
-import { Stats, readdir, lstat, unlink, exists, writeFile, existsSync, mkdirSync, readFile } from "fs";
+import { Stats, readdir, lstat, unlink, exists, writeFile, existsSync, mkdirSync, readFile, copyFile } from "fs";
 import { join } from "path";
 
 interface FileStat {
@@ -92,6 +92,18 @@ export class FileHelpers {
     public static writeFile(filePath: string, fileContent: string): Promise<void> {
         return new Promise((resolve, reject) => {
             writeFile(filePath, fileContent, (err) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        });
+    }
+
+    public static copyFile(src: string, dst: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            copyFile(src, dst, (err) => {
                 if (err) {
                     reject(err);
                 } else {

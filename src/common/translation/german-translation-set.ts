@@ -280,6 +280,17 @@ export const germanTranslationSet: TranslationSet = {
     windowsHibernation: "Ruhezustand",
     windowsHibernationDescription: "Computer in Ruhezustand versetzen",
 
+    linuxShutdown: "Ausschalten",
+    linuxShutdownDescription: "Computer ausschalten",
+    linuxRestart: "Neustart",
+    linuxRestartDescription: "Computer neu starten",
+    linuxLogout: "Abmelden",
+    linuxLogoutDescription: "Aktuellen Benutzer abmelden",
+    linuxSleep: "Ruhemodus aktivieren",
+    linuxSleepDescription: "Ruhemodus",
+    linuxLock: "Sperren",
+    linuxLockDescription: "Computer sperren",
+
     calcuator: "Rechner",
     calculatorCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",
     calculatorDescription: "Dieses Plugin erlaubt es dir schnell einfache Rechnungen zu machen.",

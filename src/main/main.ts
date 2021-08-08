@@ -29,16 +29,16 @@ import { getErrorSearchResultItem } from "../common/error-search-result-item";
 import { FileHelpers } from "./../common/helpers/file-helpers";
 import { ueliTempFolder, logFilePath } from "../common/helpers/ueli-helpers";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
-import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-helpers";
+import { trayIconPathWindows, trayIconPathMacOs, trayIconPathLinux } from "./helpers/tray-icon-helpers";
 import { isValidHotKey } from "../common/global-hot-key/global-hot-key-helpers";
 import { NotificationType } from "../common/notification-type";
 import { UserInputHistoryManager } from "./user-input-history-manager";
 import { getCurrentOperatingSystem, getOperatingSystemVersion } from "../common/helpers/operating-system-helpers";
-import { executeFilePathWindows, executeFilePathMacOs } from "./executors/file-path-executor";
+import { executeFilePathWindows, executeFilePathLinux, executeFilePathMacOs } from "./executors/file-path-executor";
 import { UpdateCheckResult } from "../common/update-check-result";
 import { ProductionLogger } from "../common/logger/production-logger";
 import { DevLogger } from "../common/logger/dev-logger";
-import { windowIconWindows, windowIconMacOs } from "./helpers/window-icon-helpers";
+import { windowIconWindows, windowIconMacOs, windowIconLinux } from "./helpers/window-icon-helpers";
 import { toHex } from "./plugins/color-converter-plugin/color-converter-helpers";
 import { deepCopy } from "../common/helpers/object-helpers";
 import { PluginType } from "./plugin-type";
@@ -57,9 +57,29 @@ const operatingSystemVersion = getOperatingSystemVersion(operatingSystem, releas
 const appIsInDevelopment = isDev(process.execPath);
 const minimumRefreshIntervalInSeconds = 10;
 const configRepository = new ElectronStoreConfigRepository(deepCopy(defaultUserConfigOptions));
-const filePathExecutor = operatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
-const trayIconFilePath = operatingSystem === OperatingSystem.Windows ? trayIconPathWindows : trayIconPathMacOs;
-const windowIconFilePath = operatingSystem === OperatingSystem.Windows ? windowIconWindows : windowIconMacOs;
+
+// TODO: check for unsupported
+const osIconsMapping = {
+    [OperatingSystem.Linux]: {
+        windowsIconPath: windowIconLinux,
+        trayIconPath: trayIconPathLinux,
+        filePathExecutor: executeFilePathLinux,
+    },
+    [OperatingSystem.Windows]: {
+        windowsIconPath: windowIconWindows,
+        trayIconPath: trayIconPathWindows,
+        filePathExecutor: executeFilePathWindows,
+    },
+    [OperatingSystem.macOS]: {
+        windowsIconPath: windowIconMacOs,
+        trayIconPath: trayIconPathMacOs,
+        filePathExecutor: executeFilePathMacOs,
+    }
+}
+const filePathExecutor = osIconsMapping[operatingSystem].filePathExecutor;
+const trayIconFilePath = osIconsMapping[operatingSystem].trayIconPath;
+const windowIconFilePath = osIconsMapping[operatingSystem].windowsIconPath;
+
 const userInputHistoryManager = new UserInputHistoryManager();
 const releaseUrl = "https://github.com/oliverschwendener/ueli/releases/latest";
 const windowsPowerShellPath = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0";

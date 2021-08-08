@@ -5,6 +5,6 @@ export function isValidWindowsFilePath(filePath: string): boolean {
     return /^(([a-zA-Z]:\\)|(\\{2}))[\\\S|*\S]?.*$/.test(filePath);
 }
 
-export function isValidMacOsFilePath(filePath: string): boolean {
+export function isValidUnixFilePath(filePath: string): boolean {
     return /^\/$|(^(?=\/)|^\.|^\.\.)(\/(?=[^/\0])[^/\0]+)*\/?$/.test(filePath);
 }
