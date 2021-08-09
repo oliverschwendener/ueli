@@ -45,7 +45,7 @@
         "@types/sqlite3": "^3.1.6",
         "@types/vue-color": "^2.4.2",
         "axios": "^0.21.1",
-        "color": "^3.1.2",
+        "color": "^4.0.1",
         "electron": "^11.2.3",
         "electron-builder": "^22.9.1",
         "electron-store": "^5.1.1",
@@ -64,14 +64,14 @@
         "vue-color": "^2.7.1",
         "webpack": "^5.30.0",
         "webpack-cli": "^4.6.0",
-        "winston": "^3.2.1"
+        "winston": "^3.3.3"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.14.0",
         "bulma": "^0.9.2",
         "bulma-extensions": "^6.2.7",
         "ini": "^2.0.0",
-        "sqlite": "^4.0.19",
-        "sqlite3": "^5.0.0"
+        "sqlite": "^4.0.23",
+        "sqlite3": "^5.0.2"
     }
 }
