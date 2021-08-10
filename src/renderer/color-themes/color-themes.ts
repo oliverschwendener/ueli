@@ -76,6 +76,25 @@ const snowStorm: ColorThemeOptions = {
     scrollbarForegroundColor: "#ECEFF4",
 };
 
+const shadesOfPurple: ColorThemeOptions = {
+    name: "Shades Of Purple",
+
+    userInputBackgroundColor: "#1e1e3f",
+    userInputTextColor: "#b362ff",
+
+    searchResultsBackgroundColor: "#1e1e3f",
+
+    searchResultsItemActiveBackgroundColor: "#fad000",
+    searchResultsItemActiveDescriptionColor: "#1e1e3f",
+    searchResultsItemActiveTextColor: "#4d21fc",
+
+    searchResultsItemDescriptionTextColor: "#4d21fc",
+    searchResultsItemNameTextcolor: "#aab2c0",
+
+    scrollbarBackgroundColor: "#1e1e3f",
+    scrollbarForegroundColor: "#fad000",
+};
+
 export const atomOneDark: ColorThemeOptions = {
     name: "Atom One Dark",
 
@@ -95,4 +114,4 @@ export const atomOneDark: ColorThemeOptions = {
     scrollbarForegroundColor: "#3d444f",
 };
 
-export const colorThemes: ColorThemeOptions[] = [atomOneDark, dark, light, polarNight, snowStorm];
+export const colorThemes: ColorThemeOptions[] = [atomOneDark, dark, light, polarNight, snowStorm, shadesOfPurple];
