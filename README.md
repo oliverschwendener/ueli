@@ -271,6 +271,7 @@ $ yarn package
 ## Alternatives
 
 -   [khanhas/ueli](https://github.com/khanhas/ueli)
+-   [Flow-Launcher](https://github.com/Flow-Launcher/Flow.Launcher)
 -   [Launchy](https://www.launchy.net/)
 -   [Wox](https://github.com/Wox-launcher/Wox)
 -   [Keypirinha](http://keypirinha.com/)
