@@ -144,9 +144,8 @@ body {
 }
 
 .search-results__item {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
     height: var(--search-results--item-height);
     padding: 0 var(--search-results--item-side-padding);
@@ -208,12 +207,12 @@ body {
 }
 
 .search-results__item-info-container {
-    flex-grow: 1;
     padding: 0 var(--search-results--item-info-container-padding);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    max-width: calc(100% - var(--search-results--item-icon-size));
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .search-results__item-number-container {
