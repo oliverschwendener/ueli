@@ -314,7 +314,7 @@ export const spanishTranslationSet: TranslationSet = {
     workflowIcon: "Icono",
     workflowExecutionSteps: "Etapas de ejecución",
     workflowExecutionArgumentType: "Tipo de argumento de ejecución",
-    wofkflowExecutionArgumentTypeCommandlineTool: "Herramienta de línea de comandos",
+    workflowExecutionArgumentTypeCommandlineTool: "Herramienta de línea de comandos",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "Etapa de ejecución inválida",
     workflowInvalidWorkflow: "Flujo de trabajo inválido",

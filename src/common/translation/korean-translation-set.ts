@@ -305,7 +305,7 @@ export const koreanTranslationSet: TranslationSet = {
     workflowIcon: "아이콘",
     workflowExecutionSteps: "실행 순서",
     workflowExecutionArgumentType: "실행 인자 유형",
-    wofkflowExecutionArgumentTypeCommandlineTool: "명령줄 도구",
+    workflowExecutionArgumentTypeCommandlineTool: "명령줄 도구",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "올바르지 않은 실행 순서",
     workflowInvalidWorkflow: "올바르지 않은 워크플로우",
