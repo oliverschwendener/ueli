@@ -268,6 +268,8 @@ export const englishTranslationSet: TranslationSet = {
     windowsShutdownDescription: "Shut down computer",
     windowsRestart: "Restart",
     windowsRestartDescription: "Restart computer",
+    windowsReboot: "Reboot",
+    windowsRebootDescription: "Restart computer",
     windowsSignout: "Sign out",
     windowsSignoutDescription: "Sign out current user",
     windowsLock: "Lock",
