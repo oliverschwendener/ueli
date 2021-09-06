@@ -307,7 +307,7 @@ export const englishTranslationSet: TranslationSet = {
     workflowIcon: "Ikona",
     workflowExecutionSteps: "Prováděcí kroky",
     workflowExecutionArgumentType: "Argument typu spuštění",
-    wofkflowExecutionArgumentTypeCommandlineTool: "Příkazový řádek",
+    workflowExecutionArgumentTypeCommandlineTool: "Příkazový řádek",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "Neplatný krok spuštění",
     workflowInvalidWorkflow: "Neplatný workflow",

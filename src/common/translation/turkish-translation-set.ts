@@ -313,7 +313,7 @@ export const turkishTranslationSet: TranslationSet = {
     workflowIcon: "İkon",
     workflowExecutionSteps: "Yürütme adımları",
     workflowExecutionArgumentType: "Yürütme parametresi türü",
-    wofkflowExecutionArgumentTypeCommandlineTool: "Komut Satırı Aracı",
+    workflowExecutionArgumentTypeCommandlineTool: "Komut Satırı Aracı",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "Geçersiz yürütme adımı",
     workflowInvalidWorkflow: "Geçersiz iş akışı",

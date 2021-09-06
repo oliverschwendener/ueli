@@ -309,7 +309,7 @@ export const englishTranslationSet: TranslationSet = {
     workflowIcon: "Icon",
     workflowExecutionSteps: "Execution steps",
     workflowExecutionArgumentType: "Executionargument Type",
-    wofkflowExecutionArgumentTypeCommandlineTool: "Commandline Tool",
+    workflowExecutionArgumentTypeCommandlineTool: "Commandline Tool",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "Invalid execution step",
     workflowInvalidWorkflow: "Invalid workflow",
