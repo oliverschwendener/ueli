@@ -86,6 +86,7 @@ let trayIcon: Tray;
 let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow;
 let lastWindowPosition = config.generalOptions.lastWindowPosition;
+let lastSearchUserInput: string | undefined;
 
 let translationSet = getTranslationSet(config.generalOptions.language);
 const logger = appIsInDevelopment ? new DevLogger() : new ProductionLogger(logFilePath, filePathExecutor);
@@ -715,9 +716,14 @@ function registerAllIpcListeners() {
     );
 
     ipcMain.on(IpcChannels.search, (event: Electron.IpcMainEvent, userInput: string) => {
+        lastSearchUserInput = userInput;
         searchEngine
             .getSearchResults(userInput)
-            .then((result) => updateSearchResults(result, event.sender))
+            .then((result) => {
+                if (lastSearchUserInput === userInput) {
+                    updateSearchResults(result, event.sender);
+                }
+            })
             .catch((err) => {
                 logger.error(err);
                 noSearchResultsFound();
