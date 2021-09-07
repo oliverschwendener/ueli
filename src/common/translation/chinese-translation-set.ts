@@ -304,7 +304,7 @@ export const chineseTranslationSet: TranslationSet = {
     workflowIcon: "图标",
     workflowExecutionSteps: "动作",
     workflowExecutionArgumentType: "运行参数类型",
-    wofkflowExecutionArgumentTypeCommandlineTool: "命令行工具",
+    workflowExecutionArgumentTypeCommandlineTool: "命令行工具",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "无效的动作",
     workflowInvalidWorkflow: "无效的工作流",

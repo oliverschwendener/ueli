@@ -301,7 +301,7 @@ export interface TranslationSet {
     workflowIcon: string;
     workflowExecutionSteps: string;
     workflowExecutionArgumentType: string;
-    wofkflowExecutionArgumentTypeCommandlineTool: string;
+    workflowExecutionArgumentTypeCommandlineTool: string;
     workflowExecutionArgumentTypeUrl: string;
     workflowInvalidExecutionStep: string;
     workflowInvalidWorkflow: string;

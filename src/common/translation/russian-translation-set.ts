@@ -308,7 +308,7 @@ export const russianTranslationSet: TranslationSet = {
     workflowIcon: "Иконка",
     workflowExecutionSteps: "Шаги выполнения",
     workflowExecutionArgumentType: "Тип аргумента выполнения",
-    wofkflowExecutionArgumentTypeCommandlineTool: "Командная строка",
+    workflowExecutionArgumentTypeCommandlineTool: "Командная строка",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "Указан не верный шаг.",
     workflowInvalidWorkflow: "Неправельный ярлык",

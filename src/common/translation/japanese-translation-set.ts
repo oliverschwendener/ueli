@@ -309,7 +309,7 @@ export const japaneseTranslationSet: TranslationSet = {
     workflowIcon: "アイコン",
     workflowExecutionSteps: "実行ステップ",
     workflowExecutionArgumentType: "実行引数型",
-    wofkflowExecutionArgumentTypeCommandlineTool: "コマンドラインツール",
+    workflowExecutionArgumentTypeCommandlineTool: "コマンドラインツール",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "無効な実行ステップ",
     workflowInvalidWorkflow: "無効なワークフロー",

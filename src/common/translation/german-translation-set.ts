@@ -314,7 +314,7 @@ export const germanTranslationSet: TranslationSet = {
     workflowIcon: "Icon",
     workflowExecutionSteps: "Ausführungsschritte",
     workflowExecutionArgumentType: "Ausführungsargumenttyp",
-    wofkflowExecutionArgumentTypeCommandlineTool: "Kommandozeilenprogramm",
+    workflowExecutionArgumentTypeCommandlineTool: "Kommandozeilenprogramm",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "Ungültiger Ausführungsschritt",
     workflowInvalidWorkflow: "Ungültiger Workflow",
