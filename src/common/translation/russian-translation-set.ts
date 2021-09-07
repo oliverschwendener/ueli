@@ -367,4 +367,9 @@ export const russianTranslationSet: TranslationSet = {
 
     controlPanel: "панель управления",
     controlPanelSettingsDescription: "Этот плагин позволяет быстро находить элементы панели управления.",
+
+    weather: "",
+    weatherPrefix: "",
+    weatherSettingsDescription: "",
+    weatherTemperatureUnit: "",
 };

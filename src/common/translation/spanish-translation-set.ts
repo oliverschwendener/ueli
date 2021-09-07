@@ -375,4 +375,9 @@ export const spanishTranslationSet: TranslationSet = {
 
     controlPanel: "Panel de control",
     controlPanelSettingsDescription: "Este plugin te permite encontrar rápidamente elementos del panel de control.",
+
+    weather: "",
+    weatherPrefix: "",
+    weatherSettingsDescription: "",
+    weatherTemperatureUnit: "",
 };

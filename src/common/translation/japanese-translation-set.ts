@@ -111,8 +111,7 @@ export const japaneseTranslationSet: TranslationSet = {
     appearanceSettingsShowDescriptionOnAllSearchResults: "全ての検索結果に説明を表示",
     appearanceSettingsShowSearchIcon: "検索領域に検索アイコンを表示",
     appearanceSettingsShowSearchResultNumbers: "検索結果の番号を表示",
-    appearanceSettingsResetWarningMessage:
-        "全ての外観設定をデフォルトにリセットします。続行しますか？",
+    appearanceSettingsResetWarningMessage: "全ての外観設定をデフォルトにリセットします。続行しますか？",
     appearanceSettingsAllowTransparentBackground: "背景の透過を許可",
     appearanceSettingsFontFamily: "フォントファミリ",
     appearanceSettingsUserInputBorderRadius: "入力欄の境界コーナー半径",
@@ -130,8 +129,7 @@ export const japaneseTranslationSet: TranslationSet = {
     colorThemeSettings: "配色テーマ",
     colorThemeSettingsImportColorTheme: "配色テーマのインポート",
     colorThemeSettingsExportColorTheme: "配色テーマのエクスポート",
-    colorThemeSettingsResetWarning:
-        "全ての配色テーマ設定をデフォルトにリセットします。続行しますか？",
+    colorThemeSettingsResetWarning: "全ての配色テーマ設定をデフォルトにリセットします。続行しますか？",
     colorThemeExportSucceeded: "配色テーマが正常にエクスポートされました",
     colorThemeExportFailed: "配色テーマのエクスポートに失敗しました",
     colorThemeImportSucceeded: "配色テーマが正常にインポートされました",
@@ -175,8 +173,7 @@ export const japaneseTranslationSet: TranslationSet = {
     searchEngineSettingsFuzzy: "曖昧",
     searchEngineSettingsBlacklist: "ブラックリスト",
     searchEngineSettingsMaxSearchResults: "検索結果最大件数",
-    searchEngineSettingsResetWarning:
-        "全ての検索エンジン設定をデフォルトにリセットします。続行しますか？",
+    searchEngineSettingsResetWarning: "全ての検索エンジン設定をデフォルトにリセットします。続行しますか？",
 
     shortcutSettings: "ショートカット",
     shortcutSettingsDescription: `このプラグインは独自のショートカットを設定することで素早くファイルやウェブサイトをオープンすることができます。`,
@@ -251,7 +248,8 @@ export const japaneseTranslationSet: TranslationSet = {
     operatingSystemCommandsSettingsDescription: `オペレーティングシステムコマンドは例えばコンピューターのシャットダウンや再起動といったオペレーティングシステムをコントロールする基本的なコマンドです。`,
 
     operatingSystemSettings: "オペレーティングシステム設定",
-    operatingSystemSettingsSettingsDescription: "このプラグインはオペレーションシステムの設定を素早く探し出すことができます。",
+    operatingSystemSettingsSettingsDescription:
+        "このプラグインはオペレーションシステムの設定を素早く探し出すことができます。",
 
     macOsShutdown: "シャットダウン",
     macOsShutdownDescription: "コンピューターをシャットダウンする",
@@ -360,8 +358,7 @@ export const japaneseTranslationSet: TranslationSet = {
     yes: "はい",
     no: "いいえ",
     resetToDefault: "デフォルトにリセットしますか？",
-    resetPluginSettingsToDefaultWarning:
-        "このプラグインの設定を全てデフォルトにリセットします。続行しますか？",
+    resetPluginSettingsToDefaultWarning: "このプラグインの設定を全てデフォルトにリセットします。続行しますか？",
     filePath: "ファイルパス",
     folderPath: "フォルダーパス",
     chooseFile: "ファイルの選択",
@@ -370,4 +367,9 @@ export const japaneseTranslationSet: TranslationSet = {
 
     controlPanel: "コントロールパネル",
     controlPanelSettingsDescription: "このプラグインでコントロールパネルの項目を素早く見つけることができます。",
+
+    weather: "",
+    weatherPrefix: "",
+    weatherSettingsDescription: "",
+    weatherTemperatureUnit: "",
 };

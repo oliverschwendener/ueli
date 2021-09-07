@@ -361,4 +361,9 @@ export const chineseTranslationSet: TranslationSet = {
 
     controlPanel: "控制面板",
     controlPanelSettingsDescription: "这个插件让你可以搜索控制面板项",
+
+    weather: "",
+    weatherPrefix: "",
+    weatherSettingsDescription: "",
+    weatherTemperatureUnit: "",
 };

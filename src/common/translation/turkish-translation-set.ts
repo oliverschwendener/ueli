@@ -374,4 +374,9 @@ export const turkishTranslationSet: TranslationSet = {
 
     controlPanel: "Kontrol Paneli",
     controlPanelSettingsDescription: "Bu eklenti, kontrol paneli öğelerini hızlı bir şekilde bulmanızı sağlar.",
+
+    weather: "",
+    weatherPrefix: "",
+    weatherSettingsDescription: "",
+    weatherTemperatureUnit: "",
 };

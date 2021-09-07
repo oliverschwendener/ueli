@@ -373,4 +373,9 @@ export const germanTranslationSet: TranslationSet = {
 
     controlPanel: "Systemsteuerung",
     controlPanelSettingsDescription: "Dieses Plugin erlaubt es dir, Elemente der Systemsteuerung schnell zu finden.",
+
+    weather: "",
+    weatherPrefix: "",
+    weatherSettingsDescription: "",
+    weatherTemperatureUnit: "",
 };

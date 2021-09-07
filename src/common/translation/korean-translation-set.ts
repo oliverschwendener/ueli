@@ -365,4 +365,9 @@ export const koreanTranslationSet: TranslationSet = {
 
     controlPanel: "제어판",
     controlPanelSettingsDescription: "이 플러그인을 사용하면 제어판 항목을 빠르게 찾을 수 있습니다.",
+
+    weather: "",
+    weatherPrefix: "",
+    weatherSettingsDescription: "",
+    weatherTemperatureUnit: "",
 };
