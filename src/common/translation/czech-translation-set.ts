@@ -256,6 +256,7 @@ export const englishTranslationSet: TranslationSet = {
     windowsShutdownDescription: "Vypnout počítač",
     windowsRestart: "Restartovat",
     windowsRestartDescription: "Restartovat počítač",
+    windowsReboot: "Restartujte",
     windowsSignout: "Odhlásit se",
     windowsSignoutDescription: "Odhlásit aktuálního uživatele",
     windowsLock: "Zamknout",

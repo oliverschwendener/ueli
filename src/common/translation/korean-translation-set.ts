@@ -265,6 +265,7 @@ export const koreanTranslationSet: TranslationSet = {
     windowsShutdownDescription: "컴퓨터를 종료합니다",
     windowsRestart: "다시 시작",
     windowsRestartDescription: "컴퓨터를 재시작합니다",
+    windowsReboot: "재부팅",
     windowsSignout: "로그아웃",
     windowsSignoutDescription: "현재 사용자 로그아웃",
     windowsLock: "잠금",

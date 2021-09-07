@@ -263,6 +263,7 @@ export const chineseTranslationSet: TranslationSet = {
     windowsShutdownDescription: "关闭计算机",
     windowsRestart: "重启",
     windowsRestartDescription: "重新启动计算机",
+    windowsReboot: "重启",
     windowsSignout: "注销",
     windowsSignoutDescription: "注销当前用户",
     windowsLock: "锁定",

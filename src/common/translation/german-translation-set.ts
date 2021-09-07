@@ -271,6 +271,7 @@ export const germanTranslationSet: TranslationSet = {
     windowsShutdownDescription: "Computer herunterfahren",
     windowsRestart: "Neu starten",
     windowsRestartDescription: "Computer neu starten",
+    windowsReboot: "Neustart",
     windowsSignout: "Abmelden",
     windowsSignoutDescription: "Aktuellen Benutzer abmelden",
     windowsLock: "Sperren",
