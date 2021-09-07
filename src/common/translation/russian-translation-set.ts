@@ -267,7 +267,6 @@ export const russianTranslationSet: TranslationSet = {
     windowsRestart: "Перезагрузить",
     windowsRestartDescription: "Перезагрузить компьютер",
     windowsReboot: "Перезагрузить",
-    windowsRebootDescription: "Перезагрузить компьютер",
     windowsSignout: "Выйти",
     windowsSignoutDescription: "Выйти из учетной записи Windows",
     windowsLock: "Заблокировать",

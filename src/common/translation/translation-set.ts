@@ -261,7 +261,6 @@ export interface TranslationSet {
     windowsRestart: string;
     windowsRestartDescription: string;
     windowsReboot: string;
-    windowsRebootDescription: string;
     windowsSignout: string;
     windowsSignoutDescription: string;
     windowsLock: string;

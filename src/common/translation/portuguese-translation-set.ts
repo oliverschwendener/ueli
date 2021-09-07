@@ -273,7 +273,6 @@ export const portugueseTranslationSet: TranslationSet = {
     windowsRestart: "Reiniciar",
     windowsRestartDescription: "Reiniciar o computador",
     windowsReboot: "Reinício",
-    windowsRebootDescription: "Reiniciar o computador",
     windowsSignout: "Sair",
     windowsSignoutDescription: "Sair do usuário atual",
     windowsLock: "Travar",

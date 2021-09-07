@@ -273,7 +273,6 @@ export const turkishTranslationSet: TranslationSet = {
     windowsRestart: "Yeniden başlat",
     windowsRestartDescription: "Bilgisayarı yeniden başlat",
     windowsReboot: "Yeniden Başlat",
-    windowsRebootDescription: "Bilgisayarı yeniden başlat",
     windowsSignout: "Oturumunu Kapat",
     windowsSignoutDescription: "Mevcut kullanıcının oturumunu kapat",
     windowsLock: "Kilitle",

@@ -267,7 +267,6 @@ export const japaneseTranslationSet: TranslationSet = {
     windowsRestart: "再起動",
     windowsRestartDescription: "コンピューターを再起動する",
     windowsReboot: "リブート",
-    windowsRebootDescription: "コンピューターを再起動する",
     windowsSignout: "サインアウト",
     windowsSignoutDescription: "現在のユーザーをサインアウトする",
     windowsLock: "ロック",
