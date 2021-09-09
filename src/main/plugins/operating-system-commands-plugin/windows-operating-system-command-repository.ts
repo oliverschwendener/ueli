@@ -44,7 +44,7 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                     type: IconType.SVG,
                 },
                 name: this.translationSet.windowsRestart,
-                searchable: [this.translationSet.windowsRestart],
+                searchable: [this.translationSet.windowsRestart, this.translationSet.windowsReboot],
             },
             {
                 description: this.translationSet.windowsSignoutDescription,

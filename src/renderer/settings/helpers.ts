@@ -31,7 +31,7 @@ export function getWorkflowExecutionArgumentTypeTranslation(
 ): string {
     switch (type) {
         case WorkflowExecutionArgumentType.CommandlineTool:
-            return translationSet.wofkflowExecutionArgumentTypeCommandlineTool;
+            return translationSet.workflowExecutionArgumentTypeCommandlineTool;
         case WorkflowExecutionArgumentType.FilePath:
             return translationSet.filePath;
         case WorkflowExecutionArgumentType.URL:
