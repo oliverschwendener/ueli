@@ -6,29 +6,41 @@ import { WeatherOptions } from "../../../common/config/weather-options";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { defaultWeatherIcon } from "../../../common/icon/default-icons";
 import { Weather } from "./weather";
+import { GeneralOptions } from "../../../common/config/general-options";
 
 export class WeatherPlugin implements ExecutionPlugin {
-    public readonly pluginType = PluginType.WeatherPlugin;
+    public readonly pluginType = PluginType.Weather;
+    private config: WeatherOptions;
+    private generalConfig: GeneralOptions;
+    private translationSet: TranslationSet;
+    private readonly clipboardCopier: (value: string) => Promise<void>;
+
     constructor(
-        private config: WeatherOptions,
-        private translationSet: TranslationSet,
-        private readonly clipboardCopier: (value: string) => Promise<void>,
-    ) {}
+        config: UserConfigOptions,
+        translationSet: TranslationSet,
+        clipboardCopier: (value: string) => Promise<void>,
+    ) {
+        this.config = config.weatherOptions;
+        this.generalConfig = config.generalOptions;
+        this.translationSet = translationSet;
+        this.clipboardCopier = clipboardCopier;
+    }
 
     public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
         return userInput.startsWith(this.config.prefix);
     }
 
     public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
+        const lang = this.getLanguage(this.generalConfig.language);
         return new Promise((resolve, reject) => {
             const region = userInput.replace(this.config.prefix, "").trim();
-            Weather.getWeatherInfo(region, this.config.temperatureUnit).then((weatherInfo) => {
+            Weather.getWeatherInfo(lang, region, this.config.temperatureUnit).then((weatherInfo) => {
                 const result: SearchResultItem = {
-                    description: weatherInfo.feelsLike,
+                    description: this.translationSet.weatherCopyToClipboard,
                     executionArgument: region,
                     hideMainWindowAfterExecution: true,
                     icon: defaultWeatherIcon,
-                    name: weatherInfo.actualWeather,
+                    name: weatherInfo,
                     originPluginType: this.pluginType,
                     searchable: [],
                 };
@@ -48,8 +60,23 @@ export class WeatherPlugin implements ExecutionPlugin {
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
         return new Promise((resolve) => {
             this.config = updatedConfig.weatherOptions;
+            this.generalConfig = updatedConfig.generalOptions;
             this.translationSet = translationSet;
             resolve();
         });
+    }
+
+    public getLanguage(lang: string): string {
+        if (lang == "English") return "en";
+        if (lang == "Deutsch") return "de";
+        if (lang == "Português") return "pt";
+        if (lang == "Русский") return "ru";
+        if (lang == "Česky") return "cs";
+        if (lang == "Türkçe") return "tr";
+        if (lang == "Español") return "es";
+        if (lang == "简体中文") return "zh";
+        if (lang == "한국어") return "ko";
+        if (lang == "日本語") return "ja";
+        return "en";
     }
 }

@@ -369,8 +369,10 @@ export const japaneseTranslationSet: TranslationSet = {
     controlPanel: "コントロールパネル",
     controlPanelSettingsDescription: "このプラグインでコントロールパネルの項目を素早く見つけることができます。",
 
-    weather: "",
-    weatherPrefix: "",
-    weatherSettingsDescription: "",
-    weatherTemperatureUnit: "",
+    weather: "天気",
+    weatherPrefix: "接頭辞",
+    weatherSettingsDescription:
+        "このプラグインは、あなたが任意の地域の気象条件を確認することができます。リージョンが指定されていない場合、既定では現在の場所の天気が表示されます。データは wttr.in によって提供されます",
+    weatherTemperatureUnit: "温度単位",
+    weatherCopyToClipboard: "エンターを押下してクリップボードにコピー",
 };

@@ -20,7 +20,7 @@ export const weatherSettingsComponent = Vue.extend({
     methods: {
         toggleEnabled() {
             const config: UserConfigOptions = this.config;
-            config.currencyConverterOptions.isEnabled = !config.weatherOptions.isEnabled;
+            config.weatherOptions.isEnabled = !config.weatherOptions.isEnabled;
             this.updateConfig();
         },
         resetAll() {

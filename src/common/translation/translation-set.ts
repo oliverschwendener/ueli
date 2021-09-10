@@ -364,4 +364,5 @@ export interface TranslationSet {
     weatherPrefix: string;
     weatherSettingsDescription: string;
     weatherTemperatureUnit: string;
+    weatherCopyToClipboard: string;
 }

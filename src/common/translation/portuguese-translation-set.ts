@@ -376,8 +376,10 @@ export const portugueseTranslationSet: TranslationSet = {
     controlPanel: "Painel de controle",
     controlPanelSettingsDescription: "Este plugin te habilita a rapidamente encontrar itens do painel de controle.",
 
-    weather: "",
-    weatherPrefix: "",
-    weatherSettingsDescription: "",
-    weatherTemperatureUnit: "",
+    weather: "Tempo",
+    weatherPrefix: "Prefixo",
+    weatherSettingsDescription:
+        "Este plugin permite verificar as condições meteorológicas de qualquer região. Se nenhuma região for fornecida, ela não pode mostrar o tempo de sua localização atual. Os dados são fornecidos por wttr.in",
+    weatherTemperatureUnit: "Unidade de Temperatura",
+    weatherCopyToClipboard: "Pressione Enter para copiar para a área de transferência",
 };

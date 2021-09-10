@@ -376,8 +376,10 @@ export const turkishTranslationSet: TranslationSet = {
     controlPanel: "Kontrol Paneli",
     controlPanelSettingsDescription: "Bu eklenti, kontrol paneli öğelerini hızlı bir şekilde bulmanızı sağlar.",
 
-    weather: "",
-    weatherPrefix: "",
-    weatherSettingsDescription: "",
-    weatherTemperatureUnit: "",
+    weather: "Hava",
+    weatherPrefix: "Ön ek",
+    weatherSettingsDescription:
+        "Bu eklenti, herhangi bir bölgenin hava durumunu kontrol etmenizi sağlar. Hiçbir bölge sağlanmazsa, geçerli konumunuzun hava durumunu göstermek varsayılan olarak sağlanır. Veriler wttr.in tarafından sağlanır",
+    weatherTemperatureUnit: "Sıcaklık Birimi",
+    weatherCopyToClipboard: "Panoya kopyalamak için enter tuşuna basın",
 };

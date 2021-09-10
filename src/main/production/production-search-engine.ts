@@ -215,7 +215,7 @@ export function getProductionSearchEngine(
         new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor, logger),
         new ColorConverterPlugin(config.colorConverterOptions, electronClipboardCopier),
         new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier, getGoogleDictionaryDefinitions),
-        new WeatherPlugin(config.weatherOptions, translationSet, electronClipboardCopier),
+        new WeatherPlugin(config, translationSet, electronClipboardCopier),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [webSearchPlugin];

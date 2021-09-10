@@ -10,6 +10,15 @@ export interface CurrentCondition {
     FeelsLikeF: string;
     cloudcover: string;
     humidity: string;
+    lang_de: LangDe[];
+    lang_pt: LangPt[];
+    lang_ru: LangRu[];
+    lang_cs: LangCs[];
+    lang_tr: LangTr[];
+    lang_es: LangEs[];
+    lang_zh: LangZh[];
+    lang_ko: LangKo[];
+    lang_ja: LangJa[];
     localObsDateTime: string;
     observation_time: string;
     precipInches: string;
@@ -31,6 +40,42 @@ export interface CurrentCondition {
 }
 
 export interface WeatherDesc {
+    value: string;
+}
+
+export interface LangDe {
+    value: string;
+}
+
+export interface LangPt {
+    value: string;
+}
+
+export interface LangRu {
+    value: string;
+}
+
+export interface LangCs {
+    value: string;
+}
+
+export interface LangTr {
+    value: string;
+}
+
+export interface LangEs {
+    value: string;
+}
+
+export interface LangZh {
+    value: string;
+}
+
+export interface LangKo {
+    value: string;
+}
+
+export interface LangJa {
     value: string;
 }
 
