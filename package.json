@@ -44,7 +44,7 @@
         "@types/node-powershell": "^3.1.0",
         "@types/sqlite3": "^3.1.6",
         "@types/vue-color": "^2.4.2",
-        "axios": "^0.21.1",
+        "axios": "^0.21.4",
         "color": "^4.0.1",
         "electron": "^11.2.3",
         "electron-builder": "^22.9.1",
