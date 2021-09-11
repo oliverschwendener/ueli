@@ -7,7 +7,7 @@ export interface WeatherOptions {
 }
 
 export const defaultWeatherOptions: WeatherOptions = {
-    isEnabled: true,
+    isEnabled: false,
     prefix: "wea?",
     temperatureUnit: TemperatureUnit.Celsius,
 };

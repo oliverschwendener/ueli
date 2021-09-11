@@ -23,7 +23,7 @@ export class Weather {
 
                     const weatherDescription = this.getWeatherDescription(lang, currentWeather);
                     const result =
-                        tempUnit == "C"
+                        tempUnit == "Celsius"
                             ? `${currentWeather.temp_C}°C - ${weatherDescription}`
                             : `${currentWeather.temp_F}°F - ${weatherDescription}`;
                     resolve(result);

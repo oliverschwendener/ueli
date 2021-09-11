@@ -34,18 +34,20 @@ export class WeatherPlugin implements ExecutionPlugin {
         const lang = this.getLanguage(this.generalConfig.language);
         return new Promise((resolve, reject) => {
             const region = userInput.replace(this.config.prefix, "").trim();
-            Weather.getWeatherInfo(lang, region, this.config.temperatureUnit).then((weatherInfo) => {
-                const result: SearchResultItem = {
-                    description: this.translationSet.weatherCopyToClipboard,
-                    executionArgument: region,
-                    hideMainWindowAfterExecution: true,
-                    icon: defaultWeatherIcon,
-                    name: weatherInfo,
-                    originPluginType: this.pluginType,
-                    searchable: [],
-                };
-                resolve([result]);
-            });
+            Weather.getWeatherInfo(lang, region, this.config.temperatureUnit)
+                .then((weatherInfo) => {
+                    const result: SearchResultItem = {
+                        description: this.translationSet.weatherCopyToClipboard,
+                        executionArgument: region,
+                        hideMainWindowAfterExecution: true,
+                        icon: defaultWeatherIcon,
+                        name: weatherInfo,
+                        originPluginType: this.pluginType,
+                        searchable: [],
+                    };
+                    resolve([result]);
+                })
+                .catch((error) => reject(error));
         });
     }
 
@@ -58,15 +60,13 @@ export class WeatherPlugin implements ExecutionPlugin {
     }
 
     public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve) => {
-            this.config = updatedConfig.weatherOptions;
-            this.generalConfig = updatedConfig.generalOptions;
-            this.translationSet = translationSet;
-            resolve();
-        });
+        this.config = updatedConfig.weatherOptions;
+        this.generalConfig = updatedConfig.generalOptions;
+        this.translationSet = translationSet;
+        return Promise.resolve();
     }
 
-    public getLanguage(lang: string): string {
+    private getLanguage(lang: string): string {
         if (lang == "English") return "en";
         if (lang == "Deutsch") return "de";
         if (lang == "Português") return "pt";
