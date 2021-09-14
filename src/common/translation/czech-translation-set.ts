@@ -369,4 +369,11 @@ export const englishTranslationSet: TranslationSet = {
 
     controlPanel: "Ovládací panely",
     controlPanelSettingsDescription: "Tento plugin umožňuje rychle najít položky ovládacího panelu.",
+
+    weather: "Počasí",
+    weatherPrefix: "Předpona",
+    weatherSettingsDescription:
+        "Tento plugin umožňuje zkontrolovat povětrnostní podmínky v libovolné oblasti. Pokud není k dispozici žádná oblast, je ve výchozím nastavení možné zobrazit počasí aktuální polohy. Údaje poskytuje wttr.in",
+    weatherTemperatureUnit: "Jednotka teploty",
+    weatherCopyToClipboard: "Stisknutím klávesy Enter zkopírujete do schránky",
 };

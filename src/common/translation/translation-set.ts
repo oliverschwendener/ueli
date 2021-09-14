@@ -359,4 +359,10 @@ export interface TranslationSet {
 
     controlPanel: string;
     controlPanelSettingsDescription: string;
+
+    weather: string;
+    weatherPrefix: string;
+    weatherSettingsDescription: string;
+    weatherTemperatureUnit: string;
+    weatherCopyToClipboard: string;
 }

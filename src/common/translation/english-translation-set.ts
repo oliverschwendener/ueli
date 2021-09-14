@@ -371,4 +371,11 @@ export const englishTranslationSet: TranslationSet = {
 
     controlPanel: "Control Panel",
     controlPanelSettingsDescription: "This plugin enables you to quickly find control panel items.",
+
+    weather: "Weather",
+    weatherPrefix: "Prefix",
+    weatherSettingsDescription:
+        "This plugin enables you to check the weather condition of any region. If no region is provided, it defaults to show the weather of your current location. Data is provided by wttr.in",
+    weatherTemperatureUnit: "Temperature Unit",
+    weatherCopyToClipboard: "Press enter to copy to clipboard",
 };

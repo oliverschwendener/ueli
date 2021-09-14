@@ -368,4 +368,11 @@ export const russianTranslationSet: TranslationSet = {
 
     controlPanel: "панель управления",
     controlPanelSettingsDescription: "Этот плагин позволяет быстро находить элементы панели управления.",
+
+    weather: "Погода",
+    weatherPrefix: "Приставка",
+    weatherSettingsDescription:
+        "Этот плагин позволяет проверить погодные условия любого региона. Если регион не указан, по умолчанию отображается погода текущего местоположения. Данные предоставляются wttr.in",
+    weatherTemperatureUnit: "Единица измерения температуры",
+    weatherCopyToClipboard: "Нажмите enter, чтобы скопировать",
 };

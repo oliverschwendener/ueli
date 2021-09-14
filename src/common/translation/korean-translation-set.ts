@@ -366,4 +366,11 @@ export const koreanTranslationSet: TranslationSet = {
 
     controlPanel: "제어판",
     controlPanelSettingsDescription: "이 플러그인을 사용하면 제어판 항목을 빠르게 찾을 수 있습니다.",
+
+    weather: "날씨",
+    weatherPrefix: "접두사",
+    weatherSettingsDescription:
+        "이 플러그인은 모든 지역의 날씨 상태를 확인할 수 있습니다. 지역이 제공되지 않으면 기본값으로 현재 위치의 날씨를 표시합니다. 데이터는 wttr.in 의해 제공됩니다.",
+    weatherTemperatureUnit: "온도 단위",
+    weatherCopyToClipboard: "Enter를 눌러 계산 결과를 클립보드에 복사",
 };

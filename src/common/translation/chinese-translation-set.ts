@@ -362,4 +362,11 @@ export const chineseTranslationSet: TranslationSet = {
 
     controlPanel: "控制面板",
     controlPanelSettingsDescription: "这个插件让你可以搜索控制面板项",
+
+    weather: "天气",
+    weatherPrefix: "前缀",
+    weatherSettingsDescription:
+        "此插件可让您检查任何区域的天气状况。如果没有提供区域，则默认显示当前位置的天气。数据由 wttr.in 提供",
+    weatherTemperatureUnit: "温度单位",
+    weatherCopyToClipboard: "按 Enter 复制到剪贴板",
 };

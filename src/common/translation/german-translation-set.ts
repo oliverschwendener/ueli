@@ -374,4 +374,11 @@ export const germanTranslationSet: TranslationSet = {
 
     controlPanel: "Systemsteuerung",
     controlPanelSettingsDescription: "Dieses Plugin erlaubt es dir, Elemente der Systemsteuerung schnell zu finden.",
+
+    weather: "Wetter",
+    weatherPrefix: "Präfix",
+    weatherSettingsDescription:
+        "Mit diesem Plugin können Sie die Wetterbedingungen jeder Region überprüfen. Wenn keine Region angegeben wird, wird standardmäßig das Wetter Ihres aktuellen Standorts angezeigt. Die Daten werden von wttr.in zur Verfügung gestellt",
+    weatherTemperatureUnit: "Temperatureinheit",
+    weatherCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",
 };

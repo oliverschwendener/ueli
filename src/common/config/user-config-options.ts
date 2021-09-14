@@ -29,6 +29,7 @@ import { ApplicationSearchOptions, defaultApplicationSearchOptions } from "./app
 import { defaultDictionaryOptions, DictionaryOptions } from "./dictionary-options";
 import { BrowserBookmarksOptions, defaultBrowserBookmarksOptions } from "./browser-bookmarks-options";
 import { ControlPanelOptions, defaultControlPanelOptions } from "./control-panel-options";
+import { WeatherOptions, defaultWeatherOptions } from "./weather-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -56,6 +57,7 @@ export interface UserConfigOptions {
     uwpSearchOptions: UwpSearchOptions;
     browserBookmarksOptions: BrowserBookmarksOptions;
     controlPanelOptions: ControlPanelOptions;
+    weatherOptions: WeatherOptions;
 }
 
 export const defaultUserConfigOptions: UserConfigOptions = {
@@ -82,6 +84,7 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     translationOptions: defaultTranslationOptions,
     urlOptions: defaultUrlOptions,
     uwpSearchOptions: defaultUwpSearchOptions,
+    weatherOptions: defaultWeatherOptions,
     websearchOptions: defaultWebSearchOptions,
     workflowOptions: defaultWorkflowOptions,
 };
