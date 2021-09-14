@@ -16,14 +16,14 @@ export class Weather {
                     }
                     const weatherResult: WeatherAPI = response.data;
                     const currentWeather = weatherResult.current_condition[0];
-                    if (currentWeather.temp_C == null || currentWeather.weatherDesc[0].value == null) {
+                    if (currentWeather.temp_C === null || currentWeather.weatherDesc[0].value === null) {
                         reject(`Unable to get weather information. Result: ${weatherResult}`);
                         return;
                     }
 
                     const weatherDescription = this.getWeatherDescription(lang, currentWeather);
                     const result =
-                        tempUnit == "Celsius"
+                        tempUnit === "Celsius"
                             ? `${currentWeather.temp_C}°C - ${weatherDescription}`
                             : `${currentWeather.temp_F}°F - ${weatherDescription}`;
                     resolve(result);

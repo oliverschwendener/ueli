@@ -67,16 +67,16 @@ export class WeatherPlugin implements ExecutionPlugin {
     }
 
     private getLanguage(lang: string): string {
-        if (lang == "English") return "en";
-        if (lang == "Deutsch") return "de";
-        if (lang == "Português") return "pt";
-        if (lang == "Русский") return "ru";
-        if (lang == "Česky") return "cs";
-        if (lang == "Türkçe") return "tr";
-        if (lang == "Español") return "es";
-        if (lang == "简体中文") return "zh";
-        if (lang == "한국어") return "ko";
-        if (lang == "日本語") return "ja";
+        if (lang === "English") return "en";
+        if (lang === "Deutsch") return "de";
+        if (lang === "Português") return "pt";
+        if (lang === "Русский") return "ru";
+        if (lang === "Česky") return "cs";
+        if (lang === "Türkçe") return "tr";
+        if (lang === "Español") return "es";
+        if (lang === "简体中文") return "zh";
+        if (lang === "한국어") return "ko";
+        if (lang === "日本語") return "ja";
         return "en";
     }
 }
