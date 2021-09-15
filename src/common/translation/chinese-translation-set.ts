@@ -207,7 +207,7 @@ export const chineseTranslationSet: TranslationSet = {
     translationSettingsTargetLanguage: "目标语言",
 
     everythingSearch: "Everything",
-    everythingSearchSettingDescription: `这个插件可以让你使用 Everything 搜索文件。需要从 https://www.voidtools.com/downloads/ 安装 Everything 和 Enverything Command-line Interface`,
+    everythingSearchSettingDescription: `这个插件可以让你使用 Everything 搜索文件。需要从 https://www.voidtools.com/downloads/ 安装 Everything 和 Everything Command-line Interface`,
     everythingSearchPathToBinary: `"es.exe" 的路径`,
     everythingSearchPrefix: "前缀",
     everythingSearchMaxSearchResults: "最大搜索记录",
