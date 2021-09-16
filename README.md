@@ -178,7 +178,7 @@ This plugin enables you to quickly execute multiple things at once.
 
 | Keyboard shortcut                    | Description                                                  |
 | ------------------------------------ | ------------------------------------------------------------ |
-| <kbd>Alt</kbd> <kbd>Space Bar</kbd>  | Open search box                                              |
+| <kbd>Alt</kbd> <kbd>Space Bar</kbd>  | Open search box (Default value, can be adjusted in settings) |
 | <kbd>Enter</kbd>                     | Execute selected search result                               |
 | <kbd>Shift</kbd> <kbd>Enter</kbd>    | Execute selected program as admin (Windows only)             |
 | <kbd>Tab</kbd>                       | Autocomplete file path                                       |
