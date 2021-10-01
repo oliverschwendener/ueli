@@ -43,13 +43,8 @@ export const searchResultsComponent = Vue.extend({
             }
         },
         update(searchResults: SearchResultItem[]) {
-            let counter = 0;
-
             const viewModel = searchResults.map(
-                (searchResult): SearchResultItemViewModel => {
-                    counter++;
-                    return createSearchResultItemViewModel(searchResult, counter);
-                },
+                (searchResult, counter): SearchResultItemViewModel => createSearchResultItemViewModel(searchResult, counter),
             );
 
             if (viewModel.length > 0) {
@@ -61,7 +56,7 @@ export const searchResultsComponent = Vue.extend({
         },
         handleSearchResultPageBrowsing(direction: BrowseDirection): void {
             const searchResults: SearchResultItemViewModel[] = this.searchResults;
-            if (searchResults.length === 0 )
+            if (searchResults.length === 0)
                 return;
 
             const activeSearchResult = searchResults.find(r => r.active);
