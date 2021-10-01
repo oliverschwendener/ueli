@@ -127,8 +127,7 @@ export class SearchEngine {
 
     public autoComplete(searchResultItem: SearchResultItem): string {
         const originPlugin = this.getAllPlugins()
-            .filter((plugin) => plugin.isEnabled())
-            .find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+            .find((plugin) => plugin.isEnabled() && plugin.pluginType === searchResultItem.originPluginType);
 
         if (originPlugin && this.pluginSupportsAutocompletion(originPlugin)) {
             return originPlugin.autoComplete(searchResultItem);
