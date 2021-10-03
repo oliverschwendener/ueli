@@ -176,23 +176,23 @@ This plugin enables you to quickly execute multiple things at once.
 
 ## Keyboard shortcuts
 
-| Keyboard shortcut                    | Description                                                  |
-| ------------------------------------ | ------------------------------------------------------------ |
-| <kbd>Alt</kbd> <kbd>Space Bar</kbd>  | Open search box (Default value, can be adjusted in settings) |
-| <kbd>Enter</kbd>                     | Execute selected search result                               |
-| <kbd>Shift</kbd> <kbd>Enter</kbd>    | Execute selected program as admin (Windows only)             |
-| <kbd>Tab</kbd>                       | Autocomplete file path                                       |
-| <kbd>Ctrl</kbd> <kbd>o</kbd>         | Open the selected program or file at it's location (Windows) |
-| <kbd>Cmd</kbd> <kbd>o</kbd>          | Open the selected program or file at it's location (macOS)   |
-| <kbd>↑</kbd>                         | Scroll up                                                    |
-| <kbd>↓</kbd>                         | Scroll down                                                  |
-| <kbd>Ctrl or Cmd</kbd> <kbd>p</kbd>  | Scroll up                                                    |
-| <kbd>Ctrl or Cmd</kbd> <kbd>n</kbd>  | Scroll down                                                  |
-| <kbd>Ctrl</kbd> <kbd>i</kbd>         | Open settings (Windows)                                      |
-| <kbd>Cmd</kbd> <kbd>,</kbd>          | Open settings (macOS)                                        |
-| <kbd>Shift</kbd> <kbd>↑</kbd>        | Browse user input history up                                 |
-| <kbd>Shift</kbd> <kbd>↓</kbd>        | Browse user input history down                               |
-| <kbd>Ctrl</kbd> <kbd>l</kbd>         | Set focus on user input                                      |
+| Keyboard shortcut                   | Description                                                  |
+| ----------------------------------- | ------------------------------------------------------------ |
+| <kbd>Alt</kbd> <kbd>Space Bar</kbd> | Open search box (Default value, can be adjusted in settings) |
+| <kbd>Enter</kbd>                    | Execute selected search result                               |
+| <kbd>Shift</kbd> <kbd>Enter</kbd>   | Execute selected program as admin (Windows only)             |
+| <kbd>Tab</kbd>                      | Autocomplete file path                                       |
+| <kbd>Ctrl</kbd> <kbd>o</kbd>        | Open the selected program or file at it's location (Windows) |
+| <kbd>Cmd</kbd> <kbd>o</kbd>         | Open the selected program or file at it's location (macOS)   |
+| <kbd>↑</kbd>                        | Scroll up                                                    |
+| <kbd>↓</kbd>                        | Scroll down                                                  |
+| <kbd>Ctrl or Cmd</kbd> <kbd>p</kbd> | Scroll up                                                    |
+| <kbd>Ctrl or Cmd</kbd> <kbd>n</kbd> | Scroll down                                                  |
+| <kbd>Ctrl</kbd> <kbd>i</kbd>        | Open settings (Windows)                                      |
+| <kbd>Cmd</kbd> <kbd>,</kbd>         | Open settings (macOS)                                        |
+| <kbd>Shift</kbd> <kbd>↑</kbd>       | Browse user input history up                                 |
+| <kbd>Shift</kbd> <kbd>↓</kbd>       | Browse user input history down                               |
+| <kbd>Ctrl</kbd> <kbd>l</kbd>        | Set focus on user input                                      |
 
 ## Settings
 
