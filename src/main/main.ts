@@ -556,7 +556,6 @@ function createMainWindow() {
 
     mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
-    mainWindow.webContents.openDevTools();
     mainWindow.on("blur", onBlur);
     mainWindow.on("closed", quitApp);
     mainWindow.on("moved", onMainWindowMove);
