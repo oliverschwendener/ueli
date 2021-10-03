@@ -13,9 +13,12 @@ export interface AppearanceOptions {
     windowWidth: number;
     allowTransparentBackground: boolean;
     fontFamily: string;
+    userInputFontWeight: string;
     userInputBorderRadius: string;
     userInputBottomMargin: number;
     searchResultsBorderRadius: string;
+    searchResultNameFontWeight: string;
+    searchResultDescriptionFontWeight: string;
     scrollbarBorderRadius: string;
 }
 
@@ -36,7 +39,10 @@ export const defaultAppearanceOptions: AppearanceOptions = {
     userInputHeight: 60,
     windowWidth: 600,
     userInputBorderRadius: "0px",
+    userInputFontWeight: "200",
     userInputBottomMargin: 0,
+    searchResultNameFontWeight: "400",
+    searchResultDescriptionFontWeight: "200",
     searchResultsBorderRadius: "0px",
     scrollbarBorderRadius: "0px",
 };

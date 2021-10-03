@@ -119,6 +119,9 @@ export const chineseTranslationSet: TranslationSet = {
     appearanceSettingsSearchResultsBorderRadius: "搜索结果边框圆角",
     appearanceSettingsScrollbarBorderRadius: "滚动条圆角",
     appearanceSettingsBorderRadiusDescription: "这是一个 CSS 值，其形式为： 10px 或 10px 0px 10px 5px",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
 
     settingsUserInputTitle: "搜索栏",
     settingsSearchResultsBoxTitle: "搜索结果栏",

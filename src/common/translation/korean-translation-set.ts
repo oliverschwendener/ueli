@@ -120,6 +120,9 @@ export const koreanTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "스크롤 바 둥글기",
     appearanceSettingsBorderRadiusDescription:
         "이것은 css 값이기 때문에, '10px'처럼 'px'를 추가해야 합니다. 또한 각각의 코너는 '10px 0px 10px 5px'처럼 지정할 수 있습니다.",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
 
     settingsUserInputTitle: "사용자 입력",
     settingsSearchResultsBoxTitle: "검색 결과 박스",

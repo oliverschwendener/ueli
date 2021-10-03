@@ -123,6 +123,9 @@ export const turkishTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Kaydırma çubuğu kenarlık yarıçapı",
     appearanceSettingsBorderRadiusDescription:
         "Bu bir css değeridir, bu nedenle bu '10px' gibi 'px' veya '10px 0px 10px 5px' gibi ayrı köşeler eklemeniz gerekir",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
 
     settingsUserInputTitle: "Kullanıcı girişi",
     settingsSearchResultsBoxTitle: "Arama sonuçları kutusu",

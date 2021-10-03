@@ -121,6 +121,9 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Posuvník border radius",
     appearanceSettingsBorderRadiusDescription:
         "Toto je hodnota CSS, takže musíte přidat 'px' jako např. '10px' nebo oddělit rohy, např. '10px 0px 10px 5px'",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
 
     settingsUserInputTitle: "Vstup uživatele",
     settingsSearchResultsBoxTitle: "Pole výsledků hledání",

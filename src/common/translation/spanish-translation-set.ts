@@ -123,6 +123,9 @@ export const spanishTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Radio de borde de la barra de scroll",
     appearanceSettingsBorderRadiusDescription:
         "Esto es un valor CSS, así que necesitas añadir 'px' de esta manera '10px' o así para esquinas separadas '10px 0px 10px 5px'",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
 
     settingsUserInputTitle: "Campo de entrada",
     settingsSearchResultsBoxTitle: "Caja de resultados de búsqueda",

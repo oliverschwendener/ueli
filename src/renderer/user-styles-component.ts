@@ -1,8 +1,8 @@
 import Vue from "vue";
-import { vueEventDispatcher } from "./vue-event-dispatcher";
-import { VueEventChannels } from "./vue-event-channels";
 import { AppearanceOptions } from "../common/config/appearance-options";
 import { ColorThemeOptions } from "../common/config/color-theme-options";
+import { VueEventChannels } from "./vue-event-channels";
+import { vueEventDispatcher } from "./vue-event-dispatcher";
 
 export const userStylesComponent = Vue.extend({
     props: ["appearance", "colortheme"],
@@ -28,25 +28,28 @@ export const userStylesComponent = Vue.extend({
             --user-input--height: {{ appearance.userInputHeight }}px;
             --search-results--item-height: {{ appearance.searchResultHeight }}px;
 
+            --user-input--font-weight: {{ appearance.userInputFontWeight }};
             --user-input--background-color: {{ colortheme.userInputBackgroundColor }};
             --user-input--color: {{ colortheme.userInputTextColor }};
-            --user-input--border-radius: {{appearance.userInputBorderRadius}};
-            --user-input--bottom-margin: {{appearance.userInputBottomMargin}}px;
+            --user-input--border-radius: {{ appearance.userInputBorderRadius }};
+            --user-input--bottom-margin: {{ appearance.userInputBottomMargin }}px;
 
 
             --search-results--background-color: {{ colortheme.searchResultsBackgroundColor }};
-            --search-results--border-radius: {{appearance.searchResultsBorderRadius}};
+            --search-results--border-radius: {{ appearance.searchResultsBorderRadius }};
 
             --search-results--item-active-background-color: {{ colortheme.searchResultsItemActiveBackgroundColor }};
             --search-results--item-active-text-color: {{ colortheme.searchResultsItemActiveTextColor }};
             --search-results--item-active-description-color: {{ colortheme.searchResultsItemActiveDescriptionColor }};
-
+            
             --search-results--item-name-text-color: {{ colortheme.searchResultsItemNameTextcolor }};
+            --search-results--item-name-font-weight:  {{ appearance.searchResultNameFontWeight }};
             --search-results--item-description-text-color: {{ colortheme.searchResultsItemDescriptionTextColor }};
+            --search-results--item-description-font-weight:  {{ appearance.searchResultDescriptionFontWeight }};
 
             --scrollbar--foreground-color: {{ colortheme.scrollbarForegroundColor }};
             --scrollbar--background-color: {{ colortheme.scrollbarBackgroundColor }};
-            --scrollbar--border-radius: {{appearance.scrollbarBorderRadius}};
+            --scrollbar--border-radius: {{ appearance.scrollbarBorderRadius }};
         }
     </style>`,
 });
