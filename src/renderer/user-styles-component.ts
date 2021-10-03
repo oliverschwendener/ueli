@@ -41,7 +41,7 @@ export const userStylesComponent = Vue.extend({
             --search-results--item-active-background-color: {{ colortheme.searchResultsItemActiveBackgroundColor }};
             --search-results--item-active-text-color: {{ colortheme.searchResultsItemActiveTextColor }};
             --search-results--item-active-description-color: {{ colortheme.searchResultsItemActiveDescriptionColor }};
-            
+
             --search-results--item-name-text-color: {{ colortheme.searchResultsItemNameTextcolor }};
             --search-results--item-name-font-weight:  {{ appearance.searchResultNameFontWeight }};
             --search-results--item-description-text-color: {{ colortheme.searchResultsItemDescriptionTextColor }};
