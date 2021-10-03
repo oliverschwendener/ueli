@@ -43,12 +43,10 @@ export const searchResultsComponent = Vue.extend({
             }
         },
         update(searchResults: SearchResultItem[]) {
-            let counter = 0;
-
-            const viewModel = searchResults.map((searchResult): SearchResultItemViewModel => {
-                counter++;
-                return createSearchResultItemViewModel(searchResult, counter);
-            });
+            const viewModel = searchResults.map(
+                (searchResult, index): SearchResultItemViewModel =>
+                    createSearchResultItemViewModel(searchResult, index + 1),
+            );
 
             if (viewModel.length > 0) {
                 viewModel[0].active = true;
