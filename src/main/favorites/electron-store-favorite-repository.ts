@@ -41,9 +41,10 @@ export class ElectronStoreFavoriteRepository implements FavoriteRepository {
         this.store.set(this.favoritesStoreKey, this.favorites);
     }
 
-    public update(favorite: Favorite): void {
-        const index = this.favorites.findIndex((f) => f.item.executionArgument === favorite.item.executionArgument);
-        this.favorites[index] = favorite;
+    public update(favoriteToUpdate: Favorite): void {
+        this.favorites = this.favorites.map((favorite) =>
+            favorite.item.executionArgument === favoriteToUpdate.item.executionArgument ? favoriteToUpdate : favorite,
+        );
 
         this.store.set(this.favoritesStoreKey, this.favorites);
     }
