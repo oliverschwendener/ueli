@@ -47,7 +47,7 @@
         "axios": "^0.21.4",
         "color": "^4.0.1",
         "electron": "^11.2.3",
-        "electron-builder": "^22.9.1",
+        "electron-builder": "22.14.3",
         "electron-store": "^5.1.1",
         "electron-updater": "^4.3.5",
         "fuse.js": "^6.4.6",
