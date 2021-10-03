@@ -3,7 +3,7 @@
         /* Basic Options */
         "target": "es2015" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'. */,
         "module": "commonjs" /* Specify module code generation: 'commonjs', 'amd', 'system', 'umd' or 'es2015'. */,
-        "lib": ["dom", "es2017"] /* Specify library files to be included in the compilation:  */,
+        "lib": ["dom", "es2017", "esnext.string"] /* Specify library files to be included in the compilation:  */,
         "esModuleInterop": true,
         // "allowJs": true,                       /* Allow javascript files to be compiled. */
         // "checkJs": true,                       /* Report errors in .js files. */

@@ -4,7 +4,7 @@ import { UserConfigOptions } from "./user-config-options";
 import { mergeUserConfigWithDefault } from "../helpers/config-helpers";
 
 export class ElectronStoreConfigRepository implements ConfigRepository {
-    private readonly store: Store;
+    private readonly store: Store<Record<any, Object>>;
     private readonly configStoreKey = "userConfigOptions";
     private readonly defaultOptions: UserConfigOptions;
 
