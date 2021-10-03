@@ -223,7 +223,7 @@ For more check [here](https://github.com/oliverschwendener/ueli/issues).
 ### Requirements
 
 -   Git
--   Node 12.x.x
+-   Node 16.x.x
 -   Yarn
 
 ### Setup
