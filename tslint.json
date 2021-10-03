@@ -4,7 +4,7 @@
     "jsRules": {},
     "rules": {
         "ordered-imports": false,
-        "max-line-length": false, // due to hardcoded svg icons
+        "max-line-length": false,
         "interface-name": [true, "never-prefix"],
         "indent": [true, "spaces", 4],
         "prefer-readonly": true
