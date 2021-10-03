@@ -120,6 +120,12 @@ export const russianTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Радиус полосы прокрутки",
     appearanceSettingsBorderRadiusDescription:
         "Это значение CSS, поэтому вам нужно добавить «px», например, «10px» или отдельные углы, например «10px 0px 10px 5px».",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
+    appearanceSettingsUserInputFontSize: "User input font size",
+    appearanceSettingsSearchResultDescriptionFontSize: "Search result name font size",
+    appearanceSettingsSearchResultNameFontSize: "Search result description font size",
 
     settingsUserInputTitle: "Пользовательский ввод",
     settingsSearchResultsBoxTitle: "Окно результатов поиска",

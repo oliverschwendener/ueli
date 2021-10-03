@@ -1,6 +1,3 @@
 {
-    "recommendations": [
-        "ms-vscode.vscode-typescript-tslint-plugin",
-        "octref.vetur"
-    ]
+    "recommendations": ["ms-vscode.vscode-typescript-tslint-plugin", "octref.vetur"]
 }

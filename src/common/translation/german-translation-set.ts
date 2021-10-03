@@ -123,6 +123,12 @@ export const germanTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Randradius der Bildlaufleiste",
     appearanceSettingsBorderRadiusDescription:
         "Dies ist ein CSS-Wert, daher müssen Sie 'px' wie diesen '10px' oder separate Ecken wie diesen '10px 0px 10px 5px' hinzufügen.",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
+    appearanceSettingsUserInputFontSize: "User input font size",
+    appearanceSettingsSearchResultDescriptionFontSize: "Search result name font size",
+    appearanceSettingsSearchResultNameFontSize: "Search result description font size",
 
     settingsUserInputTitle: "Benutzereingabe",
     settingsSearchResultsBoxTitle: "Suchergebnisfeld",

@@ -178,6 +178,7 @@ This plugin enables you to quickly execute multiple things at once.
 
 | Keyboard shortcut                   | Description                                                  |
 | ----------------------------------- | ------------------------------------------------------------ |
+| <kbd>Alt</kbd> <kbd>Space Bar</kbd> | Open search box (Default value, can be adjusted in settings) |
 | <kbd>Enter</kbd>                    | Execute selected search result                               |
 | <kbd>Shift</kbd> <kbd>Enter</kbd>   | Execute selected program as admin (Windows only)             |
 | <kbd>Tab</kbd>                      | Autocomplete file path                                       |
@@ -222,7 +223,7 @@ For more check [here](https://github.com/oliverschwendener/ueli/issues).
 ### Requirements
 
 -   Git
--   Node 12.x.x
+-   Node 16.x.x
 -   Yarn
 
 ### Setup

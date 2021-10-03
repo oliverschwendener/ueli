@@ -119,6 +119,12 @@ export const chineseTranslationSet: TranslationSet = {
     appearanceSettingsSearchResultsBorderRadius: "搜索结果边框圆角",
     appearanceSettingsScrollbarBorderRadius: "滚动条圆角",
     appearanceSettingsBorderRadiusDescription: "这是一个 CSS 值，其形式为： 10px 或 10px 0px 10px 5px",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
+    appearanceSettingsUserInputFontSize: "User input font size",
+    appearanceSettingsSearchResultDescriptionFontSize: "Search result name font size",
+    appearanceSettingsSearchResultNameFontSize: "Search result description font size",
 
     settingsUserInputTitle: "搜索栏",
     settingsSearchResultsBoxTitle: "搜索结果栏",
@@ -207,7 +213,7 @@ export const chineseTranslationSet: TranslationSet = {
     translationSettingsTargetLanguage: "目标语言",
 
     everythingSearch: "Everything",
-    everythingSearchSettingDescription: `这个插件可以让你使用 Everything 搜索文件。需要从 https://www.voidtools.com/downloads/ 安装 Everything 和 Enverything Command-line Interface`,
+    everythingSearchSettingDescription: `这个插件可以让你使用 Everything 搜索文件。需要从 https://www.voidtools.com/downloads/ 安装 Everything 和 Everything Command-line Interface`,
     everythingSearchPathToBinary: `"es.exe" 的路径`,
     everythingSearchPrefix: "前缀",
     everythingSearchMaxSearchResults: "最大搜索记录",

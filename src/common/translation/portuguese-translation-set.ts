@@ -124,6 +124,12 @@ export const portugueseTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Raio da borda da barra de rolagem",
     appearanceSettingsBorderRadiusDescription:
         "Este é um valor em css, então você precisa adicionar 'px' da seguinte forma '10px', ou separar os lados deste jeito '10px 0px 10px 5px'",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
+    appearanceSettingsUserInputFontSize: "User input font size",
+    appearanceSettingsSearchResultDescriptionFontSize: "Search result name font size",
+    appearanceSettingsSearchResultNameFontSize: "Search result description font size",
 
     settingsUserInputTitle: "Entrada do usuário",
     settingsSearchResultsBoxTitle: "Caixa de resultados de pesquisa ",
