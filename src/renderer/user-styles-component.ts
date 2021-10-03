@@ -26,25 +26,25 @@ export const userStylesComponent = Vue.extend({
             --font-family: {{ appearance.fontFamily }};
 
             --user-input--height: {{ appearance.userInputHeight }}px;
-            --search-results--item-height: {{ appearance.searchResultHeight }}px;
-
+            --user-input--font-size: {{ appearance.userInputFontSize }};
             --user-input--font-weight: {{ appearance.userInputFontWeight }};
             --user-input--background-color: {{ colortheme.userInputBackgroundColor }};
             --user-input--color: {{ colortheme.userInputTextColor }};
             --user-input--border-radius: {{ appearance.userInputBorderRadius }};
             --user-input--bottom-margin: {{ appearance.userInputBottomMargin }}px;
 
-
             --search-results--background-color: {{ colortheme.searchResultsBackgroundColor }};
             --search-results--border-radius: {{ appearance.searchResultsBorderRadius }};
 
+            --search-results--item-height: {{ appearance.searchResultHeight }}px;
             --search-results--item-active-background-color: {{ colortheme.searchResultsItemActiveBackgroundColor }};
             --search-results--item-active-text-color: {{ colortheme.searchResultsItemActiveTextColor }};
             --search-results--item-active-description-color: {{ colortheme.searchResultsItemActiveDescriptionColor }};
-
             --search-results--item-name-text-color: {{ colortheme.searchResultsItemNameTextcolor }};
+            --search-results--item-name-font-size: {{ appearance.searchResultNameFontSize }};
             --search-results--item-name-font-weight:  {{ appearance.searchResultNameFontWeight }};
             --search-results--item-description-text-color: {{ colortheme.searchResultsItemDescriptionTextColor }};
+            --search-results--item-description-font-size:  {{ appearance.searchResultDescriptionFontSize }};
             --search-results--item-description-font-weight:  {{ appearance.searchResultDescriptionFontWeight }};
 
             --scrollbar--foreground-color: {{ colortheme.scrollbarForegroundColor }};

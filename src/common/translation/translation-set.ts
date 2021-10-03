@@ -105,6 +105,7 @@ export interface TranslationSet {
     appearanceSettingsSearchResultHeight: string;
     appearanceSettingsSmoothScrolling: string;
     appearanceSettingsUserInputHeight: string;
+    appearanceSettingsUserInputFontSize: string;
     appearanceSettingsUserInputFontWeight: string;
     appearanceSettingsShowDescriptionOnAllSearchResults: string;
     appearanceSettingsShowSearchIcon: string;
@@ -117,8 +118,10 @@ export interface TranslationSet {
     appearanceSettingsSearchResultsBorderRadius: string;
     appearanceSettingsScrollbarBorderRadius: string;
     appearanceSettingsBorderRadiusDescription: string;
+    appearanceSettingsSearchResultNameFontSize: string;
     appearanceSettingsSearchResultNameFontWeight: string;
     appearanceSettingsSearchResultDescriptionFontWeight: string;
+    appearanceSettingsSearchResultDescriptionFontSize: string;
 
     settingsUserInputTitle: string;
     settingsSearchResultsBoxTitle: string;

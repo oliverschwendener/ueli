@@ -176,6 +176,17 @@ export const appearanceSettingsComponent = Vue.extend({
                     </div>
 
                     <div class="settings__option">
+                        <div class="settings__option-name">Font Size</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="text" class="input" v-model="config.appearanceOptions.userInputFontSize" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings__option">
                         <div class="settings__option-name">{{ translations.appearanceSettingsUserInputFontWeight }}</div>
                         <div class="settings__option-content">
                             <div class="field is-grouped is-grouped-right">
@@ -272,11 +283,33 @@ export const appearanceSettingsComponent = Vue.extend({
                     </div>
 
                     <div class="settings__option">
+                        <div class="settings__option-name">Font Size</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="text" class="input" v-model="config.appearanceOptions.searchResultNameFontSize" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings__option">
                         <div class="settings__option-name">{{ translations.appearanceSettingsSearchResultNameFontWeight }}</div>
                         <div class="settings__option-content">
                             <div class="field is-grouped is-grouped-right">
                                 <div class="control">
                                     <input type="number" class="input" v-model="config.appearanceOptions.searchResultNameFontWeight" @change="updateConfig">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings__option">
+                        <div class="settings__option-name">Font Size</div>
+                        <div class="settings__option-content">
+                            <div class="field is-grouped is-grouped-right">
+                                <div class="control">
+                                    <input type="text" class="input" v-model="config.appearanceOptions.searchResultDescriptionFontSize" @change="updateConfig">
                                 </div>
                             </div>
                         </div>

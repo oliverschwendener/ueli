@@ -121,9 +121,12 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Scrollbar border radius",
     appearanceSettingsBorderRadiusDescription:
         "This is a css value, so you need to add 'px' like this '10px' or separate corners like this '10px 0px 10px 5px'",
-    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsUserInputFontWeight: "User input font weight",
     appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
     appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
+    appearanceSettingsUserInputFontSize: "User input font size",
+    appearanceSettingsSearchResultDescriptionFontSize: "Search result name font size",
+    appearanceSettingsSearchResultNameFontSize: "Search result description font size",
 
     settingsUserInputTitle: "User input",
     settingsSearchResultsBoxTitle: "Search results box",

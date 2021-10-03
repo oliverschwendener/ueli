@@ -19,10 +19,11 @@
     --search-results--item-active-background-color: #3d4452;
     --search-results--item-active-text-color: #fff;
     --search-results--item-name-text-color: #aab2c0;
+    --search-results--item-name-font-size: 16px;
     --search-results--item-name-font-weight: 400;
     --search-results--item-name-padding: 0 0 2px;
     --search-results--item-description-text-color: #ccc;
-    --search-results--item-descriptioin-font-size: 12px;
+    --search-results--item-description-font-size: 12px;
     --search-results--item-description-font-weight: 200;
     --search-results--item-height: 50px;
     --search-results--item-side-padding: 15px;
@@ -236,6 +237,7 @@ body {
 
 .search-results__item-name {
     color: var(--search-results--item-name-text-color);
+    font-size: var(--search-results--item-name-font-size);
     font-weight: var(--search-results--item-name-font-weight);
     padding: var(--search-results--item-name-padding);
 }
@@ -247,7 +249,7 @@ body {
 .search-results__item-description {
     display: none;
     color: var(--search-results--item-description-text-color);
-    font-size: var(--search-results--item-descriptioin-font-size);
+    font-size: var(--search-results--item-description-font-size);
     font-weight: var(--search-results--item-description-font-weight);
 }
 

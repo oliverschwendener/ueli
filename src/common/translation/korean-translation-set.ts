@@ -123,6 +123,9 @@ export const koreanTranslationSet: TranslationSet = {
     appearanceSettingsUserInputFontWeight: "User Input Font Weight",
     appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
     appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
+    appearanceSettingsUserInputFontSize: "User input font size",
+    appearanceSettingsSearchResultDescriptionFontSize: "Search result name font size",
+    appearanceSettingsSearchResultNameFontSize: "Search result description font size",
 
     settingsUserInputTitle: "사용자 입력",
     settingsSearchResultsBoxTitle: "검색 결과 박스",

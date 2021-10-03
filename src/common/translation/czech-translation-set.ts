@@ -124,6 +124,9 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsUserInputFontWeight: "User Input Font Weight",
     appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
     appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
+    appearanceSettingsUserInputFontSize: "User input font size",
+    appearanceSettingsSearchResultDescriptionFontSize: "Search result name font size",
+    appearanceSettingsSearchResultNameFontSize: "Search result description font size",
 
     settingsUserInputTitle: "Vstup uživatele",
     settingsSearchResultsBoxTitle: "Pole výsledků hledání",
