@@ -52,7 +52,7 @@
         "electron-updater": "^4.3.5",
         "fuse.js": "^6.4.6",
         "jest": "^27.0.6",
-        "mathjs": "^9.3.2",
+        "mathjs": "^9.5.0",
         "node-powershell": "^4.0.0",
         "prettier": "^2.4.1",
         "simple-plist": "^1.1.1",
