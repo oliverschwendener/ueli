@@ -41,14 +41,10 @@ export class ElectronStoreFavoriteRepository implements FavoriteRepository {
         this.store.set(this.favoritesStoreKey, this.favorites);
     }
 
-    public update(favorite: Favorite): void {
-        // tslint:disable-next-line: prefer-for-of because we need
-        for (let i = 0; i < this.favorites.length; i++) {
-            if (this.favorites[i].item.executionArgument === favorite.item.executionArgument) {
-                this.favorites[i] = favorite;
-                break;
-            }
-        }
+    public update(favoriteToUpdate: Favorite): void {
+        this.favorites = this.favorites.map((favorite) =>
+            favorite.item.executionArgument === favoriteToUpdate.item.executionArgument ? favoriteToUpdate : favorite,
+        );
 
         this.store.set(this.favoritesStoreKey, this.favorites);
     }
