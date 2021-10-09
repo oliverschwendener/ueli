@@ -346,7 +346,7 @@ export const germanTranslationSet: TranslationSet = {
 
     dictionary: "Wörterbuch",
     dictionaryDescription:
-        "Dieses Plugin erlaubt es dir die Definition und Synonyme eines Wortes nachzuschlagen. Es benutzt eine inoffizielle API für Google Dictionary (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+        "Dieses Plugin erlaubt es dir die Definition und Synonyme eines Wortes nachzuschlagen. Es benutzt eine inoffizielle API für Google Dictionary (https://dictionaryapi.dev/)",
     dictionaryPrefix: "Präfix",
     dictionaryMinSearchTermLength: "Minimum Suchbegrifflänge",
     dictionaryDebounceDelay: "Debounce Verzögerung (in Millisekunden)",

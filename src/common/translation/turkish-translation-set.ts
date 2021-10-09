@@ -347,7 +347,7 @@ export const turkishTranslationSet: TranslationSet = {
 
     dictionary: "Sözlük",
     dictionaryDescription:
-        "Bu eklenti, kelimelerin tanımını ve eş anlamlılarını hızlı bir şekilde aramanızı sağlar. Resmi olmayan bir Google Sözlük API'i kullanıyor (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+        "Bu eklenti, kelimelerin tanımını ve eş anlamlılarını hızlı bir şekilde aramanızı sağlar. Resmi olmayan bir Google Sözlük API'i kullanıyor (https://dictionaryapi.dev/)",
     dictionaryPrefix: "Ön ek",
     dictionaryMinSearchTermLength: "Minimum arama terimi uzunluğu",
     dictionaryDebounceDelay: "Hata gecikmesi (milisaniye cinsinden)",

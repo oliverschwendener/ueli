@@ -89,7 +89,7 @@ This plugin enables you to quickly convert currencies. The latest conversion rat
 
 ### Dictionary
 
-This plugin enables you to quickly look up the definition and synonyms of words. It uses an unofficial Google Dictionary API (https://googledictionaryapi.eu-gb.mybluemix.net/)
+This plugin enables you to quickly look up the definition and synonyms of words. It uses an unofficial Google Dictionary API (https://dictionaryapi.dev/)
 
 ![dictionary](assets/feature-dictionary.png)
 

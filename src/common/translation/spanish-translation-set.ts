@@ -348,7 +348,7 @@ export const spanishTranslationSet: TranslationSet = {
 
     dictionary: "Diccionario",
     dictionaryDescription:
-        "Este plugin te permite buscar de forma rápida en las deficiones y sinónimos de palabras. Usa un API no oficial de Google Dictionary (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+        "Este plugin te permite buscar de forma rápida en las deficiones y sinónimos de palabras. Usa un API no oficial de Google Dictionary (https://dictionaryapi.dev/)",
     dictionaryPrefix: "Prefijo",
     dictionaryMinSearchTermLength: "Longitud mínima del término de búsqueda",
     dictionaryDebounceDelay: "Retraso de rebote (en milisegundos)",

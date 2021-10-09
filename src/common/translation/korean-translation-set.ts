@@ -339,7 +339,7 @@ export const koreanTranslationSet: TranslationSet = {
 
     dictionary: "사전",
     dictionaryDescription:
-        "이 플러그인은 단어의 정의와 동의어를 빠르게 검색할 수 있게 해줍니다. 비공식 구글 사전 API (https://googledictionaryapi.eu-gb.mybluemix.net/)를 사용합니다.",
+        "이 플러그인은 단어의 정의와 동의어를 빠르게 검색할 수 있게 해줍니다. 비공식 구글 사전 API (https://dictionaryapi.dev/)를 사용합니다.",
     dictionaryPrefix: "접두어",
     dictionaryMinSearchTermLength: "검색어 최소 길이",
     dictionaryDebounceDelay: "디바운스 지연 시간 (밀리 초 단위)",
