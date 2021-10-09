@@ -335,7 +335,7 @@ export const chineseTranslationSet: TranslationSet = {
     colorConverterShowColorPreview: "显示颜色预览",
 
     dictionary: "字典",
-    dictionaryDescription: "使用 Google 字典 API (https://googledictionaryapi.eu-gb.mybluemix.net/) 进行英文释义",
+    dictionaryDescription: "使用 Google 字典 API (https://dictionaryapi.dev/) 进行英文释义",
     dictionaryPrefix: "前缀",
     dictionaryMinSearchTermLength: "单词最短长度",
     dictionaryDebounceDelay: "防抖动（毫秒）",

@@ -341,7 +341,7 @@ export const japaneseTranslationSet: TranslationSet = {
 
     dictionary: "辞書",
     dictionaryDescription:
-        "このプラグインは単語の定義や同義語を素早く調べることができます。非公式の Google Dictionary API (https://googledictionaryapi.eu-gb.mybluemix.net/) を使用します。",
+        "このプラグインは単語の定義や同義語を素早く調べることができます。非公式の Google Dictionary API (https://dictionaryapi.dev/) を使用します。",
     dictionaryPrefix: "プレフィックス",
     dictionaryMinSearchTermLength: "検索語の最小長さ",
     dictionaryDebounceDelay: "デバウンス遅延 (ミリ秒)",

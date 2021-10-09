@@ -343,7 +343,7 @@ export const englishTranslationSet: TranslationSet = {
 
     dictionary: "Dictionary",
     dictionaryDescription:
-        "This plugin enables you to quickly look up the definition and synonyms of words. It uses an unofficial Google Dictionary API (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+        "This plugin enables you to quickly look up the definition and synonyms of words. It uses an unofficial Google Dictionary API (https://dictionaryapi.dev/)",
     dictionaryPrefix: "Prefix",
     dictionaryMinSearchTermLength: "Min search term length",
     dictionaryDebounceDelay: "Debounce delay (in milliseconds)",

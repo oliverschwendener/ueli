@@ -340,7 +340,7 @@ export const russianTranslationSet: TranslationSet = {
 
     dictionary: "Словарь",
     dictionaryDescription:
-        "Этот плагин позволяет быстро искать значения слов и синонимы к ним. Он использует неофициальное API Google Dictionary (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+        "Этот плагин позволяет быстро искать значения слов и синонимы к ним. Он использует неофициальное API Google Dictionary (https://dictionaryapi.dev/)",
     dictionaryPrefix: "Префикс",
     dictionaryMinSearchTermLength: "Минимальная длинна запроса",
     dictionaryDebounceDelay: "Задержка между запросами (в миллисекундах)",

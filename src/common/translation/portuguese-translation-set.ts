@@ -347,7 +347,7 @@ export const portugueseTranslationSet: TranslationSet = {
 
     dictionary: "Dicionário",
     dictionaryDescription:
-        "Este plugin te habilita a checar rapidamente definições e sinônimos de palavras. Ele usa uma API não-oficial do Google Dictionary (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+        "Este plugin te habilita a checar rapidamente definições e sinônimos de palavras. Ele usa uma API não-oficial do Google Dictionary (https://dictionaryapi.dev/)",
     dictionaryPrefix: "Prefixo",
     dictionaryMinSearchTermLength: "Tamanho mínimo do termo de pesquisa",
     dictionaryDebounceDelay: "Tempo de resposta (em milisegundos)",
