@@ -118,7 +118,11 @@ function refreshAllIndexes() {
             notifyRenderer(translationSet.successfullyRefreshedIndexes, NotificationType.Info);
         })
         .catch((err) => {
-            logger.error(err);
+            if (Array.isArray(err)) {
+                err.forEach(e => logger.error(e));
+            } else {
+                logger.error(err);
+            }
             notifyRenderer(err, NotificationType.Error);
         })
         .finally(onIndexRefreshFinished);
