@@ -26,9 +26,6 @@ export const iconComponent = Vue.extend({
             }
             return "";
         },
-        onIconLoadFailureFallback() {
-          this.icon = this.defaultIcon;
-        }
     },
     props: ["icon", "defaulticon"],
     template: `
