@@ -176,7 +176,7 @@ export const appearanceSettingsComponent = Vue.extend({
                     </div>
 
                     <div class="settings__option">
-                        <div class="settings__option-name">Font Size</div>
+                        <div class="settings__option-name">{{ translations.appearanceSettingsUserInputFontSize }}</div>
                         <div class="settings__option-content">
                             <div class="field is-grouped is-grouped-right">
                                 <div class="control">
@@ -283,7 +283,7 @@ export const appearanceSettingsComponent = Vue.extend({
                     </div>
 
                     <div class="settings__option">
-                        <div class="settings__option-name">Font Size</div>
+                        <div class="settings__option-name">{{ translations.appearanceSettingsSearchResultDescriptionFontSize }}</div>
                         <div class="settings__option-content">
                             <div class="field is-grouped is-grouped-right">
                                 <div class="control">
@@ -305,7 +305,7 @@ export const appearanceSettingsComponent = Vue.extend({
                     </div>
 
                     <div class="settings__option">
-                        <div class="settings__option-name">Font Size</div>
+                        <div class="settings__option-name">{{ translations.appearanceSettingsSearchResultNameFontSize }}</div>
                         <div class="settings__option-content">
                             <div class="field is-grouped is-grouped-right">
                                 <div class="control">
