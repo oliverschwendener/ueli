@@ -54,6 +54,8 @@ function getMacOsVersion(operatingSystemRelease: string): OperatingSystemVersion
             return OperatingSystemVersion.MacOsCatalina;
         case "20":
             return OperatingSystemVersion.MacOsBigSur;
+        case "21":
+            return OperatingSystemVersion.MacOsMonterey;
         default:
             throw new Error(`Unsupported macOS version: ${operatingSystemRelease}`);
     }
