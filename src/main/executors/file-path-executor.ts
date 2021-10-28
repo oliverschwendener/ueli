@@ -16,8 +16,10 @@ export function executeFilePathLinux(filePath: string, privileged: boolean): Pro
 
 function openFile(filePath: string): Promise<void> {
     return new Promise((resolve, reject) => {
-        if (extname(filePath) == ".desktop") {
-            return openLinuxDesktopFile(filePath);
+        if (extname(filePath) === ".desktop") {
+            openLinuxDesktopFile(filePath)
+                .then(() => resolve())
+                .catch(() => reject(`Failed to open: ${filePath}`));
         } else {
             shell
                 .openPath(filePath)
@@ -30,7 +32,9 @@ function openFile(filePath: string): Promise<void> {
 function openLinuxDesktopFile(filePath: string): Promise<void> {
     // Weirdly it's available on KDE based distros as well.
     // I guess they didn't invent their own way to run .desktop files.
-    return executeCommand(`gtk-launch ${basename(filePath)}`);
+    executeCommand(`gtk-launch ${basename(filePath)}`);
+    // Resolves instead of returning executeCommand due to exec hanging when launching an app, freezing ueli until app is closed
+    return Promise.resolve();
 }
 
 function executeFilePathWindowsAsPrivileged(filePath: string): Promise<void> {
