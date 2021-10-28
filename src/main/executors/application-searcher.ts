@@ -4,6 +4,7 @@ import { executeCommandWithOutput } from "./command-executor";
 import { Logger } from "../../common/logger/logger";
 import { OperatingSystemVersion } from "../../common/operating-system";
 import { FileHelpers } from "../../common/helpers/file-helpers";
+import { parse } from "ini";
 
 
 export function searchWindowsApplications(
@@ -85,10 +86,30 @@ export function searchLinuxApplications(
                 .map(folder => FileHelpers.readFilesFromFolder(folder))
             Promise.all(appFilePromises)
                 .then((applicationFilePaths) => {
+                    // This is maybe a bad way to do things
+                    const desktopEnv = process.env["XDG_CURRENT_DESKTOP"] || "GNOME";
                     const desktopAppFiles = applicationFilePaths
                         .flat()
                         .filter((f) => applicationSearchOptions.applicationFileExtensions.includes(extname(f)));
-                    resolve(desktopAppFiles);
+
+                    // Checks if app is supposed to be shown
+                    const filterMapPromises = desktopAppFiles.map((f) => {
+                        return FileHelpers.readFile(f)
+                            .then((data) => {
+                                const config = parse(data)["Desktop Entry"];
+                                if (!config) return false;
+                                // Following X11 specifications (I think)
+                                // ini parsing is broken due to Linux's use of semi-colons for lists
+                                return (!config.NoDisplay &&
+                                    (config.OnlyShowIn !== undefined ? config.OnlyShowIn.split(';').includes(desktopEnv) : true) &&
+                                    (config.NotShowIn !== undefined ? config.NotShowIn.split(';').includes(desktopEnv) : true)
+                                );
+                            });
+                    });
+                    Promise.all(filterMapPromises)
+                        .then(filterMap => {
+                            resolve(desktopAppFiles.filter((_value, index) => filterMap[index]));
+                        });
                 })
                 .catch((err) => reject(err));
         }
