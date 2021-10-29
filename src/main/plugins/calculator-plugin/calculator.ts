@@ -52,12 +52,12 @@ export class Calculator {
         const math = this.math(precision);
 
         if (!math.evaluate) {
-            throw new Error("Failed to instanciate math js static");
+            throw new Error("Failed to instantiate math js static");
         }
 
-        const result: string = math
-            .evaluate(this.normalizeInput(input, decimalSeparator, argumentSeparator))
-            .toString();
+        const result: string = String(
+            math.evaluate(this.normalizeInput(input, decimalSeparator, argumentSeparator)),
+        );
 
         return result.replace(new RegExp(",|\\.", "g"), (match) =>
             match === "." ? decimalSeparator : argumentSeparator,
