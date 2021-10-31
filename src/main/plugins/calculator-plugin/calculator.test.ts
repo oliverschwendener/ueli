@@ -61,6 +61,15 @@ describe(Calculator.name, () => {
                 expect(actual).toBe(expected);
             });
         });
+
+        it("should handle null", () => {
+            const precision = 16;
+            const calculation = "null";
+            const expected = "null";
+
+            const result = Calculator.calculate(calculation, precision);
+            expect(result).toBe(expected);
+        });
     });
 
     describe(Calculator.isValidInput.name, () => {
