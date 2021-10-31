@@ -132,7 +132,7 @@ export const websearchEditingModal = Vue.extend({
                             {{ translations.websearchUrl }}
                         </label>
                         <div class="control is-expanded">
-                            <input class="input" type="url" v-model="websearchEngine.url" :placeholder="getUrlPlaceholder()" v-on:blur="onUrlBlurGetFaviconUrl()">
+                            <input class="input" type="url" v-model="websearchEngine.url" :placeholder="getUrlPlaceholder()" @blur="onUrlBlurGetFaviconUrl()">
                         </div>
                     </div>
 
