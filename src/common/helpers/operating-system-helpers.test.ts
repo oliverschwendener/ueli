@@ -103,7 +103,7 @@ describe(getOperatingSystemVersion, () => {
     });
 
     it("should throw an error when passing in an unsupported darwin kernel version", () => {
-        const unsupportedKernelVersions = ["", " ", "          ", "1", "abc", "10.x.x", "11", "12", "13", "21", "22"];
+        const unsupportedKernelVersions = ["", " ", "          ", "1", "abc", "10.x.x", "11", "12", "13", "22"];
 
         let errorCounter = 0;
 
