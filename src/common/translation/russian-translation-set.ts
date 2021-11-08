@@ -113,7 +113,7 @@ export const russianTranslationSet: TranslationSet = {
     appearanceSettingsShowSearchResultNumbers: "Показывать кол-во результатов",
     appearanceSettingsResetWarningMessage: "Вы хотите восстановить настройки внешнего вида по умолчанию. Вы уверены?",
     appearanceSettingsAllowTransparentBackground: "Прозрачность фона",
-    appearanceSettingsFontFamily: "семейство шрифтов",
+    appearanceSettingsFontFamily: "Семейство шрифтов",
     appearanceSettingsUserInputBorderRadius: "Пользовательский радиус границы ввода",
     appearanceSettingsUserInputBottomMargin: "Нижнее поле пользовательского ввода (в пикселях)",
     appearanceSettingsSearchResultsBorderRadius: "Радиус границы результатов поиска",
@@ -372,7 +372,7 @@ export const russianTranslationSet: TranslationSet = {
     chooseFolder: "Выбрать папку",
     restartRequired: "Необходима перезагрузка",
 
-    controlPanel: "панель управления",
+    controlPanel: "Панель управления",
     controlPanelSettingsDescription: "Этот плагин позволяет быстро находить элементы панели управления.",
 
     weather: "Погода",
