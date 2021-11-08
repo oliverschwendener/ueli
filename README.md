@@ -271,12 +271,13 @@ $ yarn package
 
 ## Alternatives
 
--   [khanhas/ueli](https://github.com/khanhas/ueli)
--   [Flow-Launcher](https://github.com/Flow-Launcher/Flow.Launcher)
 -   [Launchy](https://www.launchy.net/)
 -   [Wox](https://github.com/Wox-launcher/Wox)
+-   [Fluent Search](https://www.fluentsearch.net/)
+-   [Flow-Launcher](https://github.com/Flow-Launcher/Flow.Launcher)
 -   [Keypirinha](http://keypirinha.com/)
 -   [Alfred](https://www.alfredapp.com/)
+-   [Raycast](https://www.raycast.com/)
 -   [Hain](https://github.com/hainproject/hain)
 -   [Zazu App](http://zazuapp.org/)
 -   [Cerebro](https://cerebroapp.com/)
