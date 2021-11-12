@@ -266,6 +266,40 @@ describe(SearchEngine.name, () => {
             .catch((err) => done(err));
     });
 
+    it("should reject index refresh with errors of all failed plugins", (done) => {
+        const translationSet = {} as TranslationSet;
+        const favoritesRepository = new FakeFavoriteRepository([]);
+        const fakePlugins = [
+            new FakeSearchPlugin(PluginType.Test, [], true),
+            new FakeSearchPlugin(PluginType.Test, [], true),
+            new FakeSearchPlugin(PluginType.Test, [], true),
+            new FakeSearchPlugin(PluginType.Test, [], true),
+        ];
+        jest.spyOn(fakePlugins[1], 'refreshIndex').mockReturnValue(Promise.reject('error 1'));
+        jest.spyOn(fakePlugins[3], 'refreshIndex').mockReturnValue(Promise.reject('error 2'));
+        const searchPlugins: SearchPlugin[] = fakePlugins;
+        const executionPlugins: ExecutionPlugin[] = [];
+        const fallbackPlugins: ExecutionPlugin[] = [];
+        const searchEngine = new SearchEngine(
+            searchPlugins,
+            executionPlugins,
+            fallbackPlugins,
+            defaultSearchEngineOptions,
+            false,
+            translationSet,
+            favoritesRepository,
+        );
+        let caughtError: any;
+
+        searchEngine
+            .refreshAllIndexes()
+            .catch((err) => caughtError = err)
+            .finally(() => {
+                expect(caughtError).toEqual(['error 1', 'error 2']);
+                done();
+            });
+    });
+
     it("should only refresh index of given plugin", (done) => {
         const translationSet = {} as TranslationSet;
         const favoritesRepository = new FakeFavoriteRepository([]);

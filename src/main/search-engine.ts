@@ -139,11 +139,16 @@ export class SearchEngine {
 
     public refreshAllIndexes(): Promise<void> {
         return new Promise((resolve, reject) => {
-            Promise.all(
-                this.searchPlugins.filter((plugin) => plugin.isEnabled()).map((plugin) => plugin.refreshIndex()),
-            )
-                .then(() => resolve())
-                .catch((err) => reject(err));
+            Promise
+                .allSettled(this.searchPlugins.filter((plugin) => plugin.isEnabled()).map((plugin) => plugin.refreshIndex()))
+                .then((results) => {
+                    const failures = results.filter(r => r.status === 'rejected') as PromiseRejectedResult[];
+                    if (failures.length > 0) {
+                        reject(failures.map(f => f.reason));
+                    } else {
+                        resolve();
+                    }
+                });
         });
     }
 
