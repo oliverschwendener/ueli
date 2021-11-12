@@ -50,6 +50,17 @@ export const websearchEditingModal = Vue.extend({
                 );
             }
         },
+        onUrlBlurGetFaviconUrl() {
+          const websearchEngine: WebSearchEngine = this.websearchEngine;
+          if (websearchEngine.url.length > 0) {
+            try {
+              const url = new URL(websearchEngine.url);
+              websearchEngine.icon.parameter = `${url.protocol}//${url.hostname}/favicon.ico`;
+            } catch {
+              websearchEngine.icon.parameter = "";
+            }
+          }
+        },
         getModalTitle(): string {
             const editMode: ModalEditMode = this.editMode;
             const translations: TranslationSet = this.translations;
@@ -121,7 +132,7 @@ export const websearchEditingModal = Vue.extend({
                             {{ translations.websearchUrl }}
                         </label>
                         <div class="control is-expanded">
-                            <input class="input" type="url" v-model="websearchEngine.url" :placeholder="getUrlPlaceholder()">
+                            <input class="input" type="url" v-model="websearchEngine.url" :placeholder="getUrlPlaceholder()" @blur="onUrlBlurGetFaviconUrl()">
                         </div>
                     </div>
 
