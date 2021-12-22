@@ -7,7 +7,11 @@ import { ApplicationIconService } from "./application-icon-service";
 import { getApplicationIconFilePath } from "./application-icon-helpers";
 import { IconType } from "../../../common/icon/icon-type";
 import { Logger } from "../../../common/logger/logger";
-import { OperatingSystemVersion } from "../../../common/operating-system";
+import { OperatingSystem, OperatingSystemVersion } from "../../../common/operating-system";
+import { getCurrentOperatingSystem } from "../../../common/helpers/operating-system-helpers";
+import { platform } from "os";
+import { FileHelpers } from "../../../common/helpers/file-helpers";
+import { parse } from "ini";
 
 export class ProductionApplicationRepository implements ApplicationRepository {
     private applications: Application[];
@@ -50,21 +54,23 @@ export class ProductionApplicationRepository implements ApplicationRepository {
         return new Promise((resolve, reject) => {
             this.searchApplications(this.config, this.logger, this.operatingSystemVersion)
                 .then((filePaths) => {
-                    const applications = filePaths.map((filePath) => this.createApplicationFromFilePath(filePath));
-
-                    if (this.config.useNativeIcons) {
-                        this.appIconService
-                            .generateAppIcons(applications)
-                            .then(() => {
-                                this.onSuccessfullyGeneratedAppIcons(applications);
-                                this.applications = applications;
-                                resolve();
-                            })
-                            .catch((err) => reject(err));
-                    } else {
-                        this.applications = applications;
-                        resolve();
-                    }
+                    Promise.all(filePaths.map((filePath) => this.createApplicationFromFilePath(filePath)))
+                    .then((applications) => {
+                        if (this.config.useNativeIcons) {
+                            this.appIconService
+                                .generateAppIcons(applications)
+                                .then(() => {
+                                    this.onSuccessfullyGeneratedAppIcons(applications);
+                                    this.applications = applications;
+                                    resolve();
+                                })
+                                .catch((err) => reject(err));
+                        } else {
+                            this.applications = applications;
+                            resolve();
+                        }
+                    })
+                    .catch((err) => reject(err));
                 })
                 .catch((err) => reject(err));
         });
@@ -86,12 +92,27 @@ export class ProductionApplicationRepository implements ApplicationRepository {
         });
     }
 
-    private createApplicationFromFilePath(filePath: string): Application {
-        return {
-            filePath,
-            icon: this.defaultAppIcon,
-            name: basename(filePath).replace(extname(filePath), ""),
-        };
+    private createApplicationFromFilePath(filePath: string): Promise<Application> {
+        return new Promise((resolve, reject) => {
+            const currentOperatingSystem = getCurrentOperatingSystem(platform());
+            if (currentOperatingSystem === OperatingSystem.Linux) {
+                FileHelpers.readFile(filePath).then((data) => {
+                    const config = parse(data);
+                    const appName = config["Desktop Entry"]["Name"];
+                    resolve({
+                        filePath,
+                        icon: this.defaultAppIcon,
+                        name: appName,
+                    });
+                });
+            } else {
+                resolve({
+                    filePath,
+                    icon: this.defaultAppIcon,
+                    name: basename(filePath).replace(extname(filePath), ""),
+                });
+            }
+        });
     }
 
     private onSuccessfullyGeneratedAppIcons(applications: Application[]) {
