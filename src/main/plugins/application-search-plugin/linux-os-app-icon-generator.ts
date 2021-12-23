@@ -92,7 +92,7 @@ function buildIconsListFromTheme(iconTheme: string, size: number): Promise<strin
         FileHelpers.readFile(`${iconThemePath}/index.theme`).then((data) => {
             const themeCofig = parse(data);
             const subdirs : string[] = themeCofig["Icon Theme"]["Directories"].split(",");
-            subdirs.forEach((subdir) => {
+            subdirs.reverse().forEach((subdir) => {
                 if (Number(themeCofig[subdir]["Size"]) === size) {
                     // Prioritize icons with ideal size
                     iconList.push(executeCommandWithOutput(`find '${join(iconThemePath, subdir)}'`));
