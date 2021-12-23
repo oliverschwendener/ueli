@@ -102,7 +102,7 @@ export function searchLinuxApplications(
                                 // ini parsing is broken due to Linux's use of semi-colons for lists
                                 return (!config.NoDisplay &&
                                     (config.OnlyShowIn !== undefined ? config.OnlyShowIn.split(';').includes(desktopEnv) : true) &&
-                                    (config.NotShowIn !== undefined ? config.NotShowIn.split(';').includes(desktopEnv) : true)
+                                    (config.NotShowIn !== undefined ? !config.NotShowIn.split(';').includes(desktopEnv) : true)
                                 );
                             });
                     });
