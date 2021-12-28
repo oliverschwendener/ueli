@@ -101,9 +101,7 @@ function buildIconsListFromTheme(iconTheme: string, size: number): Promise<strin
                 }
             });
 
-            iconList = iconList.concat(nonIdealIconList);
-
-            Promise.allSettled(iconList).then((icons) => {
+            Promise.allSettled(iconList.concat(nonIdealIconList)).then((icons) => {
                 let results : string[] = [];
                 icons.forEach((result) => {
                     if (result.status === "fulfilled") {
