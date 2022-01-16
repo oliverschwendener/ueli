@@ -54,6 +54,7 @@ Currently supported browsers:
 -   Vivaldi
 -   SideKick
 -   Microsoft Edge
+-   Yandex Browser
 
 ![browser-bookmarks](assets/feature-browser-bookmarks.png)
 
