@@ -61,6 +61,7 @@ import { BraveBookmarkRepository } from "../plugins/browser-bookmarks-plugin/bra
 import { SideKickBookmarkRepository } from "../plugins/browser-bookmarks-plugin/sidekick-bookmark-repository";
 import { VivaldiBookmarkRepository } from "../plugins/browser-bookmarks-plugin/vivaldi-bookmark-repository";
 import { EdgeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/edge-bookmark-repository";
+import { YandexBookmarkRepository } from "../plugins/browser-bookmarks-plugin/yandex-bookmark-repository";
 import { getWebearchSuggestions } from "../executors/websearch-suggestion-resolver";
 import { FirefoxBookmarkRepository } from "../plugins/browser-bookmarks-plugin/firefox-bookmark-repository";
 import { ChromiumBookmarkRepository } from "../plugins/browser-bookmarks-plugin/chromium-bookmark-repository";
@@ -107,6 +108,10 @@ export function getProductionSearchEngine(
         operatingSystem === OperatingSystem.Windows
             ? `${homedir()}\\AppData\\Local\\Vivaldi\\User Data\\Default\\Bookmarks`
             : `${homedir()}/Library/Application\ Support/Vivaldi/Default/Bookmarks`;
+    const yandexBookmarksFilePath =
+        operatingSystem === OperatingSystem.Windows
+            ? `${homedir()}\\AppData\\Local\\Yandex\\YandexBrowser\\User Data\\Default\\Bookmarks`
+            : `${homedir()}/Library/Application\ Support/Yandex/YandexBrowser/Default/Bookmarks`;
     const sideKickBookmarkFilePath =
         operatingSystem === OperatingSystem.Windows
             ? `${homedir()}\\AppData\\Local\\Sidekick\\User Data\\Default\\Bookmarks`
@@ -186,6 +191,7 @@ export function getProductionSearchEngine(
                 new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
                 new SideKickBookmarkRepository(sideKickBookmarkFilePath),
                 new VivaldiBookmarkRepository(vivaldiBookmarksFilePath),
+                new YandexBookmarkRepository(yandexBookmarksFilePath),
             ],
             urlExecutor,
         ),

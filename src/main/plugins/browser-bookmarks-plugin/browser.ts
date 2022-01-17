@@ -6,4 +6,5 @@ export enum Browser {
     GoogleChrome = "Google Chrome",
     SideKick = "SideKick",
     Vivaldi = "Vivaldi",
+    Yandex = "Yandex",
 }
