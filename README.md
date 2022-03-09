@@ -50,6 +50,8 @@ This plugin enables you to search your browser bookmarks.
 Currently supported browsers:
 
 -   Google Chrome
+-   Chromium
+-   Firefox
 -   Brave
 -   Vivaldi
 -   SideKick
@@ -276,11 +278,12 @@ $ yarn package
 -   [Wox](https://github.com/Wox-launcher/Wox)
 -   [Fluent Search](https://www.fluentsearch.net/)
 -   [Flow-Launcher](https://github.com/Flow-Launcher/Flow.Launcher)
--   [Keypirinha](http://keypirinha.com/)
+-   [Keypirinha](https://keypirinha.com/)
+-   [Listary](https://www.listary.com/)
 -   [Alfred](https://www.alfredapp.com/)
 -   [Raycast](https://www.raycast.com/)
 -   [Hain](https://github.com/hainproject/hain)
--   [Zazu App](http://zazuapp.org/)
+-   [Zazu App](https://zazuapp.org/)
 -   [Cerebro](https://cerebroapp.com/)
 
 ## Thanks
@@ -289,5 +292,5 @@ Thanks to [David Gabathuler](https://davidgabathuler.ch) for the logo!
 
 ## License
 
-Copyright (c) Oliver Schwendener. All rights reserved.
+Copyright ©️ Oliver Schwendener. All rights reserved.
 Licensed under the [MIT](LICENSE) License.
