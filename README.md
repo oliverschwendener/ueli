@@ -51,6 +51,7 @@ Currently supported browsers:
 
 -   Google Chrome
 -   Chromium
+-   Firefox
 -   Brave
 -   Vivaldi
 -   SideKick
