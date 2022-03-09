@@ -291,5 +291,5 @@ Thanks to [David Gabathuler](https://davidgabathuler.ch) for the logo!
 
 ## License
 
-Copyright (c) Oliver Schwendener. All rights reserved.
+Copyright ©️ Oliver Schwendener. All rights reserved.
 Licensed under the [MIT](LICENSE) License.
