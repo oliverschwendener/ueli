@@ -3,6 +3,7 @@ export enum Language {
     Czech = "Česky",
     English = "English",
     German = "Deutsch",
+    Hindi = "हिन्दी",
     Italian = "Italiano",
     Japanese = "日本語",
     Korean = "한국어",
