@@ -1,6 +1,7 @@
 import { chineseTranslationSet } from "./chinese-translation-set";
 import { englishTranslationSet } from "./english-translation-set";
 import { germanTranslationSet } from "./german-translation-set";
+import { hindiTranslationSet } from "./hindi-translation-set";
 import { italianTranslationSet } from "./italian-translation-set";
 import { japaneseTranslationSet } from "./japanese-translation-set";
 import { koreanTranslationSet } from "./korean-translation-set";
@@ -17,6 +18,8 @@ export function getTranslationSet(language: Language): TranslationSet {
             return englishTranslationSet;
         case Language.German:
             return germanTranslationSet;
+        case Language.Hindi:
+            return hindiTranslationSet;
         case Language.Portuguese:
             return portugueseTranslationSet;
         case Language.Russian:
