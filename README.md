@@ -9,6 +9,7 @@ This is a keystroke launcher for Windows and macOS.
 -   [Installation](#installation)
 -   [Features](#features)
 -   [Keyboard shortcuts](#keyboard-shortcuts)
+-   [Supported Languages](#supported-languages)
 -   [Settings](#settings)
 -   [Updating](#updating)
 -   [Privacy](#privacy)
@@ -196,6 +197,21 @@ This plugin enables you to quickly execute multiple things at once.
 | <kbd>Shift</kbd> <kbd>↑</kbd>       | Browse user input history up                                 |
 | <kbd>Shift</kbd> <kbd>↓</kbd>       | Browse user input history down                               |
 | <kbd>Ctrl</kbd> <kbd>l</kbd>        | Set focus on user input                                      |
+
+## Supported Languages
+
+- English
+- Chinese (简体中文)
+- Czech (Česky)
+- German (Deutsch)
+- Hindi (हिन्दी)
+- Italian (Italiano)
+- Japanese (日本語)
+- Korean (한국어)
+- Portuguese (Português)
+- Russian (Русский)
+- Spanish (Español)
+- Turkish (Türkçe)
 
 ## Settings
 
