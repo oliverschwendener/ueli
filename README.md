@@ -292,6 +292,7 @@ $ yarn package
 
 -   [Launchy](https://www.launchy.net/)
 -   [Wox](https://github.com/Wox-launcher/Wox)
+-   [Microsoft PowerToys Run](https://docs.microsoft.com/en-us/windows/powertoys/run)
 -   [Fluent Search](https://www.fluentsearch.net/)
 -   [Flow-Launcher](https://github.com/Flow-Launcher/Flow.Launcher)
 -   [Keypirinha](https://keypirinha.com/)
@@ -301,6 +302,8 @@ $ yarn package
 -   [Hain](https://github.com/hainproject/hain)
 -   [Zazu App](https://zazuapp.org/)
 -   [Cerebro](https://cerebroapp.com/)
+
+For more check [here](https://alternativeto.net/software/ueli).
 
 ## Thanks
 
