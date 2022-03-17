@@ -305,7 +305,7 @@ $ yarn package
 
 For more check [here](https://alternativeto.net/software/ueli).
 
-### Contributors Wall:
+### Contributors Wall
 <a href="https://github.com/oliverschwendener/ueli/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=oliverschwendener/ueli" />
 </a>
