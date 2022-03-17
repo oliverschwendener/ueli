@@ -9,6 +9,7 @@ This is a keystroke launcher for Windows and macOS.
 -   [Installation](#installation)
 -   [Features](#features)
 -   [Keyboard shortcuts](#keyboard-shortcuts)
+-   [Supported Languages](#supported-languages)
 -   [Settings](#settings)
 -   [Updating](#updating)
 -   [Privacy](#privacy)
@@ -197,6 +198,21 @@ This plugin enables you to quickly execute multiple things at once.
 | <kbd>Shift</kbd> <kbd>↓</kbd>       | Browse user input history down                               |
 | <kbd>Ctrl</kbd> <kbd>l</kbd>        | Set focus on user input                                      |
 
+## Supported Languages
+
+- English
+- Chinese (简体中文)
+- Czech (Česky)
+- German (Deutsch)
+- Hindi (हिन्दी)
+- Italian (Italiano)
+- Japanese (日本語)
+- Korean (한국어)
+- Portuguese (Português)
+- Russian (Русский)
+- Spanish (Español)
+- Turkish (Türkçe)
+
 ## Settings
 
 ![settings](assets/settings.png)
@@ -276,6 +292,7 @@ $ yarn package
 
 -   [Launchy](https://www.launchy.net/)
 -   [Wox](https://github.com/Wox-launcher/Wox)
+-   [Microsoft PowerToys Run](https://docs.microsoft.com/en-us/windows/powertoys/run)
 -   [Fluent Search](https://www.fluentsearch.net/)
 -   [Flow-Launcher](https://github.com/Flow-Launcher/Flow.Launcher)
 -   [Keypirinha](https://keypirinha.com/)
@@ -285,6 +302,8 @@ $ yarn package
 -   [Hain](https://github.com/hainproject/hain)
 -   [Zazu App](https://zazuapp.org/)
 -   [Cerebro](https://cerebroapp.com/)
+
+For more check [here](https://alternativeto.net/software/ueli).
 
 ## Thanks
 
