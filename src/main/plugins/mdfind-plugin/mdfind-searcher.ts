@@ -44,20 +44,18 @@ function handleFilePaths(filePaths: string[], pluginType: PluginType, defaultIco
 
         Promise.all(filePaths.map((f) => getFileIconDataUrl(f, defaultIcon, defaultFolderIcon)))
             .then((icons) => {
-                const results = icons.map(
-                    (icon): SearchResultItem => {
-                        return {
-                            description: icon.filePath,
-                            executionArgument: icon.filePath,
-                            hideMainWindowAfterExecution: true,
-                            icon: icon.icon,
-                            name: basename(icon.filePath),
-                            originPluginType: pluginType,
-                            searchable: [],
-                            supportsOpenLocation: true,
-                        };
-                    },
-                );
+                const results = icons.map((icon): SearchResultItem => {
+                    return {
+                        description: icon.filePath,
+                        executionArgument: icon.filePath,
+                        hideMainWindowAfterExecution: true,
+                        icon: icon.icon,
+                        name: basename(icon.filePath),
+                        originPluginType: pluginType,
+                        searchable: [],
+                        supportsOpenLocation: true,
+                    };
+                });
                 resolve(results);
             })
             .catch((iconError) => reject(iconError));

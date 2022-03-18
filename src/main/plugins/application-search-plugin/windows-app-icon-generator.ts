@@ -20,15 +20,13 @@ export function generateWindowsAppIcons(applicationFilePaths: string[]): Promise
                     FileHelpers.createFolderSync(applicationIconLocation);
                 }
 
-                const icons = applicationFilePaths.map(
-                    (applicationFilePath): Icon => {
-                        return {
-                            inputFilePath: applicationFilePath,
-                            outputFilePath: getApplicationIconFilePath(applicationFilePath),
-                            outputFormat: "Png",
-                        };
-                    },
-                );
+                const icons = applicationFilePaths.map((applicationFilePath): Icon => {
+                    return {
+                        inputFilePath: applicationFilePath,
+                        outputFilePath: getApplicationIconFilePath(applicationFilePath),
+                        outputFormat: "Png",
+                    };
+                });
 
                 generateIcons(icons)
                     .then(() => resolve())

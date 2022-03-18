@@ -119,7 +119,7 @@ function refreshAllIndexes() {
         })
         .catch((err) => {
             if (Array.isArray(err)) {
-                err.forEach(e => logger.error(e));
+                err.forEach((e) => logger.error(e));
             } else {
                 logger.error(err);
             }

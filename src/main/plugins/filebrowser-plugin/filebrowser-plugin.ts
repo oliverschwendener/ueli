@@ -131,23 +131,21 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin, AutoCompleti
                         return true;
                     }
                 })
-                .map(
-                    (filePath): SearchResultItem => {
-                        return {
-                            description: createFilePathDescription(filePath, {
-                                showFullFilePath: this.config.showFullFilePath,
-                            }),
-                            executionArgument: filePath,
-                            hideMainWindowAfterExecution: true,
-                            icon: defaultFileIcon,
-                            name: basename(filePath),
-                            originPluginType: this.pluginType,
-                            searchable: [basename(filePath)],
-                            supportsAutocompletion: true,
-                            supportsOpenLocation: true,
-                        };
-                    },
-                );
+                .map((filePath): SearchResultItem => {
+                    return {
+                        description: createFilePathDescription(filePath, {
+                            showFullFilePath: this.config.showFullFilePath,
+                        }),
+                        executionArgument: filePath,
+                        hideMainWindowAfterExecution: true,
+                        icon: defaultFileIcon,
+                        name: basename(filePath),
+                        originPluginType: this.pluginType,
+                        searchable: [basename(filePath)],
+                        supportsAutocompletion: true,
+                        supportsOpenLocation: true,
+                    };
+                });
 
             const promises = unsortedResults.map((unsortedResult) =>
                 this.fileIconGenerator(unsortedResult.executionArgument, defaultFileIcon, defaultFolderIcon),

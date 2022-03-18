@@ -62,9 +62,8 @@ export const applicationSearchSettingsComponent = Vue.extend({
         },
         removeApplicationFileExtension(applicationFileExtension: string) {
             const config: UserConfigOptions = this.config;
-            const indexToRemove = config.applicationSearchOptions.applicationFileExtensions.indexOf(
-                applicationFileExtension,
-            );
+            const indexToRemove =
+                config.applicationSearchOptions.applicationFileExtensions.indexOf(applicationFileExtension);
             config.applicationSearchOptions.applicationFileExtensions.splice(indexToRemove, 1);
             this.updateConfig(true);
         },

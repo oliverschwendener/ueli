@@ -9,5 +9,5 @@ export interface CurrencyConverterOptions {
 export const defaultCurrencyConverterOptions: CurrencyConverterOptions = {
     isEnabled: false,
     precision: 2,
-    defaultTarget: CurrencyCode.EUR
+    defaultTarget: CurrencyCode.EUR,
 };

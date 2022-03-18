@@ -51,15 +51,15 @@ export const websearchEditingModal = Vue.extend({
             }
         },
         onUrlBlurGetFaviconUrl() {
-          const websearchEngine: WebSearchEngine = this.websearchEngine;
-          if (websearchEngine.url.length > 0) {
-            try {
-              const url = new URL(websearchEngine.url);
-              websearchEngine.icon.parameter = `${url.protocol}//${url.hostname}/favicon.ico`;
-            } catch {
-              websearchEngine.icon.parameter = "";
+            const websearchEngine: WebSearchEngine = this.websearchEngine;
+            if (websearchEngine.url.length > 0) {
+                try {
+                    const url = new URL(websearchEngine.url);
+                    websearchEngine.icon.parameter = `${url.protocol}//${url.hostname}/favicon.ico`;
+                } catch {
+                    websearchEngine.icon.parameter = "";
+                }
             }
-          }
         },
         getModalTitle(): string {
             const editMode: ModalEditMode = this.editMode;

@@ -38,20 +38,18 @@ export function everythingSearcher(
                 );
                 Promise.all(iconPromises)
                     .then((icons) => {
-                        const results = icons.map(
-                            (icon): SearchResultItem => {
-                                return {
-                                    description: icon.filePath,
-                                    executionArgument: icon.filePath,
-                                    hideMainWindowAfterExecution: true,
-                                    icon: icon.icon,
-                                    name: basename(icon.filePath),
-                                    originPluginType: pluginType,
-                                    searchable: [],
-                                    supportsOpenLocation: true,
-                                };
-                            },
-                        );
+                        const results = icons.map((icon): SearchResultItem => {
+                            return {
+                                description: icon.filePath,
+                                executionArgument: icon.filePath,
+                                hideMainWindowAfterExecution: true,
+                                icon: icon.icon,
+                                name: basename(icon.filePath),
+                                originPluginType: pluginType,
+                                searchable: [],
+                                supportsOpenLocation: true,
+                            };
+                        });
                         resolve(results);
                     })
                     .catch((err) => reject(err));

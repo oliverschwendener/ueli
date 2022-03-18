@@ -180,25 +180,21 @@ export class WebSearchPlugin implements ExecutionPlugin, AutoCompletionPlugin {
                     .then((response) => {
                         const suggestions: string[] = response[1];
 
-                        const searchResultItems = suggestions.map(
-                            (suggestion): SearchResultItem => {
-                                return {
-                                    description: this.buildDescriptionFromSearchTerm(websearchEngine, suggestion),
-                                    executionArgument: this.buildExecutionArgumentFromSearchTerm(
-                                        websearchEngine,
-                                        suggestion,
-                                    ),
-                                    hideMainWindowAfterExecution: true,
-                                    icon: isValidIcon(websearchEngine.icon)
-                                        ? websearchEngine.icon
-                                        : defaultWebSearchIcon,
-                                    name: suggestion,
-                                    originPluginType: this.pluginType,
-                                    searchable: [],
-                                    supportsAutocompletion: true,
-                                };
-                            },
-                        );
+                        const searchResultItems = suggestions.map((suggestion): SearchResultItem => {
+                            return {
+                                description: this.buildDescriptionFromSearchTerm(websearchEngine, suggestion),
+                                executionArgument: this.buildExecutionArgumentFromSearchTerm(
+                                    websearchEngine,
+                                    suggestion,
+                                ),
+                                hideMainWindowAfterExecution: true,
+                                icon: isValidIcon(websearchEngine.icon) ? websearchEngine.icon : defaultWebSearchIcon,
+                                name: suggestion,
+                                originPluginType: this.pluginType,
+                                searchable: [],
+                                supportsAutocompletion: true,
+                            };
+                        });
 
                         resolve(searchResultItems);
                     })

@@ -90,19 +90,17 @@ export class DictionaryPlugin implements ExecutionPlugin {
             });
         });
 
-        return dictionaryResults.map(
-            (result): SearchResultItem => {
-                return {
-                    description: result.definition,
-                    executionArgument: result.definition,
-                    hideMainWindowAfterExecution: true,
-                    icon: defaultDictionaryIcon,
-                    name: this.buildName(result),
-                    originPluginType: this.pluginType,
-                    searchable: [],
-                };
-            },
-        );
+        return dictionaryResults.map((result): SearchResultItem => {
+            return {
+                description: result.definition,
+                executionArgument: result.definition,
+                hideMainWindowAfterExecution: true,
+                icon: defaultDictionaryIcon,
+                name: this.buildName(result),
+                originPluginType: this.pluginType,
+                searchable: [],
+            };
+        });
     }
 
     private buildName(result: DictionaryResult): string {

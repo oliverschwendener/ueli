@@ -35,20 +35,18 @@ export class WorkflowPlugin implements SearchPlugin {
 
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve) => {
-            const result = this.config.workflows.map(
-                (workflow): SearchResultItem => {
-                    return {
-                        description: workflow.description,
-                        executionArgument: this.encodeExecutionArguments(workflow),
-                        hideMainWindowAfterExecution: true,
-                        icon: workflow.icon || defaultWorkflowIcon,
-                        name: workflow.name,
-                        needsUserConfirmationBeforeExecution: workflow.needsUserConfirmationBeforeExecution,
-                        originPluginType: this.pluginType,
-                        searchable: [...workflow.tags, workflow.name],
-                    };
-                },
-            );
+            const result = this.config.workflows.map((workflow): SearchResultItem => {
+                return {
+                    description: workflow.description,
+                    executionArgument: this.encodeExecutionArguments(workflow),
+                    hideMainWindowAfterExecution: true,
+                    icon: workflow.icon || defaultWorkflowIcon,
+                    name: workflow.name,
+                    needsUserConfirmationBeforeExecution: workflow.needsUserConfirmationBeforeExecution,
+                    originPluginType: this.pluginType,
+                    searchable: [...workflow.tags, workflow.name],
+                };
+            });
 
             resolve(result);
         });
@@ -68,9 +66,9 @@ export class WorkflowPlugin implements SearchPlugin {
 
     public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
-            const promises = this.decodeExecutionArgument(
-                searchResultItem.executionArgument,
-            ).executionSteps.map((executionArgument) => this.handleExecutionStep(executionArgument));
+            const promises = this.decodeExecutionArgument(searchResultItem.executionArgument).executionSteps.map(
+                (executionArgument) => this.handleExecutionStep(executionArgument),
+            );
 
             Promise.all(promises)
                 .then(() => resolve())

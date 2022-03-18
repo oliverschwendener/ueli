@@ -63,8 +63,10 @@ export const hindiTranslationSet: TranslationSet = {
     generalSettingsImportFileFilterJsonFiles: "JSON फ़ाइलें",
     generalSettingsImportErrorInvalidConfig: "सेटिंग आयात विफल: फ़ाइल सामग्री अमान्य प्रतीत होती है",
     generalSettingsResetAllSettings: "सभी सेटिंग्स को डिफ़ॉल्ट पर रीसेट करें",
-    generalSettingsResetWarning: "आप सभी जनरल सेटिंग्स को डिफ़ॉल्ट पर रीसेट करने वाले हैं। क्या आप आगे बढ़ना चाहते हैं?",
-    generalSettingsResetAllSettingsWarning: "आप सभी सेटिंग्स को डिफ़ॉल्ट पर रीसेट करने वाले हैं। क्या आप आगे बढ़ना चाहते हैं?",
+    generalSettingsResetWarning:
+        "आप सभी जनरल सेटिंग्स को डिफ़ॉल्ट पर रीसेट करने वाले हैं। क्या आप आगे बढ़ना चाहते हैं?",
+    generalSettingsResetAllSettingsWarning:
+        "आप सभी सेटिंग्स को डिफ़ॉल्ट पर रीसेट करने वाले हैं। क्या आप आगे बढ़ना चाहते हैं?",
     generalSettingsClearExecutionLogWarning: "आप निष्पादन लॉग को साफ़ करने वाले हैं। क्या आप आगे बढ़ना चाहते हैं?",
     generalSettingsHideMainWindowAfterExecution: "निष्पादन के बाद विंडो छुपाएं",
     generalSettingsHideMainWindowOnBlur: "फोकस खो जाने पर विंडो छिपाएं",
@@ -171,7 +173,8 @@ export const hindiTranslationSet: TranslationSet = {
     applicationSearchSettingsNotAFolderErrorMessage: `"{{value}} फोल्डर नहीं है।"`,
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}} मौजूद नहीं है।"`,
     applicationSearchSettingsFolderValidationError: `"{{value}}" सत्यापित करने का प्रयास करते समय एक त्रुटि हुई।`,
-    applicationSearchSettingsUseNativeIcons: "नेटिव आइकॉन का इस्तेमाल करें (इसे बंद करने से परफ़ॉर्मेंस बेहतर हो सकता है।)",
+    applicationSearchSettingsUseNativeIcons:
+        "नेटिव आइकॉन का इस्तेमाल करें (इसे बंद करने से परफ़ॉर्मेंस बेहतर हो सकता है।)",
 
     searchEngineSettings: "खोज इंजन",
     searchEngineSettingsDescription: `खोज इंजन का उपयोग अनुप्रयोगों, शॉर्टकट और ऑपरेटिंग सिस्टम सेटिंग्स/कमांड जैसे प्रीइंडेक्स किए गए आइटम के लिए किया जाता है।`,
@@ -257,7 +260,8 @@ export const hindiTranslationSet: TranslationSet = {
     operatingSystemCommandsSettingsDescription: `ऑपरेटिंग सिस्टम कमांड आपके ऑपरेटिंग सिस्टम को नियंत्रित करने के लिए सरल कमांड हैं जैसे आपके कंप्यूटर को शटडाउन या पुनरारंभ करना।`,
 
     operatingSystemSettings: "ऑपरेटिंग सिस्टम सेटिंग्स",
-    operatingSystemSettingsSettingsDescription: "यह प्लगइन आपको ऑपरेटिंग सिस्टम सेटिंग्स को जल्दी से खोजने में सक्षम बनाता है।",
+    operatingSystemSettingsSettingsDescription:
+        "यह प्लगइन आपको ऑपरेटिंग सिस्टम सेटिंग्स को जल्दी से खोजने में सक्षम बनाता है।",
 
     macOsShutdown: "शट डाउन",
     macOsShutdownDescription: "कंप्यूटर बंद करें",
@@ -295,8 +299,7 @@ export const hindiTranslationSet: TranslationSet = {
     urlDefaultProtocol: "डिफ़ॉल्ट प्रोटोकॉल",
 
     email: "ईमेल",
-    emailSettingsDescription:
-        "यह प्लगइन आपको ईमेल आईडी टाइप करके ईमेल लिखना शुरू करने में सक्षम बनाता है।",
+    emailSettingsDescription: "यह प्लगइन आपको ईमेल आईडी टाइप करके ईमेल लिखना शुरू करने में सक्षम बनाता है।",
     openNewMail: "नया ईमेल खोलें",
 
     currencyConverter: "मुद्रा परिवर्तक",

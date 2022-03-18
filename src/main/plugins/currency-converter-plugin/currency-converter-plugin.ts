@@ -34,7 +34,7 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
         switch (words.length) {
             case 2: {
                 try {
-                    return (!isNaN(this.getNumber(words[0])) && this.isCurrencyCode(words[1]));
+                    return !isNaN(this.getNumber(words[0])) && this.isCurrencyCode(words[1]);
                 } catch (err) {
                     return false;
                 }
@@ -129,8 +129,9 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
             case 2: {
                 return {
                     base:
-                        Object.values(CurrencyCode).find((c: CurrencyCode) => c.toLowerCase() === words[1].toLowerCase()) ||
-                        CurrencyCode.EUR,
+                        Object.values(CurrencyCode).find(
+                            (c: CurrencyCode) => c.toLowerCase() === words[1].toLowerCase(),
+                        ) || CurrencyCode.EUR,
                     target: this.config.defaultTarget,
                     value: this.getNumber(words[0]),
                 };
@@ -138,22 +139,26 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
             case 3: {
                 return {
                     base:
-                        Object.values(CurrencyCode).find((c: CurrencyCode) => c.toLowerCase() === words[1].toLowerCase()) ||
-                        CurrencyCode.EUR,
+                        Object.values(CurrencyCode).find(
+                            (c: CurrencyCode) => c.toLowerCase() === words[1].toLowerCase(),
+                        ) || CurrencyCode.EUR,
                     target:
-                        Object.values(CurrencyCode).find((c: CurrencyCode) => c.toLowerCase() === words[2].toLowerCase()) ||
-                        CurrencyCode.USD,
+                        Object.values(CurrencyCode).find(
+                            (c: CurrencyCode) => c.toLowerCase() === words[2].toLowerCase(),
+                        ) || CurrencyCode.USD,
                     value: this.getNumber(words[0]),
                 };
             }
             default: {
                 return {
                     base:
-                        Object.values(CurrencyCode).find((c: CurrencyCode) => c.toLowerCase() === words[1].toLowerCase()) ||
-                        CurrencyCode.EUR,
+                        Object.values(CurrencyCode).find(
+                            (c: CurrencyCode) => c.toLowerCase() === words[1].toLowerCase(),
+                        ) || CurrencyCode.EUR,
                     target:
-                        Object.values(CurrencyCode).find((c: CurrencyCode) => c.toLowerCase() === words[3].toLowerCase()) ||
-                        CurrencyCode.USD,
+                        Object.values(CurrencyCode).find(
+                            (c: CurrencyCode) => c.toLowerCase() === words[3].toLowerCase(),
+                        ) || CurrencyCode.USD,
                     value: this.getNumber(words[0]),
                 };
             }

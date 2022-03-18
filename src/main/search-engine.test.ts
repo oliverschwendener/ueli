@@ -275,8 +275,8 @@ describe(SearchEngine.name, () => {
             new FakeSearchPlugin(PluginType.Test, [], true),
             new FakeSearchPlugin(PluginType.Test, [], true),
         ];
-        jest.spyOn(fakePlugins[1], 'refreshIndex').mockReturnValue(Promise.reject('error 1'));
-        jest.spyOn(fakePlugins[3], 'refreshIndex').mockReturnValue(Promise.reject('error 2'));
+        jest.spyOn(fakePlugins[1], "refreshIndex").mockReturnValue(Promise.reject("error 1"));
+        jest.spyOn(fakePlugins[3], "refreshIndex").mockReturnValue(Promise.reject("error 2"));
         const searchPlugins: SearchPlugin[] = fakePlugins;
         const executionPlugins: ExecutionPlugin[] = [];
         const fallbackPlugins: ExecutionPlugin[] = [];
@@ -293,9 +293,9 @@ describe(SearchEngine.name, () => {
 
         searchEngine
             .refreshAllIndexes()
-            .catch((err) => caughtError = err)
+            .catch((err) => (caughtError = err))
             .finally(() => {
-                expect(caughtError).toEqual(['error 1', 'error 2']);
+                expect(caughtError).toEqual(["error 1", "error 2"]);
                 done();
             });
     });

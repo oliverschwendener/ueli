@@ -55,9 +55,7 @@ export class Calculator {
             throw new Error("Failed to instantiate math js static");
         }
 
-        const result: string = String(
-            math.evaluate(this.normalizeInput(input, decimalSeparator, argumentSeparator)),
-        );
+        const result: string = String(math.evaluate(this.normalizeInput(input, decimalSeparator, argumentSeparator)));
 
         return result.replace(new RegExp(",|\\.", "g"), (match) =>
             match === "." ? decimalSeparator : argumentSeparator,

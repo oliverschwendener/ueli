@@ -21,7 +21,7 @@ export function searchWindowsApplications(
         const ignoreErrors = "$ErrorActionPreference = 'SilentlyContinue'";
         const createApplicationsArray = "$applications = New-Object Collections.Generic.List[String]";
         const extensions = applicationSearchOptions.applicationFileExtensions.map((e) => `'${e}'`).join(",");
-        const createExtensionsHashSet = `$extensions = New-Object System.Collections.Generic.HashSet[string] ([string[]]@(${extensions}), [System.StringComparer]::OrdinalIgnoreCase)`
+        const createExtensionsHashSet = `$extensions = New-Object System.Collections.Generic.HashSet[string] ([string[]]@(${extensions}), [System.StringComparer]::OrdinalIgnoreCase)`;
         const folders = applicationSearchOptions.applicationFolders
             .map((applicationFolder) => `'${applicationFolder}'`)
             .join(",");
