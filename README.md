@@ -305,6 +305,14 @@ $ yarn package
 
 For more check [here](https://alternativeto.net/software/ueli).
 
+### Contributors Wall
+<a href="https://github.com/oliverschwendener/ueli/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=oliverschwendener/ueli" />
+</a>
+
+
+_Note: It may take up to 24h for the [contrib.rocks](https://contrib.rocks/image?repo=oliverschwendener/ueli) plugin to update because it's refreshed once a day._
+
 ## Thanks
 
 Thanks to [David Gabathuler](https://davidgabathuler.ch) for the logo!
