@@ -42,7 +42,7 @@
         "@types/jest": "^27.4.1",
         "@types/mathjs": "^6.0.12",
         "@types/node-powershell": "^3.1.0",
-        "@types/sqlite3": "^3.1.6",
+        "@types/sqlite3": "^3.1.8",
         "@types/vue-color": "^2.4.2",
         "axios": "^0.21.4",
         "color": "^4.0.1",
@@ -71,7 +71,7 @@
         "bulma": "^0.9.2",
         "bulma-extensions": "^6.2.7",
         "ini": "^2.0.0",
-        "sqlite": "^4.0.23",
+        "sqlite": "^4.0.25",
         "sqlite3": "^5.0.2"
     }
 }

@@ -1030,10 +1030,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/sqlite3@^3.1.6":
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/@types/sqlite3/-/sqlite3-3.1.7.tgz#84fbc65946603d15cff4968d0cb283d1879dd156"
-  integrity sha512-8FHV/8Uzd7IwdHm5mvmF2Aif4aC/gjrt4axWD9SmfaxITnOjtOhCbOSTuqv/VbH1uq0QrwlaTj9aTz3gmR6u4w==
+"@types/sqlite3@^3.1.8":
+  version "3.1.8"
+  resolved "https://registry.yarnpkg.com/@types/sqlite3/-/sqlite3-3.1.8.tgz#e64310c5841fc01c1a8795d960d951e4cf940296"
+  integrity sha512-sQMt/qnyUWnqiTcJXm5ZfNPIBeJ/DVvJDwxw+0tAxPJvadzfiP1QhryO1JOR6t1yfb8NpzQb/Rud06mob5laIA==
   dependencies:
     "@types/node" "*"
 
@@ -5038,10 +5038,10 @@ sqlite3@^5.0.2:
   optionalDependencies:
     node-gyp "3.x"
 
-sqlite@^4.0.23:
-  version "4.0.23"
-  resolved "https://registry.yarnpkg.com/sqlite/-/sqlite-4.0.23.tgz#ada09028b38e91883db08ac465d841e814d1bb00"
-  integrity sha512-dSdmSkrdIhUL7xP/fiEMfFuAo4dxb0afag3rK8T4Y9lYxE3g3fXT0J8H9qSFvmcKxnM0zEA8yvLbpdWQ8mom3g==
+sqlite@^4.0.25:
+  version "4.0.25"
+  resolved "https://registry.yarnpkg.com/sqlite/-/sqlite-4.0.25.tgz#3710c6ea7dc94de4306f0bff77f916da02799605"
+  integrity sha512-gqCEcLF8FOTeW/na3SRYWLQkw2jZXgVj1DdgRJbm0jvrhnUgBIuNDUUm649AnBNDNHhI5XskwT8dvc8vearRLQ==
 
 sshpk@^1.7.0:
   version "1.16.1"
