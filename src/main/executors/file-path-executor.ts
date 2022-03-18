@@ -11,12 +11,10 @@ export function executeFilePathMacOs(filePath: string, privileged: boolean): Pro
 
 function openFile(filePath: string): Promise<void> {
     return new Promise((resolve, reject) => {
-        const result = shell.openPath(filePath);
-        if (result) {
-            resolve();
-        } else {
-            reject(`Failed to open: ${filePath}`);
-        }
+        shell
+            .openPath(filePath)
+            .then((error) => (error ? reject(error) : resolve()))
+            .catch(() => reject(`Failed to open: ${filePath}`));
     });
 }
 
