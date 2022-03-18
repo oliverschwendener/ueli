@@ -7,11 +7,13 @@ import { PluginSettings } from "./plugin-settings";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { deepCopy } from "../../common/helpers/object-helpers";
+import { CurrencyCode } from "../../main/plugins/currency-converter-plugin/currency-code";
 
 export const currencyConverterSettingsComponent = Vue.extend({
     data() {
         return {
             settingName: PluginSettings.CurrencyConverter,
+            currencyCodes: Object.values(CurrencyCode),
             visible: false,
         };
     },
@@ -84,6 +86,21 @@ export const currencyConverterSettingsComponent = Vue.extend({
                             </div>
                         </div>
                     </div>
+
+                    <div class="settings__option">
+                            <div class="settings__option-name">Default Currency Target</div>
+                            <div class="settings__option-content">
+                                <div class="field is-grouped is-grouped-right">
+                                    <div class="control">
+                                        <div class="select">
+                                            <select v-model="config.currencyConverterOptions.defaultTarget" @change="updateConfig">
+                                                <option v-for="currencyCode in currencyCodes">{{ currencyCode }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                 </div>
             </div>
