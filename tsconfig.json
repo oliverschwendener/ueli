@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es2015" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'. */,
         "module": "commonjs" /* Specify module code generation: 'commonjs', 'amd', 'system', 'umd' or 'es2015'. */,
-        "lib": ["dom", "ES2021"] /* Specify library files to be included in the compilation:  */,
+        "lib": ["dom", "es2017"] /* Specify library files to be included in the compilation:  */,
         "esModuleInterop": true,
         "sourceMap": true /* Generates corresponding '.map' file. */,
         "outDir": "./bundle/js" /* Redirect output structure to the directory. */,
