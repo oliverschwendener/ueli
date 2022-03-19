@@ -1,6 +1,5 @@
 import { TranslationSet } from "./translation-set";
 
-// tslint:disable:object-literal-sort-keys for better readability
 export const chineseTranslationSet: TranslationSet = {
     trayIconShow: "显示",
     trayIconSettings: "设置",

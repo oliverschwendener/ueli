@@ -22,7 +22,6 @@ export class FakeFavoriteRepository implements FavoriteRepository {
     }
 
     public update(favorite: Favorite): void {
-        // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < this.favorites.length; i++) {
             if (this.favorites[i].item.executionArgument === favorite.item.executionArgument) {
                 this.favorites[i].item = favorite.item;
