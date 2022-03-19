@@ -4,28 +4,13 @@ import { SearchResultItem } from "../../common/search-result-item";
 import Store = require("electron-store");
 
 export class ElectronStoreFavoriteRepository implements FavoriteRepository {
-    private readonly store: Store;
+    private readonly store: Store<Favorite[]>;
     private readonly favoritesStoreKey = "favorites";
     private favorites: Favorite[];
 
     constructor() {
-        this.store = new Store({ name: "favorites" });
-
-        this.favorites = this.migrateUserConfigFavorites() || this.store.get(this.favoritesStoreKey) || [];
-    }
-
-    private migrateUserConfigFavorites(): Favorite[] | undefined {
-        // Favorites were moved from the user config store to their own store.
-        // If favorites found in the user config store, migrate them.
-        const userConfigStore = new Store();
-        const userConfigFavoritesStoreKey = "favorites";
-        const userConfigFavorites = userConfigStore.get(userConfigFavoritesStoreKey);
-        if (userConfigFavorites) {
-            this.store.set(this.favoritesStoreKey, userConfigFavorites);
-            userConfigStore.delete(userConfigFavoritesStoreKey);
-        }
-
-        return userConfigFavorites;
+        this.store = new Store<Favorite[]>({ name: "favorites" });
+        this.favorites = this.store.get(this.favoritesStoreKey) || [];
     }
 
     public get(searchResultItem: SearchResultItem): Favorite | undefined {

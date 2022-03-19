@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
-        "target": "es2015",
+        "target": "ES2015",
         "module": "commonjs",
-        "lib": ["dom", "es2017"],
+        "lib": ["dom", "ESNEXT"],
         "esModuleInterop": true,
         "sourceMap": true,
         "outDir": "./bundle/js",
