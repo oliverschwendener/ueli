@@ -56,7 +56,7 @@ export const windowsCommandLineExecutor = (command: string, shell: WindowsShell)
         case WindowsShell.PowerShellInWT:
             return executeCommand(`start wt.exe powershell -NoExit -Command "&${command}"`);
         case WindowsShell.WSLInWT:
-            return executeCommand(`start wt.exe wsl sh -c "${command} && exec \$SHELL"`);
+            return executeCommand(`start wt.exe wsl sh -c "${command} && exec $SHELL"`);
         default:
             return unsupportedShellRejection(shell);
     }

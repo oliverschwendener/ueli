@@ -2,7 +2,6 @@ import { SearchPlugin } from "../../search-plugin";
 import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
-import { TranslationSet } from "../../../common/translation/translation-set";
 import { SimpleFolderSearchOptions } from "../../../common/config/simple-folder-search-options";
 import { basename, sep } from "path";
 import { FileIconDataResult, getFileIconDataUrl } from "../../../common/icon/generate-file-icon";
@@ -93,7 +92,7 @@ export class SimpleFolderSearchPlugin implements SearchPlugin, AutoCompletionPlu
         return this.filePathLocationExecutor(searchResultItem.executionArgument);
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+    public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
         return new Promise((resolve) => {
             this.config = updatedConfig.simpleFolderSearchOptions;
             resolve();

@@ -112,7 +112,7 @@ export const searchEngineSettingsComponent = Vue.extend({
                     </div>
 
                     <div class="settings__option">
-                        <div class="settings__option-name">{{ translations.searchEngineSettingsBlacklist }}</div>
+                        <div class="settings__option-name">{{ translations.searchEngineSettingsBlacklist }}</div>
                         <div class="settings__option-content">
                             <div class="field is-grouped is-grouped-right">
                                 <ul v-if="config.searchEngineOptions.blackList.length > 0" class="has-text-right">

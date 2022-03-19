@@ -26,7 +26,7 @@ export class CalculatorPlugin implements ExecutionPlugin {
         this.clipboardCopier = clipboardCopier;
     }
 
-    public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
+    public isValidUserInput(userInput: string): boolean {
         return Calculator.isValidInput(userInput, this.generalConfig.decimalSeparator, this.getArgumentSeparator());
     }
 
@@ -37,8 +37,8 @@ export class CalculatorPlugin implements ExecutionPlugin {
         return ";";
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
+    public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
+        return new Promise((resolve) => {
             const result = Calculator.calculate(
                 userInput,
                 Number(this.config.precision),
@@ -63,7 +63,7 @@ export class CalculatorPlugin implements ExecutionPlugin {
         return this.config.isEnabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(searchResultItem: SearchResultItem): Promise<void> {
         return this.clipboardCopier(searchResultItem.executionArgument);
     }
 

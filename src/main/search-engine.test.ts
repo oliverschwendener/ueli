@@ -9,7 +9,7 @@ import { dummyIcon } from "../tests/dummy-icon";
 import { ExecutionPlugin } from "./execution-plugin";
 import { TranslationSet } from "../common/translation/translation-set";
 import { FakeFavoriteRepository } from "../tests/fake-favorite-repository";
-import { defaultSearchEngineOptions, SearchEngineOptions } from "../common/config/search-engine-options";
+import { SearchEngineOptions, defaultSearchEngineOptions } from "../common/config/search-engine-options";
 
 describe(SearchEngine.name, () => {
     const fakeFavoritesRepository = new FakeFavoriteRepository([]);
@@ -289,6 +289,7 @@ describe(SearchEngine.name, () => {
             translationSet,
             favoritesRepository,
         );
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let caughtError: any;
 
         searchEngine

@@ -1,11 +1,7 @@
-import { create, all, evaluate, typeOf } from "mathjs";
+import { all, create, evaluate, typeOf } from "mathjs";
 
 export class Calculator {
-    public static isValidInput(
-        input: string,
-        decimalSeparator: string = ".",
-        argumentSeparator: string = ",",
-    ): boolean {
+    public static isValidInput(input: string, decimalSeparator = ".", argumentSeparator = ","): boolean {
         const blackListInputs = ["version", "i"];
 
         if (input.length === 0) {
@@ -37,12 +33,7 @@ export class Calculator {
         );
     }
 
-    public static calculate(
-        input: string,
-        precision: number,
-        decimalSeparator: string = ".",
-        argumentSeparator: string = ",",
-    ): string {
+    public static calculate(input: string, precision: number, decimalSeparator = ".", argumentSeparator = ","): string {
         precision = Number(precision);
 
         if (precision > 64 || precision < 0) {
@@ -55,13 +46,14 @@ export class Calculator {
             throw new Error("Failed to instantiate math js static");
         }
 
-        const result: string = String(math.evaluate(this.normalizeInput(input, decimalSeparator, argumentSeparator)));
+        const result = String(math.evaluate(this.normalizeInput(input, decimalSeparator, argumentSeparator)));
 
         return result.replace(new RegExp(",|\\.", "g"), (match) =>
             match === "." ? decimalSeparator : argumentSeparator,
         );
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private static isValidMathType(input: any): boolean {
         const mathType = typeOf(input);
 

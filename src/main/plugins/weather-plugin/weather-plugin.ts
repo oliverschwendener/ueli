@@ -26,11 +26,11 @@ export class WeatherPlugin implements ExecutionPlugin {
         this.clipboardCopier = clipboardCopier;
     }
 
-    public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
+    public isValidUserInput(userInput: string): boolean {
         return userInput.startsWith(this.config.prefix);
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
+    public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
         const lang = this.getLanguage(this.generalConfig.language);
         return new Promise((resolve, reject) => {
             const region = userInput.replace(this.config.prefix, "").trim();
@@ -55,7 +55,7 @@ export class WeatherPlugin implements ExecutionPlugin {
         return this.config.isEnabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(searchResultItem: SearchResultItem): Promise<void> {
         return this.clipboardCopier(searchResultItem.executionArgument);
     }
 

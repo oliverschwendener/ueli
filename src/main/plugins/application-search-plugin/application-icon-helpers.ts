@@ -1,4 +1,4 @@
-import { join, basename, extname } from "path";
+import { basename, extname, join } from "path";
 import { createHash } from "crypto";
 import { ueliTempFolder } from "../../../common/helpers/ueli-helpers";
 import { replaceWhitespace } from "../../../common/helpers/string-helpers";

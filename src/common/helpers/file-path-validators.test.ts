@@ -1,4 +1,4 @@
-import { isValidWindowsFilePath, isValidMacOsFilePath } from "./file-path-validators";
+import { isValidMacOsFilePath, isValidWindowsFilePath } from "./file-path-validators";
 
 const validWindowsFilePaths = [
     "C:\\Program Files (x86)\\Some Folder\\some-file.ext",

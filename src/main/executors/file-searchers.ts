@@ -38,7 +38,7 @@ export function macosFileSearcher(option: FileSearchOption): Promise<string[]> {
     return new Promise((resolve, reject) => {
         const recurse = option.recursive ? "" : "-maxdepth 1 ";
         executeCommandWithOutput(
-            `find "${option.folderPath}" ${recurse}-not -path '*/\.*' | grep -v "^${option.folderPath}$" | head -n 1000`,
+            `find "${option.folderPath}" ${recurse}-not -path '*/.*' | grep -v "^${option.folderPath}$" | head -n 1000`,
         )
             .then((data) => {
                 const result = data

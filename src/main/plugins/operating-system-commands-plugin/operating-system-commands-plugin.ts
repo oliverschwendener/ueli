@@ -65,7 +65,7 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
         return this.config.isEnabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(searchResultItem: SearchResultItem): Promise<void> {
         return this.commandExecutor(searchResultItem.executionArgument);
     }
 

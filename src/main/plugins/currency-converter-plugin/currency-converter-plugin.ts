@@ -28,7 +28,7 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
         this.clipboardCopier = clipboardCopier;
     }
 
-    public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
+    public isValidUserInput(userInput: string): boolean {
         const keywords = ["in", "to"];
         const words = userInput.trim().split(" ");
         switch (words.length) {
@@ -67,7 +67,7 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
         }
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
+    public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             const conversion = this.buildCurrencyConversion(userInput);
             CurrencyConverter.convert(conversion, Number(this.config.precision))
@@ -106,7 +106,7 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
         return this.config.isEnabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(searchResultItem: SearchResultItem): Promise<void> {
         return this.clipboardCopier(searchResultItem.executionArgument);
     }
 

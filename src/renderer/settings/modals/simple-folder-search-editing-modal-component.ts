@@ -2,8 +2,8 @@ import Vue from "vue";
 import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
 import {
-    SimpleFolderSearchOptions,
     SimpleFolderSearchFolderOption,
+    SimpleFolderSearchOptions,
 } from "../../../common/config/simple-folder-search-options";
 import { ModalEditMode } from "./modal-edit-mode";
 import { NotificationType } from "../../../common/notification-type";
@@ -56,7 +56,7 @@ export const simpleFolderSearchEditingModalComponent = Vue.extend({
                     const options: SimpleFolderSearchFolderOption = this.options;
                     options.folderPath = folderPath;
                 })
-                .catch((err) => {
+                .catch(() => {
                     // do nothing if no folder is selected
                 });
         },

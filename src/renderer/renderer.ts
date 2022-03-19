@@ -189,7 +189,7 @@ const app = new Vue({
             ipcRenderer.send(IpcChannels.downloadUpdate);
         });
 
-        ipcRenderer.on(IpcChannels.executionFinished, (event) => {
+        ipcRenderer.on(IpcChannels.executionFinished, () => {
             vueEventDispatcher.$emit(VueEventChannels.executionFinished);
         });
 
@@ -245,11 +245,11 @@ const app = new Vue({
             vueEventDispatcher.$emit(VueEventChannels.notification, message, type);
         });
 
-        ipcRenderer.on(IpcChannels.refreshIndexesStarted, (event: Electron.Event) => {
+        ipcRenderer.on(IpcChannels.refreshIndexesStarted, () => {
             vueEventDispatcher.$emit(VueEventChannels.refreshIndexesStarted);
         });
 
-        ipcRenderer.on(IpcChannels.refreshIndexesCompleted, (event: Electron.Event, message: string) => {
+        ipcRenderer.on(IpcChannels.refreshIndexesCompleted, () => {
             vueEventDispatcher.$emit(VueEventChannels.refreshIndexesFinished);
         });
 

@@ -5,7 +5,7 @@ import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { defaultTerminalIcon } from "../../../common/icon/default-icons";
 import { CommandlineOptions } from "../../../common/config/commandline-options";
-import { WindowsShell, MacOsShell } from "./shells";
+import { MacOsShell, WindowsShell } from "./shells";
 import { Logger } from "../../../common/logger/logger";
 
 export class CommandlinePlugin implements ExecutionPlugin {
@@ -18,12 +18,12 @@ export class CommandlinePlugin implements ExecutionPlugin {
         private readonly logger: Logger,
     ) {}
 
-    public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
+    public isValidUserInput(userInput: string): boolean {
         return userInput.startsWith(this.config.prefix) && userInput.length > this.config.prefix.length;
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
+    public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
+        return new Promise((resolve) => {
             const command = userInput.replace(this.config.prefix, "").trim();
             const result: SearchResultItem = {
                 description: this.translationSet.commandlineSearchResultDescription.replace("{{command}}", command),
@@ -42,7 +42,7 @@ export class CommandlinePlugin implements ExecutionPlugin {
         return this.config.isEnabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(searchResultItem: SearchResultItem): Promise<void> {
         this.commandlineExecutor(searchResultItem.executionArgument, this.config.shell)
             .then(() => {
                 /* do nothing */

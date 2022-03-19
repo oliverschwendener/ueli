@@ -3,13 +3,13 @@ import { vueEventDispatcher } from "../../vue-event-dispatcher";
 import { VueEventChannels } from "../../vue-event-channels";
 import { Shortcut } from "../../../main/plugins/shortcuts-search-plugin/shortcut";
 import { ShortcutType } from "../../../main/plugins/shortcuts-search-plugin/shortcut-type";
-import { platform, homedir } from "os";
+import { homedir, platform } from "os";
 import {
     defaultNewShortcut,
     isValidShortcutToAdd,
 } from "../../../main/plugins/shortcuts-search-plugin/shortcut-helpers";
 import { NotificationType } from "../../../common/notification-type";
-import { isValidWindowsFilePath, isValidMacOsFilePath } from "../../../common/helpers/file-path-validators";
+import { isValidMacOsFilePath, isValidWindowsFilePath } from "../../../common/helpers/file-path-validators";
 import { getCurrentOperatingSystem } from "../../../common/helpers/operating-system-helpers";
 import { showNotification } from "../../notifications";
 import { getFilePath, getFolderPath } from "../../dialogs";
@@ -140,14 +140,14 @@ export const shortcutEditingModal = Vue.extend({
         openFile() {
             getFilePath()
                 .then((filePath) => this.handleFileOrFolderSelected(filePath))
-                .catch((err) => {
+                .catch(() => {
                     /* do nothing if no file selected */
                 });
         },
         openFolder() {
             getFolderPath()
                 .then((folderPath) => this.handleFileOrFolderSelected(folderPath))
-                .catch((err) => {
+                .catch(() => {
                     /* do nothing if no folder selected */
                 });
         },
@@ -191,7 +191,7 @@ export const shortcutEditingModal = Vue.extend({
                             </label>
                             <div class="control is-expanded">
                                 <div class="select is-fullwidth">
-                                    <select v-model="shortcut.type" :autofocus="autofocus">
+                                    <select v-model="shortcut.type" :autofocus="autofocus">
                                         <option v-for="shortcutType in shortcutTypes" :value="shortcutType">
                                             {{ getShortcutType(shortcutType) }}
                                         </option>

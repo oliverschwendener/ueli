@@ -9,7 +9,7 @@ import {
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { NotificationType } from "../../../common/notification-type";
 import { ModalEditMode } from "./modal-edit-mode";
-import { isEqual, deepCopy } from "../../../common/helpers/object-helpers";
+import { deepCopy, isEqual } from "../../../common/helpers/object-helpers";
 
 export const websearchEditingModal = Vue.extend({
     computed: {

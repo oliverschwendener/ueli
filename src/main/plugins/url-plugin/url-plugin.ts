@@ -19,11 +19,11 @@ export class UrlPlugin implements ExecutionPlugin {
         this.urlExecutor = urlExecutor;
     }
 
-    public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
+    public isValidUserInput(userInput: string): boolean {
         return isValidUrl(userInput);
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
+    public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve) => {
             const urlStartsWithHttp = userInput.startsWith("http://");
             const urlStartsWithHttps = userInput.startsWith("https://");
@@ -54,7 +54,7 @@ export class UrlPlugin implements ExecutionPlugin {
         return this.config.isEnabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(searchResultItem: SearchResultItem): Promise<void> {
         return this.urlExecutor(searchResultItem.executionArgument);
     }
 

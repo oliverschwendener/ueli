@@ -7,7 +7,7 @@ import { defaultWorkflowIcon } from "../../common/icon/default-icons";
 import { WorkflowExecutionArgumentType } from "../../main/plugins/workflow-plugin/workflow-execution-argument-type";
 import { Workflow } from "../../main/plugins/workflow-plugin/workflow";
 import { ModalEditMode } from "./modals/modal-edit-mode";
-import { getWorkflowExecutionArgumentTypeIcon, getWorkflowExecutionArgumentTypeClass } from "./helpers";
+import { getWorkflowExecutionArgumentTypeClass, getWorkflowExecutionArgumentTypeIcon } from "./helpers";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./modals/user-confirmation-dialog-params";
 import { defaultWorkflowOptions } from "../../common/config/workflow-options";

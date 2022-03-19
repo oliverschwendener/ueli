@@ -14,7 +14,7 @@ export class FavoriteManager {
     }
 
     public increaseCount(searchResultItem: SearchResultItem): Promise<void> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const favorite = this.favoriteRepository.get(searchResultItem);
             if (favorite) {
                 favorite.executionCount++;

@@ -1,14 +1,13 @@
 import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
-import { TranslationSet } from "../../../common/translation/translation-set";
 import { SearchPlugin } from "../../search-plugin";
 import { WorkflowOptions } from "../../../common/config/workflow-options";
 import { WorkflowExecutionStep } from "./workflow-execution-argument";
 import { WorkflowExecutionArgumentType } from "./workflow-execution-argument-type";
 import { Workflow } from "./workflow";
 import { defaultWorkflowIcon } from "../../../common/icon/default-icons";
-import { WindowsShell, MacOsShell } from "../commandline-plugin/shells";
+import { MacOsShell, WindowsShell } from "../commandline-plugin/shells";
 import { CommandlineOptions } from "../../../common/config/commandline-options";
 
 export class WorkflowPlugin implements SearchPlugin {
@@ -64,7 +63,7 @@ export class WorkflowPlugin implements SearchPlugin {
         return this.config.isEnabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(searchResultItem: SearchResultItem): Promise<void> {
         return new Promise((resolve, reject) => {
             const promises = this.decodeExecutionArgument(searchResultItem.executionArgument).executionSteps.map(
                 (executionArgument) => this.handleExecutionStep(executionArgument),
@@ -76,7 +75,7 @@ export class WorkflowPlugin implements SearchPlugin {
         });
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+    public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
         return new Promise((resolve) => {
             this.config = updatedConfig.workflowOptions;
             resolve();

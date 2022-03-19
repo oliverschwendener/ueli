@@ -1,6 +1,6 @@
 import { SearchResultItem } from "../../../common/search-result-item";
 import { exec } from "child_process";
-import { normalize, basename } from "path";
+import { basename, normalize } from "path";
 import { getFileIconDataUrl } from "../../../common/icon/generate-file-icon";
 import { EverythingSearchOptions } from "../../../common/config/everything-search-options";
 import { Icon } from "../../../common/icon/icon";

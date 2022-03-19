@@ -37,6 +37,7 @@ export class FirefoxBookmarkRepository implements BrowserBookmarkRepository {
         );
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private getAbsoluteProfilePath(profilesIni: { [key: string]: any }): string | undefined {
         const profiles: { Default: string; Path: string; IsRelative: string }[] = Object.keys(profilesIni)
             .filter((iniSection) => iniSection.startsWith("Profile"))

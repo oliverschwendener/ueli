@@ -10,6 +10,7 @@ export function getAllUwpApps(alreadyKnownApps: UwpApplication[]): Promise<UwpAp
 
         spawnPowershellCommandWithOutput(command)
             .then((resultString) => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const result = JSON.parse(resultString) as { NewApps: any[]; RemovedAppIds: string[] };
                 const allCurrentApps = alreadyKnownApps
                     .filter(

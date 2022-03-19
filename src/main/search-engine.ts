@@ -212,6 +212,7 @@ export class SearchEngine {
                         threshold: this.config.fuzzyness,
                     });
 
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     const fuseResult = fuse.search(userInput) as any[];
 
                     if (this.logExecution) {
@@ -296,11 +297,13 @@ export class SearchEngine {
         return [...this.searchPlugins, ...this.executionPlugins];
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private pluginSupportsOpenLocation(plugin: any): plugin is OpenLocationPlugin {
         const openLocationPlugin = plugin as OpenLocationPlugin;
         return openLocationPlugin.openLocation !== undefined;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private pluginSupportsAutocompletion(plugin: any): plugin is AutoCompletionPlugin {
         const autoCompletionPlugin = plugin as AutoCompletionPlugin;
         return autoCompletionPlugin.autoComplete !== undefined;

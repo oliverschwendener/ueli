@@ -36,7 +36,7 @@ export function generateWindowsAppIcons(applicationFilePaths: string[]): Promise
     });
 }
 
-function generateIcons(icons: Icon[], followShortcuts?: boolean): Promise<void> {
+function generateIcons(icons: Icon[]): Promise<void> {
     return new Promise((resolve, reject) => {
         const ps = new Shell({
             executionPolicy: "Bypass",
@@ -65,7 +65,7 @@ function generateIcons(icons: Icon[], followShortcuts?: boolean): Promise<void> 
 
         ps.addCommand(powershellCommand)
             .then(() => ps.invoke())
-            .then((r) => resolve())
+            .then(() => resolve())
             .catch((err) => reject(err))
             .finally(() => ps.dispose());
     });

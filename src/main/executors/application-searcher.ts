@@ -7,7 +7,6 @@ import { OperatingSystemVersion } from "../../common/operating-system";
 export function searchWindowsApplications(
     applicationSearchOptions: ApplicationSearchOptions,
     logger: Logger,
-    operatingSystemVersion: OperatingSystemVersion,
 ): Promise<string[]> {
     return new Promise((resolve, reject) => {
         if (

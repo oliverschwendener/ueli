@@ -4,7 +4,7 @@ import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/u
 import { ShortcutsSearchPlugin } from "../plugins/shortcuts-search-plugin/shortcuts-search-plugin";
 import { homedir } from "os";
 import { openUrlInBrowser } from "../executors/url-executor";
-import { executeFilePathWindows, executeFilePathMacOs } from "../executors/file-path-executor";
+import { executeFilePathMacOs, executeFilePathWindows } from "../executors/file-path-executor";
 import { SearchEngine } from "../search-engine";
 import { EverythingPlugin } from "../plugins/everything-plugin/everthing-plugin";
 import { SearchPlugin } from "../search-plugin";
@@ -15,7 +15,7 @@ import { openFileLocation } from "../executors/file-path-location-executor";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { WebSearchPlugin } from "../plugins/websearch-plugin/websearch-plugin";
 import { FileBrowserExecutionPlugin } from "../plugins/filebrowser-plugin/filebrowser-plugin";
-import { isValidWindowsFilePath, isValidMacOsFilePath } from "../../common/helpers/file-path-validators";
+import { isValidMacOsFilePath, isValidWindowsFilePath } from "../../common/helpers/file-path-validators";
 import { getFileIconDataUrl } from "../../common/icon/generate-file-icon";
 import { OperatingSystemCommandsPlugin } from "../plugins/operating-system-commands-plugin/operating-system-commands-plugin";
 import { MacOsOperatingSystemCommandRepository } from "../plugins/operating-system-commands-plugin/mac-os-operating-system-command-repository";
@@ -29,12 +29,12 @@ import { CurrencyConverterPlugin } from "../plugins/currency-converter-plugin/cu
 import { executeCommand } from "../executors/command-executor";
 import { WorkflowPlugin } from "../plugins/workflow-plugin/workflow-plugin";
 import { CommandlinePlugin } from "../plugins/commandline-plugin/commandline-plugin";
-import { windowsCommandLineExecutor, macOsCommandLineExecutor } from "../executors/commandline-executor";
+import { macOsCommandLineExecutor, windowsCommandLineExecutor } from "../executors/commandline-executor";
 import { OperatingSystemSettingsPlugin } from "../plugins/operating-system-settings-plugin/operating-system-settings-plugin";
 import { MacOsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/macos-operating-system-setting-repository";
 import {
-    executeWindowsOperatingSystemSetting,
     executeMacOSOperatingSystemSetting,
+    executeWindowsOperatingSystemSetting,
 } from "../executors/operating-system-setting-executor";
 import { WindowsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/windows-operating-system-setting-repository";
 import { SimpleFolderSearchPlugin } from "../plugins/simple-folder-search-plugin/simple-folder-search-plugin";
@@ -42,11 +42,11 @@ import { Logger } from "../../common/logger/logger";
 import { UwpPlugin } from "../plugins/uwp-plugin/uwp-plugin";
 import { ColorConverterPlugin } from "../plugins/color-converter-plugin/color-converter-plugin";
 import { ProductionApplicationRepository } from "../plugins/application-search-plugin/production-application-repository";
-import { defaultWindowsAppIcon, defaultMacOsAppIcon } from "../../common/icon/default-icons";
+import { defaultMacOsAppIcon, defaultWindowsAppIcon } from "../../common/icon/default-icons";
 import { ApplicationIconService } from "../plugins/application-search-plugin/application-icon-service";
 import { generateWindowsAppIcons } from "../plugins/application-search-plugin/windows-app-icon-generator";
-import { windowsFileSearcher as powershellFileSearcher, macosFileSearcher } from "../executors/file-searchers";
-import { searchWindowsApplications, searchMacApplications } from "../executors/application-searcher";
+import { macosFileSearcher, windowsFileSearcher as powershellFileSearcher } from "../executors/file-searchers";
+import { searchMacApplications, searchWindowsApplications } from "../executors/application-searcher";
 import { generateMacAppIcons } from "../plugins/application-search-plugin/mac-os-app-icon-generator";
 import { DictionaryPlugin } from "../plugins/dictionary-plugin/dictionary-plugin";
 import { BrowserBookmarksPlugin } from "../plugins/browser-bookmarks-plugin/browser-bookmarks-plugin";
@@ -99,35 +99,35 @@ export function getProductionSearchEngine(
     const chromeBookmarksFilePath =
         operatingSystem === OperatingSystem.Windows
             ? `${homedir()}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application\ Support/Google/Chrome/Default/Bookmarks`;
+            : `${homedir()}/Library/Application Support/Google/Chrome/Default/Bookmarks`;
     const braveBookmarksFilePath =
         operatingSystem === OperatingSystem.Windows
             ? `${homedir()}\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application\ Support/BraveSoftware/Brave-Browser/Default/Bookmarks`;
+            : `${homedir()}/Library/Application Support/BraveSoftware/Brave-Browser/Default/Bookmarks`;
     const vivaldiBookmarksFilePath =
         operatingSystem === OperatingSystem.Windows
             ? `${homedir()}\\AppData\\Local\\Vivaldi\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application\ Support/Vivaldi/Default/Bookmarks`;
+            : `${homedir()}/Library/Application Support/Vivaldi/Default/Bookmarks`;
     const yandexBookmarksFilePath =
         operatingSystem === OperatingSystem.Windows
             ? `${homedir()}\\AppData\\Local\\Yandex\\YandexBrowser\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application\ Support/Yandex/YandexBrowser/Default/Bookmarks`;
+            : `${homedir()}/Library/Application Support/Yandex/YandexBrowser/Default/Bookmarks`;
     const sideKickBookmarkFilePath =
         operatingSystem === OperatingSystem.Windows
             ? `${homedir()}\\AppData\\Local\\Sidekick\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application\ Support/Sidekick/Default/Bookmarks`;
+            : `${homedir()}/Library/Application Support/Sidekick/Default/Bookmarks`;
     const edgeBookmarksFilePath =
         operatingSystem === OperatingSystem.Windows
             ? `${homedir()}\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application\ Support/Microsoft Edge/Default/Bookmarks`;
+            : `${homedir()}/Library/Application Support/Microsoft Edge/Default/Bookmarks`;
     const firefoxUserDataFolderPath =
         operatingSystem === OperatingSystem.Windows
             ? `${homedir()}\\AppData\\Roaming\\Mozilla\\Firefox`
-            : `${homedir()}/Library/Application\ Support/Firefox`;
+            : `${homedir()}/Library/Application Support/Firefox`;
     const chromiumBookmarksFilePath =
         operatingSystem === OperatingSystem.Windows
             ? `${homedir()}\\AppData\\Local\\Chromium\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application\ Support/Chromium/Default/Bookmarks`;
+            : `${homedir()}/Library/Application Support/Chromium/Default/Bookmarks`;
 
     const operatingSystemCommandRepository =
         operatingSystem === OperatingSystem.Windows

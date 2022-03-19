@@ -65,7 +65,7 @@ export const everythingSettingsComponent = Vue.extend({
                     const config: UserConfigOptions = this.config;
                     config.everythingSearchOptions.pathToEs = filePath;
                 })
-                .catch((err) => {
+                .catch(() => {
                     // do nothing if no file is selected
                 });
         },

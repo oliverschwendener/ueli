@@ -1,6 +1,6 @@
-export interface InputOutputCombination {
-    input: any;
-    output: any;
+export interface InputOutputCombination<InputType, OutputType> {
+    input: InputType;
+    output: OutputType;
 }
 
 export const validWindowsFilePaths = [

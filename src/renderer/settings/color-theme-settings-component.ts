@@ -4,7 +4,7 @@ import { VueEventChannels } from "../vue-event-channels";
 import { UserConfigOptions } from "../../common/config/user-config-options";
 import { defaultColorThemeOptions } from "../../common/config/color-theme-options";
 import { GeneralSettings } from "./general-settings";
-import { getFolderPath, getFilePath } from "../dialogs";
+import { getFilePath, getFolderPath } from "../dialogs";
 import { join } from "path";
 import { FileHelpers } from "../../common/helpers/file-helpers";
 import { TranslationSet } from "../../common/translation/translation-set";
@@ -161,7 +161,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                                     );
                                 }
                             })
-                            .catch((err) =>
+                            .catch(() =>
                                 vueEventDispatcher.$emit(
                                     VueEventChannels.notification,
                                     translations.colorThemeImportFailed,
@@ -170,7 +170,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                             );
                     }
                 })
-                .catch((err) => {
+                .catch(() => {
                     // do nothing if no file selected
                 });
         },
@@ -199,7 +199,7 @@ export const colorThemeSettingsComponent = Vue.extend({
                             );
                     }
                 })
-                .catch((err) => {
+                .catch(() => {
                     // do nothing when no folder selected
                 });
         },

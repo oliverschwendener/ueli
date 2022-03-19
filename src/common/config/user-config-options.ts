@@ -26,7 +26,7 @@ import { SimpleFolderSearchOptions, defaultSimpleFolderSearchOptions } from "./s
 import { UwpSearchOptions, defaultUwpSearchOptions } from "./uwp-search-options";
 import { ColorConverterOptions, defaultColorConverterOptions } from "./color-converter-options";
 import { ApplicationSearchOptions, defaultApplicationSearchOptions } from "./application-search-options";
-import { defaultDictionaryOptions, DictionaryOptions } from "./dictionary-options";
+import { DictionaryOptions, defaultDictionaryOptions } from "./dictionary-options";
 import { BrowserBookmarksOptions, defaultBrowserBookmarksOptions } from "./browser-bookmarks-options";
 import { ControlPanelOptions, defaultControlPanelOptions } from "./control-panel-options";
 import { WeatherOptions, defaultWeatherOptions } from "./weather-options";

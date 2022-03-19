@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BrowserBookmarkRepository } from "./browser-bookmark-repository";
 import { BrowserBookmark } from "./browser-bookmark";
 import { FileHelpers } from "../../../common/helpers/file-helpers";

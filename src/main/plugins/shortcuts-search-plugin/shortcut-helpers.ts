@@ -2,7 +2,7 @@ import { Shortcut } from "./shortcut";
 import { ShortcutType } from "./shortcut-type";
 import { IconType } from "../../../common/icon/icon-type";
 import { isValidIcon } from "../../../common/icon/icon-helpers";
-import { defaultTerminalIcon, defaultUrlIcon, defaultShortcutIcon } from "../../../common/icon/default-icons";
+import { defaultShortcutIcon, defaultTerminalIcon, defaultUrlIcon } from "../../../common/icon/default-icons";
 
 export const defaultNewShortcut: Shortcut = {
     description: "",

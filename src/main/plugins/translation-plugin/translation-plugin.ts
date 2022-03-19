@@ -60,7 +60,7 @@ export class TranslationPlugin implements ExecutionPlugin {
     }
 
     private getTranslationResults(url: string): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             LingueeTranslator.getTranslations(url)
                 .then((translations) => {
                     const result = translations.map((t): SearchResultItem => {

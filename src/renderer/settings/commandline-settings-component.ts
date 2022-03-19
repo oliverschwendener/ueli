@@ -9,7 +9,7 @@ import { UserConfirmationDialogParams, UserConfirmationDialogType } from "./moda
 import { deepCopy } from "../../common/helpers/object-helpers";
 import { getCurrentOperatingSystem } from "../../common/helpers/operating-system-helpers";
 import { platform } from "os";
-import { WindowsShell, MacOsShell } from "../../main/plugins/commandline-plugin/shells";
+import { MacOsShell, WindowsShell } from "../../main/plugins/commandline-plugin/shells";
 import { OperatingSystem } from "../../common/operating-system";
 
 const operatingSystem = getCurrentOperatingSystem(platform());

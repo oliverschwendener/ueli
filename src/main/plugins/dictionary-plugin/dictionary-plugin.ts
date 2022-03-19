@@ -3,7 +3,6 @@ import { PluginType } from "../../plugin-type";
 import { DictionaryOptions } from "../../../common/config/dictionary-options";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
-import { TranslationSet } from "../../../common/translation/translation-set";
 import { Definition } from "./dictionary";
 import { defaultDictionaryIcon } from "../../../common/icon/default-icons";
 import { capitalize } from "../../../common/helpers/string-helpers";
@@ -31,12 +30,12 @@ export class DictionaryPlugin implements ExecutionPlugin {
         this.definitionRetriever = definitionRetriever;
     }
 
-    public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
+    public isValidUserInput(userInput: string): boolean {
         const searchTerm = this.getSearchTerm(userInput);
         return userInput.startsWith(this.config.prefix) && searchTerm.length >= this.config.minSearchTermLength;
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
+    public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
         const searchTerm = this.getSearchTerm(userInput);
         return new Promise((resolve, reject) => {
             if (this.delay) {
@@ -55,12 +54,12 @@ export class DictionaryPlugin implements ExecutionPlugin {
         return this.config.isEnabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(searchResultItem: SearchResultItem): Promise<void> {
         return this.clipboardCopier(searchResultItem.executionArgument);
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve, reject) => {
+    public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
+        return new Promise((resolve) => {
             this.config = updatedConfig.dictionaryOptions;
             resolve();
         });
@@ -77,9 +76,11 @@ export class DictionaryPlugin implements ExecutionPlugin {
             const keys = Object.keys(definition.meaning);
             keys.forEach((key) => {
                 definition.meaning[key]
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     .filter((entry: any) => {
                         return entry.definition;
                     })
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     .forEach((entry: any) => {
                         dictionaryResults.push({
                             definition: entry.definition,

@@ -5,7 +5,7 @@ describe(Calculator.name, () => {
     describe(Calculator.calculate.name, () => {
         it("should return the correct result", () => {
             const precision = 16;
-            const inputOutputCombinations: InputOutputCombination[] = [
+            const inputOutputCombinations: InputOutputCombination<string, string>[] = [
                 {
                     input: "1.1 - 1",
                     output: "0.1",
@@ -29,7 +29,7 @@ describe(Calculator.name, () => {
 
         it("should use specified precision", () => {
             const calculation = "1/3";
-            const inputOutputCombinations: InputOutputCombination[] = [
+            const inputOutputCombinations: InputOutputCombination<number, string>[] = [
                 { input: 1, output: "0.3" },
                 { input: 16, output: "0.3333333333333333" },
             ];

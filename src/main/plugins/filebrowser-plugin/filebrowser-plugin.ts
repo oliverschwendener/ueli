@@ -2,7 +2,6 @@ import { ExecutionPlugin } from "../../execution-plugin";
 import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
-import { TranslationSet } from "../../../common/translation/translation-set";
 import { FileBrowserOptions } from "../../../common/config/filebrowser-options";
 import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { basename, dirname, sep } from "path";
@@ -45,12 +44,12 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin, AutoCompleti
         this.fileIconGenerator = fileIconGenerator;
     }
 
-    public isValidUserInput(userInput: string, fallback?: boolean): boolean {
+    public isValidUserInput(userInput: string): boolean {
         const filePaths = [userInput, dirname(userInput)].filter((filePath) => filePath !== ".");
         return filePaths.some((filePath) => this.filePathValidator(filePath) && existsSync(filePath));
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean): Promise<SearchResultItem[]> {
+    public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             const userInputIsExactMatch = existsSync(userInput);
             const filePath = userInputIsExactMatch ? userInput : dirname(userInput);
@@ -79,7 +78,7 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin, AutoCompleti
             : `${searchResultItem.executionArgument}${sep}`;
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+    public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
         return new Promise((resolve) => {
             this.config = updatedConfig.fileBrowserOptions;
             resolve();
@@ -180,6 +179,7 @@ export class FileBrowserExecutionPlugin implements ExecutionPlugin, AutoCompleti
                 shouldSort: true,
                 threshold: 0.4,
             });
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const fuseResult = fuse.search(searchTerm) as any[];
             sortedResutls = fuseResult.map((item) => item.item);
         } else {

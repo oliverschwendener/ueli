@@ -1,14 +1,14 @@
 import {
-    app,
     BrowserWindow,
+    Menu,
+    MenuItemConstructorOptions,
+    Tray,
+    WebContents,
+    app,
     dialog,
     globalShortcut,
     ipcMain,
-    Menu,
-    MenuItemConstructorOptions,
     screen,
-    Tray,
-    WebContents,
 } from "electron";
 import { autoUpdater } from "electron-updater";
 import { platform, release } from "os";
@@ -16,7 +16,7 @@ import { join } from "path";
 import { AppearanceOptions } from "../common/config/appearance-options";
 import { ElectronStoreConfigRepository } from "../common/config/electron-store-config-repository";
 import { defaultGeneralOptions } from "../common/config/general-options";
-import { defaultUserConfigOptions, UserConfigOptions } from "../common/config/user-config-options";
+import { UserConfigOptions, defaultUserConfigOptions } from "../common/config/user-config-options";
 import { getErrorSearchResultItem } from "../common/error-search-result-item";
 import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
 import { isValidHotKey } from "../common/global-hot-key/global-hot-key-helpers";
@@ -838,6 +838,7 @@ function registerAllIpcListeners() {
         event.sender.send(IpcChannels.userInputUpdated, newUserInput, true);
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ipcMain.on(IpcChannels.ueliCommandExecuted, (command: any) => {
         command = command as UeliCommand;
 

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { WeatherAPI, CurrentCondition } from "./weather-api";
+import { CurrentCondition, WeatherAPI } from "./weather-api";
 
 export class Weather {
     public static getWeatherInfo(lang: string, region: string, tempUnit: string): Promise<string> {

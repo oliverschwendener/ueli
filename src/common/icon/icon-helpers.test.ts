@@ -1,4 +1,4 @@
-import { isValidIconType, isValidIcon } from "./icon-helpers";
+import { isValidIcon, isValidIconType } from "./icon-helpers";
 import { IconType } from "./icon-type";
 import { Icon } from "./icon";
 
