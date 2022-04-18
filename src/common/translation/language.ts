@@ -11,4 +11,5 @@ export enum Language {
     Russian = "Русский",
     Spanish = "Español",
     Turkish = "Türkçe",
+    Ukrainian = "Українська",
 }
