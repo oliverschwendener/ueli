@@ -12,6 +12,31 @@ html {
         filter: invert(100%);
         background: #fff;
     }
+    .settings button:not(.is-status) {
+        filter: invert(10%);
+    }
+    .settings button.is-success {
+        filter: invert(90%);
+    }
+    .settings label {
+        filter: invert(80%);
+    }
+    .settings button.preview-button {
+        filter: invert(100%);
+        border-color: #242424;
+    }
+    .settings .menu-list a.is-active {
+        background-color: #b7a038;
+    }
+    .settings i {
+        filter: invert(90%);
+    }
+    .modal-background {
+        background-color: #f5f5f5db;
+    }
+    .settings__notification {
+        filter: invert(90%);
+    }
 }
 
 .settings {
