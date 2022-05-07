@@ -7,6 +7,13 @@ html {
     overflow-y: hidden !important;
 }
 
+@media (prefers-color-scheme: dark) {
+    .settings {
+        filter: invert(100%);
+        background: #fff;
+    }
+}
+
 .settings {
     display: flex;
     flex-direction: row;
