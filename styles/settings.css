@@ -18,6 +18,9 @@ html {
     .settings button.is-success {
         filter: invert(90%);
     }
+    .settings button.is-danger {
+        filter: invert(90%);
+    }
     .settings label {
         filter: invert(80%);
     }
@@ -32,7 +35,7 @@ html {
         filter: invert(90%);
     }
     .modal-background {
-        background-color: #f5f5f5db;
+        background-color: #d5d5d5bf;
     }
     .settings__notification {
         filter: invert(90%);
