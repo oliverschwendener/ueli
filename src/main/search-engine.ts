@@ -86,7 +86,7 @@ export class SearchEngine {
         });
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(userInput: string, searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
             const originPlugin = this.getAllPlugins()
                 .filter((plugin) => plugin.isEnabled())
@@ -97,7 +97,7 @@ export class SearchEngine {
                     .execute(searchResultItem, privileged)
                     .then(() => {
                         if (this.logExecution) {
-                            this.favoriteManager.increaseCount(searchResultItem);
+                            void this.favoriteManager.increaseCount(userInput, searchResultItem);
                         }
                         resolve();
                     })
@@ -220,8 +220,13 @@ export class SearchEngine {
                             const favorite = this.favoriteManager
                                 .getAllFavorites()
                                 .find((f) => f.item.executionArgument === fuseResultItem.item.executionArgument);
-                            if (favorite && favorite.executionCount !== 0) {
-                                fuseResultItem.score /= favorite.executionCount * 3;
+                            if (favorite) {
+                                if (favorite.executionCount !== 0) {
+                                    fuseResultItem.score /= favorite.executionCount * 3;
+                                }
+                                if (favorite.keyword) {
+                                    fuseResultItem.score /= (favorite.keyword[userInput] || 0.1) * 10;
+                                }
                             }
                         });
                     }

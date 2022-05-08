@@ -13,14 +13,17 @@ export class FavoriteManager {
         this.translationSet = translationSet;
     }
 
-    public increaseCount(searchResultItem: SearchResultItem): Promise<void> {
+    public increaseCount(userInput: string, searchResultItem: SearchResultItem): Promise<void> {
         return new Promise((resolve) => {
             const favorite = this.favoriteRepository.get(searchResultItem);
             if (favorite) {
                 favorite.executionCount++;
+                if (!favorite.keyword) favorite.keyword = {};
+                if (!favorite.keyword[userInput]) favorite.keyword[userInput] = 0;
+                favorite.keyword[userInput]++;
                 this.favoriteRepository.update(favorite);
             } else {
-                this.favoriteRepository.save({ executionCount: 1, item: searchResultItem });
+                this.favoriteRepository.save({ executionCount: 1, item: searchResultItem, keyword: {} });
             }
             resolve();
         });
@@ -28,14 +31,14 @@ export class FavoriteManager {
 
     public getAllFavorites(): Favorite[] {
         const all = this.favoriteRepository.getAll();
-        return all.length > 0
-            ? all
-            : [
-                  {
-                      executionCount: 1,
-                      item: getNoFavoritesSearchResult(this.translationSet),
-                  },
-              ];
+        if (all.length > 0) return all;
+        return [
+            {
+                executionCount: 1,
+                item: getNoFavoritesSearchResult(this.translationSet),
+                keyword: {},
+            },
+        ];
     }
 
     public clearExecutionLog(): Promise<void> {

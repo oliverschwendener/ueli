@@ -751,7 +751,7 @@ function registerAllIpcListeners() {
         IpcChannels.execute,
         (event, userInput: string, searchResultItem: SearchResultItem, privileged: boolean) => {
             searchEngine
-                .execute(searchResultItem, privileged)
+                .execute(userInput, searchResultItem, privileged)
                 .then(() => {
                     userInputHistoryManager.addItem(userInput);
                     if (

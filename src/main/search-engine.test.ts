@@ -206,10 +206,10 @@ describe(SearchEngine.name, () => {
             { name: "abcdef", executionArgument: "abcdef", searchable: ["abcdef"] },
         ] as SearchResultItem[];
         const favoritesRepository = new FakeFavoriteRepository([
-            { executionCount: 0, item: items[0] },
-            { executionCount: 0, item: items[1] },
-            { executionCount: 0, item: items[2] },
-            { executionCount: 10, item: items[3] },
+            { executionCount: 0, item: items[0], keyword: {} },
+            { executionCount: 0, item: items[1], keyword: {} },
+            { executionCount: 0, item: items[2], keyword: {} },
+            { executionCount: 10, item: items[3], keyword: {} },
         ]);
         const searchPlugins: SearchPlugin[] = [new FakeSearchPlugin(PluginType.Test, items, true)];
         const executionPlugins: ExecutionPlugin[] = [];
