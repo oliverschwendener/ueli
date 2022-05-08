@@ -1,13 +1,13 @@
 import os from "os";
 import pLimit from "p-limit";
-import {pinyin} from "pinyin-pro";
-import {FileHelpers} from "../../../common/helpers/file-helpers";
-import {Logger} from "../../../common/logger/logger";
-import {Language} from "../../../common/translation/language";
-import {executeCommandWithOutput} from "../../executors/command-executor";
-import {Application} from "./application";
-import {ApplicationNativeNameCaches} from "./application-native-name-cache";
-import {applicationNativeNameCachePath} from "./application-native-name-helpers";
+import { pinyin } from "pinyin-pro";
+import { FileHelpers } from "../../../common/helpers/file-helpers";
+import { Logger } from "../../../common/logger/logger";
+import { Language } from "../../../common/translation/language";
+import { executeCommandWithOutput } from "../../executors/command-executor";
+import { Application } from "./application";
+import { ApplicationNativeNameCaches } from "./application-native-name-cache";
+import { applicationNativeNameCachePath } from "./application-native-name-helpers";
 
 const limit = pLimit(os.cpus().length);
 
@@ -78,12 +78,15 @@ export class ApplicationNativeNameService {
                 for (let i = 0; i < charList.length; i++) {
                     const char = charList[i];
                     if (/\p{Unified_Ideograph}/u.test(char)) {
+                        if (keyword[keyword.length - 1] !== " ") keyword.push(" ");
                         keyword.push(pinyin(char, { toneType: "none" }));
+                        keyword.push(" ");
                     } else {
                         keyword.push(char);
                     }
                 }
-                return [keyword.join("")];
+                const key = keyword.join("");
+                return [key, key.replace(/(^|\s)(\w)\w*/g, "$2")];
             }
         }
     }
