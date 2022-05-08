@@ -169,6 +169,7 @@ export const japaneseTranslationSet: TranslationSet = {
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}}" は存在しません`,
     applicationSearchSettingsFolderValidationError: `"{{value}}" の検証中にエラーが発生しました`,
     applicationSearchSettingsUseNativeIcons: "ネイティブなアイコンを使用 (無効にするとパフォーマンスが向上するかも)",
+    applicationSearchSettingsUseNativeNames: "表示アプリケーション名を使用します（英語以外のシステムのMacOSでは、アプリケーションはローカル言語で表示されます）",
 
     searchEngineSettings: "検索エンジン",
     searchEngineSettingsDescription: `検索エンジンはアプリケーション、ショートカット及びオペレーティングシステムの設定・コマンドのように事前にインデックスが作成された項目に対して利用されます。`,

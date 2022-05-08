@@ -170,6 +170,7 @@ export const englishTranslationSet: TranslationSet = {
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}} neexistuje"`,
     applicationSearchSettingsFolderValidationError: `Při pokusu o ověření došlo k chybě "{{value}}"`,
     applicationSearchSettingsUseNativeIcons: "Používat nativní ikony (vypnutí může vést k lepšímu výkonu)",
+    applicationSearchSettingsUseNativeNames: "Použijte název zobrazované aplikace (MacOS na neanglických systémech se aplikace zobrazí v místním jazyce)",
 
     searchEngineSettings: "Vyhledávač",
     searchEngineSettingsDescription: `Vyhledávač se používá pro předindexované položky, jako jsou aplikace, zkratky a nastavení / příkazy operačního systému.`,

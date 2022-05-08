@@ -8,11 +8,13 @@ import { getApplicationIconFilePath } from "./application-icon-helpers";
 import { IconType } from "../../../common/icon/icon-type";
 import { Logger } from "../../../common/logger/logger";
 import { OperatingSystemVersion } from "../../../common/operating-system";
+import { ApplicationNativeNameService } from "./application-native-name-service";
 
 export class ProductionApplicationRepository implements ApplicationRepository {
     private applications: Application[];
     private readonly defaultAppIcon: Icon;
     private readonly appIconService: ApplicationIconService;
+    private readonly appNativeNameService: ApplicationNativeNameService;
     private readonly searchApplications: (
         options: ApplicationSearchOptions,
         logger: Logger,
@@ -26,6 +28,7 @@ export class ProductionApplicationRepository implements ApplicationRepository {
         config: ApplicationSearchOptions,
         defaultAppIcon: Icon,
         appIconService: ApplicationIconService,
+        appNativeNameService: ApplicationNativeNameService,
         searchApplications: (
             options: ApplicationSearchOptions,
             logger: Logger,
@@ -36,7 +39,9 @@ export class ProductionApplicationRepository implements ApplicationRepository {
     ) {
         this.config = config;
         this.defaultAppIcon = defaultAppIcon;
-        (this.appIconService = appIconService), (this.searchApplications = searchApplications);
+        this.appNativeNameService = appNativeNameService;
+        this.appIconService = appIconService;
+        this.searchApplications = searchApplications;
         this.logger = logger;
         this.operatingSystemVersion = operatingSystemVersion;
         this.applications = [];
@@ -51,19 +56,28 @@ export class ProductionApplicationRepository implements ApplicationRepository {
             this.searchApplications(this.config, this.logger, this.operatingSystemVersion)
                 .then((filePaths) => {
                     const applications = filePaths.map((filePath) => this.createApplicationFromFilePath(filePath));
-
+                    const task = [];
+                    if (this.config.useNativeName)
+                        task.push(
+                            this.appNativeNameService.generateAppNativeName(applications).then(() => {
+                                this.applications = applications;
+                            }),
+                        );
                     if (this.config.useNativeIcons) {
-                        this.appIconService
-                            .generateAppIcons(applications)
-                            .then(() => {
+                        task.push(
+                            this.appIconService.generateAppIcons(applications).then(() => {
                                 this.onSuccessfullyGeneratedAppIcons(applications);
                                 this.applications = applications;
-                                resolve();
-                            })
-                            .catch((err) => reject(err));
-                    } else {
+                            }),
+                        );
+                    }
+                    if (task.length === 0) {
                         this.applications = applications;
                         resolve();
+                    } else {
+                        Promise.all(task)
+                            .then(() => resolve())
+                            .catch((err) => reject(err));
                     }
                 })
                 .catch((err) => reject(err));
@@ -72,8 +86,7 @@ export class ProductionApplicationRepository implements ApplicationRepository {
 
     public clearCache(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.appIconService
-                .clearCache()
+            Promise.all([this.appIconService.clearCache(), this.appNativeNameService.clearCache()])
                 .then(() => resolve())
                 .catch((err) => reject(err));
         });

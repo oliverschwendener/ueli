@@ -170,6 +170,7 @@ export const ukrainianTranslationSet: TranslationSet = {
     applicationSearchSettingsDoesNotExistErrorMessage: '"{{value}} не існує"',
     applicationSearchSettingsFolderValidationError: 'Відбулася помилка під час перевірки "{{value}}"',
     applicationSearchSettingsUseNativeIcons: "Використовувати нативні іконки (вимкнення може підвищити продуктивність)",
+    applicationSearchSettingsUseNativeNames: "Використовуйте назву програми для відображення (в MacOS на неанглійських системах програма буде відображатися місцевою мовою)",
     searchEngineSettings: "Система пошуку",
     searchEngineSettingsDescription: "Система пошуку необхідна для індексації результатів як ярлики, файли тощо.",
     searchEngineSettingsFuzzyness: "Точність пошуку",

@@ -170,6 +170,8 @@ export const russianTranslationSet: TranslationSet = {
     applicationSearchSettingsFolderValidationError: `Произошла ошибка в ходе проверки "{{value}}"`,
     applicationSearchSettingsUseNativeIcons:
         "Использовать нативные иконки (выключение может повысить производительность)",
+    applicationSearchSettingsUseNativeNames:
+        "Используйте отображаемое имя приложения (MacOS в системах, отличных от английского, приложение будет отображаться на местном языке).",
 
     searchEngineSettings: "Система поиска",
     searchEngineSettingsDescription: `Система поиска необходима для индексации результатов как ярлыки, файлы и т.д.`,

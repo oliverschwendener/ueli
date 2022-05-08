@@ -177,6 +177,7 @@ export const italianTranslationSet: TranslationSet = {
     applicationSearchSettingsFolderValidationError:
         'Si è verificato un errore durante il tentativo di convalidare "{{value}}"',
     applicationSearchSettingsUseNativeIcons: "Usa icone native (se disattivato, potrebbe migliorare le prestazioni)",
+    applicationSearchSettingsUseNativeNames: "Usa il nome dell'applicazione di visualizzazione (MacOS su sistemi non in inglese l'applicazione verrà visualizzata nella lingua locale)",
 
     searchEngineSettings: "Motore di ricerca",
     searchEngineSettingsDescription:

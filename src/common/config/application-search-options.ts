@@ -8,6 +8,7 @@ export interface ApplicationSearchOptions {
     enabled: boolean;
     showFullFilePath: boolean;
     useNativeIcons: boolean;
+    useNativeName: boolean;
 }
 
 const windowsApplicationSearchOptions: ApplicationSearchOptions = {
@@ -20,6 +21,7 @@ const windowsApplicationSearchOptions: ApplicationSearchOptions = {
     enabled: true,
     showFullFilePath: false,
     useNativeIcons: true,
+    useNativeName: false,
 };
 
 const macOsApplicationSearchOptions: ApplicationSearchOptions = {
@@ -33,6 +35,7 @@ const macOsApplicationSearchOptions: ApplicationSearchOptions = {
     enabled: true,
     showFullFilePath: false,
     useNativeIcons: true,
+    useNativeName: false,
 };
 
 export const defaultApplicationSearchOptions =

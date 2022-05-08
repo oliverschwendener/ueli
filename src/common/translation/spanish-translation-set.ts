@@ -175,6 +175,8 @@ export const spanishTranslationSet: TranslationSet = {
     applicationSearchSettingsFolderValidationError: `Ha ocurrido un error mientras se trataba de validar "{{value}}"`,
     applicationSearchSettingsUseNativeIcons:
         "Usar iconos nativos (desactivarlo puede resultar en un mayor rendimiento)",
+    applicationSearchSettingsUseNativeNames:
+        "Use el nombre de la aplicación de visualización (MacOS en sistemas que no sean ingleses, la aplicación se mostrará en el idioma local)",
 
     searchEngineSettings: "Motor de búsqueda",
     searchEngineSettingsDescription: `El motor de búsqueda se usa para preindexar elementos como aplicaciones, accesos directos y opciones/comandos del sistema operativo.`,

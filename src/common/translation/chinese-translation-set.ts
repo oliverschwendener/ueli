@@ -168,6 +168,7 @@ export const chineseTranslationSet: TranslationSet = {
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}} 不存在"`,
     applicationSearchSettingsFolderValidationError: `在验证时 "{{value}}" 发生错误`,
     applicationSearchSettingsUseNativeIcons: "使用原生图标（或许体验更好）",
+    applicationSearchSettingsUseNativeNames: "使用展示应用名（MacOS在非英文系统上应用会以当地语言显示）",
 
     searchEngineSettings: "搜索引擎",
     searchEngineSettingsDescription: `搜索引擎被用于索引信息，比如应用程序、快捷方式、操作系统命令/设置`,

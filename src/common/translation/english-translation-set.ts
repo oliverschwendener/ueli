@@ -171,6 +171,7 @@ export const englishTranslationSet: TranslationSet = {
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}} does not exist"`,
     applicationSearchSettingsFolderValidationError: `An error occured while trying to validate "{{value}}"`,
     applicationSearchSettingsUseNativeIcons: "Use native icons (turned off might result in better performance)",
+    applicationSearchSettingsUseNativeNames: "Use the display application name (MacOS on non-English systems the application will be displayed in the local language)",
 
     searchEngineSettings: "Search engine",
     searchEngineSettingsDescription: `The search engine is used for preindexed items like applications, shortcuts and operating system settings/commands.`,

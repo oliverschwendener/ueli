@@ -169,6 +169,7 @@ export const koreanTranslationSet: TranslationSet = {
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}} 은 존재하지 않습니다"`,
     applicationSearchSettingsFolderValidationError: `"{{value}}" 을 검증하던 도중에 문제가 발생하였습니다.`,
     applicationSearchSettingsUseNativeIcons: "네이티브 아이콘 사용 (꺼짐으로 인해 성능이 향상될 수 있습니다.)",
+    applicationSearchSettingsUseNativeNames: "표시 응용 프로그램 이름 사용(영어가 아닌 시스템의 MacOS에서는 응용 프로그램이 현지 언어로 표시됨)",
 
     searchEngineSettings: "검색 엔진",
     searchEngineSettingsDescription: `검색 엔진은 응용 프로그램, 바로 가기 및 운영체제 설정/명령어과 같은 미리 인덱싱된 항목에 사용됩니다.`,

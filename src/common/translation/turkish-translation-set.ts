@@ -174,6 +174,8 @@ export const turkishTranslationSet: TranslationSet = {
     applicationSearchSettingsFolderValidationError: `"{{value}}" doğrulamaya çalışılırken bir hata oluştu`,
     applicationSearchSettingsUseNativeIcons:
         "Yerel simgeler kullanın (kapalı olduğunda daha iyi performans sağlayabilir)",
+    applicationSearchSettingsUseNativeNames:
+        "Görünen uygulama adını kullanın (İngilizce olmayan sistemlerde MacOS, uygulama yerel dilde görüntülenecektir)",
 
     searchEngineSettings: "Arama motoru",
     searchEngineSettingsDescription: `Arama motoru, uygulamalar, kısayollar ve işletim sistemi ayarları / komutları gibi önceden indekslenmiş öğeler için kullanılır.`,

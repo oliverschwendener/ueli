@@ -66,6 +66,7 @@ import { getWebearchSuggestions } from "../executors/websearch-suggestion-resolv
 import { FirefoxBookmarkRepository } from "../plugins/browser-bookmarks-plugin/firefox-bookmark-repository";
 import { ChromiumBookmarkRepository } from "../plugins/browser-bookmarks-plugin/chromium-bookmark-repository";
 import { WeatherPlugin } from "../plugins/weather-plugin/weather-plugin";
+import { ApplicationNativeNameService } from "../plugins/application-search-plugin/application-native-name-service";
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
@@ -149,6 +150,7 @@ export function getProductionSearchEngine(
                 config.applicationSearchOptions,
                 defaultAppIcon,
                 new ApplicationIconService(appIconGenerator, logger),
+                new ApplicationNativeNameService(config.generalOptions.language, logger),
                 applicationSearcher,
                 logger,
                 operatingSystemVersion,

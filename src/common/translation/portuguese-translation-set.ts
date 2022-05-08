@@ -174,6 +174,7 @@ export const portugueseTranslationSet: TranslationSet = {
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}} não existe"`,
     applicationSearchSettingsFolderValidationError: `Ocorreu um erro na tentativa de validar "{{value}}"`,
     applicationSearchSettingsUseNativeIcons: "Usar ícones nativos (desligar pode resultar em uma performance melhor)",
+    applicationSearchSettingsUseNativeNames: "Use o nome do aplicativo de exibição (MacOS em sistemas diferentes do inglês, o aplicativo será exibido no idioma local)",
 
     searchEngineSettings: "Motor de busca",
     searchEngineSettingsDescription: `O motor de busca é usado para pré-indexar itens como aplicativos, atalhos e comandos/configurações do sistema operacional.`,

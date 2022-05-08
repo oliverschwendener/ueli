@@ -243,6 +243,18 @@ export const applicationSearchSettingsComponent = Vue.extend({
                                 </div>
                             </div>
                         </div>
+
+                        <div class="settings__option">
+                            <div class="settings__option-name">{{ translations.applicationSearchSettingsUseNativeNames }}</div>
+                            <div class="settings__option-content">
+                                <div class="field is-grouped is-grouped-right">
+                                    <div class="control">
+                                        <input id="useNativeNativeNameCheckbox" type="checkbox" name="useNativeNativeNameCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.applicationSearchOptions.useNativeName" @change="updateConfig(true)">
+                                        <label for="useNativeNativeNameCheckbox"></label><input id="useNativeNativeNameCheckbox" type="checkbox" name="useNativeNativeNameCheckbox" class="switch is-rounded is-success" checked="checked" v-model="config.generalOptions.autostart" @change="updateConfig()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

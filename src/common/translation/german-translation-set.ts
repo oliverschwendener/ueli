@@ -173,6 +173,7 @@ export const germanTranslationSet: TranslationSet = {
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}}" existiert nicht`,
     applicationSearchSettingsFolderValidationError: `Während der Validierung von "{{value}}" ist ein Fehler aufgetreten`,
     applicationSearchSettingsUseNativeIcons: "Native Icons verwenden (deaktiviert führt evt. zu besserer Performance)",
+    applicationSearchSettingsUseNativeNames: "Verwenden Sie den angezeigten Anwendungsnamen (MacOS auf nicht-englischen Systemen wird die Anwendung in der Landessprache angezeigt)",
 
     searchEngineSettings: "Suchmaschine",
     searchEngineSettingsDescription: `Die Suchmaschine wird für vorindexierte Inhalte benutzt, z.B. Programme, Shortcuts und Betriebssystembefehle und -einstellungen.`,

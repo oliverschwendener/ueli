@@ -174,6 +174,8 @@ export const hindiTranslationSet: TranslationSet = {
     applicationSearchSettingsFolderValidationError: `"{{value}}" सत्यापित करने का प्रयास करते समय एक त्रुटि हुई।`,
     applicationSearchSettingsUseNativeIcons:
         "नेटिव आइकॉन का इस्तेमाल करें (इसे बंद करने से परफ़ॉर्मेंस बेहतर हो सकता है।)",
+    applicationSearchSettingsUseNativeNames:
+        "प्रदर्शन एप्लिकेशन नाम का उपयोग करें (गैर-अंग्रेज़ी सिस्टम पर MacOS एप्लिकेशन को स्थानीय भाषा में प्रदर्शित किया जाएगा)",
 
     searchEngineSettings: "खोज इंजन",
     searchEngineSettingsDescription: `खोज इंजन का उपयोग अनुप्रयोगों, शॉर्टकट और ऑपरेटिंग सिस्टम सेटिंग्स/कमांड जैसे प्रीइंडेक्स किए गए आइटम के लिए किया जाता है।`,

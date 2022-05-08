@@ -94,6 +94,11 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
     }
 
     private createSearchResultItemFromApplication(application: Application): SearchResultItem {
+        const searchable = new Set<string>();
+        searchable.add(application.name);
+        if (application.nativeName) searchable.add(application.nativeName);
+        if (application.keyword && application.keyword.length > 0)
+            application.keyword.forEach((keyword) => searchable.add(keyword));
         return {
             description: createFilePathDescription(application.filePath, {
                 showFullFilePath: this.config.showFullFilePath,
@@ -101,9 +106,9 @@ export class ApplicationSearchPlugin implements SearchPlugin, OpenLocationPlugin
             executionArgument: application.filePath,
             hideMainWindowAfterExecution: true,
             icon: application.icon,
-            name: application.name,
+            name: application.nativeName || application.name,
             originPluginType: this.pluginType,
-            searchable: [application.name],
+            searchable: [...searchable],
             supportsOpenLocation: true,
         };
     }
