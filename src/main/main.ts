@@ -443,7 +443,16 @@ function beforeQuitApp(): Promise<void> {
     });
 }
 
+let quitConfirmCount = 0;
+let quitConfirmTimer: NodeJS.Timer;
+
 function quitApp() {
+    if (quitConfirmCount < 1) {
+        quitConfirmCount++;
+        if (quitConfirmTimer) clearTimeout(quitConfirmTimer);
+        quitConfirmTimer = setTimeout(() => (quitConfirmCount = 0), 2000);
+        return false;
+    }
     beforeQuitApp()
         .then(() => {
             /* Do nothing */
@@ -603,8 +612,8 @@ function setKeyboardShortcuts() {
             {
                 label: "ueli",
                 submenu: [
-                    { label: "Quit", accelerator: "Command+Q", click: quitApp },
-                    { label: "Reload", accelerator: "Command+R", click: reloadApp },
+                    { label: "Quit", accelerator: "CmdOrCtrl+Q", click: quitApp },
+                    { label: "Reload", accelerator: "CmdOrCtrl+R", click: reloadApp },
                 ],
             },
             {
