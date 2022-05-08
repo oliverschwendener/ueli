@@ -60,6 +60,10 @@ export const userInputComponent = Vue.extend({
             }
 
             if (event.key === "Enter") {
+                if (ctrlOrMeta) {
+                    vueEventDispatcher.$emit(VueEventChannels.openSearchResultLocationKeyPress);
+                    return;
+                }
                 const privileged: boolean = event.shiftKey;
                 const userConfirmed: boolean = this.userConfirmationDialogVisible;
                 vueEventDispatcher.$emit(VueEventChannels.enterPress, this.userInput, privileged, userConfirmed);
