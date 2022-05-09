@@ -104,6 +104,10 @@ export const userInputComponent = Vue.extend({
                 this.resetUserInput();
             } else {
                 this.selectUserInput();
+                setTimeout(() => {
+                    if (this.loadingCompleted)
+                        vueEventDispatcher.$emit(VueEventChannels.userInputChange, this.userInput);
+                }, showLoaderDelay);
             }
         });
 
