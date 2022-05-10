@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+@media (prefers-color-scheme: dark) {
+    @import "variables/bulma-color-bindings.scss";
+
+    @import "../settings-light.scss";
+    @import "./scrollbar.scss";
+
+    @import "../../node_modules/bulma/sass/utilities/_all.sass";
+    @import "../../node_modules/bulma/sass/base/_all.sass";
+    @import "../../node_modules/bulma/sass/elements/box.sass";
+    @import "../../node_modules/bulma/sass/elements/table.sass";
+    @import "../../node_modules/bulma/sass/elements/button.sass";
+    @import "../../node_modules/bulma/sass/elements/container.sass";
+    @import "../../node_modules/bulma/sass/elements/title.sass";
+    @import "../../node_modules/bulma/sass/components/navbar.sass";
+    @import "../../node_modules/bulma/sass/components/menu.sass";
+    @import "../../node_modules/bulma/sass/form/_all.sass";
+    @import "../../node_modules/bulma/sass/layout/hero.sass";
+    @import "../../node_modules/bulma/sass/layout/section.sass";
+}
