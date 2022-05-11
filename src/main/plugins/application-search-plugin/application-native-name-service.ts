@@ -7,7 +7,7 @@ import { Language } from "../../../common/translation/language";
 import { executeCommandWithOutput } from "../../executors/command-executor";
 import { Application } from "./application";
 import { ApplicationNativeNameCaches } from "./application-native-name-cache";
-import { applicationNativeNameCachePath } from "./application-native-name-helpers";
+import { applicationNativeNameCachePath, hashApplicationPath } from "./application-native-name-helpers";
 
 const limit = pLimit(os.cpus().length);
 
@@ -30,8 +30,9 @@ export class ApplicationNativeNameService {
         let hasCache = false;
         const generateTasks = applications.map((application) =>
             limit(async () => {
+                const appHash = hashApplicationPath(application.filePath);
                 if (!application.nativeName) {
-                    const cache = this.caches[application.filePath];
+                    const cache = this.caches[appHash];
                     if (cache) {
                         application.nativeName = cache.nativeName;
                         application.keyword = cache.keyword;
@@ -40,7 +41,7 @@ export class ApplicationNativeNameService {
                     const nativeName = await this.getNativeName(application.filePath);
                     application.nativeName = nativeName;
                     const keyword = await this.getKeyword(application);
-                    this.caches[application.filePath] = { nativeName, keyword };
+                    this.caches[appHash] = { nativeName, keyword };
                     application.keyword = keyword;
                     hasCache = true;
                 }
@@ -71,23 +72,24 @@ export class ApplicationNativeNameService {
     }
 
     private async getKeyword(application: Application): Promise<string[] | undefined> {
+        const keywords = [];
         if (this.language === Language.Chinese && application.nativeName) {
-            if (/\p{Unified_Ideograph}/u.test(application.nativeName)) {
-                const keyword = [];
-                const charList = application.nativeName.split("");
-                for (let i = 0; i < charList.length; i++) {
-                    const char = charList[i];
-                    if (/\p{Unified_Ideograph}/u.test(char)) {
-                        if (keyword[keyword.length - 1] !== " ") keyword.push(" ");
-                        keyword.push(pinyin(char, { toneType: "none" }));
-                        keyword.push(" ");
-                    } else {
-                        keyword.push(char);
-                    }
+            const keyword = [];
+            for (let i = 0; i < application.nativeName.length; i++) {
+                const char = application.nativeName[i];
+                if (/\p{Unified_Ideograph}/u.test(char)) {
+                    if (keyword[keyword.length - 1] !== " ") keyword.push(" ");
+                    keyword.push(pinyin(char, { toneType: "none" }));
+                    keyword.push(" ");
+                } else if (/\w|\s/.test(char)) {
+                    keyword.push(char);
                 }
-                const key = keyword.join("");
-                return [key, key.replace(/(^|\s)(\w)\w*/g, "$2")];
             }
+            const key = keyword.join("").trim();
+            if (key !== application.name) keywords.push(key);
+            const shortKey = key.replace(/(^|\s+)(\w)\w*/g, "$2");
+            if (shortKey.length > 1) keywords.push(shortKey);
         }
+        return keywords;
     }
 }
