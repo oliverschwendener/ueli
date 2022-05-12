@@ -2,7 +2,7 @@ export enum Language {
     Chinese = "简体中文",
     Czech = "Česky",
     English = "English",
-    Finnish = "Finnish",
+    Finnish = "Suomi",
     German = "Deutsch",
     Hindi = "हिन्दी",
     Italian = "Italiano",
