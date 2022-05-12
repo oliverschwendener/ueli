@@ -172,7 +172,7 @@ export const finnishTranslationSet: TranslationSet = {
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}} ei ole olemassa"`,
     applicationSearchSettingsFolderValidationError: `Tapahtui virhe "{{value}}" vahvistuksen aikana`,
     applicationSearchSettingsUseNativeIcons:
-        "Käytä natiivikuvakkeita (pois päältä kytkettynä saattaa parantaa suorituskykyä",
+        "Käytä natiivikuvakkeita (pois päältä kytkettynä saattaa parantaa suorituskykyä)",
 
     searchEngineSettings: "Hakukone",
     searchEngineSettingsDescription: `Hakukonetta käytetään valmiiksi indeksoituihin kohteisiin, kuten sovelluksiin, oikoteihin ja käyttöjärjestelmän asetuksiin/käskyihin.`,
