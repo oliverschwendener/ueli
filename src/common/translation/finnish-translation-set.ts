@@ -50,7 +50,7 @@ export const finnishTranslationSet: TranslationSet = {
     generalSettingsLogExecution: "Lokien suorittaminen",
     generalSettingsPersistentUserInput: "Pysyvä käyttäjän syöte",
     generalSettingsAutostartApp: "Käynnistä sovellus automaattisesti järjestelmän käynnistyessä",
-    generalSettingsShowTrayIcon: "Näytä kuvake työkalupalkissa",
+    generalSettingsShowTrayIcon: "Näytä kuvake tehtäväpalkissa",
     generalSettingsClearCachesOnExit: "Tyhjennä välimuistit lopetettaessa",
     generalSettingsHotKey: "Pikanäppäin",
     generalSettingsRescanIntervalEnabled: "Säännöllinen uudelleentarkastus käytössä",
