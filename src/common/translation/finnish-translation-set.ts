@@ -267,7 +267,7 @@ export const finnishTranslationSet: TranslationSet = {
     macOsLogout: "Kirjaudu ulos",
     macOsLogoutDescription: "Kirjaa nykyinen käyttäjä ulos",
     macOsSleep: "Lepotila",
-    macOsSleepDescription: "Tietokoneen lepotila",
+    macOsSleepDescription: "Aseta tietokone lepotilaan",
     macOsLock: "Lukitse",
     macOsLockDescription: "Lukitse tietokone",
 
