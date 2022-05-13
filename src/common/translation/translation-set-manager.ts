@@ -1,5 +1,6 @@
 import { chineseTranslationSet } from "./chinese-translation-set";
 import { englishTranslationSet } from "./english-translation-set";
+import { finnishTranslationSet } from "./finnish-translation-set";
 import { germanTranslationSet } from "./german-translation-set";
 import { hindiTranslationSet } from "./hindi-translation-set";
 import { italianTranslationSet } from "./italian-translation-set";
@@ -17,6 +18,8 @@ export function getTranslationSet(language: Language): TranslationSet {
     switch (language) {
         case Language.English:
             return englishTranslationSet;
+        case Language.Finnish:
+            return finnishTranslationSet;
         case Language.German:
             return germanTranslationSet;
         case Language.Hindi:
