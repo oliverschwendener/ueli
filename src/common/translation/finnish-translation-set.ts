@@ -26,12 +26,12 @@ export const finnishTranslationSet: TranslationSet = {
     ueliCommandReload: "Lataa uudelleen",
     ueliCommandReloadDescription: "Lataa ueli uudelleen",
 
-    generalErrorTitle: "Virhe tapahtui",
+    generalErrorTitle: "Tapahtui virhe",
     generalErrorDescription: "Tarkista lokista lisätietoja",
 
     successfullyRefreshedIndexes: "Indeksit päivitettiin onnistuneesti",
     successfullyClearedCaches: "Välimuistit tyhjennettiin onnistuneesti",
-    successfullyUpdatedconfig: "Asetustiedosto päivitetiin onnistuneesti",
+    successfullyUpdatedconfig: "Asetustiedosto päivitettiin onnistuneesti",
     successfullyClearedExecutionLog: "Suoritusloki tyhjennettiin onnistuneesti",
 
     commandlineSearchResultDescription: "Suorita {{command}}",
@@ -70,7 +70,7 @@ export const finnishTranslationSet: TranslationSet = {
     generalSettingsHideMainWindowAfterExecution: "Piilota ikkuna suorituksen jälkeen",
     generalSettingsHideMainWindowOnBlur: "Piilota ikkuna, kun tarkennus katoaa",
     generalSettingsDecimalSeparator: "Desimaalierotin",
-    generalSettingsCheckingForUpdate: "Tarkistetaan, onko päivitys saatavilla",
+    generalSettingsCheckingForUpdate: "Tarkistetaan, onko päivityksiä saatavilla",
     generalSettingsDownloadUpdate: "Lataa päivitys",
     generalSettingsDownloadingUpdate: "Ladataan päivitystä",
     generalSettingsLatestVersion: "Käytössäsi on uusin versio!",
