@@ -332,7 +332,7 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
-"@electron/get@^1.13.0":
+"@electron/get@^1.14.1":
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/@electron/get/-/get-1.14.1.tgz#16ba75f02dffb74c23965e72d617adc721d27f40"
   integrity sha512-BrZYyL/6m0ZXz/lDxy/nlVhQz+WF+iPS6qXolEU8atw7h6v1aYkjwJZ63m+bJMBTxDE66X+r2tPS4a/8C82sZw==
@@ -2362,12 +2362,12 @@ electron-updater@^5.0.1:
     lodash.isequal "^4.5.0"
     semver "^7.3.5"
 
-electron@^18.2.3:
-  version "18.2.3"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-18.2.3.tgz#36bcb8f71e41631e6b11179eeff291c8228bfd6a"
-  integrity sha512-DJWX03hCRKTscsfXxmW4gmgFuseop+g+m4ml7NfOMfankD8uYyr2Xyi3Ui02inL9qZOlbLMeLVCu6jKCKs8p/w==
+electron@^19.0.1:
+  version "19.0.1"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-19.0.1.tgz#9370cb4d43db959bbe1dfa85ba582b3a012af5aa"
+  integrity sha512-zuhJVV7nTDFrRZ7uAIylSD0Eoi1xcUV4UzGfpWsREI4W5GsxNGyZQeqQDpg43w8+7oED812oDrGfPh5kb9rcQA==
   dependencies:
-    "@electron/get" "^1.13.0"
+    "@electron/get" "^1.14.1"
     "@types/node" "^16.11.26"
     extract-zip "^1.0.3"
 
