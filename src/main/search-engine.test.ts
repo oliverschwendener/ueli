@@ -1,6 +1,6 @@
 import { SearchEngine } from "./search-engine";
 import { SearchPlugin } from "./search-plugin";
-import { englishTranslationSet } from "../common/translation/english-translation-set";
+import * as englishTranslationSet from "../common/translation/english-translation-set";
 import { FakeSearchPlugin } from "../tests/fake-search-plugin";
 import { FakeExecutionPlugin } from "../tests/fake-execution-plugin";
 import { SearchResultItem } from "../common/search-result-item";
@@ -34,7 +34,7 @@ describe(SearchEngine.name, () => {
             [],
             defaultSearchEngineOptions,
             false,
-            englishTranslationSet,
+            englishTranslationSet.translationSet,
             fakeFavoritesRepository,
         );
 
@@ -60,7 +60,7 @@ describe(SearchEngine.name, () => {
                 searchable: ["Google Chrome"],
             },
         ];
-        const translationSet = englishTranslationSet;
+        const translationSet = englishTranslationSet.translationSet;
 
         const searchPlugins: SearchPlugin[] = [new FakeSearchPlugin(PluginType.Test, items, true)];
 
@@ -96,7 +96,7 @@ describe(SearchEngine.name, () => {
                 searchable: ["Google Chrome"],
             },
         ];
-        const translationSet = englishTranslationSet;
+        const translationSet = englishTranslationSet.translationSet;
 
         const searchPlugins: SearchPlugin[] = [new FakeSearchPlugin(PluginType.Test, items, true)];
 
@@ -132,7 +132,7 @@ describe(SearchEngine.name, () => {
                 searchable: ["Google Chrome"],
             },
         ];
-        const translationSet = englishTranslationSet;
+        const translationSet = englishTranslationSet.translationSet;
 
         const searchPlugins: SearchPlugin[] = [new FakeSearchPlugin(PluginType.Test, items, true)];
         const userOptions = { fuzzyness: 0.8 } as SearchEngineOptions;
@@ -170,7 +170,7 @@ describe(SearchEngine.name, () => {
                 searchable: ["Google Chrome"],
             },
         ];
-        const translationSet = englishTranslationSet;
+        const translationSet = englishTranslationSet.translationSet;
 
         const searchPlugins: SearchPlugin[] = [new FakeSearchPlugin(PluginType.Test, items, true)];
         const userOptions = { fuzzyness: 0.2 } as SearchEngineOptions;

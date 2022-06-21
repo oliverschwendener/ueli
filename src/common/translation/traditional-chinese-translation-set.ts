@@ -1,6 +1,6 @@
 import { TranslationSet } from "./translation-set";
 
-export const traditionalChineseTranslationSet: TranslationSet = {
+export const translationSet: TranslationSet = {
     trayIconShow: "顯示",
     trayIconSettings: "設定",
     trayIconQuit: "離開",
