@@ -1,0 +1,30 @@
+"project_id_env": "CROWDIN_PROJECT_ID"
+"api_token_env": "CROWDIN_PERSONAL_TOKEN"
+"base_path": "."
+
+"preserve_hierarchy": true
+
+"files": [
+  {
+    "source": "src/common/translation/english-translation-set.ts",
+    "translation": "src/common/translation/%language%-translation-set.ts",
+    "languages_mapping": {
+      "language": {
+        "zh-CN": "simplified-chinese",
+        "zh-TW": "traditional-chinese",
+        "cs": "czech",
+        "fi": "finnish",
+        "de": "german",
+        "hi": "hindi",
+        "it": "italian",
+        "ja": "japanese",
+        "ko": "korean",
+        "pt-PT": "portuguese",
+        "ru": "russian",
+        "es-ES": "spanish",
+        "tr": "turkish",
+        "uk": "ukrainian"
+      }
+    }
+  }
+]
