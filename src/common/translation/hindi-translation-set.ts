@@ -1,6 +1,6 @@
 import { TranslationSet } from "./translation-set";
 
-export const hindiTranslationSet: TranslationSet = {
+export const translationSet: TranslationSet = {
     trayIconShow: "दिखाएं",
     trayIconSettings: "सेटिंगस",
     trayIconQuit: "बंद करें",

@@ -1,6 +1,6 @@
 import { TranslationSet } from "./translation-set";
 
-export const japaneseTranslationSet: TranslationSet = {
+export const translationSet: TranslationSet = {
     trayIconShow: "表示",
     trayIconSettings: "設定",
     trayIconQuit: "終了",

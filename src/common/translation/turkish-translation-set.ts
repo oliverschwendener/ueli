@@ -1,6 +1,6 @@
 import { TranslationSet } from "./translation-set";
 
-export const turkishTranslationSet: TranslationSet = {
+export const translationSet: TranslationSet = {
     trayIconShow: "Göster",
     trayIconSettings: "Ayarlar",
     trayIconQuit: "Çıkış",

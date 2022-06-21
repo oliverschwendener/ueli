@@ -1,48 +1,51 @@
-import { chineseTranslationSet } from "./chinese-translation-set";
-import { englishTranslationSet } from "./english-translation-set";
-import { finnishTranslationSet } from "./finnish-translation-set";
-import { germanTranslationSet } from "./german-translation-set";
-import { hindiTranslationSet } from "./hindi-translation-set";
-import { italianTranslationSet } from "./italian-translation-set";
-import { japaneseTranslationSet } from "./japanese-translation-set";
-import { koreanTranslationSet } from "./korean-translation-set";
+import * as chineseTranslationSet from "./chinese-translation-set";
+import * as englishTranslationSet from "./english-translation-set";
+import * as finnishTranslationSet from "./finnish-translation-set";
+import * as germanTranslationSet from "./german-translation-set";
+import * as hindiTranslationSet from "./hindi-translation-set";
+import * as italianTranslationSet from "./italian-translation-set";
+import * as japaneseTranslationSet from "./japanese-translation-set";
+import * as koreanTranslationSet from "./korean-translation-set";
 import { Language } from "./language";
-import { portugueseTranslationSet } from "./portuguese-translation-set";
-import { russianTranslationSet } from "./russian-translation-set";
-import { spanishTranslationSet } from "./spanish-translation-set";
+import * as portugueseTranslationSet from "./portuguese-translation-set";
+import * as russianTranslationSet from "./russian-translation-set";
+import * as spanishTranslationSet from "./spanish-translation-set";
 import { TranslationSet } from "./translation-set";
-import { turkishTranslationSet } from "./turkish-translation-set";
-import { ukrainianTranslationSet } from "./ukrainian-translation-set";
+import * as turkishTranslationSet from "./turkish-translation-set";
+import * as ukrainianTranslationSet from "./ukrainian-translation-set";
+import * as czechTranslationSet from "./czech-translation-set";
 
 export function getTranslationSet(language: Language): TranslationSet {
     switch (language) {
         case Language.English:
-            return englishTranslationSet;
+            return englishTranslationSet.translationSet;
         case Language.Finnish:
-            return finnishTranslationSet;
+            return finnishTranslationSet.translationSet;
         case Language.German:
-            return germanTranslationSet;
+            return germanTranslationSet.translationSet;
         case Language.Hindi:
-            return hindiTranslationSet;
+            return hindiTranslationSet.translationSet;
         case Language.Portuguese:
-            return portugueseTranslationSet;
+            return portugueseTranslationSet.translationSet;
         case Language.Russian:
-            return russianTranslationSet;
+            return russianTranslationSet.translationSet;
         case Language.Turkish:
-            return turkishTranslationSet;
+            return turkishTranslationSet.translationSet;
         case Language.Spanish:
-            return spanishTranslationSet;
+            return spanishTranslationSet.translationSet;
         case Language.Chinese:
-            return chineseTranslationSet;
+            return chineseTranslationSet.translationSet;
         case Language.Korean:
-            return koreanTranslationSet;
+            return koreanTranslationSet.translationSet;
         case Language.Japanese:
-            return japaneseTranslationSet;
+            return japaneseTranslationSet.translationSet;
         case Language.Italian:
-            return italianTranslationSet;
+            return italianTranslationSet.translationSet;
         case Language.Ukrainian:
-            return ukrainianTranslationSet;
+            return ukrainianTranslationSet.translationSet;
+        case Language.Czech:
+            return czechTranslationSet.translationSet;
         default:
-            return englishTranslationSet;
+            return englishTranslationSet.translationSet;
     }
 }
