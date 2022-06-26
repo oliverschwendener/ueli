@@ -554,6 +554,7 @@ function createMainWindow() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
+            spellcheck: false,
         },
         width: config.appearanceOptions.windowWidth,
     });
@@ -661,6 +662,7 @@ function openSettings() {
             webPreferences: {
                 nodeIntegration: true,
                 contextIsolation: false,
+                spellcheck: false,
             },
             width: 1000,
         });
