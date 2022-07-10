@@ -1,6 +1,6 @@
 import { join } from "path";
 import { FileHelpers } from "../../../common/helpers/file-helpers";
-import plist from "simple-plist";
+import { readFile } from "simple-plist";
 import { applicationIconLocation, getApplicationIconFilePath } from "./application-icon-helpers";
 import { existsSync } from "fs";
 import { executeCommand } from "../../executors/command-executor";
@@ -72,13 +72,13 @@ function getIcnsFilePath(applicationFilePath: string, parsedPlistContent: InfoPl
 function getPlistContent(applicationFilePath: string): Promise<InfoPlist | undefined> {
     return new Promise((resolve) => {
         const onError = () => resolve(undefined);
-        const onSuccess = (data: InfoPlist) => resolve(data);
+        const onSuccess = (data?: InfoPlist) => resolve(data);
         const plistFilePath = join(applicationFilePath, "Contents", "Info.plist");
 
         if (!existsSync(plistFilePath)) {
             onError();
         } else {
-            plist.readFile(plistFilePath, (err, data) => {
+            readFile<InfoPlist>(plistFilePath, (err, data) => {
                 if (err) {
                     onError();
                 } else {
