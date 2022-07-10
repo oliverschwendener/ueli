@@ -471,6 +471,7 @@ function updateAutoStartOptions(userConfig: UserConfigOptions) {
 function createTrayIcon() {
     if (config.generalOptions.showTrayIcon) {
         trayIcon = new Tray(trayIconFilePath);
+        trayIcon.setToolTip("ueli");
         updateTrayIconContextMenu();
     }
 }
