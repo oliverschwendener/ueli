@@ -119,12 +119,12 @@ export const japaneseTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "スクロールバーの境界コーナー半径",
     appearanceSettingsBorderRadiusDescription:
         "CSS の値を指定するため '10px' あるいは個別のコーナー設定の場合は '10px 0px 10px 5px' のように 'px' を付加する必要があります",
-    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
-    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
-    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
-    appearanceSettingsUserInputFontSize: "User input font size",
-    appearanceSettingsSearchResultDescriptionFontSize: "Search result name font size",
-    appearanceSettingsSearchResultNameFontSize: "Search result description font size",
+    appearanceSettingsUserInputFontWeight: "入力欄のフォント太さ",
+    appearanceSettingsSearchResultNameFontWeight: "検索結果名のフォント太さ",
+    appearanceSettingsSearchResultDescriptionFontWeight: "検索結果説明のフォント太さ",
+    appearanceSettingsUserInputFontSize: "入力欄のフォントサイズ",
+    appearanceSettingsSearchResultDescriptionFontSize: "検索結果名のフォントサイズ",
+    appearanceSettingsSearchResultNameFontSize: "検索結果説明フォントサイズ",
 
     settingsUserInputTitle: "入力欄",
     settingsSearchResultsBoxTitle: "検索結果",
