@@ -4,7 +4,7 @@ import { UeliCommandSearchPlugin } from "../plugins/ueli-command-search-plugin/u
 import { ShortcutsSearchPlugin } from "../plugins/shortcuts-search-plugin/shortcuts-search-plugin";
 import { homedir } from "os";
 import { openUrlInBrowser } from "../executors/url-executor";
-import { executeFilePathLinux executeFilePathMacOs, executeFilePathWindows } from "../executors/file-path-executor";
+import { executeFilePathLinux, executeFilePathMacOs, executeFilePathWindows } from "../executors/file-path-executor";
 import { SearchEngine } from "../search-engine";
 import { EverythingPlugin } from "../plugins/everything-plugin/everthing-plugin";
 import { SearchPlugin } from "../search-plugin";
@@ -47,7 +47,6 @@ import { ProductionApplicationRepository } from "../plugins/application-search-p
 import { defaultMacOsAppIcon, defaultWindowsAppIcon } from "../../common/icon/default-icons";
 import { ApplicationIconService } from "../plugins/application-search-plugin/application-icon-service";
 import { generateWindowsAppIcons } from "../plugins/application-search-plugin/windows-app-icon-generator";
-<<<<<<< HEAD
 import { linuxFileSearcher, macosFileSearcher, windowsFileSearcher as powershellFileSearcher } from "../executors/file-searchers";
 import { searchLinuxApplications, searchMacApplications, searchWindowsApplications } from "../executors/application-searcher";
 import { generateMacAppIcons } from "../plugins/application-search-plugin/mac-os-app-icon-generator";
@@ -71,7 +70,6 @@ import { FirefoxBookmarkRepository } from "../plugins/browser-bookmarks-plugin/f
 import { ChromiumBookmarkRepository } from "../plugins/browser-bookmarks-plugin/chromium-bookmark-repository";
 import { WeatherPlugin } from "../plugins/weather-plugin/weather-plugin";
 import { LinuxOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/linux-operating-system-setting-repository";
->>>>>>> 2a6f9130 ([#94] Implement Linux support for the core components)
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
@@ -80,113 +78,6 @@ export function getProductionSearchEngine(
     translationSet: TranslationSet,
     logger: Logger,
 ): SearchEngine {
-<<<<<<< HEAD
-    const filePathValidator =
-        operatingSystem === OperatingSystem.Windows ? isValidWindowsFilePath : isValidMacOsFilePath;
-    const filePathExecutor =
-        operatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
-    const filePathLocationExecutor = openFileLocation;
-    const urlExecutor = openUrlInBrowser;
-    const commandlineExecutor =
-        operatingSystem === OperatingSystem.Windows ? windowsCommandLineExecutor : macOsCommandLineExecutor;
-    const operatingSystemSettingsRepository =
-        operatingSystem === OperatingSystem.Windows
-            ? new WindowsOperatingSystemSettingRepository()
-            : new MacOsOperatingSystemSettingRepository();
-    const operatingSystemSettingExecutor =
-        operatingSystem === OperatingSystem.Windows
-            ? executeWindowsOperatingSystemSetting
-            : executeMacOSOperatingSystemSetting;
-    const applicationSearcher =
-        operatingSystem === OperatingSystem.Windows ? searchWindowsApplications : searchMacApplications;
-    const appIconGenerator =
-        operatingSystem === OperatingSystem.Windows ? generateWindowsAppIcons : generateMacAppIcons;
-    const defaultAppIcon = operatingSystem === OperatingSystem.Windows ? defaultWindowsAppIcon : defaultMacOsAppIcon;
-    const fileSearcher = operatingSystem === OperatingSystem.Windows ? powershellFileSearcher : macosFileSearcher;
-    const chromeBookmarksFilePath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application Support/Google/Chrome/Default/Bookmarks`;
-    const braveBookmarksFilePath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application Support/BraveSoftware/Brave-Browser/Default/Bookmarks`;
-    const vivaldiBookmarksFilePath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Local\\Vivaldi\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application Support/Vivaldi/Default/Bookmarks`;
-    const yandexBookmarksFilePath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Local\\Yandex\\YandexBrowser\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application Support/Yandex/YandexBrowser/Default/Bookmarks`;
-    const sideKickBookmarkFilePath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Local\\Sidekick\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application Support/Sidekick/Default/Bookmarks`;
-    const edgeBookmarksFilePath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application Support/Microsoft Edge/Default/Bookmarks`;
-    const firefoxUserDataFolderPath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Roaming\\Mozilla\\Firefox`
-            : `${homedir()}/Library/Application Support/Firefox`;
-    const chromiumBookmarksFilePath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Local\\Chromium\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application Support/Chromium/Default/Bookmarks`;
-||||||| parent of 2a6f9130 ([#94] Implement Linux support for the core components)
-    const filePathValidator =
-        operatingSystem === OperatingSystem.Windows ? isValidWindowsFilePath : isValidMacOsFilePath;
-    const filePathExecutor =
-        operatingSystem === OperatingSystem.Windows ? executeFilePathWindows : executeFilePathMacOs;
-    const filePathLocationExecutor = openFileLocation;
-    const urlExecutor = openUrlInBrowser;
-    const commandlineExecutor =
-        operatingSystem === OperatingSystem.Windows ? windowsCommandLineExecutor : macOsCommandLineExecutor;
-    const operatingSystemSettingsRepository =
-        operatingSystem === OperatingSystem.Windows
-            ? new WindowsOperatingSystemSettingRepository()
-            : new MacOsOperatingSystemSettingRepository();
-    const operatingSystemSettingExecutor =
-        operatingSystem === OperatingSystem.Windows
-            ? executeWindowsOperatingSystemSetting
-            : executeMacOSOperatingSystemSetting;
-    const applicationSearcher =
-        operatingSystem === OperatingSystem.Windows ? searchWindowsApplications : searchMacApplications;
-    const appIconGenerator =
-        operatingSystem === OperatingSystem.Windows ? generateWindowsAppIcons : generateMacAppIcons;
-    const defaultAppIcon = operatingSystem === OperatingSystem.Windows ? defaultWindowsAppIcon : defaultMacOsAppIcon;
-    const fileSearcher = operatingSystem === OperatingSystem.Windows ? powershellFileSearcher : macosFileSearcher;
-    const chromeBookmarksFilePath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application\ Support/Google/Chrome/Default/Bookmarks`;
-    const braveBookmarksFilePath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application\ Support/BraveSoftware/Brave-Browser/Default/Bookmarks`;
-    const vivaldiBookmarksFilePath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Local\\Vivaldi\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application\ Support/Vivaldi/Default/Bookmarks`;
-    const sideKickBookmarkFilePath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Local\\Sidekick\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application\ Support/Sidekick/Default/Bookmarks`;
-    const edgeBookmarksFilePath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application\ Support/Microsoft Edge/Default/Bookmarks`;
-    const firefoxUserDataFolderPath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Roaming\\Mozilla\\Firefox`
-            : `${homedir()}/Library/Application\ Support/Firefox`;
-    const chromiumBookmarksFilePath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Local\\Chromium\\User Data\\Default\\Bookmarks`
-            : `${homedir()}/Library/Application\ Support/Chromium/Default/Bookmarks`;
-=======
     let filePathLocationExecutor = openFileLocation;
     let urlExecutor = openUrlInBrowser;
     const OsMapping = {
@@ -208,6 +99,7 @@ export function getProductionSearchEngine(
             firefoxUserDataFolderPath: `${homedir()}\\AppData\\Roaming\\Mozilla\\Firefox`,
             chromiumBookmarksFilePath: `${homedir()}\\AppData\\Local\\Chromium\\User Data\\Default\\Bookmarks`,
             operatingSystemCommandRepository: WindowsOperatingSystemCommandRepository,
+            yandexBookmarksFilePath: `${homedir()}\\AppData\\Local\\Yandex\\YandexBrowser\\User Data\\Default\\Bookmarks`,
         },
         [OperatingSystem.macOS]: {
             filePathValidator: isValidUnixFilePath,
@@ -227,6 +119,7 @@ export function getProductionSearchEngine(
             firefoxUserDataFolderPath: `${homedir()}/Library/Application\ Support/Firefox`,
             chromiumBookmarksFilePath: `${homedir()}/Library/Application\ Support/Chromium/Default/Bookmarks`,
             operatingSystemCommandRepository: MacOsOperatingSystemCommandRepository,
+            yandexBookmarksFilePath: `${homedir()}/Library/Application Support/Yandex/YandexBrowser/Default/Bookmarks`,
         },
         [OperatingSystem.Linux]: {
             filePathValidator: isValidUnixFilePath,
@@ -249,9 +142,9 @@ export function getProductionSearchEngine(
             firefoxUserDataFolderPath: `${homedir()}/.config/Firefox`,
             chromiumBookmarksFilePath: `${homedir()}/.config/chromium/Default/Bookmarks`,
             operatingSystemCommandRepository: LinuxOperatingSystemCommandRepository,
+            yandexBookmarksFilePath: `${homedir()}/Library/Application Support/Yandex/YandexBrowser/Default/Bookmarks`,
         },
     }
->>>>>>> 2a6f9130 ([#94] Implement Linux support for the core components)
 
     const OsConfig = OsMapping[operatingSystem];
     const filePathValidator = OsConfig.filePathValidator;
@@ -270,6 +163,7 @@ export function getProductionSearchEngine(
     const edgeBookmarksFilePath = OsConfig.edgeBookmarksFilePath;
     const firefoxUserDataFolderPath = OsConfig.firefoxUserDataFolderPath;
     const chromiumBookmarksFilePath = OsConfig.chromiumBookmarksFilePath;
+    const yandexBookmarksFilePath = OsConfig.yandexBookmarksFilePath;
     const operatingSystemCommandRepository = new OsConfig.operatingSystemCommandRepository(translationSet);
 
     const searchPlugins: SearchPlugin[] = [
