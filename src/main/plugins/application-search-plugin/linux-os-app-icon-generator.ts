@@ -1,8 +1,11 @@
-import { join } from "path";
+import { join, extname, basename } from "path";
 import { parse } from "ini"
+import { platform, release } from "os";
 import { FileHelpers } from "../../../common/helpers/file-helpers";
 import { applicationIconLocation, getApplicationIconFilePath } from "./application-icon-helpers";
 import { executeCommand, executeCommandWithOutput } from "../../executors/command-executor";
+import { getCurrentOperatingSystem, getOperatingSystemVersion } from "../../../common/helpers/operating-system-helpers";
+import { OperatingSystemVersion } from "../../../common/operating-system";
 
 export function generateLinuxAppIcons(applicationFilePaths: string[]): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -17,8 +20,9 @@ export function generateLinuxAppIcons(applicationFilePaths: string[]): Promise<v
                 }
 
                 getIconThemeName().then((iconTheme) => {
-                    Promise.all([iconTheme, "hicolor"].map((t) => buildIconsList(t))).then((iconsLists) => {
-                        Promise.all(applicationFilePaths.map((application) => generateLinuxAppIcon(application, iconsLists[0], iconsLists[1])))
+                    Promise.all([iconTheme, "hicolor"].map((t) => buildIconsListFromTheme(t, 48)).concat(buildIconsListFromFolder("/usr/share/pixmap")))
+                    .then((iconsLists) => {
+                        Promise.all(applicationFilePaths.map((application) => generateLinuxAppIcon(application, iconsLists.flat())))
                             .then(() => resolve())
                             .catch((err) => reject(err));
                     }).catch((err) => reject(err));
@@ -27,31 +31,21 @@ export function generateLinuxAppIcons(applicationFilePaths: string[]): Promise<v
     });
 }
 
-// This written pretty awful and probably needs to be fixed
-function generateLinuxAppIcon(applicationFilePath: string, iconsList: string[], fallbackIconList: string[]): Promise<void> {
+// Doesn't follow freedesktop specs exactly but seems to work
+function generateLinuxAppIcon(applicationFilePath: string, iconsList: string[]): Promise<void> {
     return new Promise((resolve, reject) => {
         getAppIconName(applicationFilePath).then((iconName) => {
-            if (iconName.length != 0) {
+            if (iconName.length !== 0) {
                 const outSvgFilePath = getApplicationIconFilePath(applicationFilePath);
-                // I don't think resolve() breaks forEach, does it? Anyway it's wacky and hacky solution.
-                iconsList.forEach((iconPath) =>{
-                    if (iconPath.includes(`${iconName}.svg`) || iconPath.includes(`${iconName}-symbolic.svg`)) {
-                        convertSVGtoPng(iconPath, outSvgFilePath)
-                            .then(() => resolve())
-                            .catch((err) => reject(err));
-                    }
-                });
-                fallbackIconList.forEach((iconPath) =>{
-                    if (iconPath.includes(`${iconName}.svg`) || iconPath.includes(`${iconName}-symbolic.svg`)) {
-                        convertSVGtoPng(iconPath, outSvgFilePath)
-                            .then(() => resolve())
-                            .catch((err) => reject(err));
-                    }
-                });
-                console.error(`Failed to find icon ${iconName}.svg`);
+                const icon = iconsList.find((iconPath) => basename(iconPath, extname(iconPath)) === iconName);
+                if (icon) {
+                    convertSVGtoPng(icon, outSvgFilePath);
+                } else {
+                    console.error(`Failed to find icon ${iconName}.svg`)
+                };
                 resolve();
             } else {
-                console.error(`Failed to find icon for ${applicationFilePath}`);
+                console.error(`Failed to find icon name for ${applicationFilePath}`);
                 resolve();
             }
         }).catch((err) => reject(err));
@@ -74,11 +68,13 @@ function getAppIconName(applicationFilePath: string): Promise<string> {
 
 function getIconThemeName(): Promise<string> {
     return new Promise((resolve, reject) => {
-        FileHelpers.readFile("/usr/share/icons/default/index.theme").then((data) => {
-            const config = parse(data);
-            const iconThemeName = config["Icon Theme"]["Inherits"];
+        const desktopEnv = getOperatingSystemVersion(getCurrentOperatingSystem(platform()), release()) ===
+        // Only 2 DEs supported as of now (tested with Cinnamon so far)
+            OperatingSystemVersion.LinuxGnome ? "gnome" : "cinnamon";
+        executeCommandWithOutput(`gsettings get org.${desktopEnv}.desktop.interface icon-theme`)
+        .then((iconThemeName) => {
             if (iconThemeName) {
-                resolve(JSON.stringify(iconThemeName).slice(1, -1));
+                resolve(iconThemeName.slice(1, -2));
             } else {
                 reject("Failed to determine default icon theme");
             }
@@ -86,22 +82,53 @@ function getIconThemeName(): Promise<string> {
     });
 }
 
-function buildIconsList(iconTheme: string): Promise<string[]> {
+function buildIconsListFromTheme(iconTheme: string, size: number): Promise<string[]> {
     return new Promise((resolve, reject) => {
-        const iconThemePath = join("/usr/share/icons", iconTheme, "scalable");
+        const iconThemePath = join("/usr/share/icons", iconTheme);
 
-        executeCommandWithOutput(`find ${iconThemePath}`).then((output) => {
-            const iconFiles = output.split("\n");
-            executeCommandWithOutput("find /usr/share/pixmaps").then((output) => {
-                const pixelmapFiles = output.split("\n");
-                resolve(iconFiles.concat(pixelmapFiles));
-            }).catch((err) => reject(err));
+        let iconList : Promise<string>[] = [];
+        const nonIdealIconList : Promise<string>[] = [];
+
+        FileHelpers.readFile(`${iconThemePath}/index.theme`).then((data) => {
+            const themeCofig = parse(data);
+            const subdirs : string[] = themeCofig["Icon Theme"]["Directories"].split(",");
+            subdirs.reverse().forEach((subdir) => {
+                if (Number(themeCofig[subdir]["Size"]) === size) {
+                    // Prioritize icons with ideal size
+                    iconList.push(executeCommandWithOutput(`find '${join(iconThemePath, subdir)}'`));
+                } else {
+                    nonIdealIconList.push(executeCommandWithOutput(`find '${join(iconThemePath, subdir)}'`));
+                }
+            });
+
+            Promise.allSettled(iconList.concat(nonIdealIconList)).then((icons) => {
+                let results : string[] = [];
+                icons.forEach((result) => {
+                    if (result.status === "fulfilled") {
+                        results = results.concat(result.value.split("\n").filter(file => [".png", ".svg", ".xpm"].includes(extname(file))));
+                    } else {
+                        console.error(result.reason);
+                    }
+                })
+                resolve(results);
+            })
+            .catch((err) => reject(err));
+
+        })
+        .catch((err) => reject(`Failed to read index.theme for ${iconTheme}`));
+    });
+}
+
+function buildIconsListFromFolder(folder: string): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+        executeCommandWithOutput("find /usr/share/pixmaps").then((pixOutput) => {
+            const pixelmapFiles = pixOutput.split("\n");
+            resolve(pixelmapFiles);
         }).catch((err) => reject(err));
-
     });
 }
 
 function convertSVGtoPng(source: string, output: string): Promise<void>{
     console.debug(`Converting ${source} to ${output}`);
-    return executeCommand(`convert -background none -density 1000 -resize 256x ${source} ${output}`);
+    return executeCommand(`convert -background none -resize 32x ${source} ${output}`);
 }
