@@ -291,6 +291,17 @@ export const italianTranslationSet: TranslationSet = {
     windowsHibernation: "Ibernazione",
     windowsHibernationDescription: "Mette il ​​computer in ibernazione",
 
+    linuxShutdown: "Shut Down",
+    linuxShutdownDescription: "Shut down computer",
+    linuxRestart: "Restart",
+    linuxRestartDescription: "Restart computer",
+    linuxLogout: "Log out",
+    linuxLogoutDescription: "Log out current user",
+    linuxSleep: "Sleep",
+    linuxSleepDescription: "Sleep computer",
+    linuxLock: "Lock",
+    linuxLockDescription: "Lock computer",
+
     calcuator: "Calcolatrice",
     calculatorCopyToClipboard: "Premi Invio per copiare negli appunti",
     calculatorDescription: "Questo plugin ti consente di eseguire rapidamente semplici calcoli.",

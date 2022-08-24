@@ -285,6 +285,17 @@ export const finnishTranslationSet: TranslationSet = {
     windowsHibernation: "Horrostila",
     windowsHibernationDescription: "Aseta tietokone horrostilaan",
 
+    linuxShutdown: "Shut Down",
+    linuxShutdownDescription: "Shut down computer",
+    linuxRestart: "Restart",
+    linuxRestartDescription: "Restart computer",
+    linuxLogout: "Log out",
+    linuxLogoutDescription: "Log out current user",
+    linuxSleep: "Sleep",
+    linuxSleepDescription: "Sleep computer",
+    linuxLock: "Lock",
+    linuxLockDescription: "Lock computer",
+
     calcuator: "Laskin",
     calculatorCopyToClipboard: "Paina enteriä kopioidaksesi leikepöydälle",
     calculatorDescription: "Tämän laajennuksen avulla voit tehdä nopeasti yksinkertaisia laskutoimituksia.",

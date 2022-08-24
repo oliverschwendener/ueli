@@ -284,6 +284,17 @@ export const ukrainianTranslationSet: TranslationSet = {
     windowsHibernation: "Гібернація",
     windowsHibernationDescription: "Увійти в режим глибокого сну",
 
+    linuxShutdown: "Shut Down",
+    linuxShutdownDescription: "Shut down computer",
+    linuxRestart: "Restart",
+    linuxRestartDescription: "Restart computer",
+    linuxLogout: "Log out",
+    linuxLogoutDescription: "Log out current user",
+    linuxSleep: "Sleep",
+    linuxSleepDescription: "Sleep computer",
+    linuxLock: "Lock",
+    linuxLockDescription: "Lock computer",
+
     calcuator: "Калькулятор",
     calculatorCopyToClipboard: "Натисніть клавішу enter, щоб скопіювати",
     calculatorDescription: "Цей плагін дозволяє швидко виконувати прості математичні розрахунки.",
