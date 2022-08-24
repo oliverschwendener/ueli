@@ -15,12 +15,14 @@
     },
     "description": "This is a keystroke launcher for Windows and macOS.",
     "os": [
+        "linux",
         "win32",
         "darwin"
     ],
     "keywords": [
         "keystroke",
         "launcher",
+        "linux",
         "search",
         "Windows",
         "macOS"
