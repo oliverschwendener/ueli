@@ -69,10 +69,12 @@ function getMacOsVersion(operatingSystemRelease: string): OperatingSystemVersion
 function getLinuxVersion(): OperatingSystemVersion {
     const desktopEnvironment = process.env.XDG_CURRENT_DESKTOP
     switch (desktopEnvironment) {
+        case "KDE":
+            return OperatingSystemVersion.LinuxGeneric;
         case "GNOME":
             return OperatingSystemVersion.LinuxGnome;
         case "X-Cinnamon":
-            return OperatingSystemVersion.LinuxCinnamon;
+            return OperatingSystemVersion.LinuxGeneric;
         default:
             throw new Error(`Unsupported Linux desktop environment: ${desktopEnvironment}`);
     }
