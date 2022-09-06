@@ -5,4 +5,5 @@ export interface UeliCommand {
     description: string;
     executionArgument: UeliCommandExecutionArgument;
     hideMainWindowAfterExecution: boolean;
+    searchable: string[];
 }

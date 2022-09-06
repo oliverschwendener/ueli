@@ -2,6 +2,7 @@ import { OperatingSystemCommand } from "./operating-system-command";
 import { IconType } from "../../../common/icon/icon-type";
 import { OperatingSystemCommandRepository } from "./operating-system-commands-repository";
 import { TranslationSet } from "../../../common/translation/translation-set";
+import { englishTranslationSet } from "../../../common/translation/english-translation-set";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 
 export class MacOsOperatingSystemCommandRepository implements OperatingSystemCommandRepository {
@@ -36,7 +37,7 @@ export class MacOsOperatingSystemCommandRepository implements OperatingSystemCom
                     type: IconType.SVG,
                 },
                 name: this.translationSet.macOsShutdown,
-                searchable: [this.translationSet.macOsShutdown],
+                searchable: [...new Set([this.translationSet.macOsShutdown, englishTranslationSet.macOsShutdown])],
             },
             {
                 description: this.translationSet.macOsRestartDescription,
@@ -48,7 +49,7 @@ export class MacOsOperatingSystemCommandRepository implements OperatingSystemCom
                     type: IconType.SVG,
                 },
                 name: this.translationSet.macOsRestart,
-                searchable: [this.translationSet.macOsRestart],
+                searchable: [...new Set([this.translationSet.macOsRestart, englishTranslationSet.macOsRestart])],
             },
             {
                 description: this.translationSet.macOsLogoutDescription,
@@ -62,7 +63,7 @@ export class MacOsOperatingSystemCommandRepository implements OperatingSystemCom
                     type: IconType.SVG,
                 },
                 name: this.translationSet.macOsLogout,
-                searchable: [this.translationSet.macOsLogout],
+                searchable: [...new Set([this.translationSet.macOsLogout, englishTranslationSet.macOsLogout])],
             },
             {
                 description: this.translationSet.macOsSleepDescription,
@@ -72,7 +73,7 @@ export class MacOsOperatingSystemCommandRepository implements OperatingSystemCom
                     type: IconType.SVG,
                 },
                 name: this.translationSet.macOsSleep,
-                searchable: [this.translationSet.macOsSleep],
+                searchable: [...new Set([this.translationSet.macOsSleep, englishTranslationSet.macOsSleep])],
             },
             {
                 description: this.translationSet.macOsLockDescription,
@@ -82,7 +83,7 @@ export class MacOsOperatingSystemCommandRepository implements OperatingSystemCom
                     type: IconType.SVG,
                 },
                 name: this.translationSet.macOsLock,
-                searchable: [this.translationSet.macOsLock],
+                searchable: [...new Set([this.translationSet.macOsLock, englishTranslationSet.macOsLock])],
             },
         ];
     }

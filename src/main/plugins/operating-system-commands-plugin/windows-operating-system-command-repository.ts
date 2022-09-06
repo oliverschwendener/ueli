@@ -1,6 +1,7 @@
 import { OperatingSystemCommandRepository } from "./operating-system-commands-repository";
 import { OperatingSystemCommand } from "./operating-system-command";
 import { TranslationSet } from "../../../common/translation/translation-set";
+import { englishTranslationSet } from "../../../common/translation/english-translation-set";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { IconType } from "../../../common/icon/icon-type";
 
@@ -34,7 +35,7 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                     type: IconType.SVG,
                 },
                 name: this.translationSet.windowsShutdown,
-                searchable: [this.translationSet.windowsShutdown],
+                searchable: [...new Set([this.translationSet.windowsShutdown, englishTranslationSet.windowsShutdown])],
             },
             {
                 description: this.translationSet.windowsRestartDescription,
@@ -44,7 +45,7 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                     type: IconType.SVG,
                 },
                 name: this.translationSet.windowsRestart,
-                searchable: [this.translationSet.windowsRestart, this.translationSet.windowsReboot],
+                searchable: [this.translationSet.windowsRestart, this.translationSet.windowsReboot, englishTranslationSet.windowsRestart, englishTranslationSet.windowsReboot],
             },
             {
                 description: this.translationSet.windowsSignoutDescription,
@@ -54,7 +55,7 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                     type: IconType.SVG,
                 },
                 name: this.translationSet.windowsSignout,
-                searchable: [this.translationSet.windowsSignout],
+                searchable: [this.translationSet.windowsSignout, englishTranslationSet.windowsSignout],
             },
             {
                 description: this.translationSet.windowsLockDescription,
@@ -64,7 +65,7 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                     type: IconType.SVG,
                 },
                 name: this.translationSet.windowsLock,
-                searchable: [this.translationSet.windowsLock],
+                searchable: [this.translationSet.windowsLock, englishTranslationSet.windowsLock],
             },
             {
                 description: this.translationSet.windowsSleepDescription,
@@ -74,7 +75,7 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                     type: IconType.SVG,
                 },
                 name: this.translationSet.windowsSleep,
-                searchable: [this.translationSet.windowsSleep],
+                searchable: [this.translationSet.windowsSleep, englishTranslationSet.windowsSleep],
             },
             {
                 description: this.translationSet.windowsHibernationDescription,
@@ -84,7 +85,7 @@ export class WindowsOperatingSystemCommandRepository implements OperatingSystemC
                     type: IconType.SVG,
                 },
                 name: this.translationSet.windowsHibernation,
-                searchable: [this.translationSet.windowsHibernation],
+                searchable: [this.translationSet.windowsHibernation, englishTranslationSet.windowsHibernation],
             },
         ];
     }

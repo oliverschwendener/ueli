@@ -8,6 +8,7 @@ import { UeliCommandExecutionArgument } from "./ueli-command-execution-argument"
 import { ipcMain } from "electron";
 import { IpcChannels } from "../../../common/ipc-channels";
 import { TranslationSet } from "../../../common/translation/translation-set";
+import { englishTranslationSet } from "../../../common/translation/english-translation-set";
 
 export class UeliCommandSearchPlugin implements SearchPlugin {
     public readonly pluginType = PluginType.UeliCommandSearchPlugin;
@@ -81,7 +82,7 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
             },
             name: ueliCommand.name,
             originPluginType: this.pluginType,
-            searchable: [ueliCommand.name],
+            searchable: ueliCommand.searchable,
         };
     }
 
@@ -92,36 +93,42 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
                 executionArgument: UeliCommandExecutionArgument.Exit,
                 hideMainWindowAfterExecution: true,
                 name: this.translationSet.ueliCommandExit,
+                searchable: [...new Set([this.translationSet.ueliCommandExit, englishTranslationSet.ueliCommandExit])],
             },
             {
                 description: this.translationSet.ueliCommandReloadDescription,
                 executionArgument: UeliCommandExecutionArgument.Reload,
                 hideMainWindowAfterExecution: false,
                 name: this.translationSet.ueliCommandReload,
+                searchable: [...new Set([this.translationSet.ueliCommandReload, englishTranslationSet.ueliCommandReload])],
             },
             {
                 description: this.translationSet.ueliCommandEditSettingsFileDescription,
                 executionArgument: UeliCommandExecutionArgument.EditConfigFile,
                 hideMainWindowAfterExecution: true,
                 name: this.translationSet.ueliCommandEditSettingsFile,
+                searchable: [...new Set([this.translationSet.ueliCommandEditSettingsFile, englishTranslationSet.ueliCommandEditSettingsFile])],
             },
             {
                 description: this.translationSet.ueliCommandOpenSettingsDescription,
                 executionArgument: UeliCommandExecutionArgument.OpenSettings,
                 hideMainWindowAfterExecution: false,
                 name: this.translationSet.ueliCommandOpenSettings,
+                searchable: [...new Set([this.translationSet.ueliCommandOpenSettings, englishTranslationSet.ueliCommandOpenSettings])],
             },
             {
                 description: this.translationSet.ueliCommandRefreshIndexesDescription,
                 executionArgument: UeliCommandExecutionArgument.RefreshIndexes,
                 hideMainWindowAfterExecution: false,
                 name: this.translationSet.ueliCommandRefreshIndexes,
+                searchable: [...new Set([this.translationSet.ueliCommandRefreshIndexes, englishTranslationSet.ueliCommandRefreshIndexes])],
             },
             {
                 description: this.translationSet.ueliCommandClearCachesDescription,
                 executionArgument: UeliCommandExecutionArgument.ClearCaches,
                 hideMainWindowAfterExecution: false,
                 name: this.translationSet.ueliCommandClearCaches,
+                searchable: [...new Set([this.translationSet.ueliCommandClearCaches, englishTranslationSet.ueliCommandClearCaches])],
             },
         ];
     }
