@@ -518,7 +518,7 @@ function destroyTrayIcon() {
 }
 
 function onMainWindowMove() {
-    if (windowExists(mainWindow)) {
+    if (windowExists(mainWindow) && config.generalOptions.rememberWindowPosition) {
         const currentPosition = mainWindow.getPosition();
         if (currentPosition.length === 2) {
             lastWindowPosition = {
