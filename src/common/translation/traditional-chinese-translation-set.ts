@@ -36,7 +36,7 @@ export const traditionalChineseTranslationSet: TranslationSet = {
     commandlineSearchResultDescription: "執行 {{command}}",
 
     noFavoritesFoundDescription: "沒有執行日誌",
-    noFavoritesFoundTitle: "No favorites found",
+    noFavoritesFoundTitle: "沒有任何我的最愛",
 
     // settings
     settings: "設定",
@@ -139,7 +139,7 @@ export const traditionalChineseTranslationSet: TranslationSet = {
     colorThemeImportSucceeded: "成功匯出顏色主題",
     colorThemeImportFailed: "匯入顏色主題失敗",
     colorThemeInvalidColorTheme: "無效的顏色主題",
-    colorThemePresets: "Presets",
+    colorThemePresets: "預設主題",
     colorthemeUserInputBackgroundColor: "搜尋欄背景色",
     colorThemeUserInputTextColor: "搜尋欄文字顏色",
     colorThemeSearchResultsBackgroundColor: "搜尋結果背景色",
@@ -156,7 +156,7 @@ export const traditionalChineseTranslationSet: TranslationSet = {
     applicationSearchSettings: "應用程式搜尋",
     applicationSearchSettingsDescription: `這個外掛程式讓你可以搜尋電腦中的應用程式，你可以指定你安裝應用程式的位置及哪些副檔名應該被視作應用程式。`,
     applicationSearchSettingsApplicationFolders: "應用程式資料夾",
-    applicationSearchSettingsApplicationFolder: "Application folders",
+    applicationSearchSettingsApplicationFolder: "應用程式資料夾",
     applicationSearchSettingsFolderPath: "資料夾路徑",
     applicationSearchSettingsRemoveAction: "移除",
     applicationSearchSettingsAddApplicationFolder: "新增資料夾路徑",
