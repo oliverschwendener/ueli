@@ -1,4 +1,3 @@
-import { chineseTranslationSet } from "./chinese-translation-set";
 import { englishTranslationSet } from "./english-translation-set";
 import { finnishTranslationSet } from "./finnish-translation-set";
 import { germanTranslationSet } from "./german-translation-set";
@@ -9,7 +8,9 @@ import { koreanTranslationSet } from "./korean-translation-set";
 import { Language } from "./language";
 import { portugueseTranslationSet } from "./portuguese-translation-set";
 import { russianTranslationSet } from "./russian-translation-set";
+import { simplifiedChineseTranslationSet } from "./simplified-chinese-translation-set";
 import { spanishTranslationSet } from "./spanish-translation-set";
+import { traditionalChineseTranslationSet } from "./traditional-chinese-translation-set";
 import { TranslationSet } from "./translation-set";
 import { turkishTranslationSet } from "./turkish-translation-set";
 import { ukrainianTranslationSet } from "./ukrainian-translation-set";
@@ -32,8 +33,10 @@ export function getTranslationSet(language: Language): TranslationSet {
             return turkishTranslationSet;
         case Language.Spanish:
             return spanishTranslationSet;
-        case Language.Chinese:
-            return chineseTranslationSet;
+        case Language.SimplifiedChinese:
+            return simplifiedChineseTranslationSet;
+        case Language.TraditionalChinese:
+            return traditionalChineseTranslationSet;    
         case Language.Korean:
             return koreanTranslationSet;
         case Language.Japanese:

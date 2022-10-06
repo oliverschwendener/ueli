@@ -1,5 +1,4 @@
 export enum Language {
-    Chinese = "简体中文",
     Czech = "Česky",
     English = "English",
     Finnish = "Suomi",
@@ -10,7 +9,9 @@ export enum Language {
     Korean = "한국어",
     Portuguese = "Português",
     Russian = "Русский",
+    SimplifiedChinese = "简体中文",
     Spanish = "Español",
+    TraditionalChinese = "繁體中文",
     Turkish = "Türkçe",
     Ukrainian = "Українська",
 }
