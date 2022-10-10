@@ -9,4 +9,4 @@ jobs:
       - uses: vedantmgoyal2009/winget-releaser@v1
         with:
           identifier: OliverSchwendener.ueli
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.WIN_GET_REGISTRY }}
