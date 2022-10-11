@@ -29,10 +29,14 @@ This is a keystroke launcher for Windows and macOS.
 
 > Note: because the executables are not signed Windows and macOS will probably prevent you from executing the installer or the program itself.
 
+### Install with [Windows Package Manager](https://learn.microsoft.com/en-us/windows/package-manager/)
+
+-   `PS> winget install ueli`
+
 ### Installing via chocolatey repository
 
 -   Open a powershell with administration rights (Right click on your start button and click `Windows PowerShell (Admin)`
--   Type `choco install ueli`
+-   `PS> choco install ueli`
 -   Accept the upcoming prompt by entering `y` or run above command with `-y` switch
 -   Run the application
 
@@ -200,18 +204,18 @@ This plugin enables you to quickly execute multiple things at once.
 
 ## Supported Languages
 
-- English
-- Chinese (简体中文)
-- Czech (Česky)
-- German (Deutsch)
-- Hindi (हिन्दी)
-- Italian (Italiano)
-- Japanese (日本語)
-- Korean (한국어)
-- Portuguese (Português)
-- Russian (Русский)
-- Spanish (Español)
-- Turkish (Türkçe)
+-   English
+-   Chinese (简体中文)
+-   Czech (Česky)
+-   German (Deutsch)
+-   Hindi (हिन्दी)
+-   Italian (Italiano)
+-   Japanese (日本語)
+-   Korean (한국어)
+-   Portuguese (Português)
+-   Russian (Русский)
+-   Spanish (Español)
+-   Turkish (Türkçe)
 
 ## Settings
 
@@ -306,10 +310,10 @@ $ yarn package
 For more check [here](https://alternativeto.net/software/ueli).
 
 ### Contributors Wall
+
 <a href="https://github.com/oliverschwendener/ueli/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=oliverschwendener/ueli" />
 </a>
-
 
 _Note: It may take up to 24h for the [contrib.rocks](https://contrib.rocks/image?repo=oliverschwendener/ueli) plugin to update because it's refreshed once a day._
 
