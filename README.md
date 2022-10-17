@@ -40,6 +40,9 @@ This is a keystroke launcher for Windows and macOS.
 -   Accept the upcoming prompt by entering `y` or run above command with `-y` switch
 -   Run the application
 
+### Installing on MacOS via `brew`
+-  `brew install --cask ueli`
+
 ## Features
 
 ### Application Search
