@@ -16,4 +16,5 @@ export enum OperatingSystemVersion {
     MacOsCatalina = "macOS 10.15 (Catalina)",
     MacOsBigSur = "macOS 11.0 (Big Sur)",
     MacOsMonterey = "macOS 12.0 (Monterey)",
+    MacOsVentura = "macOS 13.0 (Ventura)",
 }
