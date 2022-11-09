@@ -61,3 +61,14 @@ export const windowsCommandLineExecutor = (command: string, shell: WindowsShell)
             return unsupportedShellRejection(shell);
     }
 };
+
+export const macOsCommandLineCustomShellExecutor = (command: string, shell: string, flags: string): Promise<void> => {
+    return Promise.reject('Custom shell is not supported in your platform');
+}
+
+export const windowsCommandLineCustomShellExecutor = (command: string, shell: string, flags: string): Promise<void> => {
+    const executionParams = flags.includes('{command}') ?
+        flags.replace('{command}', command) :
+        `${flags} "${command}"`
+    return executeCommand(`start "" /D %HOMEPATH% "${shell}" ${executionParams}`)
+};

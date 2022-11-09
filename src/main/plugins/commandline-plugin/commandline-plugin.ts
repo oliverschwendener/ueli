@@ -15,6 +15,7 @@ export class CommandlinePlugin implements ExecutionPlugin {
         private config: CommandlineOptions,
         private translationSet: TranslationSet,
         private readonly commandlineExecutor: (command: string, shell: WindowsShell | MacOsShell) => Promise<void>,
+        private readonly commandlineCustomShellExecutor: (command: string, shell: string, flags: string) => Promise<void>,
         private readonly logger: Logger,
     ) {}
 
@@ -43,7 +44,11 @@ export class CommandlinePlugin implements ExecutionPlugin {
     }
 
     public execute(searchResultItem: SearchResultItem): Promise<void> {
-        this.commandlineExecutor(searchResultItem.executionArgument, this.config.shell)
+        const execution = this.config.isCustom ?
+            this.commandlineCustomShellExecutor(searchResultItem.executionArgument, this.config.customShell, this.config.customShellFlags) :
+            this.commandlineExecutor(searchResultItem.executionArgument, this.config.shell)
+
+        execution
             .then(() => {
                 /* do nothing */
             })

@@ -29,7 +29,12 @@ import { CurrencyConverterPlugin } from "../plugins/currency-converter-plugin/cu
 import { executeCommand } from "../executors/command-executor";
 import { WorkflowPlugin } from "../plugins/workflow-plugin/workflow-plugin";
 import { CommandlinePlugin } from "../plugins/commandline-plugin/commandline-plugin";
-import { macOsCommandLineExecutor, windowsCommandLineExecutor } from "../executors/commandline-executor";
+import {
+    macOsCommandLineExecutor,
+    windowsCommandLineExecutor,
+    windowsCommandLineCustomShellExecutor,
+    macOsCommandLineCustomShellExecutor
+} from "../executors/commandline-executor";
 import { OperatingSystemSettingsPlugin } from "../plugins/operating-system-settings-plugin/operating-system-settings-plugin";
 import { MacOsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/macos-operating-system-setting-repository";
 import {
@@ -82,6 +87,8 @@ export function getProductionSearchEngine(
     const urlExecutor = openUrlInBrowser;
     const commandlineExecutor =
         operatingSystem === OperatingSystem.Windows ? windowsCommandLineExecutor : macOsCommandLineExecutor;
+    const commandLineCustomShellExecutor =
+        operatingSystem === OperatingSystem.Windows ? windowsCommandLineCustomShellExecutor : macOsCommandLineCustomShellExecutor;
     const operatingSystemSettingsRepository =
         operatingSystem === OperatingSystem.Windows
             ? new WindowsOperatingSystemSettingRepository()
@@ -218,7 +225,7 @@ export function getProductionSearchEngine(
         new UrlPlugin(config.urlOptions, translationSet, urlExecutor),
         new EmailPlugin(config.emailOptions, translationSet, urlExecutor),
         new CurrencyConverterPlugin(config, translationSet, electronClipboardCopier),
-        new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor, logger),
+        new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor, commandLineCustomShellExecutor, logger),
         new ColorConverterPlugin(config.colorConverterOptions, electronClipboardCopier),
         new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier, getGoogleDictionaryDefinitions),
         new WeatherPlugin(config, translationSet, electronClipboardCopier),
