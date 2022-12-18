@@ -58,6 +58,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.url;
                 case PluginSettings.Weather:
                     return translations.weather;
+                case PluginSettings.Spotify:
+                    return "Spotify";
                 case PluginSettings.WebSearch:
                     return translations.websearch;
                 case PluginSettings.Workflow:
@@ -117,6 +119,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return config.shortcutOptions.isEnabled;
                 case PluginSettings.SimpleFolderSearch:
                     return config.simpleFolderSearchOptions.isEnabled;
+                case PluginSettings.Spotify:
+                    return config.spotifyOptions.isEnabled;
                 case PluginSettings.Translation:
                     return config.translationOptions.enabled;
                 case PluginSettings.Url:

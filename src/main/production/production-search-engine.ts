@@ -66,6 +66,7 @@ import { getWebearchSuggestions } from "../executors/websearch-suggestion-resolv
 import { FirefoxBookmarkRepository } from "../plugins/browser-bookmarks-plugin/firefox-bookmark-repository";
 import { ChromiumBookmarkRepository } from "../plugins/browser-bookmarks-plugin/chromium-bookmark-repository";
 import { WeatherPlugin } from "../plugins/weather-plugin/weather-plugin";
+import {SpotifyPlugin } from "../plugins/spotify-player-plugin/spotify-plugin";
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
@@ -222,6 +223,7 @@ export function getProductionSearchEngine(
         new ColorConverterPlugin(config.colorConverterOptions, electronClipboardCopier),
         new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier, getGoogleDictionaryDefinitions),
         new WeatherPlugin(config, translationSet, electronClipboardCopier),
+        new SpotifyPlugin(config, translationSet, electronClipboardCopier),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [webSearchPlugin];

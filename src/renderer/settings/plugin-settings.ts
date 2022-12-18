@@ -17,4 +17,5 @@ export enum PluginSettings {
     BrowserBookmarks = "Browser Bookmarks",
     Dictionary = "Dictionary",
     Weather = "Weather",
+    Spotify = "Spotify",
 }

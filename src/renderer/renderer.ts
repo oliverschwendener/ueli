@@ -61,6 +61,7 @@ import { dictionarySettingsComponent } from "./settings/dictionary-settings-comp
 import { browserBookmarkSettingsComponent } from "./settings/browser-bookmark-settings-component";
 import { controlPanelSettingsComponent } from "./settings/control-panel-settings-component";
 import { weatherSettingsComponent } from "./settings/weather-settings-component";
+import { spotifySettingsComponent } from "./settings/spotify-settings";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -107,6 +108,7 @@ Vue.component("plugin-toggle", pluginToggle);
 Vue.component("browser-bookmark-settings", browserBookmarkSettingsComponent);
 Vue.component("control-panel-settings", controlPanelSettingsComponent);
 Vue.component("weather-settings", weatherSettingsComponent);
+Vue.component("spotify-settings", spotifySettingsComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(deepCopy(defaultUserConfigOptions)).getConfig();
 
@@ -177,6 +179,14 @@ const app = new Vue({
             ipcRenderer.send(IpcChannels.openTempFolderRequested);
         });
 
+        vueEventDispatcher.$on(VueEventChannels.spotifyAuthorize, (config: UserConfigOptions)=> {
+            ipcRenderer.send(IpcChannels.spotifyAuthorize, config);
+        });
+
+        vueEventDispatcher.$on(VueEventChannels.spotifyGetDevices, (config: UserConfigOptions)=>{
+            ipcRenderer.send(IpcChannels.spotifyGetDevices, config);
+        });
+	
         vueEventDispatcher.$on(VueEventChannels.selectInputHistoryItem, (direction: string) => {
             ipcRenderer.send(IpcChannels.selectInputHistoryItem, direction);
         });
@@ -187,6 +197,11 @@ const app = new Vue({
 
         vueEventDispatcher.$on(VueEventChannels.downloadUpdate, () => {
             ipcRenderer.send(IpcChannels.downloadUpdate);
+        });
+
+        ipcRenderer.on(IpcChannels.spotifyConfigUpdated, (event: Electron.Event,config: UserConfigOptions) =>{
+            vueEventDispatcher.$emit(VueEventChannels.spotifyConfigUpdated, config);
+
         });
 
         ipcRenderer.on(IpcChannels.executionFinished, () => {

@@ -22,7 +22,7 @@ export enum PluginType {
     BrowserBookmarks = "browser-bookmarks",
     ControlPanel = "control-panel-plugin",
     Weather = "weather-plugin",
-
+    Spotify = "spotify",
     // This is used for generic search results which do not have a specific plugin as a source
     None = "none",
 

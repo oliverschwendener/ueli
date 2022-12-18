@@ -142,6 +142,7 @@ export const settingsComponent = Vue.extend({
                 <browser-bookmark-settings :config="config" :translations="translations"></browser-bookmark-settings>
                 <control-panel-settings :config="config" :translations="translations"></control-panel-settings>
                 <weather-settings :config="config" :translations="translations"></weather-settings>
+                <spotify-settings :config="config" :translations="translations"></spotify-settings>
             </div>
         </div>
     `,

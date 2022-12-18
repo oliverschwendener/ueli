@@ -37,4 +37,7 @@ export enum IpcChannels {
     checkForUpdate = " check-for-update",
     checkForUpdateResponse = "check-for-update-response",
     downloadUpdate = "download-update",
+    spotifyAuthorize = "spotify-authorize",
+    spotifyGetDevices = "spotify-get-devices",
+    spotifyConfigUpdated = "update-spotify-config",
 }
