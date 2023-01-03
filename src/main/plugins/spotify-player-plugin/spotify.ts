@@ -78,15 +78,17 @@ export class Spotify {
                     if (retry == false) {
                         reject(error);
                     }
-                    //access_token might've expired. Refresh the token and try again.
-                    spotifyApi.refreshAccessToken().then((data: any) => {
-                        config.access_token = data.body['access_token'];
-                        spotifyApi.setAccessToken(data.body['access_token']);
-                        resolve(Spotify.getTracks(song, config, false));
-                    }).catch((error: any) => {
-                        console.log("error while refreshing access_token: ", error);
-                        reject(error);
-                    })
+                    else {
+                        //access_token might've expired. Refresh the token and try again.
+                        spotifyApi.refreshAccessToken().then((data: any) => {
+                            config.access_token = data.body['access_token'];
+                            spotifyApi.setAccessToken(data.body['access_token']);
+                            resolve(Spotify.getTracks(song, config, false));
+                        }).catch((error: any) => {
+                            console.log("error while refreshing access_token: ", error);
+                            reject(error);
+                        })
+                    }
                 });
         });
     }
