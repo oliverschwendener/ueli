@@ -27,13 +27,13 @@
     ],
     "main": "./bundle/main.js",
     "scripts": {
-        "lint": "./node_modules/.bin/eslint \"src/**/*{ts,vue}\"",
-        "bundle": "./node_modules/.bin/webpack --config webpack.config.js",
-        "start": "./node_modules/.bin/electron . --remote-debugging-port=9223",
-        "test": "./node_modules/.bin/jest --config jest.json --silent .",
-        "package:dir": "./node_modules/.bin/electron-builder --dir --config electron-builder-config.yml --publish never",
-        "package": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish never",
-        "package:publish": "./node_modules/.bin/electron-builder --config electron-builder-config.yml --publish always"
+        "lint": "eslint \"src/**/*{ts,vue}\"",
+        "bundle": "webpack --config webpack.config.js",
+        "start": "electron . --remote-debugging-port=9223",
+        "test": "jest --config jest.json --silent .",
+        "package:dir": "electron-builder --dir --config electron-builder-config.yml --publish never",
+        "package": "electron-builder --config electron-builder-config.yml --publish never",
+        "package:publish": "electron-builder --config electron-builder-config.yml --publish always"
     },
     "devDependencies": {
         "@types/color": "^3.0.3",
