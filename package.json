@@ -66,7 +66,7 @@
         "vue-eslint-parser": "^9.1.0",
         "webpack": "^5.75.0",
         "webpack-cli": "^5.0.1",
-        "winston": "^3.3.3"
+        "winston": "^3.8.2"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.14.0",
