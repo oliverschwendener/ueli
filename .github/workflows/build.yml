@@ -2,7 +2,7 @@ name: Build
 on: [push, pull_request]
 
 env:
-    NODE_VERSION: 18
+    NODE_VERSION: 16
     CI: true
 
 jobs:
@@ -16,6 +16,11 @@ jobs:
         steps:
             - name: Checkout current commit/branch/tag
               uses: actions/checkout@v3
+
+            - name: Set up pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: latest
 
             - name: Set up Node ${{ env.NODE_VERSION }}
               uses: actions/setup-node@v3
