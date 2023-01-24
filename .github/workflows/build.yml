@@ -13,28 +13,31 @@ jobs:
             - name: Checkout current commit/branch/tag
               uses: actions/checkout@v3
 
-            - name: Setup Node 16
+            - name: Setup Node
               uses: actions/setup-node@v3
               with:
                   node-version: 16
 
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v2
+
             - name: Install dependencies
-              run: yarn install
+              run: pnpm install
 
             - name: Lint TypeScript files
-              run: yarn lint
+              run: pnpm lint
 
             - name: Run tests
-              run: yarn test
+              run: pnpm test
 
             - name: Bundle files
-              run: yarn bundle
+              run: pnpm bundle
               env:
                   NODE_ENV: production
 
             - name: Publish new release
               if: startsWith(github.ref, 'refs/tags')
-              run: yarn package:publish
+              run: pnpm package:publish
               env:
                   CI: true
                   GH_TOKEN: ${{ secrets.GH_TOKEN }}

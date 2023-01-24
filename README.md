@@ -41,7 +41,8 @@ This is a keystroke launcher for Windows and macOS.
 -   Run the application
 
 ### Installing on MacOS via `brew`
--  `brew install --cask ueli`
+
+-   `brew install --cask ueli`
 
 ## Features
 
@@ -250,21 +251,21 @@ For more check [here](https://github.com/oliverschwendener/ueli/issues).
 
 -   Git
 -   Node 16.x.x
--   Yarn
+-   pnpm
 
 ### Setup
 
 ```
 $ git clone https://github.com/oliverschwendener/ueli
 $ cd ueli
-$ yarn
+$ pnpm
 ```
 
 ### Run
 
 ```
-$ yarn bundle
-$ yarn start
+$ pnpm bundle
+$ pnpm start
 ```
 
 ### Debug
@@ -278,7 +279,7 @@ For debugging Visual Studio Code is recommended.
 ### Run tests
 
 ```
-$ yarn test
+$ pnpm test
 ```
 
 ### Package
@@ -286,13 +287,13 @@ $ yarn test
 #### Create portable version
 
 ```
-$ yarn package:dir
+$ pnpm package:dir
 ```
 
 #### Create installer
 
 ```
-$ yarn package
+$ pnpm package
 ```
 
 ## Alternatives
