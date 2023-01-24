@@ -50,7 +50,7 @@
         "electron": "^22.0.3",
         "electron-builder": "^23.6.0",
         "electron-store": "^8.0.1",
-        "electron-updater": "^5.0.1",
+        "electron-updater": "^5.3.0",
         "eslint": "^8.32.0",
         "fuse.js": "^6.4.6",
         "jest": "^29.4.0",
