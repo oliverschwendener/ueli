@@ -45,7 +45,7 @@
         "@types/vue-color": "^2.4.2",
         "@typescript-eslint/eslint-plugin": "^5.49.0",
         "@typescript-eslint/parser": "^5.49.0",
-        "axios": "^0.26.1",
+        "axios": "^1.2.4",
         "color": "^4.0.1",
         "electron": "^22.0.3",
         "electron-builder": "^23.6.0",
