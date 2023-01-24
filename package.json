@@ -56,7 +56,7 @@
         "jest": "^29.4.0",
         "mathjs": "^11.5.0",
         "node-powershell": "^4.0.0",
-        "prettier": "^2.6.0",
+        "prettier": "^2.8.3",
         "simple-plist": "^1.4.0",
         "ts-jest": "^29.0.5",
         "ts-loader": "^9.2.8",
@@ -64,8 +64,8 @@
         "vue": "^2.6.12",
         "vue-color": "^2.7.1",
         "vue-eslint-parser": "^9.1.0",
-        "webpack": "^5.70.0",
-        "webpack-cli": "^4.9.2",
+        "webpack": "^5.75.0",
+        "webpack-cli": "^5.0.1",
         "winston": "^3.3.3"
     },
     "dependencies": {
