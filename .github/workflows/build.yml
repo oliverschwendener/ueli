@@ -1,10 +1,6 @@
 name: Build
 on: [push, pull_request]
 
-env:
-    NODE_VERSION: 16
-    CI: true
-
 jobs:
     build:
         strategy:
@@ -22,10 +18,10 @@ jobs:
               with:
                   version: latest
 
-            - name: Set up Node ${{ env.NODE_VERSION }}
+            - name: Set up Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: ${{ env.NODE_VERSION }}
+                  node-version: 16
                   cache: pnpm
 
             - name: Install dependencies
