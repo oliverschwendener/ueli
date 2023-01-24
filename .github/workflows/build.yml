@@ -1,6 +1,10 @@
 name: Build
 on: [push, pull_request]
 
+env:
+    NODE_VERSION: 18
+    CI: true
+
 jobs:
     build:
         strategy:
@@ -13,13 +17,11 @@ jobs:
             - name: Checkout current commit/branch/tag
               uses: actions/checkout@v3
 
-            - name: Setup Node
+            - name: Set up Node ${{ env.NODE_VERSION }}
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
-
-            - name: Setup pnpm
-              uses: pnpm/action-setup@v2
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: pnpm
 
             - name: Install dependencies
               run: pnpm install
