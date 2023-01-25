@@ -5,7 +5,6 @@ specifiers:
   '@types/color': ^3.0.3
   '@types/ini': ^1.3.31
   '@types/jest': ^29.2.6
-  '@types/mathjs': ^9.4.2
   '@types/node-powershell': ^3.1.0
   '@types/sqlite3': ^3.1.8
   '@types/vue-color': ^2.4.4
@@ -51,7 +50,6 @@ devDependencies:
   '@types/color': 3.0.3
   '@types/ini': 1.3.31
   '@types/jest': 29.2.6
-  '@types/mathjs': 9.4.2
   '@types/node-powershell': 3.1.1
   '@types/sqlite3': 3.1.8
   '@types/vue-color': 2.4.4
@@ -1066,13 +1064,6 @@ packages:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
       '@types/node': 16.18.11
-    dev: true
-
-  /@types/mathjs/9.4.2:
-    resolution: {integrity: sha512-GF5g1vJmvKdWIWsE53XX7EDAyCaZ9p6gaYm1xhlXn5JjrY/NJrOfJN3fBxS3wyZpVh3QqKoMkS2WjFwxWMHOTw==}
-    deprecated: This is a stub types definition. mathjs provides its own type definitions, so you do not need this installed.
-    dependencies:
-      mathjs: 11.5.0
     dev: true
 
   /@types/minimatch/5.1.2:
