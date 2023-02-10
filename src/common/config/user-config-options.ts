@@ -30,6 +30,7 @@ import { DictionaryOptions, defaultDictionaryOptions } from "./dictionary-option
 import { BrowserBookmarksOptions, defaultBrowserBookmarksOptions } from "./browser-bookmarks-options";
 import { ControlPanelOptions, defaultControlPanelOptions } from "./control-panel-options";
 import { WeatherOptions, defaultWeatherOptions } from "./weather-options";
+import { LoremIpsumOptions, defaultLoremIpsumOptions } from "./lorem-ipsum-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -58,6 +59,7 @@ export interface UserConfigOptions {
     browserBookmarksOptions: BrowserBookmarksOptions;
     controlPanelOptions: ControlPanelOptions;
     weatherOptions: WeatherOptions;
+    loremIpsumOptions: LoremIpsumOptions;
 }
 
 export const defaultUserConfigOptions: UserConfigOptions = {
@@ -87,4 +89,5 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     weatherOptions: defaultWeatherOptions,
     websearchOptions: defaultWebSearchOptions,
     workflowOptions: defaultWorkflowOptions,
+    loremIpsumOptions: defaultLoremIpsumOptions,
 };

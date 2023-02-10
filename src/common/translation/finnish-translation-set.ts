@@ -385,4 +385,9 @@ export const finnishTranslationSet: TranslationSet = {
         "Tämän laajennuksen avulla voit tarkistaa minkä tahansa alueen säätilan. Jos aluetta ei ole annettu, se näyttää oletusarvoisesti nykyisen sijaintisi sään. Tiedot toimittaa wttr.in",
     weatherTemperatureUnit: "Lämpötilan yksikkö",
     weatherCopyToClipboard: "Paina enteriä kopioidaksesi leikepöydälle",
+    
+    loremIpsum: "Lorem Ipsum",
+    loremIpsumPrefix: "Etuliite",
+    loremIpsumCopyToClipboard: "Paina enteriä kopioidaksesi leikepöydälle",
+    loremIpsumSettingsDescription: "Tämän laajennuksen avulla voit nopeasti kopioida esimerkkitekstiä leikepöydällesi.",
 };

@@ -380,4 +380,9 @@ export const ukrainianTranslationSet: TranslationSet = {
         "Цей плагін дозволяє перевірити погодні умови будь-якого регіону. Якщо регіон не вказано, за замовчуванням відображається погода поточного розташування. Дані надаються wttr.in",
     weatherTemperatureUnit: "Одиниця виміру температури",
     weatherCopyToClipboard: "Натисніть клавішу enter, щоб скопіювати",
+    
+    loremIpsum: "Lorem Ipsum",
+    loremIpsumPrefix: "Префікс",
+    loremIpsumCopyToClipboard: "Натисніть клавішу enter, щоб скопіювати",
+    loremIpsumSettingsDescription: "Цей плагін дозволяє швидко скопіювати зразок тексту в буфер обміну.",
 };

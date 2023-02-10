@@ -380,4 +380,9 @@ export const russianTranslationSet: TranslationSet = {
         "Этот плагин позволяет проверить погодные условия любого региона. Если регион не указан, по умолчанию отображается погода текущего местоположения. Данные предоставляются wttr.in",
     weatherTemperatureUnit: "Единица измерения температуры",
     weatherCopyToClipboard: "Нажмите enter, чтобы скопировать",
+    
+    loremIpsum: "Lorem Ipsum",
+    loremIpsumPrefix: "Приставка",
+    loremIpsumCopyToClipboard: "Нажмите enter, чтобы скопировать",
+    loremIpsumSettingsDescription: "Этот плагин позволяет быстро копировать образец текста в буфер обмена.",
 };
