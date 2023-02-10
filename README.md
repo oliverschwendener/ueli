@@ -130,6 +130,8 @@ This plugin enables you to use the native macOS search to find files and folders
 
 This plugin enables you to browse through your local file system. To start you have to enter a valid absolute filepath.
 
+![file-browser](assets/feature-file-browser.png)
+
 ### Lorem Ipsum
 
 This plugin enables you to copy sample text to your clipboard. To start, type lipsum followed by a number.

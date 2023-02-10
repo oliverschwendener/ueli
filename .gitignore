@@ -76,3 +76,5 @@ typings/
 # dotenv environment variables file
 .env
 
+# optional npm files
+.npmrc

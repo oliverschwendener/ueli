@@ -4,6 +4,6 @@ export interface LoremIpsumOptions {
 }
 
 export const defaultLoremIpsumOptions: LoremIpsumOptions = {
-    isEnabled: true,
+    isEnabled: false,
     prefix: "lipsum",
 };
