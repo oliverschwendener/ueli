@@ -1,7 +1,6 @@
 import { LoremIpsumOptions } from "../../../common/config/lorem-ipsum-options";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { defaultLoremIpsumIcon } from "../../../common/icon/default-icons";
-import { Logger } from "../../../common/logger/logger";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { ExecutionPlugin } from "../../execution-plugin";
@@ -27,7 +26,6 @@ export class LoremIpsumPlugin implements ExecutionPlugin {
         private config: LoremIpsumOptions,
         private translationSet: TranslationSet,
         private clipboardCopier: (value: string) => Promise<void>,
-        private readonly logger: Logger,
     ) {}
 
     public isValidUserInput(userInput: string): boolean {
@@ -73,7 +71,6 @@ export class LoremIpsumPlugin implements ExecutionPlugin {
     }
 
     public execute(searchResultItem: SearchResultItem): Promise<void> {
-        this.logger.debug("LoremIpsum");
         const args = searchResultItem.executionArgument;
         const mode = args[0];
         const value = Number(args.slice(1));

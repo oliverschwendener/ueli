@@ -223,7 +223,7 @@ export function getProductionSearchEngine(
         new ColorConverterPlugin(config.colorConverterOptions, electronClipboardCopier),
         new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier, getGoogleDictionaryDefinitions),
         new WeatherPlugin(config, translationSet, electronClipboardCopier),
-        new LoremIpsumPlugin(config.loremIpsumOptions, translationSet, electronClipboardCopier, logger),
+        new LoremIpsumPlugin(config.loremIpsumOptions, translationSet, electronClipboardCopier),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [webSearchPlugin];
