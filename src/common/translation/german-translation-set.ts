@@ -386,4 +386,9 @@ export const germanTranslationSet: TranslationSet = {
         "Mit diesem Plugin können Sie die Wetterbedingungen jeder Region überprüfen. Wenn keine Region angegeben wird, wird standardmäßig das Wetter Ihres aktuellen Standorts angezeigt. Die Daten werden von wttr.in zur Verfügung gestellt",
     weatherTemperatureUnit: "Temperatureinheit",
     weatherCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",
+    
+    loremIpsum: "Lorem Ipsum",
+    loremIpsumPrefix: "Prefix",
+    loremIpsumCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",
+    loremIpsumSettingsDescription: "Mit diesem Plugin können Sie Beispieltext in die Zwischenablage kopieren.",
 };

@@ -371,4 +371,9 @@ export interface TranslationSet {
     weatherSettingsDescription: string;
     weatherTemperatureUnit: string;
     weatherCopyToClipboard: string;
+
+    loremIpsum: string;
+    loremIpsumPrefix: string;
+    loremIpsumCopyToClipboard: string;
+    loremIpsumSettingsDescription: string;
 }

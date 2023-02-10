@@ -132,6 +132,10 @@ This plugin enables you to browse through your local file system. To start you h
 
 ![file-browser](assets/feature-file-browser.png)
 
+### Lorem Ipsum
+
+This plugin enables you to copy sample text to your clipboard. To start, type lipsum followed by a number.
+
 ### Operating System Commands
 
 Operating system commands are simple commands to control your operating system e.g. to shutdown or restart your computer.
