@@ -123,6 +123,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return config.urlOptions.isEnabled;
                 case PluginSettings.Weather:
                     return config.weatherOptions.isEnabled;
+                case PluginSettings.LoremIpsum:
+                    return config.loremIpsumOptions.isEnabled;
                 case PluginSettings.WebSearch:
                     return config.websearchOptions.isEnabled;
                 case PluginSettings.Workflow:
