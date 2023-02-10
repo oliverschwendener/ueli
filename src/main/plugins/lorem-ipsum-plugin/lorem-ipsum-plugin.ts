@@ -36,7 +36,7 @@ export class LoremIpsumPlugin implements ExecutionPlugin {
 
     public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve) => {
-            const command = userInput.replace(this.config.prefix, "").trim() || "5";
+            const command = userInput.replace(this.config.prefix, "").trim().split(" ")[0] || "5";
             const word: SearchResultItem = {
                 description: this.translationSet.loremIpsumCopyToClipboard,
                 executionArgument: "w" + command,
@@ -74,9 +74,9 @@ export class LoremIpsumPlugin implements ExecutionPlugin {
 
     public execute(searchResultItem: SearchResultItem): Promise<void> {
         this.logger.debug("LoremIpsum");
-        const args = searchResultItem.executionArgument.split('');
+        const args = searchResultItem.executionArgument;
         const mode = args[0];
-        const value = Number(args[1]);
+        const value = Number(args.slice(1));
         switch(mode) {
             case "w":
                 this.clipboardCopier(lorem.generateWords(value));
