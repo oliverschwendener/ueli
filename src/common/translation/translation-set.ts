@@ -376,4 +376,12 @@ export interface TranslationSet {
     loremIpsumPrefix: string;
     loremIpsumCopyToClipboard: string;
     loremIpsumSettingsDescription: string;
+
+    notes: string;
+    notesPrefixWrite: string;
+    notesPrefixRead: string;
+    notesNew: string;
+    notesWriteDescription: string;
+    notesReadDescription: string;
+    notesSettingsDescription: string;
 }

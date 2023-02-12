@@ -379,4 +379,12 @@ export const traditionalChineseTranslationSet: TranslationSet = {
     loremIpsumPrefix: "前綴",
     loremIpsumCopyToClipboard: "按 Enter 複製到剪貼簿",
     loremIpsumSettingsDescription: "此插件可讓您快速將示例文本複製到剪貼板。",
+
+    notes: "筆記",
+    notesPrefixWrite: "前綴（添加新註釋）",
+    notesPrefixRead: "前綴（搜索筆記）",
+    notesNew: "新註： ",
+    notesReadDescription: "按 enter 複製到剪貼板或 Shift+Enter 刪除。",
+    notesWriteDescription: "按回車鍵添加新註釋。",
+    notesSettingsDescription: "這個插件可以讓你直接在 ueli 中寫快速筆記。",
 };

@@ -31,6 +31,7 @@ import { BrowserBookmarksOptions, defaultBrowserBookmarksOptions } from "./brows
 import { ControlPanelOptions, defaultControlPanelOptions } from "./control-panel-options";
 import { WeatherOptions, defaultWeatherOptions } from "./weather-options";
 import { LoremIpsumOptions, defaultLoremIpsumOptions } from "./lorem-ipsum-options";
+import { defaultNotesOptions, NotesOptions } from "./notes-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -60,6 +61,7 @@ export interface UserConfigOptions {
     controlPanelOptions: ControlPanelOptions;
     weatherOptions: WeatherOptions;
     loremIpsumOptions: LoremIpsumOptions;
+    notesOptions: NotesOptions;
 }
 
 export const defaultUserConfigOptions: UserConfigOptions = {
@@ -90,4 +92,5 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     websearchOptions: defaultWebSearchOptions,
     workflowOptions: defaultWorkflowOptions,
     loremIpsumOptions: defaultLoremIpsumOptions,
+    notesOptions: defaultNotesOptions,
 };

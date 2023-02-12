@@ -385,4 +385,12 @@ export const ukrainianTranslationSet: TranslationSet = {
     loremIpsumPrefix: "Префікс",
     loremIpsumCopyToClipboard: "Натисніть клавішу enter, щоб скопіювати",
     loremIpsumSettingsDescription: "Цей плагін дозволяє швидко скопіювати зразок тексту в буфер обміну.",
+
+    notes: "Примітки",
+    notesPrefixWrite: "Префікс (додати нову примітку)",
+    notesPrefixRead: "Префікс (примітки до пошуку)",
+    notesNew: "Нова примітка: ",
+    notesReadDescription: "Натисніть enter, щоб скопіювати в буфер обміну, або Shift+Enter, щоб видалити.",
+    notesWriteDescription: "Натисніть enter, щоб додати нову нотатку.",
+    notesSettingsDescription: "Цей плагін дозволяє писати короткі нотатки безпосередньо в ueli.",
 };

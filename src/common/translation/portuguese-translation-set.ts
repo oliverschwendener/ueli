@@ -392,4 +392,12 @@ export const portugueseTranslationSet: TranslationSet = {
     loremIpsumPrefix: "Prefixo",
     loremIpsumCopyToClipboard: "Pressione Enter para copiar para a área de transferência",
     loremIpsumSettingsDescription: "Este plug-in permite que você copie rapidamente o texto de amostra para a área de transferência.",
+
+    notes: "Notas",
+    notesPrefixWrite: "Prefixo (adicionar nova nota)",
+    notesPrefixRead: "Prefixo (notas de pesquisa)",
+    notesNew: "Nova Nota: ",
+    notesReadDescription: "Pressione enter para copiar para a área de transferência ou Shift+Enter para excluir.",
+    notesWriteDescription: "Pressione enter para adicionar uma nova nota.",
+    notesSettingsDescription: "Este plug-in permite escrever notas rápidas diretamente no ueli.",
 };

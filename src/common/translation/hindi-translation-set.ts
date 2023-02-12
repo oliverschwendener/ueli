@@ -391,4 +391,12 @@ export const hindiTranslationSet: TranslationSet = {
     loremIpsumPrefix: "उपसर्ग",
     loremIpsumCopyToClipboard: "क्लिपबोर्ड पर कॉपी करने के लिए एंटर दबाएं",
     loremIpsumSettingsDescription: "यह प्लगइन आपको नमूना पाठ को अपने क्लिपबोर्ड पर त्वरित रूप से कॉपी करने देता है।",
+
+    notes: "टिप्पणियाँ",
+    notesPrefixWrite: "उपसर्ग (नया नोट जोड़ें)",
+    notesPrefixRead: "उपसर्ग (खोज नोट्स)",
+    notesNew: "नया नोट: ",
+    notesReadDescription: "क्लिपबोर्ड पर प्रतिलिपि बनाने के लिए Enter दबाएं या हटाने के लिए Shift+Enter दबाएं.",
+    notesWriteDescription: "नया नोट जोड़ने के लिए एंटर दबाएं।",
+    notesSettingsDescription: "यह प्लगइन आपको सीधे उली में त्वरित नोट्स लिखने देता है।",
 };

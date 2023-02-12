@@ -125,6 +125,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return config.weatherOptions.isEnabled;
                 case PluginSettings.LoremIpsum:
                     return config.loremIpsumOptions.isEnabled;
+                case PluginSettings.Notes:
+                    return config.notesOptions.isEnabled;
                 case PluginSettings.WebSearch:
                     return config.websearchOptions.isEnabled;
                 case PluginSettings.Workflow:

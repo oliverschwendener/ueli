@@ -392,4 +392,12 @@ export const turkishTranslationSet: TranslationSet = {
     loremIpsumPrefix: "Ön ek",
     loremIpsumCopyToClipboard: "Panoya kopyalamak için enter tuşuna basın",
     loremIpsumSettingsDescription: "Bu Eklenti, örnek metni hızlı bir şekilde panonuza kopyalamanıza olanak tanır.",
+
+    notes: "Notlar",
+    notesPrefixWrite: "Önek (yeni not ekle)",
+    notesPrefixRead: "Önek (arama notları)",
+    notesNew: "Yeni Not: ",
+    notesReadDescription: "Panoya kopyalamak için Enter'a veya silmek için Shift+Enter'a basın.",
+    notesWriteDescription: "Yeni not eklemek için enter tuşuna basın.",
+    notesSettingsDescription: "Bu eklenti, hızlı notları doğrudan ueli'de yazmanıza olanak tanır.",
 };

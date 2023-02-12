@@ -18,4 +18,5 @@ export enum PluginSettings {
     Dictionary = "Dictionary",
     Weather = "Weather",
     LoremIpsum = "Lorem Ipsum",
+    Notes = "Notes",
 }

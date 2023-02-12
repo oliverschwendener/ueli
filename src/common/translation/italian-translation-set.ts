@@ -390,4 +390,12 @@ export const italianTranslationSet: TranslationSet = {
     loremIpsumPrefix: "Prefisso",
     loremIpsumCopyToClipboard: "Premi Invio per copiare negli appunti",
     loremIpsumSettingsDescription: "Questo plugin ti consente di copiare rapidamente il testo di esempio negli appunti.",
+
+    notes: "Appunti",
+    notesPrefixWrite: "Prefisso (aggiungi nuova nota)",
+    notesPrefixRead: "Prefisso (note di ricerca)",
+    notesNew: "Nuova nota: ",
+    notesReadDescription: "Premere Invio per copiare negli appunti o Maiusc+Invio per eliminare.",
+    notesWriteDescription: "Premere Invio per aggiungere una nuova nota.",
+    notesSettingsDescription: "Questo plugin ti consente di scrivere note rapide direttamente in ueli.",
 };
