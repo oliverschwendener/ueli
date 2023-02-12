@@ -386,4 +386,12 @@ export const englishTranslationSet: TranslationSet = {
     loremIpsumPrefix: "Předpona",
     loremIpsumCopyToClipboard: "Stisknutím klávesy Enter zkopírujete do schránky",
     loremIpsumSettingsDescription: "Tento plugin vám umožní rychle zkopírovat ukázkový text do schránky.",
+
+    notes: "Poznámky",
+    notesPrefixWrite: "Předpona (přidat novou poznámku)",
+    notesPrefixRead: "Předpona (hledat poznámky)",
+    notesNew: "Nová poznámka: ",
+    notesReadDescription: "Stiskněte Enter pro zkopírování do schránky nebo Shift+Enter pro smazání.",
+    notesWriteDescription: "Stisknutím klávesy Enter přidáte novou poznámku.",
+    notesSettingsDescription: "Tento plugin vám umožní psát rychlé poznámky přímo v ueli.",
 };

@@ -225,7 +225,7 @@ export function getProductionSearchEngine(
         new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier, getGoogleDictionaryDefinitions),
         new WeatherPlugin(config, translationSet, electronClipboardCopier),
         new LoremIpsumPlugin(config.loremIpsumOptions, translationSet, electronClipboardCopier),
-        new NotesPlugin(config.notesOptions, /*translationSet,*/ electronClipboardCopier),
+        new NotesPlugin(config.notesOptions, translationSet, electronClipboardCopier),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [webSearchPlugin];

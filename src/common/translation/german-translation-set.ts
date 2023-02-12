@@ -391,4 +391,12 @@ export const germanTranslationSet: TranslationSet = {
     loremIpsumPrefix: "Prefix",
     loremIpsumCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",
     loremIpsumSettingsDescription: "Mit diesem Plugin können Sie Beispieltext in die Zwischenablage kopieren.",
+
+    notes: "Notizen",
+    notesPrefixWrite: "Prefix (Notiz hinzufügen)",
+    notesPrefixRead: "Prefix (Notizen durchsuchen)",
+    notesNew: "Neue Notiz: ",
+    notesReadDescription: "Drücke Enter um in Zwischenablage zu kopieren oder Shift+Enter um zu löschen.",
+    notesWriteDescription: "Drücke Enter um Notiz hinzuzufügen.",
+    notesSettingsDescription: "Dieses Plugin erlaubt es schnelle Notizen direkt in Ueli zu schreiben.",
 };

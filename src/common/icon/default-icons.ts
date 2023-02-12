@@ -106,3 +106,8 @@ export const defaultLoremIpsumIcon = {
     parameter: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="48" height="48" viewBox="0 0 48 48" xml:space="preserve"><g transform="matrix(0.82 0 0 0.82 22.94 25.37)" style=""><text xml:space="preserve" font-family="'Open Sans', sans-serif" font-size="65" font-style="normal" font-weight="bold" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.36" y="20.42" >L</tspan></text></g></svg>`,
     type: IconType.SVG,
 };
+
+export const defaultNotesIcon = {
+    parameter: `<svg version="1.1" viewBox="0 0 581.98 744.96" xmlns="http://www.w3.org/2000/svg"><g transform="translate(-105.03 -121.31)"><g transform="matrix(11.996 0 0 11.996 -1026.7 -3323.3)"><path d="m139.16 289.02c-1.2148-0.82153-2.4093-1.383-3.6056-1.8664l-1.2844 1.7675 7.3028 5.3067 1.2844-1.7675c-1.2539-1.5418-2.4824-2.6188-3.6972-3.4403zm-5.7164 1.0383-1.2844 1.7675 7.3028 5.3067 1.2844-1.7675zm-2.2202 3.0554-17.334 23.854 3.9697 1.2896 16.735-22.702zm4.0836 3.0131-16.643 22.656 2.2523 3.5376 17.61-23.9zm-21.862 21.863-1.8834 9.5262 8.3239-4.591-2.3632-3.5249z" color="#000000"/><path d="m101.62 290.19c-4.0274 0-7.2812 3.2539-7.2812 7.2812v44.531c0 4.0274 3.2539 7.25 7.2812 7.25h29.75c4.0274 0 7.2812-3.2226 7.2812-7.25v-34.844l-4.4375 6v27.156c0 2.4813-1.9874 4.5-4.4688 4.5h-26.5c-2.4813 0-4.4688-2.0187-4.4688-4.5v-41.188c0-2.4813 1.9874-4.4688 4.4688-4.4688h21.127l2.8419-4.4688z"/></g></g></svg>`,
+    type: IconType.SVG,
+};

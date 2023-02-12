@@ -383,4 +383,12 @@ export const koreanTranslationSet: TranslationSet = {
     loremIpsumPrefix: "접두사",
     loremIpsumCopyToClipboard: "Enter를 눌러 계산 결과를 클립보드에 복사",
     loremIpsumSettingsDescription: "이 플러그인을 사용하면 클립보드에 샘플 텍스트를 빠르게 복사할 수 있습니다.",
+
+    notes: "노트",
+    notesPrefixWrite: "접두사(새 메모 추가)",
+    notesPrefixRead: "접두사(검색 노트)",
+    notesNew: "새 참고 사항: ",
+    notesReadDescription: "Enter 키를 눌러 클립보드에 복사하거나 Shift+Enter를 눌러 삭제합니다.",
+    notesWriteDescription: "새 메모를 추가하려면 Enter 키를 누르세요.",
+    notesSettingsDescription: "이 플러그인을 사용하면 ueli에서 직접 빠른 메모를 작성할 수 있습니다.",
 };

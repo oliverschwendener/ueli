@@ -390,4 +390,12 @@ export const finnishTranslationSet: TranslationSet = {
     loremIpsumPrefix: "Etuliite",
     loremIpsumCopyToClipboard: "Paina enteriä kopioidaksesi leikepöydälle",
     loremIpsumSettingsDescription: "Tämän laajennuksen avulla voit nopeasti kopioida esimerkkitekstiä leikepöydällesi.",
+
+    notes: "Huomautuksia",
+    notesPrefixWrite: "Etuliite (lisää uusi huomautus)",
+    notesPrefixRead: "Etuliite (hakumuistiinpanot)",
+    notesNew: "Uusi huomautus: ",
+    notesReadDescription: "Paina Enter kopioidaksesi leikepöydälle tai Shift+Enter poistaaksesi.",
+    notesWriteDescription: "Lisää uusi muistiinpano painamalla Enter.",
+    notesSettingsDescription: "Tämän laajennuksen avulla voit kirjoittaa nopeita muistiinpanoja suoraan ueli-kielellä.",
 };

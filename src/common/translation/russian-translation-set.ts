@@ -385,4 +385,12 @@ export const russianTranslationSet: TranslationSet = {
     loremIpsumPrefix: "Приставка",
     loremIpsumCopyToClipboard: "Нажмите enter, чтобы скопировать",
     loremIpsumSettingsDescription: "Этот плагин позволяет быстро копировать образец текста в буфер обмена.",
+
+    notes: "Примечания",
+    notesPrefixWrite: "Префикс (добавить новое примечание)",
+    notesPrefixRead: "Префикс (поиск примечаний)",
+    notesNew: "Новое примечание: ",
+    notesReadDescription: "Нажмите Enter, чтобы скопировать в буфер обмена, или Shift+Enter, чтобы удалить.",
+    notesWriteDescription: "Нажмите Enter, чтобы добавить новую заметку.",
+    notesSettingsDescription: "Этот плагин позволяет вам писать быстрые заметки прямо в ueli.",
 };

@@ -53,7 +53,7 @@ export const notesSettingsComponent = Vue.extend({
     <div v-if="visible">
             <div class="settings__setting-title title is-3">
                 <span>
-                    {{ "translations.notes" }}
+                    {{ translations.notes }}
                 </span>
                 <div>
                     <plugin-toggle :is-enabled="config.notesOptions.isEnabled" :toggled="toggleEnabled"/>
@@ -64,14 +64,14 @@ export const notesSettingsComponent = Vue.extend({
                     </button>
                 </div>
             </div>
-            <p class="settings__setting-description" v-html="translations.loremIpsumSettingsDescription"></p>
+            <p class="settings__setting-description" v-html="translations.notesSettingsDescription"></p>
             <div class="settings__setting-content">
                 <div v-if="!config.notesOptions.isEnabled" class="settings__setting-disabled-overlay"></div>
                 <div class="box">
                     <div class="settings__options-container">
 
                         <div class="settings__option">
-                            <div class="settings__option-name">{{ translations.loremIpsumPrefix }}</div>
+                            <div class="settings__option-name">{{ translations.notesPrefixWrite }}</div>
                             <div class="settings__option-content">
                                 <div class="field is-grouped is-grouped-right">
                                     <div class="control">
@@ -82,7 +82,7 @@ export const notesSettingsComponent = Vue.extend({
                         </div>
 
                         <div class="settings__option">
-                            <div class="settings__option-name">{{ translations.loremIpsumPrefix }}</div>
+                            <div class="settings__option-name">{{ translations.notesPrefixRead }}</div>
                             <div class="settings__option-content">
                                 <div class="field is-grouped is-grouped-right">
                                     <div class="control">

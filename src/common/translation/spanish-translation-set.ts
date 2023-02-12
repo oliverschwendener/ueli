@@ -393,4 +393,12 @@ export const spanishTranslationSet: TranslationSet = {
     loremIpsumPrefix: "Prefijo",
     loremIpsumCopyToClipboard: "Presiona enter para copiar al portapapeles",
     loremIpsumSettingsDescription: "Este complemento le permite copiar rápidamente texto de muestra en su portapapeles.",
+
+    notes: "Notas",
+    notesPrefixWrite: "Prefijo (añadir nueva nota)",
+    notesPrefixRead: "Prefijo (notas de búsqueda)",
+    notesNew: "Nueva nota: ",
+    notesReadDescription: "Presione enter para copiar al portapapeles o Shift+Enter para eliminar.",
+    notesWriteDescription: "Presiona enter para agregar una nueva nota.",
+    notesSettingsDescription: "Este complemento te permite escribir notas rápidas directamente en ueli.",
 };

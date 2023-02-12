@@ -385,4 +385,12 @@ export const japaneseTranslationSet: TranslationSet = {
     loremIpsumPrefix: "接頭辞",
     loremIpsumCopyToClipboard: "エンターを押下してクリップボードにコピー",
     loremIpsumSettingsDescription: "このプラグインを使用すると、サンプル テキストをクリップボードにすばやくコピーできます。",
+
+    notes: "ノート",
+    notesPrefixWrite: "プレフィックス (新しいメモを追加)",
+    notesPrefixRead: "プレフィックス (検索メモ)",
+    notesNew: "新しいメモ: ",
+    notesReadDescription: "Enter キーを押してクリップボードにコピーするか、Shift+Enter キーを押して削除します。",
+    notesWriteDescription: "Enter キーを押して、新しいメモを追加します。",
+    notesSettingsDescription: "このプラグインを使用すると、簡単なメモを ueli に直接書き込むことができます。",
 };

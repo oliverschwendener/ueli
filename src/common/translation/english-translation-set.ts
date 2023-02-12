@@ -388,4 +388,12 @@ export const englishTranslationSet: TranslationSet = {
     loremIpsumPrefix: "Prefix",
     loremIpsumCopyToClipboard: "Press enter to copy to clipboard",
     loremIpsumSettingsDescription: "This Plugin lets you quickly copy sample text to your clipboard.",
+
+    notes: "Notes",
+    notesPrefixWrite: "Prefix (add new note)",
+    notesPrefixRead: "Prefix (search notes)",
+    notesNew: "New Note: ",
+    notesReadDescription: "Press enter to copy to clipboard or Shift+Enter to delete.",
+    notesWriteDescription: "Press enter to add new note.",
+    notesSettingsDescription: "This plugin lets you write quick notes directly in ueli.",
 };
