@@ -399,4 +399,9 @@ export const germanTranslationSet: TranslationSet = {
     notesReadDescription: "Drücke Enter um in Zwischenablage zu kopieren oder Shift+Enter um zu löschen.",
     notesWriteDescription: "Drücke Enter um Notiz hinzuzufügen.",
     notesSettingsDescription: "Dieses Plugin erlaubt es schnelle Notizen direkt in Ueli zu schreiben.",
+
+    caseChanger: "Großschreibungs-Styler",
+    caseChangerPrefix: "Prefix",
+    caseChangerCopyToClipboard: "drücke Enter um in die Zwischenablage zu kopieren.",
+    caseChangerSettingsDescription: "Dieses Plugin erlaubt es, Text in verschiedenen Großschreibungsstyles zu ändern.",
 };

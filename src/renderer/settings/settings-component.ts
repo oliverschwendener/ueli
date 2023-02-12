@@ -144,6 +144,7 @@ export const settingsComponent = Vue.extend({
                 <weather-settings :config="config" :translations="translations"></weather-settings>
                 <lorem-ipsum-settings :config="config" :translations="translations"></lorem-ipsum-settings>
                 <notes-settings :config="config" :translations="translations"></notes-settings>
+                <case-changer-settings :config="config" :translations="translations"></case-changer-settings>
             </div>
         </div>
     `,

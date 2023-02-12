@@ -32,6 +32,7 @@ import { ControlPanelOptions, defaultControlPanelOptions } from "./control-panel
 import { WeatherOptions, defaultWeatherOptions } from "./weather-options";
 import { LoremIpsumOptions, defaultLoremIpsumOptions } from "./lorem-ipsum-options";
 import { defaultNotesOptions, NotesOptions } from "./notes-options";
+import { CaseChangerOptions, defaultCaseChangerOptions } from "./case-changer-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -62,6 +63,7 @@ export interface UserConfigOptions {
     weatherOptions: WeatherOptions;
     loremIpsumOptions: LoremIpsumOptions;
     notesOptions: NotesOptions;
+    caseChangerOptions: CaseChangerOptions;
 }
 
 export const defaultUserConfigOptions: UserConfigOptions = {
@@ -93,4 +95,5 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     workflowOptions: defaultWorkflowOptions,
     loremIpsumOptions: defaultLoremIpsumOptions,
     notesOptions: defaultNotesOptions,
+    caseChangerOptions: defaultCaseChangerOptions,
 };

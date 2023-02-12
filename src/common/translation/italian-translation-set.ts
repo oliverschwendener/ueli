@@ -398,4 +398,9 @@ export const italianTranslationSet: TranslationSet = {
     notesReadDescription: "Premere Invio per copiare negli appunti o Maiusc+Invio per eliminare.",
     notesWriteDescription: "Premere Invio per aggiungere una nuova nota.",
     notesSettingsDescription: "Questo plugin ti consente di scrivere note rapide direttamente in ueli.",
+
+    caseChanger: "Cambiacaso",
+    caseChangerPrefix: "Prefisso",
+    caseChangerCopyToClipboard: "premere invio per copiare negli appunti.",
+    caseChangerSettingsDescription: "Questo plug-in ti consente di modificare lo stile delle maiuscole e minuscole del testo.",
 };

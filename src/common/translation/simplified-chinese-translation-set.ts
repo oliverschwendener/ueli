@@ -387,4 +387,9 @@ export const simplifiedChineseTranslationSet: TranslationSet = {
     notesReadDescription: "按 enter 复制到剪贴板或 Shift+Enter 删除。",
     notesWriteDescription: "按回车键添加新注释。",
     notesSettingsDescription: "这个插件可以让你直接在 ueli 中写快速笔记。",
+
+    caseChanger: "换壳器",
+    caseChangerPrefix: "字首",
+    caseChangerCopyToClipboard: "按 enter 键复制到剪贴板。",
+    caseChangerSettingsDescription: "此插件可让您更改文本的大小写样式。",
 };

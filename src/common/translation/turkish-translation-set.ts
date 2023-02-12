@@ -400,4 +400,9 @@ export const turkishTranslationSet: TranslationSet = {
     notesReadDescription: "Panoya kopyalamak için Enter'a veya silmek için Shift+Enter'a basın.",
     notesWriteDescription: "Yeni not eklemek için enter tuşuna basın.",
     notesSettingsDescription: "Bu eklenti, hızlı notları doğrudan ueli'de yazmanıza olanak tanır.",
+
+    caseChanger: "Vaka değiştirici",
+    caseChangerPrefix: "Önek",
+    caseChangerCopyToClipboard: "panoya kopyalamak için enter tuşuna basın.",
+    caseChangerSettingsDescription: "Bu eklenti, metnin büyük/küçük harf stilini değiştirmenize olanak tanır.",
 };

@@ -396,4 +396,9 @@ export const englishTranslationSet: TranslationSet = {
     notesReadDescription: "Press enter to copy to clipboard or Shift+Enter to delete.",
     notesWriteDescription: "Press enter to add new note.",
     notesSettingsDescription: "This plugin lets you write quick notes directly in ueli.",
+
+    caseChanger: "Case changer",
+    caseChangerPrefix: "Prefix",
+    caseChangerCopyToClipboard: "press enter to copy to clipboard.",
+    caseChangerSettingsDescription: "This plugin lets you change the case style of text.",
 };

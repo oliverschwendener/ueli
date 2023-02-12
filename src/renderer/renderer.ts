@@ -63,6 +63,7 @@ import { controlPanelSettingsComponent } from "./settings/control-panel-settings
 import { weatherSettingsComponent } from "./settings/weather-settings-component";
 import { loremIpsumSettingsComponent } from "./settings/lorem-ipsum-settings-component";
 import { notesSettingsComponent } from "./settings/notes-settings-component";
+import { caseChangerSettingsComponent } from "./settings/case-changer-settings-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -111,6 +112,7 @@ Vue.component("control-panel-settings", controlPanelSettingsComponent);
 Vue.component("weather-settings", weatherSettingsComponent);
 Vue.component("lorem-ipsum-settings", loremIpsumSettingsComponent);
 Vue.component("notes-settings", notesSettingsComponent);
+Vue.component("case-changer-settings", caseChangerSettingsComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(deepCopy(defaultUserConfigOptions)).getConfig();
 

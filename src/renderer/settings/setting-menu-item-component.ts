@@ -127,6 +127,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return config.loremIpsumOptions.isEnabled;
                 case PluginSettings.Notes:
                     return config.notesOptions.isEnabled;
+                case PluginSettings.CaseChanger:
+                    return config.caseChangerOptions.isEnabled;
                 case PluginSettings.WebSearch:
                     return config.websearchOptions.isEnabled;
                 case PluginSettings.Workflow:

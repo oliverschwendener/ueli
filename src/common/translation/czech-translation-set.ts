@@ -394,4 +394,9 @@ export const englishTranslationSet: TranslationSet = {
     notesReadDescription: "Stiskněte Enter pro zkopírování do schránky nebo Shift+Enter pro smazání.",
     notesWriteDescription: "Stisknutím klávesy Enter přidáte novou poznámku.",
     notesSettingsDescription: "Tento plugin vám umožní psát rychlé poznámky přímo v ueli.",
+
+    caseChanger: "Měnič případu",
+    caseChangerPrefix: "Předpona",
+    caseChangerCopyToClipboard: "stiskněte klávesu Enter pro zkopírování do schránky.",
+    caseChangerSettingsDescription: "Tento plugin umožňuje změnit styl textu.",
 };

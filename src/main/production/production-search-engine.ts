@@ -68,6 +68,7 @@ import { ChromiumBookmarkRepository } from "../plugins/browser-bookmarks-plugin/
 import { WeatherPlugin } from "../plugins/weather-plugin/weather-plugin";
 import { LoremIpsumPlugin } from "../plugins/lorem-ipsum-plugin/lorem-ipsum-plugin";
 import { NotesPlugin } from "../plugins/notes-plugin/notes-plugin";
+import { CaseChangerPlugin } from "../plugins/case-changer-plugin/case-changer-plugin";
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
@@ -226,6 +227,7 @@ export function getProductionSearchEngine(
         new WeatherPlugin(config, translationSet, electronClipboardCopier),
         new LoremIpsumPlugin(config.loremIpsumOptions, translationSet, electronClipboardCopier),
         new NotesPlugin(config.notesOptions, translationSet, electronClipboardCopier),
+        new CaseChangerPlugin(config.caseChangerOptions, translationSet, electronClipboardCopier),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [webSearchPlugin];

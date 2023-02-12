@@ -398,4 +398,9 @@ export const finnishTranslationSet: TranslationSet = {
     notesReadDescription: "Paina Enter kopioidaksesi leikepöydälle tai Shift+Enter poistaaksesi.",
     notesWriteDescription: "Lisää uusi muistiinpano painamalla Enter.",
     notesSettingsDescription: "Tämän laajennuksen avulla voit kirjoittaa nopeita muistiinpanoja suoraan ueli-kielellä.",
+
+    caseChanger: "Kotelon vaihtaja",
+    caseChangerPrefix: "Etuliite",
+    caseChangerCopyToClipboard: "paina Enter kopioidaksesi leikepöydälle.",
+    caseChangerSettingsDescription: "Tämän laajennuksen avulla voit muuttaa tekstin kirjainkokoa.",
 };

@@ -393,4 +393,9 @@ export const japaneseTranslationSet: TranslationSet = {
     notesReadDescription: "Enter キーを押してクリップボードにコピーするか、Shift+Enter キーを押して削除します。",
     notesWriteDescription: "Enter キーを押して、新しいメモを追加します。",
     notesSettingsDescription: "このプラグインを使用すると、簡単なメモを ueli に直接書き込むことができます。",
+
+    caseChanger: "ケースチェンジャー",
+    caseChangerPrefix: "プレフィックス",
+    caseChangerCopyToClipboard: "Enter キーを押してクリップボードにコピーします。",
+    caseChangerSettingsDescription: "このプラグインを使用すると、テキストの大文字と小文字のスタイルを変更できます。",
 };

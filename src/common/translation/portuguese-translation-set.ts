@@ -400,4 +400,9 @@ export const portugueseTranslationSet: TranslationSet = {
     notesReadDescription: "Pressione enter para copiar para a área de transferência ou Shift+Enter para excluir.",
     notesWriteDescription: "Pressione enter para adicionar uma nova nota.",
     notesSettingsDescription: "Este plug-in permite escrever notas rápidas diretamente no ueli.",
+
+    caseChanger: "Trocador de caixa",
+    caseChangerPrefix: "Prefixo",
+    caseChangerCopyToClipboard: "pressione enter para copiar para a área de transferência.",
+    caseChangerSettingsDescription: "Este plug-in permite alterar o estilo de maiúsculas e minúsculas do texto.",
 };

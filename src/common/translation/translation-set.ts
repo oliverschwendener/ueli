@@ -384,4 +384,9 @@ export interface TranslationSet {
     notesWriteDescription: string;
     notesReadDescription: string;
     notesSettingsDescription: string;
+
+    caseChanger: string;
+    caseChangerPrefix: string;
+    caseChangerCopyToClipboard: string;
+    caseChangerSettingsDescription: string;
 }

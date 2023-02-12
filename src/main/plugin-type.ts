@@ -24,6 +24,7 @@ export enum PluginType {
     Weather = "weather-plugin",
     LoremIpsum = "lorem-ipsum-plugin",
     NotesPlugin = "notes-plugin",
+    CaseChangerPlugin = "case-changer-plugin",
 
     // This is used for generic search results which do not have a specific plugin as a source
     None = "none",

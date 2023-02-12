@@ -401,4 +401,9 @@ export const spanishTranslationSet: TranslationSet = {
     notesReadDescription: "Presione enter para copiar al portapapeles o Shift+Enter para eliminar.",
     notesWriteDescription: "Presiona enter para agregar una nueva nota.",
     notesSettingsDescription: "Este complemento te permite escribir notas rápidas directamente en ueli.",
+
+    caseChanger: "cambiador de casos",
+    caseChangerPrefix: "Prefijo",
+    caseChangerCopyToClipboard: "presione enter para copiar al portapapeles.",
+    caseChangerSettingsDescription: "Este complemento le permite cambiar el estilo de mayúsculas y minúsculas del texto.",
 };

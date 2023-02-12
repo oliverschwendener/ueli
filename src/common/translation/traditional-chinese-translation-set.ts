@@ -387,4 +387,9 @@ export const traditionalChineseTranslationSet: TranslationSet = {
     notesReadDescription: "按 enter 複製到剪貼板或 Shift+Enter 刪除。",
     notesWriteDescription: "按回車鍵添加新註釋。",
     notesSettingsDescription: "這個插件可以讓你直接在 ueli 中寫快速筆記。",
+
+    caseChanger: "換殼器",
+    caseChangerPrefix: "字首",
+    caseChangerCopyToClipboard: "按 enter 鍵複製到剪貼板。",
+    caseChangerSettingsDescription: "此插件可讓您更改文本的大小寫樣式。",
 };

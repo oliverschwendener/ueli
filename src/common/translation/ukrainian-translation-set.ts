@@ -393,4 +393,9 @@ export const ukrainianTranslationSet: TranslationSet = {
     notesReadDescription: "Натисніть enter, щоб скопіювати в буфер обміну, або Shift+Enter, щоб видалити.",
     notesWriteDescription: "Натисніть enter, щоб додати нову нотатку.",
     notesSettingsDescription: "Цей плагін дозволяє писати короткі нотатки безпосередньо в ueli.",
+
+    caseChanger: "Зміна регістру",
+    caseChangerPrefix: "Префікс",
+    caseChangerCopyToClipboard: "натисніть enter, щоб скопіювати в буфер обміну.",
+    caseChangerSettingsDescription: "Цей плагін дозволяє змінювати стиль регістру тексту.",
 };

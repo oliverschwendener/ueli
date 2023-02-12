@@ -393,4 +393,9 @@ export const russianTranslationSet: TranslationSet = {
     notesReadDescription: "Нажмите Enter, чтобы скопировать в буфер обмена, или Shift+Enter, чтобы удалить.",
     notesWriteDescription: "Нажмите Enter, чтобы добавить новую заметку.",
     notesSettingsDescription: "Этот плагин позволяет вам писать быстрые заметки прямо в ueli.",
+
+    caseChanger: "Устройство смены регистра",
+    caseChangerPrefix: "Префикс",
+    caseChangerCopyToClipboard: "нажмите Enter, чтобы скопировать в буфер обмена.",
+    caseChangerSettingsDescription: "Этот плагин позволяет вам изменить стиль текста.",
 };

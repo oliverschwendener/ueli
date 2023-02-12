@@ -19,4 +19,5 @@ export enum PluginSettings {
     Weather = "Weather",
     LoremIpsum = "Lorem Ipsum",
     Notes = "Notes",
+    CaseChanger = "Case Changer",
 }

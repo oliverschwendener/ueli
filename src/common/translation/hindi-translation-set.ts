@@ -399,4 +399,9 @@ export const hindiTranslationSet: TranslationSet = {
     notesReadDescription: "क्लिपबोर्ड पर प्रतिलिपि बनाने के लिए Enter दबाएं या हटाने के लिए Shift+Enter दबाएं.",
     notesWriteDescription: "नया नोट जोड़ने के लिए एंटर दबाएं।",
     notesSettingsDescription: "यह प्लगइन आपको सीधे उली में त्वरित नोट्स लिखने देता है।",
+
+    caseChanger: "केस परिवर्तक",
+    caseChangerPrefix: "उपसर्ग",
+    caseChangerCopyToClipboard: "क्लिपबोर्ड पर कॉपी करने के लिए एंटर दबाएं।",
+    caseChangerSettingsDescription: "यह प्लगइन आपको टेक्स्ट की केस शैली बदलने देता है।",
 };
