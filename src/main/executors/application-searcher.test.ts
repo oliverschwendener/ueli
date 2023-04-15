@@ -12,13 +12,13 @@ describe(getMacOsApplicationSearcherCommand, () => {
         ];
 
         macOsVersions.forEach((macOsVersion) => {
-            expect(getMacOsApplicationSearcherCommand(macOsVersion)).toBe(`mdfind "kind:apps"`);
+            expect(getMacOsApplicationSearcherCommand(macOsVersion, ['/dir1','/dir2'])).toBe(`mdfind "kind:apps" | egrep "/dir1|/dir2"`);
         });
     });
 
     it("should return 'mdfind kMDItemContentTypeTree=com.apple.application-bundle' on macOS 10.15 (Catalina) and newer", () => {
-        const expected = "mdfind kMDItemContentTypeTree=com.apple.application-bundle";
-        const actual = getMacOsApplicationSearcherCommand(OperatingSystemVersion.MacOsCatalina);
+        const expected = `find '/dir1' '/dir2' -type d -iname '*.app' -maxdepth 2 -prune`;
+        const actual = getMacOsApplicationSearcherCommand(OperatingSystemVersion.MacOsCatalina, ['/dir1','/dir2']);
         expect(actual).toBe(expected);
     });
 });
