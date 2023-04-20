@@ -374,7 +374,7 @@ export const traditionalChineseTranslationSet: TranslationSet = {
         "此外掛程式可讓您查詢任何區域的天氣狀況。如果沒有提供區域，則預設顯示現時位置的天氣。數據由 wttr.in 提供。",
     weatherTemperatureUnit: "溫度單位",
     weatherCopyToClipboard: "按 Enter 複製到剪貼簿",
-    
+
     loremIpsum: "Lorem Ipsum",
     loremIpsumPrefix: "前綴",
     loremIpsumCopyToClipboard: "按 Enter 複製到剪貼簿",

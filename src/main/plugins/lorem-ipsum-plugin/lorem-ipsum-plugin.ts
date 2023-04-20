@@ -11,13 +11,13 @@ import { LoremIpsum } from "lorem-ipsum";
 const lorem = new LoremIpsum({
     sentencesPerParagraph: {
         max: 8,
-        min: 4
-      },
-      wordsPerSentence: {
+        min: 4,
+    },
+    wordsPerSentence: {
         max: 16,
-        min: 4
-      }
-})
+        min: 4,
+    },
+});
 
 export class LoremIpsumPlugin implements ExecutionPlugin {
     public pluginType = PluginType.LoremIpsum;
@@ -74,7 +74,7 @@ export class LoremIpsumPlugin implements ExecutionPlugin {
         const args = searchResultItem.executionArgument;
         const mode = args[0];
         const value = Number(args.slice(1));
-        switch(mode) {
+        switch (mode) {
             case "w":
                 this.clipboardCopier(lorem.generateWords(value));
                 break;

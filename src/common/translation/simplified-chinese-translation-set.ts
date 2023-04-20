@@ -374,7 +374,7 @@ export const simplifiedChineseTranslationSet: TranslationSet = {
         "此插件可让您检查任何区域的天气状况。如果没有提供区域，则默认显示当前位置的天气。数据由 wttr.in 提供",
     weatherTemperatureUnit: "温度单位",
     weatherCopyToClipboard: "按 Enter 复制到剪贴板",
-    
+
     loremIpsum: "Lorem Ipsum",
     loremIpsumPrefix: "前缀",
     loremIpsumCopyToClipboard: "按 Enter 复制到剪贴板",

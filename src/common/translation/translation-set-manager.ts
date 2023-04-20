@@ -36,7 +36,7 @@ export function getTranslationSet(language: Language): TranslationSet {
         case Language.SimplifiedChinese:
             return simplifiedChineseTranslationSet;
         case Language.TraditionalChinese:
-            return traditionalChineseTranslationSet;    
+            return traditionalChineseTranslationSet;
         case Language.Korean:
             return koreanTranslationSet;
         case Language.Japanese:

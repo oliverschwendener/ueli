@@ -380,9 +380,10 @@ export const japaneseTranslationSet: TranslationSet = {
         "このプラグインは、あなたが任意の地域の気象条件を確認することができます。リージョンが指定されていない場合、既定では現在の場所の天気が表示されます。データは wttr.in によって提供されます",
     weatherTemperatureUnit: "温度単位",
     weatherCopyToClipboard: "エンターを押下してクリップボードにコピー",
-    
+
     loremIpsum: "Lorem Ipsum",
     loremIpsumPrefix: "接頭辞",
     loremIpsumCopyToClipboard: "エンターを押下してクリップボードにコピー",
-    loremIpsumSettingsDescription: "このプラグインを使用すると、サンプル テキストをクリップボードにすばやくコピーできます。",
+    loremIpsumSettingsDescription:
+        "このプラグインを使用すると、サンプル テキストをクリップボードにすばやくコピーできます。",
 };

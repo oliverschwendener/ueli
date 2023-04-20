@@ -383,7 +383,7 @@ export const englishTranslationSet: TranslationSet = {
         "This plugin enables you to check the weather condition of any region. If no region is provided, it defaults to show the weather of your current location. Data is provided by wttr.in",
     weatherTemperatureUnit: "Temperature Unit",
     weatherCopyToClipboard: "Press enter to copy to clipboard",
-    
+
     loremIpsum: "Lorem Ipsum",
     loremIpsumPrefix: "Prefix",
     loremIpsumCopyToClipboard: "Press enter to copy to clipboard",

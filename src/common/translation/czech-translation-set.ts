@@ -381,7 +381,7 @@ export const englishTranslationSet: TranslationSet = {
         "Tento plugin umožňuje zkontrolovat povětrnostní podmínky v libovolné oblasti. Pokud není k dispozici žádná oblast, je ve výchozím nastavení možné zobrazit počasí aktuální polohy. Údaje poskytuje wttr.in",
     weatherTemperatureUnit: "Jednotka teploty",
     weatherCopyToClipboard: "Stisknutím klávesy Enter zkopírujete do schránky",
-    
+
     loremIpsum: "Lorem Ipsum",
     loremIpsumPrefix: "Předpona",
     loremIpsumCopyToClipboard: "Stisknutím klávesy Enter zkopírujete do schránky",

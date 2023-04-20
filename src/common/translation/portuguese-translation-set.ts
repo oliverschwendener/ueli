@@ -387,9 +387,10 @@ export const portugueseTranslationSet: TranslationSet = {
         "Este plugin permite verificar as condições meteorológicas de qualquer região. Se nenhuma região for fornecida, ela não pode mostrar o tempo de sua localização atual. Os dados são fornecidos por wttr.in",
     weatherTemperatureUnit: "Unidade de Temperatura",
     weatherCopyToClipboard: "Pressione Enter para copiar para a área de transferência",
-    
+
     loremIpsum: "Lorem Ipsum",
     loremIpsumPrefix: "Prefixo",
     loremIpsumCopyToClipboard: "Pressione Enter para copiar para a área de transferência",
-    loremIpsumSettingsDescription: "Este plug-in permite que você copie rapidamente o texto de amostra para a área de transferência.",
+    loremIpsumSettingsDescription:
+        "Este plug-in permite que você copie rapidamente o texto de amostra para a área de transferência.",
 };
