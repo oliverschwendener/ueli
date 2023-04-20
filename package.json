@@ -27,7 +27,7 @@
     ],
     "main": "./bundle/main.js",
     "scripts": {
-        "lint": "eslint \"src/**/*{ts,vue}\"",
+        "lint": "eslint \"src/**/*.ts\"",
         "bundle": "webpack --config webpack.config.js",
         "start": "electron . --remote-debugging-port=9223",
         "test": "jest --config jest.json --silent .",
@@ -55,7 +55,7 @@
         "jest": "^29.4.0",
         "mathjs": "^11.5.0",
         "node-powershell": "^4.0.0",
-        "prettier": "^2.8.3",
+        "prettier": "^2.8.7",
         "simple-plist": "^1.4.0",
         "ts-jest": "^29.0.5",
         "ts-loader": "^9.4.2",
