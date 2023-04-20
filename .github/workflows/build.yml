@@ -31,7 +31,7 @@ jobs:
               run: pnpm lint
 
             - name: Prettier check
-              run: pnpm exec prettier --check src/**/*.ts
+              run: pnpm exec prettier --check src/**/*
 
             - name: Run tests
               run: pnpm test
