@@ -16,7 +16,7 @@ jobs:
             - name: Set up pnpm
               uses: pnpm/action-setup@v2
               with:
-                  version: latest
+                  version: 8
 
             - name: Set up Node.js
               uses: actions/setup-node@v3
@@ -29,6 +29,9 @@ jobs:
 
             - name: Lint TypeScript files
               run: pnpm lint
+
+            - name: Prettier check
+              run: pnpm exec prettier --check src/**/*.ts
 
             - name: Run tests
               run: pnpm test
