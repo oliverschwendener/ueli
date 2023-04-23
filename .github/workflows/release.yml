@@ -1,17 +1,17 @@
-name: Build
+name: Publish new release
 
 on:
   push:
-      branches:
-          - main
-  pull_request:
-      branches:
-          - main
+      tags:
+          - "*"
 
 jobs:
-    build:
-        runs-on: ubuntu-22.04
-        name: Build
+    release:
+        strategy:
+            matrix:
+                os: [macos-12, windows-2022]
+        runs-on: ${{ matrix.os }}
+        name: Publish new release
         steps:
             - name: Checkout current commit/branch/tag
               uses: actions/checkout@v3
@@ -32,16 +32,13 @@ jobs:
               env:
                 NODE_ENV: development
 
-            - name: Lint TypeScript files
-              run: pnpm lint
-
-            - name: Prettier check
-              run: pnpm exec prettier --check src/**/*
-
-            - name: Run tests
-              run: pnpm test
-
             - name: Bundle files
               run: pnpm bundle
               env:
                   NODE_ENV: production
+
+            - name: Package and publish
+              run: pnpm package:publish
+              env:
+                  CI: true
+                  GH_TOKEN: ${{ secrets.GH_TOKEN }}
