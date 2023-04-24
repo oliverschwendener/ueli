@@ -1,9 +1,9 @@
 name: Publish new release
 
 on:
-  push:
-      tags:
-          - "*"
+    push:
+        tags:
+            - "*"
 
 jobs:
     release:
@@ -30,7 +30,7 @@ jobs:
             - name: Install dependencies
               run: pnpm install
               env:
-                NODE_ENV: development
+                  NODE_ENV: development
 
             - name: Bundle files
               run: pnpm bundle
@@ -38,7 +38,7 @@ jobs:
                   NODE_ENV: production
 
             - name: Package and publish
-              run: pnpm package:publish
+              run: pnpm exec electron-builder --config electron-builder-config.yml --publish always
               env:
                   CI: true
                   GH_TOKEN: ${{ secrets.GH_TOKEN }}

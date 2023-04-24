@@ -30,10 +30,7 @@
         "lint": "eslint \"src/**/*.ts\"",
         "bundle": "webpack --config webpack.config.js",
         "start": "electron . --remote-debugging-port=9223",
-        "test": "jest --config jest.json --silent .",
-        "package:dir": "electron-builder --dir --config electron-builder-config.yml --publish never",
-        "package": "electron-builder --config electron-builder-config.yml --publish never",
-        "package:publish": "electron-builder --config electron-builder-config.yml --publish always"
+        "test": "jest --config jest.json --silent ."
     },
     "devDependencies": {
         "@types/color": "^3.0.3",
