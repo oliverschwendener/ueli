@@ -63,7 +63,6 @@ import { VivaldiBookmarkRepository } from "../plugins/browser-bookmarks-plugin/v
 import { EdgeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/edge-bookmark-repository";
 import { YandexBookmarkRepository } from "../plugins/browser-bookmarks-plugin/yandex-bookmark-repository";
 import { getWebearchSuggestions } from "../executors/websearch-suggestion-resolver";
-import { FirefoxBookmarkRepository } from "../plugins/browser-bookmarks-plugin/firefox-bookmark-repository";
 import { ChromiumBookmarkRepository } from "../plugins/browser-bookmarks-plugin/chromium-bookmark-repository";
 import { WeatherPlugin } from "../plugins/weather-plugin/weather-plugin";
 import { LoremIpsumPlugin } from "../plugins/lorem-ipsum-plugin/lorem-ipsum-plugin";
@@ -121,10 +120,6 @@ export function getProductionSearchEngine(
         operatingSystem === OperatingSystem.Windows
             ? `${homedir()}\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Bookmarks`
             : `${homedir()}/Library/Application Support/Microsoft Edge/Default/Bookmarks`;
-    const firefoxUserDataFolderPath =
-        operatingSystem === OperatingSystem.Windows
-            ? `${homedir()}\\AppData\\Roaming\\Mozilla\\Firefox`
-            : `${homedir()}/Library/Application Support/Firefox`;
     const chromiumBookmarksFilePath =
         operatingSystem === OperatingSystem.Windows
             ? `${homedir()}\\AppData\\Local\\Chromium\\User Data\\Default\\Bookmarks`
@@ -188,7 +183,6 @@ export function getProductionSearchEngine(
                 new BraveBookmarkRepository(braveBookmarksFilePath),
                 new ChromiumBookmarkRepository(chromiumBookmarksFilePath),
                 new EdgeBookmarkRepository(edgeBookmarksFilePath),
-                new FirefoxBookmarkRepository(firefoxUserDataFolderPath),
                 new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
                 new SideKickBookmarkRepository(sideKickBookmarkFilePath),
                 new VivaldiBookmarkRepository(vivaldiBookmarksFilePath),
