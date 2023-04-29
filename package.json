@@ -69,8 +69,6 @@
         "bulma": "^0.9.4",
         "bulma-extensions": "^6.2.7",
         "ini": "^3.0.1",
-        "lorem-ipsum": "^2.0.8",
-        "sqlite": "^4.1.2",
-        "sqlite3": "^5.1.4"
+        "lorem-ipsum": "^2.0.8"
     }
 }
