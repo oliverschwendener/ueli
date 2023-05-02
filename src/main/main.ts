@@ -31,7 +31,7 @@ import { DevLogger } from "../common/logger/dev-logger";
 import { ProductionLogger } from "../common/logger/production-logger";
 import { NotificationType } from "../common/notification-type";
 import { OperatingSystem } from "../common/operating-system";
-import { SearchResultItem } from "../common/search-result-item";
+import { SearchResultItem, SearchResultItemExecution } from "../common/search-result-item";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
 import { UpdateCheckResult } from "../common/update-check-result";
 import { FileHelpers } from "./../common/helpers/file-helpers";
@@ -86,6 +86,7 @@ let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow;
 let lastWindowPosition = config.generalOptions.lastWindowPosition;
 let lastSearchUserInput: string | undefined;
+let searchResultItemExecutionQueue: SearchResultItemExecution[] = [];
 
 let translationSet = getTranslationSet(config.generalOptions.language);
 const logger = appIsInDevelopment ? new DevLogger() : new ProductionLogger(logFilePath, filePathExecutor);
@@ -248,6 +249,10 @@ function showMainWindow() {
 }
 
 function hideMainWindow() {
+    if (searchResultItemExecutionQueue.length > 0) {
+        executeQueuedSearchResultItems();
+    }
+
     if (windowExists(mainWindow)) {
         mainWindow.webContents.send(IpcChannels.mainWindowHasBeenHidden);
 
@@ -708,6 +713,18 @@ function windowExists(window: BrowserWindow): boolean {
     return window && !window.isDestroyed();
 }
 
+function executeQueuedSearchResultItems() {
+    searchResultItemExecutionQueue.forEach((queuedItem) => {
+        searchEngine
+            .execute(queuedItem.searchResultItem, queuedItem.privileged)
+            .then(() => {
+                /* do nothing */
+            })
+            .catch((err) => logger.error(err));
+    });
+    searchResultItemExecutionQueue = [];
+}
+
 function registerAllIpcListeners() {
     ipcMain.on(
         IpcChannels.configUpdated,
@@ -752,22 +769,29 @@ function registerAllIpcListeners() {
 
     ipcMain.on(
         IpcChannels.execute,
-        (event, userInput: string, searchResultItem: SearchResultItem, privileged: boolean) => {
-            searchEngine
-                .execute(searchResultItem, privileged)
-                .then(() => {
-                    userInputHistoryManager.addItem(userInput);
-                    if (
-                        searchResultItem.hideMainWindowAfterExecution &&
-                        config.generalOptions.hideMainWindowAfterExecution
-                    ) {
-                        hideMainWindow();
-                    } else {
-                        updateMainWindowSize(0, config.appearanceOptions);
-                    }
-                })
-                .catch((err) => logger.error(err))
-                .finally(() => event.sender.send(IpcChannels.executionFinished));
+        (event, userInput: string, searchResultItem: SearchResultItem, privileged: boolean, queue: boolean) => {
+            if (queue) {
+                userInputHistoryManager.addItem(userInput);
+                searchResultItemExecutionQueue.push({ searchResultItem, privileged });
+                mainWindow.webContents.send(IpcChannels.userInputUpdated, "");
+                event.sender.send(IpcChannels.executionFinished);
+            } else {
+                searchEngine
+                    .execute(searchResultItem, privileged)
+                    .then(() => {
+                        userInputHistoryManager.addItem(userInput);
+                        if (
+                            searchResultItem.hideMainWindowAfterExecution &&
+                            config.generalOptions.hideMainWindowAfterExecution
+                        ) {
+                            hideMainWindow();
+                        } else {
+                            updateMainWindowSize(0, config.appearanceOptions);
+                        }
+                    })
+                    .catch((err) => logger.error(err))
+                    .finally(() => event.sender.send(IpcChannels.executionFinished));
+            }
         },
     );
 

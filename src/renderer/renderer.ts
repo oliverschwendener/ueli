@@ -125,9 +125,9 @@ const app = new Vue({
 
         vueEventDispatcher.$on(
             VueEventChannels.handleExecution,
-            (userInput: string, searchResultIem: SearchResultItem | undefined, privileged: boolean) => {
+            (userInput: string, searchResultIem: SearchResultItem | undefined, privileged: boolean, queue: boolean) => {
                 if (searchResultIem !== undefined) {
-                    ipcRenderer.send(IpcChannels.execute, userInput, searchResultIem, privileged);
+                    ipcRenderer.send(IpcChannels.execute, userInput, searchResultIem, privileged, queue);
                 }
             },
         );

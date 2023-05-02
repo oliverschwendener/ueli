@@ -185,13 +185,19 @@ export const searchResultsComponent = Vue.extend({
         });
         vueEventDispatcher.$on(
             VueEventChannels.enterPress,
-            (userInput: string, privileged: boolean, userConfirmed?: boolean) => {
+            (userInput: string, privileged: boolean, queue: boolean, userConfirmed?: boolean) => {
                 const activeItem: SearchResultItemViewModel = this.getActiveSearchResultItem();
                 if (activeItem && activeItem.originPluginType !== PluginType.None) {
                     if (activeItem.needsUserConfirmationBeforeExecution && !userConfirmed) {
                         vueEventDispatcher.$emit(VueEventChannels.userConfirmationRequested);
                     } else {
-                        vueEventDispatcher.$emit(VueEventChannels.handleExecution, userInput, activeItem, privileged);
+                        vueEventDispatcher.$emit(
+                            VueEventChannels.handleExecution,
+                            userInput,
+                            activeItem,
+                            privileged,
+                            queue,
+                        );
                     }
                 }
             },

@@ -61,8 +61,9 @@ export const userInputComponent = Vue.extend({
 
             if (event.key === "Enter") {
                 const privileged: boolean = event.shiftKey;
+                const queue: boolean = event.altKey;
                 const userConfirmed: boolean = this.userConfirmationDialogVisible;
-                vueEventDispatcher.$emit(VueEventChannels.enterPress, this.userInput, privileged, userConfirmed);
+                vueEventDispatcher.$emit(VueEventChannels.enterPress, this.userInput, privileged, queue, userConfirmed);
             }
 
             if (event.key === "Tab") {

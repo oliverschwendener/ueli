@@ -14,6 +14,11 @@ export interface SearchResultItem {
     supportsOpenLocation?: boolean;
 }
 
+export interface SearchResultItemExecution {
+    searchResultItem: SearchResultItem;
+    privileged: boolean;
+}
+
 export interface SearchResultItemViewModel extends SearchResultItem {
     active: boolean;
     id: string;
