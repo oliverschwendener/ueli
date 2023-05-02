@@ -4,6 +4,7 @@ export enum VueEventChannels {
     openSearchResultLocationKeyPress = "open-search-result-location-key-press",
     handleOpenLocation = "handle-open-location",
     handleExecution = "handle-execution",
+    handleEmptyEnterPress = "handle-empty-enter-press",
     handleAutoCompletion = "handle-auto-completion",
     autoCompletionResponse = "auto-completion-result",
     mainWindowHasBeenHidden = "main-window-has-been-hidden",

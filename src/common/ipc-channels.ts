@@ -2,6 +2,7 @@ export enum IpcChannels {
     search = "search",
     searchResponse = "search-response",
     execute = "execute",
+    emptyExecute = "empty-execute",
     autoComplete = "autocomplete",
     autoCompleteResponse = "autocomplete-response",
     openSearchResultLocation = "open-search-result-location",

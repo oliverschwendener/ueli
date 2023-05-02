@@ -132,6 +132,10 @@ const app = new Vue({
             },
         );
 
+        vueEventDispatcher.$on(VueEventChannels.handleEmptyEnterPress, () => {
+            ipcRenderer.send(IpcChannels.emptyExecute);
+        });
+
         vueEventDispatcher.$on(
             VueEventChannels.handleOpenLocation,
             (searchResultItem: SearchResultItem | undefined) => {

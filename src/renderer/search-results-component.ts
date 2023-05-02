@@ -199,6 +199,8 @@ export const searchResultsComponent = Vue.extend({
                             queue,
                         );
                     }
+                } else if (!userInput) {
+                    vueEventDispatcher.$emit(VueEventChannels.handleEmptyEnterPress);
                 }
             },
         );

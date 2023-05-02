@@ -767,6 +767,12 @@ function registerAllIpcListeners() {
         hideMainWindow();
     });
 
+    ipcMain.on(IpcChannels.emptyExecute, () => {
+        if (searchResultItemExecutionQueue.length > 0) {
+            hideMainWindow();
+        }
+    });
+
     ipcMain.on(
         IpcChannels.execute,
         (event, userInput: string, searchResultItem: SearchResultItem, privileged: boolean, queue: boolean) => {
