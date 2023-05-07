@@ -261,7 +261,7 @@ For more check [here](https://github.com/oliverschwendener/ueli/issues).
 ```
 $ git clone https://github.com/oliverschwendener/ueli
 $ cd ueli
-$ pnpm
+$ pnpm install
 ```
 
 ### Run
