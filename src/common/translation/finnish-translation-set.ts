@@ -1,6 +1,5 @@
 import { TranslationSet } from "./translation-set";
 
-// tslint:disable:object-literal-sort-keys for better readability
 export const finnishTranslationSet: TranslationSet = {
     trayIconShow: "Avaa",
     trayIconSettings: "Asetukset",
