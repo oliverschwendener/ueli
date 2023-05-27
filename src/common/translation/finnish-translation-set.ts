@@ -202,7 +202,7 @@ export const finnishTranslationSet: TranslationSet = {
     shortcutSettingsEditModalDownloadsFolder: "Lataukset kansio",
     shortcutSettingsEditModalCommand: "Komento",
     shortcutSettingsInvalidShortcutErrorMessage: "Virheellinen oikotie",
-    shortcutSettingsTagPlaceholder: "Lisää tunniste ja paina enteriä",
+    shortcutSettingsTagPlaceholder: "Lisää tunniste ja paina Enteriä",
     shortcutSettingsTypeUrl: "URL",
     shortcutSettingsTypeCommandlineTool: "Komentorivityökalu",
     shortcutSettingsEditModalCommandLinetoolDescription: "Muokkaa tiedostoa Visual Studio Codessa",
