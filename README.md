@@ -214,6 +214,7 @@ This plugin enables you to quickly execute multiple things at once.
 -   English
 -   Chinese (简体中文)
 -   Czech (Česky)
+-   Finnish (Suomi)
 -   German (Deutsch)
 -   Hindi (हिन्दी)
 -   Italian (Italiano)
