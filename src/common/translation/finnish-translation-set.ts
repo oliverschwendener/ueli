@@ -205,7 +205,7 @@ export const finnishTranslationSet: TranslationSet = {
     shortcutSettingsTypeUrl: "URL",
     shortcutSettingsTypeCommandlineTool: "Komentorivityökalu",
     shortcutSettingsEditModalCommandLinetoolDescription: "Muokkaa tiedostoa Visual Studio Codessa",
-    shortcutSettingsNeedsUserConfirmation: "Tarvitsee vahvistuksen ennen toteutusta",
+    shortcutSettingsNeedsUserConfirmation: "Tarvitsee vahvistuksen ennen suorittamista",
 
     translationSettingsTranslation: "Käännökset",
     translationSettingsDescription: `Tämän lisäosan avulla voit kääntää nopeasti sanoja ja lyhyitä lauseita. Se käyttää epävirallista API:ta (https://github.com/imankulov/linguee-api) Lingueelle (https://linguee.de) ja voi siksi olla epävakaa.`,
@@ -320,7 +320,7 @@ export const finnishTranslationSet: TranslationSet = {
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "Virheellinen suoritusvaihe",
     workflowInvalidWorkflow: "Virheellinen työnkulku",
-    workflowNeedsUserConfirmationBeforeExecution: "Tarvitsee vahvistuksen ennen toteutusta",
+    workflowNeedsUserConfirmationBeforeExecution: "Tarvitsee vahvistuksen ennen suorittamista",
 
     commandline: "Komentorivi",
     commandlinePrefix: "Etuliite",
