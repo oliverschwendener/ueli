@@ -28,7 +28,7 @@ export const finnishTranslationSet: TranslationSet = {
     generalErrorTitle: "Tapahtui virhe",
     generalErrorDescription: "Tarkista lisätietoja lokista",
 
-    successfullyRefreshedIndexes: "Indeksit päivitettiin onnistuneesti",
+    successfullyRefreshedIndexes: "Päivitettiin indeksit onnistuneesti",
     successfullyClearedCaches: "Välimuistit tyhjennettiin onnistuneesti",
     successfullyUpdatedconfig: "Asetustiedosto päivitettiin onnistuneesti",
     successfullyClearedExecutionLog: "Suoritusloki tyhjennettiin onnistuneesti",
@@ -73,7 +73,7 @@ export const finnishTranslationSet: TranslationSet = {
     generalSettingsDownloadUpdate: "Lataa päivitys",
     generalSettingsDownloadingUpdate: "Ladataan päivitystä",
     generalSettingsLatestVersion: "Käytössäsi on uusin versio!",
-    generalSettingsErrorWhileCheckingForUpdate: "Virhe päivityksen tarkistamisen aikana",
+    generalSettingsErrorWhileCheckingForUpdate: "Virhe tarkistaessa päivityksiä",
     clearExecutionLog: "Tyhjennä suoritusloki",
     openDebugLog: "Avaa vianmääritysloki",
     openTempFolder: "Avaa väliaikaiskansio",
@@ -216,7 +216,7 @@ export const finnishTranslationSet: TranslationSet = {
     translationSettingsTargetLanguage: "Kohdekieli",
 
     everythingSearch: "Everything-haku",
-    everythingSearchSettingDescription: `Tämän lisäosan avulla voit etsiä paikallisia tiedostoja ja kansioita Everthing-hakujen avulla. Sinun on asennettava "Everything" ja "Everything Command-line Interface" osoitteesta https://www.voidtools.com/downloads/. Kun molemmat on asennettu, sinun on määritettävä alla oleva 'es.exe'-tiedostopolku.`,
+    everythingSearchSettingDescription: `Tämän lisäosan avulla voit etsiä paikallisia tiedostoja ja kansioita Everything-hakujen avulla. Sinun on asennettava "Everything" ja "Everything Command-line Interface" osoitteesta https://www.voidtools.com/downloads/. Kun molemmat on asennettu, sinun on määritettävä alla oleva 'es.exe'-tiedostopolku.`,
     everythingSearchPathToBinary: `Polku tiedostoon "es.exe"`,
     everythingSearchPrefix: "Etuliite",
     everythingSearchMaxSearchResults: "Maksimi hakutulokset",
