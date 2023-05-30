@@ -1,4 +1,4 @@
-import { executeCommand } from "./command-executor";
+import { executeCommand, executeWindowsCommand } from "./command-executor";
 import { MacOsShell, WindowsShell } from "../plugins/commandline-plugin/shells";
 
 const unsupportedShellRejection = (shell: WindowsShell | MacOsShell) => {
@@ -46,17 +46,17 @@ export const macOsCommandLineExecutor = (command: string, shell: MacOsShell): Pr
 export const windowsCommandLineExecutor = (command: string, shell: WindowsShell): Promise<void> => {
     switch (shell) {
         case WindowsShell.WSL:
-            return executeCommand(`start wsl.exe sh -c "${command}; exec $SHELL"`);
+            return executeWindowsCommand(`start wsl.exe sh -c "${command}; exec $SHELL"`);
         case WindowsShell.PowerShellCore:
-            return executeCommand(`start pwsh.exe -NoExit -Command "&${command}"`);
+            return executeWindowsCommand(`start pwsh.exe -NoExit -Command "&${command}"`);
         case WindowsShell.Powershell:
-            return executeCommand(`start powershell -NoExit -Command "&${command}"`);
+            return executeWindowsCommand(`start powershell -NoExit -Command "&${command}"`);
         case WindowsShell.Cmd:
-            return executeCommand(`start cmd.exe /k "${command}"`);
+            return executeWindowsCommand(`start cmd.exe /k "${command}"`);
         case WindowsShell.PowerShellInWT:
-            return executeCommand(`start wt.exe powershell -NoExit -Command "&${command}"`);
+            return executeWindowsCommand(`start wt.exe powershell -NoExit -Command "&${command}"`);
         case WindowsShell.WSLInWT:
-            return executeCommand(`start wt.exe wsl sh -c "${command} && exec $SHELL"`);
+            return executeWindowsCommand(`start wt.exe wsl sh -c "${command} && exec $SHELL"`);
         default:
             return unsupportedShellRejection(shell);
     }
