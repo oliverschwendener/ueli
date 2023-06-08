@@ -1,3 +1,6 @@
+dist-electron
+dist
+
 .DS_Store
 
 #Visual Studio Code files
