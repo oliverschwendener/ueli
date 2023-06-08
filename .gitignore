@@ -1,5 +1,5 @@
-dist-electron
-dist
+dist-electron/
+dist/
 
 .DS_Store
 
