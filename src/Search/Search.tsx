@@ -1,4 +1,4 @@
-import { Button } from "@fluentui/react-components";
+import { Button, Input } from "@fluentui/react-components";
 import { FC } from "react";
 import { useNavigate } from "react-router";
 
@@ -12,7 +12,7 @@ export const Search: FC = () => {
 
     return (
         <div>
-            Search
+            <Input appearance="underline" />
             <Button onClick={openSettings}>Open Settings</Button>
         </div>
     );

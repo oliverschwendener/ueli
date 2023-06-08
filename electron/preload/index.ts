@@ -1,5 +1,5 @@
+import { ContextBridge } from "@common/ContextBridge";
 import { contextBridge, ipcRenderer } from "electron";
-import { ContextBridge } from "./ContextBridge";
 
 contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     onNativeThemeChanged: (callback: () => void) => ipcRenderer.on("nativeThemeChanged", callback),
