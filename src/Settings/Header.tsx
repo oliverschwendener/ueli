@@ -1,13 +1,5 @@
 import { Button, Text } from "@fluentui/react-components";
-import {
-    Dismiss16Filled,
-    Dismiss24Filled,
-    DismissCircle16Filled,
-    DismissCircle24Filled,
-    DismissCircle28Filled,
-    DismissCircle32Filled,
-    DismissCircle48Filled,
-} from "@fluentui/react-icons";
+import { DismissCircle24Filled } from "@fluentui/react-icons";
 import { FC } from "react";
 
 type HeaderProps = {
