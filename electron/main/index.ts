@@ -21,18 +21,13 @@ const createBrowserWindow = (appIsPackaged: boolean): BrowserWindow => {
         vibrancy: "window",
         backgroundMaterial: "auto",
         frame: false,
-        height: 60,
     });
 };
 
-const registerIpcEventListeners = (browserWindow: BrowserWindow) => {
+const registerIpcEventListeners = () => {
     ipcMain.on(
         "themeShouldUseDarkColors",
         (event: IpcMainEvent) => (event.returnValue = nativeTheme.shouldUseDarkColors),
-    );
-
-    ipcMain.on("settingsOpenStateChanged", (_, { settingsOpened }: { settingsOpened: boolean }) =>
-        browserWindow.setBounds({ height: settingsOpened ? 600 : 60 }),
     );
 };
 
@@ -44,6 +39,6 @@ const registerNativeThemeEventListeners = (browserWindow: BrowserWindow) => {
     await app.whenReady();
     const browserWindow = createBrowserWindow(app.isPackaged);
     loadFileOrUrl(browserWindow, app.isPackaged);
-    registerIpcEventListeners(browserWindow);
+    registerIpcEventListeners();
     registerNativeThemeEventListeners(browserWindow);
 })();

@@ -11,10 +11,7 @@ export const Settings: FC = () => {
 
     const [path, setPath] = useState<string>(settingsPages[0].absolutePath);
 
-    const closeSettings = () => {
-        navigate({ pathname: "/" });
-        window.ContextBridge.settingsOpenStateChanged({ settingsOpened: false });
-    };
+    const closeSettings = () => navigate({ pathname: "/" });
 
     const navigateTo = (pathname: string) => {
         setPath(pathname);

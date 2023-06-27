@@ -1,6 +1,8 @@
-import { Button, Input } from "@fluentui/react-components";
+import { Button, Divider, Input } from "@fluentui/react-components";
+import { Settings16Filled } from "@fluentui/react-icons";
 import { FC, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
+import { SearchResultList } from "./SearchResultList";
 
 export const Search: FC = () => {
     const userInputRef = useRef<HTMLInputElement>(null);
@@ -9,17 +11,40 @@ export const Search: FC = () => {
 
     const navigate = useNavigate();
 
-    const openSettings = () => {
-        navigate({ pathname: "/settings/general" });
-        window.ContextBridge.settingsOpenStateChanged({ settingsOpened: true });
-    };
+    const openSettings = () => navigate({ pathname: "/settings/general" });
 
     useEffect(setFocusOnUserInput, []);
 
     return (
-        <div>
-            <Input ref={userInputRef} appearance="underline" />
-            <Button onClick={openSettings}>Open Settings</Button>
+        <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+            <div
+                style={{
+                    flexShrink: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                }}
+            >
+                <Input ref={userInputRef} appearance="filled-darker" size="large" />
+            </div>
+            <Divider />
+            <div style={{ flexGrow: 1, overflowY: "auto" }}>
+                <SearchResultList numberOfSearchResults={100} />
+            </div>
+            <Divider />
+            <div
+                style={{
+                    flexShrink: 0,
+                    padding: 10,
+                    boxSizing: "border-box",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                }}
+            >
+                <Button onClick={openSettings} size="small" appearance="subtle" icon={<Settings16Filled />}>
+                    Settings
+                </Button>
+            </div>
         </div>
     );
 };
