@@ -22,6 +22,8 @@ export const Search: FC = () => {
                     flexShrink: 0,
                     display: "flex",
                     flexDirection: "column",
+                    padding: 10,
+                    boxSizing: "border-box",
                 }}
             >
                 <Input ref={userInputRef} appearance="filled-darker" size="large" />
