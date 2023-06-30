@@ -1,9 +1,8 @@
 import { Divider } from "@fluentui/react-components";
 import { FC, useState } from "react";
-import { Routes, useNavigate } from "react-router";
+import { Route, Routes, useNavigate } from "react-router";
 import { Header } from "./Header";
 import { Navigation } from "./Navigation";
-import { Route } from "react-router";
 import { settingsPages } from "./Pages";
 
 export const Settings: FC = () => {

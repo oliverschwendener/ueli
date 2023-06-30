@@ -1,9 +1,8 @@
 import { FluentProvider, Theme, webDarkTheme, webLightTheme } from "@fluentui/react-components";
 import { FC, useEffect, useState } from "react";
-import { Routes } from "react-router";
+import { Route, Routes } from "react-router";
 import { Search } from "./Search";
 import { Settings } from "./Settings";
-import { Route } from "react-router";
 
 export const App: FC = () => {
     const getTheme = (): Theme => (window.ContextBridge.themeShouldUseDarkColors() ? webDarkTheme : webLightTheme);

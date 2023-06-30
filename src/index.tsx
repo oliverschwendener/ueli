@@ -6,6 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
     createRoot(document.getElementById("react-app") as HTMLDivElement).render(
         <HashRouter>
             <App />
-        </HashRouter>
+        </HashRouter>,
     );
 });

@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
+import { Appearance } from "./Appearance";
 import { General } from "./General";
 import { Window } from "./Window";
-import { Appearance } from "./Appearance";
 
 export type SettingsPage = {
     label: string;
