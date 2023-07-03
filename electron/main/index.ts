@@ -3,15 +3,14 @@ import { app, BrowserWindow, BrowserWindowConstructorOptions, ipcMain, nativeThe
 import { join } from "path";
 import { platform } from "process";
 
-const getPreloadScriptFilePath = (appIsPackaged: boolean) =>
-    appIsPackaged
-        ? join(__dirname, "..", "..", "dist-electron", "preload", "index.js")
-        : join(__dirname, "..", "preload", "index.js");
+const preloadScriptFilePath = app.isPackaged
+    ? join(__dirname, "..", "..", "dist-electron", "preload", "index.js")
+    : join(__dirname, "..", "preload", "index.js");
 
 const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowConstructorOptions> = {
     macOS: {
         webPreferences: {
-            preload: getPreloadScriptFilePath(app.isPackaged),
+            preload: preloadScriptFilePath,
         },
         vibrancy: "window",
         frame: false,
@@ -19,7 +18,7 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
     Windows: {
         autoHideMenuBar: true,
         webPreferences: {
-            preload: getPreloadScriptFilePath(app.isPackaged),
+            preload: preloadScriptFilePath,
         },
         backgroundMaterial: "mica",
         transparent: true,
