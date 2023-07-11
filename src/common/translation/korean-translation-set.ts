@@ -1,6 +1,5 @@
 import { TranslationSet } from "./translation-set";
 
-// tslint:disable:object-literal-sort-keys for better readability
 export const koreanTranslationSet: TranslationSet = {
     trayIconShow: "보이기",
     trayIconSettings: "설정",
@@ -120,6 +119,12 @@ export const koreanTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "스크롤 바 둥글기",
     appearanceSettingsBorderRadiusDescription:
         "이것은 css 값이기 때문에, '10px'처럼 'px'를 추가해야 합니다. 또한 각각의 코너는 '10px 0px 10px 5px'처럼 지정할 수 있습니다.",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
+    appearanceSettingsUserInputFontSize: "User input font size",
+    appearanceSettingsSearchResultDescriptionFontSize: "Search result name font size",
+    appearanceSettingsSearchResultNameFontSize: "Search result description font size",
 
     settingsUserInputTitle: "사용자 입력",
     settingsSearchResultsBoxTitle: "검색 결과 박스",
@@ -265,6 +270,7 @@ export const koreanTranslationSet: TranslationSet = {
     windowsShutdownDescription: "컴퓨터를 종료합니다",
     windowsRestart: "다시 시작",
     windowsRestartDescription: "컴퓨터를 재시작합니다",
+    windowsReboot: "재부팅",
     windowsSignout: "로그아웃",
     windowsSignoutDescription: "현재 사용자 로그아웃",
     windowsLock: "잠금",
@@ -316,7 +322,7 @@ export const koreanTranslationSet: TranslationSet = {
     workflowIcon: "아이콘",
     workflowExecutionSteps: "실행 순서",
     workflowExecutionArgumentType: "실행 인자 유형",
-    wofkflowExecutionArgumentTypeCommandlineTool: "명령줄 도구",
+    workflowExecutionArgumentTypeCommandlineTool: "명령줄 도구",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "올바르지 않은 실행 순서",
     workflowInvalidWorkflow: "올바르지 않은 워크플로우",
@@ -343,7 +349,7 @@ export const koreanTranslationSet: TranslationSet = {
 
     dictionary: "사전",
     dictionaryDescription:
-        "이 플러그인은 단어의 정의와 동의어를 빠르게 검색할 수 있게 해줍니다. 비공식 구글 사전 API (https://googledictionaryapi.eu-gb.mybluemix.net/)를 사용합니다.",
+        "이 플러그인은 단어의 정의와 동의어를 빠르게 검색할 수 있게 해줍니다. 비공식 구글 사전 API (https://dictionaryapi.dev/)를 사용합니다.",
     dictionaryPrefix: "접두어",
     dictionaryMinSearchTermLength: "검색어 최소 길이",
     dictionaryDebounceDelay: "디바운스 지연 시간 (밀리 초 단위)",
@@ -376,4 +382,16 @@ export const koreanTranslationSet: TranslationSet = {
 
     controlPanel: "제어판",
     controlPanelSettingsDescription: "이 플러그인을 사용하면 제어판 항목을 빠르게 찾을 수 있습니다.",
+
+    weather: "날씨",
+    weatherPrefix: "접두사",
+    weatherSettingsDescription:
+        "이 플러그인은 모든 지역의 날씨 상태를 확인할 수 있습니다. 지역이 제공되지 않으면 기본값으로 현재 위치의 날씨를 표시합니다. 데이터는 wttr.in 의해 제공됩니다.",
+    weatherTemperatureUnit: "온도 단위",
+    weatherCopyToClipboard: "Enter를 눌러 계산 결과를 클립보드에 복사",
+
+    loremIpsum: "Lorem Ipsum",
+    loremIpsumPrefix: "접두사",
+    loremIpsumCopyToClipboard: "Enter를 눌러 계산 결과를 클립보드에 복사",
+    loremIpsumSettingsDescription: "이 플러그인을 사용하면 클립보드에 샘플 텍스트를 빠르게 복사할 수 있습니다.",
 };

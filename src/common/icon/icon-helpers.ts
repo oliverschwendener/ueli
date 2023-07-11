@@ -10,7 +10,7 @@ export function isValidIconType(iconType: IconType | string): boolean {
 export function isValidIcon(icon: Icon): boolean {
     return (
         icon !== undefined &&
-        this.isValidIconType(icon.type) &&
+        isValidIconType(icon.type) &&
         icon.parameter !== undefined &&
         icon.parameter.length > 0 &&
         isValidIconParameter(icon)

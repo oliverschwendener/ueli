@@ -10,7 +10,6 @@ import { parse } from "ini";
 export function searchWindowsApplications(
     applicationSearchOptions: ApplicationSearchOptions,
     logger: Logger,
-    operatingSystemVersion: OperatingSystemVersion,
 ): Promise<string[]> {
     return new Promise((resolve, reject) => {
         if (
@@ -23,15 +22,16 @@ export function searchWindowsApplications(
         const utf8Encoding = "[Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8";
         const ignoreErrors = "$ErrorActionPreference = 'SilentlyContinue'";
         const createApplicationsArray = "$applications = New-Object Collections.Generic.List[String]";
+        const extensions = applicationSearchOptions.applicationFileExtensions.map((e) => `'${e}'`).join(",");
+        const createExtensionsHashSet = `$extensions = New-Object System.Collections.Generic.HashSet[string] ([string[]]@(${extensions}), [System.StringComparer]::OrdinalIgnoreCase)`;
         const folders = applicationSearchOptions.applicationFolders
             .map((applicationFolder) => `'${applicationFolder}'`)
             .join(",");
-        const extensionFilter = applicationSearchOptions.applicationFileExtensions.map((e) => `*${e}`).join(", ");
-        const getChildItem = `Get-ChildItem -Path $_ -include ${extensionFilter} -Recurse -File | % { $applications.Add($_.FullName) }`;
+        const getChildItem = `Get-ChildItem -LiteralPath $_ -Recurse -File | Where-Object { $extensions.Contains($_.Extension) } | ForEach-Object { $applications.Add($_.FullName) }`;
         const createResult = `$result = (@{ errors = @($error | ForEach-Object { $_.Exception.Message }); applications = $applications } | ConvertTo-Json)`;
         const printResult = "Write-Host $result";
-        const powershellScript = `${utf8Encoding}; ${ignoreErrors}; ${createApplicationsArray}; ${folders} | %{ ${getChildItem} }; ${createResult}; ${printResult};`;
-        const command = `powershell -NonInteractive -NoProfile -Command "& { ${powershellScript} }"`;
+        const powershellScript = `${utf8Encoding}; ${ignoreErrors}; ${createApplicationsArray}; ${createExtensionsHashSet}; ${folders} | %{ ${getChildItem} }; ${createResult}; ${printResult};`;
+        const command = `powershell.exe -NonInteractive -NoProfile -Command "& { ${powershellScript} }"`;
         executeCommandWithOutput(command)
             .then((resultOutput: string) => {
                 const result: { errors: string[]; applications: string[] } = JSON.parse(resultOutput);

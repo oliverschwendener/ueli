@@ -1,8 +1,6 @@
 import { ExecutionPlugin } from "../main/execution-plugin";
 import { SearchResultItem } from "../common/search-result-item";
 import { PluginType } from "../main/plugin-type";
-import { UserConfigOptions } from "../common/config/user-config-options";
-import { TranslationSet } from "../common/translation/translation-set";
 
 export class FakeExecutionPlugin implements ExecutionPlugin {
     public pluginType = PluginType.Test;
@@ -17,11 +15,11 @@ export class FakeExecutionPlugin implements ExecutionPlugin {
         this.searchResults = searchResults;
     }
 
-    public isValidUserInput(userInput: string, fallback?: boolean): boolean {
+    public isValidUserInput(): boolean {
         return this.validUserInput;
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean): Promise<SearchResultItem[]> {
+    public getSearchResults(): Promise<SearchResultItem[]> {
         return Promise.resolve(this.searchResults);
     }
 
@@ -29,11 +27,11 @@ export class FakeExecutionPlugin implements ExecutionPlugin {
         return this.enabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+    public updateConfig(): Promise<void> {
         throw new Error("Method not implemented.");
     }
 }

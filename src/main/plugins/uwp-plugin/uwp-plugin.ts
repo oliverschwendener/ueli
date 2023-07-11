@@ -1,7 +1,6 @@
 import { SearchPlugin } from "../../search-plugin";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
-import { TranslationSet } from "../../../common/translation/translation-set";
 import { PluginType } from "../../plugin-type";
 import { UwpApplication } from "./uwp-application";
 import { UwpSearchOptions } from "../../../common/config/uwp-search-options";
@@ -51,7 +50,7 @@ export class UwpPlugin implements SearchPlugin {
         return this.filePathExecutor(searchResultItem.executionArgument, privileged);
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+    public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
         return new Promise((resolve) => {
             this.config = updatedConfig.uwpSearchOptions;
             resolve();

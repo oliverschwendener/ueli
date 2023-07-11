@@ -1,6 +1,5 @@
 import { TranslationSet } from "./translation-set";
 
-// tslint:disable:object-literal-sort-keys for better readability
 export const englishTranslationSet: TranslationSet = {
     trayIconShow: "Zobrazit",
     trayIconSettings: "Nastavení",
@@ -121,6 +120,12 @@ export const englishTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Posuvník border radius",
     appearanceSettingsBorderRadiusDescription:
         "Toto je hodnota CSS, takže musíte přidat 'px' jako např. '10px' nebo oddělit rohy, např. '10px 0px 10px 5px'",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
+    appearanceSettingsUserInputFontSize: "User input font size",
+    appearanceSettingsSearchResultDescriptionFontSize: "Search result name font size",
+    appearanceSettingsSearchResultNameFontSize: "Search result description font size",
 
     settingsUserInputTitle: "Vstup uživatele",
     settingsSearchResultsBoxTitle: "Pole výsledků hledání",
@@ -256,6 +261,7 @@ export const englishTranslationSet: TranslationSet = {
     windowsShutdownDescription: "Vypnout počítač",
     windowsRestart: "Restartovat",
     windowsRestartDescription: "Restartovat počítač",
+    windowsReboot: "Restartujte",
     windowsSignout: "Odhlásit se",
     windowsSignoutDescription: "Odhlásit aktuálního uživatele",
     windowsLock: "Zamknout",
@@ -318,7 +324,7 @@ export const englishTranslationSet: TranslationSet = {
     workflowIcon: "Ikona",
     workflowExecutionSteps: "Prováděcí kroky",
     workflowExecutionArgumentType: "Argument typu spuštění",
-    wofkflowExecutionArgumentTypeCommandlineTool: "Příkazový řádek",
+    workflowExecutionArgumentTypeCommandlineTool: "Příkazový řádek",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "Neplatný krok spuštění",
     workflowInvalidWorkflow: "Neplatný workflow",
@@ -379,4 +385,16 @@ export const englishTranslationSet: TranslationSet = {
 
     controlPanel: "Ovládací panely",
     controlPanelSettingsDescription: "Tento plugin umožňuje rychle najít položky ovládacího panelu.",
+
+    weather: "Počasí",
+    weatherPrefix: "Předpona",
+    weatherSettingsDescription:
+        "Tento plugin umožňuje zkontrolovat povětrnostní podmínky v libovolné oblasti. Pokud není k dispozici žádná oblast, je ve výchozím nastavení možné zobrazit počasí aktuální polohy. Údaje poskytuje wttr.in",
+    weatherTemperatureUnit: "Jednotka teploty",
+    weatherCopyToClipboard: "Stisknutím klávesy Enter zkopírujete do schránky",
+
+    loremIpsum: "Lorem Ipsum",
+    loremIpsumPrefix: "Předpona",
+    loremIpsumCopyToClipboard: "Stisknutím klávesy Enter zkopírujete do schránky",
+    loremIpsumSettingsDescription: "Tento plugin vám umožní rychle zkopírovat ukázkový text do schránky.",
 };

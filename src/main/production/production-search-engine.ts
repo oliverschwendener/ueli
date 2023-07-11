@@ -34,6 +34,7 @@ import { windowsCommandLineExecutor, macOsCommandLineExecutor, linuxCommandLineE
 import { OperatingSystemSettingsPlugin } from "../plugins/operating-system-settings-plugin/operating-system-settings-plugin";
 import { MacOsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/macos-operating-system-setting-repository";
 import {
+    executeMacOSOperatingSystemSetting,
     executeWindowsOperatingSystemSetting,
     executeMacOSOperatingSystemSetting,
     executeLinuxOperatingSystemSetting,
@@ -44,7 +45,7 @@ import { Logger } from "../../common/logger/logger";
 import { UwpPlugin } from "../plugins/uwp-plugin/uwp-plugin";
 import { ColorConverterPlugin } from "../plugins/color-converter-plugin/color-converter-plugin";
 import { ProductionApplicationRepository } from "../plugins/application-search-plugin/production-application-repository";
-import { defaultWindowsAppIcon, defaultMacOsAppIcon } from "../../common/icon/default-icons";
+import { defaultMacOsAppIcon, defaultWindowsAppIcon } from "../../common/icon/default-icons";
 import { ApplicationIconService } from "../plugins/application-search-plugin/application-icon-service";
 import { generateWindowsAppIcons } from "../plugins/application-search-plugin/windows-app-icon-generator";
 import { windowsFileSearcher as powershellFileSearcher, macosFileSearcher, linuxFileSearcher } from "../executors/file-searchers";
@@ -65,9 +66,12 @@ import { SideKickBookmarkRepository } from "../plugins/browser-bookmarks-plugin/
 import { VivaldiBookmarkRepository } from "../plugins/browser-bookmarks-plugin/vivaldi-bookmark-repository";
 import { EdgeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/edge-bookmark-repository";
 import { FirefoxBookmarkRepository } from "../plugins/browser-bookmarks-plugin/firefox-bookmark-repository";
+import { YandexBookmarkRepository } from "../plugins/browser-bookmarks-plugin/yandex-bookmark-repository";
 import { ChromiumBookmarkRepository } from "../plugins/browser-bookmarks-plugin/chromium-bookmark-repository";
 import { getWebearchSuggestions } from "../executors/websearch-suggestion-resolver";
 import { LinuxOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/linux-operating-system-setting-repository";
+import { WeatherPlugin } from "../plugins/weather-plugin/weather-plugin";
+import { LoremIpsumPlugin } from "../plugins/lorem-ipsum-plugin/lorem-ipsum-plugin";
 
 export function getProductionSearchEngine(
     operatingSystem: OperatingSystem,
@@ -213,10 +217,10 @@ export function getProductionSearchEngine(
                 new BraveBookmarkRepository(braveBookmarksFilePath),
                 new ChromiumBookmarkRepository(chromiumBookmarksFilePath),
                 new EdgeBookmarkRepository(edgeBookmarksFilePath),
-                new FirefoxBookmarkRepository(firefoxUserDataFolderPath),
                 new GoogleChromeBookmarkRepository(chromeBookmarksFilePath),
                 new SideKickBookmarkRepository(sideKickBookmarkFilePath),
                 new VivaldiBookmarkRepository(vivaldiBookmarksFilePath),
+                new YandexBookmarkRepository(yandexBookmarksFilePath),
             ],
             urlExecutor,
         ),
@@ -246,6 +250,8 @@ export function getProductionSearchEngine(
         new CommandlinePlugin(config.commandlineOptions, translationSet, commandlineExecutor, logger),
         new ColorConverterPlugin(config.colorConverterOptions, electronClipboardCopier),
         new DictionaryPlugin(config.dictionaryOptions, electronClipboardCopier, getGoogleDictionaryDefinitions),
+        new WeatherPlugin(config, translationSet, electronClipboardCopier),
+        new LoremIpsumPlugin(config.loremIpsumOptions, translationSet, electronClipboardCopier),
     ];
 
     const fallbackPlugins: ExecutionPlugin[] = [webSearchPlugin];

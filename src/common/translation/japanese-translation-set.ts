@@ -1,6 +1,5 @@
 import { TranslationSet } from "./translation-set";
 
-// tslint:disable:object-literal-sort-keys for better readability
 export const japaneseTranslationSet: TranslationSet = {
     trayIconShow: "表示",
     trayIconSettings: "設定",
@@ -111,8 +110,7 @@ export const japaneseTranslationSet: TranslationSet = {
     appearanceSettingsShowDescriptionOnAllSearchResults: "全ての検索結果に説明を表示",
     appearanceSettingsShowSearchIcon: "検索領域に検索アイコンを表示",
     appearanceSettingsShowSearchResultNumbers: "検索結果の番号を表示",
-    appearanceSettingsResetWarningMessage:
-        "全ての外観設定をデフォルトにリセットします。続行しますか？",
+    appearanceSettingsResetWarningMessage: "全ての外観設定をデフォルトにリセットします。続行しますか？",
     appearanceSettingsAllowTransparentBackground: "背景の透過を許可",
     appearanceSettingsFontFamily: "フォントファミリ",
     appearanceSettingsUserInputBorderRadius: "入力欄の境界コーナー半径",
@@ -121,6 +119,12 @@ export const japaneseTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "スクロールバーの境界コーナー半径",
     appearanceSettingsBorderRadiusDescription:
         "CSS の値を指定するため '10px' あるいは個別のコーナー設定の場合は '10px 0px 10px 5px' のように 'px' を付加する必要があります",
+    appearanceSettingsUserInputFontWeight: "入力欄のフォント太さ",
+    appearanceSettingsSearchResultNameFontWeight: "検索結果名のフォント太さ",
+    appearanceSettingsSearchResultDescriptionFontWeight: "検索結果説明のフォント太さ",
+    appearanceSettingsUserInputFontSize: "入力欄のフォントサイズ",
+    appearanceSettingsSearchResultDescriptionFontSize: "検索結果名のフォントサイズ",
+    appearanceSettingsSearchResultNameFontSize: "検索結果説明フォントサイズ",
 
     settingsUserInputTitle: "入力欄",
     settingsSearchResultsBoxTitle: "検索結果",
@@ -130,8 +134,7 @@ export const japaneseTranslationSet: TranslationSet = {
     colorThemeSettings: "配色テーマ",
     colorThemeSettingsImportColorTheme: "配色テーマのインポート",
     colorThemeSettingsExportColorTheme: "配色テーマのエクスポート",
-    colorThemeSettingsResetWarning:
-        "全ての配色テーマ設定をデフォルトにリセットします。続行しますか？",
+    colorThemeSettingsResetWarning: "全ての配色テーマ設定をデフォルトにリセットします。続行しますか？",
     colorThemeExportSucceeded: "配色テーマが正常にエクスポートされました",
     colorThemeExportFailed: "配色テーマのエクスポートに失敗しました",
     colorThemeImportSucceeded: "配色テーマが正常にインポートされました",
@@ -175,8 +178,7 @@ export const japaneseTranslationSet: TranslationSet = {
     searchEngineSettingsFuzzy: "曖昧",
     searchEngineSettingsBlacklist: "ブラックリスト",
     searchEngineSettingsMaxSearchResults: "検索結果最大件数",
-    searchEngineSettingsResetWarning:
-        "全ての検索エンジン設定をデフォルトにリセットします。続行しますか？",
+    searchEngineSettingsResetWarning: "全ての検索エンジン設定をデフォルトにリセットします。続行しますか？",
 
     shortcutSettings: "ショートカット",
     shortcutSettingsDescription: `このプラグインは独自のショートカットを設定することで素早くファイルやウェブサイトをオープンすることができます。`,
@@ -251,7 +253,8 @@ export const japaneseTranslationSet: TranslationSet = {
     operatingSystemCommandsSettingsDescription: `オペレーティングシステムコマンドは例えばコンピューターのシャットダウンや再起動といったオペレーティングシステムをコントロールする基本的なコマンドです。`,
 
     operatingSystemSettings: "オペレーティングシステム設定",
-    operatingSystemSettingsSettingsDescription: "このプラグインはオペレーションシステムの設定を素早く探し出すことができます。",
+    operatingSystemSettingsSettingsDescription:
+        "このプラグインはオペレーションシステムの設定を素早く探し出すことができます。",
 
     macOsShutdown: "シャットダウン",
     macOsShutdownDescription: "コンピューターをシャットダウンする",
@@ -268,6 +271,7 @@ export const japaneseTranslationSet: TranslationSet = {
     windowsShutdownDescription: "コンピューターをシャットダウンする",
     windowsRestart: "再起動",
     windowsRestartDescription: "コンピューターを再起動する",
+    windowsReboot: "リブート",
     windowsSignout: "サインアウト",
     windowsSignoutDescription: "現在のユーザーをサインアウトする",
     windowsLock: "ロック",
@@ -320,7 +324,7 @@ export const japaneseTranslationSet: TranslationSet = {
     workflowIcon: "アイコン",
     workflowExecutionSteps: "実行ステップ",
     workflowExecutionArgumentType: "実行引数型",
-    wofkflowExecutionArgumentTypeCommandlineTool: "コマンドラインツール",
+    workflowExecutionArgumentTypeCommandlineTool: "コマンドラインツール",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "無効な実行ステップ",
     workflowInvalidWorkflow: "無効なワークフロー",
@@ -347,7 +351,7 @@ export const japaneseTranslationSet: TranslationSet = {
 
     dictionary: "辞書",
     dictionaryDescription:
-        "このプラグインは単語の定義や同義語を素早く調べることができます。非公式の Google Dictionary API (https://googledictionaryapi.eu-gb.mybluemix.net/) を使用します。",
+        "このプラグインは単語の定義や同義語を素早く調べることができます。非公式の Google Dictionary API (https://dictionaryapi.dev/) を使用します。",
     dictionaryPrefix: "プレフィックス",
     dictionaryMinSearchTermLength: "検索語の最小長さ",
     dictionaryDebounceDelay: "デバウンス遅延 (ミリ秒)",
@@ -371,8 +375,7 @@ export const japaneseTranslationSet: TranslationSet = {
     yes: "はい",
     no: "いいえ",
     resetToDefault: "デフォルトにリセットしますか？",
-    resetPluginSettingsToDefaultWarning:
-        "このプラグインの設定を全てデフォルトにリセットします。続行しますか？",
+    resetPluginSettingsToDefaultWarning: "このプラグインの設定を全てデフォルトにリセットします。続行しますか？",
     filePath: "ファイルパス",
     folderPath: "フォルダーパス",
     chooseFile: "ファイルの選択",
@@ -381,4 +384,17 @@ export const japaneseTranslationSet: TranslationSet = {
 
     controlPanel: "コントロールパネル",
     controlPanelSettingsDescription: "このプラグインでコントロールパネルの項目を素早く見つけることができます。",
+
+    weather: "天気",
+    weatherPrefix: "接頭辞",
+    weatherSettingsDescription:
+        "このプラグインは、あなたが任意の地域の気象条件を確認することができます。リージョンが指定されていない場合、既定では現在の場所の天気が表示されます。データは wttr.in によって提供されます",
+    weatherTemperatureUnit: "温度単位",
+    weatherCopyToClipboard: "エンターを押下してクリップボードにコピー",
+
+    loremIpsum: "Lorem Ipsum",
+    loremIpsumPrefix: "接頭辞",
+    loremIpsumCopyToClipboard: "エンターを押下してクリップボードにコピー",
+    loremIpsumSettingsDescription:
+        "このプラグインを使用すると、サンプル テキストをクリップボードにすばやくコピーできます。",
 };

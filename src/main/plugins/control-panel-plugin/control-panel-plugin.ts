@@ -1,7 +1,6 @@
 import { SearchResultItem } from "../../../common/search-result-item";
 import { PluginType } from "../../plugin-type";
 import { IconType } from "../../../common/icon/icon-type";
-import { TranslationSet } from "../../../common/translation/translation-set";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
 import { SearchPlugin } from "../../search-plugin";
 import { ControlPanelOptions } from "../../../common/config/control-panel-options";
@@ -24,7 +23,7 @@ export class ControlPanelPlugin implements SearchPlugin {
         return this.config.isEnabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(searchResultItem: SearchResultItem): Promise<void> {
         return new Promise((resolve, reject) => {
             executeCommand(
                 `powershell -NonInteractive -NoProfile -Command "Show-ControlPanelItem -Name '${searchResultItem.executionArgument}'"`,
@@ -34,7 +33,7 @@ export class ControlPanelPlugin implements SearchPlugin {
         });
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+    public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
         return new Promise((resolve) => {
             this.config = updatedConfig.controlPanelOptions;
             resolve();

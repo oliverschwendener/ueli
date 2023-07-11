@@ -1,0 +1,44 @@
+name: Publish new release
+
+on:
+    push:
+        tags:
+            - "*"
+
+jobs:
+    release:
+        strategy:
+            matrix:
+                os: [macos-12, windows-2022]
+        runs-on: ${{ matrix.os }}
+        name: Publish new release
+        steps:
+            - name: Checkout current commit/branch/tag
+              uses: actions/checkout@v3
+
+            - name: Set up pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+                  cache: pnpm
+
+            - name: Install dependencies
+              run: pnpm install
+              env:
+                  NODE_ENV: development
+
+            - name: Bundle files
+              run: pnpm bundle
+              env:
+                  NODE_ENV: production
+
+            - name: Package and publish
+              run: pnpm exec electron-builder --config electron-builder-config.yml --publish always
+              env:
+                  CI: true
+                  GH_TOKEN: ${{ secrets.GH_TOKEN }}

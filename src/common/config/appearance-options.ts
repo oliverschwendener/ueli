@@ -13,9 +13,15 @@ export interface AppearanceOptions {
     windowWidth: number;
     allowTransparentBackground: boolean;
     fontFamily: string;
+    userInputFontSize: string;
+    userInputFontWeight: string;
     userInputBorderRadius: string;
     userInputBottomMargin: number;
     searchResultsBorderRadius: string;
+    searchResultNameFontSize: string;
+    searchResultNameFontWeight: string;
+    searchResultDescriptionFontSize: string;
+    searchResultDescriptionFontWeight: string;
     scrollbarBorderRadius: string;
 }
 
@@ -36,7 +42,13 @@ export const defaultAppearanceOptions: AppearanceOptions = {
     userInputHeight: 60,
     windowWidth: 600,
     userInputBorderRadius: "0px",
+    userInputFontSize: "24px",
+    userInputFontWeight: "200",
     userInputBottomMargin: 0,
+    searchResultNameFontSize: "16px",
+    searchResultNameFontWeight: "400",
+    searchResultDescriptionFontSize: "12px",
+    searchResultDescriptionFontWeight: "200",
     searchResultsBorderRadius: "0px",
     scrollbarBorderRadius: "0px",
 };

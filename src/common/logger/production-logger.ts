@@ -1,6 +1,6 @@
 import { Logger } from "./logger";
 import Winston from "winston";
-import { dirname, basename } from "path";
+import { basename, dirname } from "path";
 import { logFormat } from "../helpers/logger-helpers";
 
 export class ProductionLogger implements Logger {

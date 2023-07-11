@@ -30,19 +30,17 @@ export class OperatingSystemSettingsPlugin implements SearchPlugin {
             this.operatingSystemSettingRepository
                 .getAll(this.translationSet)
                 .then((operatingSystemSettings) => {
-                    const result = operatingSystemSettings.map(
-                        (operatingSystemSetting): SearchResultItem => {
-                            return {
-                                description: operatingSystemSetting.description,
-                                executionArgument: operatingSystemSetting.executionArgument,
-                                hideMainWindowAfterExecution: true,
-                                icon: operatingSystemSetting.icon,
-                                name: operatingSystemSetting.name,
-                                originPluginType: this.pluginType,
-                                searchable: [operatingSystemSetting.name, ...operatingSystemSetting.tags],
-                            };
-                        },
-                    );
+                    const result = operatingSystemSettings.map((operatingSystemSetting): SearchResultItem => {
+                        return {
+                            description: operatingSystemSetting.description,
+                            executionArgument: operatingSystemSetting.executionArgument,
+                            hideMainWindowAfterExecution: true,
+                            icon: operatingSystemSetting.icon,
+                            name: operatingSystemSetting.name,
+                            originPluginType: this.pluginType,
+                            searchable: [operatingSystemSetting.name, ...operatingSystemSetting.tags],
+                        };
+                    });
 
                     resolve(result);
                 })
@@ -62,7 +60,7 @@ export class OperatingSystemSettingsPlugin implements SearchPlugin {
         return this.config.isEnabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(searchResultItem: SearchResultItem): Promise<void> {
         return this.operatingSystemSettingExecutor(searchResultItem.executionArgument);
     }
 

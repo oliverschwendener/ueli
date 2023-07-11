@@ -1,7 +1,6 @@
 import { PluginType } from "../../plugin-type";
 import { SearchResultItem } from "../../../common/search-result-item";
 import { UserConfigOptions } from "../../../common/config/user-config-options";
-import { TranslationSet } from "../../../common/translation/translation-set";
 import { SearchPlugin } from "../../search-plugin";
 import { WorkflowOptions } from "../../../common/config/workflow-options";
 import { WorkflowExecutionStep } from "./workflow-execution-argument";
@@ -35,20 +34,18 @@ export class WorkflowPlugin implements SearchPlugin {
 
     public getAll(): Promise<SearchResultItem[]> {
         return new Promise((resolve) => {
-            const result = this.config.workflows.map(
-                (workflow): SearchResultItem => {
-                    return {
-                        description: workflow.description,
-                        executionArgument: this.encodeExecutionArguments(workflow),
-                        hideMainWindowAfterExecution: true,
-                        icon: workflow.icon || defaultWorkflowIcon,
-                        name: workflow.name,
-                        needsUserConfirmationBeforeExecution: workflow.needsUserConfirmationBeforeExecution,
-                        originPluginType: this.pluginType,
-                        searchable: [...workflow.tags, workflow.name],
-                    };
-                },
-            );
+            const result = this.config.workflows.map((workflow): SearchResultItem => {
+                return {
+                    description: workflow.description,
+                    executionArgument: this.encodeExecutionArguments(workflow),
+                    hideMainWindowAfterExecution: true,
+                    icon: workflow.icon || defaultWorkflowIcon,
+                    name: workflow.name,
+                    needsUserConfirmationBeforeExecution: workflow.needsUserConfirmationBeforeExecution,
+                    originPluginType: this.pluginType,
+                    searchable: [...workflow.tags, workflow.name],
+                };
+            });
 
             resolve(result);
         });
@@ -66,11 +63,11 @@ export class WorkflowPlugin implements SearchPlugin {
         return this.config.isEnabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(searchResultItem: SearchResultItem): Promise<void> {
         return new Promise((resolve, reject) => {
-            const promises = this.decodeExecutionArgument(
-                searchResultItem.executionArgument,
-            ).executionSteps.map((executionArgument) => this.handleExecutionStep(executionArgument));
+            const promises = this.decodeExecutionArgument(searchResultItem.executionArgument).executionSteps.map(
+                (executionArgument) => this.handleExecutionStep(executionArgument),
+            );
 
             Promise.all(promises)
                 .then(() => resolve())
@@ -78,7 +75,7 @@ export class WorkflowPlugin implements SearchPlugin {
         });
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
+    public updateConfig(updatedConfig: UserConfigOptions): Promise<void> {
         return new Promise((resolve) => {
             this.config = updatedConfig.workflowOptions;
             resolve();

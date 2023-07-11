@@ -60,6 +60,8 @@ import { PluginType } from "../main/plugin-type";
 import { dictionarySettingsComponent } from "./settings/dictionary-settings-component";
 import { browserBookmarkSettingsComponent } from "./settings/browser-bookmark-settings-component";
 import { controlPanelSettingsComponent } from "./settings/control-panel-settings-component";
+import { weatherSettingsComponent } from "./settings/weather-settings-component";
+import { loremIpsumSettingsComponent } from "./settings/lorem-ipsum-settings-component";
 
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
@@ -105,6 +107,8 @@ Vue.component("color-converter-setttings", colorConverterSettingsComponent);
 Vue.component("plugin-toggle", pluginToggle);
 Vue.component("browser-bookmark-settings", browserBookmarkSettingsComponent);
 Vue.component("control-panel-settings", controlPanelSettingsComponent);
+Vue.component("weather-settings", weatherSettingsComponent);
+Vue.component("lorem-ipsum-settings", loremIpsumSettingsComponent);
 
 const initialConfig = new ElectronStoreConfigRepository(deepCopy(defaultUserConfigOptions)).getConfig();
 
@@ -187,7 +191,7 @@ const app = new Vue({
             ipcRenderer.send(IpcChannels.downloadUpdate);
         });
 
-        ipcRenderer.on(IpcChannels.executionFinished, (event) => {
+        ipcRenderer.on(IpcChannels.executionFinished, () => {
             vueEventDispatcher.$emit(VueEventChannels.executionFinished);
         });
 
@@ -243,11 +247,11 @@ const app = new Vue({
             vueEventDispatcher.$emit(VueEventChannels.notification, message, type);
         });
 
-        ipcRenderer.on(IpcChannels.refreshIndexesStarted, (event: Electron.Event) => {
+        ipcRenderer.on(IpcChannels.refreshIndexesStarted, () => {
             vueEventDispatcher.$emit(VueEventChannels.refreshIndexesStarted);
         });
 
-        ipcRenderer.on(IpcChannels.refreshIndexesCompleted, (event: Electron.Event, message: string) => {
+        ipcRenderer.on(IpcChannels.refreshIndexesCompleted, () => {
             vueEventDispatcher.$emit(VueEventChannels.refreshIndexesFinished);
         });
 

@@ -4,6 +4,7 @@ export enum WindowsShell {
     PowerShellCore = "PowerShell Core",
     WSL = "WSL",
     PowerShellInWT = "Powershell in Windows Terminal",
+    WSLInWT = "WSL in Windows Terminal",
 }
 
 export enum MacOsShell {

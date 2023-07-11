@@ -7,7 +7,7 @@ import { defaultGeneralOptions } from "../../common/config/general-options";
 import { GlobalHotKeyModifier } from "../../common/global-hot-key/global-hot-key-modifier";
 import { GlobalHotKeyKey } from "../../common/global-hot-key/global-hot-key-key";
 import { Language } from "../../common/translation/language";
-import { getFolderPath, getFilePath } from "../dialogs";
+import { getFilePath, getFolderPath } from "../dialogs";
 import { NotificationType } from "../../common/notification-type";
 import { TranslationSet } from "../../common/translation/translation-set";
 import { FileHelpers } from "../../common/helpers/file-helpers";
@@ -97,7 +97,7 @@ export const generalSettingsComponent = Vue.extend({
                             vueEventDispatcher.$emit(VueEventChannels.notification, err, NotificationType.Error),
                         );
                 })
-                .catch((err) => {
+                .catch(() => {
                     // do nothing when no folder selected
                 });
         },
@@ -192,7 +192,7 @@ export const generalSettingsComponent = Vue.extend({
                         )
                         .then(() => (this.dropdownVisible = false));
                 })
-                .catch((err) => {
+                .catch(() => {
                     // do nothing if no file selected
                 });
         },

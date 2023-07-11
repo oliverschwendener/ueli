@@ -16,4 +16,6 @@ export enum PluginSettings {
     ColorConverter = "Color Converter",
     BrowserBookmarks = "Browser Bookmarks",
     Dictionary = "Dictionary",
+    Weather = "Weather",
+    LoremIpsum = "Lorem Ipsum",
 }

@@ -1,6 +1,5 @@
 import { TranslationSet } from "./translation-set";
 
-// tslint:disable:object-literal-sort-keys for better readability
 export const russianTranslationSet: TranslationSet = {
     trayIconShow: "Открыть",
     trayIconSettings: "Настройки",
@@ -113,13 +112,19 @@ export const russianTranslationSet: TranslationSet = {
     appearanceSettingsShowSearchResultNumbers: "Показывать кол-во результатов",
     appearanceSettingsResetWarningMessage: "Вы хотите восстановить настройки внешнего вида по умолчанию. Вы уверены?",
     appearanceSettingsAllowTransparentBackground: "Прозрачность фона",
-    appearanceSettingsFontFamily: "семейство шрифтов",
+    appearanceSettingsFontFamily: "Семейство шрифтов",
     appearanceSettingsUserInputBorderRadius: "Пользовательский радиус границы ввода",
     appearanceSettingsUserInputBottomMargin: "Нижнее поле пользовательского ввода (в пикселях)",
     appearanceSettingsSearchResultsBorderRadius: "Радиус границы результатов поиска",
     appearanceSettingsScrollbarBorderRadius: "Радиус полосы прокрутки",
     appearanceSettingsBorderRadiusDescription:
         "Это значение CSS, поэтому вам нужно добавить «px», например, «10px» или отдельные углы, например «10px 0px 10px 5px».",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
+    appearanceSettingsUserInputFontSize: "User input font size",
+    appearanceSettingsSearchResultDescriptionFontSize: "Search result name font size",
+    appearanceSettingsSearchResultNameFontSize: "Search result description font size",
 
     settingsUserInputTitle: "Пользовательский ввод",
     settingsSearchResultsBoxTitle: "Окно результатов поиска",
@@ -266,6 +271,7 @@ export const russianTranslationSet: TranslationSet = {
     windowsShutdownDescription: "Выключить компьютер",
     windowsRestart: "Перезагрузить",
     windowsRestartDescription: "Перезагрузить компьютер",
+    windowsReboot: "Перезагрузить",
     windowsSignout: "Выйти",
     windowsSignoutDescription: "Выйти из учетной записи Windows",
     windowsLock: "Заблокировать",
@@ -317,7 +323,7 @@ export const russianTranslationSet: TranslationSet = {
     workflowIcon: "Иконка",
     workflowExecutionSteps: "Шаги выполнения",
     workflowExecutionArgumentType: "Тип аргумента выполнения",
-    wofkflowExecutionArgumentTypeCommandlineTool: "Командная строка",
+    workflowExecutionArgumentTypeCommandlineTool: "Командная строка",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "Указан не верный шаг.",
     workflowInvalidWorkflow: "Неправельный ярлык",
@@ -344,7 +350,7 @@ export const russianTranslationSet: TranslationSet = {
 
     dictionary: "Словарь",
     dictionaryDescription:
-        "Этот плагин позволяет быстро искать значения слов и синонимы к ним. Он использует неофициальное API Google Dictionary (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+        "Этот плагин позволяет быстро искать значения слов и синонимы к ним. Он использует неофициальное API Google Dictionary (https://dictionaryapi.dev/)",
     dictionaryPrefix: "Префикс",
     dictionaryMinSearchTermLength: "Минимальная длинна запроса",
     dictionaryDebounceDelay: "Задержка между запросами (в миллисекундах)",
@@ -376,6 +382,18 @@ export const russianTranslationSet: TranslationSet = {
     chooseFolder: "Выбрать папку",
     restartRequired: "Необходима перезагрузка",
 
-    controlPanel: "панель управления",
+    controlPanel: "Панель управления",
     controlPanelSettingsDescription: "Этот плагин позволяет быстро находить элементы панели управления.",
+
+    weather: "Погода",
+    weatherPrefix: "Приставка",
+    weatherSettingsDescription:
+        "Этот плагин позволяет проверить погодные условия любого региона. Если регион не указан, по умолчанию отображается погода текущего местоположения. Данные предоставляются wttr.in",
+    weatherTemperatureUnit: "Единица измерения температуры",
+    weatherCopyToClipboard: "Нажмите enter, чтобы скопировать",
+
+    loremIpsum: "Lorem Ipsum",
+    loremIpsumPrefix: "Приставка",
+    loremIpsumCopyToClipboard: "Нажмите enter, чтобы скопировать",
+    loremIpsumSettingsDescription: "Этот плагин позволяет быстро копировать образец текста в буфер обмена.",
 };

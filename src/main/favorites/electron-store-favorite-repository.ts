@@ -4,28 +4,13 @@ import { SearchResultItem } from "../../common/search-result-item";
 import Store = require("electron-store");
 
 export class ElectronStoreFavoriteRepository implements FavoriteRepository {
-    private readonly store: Store;
+    private readonly store: Store<Record<string, Favorite[]>>;
     private readonly favoritesStoreKey = "favorites";
     private favorites: Favorite[];
 
     constructor() {
-        this.store = new Store({ name: "favorites" });
-
-        this.favorites = this.migrateUserConfigFavorites() || this.store.get(this.favoritesStoreKey) || [];
-    }
-
-    private migrateUserConfigFavorites(): Favorite[] | undefined {
-        // Favorites were moved from the user config store to their own store.
-        // If favorites found in the user config store, migrate them.
-        const userConfigStore = new Store();
-        const userConfigFavoritesStoreKey = "favorites";
-        const userConfigFavorites = userConfigStore.get(userConfigFavoritesStoreKey);
-        if (userConfigFavorites) {
-            this.store.set(this.favoritesStoreKey, userConfigFavorites);
-            userConfigStore.delete(userConfigFavoritesStoreKey);
-        }
-
-        return userConfigFavorites;
+        this.store = new Store<Record<string, Favorite[]>>({ name: "favorites" });
+        this.favorites = this.store.get(this.favoritesStoreKey) || [];
     }
 
     public get(searchResultItem: SearchResultItem): Favorite | undefined {
@@ -41,14 +26,10 @@ export class ElectronStoreFavoriteRepository implements FavoriteRepository {
         this.store.set(this.favoritesStoreKey, this.favorites);
     }
 
-    public update(favorite: Favorite): void {
-        // tslint:disable-next-line: prefer-for-of because we need
-        for (let i = 0; i < this.favorites.length; i++) {
-            if (this.favorites[i].item.executionArgument === favorite.item.executionArgument) {
-                this.favorites[i] = favorite;
-                break;
-            }
-        }
+    public update(favoriteToUpdate: Favorite): void {
+        this.favorites = this.favorites.map((favorite) =>
+            favorite.item.executionArgument === favoriteToUpdate.item.executionArgument ? favoriteToUpdate : favorite,
+        );
 
         this.store.set(this.favoritesStoreKey, this.favorites);
     }

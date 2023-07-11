@@ -60,22 +60,20 @@ export class TranslationPlugin implements ExecutionPlugin {
     }
 
     private getTranslationResults(url: string): Promise<SearchResultItem[]> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             LingueeTranslator.getTranslations(url)
                 .then((translations) => {
-                    const result = translations.map(
-                        (t): SearchResultItem => {
-                            return {
-                                description: `${capitalize(t.word_type.pos)}`,
-                                executionArgument: t.text,
-                                hideMainWindowAfterExecution: true,
-                                icon: defaultTranslatorIcon,
-                                name: t.text,
-                                originPluginType: this.pluginType,
-                                searchable: [],
-                            };
-                        },
-                    );
+                    const result = translations.map((t): SearchResultItem => {
+                        return {
+                            description: `${capitalize(t.word_type.pos)}`,
+                            executionArgument: t.text,
+                            hideMainWindowAfterExecution: true,
+                            icon: defaultTranslatorIcon,
+                            name: t.text,
+                            originPluginType: this.pluginType,
+                            searchable: [],
+                        };
+                    });
                     if (result.length > 0) {
                         resolve(result);
                     } else {

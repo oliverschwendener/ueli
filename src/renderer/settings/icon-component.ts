@@ -9,11 +9,12 @@ export const iconComponent = Vue.extend({
             iconTypeColor: IconType.Color,
             iconTypeSvg: IconType.SVG,
             iconTypeUrl: IconType.URL,
+            iconUrlFail: false,
         };
     },
     methods: {
         getIcon(icon: Icon) {
-            if (isValidIcon(icon)) {
+            if (isValidIcon(icon) && this.iconUrlFail === false) {
                 return icon;
             } else {
                 return this.defaulticon;
@@ -29,7 +30,7 @@ export const iconComponent = Vue.extend({
     props: ["icon", "defaulticon"],
     template: `
         <div class="settings-table__icon-container">
-            <img v-if="getIcon(icon).type === iconTypeUrl" :src="getIcon(icon).parameter" class="settings-table__icon-url">
+            <img v-if="getIcon(icon).type === iconTypeUrl" :src="getIcon(icon).parameter" @error="iconUrlFail=true" class="settings-table__icon-url">
             <div v-if="getIcon(icon).type === iconTypeSvg" v-html="getIcon(icon).parameter" class="settings-table__icon-svg"></div>
             <div v-if="getIcon(icon).type === iconTypeColor" :style="getBackgroundColor(icon)" class="settings-table__icon-color"></div>
         </div>

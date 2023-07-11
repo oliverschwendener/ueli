@@ -38,6 +38,63 @@ const dark: ColorThemeOptions = {
     scrollbarForegroundColor: "#444",
 };
 
+const polarNight: ColorThemeOptions = {
+    name: "Polar Night",
+
+    userInputBackgroundColor: "#2E3440",
+    userInputTextColor: "#fefefe",
+
+    searchResultsBackgroundColor: "#3B4252",
+
+    searchResultsItemActiveBackgroundColor: "#4C566A",
+    searchResultsItemActiveDescriptionColor: "#ccc",
+    searchResultsItemActiveTextColor: "#fff",
+
+    searchResultsItemDescriptionTextColor: "#ccc",
+    searchResultsItemNameTextcolor: "#fff",
+
+    scrollbarBackgroundColor: "#2E3440",
+    scrollbarForegroundColor: "#4C566A",
+};
+
+const snowStorm: ColorThemeOptions = {
+    name: "Snow Storm",
+
+    userInputBackgroundColor: "#D8DEE9",
+    userInputTextColor: "#2E3440",
+
+    searchResultsBackgroundColor: "#E5E9F0",
+
+    searchResultsItemActiveBackgroundColor: "#D8DEE9",
+    searchResultsItemActiveDescriptionColor: "#4C566A",
+    searchResultsItemActiveTextColor: "#2E3440",
+
+    searchResultsItemDescriptionTextColor: "#4C566A",
+    searchResultsItemNameTextcolor: "#2E3440",
+
+    scrollbarBackgroundColor: "#D8DEE9",
+    scrollbarForegroundColor: "#ECEFF4",
+};
+
+const shadesOfPurple: ColorThemeOptions = {
+    name: "Shades Of Purple",
+
+    userInputBackgroundColor: "#1e1e3f",
+    userInputTextColor: "#b362ff",
+
+    searchResultsBackgroundColor: "#1e1e3f",
+
+    searchResultsItemActiveBackgroundColor: "#fad000",
+    searchResultsItemActiveDescriptionColor: "#1e1e3f",
+    searchResultsItemActiveTextColor: "#4d21fc",
+
+    searchResultsItemDescriptionTextColor: "#4d21fc",
+    searchResultsItemNameTextcolor: "#aab2c0",
+
+    scrollbarBackgroundColor: "#1e1e3f",
+    scrollbarForegroundColor: "#fad000",
+};
+
 export const atomOneDark: ColorThemeOptions = {
     name: "Atom One Dark",
 
@@ -57,4 +114,4 @@ export const atomOneDark: ColorThemeOptions = {
     scrollbarForegroundColor: "#3d444f",
 };
 
-export const colorThemes: ColorThemeOptions[] = [atomOneDark, dark, light];
+export const colorThemes: ColorThemeOptions[] = [atomOneDark, dark, light, polarNight, snowStorm, shadesOfPurple];

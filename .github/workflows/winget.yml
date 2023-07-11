@@ -1,0 +1,12 @@
+name: Publish to WinGet
+on:
+    release:
+        types: [released]
+jobs:
+    publish:
+        runs-on: windows-latest
+        steps:
+            - uses: vedantmgoyal2009/winget-releaser@v2
+              with:
+                  identifier: OliverSchwendener.ueli
+                  token: ${{ secrets.WIN_GET_REGISTRY }}

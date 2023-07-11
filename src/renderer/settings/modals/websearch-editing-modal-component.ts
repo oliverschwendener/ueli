@@ -9,7 +9,7 @@ import {
 import { TranslationSet } from "../../../common/translation/translation-set";
 import { NotificationType } from "../../../common/notification-type";
 import { ModalEditMode } from "./modal-edit-mode";
-import { isEqual, deepCopy } from "../../../common/helpers/object-helpers";
+import { deepCopy, isEqual } from "../../../common/helpers/object-helpers";
 
 export const websearchEditingModal = Vue.extend({
     computed: {
@@ -48,6 +48,17 @@ export const websearchEditingModal = Vue.extend({
                     translations.websearchInvalidWebsearchEngine,
                     NotificationType.Error,
                 );
+            }
+        },
+        onUrlBlurGetFaviconUrl() {
+            const websearchEngine: WebSearchEngine = this.websearchEngine;
+            if (websearchEngine.url.length > 0) {
+                try {
+                    const url = new URL(websearchEngine.url);
+                    websearchEngine.icon.parameter = `${url.protocol}//${url.hostname}/favicon.ico`;
+                } catch {
+                    websearchEngine.icon.parameter = "";
+                }
             }
         },
         getModalTitle(): string {
@@ -121,7 +132,7 @@ export const websearchEditingModal = Vue.extend({
                             {{ translations.websearchUrl }}
                         </label>
                         <div class="control is-expanded">
-                            <input class="input" type="url" v-model="websearchEngine.url" :placeholder="getUrlPlaceholder()">
+                            <input class="input" type="url" v-model="websearchEngine.url" :placeholder="getUrlPlaceholder()" @blur="onUrlBlurGetFaviconUrl()">
                         </div>
                     </div>
 

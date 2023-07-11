@@ -14,7 +14,7 @@ export const colorPickerComponent = Vue.extend({
         closeModal() {
             this.visible = false;
         },
-        updateValue(value: any) {
+        updateValue(value: { hex8: string }) {
             this.color = value.hex8;
         },
         saveColor() {

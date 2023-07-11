@@ -56,6 +56,8 @@ export const settingMenuItemComponent = Vue.extend({
                     return translations.translationSettingsTranslation;
                 case PluginSettings.Url:
                     return translations.url;
+                case PluginSettings.Weather:
+                    return translations.weather;
                 case PluginSettings.WebSearch:
                     return translations.websearch;
                 case PluginSettings.Workflow:
@@ -119,6 +121,10 @@ export const settingMenuItemComponent = Vue.extend({
                     return config.translationOptions.enabled;
                 case PluginSettings.Url:
                     return config.urlOptions.isEnabled;
+                case PluginSettings.Weather:
+                    return config.weatherOptions.isEnabled;
+                case PluginSettings.LoremIpsum:
+                    return config.loremIpsumOptions.isEnabled;
                 case PluginSettings.WebSearch:
                     return config.websearchOptions.isEnabled;
                 case PluginSettings.Workflow:

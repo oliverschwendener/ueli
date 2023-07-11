@@ -1,43 +1,42 @@
 import {
-    app,
     BrowserWindow,
-    ipcMain,
-    globalShortcut,
-    dialog,
-    Tray,
     Menu,
-    screen,
     MenuItemConstructorOptions,
+    Tray,
     WebContents,
+    app,
+    dialog,
+    globalShortcut,
+    ipcMain,
+    screen,
 } from "electron";
 import { autoUpdater } from "electron-updater";
-import { join } from "path";
-import { IpcChannels } from "../common/ipc-channels";
-import { SearchResultItem } from "../common/search-result-item";
-import { UserConfigOptions } from "../common/config/user-config-options";
-import { ElectronStoreConfigRepository } from "../common/config/electron-store-config-repository";
-import { defaultUserConfigOptions } from "../common/config/user-config-options";
-import { AppearanceOptions } from "../common/config/appearance-options";
-import { isDev } from "../common/is-dev";
-import { UeliCommand } from "./plugins/ueli-command-search-plugin/ueli-command";
-import { UeliCommandExecutionArgument } from "./plugins/ueli-command-search-plugin/ueli-command-execution-argument";
 import { platform, release } from "os";
-import { getProductionSearchEngine } from "./production/production-search-engine";
-import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
+import { join } from "path";
+import { AppearanceOptions } from "../common/config/appearance-options";
+import { ElectronStoreConfigRepository } from "../common/config/electron-store-config-repository";
 import { defaultGeneralOptions } from "../common/config/general-options";
+import { UserConfigOptions, defaultUserConfigOptions } from "../common/config/user-config-options";
 import { getErrorSearchResultItem } from "../common/error-search-result-item";
+import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
 import { FileHelpers } from "./../common/helpers/file-helpers";
 import { ueliTempFolder, logFilePath } from "../common/helpers/ueli-helpers";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
 import { trayIconPathWindows, trayIconPathMacOs, trayIconPathLinux } from "./helpers/tray-icon-helpers";
 import { isValidHotKey } from "../common/global-hot-key/global-hot-key-helpers";
-import { NotificationType } from "../common/notification-type";
-import { UserInputHistoryManager } from "./user-input-history-manager";
+import { GlobalHotKeyKey } from "../common/global-hot-key/global-hot-key-key";
+import { GlobalHotKeyModifier } from "../common/global-hot-key/global-hot-key-modifier";
+import { deepCopy } from "../common/helpers/object-helpers";
 import { getCurrentOperatingSystem, getOperatingSystemVersion } from "../common/helpers/operating-system-helpers";
+import { logFilePath, ueliTempFolder } from "../common/helpers/ueli-helpers";
+import { IpcChannels } from "../common/ipc-channels";
+import { isDev } from "../common/is-dev";
 import { executeFilePathWindows, executeFilePathLinux, executeFilePathMacOs } from "./executors/file-path-executor";
 import { UpdateCheckResult } from "../common/update-check-result";
 import { ProductionLogger } from "../common/logger/production-logger";
 import { DevLogger } from "../common/logger/dev-logger";
+import { ProductionLogger } from "../common/logger/production-logger";
+import { NotificationType } from "../common/notification-type";
 import { windowIconWindows, windowIconMacOs, windowIconLinux } from "./helpers/window-icon-helpers";
 import { toHex } from "./plugins/color-converter-plugin/color-converter-helpers";
 import { deepCopy } from "../common/helpers/object-helpers";
@@ -45,8 +44,21 @@ import { PluginType } from "./plugin-type";
 import { getRescanIntervalInMilliseconds } from "./helpers/rescan-interval-helpers";
 import { openUrlInBrowser } from "./executors/url-executor";
 import { OperatingSystem } from "../common/operating-system";
-import { GlobalHotKeyModifier } from "../common/global-hot-key/global-hot-key-modifier";
-import { GlobalHotKeyKey } from "../common/global-hot-key/global-hot-key-key";
+import { SearchResultItem } from "../common/search-result-item";
+import { getTranslationSet } from "../common/translation/translation-set-manager";
+import { UpdateCheckResult } from "../common/update-check-result";
+import { FileHelpers } from "./../common/helpers/file-helpers";
+import { executeFilePathMacOs, executeFilePathWindows } from "./executors/file-path-executor";
+import { openUrlInBrowser } from "./executors/url-executor";
+import { getRescanIntervalInMilliseconds } from "./helpers/rescan-interval-helpers";
+import { trayIconPathMacOs, trayIconPathWindows } from "./helpers/tray-icon-helpers";
+import { windowIconMacOs, windowIconWindows } from "./helpers/window-icon-helpers";
+import { PluginType } from "./plugin-type";
+import { toHex } from "./plugins/color-converter-plugin/color-converter-helpers";
+import { UeliCommand } from "./plugins/ueli-command-search-plugin/ueli-command";
+import { UeliCommandExecutionArgument } from "./plugins/ueli-command-search-plugin/ueli-command-execution-argument";
+import { getProductionSearchEngine } from "./production/production-search-engine";
+import { UserInputHistoryManager } from "./user-input-history-manager";
 
 if (!FileHelpers.fileExistsSync(ueliTempFolder)) {
     FileHelpers.createFolderSync(ueliTempFolder);
@@ -106,6 +118,7 @@ let trayIcon: Tray;
 let mainWindow: BrowserWindow;
 let settingsWindow: BrowserWindow;
 let lastWindowPosition = config.generalOptions.lastWindowPosition;
+let lastSearchUserInput: string | undefined;
 
 let translationSet = getTranslationSet(config.generalOptions.language);
 const logger = appIsInDevelopment ? new DevLogger() : new ProductionLogger(logFilePath, filePathExecutor);
@@ -138,7 +151,11 @@ function refreshAllIndexes() {
             notifyRenderer(translationSet.successfullyRefreshedIndexes, NotificationType.Info);
         })
         .catch((err) => {
-            logger.error(err);
+            if (Array.isArray(err)) {
+                err.forEach((e) => logger.error(e));
+            } else {
+                logger.error(err);
+            }
             notifyRenderer(err, NotificationType.Error);
         })
         .finally(onIndexRefreshFinished);
@@ -487,6 +504,7 @@ function updateAutoStartOptions(userConfig: UserConfigOptions) {
 function createTrayIcon() {
     if (config.generalOptions.showTrayIcon) {
         trayIcon = new Tray(trayIconFilePath);
+        trayIcon.setToolTip("ueli");
         updateTrayIconContextMenu();
     }
 }
@@ -533,7 +551,7 @@ function destroyTrayIcon() {
 }
 
 function onMainWindowMove() {
-    if (windowExists(mainWindow)) {
+    if (windowExists(mainWindow) && config.generalOptions.rememberWindowPosition) {
         const currentPosition = mainWindow.getPosition();
         if (currentPosition.length === 2) {
             lastWindowPosition = {
@@ -569,7 +587,8 @@ function createMainWindow() {
         transparent: mainWindowNeedsToBeTransparent(config),
         webPreferences: {
             nodeIntegration: true,
-            enableRemoteModule: true,
+            contextIsolation: false,
+            spellcheck: false,
         },
         width: config.appearanceOptions.windowWidth,
     });
@@ -676,7 +695,8 @@ function openSettings() {
             title: translationSet.settings,
             webPreferences: {
                 nodeIntegration: true,
-                enableRemoteModule: true,
+                contextIsolation: false,
+                spellcheck: false,
             },
             width: 1000,
         });
@@ -735,9 +755,14 @@ function registerAllIpcListeners() {
     );
 
     ipcMain.on(IpcChannels.search, (event: Electron.IpcMainEvent, userInput: string) => {
+        lastSearchUserInput = userInput;
         searchEngine
             .getSearchResults(userInput)
-            .then((result) => updateSearchResults(result, event.sender))
+            .then((result) => {
+                if (lastSearchUserInput === userInput) {
+                    updateSearchResults(result, event.sender);
+                }
+            })
             .catch((err) => {
                 logger.error(err);
                 noSearchResultsFound();
@@ -849,6 +874,7 @@ function registerAllIpcListeners() {
         event.sender.send(IpcChannels.userInputUpdated, newUserInput, true);
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ipcMain.on(IpcChannels.ueliCommandExecuted, (command: any) => {
         command = command as UeliCommand;
 

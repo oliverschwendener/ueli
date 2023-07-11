@@ -105,6 +105,8 @@ export interface TranslationSet {
     appearanceSettingsSearchResultHeight: string;
     appearanceSettingsSmoothScrolling: string;
     appearanceSettingsUserInputHeight: string;
+    appearanceSettingsUserInputFontSize: string;
+    appearanceSettingsUserInputFontWeight: string;
     appearanceSettingsShowDescriptionOnAllSearchResults: string;
     appearanceSettingsShowSearchIcon: string;
     appearanceSettingsShowSearchResultNumbers: string;
@@ -116,6 +118,10 @@ export interface TranslationSet {
     appearanceSettingsSearchResultsBorderRadius: string;
     appearanceSettingsScrollbarBorderRadius: string;
     appearanceSettingsBorderRadiusDescription: string;
+    appearanceSettingsSearchResultNameFontSize: string;
+    appearanceSettingsSearchResultNameFontWeight: string;
+    appearanceSettingsSearchResultDescriptionFontWeight: string;
+    appearanceSettingsSearchResultDescriptionFontSize: string;
 
     settingsUserInputTitle: string;
     settingsSearchResultsBoxTitle: string;
@@ -260,6 +266,7 @@ export interface TranslationSet {
     windowsShutdownDescription: string;
     windowsRestart: string;
     windowsRestartDescription: string;
+    windowsReboot: string;
     windowsSignout: string;
     windowsSignoutDescription: string;
     windowsLock: string;
@@ -310,7 +317,7 @@ export interface TranslationSet {
     workflowIcon: string;
     workflowExecutionSteps: string;
     workflowExecutionArgumentType: string;
-    wofkflowExecutionArgumentTypeCommandlineTool: string;
+    workflowExecutionArgumentTypeCommandlineTool: string;
     workflowExecutionArgumentTypeUrl: string;
     workflowInvalidExecutionStep: string;
     workflowInvalidWorkflow: string;
@@ -369,4 +376,15 @@ export interface TranslationSet {
 
     controlPanel: string;
     controlPanelSettingsDescription: string;
+
+    weather: string;
+    weatherPrefix: string;
+    weatherSettingsDescription: string;
+    weatherTemperatureUnit: string;
+    weatherCopyToClipboard: string;
+
+    loremIpsum: string;
+    loremIpsumPrefix: string;
+    loremIpsumCopyToClipboard: string;
+    loremIpsumSettingsDescription: string;
 }

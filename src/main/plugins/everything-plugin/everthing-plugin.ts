@@ -56,7 +56,7 @@ export class EverythingPlugin implements ExecutionPlugin, OpenLocationPlugin {
     }
 
     public updateConfig(updatedUserConfig: UserConfigOptions): Promise<void> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             this.config = updatedUserConfig.everythingSearchOptions;
             resolve();
         });

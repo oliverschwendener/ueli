@@ -141,6 +141,8 @@ export const settingsComponent = Vue.extend({
                 <user-confirmation :translations="translations"></user-confirmation>
                 <browser-bookmark-settings :config="config" :translations="translations"></browser-bookmark-settings>
                 <control-panel-settings :config="config" :translations="translations"></control-panel-settings>
+                <weather-settings :config="config" :translations="translations"></weather-settings>
+                <lorem-ipsum-settings :config="config" :translations="translations"></lorem-ipsum-settings>
             </div>
         </div>
     `,

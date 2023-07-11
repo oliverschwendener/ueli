@@ -30,20 +30,18 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
                     if (commands.length === 0) {
                         resolve([]);
                     } else {
-                        const result = commands.map(
-                            (command): SearchResultItem => {
-                                return {
-                                    description: command.description,
-                                    executionArgument: command.executionArgument,
-                                    hideMainWindowAfterExecution: true,
-                                    icon: command.icon,
-                                    name: command.name,
-                                    needsUserConfirmationBeforeExecution: true,
-                                    originPluginType: this.pluginType,
-                                    searchable: command.searchable,
-                                };
-                            },
-                        );
+                        const result = commands.map((command): SearchResultItem => {
+                            return {
+                                description: command.description,
+                                executionArgument: command.executionArgument,
+                                hideMainWindowAfterExecution: true,
+                                icon: command.icon,
+                                name: command.name,
+                                needsUserConfirmationBeforeExecution: true,
+                                originPluginType: this.pluginType,
+                                searchable: command.searchable,
+                            };
+                        });
                         resolve(result);
                     }
                 })
@@ -67,7 +65,7 @@ export class OperatingSystemCommandsPlugin implements SearchPlugin {
         return this.config.isEnabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(searchResultItem: SearchResultItem): Promise<void> {
         return this.commandExecutor(searchResultItem.executionArgument);
     }
 

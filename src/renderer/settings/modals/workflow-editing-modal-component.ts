@@ -6,8 +6,8 @@ import { TranslationSet } from "../../../common/translation/translation-set";
 import { ModalEditMode } from "./modal-edit-mode";
 import { WorkflowExecutionArgumentType } from "../../../main/plugins/workflow-plugin/workflow-execution-argument-type";
 import {
-    getWorkflowExecutionArgumentTypeIcon,
     getWorkflowExecutionArgumentTypeClass,
+    getWorkflowExecutionArgumentTypeIcon,
     getWorkflowExecutionArgumentTypeTranslation,
 } from "../helpers";
 import { WorkflowExecutionStep } from "../../../main/plugins/workflow-plugin/workflow-execution-argument";
@@ -120,14 +120,14 @@ export const workflowEditingModal = Vue.extend({
         openFile() {
             getFilePath()
                 .then((filePath) => this.handleFileOrFolderSelected(filePath))
-                .catch((err) => {
+                .catch(() => {
                     /* do nothing if no file selected*/
                 });
         },
         openFolder() {
             getFolderPath()
                 .then((folderPath) => this.handleFileOrFolderSelected(folderPath))
-                .catch((err) => {
+                .catch(() => {
                     /* do nothing if no folder selected*/
                 });
         },

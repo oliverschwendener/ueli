@@ -1,5 +1,6 @@
 :root {
-    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
     --user-input--font-size: 24px;
     --user-input--font-weight: 200;
@@ -18,10 +19,11 @@
     --search-results--item-active-background-color: #3d4452;
     --search-results--item-active-text-color: #fff;
     --search-results--item-name-text-color: #aab2c0;
+    --search-results--item-name-font-size: 16px;
     --search-results--item-name-font-weight: 400;
     --search-results--item-name-padding: 0 0 2px;
     --search-results--item-description-text-color: #ccc;
-    --search-results--item-descriptioin-font-size: 12px;
+    --search-results--item-description-font-size: 12px;
     --search-results--item-description-font-weight: 200;
     --search-results--item-height: 50px;
     --search-results--item-side-padding: 15px;
@@ -144,9 +146,8 @@ body {
 }
 
 .search-results__item {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
     height: var(--search-results--item-height);
     padding: 0 var(--search-results--item-side-padding);
@@ -167,7 +168,7 @@ body {
     flex-shrink: 0;
     opacity: 0.75;
 }
-.search-results__item-icon-container.active{
+.search-results__item-icon-container.active {
     opacity: 1;
 }
 
@@ -204,16 +205,16 @@ body {
     height: var(--search-results--item-icon-size);
     width: var(--search-results--item-icon-size);
     border-radius: 50%;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
 
 .search-results__item-info-container {
-    flex-grow: 1;
     padding: 0 var(--search-results--item-info-container-padding);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    max-width: calc(100% - var(--search-results--item-icon-size));
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .search-results__item-number-container {
@@ -236,6 +237,7 @@ body {
 
 .search-results__item-name {
     color: var(--search-results--item-name-text-color);
+    font-size: var(--search-results--item-name-font-size);
     font-weight: var(--search-results--item-name-font-weight);
     padding: var(--search-results--item-name-padding);
 }
@@ -247,7 +249,7 @@ body {
 .search-results__item-description {
     display: none;
     color: var(--search-results--item-description-text-color);
-    font-size: var(--search-results--item-descriptioin-font-size);
+    font-size: var(--search-results--item-description-font-size);
     font-weight: var(--search-results--item-description-font-weight);
 }
 

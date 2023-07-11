@@ -9,7 +9,7 @@ import { dummyIcon } from "../tests/dummy-icon";
 import { ExecutionPlugin } from "./execution-plugin";
 import { TranslationSet } from "../common/translation/translation-set";
 import { FakeFavoriteRepository } from "../tests/fake-favorite-repository";
-import { defaultSearchEngineOptions, SearchEngineOptions } from "../common/config/search-engine-options";
+import { SearchEngineOptions, defaultSearchEngineOptions } from "../common/config/search-engine-options";
 
 describe(SearchEngine.name, () => {
     const fakeFavoritesRepository = new FakeFavoriteRepository([]);
@@ -264,6 +264,41 @@ describe(SearchEngine.name, () => {
                 done();
             })
             .catch((err) => done(err));
+    });
+
+    it("should reject index refresh with errors of all failed plugins", (done) => {
+        const translationSet = {} as TranslationSet;
+        const favoritesRepository = new FakeFavoriteRepository([]);
+        const fakePlugins = [
+            new FakeSearchPlugin(PluginType.Test, [], true),
+            new FakeSearchPlugin(PluginType.Test, [], true),
+            new FakeSearchPlugin(PluginType.Test, [], true),
+            new FakeSearchPlugin(PluginType.Test, [], true),
+        ];
+        jest.spyOn(fakePlugins[1], "refreshIndex").mockReturnValue(Promise.reject("error 1"));
+        jest.spyOn(fakePlugins[3], "refreshIndex").mockReturnValue(Promise.reject("error 2"));
+        const searchPlugins: SearchPlugin[] = fakePlugins;
+        const executionPlugins: ExecutionPlugin[] = [];
+        const fallbackPlugins: ExecutionPlugin[] = [];
+        const searchEngine = new SearchEngine(
+            searchPlugins,
+            executionPlugins,
+            fallbackPlugins,
+            defaultSearchEngineOptions,
+            false,
+            translationSet,
+            favoritesRepository,
+        );
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let caughtError: any;
+
+        searchEngine
+            .refreshAllIndexes()
+            .catch((err) => (caughtError = err))
+            .finally(() => {
+                expect(caughtError).toEqual(["error 1", "error 2"]);
+                done();
+            });
     });
 
     it("should only refresh index of given plugin", (done) => {

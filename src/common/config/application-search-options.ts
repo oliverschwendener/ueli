@@ -25,7 +25,12 @@ const windowsApplicationSearchOptions: ApplicationSearchOptions = {
 
 const macOsApplicationSearchOptions: ApplicationSearchOptions = {
     applicationFileExtensions: [".app"],
-    applicationFolders: ["/Applications", "/System/Library/CoreServices", `${homedir()}/Applications`],
+    applicationFolders: [
+        "/Applications",
+        "/System/Library/CoreServices",
+        "/System/Applications",
+        `${homedir()}/Applications`,
+    ],
     enabled: true,
     showFullFilePath: false,
     useNativeIcons: true,

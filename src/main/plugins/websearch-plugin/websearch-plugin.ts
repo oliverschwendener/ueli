@@ -14,13 +14,13 @@ export class WebSearchPlugin implements ExecutionPlugin, AutoCompletionPlugin {
     private config: WebSearchOptions;
     private translationSet: TranslationSet;
     private readonly urlExecutor: (url: string) => Promise<void>;
-    private readonly suggestionResolver: (url: string) => Promise<any>;
+    private readonly suggestionResolver: (url: string) => Promise<string[][]>;
 
     constructor(
         userConfig: WebSearchOptions,
         translationSet: TranslationSet,
         urlExecutor: (url: string) => Promise<void>,
-        suggestionResolver: (url: string) => Promise<any>,
+        suggestionResolver: (url: string) => Promise<string[][]>,
     ) {
         this.config = userConfig;
         this.translationSet = translationSet;
@@ -81,7 +81,7 @@ export class WebSearchPlugin implements ExecutionPlugin, AutoCompletionPlugin {
     }
 
     public autoComplete(searchResultItem: SearchResultItem): string {
-        const searchUrl = searchResultItem.executionArgument.match(/^([^:]+:\/\/[^\/]+)\//)
+        const searchUrl = searchResultItem.executionArgument.match(/^([^:]+:\/\/[^/]+)\//)
             ? RegExp.$1
             : searchResultItem.executionArgument;
 
@@ -180,25 +180,21 @@ export class WebSearchPlugin implements ExecutionPlugin, AutoCompletionPlugin {
                     .then((response) => {
                         const suggestions: string[] = response[1];
 
-                        const searchResultItems = suggestions.map(
-                            (suggestion): SearchResultItem => {
-                                return {
-                                    description: this.buildDescriptionFromSearchTerm(websearchEngine, suggestion),
-                                    executionArgument: this.buildExecutionArgumentFromSearchTerm(
-                                        websearchEngine,
-                                        suggestion,
-                                    ),
-                                    hideMainWindowAfterExecution: true,
-                                    icon: isValidIcon(websearchEngine.icon)
-                                        ? websearchEngine.icon
-                                        : defaultWebSearchIcon,
-                                    name: suggestion,
-                                    originPluginType: this.pluginType,
-                                    searchable: [],
-                                    supportsAutocompletion: true,
-                                };
-                            },
-                        );
+                        const searchResultItems = suggestions.map((suggestion): SearchResultItem => {
+                            return {
+                                description: this.buildDescriptionFromSearchTerm(websearchEngine, suggestion),
+                                executionArgument: this.buildExecutionArgumentFromSearchTerm(
+                                    websearchEngine,
+                                    suggestion,
+                                ),
+                                hideMainWindowAfterExecution: true,
+                                icon: isValidIcon(websearchEngine.icon) ? websearchEngine.icon : defaultWebSearchIcon,
+                                name: suggestion,
+                                originPluginType: this.pluginType,
+                                searchable: [],
+                                supportsAutocompletion: true,
+                            };
+                        });
 
                         resolve(searchResultItems);
                     })

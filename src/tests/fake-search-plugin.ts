@@ -1,8 +1,6 @@
 import { SearchPlugin } from "../main/search-plugin";
 import { PluginType } from "../main/plugin-type";
 import { SearchResultItem } from "../common/search-result-item";
-import { UserConfigOptions } from "../common/config/user-config-options";
-import { TranslationSet } from "../common/translation/translation-set";
 
 export class FakeSearchPlugin implements SearchPlugin {
     public pluginType: PluginType;
@@ -24,7 +22,7 @@ export class FakeSearchPlugin implements SearchPlugin {
     }
 
     public refreshIndex(): Promise<void> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             this.indexRefreshCount++;
             resolve();
         });
@@ -40,14 +38,14 @@ export class FakeSearchPlugin implements SearchPlugin {
         return this.enabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
-        return new Promise((resolve, reject) => {
+    public execute(): Promise<void> {
+        return new Promise((_, reject) => {
             reject("Method not implemented.");
         });
     }
 
-    public updateConfig(updatedConfig: UserConfigOptions, translationSet: TranslationSet): Promise<void> {
-        return new Promise((resolve, reject) => {
+    public updateConfig(): Promise<void> {
+        return new Promise((_, reject) => {
             reject("Method not implemented.");
         });
     }

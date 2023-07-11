@@ -126,9 +126,9 @@ export class SearchEngine {
     }
 
     public autoComplete(searchResultItem: SearchResultItem): string {
-        const originPlugin = this.getAllPlugins()
-            .filter((plugin) => plugin.isEnabled())
-            .find((plugin) => plugin.pluginType === searchResultItem.originPluginType);
+        const originPlugin = this.getAllPlugins().find(
+            (plugin) => plugin.isEnabled() && plugin.pluginType === searchResultItem.originPluginType,
+        );
 
         if (originPlugin && this.pluginSupportsAutocompletion(originPlugin)) {
             return originPlugin.autoComplete(searchResultItem);
@@ -139,11 +139,16 @@ export class SearchEngine {
 
     public refreshAllIndexes(): Promise<void> {
         return new Promise((resolve, reject) => {
-            Promise.all(
+            Promise.allSettled(
                 this.searchPlugins.filter((plugin) => plugin.isEnabled()).map((plugin) => plugin.refreshIndex()),
-            )
-                .then(() => resolve())
-                .catch((err) => reject(err));
+            ).then((results) => {
+                const failures = results.filter((r) => r.status === "rejected") as PromiseRejectedResult[];
+                if (failures.length > 0) {
+                    reject(failures.map((f) => f.reason));
+                } else {
+                    resolve();
+                }
+            });
         });
     }
 
@@ -207,6 +212,7 @@ export class SearchEngine {
                         threshold: this.config.fuzzyness,
                     });
 
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     const fuseResult = fuse.search(userInput) as any[];
 
                     if (this.logExecution) {
@@ -291,11 +297,13 @@ export class SearchEngine {
         return [...this.searchPlugins, ...this.executionPlugins];
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private pluginSupportsOpenLocation(plugin: any): plugin is OpenLocationPlugin {
         const openLocationPlugin = plugin as OpenLocationPlugin;
         return openLocationPlugin.openLocation !== undefined;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private pluginSupportsAutocompletion(plugin: any): plugin is AutoCompletionPlugin {
         const autoCompletionPlugin = plugin as AutoCompletionPlugin;
         return autoCompletionPlugin.autoComplete !== undefined;

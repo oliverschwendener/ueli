@@ -26,9 +26,11 @@ import { SimpleFolderSearchOptions, defaultSimpleFolderSearchOptions } from "./s
 import { UwpSearchOptions, defaultUwpSearchOptions } from "./uwp-search-options";
 import { ColorConverterOptions, defaultColorConverterOptions } from "./color-converter-options";
 import { ApplicationSearchOptions, defaultApplicationSearchOptions } from "./application-search-options";
-import { defaultDictionaryOptions, DictionaryOptions } from "./dictionary-options";
+import { DictionaryOptions, defaultDictionaryOptions } from "./dictionary-options";
 import { BrowserBookmarksOptions, defaultBrowserBookmarksOptions } from "./browser-bookmarks-options";
 import { ControlPanelOptions, defaultControlPanelOptions } from "./control-panel-options";
+import { WeatherOptions, defaultWeatherOptions } from "./weather-options";
+import { LoremIpsumOptions, defaultLoremIpsumOptions } from "./lorem-ipsum-options";
 
 export interface UserConfigOptions {
     appearanceOptions: AppearanceOptions;
@@ -56,6 +58,8 @@ export interface UserConfigOptions {
     uwpSearchOptions: UwpSearchOptions;
     browserBookmarksOptions: BrowserBookmarksOptions;
     controlPanelOptions: ControlPanelOptions;
+    weatherOptions: WeatherOptions;
+    loremIpsumOptions: LoremIpsumOptions;
 }
 
 export const defaultUserConfigOptions: UserConfigOptions = {
@@ -82,6 +86,8 @@ export const defaultUserConfigOptions: UserConfigOptions = {
     translationOptions: defaultTranslationOptions,
     urlOptions: defaultUrlOptions,
     uwpSearchOptions: defaultUwpSearchOptions,
+    weatherOptions: defaultWeatherOptions,
     websearchOptions: defaultWebSearchOptions,
     workflowOptions: defaultWorkflowOptions,
+    loremIpsumOptions: defaultLoremIpsumOptions,
 };

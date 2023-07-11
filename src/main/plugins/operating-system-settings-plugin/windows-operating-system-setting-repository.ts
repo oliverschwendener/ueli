@@ -221,17 +221,15 @@ const windowsSettings: WindowsSetting[] = [
 export class WindowsOperatingSystemSettingRepository implements OperatingSystemSettingRepository {
     public getAll(): Promise<OperatingSystemSetting[]> {
         return new Promise((resolve) => {
-            const result = windowsSettings.map(
-                (windowsSetting): OperatingSystemSetting => {
-                    return {
-                        description: windowsOperatingSystemSettingDescription,
-                        executionArgument: windowsSetting.URI,
-                        icon: { parameter: defaultWindowsOperatingSystemSettingIcon, type: IconType.URL },
-                        name: windowsSetting.name,
-                        tags: [],
-                    };
-                },
-            );
+            const result = windowsSettings.map((windowsSetting): OperatingSystemSetting => {
+                return {
+                    description: windowsOperatingSystemSettingDescription,
+                    executionArgument: windowsSetting.URI,
+                    icon: { parameter: defaultWindowsOperatingSystemSettingIcon, type: IconType.URL },
+                    name: windowsSetting.name,
+                    tags: [],
+                };
+            });
 
             resolve(result);
         });

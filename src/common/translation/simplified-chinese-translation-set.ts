@@ -1,7 +1,6 @@
 import { TranslationSet } from "./translation-set";
 
-// tslint:disable:object-literal-sort-keys for better readability
-export const chineseTranslationSet: TranslationSet = {
+export const simplifiedChineseTranslationSet: TranslationSet = {
     trayIconShow: "显示",
     trayIconSettings: "设置",
     trayIconQuit: "退出",
@@ -119,6 +118,12 @@ export const chineseTranslationSet: TranslationSet = {
     appearanceSettingsSearchResultsBorderRadius: "搜索结果边框圆角",
     appearanceSettingsScrollbarBorderRadius: "滚动条圆角",
     appearanceSettingsBorderRadiusDescription: "这是一个 CSS 值，其形式为： 10px 或 10px 0px 10px 5px",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
+    appearanceSettingsUserInputFontSize: "User input font size",
+    appearanceSettingsSearchResultDescriptionFontSize: "Search result name font size",
+    appearanceSettingsSearchResultNameFontSize: "Search result description font size",
 
     settingsUserInputTitle: "搜索栏",
     settingsSearchResultsBoxTitle: "搜索结果栏",
@@ -207,7 +212,7 @@ export const chineseTranslationSet: TranslationSet = {
     translationSettingsTargetLanguage: "目标语言",
 
     everythingSearch: "Everything",
-    everythingSearchSettingDescription: `这个插件可以让你使用 Everything 搜索文件。需要从 https://www.voidtools.com/downloads/ 安装 Everything 和 Enverything Command-line Interface`,
+    everythingSearchSettingDescription: `这个插件可以让你使用 Everything 搜索文件。需要从 https://www.voidtools.com/downloads/ 安装 Everything 和 Everything Command-line Interface`,
     everythingSearchPathToBinary: `"es.exe" 的路径`,
     everythingSearchPrefix: "前缀",
     everythingSearchMaxSearchResults: "最大搜索记录",
@@ -263,6 +268,7 @@ export const chineseTranslationSet: TranslationSet = {
     windowsShutdownDescription: "关闭计算机",
     windowsRestart: "重启",
     windowsRestartDescription: "重新启动计算机",
+    windowsReboot: "重启",
     windowsSignout: "注销",
     windowsSignoutDescription: "注销当前用户",
     windowsLock: "锁定",
@@ -313,7 +319,7 @@ export const chineseTranslationSet: TranslationSet = {
     workflowIcon: "图标",
     workflowExecutionSteps: "动作",
     workflowExecutionArgumentType: "运行参数类型",
-    wofkflowExecutionArgumentTypeCommandlineTool: "命令行工具",
+    workflowExecutionArgumentTypeCommandlineTool: "命令行工具",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "无效的动作",
     workflowInvalidWorkflow: "无效的工作流",
@@ -339,7 +345,7 @@ export const chineseTranslationSet: TranslationSet = {
     colorConverterShowColorPreview: "显示颜色预览",
 
     dictionary: "字典",
-    dictionaryDescription: "使用 Google 字典 API (https://googledictionaryapi.eu-gb.mybluemix.net/) 进行英文释义",
+    dictionaryDescription: "使用 Google 字典 API (https://dictionaryapi.dev/) 进行英文释义",
     dictionaryPrefix: "前缀",
     dictionaryMinSearchTermLength: "单词最短长度",
     dictionaryDebounceDelay: "防抖动（毫秒）",
@@ -372,4 +378,16 @@ export const chineseTranslationSet: TranslationSet = {
 
     controlPanel: "控制面板",
     controlPanelSettingsDescription: "这个插件让你可以搜索控制面板项",
+
+    weather: "天气",
+    weatherPrefix: "前缀",
+    weatherSettingsDescription:
+        "此插件可让您检查任何区域的天气状况。如果没有提供区域，则默认显示当前位置的天气。数据由 wttr.in 提供",
+    weatherTemperatureUnit: "温度单位",
+    weatherCopyToClipboard: "按 Enter 复制到剪贴板",
+
+    loremIpsum: "Lorem Ipsum",
+    loremIpsumPrefix: "前缀",
+    loremIpsumCopyToClipboard: "按 Enter 复制到剪贴板",
+    loremIpsumSettingsDescription: "此插件可让您快速将示例文本复制到剪贴板。",
 };

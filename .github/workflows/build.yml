@@ -1,47 +1,47 @@
 name: Build
-on: [push]
+
+on:
+  push:
+      branches:
+          - main
+  pull_request:
+      branches:
+          - main
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        os: [macos-latest, windows-latest]
-        node_version: ['12.x']
+    build:
+        runs-on: ubuntu-22.04
+        name: Build
+        steps:
+            - name: Checkout current commit/branch/tag
+              uses: actions/checkout@v3
 
-    runs-on: ${{ matrix.os }}
-    name: Build on ${{ matrix.os }} with Node ${{ matrix.node_version }}
-    steps:
-      - name: Checkout current commit/branch/tag
-        uses: actions/checkout@v1
+            - name: Set up pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 8
 
-      - name: Setup Node ${{ matrix.node_version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node_version }}
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+                  cache: pnpm
 
-      - name: Show exact node version
-        run: node --version
+            - name: Install dependencies
+              run: pnpm install
+              env:
+                NODE_ENV: development
 
-      - name: Show exact yarn version
-        run: yarn --version
+            - name: Lint TypeScript files
+              run: pnpm lint
 
-      - name: Install dependencies
-        run: yarn install
+            - name: Prettier check
+              run: pnpm exec prettier --check src/**/*
 
-      - name: Lint TypeScript files
-        run: yarn lint
+            - name: Run tests
+              run: pnpm test
 
-      - name: Run tests
-        run: yarn test
-
-      - name: Bundle files
-        run: yarn bundle
-        env:
-          NODE_ENV: production
-
-      - name: Publish new release
-        if: startsWith(github.ref, 'refs/tags')
-        run: yarn package:publish
-        env:
-          CI: true
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+            - name: Bundle files
+              run: pnpm bundle
+              env:
+                  NODE_ENV: production

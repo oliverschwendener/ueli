@@ -9,6 +9,7 @@ This is a keystroke launcher for Windows and macOS.
 -   [Installation](#installation)
 -   [Features](#features)
 -   [Keyboard shortcuts](#keyboard-shortcuts)
+-   [Supported Languages](#supported-languages)
 -   [Settings](#settings)
 -   [Updating](#updating)
 -   [Privacy](#privacy)
@@ -28,12 +29,20 @@ This is a keystroke launcher for Windows and macOS.
 
 > Note: because the executables are not signed Windows and macOS will probably prevent you from executing the installer or the program itself.
 
+### Install with [Windows Package Manager](https://learn.microsoft.com/en-us/windows/package-manager/)
+
+-   `PS> winget install ueli`
+
 ### Installing via chocolatey repository
 
 -   Open a powershell with administration rights (Right click on your start button and click `Windows PowerShell (Admin)`
--   Type `choco install ueli`
+-   `PS> choco install ueli`
 -   Accept the upcoming prompt by entering `y` or run above command with `-y` switch
 -   Run the application
+
+### Installing on MacOS via `brew`
+
+-   `brew install --cask ueli`
 
 ## Features
 
@@ -50,10 +59,12 @@ This plugin enables you to search your browser bookmarks.
 Currently supported browsers:
 
 -   Google Chrome
+-   Chromium
 -   Brave
 -   Vivaldi
 -   SideKick
 -   Microsoft Edge
+-   Yandex Browser
 
 ![browser-bookmarks](assets/feature-browser-bookmarks.png)
 
@@ -89,7 +100,7 @@ This plugin enables you to quickly convert currencies. The latest conversion rat
 
 ### Dictionary
 
-This plugin enables you to quickly look up the definition and synonyms of words. It uses an unofficial Google Dictionary API (https://googledictionaryapi.eu-gb.mybluemix.net/)
+This plugin enables you to quickly look up the definition and synonyms of words. It uses an unofficial Google Dictionary API (https://dictionaryapi.dev/)
 
 ![dictionary](assets/feature-dictionary.png)
 
@@ -119,6 +130,10 @@ This plugin enables you to use the native macOS search to find files and folders
 This plugin enables you to browse through your local file system. To start you have to enter a valid absolute filepath.
 
 ![file-browser](assets/feature-file-browser.png)
+
+### Lorem Ipsum
+
+This plugin enables you to copy sample text to your clipboard. To start, type lipsum followed by a number.
 
 ### Operating System Commands
 
@@ -178,6 +193,7 @@ This plugin enables you to quickly execute multiple things at once.
 
 | Keyboard shortcut                   | Description                                                  |
 | ----------------------------------- | ------------------------------------------------------------ |
+| <kbd>Alt</kbd> <kbd>Space Bar</kbd> | Open search box (Default value, can be adjusted in settings) |
 | <kbd>Enter</kbd>                    | Execute selected search result                               |
 | <kbd>Shift</kbd> <kbd>Enter</kbd>   | Execute selected program as admin (Windows only)             |
 | <kbd>Tab</kbd>                      | Autocomplete file path                                       |
@@ -192,6 +208,22 @@ This plugin enables you to quickly execute multiple things at once.
 | <kbd>Shift</kbd> <kbd>↑</kbd>       | Browse user input history up                                 |
 | <kbd>Shift</kbd> <kbd>↓</kbd>       | Browse user input history down                               |
 | <kbd>Ctrl</kbd> <kbd>l</kbd>        | Set focus on user input                                      |
+
+## Supported Languages
+
+-   English
+-   Chinese (简体中文)
+-   Czech (Česky)
+-   Finnish (Suomi)
+-   German (Deutsch)
+-   Hindi (हिन्दी)
+-   Italian (Italiano)
+-   Japanese (日本語)
+-   Korean (한국어)
+-   Portuguese (Português)
+-   Russian (Русский)
+-   Spanish (Español)
+-   Turkish (Türkçe)
 
 ## Settings
 
@@ -222,22 +254,22 @@ For more check [here](https://github.com/oliverschwendener/ueli/issues).
 ### Requirements
 
 -   Git
--   Node 12.x.x
--   Yarn
+-   Node 16.x.x
+-   pnpm
 
 ### Setup
 
 ```
 $ git clone https://github.com/oliverschwendener/ueli
 $ cd ueli
-$ yarn
+$ pnpm install
 ```
 
 ### Run
 
 ```
-$ yarn bundle
-$ yarn start
+$ pnpm bundle
+$ pnpm start
 ```
 
 ### Debug
@@ -251,33 +283,47 @@ For debugging Visual Studio Code is recommended.
 ### Run tests
 
 ```
-$ yarn test
+$ pnpm test
 ```
 
-### Package
+### Build the app
 
 #### Create portable version
 
 ```
-$ yarn package:dir
+$ pnpm exec electron-builder --dir --config electron-builder-config.yml --publish never
 ```
 
 #### Create installer
 
 ```
-$ yarn package
+$ pnpm exec electron-builder --config electron-builder-config.yml --publish never
 ```
 
 ## Alternatives
 
--   [khanhas/ueli](https://github.com/khanhas/ueli)
 -   [Launchy](https://www.launchy.net/)
 -   [Wox](https://github.com/Wox-launcher/Wox)
--   [Keypirinha](http://keypirinha.com/)
+-   [Microsoft PowerToys Run](https://docs.microsoft.com/en-us/windows/powertoys/run)
+-   [Fluent Search](https://www.fluentsearch.net/)
+-   [Flow-Launcher](https://github.com/Flow-Launcher/Flow.Launcher)
+-   [Keypirinha](https://keypirinha.com/)
+-   [Listary](https://www.listary.com/)
 -   [Alfred](https://www.alfredapp.com/)
+-   [Raycast](https://www.raycast.com/)
 -   [Hain](https://github.com/hainproject/hain)
--   [Zazu App](http://zazuapp.org/)
+-   [Zazu App](https://zazuapp.org/)
 -   [Cerebro](https://cerebroapp.com/)
+
+For more check [here](https://alternativeto.net/software/ueli).
+
+### Contributors Wall
+
+<a href="https://github.com/oliverschwendener/ueli/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=oliverschwendener/ueli" />
+</a>
+
+_Note: It may take up to 24h for the [contrib.rocks](https://contrib.rocks/image?repo=oliverschwendener/ueli) plugin to update because it's refreshed once a day._
 
 ## Thanks
 
@@ -285,5 +331,5 @@ Thanks to [David Gabathuler](https://davidgabathuler.ch) for the logo!
 
 ## License
 
-Copyright (c) Oliver Schwendener. All rights reserved.
+Copyright ©️ Oliver Schwendener. All rights reserved.
 Licensed under the [MIT](LICENSE) License.

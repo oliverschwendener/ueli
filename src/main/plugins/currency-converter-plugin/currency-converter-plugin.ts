@@ -28,26 +28,46 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
         this.clipboardCopier = clipboardCopier;
     }
 
-    public isValidUserInput(userInput: string, fallback?: boolean | undefined): boolean {
+    public isValidUserInput(userInput: string): boolean {
         const keywords = ["in", "to"];
         const words = userInput.trim().split(" ");
-        if (words.length === 4) {
-            try {
-                return (
-                    keywords.includes(words[2].toLowerCase()) &&
-                    !isNaN(this.getNumber(words[0])) &&
-                    this.isCurrencyCode(words[1]) &&
-                    this.isCurrencyCode(words[3])
-                );
-            } catch (err) {
-                return false;
+        switch (words.length) {
+            case 2: {
+                try {
+                    return !isNaN(this.getNumber(words[0])) && this.isCurrencyCode(words[1]);
+                } catch (err) {
+                    return false;
+                }
             }
-        } else {
-            return false;
+            case 3: {
+                try {
+                    return (
+                        !isNaN(this.getNumber(words[0])) &&
+                        this.isCurrencyCode(words[1]) &&
+                        this.isCurrencyCode(words[2])
+                    );
+                } catch (err) {
+                    return false;
+                }
+            }
+            case 4: {
+                try {
+                    return (
+                        keywords.includes(words[2].toLowerCase()) &&
+                        !isNaN(this.getNumber(words[0])) &&
+                        this.isCurrencyCode(words[1]) &&
+                        this.isCurrencyCode(words[3])
+                    );
+                } catch (err) {
+                    return false;
+                }
+            }
+            default:
+                return false;
         }
     }
 
-    public getSearchResults(userInput: string, fallback?: boolean | undefined): Promise<SearchResultItem[]> {
+    public getSearchResults(userInput: string): Promise<SearchResultItem[]> {
         return new Promise((resolve, reject) => {
             const conversion = this.buildCurrencyConversion(userInput);
             CurrencyConverter.convert(conversion, Number(this.config.precision))
@@ -86,7 +106,7 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
         return this.config.isEnabled;
     }
 
-    public execute(searchResultItem: SearchResultItem, privileged: boolean): Promise<void> {
+    public execute(searchResultItem: SearchResultItem): Promise<void> {
         return this.clipboardCopier(searchResultItem.executionArgument);
     }
 
@@ -105,14 +125,43 @@ export class CurrencyConverterPlugin implements ExecutionPlugin {
 
     private buildCurrencyConversion(userInput: string): CurrencyConversion {
         const words = userInput.trim().split(" ");
-        return {
-            base:
-                Object.values(CurrencyCode).find((c: CurrencyCode) => c.toLowerCase() === words[1].toLowerCase()) ||
-                CurrencyCode.EUR,
-            target:
-                Object.values(CurrencyCode).find((c: CurrencyCode) => c.toLowerCase() === words[3].toLowerCase()) ||
-                CurrencyCode.USD,
-            value: this.getNumber(words[0]),
-        };
+        switch (words.length) {
+            case 2: {
+                return {
+                    base:
+                        Object.values(CurrencyCode).find(
+                            (c: CurrencyCode) => c.toLowerCase() === words[1].toLowerCase(),
+                        ) || CurrencyCode.EUR,
+                    target: this.config.defaultTarget,
+                    value: this.getNumber(words[0]),
+                };
+            }
+            case 3: {
+                return {
+                    base:
+                        Object.values(CurrencyCode).find(
+                            (c: CurrencyCode) => c.toLowerCase() === words[1].toLowerCase(),
+                        ) || CurrencyCode.EUR,
+                    target:
+                        Object.values(CurrencyCode).find(
+                            (c: CurrencyCode) => c.toLowerCase() === words[2].toLowerCase(),
+                        ) || CurrencyCode.USD,
+                    value: this.getNumber(words[0]),
+                };
+            }
+            default: {
+                return {
+                    base:
+                        Object.values(CurrencyCode).find(
+                            (c: CurrencyCode) => c.toLowerCase() === words[1].toLowerCase(),
+                        ) || CurrencyCode.EUR,
+                    target:
+                        Object.values(CurrencyCode).find(
+                            (c: CurrencyCode) => c.toLowerCase() === words[3].toLowerCase(),
+                        ) || CurrencyCode.USD,
+                    value: this.getNumber(words[0]),
+                };
+            }
+        }
     }
 }

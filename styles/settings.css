@@ -74,7 +74,7 @@ html {
     padding-bottom: 0.75rem;
 }
 
-.settings__option:last-child{
+.settings__option:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
     border-bottom: none;
@@ -97,7 +97,7 @@ html {
     z-index: 100;
     opacity: 0;
     transform: translateY(100%) translateX(-50%);
-    box-shadow: 0 0 50px rgba(0,0,0,0.25);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
 }
 
 .settings__notification.visible {
@@ -115,7 +115,7 @@ html {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255,255,255, 0.75);
+    background-color: rgba(255, 255, 255, 0.75);
     z-index: 100;
 }
 
@@ -131,7 +131,7 @@ html {
     align-items: center;
 }
 
-.settings-table__icon-svg > svg{
+.settings-table__icon-svg > svg {
     width: 24px;
     height: 24px;
 }
@@ -139,7 +139,7 @@ html {
 .settings-table__icon-color {
     width: 24px;
     height: 24px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     border-radius: 50%;
 }
 
@@ -189,7 +189,7 @@ html {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255, 255, 255, 0.8);
     z-index: 5;
 }
 

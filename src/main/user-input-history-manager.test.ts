@@ -82,7 +82,6 @@ describe(TestableUserInputHistoryManager.name, (): void => {
             manager.setHistory(history);
             manager.setIndex(-1);
 
-            // tslint:disable-next-line:prefer-for-of because we want a for loops
             for (let i = 0; i < history.length; i++) {
                 const actual = manager.getNext();
                 expect(actual).toBe(history[i]);

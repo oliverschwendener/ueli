@@ -1,6 +1,5 @@
 import { TranslationSet } from "./translation-set";
 
-// tslint:disable:object-literal-sort-keys for better readability
 export const germanTranslationSet: TranslationSet = {
     trayIconShow: "Öffnen",
     trayIconSettings: "Einstellungen",
@@ -123,6 +122,12 @@ export const germanTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Randradius der Bildlaufleiste",
     appearanceSettingsBorderRadiusDescription:
         "Dies ist ein CSS-Wert, daher müssen Sie 'px' wie diesen '10px' oder separate Ecken wie diesen '10px 0px 10px 5px' hinzufügen.",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
+    appearanceSettingsUserInputFontSize: "User input font size",
+    appearanceSettingsSearchResultDescriptionFontSize: "Search result name font size",
+    appearanceSettingsSearchResultNameFontSize: "Search result description font size",
 
     settingsUserInputTitle: "Benutzereingabe",
     settingsSearchResultsBoxTitle: "Suchergebnisfeld",
@@ -271,6 +276,7 @@ export const germanTranslationSet: TranslationSet = {
     windowsShutdownDescription: "Computer herunterfahren",
     windowsRestart: "Neu starten",
     windowsRestartDescription: "Computer neu starten",
+    windowsReboot: "Neustart",
     windowsSignout: "Abmelden",
     windowsSignoutDescription: "Aktuellen Benutzer abmelden",
     windowsLock: "Sperren",
@@ -323,7 +329,7 @@ export const germanTranslationSet: TranslationSet = {
     workflowIcon: "Icon",
     workflowExecutionSteps: "Ausführungsschritte",
     workflowExecutionArgumentType: "Ausführungsargumenttyp",
-    wofkflowExecutionArgumentTypeCommandlineTool: "Kommandozeilenprogramm",
+    workflowExecutionArgumentTypeCommandlineTool: "Kommandozeilenprogramm",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "Ungültiger Ausführungsschritt",
     workflowInvalidWorkflow: "Ungültiger Workflow",
@@ -350,7 +356,7 @@ export const germanTranslationSet: TranslationSet = {
 
     dictionary: "Wörterbuch",
     dictionaryDescription:
-        "Dieses Plugin erlaubt es dir die Definition und Synonyme eines Wortes nachzuschlagen. Es benutzt eine inoffizielle API für Google Dictionary (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+        "Dieses Plugin erlaubt es dir die Definition und Synonyme eines Wortes nachzuschlagen. Es benutzt eine inoffizielle API für Google Dictionary (https://dictionaryapi.dev/)",
     dictionaryPrefix: "Präfix",
     dictionaryMinSearchTermLength: "Minimum Suchbegrifflänge",
     dictionaryDebounceDelay: "Debounce Verzögerung (in Millisekunden)",
@@ -384,4 +390,16 @@ export const germanTranslationSet: TranslationSet = {
 
     controlPanel: "Systemsteuerung",
     controlPanelSettingsDescription: "Dieses Plugin erlaubt es dir, Elemente der Systemsteuerung schnell zu finden.",
+
+    weather: "Wetter",
+    weatherPrefix: "Präfix",
+    weatherSettingsDescription:
+        "Mit diesem Plugin können Sie die Wetterbedingungen jeder Region überprüfen. Wenn keine Region angegeben wird, wird standardmäßig das Wetter Ihres aktuellen Standorts angezeigt. Die Daten werden von wttr.in zur Verfügung gestellt",
+    weatherTemperatureUnit: "Temperatureinheit",
+    weatherCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",
+
+    loremIpsum: "Lorem Ipsum",
+    loremIpsumPrefix: "Prefix",
+    loremIpsumCopyToClipboard: "Drücke Enter um in die Zwischenablage zu kopieren",
+    loremIpsumSettingsDescription: "Mit diesem Plugin können Sie Beispieltext in die Zwischenablage kopieren.",
 };

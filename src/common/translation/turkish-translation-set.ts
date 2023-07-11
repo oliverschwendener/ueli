@@ -1,6 +1,5 @@
 import { TranslationSet } from "./translation-set";
 
-// tslint:disable:object-literal-sort-keys for better readability
 export const turkishTranslationSet: TranslationSet = {
     trayIconShow: "Göster",
     trayIconSettings: "Ayarlar",
@@ -123,6 +122,12 @@ export const turkishTranslationSet: TranslationSet = {
     appearanceSettingsScrollbarBorderRadius: "Kaydırma çubuğu kenarlık yarıçapı",
     appearanceSettingsBorderRadiusDescription:
         "Bu bir css değeridir, bu nedenle bu '10px' gibi 'px' veya '10px 0px 10px 5px' gibi ayrı köşeler eklemeniz gerekir",
+    appearanceSettingsUserInputFontWeight: "User Input Font Weight",
+    appearanceSettingsSearchResultNameFontWeight: "Search result name font weight",
+    appearanceSettingsSearchResultDescriptionFontWeight: "Search result description font weight",
+    appearanceSettingsUserInputFontSize: "User input font size",
+    appearanceSettingsSearchResultDescriptionFontSize: "Search result name font size",
+    appearanceSettingsSearchResultNameFontSize: "Search result description font size",
 
     settingsUserInputTitle: "Kullanıcı girişi",
     settingsSearchResultsBoxTitle: "Arama sonuçları kutusu",
@@ -272,6 +277,7 @@ export const turkishTranslationSet: TranslationSet = {
     windowsShutdownDescription: "Bilgisayarı Kapat",
     windowsRestart: "Yeniden başlat",
     windowsRestartDescription: "Bilgisayarı yeniden başlat",
+    windowsReboot: "Yeniden Başlat",
     windowsSignout: "Oturumunu Kapat",
     windowsSignoutDescription: "Mevcut kullanıcının oturumunu kapat",
     windowsLock: "Kilitle",
@@ -324,7 +330,7 @@ export const turkishTranslationSet: TranslationSet = {
     workflowIcon: "İkon",
     workflowExecutionSteps: "Yürütme adımları",
     workflowExecutionArgumentType: "Yürütme parametresi türü",
-    wofkflowExecutionArgumentTypeCommandlineTool: "Komut Satırı Aracı",
+    workflowExecutionArgumentTypeCommandlineTool: "Komut Satırı Aracı",
     workflowExecutionArgumentTypeUrl: "URL",
     workflowInvalidExecutionStep: "Geçersiz yürütme adımı",
     workflowInvalidWorkflow: "Geçersiz iş akışı",
@@ -351,7 +357,7 @@ export const turkishTranslationSet: TranslationSet = {
 
     dictionary: "Sözlük",
     dictionaryDescription:
-        "Bu eklenti, kelimelerin tanımını ve eş anlamlılarını hızlı bir şekilde aramanızı sağlar. Resmi olmayan bir Google Sözlük API'i kullanıyor (https://googledictionaryapi.eu-gb.mybluemix.net/)",
+        "Bu eklenti, kelimelerin tanımını ve eş anlamlılarını hızlı bir şekilde aramanızı sağlar. Resmi olmayan bir Google Sözlük API'i kullanıyor (https://dictionaryapi.dev/)",
     dictionaryPrefix: "Ön ek",
     dictionaryMinSearchTermLength: "Minimum arama terimi uzunluğu",
     dictionaryDebounceDelay: "Hata gecikmesi (milisaniye cinsinden)",
@@ -385,4 +391,16 @@ export const turkishTranslationSet: TranslationSet = {
 
     controlPanel: "Kontrol Paneli",
     controlPanelSettingsDescription: "Bu eklenti, kontrol paneli öğelerini hızlı bir şekilde bulmanızı sağlar.",
+
+    weather: "Hava",
+    weatherPrefix: "Ön ek",
+    weatherSettingsDescription:
+        "Bu eklenti, herhangi bir bölgenin hava durumunu kontrol etmenizi sağlar. Hiçbir bölge sağlanmazsa, geçerli konumunuzun hava durumunu göstermek varsayılan olarak sağlanır. Veriler wttr.in tarafından sağlanır",
+    weatherTemperatureUnit: "Sıcaklık Birimi",
+    weatherCopyToClipboard: "Panoya kopyalamak için enter tuşuna basın",
+
+    loremIpsum: "Lorem Ipsum",
+    loremIpsumPrefix: "Ön ek",
+    loremIpsumCopyToClipboard: "Panoya kopyalamak için enter tuşuna basın",
+    loremIpsumSettingsDescription: "Bu Eklenti, örnek metni hızlı bir şekilde panonuza kopyalamanıza olanak tanır.",
 };
