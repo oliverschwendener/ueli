@@ -34,7 +34,6 @@ import { windowsCommandLineExecutor, macOsCommandLineExecutor, linuxCommandLineE
 import { OperatingSystemSettingsPlugin } from "../plugins/operating-system-settings-plugin/operating-system-settings-plugin";
 import { MacOsOperatingSystemSettingRepository } from "../plugins/operating-system-settings-plugin/macos-operating-system-setting-repository";
 import {
-    executeMacOSOperatingSystemSetting,
     executeWindowsOperatingSystemSetting,
     executeMacOSOperatingSystemSetting,
     executeLinuxOperatingSystemSetting,
@@ -65,7 +64,6 @@ import { BraveBookmarkRepository } from "../plugins/browser-bookmarks-plugin/bra
 import { SideKickBookmarkRepository } from "../plugins/browser-bookmarks-plugin/sidekick-bookmark-repository";
 import { VivaldiBookmarkRepository } from "../plugins/browser-bookmarks-plugin/vivaldi-bookmark-repository";
 import { EdgeBookmarkRepository } from "../plugins/browser-bookmarks-plugin/edge-bookmark-repository";
-import { FirefoxBookmarkRepository } from "../plugins/browser-bookmarks-plugin/firefox-bookmark-repository";
 import { YandexBookmarkRepository } from "../plugins/browser-bookmarks-plugin/yandex-bookmark-repository";
 import { ChromiumBookmarkRepository } from "../plugins/browser-bookmarks-plugin/chromium-bookmark-repository";
 import { getWebearchSuggestions } from "../executors/websearch-suggestion-resolver";
@@ -98,8 +96,8 @@ export function getProductionSearchEngine(
             vivaldiBookmarksFilePath: `${homedir()}\\AppData\\Local\\Vivaldi\\User Data\\Default\\Bookmarks`,
             sideKickBookmarkFilePath: `${homedir()}\\AppData\\Local\\Sidekick\\User Data\\Default\\Bookmarks`,
             edgeBookmarksFilePath: `${homedir()}\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Bookmarks`,
-            firefoxUserDataFolderPath: `${homedir()}\\AppData\\Roaming\\Mozilla\\Firefox`,
             chromiumBookmarksFilePath: `${homedir()}\\AppData\\Local\\Chromium\\User Data\\Default\\Bookmarks`,
+            yandexBookmarksFilePath: `${homedir()}\\AppData\\Local\\Yandex\\YandexBrowser\\User Data\\Default\\Bookmarks`,
             operatingSystemCommandRepository: WindowsOperatingSystemCommandRepository,
         },
         [OperatingSystem.macOS]: {
@@ -117,8 +115,8 @@ export function getProductionSearchEngine(
             vivaldiBookmarksFilePath: `${homedir()}/Library/Application\ Support/Vivaldi/Default/Bookmarks`,
             sideKickBookmarkFilePath: `${homedir()}/Library/Application\ Support/Sidekick/Default/Bookmarks`,
             edgeBookmarksFilePath: `${homedir()}/Library/Application\ Support/Microsoft Edge/Default/Bookmarks`,
-            firefoxUserDataFolderPath: `${homedir()}/Library/Application\ Support/Firefox`,
             chromiumBookmarksFilePath: `${homedir()}/Library/Application\ Support/Chromium/Default/Bookmarks`,
+            yandexBookmarksFilePath: `${homedir()}/Library/Application\ Support/Yandex/YandexBrowser/Default/Bookmarks`,
             operatingSystemCommandRepository: MacOsOperatingSystemCommandRepository,
         },
         [OperatingSystem.Linux]: {
@@ -139,8 +137,9 @@ export function getProductionSearchEngine(
             vivaldiBookmarksFilePath: `${homedir()}/.config/Vivaldi/Default/Bookmarks`,
             sideKickBookmarkFilePath: `${homedir()}/.config/Support/Sidekick/Default/Bookmarks`,
             edgeBookmarksFilePath: `${homedir()}/.config/microsoft-edge-beta/Default/Bookmarks`,
-            firefoxUserDataFolderPath: `${homedir()}/.config/Firefox`,
             chromiumBookmarksFilePath: `${homedir()}/.config/chromium/Default/Bookmarks`,
+            // TODO: Find file path
+            yandexBookmarksFilePath: `${homedir()}/.config/`,
             operatingSystemCommandRepository: LinuxOperatingSystemCommandRepository,
         },
     }
@@ -160,8 +159,8 @@ export function getProductionSearchEngine(
     const vivaldiBookmarksFilePath = OsConfig.vivaldiBookmarksFilePath;
     const sideKickBookmarkFilePath = OsConfig.sideKickBookmarkFilePath;
     const edgeBookmarksFilePath = OsConfig.edgeBookmarksFilePath;
-    const firefoxUserDataFolderPath = OsConfig.firefoxUserDataFolderPath;
     const chromiumBookmarksFilePath = OsConfig.chromiumBookmarksFilePath;
+    const yandexBookmarksFilePath = OsConfig.yandexBookmarksFilePath;
     const operatingSystemCommandRepository = new OsConfig.operatingSystemCommandRepository(translationSet);
 
     const searchPlugins: SearchPlugin[] = [
