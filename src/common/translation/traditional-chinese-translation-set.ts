@@ -278,6 +278,17 @@ export const traditionalChineseTranslationSet: TranslationSet = {
     windowsHibernation: "休眠",
     windowsHibernationDescription: "儲存目前記憶體資料到硬碟並斷電",
 
+    linuxShutdown: "關機",
+    linuxShutdownDescription: "關閉電腦",
+    linuxRestart: "重新啟動",
+    linuxRestartDescription: "重新啟動電腦",
+    linuxLogout: "登出",
+    linuxLogoutDescription: "登出當前用戶",
+    linuxSleep: "鎖定",
+    linuxSleepDescription: "登出當前用戶",
+    linuxLock: "鎖定",
+    linuxLockDescription: "鎖定電腦",
+
     calcuator: "計算機",
     calculatorCopyToClipboard: "按 Enter 複製到剪貼簿",
     calculatorDescription: "這個外掛程式可以快速做一些簡單計算。",

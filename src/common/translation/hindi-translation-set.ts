@@ -287,6 +287,17 @@ export const hindiTranslationSet: TranslationSet = {
     windowsHibernation: "हाइबरनेट",
     windowsHibernationDescription: "कंप्यूटर को हाइबरनेशन पर रखें",
 
+    linuxShutdown: "शट डाउन",
+    linuxShutdownDescription: "कंप्यूटर बंद करें",
+    linuxRestart: "रीस्टार्ट करें",
+    linuxRestartDescription: "कंप्यूटर रीस्टार्ट करो",
+    linuxLogout: "लॉग आउट",
+    linuxLogoutDescription: "वर्तमान उपयोगकर्ता को लॉग आउट करें",
+    linuxSleep: "स्लीप",
+    linuxSleepDescription: "स्लीप कंप्यूटर",
+    linuxLock: "लॉक",
+    linuxLockDescription: "कंप्यूटर लॉक करें",
+
     calcuator: "कैलकुलेटर",
     calculatorCopyToClipboard: "क्लिपबोर्ड पर कॉपी करने के लिए एंटर दबाएं",
     calculatorDescription: "यह प्लगइन आपको सरल गणनाओं को शीघ्रता से करने देता है।",

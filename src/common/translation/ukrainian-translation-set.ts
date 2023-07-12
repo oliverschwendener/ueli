@@ -260,6 +260,7 @@ export const ukrainianTranslationSet: TranslationSet = {
 
     operatingSystemSettings: "Налаштування ОС",
     operatingSystemSettingsSettingsDescription: "Цей плагін дозволяє швидко користуватися налаштуваннями ОС.",
+
     macOsShutdown: "Вимкнути",
     macOsShutdownDescription: "Вимкнути комп'ютер",
     macOsRestart: "Перезавантажити",
@@ -270,6 +271,7 @@ export const ukrainianTranslationSet: TranslationSet = {
     macOsSleepDescription: "Увійти в режим сну",
     macOsLock: "Заблокувати",
     macOsLockDescription: "Заблокувати комп'ютер",
+
     windowsShutdown: "Вимкнути",
     windowsShutdownDescription: "Вимкнути комп'ютер",
     windowsRestart: "Перезавантажити",
@@ -283,6 +285,17 @@ export const ukrainianTranslationSet: TranslationSet = {
     windowsSleepDescription: "Увійти в режим сну",
     windowsHibernation: "Гібернація",
     windowsHibernationDescription: "Увійти в режим глибокого сну",
+
+    linuxShutdown: "Вимкнути",
+    linuxShutdownDescription: "Вимкнути комп'ютер",
+    linuxRestart: "Перезавантажити",
+    linuxRestartDescription: "Перезавантажити комп'ютер",
+    linuxLogout: "Вийти",
+    linuxLogoutDescription: "Вийти з облікового запису поточного користувача",
+    linuxSleep: "Сон",
+    linuxSleepDescription: "Увійти в режим сну",
+    linuxLock: "Заблокувати",
+    linuxLockDescription: "Заблокувати комп'ютер",
 
     calcuator: "Калькулятор",
     calculatorCopyToClipboard: "Натисніть клавішу enter, щоб скопіювати",
