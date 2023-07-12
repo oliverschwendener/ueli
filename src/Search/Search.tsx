@@ -18,6 +18,7 @@ export const Search: FC = () => {
     return (
         <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
             <div
+                className="draggable-area"
                 style={{
                     flexShrink: 0,
                     display: "flex",
@@ -26,7 +27,7 @@ export const Search: FC = () => {
                     boxSizing: "border-box",
                 }}
             >
-                <Input ref={userInputRef} appearance="filled-darker" size="large" />
+                <Input className="non-draggable-area" ref={userInputRef} appearance="filled-darker" size="large" />
             </div>
             <Divider />
             <div style={{ flexGrow: 1, overflowY: "auto" }}>
