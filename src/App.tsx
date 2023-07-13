@@ -6,11 +6,14 @@ import { Settings } from "./Settings";
 
 export const App: FC = () => {
     const getTheme = (): Theme => (window.ContextBridge.themeShouldUseDarkColors() ? webDarkTheme : webLightTheme);
-
     const [theme, setTheme] = useState<Theme>(getTheme);
 
     useEffect(() => {
         window.ContextBridge.onNativeThemeChanged(() => setTheme(getTheme()));
+
+        window.ContextBridge.onSearchResultItemsUpdated((searchResultItems) =>
+            console.log("search result items updated", searchResultItems),
+        );
     }, []);
 
     return (
