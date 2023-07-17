@@ -45,7 +45,13 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
                 { id: "1", description: "/Applications/Adobe Photoshop CC 2023.app", name: "Adobe Photoshop CC 2023" },
                 { id: "2", description: "/Applications/Visual Studio Code.app", name: "Visual Studio Code" },
                 { id: "3", description: "/Applications/Whatsapp.app", name: "Whatsapp" },
-                { id: "4", description: "/Applications/Brave Browser.app", name: "Brave Browser" },
+                { id: "4", description: "/Applications/1Password.app", name: "1Password" },
+                { id: "5", description: "/Applications/Calculator.app", name: "Calculator" },
+                { id: "6", description: "/Applications/Chess.app", name: "Chess" },
+                { id: "7", description: "/Applications/ClickUp.app", name: "ClickUp" },
+                { id: "8", description: "/Applications/Docker.app", name: "Docker" },
+                { id: "9", description: "/Applications/FaceTime.app", name: "FaceTime" },
+                { id: "10", description: "/Applications/Fellow.app", name: "Fellow" },
             ],
         });
     }, 5000);
