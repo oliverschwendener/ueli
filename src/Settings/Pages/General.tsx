@@ -1,5 +1,3 @@
-import { FC } from "react";
-
-export const General: FC = () => {
+export const General = () => {
     return <>General</>;
 };

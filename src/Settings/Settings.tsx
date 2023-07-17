@@ -1,11 +1,11 @@
 import { Divider } from "@fluentui/react-components";
-import { FC, useState } from "react";
+import { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router";
 import { Header } from "./Header";
 import { Navigation } from "./Navigation";
 import { settingsPages } from "./Pages";
 
-export const Settings: FC = () => {
+export const Settings = () => {
     const navigate = useNavigate();
 
     const [path, setPath] = useState<string>(settingsPages[0].absolutePath);

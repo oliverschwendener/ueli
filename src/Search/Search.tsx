@@ -1,11 +1,16 @@
+import { SearchResultItem } from "@common/SearchResultItem";
 import { Button, Divider, Input } from "@fluentui/react-components";
 import { Settings16Filled } from "@fluentui/react-icons";
-import { FC, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { FavoritesList } from "./FavoritesList";
 import { SearchResultList } from "./SearchResultList";
 
-export const Search: FC = () => {
+type SearchProps = {
+    searchResultItems: SearchResultItem[];
+};
+
+export const Search = ({ searchResultItems }: SearchProps) => {
     const [searchTerm, setSearchTerm] = useState<string>("");
     const userInputRef = useRef<HTMLInputElement>(null);
 
@@ -39,7 +44,11 @@ export const Search: FC = () => {
             </div>
             <Divider />
             <div style={{ height: "100%", overflowY: "auto" }}>
-                {searchTerm.length === 0 ? <FavoritesList /> : <SearchResultList />}
+                {searchTerm.length === 0 ? (
+                    <FavoritesList />
+                ) : (
+                    <SearchResultList searchTerm={searchTerm} searchResultItems={searchResultItems} />
+                )}
             </div>
             <Divider />
             <div

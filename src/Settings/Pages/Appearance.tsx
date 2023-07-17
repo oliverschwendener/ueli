@@ -1,5 +1,3 @@
-import { FC } from "react";
-
-export const Appearance: FC = () => {
+export const Appearance = () => {
     return <>Appearance</>;
 };

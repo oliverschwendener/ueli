@@ -4,16 +4,6 @@ import { app, BrowserWindow, BrowserWindowConstructorOptions, ipcMain, nativeThe
 import { join } from "path";
 import { platform } from "process";
 
-const firstSearchResultItems: SearchResultItem[] = [
-    { id: "1", description: "description-1", name: "Search Result Item 1" },
-];
-
-const secondSearchResultItems: SearchResultItem[] = [
-    { id: "1", description: "description-1", name: "Search Result Item 1" },
-    { id: "2", description: "description-2", name: "Search Result Item 2" },
-    { id: "3", description: "description-3", name: "Search Result Item 3" },
-];
-
 const preloadScriptFilePath = app.isPackaged
     ? join(__dirname, "..", "..", "dist-electron", "preload", "index.js")
     : join(__dirname, "..", "preload", "index.js");
@@ -48,21 +38,17 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
 
     ipcMain.on("themeShouldUseDarkColors", (event) => (event.returnValue = nativeTheme.shouldUseDarkColors));
 
-    setTimeout(
-        () =>
-            browserWindow.webContents.send("searchResultItemsUpdated", <{ searchResultItems: SearchResultItem[] }>{
-                searchResultItems: firstSearchResultItems,
-            }),
-        5000,
-    );
-
-    setTimeout(
-        () =>
-            browserWindow.webContents.send("searchResultItemsUpdated", <{ searchResultItems: SearchResultItem[] }>{
-                searchResultItems: secondSearchResultItems,
-            }),
-        10000,
-    );
+    // This fakes the future implementation of the search index
+    setInterval(() => {
+        browserWindow.webContents.send("searchResultItemsUpdated", <{ searchResultItems: SearchResultItem[] }>{
+            searchResultItems: [
+                { id: "1", description: "/Applications/Adobe Photoshop CC 2023.app", name: "Adobe Photoshop CC 2023" },
+                { id: "2", description: "/Applications/Visual Studio Code.app", name: "Visual Studio Code" },
+                { id: "3", description: "/Applications/Whatsapp.app", name: "Whatsapp" },
+                { id: "4", description: "/Applications/Brave Browser.app", name: "Brave Browser" },
+            ],
+        });
+    }, 5000);
 
     nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
 })();

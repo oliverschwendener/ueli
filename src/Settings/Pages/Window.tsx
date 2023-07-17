@@ -1,5 +1,3 @@
-import { FC } from "react";
-
-export const Window: FC = () => {
+export const Window = () => {
     return <>Window</>;
 };

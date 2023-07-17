@@ -1,5 +1,4 @@
 import { Tab, TabList } from "@fluentui/react-components";
-import { FC } from "react";
 import { SettingsPage } from "./Pages";
 
 type NavigationProps = {
@@ -8,7 +7,7 @@ type NavigationProps = {
     onNavigate: (path: string) => void;
 };
 
-export const Navigation: FC<NavigationProps> = ({ settingsPages, path, onNavigate }) => {
+export const Navigation = ({ settingsPages, path, onNavigate }: NavigationProps) => {
     return (
         <TabList
             selectedValue={path}
