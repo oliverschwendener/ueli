@@ -18,6 +18,7 @@ export const SearchResultList = ({ searchTerm, searchResultItems }: SearchResult
         <div style={{ display: "flex", flexDirection: "column", gap: 20, paddingTop: 10, paddingBottom: 10 }}>
             {filterSearchResultItemsBySearchTerm(searchResultItems, searchTerm).map((searchResultItem) => (
                 <div
+                    key={searchResultItem.id}
                     style={{
                         display: "flex",
                         flexDirection: "column",

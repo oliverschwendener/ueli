@@ -5,6 +5,8 @@ import { contextBridge, ipcRenderer } from "electron";
 contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     onNativeThemeChanged: (callback: () => void) => ipcRenderer.on("nativeThemeChanged", callback),
 
+    getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
+
     onSearchResultItemsUpdated: (callback: (searchResultItems: SearchResultItem[]) => void) =>
         ipcRenderer.on("searchResultItemsUpdated", (_, { searchResultItems }) => callback(searchResultItems)),
 

@@ -6,13 +6,19 @@ import { Search } from "./Search";
 import { Settings } from "./Settings";
 
 export const App = () => {
-    const [searchResultItems, setSearchResultItems] = useState<SearchResultItem[]>([]);
+    const [searchResultItems, setSearchResultItems] = useState<SearchResultItem[]>(
+        window.ContextBridge.getSearchResultItems(),
+    );
+
     const getTheme = (): Theme => (window.ContextBridge.themeShouldUseDarkColors() ? webDarkTheme : webLightTheme);
     const [theme, setTheme] = useState<Theme>(getTheme);
 
     useEffect(() => {
         window.ContextBridge.onNativeThemeChanged(() => setTheme(getTheme()));
-        window.ContextBridge.onSearchResultItemsUpdated((searchResultItems) => setSearchResultItems(searchResultItems));
+        window.ContextBridge.onSearchResultItemsUpdated((searchResultItems) => {
+            console.log("search result items updated", searchResultItems);
+            setSearchResultItems(searchResultItems);
+        });
     }, []);
 
     return (
