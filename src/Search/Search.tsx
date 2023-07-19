@@ -1,5 +1,5 @@
 import { SearchResultItem } from "@common/SearchResultItem";
-import { Button, Divider, Input } from "@fluentui/react-components";
+import { Button, Divider, Input, ProgressBar } from "@fluentui/react-components";
 import { Settings16Filled } from "@fluentui/react-icons";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
@@ -7,10 +7,11 @@ import { FavoritesList } from "./FavoritesList";
 import { SearchResultList } from "./SearchResultList";
 
 type SearchProps = {
+    rescanState: { rescanPending: boolean };
     searchResultItems: SearchResultItem[];
 };
 
-export const Search = ({ searchResultItems }: SearchProps) => {
+export const Search = ({ rescanState, searchResultItems }: SearchProps) => {
     const [searchTerm, setSearchTerm] = useState<string>("");
     const userInputRef = useRef<HTMLInputElement>(null);
 
@@ -43,6 +44,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                 />
             </div>
             <Divider />
+            {rescanState.rescanPending ? <ProgressBar /> : null}
             <div style={{ height: "100%", overflowY: "auto" }}>
                 {searchTerm.length === 0 ? (
                     <FavoritesList />
@@ -55,10 +57,12 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                 style={{
                     flexShrink: 0,
                     padding: 10,
+                    gap: 10,
                     boxSizing: "border-box",
                     display: "flex",
                     flexDirection: "row",
                     justifyContent: "flex-end",
+                    alignItems: "center",
                 }}
             >
                 <Button onClick={openSettings} size="small" appearance="subtle" icon={<Settings16Filled />}>

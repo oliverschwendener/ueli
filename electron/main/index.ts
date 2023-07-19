@@ -32,7 +32,11 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
     const operatingSysetem = platform === "win32" ? "Windows" : "macOS";
     const browserWindow = new BrowserWindow(browserWindowConstructorOptionsMap[operatingSysetem]);
 
-    const searchIndex = new SearchIndex(() => browserWindow.webContents.send("searchIndexUpdated"));
+    const searchIndex = new SearchIndex(
+        () => browserWindow.webContents.send("searchIndexUpdated"),
+        (rescanState) => browserWindow.webContents.send("rescanStateChanged", rescanState),
+    );
+
     searchIndex.scan();
 
     app.isPackaged
@@ -40,6 +44,7 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
         : browserWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
 
     ipcMain.on("themeShouldUseDarkColors", (event) => (event.returnValue = nativeTheme.shouldUseDarkColors));
+    ipcMain.on("getRescanState", (event) => (event.returnValue = searchIndex.getRescanState()));
     ipcMain.on("getSearchResultItems", (event) => (event.returnValue = searchIndex.getSearchResultItems()));
     nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
 })();

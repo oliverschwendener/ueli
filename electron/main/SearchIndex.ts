@@ -1,11 +1,18 @@
+import { RescanSate } from "@common/RescanState";
 import { SearchResultItem } from "@common/SearchResultItem";
 
 export class SearchIndex {
     private static readonly SCAN_DURATION_IN_MS = 5000;
+    private static readonly RESCAN_INTERVAL_IN_MS = 10000;
 
+    private rescanState: RescanSate;
     private searchResultItems: SearchResultItem[];
 
-    public constructor(private readonly onSearchIndexUpdated: () => void) {
+    public constructor(
+        private readonly onSearchIndexUpdated: () => void,
+        private readonly onRescanStateChanged: (rescanState: RescanSate) => void,
+    ) {
+        this.rescanState = { rescanPending: false };
         this.searchResultItems = [];
     }
 
@@ -14,6 +21,8 @@ export class SearchIndex {
     }
 
     public async scan(): Promise<void> {
+        this.changeRescanState(true);
+
         await this.wait(SearchIndex.SCAN_DURATION_IN_MS);
 
         this.searchResultItems = [
@@ -29,7 +38,20 @@ export class SearchIndex {
             { id: "10", description: "/Applications/Fellow.app", name: "Fellow" },
         ];
 
+        this.changeRescanState(false);
+
         this.onSearchIndexUpdated();
+
+        setTimeout(() => this.scan(), SearchIndex.RESCAN_INTERVAL_IN_MS);
+    }
+
+    public getRescanState(): RescanSate {
+        return this.rescanState;
+    }
+
+    private changeRescanState(rescanPending: boolean): void {
+        this.rescanState.rescanPending = rescanPending;
+        this.onRescanStateChanged(this.rescanState);
     }
 
     private wait(millisecondsToWait: number): Promise<void> {
