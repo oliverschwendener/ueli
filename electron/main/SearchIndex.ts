@@ -21,7 +21,7 @@ export class SearchIndex {
     }
 
     public async scan(): Promise<void> {
-        this.changeRescanState(true);
+        this.changeRescanState({ rescanPending: true });
 
         await this.wait(SearchIndex.SCAN_DURATION_IN_MS);
 
@@ -38,7 +38,7 @@ export class SearchIndex {
             { id: "10", description: "/Applications/Fellow.app", name: "Fellow" },
         ];
 
-        this.changeRescanState(false);
+        this.changeRescanState({ rescanPending: false });
 
         this.onSearchIndexUpdated();
 
@@ -49,9 +49,9 @@ export class SearchIndex {
         return this.rescanState;
     }
 
-    private changeRescanState(rescanPending: boolean): void {
-        this.rescanState.rescanPending = rescanPending;
-        this.onRescanStateChanged(this.rescanState);
+    private changeRescanState(rescanState: RescanSate): void {
+        this.rescanState = rescanState;
+        this.onRescanStateChanged(rescanState);
     }
 
     private wait(millisecondsToWait: number): Promise<void> {
