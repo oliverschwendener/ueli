@@ -37,7 +37,7 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
         (rescanState) => browserWindow.webContents.send("rescanStateChanged", rescanState),
     );
 
-    searchIndex.scan();
+    searchIndex.rescan();
 
     app.isPackaged
         ? browserWindow.loadFile(join(__dirname, "..", "..", "dist", "index.html"))

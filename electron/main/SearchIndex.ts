@@ -20,7 +20,7 @@ export class SearchIndex {
         return this.searchResultItems;
     }
 
-    public async scan(): Promise<void> {
+    public async rescan(): Promise<void> {
         this.changeRescanState({ rescanPending: true });
 
         await this.wait(SearchIndex.SCAN_DURATION_IN_MS);
@@ -42,7 +42,7 @@ export class SearchIndex {
 
         this.onSearchIndexUpdated();
 
-        setTimeout(() => this.scan(), SearchIndex.RESCAN_INTERVAL_IN_MS);
+        setTimeout(() => this.rescan(), SearchIndex.RESCAN_INTERVAL_IN_MS);
     }
 
     public getRescanState(): RescanSate {
