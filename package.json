@@ -60,8 +60,8 @@
         "vue": "^2.7.14",
         "vue-color": "^2.8.1",
         "vue-eslint-parser": "^9.3.1",
-        "webpack": "^5.75.0",
-        "webpack-cli": "^5.0.1",
+        "webpack": "^5.88.2",
+        "webpack-cli": "^5.1.4",
         "winston": "^3.8.2"
     },
     "dependencies": {
