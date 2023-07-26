@@ -35,8 +35,11 @@ jobs:
             - name: Lint TypeScript files
               run: pnpm lint
 
-            - name: Prettier check
+            - name: Prettier check src folder
               run: pnpm exec prettier --check src/**/*
+
+            - name: Prettier check electron folder
+              run: pnpm exec prettier --check electron/**/*
 
             - name: Run tests
               run: pnpm test
