@@ -14,9 +14,7 @@ export const SearchResultListItem = ({ containerRef, isSelected, searchResultIte
 
     const scrollIntoViewIfSelectedAndNotVisible = () => {
         if (containerRef.current && ref.current && isSelected && !elementIsVisible(ref.current, containerRef.current)) {
-            setTimeout(() => {
-                ref.current?.scrollIntoView({ behavior: "smooth" });
-            }, 50);
+            setTimeout(() => ref.current?.scrollIntoView({ behavior: "smooth" }), 50);
         }
     };
 

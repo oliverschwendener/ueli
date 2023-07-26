@@ -52,7 +52,7 @@ export const Search = ({ rescanState, searchResultItems }: SearchProps) => {
                     className="non-draggable-area"
                     ref={userInputRef}
                     appearance="filled-darker"
-                    size="small"
+                    size="large"
                     value={searchTerm}
                     onChange={(_, { value }) => search(value)}
                     onKeyDown={(keyboardEvent) => {
