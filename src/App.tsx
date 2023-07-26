@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router";
 import { Search } from "./Search";
 import { Settings } from "./Settings";
+import { getThemeName, themeMap } from "./Theme";
 import { ThemeContext } from "./ThemeContext";
-import { getThemeName, themeMap } from "./helpers";
 
 export const App = () => {
     const [rescanState, setRescanState] = useState<RescanSate>(window.ContextBridge.getRescanState());

@@ -57,10 +57,12 @@ export const Search = ({ rescanState, searchResultItems }: SearchProps) => {
                     onChange={(_, { value }) => search(value)}
                     onKeyDown={(keyboardEvent) => {
                         if (keyboardEvent.key === "ArrowUp") {
+                            keyboardEvent.preventDefault();
                             selectPreviousSearchResultItem();
                         }
 
                         if (keyboardEvent.key === "ArrowDown") {
+                            keyboardEvent.preventDefault();
                             selectNextSearchResultItem();
                         }
                     }}
