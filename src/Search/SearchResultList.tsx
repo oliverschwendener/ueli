@@ -1,5 +1,5 @@
 import { SearchResultItem } from "@common/SearchResultItem";
-import { Text } from "@fluentui/react-components";
+import { SearchResultListItem } from "./SearchResultListItem";
 
 type SearchResultListProps = {
     searchTerm: string;
@@ -14,24 +14,20 @@ const filterSearchResultItemsBySearchTerm = (searchResultItems: SearchResultItem
     );
 
 export const SearchResultList = ({ searchTerm, searchResultItems }: SearchResultListProps) => {
+    const filteredSearchResultItems = filterSearchResultItemsBySearchTerm(searchResultItems, searchTerm);
+
     return (
-        <div style={{ display: "flex", flexDirection: "column", gap: 20, paddingTop: 10, paddingBottom: 10 }}>
-            {filterSearchResultItemsBySearchTerm(searchResultItems, searchTerm).map((searchResultItem) => (
-                <div
-                    key={searchResultItem.id}
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        paddingLeft: 10,
-                        paddingRight: 10,
-                        boxSizing: "border-box",
-                    }}
-                >
-                    <Text weight="semibold" size={400}>
-                        {searchResultItem.name}
-                    </Text>
-                    <Text weight="regular">{searchResultItem.description}</Text>
-                </div>
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 20,
+                paddingTop: 10,
+                paddingBottom: 10,
+            }}
+        >
+            {filteredSearchResultItems.map((searchResultItem) => (
+                <SearchResultListItem key={searchResultItem.id} searchResultItem={searchResultItem} />
             ))}
         </div>
     );
