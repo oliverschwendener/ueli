@@ -15,7 +15,6 @@
         "lint": "eslint . --ext js,ts,tsx",
         "package:publish": "electron-builder --config electron-builder.config.js --publish always",
         "package": "electron-builder --config electron-builder.config.js",
-        "prettier:check": "prettier --check -- src/**/*.{ts,tsx} electron/**/*.ts",
         "test:coverage": "vitest run --coverage",
         "test:watch": "vitest",
         "test": "vitest run",
