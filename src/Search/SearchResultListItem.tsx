@@ -1,6 +1,7 @@
 import { SearchResultItem } from "@common/SearchResultItem";
 import { Text } from "@fluentui/react-components";
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useContext, useEffect, useRef } from "react";
+import { ThemeContext } from "../ThemeContext";
 import { elementIsVisible } from "./helpers";
 
 type SearchResultListItemProps = {
@@ -10,6 +11,8 @@ type SearchResultListItemProps = {
 };
 
 export const SearchResultListItem = ({ containerRef, isSelected, searchResultItem }: SearchResultListItemProps) => {
+    const { theme } = useContext(ThemeContext);
+
     const ref = useRef<HTMLDivElement>(null);
 
     const scrollIntoViewIfSelectedAndNotVisible = () => {
@@ -30,7 +33,7 @@ export const SearchResultListItem = ({ containerRef, isSelected, searchResultIte
                 padding: 10,
                 boxSizing: "border-box",
                 opacity: isSelected ? 1 : 0.75,
-                backgroundColor: isSelected ? "rgba(0,0,122,0.05)" : undefined,
+                backgroundColor: isSelected ? theme.colorBrandBackgroundStatic : undefined,
             }}
         >
             <Text weight={isSelected ? "semibold" : "regular"} size={400}>
