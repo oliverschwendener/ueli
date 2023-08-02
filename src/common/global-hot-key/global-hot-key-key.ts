@@ -25,6 +25,7 @@ export enum GlobalHotKeyKey {
     "X" = "X",
     "Y" = "Y",
     "Z" = "Z",
+    "`" = "`",
     Plus = "Plus",
     Space = "Space",
     Tab = "Tab",
