@@ -18,6 +18,7 @@ export enum OperatingSystemVersion {
     MacOsBigSur = "macOS 11.0 (Big Sur)",
     MacOsMonterey = "macOS 12.0 (Monterey)",
     MacOsVentura = "macOS 13.0 (Ventura)",
-    LinuxGnome = "Generic Linux Gnome",
+    LinuxGnome = "Generic Linux GNOME",
     LinuxCinnamon = "Generic Linux Cinnamon",
+    LinuxMate = "Generic Linux MATE",
 }
