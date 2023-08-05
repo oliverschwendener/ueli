@@ -28,16 +28,20 @@ export class LinuxOperatingSystemCommandRepository implements OperatingSystemCom
     }
 
     private getOperatingSystemCommands(): OperatingSystemCommand[] {
-        const systemCommandMapping : { [key: string]: { [key: string]: string} } = {
+        const systemCommandMapping: { [key: string]: { [key: string]: string } } = {
             [OperatingSystemVersion.LinuxGnome]: {
                 lockscreen: `dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock`,
-                logout: `dbus-send --session --type=method_call --print-reply --dest=org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager.Logout uint32:1`
+                logout: `dbus-send --session --type=method_call --print-reply --dest=org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager.Logout uint32:1`,
             },
             [OperatingSystemVersion.LinuxCinnamon]: {
                 lockscreen: `cinnamon-screensaver-command --lock`,
                 logout: `cinnamon-session-quit --logout`,
-            }
-        }
+            },
+            [OperatingSystemVersion.LinuxMate]: {
+                lockscreen: `xdg-screensaver lock`,
+                logout: `mate-session-save --logout`,
+            },
+        };
         const version = getOperatingSystemVersion(getCurrentOperatingSystem(platform()), release());
         if (!systemCommandMapping[version]) throw new Error(`Unsupported Linux desktop environment: ${version}`);
         return [

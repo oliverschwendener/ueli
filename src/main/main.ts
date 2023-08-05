@@ -57,7 +57,10 @@ const appIsInDevelopment = isDev(process.execPath);
 const minimumRefreshIntervalInSeconds = 10;
 const configRepository = new ElectronStoreConfigRepository(deepCopy(defaultUserConfigOptions));
 
-// TODO: check for unsupported
+if (!(operatingSystem in OperatingSystem)) {
+    throw new Error("Operating system not supported!");
+}
+
 const osIconsMapping = {
     [OperatingSystem.Linux]: {
         windowsIconPath: windowIconLinux,

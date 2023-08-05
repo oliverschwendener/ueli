@@ -34,7 +34,6 @@ const defaultCommandlineOptionsMapping = {
 }
 
 const currentOs = getCurrentOperatingSystem(platform());
-// const currentOsVersion = getCurrentOperatingSystemVersion(currentOs, release())
 
 export const defaultCommandlineOptions: CommandlineOptions =
     defaultCommandlineOptionsMapping[currentOs]
