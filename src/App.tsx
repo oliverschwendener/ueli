@@ -1,34 +1,18 @@
-import { RescanSate } from "@common/RescanState";
-import { SearchResultItem } from "@common/SearchResultItem";
-import { FluentProvider, Theme } from "@fluentui/react-components";
-import { useEffect, useState } from "react";
+import { FluentProvider } from "@fluentui/react-components";
 import { Route, Routes } from "react-router";
+import { useRescanState, useSearchResultItems, useTheme } from "./Hooks";
 import { Search } from "./Search";
 import { Settings } from "./Settings";
-import { getThemeName, themeMap } from "./Theme";
 import { ThemeContext } from "./ThemeContext";
 
 export const App = () => {
-    const [rescanState, setRescanState] = useState<RescanSate>(window.ContextBridge.getRescanState());
-
-    const [searchResultItems, setSearchResultItems] = useState<SearchResultItem[]>(
-        window.ContextBridge.getSearchResultItems(),
-    );
-
-    const [theme, setTheme] = useState<Theme>(themeMap[getThemeName()]);
-
-    useEffect(() => {
-        window.ContextBridge.onNativeThemeChanged(() => setTheme(themeMap[getThemeName()]));
-        window.ContextBridge.onRescanStateChanged((rescanState) => setRescanState(rescanState));
-
-        window.ContextBridge.onSearchIndexUpdated(() =>
-            setSearchResultItems(window.ContextBridge.getSearchResultItems()),
-        );
-    }, []);
+    const { theme, setTheme } = useTheme();
+    const { rescanState } = useRescanState();
+    const { searchResultItems } = useSearchResultItems();
 
     return (
-        <ThemeContext.Provider value={{ theme }}>
-            <FluentProvider theme={theme} style={{ height: "100vh", background: "transparent" }}>
+        <ThemeContext.Provider value={{ theme, setTheme }}>
+            <FluentProvider theme={theme} style={{ height: "100vh" }}>
                 <Routes>
                     <Route
                         path="/"

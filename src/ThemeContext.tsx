@@ -1,11 +1,12 @@
-import { Theme } from "@fluentui/react-components";
+import { Theme, webDarkTheme } from "@fluentui/react-components";
 import { createContext } from "react";
-import { getThemeName, themeMap } from "./Theme";
 
 type ThemeContextProps = {
     theme: Theme;
+    setTheme: (theme: Theme) => void;
 };
 
 export const ThemeContext = createContext<ThemeContextProps>({
-    theme: themeMap[getThemeName()],
+    theme: webDarkTheme,
+    setTheme: () => null,
 });

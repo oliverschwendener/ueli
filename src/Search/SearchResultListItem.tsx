@@ -12,7 +12,6 @@ type SearchResultListItemProps = {
 
 export const SearchResultListItem = ({ containerRef, isSelected, searchResultItem }: SearchResultListItemProps) => {
     const { theme } = useContext(ThemeContext);
-
     const ref = useRef<HTMLDivElement>(null);
 
     const scrollIntoViewIfSelectedAndNotVisible = () => {

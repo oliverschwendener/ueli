@@ -4,6 +4,8 @@ import { join } from "path";
 import { platform } from "process";
 import { SearchIndex } from "./SearchIndex";
 
+const settings: Record<string, unknown> = {};
+
 const preloadScriptFilePath = app.isPackaged
     ? join(__dirname, "..", "..", "dist-electron", "preload", "index.js")
     : join(__dirname, "..", "preload", "index.js");
@@ -13,7 +15,6 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
         webPreferences: {
             preload: preloadScriptFilePath,
         },
-        vibrancy: "window",
         frame: false,
     },
     Windows: {
@@ -21,8 +22,6 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
         webPreferences: {
             preload: preloadScriptFilePath,
         },
-        backgroundMaterial: "mica",
-        transparent: true,
     },
 };
 
@@ -46,5 +45,15 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
     ipcMain.on("themeShouldUseDarkColors", (event) => (event.returnValue = nativeTheme.shouldUseDarkColors));
     ipcMain.on("getRescanState", (event) => (event.returnValue = searchIndex.getRescanState()));
     ipcMain.on("getSearchResultItems", (event) => (event.returnValue = searchIndex.getSearchResultItems()));
+
+    ipcMain.on("getSettingByKey", (event, { key, defaultValue }: { key: string; defaultValue: string }) => {
+        event.returnValue = settings[key] ?? defaultValue;
+    });
+
+    ipcMain.handle("updateSettingByKey", (_, { key, value }: { key: string; value: unknown }) => {
+        settings[key] = value;
+        return Promise.resolve();
+    });
+
     nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
 })();
