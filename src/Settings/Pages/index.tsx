@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { Appearance } from "./Appearance";
 import { General } from "./General";
+import { SearchEngine } from "./SearchEngine";
 import { Window } from "./Window";
 
 export type SettingsPage = {
@@ -28,5 +29,11 @@ export const settingsPages: SettingsPage[] = [
         relativePath: "appearance",
         absolutePath: "/settings/appearance",
         element: <Appearance />,
+    },
+    {
+        label: "Search Engine",
+        relativePath: "search-engine",
+        absolutePath: "/settings/search-engine",
+        element: <SearchEngine />,
     },
 ];

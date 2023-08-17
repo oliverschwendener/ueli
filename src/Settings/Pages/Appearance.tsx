@@ -9,6 +9,8 @@ import {
     getTheme,
 } from "../../Theme";
 import { ThemeContext } from "../../ThemeContext";
+import { SectionList } from "../SectionList";
+import { Section } from "../Section";
 
 export const Appearance = () => {
     const { setTheme: updateTheme } = useContext(ThemeContext);
@@ -35,9 +37,9 @@ export const Appearance = () => {
     };
 
     return (
-        <>
-            <div>
-                <label id={SYNC_WITH_OS_SETTING_KEY}>Sync with OS</label>
+        <SectionList>
+            <Section>
+                <label id={SYNC_WITH_OS_SETTING_KEY}>Sync Theme with OS</label>
                 <Switch
                     aria-labelledby={SYNC_WITH_OS_SETTING_KEY}
                     checked={syncWithOs}
@@ -46,8 +48,8 @@ export const Appearance = () => {
                         saveSetting(SYNC_WITH_OS_SETTING_KEY, checked);
                     }}
                 />
-            </div>
-            <div>
+            </Section>
+            <Section>
                 <label id={PREFERRED_THEME_SETTING_KEY}>Preferred Theme</label>
                 <Dropdown
                     aria-labelledby={PREFERRED_THEME_SETTING_KEY}
@@ -65,8 +67,8 @@ export const Appearance = () => {
                     <Option value="Teams Light">Teams Light</Option>
                     <Option value="Teams Dark">Teams Dark</Option>
                 </Dropdown>
-            </div>
-            <div>
+            </Section>
+            <Section>
                 <label id={PREFERRED_LIGHT_THEME_SETTING_KEY}>Preferred Light Theme</label>
                 <Dropdown
                     aria-labelledby={PREFERRED_LIGHT_THEME_SETTING_KEY}
@@ -82,8 +84,8 @@ export const Appearance = () => {
                     <Option value="Web Light">Web Light</Option>
                     <Option value="Teams Light">Teams Light</Option>
                 </Dropdown>
-            </div>
-            <div>
+            </Section>
+            <Section>
                 <label id={PREFERRED_DARK_THEME_SETTING_KEY}>Preferred Dark Theme</label>
                 <Dropdown
                     aria-labelledby={PREFERRED_DARK_THEME_SETTING_KEY}
@@ -99,7 +101,7 @@ export const Appearance = () => {
                     <Option value="Web Dark">Web Dark</Option>
                     <Option value="Teams Dark">Teams Dark</Option>
                 </Dropdown>
-            </div>
-        </>
+            </Section>
+        </SectionList>
     );
 };
