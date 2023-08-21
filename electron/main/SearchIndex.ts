@@ -3,7 +3,6 @@ import { SearchResultItem } from "@common/SearchResultItem";
 
 export class SearchIndex {
     private static readonly SCAN_DURATION_IN_MS = 50;
-    private static readonly RESCAN_INTERVAL_IN_MS = 360000;
 
     private rescanState: RescanSate;
     private searchResultItems: SearchResultItem[];
@@ -91,8 +90,6 @@ export class SearchIndex {
         this.changeRescanState({ rescanPending: false });
 
         this.onSearchIndexUpdated();
-
-        setTimeout(() => this.rescan(), SearchIndex.RESCAN_INTERVAL_IN_MS);
     }
 
     public getRescanState(): RescanSate {
