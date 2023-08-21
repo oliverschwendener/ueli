@@ -1,5 +1,12 @@
-import { PaintBrush16Regular, Search16Regular, Settings16Regular, Window16Regular } from "@fluentui/react-icons";
+import {
+    Info16Regular,
+    PaintBrush16Regular,
+    Search16Regular,
+    Settings16Regular,
+    Window16Regular,
+} from "@fluentui/react-icons";
 import { ReactElement } from "react";
+import { About } from "./About";
 import { Appearance } from "./Appearance";
 import { General } from "./General";
 import { SearchEngine } from "./SearchEngine";
@@ -41,5 +48,12 @@ export const settingsPages: SettingsPage[] = [
         absolutePath: "/settings/search-engine",
         element: <SearchEngine />,
         icon: <Search16Regular />,
+    },
+    {
+        label: "About",
+        relativePath: "about",
+        absolutePath: "/settings/about",
+        element: <About />,
+        icon: <Info16Regular />,
     },
 ];

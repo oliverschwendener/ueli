@@ -19,7 +19,9 @@ export const General = () => {
     return (
         <SectionList>
             <Section>
+                <label id="general.language">Language</label>
                 <Dropdown
+                    aria-labelledby="general.language"
                     value={supportedLanguages.find(({ locale }) => locale === language)?.label}
                     onOptionSelect={(_, { optionValue }) => optionValue && setLanguage(optionValue)}
                 >
