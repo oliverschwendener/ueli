@@ -15,27 +15,25 @@ const themeMap: Record<ThemeName, Theme> = {
 };
 
 const getThemeName = (): ThemeName => {
-    const syncWithOs = window.ContextBridge.getSettingByKey(SYNC_WITH_OS_SETTING_KEY, true);
+    const syncWithOs = window.ContextBridge.getSettingByKey<boolean>(SYNC_WITH_OS_SETTING_KEY, true);
 
-    const osPrefersDarkColors = window.ContextBridge.themeShouldUseDarkColors();
-
-    const preferredThemeName = window.ContextBridge.getSettingByKey(
+    const preferredThemeName = window.ContextBridge.getSettingByKey<ThemeName>(
         PREFERRED_THEME_NAME_SETTING_KEY,
-        <ThemeName>"Web Dark",
+        "Web Dark",
     );
 
-    const preferredLightThemeName = window.ContextBridge.getSettingByKey(
+    const preferredLightThemeName = window.ContextBridge.getSettingByKey<ThemeName>(
         PREFERRED_LIGHT_THEME_NAME_SETTING_KEY,
-        <ThemeName>"Web Light",
+        "Web Light",
     );
 
-    const preferredDarkThemeName = window.ContextBridge.getSettingByKey(
+    const preferredDarkThemeName = window.ContextBridge.getSettingByKey<ThemeName>(
         PREFERRED_DARK_THEME_NAME_SETTING_KEY,
-        <ThemeName>"Web Dark",
+        "Web Dark",
     );
 
     if (syncWithOs) {
-        return osPrefersDarkColors ? preferredDarkThemeName : preferredLightThemeName;
+        return window.ContextBridge.themeShouldUseDarkColors() ? preferredDarkThemeName : preferredLightThemeName;
     }
 
     return preferredThemeName;
