@@ -28,18 +28,44 @@ export const SearchResultListItem = ({ containerRef, isSelected, searchResultIte
             key={searchResultItem.id}
             style={{
                 display: "flex",
-                flexDirection: "column",
+                flexDirection: "row",
+                alignItems: "center",
                 padding: 10,
+                gap: 10,
                 boxSizing: "border-box",
                 opacity: isSelected ? 1 : 0.75,
                 backgroundColor: isSelected ? theme.colorSubtleBackgroundSelected : undefined,
                 color: isSelected ? theme.colorNeutralForeground1Selected : undefined,
             }}
         >
-            <Text weight={isSelected ? "semibold" : "regular"} size={400}>
-                {searchResultItem.name}
-            </Text>
-            <Text weight="regular">{searchResultItem.description}</Text>
+            <div
+                style={{
+                    width: 24,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexShrink: 0,
+                }}
+            >
+                <img style={{ maxHeight: "100%", maxWidth: "100%" }} alt="" src={searchResultItem.icon} />
+            </div>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    flexGrow: 1,
+                }}
+            >
+                <Text weight="regular" size={400}>
+                    {searchResultItem.name}
+                </Text>
+                <Text weight="regular" size={200}>
+                    {searchResultItem.description}
+                </Text>
+            </div>
         </div>
     );
 };
