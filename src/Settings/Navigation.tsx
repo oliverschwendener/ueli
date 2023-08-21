@@ -16,8 +16,8 @@ export const Navigation = ({ settingsPages, path, onNavigate }: NavigationProps)
             appearance="subtle"
             style={{ width: "100%" }}
         >
-            {settingsPages.map(({ label, absolutePath }) => (
-                <Tab key={`settings-page-tab-${absolutePath}`} value={absolutePath}>
+            {settingsPages.map(({ label, absolutePath, icon }) => (
+                <Tab key={`settings-page-tab-${absolutePath}`} value={absolutePath} icon={icon}>
                     {label}
                 </Tab>
             ))}

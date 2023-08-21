@@ -1,6 +1,6 @@
 import { SearchResultItem } from "@common/SearchResultItem";
 import { Button, Divider, Input, ProgressBar } from "@fluentui/react-components";
-import { Settings16Filled } from "@fluentui/react-icons";
+import { Settings16Regular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { FavoritesList } from "./FavoritesList";
@@ -94,7 +94,7 @@ export const Search = ({ rescanState, searchResultItems }: SearchProps) => {
                     alignItems: "center",
                 }}
             >
-                <Button onClick={openSettings} size="small" appearance="subtle" icon={<Settings16Filled />}>
+                <Button onClick={openSettings} size="small" appearance="subtle" icon={<Settings16Regular />}>
                     Settings
                 </Button>
             </div>
