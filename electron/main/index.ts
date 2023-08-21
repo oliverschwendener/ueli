@@ -33,26 +33,6 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
     },
 };
 
-const registerIpcMainEventHandlers = (searchIndex: SearchIndex) => {
-    ipcMain.on("themeShouldUseDarkColors", (event) => (event.returnValue = nativeTheme.shouldUseDarkColors));
-    ipcMain.on("getRescanState", (event) => (event.returnValue = searchIndex.getRescanState()));
-    ipcMain.on("getSearchResultItems", (event) => (event.returnValue = searchIndex.getSearchResultItems()));
-
-    ipcMain.on(
-        "getSettingByKey",
-        (event, { key, defaultValue }: { key: string; defaultValue: unknown }) =>
-            (event.returnValue = settingsManager.getSettingByKey(key, defaultValue)),
-    );
-
-    ipcMain.handle("updateSettingByKey", (_, { key, value }: { key: string; value: unknown }) =>
-        settingsManager.saveSetting(key, value),
-    );
-};
-
-const registerNativeThemeEventHandlers = (browserWindow: BrowserWindow) => {
-    nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
-};
-
 (async () => {
     await app.whenReady();
 
@@ -70,6 +50,19 @@ const registerNativeThemeEventHandlers = (browserWindow: BrowserWindow) => {
         ? browserWindow.loadFile(join(__dirname, "..", "..", "dist", "index.html"))
         : browserWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
 
-    registerIpcMainEventHandlers(searchIndex);
-    registerNativeThemeEventHandlers(browserWindow);
+    ipcMain.on("themeShouldUseDarkColors", (event) => (event.returnValue = nativeTheme.shouldUseDarkColors));
+    ipcMain.on("getRescanState", (event) => (event.returnValue = searchIndex.getRescanState()));
+    ipcMain.on("getSearchResultItems", (event) => (event.returnValue = searchIndex.getSearchResultItems()));
+
+    ipcMain.on(
+        "getSettingByKey",
+        (event, { key, defaultValue }: { key: string; defaultValue: unknown }) =>
+            (event.returnValue = settingsManager.getSettingByKey(key, defaultValue)),
+    );
+
+    ipcMain.handle("updateSettingByKey", (_, { key, value }: { key: string; value: unknown }) =>
+        settingsManager.saveSetting(key, value),
+    );
+
+    nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
 })();
