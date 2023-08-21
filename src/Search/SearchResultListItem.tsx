@@ -32,8 +32,8 @@ export const SearchResultListItem = ({ containerRef, isSelected, searchResultIte
                 padding: 10,
                 boxSizing: "border-box",
                 opacity: isSelected ? 1 : 0.75,
-                backgroundColor: isSelected ? theme.colorBrandBackgroundStatic : undefined,
-                color: isSelected ? theme.colorNeutralForegroundOnBrand : undefined,
+                backgroundColor: isSelected ? theme.colorSubtleBackgroundSelected : undefined,
+                color: isSelected ? theme.colorNeutralForeground1Selected : undefined,
             }}
         >
             <Text weight={isSelected ? "semibold" : "regular"} size={400}>

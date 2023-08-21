@@ -25,6 +25,27 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
     },
 };
 
+const registerIpcMainEventHandlers = (searchIndex: SearchIndex) => {
+    ipcMain.on("themeShouldUseDarkColors", (event) => (event.returnValue = nativeTheme.shouldUseDarkColors));
+    ipcMain.on("getRescanState", (event) => (event.returnValue = searchIndex.getRescanState()));
+    ipcMain.on("getSearchResultItems", (event) => (event.returnValue = searchIndex.getSearchResultItems()));
+
+    ipcMain.on(
+        "getSettingByKey",
+        (event, { key, defaultValue }: { key: string; defaultValue: unknown }) =>
+            (event.returnValue = settings[key] ?? defaultValue),
+    );
+
+    ipcMain.handle("updateSettingByKey", (_, { key, value }: { key: string; value: unknown }) => {
+        settings[key] = value;
+        return Promise.resolve();
+    });
+};
+
+const registerNativeThemeEventHandlers = (browserWindow: BrowserWindow) => {
+    nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
+};
+
 (async () => {
     await app.whenReady();
 
@@ -42,18 +63,6 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
         ? browserWindow.loadFile(join(__dirname, "..", "..", "dist", "index.html"))
         : browserWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
 
-    ipcMain.on("themeShouldUseDarkColors", (event) => (event.returnValue = nativeTheme.shouldUseDarkColors));
-    ipcMain.on("getRescanState", (event) => (event.returnValue = searchIndex.getRescanState()));
-    ipcMain.on("getSearchResultItems", (event) => (event.returnValue = searchIndex.getSearchResultItems()));
-
-    ipcMain.on("getSettingByKey", (event, { key, defaultValue }: { key: string; defaultValue: string }) => {
-        event.returnValue = settings[key] ?? defaultValue;
-    });
-
-    ipcMain.handle("updateSettingByKey", (_, { key, value }: { key: string; value: unknown }) => {
-        settings[key] = value;
-        return Promise.resolve();
-    });
-
-    nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
+    registerIpcMainEventHandlers(searchIndex);
+    registerNativeThemeEventHandlers(browserWindow);
 })();
