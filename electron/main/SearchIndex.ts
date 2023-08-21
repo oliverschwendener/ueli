@@ -2,8 +2,6 @@ import { RescanSate } from "@common/RescanState";
 import { SearchResultItem } from "@common/SearchResultItem";
 
 export class SearchIndex {
-    private static readonly SCAN_DURATION_IN_MS = 50;
-
     private rescanState: RescanSate;
     private searchResultItems: SearchResultItem[];
 
@@ -21,8 +19,6 @@ export class SearchIndex {
 
     public async rescan(): Promise<void> {
         this.changeRescanState({ rescanPending: true });
-
-        await this.wait(SearchIndex.SCAN_DURATION_IN_MS);
 
         this.searchResultItems = [
             {
@@ -99,9 +95,5 @@ export class SearchIndex {
     private changeRescanState(rescanState: RescanSate): void {
         this.rescanState = rescanState;
         this.onRescanStateChanged(rescanState);
-    }
-
-    private wait(millisecondsToWait: number): Promise<void> {
-        return new Promise((resolve) => setTimeout(() => resolve(), millisecondsToWait));
     }
 }
