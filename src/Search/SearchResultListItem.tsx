@@ -33,7 +33,6 @@ export const SearchResultListItem = ({ containerRef, isSelected, searchResultIte
                 padding: 10,
                 gap: 10,
                 boxSizing: "border-box",
-                opacity: isSelected ? 1 : 0.75,
                 backgroundColor: isSelected ? theme.colorSubtleBackgroundSelected : undefined,
                 color: isSelected ? theme.colorNeutralForeground1Selected : undefined,
             }}
@@ -59,12 +58,8 @@ export const SearchResultListItem = ({ containerRef, isSelected, searchResultIte
                     flexGrow: 1,
                 }}
             >
-                <Text weight="regular" size={400}>
-                    {searchResultItem.name}
-                </Text>
-                <Text weight="regular" size={200}>
-                    {searchResultItem.description}
-                </Text>
+                <Text>{searchResultItem.name}</Text>
+                <Text size={200}>{searchResultItem.description}</Text>
             </div>
         </div>
     );
