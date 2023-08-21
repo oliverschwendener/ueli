@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { FavoritesList } from "./FavoritesList";
 import { SearchResultList } from "./SearchResultList";
-import { filterSearchResultItemsBySearchTerm } from "./helpers";
+import { filterSearchResultItemsBySearchTerm } from "./Helpers/filterSearchResultItemsBySearchTerm";
 
 type SearchProps = {
     rescanState: { rescanPending: boolean };

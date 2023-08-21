@@ -2,7 +2,7 @@ import { SearchResultItem } from "@common/SearchResultItem";
 import { Text } from "@fluentui/react-components";
 import { RefObject, useContext, useEffect, useRef } from "react";
 import { ThemeContext } from "../ThemeContext";
-import { elementIsVisible } from "./helpers";
+import { elementIsVisible } from "./Helpers";
 
 type SearchResultListItemProps = {
     containerRef: RefObject<HTMLDivElement>;
