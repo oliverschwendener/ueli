@@ -3,8 +3,16 @@ import { app, BrowserWindow, BrowserWindowConstructorOptions, ipcMain, nativeThe
 import { join } from "path";
 import { platform } from "process";
 import { SearchIndex } from "./SearchIndex";
+import { SettingsManager } from "./Settings";
+import { SettingsFileReader } from "./Settings/SettingsFileReader";
+import { SettingsFileWriter } from "./Settings/SettingsFileWriter";
 
-const settings: Record<string, unknown> = {};
+const settingsFilePath = join(app.getPath("userData"), "ueli9.settings.json");
+
+const settingsManager = new SettingsManager(
+    new SettingsFileReader(settingsFilePath),
+    new SettingsFileWriter(settingsFilePath),
+);
 
 const preloadScriptFilePath = app.isPackaged
     ? join(__dirname, "..", "..", "dist-electron", "preload", "index.js")
@@ -33,13 +41,12 @@ const registerIpcMainEventHandlers = (searchIndex: SearchIndex) => {
     ipcMain.on(
         "getSettingByKey",
         (event, { key, defaultValue }: { key: string; defaultValue: unknown }) =>
-            (event.returnValue = settings[key] ?? defaultValue),
+            (event.returnValue = settingsManager.getSettingByKey(key, defaultValue)),
     );
 
-    ipcMain.handle("updateSettingByKey", (_, { key, value }: { key: string; value: unknown }) => {
-        settings[key] = value;
-        return Promise.resolve();
-    });
+    ipcMain.handle("updateSettingByKey", (_, { key, value }: { key: string; value: unknown }) =>
+        settingsManager.saveSetting(key, value),
+    );
 };
 
 const registerNativeThemeEventHandlers = (browserWindow: BrowserWindow) => {

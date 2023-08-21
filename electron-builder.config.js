@@ -3,8 +3,7 @@
  * @see https://www.electron.build/configuration/configuration
  */
 const config = {
-    appId: "com.electron.fluentui",
-    productName: "Electron Fluent UI",
+    productName: "Ueli",
     directories: {
         output: "release",
         buildResources: "build",
