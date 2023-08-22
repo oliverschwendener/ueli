@@ -2,7 +2,7 @@
  * @type {import('electron-builder').Configuration}
  * @see https://www.electron.build/configuration/configuration
  */
-const config = {
+module.exports = {
     productName: "Ueli",
     directories: {
         output: "release",
@@ -54,5 +54,3 @@ const config = {
         ],
     },
 };
-
-module.exports = config;
