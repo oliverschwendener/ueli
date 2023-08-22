@@ -2,12 +2,11 @@ import { OperatingSystem } from "@common/OperatingSystem";
 import { app, BrowserWindow, BrowserWindowConstructorOptions, ipcMain, nativeTheme } from "electron";
 import { join } from "path";
 import { platform } from "process";
+import { MacOsApplicationSearch, Plugin } from "./Plugins";
 import { SearchIndex } from "./SearchIndex";
 import { SettingsManager } from "./Settings";
 import { SettingsFileReader } from "./Settings/SettingsFileReader";
 import { SettingsFileWriter } from "./Settings/SettingsFileWriter";
-import { Plugin } from "./Plugins/Plugin";
-import { MacOsApplicationSearch } from "./Plugins/MacOsApplicationSearch";
 
 const settingsFilePath = join(app.getPath("userData"), "ueli9.settings.json");
 

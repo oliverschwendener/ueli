@@ -1,9 +1,8 @@
-import { normalize } from "path";
-import { CommandlineUtility } from "../../Utilities/CommandlineUtility";
-import { FileIconUtility } from "../../Utilities/FileIconUtility";
-import { Application } from "./Application";
 import { SearchResultItem } from "@common/SearchResultItem";
+import { normalize } from "path";
+import { CommandlineUtility, FileIconUtility } from "../../Utilities";
 import { Plugin } from "../Plugin";
+import { Application } from "./Application";
 
 export class MacOsApplicationSearch implements Plugin {
     private static readonly applicationFolders = ["/System/Applications/", "/Applications/"];
