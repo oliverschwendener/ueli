@@ -1,18 +1,17 @@
 import { SearchResultItem } from "@common/SearchResultItem";
-import { Button, Divider, Input, ProgressBar } from "@fluentui/react-components";
+import { Button, Divider, Input } from "@fluentui/react-components";
 import { Settings16Regular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { FavoritesList } from "./FavoritesList";
-import { SearchResultList } from "./SearchResultList";
 import { filterSearchResultItemsBySearchTerm } from "./Helpers/filterSearchResultItemsBySearchTerm";
+import { SearchResultList } from "./SearchResultList";
 
 type SearchProps = {
-    rescanState: { rescanPending: boolean };
     searchResultItems: SearchResultItem[];
 };
 
-export const Search = ({ rescanState, searchResultItems }: SearchProps) => {
+export const Search = ({ searchResultItems }: SearchProps) => {
     const [selectedItemIndex, setSelectedItemIndex] = useState<number>(0);
     const [searchTerm, setSearchTerm] = useState<string>("");
     const userInputRef = useRef<HTMLInputElement>(null);
@@ -81,7 +80,6 @@ export const Search = ({ rescanState, searchResultItems }: SearchProps) => {
                 )}
             </div>
             <Divider />
-            {rescanState.rescanPending ? <ProgressBar /> : null}
             <div
                 style={{
                     flexShrink: 0,

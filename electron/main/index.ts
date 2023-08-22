@@ -6,6 +6,8 @@ import { SearchIndex } from "./SearchIndex";
 import { SettingsManager } from "./Settings";
 import { SettingsFileReader } from "./Settings/SettingsFileReader";
 import { SettingsFileWriter } from "./Settings/SettingsFileWriter";
+import { Plugin } from "./Plugins/Plugin";
+import { MacOsApplicationSearch } from "./Plugins/MacOsApplicationSearch";
 
 const settingsFilePath = join(app.getPath("userData"), "ueli9.settings.json");
 
@@ -39,19 +41,21 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
     const operatingSysetem = platform === "win32" ? "Windows" : "macOS";
     const browserWindow = new BrowserWindow(browserWindowConstructorOptionsMap[operatingSysetem]);
 
-    const searchIndex = new SearchIndex(
-        () => browserWindow.webContents.send("searchIndexUpdated"),
-        (rescanState) => browserWindow.webContents.send("rescanStateChanged", rescanState),
-    );
+    const searchIndex = new SearchIndex(() => browserWindow.webContents.send("searchIndexUpdated"));
 
-    searchIndex.rescan();
+    const plugins: Plugin[] = [new MacOsApplicationSearch()];
+
+    for (const plugin of plugins) {
+        plugin
+            .getAllSearchResultItems()
+            .then((searchResultItems) => searchIndex.addSearchResultItems(plugin.getId(), searchResultItems));
+    }
 
     app.isPackaged
         ? browserWindow.loadFile(join(__dirname, "..", "..", "dist", "index.html"))
         : browserWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
 
     ipcMain.on("themeShouldUseDarkColors", (event) => (event.returnValue = nativeTheme.shouldUseDarkColors));
-    ipcMain.on("getRescanState", (event) => (event.returnValue = searchIndex.getRescanState()));
     ipcMain.on("getSearchResultItems", (event) => (event.returnValue = searchIndex.getSearchResultItems()));
 
     ipcMain.on(

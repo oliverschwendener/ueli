@@ -4,3 +4,7 @@ export type SearchResultItem = {
     description: string;
     icon?: string;
 };
+
+export interface Searchable {
+    toSearchResultItem(): SearchResultItem;
+}
