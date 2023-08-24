@@ -1,5 +1,5 @@
-import { SearchResultItem } from "@common/SearchResultItem";
 import { normalize } from "path";
+import { SearchIndex } from "../../SearchIndex";
 import { CommandlineUtility, FileIconUtility } from "../../Utilities";
 import { Plugin } from "../Plugin";
 import { Application } from "./Application";
@@ -7,17 +7,21 @@ import { Application } from "./Application";
 export class MacOsApplicationSearch implements Plugin {
     private static readonly applicationFolders = ["/System/Applications/", "/Applications/"];
 
+    public constructor(private readonly searchIndex: SearchIndex) {}
+
     public getId(): string {
         return "MacOsApplicationSearch";
     }
 
-    public async getAllSearchResultItems(): Promise<SearchResultItem[]> {
+    public async addSearchResultItemsToSearchIndex(): Promise<void> {
         const filePaths = await this.getAllFilePaths();
         const icons = await this.getAllIcons(filePaths);
 
-        return filePaths
+        const searchResultItems = filePaths
             .map((filePath) => Application.fromFilePathAndIcon({ filePath, iconDataUrl: icons[filePath] }))
             .map((application) => application.toSearchResultItem());
+
+        this.searchIndex.addSearchResultItems(this.getId(), searchResultItems);
     }
 
     private async getAllFilePaths(): Promise<string[]> {

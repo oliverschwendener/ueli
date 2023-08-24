@@ -42,12 +42,10 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
 
     const searchIndex = new SearchIndex(() => browserWindow.webContents.send("searchIndexUpdated"));
 
-    const plugins: Plugin[] = [new MacOsApplicationSearch()];
+    const plugins: Plugin[] = [new MacOsApplicationSearch(searchIndex)];
 
     for (const plugin of plugins) {
-        plugin
-            .getAllSearchResultItems()
-            .then((searchResultItems) => searchIndex.addSearchResultItems(plugin.getId(), searchResultItems));
+        plugin.addSearchResultItemsToSearchIndex();
     }
 
     app.isPackaged
