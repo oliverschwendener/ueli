@@ -22,7 +22,7 @@ export class Application implements Searchable {
             id: this.getId(),
             description: "Application",
             name: this.getApplicationName(),
-            icon: this.iconDataUrl,
+            imageUrl: this.iconDataUrl,
         };
     }
 

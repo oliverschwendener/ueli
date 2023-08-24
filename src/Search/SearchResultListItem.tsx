@@ -47,7 +47,11 @@ export const SearchResultListItem = ({ containerRef, isSelected, searchResultIte
                     flexShrink: 0,
                 }}
             >
-                <img style={{ maxHeight: "100%", maxWidth: "100%" }} alt="" src={searchResultItem.icon} />
+                <img
+                    style={{ maxHeight: "100%", maxWidth: "100%" }}
+                    alt={searchResultItem.name}
+                    src={searchResultItem.imageUrl}
+                />
             </div>
             <div
                 style={{

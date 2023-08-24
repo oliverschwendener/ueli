@@ -13,7 +13,7 @@ describe(Application, () => {
             id: "L0FwcGxpY2F0aW9ucy9VdGlsaXRpZXMvQWRvYmUgQ3JlYXRpdmUgQ2xvdWQvVXRpbHMvQ3JlYXRpdmUgQ2xvdWQgVW5pbnN0YWxsZXIuYXBw",
             description: "Application",
             name: "Creative Cloud Uninstaller",
-            icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAA",
+            imageUrl: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAA",
         });
     });
 });
