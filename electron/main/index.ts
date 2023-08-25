@@ -4,16 +4,18 @@ import mitt from "mitt";
 import { join } from "path";
 import { platform } from "process";
 import { useEventEmitter, useEventSubscriber } from "./EventEmitter";
+import { useOperatingSystem } from "./OperatingSystem";
 import { usePlugins } from "./Plugins";
 import { useSearchIndex } from "./SearchIndex";
 import { useSettingsManager } from "./Settings";
 
+const { operatingSystem } = useOperatingSystem(platform);
 const emitter = mitt<Record<string, unknown>>();
 const { eventEmitter } = useEventEmitter(emitter);
 const { eventSubscriber } = useEventSubscriber(emitter);
 const { settingsManager } = useSettingsManager(app);
 const { searchIndex } = useSearchIndex(eventEmitter);
-const { plugins } = usePlugins(searchIndex);
+const { plugins } = usePlugins(operatingSystem, searchIndex);
 
 const preloadScriptFilePath = app.isPackaged
     ? join(__dirname, "..", "..", "dist-electron", "preload", "index.js")
@@ -37,8 +39,7 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
 (async () => {
     await app.whenReady();
 
-    const operatingSysetem = platform === "win32" ? "Windows" : "macOS";
-    const browserWindow = new BrowserWindow(browserWindowConstructorOptionsMap[operatingSysetem]);
+    const browserWindow = new BrowserWindow(browserWindowConstructorOptionsMap[operatingSystem]);
 
     eventSubscriber.subscribe("searchResultsUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
 
