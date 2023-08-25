@@ -1,19 +1,19 @@
 import { OperatingSystem } from "@common/OperatingSystem";
 import { app, BrowserWindow, BrowserWindowConstructorOptions, ipcMain, nativeTheme } from "electron";
+import mitt from "mitt";
 import { join } from "path";
 import { platform } from "process";
-import { MacOsApplicationSearch, Plugin } from "./Plugins";
-import { SearchIndex } from "./SearchIndex";
-import { SettingsManager } from "./Settings";
-import { SettingsFileReader } from "./Settings/SettingsFileReader";
-import { SettingsFileWriter } from "./Settings/SettingsFileWriter";
+import { useEventEmitter, useEventSubscriber } from "./EventEmitter";
+import { usePlugins } from "./Plugins";
+import { useSearchIndex } from "./SearchIndex";
+import { useSettingsManager } from "./Settings";
 
-const settingsFilePath = join(app.getPath("userData"), "ueli9.settings.json");
-
-const settingsManager = new SettingsManager(
-    new SettingsFileReader(settingsFilePath),
-    new SettingsFileWriter(settingsFilePath),
-);
+const emitter = mitt<Record<string, unknown>>();
+const { eventEmitter } = useEventEmitter(emitter);
+const { eventSubscriber } = useEventSubscriber(emitter);
+const { settingsManager } = useSettingsManager(app);
+const { searchIndex } = useSearchIndex(eventEmitter);
+const { plugins } = usePlugins(searchIndex);
 
 const preloadScriptFilePath = app.isPackaged
     ? join(__dirname, "..", "..", "dist-electron", "preload", "index.js")
@@ -40,9 +40,7 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
     const operatingSysetem = platform === "win32" ? "Windows" : "macOS";
     const browserWindow = new BrowserWindow(browserWindowConstructorOptionsMap[operatingSysetem]);
 
-    const searchIndex = new SearchIndex(() => browserWindow.webContents.send("searchIndexUpdated"));
-
-    const plugins: Plugin[] = [new MacOsApplicationSearch(searchIndex)];
+    eventSubscriber.subscribe("searchResultsUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
 
     for (const plugin of plugins) {
         plugin.addSearchResultItemsToSearchIndex();
