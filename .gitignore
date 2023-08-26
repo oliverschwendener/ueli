@@ -1,5 +1,6 @@
 dist-electron/
 dist/
+release/
 
 .DS_Store
 
