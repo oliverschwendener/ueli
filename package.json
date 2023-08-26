@@ -39,8 +39,8 @@
         "vitest": "^0.33.0"
     },
     "dependencies": {
-        "@fluentui/react-components": "^9.26.1",
-        "@fluentui/react-icons": "^2.0.207",
+        "@fluentui/react-components": "^9.30.0",
+        "@fluentui/react-icons": "^2.0.212",
         "mitt": "^3.0.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
