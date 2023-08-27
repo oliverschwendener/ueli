@@ -1,10 +1,7 @@
 import { EventEmitter } from "../EventEmitter";
 import { InMemorySearchIndex } from "./InMemorySearchIndex";
+import { SearchIndex } from "./SearchIndex";
 
 export * from "./SearchIndex";
 
-export const useSearchIndex = (eventEmitter: EventEmitter) => {
-    const searchIndex = new InMemorySearchIndex(eventEmitter);
-
-    return { searchIndex };
-};
+export const useSearchIndex = (eventEmitter: EventEmitter): SearchIndex => new InMemorySearchIndex(eventEmitter);

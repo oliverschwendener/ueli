@@ -9,13 +9,13 @@ import { usePlugins } from "./Plugins";
 import { useSearchIndex } from "./SearchIndex";
 import { useSettingsManager } from "./Settings";
 
-const { operatingSystem } = useOperatingSystem(platform);
+const operatingSystem = useOperatingSystem(platform);
 const emitter = mitt<Record<string, unknown>>();
-const { eventEmitter } = useEventEmitter(emitter);
-const { eventSubscriber } = useEventSubscriber(emitter);
-const { settingsManager } = useSettingsManager(app);
-const { searchIndex } = useSearchIndex(eventEmitter);
-const { plugins } = usePlugins(operatingSystem, searchIndex);
+const eventEmitter = useEventEmitter(emitter);
+const eventSubscriber = useEventSubscriber(emitter);
+const settingsManager = useSettingsManager(app);
+const searchIndex = useSearchIndex(eventEmitter);
+const plugins = usePlugins(app, operatingSystem, searchIndex);
 
 const preloadScriptFilePath = app.isPackaged
     ? join(__dirname, "..", "..", "dist-electron", "preload", "index.js")
@@ -32,6 +32,7 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
         autoHideMenuBar: true,
         webPreferences: {
             preload: preloadScriptFilePath,
+            webSecurity: false,
         },
         frame: false,
     },
