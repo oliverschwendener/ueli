@@ -1,8 +1,8 @@
-import { OperatingSystem } from "@common/OperatingSystem";
-import { app, BrowserWindow, BrowserWindowConstructorOptions, ipcMain, nativeTheme } from "electron";
+import { app, ipcMain, nativeTheme } from "electron";
 import mitt from "mitt";
 import { join } from "path";
 import { platform } from "process";
+import { useBrowserWindow } from "./BrowserWindow";
 import { useEventEmitter, useEventSubscriber } from "./EventEmitter";
 import { useOperatingSystem } from "./OperatingSystem";
 import { usePlugins } from "./Plugins";
@@ -17,31 +17,10 @@ const settingsManager = useSettingsManager(app);
 const searchIndex = useSearchIndex(eventEmitter);
 const plugins = usePlugins(app, operatingSystem, searchIndex);
 
-const preloadScriptFilePath = app.isPackaged
-    ? join(__dirname, "..", "..", "dist-electron", "preload", "index.js")
-    : join(__dirname, "..", "preload", "index.js");
-
-const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowConstructorOptions> = {
-    macOS: {
-        webPreferences: {
-            preload: preloadScriptFilePath,
-        },
-        frame: false,
-    },
-    Windows: {
-        autoHideMenuBar: true,
-        webPreferences: {
-            preload: preloadScriptFilePath,
-            webSecurity: false,
-        },
-        frame: false,
-    },
-};
-
 (async () => {
     await app.whenReady();
 
-    const browserWindow = new BrowserWindow(browserWindowConstructorOptionsMap[operatingSystem]);
+    const browserWindow = useBrowserWindow(app, operatingSystem);
 
     eventSubscriber.subscribe("searchResultsUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
 
