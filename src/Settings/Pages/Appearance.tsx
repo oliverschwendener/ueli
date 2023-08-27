@@ -1,4 +1,6 @@
 import { Dropdown, Option, Switch } from "@fluentui/react-components";
+import { useContext } from "react";
+import { useSetting } from "../../Hooks";
 import {
     PREFERRED_DARK_THEME_NAME_SETTING_KEY,
     PREFERRED_LIGHT_THEME_NAME_SETTING_KEY,
@@ -7,11 +9,9 @@ import {
     ThemeName,
     getTheme,
 } from "../../Theme";
+import { ThemeContext } from "../../ThemeContext";
 import { Section } from "../Section";
 import { SectionList } from "../SectionList";
-import { useSetting } from "./Hooks";
-import { useContext } from "react";
-import { ThemeContext } from "../../ThemeContext";
 
 export const Appearance = () => {
     const { setTheme } = useContext(ThemeContext);

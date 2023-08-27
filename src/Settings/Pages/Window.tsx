@@ -1,7 +1,7 @@
 import { Switch } from "@fluentui/react-components";
+import { useSetting } from "../../Hooks";
 import { Section } from "../Section";
 import { SectionList } from "../SectionList";
-import { useSetting } from "./Hooks";
 
 export const Window = () => {
     const { value: hideWindowOnBlur, updateValue: setHideWindowOnBlur } = useSetting("window.hideWindowOnBlur", true);

@@ -1,6 +1,19 @@
 import { SearchResultItem } from "@common/SearchResultItem";
+import Fuse from "fuse.js";
 
-export const filterSearchResultItemsBySearchTerm = (searchResultItems: SearchResultItem[], searchTerm: string) =>
-    searchResultItems.filter((searchResultItem) =>
-        searchResultItem.name.toLowerCase().includes(searchTerm.trim().toLowerCase()),
-    );
+type SearchOptions = {
+    searchTerm: string;
+    fuzzyness: number;
+};
+
+export const filterSearchResultItemsBySearchTerm = (
+    searchResultItems: SearchResultItem[],
+    searchOptions: SearchOptions,
+): SearchResultItem[] => {
+    return new Fuse(searchResultItems, {
+        keys: ["name"],
+        threshold: searchOptions.fuzzyness,
+    })
+        .search(searchOptions.searchTerm)
+        .map((i) => i.item);
+};

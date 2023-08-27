@@ -41,6 +41,7 @@
     "dependencies": {
         "@fluentui/react-components": "^9.30.0",
         "@fluentui/react-icons": "^2.0.212",
+        "fuse.js": "^6.6.2",
         "mitt": "^3.0.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",

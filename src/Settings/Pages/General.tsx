@@ -1,7 +1,7 @@
 import { Dropdown, Option } from "@fluentui/react-components";
+import { useSetting } from "../../Hooks";
 import { Section } from "../Section";
 import { SectionList } from "../SectionList";
-import { useSetting } from "./Hooks";
 
 type SupportedLanguage = {
     locale: string;

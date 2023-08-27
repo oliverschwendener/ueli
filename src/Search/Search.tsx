@@ -3,6 +3,7 @@ import { Button, Divider, Input } from "@fluentui/react-components";
 import { Settings16Regular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
+import { useSetting } from "../Hooks";
 import { FavoritesList } from "./FavoritesList";
 import { filterSearchResultItemsBySearchTerm } from "./Helpers/filterSearchResultItemsBySearchTerm";
 import { SearchResultList } from "./SearchResultList";
@@ -21,8 +22,9 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     const navigate = useNavigate();
     const openSettings = () => navigate({ pathname: "/settings/general" });
     const search = (updatedSearchTerm: string) => setSearchTerm(updatedSearchTerm);
+    const { value: fuzzyness } = useSetting("searchEngine.fuzzyness", 0.6);
 
-    const filteredSearchResultItems = filterSearchResultItemsBySearchTerm(searchResultItems, searchTerm);
+    const filteredSearchResultItems = filterSearchResultItemsBySearchTerm(searchResultItems, { searchTerm, fuzzyness });
 
     const selectNextSearchResultItem = () =>
         setSelectedItemIndex(selectedItemIndex === filteredSearchResultItems.length - 1 ? 0 : selectedItemIndex + 1);
@@ -81,6 +83,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
             </div>
             <Divider />
             <div
+                className="draggable-area"
                 style={{
                     flexShrink: 0,
                     padding: 10,
@@ -92,7 +95,13 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                     alignItems: "center",
                 }}
             >
-                <Button onClick={openSettings} size="small" appearance="subtle" icon={<Settings16Regular />}>
+                <Button
+                    className="non-draggable-area"
+                    onClick={openSettings}
+                    size="small"
+                    appearance="subtle"
+                    icon={<Settings16Regular />}
+                >
                     Settings
                 </Button>
             </div>

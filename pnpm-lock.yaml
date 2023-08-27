@@ -11,6 +11,9 @@ dependencies:
   '@fluentui/react-icons':
     specifier: ^2.0.212
     version: 2.0.212(react@18.2.0)
+  fuse.js:
+    specifier: ^6.6.2
+    version: 6.6.2
   mitt:
     specifier: ^3.0.1
     version: 3.0.1
@@ -3340,6 +3343,11 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /fuse.js@6.6.2:
+    resolution: {integrity: sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==}
+    engines: {node: '>=10'}
+    dev: false
 
   /gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
