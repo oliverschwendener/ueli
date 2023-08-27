@@ -33,6 +33,7 @@ const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowC
         webPreferences: {
             preload: preloadScriptFilePath,
         },
+        frame: false,
     },
 };
 
