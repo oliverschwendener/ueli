@@ -10,15 +10,26 @@ import type { Settings } from "./Settings";
 export class MacOsApplicationSearch implements Plugin {
     private static readonly PluginId = "MacOsApplicationSearch";
 
+    private readonly commandlineUtility: CommandlineUtility;
+    private readonly defaultSettings: Settings;
+    private readonly fileSystemUtility: FileSystemUtility;
+    private readonly pluginCacheFolderPath: string;
     private readonly searchIndex: SearchIndex;
     private readonly settingsManager: SettingsManager;
-    private readonly pluginCacheFolderPath: string;
-    private readonly defaultSettings: Settings;
 
-    public constructor({ app, searchIndex, settingsManager, pluginCacheFolderPath }: PluginDependencies) {
+    public constructor({
+        app,
+        searchIndex,
+        settingsManager,
+        pluginCacheFolderPath,
+        commandlineUtility,
+        fileSystemUtility,
+    }: PluginDependencies) {
+        this.commandlineUtility = commandlineUtility;
+        this.fileSystemUtility = fileSystemUtility;
+        this.pluginCacheFolderPath = pluginCacheFolderPath;
         this.searchIndex = searchIndex;
         this.settingsManager = settingsManager;
-        this.pluginCacheFolderPath = pluginCacheFolderPath;
 
         this.defaultSettings = {
             folders: ["/System/Applications", "/Applications", join(app.getPath("home"), "Applications")],
@@ -38,7 +49,7 @@ export class MacOsApplicationSearch implements Plugin {
     }
 
     private async getAllFilePaths(): Promise<string[]> {
-        return (await CommandlineUtility.executeCommandWithOutput(`mdfind "kMDItemKind == 'Application'"`))
+        return (await this.commandlineUtility.executeCommandWithOutput(`mdfind "kMDItemKind == 'Application'"`))
             .split("\n")
             .map((filePath) => normalize(filePath).trim())
             .filter((filePath) =>
@@ -75,12 +86,12 @@ export class MacOsApplicationSearch implements Plugin {
             Buffer.from(applicationFilePath).toString("base64"),
         )}.png`;
 
-        if (await FileSystemUtility.pathExists(iconFilePath)) {
+        if (await this.fileSystemUtility.pathExists(iconFilePath)) {
             return { applicationFilePath, iconFilePath };
         }
 
         const relativeIcnsFilePath = (
-            await CommandlineUtility.executeCommandWithOutput(
+            await this.commandlineUtility.executeCommandWithOutput(
                 `defaults read "${join(applicationFilePath, "Contents", "Info.plist")}" CFBundleIconFile`,
             )
         ).trim();
@@ -91,7 +102,7 @@ export class MacOsApplicationSearch implements Plugin {
             ? potentialIcnsFilePath
             : `${potentialIcnsFilePath}.icns`;
 
-        await CommandlineUtility.executeCommand(`sips -s format png "${icnsIconFilePath}" -o "${iconFilePath}"`);
+        await this.commandlineUtility.executeCommand(`sips -s format png "${icnsIconFilePath}" -o "${iconFilePath}"`);
 
         return { applicationFilePath, iconFilePath };
     }

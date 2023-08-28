@@ -1,4 +1,4 @@
-export const extractShortcutPowershellScript = `
+const extractShortcutPowershellScript = `
 function Extract-Shortcut {
     param(
         [string]$ShortcutFilePath
@@ -20,7 +20,7 @@ function Extract-Shortcut {
     }
 }`;
 
-export const getWindowsAppsPowershellScript = `
+const getWindowsAppsPowershellScript = `
 function Get-WindowsApps {
     param(
         [string[]]$FolderPaths,
@@ -58,3 +58,10 @@ function Get-WindowsApps {
 
     $Files | ConvertTo-Json -Compress
 }`;
+
+export const usePowershellScripts = () => {
+    return {
+        extractShortcutPowershellScript,
+        getWindowsAppsPowershellScript,
+    };
+};

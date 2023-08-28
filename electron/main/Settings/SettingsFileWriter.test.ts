@@ -1,4 +1,4 @@
-import { Settings } from "@common/Settings";
+import type { Settings } from "@common/Settings";
 import { existsSync, readFileSync, unlinkSync } from "fs";
 import { join } from "path";
 import { afterEach, describe, expect, it } from "vitest";

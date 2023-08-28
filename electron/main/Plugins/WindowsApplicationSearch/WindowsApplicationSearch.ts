@@ -1,26 +1,34 @@
 import { join } from "path";
 import type { SearchIndex } from "../../SearchIndex";
 import type { SettingsManager } from "../../Settings/SettingsManager";
-import { PowershellUtility } from "../../Utilities";
+import type { PowershellUtility } from "../../Utilities";
 import type { Plugin } from "../Plugin";
 import type { PluginDependencies } from "../PluginDependencies";
 import { Application } from "./Application";
-import { extractShortcutPowershellScript, getWindowsAppsPowershellScript } from "./PowershellScripts";
 import type { Settings } from "./Settings";
 import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
+import { usePowershellScripts } from "./usePowershellScripts";
 
 export class WindowsApplicationSearch implements Plugin {
     private static readonly PluginId = "WindowsApplicationSearch";
 
+    private readonly defaultSettings: Settings;
+    private readonly pluginCacheFolderPath: string;
+    private readonly powershellUtility: PowershellUtility;
     private readonly searchIndex: SearchIndex;
     private readonly settingsManager: SettingsManager;
-    private readonly pluginCacheFolderPath: string;
-    private readonly defaultSettings: Settings;
 
-    public constructor({ app, pluginCacheFolderPath, searchIndex, settingsManager }: PluginDependencies) {
+    public constructor({
+        app,
+        pluginCacheFolderPath,
+        powershellUtility,
+        searchIndex,
+        settingsManager,
+    }: PluginDependencies) {
+        this.pluginCacheFolderPath = pluginCacheFolderPath;
+        this.powershellUtility = powershellUtility;
         this.searchIndex = searchIndex;
         this.settingsManager = settingsManager;
-        this.pluginCacheFolderPath = pluginCacheFolderPath;
 
         this.defaultSettings = {
             folders: [
@@ -33,7 +41,7 @@ export class WindowsApplicationSearch implements Plugin {
 
     public async addSearchResultItemsToSearchIndex(): Promise<void> {
         const windowsApplicationRetrieverResults = <WindowsApplicationRetrieverResult[]>(
-            JSON.parse(await PowershellUtility.executePowershellScript(this.getPowershellScript()))
+            JSON.parse(await this.powershellUtility.executePowershellScript(this.getPowershellScript()))
         );
 
         this.searchIndex.addSearchResultItems(
@@ -45,6 +53,8 @@ export class WindowsApplicationSearch implements Plugin {
     }
 
     private getPowershellScript(): string {
+        const { extractShortcutPowershellScript, getWindowsAppsPowershellScript } = usePowershellScripts();
+
         const folderPaths = WindowsApplicationSearch.getFolderPathFilter(
             this.settingsManager.getPluginSettingByKey<string[]>(
                 WindowsApplicationSearch.PluginId,

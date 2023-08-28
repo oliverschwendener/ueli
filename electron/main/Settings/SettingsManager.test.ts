@@ -1,8 +1,8 @@
-import { Settings } from "@common/Settings";
+import type { Settings } from "@common/Settings";
 import { describe, expect, it } from "vitest";
 import { SettingsManager } from "./SettingsManager";
-import { SettingsReader } from "./SettingsReader";
-import { SettingsWriter } from "./SettingsWriter";
+import type { SettingsReader } from "./SettingsReader";
+import type { SettingsWriter } from "./SettingsWriter";
 
 const getDummySettingsReader = (settings: Settings) =>
     new (class implements SettingsReader {

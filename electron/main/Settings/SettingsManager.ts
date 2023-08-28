@@ -1,6 +1,6 @@
-import { Settings } from "@common/Settings";
-import { SettingsReader } from "./SettingsReader";
-import { SettingsWriter } from "./SettingsWriter";
+import type { Settings } from "@common/Settings";
+import type { SettingsReader } from "./SettingsReader";
+import type { SettingsWriter } from "./SettingsWriter";
 
 export class SettingsManager {
     private settings: Settings;
