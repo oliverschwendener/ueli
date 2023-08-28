@@ -1,6 +1,6 @@
 import { Dropdown, Option, Switch } from "@fluentui/react-components";
 import { useContext } from "react";
-import { useSetting } from "../../Hooks";
+import { useContextBridge, useSetting } from "../../Hooks";
 import {
     PREFERRED_DARK_THEME_NAME_SETTING_KEY,
     PREFERRED_LIGHT_THEME_NAME_SETTING_KEY,
@@ -15,7 +15,7 @@ import { SectionList } from "../SectionList";
 
 export const Appearance = () => {
     const { setTheme } = useContext(ThemeContext);
-    const updateTheme = () => setTheme(getTheme());
+    const updateTheme = () => setTheme(getTheme(useContextBridge()));
 
     const { value: syncWithOs, updateValue: setSyncWithOs } = useSetting(SYNC_WITH_OS_SETTING_KEY, true, updateTheme);
 

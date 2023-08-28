@@ -7,8 +7,10 @@ import { ThemeContext } from "./ThemeContext";
 
 export const App = () => {
     const contextBridge = useContextBridge();
-    const { theme, setTheme } = useTheme({ contextBridge });
-    const { searchResultItems } = useSearchResultItems({ contextBridge });
+
+    const { theme, setTheme } = useTheme(contextBridge);
+    const { searchResultItems } = useSearchResultItems(contextBridge);
+
     useScrollBar({ document, theme });
 
     return (
