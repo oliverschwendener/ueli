@@ -7,13 +7,13 @@ describe(Application, () => {
         expect(
             Application.fromFilePathAndIcon({
                 filePath: "/Applications/Utilities/Adobe Creative Cloud/Utils/Creative Cloud Uninstaller.app",
-                iconDataUrl: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAA",
+                iconFilePath: "/Users/UserName/Application Support/ueli/PluginCache/image.png",
             }).toSearchResultItem(),
         ).toEqual(<SearchResultItem>{
             id: "L0FwcGxpY2F0aW9ucy9VdGlsaXRpZXMvQWRvYmUgQ3JlYXRpdmUgQ2xvdWQvVXRpbHMvQ3JlYXRpdmUgQ2xvdWQgVW5pbnN0YWxsZXIuYXBw",
             description: "Application",
             name: "Creative Cloud Uninstaller",
-            imageUrl: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAA",
+            imageUrl: "file:///Users/UserName/Application Support/ueli/PluginCache/image.png",
         });
     });
 });
