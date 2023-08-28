@@ -23,6 +23,7 @@ export const useBrowserWindow = async ({
             webPreferences: {
                 preload: preloadScriptFilePath,
                 webSecurity: app.isPackaged ? true : false,
+                spellcheck: false,
             },
             frame: false,
         },
@@ -31,6 +32,7 @@ export const useBrowserWindow = async ({
             webPreferences: {
                 preload: preloadScriptFilePath,
                 webSecurity: app.isPackaged ? true : false,
+                spellcheck: false,
             },
             frame: false,
         },
