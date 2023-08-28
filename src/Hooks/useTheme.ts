@@ -1,12 +1,13 @@
-import { Theme } from "@fluentui/react-components";
+import type { ContextBridge } from "@common/ContextBridge";
+import type { Theme } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 import { getTheme } from "../Theme";
 
-export const useTheme = () => {
+export const useTheme = ({ contextBridge }: { contextBridge: ContextBridge }) => {
     const [theme, setTheme] = useState<Theme>(getTheme());
 
     useEffect(() => {
-        window.ContextBridge.onNativeThemeChanged(() => setTheme(getTheme()));
+        contextBridge.onNativeThemeChanged(() => setTheme(getTheme()));
     }, []);
 
     return { theme, setTheme };

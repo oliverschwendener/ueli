@@ -1,15 +1,14 @@
-import { SearchResultItem } from "@common/SearchResultItem";
+import type { ContextBridge } from "@common/ContextBridge";
+import type { SearchResultItem } from "@common/SearchResultItem";
 import { useEffect, useState } from "react";
 
-export const useSearchResultItems = () => {
+export const useSearchResultItems = ({ contextBridge }: { contextBridge: ContextBridge }) => {
     const [searchResultItems, setSearchResultItems] = useState<SearchResultItem[]>(
-        window.ContextBridge.getSearchResultItems(),
+        contextBridge.getSearchResultItems(),
     );
 
     useEffect(() => {
-        window.ContextBridge.onSearchIndexUpdated(() =>
-            setSearchResultItems(window.ContextBridge.getSearchResultItems()),
-        );
+        contextBridge.onSearchIndexUpdated(() => setSearchResultItems(contextBridge.getSearchResultItems()));
     }, []);
 
     return { searchResultItems };
