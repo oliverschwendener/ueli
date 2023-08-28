@@ -1,5 +1,6 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { App } from "electron";
+import { join } from "path";
 import { describe, expect, it } from "vitest";
 import type { SearchIndex } from "../SearchIndex";
 import type { SettingsManager } from "../Settings/SettingsManager";
@@ -23,7 +24,7 @@ const settingsManager = <SettingsManager>{};
 
 const pluginDependencies = <PluginDependencies>{
     app,
-    pluginCacheFolderPath: "userData/PluginCache",
+    pluginCacheFolderPath: join("userData", "PluginCache"),
     searchIndex,
     settingsManager,
 };
