@@ -1,16 +1,16 @@
 import { join } from "path";
-import { SearchIndex } from "../../SearchIndex";
+import type { SearchIndex } from "../../SearchIndex";
+import type { SettingsManager } from "../../Settings/SettingsManager";
 import { PowershellUtility } from "../../Utilities";
-import { Plugin } from "../Plugin";
+import type { Plugin } from "../Plugin";
+import type { PluginDependencies } from "../PluginDependencies";
 import { Application } from "./Application";
 import { extractShortcutPowershellScript, getWindowsAppsPowershellScript } from "./PowershellScripts";
-import { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
-import { Settings } from "./Settings";
-import { SettingsManager } from "../../Settings/SettingsManager";
-import { PluginDependencies } from "../PluginDependencies";
+import type { Settings } from "./Settings";
+import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
 
 export class WindowsApplicationSearch implements Plugin {
-    private static readonly pluginId = "WindowsApplicationSearch";
+    private static readonly PluginId = "WindowsApplicationSearch";
 
     private readonly searchIndex: SearchIndex;
     private readonly settingsManager: SettingsManager;
@@ -37,7 +37,7 @@ export class WindowsApplicationSearch implements Plugin {
         );
 
         this.searchIndex.addSearchResultItems(
-            WindowsApplicationSearch.pluginId,
+            WindowsApplicationSearch.PluginId,
             windowsApplicationRetrieverResults
                 .map((result) => Application.fromFilePath(result))
                 .map((application) => application.toSearchResultItem()),
@@ -46,15 +46,17 @@ export class WindowsApplicationSearch implements Plugin {
 
     private getPowershellScript(): string {
         const folderPaths = WindowsApplicationSearch.getFolderPathFilter(
-            this.settingsManager.getSettingByKey<string[]>(
-                `plugin[${WindowsApplicationSearch.pluginId}].folders`,
+            this.settingsManager.getPluginSettingByKey<string[]>(
+                WindowsApplicationSearch.PluginId,
+                "folders",
                 this.defaultSettings.folders,
             ),
         );
 
         const fileExtensions = WindowsApplicationSearch.getFileExtensionFilter(
-            this.settingsManager.getSettingByKey<string[]>(
-                `plugin[${WindowsApplicationSearch.pluginId}].fileExtensions`,
+            this.settingsManager.getPluginSettingByKey<string[]>(
+                WindowsApplicationSearch.PluginId,
+                "fileExtensions",
                 this.defaultSettings.fileExtensions,
             ),
         );

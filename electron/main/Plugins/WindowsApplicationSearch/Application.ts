@@ -1,5 +1,5 @@
-import { SearchResultItem, Searchable } from "@common/SearchResultItem";
-import { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
+import type { SearchResultItem, Searchable } from "@common/SearchResultItem";
+import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
 
 export class Application implements Searchable {
     public static fromFilePath({ BaseName, FullName, IconFilePath }: WindowsApplicationRetrieverResult) {

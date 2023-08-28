@@ -3,19 +3,19 @@ import type { SearchIndex } from "../../SearchIndex";
 import type { SettingsManager } from "../../Settings/SettingsManager";
 import { CommandlineUtility, FileIconUtility } from "../../Utilities";
 import type { Plugin } from "../Plugin";
+import { PluginDependencies } from "../PluginDependencies";
 import { Application } from "./Application";
 import type { Settings } from "./Settings";
-import { PluginDependencies } from "../PluginDependencies";
 
 export class MacOsApplicationSearch implements Plugin {
-    private searchIndex: SearchIndex;
-    private settingsManager: SettingsManager;
+    private static readonly PluginId = "MacOsApplicationSearch";
 
-    private static readonly pluginId = "MacOsApplicationSearch";
-
-    private static readonly defaultSettings: Settings = {
+    private static readonly DefaultSettings: Settings = {
         folders: ["/System/Applications/", "/Applications/"],
     };
+
+    private searchIndex: SearchIndex;
+    private settingsManager: SettingsManager;
 
     public constructor({ searchIndex, settingsManager }: PluginDependencies) {
         this.searchIndex = searchIndex;
@@ -30,7 +30,7 @@ export class MacOsApplicationSearch implements Plugin {
             .map((filePath) => Application.fromFilePathAndIcon({ filePath, iconDataUrl: icons[filePath] }))
             .map((application) => application.toSearchResultItem());
 
-        this.searchIndex.addSearchResultItems(MacOsApplicationSearch.pluginId, searchResultItems);
+        this.searchIndex.addSearchResultItems(MacOsApplicationSearch.PluginId, searchResultItems);
     }
 
     private async getAllFilePaths(): Promise<string[]> {
@@ -39,9 +39,10 @@ export class MacOsApplicationSearch implements Plugin {
             .map((filePath) => normalize(filePath).trim())
             .filter((filePath) =>
                 this.settingsManager
-                    .getSettingByKey<string[]>(
-                        `plugin[${MacOsApplicationSearch.pluginId}].folders`,
-                        MacOsApplicationSearch.defaultSettings.folders,
+                    .getPluginSettingByKey<string[]>(
+                        MacOsApplicationSearch.PluginId,
+                        "folders",
+                        MacOsApplicationSearch.DefaultSettings.folders,
                     )
                     .some((applicationFolder) => filePath.startsWith(applicationFolder)),
             )
