@@ -13,17 +13,13 @@ export class WindowsApplicationSearch implements Plugin {
         private readonly pluginCacheFolderPath: string,
     ) {}
 
-    public getId(): string {
-        return "WindowsApplicationSearch";
-    }
-
     public async addSearchResultItemsToSearchIndex(): Promise<void> {
         const windowsApplicationRetrieverResults = <WindowsApplicationRetrieverResult[]>(
             JSON.parse(await PowershellUtility.executePowershellScript(this.getPowershellScript()))
         );
 
         this.searchIndex.addSearchResultItems(
-            this.getId(),
+            "WindowsApplicationSearch",
             windowsApplicationRetrieverResults
                 .map((result) => Application.fromFilePath(result))
                 .map((application) => application.toSearchResultItem()),

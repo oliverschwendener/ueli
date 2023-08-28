@@ -9,10 +9,6 @@ export class MacOsApplicationSearch implements Plugin {
 
     public constructor(private readonly searchIndex: SearchIndex) {}
 
-    public getId(): string {
-        return "MacOsApplicationSearch";
-    }
-
     public async addSearchResultItemsToSearchIndex(): Promise<void> {
         const filePaths = await this.getAllFilePaths();
         const icons = await this.getAllIcons(filePaths);
@@ -21,7 +17,7 @@ export class MacOsApplicationSearch implements Plugin {
             .map((filePath) => Application.fromFilePathAndIcon({ filePath, iconDataUrl: icons[filePath] }))
             .map((application) => application.toSearchResultItem());
 
-        this.searchIndex.addSearchResultItems(this.getId(), searchResultItems);
+        this.searchIndex.addSearchResultItems("MacOsApplicationSearch", searchResultItems);
     }
 
     private async getAllFilePaths(): Promise<string[]> {

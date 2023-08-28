@@ -1,8 +1,14 @@
 import { OperatingSystem } from "@common/OperatingSystem";
-import { BrowserWindow, type App, type BrowserWindowConstructorOptions } from "electron";
+import { BrowserWindow, type App, type BrowserWindowConstructorOptions, type NativeTheme } from "electron";
 import { join } from "path";
+import { EventSubscriber } from "../EventEmitter";
 
-export const useBrowserWindow = (app: App, operatingSystem: OperatingSystem): BrowserWindow => {
+export const useBrowserWindow = async (
+    app: App,
+    operatingSystem: OperatingSystem,
+    eventSubscriber: EventSubscriber,
+    nativeTheme: NativeTheme,
+): Promise<BrowserWindow> => {
     const preloadScriptFilePath = app.isPackaged
         ? join(__dirname, "..", "..", "dist-electron", "preload", "index.js")
         : join(__dirname, "..", "preload", "index.js");
@@ -24,5 +30,14 @@ export const useBrowserWindow = (app: App, operatingSystem: OperatingSystem): Br
         },
     };
 
-    return new BrowserWindow(browserWindowConstructorOptionsMap[operatingSystem]);
+    const browserWindow = new BrowserWindow(browserWindowConstructorOptionsMap[operatingSystem]);
+
+    eventSubscriber.subscribe("searchResultItemsUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
+    nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
+
+    app.isPackaged
+        ? await browserWindow.loadFile(join(__dirname, "..", "..", "dist", "index.html"))
+        : await browserWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
+
+    return browserWindow;
 };

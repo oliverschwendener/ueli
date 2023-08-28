@@ -7,10 +7,9 @@ export const useSearchResultItems = () => {
     );
 
     useEffect(() => {
-        window.ContextBridge.onSearchIndexUpdated(() => {
-            setSearchResultItems(window.ContextBridge.getSearchResultItems());
-            console.log("updated");
-        });
+        window.ContextBridge.onSearchIndexUpdated(() =>
+            setSearchResultItems(window.ContextBridge.getSearchResultItems()),
+        );
     }, []);
 
     return { searchResultItems };
