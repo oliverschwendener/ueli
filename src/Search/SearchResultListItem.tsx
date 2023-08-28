@@ -35,6 +35,7 @@ export const SearchResultListItem = ({ containerRef, isSelected, searchResultIte
                 boxSizing: "border-box",
                 backgroundColor: isSelected ? theme.colorSubtleBackgroundSelected : undefined,
                 color: isSelected ? theme.colorNeutralForeground1Selected : undefined,
+                height: 42,
             }}
         >
             <div

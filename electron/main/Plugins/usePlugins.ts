@@ -1,8 +1,8 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { App } from "electron";
-import { join } from "path";
 import type { SearchIndex } from "../SearchIndex";
 import type { SettingsManager } from "../Settings/SettingsManager";
+import { ensureCacheFolderExists } from "./CacheFolder";
 import { MacOsApplicationSearch } from "./MacOsApplicationSearch";
 import type { Plugin } from "./Plugin";
 import type { PluginDependencies } from "./PluginDependencies";
@@ -19,7 +19,7 @@ export const usePlugins = ({
     searchIndex: SearchIndex;
     settingsManager: SettingsManager;
 }): Plugin[] => {
-    const pluginCacheFolderPath = join(app.getPath("userData"), "PluginCache");
+    const { pluginCacheFolderPath } = ensureCacheFolderExists(app);
 
     const pluginDependencies: PluginDependencies = {
         app,
