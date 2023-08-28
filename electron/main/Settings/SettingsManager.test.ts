@@ -56,6 +56,21 @@ describe(SettingsManager, () => {
         expect(settingsManager.getSettingByKey("key5", "defaultValue5")).toBe("defaultValue5");
     });
 
+    it("should get a plugin setting by plugin id and key", () => {
+        const settings: Settings = {
+            key1: "value1",
+            "plugin[testPluginId].key1": "pluginValue",
+        };
+
+        const settingsReader = getDummySettingsReader(settings);
+        const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter());
+
+        expect(settingsManager.getPluginSettingByKey("testPluginId", "key1")).toBe("pluginValue");
+        expect(settingsManager.getPluginSettingByKey("testPluginId", "key2")).toBe(undefined);
+        expect(settingsManager.getPluginSettingByKey("testPluginId", "key2", "defaultValue")).toBe("defaultValue");
+        expect(settingsManager.getPluginSettingByKey("testPluginId2", "key")).toBe(undefined);
+    });
+
     it("should save a setting by key", async () => {
         const settings: Settings = {
             key1: "value1",
