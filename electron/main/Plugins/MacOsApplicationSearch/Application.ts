@@ -1,4 +1,5 @@
-import { SearchResultItem, Searchable } from "@common/SearchResultItem";
+import type { SearchResultItem } from "@common/SearchResultItem";
+import type { Searchable } from "@common/Searchable";
 import { parse } from "path";
 
 export class Application implements Searchable {

@@ -1,4 +1,4 @@
-import { SearchResultItem } from "./SearchResultItem";
+import type { SearchResultItem } from "./SearchResultItem";
 
 export type ContextBridge = {
     getSearchResultItems: () => SearchResultItem[];

@@ -4,7 +4,3 @@ export type SearchResultItem = {
     description: string;
     imageUrl?: string;
 };
-
-export interface Searchable {
-    toSearchResultItem(): SearchResultItem;
-}

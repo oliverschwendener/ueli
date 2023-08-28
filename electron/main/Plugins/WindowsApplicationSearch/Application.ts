@@ -1,4 +1,5 @@
-import type { SearchResultItem, Searchable } from "@common/SearchResultItem";
+import type { SearchResultItem } from "@common/SearchResultItem";
+import type { Searchable } from "@common/Searchable";
 import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
 
 export class Application implements Searchable {
