@@ -18,7 +18,7 @@ import { useSettingsManager } from "./Settings";
     const eventEmitter = useEventEmitter({ emitter });
     const eventSubscriber = useEventSubscriber({ emitter });
     const searchIndex = useSearchIndex({ eventEmitter });
-    const plugins = usePlugins({ app, operatingSystem, searchIndex });
+    const plugins = usePlugins({ app, operatingSystem, searchIndex, settingsManager });
 
     await useBrowserWindow({ app, operatingSystem, eventSubscriber, nativeTheme });
 

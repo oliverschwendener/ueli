@@ -1,13 +1,26 @@
 import { normalize } from "path";
-import { SearchIndex } from "../../SearchIndex";
+import type { SearchIndex } from "../../SearchIndex";
+import type { SettingsManager } from "../../Settings/SettingsManager";
 import { CommandlineUtility, FileIconUtility } from "../../Utilities";
-import { Plugin } from "../Plugin";
+import type { Plugin } from "../Plugin";
 import { Application } from "./Application";
+import type { Settings } from "./Settings";
+import { PluginDependencies } from "../PluginDependencies";
 
 export class MacOsApplicationSearch implements Plugin {
-    private static readonly applicationFolders = ["/System/Applications/", "/Applications/"];
+    private searchIndex: SearchIndex;
+    private settingsManager: SettingsManager;
 
-    public constructor(private readonly searchIndex: SearchIndex) {}
+    private static readonly pluginId = "MacOsApplicationSearch";
+
+    private static readonly defaultSettings: Settings = {
+        folders: ["/System/Applications/", "/Applications/"],
+    };
+
+    public constructor({ searchIndex, settingsManager }: PluginDependencies) {
+        this.searchIndex = searchIndex;
+        this.settingsManager = settingsManager;
+    }
 
     public async addSearchResultItemsToSearchIndex(): Promise<void> {
         const filePaths = await this.getAllFilePaths();
@@ -17,7 +30,7 @@ export class MacOsApplicationSearch implements Plugin {
             .map((filePath) => Application.fromFilePathAndIcon({ filePath, iconDataUrl: icons[filePath] }))
             .map((application) => application.toSearchResultItem());
 
-        this.searchIndex.addSearchResultItems("MacOsApplicationSearch", searchResultItems);
+        this.searchIndex.addSearchResultItems(MacOsApplicationSearch.pluginId, searchResultItems);
     }
 
     private async getAllFilePaths(): Promise<string[]> {
@@ -25,9 +38,12 @@ export class MacOsApplicationSearch implements Plugin {
             .split("\n")
             .map((filePath) => normalize(filePath).trim())
             .filter((filePath) =>
-                MacOsApplicationSearch.applicationFolders.some((applicationFolder) =>
-                    filePath.startsWith(applicationFolder),
-                ),
+                this.settingsManager
+                    .getSettingByKey<string[]>(
+                        `plugin[${MacOsApplicationSearch.pluginId}].folders`,
+                        MacOsApplicationSearch.defaultSettings.folders,
+                    )
+                    .some((applicationFolder) => filePath.startsWith(applicationFolder)),
             )
             .filter((filePath) => [".", ".."].indexOf(filePath) === -1);
     }

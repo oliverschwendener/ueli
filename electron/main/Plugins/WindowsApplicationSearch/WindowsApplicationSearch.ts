@@ -5,13 +5,31 @@ import { Plugin } from "../Plugin";
 import { Application } from "./Application";
 import { extractShortcutPowershellScript, getWindowsAppsPowershellScript } from "./PowershellScripts";
 import { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
+import { Settings } from "./Settings";
+import { SettingsManager } from "../../Settings/SettingsManager";
+import { PluginDependencies } from "../PluginDependencies";
 
 export class WindowsApplicationSearch implements Plugin {
-    public constructor(
-        private readonly searchIndex: SearchIndex,
-        private readonly userHomePath: string,
-        private readonly pluginCacheFolderPath: string,
-    ) {}
+    private static readonly pluginId = "WindowsApplicationSearch";
+
+    private readonly searchIndex: SearchIndex;
+    private readonly settingsManager: SettingsManager;
+    private readonly pluginCacheFolderPath: string;
+    private readonly defaultSettings: Settings;
+
+    public constructor({ app, pluginCacheFolderPath, searchIndex, settingsManager }: PluginDependencies) {
+        this.searchIndex = searchIndex;
+        this.settingsManager = settingsManager;
+        this.pluginCacheFolderPath = pluginCacheFolderPath;
+
+        this.defaultSettings = {
+            folders: [
+                "C:\\ProgramData\\Microsoft\\Windows\\Start Menu",
+                join(app.getPath("home"), "AppData", "Roaming", "Microsoft", "Windows", "Start Menu"),
+            ],
+            fileExtensions: ["lnk"],
+        };
+    }
 
     public async addSearchResultItemsToSearchIndex(): Promise<void> {
         const windowsApplicationRetrieverResults = <WindowsApplicationRetrieverResult[]>(
@@ -19,7 +37,7 @@ export class WindowsApplicationSearch implements Plugin {
         );
 
         this.searchIndex.addSearchResultItems(
-            "WindowsApplicationSearch",
+            WindowsApplicationSearch.pluginId,
             windowsApplicationRetrieverResults
                 .map((result) => Application.fromFilePath(result))
                 .map((application) => application.toSearchResultItem()),
@@ -27,12 +45,19 @@ export class WindowsApplicationSearch implements Plugin {
     }
 
     private getPowershellScript(): string {
-        const folderPaths = WindowsApplicationSearch.getFolderPathFilter([
-            "C:\\ProgramData\\Microsoft\\Windows\\Start Menu",
-            join(this.userHomePath, "AppData", "Roaming", "Microsoft", "Windows", "Start Menu"),
-        ]);
+        const folderPaths = WindowsApplicationSearch.getFolderPathFilter(
+            this.settingsManager.getSettingByKey<string[]>(
+                `plugin[${WindowsApplicationSearch.pluginId}].folders`,
+                this.defaultSettings.folders,
+            ),
+        );
 
-        const fileExtensions = WindowsApplicationSearch.getFileExtensionFilter(["lnk"]);
+        const fileExtensions = WindowsApplicationSearch.getFileExtensionFilter(
+            this.settingsManager.getSettingByKey<string[]>(
+                `plugin[${WindowsApplicationSearch.pluginId}].fileExtensions`,
+                this.defaultSettings.fileExtensions,
+            ),
+        );
 
         return `
             ${extractShortcutPowershellScript}
