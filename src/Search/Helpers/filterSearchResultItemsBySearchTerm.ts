@@ -13,6 +13,7 @@ export const filterSearchResultItemsBySearchTerm = (
     return new Fuse(searchResultItems, {
         keys: ["name"],
         threshold: searchOptions.fuzzyness,
+        shouldSort: true,
     })
         .search(searchOptions.searchTerm)
         .map((i) => i.item);
