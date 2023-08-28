@@ -1,10 +1,10 @@
 import { join } from "path";
-import { PowershellUtility } from "../../Utilities/PowershellUtility";
+import { SearchIndex } from "../../SearchIndex";
+import { PowershellUtility } from "../../Utilities";
 import { Plugin } from "../Plugin";
+import { Application } from "./Application";
 import { extractShortcutPowershellScript, getWindowsAppsPowershellScript } from "./PowershellScripts";
 import { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
-import { SearchIndex } from "../../SearchIndex";
-import { Application } from "./Application";
 
 export class WindowsApplicationSearch implements Plugin {
     public constructor(
