@@ -4,17 +4,17 @@ import { parse } from "path";
 export class Application implements Searchable {
     public static fromFilePathAndIcon({
         filePath,
-        iconDataUrl,
+        iconFilePath,
     }: {
         filePath: string;
-        iconDataUrl: string;
+        iconFilePath: string;
     }): Application {
-        return new Application(filePath, iconDataUrl);
+        return new Application(filePath, iconFilePath);
     }
 
     private constructor(
         private readonly filePath: string,
-        private readonly iconDataUrl: string,
+        private readonly iconFilePath: string,
     ) {}
 
     public toSearchResultItem(): SearchResultItem {
@@ -22,7 +22,7 @@ export class Application implements Searchable {
             id: this.getId(),
             description: "Application",
             name: this.getApplicationName(),
-            imageUrl: this.iconDataUrl,
+            imageUrl: `file://${this.iconFilePath}`,
         };
     }
 

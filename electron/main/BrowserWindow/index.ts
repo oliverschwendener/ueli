@@ -29,7 +29,6 @@ export const useBrowserWindow = async ({
             autoHideMenuBar: true,
             webPreferences: {
                 preload: preloadScriptFilePath,
-                webSecurity: false,
             },
             frame: false,
         },
