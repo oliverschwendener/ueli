@@ -4,4 +4,5 @@ import { SearchIndex } from "./SearchIndex";
 
 export * from "./SearchIndex";
 
-export const useSearchIndex = (eventEmitter: EventEmitter): SearchIndex => new InMemorySearchIndex(eventEmitter);
+export const useSearchIndex = ({ eventEmitter }: { eventEmitter: EventEmitter }): SearchIndex =>
+    new InMemorySearchIndex(eventEmitter);

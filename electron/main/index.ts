@@ -12,17 +12,17 @@ import { useSettingsManager } from "./Settings";
 (async () => {
     await app.whenReady();
 
-    const operatingSystem = useOperatingSystem(platform);
-    const settingsManager = useSettingsManager(app);
+    const operatingSystem = useOperatingSystem({ platform });
+    const settingsManager = useSettingsManager({ app });
     const emitter = mitt<Record<string, unknown>>();
-    const eventEmitter = useEventEmitter(emitter);
-    const eventSubscriber = useEventSubscriber(emitter);
-    const searchIndex = useSearchIndex(eventEmitter);
-    const plugins = usePlugins(app, operatingSystem, searchIndex);
+    const eventEmitter = useEventEmitter({ emitter });
+    const eventSubscriber = useEventSubscriber({ emitter });
+    const searchIndex = useSearchIndex({ eventEmitter });
+    const plugins = usePlugins({ app, operatingSystem, searchIndex });
 
-    await useBrowserWindow(app, operatingSystem, eventSubscriber, nativeTheme);
+    await useBrowserWindow({ app, operatingSystem, eventSubscriber, nativeTheme });
 
-    useIpcMain(ipcMain, nativeTheme, searchIndex, settingsManager);
+    useIpcMain({ ipcMain, nativeTheme, searchIndex, settingsManager });
 
     for (const plugin of plugins) {
         plugin.addSearchResultItemsToSearchIndex();

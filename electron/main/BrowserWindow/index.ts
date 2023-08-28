@@ -3,12 +3,17 @@ import { BrowserWindow, type App, type BrowserWindowConstructorOptions, type Nat
 import { join } from "path";
 import { EventSubscriber } from "../EventEmitter";
 
-export const useBrowserWindow = async (
-    app: App,
-    operatingSystem: OperatingSystem,
-    eventSubscriber: EventSubscriber,
-    nativeTheme: NativeTheme,
-): Promise<void> => {
+export const useBrowserWindow = async ({
+    app,
+    operatingSystem,
+    eventSubscriber,
+    nativeTheme,
+}: {
+    app: App;
+    operatingSystem: OperatingSystem;
+    eventSubscriber: EventSubscriber;
+    nativeTheme: NativeTheme;
+}): Promise<void> => {
     const preloadScriptFilePath = app.isPackaged
         ? join(__dirname, "..", "..", "dist-electron", "preload", "index.js")
         : join(__dirname, "..", "preload", "index.js");
