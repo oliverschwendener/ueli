@@ -29,15 +29,13 @@ export const Settings = () => {
                     flexGrow: 1,
                     display: "flex",
                     flexDirection: "row",
-                    padding: 10,
-                    gap: 10,
                     boxSizing: "border-box",
                 }}
             >
-                <div style={{ flexShrink: 0, width: 200 }}>
+                <div style={{ flexShrink: 0, width: 200, padding: 10 }}>
                     <Navigation settingsPages={settingsPages} onNavigate={navigateTo} path={path} />
                 </div>
-                <div style={{ height: "100%", flexGrow: 1, overflowY: "auto", padding: 10, boxSizing: "border-box" }}>
+                <div style={{ height: "100%", flexGrow: 1, overflowY: "scroll", padding: 20, boxSizing: "border-box" }}>
                     <Routes>
                         {settingsPages.map(({ element, relativePath }) => (
                             <Route

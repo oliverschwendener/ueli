@@ -70,7 +70,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                 />
             </div>
             <Divider />
-            <div ref={containerRef} style={{ height: "100%", overflowY: "auto" }}>
+            <div ref={containerRef} style={{ height: "100%", overflowY: "scroll" }}>
                 {searchTerm.length === 0 ? (
                     <FavoritesList />
                 ) : (

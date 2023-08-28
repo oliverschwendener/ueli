@@ -1,6 +1,6 @@
 import { FluentProvider } from "@fluentui/react-components";
 import { Route, Routes } from "react-router";
-import { useSearchResultItems, useTheme } from "./Hooks";
+import { useScrollBar, useSearchResultItems, useTheme } from "./Hooks";
 import { Search } from "./Search";
 import { Settings } from "./Settings";
 import { ThemeContext } from "./ThemeContext";
@@ -8,6 +8,8 @@ import { ThemeContext } from "./ThemeContext";
 export const App = () => {
     const { theme, setTheme } = useTheme();
     const { searchResultItems } = useSearchResultItems();
+
+    useScrollBar(theme);
 
     return (
         <ThemeContext.Provider value={{ theme, setTheme }}>
