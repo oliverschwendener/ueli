@@ -1,8 +1,8 @@
 import { Emitter } from "mitt";
+import type { EventEmitter } from "./EventEmitter";
+import type { EventSubscriber } from "./EventSubscriber";
 import { MittEventEmitter } from "./MittEventEmitter";
 import { MittEventSubscriber } from "./MittEventSubscriber";
-import { EventEmitter } from "./EventEmitter";
-import { EventSubscriber } from "./EventSubscriber";
 
 export * from "./EventEmitter";
 export * from "./EventSubscriber";

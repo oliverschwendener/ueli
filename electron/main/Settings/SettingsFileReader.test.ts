@@ -1,5 +1,5 @@
-import { Settings } from "@common/Settings";
-import { unlinkSync, writeFileSync, existsSync } from "fs";
+import type { Settings } from "@common/Settings";
+import { existsSync, unlinkSync, writeFileSync } from "fs";
 import { join } from "path";
 import { afterEach, describe, expect, it } from "vitest";
 import { SettingsFileReader } from "./SettingsFileReader";

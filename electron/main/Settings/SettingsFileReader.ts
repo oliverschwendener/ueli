@@ -1,6 +1,6 @@
-import { Settings } from "@common/Settings";
-import { SettingsReader } from "./SettingsReader";
+import type { Settings } from "@common/Settings";
 import { readFileSync } from "fs";
+import { SettingsReader } from "./SettingsReader";
 
 export class SettingsFileReader implements SettingsReader {
     public constructor(private readonly settingsFilePath: string) {}

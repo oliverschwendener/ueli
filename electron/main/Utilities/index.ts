@@ -1,4 +1,4 @@
 export * from "./CommandlineUtility";
 export * from "./FileIconUtility";
-export * from "./PowershellUtility";
 export * from "./FileSystemUtility";
+export * from "./PowershellUtility";

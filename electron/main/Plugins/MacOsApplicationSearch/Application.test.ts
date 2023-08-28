@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
+import type { SearchResultItem } from "@common/SearchResultItem";
+import { describe, expect, it } from "vitest";
 import { Application } from "./Application";
-import { SearchResultItem } from "@common/SearchResultItem";
 
 describe(Application, () => {
     it("should map to a SearchResultItem", () => {
