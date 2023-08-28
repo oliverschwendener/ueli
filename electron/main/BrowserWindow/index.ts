@@ -22,6 +22,7 @@ export const useBrowserWindow = async ({
         macOS: {
             webPreferences: {
                 preload: preloadScriptFilePath,
+                webSecurity: app.isPackaged ? true : false,
             },
             frame: false,
         },
@@ -29,6 +30,7 @@ export const useBrowserWindow = async ({
             autoHideMenuBar: true,
             webPreferences: {
                 preload: preloadScriptFilePath,
+                webSecurity: app.isPackaged ? true : false,
             },
             frame: false,
         },
