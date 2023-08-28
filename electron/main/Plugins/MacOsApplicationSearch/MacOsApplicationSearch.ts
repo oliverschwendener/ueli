@@ -10,18 +10,19 @@ import type { Settings } from "./Settings";
 export class MacOsApplicationSearch implements Plugin {
     private static readonly PluginId = "MacOsApplicationSearch";
 
-    private static readonly DefaultSettings: Settings = {
-        folders: ["/System/Applications/", "/Applications/"],
-    };
-
     private readonly searchIndex: SearchIndex;
     private readonly settingsManager: SettingsManager;
     private readonly pluginCacheFolderPath: string;
+    private readonly defaultSettings: Settings;
 
-    public constructor({ searchIndex, settingsManager, pluginCacheFolderPath }: PluginDependencies) {
+    public constructor({ app, searchIndex, settingsManager, pluginCacheFolderPath }: PluginDependencies) {
         this.searchIndex = searchIndex;
         this.settingsManager = settingsManager;
         this.pluginCacheFolderPath = pluginCacheFolderPath;
+
+        this.defaultSettings = {
+            folders: ["/System/Applications", "/Applications", join(app.getPath("home"), "Applications")],
+        };
     }
 
     public async addSearchResultItemsToSearchIndex(): Promise<void> {
@@ -45,7 +46,7 @@ export class MacOsApplicationSearch implements Plugin {
                     .getPluginSettingByKey<string[]>(
                         MacOsApplicationSearch.PluginId,
                         "folders",
-                        MacOsApplicationSearch.DefaultSettings.folders,
+                        this.defaultSettings.folders,
                     )
                     .some((applicationFolder) => filePath.startsWith(applicationFolder)),
             )
