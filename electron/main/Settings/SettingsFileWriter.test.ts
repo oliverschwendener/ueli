@@ -1,7 +1,7 @@
 import type { Settings } from "@common/Settings";
 import { existsSync, readFileSync, unlinkSync } from "fs";
 import { join } from "path";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { SettingsFileWriter } from "./SettingsFileWriter";
 
 const settingsFilePath = join(__dirname, "settings.json");
@@ -12,30 +12,24 @@ const settings: Settings = {
     key3: "value3",
 };
 
+const removeFileIfExists = (filePath: string) => {
+    if (existsSync(filePath)) {
+        unlinkSync(filePath);
+    }
+};
+
 describe(SettingsFileWriter, () => {
-    afterEach(() => {
-        if (existsSync(settingsFilePath)) {
-            unlinkSync(settingsFilePath);
-        }
-    });
+    beforeEach(() => removeFileIfExists(settingsFilePath));
+    afterEach(() => removeFileIfExists(settingsFilePath));
 
     it("should write settings to a JSON file", async () => {
         const settingsFileWriter = new SettingsFileWriter(settingsFilePath);
         await settingsFileWriter.writeSettings(settings);
 
-        expect(JSON.parse(readFileSync(settingsFilePath, "utf-8"))).toEqual(settings);
+        expect(readFileSync(settingsFilePath, "utf-8")).toEqual(JSON.stringify(settings, null, 4));
     });
 
     it("should return a rejected promise when trying to write a JSON file to an inaccessible file path", async () => {
-        const settingsFileWriter = new SettingsFileWriter("/foo/bar");
-        let errorCounter = 0;
-
-        try {
-            await settingsFileWriter.writeSettings(settings);
-        } catch (error) {
-            errorCounter++;
-        }
-
-        expect(errorCounter).toBe(1);
+        await expect(new SettingsFileWriter("/foo/bar").writeSettings(settings)).rejects.toThrowError();
     });
 });

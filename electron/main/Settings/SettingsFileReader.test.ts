@@ -1,7 +1,7 @@
 import type { Settings } from "@common/Settings";
 import { existsSync, unlinkSync, writeFileSync } from "fs";
 import { join } from "path";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { SettingsFileReader } from "./SettingsFileReader";
 
 const settingsFilePath = join(__dirname, "settings.json");
@@ -12,12 +12,15 @@ const settings: Settings = {
     key3: "value3",
 };
 
+const removeFileIfExists = (filePath: string) => {
+    if (existsSync(filePath)) {
+        unlinkSync(filePath);
+    }
+};
+
 describe(SettingsFileReader, () => {
-    afterEach(() => {
-        if (existsSync(settingsFilePath)) {
-            unlinkSync(settingsFilePath);
-        }
-    });
+    beforeEach(() => removeFileIfExists(settingsFilePath));
+    afterEach(() => removeFileIfExists(settingsFilePath));
 
     it("should read settings from a json file", () => {
         writeFileSync(settingsFilePath, JSON.stringify(settings), "utf-8");
