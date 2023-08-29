@@ -6,7 +6,7 @@ import { useEventEmitter, useEventSubscriber } from "./EventEmitter";
 import { useIpcMain } from "./IpcMain";
 import { useOperatingSystem } from "./OperatingSystem";
 import { usePluginCacheFolder } from "./PluginCacheFolder";
-import { PluginDependencyInjector } from "./PluginDependencyInjector/PluginDependencyInjector";
+import { PluginDependencies } from "./PluginDependencies";
 import { usePlugins } from "./Plugins";
 import { useSearchIndex } from "./SearchIndex";
 import { useSettingsManager } from "./Settings";
@@ -29,7 +29,7 @@ import { useUtilities } from "./Utilities";
 
     const pluginCacheFolderPath = await usePluginCacheFolder({ app, fileSystemUtility });
 
-    const pluginDependencyInjector = new PluginDependencyInjector(
+    const pluginDependencyInjector = new PluginDependencies(
         app,
         commandlineUtility,
         fileSystemUtility,

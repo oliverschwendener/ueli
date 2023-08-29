@@ -1,5 +1,5 @@
 import { join, normalize } from "path";
-import type { PluginDependencyInjector } from "../../PluginDependencyInjector/PluginDependencyInjector";
+import type { PluginDependencies } from "../../PluginDependencies";
 import type { SearchIndex } from "../../SearchIndex";
 import type { SettingsManager } from "../../Settings/SettingsManager";
 import { CommandlineUtility, FileSystemUtility } from "../../Utilities";
@@ -24,7 +24,7 @@ export class MacOsApplicationSearch implements Plugin {
         pluginCacheFolderPath,
         searchIndex,
         settingsManager,
-    }: PluginDependencyInjector) {
+    }: PluginDependencies) {
         this.commandlineUtility = commandlineUtility;
         this.fileSystemUtility = fileSystemUtility;
         this.pluginCacheFolderPath = pluginCacheFolderPath;

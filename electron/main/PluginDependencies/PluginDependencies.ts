@@ -4,7 +4,7 @@ import type { SearchIndex } from "../SearchIndex";
 import type { SettingsManager } from "../Settings/SettingsManager";
 import type { CommandlineUtility, FileSystemUtility, PowershellUtility } from "../Utilities";
 
-export class PluginDependencyInjector {
+export class PluginDependencies {
     public constructor(
         public readonly app: App,
         public readonly commandlineUtility: CommandlineUtility,

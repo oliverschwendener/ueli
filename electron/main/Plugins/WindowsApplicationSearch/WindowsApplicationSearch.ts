@@ -1,5 +1,5 @@
 import { join } from "path";
-import type { PluginDependencyInjector } from "../../PluginDependencyInjector/PluginDependencyInjector";
+import type { PluginDependencies } from "../../PluginDependencies";
 import type { SearchIndex } from "../../SearchIndex";
 import type { SettingsManager } from "../../Settings/SettingsManager";
 import type { PowershellUtility } from "../../Utilities";
@@ -24,7 +24,7 @@ export class WindowsApplicationSearch implements Plugin {
         powershellUtility,
         searchIndex,
         settingsManager,
-    }: PluginDependencyInjector) {
+    }: PluginDependencies) {
         this.pluginCacheFolderPath = pluginCacheFolderPath;
         this.powershellUtility = powershellUtility;
         this.searchIndex = searchIndex;
