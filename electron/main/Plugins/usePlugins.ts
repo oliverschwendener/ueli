@@ -1,14 +1,14 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
+import type { PluginDependencyInjector } from "../PluginDependencyInjector/PluginDependencyInjector";
 import { MacOsApplicationSearch } from "./MacOsApplicationSearch";
 import type { Plugin } from "./Plugin";
-import type { PluginDependencies } from "./PluginDependencies";
 import { WindowsApplicationSearch } from "./WindowsApplicationSearch/WindowsApplicationSearch";
 
-export const usePlugins = (dependencies: PluginDependencies): Plugin[] => {
+export const usePlugins = (pluginDependencyInjector: PluginDependencyInjector): Plugin[] => {
     const pluginMap: Record<OperatingSystem, Plugin[]> = {
-        macOS: [new MacOsApplicationSearch(dependencies)],
-        Windows: [new WindowsApplicationSearch(dependencies)],
+        macOS: [new MacOsApplicationSearch(pluginDependencyInjector)],
+        Windows: [new WindowsApplicationSearch(pluginDependencyInjector)],
     };
 
-    return pluginMap[dependencies.operatingSystem];
+    return pluginMap[pluginDependencyInjector.operatingSystem];
 };

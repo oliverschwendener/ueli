@@ -6,6 +6,7 @@ import { useEventEmitter, useEventSubscriber } from "./EventEmitter";
 import { useIpcMain } from "./IpcMain";
 import { useOperatingSystem } from "./OperatingSystem";
 import { usePluginCacheFolder } from "./PluginCacheFolder";
+import { PluginDependencyInjector } from "./PluginDependencyInjector/PluginDependencyInjector";
 import { usePlugins } from "./Plugins";
 import { useSearchIndex } from "./SearchIndex";
 import { useSettingsManager } from "./Settings";
@@ -22,9 +23,14 @@ import { useUtilities } from "./Utilities";
     const eventEmitter = useEventEmitter({ emitter });
     const eventSubscriber = useEventSubscriber({ emitter });
     const searchIndex = useSearchIndex({ eventEmitter });
-    const pluginCacheFolderPath = usePluginCacheFolder({ app, fileSystemUtility });
 
-    const plugins = usePlugins({
+    await useBrowserWindow({ app, operatingSystem, eventSubscriber, nativeTheme });
+
+    useIpcMain({ ipcMain, nativeTheme, searchIndex, settingsManager });
+
+    const pluginCacheFolderPath = await usePluginCacheFolder({ app, fileSystemUtility });
+
+    const pluginDependencyInjector = new PluginDependencyInjector(
         app,
         commandlineUtility,
         fileSystemUtility,
@@ -33,13 +39,9 @@ import { useUtilities } from "./Utilities";
         powershellUtility,
         searchIndex,
         settingsManager,
-    });
+    );
 
-    await useBrowserWindow({ app, operatingSystem, eventSubscriber, nativeTheme });
-
-    useIpcMain({ ipcMain, nativeTheme, searchIndex, settingsManager });
-
-    for (const plugin of plugins) {
+    for (const plugin of usePlugins(pluginDependencyInjector)) {
         plugin.addSearchResultItemsToSearchIndex();
     }
 })();

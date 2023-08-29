@@ -1,9 +1,9 @@
 import { join, normalize } from "path";
+import type { PluginDependencyInjector } from "../../PluginDependencyInjector/PluginDependencyInjector";
 import type { SearchIndex } from "../../SearchIndex";
 import type { SettingsManager } from "../../Settings/SettingsManager";
 import { CommandlineUtility, FileSystemUtility } from "../../Utilities";
 import type { Plugin } from "../Plugin";
-import type { PluginDependencies } from "../PluginDependencies";
 import { Application } from "./Application";
 import type { Settings } from "./Settings";
 
@@ -19,12 +19,12 @@ export class MacOsApplicationSearch implements Plugin {
 
     public constructor({
         app,
-        searchIndex,
-        settingsManager,
-        pluginCacheFolderPath,
         commandlineUtility,
         fileSystemUtility,
-    }: PluginDependencies) {
+        pluginCacheFolderPath,
+        searchIndex,
+        settingsManager,
+    }: PluginDependencyInjector) {
         this.commandlineUtility = commandlineUtility;
         this.fileSystemUtility = fileSystemUtility;
         this.pluginCacheFolderPath = pluginCacheFolderPath;

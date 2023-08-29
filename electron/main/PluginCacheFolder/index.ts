@@ -2,7 +2,7 @@ import type { App } from "electron";
 import { join } from "path";
 import type { FileSystemUtility } from "../Utilities";
 
-export const usePluginCacheFolder = ({
+export const usePluginCacheFolder = async ({
     app,
     fileSystemUtility,
 }: {
@@ -11,7 +11,7 @@ export const usePluginCacheFolder = ({
 }) => {
     const pluginCacheFolderPath = join(app.getPath("userData"), "PluginCache");
 
-    fileSystemUtility.createFolderIfDoesntExist(pluginCacheFolderPath);
+    await fileSystemUtility.createFolderIfDoesntExist(pluginCacheFolderPath);
 
     return pluginCacheFolderPath;
 };
