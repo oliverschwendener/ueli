@@ -16,7 +16,6 @@ import { useUtilities } from "./Utilities";
     await app.whenReady();
 
     const { commandlineUtility, powershellUtility, fileSystemUtility } = useUtilities();
-
     const operatingSystem = useOperatingSystem({ platform });
     const settingsManager = useSettingsManager({ app });
     const emitter = mitt<Record<string, unknown>>();
