@@ -4,15 +4,13 @@ import type { SearchIndex } from "../SearchIndex";
 import type { SettingsManager } from "../Settings/SettingsManager";
 import type { CommandlineUtility, FileSystemUtility, PowershellUtility } from "../Utilities";
 
-export class PluginDependencies {
-    public constructor(
-        public readonly app: App,
-        public readonly commandlineUtility: CommandlineUtility,
-        public readonly fileSystemUtility: FileSystemUtility,
-        public readonly operatingSystem: OperatingSystem,
-        public readonly pluginCacheFolderPath: string,
-        public readonly powershellUtility: PowershellUtility,
-        public readonly searchIndex: SearchIndex,
-        public readonly settingsManager: SettingsManager,
-    ) {}
-}
+export type PluginDependencies = {
+    readonly app: App;
+    readonly commandlineUtility: CommandlineUtility;
+    readonly fileSystemUtility: FileSystemUtility;
+    readonly operatingSystem: OperatingSystem;
+    readonly pluginCacheFolderPath: string;
+    readonly powershellUtility: PowershellUtility;
+    readonly searchIndex: SearchIndex;
+    readonly settingsManager: SettingsManager;
+};
