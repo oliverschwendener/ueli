@@ -4,11 +4,11 @@ import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
-    onNativeThemeChanged: (callback) => ipcRenderer.on("nativeThemeChanged", callback),
-    onSearchIndexUpdated: (callback) => ipcRenderer.on("searchIndexUpdated", callback),
     getSettingByKey: <T>(key: string, defaultValue: T): T =>
         ipcRenderer.sendSync("getSettingByKey", { key, defaultValue }),
-    updateSettingByKey: <T>(key: string, value: T) => ipcRenderer.invoke("updateSettingByKey", { key, value }),
-    themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),
     invokeExecution: (executionArgument: ExecutionArgument) => ipcRenderer.invoke("invokeExecution", executionArgument),
+    onNativeThemeChanged: (callback) => ipcRenderer.on("nativeThemeChanged", callback),
+    onSearchIndexUpdated: (callback) => ipcRenderer.on("searchIndexUpdated", callback),
+    themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),
+    updateSettingByKey: <T>(key: string, value: T) => ipcRenderer.invoke("updateSettingByKey", { key, value }),
 });
