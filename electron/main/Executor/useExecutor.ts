@@ -6,9 +6,14 @@ import { Executor } from "./Executor";
 export const useExecutor = ({ shell, eventEmitter }: { shell: Shell; eventEmitter: EventEmitter }) => {
     return new Executor(
         {
-            FilePath: new FilePathExecutionService(async (filePath: string) => {
-                await shell.openPath(filePath);
-            }),
+            FilePath: new FilePathExecutionService(
+                async (filePath: string) => {
+                    await shell.openPath(filePath);
+                },
+                async (filePath: string) => {
+                    shell.showItemInFolder(filePath);
+                },
+            ),
             URL: new UrlExecutionService(shell.openExternal),
         },
         eventEmitter,
