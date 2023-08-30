@@ -8,7 +8,11 @@ export const useExecutor = ({ shell, eventEmitter }: { shell: Shell; eventEmitte
         {
             FilePath: new FilePathExecutionService(
                 async (filePath: string) => {
-                    await shell.openPath(filePath);
+                    const errorMessage = await shell.openPath(filePath);
+
+                    if (errorMessage) {
+                        throw new Error(errorMessage);
+                    }
                 },
                 async (filePath: string) => {
                     shell.showItemInFolder(filePath);
