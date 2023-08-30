@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, readFileSync, unlink, writeFileSync } from "fs";
 import { emptyDir, ensureDir, pathExists, readFile, readdir, rmdir, writeFile } from "fs-extra";
 import { join } from "path";
 import type { FileSystemUtility } from "./FileSystemUtility";
@@ -36,6 +36,22 @@ export class RealFileSystemUtility implements FileSystemUtility {
 
     public readJsonFileSync<T>(filePath: string): T {
         return JSON.parse(this.readFileSync(filePath).toString());
+    }
+
+    public removeFile(filePath: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            unlink(filePath, (error) => {
+                error ? reject(error) : resolve();
+            });
+        });
+    }
+
+    public writeTextFile(data: string, filePath: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            writeFile(filePath, data, "utf-8", (error) => {
+                error ? reject(error) : resolve();
+            });
+        });
     }
 
     public writeJsonFile<T>(data: T, filePath: string): Promise<void> {

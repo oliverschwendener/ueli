@@ -14,7 +14,7 @@ import { useUtilities } from "./Utilities";
 (async () => {
     await app.whenReady();
 
-    const { commandlineUtility, powershellUtility, fileSystemUtility } = useUtilities();
+    const { commandlineUtility, fileSystemUtility } = useUtilities();
     const operatingSystem = useOperatingSystem({ platform });
     const settingsManager = useSettingsManager({ app });
     const emitter = mitt<Record<string, unknown>>();
@@ -41,7 +41,6 @@ import { useUtilities } from "./Utilities";
         fileSystemUtility,
         operatingSystem,
         pluginCacheFolderPath,
-        powershellUtility,
         searchIndex,
         settingsManager,
     })) {

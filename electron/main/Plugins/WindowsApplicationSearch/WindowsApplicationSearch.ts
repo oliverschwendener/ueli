@@ -1,9 +1,9 @@
 import { join } from "path";
-import type { PluginDependencies } from "../../PluginDependencies";
 import type { SearchIndex } from "../../SearchIndex";
 import type { SettingsManager } from "../../Settings/SettingsManager";
-import type { PowershellUtility } from "../../Utilities";
+import type { CommandlineUtility, FileSystemUtility } from "../../Utilities";
 import type { Plugin } from "../Plugin";
+import type { PluginDependencies } from "../PluginDependencies";
 import { Application } from "./Application";
 import type { Settings } from "./Settings";
 import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
@@ -12,21 +12,24 @@ import { usePowershellScripts } from "./usePowershellScripts";
 export class WindowsApplicationSearch implements Plugin {
     private static readonly PluginId = "WindowsApplicationSearch";
 
+    private readonly commandlineUtility: CommandlineUtility;
     private readonly defaultSettings: Settings;
+    private readonly fileSystemUtility: FileSystemUtility;
     private readonly pluginCacheFolderPath: string;
-    private readonly powershellUtility: PowershellUtility;
     private readonly searchIndex: SearchIndex;
     private readonly settingsManager: SettingsManager;
 
     public constructor({
         app,
+        commandlineUtility,
+        fileSystemUtility,
         pluginCacheFolderPath,
-        powershellUtility,
         searchIndex,
         settingsManager,
     }: PluginDependencies) {
+        this.commandlineUtility = commandlineUtility;
+        this.fileSystemUtility = fileSystemUtility;
         this.pluginCacheFolderPath = pluginCacheFolderPath;
-        this.powershellUtility = powershellUtility;
         this.searchIndex = searchIndex;
         this.settingsManager = settingsManager;
 
@@ -40,8 +43,16 @@ export class WindowsApplicationSearch implements Plugin {
     }
 
     public async addSearchResultItemsToSearchIndex(): Promise<void> {
+        const temporaryPowershellScriptFilePath = join(this.pluginCacheFolderPath, "WindowsApplicationSearch.temp.ps1");
+
+        await this.fileSystemUtility.writeTextFile(this.getPowershellScript(), temporaryPowershellScriptFilePath);
+
         const windowsApplicationRetrieverResults = <WindowsApplicationRetrieverResult[]>(
-            JSON.parse(await this.powershellUtility.executePowershellScript(this.getPowershellScript()))
+            JSON.parse(
+                await this.commandlineUtility.executeCommandWithOutput(
+                    `powershell -NoProfile -NonInteractive -ExecutionPolicy bypass -File "${temporaryPowershellScriptFilePath}"`,
+                ),
+            )
         );
 
         this.searchIndex.addSearchResultItems(
@@ -50,40 +61,31 @@ export class WindowsApplicationSearch implements Plugin {
                 .map((result) => Application.fromFilePath(result))
                 .map((application) => application.toSearchResultItem()),
         );
+
+        await this.fileSystemUtility.removeFile(temporaryPowershellScriptFilePath);
     }
 
     private getPowershellScript(): string {
         const { extractShortcutPowershellScript, getWindowsAppsPowershellScript } = usePowershellScripts();
 
-        const folderPaths = WindowsApplicationSearch.getFolderPathFilter(
-            this.settingsManager.getPluginSettingByKey<string[]>(
-                WindowsApplicationSearch.PluginId,
-                "folders",
-                this.defaultSettings.folders,
-            ),
-        );
+        const folderPaths = this.settingsManager
+            .getPluginSettingByKey(WindowsApplicationSearch.PluginId, "folders", this.defaultSettings.folders)
+            .map((folderPath) => `'${folderPath}'`)
+            .join(",");
 
-        const fileExtensions = WindowsApplicationSearch.getFileExtensionFilter(
-            this.settingsManager.getPluginSettingByKey<string[]>(
+        const fileExtensions = this.settingsManager
+            .getPluginSettingByKey(
                 WindowsApplicationSearch.PluginId,
                 "fileExtensions",
                 this.defaultSettings.fileExtensions,
-            ),
-        );
+            )
+            .map((fileExtension) => `'*.${fileExtension}'`)
+            .join(",");
 
         return `
-            ${extractShortcutPowershellScript}
-            ${getWindowsAppsPowershellScript}
+${extractShortcutPowershellScript}
+${getWindowsAppsPowershellScript}
 
-            Get-WindowsApps -FolderPaths ${folderPaths} -FileExtensions ${fileExtensions} -AppIconFolder '${this.pluginCacheFolderPath}';
-        `;
-    }
-
-    private static getFolderPathFilter(folderPaths: string[]): string {
-        return folderPaths.map((folderPath) => `'${folderPath}'`).join(",");
-    }
-
-    private static getFileExtensionFilter(fileExtensions: string[]): string {
-        return fileExtensions.map((fileExtension) => `'*.${fileExtension}'`).join(",");
+Get-WindowsApps -FolderPaths ${folderPaths} -FileExtensions ${fileExtensions} -AppIconFolder '${this.pluginCacheFolderPath}';`;
     }
 }
