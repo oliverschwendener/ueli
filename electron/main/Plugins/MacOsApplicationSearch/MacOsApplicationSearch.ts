@@ -61,7 +61,7 @@ export class MacOsApplicationSearch implements Plugin {
                     )
                     .some((applicationFolder) => filePath.startsWith(applicationFolder)),
             )
-            .filter((filePath) => [".", ".."].indexOf(filePath) === -1);
+            .filter((filePath) => ![".", ".."].includes(filePath));
     }
 
     private async getAllIcons(filePaths: string[]): Promise<Record<string, string>> {
