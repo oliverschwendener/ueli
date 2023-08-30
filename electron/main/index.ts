@@ -1,8 +1,9 @@
-import { app, ipcMain, nativeTheme } from "electron";
+import { app, ipcMain, nativeTheme, shell } from "electron";
 import mitt from "mitt";
 import { platform } from "process";
 import { useBrowserWindow } from "./BrowserWindow";
 import { useEventEmitter, useEventSubscriber } from "./EventEmitter";
+import { useExecutor } from "./Executor";
 import { useIpcMain } from "./IpcMain";
 import { useOperatingSystem } from "./OperatingSystem";
 import { usePluginCacheFolder, usePlugins } from "./Plugins";
@@ -20,10 +21,17 @@ import { useUtilities } from "./Utilities";
     const eventEmitter = useEventEmitter({ emitter });
     const eventSubscriber = useEventSubscriber({ emitter });
     const searchIndex = useSearchIndex({ eventEmitter });
+    const executor = useExecutor({ shell, eventEmitter });
 
     await useBrowserWindow({ app, operatingSystem, eventSubscriber, nativeTheme });
 
-    useIpcMain({ ipcMain, nativeTheme, searchIndex, settingsManager });
+    useIpcMain({
+        executor,
+        ipcMain,
+        nativeTheme,
+        searchIndex,
+        settingsManager,
+    });
 
     const pluginCacheFolderPath = await usePluginCacheFolder({ app, fileSystemUtility });
 

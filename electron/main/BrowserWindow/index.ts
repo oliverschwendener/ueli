@@ -41,6 +41,8 @@ export const useBrowserWindow = async ({
     const browserWindow = new BrowserWindow(browserWindowConstructorOptionsMap[operatingSystem]);
 
     eventSubscriber.subscribe("searchResultItemsUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
+    eventSubscriber.subscribe("executionSucceeded", () => browserWindow.hide());
+
     nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
 
     app.isPackaged

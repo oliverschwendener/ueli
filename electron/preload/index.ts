@@ -1,4 +1,5 @@
-import { ContextBridge } from "@common/ContextBridge";
+import type { ContextBridge } from "@common/ContextBridge";
+import type { ExecutionArgument } from "@common/ExecutionArgument";
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
@@ -9,4 +10,5 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
         ipcRenderer.sendSync("getSettingByKey", { key, defaultValue }),
     updateSettingByKey: <T>(key: string, value: T) => ipcRenderer.invoke("updateSettingByKey", { key, value }),
     themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),
+    invokeExecution: (executionArgument: ExecutionArgument) => ipcRenderer.invoke("invokeExecution", executionArgument),
 });

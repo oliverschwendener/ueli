@@ -16,9 +16,15 @@ export class Application implements Searchable {
     public toSearchResultItem(): SearchResultItem {
         return {
             description: "Application",
-            id: this.filePath,
+            id: this.getId(),
             name: this.name,
             imageUrl: `file:///${this.iconFilePath}`,
+            executorId: "FilePath",
+            executorArgument: this.filePath,
         };
+    }
+
+    private getId(): string {
+        return Buffer.from(this.filePath).toString("base64");
     }
 }

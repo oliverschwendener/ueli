@@ -14,6 +14,8 @@ describe(Application, () => {
             description: "Application",
             name: "Creative Cloud Uninstaller",
             imageUrl: "file:///Users/UserName/Application Support/ueli/PluginCache/image.png",
+            executorId: "FilePath",
+            executorArgument: "/Applications/Utilities/Adobe Creative Cloud/Utils/Creative Cloud Uninstaller.app",
         });
     });
 
@@ -28,6 +30,8 @@ describe(Application, () => {
             description: "Application",
             name: "Creative Cloud Uninstaller",
             imageUrl: undefined,
+            executorId: "FilePath",
+            executorArgument: "/Applications/Utilities/Adobe Creative Cloud/Utils/Creative Cloud Uninstaller.app",
         });
 
         expect(
@@ -40,6 +44,8 @@ describe(Application, () => {
             description: "Application",
             name: "Creative Cloud Uninstaller",
             imageUrl: undefined,
+            executorId: "FilePath",
+            executorArgument: "/Applications/Utilities/Adobe Creative Cloud/Utils/Creative Cloud Uninstaller.app",
         });
     });
 });

@@ -1,9 +1,9 @@
 import { SearchResultItem } from "@common/SearchResultItem";
 import { Button, Divider, Input } from "@fluentui/react-components";
 import { Settings16Regular } from "@fluentui/react-icons";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { useNavigate } from "react-router";
-import { useSetting } from "../Hooks";
+import { useContextBridge, useSetting } from "../Hooks";
 import { FavoritesList } from "./FavoritesList";
 import { filterSearchResultItemsBySearchTerm } from "./Helpers/filterSearchResultItemsBySearchTerm";
 import { SearchResultList } from "./SearchResultList";
@@ -13,6 +13,7 @@ type SearchProps = {
 };
 
 export const Search = ({ searchResultItems }: SearchProps) => {
+    const contextBridge = useContextBridge();
     const [selectedItemIndex, setSelectedItemIndex] = useState<number>(0);
     const [searchTerm, setSearchTerm] = useState<string>("");
     const userInputRef = useRef<HTMLInputElement>(null);
@@ -33,6 +34,35 @@ export const Search = ({ searchResultItems }: SearchProps) => {
         setSelectedItemIndex(selectedItemIndex === 0 ? filteredSearchResultItems.length - 1 : selectedItemIndex - 1);
 
     const selectFirstSearchResultItemItem = () => setSelectedItemIndex(0);
+
+    const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
+        filteredSearchResultItems[selectedItemIndex];
+
+    const invokeExecution = (isAlternativeExecution: boolean) => {
+        const searchResultItem = getSelectedSearchResultItem();
+
+        if (!searchResultItem) {
+            return;
+        }
+
+        contextBridge.invokeExecution({ searchResultItem, isAlternativeExecution });
+    };
+
+    const handleUserInputKeyboardEvent = (keyboardEvent: KeyboardEvent) => {
+        if (keyboardEvent.key === "ArrowUp") {
+            keyboardEvent.preventDefault();
+            selectPreviousSearchResultItem();
+        }
+
+        if (keyboardEvent.key === "ArrowDown") {
+            keyboardEvent.preventDefault();
+            selectNextSearchResultItem();
+        }
+
+        if (keyboardEvent.key === "Enter") {
+            invokeExecution(keyboardEvent.shiftKey);
+        }
+    };
 
     useEffect(setFocusOnUserInput, []);
     useEffect(selectFirstSearchResultItemItem, [searchTerm]);
@@ -56,17 +86,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                     size="large"
                     value={searchTerm}
                     onChange={(_, { value }) => search(value)}
-                    onKeyDown={(keyboardEvent) => {
-                        if (keyboardEvent.key === "ArrowUp") {
-                            keyboardEvent.preventDefault();
-                            selectPreviousSearchResultItem();
-                        }
-
-                        if (keyboardEvent.key === "ArrowDown") {
-                            keyboardEvent.preventDefault();
-                            selectNextSearchResultItem();
-                        }
-                    }}
+                    onKeyDown={handleUserInputKeyboardEvent}
                 />
             </div>
             <Divider />

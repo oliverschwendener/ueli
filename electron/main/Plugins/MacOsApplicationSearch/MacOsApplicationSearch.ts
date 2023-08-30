@@ -1,9 +1,9 @@
 import { join, normalize } from "path";
-import type { PluginDependencies } from "../../PluginDependencies";
 import type { SearchIndex } from "../../SearchIndex";
 import type { SettingsManager } from "../../Settings/SettingsManager";
 import { CommandlineUtility, FileSystemUtility } from "../../Utilities";
 import type { Plugin } from "../Plugin";
+import type { PluginDependencies } from "../PluginDependencies";
 import { Application } from "./Application";
 import type { Settings } from "./Settings";
 
