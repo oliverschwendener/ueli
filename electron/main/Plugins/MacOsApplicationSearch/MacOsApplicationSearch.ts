@@ -43,7 +43,7 @@ export class MacOsApplicationSearch implements Plugin {
         this.searchIndex.addSearchResultItems(
             MacOsApplicationSearch.PluginId,
             filePaths
-                .map((filePath) => Application.fromFilePathAndIcon({ filePath, iconFilePath: icons[filePath] }))
+                .map((filePath) => Application.fromFilePathAndOptionalIcon({ filePath, iconFilePath: icons[filePath] }))
                 .map((application) => application.toSearchResultItem()),
         );
     }

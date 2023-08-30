@@ -3,19 +3,19 @@ import type { Searchable } from "@common/Searchable";
 import { parse } from "path";
 
 export class Application implements Searchable {
-    public static fromFilePathAndIcon({
+    public static fromFilePathAndOptionalIcon({
         filePath,
         iconFilePath,
     }: {
         filePath: string;
-        iconFilePath: string;
+        iconFilePath?: string;
     }): Application {
         return new Application(filePath, iconFilePath);
     }
 
     private constructor(
         private readonly filePath: string,
-        private readonly iconFilePath: string,
+        private readonly iconFilePath?: string,
     ) {}
 
     public toSearchResultItem(): SearchResultItem {
@@ -23,7 +23,7 @@ export class Application implements Searchable {
             id: this.getId(),
             description: "Application",
             name: this.getApplicationName(),
-            imageUrl: `file://${this.iconFilePath}`,
+            imageUrl: this.iconFilePath ? `file://${this.iconFilePath}` : undefined,
         };
     }
 
