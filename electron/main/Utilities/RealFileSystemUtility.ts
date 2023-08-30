@@ -1,30 +1,23 @@
-import { existsSync, readFileSync, unlink, writeFileSync } from "fs";
-import { emptyDir, ensureDir, pathExists, readFile, readdir, rmdir, writeFile } from "fs-extra";
-import { join } from "path";
+import { access, existsSync, mkdir, readFile, readFileSync, unlink, writeFile, writeFileSync } from "fs";
 import type { FileSystemUtility } from "./FileSystemUtility";
 
 export class RealFileSystemUtility implements FileSystemUtility {
-    public createFolderIfDoesntExist(folderPath: string): Promise<void> {
-        return ensureDir(folderPath);
-    }
+    public async createFolderIfDoesntExist(folderPath: string): Promise<void> {
+        const exists = await this.pathExists(folderPath);
 
-    public async deleteFolderRecursively(folderPath: string): Promise<void> {
-        await this.cleanFolder(folderPath);
-        return rmdir(folderPath);
-    }
-
-    public cleanFolder(folderPath: string): Promise<void> {
-        return emptyDir(folderPath);
+        if (!exists) {
+            await this.createFolder(folderPath);
+        }
     }
 
     public pathExists(fileOrFolderPath: string): Promise<boolean> {
-        return pathExists(fileOrFolderPath);
+        return new Promise((resolve) => access(fileOrFolderPath, (error) => resolve(!error)));
     }
 
-    public getFolderItems(folderPath: string): Promise<string[]> {
+    public createFolder(folderPath: string): Promise<void> {
         return new Promise((resolve, reject) => {
-            readdir(folderPath, (error, fileNames) => {
-                error ? reject(error) : resolve(fileNames.map((fileName): string => join(folderPath, fileName)));
+            mkdir(folderPath, (error) => {
+                error ? reject(error) : resolve();
             });
         });
     }
@@ -67,7 +60,11 @@ export class RealFileSystemUtility implements FileSystemUtility {
     }
 
     public writePng(buffer: Buffer, filePath: string): Promise<void> {
-        return writeFile(filePath, buffer);
+        return new Promise((resolve, reject) => {
+            writeFile(filePath, buffer, (error) => {
+                error ? reject(error) : resolve();
+            });
+        });
     }
 
     public existsSync(filePath: string): boolean {
