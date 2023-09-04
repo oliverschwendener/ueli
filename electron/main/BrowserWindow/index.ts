@@ -1,18 +1,21 @@
-import { OperatingSystem } from "@common/OperatingSystem";
+import type { OperatingSystem } from "@common/OperatingSystem";
 import { BrowserWindow, type App, type BrowserWindowConstructorOptions, type NativeTheme } from "electron";
 import { join } from "path";
-import { EventSubscriber } from "../EventSubscriber";
+import type { EventSubscriber } from "../EventSubscriber";
+import type { SettingsManager } from "../Settings/SettingsManager";
 
 export const useBrowserWindow = async ({
     app,
     operatingSystem,
     eventSubscriber,
     nativeTheme,
+    settingsManager,
 }: {
     app: App;
     operatingSystem: OperatingSystem;
     eventSubscriber: EventSubscriber;
     nativeTheme: NativeTheme;
+    settingsManager: SettingsManager;
 }): Promise<void> => {
     const preloadScriptFilePath = app.isPackaged
         ? join(__dirname, "..", "..", "dist-electron", "preload", "index.js")
@@ -41,7 +44,12 @@ export const useBrowserWindow = async ({
     const browserWindow = new BrowserWindow(browserWindowConstructorOptionsMap[operatingSystem]);
 
     eventSubscriber.subscribe("searchResultItemsUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
-    eventSubscriber.subscribe("executionSucceeded", () => browserWindow.hide());
+
+    eventSubscriber.subscribe("executionSucceeded", () => {
+        if (settingsManager.getSettingByKey("window.hideWindowAfterExecution", true)) {
+            browserWindow.hide();
+        }
+    });
 
     nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
 
