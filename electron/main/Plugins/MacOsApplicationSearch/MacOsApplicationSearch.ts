@@ -1,3 +1,4 @@
+import type { OperatingSystem } from "@common/OperatingSystem";
 import { join, normalize } from "path";
 import type { Plugin } from "../Plugin";
 import type { PluginDependencies } from "../PluginDependencies";
@@ -7,6 +8,10 @@ export class MacOsApplicationSearch implements Plugin {
     private static readonly PluginId = "MacOsApplicationSearch";
 
     public constructor(private readonly pluginDependencies: PluginDependencies) {}
+
+    public getSupportedOperatingSystems(): OperatingSystem[] {
+        return ["macOS"];
+    }
 
     public async addSearchResultItemsToSearchIndex(): Promise<void> {
         const { searchIndex } = this.pluginDependencies;

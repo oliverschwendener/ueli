@@ -1,3 +1,4 @@
+import type { OperatingSystem } from "@common/OperatingSystem";
 import { join } from "path";
 import type { Plugin } from "../Plugin";
 import type { PluginDependencies } from "../PluginDependencies";
@@ -9,6 +10,10 @@ export class WindowsApplicationSearch implements Plugin {
     private static readonly PluginId = "WindowsApplicationSearch";
 
     public constructor(private readonly pluginDependencies: PluginDependencies) {}
+
+    public getSupportedOperatingSystems(): OperatingSystem[] {
+        return ["Windows"];
+    }
 
     public async addSearchResultItemsToSearchIndex(): Promise<void> {
         const { pluginCacheFolderPath, fileSystemUtility, commandlineUtility, searchIndex } = this.pluginDependencies;
