@@ -3,7 +3,11 @@ import type { Searchable } from "@common/Searchable";
 import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
 
 export class Application implements Searchable {
-    public static fromFilePath({ BaseName, FullName, IconFilePath }: WindowsApplicationRetrieverResult) {
+    public static fromWindowsApplicationRetrieverResult({
+        BaseName,
+        FullName,
+        IconFilePath,
+    }: WindowsApplicationRetrieverResult) {
         return new Application(BaseName, FullName, IconFilePath);
     }
 
