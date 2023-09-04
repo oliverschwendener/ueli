@@ -1,12 +1,6 @@
 import type { ContextBridge } from "@common/ContextBridge";
 import { teamsDarkTheme, teamsLightTheme, webDarkTheme, webLightTheme, type Theme } from "@fluentui/react-components";
-
-export type ThemeName = "Web Dark" | "Web Light" | "Teams Light" | "Teams Dark";
-
-export const SYNC_WITH_OS_SETTING_KEY = "appearance.syncWithOs";
-export const PREFERRED_THEME_NAME_SETTING_KEY = "appearance.preferredThemeName";
-export const PREFERRED_LIGHT_THEME_NAME_SETTING_KEY = "appearance.preferredLightThemeName";
-export const PREFERRED_DARK_THEME_NAME_SETTING_KEY = "appearance.preferredDarkThemeName";
+import type { ThemeName } from "./ThemeName";
 
 const themeMap: Record<ThemeName, Theme> = {
     "Web Dark": webDarkTheme,
@@ -16,17 +10,17 @@ const themeMap: Record<ThemeName, Theme> = {
 };
 
 const getThemeName = (contextBridge: ContextBridge): ThemeName => {
-    const syncWithOs = contextBridge.getSettingByKey<boolean>(SYNC_WITH_OS_SETTING_KEY, true);
+    const syncWithOs = contextBridge.getSettingByKey<boolean>("appearance.syncWithOs", true);
 
-    const preferredThemeName = contextBridge.getSettingByKey<ThemeName>(PREFERRED_THEME_NAME_SETTING_KEY, "Web Dark");
+    const preferredThemeName = contextBridge.getSettingByKey<ThemeName>("appearance.preferredThemeName", "Web Dark");
 
     const preferredLightThemeName = contextBridge.getSettingByKey<ThemeName>(
-        PREFERRED_LIGHT_THEME_NAME_SETTING_KEY,
+        "appearance.preferredLightThemeName",
         "Web Light",
     );
 
     const preferredDarkThemeName = contextBridge.getSettingByKey<ThemeName>(
-        PREFERRED_DARK_THEME_NAME_SETTING_KEY,
+        "appearance.preferredDarkThemeName",
         "Web Dark",
     );
 

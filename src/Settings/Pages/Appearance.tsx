@@ -1,38 +1,36 @@
 import { Dropdown, Option, Switch } from "@fluentui/react-components";
 import { useContext } from "react";
 import { useContextBridge, useSetting } from "../../Hooks";
-import {
-    PREFERRED_DARK_THEME_NAME_SETTING_KEY,
-    PREFERRED_LIGHT_THEME_NAME_SETTING_KEY,
-    PREFERRED_THEME_NAME_SETTING_KEY,
-    SYNC_WITH_OS_SETTING_KEY,
-    ThemeName,
-    getTheme,
-} from "../../Theme";
+import { getTheme, type ThemeName } from "../../Theme";
 import { ThemeContext } from "../../ThemeContext";
 import { Section } from "../Section";
 import { SectionList } from "../SectionList";
 
 export const Appearance = () => {
     const { setTheme } = useContext(ThemeContext);
+
     const updateTheme = () => setTheme(getTheme(useContextBridge()));
 
-    const { value: syncWithOs, updateValue: setSyncWithOs } = useSetting(SYNC_WITH_OS_SETTING_KEY, true, updateTheme);
+    const { value: syncWithOs, updateValue: setSyncWithOs } = useSetting<boolean>(
+        "appearance.syncWithOs",
+        true,
+        updateTheme,
+    );
 
     const { value: preferredThemeName, updateValue: setPreferredThemeName } = useSetting<ThemeName>(
-        PREFERRED_THEME_NAME_SETTING_KEY,
+        "appearance.preferredThemeName",
         "Web Dark",
         updateTheme,
     );
 
     const { value: preferredLightThemeName, updateValue: setPreferredLightThemeName } = useSetting<ThemeName>(
-        PREFERRED_LIGHT_THEME_NAME_SETTING_KEY,
+        "appearance.preferredLightThemeName",
         "Web Light",
         updateTheme,
     );
 
     const { value: preferredDarkThemeName, updateValue: setPreferredDarkThemeName } = useSetting<ThemeName>(
-        PREFERRED_DARK_THEME_NAME_SETTING_KEY,
+        "appearance.preferredDarkThemeName",
         "Web Dark",
         updateTheme,
     );
@@ -40,17 +38,17 @@ export const Appearance = () => {
     return (
         <SectionList>
             <Section>
-                <label id={SYNC_WITH_OS_SETTING_KEY}>Sync Theme with OS</label>
+                <label id="appearance.syncWithOs">Sync Theme with OS</label>
                 <Switch
-                    aria-labelledby={SYNC_WITH_OS_SETTING_KEY}
+                    aria-labelledby="appearance.syncWithOs"
                     checked={syncWithOs}
                     onChange={(_, { checked }) => setSyncWithOs(checked)}
                 />
             </Section>
             <Section>
-                <label id={PREFERRED_THEME_NAME_SETTING_KEY}>Preferred Theme</label>
+                <label id="appearance.customThemeEnabled">Preferred Theme</label>
                 <Dropdown
-                    aria-labelledby={PREFERRED_THEME_NAME_SETTING_KEY}
+                    aria-labelledby="appearance.customThemeEnabled"
                     value={preferredThemeName}
                     onOptionSelect={(_, { optionValue }) =>
                         optionValue && setPreferredThemeName(optionValue as ThemeName)
@@ -64,9 +62,9 @@ export const Appearance = () => {
                 </Dropdown>
             </Section>
             <Section>
-                <label id={PREFERRED_LIGHT_THEME_NAME_SETTING_KEY}>Preferred Light Theme</label>
+                <label id="appearance.preferredLightThemeName">Preferred Light Theme</label>
                 <Dropdown
-                    aria-labelledby={PREFERRED_LIGHT_THEME_NAME_SETTING_KEY}
+                    aria-labelledby="appearance.preferredLightThemeName"
                     value={preferredLightThemeName}
                     onOptionSelect={(_, { optionValue }) =>
                         optionValue && setPreferredLightThemeName(optionValue as ThemeName)
@@ -78,9 +76,9 @@ export const Appearance = () => {
                 </Dropdown>
             </Section>
             <Section>
-                <label id={PREFERRED_DARK_THEME_NAME_SETTING_KEY}>Preferred Dark Theme</label>
+                <label id="appearance.preferredDarkThemeName">Preferred Dark Theme</label>
                 <Dropdown
-                    aria-labelledby={PREFERRED_DARK_THEME_NAME_SETTING_KEY}
+                    aria-labelledby="appearance.preferredDarkThemeName"
                     value={preferredDarkThemeName}
                     onOptionSelect={(_, { optionValue }) =>
                         optionValue && setPreferredDarkThemeName(optionValue as ThemeName)
