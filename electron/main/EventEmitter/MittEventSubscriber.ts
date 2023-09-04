@@ -1,4 +1,4 @@
-import { Emitter } from "mitt";
+import type { Emitter } from "mitt";
 import type { EventSubscriber } from "./EventSubscriber";
 
 export class MittEventSubscriber implements EventSubscriber {
