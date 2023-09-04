@@ -1,7 +1,8 @@
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { EventEmitter } from "../EventEmitter";
+import type { SearchIndex } from "./SearchIndex";
 
-export class InMemorySearchIndex {
+export class InMemorySearchIndex implements SearchIndex {
     private index: Record<string, SearchResultItem[]>;
 
     public constructor(private readonly eventEmitter: EventEmitter) {
@@ -21,6 +22,6 @@ export class InMemorySearchIndex {
     public addSearchResultItems(pluginId: string, searchResultItems: SearchResultItem[]): void {
         this.index[pluginId] = searchResultItems;
 
-        this.eventEmitter.emitEvent("searchResultItemsUpdated");
+        this.eventEmitter.emitEvent("searchIndexUpdated");
     }
 }

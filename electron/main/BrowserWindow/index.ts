@@ -43,7 +43,7 @@ export const useBrowserWindow = async ({
 
     const browserWindow = new BrowserWindow(browserWindowConstructorOptionsMap[operatingSystem]);
 
-    eventSubscriber.subscribe("searchResultItemsUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
+    eventSubscriber.subscribe("searchIndexUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
 
     eventSubscriber.subscribe("executionSucceeded", () => {
         if (settingsManager.getSettingByKey("window.hideWindowAfterExecution", true)) {
