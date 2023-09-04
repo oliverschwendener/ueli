@@ -25,10 +25,6 @@ import { useUtilities } from "./Utilities";
     const searchIndex = useSearchIndex({ eventEmitter });
     const executor = useExecutor({ shell, eventEmitter });
 
-    await useBrowserWindow({ app, eventSubscriber, nativeTheme, operatingSystem, settingsManager });
-
-    useIpcMain({ executor, ipcMain, nativeTheme, searchIndex, settingsManager });
-
     const pluginCacheFolderPath = await usePluginCacheFolder({ app, fileSystemUtility });
 
     const plugins = usePlugins({
@@ -41,7 +37,13 @@ import { useUtilities } from "./Utilities";
         settingsManager,
     });
 
+    await useBrowserWindow({ app, eventSubscriber, nativeTheme, operatingSystem, settingsManager });
+
+    useIpcMain({ executor, ipcMain, nativeTheme, searchIndex, settingsManager, plugins });
+
     for (const plugin of plugins) {
-        plugin.addSearchResultItemsToSearchIndex();
+        if (settingsManager.getSettingByKey("plugins.enabledPluginIds", ["ApplicationSearch"]).includes(plugin.id)) {
+            plugin.addSearchResultItemsToSearchIndex();
+        }
     }
 })();

@@ -3,12 +3,14 @@ import {
     PaintBrush16Regular,
     Search16Regular,
     Settings16Regular,
+    UsbPlugRegular,
     Window16Regular,
 } from "@fluentui/react-icons";
 import { ReactElement } from "react";
 import { About } from "./About";
 import { Appearance } from "./Appearance";
 import { General } from "./General";
+import { Plugins } from "./Plugins";
 import { SearchEngine } from "./SearchEngine";
 import { Window } from "./Window";
 
@@ -55,5 +57,12 @@ export const settingsPages: SettingsPage[] = [
         absolutePath: "/settings/about",
         element: <About />,
         icon: <Info16Regular />,
+    },
+    {
+        label: "Plugins",
+        relativePath: "plugins",
+        absolutePath: "/settings/plugins",
+        element: <Plugins />,
+        icon: <UsbPlugRegular />,
     },
 ];

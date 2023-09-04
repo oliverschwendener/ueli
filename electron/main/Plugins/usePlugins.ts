@@ -1,11 +1,11 @@
+import type { UeliPlugin } from "../../../common/UeliPlugin";
 import { ApplicationSearchPlugin } from "./ApplicationSearch/ApplicationSearchPlugin";
-import type { Plugin } from "./Plugin";
 import type { PluginDependencies } from "./PluginDependencies";
 
-export const usePlugins = (pluginDependencies: PluginDependencies): Plugin[] => {
+export const usePlugins = (pluginDependencies: PluginDependencies): UeliPlugin[] => {
     const { operatingSystem } = pluginDependencies;
 
-    return [new ApplicationSearchPlugin(pluginDependencies)].filter((plugin) =>
-        plugin.getSupportedOperatingSystems().includes(operatingSystem),
+    return [new ApplicationSearchPlugin(pluginDependencies)].filter(({ getSupportedOperatingSystems }) =>
+        getSupportedOperatingSystems().includes(operatingSystem),
     );
 };

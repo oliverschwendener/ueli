@@ -1,19 +1,20 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
-import type { Plugin } from "../Plugin";
+import type { UeliPlugin } from "@common/UeliPlugin";
 import type { PluginDependencies } from "../PluginDependencies";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { MacOsApplicationRepository } from "./MacOsApplicationRepository";
 import { WindowsApplicationRepository } from "./WindowsApplicationRepository";
 
-export class ApplicationSearchPlugin implements Plugin {
-    private static readonly Id = "ApplicationSearch";
+export class ApplicationSearchPlugin implements UeliPlugin {
+    public readonly id = "ApplicationSearch";
+    public readonly name = "Application Search";
 
     private applicationRepositories: Record<OperatingSystem, ApplicationRepository>;
 
     public constructor(private readonly pluginDependencies: PluginDependencies) {
         this.applicationRepositories = {
-            macOS: new MacOsApplicationRepository(pluginDependencies, ApplicationSearchPlugin.Id),
-            Windows: new WindowsApplicationRepository(pluginDependencies, ApplicationSearchPlugin.Id),
+            macOS: new MacOsApplicationRepository(pluginDependencies, this.id),
+            Windows: new WindowsApplicationRepository(pluginDependencies, this.id),
         };
     }
 
@@ -28,7 +29,7 @@ export class ApplicationSearchPlugin implements Plugin {
             await this.applicationRepositories[this.pluginDependencies.operatingSystem].getApplications();
 
         searchIndex.addSearchResultItems(
-            ApplicationSearchPlugin.Id,
+            this.id,
             applications.map((applicaiton) => applicaiton.toSearchResultItem()),
         );
     }
