@@ -1,4 +1,4 @@
-import { Emitter } from "mitt";
+import type { Emitter } from "mitt";
 import type { EventEmitter } from "./EventEmitter";
 import type { EventSubscriber } from "./EventSubscriber";
 import { MittEventEmitter } from "./MittEventEmitter";
