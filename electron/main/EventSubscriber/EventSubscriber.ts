@@ -1,3 +1,3 @@
 export interface EventSubscriber {
-    subscribe(event: string, eventHandler: () => void): void;
+    subscribe<T>(event: string, eventHandler: (data?: T) => void): void;
 }

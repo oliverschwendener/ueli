@@ -4,6 +4,8 @@ import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     getAllPlugins: () => ipcRenderer.sendSync("getPlugins"),
+    pluginDisabled: (pluginId: string) => ipcRenderer.send("pluginDisabled", { pluginId }),
+    pluginEnabled: (pluginId: string) => ipcRenderer.send("pluginEnabled", { pluginId }),
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
     getSettingByKey: <T>(key: string, defaultValue: T): T =>
         ipcRenderer.sendSync("getSettingByKey", { key, defaultValue }),

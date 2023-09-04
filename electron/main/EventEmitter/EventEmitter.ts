@@ -1,3 +1,3 @@
 export interface EventEmitter {
-    emitEvent(event: string): void;
+    emitEvent<T>(event: string, data?: T): void;
 }

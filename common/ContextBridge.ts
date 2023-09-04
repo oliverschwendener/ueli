@@ -4,6 +4,8 @@ import type { UeliPlugin } from "./UeliPlugin";
 
 export type ContextBridge = {
     getAllPlugins: () => UeliPlugin[];
+    pluginDisabled: (pluginId: string) => void;
+    pluginEnabled: (pluginId: string) => void;
     getSearchResultItems: () => SearchResultItem[];
     getSettingByKey: <T>(key: string, defaultValue: T) => T;
     invokeExecution: (executionArgument: ExecutionArgument) => Promise<void>;

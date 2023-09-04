@@ -3,14 +3,21 @@ import { useContextBridge, useSetting } from "../../Hooks";
 import { SectionList } from "../SectionList";
 
 export const Plugins = () => {
-    const { getAllPlugins } = useContextBridge();
+    const { getAllPlugins, pluginDisabled: disablePlugin, pluginEnabled: enablePlugin } = useContextBridge();
 
     const { value: enabledPluginIds, updateValue: setEnabledPluginIds } = useSetting("plugins.enabledPluginIds", [
         "ApplicationSearch",
     ]);
 
-    const enablePlugin = (pluginId: string) => setEnabledPluginIds([pluginId, ...enabledPluginIds]);
-    const disablePlugin = (pluginId: string) => setEnabledPluginIds(enabledPluginIds.filter((p) => p !== pluginId));
+    const enable = (pluginId: string) => {
+        setEnabledPluginIds([pluginId, ...enabledPluginIds]);
+        enablePlugin(pluginId);
+    };
+
+    const disable = (pluginId: string) => {
+        setEnabledPluginIds(enabledPluginIds.filter((p) => p !== pluginId));
+        disablePlugin(pluginId);
+    };
 
     return (
         <SectionList>
@@ -19,7 +26,7 @@ export const Plugins = () => {
                     <Checkbox
                         key={id}
                         checked={enabledPluginIds.includes(id)}
-                        onChange={(_, { checked }) => (checked ? enablePlugin(id) : disablePlugin(id))}
+                        onChange={(_, { checked }) => (checked ? enable(id) : disable(id))}
                         label={name}
                     />
                 ))}
