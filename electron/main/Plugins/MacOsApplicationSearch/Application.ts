@@ -24,8 +24,8 @@ export class Application implements Searchable {
             description: "Application",
             name: this.getApplicationName(),
             imageUrl: this.iconFilePath ? `file://${this.iconFilePath}` : undefined,
-            executorId: "FilePath",
-            executorArgument: this.filePath,
+            executionServiceId: "FilePath",
+            executionServiceArgument: this.filePath,
         };
     }
 

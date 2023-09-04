@@ -9,7 +9,7 @@ export class FilePathExecutionService implements ExecutionService {
 
     public execute(executionArgument: ExecutionArgument): Promise<void> {
         return executionArgument.isAlternativeExecution
-            ? this.openFilePathLocation(executionArgument.searchResultItem.executorArgument)
-            : this.openFilePath(executionArgument.searchResultItem.executorArgument);
+            ? this.openFilePathLocation(executionArgument.searchResultItem.executionServiceArgument)
+            : this.openFilePath(executionArgument.searchResultItem.executionServiceArgument);
     }
 }

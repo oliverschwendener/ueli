@@ -3,6 +3,6 @@ export type SearchResultItem = {
     name: string;
     description: string;
     imageUrl?: string;
-    executorId: string;
-    executorArgument: string;
+    executionServiceId: string;
+    executionServiceArgument: string;
 };

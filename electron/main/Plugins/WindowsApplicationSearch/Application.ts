@@ -19,8 +19,8 @@ export class Application implements Searchable {
             id: this.getId(),
             name: this.name,
             imageUrl: `file:///${this.iconFilePath}`,
-            executorId: "FilePath",
-            executorArgument: this.filePath,
+            executionServiceId: "FilePath",
+            executionServiceArgument: this.filePath,
         };
     }
 

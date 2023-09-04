@@ -9,10 +9,12 @@ export class Executor {
     ) {}
 
     public async execute(executionArgument: ExecutionArgument): Promise<void> {
-        const executionService = this.executionServices[executionArgument.searchResultItem.executorId];
+        const executionService = this.executionServices[executionArgument.searchResultItem.executionServiceId];
 
-        if (!executionArgument) {
-            return Promise.reject("Unable to find execution service that supports execution argument");
+        if (!executionService) {
+            throw new Error(
+                `Unable to find execution service by id: '${executionArgument.searchResultItem.executionServiceId}'`,
+            );
         }
 
         await executionService.execute(executionArgument);
