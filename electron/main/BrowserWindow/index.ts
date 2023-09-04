@@ -1,7 +1,7 @@
 import { OperatingSystem } from "@common/OperatingSystem";
 import { BrowserWindow, type App, type BrowserWindowConstructorOptions, type NativeTheme } from "electron";
 import { join } from "path";
-import { EventSubscriber } from "../EventEmitter";
+import { EventSubscriber } from "../EventSubscriber";
 
 export const useBrowserWindow = async ({
     app,

@@ -1,6 +1,6 @@
-import { EventEmitter } from "../EventEmitter";
+import type { EventEmitter } from "../EventEmitter";
 import { InMemorySearchIndex } from "./InMemorySearchIndex";
-import { SearchIndex } from "./SearchIndex";
+import type { SearchIndex } from "./SearchIndex";
 
 export * from "./SearchIndex";
 

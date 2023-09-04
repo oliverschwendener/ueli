@@ -1,6 +1,6 @@
-import { SearchResultItem } from "@common/SearchResultItem";
+import type { SearchResultItem } from "@common/SearchResultItem";
 import { describe, expect, it } from "vitest";
-import { EventEmitter } from "../EventEmitter";
+import type { EventEmitter } from "../EventEmitter";
 import { InMemorySearchIndex } from "./InMemorySearchIndex";
 
 describe(InMemorySearchIndex, () => {
@@ -20,10 +20,10 @@ describe(InMemorySearchIndex, () => {
     it("should return all search result items if the search index is not empty", () => {
         const emittedEvents: string[] = [];
 
-        const searchResultItems: SearchResultItem[] = [
-            { description: "item1", id: "item1", name: "item1" },
-            { description: "item2", id: "item2", name: "item2" },
-            { description: "item3", id: "item3", name: "item3" },
+        const searchResultItems = [
+            <SearchResultItem>{ description: "item1", id: "item1", name: "item1" },
+            <SearchResultItem>{ description: "item2", id: "item2", name: "item2" },
+            <SearchResultItem>{ description: "item3", id: "item3", name: "item3" },
         ];
 
         const eventEmitter = <EventEmitter>{

@@ -1,5 +1,5 @@
 import type { ExecutionArgument } from "@common/ExecutionArgument";
-import { EventEmitter } from "../EventEmitter";
+import type { EventEmitter } from "../EventEmitter";
 import type { ExecutionService } from "./ExecutionServices/ExecutionService";
 
 export class Executor {

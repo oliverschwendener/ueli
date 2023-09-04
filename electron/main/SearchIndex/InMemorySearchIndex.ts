@@ -1,5 +1,5 @@
-import { SearchResultItem } from "@common/SearchResultItem";
-import { EventEmitter } from "../EventEmitter";
+import type { SearchResultItem } from "@common/SearchResultItem";
+import type { EventEmitter } from "../EventEmitter";
 
 export class InMemorySearchIndex {
     private index: Record<string, SearchResultItem[]>;

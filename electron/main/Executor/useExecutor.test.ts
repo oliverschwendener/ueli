@@ -1,6 +1,6 @@
-import { Shell } from "electron";
+import type { Shell } from "electron";
 import { describe, expect, it } from "vitest";
-import { EventEmitter } from "../EventEmitter";
+import type { EventEmitter } from "../EventEmitter";
 import { FilePathExecutionService, UrlExecutionService } from "./ExecutionServices";
 import { Executor } from "./Executor";
 import { useExecutor } from "./useExecutor";

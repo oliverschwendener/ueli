@@ -1,7 +1,7 @@
-import { ExecutionArgument } from "@common/ExecutionArgument";
+import type { ExecutionArgument } from "@common/ExecutionArgument";
 import { describe, expect, it, vi } from "vitest";
-import { EventEmitter } from "../EventEmitter";
-import { ExecutionService } from "./ExecutionServices/ExecutionService";
+import type { EventEmitter } from "../EventEmitter";
+import type { ExecutionService } from "./ExecutionServices/ExecutionService";
 import { Executor } from "./Executor";
 
 describe(Executor, () => {
