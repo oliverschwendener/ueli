@@ -1,48 +1,37 @@
-import type { OperatingSystem } from "@common/OperatingSystem";
-import { join, normalize } from "path";
-import type { Plugin } from "../Plugin";
+import { join, normalize, parse } from "path";
 import type { PluginDependencies } from "../PluginDependencies";
 import { Application } from "./Application";
+import type { ApplicationRepository } from "./ApplicationRepository";
 
-export class MacOsApplicationSearch implements Plugin {
-    private static readonly PluginId = "MacOsApplicationSearch";
+export class MacOsApplicationRepository implements ApplicationRepository {
+    public constructor(
+        private readonly pluginDependencies: PluginDependencies,
+        private readonly pluginId: string,
+    ) {}
 
-    public constructor(private readonly pluginDependencies: PluginDependencies) {}
-
-    public getSupportedOperatingSystems(): OperatingSystem[] {
-        return ["macOS"];
-    }
-
-    public async addSearchResultItemsToSearchIndex(): Promise<void> {
-        const { searchIndex } = this.pluginDependencies;
-
+    public async getApplications(): Promise<Application[]> {
         const filePaths = await this.getAllFilePaths();
         const icons = await this.getAllIcons(filePaths);
 
-        searchIndex.addSearchResultItems(
-            MacOsApplicationSearch.PluginId,
-            filePaths
-                .map((filePath) => Application.fromFilePathAndOptionalIcon({ filePath, iconFilePath: icons[filePath] }))
-                .map((application) => application.toSearchResultItem()),
-        );
+        return filePaths.map((filePath) => new Application(parse(filePath).base, filePath, icons[filePath]));
     }
 
     private async getAllFilePaths(): Promise<string[]> {
-        const { commandlineUtility, settingsManager } = this.pluginDependencies;
+        const { commandlineUtility } = this.pluginDependencies;
 
         return (await commandlineUtility.executeCommandWithOutput(`mdfind "kMDItemKind == 'Application'"`))
             .split("\n")
             .map((filePath) => normalize(filePath).trim())
-            .filter((filePath) =>
-                settingsManager
-                    .getPluginSettingByKey<string[]>(
-                        MacOsApplicationSearch.PluginId,
-                        "folders",
-                        this.getDefaultFolders(),
-                    )
-                    .some((folderPath) => filePath.startsWith(folderPath)),
-            )
+            .filter((filePath) => this.filterFilePathByConfiguredFolders(filePath))
             .filter((filePath) => ![".", ".."].includes(filePath));
+    }
+
+    private filterFilePathByConfiguredFolders(filePath: string): boolean {
+        const { settingsManager } = this.pluginDependencies;
+
+        return settingsManager
+            .getPluginSettingByKey<string[]>(this.pluginId, "folders", this.getDefaultFolders())
+            .some((folderPath) => filePath.startsWith(folderPath));
     }
 
     private async getAllIcons(filePaths: string[]): Promise<Record<string, string>> {

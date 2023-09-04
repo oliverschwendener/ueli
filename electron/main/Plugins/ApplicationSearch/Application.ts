@@ -1,17 +1,8 @@
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { Searchable } from "@common/Searchable";
-import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
 
 export class Application implements Searchable {
-    public static fromWindowsApplicationRetrieverResult({
-        BaseName,
-        FullName,
-        IconFilePath,
-    }: WindowsApplicationRetrieverResult) {
-        return new Application(BaseName, FullName, IconFilePath);
-    }
-
-    private constructor(
+    public constructor(
         private readonly name: string,
         private readonly filePath: string,
         private readonly iconFilePath: string,
@@ -20,11 +11,11 @@ export class Application implements Searchable {
     public toSearchResultItem(): SearchResultItem {
         return {
             description: "Application",
+            executionServiceArgument: this.filePath,
+            executionServiceId: "FilePath",
             id: this.getId(),
             name: this.name,
-            imageUrl: `file:///${this.iconFilePath}`,
-            executionServiceId: "FilePath",
-            executionServiceArgument: this.filePath,
+            imageUrl: `file://${this.iconFilePath}`,
         };
     }
 
