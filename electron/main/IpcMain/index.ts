@@ -30,7 +30,11 @@ export const useIpcMain = ({
     );
 
     ipcMain.on("getPlugins", (event) => {
-        event.returnValue = plugins.map(({ id, name }) => ({ id, name }));
+        event.returnValue = plugins.map(({ id, name, supportedOperatingSystems }) => ({
+            id,
+            name,
+            supportedOperatingSystems,
+        }));
     });
 
     ipcMain.handle("updateSettingByKey", (_, { key, value }: { key: string; value: unknown }) =>

@@ -8,6 +8,7 @@ import { WindowsApplicationRepository } from "./WindowsApplicationRepository";
 export class ApplicationSearchPlugin implements UeliPlugin {
     public readonly id = "ApplicationSearch";
     public readonly name = "Application Search";
+    public readonly supportedOperatingSystems: OperatingSystem[] = ["macOS", "Windows"];
 
     private applicationRepositories: Record<OperatingSystem, ApplicationRepository>;
 
@@ -16,10 +17,6 @@ export class ApplicationSearchPlugin implements UeliPlugin {
             macOS: new MacOsApplicationRepository(pluginDependencies, this.id),
             Windows: new WindowsApplicationRepository(pluginDependencies, this.id),
         };
-    }
-
-    public getSupportedOperatingSystems(): OperatingSystem[] {
-        return ["macOS", "Windows"];
     }
 
     public async addSearchResultItemsToSearchIndex(): Promise<void> {
