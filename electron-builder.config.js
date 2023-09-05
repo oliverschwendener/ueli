@@ -27,6 +27,7 @@ module.exports = {
         ],
     },
     win: {
+        icon: "build/windows-app-icon-dark-background.png",
         target: [
             {
                 target: "msi",
