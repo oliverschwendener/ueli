@@ -8,6 +8,7 @@ describe(Application, () => {
 
         expect(application.toSearchResultItem()).toEqual(<SearchResultItem>{
             description: "Application",
+            descriptionTranslationKey: "plugin[ApplicationSearch].searchResultItemDescription",
             executionServiceArgument: "/Applications/My App.app",
             executionServiceId: "FilePath",
             id: "L0FwcGxpY2F0aW9ucy9NeSBBcHAuYXBw",
