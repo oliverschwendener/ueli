@@ -1,7 +1,7 @@
+import react from "@vitejs/plugin-react";
 import { rmSync } from "fs";
 import { join } from "path";
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 import electron from "vite-plugin-electron";
 import renderer from "vite-plugin-electron-renderer";
 import pkg from "./package.json";
@@ -19,6 +19,9 @@ export default defineConfig(({ command }) => {
             alias: {
                 "@": join(__dirname, "src"),
             },
+        },
+        build: {
+            chunkSizeWarningLimit: 1000,
         },
         plugins: [
             react(),
