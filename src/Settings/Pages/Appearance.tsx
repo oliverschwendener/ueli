@@ -9,10 +9,10 @@ import { SectionList } from "../SectionList";
 
 export const Appearance = () => {
     const { t } = useTranslation();
-
+    const { contextBridge } = useContextBridge();
     const { setTheme } = useContext(ThemeContext);
 
-    const updateTheme = () => setTheme(getTheme(useContextBridge()));
+    const updateTheme = () => setTheme(getTheme(contextBridge));
 
     const { value: syncWithOs, updateValue: setSyncWithOs } = useSetting<boolean>(
         "appearance.syncWithOs",

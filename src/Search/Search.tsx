@@ -15,7 +15,7 @@ type SearchProps = {
 
 export const Search = ({ searchResultItems }: SearchProps) => {
     const { t } = useTranslation();
-    const contextBridge = useContextBridge();
+    const { contextBridge } = useContextBridge();
     const [selectedItemIndex, setSelectedItemIndex] = useState<number>(0);
     const [searchTerm, setSearchTerm] = useState<string>("");
     const userInputRef = useRef<HTMLInputElement>(null);

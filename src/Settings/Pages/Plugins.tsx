@@ -5,8 +5,8 @@ import { SectionList } from "../SectionList";
 
 export const Plugins = () => {
     const { t } = useTranslation();
-
-    const { getAllPlugins, pluginDisabled: disablePlugin, pluginEnabled: enablePlugin } = useContextBridge();
+    const { contextBridge } = useContextBridge();
+    const { getAllPlugins, pluginDisabled: disablePlugin, pluginEnabled: enablePlugin } = contextBridge;
 
     const { value: enabledPluginIds, updateValue: setEnabledPluginIds } = useSetting("plugins.enabledPluginIds", [
         "ApplicationSearch",
