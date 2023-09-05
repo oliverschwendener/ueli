@@ -33,9 +33,10 @@ export const useIpcMain = ({
     );
 
     ipcMain.on("getPlugins", (event) => {
-        event.returnValue = plugins.map(({ id, name, supportedOperatingSystems }) => ({
+        event.returnValue = plugins.map(({ id, name, nameTranslationKey, supportedOperatingSystems }) => ({
             id,
             name,
+            nameTranslationKey,
             supportedOperatingSystems,
         }));
     });

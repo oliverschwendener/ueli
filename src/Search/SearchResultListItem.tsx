@@ -1,6 +1,7 @@
-import { SearchResultItem } from "@common/SearchResultItem";
+import type { SearchResultItem } from "@common/SearchResultItem";
 import { Text } from "@fluentui/react-components";
 import { RefObject, useContext, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { ThemeContext } from "../ThemeContext";
 import { elementIsVisible } from "./Helpers";
 
@@ -11,6 +12,7 @@ type SearchResultListItemProps = {
 };
 
 export const SearchResultListItem = ({ containerRef, isSelected, searchResultItem }: SearchResultListItemProps) => {
+    const { t } = useTranslation();
     const { theme } = useContext(ThemeContext);
     const ref = useRef<HTMLDivElement>(null);
 
@@ -60,7 +62,11 @@ export const SearchResultListItem = ({ containerRef, isSelected, searchResultIte
                 }}
             >
                 <Text>{searchResultItem.name}</Text>
-                <Text size={200}>{searchResultItem.description}</Text>
+                <Text size={200}>
+                    {searchResultItem.descriptionTranslationKey
+                        ? t(searchResultItem.descriptionTranslationKey)
+                        : searchResultItem.description}
+                </Text>
             </div>
         </div>
     );

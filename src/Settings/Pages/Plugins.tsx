@@ -1,8 +1,11 @@
 import { Checkbox } from "@fluentui/react-components";
+import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting } from "../../Hooks";
 import { SectionList } from "../SectionList";
 
 export const Plugins = () => {
+    const { t } = useTranslation();
+
     const { getAllPlugins, pluginDisabled: disablePlugin, pluginEnabled: enablePlugin } = useContextBridge();
 
     const { value: enabledPluginIds, updateValue: setEnabledPluginIds } = useSetting("plugins.enabledPluginIds", [
@@ -22,12 +25,12 @@ export const Plugins = () => {
     return (
         <SectionList>
             <div style={{ display: "flex", flexDirection: "column" }}>
-                {getAllPlugins().map(({ id, name }) => (
+                {getAllPlugins().map(({ id, name, nameTranslationKey }) => (
                     <Checkbox
                         key={id}
                         checked={enabledPluginIds.includes(id)}
                         onChange={(_, { checked }) => (checked ? enable(id) : disable(id))}
-                        label={name}
+                        label={nameTranslationKey ? t(nameTranslationKey) : name}
                     />
                 ))}
             </div>

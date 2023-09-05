@@ -11,6 +11,7 @@ export class Application implements Searchable {
     public toSearchResultItem(): SearchResultItem {
         return {
             description: "Application",
+            descriptionTranslationKey: "plugin[ApplicationSearch].searchResultItemDescription",
             executionServiceArgument: this.filePath,
             executionServiceId: "FilePath",
             id: this.getId(),
