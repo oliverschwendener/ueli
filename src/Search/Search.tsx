@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { useContextBridge, useSetting } from "../Hooks";
 import { FavoritesList } from "./FavoritesList";
-import { filterSearchResultItemsBySearchTerm } from "./Helpers/filterSearchResultItemsBySearchTerm";
+import { filterSearchResultItemsBySearchTerm } from "./Helpers";
 import { SearchResultList } from "./SearchResultList";
 
 type SearchProps = {
@@ -40,17 +40,17 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
         filteredSearchResultItems[selectedItemIndex];
 
-    const invokeExecution = (isAlternativeExecution: boolean) => {
+    const invokeExecution = async (isAlternativeExecution: boolean) => {
         const searchResultItem = getSelectedSearchResultItem();
 
         if (!searchResultItem) {
             return;
         }
 
-        contextBridge.invokeExecution({ searchResultItem, isAlternativeExecution });
+        await contextBridge.invokeExecution({ searchResultItem, isAlternativeExecution });
     };
 
-    const handleUserInputKeyboardEvent = (keyboardEvent: KeyboardEvent) => {
+    const handleUserInputKeyboardEvent = async (keyboardEvent: KeyboardEvent) => {
         if (keyboardEvent.key === "ArrowUp") {
             keyboardEvent.preventDefault();
             selectPreviousSearchResultItem();
@@ -62,7 +62,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
         }
 
         if (keyboardEvent.key === "Enter") {
-            invokeExecution(keyboardEvent.shiftKey);
+            await invokeExecution(keyboardEvent.shiftKey);
         }
     };
 

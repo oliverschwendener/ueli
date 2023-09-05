@@ -3,7 +3,7 @@ import type { SettingsReader } from "./SettingsReader";
 import type { SettingsWriter } from "./SettingsWriter";
 
 export class SettingsManager {
-    private settings: Settings;
+    private readonly settings: Settings;
 
     public constructor(
         private readonly settingsReader: SettingsReader,
