@@ -2,6 +2,7 @@ import type { OperatingSystem } from "@common/OperatingSystem";
 import type { UeliPlugin } from "@common/UeliPlugin";
 import type { PluginDependencies } from "../PluginDependencies";
 import type { ApplicationRepository } from "./ApplicationRepository";
+import { MacOsApplicationIconGenerator } from "./MacOsApplicationIconGenerator";
 import { MacOsApplicationRepository } from "./MacOsApplicationRepository";
 import { WindowsApplicationRepository } from "./WindowsApplicationRepository";
 
@@ -14,7 +15,11 @@ export class ApplicationSearchPlugin implements UeliPlugin {
 
     public constructor(private readonly pluginDependencies: PluginDependencies) {
         this.applicationRepositories = {
-            macOS: new MacOsApplicationRepository(pluginDependencies, this.id),
+            macOS: new MacOsApplicationRepository(
+                pluginDependencies,
+                this.id,
+                new MacOsApplicationIconGenerator(pluginDependencies),
+            ),
             Windows: new WindowsApplicationRepository(pluginDependencies, this.id),
         };
     }

@@ -2,18 +2,20 @@ import { join, normalize, parse } from "path";
 import type { PluginDependencies } from "../PluginDependencies";
 import { Application } from "./Application";
 import type { ApplicationRepository } from "./ApplicationRepository";
+import type { MacOsApplicationIconGenerator } from "./MacOsApplicationIconGenerator";
 
 export class MacOsApplicationRepository implements ApplicationRepository {
     public constructor(
         private readonly pluginDependencies: PluginDependencies,
         private readonly pluginId: string,
+        private readonly macOsApplicationIconGenerator: MacOsApplicationIconGenerator,
     ) {}
 
     public async getApplications(): Promise<Application[]> {
         const filePaths = await this.getAllFilePaths();
         const icons = await this.getAllIcons(filePaths);
 
-        return filePaths.map((filePath) => new Application(parse(filePath).base, filePath, icons[filePath]));
+        return filePaths.map((filePath) => new Application(parse(filePath).name, filePath, icons[filePath]));
     }
 
     private async getAllFilePaths(): Promise<string[]> {
@@ -37,7 +39,9 @@ export class MacOsApplicationRepository implements ApplicationRepository {
     private async getAllIcons(filePaths: string[]): Promise<Record<string, string>> {
         const result: Record<string, string> = {};
 
-        const promiseResults = await Promise.allSettled(filePaths.map((filePath) => this.generateMacAppIcon(filePath)));
+        const promiseResults = await Promise.allSettled(
+            filePaths.map((filePath) => this.macOsApplicationIconGenerator.generateApplicationIcon(filePath)),
+        );
 
         for (const promiseResult of promiseResults) {
             if (promiseResult.status === "fulfilled") {
@@ -46,32 +50,6 @@ export class MacOsApplicationRepository implements ApplicationRepository {
         }
 
         return result;
-    }
-
-    private async generateMacAppIcon(
-        applicationFilePath: string,
-    ): Promise<{ applicationFilePath: string; iconFilePath: string }> {
-        const { commandlineUtility, fileSystemUtility, pluginCacheFolderPath } = this.pluginDependencies;
-
-        const iconFilePath = `${join(pluginCacheFolderPath, Buffer.from(applicationFilePath).toString("base64"))}.png`;
-
-        if (await fileSystemUtility.pathExists(iconFilePath)) {
-            return { applicationFilePath, iconFilePath };
-        }
-
-        const relativeIcnsFilePath = await commandlineUtility.executeCommandWithOutput(
-            `defaults read "${join(applicationFilePath, "Contents", "Info.plist")}" CFBundleIconFile`,
-        );
-
-        const potentialIcnsFilePath = join(applicationFilePath, "Contents", "Resources", relativeIcnsFilePath.trim());
-
-        const icnsIconFilePath = potentialIcnsFilePath.endsWith(".icns")
-            ? potentialIcnsFilePath
-            : `${potentialIcnsFilePath}.icns`;
-
-        await commandlineUtility.executeCommand(`sips -s format png "${icnsIconFilePath}" -o "${iconFilePath}"`);
-
-        return { applicationFilePath, iconFilePath };
     }
 
     private getDefaultFolders(): string[] {
