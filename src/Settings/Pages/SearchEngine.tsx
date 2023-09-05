@@ -1,9 +1,12 @@
 import { Field, Input, Slider, Switch } from "@fluentui/react-components";
+import { useTranslation } from "react-i18next";
 import { useSetting } from "../../Hooks";
 import { Section } from "../Section";
 import { SectionList } from "../SectionList";
 
 export const SearchEngine = () => {
+    const { t } = useTranslation();
+
     const { value: automaticRescanEnabled, updateValue: setAutomaticRescanEnabled } = useSetting(
         "searchEngine.automaticRescan",
         true,
@@ -18,7 +21,7 @@ export const SearchEngine = () => {
     return (
         <SectionList>
             <Section>
-                <label id="searchEngine.automaticRescan">Automatic rescan</label>
+                <label id="searchEngine.automaticRescan">{t("settingsSearchEngine.automaticRescan")}</label>
                 <Switch
                     aria-labelledby="searchEngine.automaticRescan"
                     checked={automaticRescanEnabled}
@@ -26,7 +29,7 @@ export const SearchEngine = () => {
                 />
             </Section>
             <Section>
-                <Field label="Rescan interval in seconds" validationState="none">
+                <Field label={t("settingsSearchEngine.rescanIntervalInSeconds")} validationState="none">
                     <Input
                         value={`${rescanIntervalInSeconds}`}
                         onChange={(_, { value }) => setRescanIntervalInSeconds(Number(value))}
@@ -36,7 +39,7 @@ export const SearchEngine = () => {
                 </Field>
             </Section>
             <Section>
-                <label id="searchEngine.fuzzyness">Fuzzyness</label>
+                <label id="searchEngine.fuzzyness">{t("settingsSearchEngine.fuzzyness")}</label>
                 <Slider
                     aria-labelledby="searchEngine.fuzzyness"
                     value={fuzzyness}

@@ -15,7 +15,7 @@ import { SearchEngine } from "./SearchEngine";
 import { Window } from "./Window";
 
 export type SettingsPage = {
-    label: string;
+    translationKey: string;
     absolutePath: string;
     relativePath: string;
     element: ReactElement;
@@ -24,42 +24,42 @@ export type SettingsPage = {
 
 export const settingsPages: SettingsPage[] = [
     {
-        label: "General",
+        translationKey: "settingsPage.general",
         relativePath: "general",
         absolutePath: "/settings/general",
         element: <General />,
         icon: <Settings16Regular />,
     },
     {
-        label: "Window",
+        translationKey: "settingsPage.window",
         relativePath: "window",
         absolutePath: "/settings/window",
         element: <Window />,
         icon: <Window16Regular />,
     },
     {
-        label: "Appearance",
+        translationKey: "settingsPage.appearance",
         relativePath: "appearance",
         absolutePath: "/settings/appearance",
         element: <Appearance />,
         icon: <PaintBrush16Regular />,
     },
     {
-        label: "Search Engine",
+        translationKey: "settingsPage.searchEngine",
         relativePath: "search-engine",
         absolutePath: "/settings/search-engine",
         element: <SearchEngine />,
         icon: <Search16Regular />,
     },
     {
-        label: "About",
+        translationKey: "settingsPage.about",
         relativePath: "about",
         absolutePath: "/settings/about",
         element: <About />,
         icon: <Info16Regular />,
     },
     {
-        label: "Plugins",
+        translationKey: "settingsPage.plugins",
         relativePath: "plugins",
         absolutePath: "/settings/plugins",
         element: <Plugins />,

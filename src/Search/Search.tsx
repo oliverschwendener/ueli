@@ -2,6 +2,7 @@ import { SearchResultItem } from "@common/SearchResultItem";
 import { Button, Divider, Input } from "@fluentui/react-components";
 import { Settings16Regular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { useContextBridge, useSetting } from "../Hooks";
 import { FavoritesList } from "./FavoritesList";
@@ -13,6 +14,7 @@ type SearchProps = {
 };
 
 export const Search = ({ searchResultItems }: SearchProps) => {
+    const { t } = useTranslation();
     const contextBridge = useContextBridge();
     const [selectedItemIndex, setSelectedItemIndex] = useState<number>(0);
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -122,7 +124,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                     appearance="subtle"
                     icon={<Settings16Regular />}
                 >
-                    Settings
+                    {t("general.settings")}
                 </Button>
             </div>
         </div>

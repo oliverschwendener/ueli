@@ -1,4 +1,5 @@
 import { Tab, TabList } from "@fluentui/react-components";
+import { useTranslation } from "react-i18next";
 import { SettingsPage } from "./Pages";
 
 type NavigationProps = {
@@ -8,6 +9,8 @@ type NavigationProps = {
 };
 
 export const Navigation = ({ settingsPages, path, onNavigate }: NavigationProps) => {
+    const { t } = useTranslation();
+
     return (
         <TabList
             selectedValue={path}
@@ -16,9 +19,9 @@ export const Navigation = ({ settingsPages, path, onNavigate }: NavigationProps)
             appearance="subtle"
             style={{ width: "100%" }}
         >
-            {settingsPages.map(({ label, absolutePath, icon }) => (
+            {settingsPages.map(({ translationKey, absolutePath, icon }) => (
                 <Tab key={`settings-page-tab-${absolutePath}`} value={absolutePath} icon={icon}>
-                    {label}
+                    {t(translationKey)}
                 </Tab>
             ))}
         </TabList>

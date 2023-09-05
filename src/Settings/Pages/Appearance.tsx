@@ -1,5 +1,6 @@
 import { Dropdown, Option, Switch } from "@fluentui/react-components";
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting } from "../../Hooks";
 import { getTheme, type ThemeName } from "../../Theme";
 import { ThemeContext } from "../../ThemeContext";
@@ -7,6 +8,8 @@ import { Section } from "../Section";
 import { SectionList } from "../SectionList";
 
 export const Appearance = () => {
+    const { t } = useTranslation();
+
     const { setTheme } = useContext(ThemeContext);
 
     const updateTheme = () => setTheme(getTheme(useContextBridge()));
@@ -38,7 +41,7 @@ export const Appearance = () => {
     return (
         <SectionList>
             <Section>
-                <label id="appearance.syncWithOs">Sync Theme with OS</label>
+                <label id="appearance.syncWithOs">{t("settingsAppearance.syncThemeWithOs")}</label>
                 <Switch
                     aria-labelledby="appearance.syncWithOs"
                     checked={syncWithOs}
@@ -46,7 +49,7 @@ export const Appearance = () => {
                 />
             </Section>
             <Section>
-                <label id="appearance.customThemeEnabled">Preferred Theme</label>
+                <label id="appearance.customThemeEnabled">{t("settingsAppearance.preferredTheme")}</label>
                 <Dropdown
                     aria-labelledby="appearance.customThemeEnabled"
                     value={preferredThemeName}
@@ -62,7 +65,7 @@ export const Appearance = () => {
                 </Dropdown>
             </Section>
             <Section>
-                <label id="appearance.preferredLightThemeName">Preferred Light Theme</label>
+                <label id="appearance.preferredLightThemeName">{t("settingsAppearance.preferredLightTheme")}</label>
                 <Dropdown
                     aria-labelledby="appearance.preferredLightThemeName"
                     value={preferredLightThemeName}
@@ -76,7 +79,7 @@ export const Appearance = () => {
                 </Dropdown>
             </Section>
             <Section>
-                <label id="appearance.preferredDarkThemeName">Preferred Dark Theme</label>
+                <label id="appearance.preferredDarkThemeName">{t("settingsAppearance.preferredDarkTheme")}</label>
                 <Dropdown
                     aria-labelledby="appearance.preferredDarkThemeName"
                     value={preferredDarkThemeName}

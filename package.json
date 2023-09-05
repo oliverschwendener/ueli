@@ -43,9 +43,11 @@
         "@fluentui/react-components": "^9.30.0",
         "@fluentui/react-icons": "^2.0.212",
         "fuse.js": "^6.6.2",
+        "i18next": "^23.4.6",
         "mitt": "^3.0.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "react-i18next": "^13.2.2",
         "react-router": "^6.11.1",
         "react-router-dom": "^6.11.1"
     }

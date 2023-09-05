@@ -24,6 +24,10 @@ export class ApplicationSearchPlugin implements UeliPlugin {
         };
     }
 
+    public getName(): string {
+        return "Application Search";
+    }
+
     public async addSearchResultItemsToSearchIndex(): Promise<void> {
         const { searchIndex } = this.pluginDependencies;
 
