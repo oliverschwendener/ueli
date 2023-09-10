@@ -308,7 +308,7 @@ export const italianTranslationSet: TranslationSet = {
     openNewMail: "Crea nuova email",
     currencyConverter: "Convertitore di valuta",
     currencyConverterDescription:
-        "Questo plugin ti consente di convertire rapidamente le valute. Gli ultimi tassi di conversione sono forniti da https://exchangeratesapi.io/.",
+        "Questo plugin ti consente di convertire rapidamente le valute. Gli ultimi tassi di conversione sono forniti da https://exchangerate.host/.",
     currencyConverterPrecision: "Precisione",
     currencyConverterCopyToClipboard: "Premi Invio per copiare negli appunti",
     workflows: "Flussi di lavoro",

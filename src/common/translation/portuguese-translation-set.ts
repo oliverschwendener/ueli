@@ -304,7 +304,7 @@ export const portugueseTranslationSet: TranslationSet = {
 
     currencyConverter: "Converter moeda",
     currencyConverterDescription:
-        "Este plugin te habilita a converter moedas rapidamente. As taxas de conversão são providas por https://exchangeratesapi.io/.",
+        "Este plugin te habilita a converter moedas rapidamente. As taxas de conversão são providas por https://exchangerate.host/.",
     currencyConverterPrecision: "Precisão",
     currencyConverterCopyToClipboard: "Pressione Enter para copiar para a área de transferência",
 
