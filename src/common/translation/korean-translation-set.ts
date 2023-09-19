@@ -296,7 +296,7 @@ export const koreanTranslationSet: TranslationSet = {
 
     currencyConverter: "통화 변환기",
     currencyConverterDescription:
-        "이 플러그인을 사용하면 통화를 빠르게 변환할 수 있습니다. 최신 환율은 https://exchangeratesapi.io/ 에서 제공합니다.",
+        "이 플러그인을 사용하면 통화를 빠르게 변환할 수 있습니다. 최신 환율은 https://exchangerate.host/ 에서 제공합니다.",
     currencyConverterPrecision: "정밀도",
     currencyConverterCopyToClipboard: "Enter를 눌러 계산 결과를 클립보드에 복사",
 

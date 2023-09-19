@@ -298,7 +298,7 @@ export const japaneseTranslationSet: TranslationSet = {
 
     currencyConverter: "通貨コンバーター",
     currencyConverterDescription:
-        "このプラグインは素早く通貨を変換することができます。最新の交換レートは https://exchangeratesapi.io/ より提供されます。",
+        "このプラグインは素早く通貨を変換することができます。最新の交換レートは https://exchangerate.host/ より提供されます。",
     currencyConverterPrecision: "精度",
     currencyConverterCopyToClipboard: "エンターを押下してクリップボードにコピー",
 

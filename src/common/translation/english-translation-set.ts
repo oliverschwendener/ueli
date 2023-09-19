@@ -300,7 +300,7 @@ export const englishTranslationSet: TranslationSet = {
 
     currencyConverter: "Currency Converter",
     currencyConverterDescription:
-        "This plugin enables you to quickly convert currencies. The latest conversion rates are provided by https://exchangeratesapi.io/.",
+        "This plugin enables you to quickly convert currencies. The latest conversion rates are provided by https://exchangerate.host/.",
     currencyConverterPrecision: "Precision",
     currencyConverterCopyToClipboard: "Press enter to copy to clipboard",
 

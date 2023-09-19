@@ -94,7 +94,7 @@ This plugin enables you to quickly find control panel items.
 
 ### Currency Converter
 
-This plugin enables you to quickly convert currencies. The latest conversion rates are provided by https://exchangeratesapi.io/.
+This plugin enables you to quickly convert currencies. The latest conversion rates are provided by https://exchangerate.host/.
 
 ![currency-converter](assets/feature-currency-converter.png)
 
