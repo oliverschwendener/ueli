@@ -1,5 +1,6 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { App } from "electron";
+import type { EventSubscriber } from "../EventSubscriber";
 import type { SearchIndex } from "../SearchIndex";
 import type { SettingsManager } from "../Settings/SettingsManager";
 import type { CommandlineUtility, FileSystemUtility } from "../Utilities";
@@ -7,6 +8,7 @@ import type { CommandlineUtility, FileSystemUtility } from "../Utilities";
 export type PluginDependencies = {
     readonly app: App;
     readonly commandlineUtility: CommandlineUtility;
+    readonly eventSubscriber: EventSubscriber;
     readonly fileSystemUtility: FileSystemUtility;
     readonly operatingSystem: OperatingSystem;
     readonly pluginCacheFolderPath: string;

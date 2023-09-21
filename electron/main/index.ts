@@ -30,6 +30,7 @@ import { useUtilities } from "./Utilities";
     const plugins = usePlugins({
         app,
         commandlineUtility,
+        eventSubscriber,
         fileSystemUtility,
         operatingSystem,
         pluginCacheFolderPath,
@@ -40,18 +41,4 @@ import { useUtilities } from "./Utilities";
     await useBrowserWindow({ app, eventSubscriber, nativeTheme, operatingSystem, settingsManager });
 
     useIpcMain({ eventEmitter, executor, ipcMain, nativeTheme, searchIndex, settingsManager, plugins });
-
-    for (const plugin of plugins) {
-        if (settingsManager.getSettingByKey("plugins.enabledPluginIds", ["ApplicationSearch"]).includes(plugin.id)) {
-            plugin.addSearchResultItemsToSearchIndex();
-        }
-    }
-
-    eventSubscriber.subscribe<{ pluginId: string }>("pluginDisabled", ({ pluginId }) =>
-        searchIndex.removeSearchResultItems(pluginId),
-    );
-
-    eventSubscriber.subscribe<{ pluginId: string }>("pluginEnabled", ({ pluginId }) =>
-        plugins.find(({ id }) => id === pluginId).addSearchResultItemsToSearchIndex(),
-    );
 })();
