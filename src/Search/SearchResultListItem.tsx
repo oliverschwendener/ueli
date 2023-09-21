@@ -8,10 +8,18 @@ import { elementIsVisible } from "./Helpers";
 type SearchResultListItemProps = {
     containerRef: RefObject<HTMLDivElement>;
     isSelected: boolean;
+    onClick: () => void;
+    onDoubleClick: () => void;
     searchResultItem: SearchResultItem;
 };
 
-export const SearchResultListItem = ({ containerRef, isSelected, searchResultItem }: SearchResultListItemProps) => {
+export const SearchResultListItem = ({
+    containerRef,
+    isSelected,
+    onClick,
+    onDoubleClick,
+    searchResultItem,
+}: SearchResultListItemProps) => {
     const { t } = useTranslation();
     const { theme } = useContext(ThemeContext);
     const ref = useRef<HTMLDivElement>(null);
@@ -28,37 +36,46 @@ export const SearchResultListItem = ({ containerRef, isSelected, searchResultIte
         <div
             ref={ref}
             key={searchResultItem.id}
+            onClick={onClick}
+            onDoubleClick={onDoubleClick}
             style={{
+                alignItems: "center",
+                backgroundColor: isSelected ? theme.colorSubtleBackgroundSelected : undefined,
+                boxSizing: "border-box",
+                color: isSelected ? theme.colorNeutralForeground1Selected : undefined,
                 display: "flex",
                 flexDirection: "row",
-                alignItems: "center",
-                padding: 10,
                 gap: 10,
-                boxSizing: "border-box",
-                backgroundColor: isSelected ? theme.colorSubtleBackgroundSelected : undefined,
-                color: isSelected ? theme.colorNeutralForeground1Selected : undefined,
                 height: 42,
+                padding: 10,
+                userSelect: "none",
             }}
         >
             <div
                 style={{
-                    width: 24,
+                    alignItems: "center",
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
                     flexShrink: 0,
+                    justifyContent: "center",
+                    width: 24,
                 }}
             >
-                <img style={{ maxHeight: "100%", maxWidth: "100%" }} src={searchResultItem.imageUrl} />
+                <img
+                    style={{
+                        maxHeight: "100%",
+                        maxWidth: "100%",
+                    }}
+                    src={searchResultItem.imageUrl}
+                />
             </div>
             <div
                 style={{
+                    alignItems: "center",
                     display: "flex",
                     flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
                     flexGrow: 1,
+                    justifyContent: "space-between",
                 }}
             >
                 <Text>{searchResultItem.name}</Text>

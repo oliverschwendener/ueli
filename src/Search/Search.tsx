@@ -40,15 +40,8 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
         filteredSearchResultItems[selectedItemIndex];
 
-    const invokeExecution = async (isAlternativeExecution: boolean) => {
-        const searchResultItem = getSelectedSearchResultItem();
-
-        if (!searchResultItem) {
-            return;
-        }
-
-        await contextBridge.invokeExecution({ searchResultItem, isAlternativeExecution });
-    };
+    const invokeExecution = (searchResultItem: SearchResultItem, isAlternativeExecution: boolean) =>
+        contextBridge.invokeExecution({ searchResultItem, isAlternativeExecution });
 
     const handleUserInputKeyboardEvent = async (keyboardEvent: KeyboardEvent) => {
         if (keyboardEvent.key === "ArrowUp") {
@@ -62,9 +55,20 @@ export const Search = ({ searchResultItems }: SearchProps) => {
         }
 
         if (keyboardEvent.key === "Enter") {
-            await invokeExecution(keyboardEvent.shiftKey);
+            const searchResultItem = getSelectedSearchResultItem();
+
+            if (!searchResultItem) {
+                return;
+            }
+
+            await invokeExecution(searchResultItem, keyboardEvent.shiftKey);
         }
     };
+
+    const handleSearchResultItemClickEvent = (index: number) => setSelectedItemIndex(index);
+
+    const handleSearchResultItemDoubleClickEvent = (searchResultItem: SearchResultItem) =>
+        invokeExecution(searchResultItem, false);
 
     useEffect(setFocusOnUserInput, []);
     useEffect(selectFirstSearchResultItemItem, [searchTerm]);
@@ -74,11 +78,11 @@ export const Search = ({ searchResultItems }: SearchProps) => {
             <div
                 className="draggable-area"
                 style={{
-                    flexShrink: 0,
+                    boxSizing: "border-box",
                     display: "flex",
                     flexDirection: "column",
+                    flexShrink: 0,
                     padding: 10,
-                    boxSizing: "border-box",
                 }}
             >
                 <Input
@@ -100,6 +104,8 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                         containerRef={containerRef}
                         selectedItemIndex={selectedItemIndex}
                         searchResultItems={filteredSearchResultItems}
+                        onSearchResultItemClick={handleSearchResultItemClickEvent}
+                        onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
                     />
                 )}
             </div>
