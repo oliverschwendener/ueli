@@ -32,7 +32,7 @@ export const useIpcMain = ({
             (event.returnValue = settingsManager.getSettingByKey(key, defaultValue)),
     );
 
-    ipcMain.on("getPlugins", (event) => {
+    ipcMain.on("getAllPlugins", (event) => {
         event.returnValue = plugins.map(({ id, name, nameTranslationKey, supportedOperatingSystems }) => ({
             id,
             name,
