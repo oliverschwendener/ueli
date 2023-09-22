@@ -14,6 +14,7 @@ describe(Application, () => {
             id: "L0FwcGxpY2F0aW9ucy9NeSBBcHAuYXBw",
             name: "My App",
             imageUrl: "file:///Users/Dummy/Icons/icon.png",
+            hideWindowAfterExecution: true,
         });
     });
 });

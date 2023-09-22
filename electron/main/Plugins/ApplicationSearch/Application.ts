@@ -17,6 +17,7 @@ export class Application implements Searchable {
             id: this.getId(),
             name: this.name,
             imageUrl: `file://${this.iconFilePath}`,
+            hideWindowAfterExecution: true,
         };
     }
 

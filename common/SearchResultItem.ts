@@ -7,4 +7,5 @@ export type SearchResultItem = {
     imageUrl?: string;
     executionServiceId: string;
     executionServiceArgument: string;
+    hideWindowAfterExecution: boolean;
 };

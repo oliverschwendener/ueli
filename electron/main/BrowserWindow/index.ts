@@ -1,4 +1,5 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
+import type { SearchResultItem } from "@common/SearchResultItem";
 import { BrowserWindow, type App, type BrowserWindowConstructorOptions, type NativeTheme } from "electron";
 import { join } from "path";
 import type { EventSubscriber } from "../EventSubscriber";
@@ -45,8 +46,11 @@ export const useBrowserWindow = async ({
 
     eventSubscriber.subscribe("searchIndexUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
 
-    eventSubscriber.subscribe("executionSucceeded", () => {
-        if (settingsManager.getSettingByKey("window.hideWindowAfterExecution", true)) {
+    eventSubscriber.subscribe("executionSucceeded", ({ searchResultItem }: { searchResultItem: SearchResultItem }) => {
+        if (
+            settingsManager.getSettingByKey("window.hideWindowAfterExecution", true) &&
+            searchResultItem.hideWindowAfterExecution
+        ) {
             browserWindow.hide();
         }
     });

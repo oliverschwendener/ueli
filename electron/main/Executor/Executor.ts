@@ -9,16 +9,17 @@ export class Executor {
     ) {}
 
     public async execute(executionArgument: ExecutionArgument): Promise<void> {
-        const executionService = this.executionServices[executionArgument.searchResultItem.executionServiceId];
+        const { searchResultItem } = executionArgument;
+        const { executionServiceId } = searchResultItem;
+
+        const executionService = this.executionServices[executionServiceId];
 
         if (!executionService) {
-            throw new Error(
-                `Unable to find execution service by id: '${executionArgument.searchResultItem.executionServiceId}'`,
-            );
+            throw new Error(`Unable to find execution service by id: '${executionServiceId}'`);
         }
 
         await executionService.execute(executionArgument);
 
-        this.eventEmitter.emitEvent("executionSucceeded");
+        this.eventEmitter.emitEvent("executionSucceeded", { searchResultItem });
     }
 }
