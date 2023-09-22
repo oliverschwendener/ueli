@@ -7,7 +7,7 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "settingsAppearance.preferredTheme": "Preferred theme",
             "settingsAppearance.syncThemeWithOs": "Sync theme with operating system",
             "settingsGeneral.language": "Language",
-            "settingsPage.about": "About ueli",
+            "settingsPage.about": "About",
             "settingsPage.appearance": "Appearance",
             "settingsPage.general": "General",
             "settingsPage.plugins": "Plug-Ins",
@@ -20,6 +20,7 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "settingsWindow.hideWindowOnBlur": "Hide window on blur",
             "plugin[ApplicationSearch].searchResultItemDescription": "Application",
             "plugin[ApplicationSearch].pluginName": "Application Search",
+            "plugin[WindowsColorThemeSwitcher].pluginName": "Windows Color Theme Switcher",
         },
     },
     "de-CH": {
@@ -30,7 +31,7 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "settingsAppearance.preferredTheme": "Bevorzugtes Theme",
             "settingsAppearance.syncThemeWithOs": "Theme mit Betriebssystem synchronisieren",
             "settingsGeneral.language": "Sprache",
-            "settingsPage.about": "Über ueli",
+            "settingsPage.about": "Über",
             "settingsPage.appearance": "Erscheinungsbild",
             "settingsPage.general": "Allgemein",
             "settingsPage.plugins": "Plug-Ins",
@@ -43,6 +44,7 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "settingsWindow.hideWindowOnBlur": "Fenster verstecken bei Fokusverlust",
             "plugin[ApplicationSearch].searchResultItemDescription": "Applikation",
             "plugin[ApplicationSearch].pluginName": "Applikationssuche",
+            "plugin[WindowsColorThemeSwitcher].pluginName": "Windows Color Theme Switcher",
         },
     },
 };
