@@ -9,7 +9,7 @@ import { WindowsApplicationRepository } from "./WindowsApplicationRepository";
 export class ApplicationSearchPlugin implements UeliPlugin {
     public readonly id = "ApplicationSearch";
     public readonly name = "Application Search";
-    public readonly nameTranslationKey? = "plugin[ApplicationSearch].pluginName";
+    public readonly nameTranslationKey = "plugin[ApplicationSearch].pluginName";
     public readonly supportedOperatingSystems: OperatingSystem[] = ["macOS", "Windows"];
 
     private applicationRepositories: Record<OperatingSystem, ApplicationRepository>;
