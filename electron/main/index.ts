@@ -23,7 +23,7 @@ import { useUtilities } from "./Utilities";
     const eventEmitter = useEventEmitter({ emitter });
     const eventSubscriber = useEventSubscriber({ emitter });
     const searchIndex = useSearchIndex({ eventEmitter });
-    const executor = useExecutor({ shell, eventEmitter });
+    const executor = useExecutor({ commandlineUtility, eventEmitter, shell });
 
     const pluginCacheFolderPath = await usePluginCacheFolder({ app, fileSystemUtility });
 
