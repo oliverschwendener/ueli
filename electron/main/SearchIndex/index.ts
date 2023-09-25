@@ -1,5 +1,5 @@
+import type { IpcMain } from "electron";
 import type { EventEmitter } from "../EventEmitter";
-import type { EventSubscriber } from "../EventSubscriber";
 import { InMemorySearchIndex } from "./InMemorySearchIndex";
 import type { SearchIndex } from "./SearchIndex";
 
@@ -7,16 +7,18 @@ export type * from "./SearchIndex";
 
 export const useSearchIndex = ({
     eventEmitter,
-    eventSubscriber,
+    ipcMain,
 }: {
     eventEmitter: EventEmitter;
-    eventSubscriber: EventSubscriber;
+    ipcMain: IpcMain;
 }): SearchIndex => {
     const searchIndex = new InMemorySearchIndex(eventEmitter);
 
-    eventSubscriber.subscribe<{ pluginId: string }>("pluginDisabled", ({ pluginId }) =>
+    ipcMain.on("pluginDisabled", (_, { pluginId }: { pluginId: string }) =>
         searchIndex.removeSearchResultItems(pluginId),
     );
+
+    ipcMain.on("getSearchResultItems", (event) => (event.returnValue = searchIndex.getSearchResultItems()));
 
     return searchIndex;
 };

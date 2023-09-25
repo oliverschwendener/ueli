@@ -1,19 +1,19 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { UeliPlugin } from "@common/UeliPlugin";
-import type { EventSubscriber } from "../EventSubscriber";
+import type { IpcMain } from "electron";
 import type { PluginDependencies } from "../Plugins";
 import type { SettingsManager } from "../Settings";
 import { PluginManager } from "./PluginManager";
 
 export const usePluginManager = ({
-    eventSubscriber,
+    ipcMain,
     operatingSystem,
     pluginDependencies,
     pluginIdsEnabledByDefault,
     plugins,
     settingsManager,
 }: {
-    eventSubscriber: EventSubscriber;
+    ipcMain: IpcMain;
     operatingSystem: OperatingSystem;
     pluginDependencies: PluginDependencies;
     pluginIdsEnabledByDefault: string[];
@@ -25,7 +25,7 @@ export const usePluginManager = ({
         pluginIdsEnabledByDefault,
         operatingSystem,
         settingsManager,
-        eventSubscriber,
+        ipcMain,
     );
 
     pluginManager.setPluginDependencies(pluginDependencies);

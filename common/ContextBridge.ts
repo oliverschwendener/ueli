@@ -3,7 +3,7 @@ import type { SearchResultItem } from "./SearchResultItem";
 import type { UeliPlugin } from "./UeliPlugin";
 
 export type ContextBridge = {
-    getAllPlugins: () => UeliPlugin[];
+    getSupportedPlugins: () => UeliPlugin[];
     pluginDisabled: (pluginId: string) => void;
     pluginEnabled: (pluginId: string) => void;
     getSearchResultItems: () => SearchResultItem[];

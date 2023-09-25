@@ -1,6 +1,6 @@
 import type { UeliPlugin } from "@common/UeliPlugin";
+import type { IpcMain } from "electron";
 import { describe, expect, it, vi } from "vitest";
-import type { EventSubscriber } from "../EventSubscriber";
 import type { PluginDependencies } from "../Plugins";
 import type { SettingsManager } from "../Settings";
 import { PluginManager } from "./PluginManager";
@@ -19,7 +19,7 @@ describe(PluginManager, () => {
             [],
             "Windows",
             <SettingsManager>{},
-            <EventSubscriber>{},
+            <IpcMain>{},
         ).setPluginDependencies(pluginDependencies);
 
         expect(setDependenciesMock).toHaveBeenCalledWith(pluginDependencies);
@@ -35,7 +35,7 @@ describe(PluginManager, () => {
             [],
             "Windows",
             <SettingsManager>{},
-            <EventSubscriber>{},
+            <IpcMain>{},
         ).getSupportedPlugins();
 
         expect(actual).toEqual([plugin]);
@@ -51,7 +51,7 @@ describe(PluginManager, () => {
             [],
             "Windows",
             <SettingsManager>{},
-            <EventSubscriber>{},
+            <IpcMain>{},
         ).getSupportedPlugins();
 
         expect(actual).toEqual([]);
@@ -67,26 +67,26 @@ describe(PluginManager, () => {
             [],
             "Windows",
             <SettingsManager>{},
-            <EventSubscriber>{},
+            <IpcMain>{},
         ).getSupportedPlugins();
 
         expect(actual).toEqual([plugin]);
     });
 
     it("should subscribe to the 'pluginEnabled' event", () => {
-        const subscribeMock = vi.fn();
+        const ipcMainOnMock = vi.fn();
 
         new PluginManager(
             [<UeliPlugin>{}],
             [],
             "Windows",
             <SettingsManager>{},
-            <EventSubscriber>{
-                subscribe: (event, eventHandler) => subscribeMock(event, eventHandler),
+            <IpcMain>{
+                on: (event, eventHandler) => ipcMainOnMock(event, eventHandler),
             },
         ).subscribeToEvents();
 
-        expect(subscribeMock).toHaveBeenCalledOnce();
+        expect(ipcMainOnMock).toHaveBeenCalledTimes(2);
     });
 
     it("should call addSearchResultItemsToSearchIndex of all plugins", () => {
@@ -113,7 +113,7 @@ describe(PluginManager, () => {
             <SettingsManager>{
                 getSettingByKey: (key, defaultValue) => getSettingByKeyMock(key, defaultValue),
             },
-            <EventSubscriber>{},
+            <IpcMain>{},
         ).addSearchResultItemsToSearchIndex();
 
         expect(getSettingByKeyMock).toHaveBeenCalledWith("plugins.enabledPluginIds", []);

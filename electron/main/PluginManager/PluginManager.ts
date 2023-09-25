@@ -1,6 +1,6 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { UeliPlugin } from "@common/UeliPlugin";
-import type { EventSubscriber } from "../EventSubscriber";
+import type { IpcMain } from "electron";
 import type { PluginDependencies } from "../Plugins";
 import type { SettingsManager } from "../Settings";
 
@@ -10,7 +10,7 @@ export class PluginManager {
         private readonly pluginIdsEnabledByDefault: string[],
         private readonly currentOperatingSystem: OperatingSystem,
         private readonly settingsManager: SettingsManager,
-        private readonly eventSubscriber: EventSubscriber,
+        private readonly ipcMain: IpcMain,
     ) {}
 
     public setPluginDependencies(pluginDependencies: PluginDependencies) {
@@ -24,9 +24,15 @@ export class PluginManager {
     }
 
     public subscribeToEvents(): void {
-        this.eventSubscriber.subscribe<{ pluginId: string }>("pluginEnabled", ({ pluginId }) =>
+        this.ipcMain.on("pluginEnabled", (_, { pluginId }: { pluginId: string }) =>
             this.plugins.find(({ id }) => id === pluginId).addSearchResultItemsToSearchIndex(),
         );
+
+        this.ipcMain.on("getSupportedPlugins", (event) => {
+            event.returnValue = this.getSupportedPlugins().map((plugin) =>
+                PluginManager.serializePluginToIpcEventReturnValue(plugin),
+            );
+        });
     }
 
     public addSearchResultItemsToSearchIndex(): void {
@@ -41,5 +47,19 @@ export class PluginManager {
                 .getSettingByKey<string[]>("plugins.enabledPluginIds", this.pluginIdsEnabledByDefault)
                 .includes(plugin.id),
         );
+    }
+
+    private static serializePluginToIpcEventReturnValue({
+        id,
+        name,
+        nameTranslationKey,
+        supportedOperatingSystems,
+    }: UeliPlugin) {
+        return {
+            id,
+            name,
+            nameTranslationKey,
+            supportedOperatingSystems,
+        };
     }
 }

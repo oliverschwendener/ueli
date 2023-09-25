@@ -1,4 +1,5 @@
-import type { Shell } from "electron";
+import type { ExecutionArgument } from "@common/ExecutionArgument";
+import type { IpcMain, Shell } from "electron";
 import type { EventEmitter } from "../EventEmitter";
 import type { CommandlineUtility } from "../Utilities";
 import {
@@ -12,13 +13,15 @@ import { Executor } from "./Executor";
 export const useExecutor = ({
     commandlineUtility,
     eventEmitter,
+    ipcMain,
     shell,
 }: {
     commandlineUtility: CommandlineUtility;
     eventEmitter: EventEmitter;
+    ipcMain: IpcMain;
     shell: Shell;
 }) => {
-    return new Executor(
+    const executor = new Executor(
         {
             FilePath: new FilePathExecutionService(shell),
             URL: new UrlExecutionService(shell),
@@ -27,4 +30,8 @@ export const useExecutor = ({
         },
         eventEmitter,
     );
+
+    ipcMain.handle("invokeExecution", (_, executionArgument: ExecutionArgument) => executor.execute(executionArgument));
+
+    return executor;
 };

@@ -6,7 +6,7 @@ import { SectionList } from "../SectionList";
 export const Plugins = () => {
     const { t } = useTranslation();
     const { contextBridge } = useContextBridge();
-    const { getAllPlugins, pluginDisabled: disablePlugin, pluginEnabled: enablePlugin } = contextBridge;
+    const { getSupportedPlugins, pluginDisabled: disablePlugin, pluginEnabled: enablePlugin } = contextBridge;
 
     const { value: enabledPluginIds, updateValue: setEnabledPluginIds } = useSetting("plugins.enabledPluginIds", [
         "ApplicationSearch",
@@ -25,7 +25,7 @@ export const Plugins = () => {
     return (
         <SectionList>
             <div style={{ display: "flex", flexDirection: "column" }}>
-                {getAllPlugins().map(({ id, name, nameTranslationKey }) => (
+                {getSupportedPlugins().map(({ id, name, nameTranslationKey }) => (
                     <Checkbox
                         key={id}
                         checked={enabledPluginIds.includes(id)}

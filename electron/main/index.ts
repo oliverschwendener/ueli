@@ -5,7 +5,7 @@ import { useBrowserWindow } from "./BrowserWindow";
 import { useEventEmitter } from "./EventEmitter";
 import { useEventSubscriber } from "./EventSubscriber";
 import { useExecutor } from "./Executor";
-import { useIpcMain } from "./IpcMain";
+import { useNativeTheme } from "./NativeTheme";
 import { useOperatingSystem } from "./OperatingSystem";
 import { usePluginCacheFolder } from "./PluginCacheFolder";
 import { usePluginManager } from "./PluginManager";
@@ -19,13 +19,19 @@ import { useUtilities } from "./Utilities";
 
     const { commandlineUtility, fileSystemUtility } = useUtilities();
     const operatingSystem = useOperatingSystem({ platform });
-    const settingsManager = useSettingsManager({ app });
+    const settingsManager = useSettingsManager({ app, ipcMain });
     const emitter = mitt<Record<string, unknown>>();
     const eventEmitter = useEventEmitter({ emitter });
     const eventSubscriber = useEventSubscriber({ emitter });
-    const searchIndex = useSearchIndex({ eventEmitter, eventSubscriber });
-    const executor = useExecutor({ commandlineUtility, eventEmitter, shell });
+    const searchIndex = useSearchIndex({ eventEmitter, ipcMain });
     const { plugins, pluginIdsEnabledByDefault } = usePlugins();
+
+    useExecutor({
+        commandlineUtility,
+        eventEmitter,
+        ipcMain,
+        shell,
+    });
 
     const pluginDependencies: PluginDependencies = {
         app,
@@ -38,8 +44,8 @@ import { useUtilities } from "./Utilities";
         settingsManager,
     };
 
-    const pluginManager = usePluginManager({
-        eventSubscriber,
+    usePluginManager({
+        ipcMain,
         operatingSystem,
         pluginDependencies,
         pluginIdsEnabledByDefault,
@@ -55,13 +61,8 @@ import { useUtilities } from "./Utilities";
         settingsManager,
     });
 
-    useIpcMain({
-        eventEmitter,
-        executor,
+    useNativeTheme({
         ipcMain,
         nativeTheme,
-        pluginManager,
-        searchIndex,
-        settingsManager,
     });
 })();

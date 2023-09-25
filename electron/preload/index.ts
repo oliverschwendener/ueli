@@ -3,7 +3,7 @@ import type { ExecutionArgument } from "@common/ExecutionArgument";
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
-    getAllPlugins: () => ipcRenderer.sendSync("getAllPlugins"),
+    getSupportedPlugins: () => ipcRenderer.sendSync("getSupportedPlugins"),
     pluginDisabled: (pluginId: string) => ipcRenderer.send("pluginDisabled", { pluginId }),
     pluginEnabled: (pluginId: string) => ipcRenderer.send("pluginEnabled", { pluginId }),
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
