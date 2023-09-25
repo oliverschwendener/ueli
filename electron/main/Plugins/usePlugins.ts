@@ -1,10 +1,27 @@
-import type { UeliPlugin } from "../../../common/UeliPlugin";
-import { ApplicationSearchPlugin } from "./ApplicationSearch/ApplicationSearchPlugin";
-import { SystemColorThemeSwitcher } from "./SystemColorThemeSwitcher/SystemColorThemeSwitcher";
+import type { IpcMain } from "electron";
+import {
+    addSearchResultItemsToSearchIndex,
+    getEnabledPlugins,
+    getSupportedPlugins,
+    setPluginDependencies,
+    subscribeToIpcMainEvents,
+} from "./Helpers";
+import type { PluginDependencies } from "./PluginDependencies";
+import { pluginIdsEnabledByDefault, plugins } from "./Plugins";
 
-export const usePlugins = (): { plugins: UeliPlugin[]; pluginIdsEnabledByDefault: string[] } => {
-    return {
-        plugins: [new ApplicationSearchPlugin(), new SystemColorThemeSwitcher()],
-        pluginIdsEnabledByDefault: ["ApplicationSearch"],
-    };
+export const usePlugins = ({
+    ipcMain,
+    pluginDependencies,
+}: {
+    ipcMain: IpcMain;
+    pluginDependencies: PluginDependencies;
+}) => {
+    const { currentOperatingSystem, settingsManager } = pluginDependencies;
+
+    const supportedPlugins = getSupportedPlugins(plugins, currentOperatingSystem);
+    const enabledPlugins = getEnabledPlugins(supportedPlugins, settingsManager, pluginIdsEnabledByDefault);
+
+    setPluginDependencies(plugins, pluginDependencies);
+    subscribeToIpcMainEvents(ipcMain, supportedPlugins);
+    addSearchResultItemsToSearchIndex(enabledPlugins);
 };

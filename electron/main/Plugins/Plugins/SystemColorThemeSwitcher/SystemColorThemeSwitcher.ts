@@ -1,7 +1,7 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { UeliPlugin } from "@common/UeliPlugin";
-import type { PluginDependencies } from "../PluginDependencies";
+import type { PluginDependencies } from "../../PluginDependencies";
 
 export class SystemColorThemeSwitcher implements UeliPlugin {
     public readonly id: string = "SystemColorThemeSwitcher";

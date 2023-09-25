@@ -8,8 +8,7 @@ import { useExecutor } from "./Executor";
 import { useNativeTheme } from "./NativeTheme";
 import { useCurrentOperatingSystem } from "./OperatingSystem";
 import { usePluginCacheFolder } from "./PluginCacheFolder";
-import { usePluginManager } from "./PluginManager";
-import { usePlugins, type PluginDependencies } from "./Plugins";
+import { PluginDependencies, usePlugins } from "./Plugins";
 import { useSearchIndex } from "./SearchIndex";
 import { useSettingsManager } from "./Settings";
 import { useUtilities } from "./Utilities";
@@ -24,14 +23,6 @@ import { useUtilities } from "./Utilities";
     const eventEmitter = useEventEmitter({ emitter });
     const eventSubscriber = useEventSubscriber({ emitter });
     const searchIndex = useSearchIndex({ eventEmitter, ipcMain });
-    const { plugins, pluginIdsEnabledByDefault } = usePlugins();
-
-    useExecutor({
-        commandlineUtility,
-        eventEmitter,
-        ipcMain,
-        shell,
-    });
 
     const pluginDependencies: PluginDependencies = {
         app,
@@ -44,20 +35,23 @@ import { useUtilities } from "./Utilities";
         settingsManager,
     };
 
-    usePluginManager({
+    usePlugins({
         ipcMain,
-        currentOperatingSystem,
         pluginDependencies,
-        pluginIdsEnabledByDefault,
-        plugins,
-        settingsManager,
+    });
+
+    useExecutor({
+        commandlineUtility,
+        eventEmitter,
+        ipcMain,
+        shell,
     });
 
     await useBrowserWindow({
         app,
+        currentOperatingSystem,
         eventSubscriber,
         nativeTheme,
-        operatingSystem: currentOperatingSystem,
         settingsManager,
     });
 

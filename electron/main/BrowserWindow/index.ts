@@ -7,13 +7,13 @@ import type { SettingsManager } from "../Settings";
 
 export const useBrowserWindow = async ({
     app,
-    operatingSystem,
+    currentOperatingSystem,
     eventSubscriber,
     nativeTheme,
     settingsManager,
 }: {
     app: App;
-    operatingSystem: OperatingSystem;
+    currentOperatingSystem: OperatingSystem;
     eventSubscriber: EventSubscriber;
     nativeTheme: NativeTheme;
     settingsManager: SettingsManager;
@@ -42,7 +42,7 @@ export const useBrowserWindow = async ({
         },
     };
 
-    const browserWindow = new BrowserWindow(browserWindowConstructorOptionsMap[operatingSystem]);
+    const browserWindow = new BrowserWindow(browserWindowConstructorOptionsMap[currentOperatingSystem]);
 
     eventSubscriber.subscribe("searchIndexUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
 
