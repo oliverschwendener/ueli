@@ -6,7 +6,7 @@ import { useEventEmitter } from "./EventEmitter";
 import { useEventSubscriber } from "./EventSubscriber";
 import { useExecutor } from "./Executor";
 import { useNativeTheme } from "./NativeTheme";
-import { useOperatingSystem } from "./OperatingSystem";
+import { useCurrentOperatingSystem } from "./OperatingSystem";
 import { usePluginCacheFolder } from "./PluginCacheFolder";
 import { usePluginManager } from "./PluginManager";
 import { usePlugins, type PluginDependencies } from "./Plugins";
@@ -18,7 +18,7 @@ import { useUtilities } from "./Utilities";
     await app.whenReady();
 
     const { commandlineUtility, fileSystemUtility } = useUtilities();
-    const operatingSystem = useOperatingSystem({ platform });
+    const currentOperatingSystem = useCurrentOperatingSystem({ platform });
     const settingsManager = useSettingsManager({ app, ipcMain });
     const emitter = mitt<Record<string, unknown>>();
     const eventEmitter = useEventEmitter({ emitter });
@@ -38,7 +38,7 @@ import { useUtilities } from "./Utilities";
         commandlineUtility,
         eventSubscriber,
         fileSystemUtility,
-        operatingSystem,
+        currentOperatingSystem,
         pluginCacheFolderPath: await usePluginCacheFolder({ app, fileSystemUtility }),
         searchIndex,
         settingsManager,
@@ -46,7 +46,7 @@ import { useUtilities } from "./Utilities";
 
     usePluginManager({
         ipcMain,
-        operatingSystem,
+        currentOperatingSystem,
         pluginDependencies,
         pluginIdsEnabledByDefault,
         plugins,
@@ -57,7 +57,7 @@ import { useUtilities } from "./Utilities";
         app,
         eventSubscriber,
         nativeTheme,
-        operatingSystem,
+        operatingSystem: currentOperatingSystem,
         settingsManager,
     });
 

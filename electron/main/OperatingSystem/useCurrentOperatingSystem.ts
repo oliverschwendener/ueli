@@ -1,16 +1,16 @@
 import { OperatingSystem } from "@common/OperatingSystem";
 
-export const useOperatingSystem = ({ platform }: { platform: string }): OperatingSystem => {
+export const useCurrentOperatingSystem = ({ platform }: { platform: string }): OperatingSystem => {
     const operatingSystemMap: Record<"darwin" | "win32", OperatingSystem> = {
         darwin: "macOS",
         win32: "Windows",
     };
 
-    const operatingSystem: OperatingSystem | undefined = operatingSystemMap[platform];
+    const currentOperatingSystem: OperatingSystem | undefined = operatingSystemMap[platform];
 
-    if (!operatingSystem) {
+    if (!currentOperatingSystem) {
         throw new Error(`Unexpected platform: ${platform}`);
     }
 
-    return operatingSystem;
+    return currentOperatingSystem;
 };

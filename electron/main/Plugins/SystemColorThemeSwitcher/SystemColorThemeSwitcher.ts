@@ -1,7 +1,6 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { UeliPlugin } from "@common/UeliPlugin";
-import type { SearchIndex } from "../../SearchIndex";
 import type { PluginDependencies } from "../PluginDependencies";
 
 export class SystemColorThemeSwitcher implements UeliPlugin {
@@ -10,45 +9,45 @@ export class SystemColorThemeSwitcher implements UeliPlugin {
     public readonly nameTranslationKey: string = "plugin[SystemColorThemeSwitcher].pluginName";
     public readonly supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
 
-    private currentOperatingSystem: OperatingSystem;
-    private searchIndex: SearchIndex;
+    private pluginDependencies: PluginDependencies;
 
     public setPluginDependencies(pluginDependencies: PluginDependencies): void {
-        this.currentOperatingSystem = pluginDependencies.operatingSystem;
-        this.searchIndex = pluginDependencies.searchIndex;
+        this.pluginDependencies = pluginDependencies;
     }
 
     public async addSearchResultItemsToSearchIndex(): Promise<void> {
-        this.searchIndex.addSearchResultItems(this.id, [
+        const { searchIndex, currentOperatingSystem } = this.pluginDependencies;
+
+        searchIndex.addSearchResultItems(this.id, [
             SystemColorThemeSwitcher.getSearchResultItem({
-                operatingSystem: this.currentOperatingSystem,
+                currentOperatingSystem,
                 switchToLightMode: true,
             }),
             SystemColorThemeSwitcher.getSearchResultItem({
-                operatingSystem: this.currentOperatingSystem,
+                currentOperatingSystem,
                 switchToLightMode: false,
             }),
         ]);
     }
 
     private static getSearchResultItem({
-        operatingSystem,
+        currentOperatingSystem,
         switchToLightMode,
     }: {
-        operatingSystem: OperatingSystem;
+        currentOperatingSystem: OperatingSystem;
         switchToLightMode: boolean;
     }): SearchResultItem {
         return {
             description: "System",
             executionServiceArgument: SystemColorThemeSwitcher.getSearchResultItemExecutionServiceArgument({
-                operatingSystem,
+                currentOperatingSystem,
                 switchToLightMode,
             }),
-            executionServiceId: SystemColorThemeSwitcher.getSearchResultItemExecutionServiceId(operatingSystem),
+            executionServiceId: SystemColorThemeSwitcher.getSearchResultItemExecutionServiceId(currentOperatingSystem),
             id: SystemColorThemeSwitcher.getSearchResultItemId(switchToLightMode),
             name: SystemColorThemeSwitcher.getSearchResultItemName(switchToLightMode),
             hideWindowAfterExecution: false,
-            imageUrl: SystemColorThemeSwitcher.getSearchResultItemImageUrl(operatingSystem),
+            imageUrl: SystemColorThemeSwitcher.getSearchResultItemImageUrl(currentOperatingSystem),
         };
     }
 
@@ -75,10 +74,10 @@ export class SystemColorThemeSwitcher implements UeliPlugin {
     }
 
     private static getSearchResultItemExecutionServiceArgument({
-        operatingSystem,
+        currentOperatingSystem,
         switchToLightMode,
     }: {
-        operatingSystem: OperatingSystem;
+        currentOperatingSystem: OperatingSystem;
         switchToLightMode: boolean;
     }): string {
         const windowsRegistryPath = "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
@@ -96,6 +95,6 @@ export class SystemColorThemeSwitcher implements UeliPlugin {
             macOS: macOsExecutionServiceArgument,
         };
 
-        return result[operatingSystem];
+        return result[currentOperatingSystem];
     }
 }

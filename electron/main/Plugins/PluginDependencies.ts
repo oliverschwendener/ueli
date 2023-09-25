@@ -10,7 +10,7 @@ export type PluginDependencies = {
     readonly commandlineUtility: CommandlineUtility;
     readonly eventSubscriber: EventSubscriber;
     readonly fileSystemUtility: FileSystemUtility;
-    readonly operatingSystem: OperatingSystem;
+    readonly currentOperatingSystem: OperatingSystem;
     readonly pluginCacheFolderPath: string;
     readonly searchIndex: SearchIndex;
     readonly settingsManager: SettingsManager;

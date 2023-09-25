@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { useOperatingSystem } from "./useOperatingSystem";
+import { useCurrentOperatingSystem } from "./useCurrentOperatingSystem";
 
-describe(useOperatingSystem, () => {
+describe(useCurrentOperatingSystem, () => {
     it("should return 'Windows' when platform is 'win32'", () =>
-        expect(useOperatingSystem({ platform: "win32" })).toBe("Windows"));
+        expect(useCurrentOperatingSystem({ platform: "win32" })).toBe("Windows"));
 
     it("should return 'macOS' when platform is 'darwin'", () =>
-        expect(useOperatingSystem({ platform: "darwin" })).toBe("macOS"));
+        expect(useCurrentOperatingSystem({ platform: "darwin" })).toBe("macOS"));
 
     it("should throw an error when platform is not 'win32' or 'darwin'", () => {
         const platforms: string[] = [
@@ -25,7 +25,7 @@ describe(useOperatingSystem, () => {
         ];
 
         for (const platform of platforms) {
-            expect(() => useOperatingSystem({ platform })).toThrow(`Unexpected platform: ${platform}`);
+            expect(() => useCurrentOperatingSystem({ platform })).toThrow(`Unexpected platform: ${platform}`);
         }
     });
 });

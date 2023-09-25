@@ -7,14 +7,14 @@ import { PluginManager } from "./PluginManager";
 
 export const usePluginManager = ({
     ipcMain,
-    operatingSystem,
+    currentOperatingSystem,
     pluginDependencies,
     pluginIdsEnabledByDefault,
     plugins,
     settingsManager,
 }: {
     ipcMain: IpcMain;
-    operatingSystem: OperatingSystem;
+    currentOperatingSystem: OperatingSystem;
     pluginDependencies: PluginDependencies;
     pluginIdsEnabledByDefault: string[];
     plugins: UeliPlugin[];
@@ -23,7 +23,7 @@ export const usePluginManager = ({
     const pluginManager = new PluginManager(
         plugins,
         pluginIdsEnabledByDefault,
-        operatingSystem,
+        currentOperatingSystem,
         settingsManager,
         ipcMain,
     );
