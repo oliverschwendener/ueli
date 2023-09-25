@@ -1,6 +1,7 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { UeliPlugin } from "@common/UeliPlugin";
+import type { SearchIndex } from "../../SearchIndex";
 import type { PluginDependencies } from "../PluginDependencies";
 
 export class SystemColorThemeSwitcher implements UeliPlugin {
@@ -9,14 +10,24 @@ export class SystemColorThemeSwitcher implements UeliPlugin {
     public readonly nameTranslationKey: string = "plugin[SystemColorThemeSwitcher].pluginName";
     public readonly supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
 
-    public constructor(private readonly pluginDependencies: PluginDependencies) {}
+    private currentOperatingSystem: OperatingSystem;
+    private searchIndex: SearchIndex;
+
+    public setPluginDependencies(pluginDependencies: PluginDependencies): void {
+        this.currentOperatingSystem = pluginDependencies.operatingSystem;
+        this.searchIndex = pluginDependencies.searchIndex;
+    }
 
     public async addSearchResultItemsToSearchIndex(): Promise<void> {
-        const { operatingSystem, searchIndex } = this.pluginDependencies;
-
-        searchIndex.addSearchResultItems(this.id, [
-            SystemColorThemeSwitcher.getSearchResultItem({ operatingSystem, switchToLightMode: true }),
-            SystemColorThemeSwitcher.getSearchResultItem({ operatingSystem, switchToLightMode: false }),
+        this.searchIndex.addSearchResultItems(this.id, [
+            SystemColorThemeSwitcher.getSearchResultItem({
+                operatingSystem: this.currentOperatingSystem,
+                switchToLightMode: true,
+            }),
+            SystemColorThemeSwitcher.getSearchResultItem({
+                operatingSystem: this.currentOperatingSystem,
+                switchToLightMode: false,
+            }),
         ]);
     }
 

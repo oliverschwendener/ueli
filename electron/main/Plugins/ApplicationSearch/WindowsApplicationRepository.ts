@@ -1,5 +1,7 @@
+import type { App } from "electron";
 import { join } from "path";
-import type { PluginDependencies } from "../PluginDependencies";
+import type { SettingsManager } from "../../Settings";
+import type { CommandlineUtility, FileSystemUtility } from "../../Utilities";
 import { Application } from "./Application";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
@@ -7,16 +9,18 @@ import { usePowershellScripts } from "./usePowershellScripts";
 
 export class WindowsApplicationRepository implements ApplicationRepository {
     public constructor(
-        private readonly pluginDependencies: PluginDependencies,
+        private readonly pluginCacheFolderPath: string,
+        private readonly fileSystemUtility: FileSystemUtility,
+        private readonly commandlineUtility: CommandlineUtility,
+        private readonly settingsManager: SettingsManager,
+        private readonly app: App,
         private readonly pluginId: string,
     ) {}
 
     public async getApplications(): Promise<Application[]> {
-        const { pluginCacheFolderPath } = this.pluginDependencies;
-
         const stdout = await this.executeTemporaryPowershellScriptWithOutput(
             this.getPowershellScript(),
-            join(pluginCacheFolderPath, "WindowsApplicationSearch.temp.ps1"),
+            join(this.pluginCacheFolderPath, "WindowsApplicationSearch.temp.ps1"),
         );
 
         const windowsApplicationRetrieverResults = <WindowsApplicationRetrieverResult[]>JSON.parse(stdout);
@@ -27,28 +31,24 @@ export class WindowsApplicationRepository implements ApplicationRepository {
     }
 
     private async executeTemporaryPowershellScriptWithOutput(script: string, filePath: string): Promise<string> {
-        const { fileSystemUtility, commandlineUtility } = this.pluginDependencies;
+        await this.fileSystemUtility.writeTextFile(script, filePath);
 
-        await fileSystemUtility.writeTextFile(script, filePath);
-
-        const stdout = await commandlineUtility.executeCommandWithOutput(
+        const stdout = await this.commandlineUtility.executeCommandWithOutput(
             `powershell -NoProfile -NonInteractive -ExecutionPolicy bypass -File "${filePath}"`,
         );
 
-        await fileSystemUtility.removeFile(filePath);
+        await this.fileSystemUtility.removeFile(filePath);
 
         return stdout;
     }
 
     private getPowershellScript(): string {
-        const { pluginCacheFolderPath, settingsManager } = this.pluginDependencies;
-
-        const folderPaths = settingsManager
+        const folderPaths = this.settingsManager
             .getPluginSettingByKey(this.pluginId, "windowsFolders", this.getDefaultFolderPaths())
             .map((folderPath) => `'${folderPath}'`)
             .join(",");
 
-        const fileExtensions = settingsManager
+        const fileExtensions = this.settingsManager
             .getPluginSettingByKey(this.pluginId, "windowsFileExtensions", this.getDefaultFileExtensions())
             .map((fileExtension) => `'*.${fileExtension}'`)
             .join(",");
@@ -59,15 +59,13 @@ export class WindowsApplicationRepository implements ApplicationRepository {
             ${extractShortcutPowershellScript}
             ${getWindowsAppsPowershellScript}
 
-            Get-WindowsApps -FolderPaths ${folderPaths} -FileExtensions ${fileExtensions} -AppIconFolder '${pluginCacheFolderPath}';`;
+            Get-WindowsApps -FolderPaths ${folderPaths} -FileExtensions ${fileExtensions} -AppIconFolder '${this.pluginCacheFolderPath}';`;
     }
 
     private getDefaultFolderPaths(): string[] {
-        const { app } = this.pluginDependencies;
-
         return [
             "C:\\ProgramData\\Microsoft\\Windows\\Start Menu",
-            join(app.getPath("home"), "AppData", "Roaming", "Microsoft", "Windows", "Start Menu"),
+            join(this.app.getPath("home"), "AppData", "Roaming", "Microsoft", "Windows", "Start Menu"),
         ];
     }
 

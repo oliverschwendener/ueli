@@ -1,2 +1,2 @@
 export * from "../EventSubscriber/useEventSubscriber";
-export * from "./EventSubscriber";
+export type * from "./EventSubscriber";

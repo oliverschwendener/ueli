@@ -1,8 +1,8 @@
 import { RealCommandlineUtility } from "./RealCommandlineUtility";
 import { RealFileSystemUtility } from "./RealFileSystemUtility";
 
-export * from "./CommandlineUtility";
-export * from "./FileSystemUtility";
+export type * from "./CommandlineUtility";
+export type * from "./FileSystemUtility";
 
 export const useUtilities = () => {
     const commandlineUtility = new RealCommandlineUtility();

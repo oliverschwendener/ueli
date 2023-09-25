@@ -3,7 +3,7 @@ import type { SearchResultItem } from "@common/SearchResultItem";
 import { BrowserWindow, type App, type BrowserWindowConstructorOptions, type NativeTheme } from "electron";
 import { join } from "path";
 import type { EventSubscriber } from "../EventSubscriber";
-import type { SettingsManager } from "../Settings/SettingsManager";
+import type { SettingsManager } from "../Settings";
 
 export const useBrowserWindow = async ({
     app,

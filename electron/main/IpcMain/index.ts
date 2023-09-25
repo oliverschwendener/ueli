@@ -1,10 +1,10 @@
 import type { ExecutionArgument } from "@common/ExecutionArgument";
 import type { IpcMain, NativeTheme } from "electron";
-import type { UeliPlugin } from "../../../common/UeliPlugin";
 import type { EventEmitter } from "../EventEmitter";
-import type { Executor } from "../Executor/Executor";
+import type { Executor } from "../Executor";
+import type { PluginManager } from "../PluginManager";
 import type { SearchIndex } from "../SearchIndex";
-import type { SettingsManager } from "../Settings/SettingsManager";
+import type { SettingsManager } from "../Settings";
 
 export const useIpcMain = ({
     eventEmitter,
@@ -13,13 +13,13 @@ export const useIpcMain = ({
     nativeTheme,
     searchIndex,
     settingsManager,
-    plugins,
+    pluginManager,
 }: {
     eventEmitter: EventEmitter;
     executor: Executor;
     ipcMain: IpcMain;
     nativeTheme: NativeTheme;
-    plugins: UeliPlugin[];
+    pluginManager: PluginManager;
     searchIndex: SearchIndex;
     settingsManager: SettingsManager;
 }) => {
@@ -33,12 +33,14 @@ export const useIpcMain = ({
     );
 
     ipcMain.on("getAllPlugins", (event) => {
-        event.returnValue = plugins.map(({ id, name, nameTranslationKey, supportedOperatingSystems }) => ({
-            id,
-            name,
-            nameTranslationKey,
-            supportedOperatingSystems,
-        }));
+        event.returnValue = pluginManager
+            .getSupportedPlugins()
+            .map(({ id, name, nameTranslationKey, supportedOperatingSystems }) => ({
+                id,
+                name,
+                nameTranslationKey,
+                supportedOperatingSystems,
+            }));
     });
 
     ipcMain.on("pluginEnabled", (_, { pluginId }: { pluginId: string }) =>

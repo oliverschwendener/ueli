@@ -1,2 +1,2 @@
-export * from "./EventEmitter";
+export type * from "./EventEmitter";
 export * from "./useEventEmitter";
