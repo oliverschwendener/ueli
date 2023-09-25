@@ -1,14 +1,14 @@
 import type { UeliPlugin } from "../../../common/UeliPlugin";
 import { ApplicationSearchPlugin } from "./ApplicationSearch/ApplicationSearchPlugin";
 import type { PluginDependencies } from "./PluginDependencies";
-import { WindowsColorThemeSwitcher } from "./WindowsColorThemeSwitcher/WindowsColorThemeSwitcher";
+import { SystemColorThemeSwitcher } from "./SystemColorThemeSwitcher/SystemColorThemeSwitcher";
 
 export const usePlugins = (pluginDependencies: PluginDependencies): UeliPlugin[] => {
     const { operatingSystem, searchIndex, eventSubscriber, settingsManager } = pluginDependencies;
 
     const allPlugins = [
         new ApplicationSearchPlugin(pluginDependencies),
-        new WindowsColorThemeSwitcher(pluginDependencies),
+        new SystemColorThemeSwitcher(pluginDependencies),
     ];
 
     const pluginsSupportedByCurrentOperatingSystem = allPlugins.filter(({ supportedOperatingSystems }) =>

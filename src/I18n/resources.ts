@@ -20,7 +20,7 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "settingsWindow.hideWindowOnBlur": "Hide window on blur",
             "plugin[ApplicationSearch].searchResultItemDescription": "Application",
             "plugin[ApplicationSearch].pluginName": "Application Search",
-            "plugin[WindowsColorThemeSwitcher].pluginName": "Windows Color Theme Switcher",
+            "plugin[SystemColorThemeSwitcher].pluginName": "System Color Theme Switcher",
         },
     },
     "de-CH": {
@@ -44,7 +44,7 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "settingsWindow.hideWindowOnBlur": "Fenster verstecken bei Fokusverlust",
             "plugin[ApplicationSearch].searchResultItemDescription": "Applikation",
             "plugin[ApplicationSearch].pluginName": "Applikationssuche",
-            "plugin[WindowsColorThemeSwitcher].pluginName": "Windows Color Theme Switcher",
+            "plugin[SystemColorThemeSwitcher].pluginName": "System Color Theme Switcher",
         },
     },
 };
