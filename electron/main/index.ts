@@ -24,21 +24,21 @@ import { useUtilities } from "./Utilities";
     const eventSubscriber = useEventSubscriber({ emitter });
     const searchIndex = useSearchIndex({ eventEmitter, ipcMain });
 
+    useNativeTheme({ ipcMain, nativeTheme });
+
     const pluginDependencies: PluginDependencies = {
         app,
         commandlineUtility,
+        currentOperatingSystem,
         eventSubscriber,
         fileSystemUtility,
-        currentOperatingSystem,
+        nativeTheme,
         pluginCacheFolderPath: await usePluginCacheFolder({ app, fileSystemUtility }),
         searchIndex,
         settingsManager,
     };
 
-    usePlugins({
-        ipcMain,
-        pluginDependencies,
-    });
+    usePlugins({ ipcMain, pluginDependencies });
 
     useExecutor({
         commandlineUtility,
@@ -53,10 +53,5 @@ import { useUtilities } from "./Utilities";
         eventSubscriber,
         nativeTheme,
         settingsManager,
-    });
-
-    useNativeTheme({
-        ipcMain,
-        nativeTheme,
     });
 })();
