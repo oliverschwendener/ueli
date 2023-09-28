@@ -58,6 +58,8 @@ function getMacOsVersion(operatingSystemRelease: string): OperatingSystemVersion
             return OperatingSystemVersion.MacOsMonterey;
         case "22":
             return OperatingSystemVersion.MacOsVentura;
+        case "23":
+            return OperatingSystemVersion.MacOsSonoma;
         default:
             throw new Error(`Unsupported macOS version: ${operatingSystemRelease}`);
     }

@@ -103,6 +103,10 @@ describe(getOperatingSystemVersion, () => {
                 kernelVersion: "22.x.x",
                 macOsVersion: OperatingSystemVersion.MacOsVentura,
             },
+            {
+                kernelVersion: "23.x.x",
+                macOsVersion: OperatingSystemVersion.MacOsSonoma,
+            },
         ];
 
         versions.forEach((version) => {
@@ -111,7 +115,7 @@ describe(getOperatingSystemVersion, () => {
     });
 
     it("should throw an error when passing in an unsupported darwin kernel version", () => {
-        const unsupportedKernelVersions = ["", " ", "          ", "1", "abc", "10.x.x", "11", "12", "13", "23"];
+        const unsupportedKernelVersions = ["", " ", "          ", "1", "abc", "10.x.x", "11", "12", "13", "24"];
 
         let errorCounter = 0;
 
