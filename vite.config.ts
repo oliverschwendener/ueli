@@ -1,13 +1,12 @@
 import react from "@vitejs/plugin-react";
 import { rmSync } from "fs";
 import { join } from "path";
-import { defineConfig } from "vite";
+import { defineConfig, type ConfigEnv, type ServerOptions, type UserConfig } from "vite";
 import electron from "vite-plugin-electron";
 import renderer from "vite-plugin-electron-renderer";
 import pkg from "./package.json";
 
-// https://vitejs.dev/config/
-export default defineConfig(({ command }) => {
+export default defineConfig(({ command }: ConfigEnv): UserConfig => {
     rmSync("dist-electron", { recursive: true, force: true });
 
     const isServe = command === "serve";
@@ -63,11 +62,10 @@ export default defineConfig(({ command }) => {
             ]),
             renderer(),
         ],
-        server: (() => {
-            const { hostname, port } = new URL("http://127.0.0.1:7777/");
+        server: ((): ServerOptions => {
             return {
-                host: hostname,
-                port: port,
+                host: "127.0.0.1",
+                port: 7777,
             };
         })(),
         clearScreen: false,
