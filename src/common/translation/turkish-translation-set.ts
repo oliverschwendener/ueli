@@ -304,7 +304,7 @@ export const turkishTranslationSet: TranslationSet = {
 
     currencyConverter: "Döviz Çevirici",
     currencyConverterDescription:
-        "Bu eklenti para birimlerini hızlıca dönüştürmenizi sağlar. En son dönüşüm oranları https://exchangerate.host/ tarafından sağlanmaktadır..",
+        "Bu eklenti para birimlerini hızlıca dönüştürmenizi sağlar. En son dönüşüm oranları https://github.com/fawazahmed0/currency-api/ tarafından sağlanmaktadır..",
     currencyConverterPrecision: "Hassas",
     currencyConverterCopyToClipboard: "Panoya kopyalamak için enter tuşuna basın",
 

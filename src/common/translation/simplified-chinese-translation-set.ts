@@ -293,7 +293,7 @@ export const simplifiedChineseTranslationSet: TranslationSet = {
     openNewMail: "打开新邮件",
 
     currencyConverter: "货币换算",
-    currencyConverterDescription: "根据 https://exchangerate.host/ 数据来转换货币",
+    currencyConverterDescription: "根据 https://github.com/fawazahmed0/currency-api/ 数据来转换货币",
     currencyConverterPrecision: "精度",
     currencyConverterCopyToClipboard: "按 Enter 复制到剪贴板",
 

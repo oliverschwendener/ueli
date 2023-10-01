@@ -303,7 +303,7 @@ export const hindiTranslationSet: TranslationSet = {
 
     currencyConverter: "मुद्रा परिवर्तक",
     currencyConverterDescription:
-        "यह प्लगइन आपको मुद्राओं को जल्दी से बदलने में सक्षम बनाता है। नवीनतम रूपांतरण दरें https://exchangerate.host/ द्वारा प्रदान की जाती हैं।",
+        "यह प्लगइन आपको मुद्राओं को जल्दी से बदलने में सक्षम बनाता है। नवीनतम रूपांतरण दरें https://github.com/fawazahmed0/currency-api/ द्वारा प्रदान की जाती हैं।",
     currencyConverterPrecision: "सटीक",
     currencyConverterCopyToClipboard: "क्लिपबोर्ड पर कॉपी करने के लिए एंटर दबाएं",
 

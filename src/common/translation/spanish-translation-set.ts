@@ -305,7 +305,7 @@ export const spanishTranslationSet: TranslationSet = {
 
     currencyConverter: "Conversor de divisa",
     currencyConverterDescription:
-        "Este plugin te permite convertir divisa de forma rápida. Los últimos ratios de conversión están provistos por https://exchangerate.host/.",
+        "Este plugin te permite convertir divisa de forma rápida. Los últimos ratios de conversión están provistos por https://github.com/fawazahmed0/currency-api/.",
     currencyConverterPrecision: "Precisión",
     currencyConverterCopyToClipboard: "Presiona enter para copiar al portapapeles",
 
