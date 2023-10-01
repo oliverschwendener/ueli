@@ -5,7 +5,7 @@ import { CurrencyConversion } from "./currency-conversion";
 export class CurrencyConverter {
     public static convert(conversion: CurrencyConversion, precision: number): Promise<number> {
         return new Promise((resolve, reject) => {
-            const url = `https://api.exchangerate.host/convert?from=${conversion.base.toUpperCase()}&to=${conversion.target.toUpperCase()}`;
+            const url = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${conversion.base.toLowerCase()}/${conversion.target.toLowerCase()}.min.json`;
             axios
                 .get(url, { timeout: 5000 })
                 .then((response: AxiosResponse) => {
@@ -16,11 +16,11 @@ export class CurrencyConverter {
                         return;
                     }
                     const conversionResult: ConversionApiResult = response.data;
-                    if (!conversionResult.success || conversionResult.result == null) {
+                    if (!conversionResult[conversion.target.toLowerCase()]) {
                         reject(`Unable to get exchange rate. Result: ${conversionResult}`);
                         return;
                     }
-                    const rate = conversionResult.result;
+                    const rate = conversionResult[conversion.target.toLowerCase()];
                     const converted = Number.parseFloat(`${conversion.value * rate}`).toFixed(Number(precision));
                     resolve(Number(converted));
                 })
