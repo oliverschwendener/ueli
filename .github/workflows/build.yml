@@ -1,12 +1,12 @@
 name: Build
 
 on:
-  push:
-      branches:
-          - main
-  pull_request:
-      branches:
-          - main
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 jobs:
     build:
@@ -24,22 +24,26 @@ jobs:
             - name: Set up Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: 18
                   cache: pnpm
 
             - name: Install dependencies
               run: pnpm install
               env:
-                NODE_ENV: development
+                  NODE_ENV: development
 
-            - name: Lint TypeScript files
+            - name: Run typecheck
+              run: |
+                  pnpm typecheck:electron
+                  pnpm typecheck:renderer
+
+            - name: Run linter
               run: pnpm lint
 
-            - name: Prettier check src folder
-              run: pnpm exec prettier --check src/**/*
-
-            - name: Prettier check electron folder
-              run: pnpm exec prettier --check electron/**/*
+            - name: Run prettier
+              run: |
+                  pnpm exec prettier --check src/**/*
+                  pnpm exec prettier --check electron/**/*
 
             - name: Run tests
               run: pnpm test

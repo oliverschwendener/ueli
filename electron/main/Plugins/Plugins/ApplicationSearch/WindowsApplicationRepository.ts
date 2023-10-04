@@ -1,5 +1,5 @@
 import { join } from "path";
-import type { PluginDependencies } from "../PluginDependencies";
+import type { PluginDependencies } from "../../PluginDependencies";
 import { Application } from "./Application";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";

@@ -16,12 +16,12 @@ export class SettingsManager {
         return this.settings;
     }
 
-    public getPluginSettingByKey<T>(pluginId: string, key: string, defaultValue?: T): T {
+    public getPluginSettingByKey<T>(pluginId: string, key: string, defaultValue: T): T {
         return this.getSettingByKey<T>(`plugin[${pluginId}].${key}`, defaultValue);
     }
 
-    public getSettingByKey<T>(key: string, defaultValue?: T): T {
-        return (this.settings[key] as T) ?? defaultValue;
+    public getSettingByKey<T>(key: string, defaultValue: T): T {
+        return (this.settings[key] as T | undefined) ?? defaultValue;
     }
 
     public async saveSetting<T>(key: string, value: T): Promise<void> {

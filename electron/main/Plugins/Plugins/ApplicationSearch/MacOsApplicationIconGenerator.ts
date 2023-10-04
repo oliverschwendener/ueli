@@ -1,5 +1,5 @@
 import { join } from "path";
-import type { PluginDependencies } from "../PluginDependencies";
+import type { PluginDependencies } from "../../PluginDependencies";
 
 export class MacOsApplicationIconGenerator {
     public constructor(private readonly pluginDependencies: PluginDependencies) {}

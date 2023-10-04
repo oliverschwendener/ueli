@@ -1,5 +1,5 @@
 import { join, normalize, parse } from "path";
-import type { PluginDependencies } from "../PluginDependencies";
+import type { PluginDependencies } from "../../PluginDependencies";
 import { Application } from "./Application";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import type { MacOsApplicationIconGenerator } from "./MacOsApplicationIconGenerator";

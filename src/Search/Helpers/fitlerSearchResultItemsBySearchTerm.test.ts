@@ -1,4 +1,4 @@
-import { SearchResultItem } from "@common/SearchResultItem";
+import type { SearchResultItem } from "@common/SearchResultItem";
 import { describe, expect, it } from "vitest";
 import { filterSearchResultItemsBySearchTerm } from "./filterSearchResultItemsBySearchTerm";
 
@@ -25,7 +25,7 @@ describe(filterSearchResultItemsBySearchTerm, () => {
 
     it("should return an empty list if search term does not match any of the search result items", () =>
         testFilterSearchResultItemsBySearchTerm({
-            searchResultItems: [{ id: "item1", name: "Item 1", description: "Item 1" }],
+            searchResultItems: [<SearchResultItem>{ id: "item1", name: "Item 1", description: "Item 1" }],
             searchTerm: "search term",
             fuzzyness: 0.6,
             expected: [],
@@ -34,33 +34,33 @@ describe(filterSearchResultItemsBySearchTerm, () => {
     it("should return list of one item if search term matches one search result item", () =>
         testFilterSearchResultItemsBySearchTerm({
             searchResultItems: [
-                { id: "item1", name: "Old Man's War", description: "An old book" },
-                { id: "item2", name: "The Lock Artist", description: "A very old book" },
+                <SearchResultItem>{ id: "item1", name: "Old Man's War", description: "An old book" },
+                <SearchResultItem>{ id: "item2", name: "The Lock Artist", description: "A very old book" },
             ],
             searchTerm: "Old",
             fuzzyness: 0.6,
-            expected: [{ id: "item1", name: "Old Man's War", description: "An old book" }],
+            expected: [<SearchResultItem>{ id: "item1", name: "Old Man's War", description: "An old book" }],
         }));
 
     it("should be case insensitive", () =>
         testFilterSearchResultItemsBySearchTerm({
-            searchResultItems: [{ id: "item1", name: "Item 1", description: "Item 1" }],
+            searchResultItems: [<SearchResultItem>{ id: "item1", name: "Item 1", description: "Item 1" }],
             searchTerm: "item",
             fuzzyness: 0.6,
-            expected: [{ id: "item1", name: "Item 1", description: "Item 1" }],
+            expected: [<SearchResultItem>{ id: "item1", name: "Item 1", description: "Item 1" }],
         }));
 
     it("should include items that partially match the search term if fuzzyness is high", () =>
         testFilterSearchResultItemsBySearchTerm({
-            searchResultItems: [{ id: "item1", name: "Item 1", description: "Item 1" }],
+            searchResultItems: [<SearchResultItem>{ id: "item1", name: "Item 1", description: "Item 1" }],
             searchTerm: "itm",
             fuzzyness: 0.6,
-            expected: [{ id: "item1", name: "Item 1", description: "Item 1" }],
+            expected: [<SearchResultItem>{ id: "item1", name: "Item 1", description: "Item 1" }],
         }));
 
     it("should exclude items that partially match the search term if fuzzyness is low", () =>
         testFilterSearchResultItemsBySearchTerm({
-            searchResultItems: [{ id: "item1", name: "Item 1", description: "Item 1" }],
+            searchResultItems: [<SearchResultItem>{ id: "item1", name: "Item 1", description: "Item 1" }],
             searchTerm: "itm",
             fuzzyness: 0.2,
             expected: [],

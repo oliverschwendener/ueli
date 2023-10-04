@@ -1,6 +1,7 @@
 dist-electron/
 dist/
 release/
+tsconfig.node.tsbuildinfo
 
 .DS_Store
 

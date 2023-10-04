@@ -1,7 +1,7 @@
 import react from "@vitejs/plugin-react";
 import { rmSync } from "fs";
 import { join } from "path";
-import { defineConfig, type ConfigEnv, type ServerOptions, type UserConfig } from "vite";
+import { AliasOptions, defineConfig, type ConfigEnv, type ServerOptions, type UserConfig } from "vite";
 import electron from "vite-plugin-electron";
 import renderer from "vite-plugin-electron-renderer";
 import pkg from "./package.json";
@@ -13,12 +13,14 @@ export default defineConfig(({ command }: ConfigEnv): UserConfig => {
     const isBuild = command === "build";
     const sourcemap = isServe;
 
-    return {
-        resolve: {
-            alias: {
-                "@": join(__dirname, "src"),
-            },
+    const resolve: { alias: AliasOptions } = {
+        alias: {
+            "@common": join(__dirname, "common"),
         },
+    };
+
+    return {
+        resolve,
         build: {
             chunkSizeWarningLimit: 1000,
         },
@@ -31,6 +33,7 @@ export default defineConfig(({ command }: ConfigEnv): UserConfig => {
                         options.startup();
                     },
                     vite: {
+                        resolve,
                         build: {
                             sourcemap,
                             minify: isBuild,
@@ -49,6 +52,7 @@ export default defineConfig(({ command }: ConfigEnv): UserConfig => {
                         options.reload();
                     },
                     vite: {
+                        resolve,
                         build: {
                             sourcemap: sourcemap ? "inline" : undefined,
                             minify: isBuild,

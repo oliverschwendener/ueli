@@ -24,13 +24,29 @@ jobs:
             - name: Set up Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: 18
                   cache: pnpm
 
             - name: Install dependencies
               run: pnpm install
               env:
                   NODE_ENV: development
+
+            - name: Run typecheck
+              run: |
+                  pnpm typecheck:electron
+                  pnpm typecheck:renderer
+
+            - name: Run linter
+              run: pnpm lint
+
+            - name: Run prettier
+              run: |
+                  pnpm exec prettier --check src/**/*
+                  pnpm exec prettier --check electron/**/*
+
+            - name: Run tests
+              run: pnpm test
 
             - name: Bundle files
               run: pnpm bundle
