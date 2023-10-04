@@ -1,4 +1,7 @@
-export interface ConversionApiResult {
-    success: boolean;
-    result: number;
+interface ConversionApiResultDate {
+    date: string;
 }
+interface ConversionApiResultValue {
+    [key: string]: number;
+}
+export type ConversionApiResult = ConversionApiResultDate & ConversionApiResultValue;

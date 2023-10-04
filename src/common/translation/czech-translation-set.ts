@@ -298,7 +298,7 @@ export const englishTranslationSet: TranslationSet = {
 
     currencyConverter: "Převodník měn",
     currencyConverterDescription:
-        "Tento plugin umožňuje rychle převádět měny. Nejnovější kurzy jsou uvedeny na adrese https://exchangerate.host/.",
+        "Tento plugin umožňuje rychle převádět měny. Nejnovější kurzy jsou uvedeny na adrese https://github.com/fawazahmed0/currency-api/.",
     currencyConverterPrecision: "Přesnost",
     currencyConverterCopyToClipboard: "Stisknutím klávesy Enter zkopírujete do schránky",
 
