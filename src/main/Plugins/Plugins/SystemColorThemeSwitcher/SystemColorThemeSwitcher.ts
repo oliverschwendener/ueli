@@ -11,19 +11,13 @@ export class SystemColorThemeSwitcher implements UeliPlugin {
 
     public constructor(private readonly pluginDependencies: PluginDependencies) {}
 
-    public async addSearchResultItemsToSearchIndex(): Promise<void> {
-        const { searchIndex, currentOperatingSystem } = this.pluginDependencies;
+    public async getSearchResultItems(): Promise<SearchResultItem[]> {
+        const { currentOperatingSystem } = this.pluginDependencies;
 
-        searchIndex.addSearchResultItems(this.id, [
-            SystemColorThemeSwitcher.getSearchResultItem({
-                currentOperatingSystem,
-                switchToLightMode: true,
-            }),
-            SystemColorThemeSwitcher.getSearchResultItem({
-                currentOperatingSystem,
-                switchToLightMode: false,
-            }),
-        ]);
+        return [
+            SystemColorThemeSwitcher.getSearchResultItem({ currentOperatingSystem, switchToLightMode: true }),
+            SystemColorThemeSwitcher.getSearchResultItem({ currentOperatingSystem, switchToLightMode: false }),
+        ];
     }
 
     private static getSearchResultItem({

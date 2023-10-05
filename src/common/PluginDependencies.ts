@@ -3,7 +3,6 @@ import type { CommandlineUtility } from "./CommandlineUtility";
 import type { EventSubscriber } from "./EventSubscriber";
 import type { FileSystemUtility } from "./FileSystemUtility";
 import type { OperatingSystem } from "./OperatingSystem";
-import type { SearchIndex } from "./SearchIndex";
 import type { SettingsManager } from "./SettingsManager";
 
 export type PluginDependencies = {
@@ -14,6 +13,5 @@ export type PluginDependencies = {
     readonly fileSystemUtility: FileSystemUtility;
     readonly nativeTheme: NativeTheme;
     readonly pluginCacheFolderPath: string;
-    readonly searchIndex: SearchIndex;
     readonly settingsManager: SettingsManager;
 };

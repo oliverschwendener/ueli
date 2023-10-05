@@ -35,11 +35,14 @@ import { useUtilities } from "./Utilities";
         fileSystemUtility,
         nativeTheme,
         pluginCacheFolderPath: await usePluginCacheFolder({ app, fileSystemUtility }),
-        searchIndex,
         settingsManager,
     };
 
-    usePlugins({ ipcMain, pluginDependencies });
+    usePlugins({
+        ipcMain,
+        pluginDependencies,
+        searchIndex,
+    });
 
     useExecutor({
         commandlineUtility,

@@ -1,5 +1,5 @@
 import type { Application } from "./Application";
 
 export interface ApplicationRepository {
-    getApplications(): Promise<Application[]>;
+    getApplications(pluginId: string): Promise<Application[]>;
 }

@@ -1,4 +1,5 @@
 import type { PluginDependencies } from "@common/PluginDependencies";
+import type { SearchIndex } from "@common/SearchIndex";
 import type { IpcMain } from "electron";
 import {
     addSearchResultItemsToSearchIndex,
@@ -11,9 +12,11 @@ import { getAll, getAllPluginIdsEnabledByDefault } from "./Plugins";
 export const usePlugins = ({
     ipcMain,
     pluginDependencies,
+    searchIndex,
 }: {
     ipcMain: IpcMain;
     pluginDependencies: PluginDependencies;
+    searchIndex: SearchIndex;
 }) => {
     const { currentOperatingSystem, settingsManager } = pluginDependencies;
 
@@ -23,6 +26,14 @@ export const usePlugins = ({
     const supportedPlugins = getSupportedPlugins(plugins, currentOperatingSystem);
     const enabledPlugins = getEnabledPlugins(supportedPlugins, settingsManager, pluginIdsEnabledByDefault);
 
-    subscribeToIpcMainEvents(ipcMain, supportedPlugins);
-    addSearchResultItemsToSearchIndex(enabledPlugins);
+    subscribeToIpcMainEvents({
+        ipcMain,
+        plugins: supportedPlugins,
+        searchIndex,
+    });
+
+    addSearchResultItemsToSearchIndex({
+        plugins: enabledPlugins,
+        searchIndex,
+    });
 };

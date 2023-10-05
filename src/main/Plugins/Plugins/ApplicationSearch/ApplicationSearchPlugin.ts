@@ -1,5 +1,6 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { PluginDependencies } from "@common/PluginDependencies";
+import type { SearchResultItem } from "@common/SearchResultItem";
 import type { UeliPlugin } from "@common/UeliPlugin";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { MacOsApplicationIconGenerator } from "./MacOsApplicationIconGenerator";
@@ -18,21 +19,17 @@ export class ApplicationSearchPlugin implements UeliPlugin {
         this.applicationRepositories = {
             macOS: new MacOsApplicationRepository(
                 pluginDependencies,
-                this.id,
                 new MacOsApplicationIconGenerator(pluginDependencies),
             ),
-            Windows: new WindowsApplicationRepository(pluginDependencies, this.id),
+            Windows: new WindowsApplicationRepository(pluginDependencies),
         };
     }
 
-    public async addSearchResultItemsToSearchIndex(): Promise<void> {
-        const { currentOperatingSystem, searchIndex } = this.pluginDependencies;
+    public async getSearchResultItems(): Promise<SearchResultItem[]> {
+        const { currentOperatingSystem } = this.pluginDependencies;
 
-        const applications = await this.applicationRepositories[currentOperatingSystem].getApplications();
+        const applications = await this.applicationRepositories[currentOperatingSystem].getApplications(this.id);
 
-        searchIndex.addSearchResultItems(
-            this.id,
-            applications.map((application) => application.toSearchResultItem()),
-        );
+        return applications.map((application) => application.toSearchResultItem());
     }
 }

@@ -6,16 +6,13 @@ import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetr
 import { usePowershellScripts } from "./usePowershellScripts";
 
 export class WindowsApplicationRepository implements ApplicationRepository {
-    public constructor(
-        private readonly pluginDependencies: PluginDependencies,
-        private readonly pluginId: string,
-    ) {}
+    public constructor(private readonly pluginDependencies: PluginDependencies) {}
 
-    public async getApplications(): Promise<Application[]> {
+    public async getApplications(pluginId: string): Promise<Application[]> {
         const { pluginCacheFolderPath } = this.pluginDependencies;
 
         const stdout = await this.executeTemporaryPowershellScriptWithOutput(
-            this.getPowershellScript(),
+            this.getPowershellScript(pluginId),
             join(pluginCacheFolderPath, "WindowsApplicationSearch.temp.ps1"),
         );
 
@@ -40,16 +37,16 @@ export class WindowsApplicationRepository implements ApplicationRepository {
         return stdout;
     }
 
-    private getPowershellScript(): string {
+    private getPowershellScript(pluginId: string): string {
         const { pluginCacheFolderPath, settingsManager } = this.pluginDependencies;
 
         const folderPaths = settingsManager
-            .getPluginSettingByKey(this.pluginId, "windowsFolders", this.getDefaultFolderPaths())
+            .getPluginSettingByKey(pluginId, "windowsFolders", this.getDefaultFolderPaths())
             .map((folderPath) => `'${folderPath}'`)
             .join(",");
 
         const fileExtensions = settingsManager
-            .getPluginSettingByKey(this.pluginId, "windowsFileExtensions", this.getDefaultFileExtensions())
+            .getPluginSettingByKey(pluginId, "windowsFileExtensions", this.getDefaultFileExtensions())
             .map((fileExtension) => `'*.${fileExtension}'`)
             .join(",");
 
