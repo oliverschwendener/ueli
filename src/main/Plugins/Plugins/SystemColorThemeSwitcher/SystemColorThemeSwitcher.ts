@@ -12,43 +12,37 @@ export class SystemColorThemeSwitcher implements UeliPlugin {
     public constructor(private readonly pluginDependencies: PluginDependencies) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const { currentOperatingSystem } = this.pluginDependencies;
-
         return [
-            SystemColorThemeSwitcher.getSearchResultItem({ currentOperatingSystem, switchToLightMode: true }),
-            SystemColorThemeSwitcher.getSearchResultItem({ currentOperatingSystem, switchToLightMode: false }),
+            this.getSearchResultItem({ switchToLightMode: true }),
+            this.getSearchResultItem({ switchToLightMode: false }),
         ];
     }
 
-    private static getSearchResultItem({
-        currentOperatingSystem,
-        switchToLightMode,
-    }: {
-        currentOperatingSystem: OperatingSystem;
-        switchToLightMode: boolean;
-    }): SearchResultItem {
+    private getSearchResultItem({ switchToLightMode }: { switchToLightMode: boolean }): SearchResultItem {
         return {
             description: "System",
-            executionServiceArgument: SystemColorThemeSwitcher.getSearchResultItemExecutionServiceArgument({
-                currentOperatingSystem,
-                switchToLightMode,
-            }),
-            executionServiceId: SystemColorThemeSwitcher.getSearchResultItemExecutionServiceId(currentOperatingSystem),
+            executionServiceArgument: this.getSearchResultItemExecutionServiceArgument(switchToLightMode),
+            executionServiceId: this.getSearchResultItemExecutionServiceId(),
             id: SystemColorThemeSwitcher.getSearchResultItemId(switchToLightMode),
             name: SystemColorThemeSwitcher.getSearchResultItemName(switchToLightMode),
             hideWindowAfterExecution: false,
-            imageUrl: SystemColorThemeSwitcher.getSearchResultItemImageUrl(currentOperatingSystem),
+            imageUrl: this.getSearchResultItemImageUrl(),
         };
     }
 
-    private static getSearchResultItemImageUrl(operatingSystem: OperatingSystem): string {
-        return operatingSystem === "Windows"
-            ? "https://preview.redd.it/windows-11-logo-in-svg-format-v0-sudz5o3s1vn91.png?width=1080&format=png&auto=webp&s=196ef4f2bff864c6d3f58b074fa32479a285ab49"
-            : "https://upload.wikimedia.org/wikipedia/en/thumb/2/23/System_Preferences_icon.png/120px-System_Preferences_icon.png";
+    private getSearchResultItemImageUrl(): string {
+        return {
+            macOS: "https://upload.wikimedia.org/wikipedia/en/thumb/2/23/System_Preferences_icon.png/120px-System_Preferences_icon.png",
+            Windows:
+                "https://preview.redd.it/windows-11-logo-in-svg-format-v0-sudz5o3s1vn91.png?width=1080&format=png&auto=webp&s=196ef4f2bff864c6d3f58b074fa32479a285ab49",
+        }[this.pluginDependencies.currentOperatingSystem];
     }
 
-    private static getSearchResultItemExecutionServiceId(operatingSystem: OperatingSystem): string {
-        return operatingSystem === "Windows" ? "Powershell" : "Commandline";
+    private getSearchResultItemExecutionServiceId(): string {
+        return {
+            macOS: "Commandline",
+            Windows: "Powershell",
+        }[this.pluginDependencies.currentOperatingSystem];
     }
 
     private static getSearchResultItemName(switchToLightMode: boolean): string {
@@ -63,13 +57,7 @@ export class SystemColorThemeSwitcher implements UeliPlugin {
         return `OperatingSystemColorThemeSwitcher:${suffix}`;
     }
 
-    private static getSearchResultItemExecutionServiceArgument({
-        currentOperatingSystem,
-        switchToLightMode,
-    }: {
-        currentOperatingSystem: OperatingSystem;
-        switchToLightMode: boolean;
-    }): string {
+    private getSearchResultItemExecutionServiceArgument(switchToLightMode: boolean): string {
         const windowsRegistryPath = "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
         const windowsRegistryValue = switchToLightMode ? "1" : "0";
         const windowsExecutionServiceArgument = [
@@ -80,11 +68,9 @@ export class SystemColorThemeSwitcher implements UeliPlugin {
         const osaScriptValue = switchToLightMode ? "false" : "true";
         const macOsExecutionServiceArgument = `osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to ${osaScriptValue}'`;
 
-        const result: Record<OperatingSystem, string> = {
+        return {
             Windows: windowsExecutionServiceArgument,
             macOS: macOsExecutionServiceArgument,
-        };
-
-        return result[currentOperatingSystem];
+        }[this.pluginDependencies.currentOperatingSystem];
     }
 }
