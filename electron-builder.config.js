@@ -16,42 +16,16 @@ module.exports = {
         hardenedRuntime: true,
         gatekeeperAssess: false,
         target: [
-            {
-                target: "dmg",
-                arch: "universal",
-            },
-            {
-                target: "zip",
-                arch: "universal",
-            },
+            { target: "dmg", arch: "universal" },
+            { target: "zip", arch: "universal" },
         ],
     },
     win: {
         icon: "build/windows-app-icon-dark-background.png",
-        target: [
-            {
-                target: "msi",
-            },
-            {
-                target: "nsis",
-            },
-            {
-                target: "zip",
-            },
-        ],
+        target: [{ target: "msi" }, { target: "nsis" }, { target: "zip" }],
     },
     linux: {
         category: "Utility",
-        target: [
-            {
-                target: "AppImage",
-            },
-            {
-                target: "deb",
-            },
-            {
-                target: "zip",
-            },
-        ],
+        target: [{ target: "AppImage" }, { target: "deb" }, { target: "zip" }],
     },
 };
