@@ -4,8 +4,8 @@ import { CurrencyConversion } from "./currency-conversion";
 
 const defaultTimeout = 5000;
 const baseUrls = {
-    jsdelivr: 'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies',
-    github: 'https://raw.githubusercontent.com/fawazahmed0/currency-api/1/latest/currencies',
+    jsdelivr: "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies",
+    github: "https://raw.githubusercontent.com/fawazahmed0/currency-api/1/latest/currencies",
 };
 
 export class CurrencyConverter {
@@ -20,7 +20,7 @@ export class CurrencyConverter {
                         continue;
                     }
                     const conversionResult: ConversionApiResult = response.data;
-                    if (typeof conversionResult[target] !== 'number' || !isFinite(conversionResult[target])) {
+                    if (typeof conversionResult[target] !== "number" || !isFinite(conversionResult[target])) {
                         errorMsg = `Result: ${JSON.stringify(conversionResult)}`;
                         continue;
                     }
@@ -30,7 +30,7 @@ export class CurrencyConverter {
                     continue;
                 }
             }
-            throw (`Unable to get exchange rate. ${errorMsg}`);
+            throw `Unable to get exchange rate. ${errorMsg}`;
         };
 
         const conversionBase = conversion.base.toLowerCase();
