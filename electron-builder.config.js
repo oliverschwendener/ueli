@@ -8,7 +8,7 @@ module.exports = {
         output: "release",
         buildResources: "build",
     },
-    files: ["dist-electron/**/*.js", "dist/**/*"],
+    files: ["dist-main/index.js", "dist-preload/index.js", "dist-renderer/**/*"],
     extraMetadata: {
         version: process.env.VITE_APP_VERSION,
     },

@@ -15,10 +15,9 @@
         "isolatedModules": true,
         "noEmit": true,
         "jsx": "react-jsx",
-        "baseUrl": "./",
+        "rootDir": "./src",
         "paths": {
-            "@common/*": ["./common/*"]
+            "@common/*": ["./src/common/*"]
         }
-    },
-    "include": ["src", "common"]
+    }
 }

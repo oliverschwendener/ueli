@@ -34,7 +34,8 @@ jobs:
 
             - name: Run typecheck
               run: |
-                  pnpm typecheck:electron
+                  pnpm typecheck:main
+                  pnpm typecheck:preload
                   pnpm typecheck:renderer
 
             - name: Run linter

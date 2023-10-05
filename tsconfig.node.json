@@ -5,9 +5,9 @@
         "moduleResolution": "Node",
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
+        "rootDir": "./src",
         "paths": {
-            "@common/*": ["./common/*"]
+            "@common/*": ["./src/common/*"]
         }
-    },
-    "include": ["vite.config.ts", "package.json", "electron", "common"]
+    }
 }

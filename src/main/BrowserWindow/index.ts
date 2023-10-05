@@ -18,9 +18,7 @@ export const useBrowserWindow = async ({
     nativeTheme: NativeTheme;
     settingsManager: SettingsManager;
 }): Promise<void> => {
-    const preloadScriptFilePath = app.isPackaged
-        ? join(__dirname, "..", "..", "dist-electron", "preload", "index.js")
-        : join(__dirname, "..", "preload", "index.js");
+    const preloadScriptFilePath = join(__dirname, "..", "dist-preload", "index.js");
 
     const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowConstructorOptions> = {
         macOS: {
@@ -58,6 +56,6 @@ export const useBrowserWindow = async ({
     nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
 
     app.isPackaged
-        ? await browserWindow.loadFile(join(__dirname, "..", "..", "dist", "index.html"))
+        ? await browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html"))
         : await browserWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
 };

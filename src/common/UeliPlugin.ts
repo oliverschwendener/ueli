@@ -1,5 +1,5 @@
-import type { OperatingSystem } from "@common/OperatingSystem";
 import type { PluginDependencies } from "../electron/main/Plugins";
+import type { OperatingSystem } from "./OperatingSystem";
 
 export interface UeliPlugin {
     readonly id: string;

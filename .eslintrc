@@ -22,7 +22,7 @@
             }
         }
     ],
-    "ignorePatterns": ["bundle", "dist", "dist-electron"],
+    "ignorePatterns": ["bundle", "dist-main", "dist-preload", "dist-renderer"],
     "env": {
         "browser": true,
         "node": true

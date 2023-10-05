@@ -1,7 +1,8 @@
-dist-electron/
-dist/
+dist-main/
+dist-preload/
+dist-renderer/
 release/
-tsconfig.node.tsbuildinfo
+tsconfig.tsbuildinfo
 
 .DS_Store
 
@@ -15,9 +16,6 @@ tsconfig.node.tsbuildinfo
 
 #Bundled files
 bundle/
-
-#Packaged apps
-dist/
 
 # debug files
 icon-store/
