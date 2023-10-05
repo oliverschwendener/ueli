@@ -12,12 +12,9 @@ export class ApplicationSearchPlugin implements UeliPlugin {
     public readonly nameTranslationKey = "plugin[ApplicationSearch].pluginName";
     public readonly supportedOperatingSystems: OperatingSystem[] = ["macOS", "Windows"];
 
-    private pluginDependencies: PluginDependencies;
     private applicationRepositories: Record<OperatingSystem, ApplicationRepository>;
 
-    public setPluginDependencies(pluginDependencies: PluginDependencies): void {
-        this.pluginDependencies = pluginDependencies;
-
+    public constructor(private readonly pluginDependencies: PluginDependencies) {
         this.applicationRepositories = {
             macOS: new MacOsApplicationRepository(
                 pluginDependencies,

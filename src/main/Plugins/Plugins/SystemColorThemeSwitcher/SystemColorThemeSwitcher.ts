@@ -9,11 +9,7 @@ export class SystemColorThemeSwitcher implements UeliPlugin {
     public readonly nameTranslationKey: string = "plugin[SystemColorThemeSwitcher].pluginName";
     public readonly supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
 
-    private pluginDependencies: PluginDependencies;
-
-    public setPluginDependencies(pluginDependencies: PluginDependencies): void {
-        this.pluginDependencies = pluginDependencies;
-    }
+    public constructor(private readonly pluginDependencies: PluginDependencies) {}
 
     public async addSearchResultItemsToSearchIndex(): Promise<void> {
         const { searchIndex, currentOperatingSystem } = this.pluginDependencies;

@@ -4,10 +4,9 @@ import {
     addSearchResultItemsToSearchIndex,
     getEnabledPlugins,
     getSupportedPlugins,
-    setPluginDependencies,
     subscribeToIpcMainEvents,
 } from "./Helpers";
-import { pluginIdsEnabledByDefault, plugins } from "./Plugins";
+import { getAll, getAllPluginIdsEnabledByDefault } from "./Plugins";
 
 export const usePlugins = ({
     ipcMain,
@@ -18,10 +17,12 @@ export const usePlugins = ({
 }) => {
     const { currentOperatingSystem, settingsManager } = pluginDependencies;
 
+    const plugins = getAll(pluginDependencies);
+    const pluginIdsEnabledByDefault = getAllPluginIdsEnabledByDefault();
+
     const supportedPlugins = getSupportedPlugins(plugins, currentOperatingSystem);
     const enabledPlugins = getEnabledPlugins(supportedPlugins, settingsManager, pluginIdsEnabledByDefault);
 
-    setPluginDependencies(plugins, pluginDependencies);
     subscribeToIpcMainEvents(ipcMain, supportedPlugins);
     addSearchResultItemsToSearchIndex(enabledPlugins);
 };

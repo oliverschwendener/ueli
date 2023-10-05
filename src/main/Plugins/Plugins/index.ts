@@ -1,7 +1,11 @@
-import type { UeliPlugin } from "@common/UeliPlugin";
+import { PluginDependencies } from "@common/PluginDependencies";
+import { UeliPlugin } from "@common/UeliPlugin";
 import { ApplicationSearchPlugin } from "./ApplicationSearch";
 import { SystemColorThemeSwitcher } from "./SystemColorThemeSwitcher";
 
-export const plugins: UeliPlugin[] = [new ApplicationSearchPlugin(), new SystemColorThemeSwitcher()];
+export const getAll = (pluginDependencies: PluginDependencies): UeliPlugin[] => [
+    new ApplicationSearchPlugin(pluginDependencies),
+    new SystemColorThemeSwitcher(pluginDependencies),
+];
 
-export const pluginIdsEnabledByDefault: string[] = ["ApplicationSearch"];
+export const getAllPluginIdsEnabledByDefault = () => ["ApplicationSearch"];
