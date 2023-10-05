@@ -51,8 +51,8 @@ describe(SettingsManager, () => {
 
         const settingsReader = getDummySettingsReader(settings);
         const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter());
-        expect(settingsManager.getSettingByKey("key1")).toBe("value1");
-        expect(settingsManager.getSettingByKey("key4")).toBe(undefined);
+        expect(settingsManager.getSettingByKey("key1", undefined)).toBe("value1");
+        expect(settingsManager.getSettingByKey("key4", undefined)).toBe(undefined);
         expect(settingsManager.getSettingByKey("key5", "defaultValue5")).toBe("defaultValue5");
     });
 
@@ -65,10 +65,10 @@ describe(SettingsManager, () => {
         const settingsReader = getDummySettingsReader(settings);
         const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter());
 
-        expect(settingsManager.getPluginSettingByKey("testPluginId", "key1")).toBe("pluginValue");
-        expect(settingsManager.getPluginSettingByKey("testPluginId", "key2")).toBe(undefined);
+        expect(settingsManager.getPluginSettingByKey("testPluginId", "key1", undefined)).toBe("pluginValue");
+        expect(settingsManager.getPluginSettingByKey("testPluginId", "key2", undefined)).toBe(undefined);
         expect(settingsManager.getPluginSettingByKey("testPluginId", "key2", "defaultValue")).toBe("defaultValue");
-        expect(settingsManager.getPluginSettingByKey("testPluginId2", "key")).toBe(undefined);
+        expect(settingsManager.getPluginSettingByKey("testPluginId2", "key", undefined)).toBe(undefined);
     });
 
     it("should save a setting by key", async () => {
