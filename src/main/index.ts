@@ -11,7 +11,7 @@ import { useCurrentOperatingSystem } from "./OperatingSystem";
 import { usePluginCacheFolder } from "./PluginCacheFolder";
 import { usePlugins } from "./Plugins";
 import { useSearchIndex } from "./SearchIndex";
-import { useSettingsManager } from "./Settings";
+import { useSettingsManager } from "./SettingsManager";
 import { useUtilities } from "./Utilities";
 
 (async () => {
