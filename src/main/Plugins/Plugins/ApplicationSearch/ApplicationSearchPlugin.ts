@@ -1,6 +1,6 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
+import type { PluginDependencies } from "@common/PluginDependencies";
 import type { UeliPlugin } from "@common/UeliPlugin";
-import type { PluginDependencies } from "../../PluginDependencies";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { MacOsApplicationIconGenerator } from "./MacOsApplicationIconGenerator";
 import { MacOsApplicationRepository } from "./MacOsApplicationRepository";

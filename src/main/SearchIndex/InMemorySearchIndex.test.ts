@@ -1,6 +1,6 @@
+import type { EventEmitter } from "@common/EventEmitter";
 import type { SearchResultItem } from "@common/SearchResultItem";
 import { describe, expect, it, vi } from "vitest";
-import type { EventEmitter } from "../EventEmitter";
 import { InMemorySearchIndex } from "./InMemorySearchIndex";
 
 describe(InMemorySearchIndex, () => {

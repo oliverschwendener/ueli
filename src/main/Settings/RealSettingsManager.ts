@@ -1,8 +1,9 @@
 import type { Settings } from "@common/Settings";
+import type { SettingsManager } from "@common/SettingsManager";
 import type { SettingsReader } from "./SettingsReader";
 import type { SettingsWriter } from "./SettingsWriter";
 
-export class SettingsManager {
+export class RealSettingsManager implements SettingsManager {
     private readonly settings: Settings;
 
     public constructor(

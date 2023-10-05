@@ -1,6 +1,6 @@
+import type { FileSystemUtility } from "@common/FileSystemUtility";
 import type { App } from "electron";
 import { join } from "path";
-import type { FileSystemUtility } from "../Utilities";
 
 export const usePluginCacheFolder = async ({
     app,

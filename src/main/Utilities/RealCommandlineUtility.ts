@@ -1,5 +1,5 @@
+import { CommandlineUtility } from "@common/CommandlineUtility";
 import { exec } from "child_process";
-import { CommandlineUtility } from "./CommandlineUtility";
 
 export class RealCommandlineUtility implements CommandlineUtility {
     public executeCommandWithOutput(command: string): Promise<string> {

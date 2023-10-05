@@ -1,7 +1,7 @@
+import type { CommandlineUtility } from "@common/CommandlineUtility";
+import type { EventEmitter } from "@common/EventEmitter";
 import type { IpcMain, Shell } from "electron";
 import { describe, expect, it, vi } from "vitest";
-import type { EventEmitter } from "../EventEmitter";
-import type { CommandlineUtility } from "../Utilities";
 import {
     CommandlineExecutionService,
     FilePathExecutionService,

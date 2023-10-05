@@ -1,3 +1,4 @@
+import type { PluginDependencies } from "@common/PluginDependencies";
 import type { IpcMain } from "electron";
 import {
     addSearchResultItemsToSearchIndex,
@@ -6,7 +7,6 @@ import {
     setPluginDependencies,
     subscribeToIpcMainEvents,
 } from "./Helpers";
-import type { PluginDependencies } from "./PluginDependencies";
 import { pluginIdsEnabledByDefault, plugins } from "./Plugins";
 
 export const usePlugins = ({

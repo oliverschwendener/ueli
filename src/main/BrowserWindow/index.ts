@@ -1,9 +1,9 @@
+import type { EventSubscriber } from "@common/EventSubscriber";
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { SearchResultItem } from "@common/SearchResultItem";
+import type { SettingsManager } from "@common/SettingsManager";
 import { BrowserWindow, type App, type BrowserWindowConstructorOptions, type NativeTheme } from "electron";
 import { join } from "path";
-import type { EventSubscriber } from "../EventSubscriber";
-import type { SettingsManager } from "../Settings";
 
 export const useBrowserWindow = async ({
     app,

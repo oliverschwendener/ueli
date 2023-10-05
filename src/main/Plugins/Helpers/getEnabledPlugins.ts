@@ -1,5 +1,5 @@
-import { UeliPlugin } from "@common/UeliPlugin";
-import { SettingsManager } from "../../Settings";
+import type { SettingsManager } from "@common/SettingsManager";
+import type { UeliPlugin } from "@common/UeliPlugin";
 
 export const getEnabledPlugins = (
     plugins: UeliPlugin[],

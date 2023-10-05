@@ -1,7 +1,7 @@
+import type { FileSystemUtility } from "@common/FileSystemUtility";
 import type { App } from "electron";
 import { join } from "path";
 import { describe, expect, it, vi } from "vitest";
-import type { FileSystemUtility } from "../Utilities";
 import { usePluginCacheFolder } from "./usePluginCacheFolder";
 
 describe(usePluginCacheFolder, () => {

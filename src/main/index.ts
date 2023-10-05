@@ -1,3 +1,4 @@
+import type { PluginDependencies } from "@common/PluginDependencies";
 import { app, ipcMain, nativeTheme, shell } from "electron";
 import mitt from "mitt";
 import { platform } from "process";
@@ -8,7 +9,7 @@ import { useExecutor } from "./Executor";
 import { useNativeTheme } from "./NativeTheme";
 import { useCurrentOperatingSystem } from "./OperatingSystem";
 import { usePluginCacheFolder } from "./PluginCacheFolder";
-import { PluginDependencies, usePlugins } from "./Plugins";
+import { usePlugins } from "./Plugins";
 import { useSearchIndex } from "./SearchIndex";
 import { useSettingsManager } from "./Settings";
 import { useUtilities } from "./Utilities";

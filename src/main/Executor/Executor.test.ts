@@ -1,6 +1,6 @@
+import type { EventEmitter } from "@common/EventEmitter";
 import type { ExecutionArgument } from "@common/ExecutionArgument";
 import { describe, expect, it, vi } from "vitest";
-import type { EventEmitter } from "../EventEmitter";
 import type { ExecutionService } from "./ExecutionServices/ExecutionService";
 import { Executor } from "./Executor";
 

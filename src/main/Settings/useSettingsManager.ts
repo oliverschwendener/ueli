@@ -1,13 +1,14 @@
+import type { SettingsManager } from "@common/SettingsManager";
 import type { App, IpcMain } from "electron";
 import { join } from "path";
+import { RealSettingsManager } from "./RealSettingsManager";
 import { SettingsFileReader } from "./SettingsFileReader";
 import { SettingsFileWriter } from "./SettingsFileWriter";
-import { SettingsManager } from "./SettingsManager";
 
 export const useSettingsManager = ({ app, ipcMain }: { app: App; ipcMain: IpcMain }): SettingsManager => {
     const settingsFilePath = join(app.getPath("userData"), "ueli9.settings.json");
 
-    const settingsManager = new SettingsManager(
+    const settingsManager = new RealSettingsManager(
         new SettingsFileReader(settingsFilePath),
         new SettingsFileWriter(settingsFilePath),
     );

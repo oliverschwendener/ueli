@@ -1,5 +1,5 @@
+import type { CommandlineUtility } from "@common/CommandlineUtility";
 import type { ExecutionArgument } from "@common/ExecutionArgument";
-import type { CommandlineUtility } from "../../Utilities";
 import type { ExecutionService } from "./ExecutionService";
 
 export class CommandlineExecutionService implements ExecutionService {

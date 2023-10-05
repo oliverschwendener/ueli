@@ -1,9 +1,7 @@
+import type { EventEmitter } from "@common/EventEmitter";
+import type { SearchIndex } from "@common/SearchIndex";
 import type { IpcMain } from "electron";
-import type { EventEmitter } from "../EventEmitter";
 import { InMemorySearchIndex } from "./InMemorySearchIndex";
-import type { SearchIndex } from "./SearchIndex";
-
-export type * from "./SearchIndex";
 
 export const useSearchIndex = ({
     eventEmitter,

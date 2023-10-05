@@ -1,6 +1,6 @@
+import type { CommandlineUtility } from "@common/CommandlineUtility";
 import type { ExecutionArgument } from "@common/ExecutionArgument";
 import { describe, expect, it, vi } from "vitest";
-import type { CommandlineUtility } from "../../Utilities";
 import { PowershellExecutionService } from "./PowershellExecutionService";
 
 describe(PowershellExecutionService, () => {
