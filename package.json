@@ -42,7 +42,7 @@
         "@typescript-eslint/parser": "^6.1.0",
         "axios": "^1.2.4",
         "color": "^4.2.3",
-        "electron": "^26.2.1",
+        "electron": "^26.3.0",
         "electron-builder": "^24.6.4",
         "electron-store": "^8.1.0",
         "electron-updater": "^6.1.4",
