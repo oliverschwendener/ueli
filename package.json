@@ -23,6 +23,7 @@
         "typecheck:renderer": "tsc -p src/renderer/tsconfig.json --noEmit"
     },
     "devDependencies": {
+        "@types/node": "^20.8.6",
         "@types/react": "^18.2.6",
         "@types/react-dom": "^18.2.4",
         "@types/react-router-dom": "^5.3.3",
