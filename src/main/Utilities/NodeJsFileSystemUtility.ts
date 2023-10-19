@@ -1,7 +1,7 @@
 import type { FileSystemUtility } from "@common/FileSystemUtility";
 import { access, existsSync, mkdir, readFile, readFileSync, unlink, writeFile, writeFileSync } from "fs";
 
-export class RealFileSystemUtility implements FileSystemUtility {
+export class NodeJsFileSystemUtility implements FileSystemUtility {
     public async createFolderIfDoesntExist(folderPath: string): Promise<void> {
         const exists = await this.pathExists(folderPath);
 

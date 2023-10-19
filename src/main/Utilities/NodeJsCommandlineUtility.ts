@@ -1,7 +1,7 @@
-import { CommandlineUtility } from "@common/CommandlineUtility";
+import type { CommandlineUtility } from "@common/CommandlineUtility";
 import { exec } from "child_process";
 
-export class RealCommandlineUtility implements CommandlineUtility {
+export class NodeJsCommandlineUtility implements CommandlineUtility {
     public executeCommandWithOutput(command: string): Promise<string> {
         return new Promise((resolve, reject) => {
             exec(command, (error, stdout, stderr) => {

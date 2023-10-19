@@ -1,12 +1,11 @@
-import { RealCommandlineUtility } from "./RealCommandlineUtility";
-import { RealFileSystemUtility } from "./RealFileSystemUtility";
+import type { CommandlineUtility } from "@common/CommandlineUtility";
+import type { FileSystemUtility } from "@common/FileSystemUtility";
+import { NodeJsCommandlineUtility } from "./NodeJsCommandlineUtility";
+import { NodeJsFileSystemUtility } from "./NodeJsFileSystemUtility";
 
-export const useUtilities = () => {
-    const commandlineUtility = new RealCommandlineUtility();
-    const fileSystemUtility = new RealFileSystemUtility();
-
+export const useUtilities = (): { commandlineUtility: CommandlineUtility; fileSystemUtility: FileSystemUtility } => {
     return {
-        commandlineUtility,
-        fileSystemUtility,
+        commandlineUtility: new NodeJsCommandlineUtility(),
+        fileSystemUtility: new NodeJsFileSystemUtility(),
     };
 };
