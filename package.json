@@ -43,8 +43,8 @@
         "vitest": "^0.34.6"
     },
     "dependencies": {
-        "@fluentui/react-components": "^9.30.0",
-        "@fluentui/react-icons": "^2.0.212",
+        "@fluentui/react-components": "^9.36.0",
+        "@fluentui/react-icons": "^2.0.221",
         "fuse.js": "^6.6.2",
         "i18next": "^23.4.6",
         "mitt": "^3.0.1",
