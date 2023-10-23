@@ -42,6 +42,12 @@ export const useBrowserWindow = async ({
 
     const browserWindow = new BrowserWindow(browserWindowConstructorOptionsMap[currentOperatingSystem]);
 
+    browserWindow.on("blur", () => {
+        if (settingsManager.getSettingByKey("window.hideWindowOnBlur", true)) {
+            browserWindow.hide();
+        }
+    });
+
     eventSubscriber.subscribe("searchIndexUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
 
     eventSubscriber.subscribe("executionSucceeded", ({ searchResultItem }: { searchResultItem: SearchResultItem }) => {
