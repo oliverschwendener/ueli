@@ -14,6 +14,6 @@ describe(useGlobalShortcut, () => {
 
         useGlobalShortcut({ globalShortcut, browserWindowToggler });
 
-        expect(registerMock).toHaveBeenCalledWith("alt+space", browserWindowToggler.toggleWindow);
+        expect(registerMock).toHaveBeenCalledWith("alt+space", expect.any(Function));
     });
 });

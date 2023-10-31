@@ -2,7 +2,7 @@ import type { Settings } from "@common/Settings";
 import type { SettingsReader } from "@common/SettingsReader";
 import type { SettingsWriter } from "@common/SettingsWriter";
 import { describe, expect, it } from "vitest";
-import { RealSettingsManager } from "./RealSettingsManager";
+import { SettingsManager } from "./SettingsManager";
 
 const getDummySettingsReader = (settings: Settings) =>
     new (class implements SettingsReader {
@@ -29,7 +29,7 @@ const getDummySettingsWriter = () =>
         }
     })();
 
-describe(RealSettingsManager, () => {
+describe(SettingsManager, () => {
     it("should read the settings when instantiating the class", () => {
         const settings: Settings = {
             key1: "value1",
@@ -38,7 +38,7 @@ describe(RealSettingsManager, () => {
         };
 
         const settingsReader = getDummySettingsReader(settings);
-        const settingsManager = new RealSettingsManager(settingsReader, getDummySettingsWriter());
+        const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter());
         expect(settingsManager.getSettings()).toBe(settings);
     });
 
@@ -50,7 +50,7 @@ describe(RealSettingsManager, () => {
         };
 
         const settingsReader = getDummySettingsReader(settings);
-        const settingsManager = new RealSettingsManager(settingsReader, getDummySettingsWriter());
+        const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter());
         expect(settingsManager.getSettingByKey("key1", undefined)).toBe("value1");
         expect(settingsManager.getSettingByKey("key4", undefined)).toBe(undefined);
         expect(settingsManager.getSettingByKey("key5", "defaultValue5")).toBe("defaultValue5");
@@ -63,7 +63,7 @@ describe(RealSettingsManager, () => {
         };
 
         const settingsReader = getDummySettingsReader(settings);
-        const settingsManager = new RealSettingsManager(settingsReader, getDummySettingsWriter());
+        const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter());
 
         expect(settingsManager.getPluginSettingByKey("testPluginId", "key1", undefined)).toBe("pluginValue");
         expect(settingsManager.getPluginSettingByKey("testPluginId", "key2", undefined)).toBe(undefined);
@@ -83,7 +83,7 @@ describe(RealSettingsManager, () => {
 
         expect(settingsWriter.getWriteCounter()).toBe(0);
 
-        const settingsManager = new RealSettingsManager(settingsReader, settingsWriter);
+        const settingsManager = new SettingsManager(settingsReader, settingsWriter);
         await settingsManager.saveSetting("key4", "value4");
 
         expect(settingsManager.getSettings()).toEqual({ ...settings, ...{ key4: "value4" } });

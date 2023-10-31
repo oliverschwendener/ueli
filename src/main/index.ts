@@ -13,7 +13,11 @@ import { useCurrentOperatingSystem } from "./OperatingSystem";
 import { usePluginCacheFolder } from "./PluginCacheFolder";
 import { usePlugins } from "./Plugins";
 import { useSearchIndex } from "./SearchIndex";
+import { useSettingsEventSubscriber } from "./SettingsEventSubscriber";
+import { useSettingsFilePath } from "./SettingsFile";
 import { useSettingsManager } from "./SettingsManager";
+import { useSettingsReader } from "./SettingsReader";
+import { useSettingsWriter } from "./SettingsWriter";
 import { useUtilities } from "./Utilities";
 
 (async () => {
@@ -23,7 +27,13 @@ import { useUtilities } from "./Utilities";
 
     const { commandlineUtility, fileSystemUtility } = useUtilities();
     const currentOperatingSystem = useCurrentOperatingSystem({ platform });
-    const settingsManager = useSettingsManager({ app, ipcMain });
+
+    const settingsFilePath = useSettingsFilePath({ app });
+    const settingsReader = useSettingsReader(settingsFilePath);
+    const settingsWriter = useSettingsWriter(settingsFilePath);
+    const settingsManager = useSettingsManager({ settingsReader, settingsWriter });
+    useSettingsEventSubscriber({ settingsManager, ipcMain });
+
     const emitter = mitt<Record<string, unknown>>();
     const eventEmitter = useEventEmitter({ emitter });
     const eventSubscriber = useEventSubscriber({ emitter });
@@ -42,11 +52,7 @@ import { useUtilities } from "./Utilities";
         settingsManager,
     };
 
-    usePlugins({
-        ipcMain,
-        pluginDependencies,
-        searchIndex,
-    });
+    usePlugins({ ipcMain, pluginDependencies, searchIndex });
 
     useExecutor({
         commandlineUtility,

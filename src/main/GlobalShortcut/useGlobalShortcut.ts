@@ -7,4 +7,4 @@ export const useGlobalShortcut = ({
 }: {
     globalShortcut: GlobalShortcut;
     browserWindowToggler: BrowserWindowToggler;
-}) => globalShortcut.register("alt+space", browserWindowToggler.toggleWindow);
+}) => globalShortcut.register("alt+space", () => browserWindowToggler.toggleWindow());
