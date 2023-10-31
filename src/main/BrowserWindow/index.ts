@@ -17,7 +17,7 @@ export const useBrowserWindow = async ({
     eventSubscriber: EventSubscriber;
     nativeTheme: NativeTheme;
     settingsManager: SettingsManager;
-}): Promise<void> => {
+}): Promise<BrowserWindow> => {
     const preloadScriptFilePath = join(__dirname, "..", "dist-preload", "index.js");
 
     const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowConstructorOptions> = {
@@ -64,4 +64,6 @@ export const useBrowserWindow = async ({
     app.isPackaged
         ? await browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html"))
         : await browserWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
+
+    return browserWindow;
 };

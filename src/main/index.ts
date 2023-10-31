@@ -1,11 +1,12 @@
 import type { PluginDependencies } from "@common/PluginDependencies";
-import { app, ipcMain, nativeTheme, shell } from "electron";
+import { app, globalShortcut, ipcMain, nativeTheme, shell } from "electron";
 import mitt from "mitt";
 import { platform } from "process";
 import { useBrowserWindow } from "./BrowserWindow";
 import { useEventEmitter } from "./EventEmitter";
 import { useEventSubscriber } from "./EventSubscriber";
 import { useExecutor } from "./Executor";
+import { useGlobalShortcut } from "./GlobalShortcut";
 import { useNativeTheme } from "./NativeTheme";
 import { useCurrentOperatingSystem } from "./OperatingSystem";
 import { usePluginCacheFolder } from "./PluginCacheFolder";
@@ -16,6 +17,8 @@ import { useUtilities } from "./Utilities";
 
 (async () => {
     await app.whenReady();
+
+    app.dock.hide();
 
     const { commandlineUtility, fileSystemUtility } = useUtilities();
     const currentOperatingSystem = useCurrentOperatingSystem({ platform });
@@ -51,11 +54,17 @@ import { useUtilities } from "./Utilities";
         shell,
     });
 
-    await useBrowserWindow({
+    const browserWindow = await useBrowserWindow({
         app,
         currentOperatingSystem,
         eventSubscriber,
         nativeTheme,
         settingsManager,
+    });
+
+    useGlobalShortcut({
+        app,
+        globalShortcut,
+        browserWindow,
     });
 })();
