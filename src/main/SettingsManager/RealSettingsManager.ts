@@ -1,7 +1,7 @@
 import type { Settings } from "@common/Settings";
 import type { SettingsManager } from "@common/SettingsManager";
-import type { SettingsReader } from "./SettingsReader";
-import type { SettingsWriter } from "./SettingsWriter";
+import type { SettingsReader } from "@common/SettingsReader";
+import type { SettingsWriter } from "@common/SettingsWriter";
 
 export class RealSettingsManager implements SettingsManager {
     private readonly settings: Settings;
