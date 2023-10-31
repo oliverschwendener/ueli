@@ -1,5 +1,5 @@
+import type { BrowserWindowToggler } from "@common/BrowserWindowToggler";
 import type { App, BrowserWindow } from "electron";
-import type { BrowserWindowToggler } from "./BrowserWindowToggler";
 import { ElectronBrowserWindowToggler } from "./ElectronBrowserWindowToggler";
 
 export const useBrowserWindowToggler = ({

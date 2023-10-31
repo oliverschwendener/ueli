@@ -1,5 +1,5 @@
+import type { BrowserWindowToggler } from "@common/BrowserWindowToggler";
 import type { App, BrowserWindow } from "electron";
-import type { BrowserWindowToggler } from "./BrowserWindowToggler";
 
 export class ElectronBrowserWindowToggler implements BrowserWindowToggler {
     public constructor(
