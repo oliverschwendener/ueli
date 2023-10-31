@@ -1,21 +1,10 @@
-import type { App, BrowserWindow, GlobalShortcut } from "electron";
+import type { GlobalShortcut } from "electron";
+import type { BrowserWindowToggler } from "../BrowserWindow";
 
 export const useGlobalShortcut = ({
-    app,
-    browserWindow,
+    browserWindowToggler,
     globalShortcut,
 }: {
-    app: App;
-    browserWindow: BrowserWindow;
     globalShortcut: GlobalShortcut;
-}) => {
-    globalShortcut.register("alt+space", () => {
-        if (browserWindow.isVisible() && browserWindow.isFocused()) {
-            app.hide();
-            browserWindow.hide();
-        } else {
-            browserWindow.show();
-            browserWindow.focus();
-        }
-    });
-};
+    browserWindowToggler: BrowserWindowToggler;
+}) => globalShortcut.register("alt+space", browserWindowToggler.toggleWindow);

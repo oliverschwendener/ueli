@@ -3,6 +3,7 @@ import { app, globalShortcut, ipcMain, nativeTheme, shell } from "electron";
 import mitt from "mitt";
 import { platform } from "process";
 import { useBrowserWindow } from "./BrowserWindow";
+import { useBrowserWindowToggler } from "./BrowserWindow/useBrowserWindowToggler";
 import { useEventEmitter } from "./EventEmitter";
 import { useEventSubscriber } from "./EventSubscriber";
 import { useExecutor } from "./Executor";
@@ -62,9 +63,7 @@ import { useUtilities } from "./Utilities";
         settingsManager,
     });
 
-    useGlobalShortcut({
-        app,
-        globalShortcut,
-        browserWindow,
-    });
+    const browserWindowToggler = useBrowserWindowToggler({ app, browserWindow });
+
+    useGlobalShortcut({ globalShortcut, browserWindowToggler });
 })();
