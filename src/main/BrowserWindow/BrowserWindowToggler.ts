@@ -1,3 +1,3 @@
-export type BrowserWindowToggler = {
+export interface BrowserWindowToggler {
     toggleWindow: () => void;
-};
+}
