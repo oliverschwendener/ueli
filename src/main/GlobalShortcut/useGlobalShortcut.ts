@@ -1,5 +1,5 @@
+import type { BrowserWindowToggler } from "@common/BrowserWindowToggler";
 import type { GlobalShortcut } from "electron";
-import type { BrowserWindowToggler } from "../BrowserWindow";
 
 export const useGlobalShortcut = ({
     browserWindowToggler,

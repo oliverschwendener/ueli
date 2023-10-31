@@ -1,6 +1,6 @@
+import type { BrowserWindowToggler } from "@common/BrowserWindowToggler";
 import type { GlobalShortcut } from "electron";
 import { describe, expect, it, vi } from "vitest";
-import type { BrowserWindowToggler } from "../BrowserWindow";
 import { useGlobalShortcut } from "./useGlobalShortcut";
 
 describe(useGlobalShortcut, () => {
