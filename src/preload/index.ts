@@ -14,4 +14,5 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     onSearchIndexUpdated: (callback) => ipcRenderer.on("searchIndexUpdated", callback),
     themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),
     updateSettingByKey: <T>(key: string, value: T) => ipcRenderer.invoke("updateSettingByKey", { key, value }),
+    windowFocused: (callback) => ipcRenderer.on("windowFocused", callback),
 });

@@ -21,7 +21,11 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     const userInputRef = useRef<HTMLInputElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const setFocusOnUserInput = () => userInputRef?.current?.focus();
+    const setFocusOnUserInputAndSelectText = () => {
+        userInputRef?.current?.focus();
+        userInputRef?.current?.select();
+    };
+
     const navigate = useNavigate();
     const openSettings = () => navigate({ pathname: "/settings/general" });
     const search = (updatedSearchTerm: string) => setSearchTerm(updatedSearchTerm);
@@ -70,7 +74,11 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     const handleSearchResultItemDoubleClickEvent = (searchResultItem: SearchResultItem) =>
         invokeExecution(searchResultItem, false);
 
-    useEffect(setFocusOnUserInput, []);
+    useEffect(() => {
+        setFocusOnUserInputAndSelectText();
+        window.ContextBridge.windowFocused(() => setFocusOnUserInputAndSelectText());
+    }, []);
+
     useEffect(selectFirstSearchResultItemItem, [searchTerm]);
 
     return (

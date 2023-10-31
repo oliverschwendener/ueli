@@ -27,6 +27,7 @@ describe(ElectronBrowserWindowToggler, () => {
         const appShowMock = vi.fn();
         const browserWindowShowMock = vi.fn();
         const browserWindowFocusMock = vi.fn();
+        const sendMock = vi.fn();
 
         const app = <App>{
             show: () => appShowMock(),
@@ -37,6 +38,9 @@ describe(ElectronBrowserWindowToggler, () => {
             isFocused: () => false,
             show: () => browserWindowShowMock(),
             focus: () => browserWindowFocusMock(),
+            webContents: {
+                send: (channel) => sendMock(channel),
+            },
         };
 
         new ElectronBrowserWindowToggler(app, browserWindow).toggleWindow();
@@ -44,12 +48,14 @@ describe(ElectronBrowserWindowToggler, () => {
         expect(appShowMock).toHaveBeenCalledOnce();
         expect(browserWindowShowMock).toHaveBeenCalledOnce();
         expect(browserWindowFocusMock).toHaveBeenCalledOnce();
+        expect(sendMock).toHaveBeenCalledWith("windowFocused");
     });
 
     it("should show and focus the window if its visible but not focused", () => {
         const appShowMock = vi.fn();
         const browserWindowShowMock = vi.fn();
         const browserWindowFocusMock = vi.fn();
+        const sendMock = vi.fn();
 
         const app = <App>{
             show: () => appShowMock(),
@@ -60,6 +66,9 @@ describe(ElectronBrowserWindowToggler, () => {
             isFocused: () => false,
             show: () => browserWindowShowMock(),
             focus: () => browserWindowFocusMock(),
+            webContents: {
+                send: (channel) => sendMock(channel),
+            },
         };
 
         new ElectronBrowserWindowToggler(app, browserWindow).toggleWindow();
@@ -67,5 +76,6 @@ describe(ElectronBrowserWindowToggler, () => {
         expect(appShowMock).toHaveBeenCalledOnce();
         expect(browserWindowShowMock).toHaveBeenCalledOnce();
         expect(browserWindowFocusMock).toHaveBeenCalledOnce();
+        expect(sendMock).toHaveBeenCalledWith("windowFocused");
     });
 });

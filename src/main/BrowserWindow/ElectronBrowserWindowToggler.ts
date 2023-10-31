@@ -15,6 +15,7 @@ export class ElectronBrowserWindowToggler implements BrowserWindowToggler {
             this.app.show();
             this.browserWindow.show();
             this.browserWindow.focus();
+            this.browserWindow.webContents.send("windowFocused");
         }
     }
 }
