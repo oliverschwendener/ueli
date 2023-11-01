@@ -1,13 +1,11 @@
 import { Divider } from "@fluentui/react-components";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router";
-import { ThemeContext } from "../ThemeContext";
 import { Header } from "./Header";
 import { Navigation } from "./Navigation";
 import { settingsPages } from "./Pages";
 
 export const Settings = () => {
-    const { theme } = useContext(ThemeContext);
     const navigate = useNavigate();
 
     const [path, setPath] = useState<string>(settingsPages[0].absolutePath);
@@ -23,7 +21,7 @@ export const Settings = () => {
         <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
             <div style={{ flexShrink: 0 }}>
                 <Header onCloseSettingsClicked={closeSettings} />
-                <Divider />
+                <Divider appearance="subtle" />
             </div>
 
             <div
@@ -34,8 +32,11 @@ export const Settings = () => {
                     boxSizing: "border-box",
                 }}
             >
-                <div style={{ flexShrink: 0, width: 200, padding: 10 }}>
-                    <Navigation settingsPages={settingsPages} onNavigate={navigateTo} path={path} />
+                <div style={{ display: "flex" }}>
+                    <div style={{ display: "flex", width: "200px", padding: 10, boxSizing: "border-box" }}>
+                        <Navigation settingsPages={settingsPages} onNavigate={navigateTo} path={path} />
+                    </div>
+                    <Divider appearance="subtle" vertical />
                 </div>
                 <div
                     style={{
@@ -44,7 +45,6 @@ export const Settings = () => {
                         overflowY: "scroll",
                         padding: 20,
                         boxSizing: "border-box",
-                        backgroundColor: theme.colorNeutralBackground2,
                     }}
                 >
                     <Routes>

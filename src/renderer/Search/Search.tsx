@@ -103,7 +103,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                     onKeyDown={handleUserInputKeyboardEvent}
                 />
             </div>
-            <Divider />
+            <Divider appearance="subtle" />
             <div ref={containerRef} style={{ height: "100%", overflowY: "scroll" }}>
                 {searchTerm.length === 0 ? (
                     <FavoritesList />
@@ -117,7 +117,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                     />
                 )}
             </div>
-            <Divider />
+            <Divider appearance="subtle" />
             <div
                 className="draggable-area"
                 style={{
