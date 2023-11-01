@@ -9,10 +9,10 @@ export class ElectronBrowserWindowToggler implements BrowserWindowToggler {
 
     public toggleWindow() {
         if (this.browserWindow.isVisible() && this.browserWindow.isFocused()) {
-            this.app.hide();
+            this.app.hide && this.app.hide();
             this.browserWindow.hide();
         } else {
-            this.app.show();
+            this.app.show && this.app.show();
             this.browserWindow.show();
             this.browserWindow.focus();
             this.browserWindow.webContents.send("windowFocused");

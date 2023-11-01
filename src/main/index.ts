@@ -23,7 +23,7 @@ import { useUtilities } from "./Utilities";
 (async () => {
     await app.whenReady();
 
-    app.dock.hide();
+    app.dock?.hide();
 
     const { commandlineUtility, fileSystemUtility } = useUtilities();
     const currentOperatingSystem = useCurrentOperatingSystem({ platform });
