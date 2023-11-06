@@ -2,9 +2,9 @@ import type { PluginDependencies } from "@common/PluginDependencies";
 import type { UeliPlugin } from "@common/UeliPlugin";
 import type { UeliPluginBootstrapper } from "@common/UeliPluginBootstrapper";
 import { ApplicationSearch } from "./ApplicationSearch";
-import { MacOsApplicationIconGenerator } from "./MacOsApplicationIconGenerator";
-import { MacOsApplicationRepository } from "./MacOsApplicationRepository";
-import { WindowsApplicationRepository } from "./WindowsApplicationRepository";
+import { WindowsApplicationRepository } from "./Windows/WindowsApplicationRepository";
+import { MacOsApplicationIconGenerator } from "./macOS/MacOsApplicationIconGenerator";
+import { MacOsApplicationRepository } from "./macOS/MacOsApplicationRepository";
 
 export class ApplicationSearchBootstrapper implements UeliPluginBootstrapper {
     public bootstrap(pluginDependencies: PluginDependencies): UeliPlugin {

@@ -1,7 +1,7 @@
 import type { PluginDependencies } from "@common/PluginDependencies";
 import { join } from "path";
-import { Application } from "./Application";
-import type { ApplicationRepository } from "./ApplicationRepository";
+import { Application } from "../Application";
+import type { ApplicationRepository } from "../ApplicationRepository";
 import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
 import { usePowershellScripts } from "./usePowershellScripts";
 

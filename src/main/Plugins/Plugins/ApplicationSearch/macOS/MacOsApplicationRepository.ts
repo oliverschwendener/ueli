@@ -1,7 +1,7 @@
 import type { PluginDependencies } from "@common/PluginDependencies";
 import { join, normalize, parse } from "path";
-import { Application } from "./Application";
-import type { ApplicationRepository } from "./ApplicationRepository";
+import { Application } from "../Application";
+import type { ApplicationRepository } from "../ApplicationRepository";
 import type { MacOsApplicationIconGenerator } from "./MacOsApplicationIconGenerator";
 
 export class MacOsApplicationRepository implements ApplicationRepository {
