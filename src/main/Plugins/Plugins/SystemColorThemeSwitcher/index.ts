@@ -1,1 +1,1 @@
-export * from "./SystemColorThemeSwitcher";
+export * from "./SystemColorThemeSwitcherBootstrapper";

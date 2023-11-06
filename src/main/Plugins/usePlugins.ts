@@ -7,7 +7,7 @@ import {
     getSupportedPlugins,
     subscribeToIpcMainEvents,
 } from "./Helpers";
-import { getAll, getAllPluginIdsEnabledByDefault } from "./Plugins";
+import { getAll } from "./Plugins";
 
 export const usePlugins = ({
     ipcMain,
@@ -21,10 +21,8 @@ export const usePlugins = ({
     const { currentOperatingSystem, settingsManager } = pluginDependencies;
 
     const plugins = getAll(pluginDependencies);
-    const pluginIdsEnabledByDefault = getAllPluginIdsEnabledByDefault();
-
     const supportedPlugins = getSupportedPlugins(plugins, currentOperatingSystem);
-    const enabledPlugins = getEnabledPlugins(supportedPlugins, settingsManager, pluginIdsEnabledByDefault);
+    const enabledPlugins = getEnabledPlugins(supportedPlugins, settingsManager, ["ApplicationSearch"]);
 
     subscribeToIpcMainEvents({
         ipcMain,

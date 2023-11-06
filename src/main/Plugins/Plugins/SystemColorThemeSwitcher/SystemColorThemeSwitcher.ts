@@ -1,5 +1,4 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
-import type { PluginDependencies } from "@common/PluginDependencies";
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { UeliPlugin } from "@common/UeliPlugin";
 
@@ -9,7 +8,7 @@ export class SystemColorThemeSwitcher implements UeliPlugin {
     public readonly nameTranslationKey: string = "plugin[SystemColorThemeSwitcher].pluginName";
     public readonly supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
 
-    public constructor(private readonly pluginDependencies: PluginDependencies) {}
+    public constructor(private readonly currentOperatingSystem: OperatingSystem) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
         return [
@@ -35,14 +34,14 @@ export class SystemColorThemeSwitcher implements UeliPlugin {
             macOS: "https://upload.wikimedia.org/wikipedia/en/thumb/2/23/System_Preferences_icon.png/120px-System_Preferences_icon.png",
             Windows:
                 "https://preview.redd.it/windows-11-logo-in-svg-format-v0-sudz5o3s1vn91.png?width=1080&format=png&auto=webp&s=196ef4f2bff864c6d3f58b074fa32479a285ab49",
-        }[this.pluginDependencies.currentOperatingSystem];
+        }[this.currentOperatingSystem];
     }
 
     private getSearchResultItemExecutionServiceId(): string {
         return {
             macOS: "Commandline",
             Windows: "Powershell",
-        }[this.pluginDependencies.currentOperatingSystem];
+        }[this.currentOperatingSystem];
     }
 
     private static getSearchResultItemName(switchToLightMode: boolean): string {
@@ -71,6 +70,6 @@ export class SystemColorThemeSwitcher implements UeliPlugin {
         return {
             Windows: windowsExecutionServiceArgument,
             macOS: macOsExecutionServiceArgument,
-        }[this.pluginDependencies.currentOperatingSystem];
+        }[this.currentOperatingSystem];
     }
 }

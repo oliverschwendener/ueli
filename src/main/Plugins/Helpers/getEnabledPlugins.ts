@@ -5,10 +5,9 @@ export const getEnabledPlugins = (
     plugins: UeliPlugin[],
     settingsManager: SettingsManager,
     pluginIdsEnabledByDefault: string[],
-) => {
-    return plugins.filter((plugin) =>
+) =>
+    plugins.filter((plugin) =>
         settingsManager
             .getSettingByKey<string[]>("plugins.enabledPluginIds", pluginIdsEnabledByDefault)
             .includes(plugin.id),
     );
-};

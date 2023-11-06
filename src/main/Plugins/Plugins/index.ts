@@ -1,11 +1,9 @@
-import { PluginDependencies } from "@common/PluginDependencies";
-import { UeliPlugin } from "@common/UeliPlugin";
-import { ApplicationSearch } from "./ApplicationSearch";
-import { SystemColorThemeSwitcher } from "./SystemColorThemeSwitcher";
+import type { PluginDependencies } from "@common/PluginDependencies";
+import type { UeliPlugin } from "@common/UeliPlugin";
+import { ApplicationSearchBootstrapper } from "./ApplicationSearch";
+import { SystemColorThemeSwitcherBootstrapper } from "./SystemColorThemeSwitcher";
 
 export const getAll = (pluginDependencies: PluginDependencies): UeliPlugin[] => [
-    new ApplicationSearch(pluginDependencies),
-    new SystemColorThemeSwitcher(pluginDependencies),
+    new ApplicationSearchBootstrapper().bootstrap(pluginDependencies),
+    new SystemColorThemeSwitcherBootstrapper().bootstrap(pluginDependencies),
 ];
-
-export const getAllPluginIdsEnabledByDefault = () => ["ApplicationSearch"];

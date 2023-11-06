@@ -1,1 +1,1 @@
-export * from "./ApplicationSearch";
+export * from "./ApplicationSearchBootstrapper";
