@@ -12,7 +12,7 @@ export class ApplicationSearch implements UeliPlugin {
     public constructor(private readonly applicationRepository: ApplicationRepository) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const applications = await this.applicationRepository.getApplications(this.id);
+        const applications = await this.applicationRepository.getApplications();
         return applications.map((application) => application.toSearchResultItem());
     }
 }

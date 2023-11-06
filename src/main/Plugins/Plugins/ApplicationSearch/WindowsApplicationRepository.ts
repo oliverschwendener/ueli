@@ -8,11 +8,11 @@ import { usePowershellScripts } from "./usePowershellScripts";
 export class WindowsApplicationRepository implements ApplicationRepository {
     public constructor(private readonly pluginDependencies: PluginDependencies) {}
 
-    public async getApplications(pluginId: string): Promise<Application[]> {
+    public async getApplications(): Promise<Application[]> {
         const { pluginCacheFolderPath } = this.pluginDependencies;
 
         const stdout = await this.executeTemporaryPowershellScriptWithOutput(
-            this.getPowershellScript(pluginId),
+            this.getPowershellScript(),
             join(pluginCacheFolderPath, "WindowsApplicationSearch.temp.ps1"),
         );
 
@@ -37,16 +37,16 @@ export class WindowsApplicationRepository implements ApplicationRepository {
         return stdout;
     }
 
-    private getPowershellScript(pluginId: string): string {
+    private getPowershellScript(): string {
         const { pluginCacheFolderPath, settingsManager } = this.pluginDependencies;
 
         const folderPaths = settingsManager
-            .getPluginSettingByKey(pluginId, "windowsFolders", this.getDefaultFolderPaths())
+            .getPluginSettingByKey("ApplicationSearch", "windowsFolders", this.getDefaultFolderPaths())
             .map((folderPath) => `'${folderPath}'`)
             .join(",");
 
         const fileExtensions = settingsManager
-            .getPluginSettingByKey(pluginId, "windowsFileExtensions", this.getDefaultFileExtensions())
+            .getPluginSettingByKey("ApplicationSearch", "windowsFileExtensions", this.getDefaultFileExtensions())
             .map((fileExtension) => `'*.${fileExtension}'`)
             .join(",");
 

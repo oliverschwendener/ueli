@@ -10,28 +10,28 @@ export class MacOsApplicationRepository implements ApplicationRepository {
         private readonly macOsApplicationIconGenerator: MacOsApplicationIconGenerator,
     ) {}
 
-    public async getApplications(pluginId: string): Promise<Application[]> {
-        const filePaths = await this.getAllFilePaths(pluginId);
+    public async getApplications(): Promise<Application[]> {
+        const filePaths = await this.getAllFilePaths();
         const icons = await this.getAllIcons(filePaths);
 
         return filePaths.map((filePath) => new Application(parse(filePath).name, filePath, icons[filePath]));
     }
 
-    private async getAllFilePaths(pluginId: string): Promise<string[]> {
+    private async getAllFilePaths(): Promise<string[]> {
         const { commandlineUtility } = this.pluginDependencies;
 
         return (await commandlineUtility.executeCommandWithOutput(`mdfind "kMDItemKind == 'Application'"`))
             .split("\n")
             .map((filePath) => normalize(filePath).trim())
-            .filter((filePath) => this.filterFilePathByConfiguredFolders(pluginId, filePath))
+            .filter((filePath) => this.filterFilePathByConfiguredFolders(filePath))
             .filter((filePath) => ![".", ".."].includes(filePath));
     }
 
-    private filterFilePathByConfiguredFolders(pluginId: string, filePath: string): boolean {
+    private filterFilePathByConfiguredFolders(filePath: string): boolean {
         const { settingsManager } = this.pluginDependencies;
 
         return settingsManager
-            .getPluginSettingByKey<string[]>(pluginId, "folders", this.getDefaultFolders())
+            .getPluginSettingByKey<string[]>("ApplicationSearch", "folders", this.getDefaultFolders())
             .some((folderPath) => filePath.startsWith(folderPath));
     }
 
