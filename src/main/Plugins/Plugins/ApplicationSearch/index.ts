@@ -1,1 +1,1 @@
-export * from "./ApplicationSearchPlugin";
+export * from "./ApplicationSearch";

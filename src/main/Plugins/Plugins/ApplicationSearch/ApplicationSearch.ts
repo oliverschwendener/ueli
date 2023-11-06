@@ -7,7 +7,7 @@ import { MacOsApplicationIconGenerator } from "./MacOsApplicationIconGenerator";
 import { MacOsApplicationRepository } from "./MacOsApplicationRepository";
 import { WindowsApplicationRepository } from "./WindowsApplicationRepository";
 
-export class ApplicationSearchPlugin implements UeliPlugin {
+export class ApplicationSearch implements UeliPlugin {
     public readonly id = "ApplicationSearch";
     public readonly name = "Application Search";
     public readonly nameTranslationKey = "plugin[ApplicationSearch].pluginName";
