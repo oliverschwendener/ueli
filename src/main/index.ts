@@ -13,7 +13,7 @@ import {
 import mitt, { Emitter } from "mitt";
 import { platform } from "os";
 import { useBrowserWindow } from "./BrowserWindow";
-import { useBrowserWindowToggler } from "./BrowserWindow/useBrowserWindowToggler";
+import { useBrowserWindowToggler } from "./BrowserWindowToggler";
 import { DependencyInjector } from "./DependencyInjector";
 import { useEventEmitter } from "./EventEmitter";
 import { useEventSubscriber } from "./EventSubscriber";
