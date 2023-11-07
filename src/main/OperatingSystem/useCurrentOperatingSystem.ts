@@ -1,16 +1,19 @@
+import type { DependencyInjector } from "@common/DependencyInjector";
 import type { OperatingSystem } from "@common/OperatingSystem";
 
-export const useCurrentOperatingSystem = ({ platform }: { platform: string }): OperatingSystem => {
+export const useCurrentOperatingSystem = (dependencyInjector: DependencyInjector) => {
+    const platform = dependencyInjector.getInstance<string>("Platform");
+
     const operatingSystemMap: Record<"darwin" | "win32", OperatingSystem> = {
         darwin: "macOS",
         win32: "Windows",
     };
 
-    const currentOperatingSystem: OperatingSystem | undefined = operatingSystemMap[platform];
+    const operatingSystem: OperatingSystem | undefined = operatingSystemMap[platform];
 
-    if (!currentOperatingSystem) {
+    if (!operatingSystem) {
         throw new Error(`Unexpected platform: ${platform}`);
     }
 
-    return currentOperatingSystem;
+    dependencyInjector.registerInstance<OperatingSystem>("OperatingSystem", operatingSystem);
 };

@@ -1,11 +1,11 @@
-import type { CommandlineUtility } from "@common/CommandlineUtility";
-import type { FileSystemUtility } from "@common/FileSystemUtility";
+import type { DependencyInjector } from "@common/DependencyInjector";
 import { NodeJsCommandlineUtility } from "./NodeJsCommandlineUtility";
 import { NodeJsFileSystemUtility } from "./NodeJsFileSystemUtility";
 
-export const useUtilities = (): { commandlineUtility: CommandlineUtility; fileSystemUtility: FileSystemUtility } => {
-    return {
-        commandlineUtility: new NodeJsCommandlineUtility(),
-        fileSystemUtility: new NodeJsFileSystemUtility(),
-    };
+export const useUtilities = (dependencyInjector: DependencyInjector) => {
+    const commandlineUtility = new NodeJsCommandlineUtility();
+    const fileSystemUtility = new NodeJsFileSystemUtility();
+
+    dependencyInjector.registerInstance("CommandlineUtility", commandlineUtility);
+    dependencyInjector.registerInstance("FileSystemUtility", fileSystemUtility);
 };

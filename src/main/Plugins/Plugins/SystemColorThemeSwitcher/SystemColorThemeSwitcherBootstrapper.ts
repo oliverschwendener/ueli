@@ -1,10 +1,11 @@
-import type { PluginDependencies } from "@common/PluginDependencies";
+import type { DependencyInjector } from "@common/DependencyInjector";
+import type { OperatingSystem } from "@common/OperatingSystem";
 import type { UeliPlugin } from "@common/UeliPlugin";
 import type { UeliPluginBootstrapper } from "@common/UeliPluginBootstrapper";
 import { SystemColorThemeSwitcher } from "./SystemColorThemeSwitcher";
 
 export class SystemColorThemeSwitcherBootstrapper implements UeliPluginBootstrapper {
-    public bootstrap(pluginDependencies: PluginDependencies): UeliPlugin {
-        return new SystemColorThemeSwitcher(pluginDependencies.currentOperatingSystem);
+    public bootstrap(dependencyInjector: DependencyInjector): UeliPlugin {
+        return new SystemColorThemeSwitcher(dependencyInjector.getInstance<OperatingSystem>("OperatingSystem"));
     }
 }

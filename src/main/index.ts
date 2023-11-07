@@ -1,9 +1,20 @@
-import type { PluginDependencies } from "@common/PluginDependencies";
-import { app, globalShortcut, ipcMain, nativeTheme, shell } from "electron";
-import mitt from "mitt";
-import { platform } from "process";
+import {
+    app,
+    globalShortcut,
+    ipcMain,
+    nativeTheme,
+    shell,
+    type App,
+    type GlobalShortcut,
+    type IpcMain,
+    type NativeTheme,
+    type Shell,
+} from "electron";
+import mitt, { Emitter } from "mitt";
+import { platform } from "os";
 import { useBrowserWindow } from "./BrowserWindow";
 import { useBrowserWindowToggler } from "./BrowserWindow/useBrowserWindowToggler";
+import { DependencyInjector } from "./DependencyInjector";
 import { useEventEmitter } from "./EventEmitter";
 import { useEventSubscriber } from "./EventSubscriber";
 import { useExecutor } from "./Executor";
@@ -14,7 +25,7 @@ import { usePluginCacheFolder } from "./PluginCacheFolder";
 import { usePlugins } from "./Plugins";
 import { useSearchIndex } from "./SearchIndex";
 import { useSettingsEventSubscriber } from "./SettingsEventSubscriber";
-import { useSettingsFilePath } from "./SettingsFile";
+import { useSettingsFile } from "./SettingsFile";
 import { useSettingsManager } from "./SettingsManager";
 import { useSettingsReader } from "./SettingsReader";
 import { useSettingsWriter } from "./SettingsWriter";
@@ -25,51 +36,35 @@ import { useUtilities } from "./Utilities";
 
     app.dock?.hide();
 
-    const { commandlineUtility, fileSystemUtility } = useUtilities();
-    const currentOperatingSystem = useCurrentOperatingSystem({ platform });
+    const dependencyInjector = new DependencyInjector();
 
-    const settingsFilePath = useSettingsFilePath({ app });
-    const settingsReader = useSettingsReader(settingsFilePath);
-    const settingsWriter = useSettingsWriter(settingsFilePath);
-    const settingsManager = useSettingsManager({ settingsReader, settingsWriter });
-    useSettingsEventSubscriber({ settingsManager, ipcMain });
+    dependencyInjector.registerInstance<string>("Platform", platform());
+    dependencyInjector.registerInstance<App>("App", app);
+    dependencyInjector.registerInstance<IpcMain>("IpcMain", ipcMain);
+    dependencyInjector.registerInstance<NativeTheme>("NativeTheme", nativeTheme);
+    dependencyInjector.registerInstance<Shell>("Shell", shell);
+    dependencyInjector.registerInstance<GlobalShortcut>("GlobalShortcut", globalShortcut);
+    dependencyInjector.registerInstance<Emitter<Record<string, unknown>>>("Emitter", mitt<Record<string, unknown>>());
 
-    const emitter = mitt<Record<string, unknown>>();
-    const eventEmitter = useEventEmitter({ emitter });
-    const eventSubscriber = useEventSubscriber({ emitter });
-    const searchIndex = useSearchIndex({ eventEmitter, ipcMain });
+    useUtilities(dependencyInjector);
+    useCurrentOperatingSystem(dependencyInjector);
+    useSettingsFile(dependencyInjector);
+    useSettingsReader(dependencyInjector);
+    useSettingsWriter(dependencyInjector);
+    useSettingsManager(dependencyInjector);
+    useSettingsEventSubscriber(dependencyInjector);
+    useEventEmitter(dependencyInjector);
+    useEventSubscriber(dependencyInjector);
+    useSearchIndex(dependencyInjector);
+    useNativeTheme(dependencyInjector);
 
-    useNativeTheme({ ipcMain, nativeTheme });
+    await usePluginCacheFolder(dependencyInjector);
 
-    const pluginDependencies: PluginDependencies = {
-        app,
-        commandlineUtility,
-        currentOperatingSystem,
-        eventSubscriber,
-        fileSystemUtility,
-        nativeTheme,
-        pluginCacheFolderPath: await usePluginCacheFolder({ app, fileSystemUtility }),
-        settingsManager,
-    };
+    usePlugins(dependencyInjector);
+    useExecutor(dependencyInjector);
 
-    usePlugins({ ipcMain, pluginDependencies, searchIndex });
+    await useBrowserWindow(dependencyInjector);
 
-    useExecutor({
-        commandlineUtility,
-        eventEmitter,
-        ipcMain,
-        shell,
-    });
-
-    const browserWindow = await useBrowserWindow({
-        app,
-        currentOperatingSystem,
-        eventSubscriber,
-        nativeTheme,
-        settingsManager,
-    });
-
-    const browserWindowToggler = useBrowserWindowToggler({ app, browserWindow });
-
-    useGlobalShortcut({ globalShortcut, browserWindowToggler });
+    useBrowserWindowToggler(dependencyInjector);
+    useGlobalShortcut(dependencyInjector);
 })();

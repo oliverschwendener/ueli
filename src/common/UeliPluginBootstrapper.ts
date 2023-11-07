@@ -1,6 +1,6 @@
-import type { PluginDependencies } from "./PluginDependencies";
+import type { DependencyInjector } from "./DependencyInjector";
 import type { UeliPlugin } from "./UeliPlugin";
 
 export interface UeliPluginBootstrapper {
-    bootstrap(pluginDependencies: PluginDependencies): UeliPlugin;
+    bootstrap(dependencyInjector: DependencyInjector): UeliPlugin;
 }

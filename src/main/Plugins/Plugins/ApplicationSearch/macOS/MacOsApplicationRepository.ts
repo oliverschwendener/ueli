@@ -1,4 +1,6 @@
-import type { PluginDependencies } from "@common/PluginDependencies";
+import type { CommandlineUtility } from "@common/CommandlineUtility";
+import type { SettingsManager } from "@common/SettingsManager";
+import type { App } from "electron";
 import { join, normalize, parse } from "path";
 import { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
@@ -6,7 +8,9 @@ import type { MacOsApplicationIconGenerator } from "./MacOsApplicationIconGenera
 
 export class MacOsApplicationRepository implements ApplicationRepository {
     public constructor(
-        private readonly pluginDependencies: PluginDependencies,
+        private readonly commandlineUtility: CommandlineUtility,
+        private readonly settingsManager: SettingsManager,
+        private readonly app: App,
         private readonly macOsApplicationIconGenerator: MacOsApplicationIconGenerator,
     ) {}
 
@@ -18,9 +22,7 @@ export class MacOsApplicationRepository implements ApplicationRepository {
     }
 
     private async getAllFilePaths(): Promise<string[]> {
-        const { commandlineUtility } = this.pluginDependencies;
-
-        return (await commandlineUtility.executeCommandWithOutput(`mdfind "kMDItemKind == 'Application'"`))
+        return (await this.commandlineUtility.executeCommandWithOutput(`mdfind "kMDItemKind == 'Application'"`))
             .split("\n")
             .map((filePath) => normalize(filePath).trim())
             .filter((filePath) => this.filterFilePathByConfiguredFolders(filePath))
@@ -28,9 +30,7 @@ export class MacOsApplicationRepository implements ApplicationRepository {
     }
 
     private filterFilePathByConfiguredFolders(filePath: string): boolean {
-        const { settingsManager } = this.pluginDependencies;
-
-        return settingsManager
+        return this.settingsManager
             .getPluginSettingByKey<string[]>("ApplicationSearch", "folders", this.getDefaultFolders())
             .some((folderPath) => filePath.startsWith(folderPath));
     }
@@ -52,8 +52,6 @@ export class MacOsApplicationRepository implements ApplicationRepository {
     }
 
     private getDefaultFolders(): string[] {
-        const { app } = this.pluginDependencies;
-
-        return ["/System/Applications", "/Applications", join(app.getPath("home"), "Applications")];
+        return ["/System/Applications", "/Applications", join(this.app.getPath("home"), "Applications")];
     }
 }

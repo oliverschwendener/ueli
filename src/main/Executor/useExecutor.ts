@@ -1,7 +1,8 @@
-import type { CommandlineUtility } from "@common/CommandlineUtility";
-import type { EventEmitter } from "@common/EventEmitter";
+import { CommandlineUtility } from "@common/CommandlineUtility";
+import type { DependencyInjector } from "@common/DependencyInjector";
+import { EventEmitter } from "@common/EventEmitter";
 import type { ExecutionArgument } from "@common/ExecutionArgument";
-import type { IpcMain, Shell } from "electron";
+import { IpcMain, Shell } from "electron";
 import {
     CommandlineExecutionService,
     FilePathExecutionService,
@@ -10,17 +11,12 @@ import {
 } from "./ExecutionServices";
 import { Executor } from "./Executor";
 
-export const useExecutor = ({
-    commandlineUtility,
-    eventEmitter,
-    ipcMain,
-    shell,
-}: {
-    commandlineUtility: CommandlineUtility;
-    eventEmitter: EventEmitter;
-    ipcMain: IpcMain;
-    shell: Shell;
-}) => {
+export const useExecutor = (dependencyInjector: DependencyInjector) => {
+    const shell = dependencyInjector.getInstance<Shell>("Shell");
+    const commandlineUtility = dependencyInjector.getInstance<CommandlineUtility>("CommandlineUtility");
+    const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
+    const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
+
     const executor = new Executor(
         {
             FilePath: new FilePathExecutionService(shell),
@@ -32,6 +28,4 @@ export const useExecutor = ({
     );
 
     ipcMain.handle("invokeExecution", (_, executionArgument: ExecutionArgument) => executor.execute(executionArgument));
-
-    return executor;
 };

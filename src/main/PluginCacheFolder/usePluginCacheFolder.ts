@@ -1,17 +1,16 @@
+import type { DependencyInjector } from "@common/DependencyInjector";
 import type { FileSystemUtility } from "@common/FileSystemUtility";
+import type { PluginCacheFolder } from "@common/PluginCacheFolder";
 import type { App } from "electron";
 import { join } from "path";
 
-export const usePluginCacheFolder = async ({
-    app,
-    fileSystemUtility,
-}: {
-    app: App;
-    fileSystemUtility: FileSystemUtility;
-}) => {
-    const pluginCacheFolderPath = join(app.getPath("userData"), "PluginCache");
+export const usePluginCacheFolder = async (dependencyInjector: DependencyInjector) => {
+    const app = dependencyInjector.getInstance<App>("App");
+    const fileSystemUtility = dependencyInjector.getInstance<FileSystemUtility>("FileSystemUtility");
 
-    await fileSystemUtility.createFolderIfDoesntExist(pluginCacheFolderPath);
+    const pluginCacheFolder: PluginCacheFolder = { path: join(app.getPath("userData"), "PluginCache") };
 
-    return pluginCacheFolderPath;
+    await fileSystemUtility.createFolderIfDoesntExist(pluginCacheFolder.path);
+
+    dependencyInjector.registerInstance<PluginCacheFolder>("PluginCacheFolder", pluginCacheFolder);
 };
