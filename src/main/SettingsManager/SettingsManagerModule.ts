@@ -15,10 +15,10 @@ export class SettingsManagerModule {
             new SettingsManager(settingsReader, settingsWriter),
         );
 
-        SettingsManagerModule.registerIpcEvents(dependencyInjector);
+        SettingsManagerModule.registerIpcEventListeners(dependencyInjector);
     }
 
-    private static registerIpcEvents(dependencyInjector: DependencyInjector): void {
+    private static registerIpcEventListeners(dependencyInjector: DependencyInjector): void {
         const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
 

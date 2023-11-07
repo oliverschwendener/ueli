@@ -7,16 +7,20 @@ import { InMemorySearchIndex } from "./InMemorySearchIndex";
 export class SearchIndexModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {
         const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
-        const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
 
-        const searchIndex = new InMemorySearchIndex(eventEmitter);
+        dependencyInjector.registerInstance<SearchIndex>("SearchIndex", new InMemorySearchIndex(eventEmitter));
+
+        SearchIndexModule.registerIpcMainEventListeners(dependencyInjector);
+    }
+
+    private static registerIpcMainEventListeners(dependencyInjector: DependencyInjector) {
+        const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
+        const searchIndex = dependencyInjector.getInstance<SearchIndex>("SearchIndex");
 
         ipcMain.on("pluginDisabled", (_, { pluginId }: { pluginId: string }) =>
             searchIndex.removeSearchResultItems(pluginId),
         );
 
         ipcMain.on("getSearchResultItems", (event) => (event.returnValue = searchIndex.getSearchResultItems()));
-
-        dependencyInjector.registerInstance<SearchIndex>("SearchIndex", searchIndex);
     }
 }
