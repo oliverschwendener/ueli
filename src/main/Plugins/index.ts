@@ -1,1 +1,1 @@
-export * from "./usePlugins";
+export * from "./PluginModule";

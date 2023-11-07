@@ -1,1 +1,1 @@
-export * from "./useBrowserWindowToggler";
+export * from "./BrowserWindowTogglerModule";

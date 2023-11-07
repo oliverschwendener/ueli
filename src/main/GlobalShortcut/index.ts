@@ -1,1 +1,1 @@
-export * from "./useGlobalShortcut";
+export * from "./GlobalShortcutModule";

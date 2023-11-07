@@ -1,1 +1,1 @@
-export * from "./useEventEmitter";
+export * from "./EventEmitterModule";

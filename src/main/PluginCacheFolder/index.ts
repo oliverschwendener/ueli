@@ -1,1 +1,1 @@
-export * from "./usePluginCacheFolder";
+export * from "./PluginCacheFolderModule";

@@ -1,1 +1,1 @@
-export * from "./useSearchIndex";
+export * from "./SearchIndexModule";

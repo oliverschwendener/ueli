@@ -1,1 +1,1 @@
-export * from "./useSettingsWriter";
+export * from "./SettingsWriterModule";

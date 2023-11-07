@@ -1,1 +1,1 @@
-export * from "./useSettingsReader";
+export * from "./SettingsReaderModule";

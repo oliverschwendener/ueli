@@ -16,7 +16,7 @@ export class DependencyInjector implements DependencyInjectorInterface {
         const instance = this.dependencies[name] as T;
 
         if (!instance) {
-            throw new Error(`Instance ${instance} not registered`);
+            throw new Error(`Iinstance with name "${name}" not found`);
         }
 
         return instance;

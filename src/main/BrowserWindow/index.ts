@@ -1,1 +1,1 @@
-export * from "./useBrowserWindow";
+export * from "./BrowserWindowModule";

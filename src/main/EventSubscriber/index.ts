@@ -1,1 +1,1 @@
-export * from "./useEventSubscriber";
+export * from "./EventSubscriberModule";

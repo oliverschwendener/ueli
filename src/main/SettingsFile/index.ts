@@ -1,1 +1,1 @@
-export * from "./useSettingsFile";
+export * from "./SettingsFileModule";

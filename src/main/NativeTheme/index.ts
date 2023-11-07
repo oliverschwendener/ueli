@@ -1,1 +1,1 @@
-export * from "./useNativeTheme";
+export * from "./NativeThemeModule";

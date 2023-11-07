@@ -1,1 +1,1 @@
-export * from "./useCurrentOperatingSystem";
+export * from "./OperatingSystemModule";

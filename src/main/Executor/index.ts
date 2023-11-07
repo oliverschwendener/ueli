@@ -1,2 +1,1 @@
-export type * from "./Executor";
-export * from "./useExecutor";
+export * from "./ExecutorModule";

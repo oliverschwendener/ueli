@@ -12,24 +12,25 @@ import {
 } from "electron";
 import mitt, { Emitter } from "mitt";
 import { platform } from "os";
-import { useBrowserWindow } from "./BrowserWindow";
-import { useBrowserWindowToggler } from "./BrowserWindowToggler";
+import { BrowserWindowModule } from "./BrowserWindow";
+import { BrowserWindowTogglerModule } from "./BrowserWindowToggler";
+import { CommandlineUtilityModule } from "./CommandlineUtility";
 import { DependencyInjector } from "./DependencyInjector";
-import { useEventEmitter } from "./EventEmitter";
-import { useEventSubscriber } from "./EventSubscriber";
-import { useExecutor } from "./Executor";
-import { useGlobalShortcut } from "./GlobalShortcut";
-import { useNativeTheme } from "./NativeTheme";
-import { useCurrentOperatingSystem } from "./OperatingSystem";
-import { usePluginCacheFolder } from "./PluginCacheFolder";
-import { usePlugins } from "./Plugins";
-import { useSearchIndex } from "./SearchIndex";
-import { useSettingsEventSubscriber } from "./SettingsEventSubscriber";
-import { useSettingsFile } from "./SettingsFile";
-import { useSettingsManager } from "./SettingsManager";
-import { useSettingsReader } from "./SettingsReader";
-import { useSettingsWriter } from "./SettingsWriter";
-import { useUtilities } from "./Utilities";
+import { EventEmitterModule } from "./EventEmitter";
+import { EventSubscriberModule } from "./EventSubscriber";
+import { ExecutorModule } from "./Executor";
+import { FileSystemUtilityModule } from "./FileSystemUtility";
+import { GlobalShortcutModule } from "./GlobalShortcut";
+import { NativeThemeModule } from "./NativeTheme";
+import { OperatingSystemModule } from "./OperatingSystem";
+import { PluginCacheFolderModule } from "./PluginCacheFolder";
+import { PluginModule } from "./Plugins";
+import { SearchIndexModule } from "./SearchIndex";
+import { SettingsEventSubscriberModule } from "./SettingsEventSubscriber";
+import { SettingsFileModule } from "./SettingsFile";
+import { SettingsManagerModule } from "./SettingsManager";
+import { SettingsReaderModule } from "./SettingsReader";
+import { SettingsWriterModule } from "./SettingsWriter";
 
 (async () => {
     await app.whenReady();
@@ -38,6 +39,7 @@ import { useUtilities } from "./Utilities";
 
     const dependencyInjector = new DependencyInjector();
 
+    // Electron Modules
     dependencyInjector.registerInstance<string>("Platform", platform());
     dependencyInjector.registerInstance<App>("App", app);
     dependencyInjector.registerInstance<IpcMain>("IpcMain", ipcMain);
@@ -46,25 +48,23 @@ import { useUtilities } from "./Utilities";
     dependencyInjector.registerInstance<GlobalShortcut>("GlobalShortcut", globalShortcut);
     dependencyInjector.registerInstance<Emitter<Record<string, unknown>>>("Emitter", mitt<Record<string, unknown>>());
 
-    useUtilities(dependencyInjector);
-    useCurrentOperatingSystem(dependencyInjector);
-    useSettingsFile(dependencyInjector);
-    useSettingsReader(dependencyInjector);
-    useSettingsWriter(dependencyInjector);
-    useSettingsManager(dependencyInjector);
-    useSettingsEventSubscriber(dependencyInjector);
-    useEventEmitter(dependencyInjector);
-    useEventSubscriber(dependencyInjector);
-    useSearchIndex(dependencyInjector);
-    useNativeTheme(dependencyInjector);
-
-    await usePluginCacheFolder(dependencyInjector);
-
-    usePlugins(dependencyInjector);
-    useExecutor(dependencyInjector);
-
-    await useBrowserWindow(dependencyInjector);
-
-    useBrowserWindowToggler(dependencyInjector);
-    useGlobalShortcut(dependencyInjector);
+    // Ueli Modules
+    CommandlineUtilityModule.bootstrap(dependencyInjector);
+    FileSystemUtilityModule.bootstrap(dependencyInjector);
+    OperatingSystemModule.bootstrap(dependencyInjector);
+    SettingsFileModule.bootstrap(dependencyInjector);
+    SettingsReaderModule.bootstrap(dependencyInjector);
+    SettingsWriterModule.bootstrap(dependencyInjector);
+    SettingsManagerModule.bootstrap(dependencyInjector);
+    SettingsEventSubscriberModule.bootstrap(dependencyInjector);
+    EventEmitterModule.bootstrap(dependencyInjector);
+    EventSubscriberModule.bootstrap(dependencyInjector);
+    SearchIndexModule.bootstrap(dependencyInjector);
+    NativeThemeModule.bootstrap(dependencyInjector);
+    await PluginCacheFolderModule.bootstrap(dependencyInjector);
+    PluginModule.bootstrap(dependencyInjector);
+    ExecutorModule.bootstrap(dependencyInjector);
+    await BrowserWindowModule.bootstrap(dependencyInjector);
+    BrowserWindowTogglerModule.bootstrap(dependencyInjector);
+    GlobalShortcutModule.bootstrap(dependencyInjector);
 })();
