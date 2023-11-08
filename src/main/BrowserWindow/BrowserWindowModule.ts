@@ -1,7 +1,7 @@
 import type { DependencyInjector } from "@common/DependencyInjector";
 import type { EventSubscriber } from "@common/EventSubscriber";
 import type { OperatingSystem } from "@common/OperatingSystem";
-import type { SearchResultItem } from "@common/SearchResultItem";
+import { SearchResultItemAction } from "@common/SearchResultItemAction";
 import type { SettingsManager } from "@common/SettingsManager";
 import { BrowserWindow, type App, type NativeTheme } from "electron";
 import { join } from "path";
@@ -40,17 +40,13 @@ export class BrowserWindowModule {
     ) {
         eventSubscriber.subscribe("searchIndexUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
 
-        eventSubscriber.subscribe(
-            "executionSucceeded",
-            ({ searchResultItem }: { searchResultItem: SearchResultItem }) => {
-                if (
-                    settingsManager.getSettingByKey("window.hideWindowAfterExecution", true) &&
-                    searchResultItem.hideWindowAfterExecution
-                ) {
-                    browserWindow.hide();
-                }
-            },
-        );
+        eventSubscriber.subscribe("actionInvokationSucceeded", ({ action }: { action: SearchResultItemAction }) => {
+            const shouldHideWindow =
+                settingsManager.getSettingByKey("window.hideWindowAfterExecution", true) &&
+                action.hideWindowAfterInvokation;
+
+            shouldHideWindow && browserWindow.hide();
+        });
     }
 
     private static registerNativeThemeEventListeners(browserWindow: BrowserWindow, nativeTheme: NativeTheme) {

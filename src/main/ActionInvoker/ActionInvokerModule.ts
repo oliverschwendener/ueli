@@ -1,35 +1,35 @@
 import type { CommandlineUtility } from "@common/CommandlineUtility";
 import type { DependencyInjector } from "@common/DependencyInjector";
-import { EventEmitter } from "@common/EventEmitter";
-import type { SearchResultItem } from "@common/SearchResultItem";
+import type { EventEmitter } from "@common/EventEmitter";
+import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import { IpcMain, Shell } from "electron";
 import {
-    CommandlineExecutionService,
-    FilePathExecutionService,
-    PowershellExecutionService,
+    CommandlineActionHandler,
+    FilePathActionHandler,
+    PowershellActionHandler,
     UrlExecutionService,
-} from "./ExecutionServices";
-import { Executor } from "./Executor";
+} from "./ActionHandlers";
+import { ActionInvoker } from "./ActionInvoker";
 
-export class ExecutorModule {
+export class ActionInvokerModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {
         const shell = dependencyInjector.getInstance<Shell>("Shell");
         const commandlineUtility = dependencyInjector.getInstance<CommandlineUtility>("CommandlineUtility");
         const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
 
-        const executor = new Executor(
+        const actionInvoker = new ActionInvoker(
             {
-                FilePath: new FilePathExecutionService(shell),
+                FilePath: new FilePathActionHandler(shell),
                 URL: new UrlExecutionService(shell),
-                Powershell: new PowershellExecutionService(commandlineUtility),
-                Commandline: new CommandlineExecutionService(commandlineUtility),
+                Powershell: new PowershellActionHandler(commandlineUtility),
+                Commandline: new CommandlineActionHandler(commandlineUtility),
             },
             eventEmitter,
         );
 
-        ipcMain.handle("invokeExecution", (_, { searchResultItem }: { searchResultItem: SearchResultItem }) =>
-            executor.execute(searchResultItem),
+        ipcMain.handle("invokeAction", (_, { action }: { action: SearchResultItemAction }) =>
+            actionInvoker.invoke(action),
         );
     }
 }

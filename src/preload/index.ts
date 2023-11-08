@@ -8,7 +8,7 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
     getSettingByKey: <T>(key: string, defaultValue: T): T =>
         ipcRenderer.sendSync("getSettingByKey", { key, defaultValue }),
-    invokeExecution: (executionArgument) => ipcRenderer.invoke("invokeExecution", executionArgument),
+    invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
     onNativeThemeChanged: (callback) => ipcRenderer.on("nativeThemeChanged", callback),
     onSearchIndexUpdated: (callback) => ipcRenderer.on("searchIndexUpdated", callback),
     themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),

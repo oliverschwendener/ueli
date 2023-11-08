@@ -1,4 +1,5 @@
 import { SearchResultItem } from "@common/SearchResultItem";
+import { SearchResultItemAction } from "@common/SearchResultItemAction";
 import { Button, Divider, Input } from "@fluentui/react-components";
 import { Settings16Regular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
@@ -44,7 +45,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
         filteredSearchResultItems[selectedItemIndex];
 
-    const invokeExecution = (searchResultItem: SearchResultItem) => contextBridge.invokeExecution({ searchResultItem });
+    const invokeExecution = (action: SearchResultItemAction) => contextBridge.invokeAction(action);
 
     const handleUserInputKeyboardEvent = async (keyboardEvent: KeyboardEvent) => {
         if (keyboardEvent.key === "ArrowUp") {
@@ -60,18 +61,18 @@ export const Search = ({ searchResultItems }: SearchProps) => {
         if (keyboardEvent.key === "Enter") {
             const searchResultItem = getSelectedSearchResultItem();
 
-            if (!searchResultItem) {
+            if (!searchResultItem || !searchResultItem.defaultAction) {
                 return;
             }
 
-            await invokeExecution(searchResultItem);
+            await invokeExecution(searchResultItem.defaultAction);
         }
     };
 
     const handleSearchResultItemClickEvent = (index: number) => setSelectedItemIndex(index);
 
     const handleSearchResultItemDoubleClickEvent = (searchResultItem: SearchResultItem) =>
-        invokeExecution(searchResultItem);
+        searchResultItem.defaultAction && invokeExecution(searchResultItem.defaultAction);
 
     useEffect(() => {
         setFocusOnUserInputAndSelectText();

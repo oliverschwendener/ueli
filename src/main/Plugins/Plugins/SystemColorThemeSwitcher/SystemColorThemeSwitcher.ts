@@ -20,12 +20,16 @@ export class SystemColorThemeSwitcher implements UeliPlugin {
     private getSearchResultItem({ switchToLightMode }: { switchToLightMode: boolean }): SearchResultItem {
         return {
             description: "System",
-            executionServiceArgument: this.getSearchResultItemExecutionServiceArgument(switchToLightMode),
-            executionServiceId: this.getSearchResultItemExecutionServiceId(),
             id: SystemColorThemeSwitcher.getSearchResultItemId(switchToLightMode),
             name: SystemColorThemeSwitcher.getSearchResultItemName(switchToLightMode),
-            hideWindowAfterExecution: false,
             imageUrl: this.getSearchResultItemImageUrl(),
+            defaultAction: {
+                argument: this.getSearchResultItemExecutionServiceArgument(switchToLightMode),
+                description: "",
+                descriptionTranslationKey: "",
+                handlerId: this.getSearchResultItemExecutionServiceId(),
+                hideWindowAfterInvokation: false,
+            },
         };
     }
 

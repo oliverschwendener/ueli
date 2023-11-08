@@ -9,12 +9,16 @@ describe(Application, () => {
         expect(application.toSearchResultItem()).toEqual(<SearchResultItem>{
             description: "Application",
             descriptionTranslationKey: "plugin[ApplicationSearch].searchResultItemDescription",
-            executionServiceArgument: "/Applications/My App.app",
-            executionServiceId: "FilePath",
             id: "L0FwcGxpY2F0aW9ucy9NeSBBcHAuYXBw",
             name: "My App",
             imageUrl: "file:///Users/Dummy/Icons/icon.png",
-            hideWindowAfterExecution: true,
+            defaultAction: {
+                argument: "/Applications/My App.app",
+                description: "",
+                descriptionTranslationKey: "",
+                handlerId: "FilePath",
+                hideWindowAfterInvokation: true,
+            },
         });
     });
 });

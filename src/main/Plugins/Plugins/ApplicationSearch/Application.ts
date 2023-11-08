@@ -12,12 +12,16 @@ export class Application implements Searchable {
         return {
             description: "Application",
             descriptionTranslationKey: "plugin[ApplicationSearch].searchResultItemDescription",
-            executionServiceArgument: this.filePath,
-            executionServiceId: "FilePath",
             id: this.getId(),
             name: this.name,
             imageUrl: `file://${this.iconFilePath}`,
-            hideWindowAfterExecution: true,
+            defaultAction: {
+                argument: this.filePath,
+                description: "",
+                descriptionTranslationKey: "",
+                handlerId: "FilePath",
+                hideWindowAfterInvokation: true,
+            },
         };
     }
 

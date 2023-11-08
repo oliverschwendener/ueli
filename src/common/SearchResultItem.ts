@@ -1,3 +1,5 @@
+import type { SearchResultItemAction } from "./SearchResultItemAction";
+
 export type SearchResultItem = {
     id: string;
     name: string;
@@ -5,7 +7,6 @@ export type SearchResultItem = {
     description: string;
     descriptionTranslationKey?: string;
     imageUrl?: string;
-    executionServiceId: string;
-    executionServiceArgument: string;
-    hideWindowAfterExecution: boolean;
+    defaultAction: SearchResultItemAction;
+    additionalActions?: SearchResultItemAction[];
 };
