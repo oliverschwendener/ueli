@@ -6,7 +6,7 @@ export const getOperatingSystemFromPlatform = (platform: string): OperatingSyste
         win32: "Windows",
     };
 
-    const operatingSystem: OperatingSystem | undefined = operatingSystemMap[platform];
+    const operatingSystem = operatingSystemMap[platform];
 
     if (!operatingSystem) {
         throw new Error(`Unexpected platform: ${platform}`);
