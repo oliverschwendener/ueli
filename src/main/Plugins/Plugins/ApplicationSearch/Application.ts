@@ -19,9 +19,19 @@ export class Application implements Searchable {
                 argument: this.filePath,
                 description: "",
                 descriptionTranslationKey: "",
-                handlerId: "FilePath",
+                handlerId: "OpenFilePath",
                 hideWindowAfterInvokation: true,
             },
+            additionalActions: [
+                {
+                    argument: this.filePath,
+                    description: "Show in Finder",
+                    descriptionTranslationKey:
+                        "plugin[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer",
+                    handlerId: "ShowItemInFileExplorer",
+                    hideWindowAfterInvokation: true,
+                },
+            ],
         };
     }
 

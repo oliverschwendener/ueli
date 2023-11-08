@@ -5,8 +5,9 @@ import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import { IpcMain, Shell } from "electron";
 import {
     CommandlineActionHandler,
-    FilePathActionHandler,
+    OpenFilePathActionHandler,
     PowershellActionHandler,
+    ShowItemInFileExplorerActionHandler,
     UrlExecutionService,
 } from "./ActionHandlers";
 import { ActionInvoker } from "./ActionInvoker";
@@ -20,7 +21,8 @@ export class ActionInvokerModule {
 
         const actionInvoker = new ActionInvoker(
             {
-                FilePath: new FilePathActionHandler(shell),
+                OpenFilePath: new OpenFilePathActionHandler(shell),
+                ShowItemInFileExplorer: new ShowItemInFileExplorerActionHandler(shell),
                 URL: new UrlExecutionService(shell),
                 Powershell: new PowershellActionHandler(commandlineUtility),
                 Commandline: new CommandlineActionHandler(commandlineUtility),

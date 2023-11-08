@@ -16,7 +16,7 @@ describe(Application, () => {
                 argument: "/Applications/My App.app",
                 description: "",
                 descriptionTranslationKey: "",
-                handlerId: "FilePath",
+                handlerId: "OpenFilePath",
                 hideWindowAfterInvokation: true,
             },
         });

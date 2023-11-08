@@ -2,7 +2,7 @@ import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import type { Shell } from "electron";
 import type { ActionHandler } from "./ActionHandler";
 
-export class FilePathActionHandler implements ActionHandler {
+export class OpenFilePathActionHandler implements ActionHandler {
     public constructor(private readonly shell: Shell) {}
 
     public invoke(action: SearchResultItemAction): Promise<void> {

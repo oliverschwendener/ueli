@@ -19,6 +19,7 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "settingsWindow.hideWindowAfterExecution": "Hide window after execution",
             "settingsWindow.hideWindowOnBlur": "Hide window on blur",
             "plugin[ApplicationSearch].searchResultItemDescription": "Application",
+            "plugin[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer": "Show in file explorer",
             "plugin[ApplicationSearch].pluginName": "Application Search",
             "plugin[SystemColorThemeSwitcher].pluginName": "System Color Theme Switcher",
         },
@@ -44,6 +45,8 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "settingsWindow.hideWindowOnBlur": "Fenster verstecken bei Fokusverlust",
             "plugin[ApplicationSearch].searchResultItemDescription": "Anwendung",
             "plugin[ApplicationSearch].pluginName": "Anwendungssuche",
+            "plugin[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer":
+                "Im Datei-Explorer anzeigen",
             "plugin[SystemColorThemeSwitcher].pluginName": "System Color Theme Switcher",
         },
     },

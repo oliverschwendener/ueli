@@ -1,9 +1,9 @@
 import { SearchResultItemAction } from "@common/SearchResultItemAction";
 import type { Shell } from "electron";
 import { describe, expect, it, vi } from "vitest";
-import { FilePathActionHandler } from "./FilePathActionHandler";
+import { OpenFilePathActionHandler } from "./OpenFilePathActionHandler";
 
-describe(FilePathActionHandler, () => {
+describe(OpenFilePathActionHandler, () => {
     it("should call shell's openPath function when executing search result item", async () => {
         const openPathMock = vi.fn().mockReturnValue(Promise.resolve(""));
         const shell = <Shell>{ openPath: (path) => openPathMock(path) };
@@ -12,7 +12,7 @@ describe(FilePathActionHandler, () => {
             argument: "this is a file path",
         };
 
-        await new FilePathActionHandler(shell).invoke(action);
+        await new OpenFilePathActionHandler(shell).invoke(action);
 
         expect(openPathMock).toHaveBeenCalledWith(action.argument);
     });
@@ -25,6 +25,6 @@ describe(FilePathActionHandler, () => {
             argument: "this is a file path",
         };
 
-        await expect(new FilePathActionHandler(shell).invoke(action)).rejects.toThrowError("there was an error");
+        await expect(new OpenFilePathActionHandler(shell).invoke(action)).rejects.toThrowError("there was an error");
     });
 });

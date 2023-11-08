@@ -1,5 +1,6 @@
 export * from "./ActionHandler";
 export * from "./CommandlineActionHandler";
-export * from "./FilePathActionHandler";
+export * from "./OpenFilePathActionHandler";
 export * from "./PowershellActionHandler";
+export * from "./ShowItemInFileExplorerActionHandler";
 export * from "./UrlActionHandler";
