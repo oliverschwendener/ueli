@@ -1,5 +1,5 @@
 import type { CommandlineUtility } from "@common/CommandlineUtility";
-import type { ExecutionArgument } from "@common/ExecutionArgument";
+import type { SearchResultItem } from "@common/SearchResultItem";
 import { describe, expect, it, vi } from "vitest";
 import { PowershellExecutionService } from "./PowershellExecutionService";
 
@@ -11,16 +11,14 @@ describe(PowershellExecutionService, () => {
             executeCommand: (command) => executeCommandMock(command),
         };
 
-        const executionArgument = <ExecutionArgument>{
-            searchResultItem: {
-                executionServiceArgument: "this is my powershell command",
-            },
+        const searchResultItem = <SearchResultItem>{
+            executionServiceArgument: "this is my powershell command",
         };
 
-        new PowershellExecutionService(commandlineUtility).execute(executionArgument);
+        new PowershellExecutionService(commandlineUtility).execute(searchResultItem);
 
         expect(executeCommandMock).toHaveBeenCalledWith(
-            `powershell -Command "& {${executionArgument.searchResultItem.executionServiceArgument}}"`,
+            `powershell -Command "& {${searchResultItem.executionServiceArgument}}"`,
         );
     });
 });

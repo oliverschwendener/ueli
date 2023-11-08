@@ -1,5 +1,4 @@
 import type { ContextBridge } from "@common/ContextBridge";
-import type { ExecutionArgument } from "@common/ExecutionArgument";
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
@@ -9,7 +8,7 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
     getSettingByKey: <T>(key: string, defaultValue: T): T =>
         ipcRenderer.sendSync("getSettingByKey", { key, defaultValue }),
-    invokeExecution: (executionArgument: ExecutionArgument) => ipcRenderer.invoke("invokeExecution", executionArgument),
+    invokeExecution: (executionArgument) => ipcRenderer.invoke("invokeExecution", executionArgument),
     onNativeThemeChanged: (callback) => ipcRenderer.on("nativeThemeChanged", callback),
     onSearchIndexUpdated: (callback) => ipcRenderer.on("searchIndexUpdated", callback),
     themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),

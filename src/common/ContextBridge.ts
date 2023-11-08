@@ -1,4 +1,3 @@
-import type { ExecutionArgument } from "./ExecutionArgument";
 import type { SearchResultItem } from "./SearchResultItem";
 import type { UeliPlugin } from "./UeliPlugin";
 
@@ -8,7 +7,7 @@ export type ContextBridge = {
     pluginEnabled: (pluginId: string) => void;
     getSearchResultItems: () => SearchResultItem[];
     getSettingByKey: <T>(key: string, defaultValue: T) => T;
-    invokeExecution: (executionArgument: ExecutionArgument) => Promise<void>;
+    invokeExecution: (executionArgument: { searchResultItem: SearchResultItem }) => Promise<void>;
     onNativeThemeChanged: (callback: () => void) => void;
     onSearchIndexUpdated: (callback: () => void) => void;
     themeShouldUseDarkColors: () => boolean;

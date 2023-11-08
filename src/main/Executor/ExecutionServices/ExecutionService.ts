@@ -1,5 +1,5 @@
-import type { ExecutionArgument } from "@common/ExecutionArgument";
+import type { SearchResultItem } from "@common/SearchResultItem";
 
 export interface ExecutionService {
-    execute(executionArgument: ExecutionArgument): Promise<void>;
+    execute(searchResultItem: SearchResultItem): Promise<void>;
 }

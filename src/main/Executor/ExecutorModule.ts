@@ -1,7 +1,7 @@
-import { CommandlineUtility } from "@common/CommandlineUtility";
+import type { CommandlineUtility } from "@common/CommandlineUtility";
 import type { DependencyInjector } from "@common/DependencyInjector";
 import { EventEmitter } from "@common/EventEmitter";
-import type { ExecutionArgument } from "@common/ExecutionArgument";
+import type { SearchResultItem } from "@common/SearchResultItem";
 import { IpcMain, Shell } from "electron";
 import {
     CommandlineExecutionService,
@@ -28,8 +28,8 @@ export class ExecutorModule {
             eventEmitter,
         );
 
-        ipcMain.handle("invokeExecution", (_, executionArgument: ExecutionArgument) =>
-            executor.execute(executionArgument),
+        ipcMain.handle("invokeExecution", (_, { searchResultItem }: { searchResultItem: SearchResultItem }) =>
+            executor.execute(searchResultItem),
         );
     }
 }

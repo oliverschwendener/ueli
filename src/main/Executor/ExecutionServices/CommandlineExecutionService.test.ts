@@ -1,5 +1,5 @@
 import type { CommandlineUtility } from "@common/CommandlineUtility";
-import type { ExecutionArgument } from "@common/ExecutionArgument";
+import type { SearchResultItem } from "@common/SearchResultItem";
 import { describe, expect, it, vi } from "vitest";
 import { CommandlineExecutionService } from "./CommandlineExecutionService";
 
@@ -11,16 +11,12 @@ describe(CommandlineExecutionService, () => {
             executeCommand: (command) => executeCommandMock(command),
         };
 
-        const executionArgument = <ExecutionArgument>{
-            searchResultItem: {
-                executionServiceArgument: "this is a commandline command",
-            },
+        const searchResultItem = <SearchResultItem>{
+            executionServiceArgument: "this is a commandline command",
         };
 
-        new CommandlineExecutionService(commandlineUtility).execute(executionArgument);
+        new CommandlineExecutionService(commandlineUtility).execute(searchResultItem);
 
-        expect(executeCommandMock).toHaveBeenLastCalledWith(
-            executionArgument.searchResultItem.executionServiceArgument,
-        );
+        expect(executeCommandMock).toHaveBeenLastCalledWith(searchResultItem.executionServiceArgument);
     });
 });

@@ -1,4 +1,4 @@
-import type { ExecutionArgument } from "@common/ExecutionArgument";
+import type { SearchResultItem } from "@common/SearchResultItem";
 import type { Shell } from "electron";
 import { describe, expect, it, vi } from "vitest";
 import { FilePathExecutionService } from "./FilePathExecutionService";
@@ -8,28 +8,24 @@ describe(FilePathExecutionService, () => {
         const openPathMock = vi.fn().mockReturnValue(Promise.resolve(""));
         const shell = <Shell>{ openPath: (path) => openPathMock(path) };
 
-        const executionArgument = <ExecutionArgument>{
-            searchResultItem: {
-                executionServiceArgument: "this is a file path",
-            },
+        const searchResultItem = <SearchResultItem>{
+            executionServiceArgument: "this is a file path",
         };
 
-        await new FilePathExecutionService(shell).execute(executionArgument);
+        await new FilePathExecutionService(shell).execute(searchResultItem);
 
-        expect(openPathMock).toHaveBeenCalledWith(executionArgument.searchResultItem.executionServiceArgument);
+        expect(openPathMock).toHaveBeenCalledWith(searchResultItem.executionServiceArgument);
     });
 
     it("should throw an error if shell's openPath function returns an error message", async () => {
         const openPathMock = vi.fn().mockReturnValue(Promise.resolve("there was an error"));
         const shell = <Shell>{ openPath: (path) => openPathMock(path) };
 
-        const executionArgument = <ExecutionArgument>{
-            searchResultItem: {
-                executionServiceArgument: "this is a file path",
-            },
+        const searchResultItem = <SearchResultItem>{
+            executionServiceArgument: "this is a file path",
         };
 
-        await expect(new FilePathExecutionService(shell).execute(executionArgument)).rejects.toThrowError(
+        await expect(new FilePathExecutionService(shell).execute(searchResultItem)).rejects.toThrowError(
             "there was an error",
         );
     });

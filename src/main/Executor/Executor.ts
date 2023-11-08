@@ -1,5 +1,5 @@
 import type { EventEmitter } from "@common/EventEmitter";
-import type { ExecutionArgument } from "@common/ExecutionArgument";
+import type { SearchResultItem } from "@common/SearchResultItem";
 import type { ExecutionService } from "./ExecutionServices/ExecutionService";
 
 export class Executor {
@@ -8,8 +8,7 @@ export class Executor {
         private readonly eventEmitter: EventEmitter,
     ) {}
 
-    public async execute(executionArgument: ExecutionArgument): Promise<void> {
-        const { searchResultItem } = executionArgument;
+    public async execute(searchResultItem: SearchResultItem): Promise<void> {
         const { executionServiceId } = searchResultItem;
 
         const executionService = this.executionServices[executionServiceId];
@@ -18,7 +17,7 @@ export class Executor {
             throw new Error(`Unable to find execution service by id: '${executionServiceId}'`);
         }
 
-        await executionService.execute(executionArgument);
+        await executionService.execute(searchResultItem);
 
         this.eventEmitter.emitEvent("executionSucceeded", { searchResultItem });
     }

@@ -1,4 +1,4 @@
-import type { ExecutionArgument } from "@common/ExecutionArgument";
+import type { SearchResultItem } from "@common/SearchResultItem";
 import type { Shell } from "electron";
 import { describe, expect, it, vi } from "vitest";
 import { UrlExecutionService } from "./UrlExecutionService";
@@ -8,14 +8,12 @@ describe(UrlExecutionService, () => {
         const openExternalMock = vi.fn().mockReturnValue(Promise.resolve());
 
         const shell = <Shell>{ openExternal: (url) => openExternalMock(url) };
-        const executionArgument = <ExecutionArgument>{
-            searchResultItem: {
-                executionServiceArgument: "this is a url",
-            },
+        const searchResultItem = <SearchResultItem>{
+            executionServiceArgument: "this is a url",
         };
 
-        await new UrlExecutionService(shell).execute(executionArgument);
+        await new UrlExecutionService(shell).execute(searchResultItem);
 
-        expect(openExternalMock).toHaveBeenCalledWith(executionArgument.searchResultItem.executionServiceArgument);
+        expect(openExternalMock).toHaveBeenCalledWith(searchResultItem.executionServiceArgument);
     });
 });
