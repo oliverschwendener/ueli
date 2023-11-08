@@ -9,7 +9,6 @@ describe(FilePathExecutionService, () => {
         const shell = <Shell>{ openPath: (path) => openPathMock(path) };
 
         const executionArgument = <ExecutionArgument>{
-            isAlternativeExecution: false,
             searchResultItem: {
                 executionServiceArgument: "this is a file path",
             },
@@ -25,7 +24,6 @@ describe(FilePathExecutionService, () => {
         const shell = <Shell>{ openPath: (path) => openPathMock(path) };
 
         const executionArgument = <ExecutionArgument>{
-            isAlternativeExecution: false,
             searchResultItem: {
                 executionServiceArgument: "this is a file path",
             },
@@ -34,26 +32,5 @@ describe(FilePathExecutionService, () => {
         await expect(new FilePathExecutionService(shell).execute(executionArgument)).rejects.toThrowError(
             "there was an error",
         );
-    });
-
-    it("should call shell's showItemInFolder function when execution search result item alternatively", async () => {
-        const showItemInFolderMock = vi.fn();
-
-        const shell = <Shell>{
-            showItemInFolder: (path) => {
-                showItemInFolderMock(path);
-            },
-        };
-
-        const executionArgument = <ExecutionArgument>{
-            isAlternativeExecution: true,
-            searchResultItem: {
-                executionServiceArgument: "this is a file path",
-            },
-        };
-
-        await new FilePathExecutionService(shell).execute(executionArgument);
-
-        expect(showItemInFolderMock).toHaveBeenCalledWith(executionArgument.searchResultItem.executionServiceArgument);
     });
 });

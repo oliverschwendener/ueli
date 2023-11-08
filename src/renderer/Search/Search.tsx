@@ -44,8 +44,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
         filteredSearchResultItems[selectedItemIndex];
 
-    const invokeExecution = (searchResultItem: SearchResultItem, isAlternativeExecution: boolean) =>
-        contextBridge.invokeExecution({ searchResultItem, isAlternativeExecution });
+    const invokeExecution = (searchResultItem: SearchResultItem) => contextBridge.invokeExecution({ searchResultItem });
 
     const handleUserInputKeyboardEvent = async (keyboardEvent: KeyboardEvent) => {
         if (keyboardEvent.key === "ArrowUp") {
@@ -65,14 +64,14 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                 return;
             }
 
-            await invokeExecution(searchResultItem, keyboardEvent.shiftKey);
+            await invokeExecution(searchResultItem);
         }
     };
 
     const handleSearchResultItemClickEvent = (index: number) => setSelectedItemIndex(index);
 
     const handleSearchResultItemDoubleClickEvent = (searchResultItem: SearchResultItem) =>
-        invokeExecution(searchResultItem, false);
+        invokeExecution(searchResultItem);
 
     useEffect(() => {
         setFocusOnUserInputAndSelectText();
