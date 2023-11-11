@@ -42,7 +42,7 @@ devDependencies:
     version: 6.1.0(eslint@8.45.0)(typescript@4.9.4)
   axios:
     specifier: ^1.2.4
-    version: 1.2.4
+    version: 1.6.0
   color:
     specifier: ^4.2.3
     version: 4.2.3
@@ -1743,8 +1743,8 @@ packages:
     engines: {node: '>=10.12.0'}
     dev: true
 
-  /axios@1.2.4:
-    resolution: {integrity: sha512-lIQuCfBJvZB/Bv7+RWUqEJqNShGOVpk9v7P0ZWx5Ip0qY6u7JBAU6dzQPMLasU9vHL2uD8av/1FDJXj7n6c39w==}
+  /axios@1.6.0:
+    resolution: {integrity: sha512-EZ1DYihju9pwVB+jg67ogm+Tmqc6JmhamRN6I4Zt8DfZu5lbcQGw3ozH9lFejSJgs/ibaef3A9PMXPLeefFGJg==}
     dependencies:
       follow-redirects: 1.15.2
       form-data: 4.0.0
