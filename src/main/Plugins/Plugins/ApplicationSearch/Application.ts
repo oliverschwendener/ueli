@@ -25,7 +25,7 @@ export class Application implements Searchable {
             additionalActions: [
                 {
                     argument: this.filePath,
-                    description: "Show in Finder",
+                    description: "Show in file explorer",
                     descriptionTranslationKey:
                         "plugin[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer",
                     handlerId: "ShowItemInFileExplorer",
