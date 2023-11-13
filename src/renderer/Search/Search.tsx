@@ -1,12 +1,12 @@
-import { SearchResultItem } from "@common/SearchResultItem";
-import { SearchResultItemAction } from "@common/SearchResultItemAction";
+import type { SearchResultItem } from "@common/SearchResultItem";
+import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import { Button, Divider, Input } from "@fluentui/react-components";
 import { Settings16Regular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { useContextBridge, useSetting } from "../Hooks";
-import { AdditionalActions } from "./AdditionalActions";
+import { ActionsMenu } from "./ActionsMenu";
 import { FavoritesList } from "./FavoritesList";
 import { filterSearchResultItemsBySearchTerm } from "./Helpers";
 import { SearchResultList } from "./SearchResultList";
@@ -95,12 +95,12 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     const updateAdditionalActions = () => {
         const searchResultItem = getSelectedSearchResultItem();
 
-        if (!searchResultItem || !searchResultItem.additionalActions) {
+        if (!searchResultItem) {
             setAdditionalActions([]);
             return;
         }
 
-        setAdditionalActions(searchResultItem.additionalActions);
+        setAdditionalActions([searchResultItem.defaultAction, ...(searchResultItem.additionalActions ?? [])]);
     };
 
     useEffect(() => {
@@ -170,7 +170,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                 >
                     {t("general.settings")}
                 </Button>
-                <AdditionalActions
+                <ActionsMenu
                     actions={additionalActions}
                     invokeAction={invokeAction}
                     additionalActionsButtonRef={additionalActionsButtonRef}

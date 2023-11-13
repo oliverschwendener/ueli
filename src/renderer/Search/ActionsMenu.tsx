@@ -1,6 +1,7 @@
 import { SearchResultItemAction } from "@common/SearchResultItemAction";
 import { Button, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger } from "@fluentui/react-components";
 import { FlashRegular } from "@fluentui/react-icons";
+import { useTranslation } from "react-i18next";
 
 type AdditionalActionsProps = {
     actions: SearchResultItemAction[];
@@ -9,12 +10,14 @@ type AdditionalActionsProps = {
     onMenuClosed: () => void;
 };
 
-export const AdditionalActions = ({
+export const ActionsMenu = ({
     actions,
     invokeAction,
     additionalActionsButtonRef,
     onMenuClosed,
 }: AdditionalActionsProps) => {
+    const { t } = useTranslation();
+
     return (
         <Menu
             onOpenChange={(_, { open }) => {
@@ -32,7 +35,7 @@ export const AdditionalActions = ({
                     icon={<FlashRegular />}
                     ref={additionalActionsButtonRef}
                 >
-                    Actions
+                    {t("general.actions")}
                 </Button>
             </MenuTrigger>
             <MenuPopover>
@@ -42,7 +45,9 @@ export const AdditionalActions = ({
                             key={`additional-action-${action.argument}-${action.handlerId}`}
                             onClick={() => invokeAction(action)}
                         >
-                            {action.description}
+                            {action.descriptionTranslationKey
+                                ? t(action.descriptionTranslationKey)
+                                : action.description}
                         </MenuItem>
                     ))}
                 </MenuList>

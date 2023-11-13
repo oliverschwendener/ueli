@@ -2,6 +2,7 @@ export const resources: Record<string, { translation: Record<string, string> }> 
     "en-US": {
         translation: {
             "general.settings": "Settings",
+            "general.actions": "Actions",
             "settingsAppearance.preferredDarkTheme": "Preferred dark theme",
             "settingsAppearance.preferredLightTheme": "Preferred light theme",
             "settingsAppearance.preferredTheme": "Preferred theme",
@@ -19,6 +20,7 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "settingsWindow.hideWindowAfterExecution": "Hide window after execution",
             "settingsWindow.hideWindowOnBlur": "Hide window on blur",
             "plugin[ApplicationSearch].searchResultItemDescription": "Application",
+            "plugin[ApplicationSearch].searchResultItem.defaultAction.openApplication": "Open application",
             "plugin[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer": "Show in file explorer",
             "plugin[ApplicationSearch].pluginName": "Application Search",
             "plugin[SystemColorThemeSwitcher].pluginName": "System Color Theme Switcher",
@@ -27,6 +29,7 @@ export const resources: Record<string, { translation: Record<string, string> }> 
     "de-CH": {
         translation: {
             "general.settings": "Einstellungen",
+            "general.actions": "Aktionen",
             "settingsAppearance.preferredDarkTheme": "Bevorzugtes dunkles Theme",
             "settingsAppearance.preferredLightTheme": "Bevorzugtes helles Theme",
             "settingsAppearance.preferredTheme": "Bevorzugtes Theme",
@@ -45,6 +48,7 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "settingsWindow.hideWindowOnBlur": "Fenster verstecken bei Fokusverlust",
             "plugin[ApplicationSearch].searchResultItemDescription": "Anwendung",
             "plugin[ApplicationSearch].pluginName": "Anwendungssuche",
+            "plugin[ApplicationSearch].searchResultItem.defaultAction.openApplication": "Anwendung öffnen",
             "plugin[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer":
                 "Im Datei-Explorer anzeigen",
             "plugin[SystemColorThemeSwitcher].pluginName": "System Color Theme Switcher",

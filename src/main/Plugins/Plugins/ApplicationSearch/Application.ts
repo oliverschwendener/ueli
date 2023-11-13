@@ -17,8 +17,8 @@ export class Application implements Searchable {
             imageUrl: `file://${this.iconFilePath}`,
             defaultAction: {
                 argument: this.filePath,
-                description: "",
-                descriptionTranslationKey: "",
+                description: "Open application",
+                descriptionTranslationKey: "plugin[ApplicationSearch].searchResultItem.defaultAction.openApplication",
                 handlerId: "OpenFilePath",
                 hideWindowAfterInvokation: true,
             },
