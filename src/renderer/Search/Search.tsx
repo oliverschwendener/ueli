@@ -9,6 +9,7 @@ import { useContextBridge, useSetting } from "../Hooks";
 import { ActionsMenu } from "./ActionsMenu";
 import { FavoritesList } from "./FavoritesList";
 import { filterSearchResultItemsBySearchTerm } from "./Helpers";
+import type { KeyboardEventHandler } from "./KeyboardEventHandler";
 import { SearchResultList } from "./SearchResultList";
 
 type SearchProps = {
@@ -64,26 +65,36 @@ export const Search = ({ searchResultItems }: SearchProps) => {
 
     const invokeAction = (action: SearchResultItemAction) => contextBridge.invokeAction(action);
 
-    const handleUserInputKeyboardEvent = (keyboardEvent: KeyboardEvent) => {
-        if (keyboardEvent.key === "ArrowUp") {
-            keyboardEvent.preventDefault();
-            selectPreviousSearchResultItem();
-            return;
-        }
+    const userInputKeyboardEventHandlers: KeyboardEventHandler[] = [
+        {
+            listener: (e) => {
+                e.preventDefault();
+                selectPreviousSearchResultItem();
+            },
+            needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowUp",
+        },
+        {
+            listener: (e) => {
+                e.preventDefault();
+                selectNextSearchResultItem();
+            },
+            needsToInvokeListener: (e) => e.key === "ArrowDown",
+        },
+        {
+            listener: () => invokeSelectedSearchResultItem(),
+            needsToInvokeListener: (e) => e.key === "Enter",
+        },
+        {
+            listener: () => additionalActionsButtonRef.current?.click(),
+            needsToInvokeListener: (e) => e.key === "k" && (e.metaKey || e.ctrlKey),
+        },
+    ];
 
-        if (keyboardEvent.key === "ArrowDown") {
-            keyboardEvent.preventDefault();
-            selectNextSearchResultItem();
-            return;
-        }
-
-        if (keyboardEvent.key === "Enter") {
-            invokeSelectedSearchResultItem();
-            return;
-        }
-
-        if (keyboardEvent.key === "k" && (keyboardEvent.metaKey || keyboardEvent.ctrlKey)) {
-            additionalActionsButtonRef.current?.click();
+    const handleUserInputKeyboardEvent = (keyboardEvent: KeyboardEvent<HTMLElement>) => {
+        for (const keyboardEventHandler of userInputKeyboardEventHandlers) {
+            if (keyboardEventHandler.needsToInvokeListener(keyboardEvent)) {
+                keyboardEventHandler.listener(keyboardEvent);
+            }
         }
     };
 
