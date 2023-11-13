@@ -19,13 +19,7 @@ export const ActionsMenu = ({
     const { t } = useTranslation();
 
     return (
-        <Menu
-            onOpenChange={(_, { open }) => {
-                if (!open) {
-                    onMenuClosed();
-                }
-            }}
-        >
+        <Menu onOpenChange={(_, { open }) => !open && onMenuClosed()}>
             <MenuTrigger>
                 <Button
                     disabled={actions.length === 0}
