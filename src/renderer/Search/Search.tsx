@@ -82,7 +82,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
             return;
         }
 
-        if (keyboardEvent.key === "k" && keyboardEvent.metaKey) {
+        if (keyboardEvent.key === "k" && (keyboardEvent.metaKey || keyboardEvent.ctrlKey)) {
             additionalActionsButtonRef.current?.click();
         }
     };
