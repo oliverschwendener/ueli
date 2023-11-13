@@ -43,6 +43,7 @@ export const SearchResultListItem = ({
                 backgroundColor: isSelected ? theme.colorSubtleBackgroundSelected : undefined,
                 boxSizing: "border-box",
                 color: isSelected ? theme.colorNeutralForeground1Selected : undefined,
+                outline: isSelected ? `1px solid ${theme.colorNeutralStroke1}` : undefined,
                 display: "flex",
                 flexDirection: "row",
                 gap: 10,
