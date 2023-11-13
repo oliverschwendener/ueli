@@ -50,13 +50,9 @@ export function searchMacApplications(
         if (applicationSearchOptions.applicationFolders.length === 0) {
             resolve([]);
         } else {
-            const folderRegex = applicationSearchOptions.applicationFolders
-                .map((applicationFolder) => {
-                    return `^${applicationFolder.replace("\\", "\\\\").replace("/", "\\/")}`;
-                })
-                .join("|");
-
-            executeCommandWithOutput(`${getMacOsApplicationSearcherCommand(macOsVersion)} | egrep "${folderRegex}"`)
+            executeCommandWithOutput(
+                getMacOsApplicationSearcherCommand(macOsVersion, applicationSearchOptions.applicationFolders),
+            )
                 .then((data) => {
                     const filePaths = data
                         .split("\n")
@@ -70,15 +66,27 @@ export function searchMacApplications(
     });
 }
 
-export function getMacOsApplicationSearcherCommand(macOsVersion: OperatingSystemVersion): string {
+export function getMacOsApplicationSearcherCommand(macOsVersion: OperatingSystemVersion, folders: string[]): string {
+    const folderRegex = folders
+        .map((applicationFolder) => `^${applicationFolder.replace("\\", "\\\\").replace("/", "\\/")}`)
+        .join("|");
+
+    const foldersAsArgs = folders.map((applicationFolder) => `'${applicationFolder}'`).join(" ");
+
     switch (macOsVersion) {
         case OperatingSystemVersion.MacOsYosemite:
         case OperatingSystemVersion.MacOsElCapitan:
         case OperatingSystemVersion.MacOsSierra:
         case OperatingSystemVersion.MacOsHighSierra:
         case OperatingSystemVersion.MacOsMojave:
-            return `mdfind "kind:apps"`;
+            return `mdfind "kind:apps" | egrep "${folderRegex}"`;
         default:
-            return "mdfind kMDItemContentTypeTree=com.apple.application-bundle";
+            /*
+             * -type d         # Only directories
+             * -iname '*.app'  # Name pattern of application folders
+             * -maxdepth 2     # Traverse only 1 level deep to speed up execution
+             * -prune          # Do not recursively traverse application folders
+             */
+            return `find ${foldersAsArgs} -type d -iname '*.app' -maxdepth 2 -prune`;
     }
 }
