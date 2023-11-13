@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { useContextBridge, useSetting } from "../Hooks";
+import { AdditionalActions } from "./AdditionalActions";
 import { FavoritesList } from "./FavoritesList";
 import { filterSearchResultItemsBySearchTerm } from "./Helpers";
 import { SearchResultList } from "./SearchResultList";
@@ -21,6 +22,12 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     const [searchTerm, setSearchTerm] = useState<string>("");
     const userInputRef = useRef<HTMLInputElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
+    const [additionalActions, setAdditionalActions] = useState<SearchResultItemAction[]>([]);
+
+    const setFocusOnUserInput = () => {
+        userInputRef?.current?.focus();
+    };
 
     const setFocusOnUserInputAndSelectText = () => {
         userInputRef?.current?.focus();
@@ -45,41 +52,64 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
         filteredSearchResultItems[selectedItemIndex];
 
-    const invokeExecution = (action: SearchResultItemAction) => contextBridge.invokeAction(action);
+    const invokeSelectedSearchResultItem = async () => {
+        const searchResultItem = getSelectedSearchResultItem();
 
-    const handleUserInputKeyboardEvent = async (keyboardEvent: KeyboardEvent) => {
+        if (!searchResultItem || !searchResultItem.defaultAction) {
+            return;
+        }
+
+        await invokeAction(searchResultItem.defaultAction);
+    };
+
+    const invokeAction = (action: SearchResultItemAction) => contextBridge.invokeAction(action);
+
+    const handleUserInputKeyboardEvent = (keyboardEvent: KeyboardEvent) => {
         if (keyboardEvent.key === "ArrowUp") {
             keyboardEvent.preventDefault();
             selectPreviousSearchResultItem();
+            return;
         }
 
         if (keyboardEvent.key === "ArrowDown") {
             keyboardEvent.preventDefault();
             selectNextSearchResultItem();
+            return;
         }
 
         if (keyboardEvent.key === "Enter") {
-            const searchResultItem = getSelectedSearchResultItem();
+            invokeSelectedSearchResultItem();
+            return;
+        }
 
-            if (!searchResultItem || !searchResultItem.defaultAction) {
-                return;
-            }
-
-            await invokeExecution(searchResultItem.defaultAction);
+        if (keyboardEvent.key === "k" && keyboardEvent.metaKey) {
+            additionalActionsButtonRef.current?.click();
         }
     };
 
     const handleSearchResultItemClickEvent = (index: number) => setSelectedItemIndex(index);
 
     const handleSearchResultItemDoubleClickEvent = (searchResultItem: SearchResultItem) =>
-        searchResultItem.defaultAction && invokeExecution(searchResultItem.defaultAction);
+        searchResultItem.defaultAction && invokeAction(searchResultItem.defaultAction);
+
+    const updateAdditionalActions = () => {
+        const searchResultItem = getSelectedSearchResultItem();
+
+        if (!searchResultItem || !searchResultItem.additionalActions) {
+            setAdditionalActions([]);
+            return;
+        }
+
+        setAdditionalActions(searchResultItem.additionalActions);
+    };
 
     useEffect(() => {
         setFocusOnUserInputAndSelectText();
         window.ContextBridge.windowFocused(() => setFocusOnUserInputAndSelectText());
     }, []);
 
-    useEffect(selectFirstSearchResultItemItem, [searchTerm]);
+    useEffect(() => selectFirstSearchResultItemItem(), [searchTerm]);
+    useEffect(() => updateAdditionalActions(), [selectedItemIndex, searchTerm]);
 
     return (
         <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -127,7 +157,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                     boxSizing: "border-box",
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "flex-end",
+                    justifyContent: "space-between",
                     alignItems: "center",
                 }}
             >
@@ -140,6 +170,12 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                 >
                     {t("general.settings")}
                 </Button>
+                <AdditionalActions
+                    actions={additionalActions}
+                    invokeAction={invokeAction}
+                    additionalActionsButtonRef={additionalActionsButtonRef}
+                    onMenuClosed={() => setFocusOnUserInput()}
+                />
             </div>
         </div>
     );

@@ -1,10 +1,7 @@
 import type { SearchResultItem } from "@common/SearchResultItem";
-import type { SearchResultItemAction } from "@common/SearchResultItemAction";
-import { Button, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger, Text } from "@fluentui/react-components";
-import { FlashRegular } from "@fluentui/react-icons";
+import { Text } from "@fluentui/react-components";
 import { useContext, useEffect, useRef, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
-import { useContextBridge } from "../Hooks";
 import { ThemeContext } from "../ThemeContext";
 import { elementIsVisible } from "./Helpers";
 
@@ -23,7 +20,6 @@ export const SearchResultListItem = ({
     onDoubleClick,
     searchResultItem,
 }: SearchResultListItemProps) => {
-    const { contextBridge } = useContextBridge();
     const { t } = useTranslation();
     const { theme } = useContext(ThemeContext);
     const ref = useRef<HTMLDivElement>(null);
@@ -33,8 +29,6 @@ export const SearchResultListItem = ({
             setTimeout(() => ref.current?.scrollIntoView({ behavior: "smooth" }), 50);
         }
     };
-
-    const invokeAction = (action: SearchResultItemAction) => contextBridge.invokeAction(action);
 
     useEffect(scrollIntoViewIfSelectedAndNotVisible, [isSelected]);
 
@@ -101,25 +95,6 @@ export const SearchResultListItem = ({
                             : searchResultItem.description}
                     </Text>
                 </div>
-                <Menu>
-                    <MenuTrigger>
-                        <Button icon={<FlashRegular />} size="small" appearance="subtle"></Button>
-                    </MenuTrigger>
-                    <MenuPopover>
-                        <MenuList>
-                            {searchResultItem.additionalActions?.map((action, index) => (
-                                <MenuItem
-                                    key={`action-${action.argument}-${index}`}
-                                    onClick={() => invokeAction(action)}
-                                >
-                                    {action.descriptionTranslationKey
-                                        ? t(action.descriptionTranslationKey)
-                                        : action.description}
-                                </MenuItem>
-                            ))}
-                        </MenuList>
-                    </MenuPopover>
-                </Menu>
             </div>
         </div>
     );
