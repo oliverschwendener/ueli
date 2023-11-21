@@ -24,6 +24,7 @@ import { GlobalShortcutModule } from "./GlobalShortcut";
 import { NativeThemeModule } from "./NativeTheme";
 import { OperatingSystemModule } from "./OperatingSystem";
 import { PluginCacheFolderModule } from "./PluginCacheFolder";
+import { PluginManagerModule } from "./PluginManager";
 import { PluginModule } from "./Plugins";
 import { SearchIndexModule } from "./SearchIndex";
 import { SettingsFileModule } from "./SettingsFile";
@@ -59,10 +60,13 @@ import { SettingsWriterModule } from "./SettingsWriter";
     EventSubscriberModule.bootstrap(dependencyInjector);
     SearchIndexModule.bootstrap(dependencyInjector);
     NativeThemeModule.bootstrap(dependencyInjector);
-    await PluginCacheFolderModule.bootstrap(dependencyInjector);
-    PluginModule.bootstrap(dependencyInjector);
-    ActionInvokerModule.bootstrap(dependencyInjector);
     await BrowserWindowModule.bootstrap(dependencyInjector);
     BrowserWindowTogglerModule.bootstrap(dependencyInjector);
     GlobalShortcutModule.bootstrap(dependencyInjector);
+    ActionInvokerModule.bootstrap(dependencyInjector);
+
+    // Plugin MOdules
+    await PluginCacheFolderModule.bootstrap(dependencyInjector);
+    PluginModule.bootstrap(dependencyInjector);
+    PluginManagerModule.bootstrap(dependencyInjector);
 })();

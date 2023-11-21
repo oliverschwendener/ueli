@@ -1,11 +1,22 @@
 import type { DependencyInjector as DependencyInjectorInterface } from "@common/DependencyInjector";
 import type { DependencyName } from "@common/DependencyName";
+import type { UeliPlugin } from "@common/UeliPlugin";
 
 export class DependencyInjector implements DependencyInjectorInterface {
     private dependencies: Record<DependencyName | string, unknown>;
+    private plugins: UeliPlugin[];
 
     public constructor() {
         this.dependencies = {};
+        this.plugins = [];
+    }
+
+    public registerPlugin(plugin: UeliPlugin): void {
+        this.plugins.push(plugin);
+    }
+
+    public getAllPlugins(): UeliPlugin[] {
+        return this.plugins;
     }
 
     public registerInstance<T>(name: DependencyName, instance: T): void {

@@ -4,16 +4,14 @@ import type { FileSystemUtility } from "@common/FileSystemUtility";
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { PluginCacheFolder } from "@common/PluginCacheFolder";
 import type { SettingsManager } from "@common/SettingsManager";
-import type { UeliPlugin } from "@common/UeliPlugin";
-import type { UeliPluginBootstrapper } from "@common/UeliPluginBootstrapper";
 import type { App } from "electron";
 import { ApplicationSearch } from "./ApplicationSearch";
 import { WindowsApplicationRepository } from "./Windows/WindowsApplicationRepository";
 import { MacOsApplicationIconGenerator } from "./macOS/MacOsApplicationIconGenerator";
 import { MacOsApplicationRepository } from "./macOS/MacOsApplicationRepository";
 
-export class ApplicationSearchBootstrapper implements UeliPluginBootstrapper {
-    public bootstrap(dependencyInjector: DependencyInjector): UeliPlugin {
+export class ApplicationSearchModule {
+    public static bootstrap(dependencyInjector: DependencyInjector) {
         const operatingSystem = dependencyInjector.getInstance<OperatingSystem>("OperatingSystem");
         const fileSystemUtility = dependencyInjector.getInstance<FileSystemUtility>("FileSystemUtility");
         const commandlineUtility = dependencyInjector.getInstance<CommandlineUtility>("CommandlineUtility");
@@ -37,6 +35,6 @@ export class ApplicationSearchBootstrapper implements UeliPluginBootstrapper {
             ),
         }[operatingSystem];
 
-        return new ApplicationSearch(applicationRepository);
+        dependencyInjector.registerPlugin(new ApplicationSearch(applicationRepository));
     }
 }

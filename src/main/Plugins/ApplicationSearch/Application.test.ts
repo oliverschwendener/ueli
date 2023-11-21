@@ -12,10 +12,20 @@ describe(Application, () => {
             id: "L0FwcGxpY2F0aW9ucy9NeSBBcHAuYXBw",
             name: "My App",
             imageUrl: "file:///Users/Dummy/Icons/icon.png",
+            additionalActions: [
+                {
+                    argument: "/Applications/My App.app",
+                    description: "Show in file explorer",
+                    descriptionTranslationKey:
+                        "plugin[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer",
+                    handlerId: "ShowItemInFileExplorer",
+                    hideWindowAfterInvokation: true,
+                },
+            ],
             defaultAction: {
                 argument: "/Applications/My App.app",
-                description: "",
-                descriptionTranslationKey: "",
+                description: "Open application",
+                descriptionTranslationKey: "plugin[ApplicationSearch].searchResultItem.defaultAction.openApplication",
                 handlerId: "OpenFilePath",
                 hideWindowAfterInvokation: true,
             },
