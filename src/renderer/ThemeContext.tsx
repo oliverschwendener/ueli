@@ -1,4 +1,4 @@
-import { Theme, webDarkTheme } from "@fluentui/react-components";
+import { webDarkTheme, type Theme } from "@fluentui/react-components";
 import { createContext } from "react";
 
 type ThemeContextProps = {

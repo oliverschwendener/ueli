@@ -1,4 +1,4 @@
-import { SearchResultItem } from "@common/SearchResultItem";
+import type { SearchResultItem } from "@common/SearchResultItem";
 import Fuse from "fuse.js";
 
 type SearchOptions = {

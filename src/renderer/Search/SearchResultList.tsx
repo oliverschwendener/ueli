@@ -1,5 +1,5 @@
-import { SearchResultItem } from "@common/SearchResultItem";
-import { RefObject } from "react";
+import type { SearchResultItem } from "@common/SearchResultItem";
+import type { RefObject } from "react";
 import { SearchResultListItem } from "./SearchResultListItem";
 
 type SearchResultListProps = {

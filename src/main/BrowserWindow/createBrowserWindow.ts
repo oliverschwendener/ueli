@@ -1,4 +1,4 @@
-import { OperatingSystem } from "@common/OperatingSystem";
+import type { OperatingSystem } from "@common/OperatingSystem";
 import { BrowserWindow, type App, type BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
 

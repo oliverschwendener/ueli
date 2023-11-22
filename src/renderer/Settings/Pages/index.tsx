@@ -6,7 +6,7 @@ import {
     UsbPlugRegular,
     Window16Regular,
 } from "@fluentui/react-icons";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 import { About } from "./About";
 import { Appearance } from "./Appearance";
 import { General } from "./General";

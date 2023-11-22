@@ -1,4 +1,4 @@
-import { SearchResultItemAction } from "@common/SearchResultItemAction";
+import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import type { Shell } from "electron";
 import { describe, expect, it, vi } from "vitest";
 import { OpenFilePathActionHandler } from "./OpenFilePathActionHandler";

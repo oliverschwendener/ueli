@@ -1,9 +1,9 @@
 import type { DependencyInjector } from "@common/DependencyInjector";
 import type { EventSubscriber } from "@common/EventSubscriber";
 import type { OperatingSystem } from "@common/OperatingSystem";
-import { SearchResultItemAction } from "@common/SearchResultItemAction";
+import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import type { SettingsManager } from "@common/SettingsManager";
-import { BrowserWindow, type App, type NativeTheme } from "electron";
+import type { App, BrowserWindow, NativeTheme } from "electron";
 import { join } from "path";
 import { createBrowserWindow } from "./createBrowserWindow";
 

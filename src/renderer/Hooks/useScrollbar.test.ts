@@ -1,4 +1,4 @@
-import { Theme } from "@fluentui/react-components";
+import type { Theme } from "@fluentui/react-components";
 import { describe, expect, it, vi } from "vitest";
 import { useScrollBar } from "./useScrollbar";
 

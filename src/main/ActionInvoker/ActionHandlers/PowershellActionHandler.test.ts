@@ -1,5 +1,5 @@
 import type { CommandlineUtility } from "@common/CommandlineUtility";
-import { SearchResultItemAction } from "@common/SearchResultItemAction";
+import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import { describe, expect, it, vi } from "vitest";
 import { PowershellActionHandler } from "./PowershellActionHandler";
 

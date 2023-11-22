@@ -1,5 +1,5 @@
 import type { SearchResultItem } from "./SearchResultItem";
-import { SearchResultItemAction } from "./SearchResultItemAction";
+import type { SearchResultItemAction } from "./SearchResultItemAction";
 import type { UeliPlugin } from "./UeliPlugin";
 
 export type ContextBridge = {
