@@ -18,8 +18,6 @@ export class BrowserWindowModule {
 
         const browserWindow = createBrowserWindow(app, operatingSystem);
 
-        dependencyInjector.registerInstance<BrowserWindow>("BrowserWindow", browserWindow);
-
         BrowserWindowModule.registerBrowserWindowEventListeners(browserWindow, settingsManager);
         BrowserWindowModule.registerNativeThemeEventListeners(browserWindow, nativeTheme);
         BrowserWindowModule.registerEvents(app, browserWindow, eventSubscriber, settingsManager);

@@ -1,7 +1,5 @@
 export type DependencyName =
     | "App"
-    | "BrowserWindow"
-    | "BrowserWindowToggler"
     | "CommandlineUtility"
     | "Emitter"
     | "EventEmitter"
