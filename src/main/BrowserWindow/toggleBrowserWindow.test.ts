@@ -1,8 +1,8 @@
 import type { App, BrowserWindow } from "electron";
 import { describe, expect, it, vi } from "vitest";
-import { ElectronBrowserWindowToggler } from "./ElectronBrowserWindowToggler";
+import { toggleBrowserWindow } from "./toggleBrowserWindow";
 
-describe(ElectronBrowserWindowToggler, () => {
+describe(toggleBrowserWindow, () => {
     it("should hide the window if it is visible and focussed", () => {
         const appHideMock = vi.fn();
         const browserWindowHideMock = vi.fn();
@@ -17,7 +17,7 @@ describe(ElectronBrowserWindowToggler, () => {
             hide: () => browserWindowHideMock(),
         };
 
-        new ElectronBrowserWindowToggler(app, browserWindow).toggleWindow();
+        toggleBrowserWindow(app, browserWindow);
 
         expect(appHideMock).toHaveBeenCalledOnce();
         expect(browserWindowHideMock).toHaveBeenCalledOnce();
@@ -32,7 +32,7 @@ describe(ElectronBrowserWindowToggler, () => {
             hide: () => browserWindowHideMock(),
         };
 
-        new ElectronBrowserWindowToggler(<App>{}, browserWindow).toggleWindow();
+        toggleBrowserWindow(<App>{}, browserWindow);
 
         expect(browserWindowHideMock).toHaveBeenCalledOnce();
     });
@@ -57,7 +57,7 @@ describe(ElectronBrowserWindowToggler, () => {
             },
         };
 
-        new ElectronBrowserWindowToggler(app, browserWindow).toggleWindow();
+        toggleBrowserWindow(app, browserWindow);
 
         expect(appShowMock).toHaveBeenCalledOnce();
         expect(browserWindowShowMock).toHaveBeenCalledOnce();
@@ -80,7 +80,7 @@ describe(ElectronBrowserWindowToggler, () => {
             },
         };
 
-        new ElectronBrowserWindowToggler(<App>{}, browserWindow).toggleWindow();
+        toggleBrowserWindow(<App>{}, browserWindow);
 
         expect(browserWindowShowMock).toHaveBeenCalledOnce();
         expect(browserWindowFocusMock).toHaveBeenCalledOnce();
@@ -107,7 +107,7 @@ describe(ElectronBrowserWindowToggler, () => {
             },
         };
 
-        new ElectronBrowserWindowToggler(app, browserWindow).toggleWindow();
+        toggleBrowserWindow(app, browserWindow);
 
         expect(appShowMock).toHaveBeenCalledOnce();
         expect(browserWindowShowMock).toHaveBeenCalledOnce();

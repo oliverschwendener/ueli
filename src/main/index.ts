@@ -14,7 +14,6 @@ import mitt, { Emitter } from "mitt";
 import { platform } from "os";
 import { ActionInvokerModule } from "./ActionInvoker";
 import { BrowserWindowModule } from "./BrowserWindow";
-import { BrowserWindowTogglerModule } from "./BrowserWindowToggler";
 import { CommandlineUtilityModule } from "./CommandlineUtility";
 import { DependencyInjector } from "./DependencyInjector";
 import { EventEmitterModule } from "./EventEmitter";
@@ -61,7 +60,6 @@ import { SettingsWriterModule } from "./SettingsWriter";
     SearchIndexModule.bootstrap(dependencyInjector);
     NativeThemeModule.bootstrap(dependencyInjector);
     await BrowserWindowModule.bootstrap(dependencyInjector);
-    BrowserWindowTogglerModule.bootstrap(dependencyInjector);
     GlobalShortcutModule.bootstrap(dependencyInjector);
     ActionInvokerModule.bootstrap(dependencyInjector);
 

@@ -6,6 +6,7 @@ import type { SettingsManager } from "@common/SettingsManager";
 import type { App, BrowserWindow, NativeTheme } from "electron";
 import { join } from "path";
 import { createBrowserWindow } from "./createBrowserWindow";
+import { toggleBrowserWindow } from "./toggleBrowserWindow";
 
 export class BrowserWindowModule {
     public static async bootstrap(dependencyInjector: DependencyInjector) {
@@ -21,8 +22,8 @@ export class BrowserWindowModule {
 
         BrowserWindowModule.registerBrowserWindowEventListeners(browserWindow, settingsManager);
         BrowserWindowModule.registerNativeThemeEventListeners(browserWindow, nativeTheme);
-        BrowserWindowModule.registerEvents(browserWindow, eventSubscriber, settingsManager);
-        await BrowserWindowModule.loadFileOrUrl(browserWindow, app);
+        BrowserWindowModule.registerEvents(app, browserWindow, eventSubscriber, settingsManager);
+        await BrowserWindowModule.loadFileOrUrl(app, browserWindow);
     }
 
     private static registerBrowserWindowEventListeners(browserWindow: BrowserWindow, settingsManager: SettingsManager) {
@@ -34,6 +35,7 @@ export class BrowserWindowModule {
     }
 
     private static registerEvents(
+        app: App,
         browserWindow: BrowserWindow,
         eventSubscriber: EventSubscriber,
         settingsManager: SettingsManager,
@@ -47,13 +49,15 @@ export class BrowserWindowModule {
 
             shouldHideWindow && browserWindow.hide();
         });
+
+        eventSubscriber.subscribe("hotkeyPressed", () => toggleBrowserWindow(app, browserWindow));
     }
 
     private static registerNativeThemeEventListeners(browserWindow: BrowserWindow, nativeTheme: NativeTheme) {
         nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
     }
 
-    private static async loadFileOrUrl(browserWindow: BrowserWindow, app: App) {
+    private static async loadFileOrUrl(app: App, browserWindow: BrowserWindow) {
         await (app.isPackaged
             ? browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html"))
             : browserWindow.loadURL(process.env.VITE_DEV_SERVER_URL));
