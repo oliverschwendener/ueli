@@ -1,35 +1,72 @@
 import type { DependencyInjector } from "@common/DependencyInjector";
-import type { OperatingSystem } from "@common/OperatingSystem";
+import { PluginInfo } from "@common/PluginInfo";
 import type { SearchIndex } from "@common/SearchIndex";
 import type { SettingsManager } from "@common/SettingsManager";
+import type { UeliPlugin } from "@common/UeliPlugin";
 import type { IpcMain } from "electron";
-import {
-    addSearchResultItemsToSearchIndex,
-    getEnabledPlugins,
-    getSupportedPlugins,
-    subscribeToIpcMainEvents,
-} from "./Helpers";
 
 export class PluginManagerModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {
-        const currentOperatingSystem = dependencyInjector.getInstance<OperatingSystem>("OperatingSystem");
-        const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
+        const supportedPlugins = PluginManagerModule.getSupportedPlugins(dependencyInjector);
+
+        PluginManagerModule.registerIpcMainEventListeners(dependencyInjector, supportedPlugins);
+        PluginManagerModule.addSearchResultItemsToSearchIndex(dependencyInjector, supportedPlugins);
+    }
+
+    private static getSupportedPlugins(dependencyInjector: DependencyInjector): UeliPlugin[] {
+        return dependencyInjector.getAllPlugins().filter((plugin) => plugin.isSupported(dependencyInjector));
+    }
+
+    private static registerIpcMainEventListeners(
+        dependencyInjector: DependencyInjector,
+        supportedPlugins: UeliPlugin[],
+    ) {
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
         const searchIndex = dependencyInjector.getInstance<SearchIndex>("SearchIndex");
 
-        const plugins = dependencyInjector.getAllPlugins();
-        const supportedPlugins = getSupportedPlugins(plugins, currentOperatingSystem);
-        const enabledPlugins = getEnabledPlugins(supportedPlugins, settingsManager, ["ApplicationSearch"]);
+        ipcMain.on("pluginEnabled", async (_, { pluginId }: { pluginId: string }) => {
+            const plugin = supportedPlugins.find(({ id }) => id === pluginId);
 
-        subscribeToIpcMainEvents({
-            ipcMain,
-            plugins: supportedPlugins,
-            searchIndex,
+            if (!plugin) {
+                throw new Error(`Unable to find plugin with id ${pluginId}`);
+            }
+
+            searchIndex.addSearchResultItems(plugin.id, await plugin.getSearchResultItems());
         });
 
-        addSearchResultItemsToSearchIndex({
-            plugins: enabledPlugins,
-            searchIndex,
+        ipcMain.on("getSupportedPlugins", (event) => {
+            event.returnValue = supportedPlugins.map(
+                ({ id, name, nameTranslationKey }): PluginInfo => ({ id, name, nameTranslationKey }),
+            );
         });
+    }
+
+    private static async addSearchResultItemsToSearchIndex(
+        dependencyInjector: DependencyInjector,
+        plugins: UeliPlugin[],
+    ) {
+        const searchIndex = dependencyInjector.getInstance<SearchIndex>("SearchIndex");
+        const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
+
+        const enabledPlugins = plugins.filter((plugin) =>
+            settingsManager
+                .getSettingByKey<string[]>("plugins.enabledPluginIds", ["ApplicationSearch"])
+                .includes(plugin.id),
+        );
+
+        const promiseResults = await Promise.allSettled(enabledPlugins.map((plugin) => plugin.getSearchResultItems()));
+
+        for (let i = 0; i < enabledPlugins.length; i++) {
+            const promiseResult = promiseResults[i];
+            const { id: pluginId } = enabledPlugins[i];
+
+            promiseResult.status === "fulfilled"
+                ? searchIndex.addSearchResultItems(pluginId, promiseResult.value)
+                : console.error({
+                      error: "Failed ot get search result items by plugin",
+                      pluginId: pluginId,
+                      reason: promiseResult.reason,
+                  });
+        }
     }
 }

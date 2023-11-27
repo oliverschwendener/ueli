@@ -1,9 +1,9 @@
+import type { PluginInfo } from "./PluginInfo";
 import type { SearchResultItem } from "./SearchResultItem";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
-import type { UeliPlugin } from "./UeliPlugin";
 
 export type ContextBridge = {
-    getSupportedPlugins: () => UeliPlugin[];
+    getSupportedPlugins: () => PluginInfo[];
     pluginDisabled: (pluginId: string) => void;
     pluginEnabled: (pluginId: string) => void;
     getSearchResultItems: () => SearchResultItem[];

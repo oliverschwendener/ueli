@@ -1,3 +1,4 @@
+import { DependencyInjector } from "@common/DependencyInjector";
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { UeliPlugin } from "@common/UeliPlugin";
@@ -15,6 +16,12 @@ export class SystemColorThemeSwitcher implements UeliPlugin {
             this.getSearchResultItem({ switchToLightMode: true }),
             this.getSearchResultItem({ switchToLightMode: false }),
         ];
+    }
+
+    public isSupported(dependencyInjector: DependencyInjector): boolean {
+        const currentOperatingSystem = dependencyInjector.getInstance<OperatingSystem>("OperatingSystem");
+        const supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
+        return supportedOperatingSystems.includes(currentOperatingSystem);
     }
 
     private getSearchResultItem({ switchToLightMode }: { switchToLightMode: boolean }): SearchResultItem {
