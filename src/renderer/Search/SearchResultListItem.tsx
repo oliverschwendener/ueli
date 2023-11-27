@@ -40,16 +40,19 @@ export const SearchResultListItem = ({
             onDoubleClick={onDoubleClick}
             style={{
                 alignItems: "center",
-                backgroundColor: isSelected ? theme.colorSubtleBackgroundSelected : undefined,
+                backgroundColor: isSelected ? theme.colorSubtleBackgroundHover : undefined,
                 boxSizing: "border-box",
                 color: isSelected ? theme.colorNeutralForeground1Selected : undefined,
-                outline: isSelected ? `1px solid ${theme.colorNeutralStroke1}` : undefined,
+                borderStyle: "solid",
+                borderWidth: "1px",
+                borderColor: isSelected ? theme.colorNeutralStroke1 : "transparent",
                 display: "flex",
                 flexDirection: "row",
                 gap: 10,
                 height: 42,
                 padding: 10,
                 userSelect: "none",
+                borderRadius: theme.borderRadiusMedium,
             }}
         >
             <div

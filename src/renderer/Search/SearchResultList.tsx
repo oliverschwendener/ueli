@@ -22,6 +22,8 @@ export const SearchResultList = ({
             style={{
                 display: "flex",
                 flexDirection: "column",
+                padding: 10,
+                boxSizing: "border-box",
             }}
         >
             {searchResultItems.map((searchResultItem, index) => (
