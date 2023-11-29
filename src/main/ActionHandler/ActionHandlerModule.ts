@@ -15,23 +15,7 @@ import {
 export class ActionHandlerModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {
         ActionHandlerModule.registerDefaultActionHandlers(dependencyInjector);
-
-        const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
-        const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
-
-        ipcMain.handle("invokeAction", async (_, { action }: { action: SearchResultItemAction }) => {
-            const actionHandler = dependencyInjector.getActionHandler(action.handlerId);
-
-            if (!actionHandler) {
-                throw new Error(
-                    `Unable to invoke action. Reason: action handler with id ${action.handlerId} not found`,
-                );
-            }
-
-            await actionHandler.invokeAction(action);
-
-            eventEmitter.emitEvent("actionInvokationSucceeded", { action });
-        });
+        ActionHandlerModule.registerIpcMainEventHandlers(dependencyInjector);
     }
 
     private static registerDefaultActionHandlers(dependencyInjector: DependencyInjector): void {
@@ -49,5 +33,15 @@ export class ActionHandlerModule {
         for (const actionHandler of actionHandlers) {
             dependencyInjector.registerActionHandler(actionHandler);
         }
+    }
+
+    private static registerIpcMainEventHandlers(dependencyInjector: DependencyInjector) {
+        const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
+        const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
+
+        ipcMain.handle("invokeAction", async (_, { action }: { action: SearchResultItemAction }) => {
+            dependencyInjector.getActionHandler(action.handlerId).invokeAction(action);
+            eventEmitter.emitEvent("actionInvokationSucceeded", { action });
+        });
     }
 }
