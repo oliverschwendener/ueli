@@ -1,7 +1,6 @@
 import type { SearchResultItem } from "@common/SearchResultItem";
-import type { Searchable } from "../Searchable";
 
-export class Application implements Searchable {
+export class Application {
     public constructor(
         private readonly name: string,
         private readonly filePath: string,
