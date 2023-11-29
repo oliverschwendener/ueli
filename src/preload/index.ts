@@ -2,9 +2,9 @@ import type { ContextBridge } from "@common/ContextBridge";
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
-    getSupportedPlugins: () => ipcRenderer.sendSync("getSupportedPlugins"),
-    pluginDisabled: (pluginId: string) => ipcRenderer.send("pluginDisabled", { pluginId }),
-    pluginEnabled: (pluginId: string) => ipcRenderer.send("pluginEnabled", { pluginId }),
+    getSupportedExtensions: () => ipcRenderer.sendSync("getSupportedExtensions"),
+    extensionDisabled: (extensionId: string) => ipcRenderer.send("extensionDisabled", { extensionId }),
+    extensionEnabled: (extensionId: string) => ipcRenderer.send("extensionEnabled", { extensionId }),
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
     getSettingByKey: <T>(key: string, defaultValue: T): T =>
         ipcRenderer.sendSync("getSettingByKey", { key, defaultValue }),

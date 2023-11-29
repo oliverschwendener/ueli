@@ -17,8 +17,8 @@ export class SearchIndexModule {
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
         const searchIndex = dependencyInjector.getInstance<SearchIndex>("SearchIndex");
 
-        ipcMain.on("pluginDisabled", (_, { pluginId }: { pluginId: string }) =>
-            searchIndex.removeSearchResultItems(pluginId),
+        ipcMain.on("extensionDisabled", (_, { extensionId }: { extensionId: string }) =>
+            searchIndex.removeSearchResultItems(extensionId),
         );
 
         ipcMain.on("getSearchResultItems", (event) => (event.returnValue = searchIndex.getSearchResultItems()));

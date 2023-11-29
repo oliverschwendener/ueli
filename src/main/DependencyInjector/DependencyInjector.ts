@@ -1,22 +1,22 @@
-import type { UeliPlugin } from "../Plugin";
+import type { Extension } from "../Extension";
 import type { DependencyInjector as DependencyInjectorInterface } from "./Contract";
 import type { DependencyName } from "./DependencyName";
 
 export class DependencyInjector implements DependencyInjectorInterface {
     private dependencies: Record<DependencyName | string, unknown>;
-    private plugins: UeliPlugin[];
+    private extensions: Extension[];
 
     public constructor() {
         this.dependencies = {};
-        this.plugins = [];
+        this.extensions = [];
     }
 
-    public registerPlugin(plugin: UeliPlugin): void {
-        this.plugins.push(plugin);
+    public registerExtension(extension: Extension): void {
+        this.extensions.push(extension);
     }
 
-    public getAllPlugins(): UeliPlugin[] {
-        return this.plugins;
+    public getAllExtensions(): Extension[] {
+        return this.extensions;
     }
 
     public registerInstance<T>(name: DependencyName, instance: T): void {

@@ -1,7 +1,7 @@
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { DependencyInjector } from "../../DependencyInjector";
 
-export interface UeliPlugin {
+export interface Extension {
     readonly id: string;
     readonly name: string;
     readonly nameTranslationKey?: string;

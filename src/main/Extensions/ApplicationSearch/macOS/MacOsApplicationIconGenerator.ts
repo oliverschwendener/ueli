@@ -1,13 +1,13 @@
 import { join } from "path";
 import type { CommandlineUtility } from "../../../CommandlineUtility";
+import type { ExtensionCacheFolder } from "../../../ExtensionCacheFolder";
 import type { FileSystemUtility } from "../../../FileSystemUtility";
-import type { PluginCacheFolder } from "../../../PluginCacheFolder";
 
 export class MacOsApplicationIconGenerator {
     public constructor(
         private readonly fileSystemUtility: FileSystemUtility,
         private readonly commandlineUtility: CommandlineUtility,
-        private readonly pluginCacheFolder: PluginCacheFolder,
+        private readonly extensionCacheFolder: ExtensionCacheFolder,
     ) {}
 
     public async generateApplicationIcon(
@@ -27,7 +27,7 @@ export class MacOsApplicationIconGenerator {
     }
 
     private getIconFilePath(applicationFilePath: string): string {
-        return `${join(this.pluginCacheFolder.path, Buffer.from(applicationFilePath).toString("base64"))}.png`;
+        return `${join(this.extensionCacheFolder.path, Buffer.from(applicationFilePath).toString("base64"))}.png`;
     }
 
     private async getIcnsIconFilePath(applicationFilePath: string): Promise<string> {

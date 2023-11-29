@@ -11,14 +11,15 @@ export class Application implements Searchable {
     public toSearchResultItem(): SearchResultItem {
         return {
             description: "Application",
-            descriptionTranslationKey: "plugin[ApplicationSearch].searchResultItemDescription",
+            descriptionTranslationKey: "extension[ApplicationSearch].searchResultItemDescription",
             id: this.getId(),
             name: this.name,
             imageUrl: `file://${this.iconFilePath}`,
             defaultAction: {
                 argument: this.filePath,
                 description: "Open application",
-                descriptionTranslationKey: "plugin[ApplicationSearch].searchResultItem.defaultAction.openApplication",
+                descriptionTranslationKey:
+                    "extension[ApplicationSearch].searchResultItem.defaultAction.openApplication",
                 handlerId: "OpenFilePath",
                 hideWindowAfterInvokation: true,
             },
@@ -27,7 +28,7 @@ export class Application implements Searchable {
                     argument: this.filePath,
                     description: "Show in file explorer",
                     descriptionTranslationKey:
-                        "plugin[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer",
+                        "extension[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer",
                     handlerId: "ShowItemInFileExplorer",
                     hideWindowAfterInvokation: true,
                 },

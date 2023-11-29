@@ -1,11 +1,11 @@
-import type { PluginInfo } from "./PluginInfo";
+import type { ExtensionInfo } from "./ExtensionInfo";
 import type { SearchResultItem } from "./SearchResultItem";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
 
 export type ContextBridge = {
-    getSupportedPlugins: () => PluginInfo[];
-    pluginDisabled: (pluginId: string) => void;
-    pluginEnabled: (pluginId: string) => void;
+    getSupportedExtensions: () => ExtensionInfo[];
+    extensionDisabled: (extensionId: string) => void;
+    extensionEnabled: (extensionId: string) => void;
     getSearchResultItems: () => SearchResultItem[];
     getSettingByKey: <T>(key: string, defaultValue: T) => T;
     invokeAction: (action: SearchResultItemAction) => Promise<void>;

@@ -1,16 +1,16 @@
 import {
+    AppsAddInRegular,
     Info16Regular,
     PaintBrush16Regular,
     Search16Regular,
     Settings16Regular,
-    UsbPlugRegular,
     Window16Regular,
 } from "@fluentui/react-icons";
 import type { ReactElement } from "react";
 import { About } from "./About";
 import { Appearance } from "./Appearance";
+import { Extensions } from "./Extensions";
 import { General } from "./General";
-import { Plugins } from "./Plugins";
 import { SearchEngine } from "./SearchEngine";
 import { Window } from "./Window";
 
@@ -59,10 +59,10 @@ export const settingsPages: SettingsPage[] = [
         icon: <Info16Regular />,
     },
     {
-        translationKey: "settingsPage.plugins",
-        relativePath: "plugins",
-        absolutePath: "/settings/plugins",
-        element: <Plugins />,
-        icon: <UsbPlugRegular />,
+        translationKey: "settingsPage.extensions",
+        relativePath: "extensions",
+        absolutePath: "/settings/extensions",
+        element: <Extensions />,
+        icon: <AppsAddInRegular />,
     },
 ];

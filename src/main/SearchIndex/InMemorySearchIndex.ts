@@ -13,21 +13,21 @@ export class InMemorySearchIndex implements SearchIndex {
     public getSearchResultItems(): SearchResultItem[] {
         let result: SearchResultItem[] = [];
 
-        for (const pluginId of Object.keys(this.index)) {
-            result = [...result, ...this.index[pluginId]];
+        for (const extensionId of Object.keys(this.index)) {
+            result = [...result, ...this.index[extensionId]];
         }
 
         return result;
     }
 
-    public addSearchResultItems(pluginId: string, searchResultItems: SearchResultItem[]): void {
-        this.index[pluginId] = searchResultItems;
+    public addSearchResultItems(extensionId: string, searchResultItems: SearchResultItem[]): void {
+        this.index[extensionId] = searchResultItems;
 
         this.eventEmitter.emitEvent("searchIndexUpdated");
     }
 
-    public removeSearchResultItems(pluginId: string): void {
-        delete this.index[pluginId];
+    public removeSearchResultItems(extensionId: string): void {
+        delete this.index[extensionId];
 
         this.eventEmitter.emitEvent("searchIndexUpdated");
     }

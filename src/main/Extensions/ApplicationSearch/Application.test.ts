@@ -8,7 +8,7 @@ describe(Application, () => {
 
         expect(application.toSearchResultItem()).toEqual(<SearchResultItem>{
             description: "Application",
-            descriptionTranslationKey: "plugin[ApplicationSearch].searchResultItemDescription",
+            descriptionTranslationKey: "extension[ApplicationSearch].searchResultItemDescription",
             id: "L0FwcGxpY2F0aW9ucy9NeSBBcHAuYXBw",
             name: "My App",
             imageUrl: "file:///Users/Dummy/Icons/icon.png",
@@ -17,7 +17,7 @@ describe(Application, () => {
                     argument: "/Applications/My App.app",
                     description: "Show in file explorer",
                     descriptionTranslationKey:
-                        "plugin[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer",
+                        "extension[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer",
                     handlerId: "ShowItemInFileExplorer",
                     hideWindowAfterInvokation: true,
                 },
@@ -25,7 +25,8 @@ describe(Application, () => {
             defaultAction: {
                 argument: "/Applications/My App.app",
                 description: "Open application",
-                descriptionTranslationKey: "plugin[ApplicationSearch].searchResultItem.defaultAction.openApplication",
+                descriptionTranslationKey:
+                    "extension[ApplicationSearch].searchResultItem.defaultAction.openApplication",
                 handlerId: "OpenFilePath",
                 hideWindowAfterInvokation: true,
             },

@@ -17,8 +17,8 @@ export class SettingsManager implements SettingsManagerInterface {
         return this.settings;
     }
 
-    public getPluginSettingByKey<T>(pluginId: string, key: string, defaultValue: T): T {
-        return this.getSettingByKey<T>(`plugin[${pluginId}].${key}`, defaultValue);
+    public getExtensionSettingByKey<T>(extensionId: string, key: string, defaultValue: T): T {
+        return this.getSettingByKey<T>(`extension[${extensionId}].${key}`, defaultValue);
     }
 
     public getSettingByKey<T>(key: string, defaultValue: T): T {

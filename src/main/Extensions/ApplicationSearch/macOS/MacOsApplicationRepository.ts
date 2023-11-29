@@ -31,7 +31,7 @@ export class MacOsApplicationRepository implements ApplicationRepository {
 
     private filterFilePathByConfiguredFolders(filePath: string): boolean {
         return this.settingsManager
-            .getPluginSettingByKey<string[]>("ApplicationSearch", "folders", this.getDefaultFolders())
+            .getExtensionSettingByKey<string[]>("ApplicationSearch", "folders", this.getDefaultFolders())
             .some((folderPath) => filePath.startsWith(folderPath));
     }
 

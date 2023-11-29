@@ -1,13 +1,13 @@
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { DependencyInjector } from "../../DependencyInjector";
+import type { Extension } from "../../Extension";
 import type { OperatingSystem } from "../../OperatingSystem";
-import type { UeliPlugin } from "../../Plugin";
 import type { ApplicationRepository } from "./ApplicationRepository";
 
-export class ApplicationSearch implements UeliPlugin {
+export class ApplicationSearch implements Extension {
     public readonly id = "ApplicationSearch";
     public readonly name = "Application Search";
-    public readonly nameTranslationKey = "plugin[ApplicationSearch].pluginName";
+    public readonly nameTranslationKey = "extension[ApplicationSearch].extensionName";
 
     public constructor(private readonly applicationRepository: ApplicationRepository) {}
 

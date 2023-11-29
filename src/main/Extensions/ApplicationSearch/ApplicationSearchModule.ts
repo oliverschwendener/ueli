@@ -1,9 +1,9 @@
 import type { App } from "electron";
 import type { CommandlineUtility } from "../../CommandlineUtility";
 import type { DependencyInjector } from "../../DependencyInjector";
+import type { ExtensionCacheFolder } from "../../ExtensionCacheFolder";
 import type { FileSystemUtility } from "../../FileSystemUtility";
 import type { OperatingSystem } from "../../OperatingSystem";
-import type { PluginCacheFolder } from "../../PluginCacheFolder";
 import type { SettingsManager } from "../../SettingsManager";
 import { ApplicationSearch } from "./ApplicationSearch";
 import { WindowsApplicationRepository } from "./Windows/WindowsApplicationRepository";
@@ -15,7 +15,7 @@ export class ApplicationSearchModule {
         const operatingSystem = dependencyInjector.getInstance<OperatingSystem>("OperatingSystem");
         const fileSystemUtility = dependencyInjector.getInstance<FileSystemUtility>("FileSystemUtility");
         const commandlineUtility = dependencyInjector.getInstance<CommandlineUtility>("CommandlineUtility");
-        const pluginCacheFolder = dependencyInjector.getInstance<PluginCacheFolder>("PluginCacheFolder");
+        const extensionCacheFolder = dependencyInjector.getInstance<ExtensionCacheFolder>("ExtensionCacheFolder");
         const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
         const app = dependencyInjector.getInstance<App>("App");
 
@@ -24,10 +24,10 @@ export class ApplicationSearchModule {
                 commandlineUtility,
                 settingsManager,
                 app,
-                new MacOsApplicationIconGenerator(fileSystemUtility, commandlineUtility, pluginCacheFolder),
+                new MacOsApplicationIconGenerator(fileSystemUtility, commandlineUtility, extensionCacheFolder),
             ),
             Windows: new WindowsApplicationRepository(
-                pluginCacheFolder,
+                extensionCacheFolder,
                 fileSystemUtility,
                 commandlineUtility,
                 settingsManager,
@@ -35,6 +35,6 @@ export class ApplicationSearchModule {
             ),
         }[operatingSystem];
 
-        dependencyInjector.registerPlugin(new ApplicationSearch(applicationRepository));
+        dependencyInjector.registerExtension(new ApplicationSearch(applicationRepository));
     }
 }

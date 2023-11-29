@@ -1,12 +1,12 @@
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { DependencyInjector } from "../../DependencyInjector";
+import type { Extension } from "../../Extension";
 import type { OperatingSystem } from "../../OperatingSystem";
-import type { UeliPlugin } from "../../Plugin";
 
-export class SystemColorThemeSwitcher implements UeliPlugin {
+export class SystemColorThemeSwitcher implements Extension {
     public readonly id: string = "SystemColorThemeSwitcher";
     public readonly name: string = "SystemColorThemeSwitcher";
-    public readonly nameTranslationKey: string = "plugin[SystemColorThemeSwitcher].pluginName";
+    public readonly nameTranslationKey: string = "extension[SystemColorThemeSwitcher].extensionName";
     public readonly supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
 
     public constructor(private readonly currentOperatingSystem: OperatingSystem) {}

@@ -1,8 +1,8 @@
 import type { App } from "electron";
 import { join } from "path";
 import type { CommandlineUtility } from "../../../CommandlineUtility";
+import type { ExtensionCacheFolder } from "../../../ExtensionCacheFolder";
 import type { FileSystemUtility } from "../../../FileSystemUtility";
-import type { PluginCacheFolder } from "../../../PluginCacheFolder";
 import type { SettingsManager } from "../../../SettingsManager";
 import { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
@@ -11,7 +11,7 @@ import { usePowershellScripts } from "./usePowershellScripts";
 
 export class WindowsApplicationRepository implements ApplicationRepository {
     public constructor(
-        private readonly pluginCacheFolder: PluginCacheFolder,
+        private readonly extensionCacheFolder: ExtensionCacheFolder,
         private readonly fileSystemUtility: FileSystemUtility,
         private readonly commandlineUtility: CommandlineUtility,
         private readonly settingsManager: SettingsManager,
@@ -21,7 +21,7 @@ export class WindowsApplicationRepository implements ApplicationRepository {
     public async getApplications(): Promise<Application[]> {
         const stdout = await this.executeTemporaryPowershellScriptWithOutput(
             this.getPowershellScript(),
-            join(this.pluginCacheFolder.path, "WindowsApplicationSearch.temp.ps1"),
+            join(this.extensionCacheFolder.path, "WindowsApplicationSearch.temp.ps1"),
         );
 
         const windowsApplicationRetrieverResults = <WindowsApplicationRetrieverResult[]>JSON.parse(stdout);
@@ -45,12 +45,12 @@ export class WindowsApplicationRepository implements ApplicationRepository {
 
     private getPowershellScript(): string {
         const folderPaths = this.settingsManager
-            .getPluginSettingByKey("ApplicationSearch", "windowsFolders", this.getDefaultFolderPaths())
+            .getExtensionSettingByKey("ApplicationSearch", "windowsFolders", this.getDefaultFolderPaths())
             .map((folderPath) => `'${folderPath}'`)
             .join(",");
 
         const fileExtensions = this.settingsManager
-            .getPluginSettingByKey("ApplicationSearch", "windowsFileExtensions", this.getDefaultFileExtensions())
+            .getExtensionSettingByKey("ApplicationSearch", "windowsFileExtensions", this.getDefaultFileExtensions())
             .map((fileExtension) => `'*.${fileExtension}'`)
             .join(",");
 
@@ -60,7 +60,7 @@ export class WindowsApplicationRepository implements ApplicationRepository {
             ${extractShortcutPowershellScript}
             ${getWindowsAppsPowershellScript}
 
-            Get-WindowsApps -FolderPaths ${folderPaths} -FileExtensions ${fileExtensions} -AppIconFolder '${this.pluginCacheFolder.path}';`;
+            Get-WindowsApps -FolderPaths ${folderPaths} -FileExtensions ${fileExtensions} -AppIconFolder '${this.extensionCacheFolder.path}';`;
     }
 
     private getDefaultFolderPaths(): string[] {

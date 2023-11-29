@@ -10,7 +10,7 @@ export type DependencyName =
     | "NativeTheme"
     | "OperatingSystem"
     | "Platform"
-    | "PluginCacheFolder"
+    | "ExtensionCacheFolder"
     | "SearchIndex"
     | "SettingsFile"
     | "SettingsManager"
