@@ -39,7 +39,7 @@ jobs:
               run: pnpm lint
 
             - name: Run prettier
-              run: pnpm exec prettier --check src/**/*
+              run: pnpm prettier:check
 
             - name: Run tests
               run: pnpm test
