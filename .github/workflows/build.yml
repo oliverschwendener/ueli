@@ -33,18 +33,13 @@ jobs:
                   NODE_ENV: development
 
             - name: Run typecheck
-              run: |
-                  pnpm typecheck:main
-                  pnpm typecheck:preload
-                  pnpm typecheck:renderer
+              run: pnpm typecheck
 
             - name: Run linter
               run: pnpm lint
 
             - name: Run prettier
-              run: |
-                  pnpm exec prettier --check src/**/*
-                  pnpm exec prettier --check electron/**/*
+              run: pnpm exec prettier --check src/**/*
 
             - name: Run tests
               run: pnpm test

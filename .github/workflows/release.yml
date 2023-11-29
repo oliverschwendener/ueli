@@ -9,7 +9,7 @@ jobs:
     release:
         strategy:
             matrix:
-                os: [macos-12, windows-2022]
+                os: [macos-12, windows-2022, ubuntu-22.04]
         runs-on: ${{ matrix.os }}
         name: Publish new release
         steps:
@@ -33,18 +33,13 @@ jobs:
                   NODE_ENV: development
 
             - name: Run typecheck
-              run: |
-                  pnpm typecheck:main
-                  pnpm typecheck:preload
-                  pnpm typecheck:renderer
+              run: pnpm typecheck
 
             - name: Run linter
               run: pnpm lint
 
             - name: Run prettier
-              run: |
-                  pnpm exec prettier --check src/**/*
-                  pnpm exec prettier --check electron/**/*
+              run: pnpm exec prettier --check src/**/*
 
             - name: Run tests
               run: pnpm test

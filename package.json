@@ -1,6 +1,6 @@
 {
     "name": "ueli",
-    "description": "Keystroke launcher for Windows and macOS",
+    "description": "Keystroke launcher for Windows, macOS and Linux",
     "version": "9.0.0-beta.2",
     "license": "MIT",
     "author": {
@@ -18,6 +18,7 @@
         "test:coverage": "vitest run --root=src --coverage",
         "test:watch": "vitest --root=src",
         "test": "vitest run --root=src",
+        "typecheck": "pnpm typecheck:main && pnpm typecheck:preload && pnpm typecheck:renderer",
         "typecheck:main": "tsc -p src/main/tsconfig.json --noEmit",
         "typecheck:preload": "tsc -p src/preload/tsconfig.json --noEmit",
         "typecheck:renderer": "tsc -p src/renderer/tsconfig.json --noEmit"
