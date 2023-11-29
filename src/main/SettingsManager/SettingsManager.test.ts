@@ -67,7 +67,9 @@ describe(SettingsManager, () => {
 
         expect(settingsManager.getExtensionSettingByKey("testExtensionId", "key1", undefined)).toBe("extensionValue");
         expect(settingsManager.getExtensionSettingByKey("testExtensionId", "key2", undefined)).toBe(undefined);
-        expect(settingsManager.getExtensionSettingByKey("testExtensionId", "key2", "defaultValue")).toBe("defaultValue");
+        expect(settingsManager.getExtensionSettingByKey("testExtensionId", "key2", "defaultValue")).toBe(
+            "defaultValue",
+        );
         expect(settingsManager.getExtensionSettingByKey("testExtensionId2", "key", undefined)).toBe(undefined);
     });
 
