@@ -1,4 +1,4 @@
-import type { UeliPlugin } from "../Plugins";
+import type { UeliPlugin } from "../Plugin";
 import type { DependencyInjector as DependencyInjectorInterface } from "./Contract";
 import type { DependencyName } from "./DependencyName";
 

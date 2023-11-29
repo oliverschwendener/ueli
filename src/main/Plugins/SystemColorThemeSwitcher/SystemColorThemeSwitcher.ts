@@ -1,7 +1,7 @@
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { DependencyInjector } from "../../DependencyInjector";
 import type { OperatingSystem } from "../../OperatingSystem";
-import type { UeliPlugin } from "../Contract";
+import type { UeliPlugin } from "../../Plugin";
 
 export class SystemColorThemeSwitcher implements UeliPlugin {
     public readonly id: string = "SystemColorThemeSwitcher";

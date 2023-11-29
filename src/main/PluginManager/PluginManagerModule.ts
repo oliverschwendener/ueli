@@ -1,7 +1,7 @@
 import type { PluginInfo } from "@common/PluginInfo";
 import type { IpcMain } from "electron";
 import type { DependencyInjector } from "../DependencyInjector";
-import type { UeliPlugin } from "../Plugins";
+import type { UeliPlugin } from "../Plugin";
 import type { SearchIndex } from "../SearchIndex";
 import type { SettingsManager } from "../SettingsManager";
 

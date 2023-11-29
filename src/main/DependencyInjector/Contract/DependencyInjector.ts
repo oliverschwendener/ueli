@@ -1,4 +1,4 @@
-import type { UeliPlugin } from "../../Plugins";
+import type { UeliPlugin } from "../../Plugin";
 import type { DependencyName } from "../DependencyName";
 
 export interface DependencyInjector {
