@@ -1,8 +1,8 @@
-import type { CommandlineUtility } from "@common/CommandlineUtility";
-import type { DependencyInjector } from "@common/DependencyInjector";
-import type { EventEmitter } from "@common/EventEmitter";
 import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import type { IpcMain, Shell } from "electron";
+import type { CommandlineUtility } from "../CommandlineUtility";
+import type { DependencyInjector } from "../DependencyInjector";
+import type { EventEmitter } from "../EventEmitter";
 import {
     CommandlineActionHandler,
     OpenFilePathActionHandler,

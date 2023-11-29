@@ -1,5 +1,5 @@
 import type { SearchResultItem } from "@common/SearchResultItem";
-import type { Searchable } from "@common/Searchable";
+import type { Searchable } from "../Searchable";
 
 export class Application implements Searchable {
     public constructor(

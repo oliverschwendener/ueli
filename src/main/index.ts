@@ -15,7 +15,7 @@ import { platform } from "os";
 import { ActionInvokerModule } from "./ActionInvoker";
 import { BrowserWindowModule } from "./BrowserWindow";
 import { CommandlineUtilityModule } from "./CommandlineUtility";
-import { DependencyInjector } from "./DependencyInjector";
+import { DependencyInjectorModule } from "./DependencyInjector";
 import { EventEmitterModule } from "./EventEmitter";
 import { EventSubscriberModule } from "./EventSubscriber";
 import { FileSystemUtilityModule } from "./FileSystemUtility";
@@ -36,7 +36,7 @@ import { SettingsWriterModule } from "./SettingsWriter";
 
     app.dock?.hide();
 
-    const dependencyInjector = new DependencyInjector();
+    const dependencyInjector = DependencyInjectorModule.bootstrap();
 
     // Electron Modules
     dependencyInjector.registerInstance<string>("Platform", platform());

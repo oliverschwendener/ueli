@@ -1,5 +1,5 @@
-import type { OperatingSystem } from "@common/OperatingSystem";
 import { describe, expect, it } from "vitest";
+import type { OperatingSystem } from "./Contract";
 import { getOperatingSystemFromPlatform } from "./getOperatingSystemFromPlatform";
 
 describe(getOperatingSystemFromPlatform, () => {

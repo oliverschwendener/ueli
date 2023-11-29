@@ -1,7 +1,7 @@
-import type { Settings } from "@common/Settings";
-import type { SettingsManager as SettingsManagerInterface } from "@common/SettingsManager";
-import type { SettingsReader } from "@common/SettingsReader";
-import type { SettingsWriter } from "@common/SettingsWriter";
+import type { Settings } from "../Settings";
+import type { SettingsReader } from "../SettingsReader";
+import type { SettingsWriter } from "../SettingsWriter";
+import type { SettingsManager as SettingsManagerInterface } from "./Contract";
 
 export class SettingsManager implements SettingsManagerInterface {
     private readonly settings: Settings;

@@ -1,8 +1,8 @@
-import type { DependencyInjector } from "@common/DependencyInjector";
-import type { FileSystemUtility } from "@common/FileSystemUtility";
-import type { PluginCacheFolder } from "@common/PluginCacheFolder";
 import type { App } from "electron";
 import { join } from "path";
+import type { DependencyInjector } from "../DependencyInjector";
+import type { FileSystemUtility } from "../FileSystemUtility";
+import type { PluginCacheFolder } from "./Contract";
 
 export class PluginCacheFolderModule {
     public static async bootstrap(dependencyInjector: DependencyInjector) {

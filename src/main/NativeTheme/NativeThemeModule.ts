@@ -1,5 +1,5 @@
-import type { DependencyInjector } from "@common/DependencyInjector";
 import type { IpcMain, NativeTheme } from "electron";
+import type { DependencyInjector } from "../DependencyInjector";
 
 export class NativeThemeModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {

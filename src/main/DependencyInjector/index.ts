@@ -1,1 +1,2 @@
-export * from "./DependencyInjector";
+export * from "./Contract";
+export * from "./DependencyInjectorModule";

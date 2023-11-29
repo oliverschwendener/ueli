@@ -1,7 +1,7 @@
-import type { CommandlineUtility } from "@common/CommandlineUtility";
-import type { SettingsManager } from "@common/SettingsManager";
 import type { App } from "electron";
 import { join, normalize, parse } from "path";
+import type { CommandlineUtility } from "../../../CommandlineUtility";
+import type { SettingsManager } from "../../../SettingsManager";
 import { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
 import type { MacOsApplicationIconGenerator } from "./MacOsApplicationIconGenerator";

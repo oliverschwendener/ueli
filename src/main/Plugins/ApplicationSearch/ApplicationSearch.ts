@@ -1,7 +1,7 @@
-import type { DependencyInjector } from "@common/DependencyInjector";
-import type { OperatingSystem } from "@common/OperatingSystem";
 import type { SearchResultItem } from "@common/SearchResultItem";
-import type { UeliPlugin } from "@common/UeliPlugin";
+import type { DependencyInjector } from "../../DependencyInjector";
+import type { OperatingSystem } from "../../OperatingSystem";
+import type { UeliPlugin } from "../Contract";
 import type { ApplicationRepository } from "./ApplicationRepository";
 
 export class ApplicationSearch implements UeliPlugin {

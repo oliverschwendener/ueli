@@ -1,9 +1,9 @@
-import type { CommandlineUtility } from "@common/CommandlineUtility";
-import type { FileSystemUtility } from "@common/FileSystemUtility";
-import type { PluginCacheFolder } from "@common/PluginCacheFolder";
-import type { SettingsManager } from "@common/SettingsManager";
 import type { App } from "electron";
 import { join } from "path";
+import type { CommandlineUtility } from "../../../CommandlineUtility";
+import type { FileSystemUtility } from "../../../FileSystemUtility";
+import type { PluginCacheFolder } from "../../../PluginCacheFolder";
+import type { SettingsManager } from "../../../SettingsManager";
 import { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
 import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";

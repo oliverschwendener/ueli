@@ -1,6 +1,6 @@
-import type { EventEmitter } from "@common/EventEmitter";
 import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import { describe, expect, it, vi } from "vitest";
+import type { EventEmitter } from "../EventEmitter";
 import type { ActionHandler } from "./ActionHandlers";
 import { ActionInvoker } from "./ActionInvoker";
 

@@ -1,6 +1,6 @@
-import type { OperatingSystem } from "@common/OperatingSystem";
 import { BrowserWindow, type App, type BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
+import type { OperatingSystem } from "../OperatingSystem";
 
 export const createBrowserWindow = (app: App, operatingSystem: OperatingSystem) => {
     const preloadScriptFilePath = join(__dirname, "..", "dist-preload", "index.js");

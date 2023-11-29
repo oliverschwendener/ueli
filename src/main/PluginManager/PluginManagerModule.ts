@@ -1,9 +1,9 @@
-import type { DependencyInjector } from "@common/DependencyInjector";
 import type { PluginInfo } from "@common/PluginInfo";
-import type { SearchIndex } from "@common/SearchIndex";
-import type { SettingsManager } from "@common/SettingsManager";
-import type { UeliPlugin } from "@common/UeliPlugin";
 import type { IpcMain } from "electron";
+import type { DependencyInjector } from "../DependencyInjector";
+import type { UeliPlugin } from "../Plugins";
+import type { SearchIndex } from "../SearchIndex";
+import type { SettingsManager } from "../SettingsManager";
 
 export class PluginManagerModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {

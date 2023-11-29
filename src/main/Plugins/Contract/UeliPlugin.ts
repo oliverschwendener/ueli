@@ -1,5 +1,5 @@
-import type { DependencyInjector } from "./DependencyInjector";
-import type { SearchResultItem } from "./SearchResultItem";
+import type { SearchResultItem } from "@common/SearchResultItem";
+import type { DependencyInjector } from "../../DependencyInjector";
 
 export interface UeliPlugin {
     readonly id: string;

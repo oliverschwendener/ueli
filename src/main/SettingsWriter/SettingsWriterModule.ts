@@ -1,6 +1,6 @@
-import type { DependencyInjector } from "@common/DependencyInjector";
-import type { SettingsFile } from "@common/SettingsFile";
-import type { SettingsWriter } from "@common/SettingsWriter";
+import type { DependencyInjector } from "../DependencyInjector";
+import type { SettingsFile } from "../SettingsFile";
+import type { SettingsWriter } from "./Contract";
 import { SettingsFileWriter } from "./SettingsFileWriter";
 
 export class SettingsWriterModule {

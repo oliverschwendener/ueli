@@ -1,6 +1,6 @@
-import type { Settings } from "@common/Settings";
-import type { SettingsWriter } from "@common/SettingsWriter";
 import { writeFile } from "fs";
+import type { Settings } from "../Settings";
+import type { SettingsWriter } from "./Contract";
 
 export class SettingsFileWriter implements SettingsWriter {
     public constructor(private readonly settingsFilePath: string) {}

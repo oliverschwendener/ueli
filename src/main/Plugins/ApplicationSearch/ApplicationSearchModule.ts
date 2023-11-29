@@ -1,10 +1,10 @@
-import type { CommandlineUtility } from "@common/CommandlineUtility";
-import type { DependencyInjector } from "@common/DependencyInjector";
-import type { FileSystemUtility } from "@common/FileSystemUtility";
-import type { OperatingSystem } from "@common/OperatingSystem";
-import type { PluginCacheFolder } from "@common/PluginCacheFolder";
-import type { SettingsManager } from "@common/SettingsManager";
 import type { App } from "electron";
+import type { CommandlineUtility } from "../../CommandlineUtility";
+import type { DependencyInjector } from "../../DependencyInjector";
+import type { FileSystemUtility } from "../../FileSystemUtility";
+import type { OperatingSystem } from "../../OperatingSystem";
+import type { PluginCacheFolder } from "../../PluginCacheFolder";
+import type { SettingsManager } from "../../SettingsManager";
 import { ApplicationSearch } from "./ApplicationSearch";
 import { WindowsApplicationRepository } from "./Windows/WindowsApplicationRepository";
 import { MacOsApplicationIconGenerator } from "./macOS/MacOsApplicationIconGenerator";

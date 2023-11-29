@@ -1,8 +1,8 @@
-import type { DependencyInjector } from "@common/DependencyInjector";
-import type { SettingsManager as SettingsManagerInterface } from "@common/SettingsManager";
-import type { SettingsReader } from "@common/SettingsReader";
-import type { SettingsWriter } from "@common/SettingsWriter";
 import type { IpcMain } from "electron";
+import type { DependencyInjector } from "../DependencyInjector";
+import type { SettingsReader } from "../SettingsReader";
+import type { SettingsWriter } from "../SettingsWriter";
+import type { SettingsManager as SettingsManagerInterface } from "./Contract";
 import { SettingsManager } from "./SettingsManager";
 
 export class SettingsManagerModule {

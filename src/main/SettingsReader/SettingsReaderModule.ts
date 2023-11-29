@@ -1,6 +1,6 @@
-import type { DependencyInjector } from "@common/DependencyInjector";
-import type { SettingsFile } from "@common/SettingsFile";
-import type { SettingsReader } from "@common/SettingsReader";
+import type { DependencyInjector } from "../DependencyInjector";
+import type { SettingsFile } from "../SettingsFile";
+import type { SettingsReader } from "./Contract";
 import { SettingsFileReader } from "./SettingsFileReader";
 
 export class SettingsReaderModule {

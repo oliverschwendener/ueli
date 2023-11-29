@@ -1,7 +1,7 @@
-import type { Settings } from "@common/Settings";
 import { existsSync, unlinkSync, writeFileSync } from "fs";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import type { Settings } from "../Settings";
 import { SettingsFileReader } from "./SettingsFileReader";
 
 const settingsFilePath = join(__dirname, "settings.json");

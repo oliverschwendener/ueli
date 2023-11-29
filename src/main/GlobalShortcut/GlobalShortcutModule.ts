@@ -1,6 +1,6 @@
-import type { DependencyInjector } from "@common/DependencyInjector";
-import type { EventEmitter } from "@common/EventEmitter";
 import type { GlobalShortcut } from "electron";
+import type { DependencyInjector } from "../DependencyInjector";
+import type { EventEmitter } from "../EventEmitter";
 
 export class GlobalShortcutModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {

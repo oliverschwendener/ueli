@@ -1,10 +1,10 @@
-import type { DependencyInjector } from "@common/DependencyInjector";
-import type { EventSubscriber } from "@common/EventSubscriber";
-import type { OperatingSystem } from "@common/OperatingSystem";
 import type { SearchResultItemAction } from "@common/SearchResultItemAction";
-import type { SettingsManager } from "@common/SettingsManager";
 import type { App, BrowserWindow, NativeTheme } from "electron";
 import { join } from "path";
+import type { DependencyInjector } from "../DependencyInjector";
+import type { EventSubscriber } from "../EventSubscriber";
+import type { OperatingSystem } from "../OperatingSystem";
+import type { SettingsManager } from "../SettingsManager";
 import { createBrowserWindow } from "./createBrowserWindow";
 import { toggleBrowserWindow } from "./toggleBrowserWindow";
 

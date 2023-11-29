@@ -1,6 +1,6 @@
-import type { EventEmitter } from "@common/EventEmitter";
-import type { SearchIndex } from "@common/SearchIndex";
 import type { SearchResultItem } from "@common/SearchResultItem";
+import type { EventEmitter } from "../EventEmitter";
+import type { SearchIndex } from "./Contract";
 import type { InMemoryIndex } from "./InMemoryIndex";
 
 export class InMemorySearchIndex implements SearchIndex {

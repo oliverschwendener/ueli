@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "./SearchResultItem";
+import type { SearchResultItem } from "@common/SearchResultItem";
 
 export interface SearchIndex {
     getSearchResultItems(): SearchResultItem[];

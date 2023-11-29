@@ -1,4 +1,4 @@
-import type { DependencyInjector } from "@common/DependencyInjector";
+import type { DependencyInjector } from "../DependencyInjector";
 import { ApplicationSearchModule } from "./ApplicationSearch";
 import { SystemColorThemeSwitcherModule } from "./SystemColorThemeSwitcher";
 

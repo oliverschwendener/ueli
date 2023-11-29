@@ -1,5 +1,5 @@
-import type { DependencyInjector } from "@common/DependencyInjector";
-import type { OperatingSystem } from "@common/OperatingSystem";
+import type { DependencyInjector } from "../../DependencyInjector";
+import type { OperatingSystem } from "../../OperatingSystem";
 import { SystemColorThemeSwitcher } from "./SystemColorThemeSwitcher";
 
 export class SystemColorThemeSwitcherModule {

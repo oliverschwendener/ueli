@@ -1,5 +1,5 @@
-import type { CommandlineUtility } from "@common/CommandlineUtility";
 import { exec } from "child_process";
+import type { CommandlineUtility } from "./Contract";
 
 export class NodeJsCommandlineUtility implements CommandlineUtility {
     public executeCommandWithOutput(command: string): Promise<string> {

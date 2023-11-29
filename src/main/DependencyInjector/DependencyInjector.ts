@@ -1,6 +1,6 @@
-import type { DependencyInjector as DependencyInjectorInterface } from "@common/DependencyInjector";
-import type { DependencyName } from "@common/DependencyName";
-import type { UeliPlugin } from "@common/UeliPlugin";
+import type { UeliPlugin } from "../Plugins";
+import type { DependencyInjector as DependencyInjectorInterface } from "./Contract";
+import type { DependencyName } from "./DependencyName";
 
 export class DependencyInjector implements DependencyInjectorInterface {
     private dependencies: Record<DependencyName | string, unknown>;

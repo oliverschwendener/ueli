@@ -1,7 +1,7 @@
-import type { DependencyInjector } from "@common/DependencyInjector";
-import type { EventEmitter } from "@common/EventEmitter";
-import type { SearchIndex } from "@common/SearchIndex";
 import type { IpcMain } from "electron";
+import type { DependencyInjector } from "../DependencyInjector";
+import type { EventEmitter } from "../EventEmitter";
+import type { SearchIndex } from "./Contract";
 import { InMemorySearchIndex } from "./InMemorySearchIndex";
 
 export class SearchIndexModule {

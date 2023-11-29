@@ -1,5 +1,5 @@
-import type { EventEmitter } from "@common/EventEmitter";
 import type { SearchResultItemAction } from "@common/SearchResultItemAction";
+import type { EventEmitter } from "../EventEmitter";
 import type { ActionHandler } from "./ActionHandlers";
 
 export class ActionInvoker {

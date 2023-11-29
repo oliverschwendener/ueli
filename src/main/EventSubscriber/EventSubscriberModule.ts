@@ -1,6 +1,6 @@
-import type { DependencyInjector } from "@common/DependencyInjector";
-import type { EventSubscriber } from "@common/EventSubscriber";
 import type { Emitter } from "mitt";
+import type { DependencyInjector } from "../DependencyInjector";
+import type { EventSubscriber } from "./Contract";
 import { MittEventSubscriber } from "./MittEventSubscriber";
 
 export class EventSubscriberModule {

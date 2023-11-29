@@ -1,5 +1,5 @@
-import type { EventSubscriber } from "@common/EventSubscriber";
 import type { Emitter } from "mitt";
+import type { EventSubscriber } from "./Contract";
 
 export class MittEventSubscriber implements EventSubscriber {
     public constructor(private readonly emitter: Emitter<Record<string, unknown>>) {}

@@ -1,4 +1,4 @@
-import type { DependencyInjector } from "@common/DependencyInjector";
+import type { DependencyInjector } from "../DependencyInjector";
 import { NodeJsFileSystemUtility } from "./NodeJsFileSystemUtility";
 
 export class FileSystemUtilityModule {
