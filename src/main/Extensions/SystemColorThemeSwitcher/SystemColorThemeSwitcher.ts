@@ -17,6 +17,7 @@ export class SystemColorThemeSwitcher implements Extension {
                 description: "System",
                 id: "SystemColorThemeSwitcher:toggle",
                 name: "Toggle System Appearance",
+                nameTranslationKey: "",
                 imageUrl: this.getSearchResultItemImageUrl(),
                 defaultAction: {
                     argument: "toggle",

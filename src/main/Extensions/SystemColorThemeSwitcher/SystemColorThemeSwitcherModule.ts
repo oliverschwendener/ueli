@@ -2,7 +2,7 @@ import type { NativeTheme } from "electron";
 import type { CommandlineUtility } from "../../CommandlineUtility";
 import type { DependencyInjector } from "../../DependencyInjector";
 import type { OperatingSystem } from "../../OperatingSystem";
-import { CustomActionHandler } from "./ActionHandler/CustomActionHandler";
+import { CustomActionHandler } from "./CustomActionHandler";
 import { SystemColorThemeSwitcher } from "./SystemColorThemeSwitcher";
 
 export class SystemColorThemeSwitcherModule {
