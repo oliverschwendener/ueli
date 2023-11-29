@@ -13,7 +13,7 @@ describe(UrlActionHandler, () => {
             argument: "this is a url",
         };
 
-        await new UrlActionHandler(shell).invoke(action);
+        await new UrlActionHandler(shell).invokeAction(action);
 
         expect(openExternalMock).toHaveBeenCalledWith(action.argument);
     });

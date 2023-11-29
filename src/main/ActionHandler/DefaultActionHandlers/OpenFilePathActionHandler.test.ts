@@ -12,7 +12,7 @@ describe(OpenFilePathActionHandler, () => {
             argument: "this is a file path",
         };
 
-        await new OpenFilePathActionHandler(shell).invoke(action);
+        await new OpenFilePathActionHandler(shell).invokeAction(action);
 
         expect(openPathMock).toHaveBeenCalledWith(action.argument);
     });
@@ -25,6 +25,8 @@ describe(OpenFilePathActionHandler, () => {
             argument: "this is a file path",
         };
 
-        await expect(new OpenFilePathActionHandler(shell).invoke(action)).rejects.toThrowError("there was an error");
+        await expect(new OpenFilePathActionHandler(shell).invokeAction(action)).rejects.toThrowError(
+            "there was an error",
+        );
     });
 });

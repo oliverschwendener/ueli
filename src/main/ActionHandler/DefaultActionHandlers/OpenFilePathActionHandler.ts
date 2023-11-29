@@ -7,7 +7,7 @@ export class OpenFilePathActionHandler implements ActionHandler {
 
     public constructor(private readonly shell: Shell) {}
 
-    public invoke(action: SearchResultItemAction): Promise<void> {
+    public invokeAction(action: SearchResultItemAction): Promise<void> {
         return this.openFilePath(action.argument);
     }
 

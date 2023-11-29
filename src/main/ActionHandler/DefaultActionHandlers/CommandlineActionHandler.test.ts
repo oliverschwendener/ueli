@@ -15,7 +15,7 @@ describe(CommandlineActionHandler, () => {
             argument: "this is a commandline command",
         };
 
-        new CommandlineActionHandler(commandlineUtility).invoke(action);
+        new CommandlineActionHandler(commandlineUtility).invokeAction(action);
 
         expect(executeCommandMock).toHaveBeenLastCalledWith(action.argument);
     });

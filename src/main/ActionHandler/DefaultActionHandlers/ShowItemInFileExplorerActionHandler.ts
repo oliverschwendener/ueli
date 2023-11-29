@@ -7,7 +7,7 @@ export class ShowItemInFileExplorerActionHandler implements ActionHandler {
 
     public constructor(private readonly shell: Shell) {}
 
-    public async invoke(action: SearchResultItemAction): Promise<void> {
+    public async invokeAction(action: SearchResultItemAction): Promise<void> {
         return this.shell.showItemInFolder(action.argument);
     }
 }

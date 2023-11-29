@@ -30,7 +30,7 @@ export class ActionHandlerModule {
                 );
             }
 
-            await actionHandler.invoke(action);
+            await actionHandler.invokeAction(action);
 
             eventEmitter.emitEvent("actionInvokationSucceeded", { action });
         });

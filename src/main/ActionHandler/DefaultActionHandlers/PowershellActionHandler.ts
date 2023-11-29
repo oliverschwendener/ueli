@@ -7,7 +7,7 @@ export class PowershellActionHandler implements ActionHandler {
 
     public constructor(private readonly commandlineUtility: CommandlineUtility) {}
 
-    public invoke(action: SearchResultItemAction): Promise<void> {
+    public invokeAction(action: SearchResultItemAction): Promise<void> {
         return this.commandlineUtility.executeCommand(`powershell -Command "& {${action.argument}}"`);
     }
 }

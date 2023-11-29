@@ -15,7 +15,7 @@ describe(PowershellActionHandler, () => {
             argument: "this is my powershell command",
         };
 
-        new PowershellActionHandler(commandlineUtility).invoke(action);
+        new PowershellActionHandler(commandlineUtility).invokeAction(action);
 
         expect(executeCommandMock).toHaveBeenCalledWith(`powershell -Command "& {${action.argument}}"`);
     });
