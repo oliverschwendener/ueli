@@ -62,8 +62,6 @@ import { SettingsWriterModule } from "./SettingsWriter";
     await BrowserWindowModule.bootstrap(dependencyInjector);
     GlobalShortcutModule.bootstrap(dependencyInjector);
     ActionInvokerModule.bootstrap(dependencyInjector);
-
-    // Plugin Modules
     await PluginCacheFolderModule.bootstrap(dependencyInjector);
     PluginModule.bootstrap(dependencyInjector);
     PluginManagerModule.bootstrap(dependencyInjector);
