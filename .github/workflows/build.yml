@@ -44,7 +44,7 @@ jobs:
             - name: Run tests
               run: pnpm test
 
-            - name: Bundle files
-              run: pnpm bundle
+            - name: Build app
+              run: pnpm build
               env:
                   NODE_ENV: production
