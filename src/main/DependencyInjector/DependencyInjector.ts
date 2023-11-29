@@ -14,13 +14,19 @@ export class DependencyInjector implements DependencyInjectorInterface {
         this.extensions = {};
     }
 
-    public getAllActionHandlers(): ActionHandler[] {
-        return Object.values(this.actionHandlers);
+    public getActionHandler(actionHandlerId: string): ActionHandler {
+        const candidate = this.actionHandlers[actionHandlerId];
+
+        if (!candidate) {
+            throw new Error(`Unable to find action handler with id "${actionHandlerId}"`);
+        }
+
+        return candidate;
     }
 
     public registerActionHandler(actionHandler: ActionHandler): void {
         if (this.actionHandlers[actionHandler.id]) {
-            throw new Error(`Action handler with id ${actionHandler.id} is already registered`);
+            throw new Error(`Action handler with id "${actionHandler.id}" is already registered`);
         }
 
         this.actionHandlers[actionHandler.id] = actionHandler;
@@ -28,7 +34,7 @@ export class DependencyInjector implements DependencyInjectorInterface {
 
     public registerExtension(extension: Extension): void {
         if (this.extensions[extension.id]) {
-            throw new Error(`Extension with id ${extension.id} is already registered`);
+            throw new Error(`Extension with id "${extension.id}" is already registered`);
         }
 
         this.extensions[extension.id] = extension;

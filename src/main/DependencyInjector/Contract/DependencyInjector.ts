@@ -7,7 +7,7 @@ export interface DependencyInjector {
     getAllExtensions(): Extension[];
 
     registerActionHandler(actionHandler: ActionHandler): void;
-    getAllActionHandlers(): ActionHandler[];
+    getActionHandler(actionHandlerId: string): ActionHandler;
 
     registerInstance<T>(name: DependencyName, instance: T): void;
     getInstance<T>(name: DependencyName): T;

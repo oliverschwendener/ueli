@@ -20,9 +20,7 @@ export class ActionHandlerModule {
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
 
         ipcMain.handle("invokeAction", async (_, { action }: { action: SearchResultItemAction }) => {
-            const actionHandler = dependencyInjector
-                .getAllActionHandlers()
-                .find((actionHandler) => actionHandler.id === action.handlerId);
+            const actionHandler = dependencyInjector.getActionHandler(action.handlerId);
 
             if (!actionHandler) {
                 throw new Error(
