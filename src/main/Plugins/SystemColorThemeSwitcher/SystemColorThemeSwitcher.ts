@@ -1,4 +1,4 @@
-import { DependencyInjector } from "@common/DependencyInjector";
+import type { DependencyInjector } from "@common/DependencyInjector";
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { UeliPlugin } from "@common/UeliPlugin";

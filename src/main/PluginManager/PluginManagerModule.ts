@@ -1,5 +1,5 @@
 import type { DependencyInjector } from "@common/DependencyInjector";
-import { PluginInfo } from "@common/PluginInfo";
+import type { PluginInfo } from "@common/PluginInfo";
 import type { SearchIndex } from "@common/SearchIndex";
 import type { SettingsManager } from "@common/SettingsManager";
 import type { UeliPlugin } from "@common/UeliPlugin";
