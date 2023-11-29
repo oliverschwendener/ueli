@@ -1,1 +1,1 @@
-export type OperatingSystem = "Windows" | "macOS";
+export type OperatingSystem = "Windows" | "macOS" | "Linux";

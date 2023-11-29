@@ -23,6 +23,7 @@ export const createBrowserWindow = (app: App, operatingSystem: OperatingSystem) 
             },
             frame: false,
         },
+        Linux: {},
     };
 
     return new BrowserWindow(browserWindowConstructorOptionsMap[operatingSystem]);

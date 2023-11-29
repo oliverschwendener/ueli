@@ -17,6 +17,9 @@ describe(getOperatingSystemFromPlatform, () => {
     it("should return macOS when platform is darwin", () =>
         testGetOperatingSystemFromPlatform({ expected: "macOS", platform: "darwin" }));
 
+    it("should return Linux when platform is linux", () =>
+        testGetOperatingSystemFromPlatform({ expected: "Linux", platform: "linux" }));
+
     it("should throw an error when platform is not win32 or darwin", () =>
         expect(() => getOperatingSystemFromPlatform("windows")).toThrowError("Unexpected platform: windows"));
 });
