@@ -8,30 +8,48 @@ import {
     OpenFilePathActionHandler,
     PowershellActionHandler,
     ShowItemInFileExplorerActionHandler,
-    UrlExecutionService,
+    UrlActionHandler,
 } from "./ActionHandlers";
-import { ActionInvoker } from "./ActionInvoker";
+import type { ActionHandler } from "./Contract";
 
 export class ActionInvokerModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {
-        const shell = dependencyInjector.getInstance<Shell>("Shell");
-        const commandlineUtility = dependencyInjector.getInstance<CommandlineUtility>("CommandlineUtility");
+        ActionInvokerModule.registerDefaultActionHandlers(dependencyInjector);
+
         const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
 
-        const actionInvoker = new ActionInvoker(
-            {
-                OpenFilePath: new OpenFilePathActionHandler(shell),
-                ShowItemInFileExplorer: new ShowItemInFileExplorerActionHandler(shell),
-                URL: new UrlExecutionService(shell),
-                Powershell: new PowershellActionHandler(commandlineUtility),
-                Commandline: new CommandlineActionHandler(commandlineUtility),
-            },
-            eventEmitter,
-        );
+        ipcMain.handle("invokeAction", async (_, { action }: { action: SearchResultItemAction }) => {
+            const actionHandler = dependencyInjector
+                .getAllActionHandlers()
+                .find((actionHandler) => actionHandler.id === action.handlerId);
 
-        ipcMain.handle("invokeAction", (_, { action }: { action: SearchResultItemAction }) =>
-            actionInvoker.invoke(action),
-        );
+            if (!actionHandler) {
+                throw new Error(
+                    `Unable to invoke action. Reason: action handler with id ${action.handlerId} not found`,
+                );
+            }
+
+            await actionHandler.invoke(action);
+
+            eventEmitter.emitEvent("actionInvokationSucceeded", { action });
+        });
+    }
+
+    private static registerDefaultActionHandlers(dependencyInjector: DependencyInjector): void {
+        const commandlineUtility = dependencyInjector.getInstance<CommandlineUtility>("CommandlineUtility");
+        const shell = dependencyInjector.getInstance<Shell>("Shell");
+
+        const actionHandlers: ActionHandler[] = [
+            new CommandlineActionHandler(commandlineUtility),
+            new OpenFilePathActionHandler(shell),
+            new PowershellActionHandler(commandlineUtility),
+            new ShowItemInFileExplorerActionHandler(shell),
+            new UrlActionHandler(shell),
+        ];
+
+        for (const actionHandler of actionHandlers) {
+            dependencyInjector.registerActionHandler(actionHandler);
+        }
     }
 }

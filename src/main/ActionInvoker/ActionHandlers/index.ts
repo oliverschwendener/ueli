@@ -1,4 +1,3 @@
-export * from "./ActionHandler";
 export * from "./CommandlineActionHandler";
 export * from "./OpenFilePathActionHandler";
 export * from "./PowershellActionHandler";

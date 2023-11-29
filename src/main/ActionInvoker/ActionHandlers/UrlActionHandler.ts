@@ -1,8 +1,10 @@
 import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import type { Shell } from "electron";
-import type { ActionHandler } from "./ActionHandler";
+import type { ActionHandler } from "../Contract/ActionHandler";
 
-export class UrlExecutionService implements ActionHandler {
+export class UrlActionHandler implements ActionHandler {
+    public readonly id = "Url";
+
     public constructor(private readonly shell: Shell) {}
 
     public invoke(action: SearchResultItemAction): Promise<void> {

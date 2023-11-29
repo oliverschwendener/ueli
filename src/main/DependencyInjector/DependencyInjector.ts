@@ -1,22 +1,41 @@
+import type { ActionHandler } from "../ActionInvoker";
 import type { Extension } from "../Extension";
 import type { DependencyInjector as DependencyInjectorInterface } from "./Contract";
 import type { DependencyName } from "./DependencyName";
 
 export class DependencyInjector implements DependencyInjectorInterface {
     private dependencies: Record<DependencyName | string, unknown>;
-    private extensions: Extension[];
+    private actionHandlers: Record<string, ActionHandler>;
+    private extensions: Record<string, Extension>;
 
     public constructor() {
         this.dependencies = {};
-        this.extensions = [];
+        this.actionHandlers = {};
+        this.extensions = {};
+    }
+
+    public getAllActionHandlers(): ActionHandler[] {
+        return Object.values(this.actionHandlers);
+    }
+
+    public registerActionHandler(actionHandler: ActionHandler): void {
+        if (this.actionHandlers[actionHandler.id]) {
+            throw new Error(`Action handler with id ${actionHandler.id} is already registered`);
+        }
+
+        this.actionHandlers[actionHandler.id] = actionHandler;
     }
 
     public registerExtension(extension: Extension): void {
-        this.extensions.push(extension);
+        if (this.extensions[extension.id]) {
+            throw new Error(`Extension with id ${extension.id} is already registered`);
+        }
+
+        this.extensions[extension.id] = extension;
     }
 
     public getAllExtensions(): Extension[] {
-        return this.extensions;
+        return Object.values(this.extensions);
     }
 
     public registerInstance<T>(name: DependencyName, instance: T): void {

@@ -1,9 +1,9 @@
 import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import type { Shell } from "electron";
 import { describe, expect, it, vi } from "vitest";
-import { UrlExecutionService } from "./UrlActionHandler";
+import { UrlActionHandler } from "./UrlActionHandler";
 
-describe(UrlExecutionService, () => {
+describe(UrlActionHandler, () => {
     it("should call shell's openExternal function", async () => {
         const openExternalMock = vi.fn().mockReturnValue(Promise.resolve());
 
@@ -13,7 +13,7 @@ describe(UrlExecutionService, () => {
             argument: "this is a url",
         };
 
-        await new UrlExecutionService(shell).invoke(action);
+        await new UrlActionHandler(shell).invoke(action);
 
         expect(openExternalMock).toHaveBeenCalledWith(action.argument);
     });
