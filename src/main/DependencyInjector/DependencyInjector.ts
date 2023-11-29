@@ -1,4 +1,4 @@
-import type { ActionHandler } from "../ActionInvoker";
+import type { ActionHandler } from "../ActionHandler";
 import type { Extension } from "../Extension";
 import type { DependencyInjector as DependencyInjectorInterface } from "./Contract";
 import type { DependencyName } from "./DependencyName";

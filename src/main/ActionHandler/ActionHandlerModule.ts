@@ -3,18 +3,18 @@ import type { IpcMain, Shell } from "electron";
 import type { CommandlineUtility } from "../CommandlineUtility";
 import type { DependencyInjector } from "../DependencyInjector";
 import type { EventEmitter } from "../EventEmitter";
+import type { ActionHandler } from "./Contract";
 import {
     CommandlineActionHandler,
     OpenFilePathActionHandler,
     PowershellActionHandler,
     ShowItemInFileExplorerActionHandler,
     UrlActionHandler,
-} from "./ActionHandlers";
-import type { ActionHandler } from "./Contract";
+} from "./DefaultActionHandlers";
 
-export class ActionInvokerModule {
+export class ActionHandlerModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {
-        ActionInvokerModule.registerDefaultActionHandlers(dependencyInjector);
+        ActionHandlerModule.registerDefaultActionHandlers(dependencyInjector);
 
         const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");

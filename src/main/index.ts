@@ -12,7 +12,7 @@ import {
 } from "electron";
 import mitt, { Emitter } from "mitt";
 import { platform } from "os";
-import { ActionInvokerModule } from "./ActionInvoker";
+import { ActionHandlerModule } from "./ActionHandler";
 import { BrowserWindowModule } from "./BrowserWindow";
 import { CommandlineUtilityModule } from "./CommandlineUtility";
 import { DependencyInjectorModule } from "./DependencyInjector";
@@ -61,7 +61,7 @@ import { SettingsWriterModule } from "./SettingsWriter";
     NativeThemeModule.bootstrap(dependencyInjector);
     await BrowserWindowModule.bootstrap(dependencyInjector);
     GlobalShortcutModule.bootstrap(dependencyInjector);
-    ActionInvokerModule.bootstrap(dependencyInjector);
+    ActionHandlerModule.bootstrap(dependencyInjector);
     await ExtensionCacheFolderModule.bootstrap(dependencyInjector);
     ExtensionsModule.bootstrap(dependencyInjector);
     ExtensionManagerModule.bootstrap(dependencyInjector);
