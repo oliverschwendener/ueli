@@ -3,11 +3,12 @@ import type { SearchResultItem } from "./SearchResultItem";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
 
 export type ContextBridge = {
-    getSupportedExtensions: () => ExtensionInfo[];
     extensionDisabled: (extensionId: string) => void;
     extensionEnabled: (extensionId: string) => void;
+    getAccentColor: () => string;
     getSearchResultItems: () => SearchResultItem[];
     getSettingByKey: <T>(key: string, defaultValue: T) => T;
+    getSupportedExtensions: () => ExtensionInfo[];
     invokeAction: (action: SearchResultItemAction) => Promise<void>;
     onNativeThemeChanged: (callback: () => void) => void;
     onSearchIndexUpdated: (callback: () => void) => void;

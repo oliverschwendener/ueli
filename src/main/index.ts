@@ -4,11 +4,13 @@ import {
     ipcMain,
     nativeTheme,
     shell,
+    systemPreferences,
     type App,
     type GlobalShortcut,
     type IpcMain,
     type NativeTheme,
     type Shell,
+    type SystemPreferences,
 } from "electron";
 import mitt, { Emitter } from "mitt";
 import { platform } from "os";
@@ -30,6 +32,7 @@ import { SettingsFileModule } from "./SettingsFile";
 import { SettingsManagerModule } from "./SettingsManager";
 import { SettingsReaderModule } from "./SettingsReader";
 import { SettingsWriterModule } from "./SettingsWriter";
+import { SystemPreferencesModule } from "./SystemPreferences/SystemPreferencesModule";
 
 (async () => {
     await app.whenReady();
@@ -46,8 +49,10 @@ import { SettingsWriterModule } from "./SettingsWriter";
     dependencyInjector.registerInstance<Shell>("Shell", shell);
     dependencyInjector.registerInstance<GlobalShortcut>("GlobalShortcut", globalShortcut);
     dependencyInjector.registerInstance<Emitter<Record<string, unknown>>>("Emitter", mitt<Record<string, unknown>>());
+    dependencyInjector.registerInstance<SystemPreferences>("SystemPreferences", systemPreferences);
 
     // Ueli Modules
+    SystemPreferencesModule.bootstrap(dependencyInjector);
     CommandlineUtilityModule.bootstrap(dependencyInjector);
     FileSystemUtilityModule.bootstrap(dependencyInjector);
     OperatingSystemModule.bootstrap(dependencyInjector);
