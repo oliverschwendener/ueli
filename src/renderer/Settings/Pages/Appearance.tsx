@@ -1,8 +1,8 @@
-import { Dropdown, Option, Switch } from "@fluentui/react-components";
+import { Dropdown, Option } from "@fluentui/react-components";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting } from "../../Hooks";
-import { getTheme, type ThemeName } from "../../Theme";
+import { getTheme } from "../../Theme";
 import { ThemeContext } from "../../ThemeContext";
 import { Section } from "../Section";
 import { SectionList } from "../SectionList";
@@ -14,82 +14,25 @@ export const Appearance = () => {
 
     const updateTheme = () => setTheme(getTheme(contextBridge));
 
-    const { value: syncWithOs, updateValue: setSyncWithOs } = useSetting<boolean>(
-        "appearance.syncWithOs",
-        true,
-        updateTheme,
-    );
-
-    const { value: preferredThemeName, updateValue: setPreferredThemeName } = useSetting<ThemeName>(
-        "appearance.preferredThemeName",
-        "Web Dark",
-        updateTheme,
-    );
-
-    const { value: preferredLightThemeName, updateValue: setPreferredLightThemeName } = useSetting<ThemeName>(
-        "appearance.preferredLightThemeName",
-        "Web Light",
-        updateTheme,
-    );
-
-    const { value: preferredDarkThemeName, updateValue: setPreferredDarkThemeName } = useSetting<ThemeName>(
-        "appearance.preferredDarkThemeName",
-        "Web Dark",
+    const { value: themeName, updateValue: setThemeName } = useSetting<string>(
+        "appearance.themeName",
+        "Ueli",
         updateTheme,
     );
 
     return (
         <SectionList>
+            <Section></Section>
             <Section>
-                <label id="appearance.syncWithOs">{t("settingsAppearance.syncThemeWithOs")}</label>
-                <Switch
-                    aria-labelledby="appearance.syncWithOs"
-                    checked={syncWithOs}
-                    onChange={(_, { checked }) => setSyncWithOs(checked)}
-                />
-            </Section>
-            <Section>
-                <label id="appearance.customThemeEnabled">{t("settingsAppearance.preferredTheme")}</label>
+                <label id="appearance.themeName">{t("settingsAppearance.themeName")}</label>
                 <Dropdown
-                    aria-labelledby="appearance.customThemeEnabled"
-                    value={preferredThemeName}
-                    onOptionSelect={(_, { optionValue }) =>
-                        optionValue && setPreferredThemeName(optionValue as ThemeName)
-                    }
-                    disabled={syncWithOs}
+                    aria-labelledby="appearance.themeName"
+                    value={themeName}
+                    onOptionSelect={(_, { optionValue }) => optionValue && setThemeName(optionValue)}
                 >
-                    <Option value="Web Light">Web Light</Option>
-                    <Option value="Web Dark">Web Dark</Option>
-                    <Option value="Teams Light">Teams Light</Option>
-                    <Option value="Teams Dark">Teams Dark</Option>
-                </Dropdown>
-            </Section>
-            <Section>
-                <label id="appearance.preferredLightThemeName">{t("settingsAppearance.preferredLightTheme")}</label>
-                <Dropdown
-                    aria-labelledby="appearance.preferredLightThemeName"
-                    value={preferredLightThemeName}
-                    onOptionSelect={(_, { optionValue }) =>
-                        optionValue && setPreferredLightThemeName(optionValue as ThemeName)
-                    }
-                    disabled={!syncWithOs}
-                >
-                    <Option value="Web Light">Web Light</Option>
-                    <Option value="Teams Light">Teams Light</Option>
-                </Dropdown>
-            </Section>
-            <Section>
-                <label id="appearance.preferredDarkThemeName">{t("settingsAppearance.preferredDarkTheme")}</label>
-                <Dropdown
-                    aria-labelledby="appearance.preferredDarkThemeName"
-                    value={preferredDarkThemeName}
-                    onOptionSelect={(_, { optionValue }) =>
-                        optionValue && setPreferredDarkThemeName(optionValue as ThemeName)
-                    }
-                    disabled={!syncWithOs}
-                >
-                    <Option value="Web Dark">Web Dark</Option>
-                    <Option value="Teams Dark">Teams Dark</Option>
+                    <Option value="MicrosoftTeams">Microsoft Teams</Option>
+                    <Option value="Ueli">Ueli</Option>
+                    <Option value="FluentUIWeb">Fluent UI Web</Option>
                 </Dropdown>
             </Section>
         </SectionList>

@@ -1,34 +1,8 @@
 import type { ContextBridge } from "@common/ContextBridge";
-import { teamsDarkTheme, teamsLightTheme, webDarkTheme, webLightTheme, type Theme } from "@fluentui/react-components";
-import type { ThemeName } from "./ThemeName";
+import type { Theme } from "@fluentui/react-components";
+import { themeMap } from "./themes";
 
-const themeMap: Record<ThemeName, Theme> = {
-    "Web Dark": webDarkTheme,
-    "Web Light": webLightTheme,
-    "Teams Dark": teamsDarkTheme,
-    "Teams Light": teamsLightTheme,
+export const getTheme = (contextBridge: ContextBridge): Theme => {
+    const themeName = contextBridge.getSettingByKey<string>("appearance.preferredThemeName", "Ueli");
+    return contextBridge.themeShouldUseDarkColors() ? themeMap[themeName].dark : themeMap[themeName].light;
 };
-
-const getThemeName = (contextBridge: ContextBridge): ThemeName => {
-    const syncWithOs = contextBridge.getSettingByKey<boolean>("appearance.syncWithOs", true);
-
-    const preferredThemeName = contextBridge.getSettingByKey<ThemeName>("appearance.preferredThemeName", "Web Dark");
-
-    const preferredLightThemeName = contextBridge.getSettingByKey<ThemeName>(
-        "appearance.preferredLightThemeName",
-        "Web Light",
-    );
-
-    const preferredDarkThemeName = contextBridge.getSettingByKey<ThemeName>(
-        "appearance.preferredDarkThemeName",
-        "Web Dark",
-    );
-
-    if (syncWithOs) {
-        return contextBridge.themeShouldUseDarkColors() ? preferredDarkThemeName : preferredLightThemeName;
-    }
-
-    return preferredThemeName;
-};
-
-export const getTheme = (contextBridge: ContextBridge): Theme => themeMap[getThemeName(contextBridge)];
