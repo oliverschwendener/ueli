@@ -30,9 +30,9 @@ export const Appearance = () => {
                     value={themeName}
                     onOptionSelect={(_, { optionValue }) => optionValue && setThemeName(optionValue)}
                 >
-                    <Option value="MicrosoftTeams">Microsoft Teams</Option>
+                    <Option value="Microsoft Teams">Microsoft Teams</Option>
                     <Option value="Ueli">Ueli</Option>
-                    <Option value="FluentUIWeb">Fluent UI Web</Option>
+                    <Option value="Fluent UI Web">Fluent UI Web</Option>
                 </Dropdown>
             </Section>
         </SectionList>

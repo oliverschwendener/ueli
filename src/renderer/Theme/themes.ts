@@ -29,8 +29,13 @@ const ueliColors: BrandVariants = {
     160: "#5AF6D2",
 };
 
+export const defaultTheme = {
+    dark: webDarkTheme,
+    light: webLightTheme,
+};
+
 export const themeMap: ThemeMap = {
-    MicrosoftTeams: { dark: teamsDarkTheme, light: teamsLightTheme },
+    "Microsoft Teams": { dark: teamsDarkTheme, light: teamsLightTheme },
     Ueli: { dark: createDarkTheme(ueliColors), light: createLightTheme(ueliColors) },
-    FluentUIWeb: { dark: webDarkTheme, light: webLightTheme },
+    "Fluent UI Web": { dark: webDarkTheme, light: webLightTheme },
 };
