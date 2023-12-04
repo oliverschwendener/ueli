@@ -1,6 +1,6 @@
 import { TranslationSet } from "./translation-set";
 
-export const englishTranslationSet: TranslationSet = {
+export const czechTranslationSet: TranslationSet = {
     trayIconShow: "Zobrazit",
     trayIconSettings: "Nastavení",
     trayIconQuit: "Ukončit",

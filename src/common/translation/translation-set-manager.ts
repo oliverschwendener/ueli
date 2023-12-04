@@ -1,3 +1,4 @@
+import { czechTranslationSet } from "./czech-translation-set";
 import { englishTranslationSet } from "./english-translation-set";
 import { finnishTranslationSet } from "./finnish-translation-set";
 import { germanTranslationSet } from "./german-translation-set";
@@ -17,6 +18,8 @@ import { ukrainianTranslationSet } from "./ukrainian-translation-set";
 
 export function getTranslationSet(language: Language): TranslationSet {
     switch (language) {
+        case Language.Czech:
+            return czechTranslationSet;
         case Language.English:
             return englishTranslationSet;
         case Language.Finnish:
