@@ -35,7 +35,16 @@ export const defaultTheme = {
 };
 
 export const themeMap: ThemeMap = {
-    "Microsoft Teams": { dark: teamsDarkTheme, light: teamsLightTheme },
-    Ueli: { dark: createDarkTheme(ueliColors), light: createLightTheme(ueliColors) },
-    "Fluent UI Web": { dark: webDarkTheme, light: webLightTheme },
+    "Microsoft Teams": {
+        dark: { theme: teamsDarkTheme, accentColor: "#7F85F5" },
+        light: { theme: teamsLightTheme, accentColor: "#5B5FC7" },
+    },
+    Ueli: {
+        dark: { theme: createDarkTheme(ueliColors), accentColor: "#00967C" },
+        light: { theme: createLightTheme(ueliColors), accentColor: "#007762" },
+    },
+    "Fluent UI Web": {
+        dark: { theme: webDarkTheme, accentColor: "#4F82C8" },
+        light: { theme: webLightTheme, accentColor: "#1267B4" },
+    },
 };
