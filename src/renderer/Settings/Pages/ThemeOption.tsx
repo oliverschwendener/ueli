@@ -1,9 +1,12 @@
 type ThemeOptionProps = {
     themeName: string;
-    accentColor: string;
+    accentColors: {
+        light: string;
+        dark: string;
+    };
 };
 
-export const ThemeOption = ({ themeName, accentColor }: ThemeOptionProps) => {
+export const ThemeOption = ({ themeName, accentColors }: ThemeOptionProps) => {
     return (
         <div
             style={{
@@ -16,7 +19,7 @@ export const ThemeOption = ({ themeName, accentColor }: ThemeOptionProps) => {
         >
             <div
                 style={{
-                    backgroundColor: accentColor,
+                    background: `linear-gradient(320deg, ${accentColors.light} 0%, ${accentColors.dark} 100%)`,
                     height: 16,
                     width: 16,
                     borderRadius: "50%",

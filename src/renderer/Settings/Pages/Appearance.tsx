@@ -19,7 +19,7 @@ export const Appearance = () => {
 
     const { value: themeName, updateValue: setThemeName } = useSetting<string>(
         "appearance.themeName",
-        "Ueli",
+        "Fluent UI Web",
         updateTheme,
     );
 
@@ -34,12 +34,7 @@ export const Appearance = () => {
                 >
                     {availableThemes.map(({ name, accentColors }) => (
                         <Option key={`theme-option-${name}`} value={name} text={name}>
-                            <ThemeOption
-                                themeName={name}
-                                accentColor={
-                                    contextBridge.themeShouldUseDarkColors() ? accentColors.dark : accentColors.light
-                                }
-                            />
+                            <ThemeOption themeName={name} accentColors={accentColors} />
                         </Option>
                     ))}
                 </Dropdown>
