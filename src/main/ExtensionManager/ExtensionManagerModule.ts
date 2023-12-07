@@ -62,13 +62,14 @@ export class ExtensionManagerModule {
             const promiseResult = promiseResults[i];
             const { id: extensionId } = enabledExtensions[i];
 
-            promiseResult.status === "fulfilled"
-                ? searchIndex.addSearchResultItems(extensionId, promiseResult.value)
-                : console.error({
-                      error: "Failed ot get search result items by extension",
-                      extensionId,
-                      reason: promiseResult.reason,
-                  });
+            if (promiseResult.status === "fulfilled") {
+                searchIndex.addSearchResultItems(extensionId, promiseResult.value);
+            } else {
+                console.error(
+                    `Failed ot get search result items for extension with id '${extensionId}.` +
+                        `Reason: ${promiseResult.reason}'`,
+                );
+            }
         }
     }
 }
