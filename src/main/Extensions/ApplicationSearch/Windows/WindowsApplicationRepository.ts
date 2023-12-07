@@ -11,11 +11,11 @@ import { usePowershellScripts } from "./usePowershellScripts";
 
 export class WindowsApplicationRepository implements ApplicationRepository {
     public constructor(
+        private readonly app: App,
+        private readonly commandlineUtility: CommandlineUtility,
         private readonly extensionCacheFolder: ExtensionCacheFolder,
         private readonly fileSystemUtility: FileSystemUtility,
-        private readonly commandlineUtility: CommandlineUtility,
         private readonly settingsManager: SettingsManager,
-        private readonly app: App,
     ) {}
 
     public async getApplications(): Promise<Application[]> {

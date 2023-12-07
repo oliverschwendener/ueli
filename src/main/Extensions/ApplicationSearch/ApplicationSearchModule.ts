@@ -21,17 +21,17 @@ export class ApplicationSearchModule {
 
         const applicationRepository = {
             macOS: new MacOsApplicationRepository(
-                commandlineUtility,
-                settingsManager,
                 app,
+                commandlineUtility,
                 new MacOsApplicationIconGenerator(fileSystemUtility, commandlineUtility, extensionCacheFolder),
+                settingsManager,
             ),
             Windows: new WindowsApplicationRepository(
+                app,
+                commandlineUtility,
                 extensionCacheFolder,
                 fileSystemUtility,
-                commandlineUtility,
                 settingsManager,
-                app,
             ),
         }[operatingSystem];
 

@@ -8,10 +8,10 @@ import type { MacOsApplicationIconGenerator } from "./MacOsApplicationIconGenera
 
 export class MacOsApplicationRepository implements ApplicationRepository {
     public constructor(
-        private readonly commandlineUtility: CommandlineUtility,
-        private readonly settingsManager: SettingsManager,
         private readonly app: App,
+        private readonly commandlineUtility: CommandlineUtility,
         private readonly macOsApplicationIconGenerator: MacOsApplicationIconGenerator,
+        private readonly settingsManager: SettingsManager,
     ) {}
 
     public async getApplications(): Promise<Application[]> {
