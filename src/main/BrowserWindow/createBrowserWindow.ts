@@ -9,26 +9,27 @@ export const createBrowserWindow = (dependencyInjector: DependencyInjector) => {
 
     const preloadScriptFilePath = join(__dirname, "..", "dist-preload", "index.js");
 
-    const browserWindowConstructorOptionsMap: Record<OperatingSystem, BrowserWindowConstructorOptions> = {
-        macOS: {
-            webPreferences: {
-                preload: preloadScriptFilePath,
-                webSecurity: app.isPackaged,
-                spellcheck: false,
-            },
-            frame: false,
+    const defaultBrowserWindowOptions: BrowserWindowConstructorOptions = {
+        webPreferences: {
+            preload: preloadScriptFilePath,
+            webSecurity: app.isPackaged,
+            spellcheck: false,
         },
-        Windows: {
-            autoHideMenuBar: true,
-            webPreferences: {
-                preload: preloadScriptFilePath,
-                webSecurity: app.isPackaged,
-                spellcheck: false,
-            },
-            frame: false,
-        },
-        Linux: {},
+        frame: false,
     };
 
-    return new BrowserWindow(browserWindowConstructorOptionsMap[operatingSystem]);
+    const extendDefaultBrowserWindowOptions = (browserWindowOptions: BrowserWindowConstructorOptions) => {
+        return {
+            ...defaultBrowserWindowOptions,
+            ...browserWindowOptions,
+        };
+    };
+
+    const browserWindowOptionsMap: Record<OperatingSystem, BrowserWindowConstructorOptions> = {
+        macOS: extendDefaultBrowserWindowOptions({}),
+        Windows: extendDefaultBrowserWindowOptions({ autoHideMenuBar: true }),
+        Linux: extendDefaultBrowserWindowOptions({}),
+    };
+
+    return new BrowserWindow(browserWindowOptionsMap[operatingSystem]);
 };
