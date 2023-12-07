@@ -18,13 +18,16 @@ export class MacOsApplicationRepository implements ApplicationRepository {
         const filePaths = await this.getAllFilePaths();
         const icons = await this.getAllIcons(filePaths);
 
-        return filePaths.map((filePath) => new Application(parse(filePath).name, filePath, icons[filePath]));
+        return filePaths
+            .filter((filePath) => !!icons[filePath])
+            .map((filePath) => new Application(parse(filePath).name, filePath, icons[filePath]));
     }
 
     private async getAllFilePaths(): Promise<string[]> {
         return (await this.commandlineUtility.executeCommandWithOutput(`mdfind "kMDItemKind == 'Application'"`))
             .split("\n")
             .map((filePath) => normalize(filePath).trim())
+            .filter((filePath) => filePath.endsWith(".app"))
             .filter((filePath) => this.filterFilePathByConfiguredFolders(filePath))
             .filter((filePath) => ![".", ".."].includes(filePath));
     }
@@ -42,9 +45,14 @@ export class MacOsApplicationRepository implements ApplicationRepository {
             filePaths.map((filePath) => this.macOsApplicationIconGenerator.generateApplicationIcon(filePath)),
         );
 
-        for (const promiseResult of promiseResults) {
+        for (let i = 0; i < filePaths.length; i++) {
+            const filePath = filePaths[i];
+            const promiseResult = promiseResults[i];
+
             if (promiseResult.status === "fulfilled") {
-                result[promiseResult.value.applicationFilePath] = promiseResult.value.iconFilePath;
+                result[filePath] = promiseResult.value.iconFilePath;
+            } else {
+                console.error(`Failed to generate icon for '${filePath}. Reason: ${promiseResult.reason}'`);
             }
         }
 
@@ -52,6 +60,11 @@ export class MacOsApplicationRepository implements ApplicationRepository {
     }
 
     private getDefaultFolders(): string[] {
-        return ["/System/Applications", "/Applications", join(this.app.getPath("home"), "Applications")];
+        return [
+            "/System/Applications",
+            "/System/Library/CoreServices",
+            "/Applications",
+            join(this.app.getPath("home"), "Applications"),
+        ];
     }
 }
