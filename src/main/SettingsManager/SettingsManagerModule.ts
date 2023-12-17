@@ -1,5 +1,6 @@
 import type { IpcMain } from "electron";
 import type { DependencyInjector } from "../DependencyInjector";
+import { EventEmitter } from "../EventEmitter";
 import type { SettingsReader } from "../SettingsReader";
 import type { SettingsWriter } from "../SettingsWriter";
 import type { SettingsManager as SettingsManagerInterface } from "./Contract";
@@ -9,10 +10,11 @@ export class SettingsManagerModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {
         const settingsReader = dependencyInjector.getInstance<SettingsReader>("SettingsReader");
         const settingsWriter = dependencyInjector.getInstance<SettingsWriter>("SettingsWriter");
+        const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
 
         dependencyInjector.registerInstance<SettingsManagerInterface>(
             "SettingsManager",
-            new SettingsManager(settingsReader, settingsWriter),
+            new SettingsManager(settingsReader, settingsWriter, eventEmitter),
         );
 
         SettingsManagerModule.registerIpcEventListeners(dependencyInjector);

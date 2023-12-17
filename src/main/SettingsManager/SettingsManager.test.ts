@@ -1,4 +1,5 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import { EventEmitter } from "../EventEmitter";
 import type { Settings } from "../Settings";
 import type { SettingsReader } from "../SettingsReader";
 import type { SettingsWriter } from "../SettingsWriter";
@@ -37,8 +38,14 @@ describe(SettingsManager, () => {
             key3: "value3",
         };
 
+        const emitEventMock = vi.fn();
+
+        const eventEmitter = <EventEmitter>{
+            emitEvent: (eventName, data) => emitEventMock(eventName, data),
+        };
+
         const settingsReader = getDummySettingsReader(settings);
-        const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter());
+        const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter(), eventEmitter);
         expect(settingsManager.getSettings()).toBe(settings);
     });
 
@@ -49,8 +56,14 @@ describe(SettingsManager, () => {
             key3: "value3",
         };
 
+        const emitEventMock = vi.fn();
+
+        const eventEmitter = <EventEmitter>{
+            emitEvent: (eventName, data) => emitEventMock(eventName, data),
+        };
+
         const settingsReader = getDummySettingsReader(settings);
-        const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter());
+        const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter(), eventEmitter);
         expect(settingsManager.getSettingByKey("key1", undefined)).toBe("value1");
         expect(settingsManager.getSettingByKey("key4", undefined)).toBe(undefined);
         expect(settingsManager.getSettingByKey("key5", "defaultValue5")).toBe("defaultValue5");
@@ -62,8 +75,14 @@ describe(SettingsManager, () => {
             "extension[testExtensionId].key1": "extensionValue",
         };
 
+        const emitEventMock = vi.fn();
+
+        const eventEmitter = <EventEmitter>{
+            emitEvent: (eventName, data) => emitEventMock(eventName, data),
+        };
+
         const settingsReader = getDummySettingsReader(settings);
-        const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter());
+        const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter(), eventEmitter);
 
         expect(settingsManager.getExtensionSettingByKey("testExtensionId", "key1", undefined)).toBe("extensionValue");
         expect(settingsManager.getExtensionSettingByKey("testExtensionId", "key2", undefined)).toBe(undefined);
@@ -80,15 +99,22 @@ describe(SettingsManager, () => {
             key3: "value3",
         };
 
+        const emitEventMock = vi.fn();
+
+        const eventEmitter = <EventEmitter>{
+            emitEvent: (eventName, data) => emitEventMock(eventName, data),
+        };
+
         const settingsReader = getDummySettingsReader(settings);
         const settingsWriter = getDummySettingsWriter();
 
         expect(settingsWriter.getWriteCounter()).toBe(0);
 
-        const settingsManager = new SettingsManager(settingsReader, settingsWriter);
+        const settingsManager = new SettingsManager(settingsReader, settingsWriter, eventEmitter);
         await settingsManager.saveSetting("key4", "value4");
 
         expect(settingsManager.getSettings()).toEqual({ ...settings, ...{ key4: "value4" } });
         expect(settingsWriter.getWriteCounter()).toBe(1);
+        expect(emitEventMock).toHaveBeenCalledWith("settingUpdated", { key: "key4", value: "value4" });
     });
 });

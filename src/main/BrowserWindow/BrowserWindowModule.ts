@@ -5,6 +5,7 @@ import type { DependencyInjector } from "../DependencyInjector";
 import type { EventSubscriber } from "../EventSubscriber";
 import type { SettingsManager } from "../SettingsManager";
 import { createBrowserWindow } from "./createBrowserWindow";
+import { showAndFocusBrowserWindow } from "./showAndFocusBrowserWindow";
 import { toggleBrowserWindow } from "./toggleBrowserWindow";
 
 export class BrowserWindowModule {
@@ -46,6 +47,8 @@ export class BrowserWindowModule {
         });
 
         eventSubscriber.subscribe("hotkeyPressed", () => toggleBrowserWindow(app, browserWindow));
+
+        eventSubscriber.subscribe("trayIconClicked", () => showAndFocusBrowserWindow(browserWindow));
     }
 
     private static registerNativeThemeEventListeners(

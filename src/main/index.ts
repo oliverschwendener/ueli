@@ -33,6 +33,7 @@ import { SettingsManagerModule } from "./SettingsManager";
 import { SettingsReaderModule } from "./SettingsReader";
 import { SettingsWriterModule } from "./SettingsWriter";
 import { SystemPreferencesModule } from "./SystemPreferences/SystemPreferencesModule";
+import { TrayIconModule } from "./TrayIcon/TrayIconModule";
 
 (async () => {
     await app.whenReady();
@@ -52,6 +53,8 @@ import { SystemPreferencesModule } from "./SystemPreferences/SystemPreferencesMo
     dependencyInjector.registerInstance<SystemPreferences>("SystemPreferences", systemPreferences);
 
     // Ueli Modules
+    EventEmitterModule.bootstrap(dependencyInjector);
+    EventSubscriberModule.bootstrap(dependencyInjector);
     SystemPreferencesModule.bootstrap(dependencyInjector);
     CommandlineUtilityModule.bootstrap(dependencyInjector);
     FileSystemUtilityModule.bootstrap(dependencyInjector);
@@ -60,8 +63,6 @@ import { SystemPreferencesModule } from "./SystemPreferences/SystemPreferencesMo
     SettingsReaderModule.bootstrap(dependencyInjector);
     SettingsWriterModule.bootstrap(dependencyInjector);
     SettingsManagerModule.bootstrap(dependencyInjector);
-    EventEmitterModule.bootstrap(dependencyInjector);
-    EventSubscriberModule.bootstrap(dependencyInjector);
     SearchIndexModule.bootstrap(dependencyInjector);
     NativeThemeModule.bootstrap(dependencyInjector);
     await BrowserWindowModule.bootstrap(dependencyInjector);
@@ -70,4 +71,5 @@ import { SystemPreferencesModule } from "./SystemPreferences/SystemPreferencesMo
     await ExtensionCacheFolderModule.bootstrap(dependencyInjector);
     ExtensionsModule.bootstrap(dependencyInjector);
     ExtensionManagerModule.bootstrap(dependencyInjector);
+    TrayIconModule.bootstrap(dependencyInjector);
 })();

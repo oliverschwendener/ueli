@@ -1,3 +1,4 @@
+import type { EventEmitter } from "../EventEmitter";
 import type { Settings } from "../Settings";
 import type { SettingsReader } from "../SettingsReader";
 import type { SettingsWriter } from "../SettingsWriter";
@@ -9,6 +10,7 @@ export class SettingsManager implements SettingsManagerInterface {
     public constructor(
         private readonly settingsReader: SettingsReader,
         private readonly settingsWriter: SettingsWriter,
+        private readonly eventEmitter: EventEmitter,
     ) {
         this.settings = this.settingsReader.readSettings();
     }
@@ -27,6 +29,7 @@ export class SettingsManager implements SettingsManagerInterface {
 
     public async saveSetting<T>(key: string, value: T): Promise<void> {
         this.settings[key] = value;
+        this.eventEmitter.emitEvent("settingUpdated", { key, value });
         return this.settingsWriter.writeSettings(this.settings);
     }
 }

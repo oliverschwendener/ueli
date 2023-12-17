@@ -2,17 +2,15 @@ import { Dropdown, Option } from "@fluentui/react-components";
 import { changeLanguage } from "i18next";
 import { useTranslation } from "react-i18next";
 import { useSetting } from "../../Hooks";
-import { getDefaultLanguage, supportedLanguages } from "../../I18n";
+import { supportedLanguages } from "../../I18n";
 import { Section } from "../Section";
 import { SectionList } from "../SectionList";
 
 export const General = () => {
     const { t } = useTranslation();
 
-    const { value: language, updateValue: setLanguage } = useSetting(
-        "general.language",
-        getDefaultLanguage(),
-        (updatedLanguage) => changeLanguage(updatedLanguage),
+    const { value: language, updateValue: setLanguage } = useSetting("general.language", "en-US", (updatedLanguage) =>
+        changeLanguage(updatedLanguage),
     );
 
     return (
