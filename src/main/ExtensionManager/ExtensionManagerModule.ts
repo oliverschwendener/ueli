@@ -34,7 +34,7 @@ export class ExtensionManagerModule {
             searchIndex.addSearchResultItems(extension.id, await extension.getSearchResultItems());
         });
 
-        ipcMain.on("getSupportedExtensions", (event) => {
+        ipcMain.on("getAvailableExtensions", (event) => {
             event.returnValue = supportedExtensions.map(
                 ({ id, name, nameTranslationKey }): ExtensionInfo => ({ id, name, nameTranslationKey }),
             );

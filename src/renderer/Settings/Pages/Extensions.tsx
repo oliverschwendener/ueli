@@ -8,7 +8,7 @@ export const Extensions = () => {
     const { contextBridge } = useContextBridge();
 
     const {
-        getSupportedExtensions,
+        getAvailableExtensions,
         extensionDisabled: disableExtension,
         extensionEnabled: enableExtension,
     } = contextBridge;
@@ -31,7 +31,7 @@ export const Extensions = () => {
     return (
         <SectionList>
             <div style={{ display: "flex", flexDirection: "column" }}>
-                {getSupportedExtensions().map(({ id, name, nameTranslationKey }) => (
+                {getAvailableExtensions().map(({ id, name, nameTranslationKey }) => (
                     <Checkbox
                         key={id}
                         checked={enabledExtensionIds.includes(id)}

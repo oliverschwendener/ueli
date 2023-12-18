@@ -8,7 +8,7 @@ export type ContextBridge = {
     getAccentColor: () => string;
     getSearchResultItems: () => SearchResultItem[];
     getSettingByKey: <T>(key: string, defaultValue: T) => T;
-    getSupportedExtensions: () => ExtensionInfo[];
+    getAvailableExtensions: () => ExtensionInfo[];
     invokeAction: (action: SearchResultItemAction) => Promise<void>;
     onNativeThemeChanged: (callback: () => void) => void;
     onSearchIndexUpdated: (callback: () => void) => void;
