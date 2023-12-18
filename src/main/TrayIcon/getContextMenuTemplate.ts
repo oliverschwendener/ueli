@@ -26,17 +26,19 @@ export const getContextMenuTemplate = ({
         },
     };
 
+    const translationSet = translations[language] ?? translations["en-US"];
+
     return [
         {
-            label: translations[language].show,
+            label: translationSet.show,
             click: () => eventEmitter.emitEvent("trayIconContextMenuShowClicked"),
         },
         {
-            label: translations[language].settings,
+            label: translationSet.settings,
             click: () => eventEmitter.emitEvent("trayIconContextMenuSettingsClicked"),
         },
         {
-            label: translations[language].quit,
+            label: translationSet.quit,
             click: () => app.quit(),
         },
     ];
