@@ -33,7 +33,7 @@ import { SettingsManagerModule } from "./SettingsManager";
 import { SettingsReaderModule } from "./SettingsReader";
 import { SettingsWriterModule } from "./SettingsWriter";
 import { SystemPreferencesModule } from "./SystemPreferences/SystemPreferencesModule";
-import { TrayIconModule } from "./TrayIcon/TrayIconModule";
+import { TrayIconModule } from "./TrayIcon";
 
 (async () => {
     await app.whenReady();
