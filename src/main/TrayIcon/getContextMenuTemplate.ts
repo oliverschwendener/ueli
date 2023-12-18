@@ -1,8 +1,10 @@
 import type { App, MenuItemConstructorOptions } from "electron";
+import { init, t } from "i18next";
 import type { EventEmitter } from "../EventEmitter";
 import type { SettingsManager } from "../SettingsManager";
+import { resources } from "./I18n";
 
-export const getContextMenuTemplate = ({
+export const getContextMenuTemplate = async ({
     app,
     eventEmitter,
     settingsManager,
@@ -10,35 +12,24 @@ export const getContextMenuTemplate = ({
     app: App;
     eventEmitter: EventEmitter;
     settingsManager: SettingsManager;
-}): MenuItemConstructorOptions[] => {
-    const language = settingsManager.getSettingByKey<string>("general.language", "en-US");
-
-    const translations: Record<string, { show: string; settings: string; quit: string }> = {
-        "en-US": {
-            quit: "Quit",
-            settings: "Settings",
-            show: "Show",
-        },
-        "de-CH": {
-            quit: "Beenden",
-            settings: "Einstellungen",
-            show: "Anzeigen",
-        },
-    };
-
-    const translationSet = translations[language] ?? translations["en-US"];
+}): Promise<MenuItemConstructorOptions[]> => {
+    await init({
+        resources,
+        lng: settingsManager.getSettingByKey<string>("general.language", "en-US"),
+        fallbackLng: "en-US",
+    });
 
     return [
         {
-            label: translationSet.show,
+            label: t("trayIcon.contextMenu.show"),
             click: () => eventEmitter.emitEvent("trayIconContextMenuShowClicked"),
         },
         {
-            label: translationSet.settings,
+            label: t("trayIcon.contextMenu.settings"),
             click: () => eventEmitter.emitEvent("trayIconContextMenuSettingsClicked"),
         },
         {
-            label: translationSet.quit,
+            label: t("trayIcon.contextMenu.quit"),
             click: () => app.quit(),
         },
     ];

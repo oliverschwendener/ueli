@@ -16,8 +16,8 @@ export class TrayIconModule {
         const operatingSystem = dependencyInjector.getInstance<OperatingSystem>("OperatingSystem");
         const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
 
-        const setTrayContextMenu = (tray: Tray) => {
-            const contextMeuTemplate = getContextMenuTemplate({ app, eventEmitter, settingsManager });
+        const setTrayContextMenu = async (tray: Tray) => {
+            const contextMeuTemplate = await getContextMenuTemplate({ app, eventEmitter, settingsManager });
             tray.setContextMenu(Menu.buildFromTemplate(contextMeuTemplate));
         };
 
