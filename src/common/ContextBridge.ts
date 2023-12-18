@@ -12,6 +12,7 @@ export type ContextBridge = {
     invokeAction: (action: SearchResultItemAction) => Promise<void>;
     onNativeThemeChanged: (callback: () => void) => void;
     onSearchIndexUpdated: (callback: () => void) => void;
+    onOpenSettings: (callback: () => void) => void;
     themeShouldUseDarkColors: () => boolean;
     updateSettingByKey: <T>(key: string, value: T) => Promise<void>;
     windowFocused: (callback: () => void) => void;

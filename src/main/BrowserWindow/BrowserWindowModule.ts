@@ -5,7 +5,6 @@ import type { DependencyInjector } from "../DependencyInjector";
 import type { EventSubscriber } from "../EventSubscriber";
 import type { SettingsManager } from "../SettingsManager";
 import { createBrowserWindow } from "./createBrowserWindow";
-import { showAndFocusBrowserWindow } from "./showAndFocusBrowserWindow";
 import { toggleBrowserWindow } from "./toggleBrowserWindow";
 
 export class BrowserWindowModule {
@@ -36,6 +35,14 @@ export class BrowserWindowModule {
         const eventSubscriber = dependencyInjector.getInstance<EventSubscriber>("EventSubscriber");
         const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
 
+        const openAndFocusBrowserWindow = (b: BrowserWindow) => {
+            if (!b.isVisible()) {
+                b.show();
+            }
+
+            b.focus();
+        };
+
         eventSubscriber.subscribe("searchIndexUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
 
         eventSubscriber.subscribe("actionInvokationSucceeded", ({ action }: { action: SearchResultItemAction }) => {
@@ -48,7 +55,12 @@ export class BrowserWindowModule {
 
         eventSubscriber.subscribe("hotkeyPressed", () => toggleBrowserWindow(app, browserWindow));
 
-        eventSubscriber.subscribe("trayIconClicked", () => showAndFocusBrowserWindow(browserWindow));
+        eventSubscriber.subscribe("trayIconContextMenuShowClicked", () => openAndFocusBrowserWindow(browserWindow));
+
+        eventSubscriber.subscribe("trayIconContextMenuSettingsClicked", () => {
+            openAndFocusBrowserWindow(browserWindow);
+            browserWindow.webContents.send("openSettings");
+        });
     }
 
     private static registerNativeThemeEventListeners(

@@ -1,36 +1,32 @@
-import { Menu, Tray, type NativeTheme } from "electron";
+import { Menu, Tray, type App, type NativeTheme } from "electron";
 import type { DependencyInjector } from "../DependencyInjector";
 import type { EventEmitter } from "../EventEmitter";
-import { EventSubscriber } from "../EventSubscriber";
-import { OperatingSystem } from "../OperatingSystem";
-import { SettingsManager } from "../SettingsManager";
+import type { EventSubscriber } from "../EventSubscriber";
+import type { OperatingSystem } from "../OperatingSystem";
+import type { SettingsManager } from "../SettingsManager";
 import { getContextMenuTemplate } from "./getContextMenuTemplate";
 import { getTrayIconImage } from "./getTrayIconImage";
 
 export class TrayIconModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {
-        const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
+        const app = dependencyInjector.getInstance<App>("App");
         const eventSubscriber = dependencyInjector.getInstance<EventSubscriber>("EventSubscriber");
+        const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
         const nativeTheme = dependencyInjector.getInstance<NativeTheme>("NativeTheme");
         const operatingSystem = dependencyInjector.getInstance<OperatingSystem>("OperatingSystem");
         const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
 
+        const setTrayContextMenu = (tray: Tray) => {
+            const contextMeuTemplate = getContextMenuTemplate({ app, eventEmitter, settingsManager });
+            tray.setContextMenu(Menu.buildFromTemplate(contextMeuTemplate));
+        };
+
         const tray = new Tray(getTrayIconImage(operatingSystem, nativeTheme));
 
-        tray.setContextMenu(
-            Menu.buildFromTemplate(
-                getContextMenuTemplate(settingsManager.getSettingByKey<string>("general.language", "en-US")),
-            ),
-        );
-
-        tray.on("click", () => eventEmitter.emitEvent("trayIconClicked"));
+        setTrayContextMenu(tray);
 
         nativeTheme.on("updated", () => tray.setImage(getTrayIconImage(operatingSystem, nativeTheme)));
 
-        eventSubscriber.subscribe<{ key: string; value: string }>("settingUpdated", ({ key, value }) => {
-            if (key === "general.language") {
-                tray.setContextMenu(Menu.buildFromTemplate(getContextMenuTemplate(value)));
-            }
-        });
+        eventSubscriber.subscribe("settingUpdated[general.language]", () => setTrayContextMenu(tray));
     }
 }

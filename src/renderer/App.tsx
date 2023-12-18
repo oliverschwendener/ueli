@@ -1,5 +1,6 @@
 import { FluentProvider } from "@fluentui/react-components";
-import { Route, Routes } from "react-router";
+import { useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router";
 import { useContextBridge, useScrollBar, useSearchResultItems, useTheme } from "./Hooks";
 import { useI18n } from "./I18n";
 import { Search } from "./Search";
@@ -10,9 +11,14 @@ export const App = () => {
     const { contextBridge } = useContextBridge();
     const { theme, setTheme } = useTheme(contextBridge);
     const { searchResultItems } = useSearchResultItems(contextBridge);
+    const navigate = useNavigate();
 
     useI18n({ contextBridge });
     useScrollBar({ document, theme });
+
+    useEffect(() => {
+        contextBridge.onOpenSettings(() => navigate({ pathname: "/settings/general" }));
+    }, []);
 
     return (
         <ThemeContext.Provider value={{ theme, setTheme }}>

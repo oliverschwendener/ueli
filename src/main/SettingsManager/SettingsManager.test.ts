@@ -115,6 +115,6 @@ describe(SettingsManager, () => {
 
         expect(settingsManager.getSettings()).toEqual({ ...settings, ...{ key4: "value4" } });
         expect(settingsWriter.getWriteCounter()).toBe(1);
-        expect(emitEventMock).toHaveBeenCalledWith("settingUpdated", { key: "key4", value: "value4" });
+        expect(emitEventMock).toHaveBeenCalledWith("settingUpdated[key4]", { value: "value4" });
     });
 });
