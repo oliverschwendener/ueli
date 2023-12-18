@@ -61,6 +61,11 @@ export class BrowserWindowModule {
             openAndFocusBrowserWindow(browserWindow);
             browserWindow.webContents.send("openSettings");
         });
+
+        eventSubscriber.subscribe("trayIconContextMenuAboutClicked", () => {
+            openAndFocusBrowserWindow(browserWindow);
+            browserWindow.webContents.send("openAbout");
+        });
     }
 
     private static registerNativeThemeEventListeners(

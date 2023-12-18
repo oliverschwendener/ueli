@@ -18,6 +18,7 @@ export const App = () => {
 
     useEffect(() => {
         contextBridge.onOpenSettings(() => navigate({ pathname: "/settings/general" }));
+        contextBridge.onOpenAbout(() => navigate({ pathname: "/settings/about" }));
     }, []);
 
     return (

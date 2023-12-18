@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     onNativeThemeChanged: (callback) => ipcRenderer.on("nativeThemeChanged", callback),
     onSearchIndexUpdated: (callback) => ipcRenderer.on("searchIndexUpdated", callback),
     onOpenSettings: (callback) => ipcRenderer.on("openSettings", callback),
+    onOpenAbout: (callback) => ipcRenderer.on("openAbout", callback),
     themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),
     updateSettingByKey: <T>(key: string, value: T) => ipcRenderer.invoke("updateSettingByKey", { key, value }),
     windowFocused: (callback) => ipcRenderer.on("windowFocused", callback),

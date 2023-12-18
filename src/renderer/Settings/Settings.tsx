@@ -1,5 +1,4 @@
 import { Divider } from "@fluentui/react-components";
-import { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router";
 import { Header } from "./Header";
 import { Navigation } from "./Navigation";
@@ -8,14 +7,9 @@ import { settingsPages } from "./Pages";
 export const Settings = () => {
     const navigate = useNavigate();
 
-    const [path, setPath] = useState<string>(settingsPages[0].absolutePath);
-
     const closeSettings = () => navigate({ pathname: "/" });
 
-    const navigateTo = (pathname: string) => {
-        setPath(pathname);
-        navigate({ pathname });
-    };
+    const navigateTo = (pathname: string) => navigate({ pathname });
 
     return (
         <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -34,7 +28,7 @@ export const Settings = () => {
             >
                 <div style={{ display: "flex" }}>
                     <div style={{ display: "flex", width: "200px", padding: 10, boxSizing: "border-box" }}>
-                        <Navigation settingsPages={settingsPages} onNavigate={navigateTo} path={path} />
+                        <Navigation settingsPages={settingsPages} onNavigate={navigateTo} />
                     </div>
                     <Divider appearance="subtle" vertical />
                 </div>
