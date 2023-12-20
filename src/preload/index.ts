@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     getSettingByKey: <T>(key: string, defaultValue: T): T =>
         ipcRenderer.sendSync("getSettingByKey", { key, defaultValue }),
     getAvailableExtensions: () => ipcRenderer.sendSync("getAvailableExtensions"),
+    getOperatingSystem: () => ipcRenderer.sendSync("getOperatingSystem"),
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
     onNativeThemeChanged: (callback) => ipcRenderer.on("nativeThemeChanged", callback),
     onSearchIndexUpdated: (callback) => ipcRenderer.on("searchIndexUpdated", callback),

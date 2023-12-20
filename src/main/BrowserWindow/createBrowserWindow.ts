@@ -28,7 +28,7 @@ export const createBrowserWindow = (dependencyInjector: DependencyInjector) => {
     };
 
     const browserWindowOptionsMap: Record<OperatingSystem, BrowserWindowConstructorOptions> = {
-        macOS: extendDefaultBrowserWindowOptions({}),
+        macOS: extendDefaultBrowserWindowOptions({ vibrancy: "under-window" }),
         Windows: extendDefaultBrowserWindowOptions({ autoHideMenuBar: true }),
         Linux: extendDefaultBrowserWindowOptions({}),
     };

@@ -6,6 +6,7 @@ import { useI18n } from "./I18n";
 import { Search } from "./Search";
 import { Settings } from "./Settings";
 import { ThemeContext } from "./ThemeContext";
+import { getGlobalCssProperties } from "./globalCssProperties";
 
 export const App = () => {
     const { contextBridge } = useContextBridge();
@@ -21,9 +22,12 @@ export const App = () => {
         contextBridge.onOpenAbout(() => navigate({ pathname: "/settings/about" }));
     }, []);
 
+    const shouldUseDarkColors = contextBridge.themeShouldUseDarkColors();
+    const operatingSystem = contextBridge.getOperatingSystem();
+
     return (
         <ThemeContext.Provider value={{ theme, setTheme }}>
-            <FluentProvider theme={theme} style={{ height: "100vh" }}>
+            <FluentProvider theme={theme} style={getGlobalCssProperties(shouldUseDarkColors)[operatingSystem]}>
                 <Routes>
                     <Route path="/" element={<Search searchResultItems={searchResultItems} />} />
                     <Route path="/settings/*" element={<Settings />} />
