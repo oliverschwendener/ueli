@@ -92,7 +92,11 @@ export const SearchResultListItem = ({
                         justifyContent: "space-between",
                     }}
                 >
-                    <Text>{searchResultItem.name}</Text>
+                    <Text>
+                        {searchResultItem.nameTranslationKey
+                            ? t(searchResultItem.nameTranslationKey)
+                            : searchResultItem.name}
+                    </Text>
                     <Text size={200}>
                         {searchResultItem.descriptionTranslationKey
                             ? t(searchResultItem.descriptionTranslationKey)

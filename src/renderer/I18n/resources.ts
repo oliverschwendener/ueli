@@ -22,6 +22,10 @@ export const resources: Record<string, { translation: Record<string, string> }> 
                 "Show in file explorer",
             "extension[ApplicationSearch].extensionName": "Application Search",
             "extension[SystemColorThemeSwitcher].extensionName": "System Color Theme Switcher",
+            "extension[UeliCommand].extensionName": "Ueli Commands",
+            "extension[UeliCommand].searchResultDescription": "Ueli Command",
+            "extension[UeliCommand].quitUeli": "Quit Ueli",
+            "extension[UeliCommand].openSettings": "Open Ueli Settings",
         },
     },
     "de-CH": {
@@ -47,6 +51,10 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "extension[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer":
                 "Im Datei-Explorer anzeigen",
             "extension[SystemColorThemeSwitcher].extensionName": "System Color Theme Switcher",
+            "extension[UeliCommand].extensionName": "Ueli Befehle",
+            "extension[UeliCommand].searchResultDescription": "Ueli Befehl",
+            "extension[UeliCommand].quitUeli": "Ueli beenden",
+            "extension[UeliCommand].openSettings": "Ueli Einstellungen öffnen",
         },
     },
 };

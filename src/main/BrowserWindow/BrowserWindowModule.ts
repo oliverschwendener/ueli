@@ -66,6 +66,10 @@ export class BrowserWindowModule {
             openAndFocusBrowserWindow(browserWindow);
             browserWindow.webContents.send("openAbout");
         });
+
+        eventSubscriber.subscribe("ueliCommandOpenSettingsActionInvoked", () => {
+            browserWindow.webContents.send("openSettings");
+        });
     }
 
     private static registerNativeThemeEventListeners(

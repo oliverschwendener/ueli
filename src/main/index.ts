@@ -38,6 +38,10 @@ import { TrayIconModule } from "./TrayIcon";
 (async () => {
     await app.whenReady();
 
+    if (!app.requestSingleInstanceLock()) {
+        app.quit();
+    }
+
     app.dock?.hide();
 
     const dependencyInjector = DependencyInjectorModule.bootstrap();
