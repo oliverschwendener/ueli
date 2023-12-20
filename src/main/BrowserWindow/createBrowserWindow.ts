@@ -10,12 +10,14 @@ export const createBrowserWindow = (dependencyInjector: DependencyInjector) => {
     const preloadScriptFilePath = join(__dirname, "..", "dist-preload", "index.js");
 
     const defaultBrowserWindowOptions: BrowserWindowConstructorOptions = {
+        width: 750,
+        height: 500,
+        frame: false,
         webPreferences: {
             preload: preloadScriptFilePath,
             webSecurity: app.isPackaged,
             spellcheck: false,
         },
-        frame: false,
     };
 
     const extendDefaultBrowserWindowOptions = (browserWindowOptions: BrowserWindowConstructorOptions) => {
