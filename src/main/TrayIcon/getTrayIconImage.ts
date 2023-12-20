@@ -1,6 +1,6 @@
+import type { OperatingSystem } from "@common/OperatingSystem";
 import type { NativeTheme } from "electron";
 import { join } from "path";
-import type { OperatingSystem } from "../OperatingSystem";
 
 export const getTrayIconImage = (operatingSystem: OperatingSystem, nativeTheme: NativeTheme) => {
     if (operatingSystem === "Windows") {

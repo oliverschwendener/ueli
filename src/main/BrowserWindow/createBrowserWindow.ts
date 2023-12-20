@@ -1,7 +1,7 @@
+import type { OperatingSystem } from "@common/OperatingSystem";
 import { BrowserWindow, type App, type BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
 import type { DependencyInjector } from "../DependencyInjector";
-import type { OperatingSystem } from "../OperatingSystem";
 
 export const createBrowserWindow = (dependencyInjector: DependencyInjector) => {
     const app = dependencyInjector.getInstance<App>("App");

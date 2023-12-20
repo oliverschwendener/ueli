@@ -1,7 +1,7 @@
+import type { OperatingSystem } from "@common/OperatingSystem";
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { DependencyInjector } from "../../DependencyInjector";
 import type { Extension } from "../../Extension";
-import type { OperatingSystem } from "../../OperatingSystem";
 import type { ApplicationRepository } from "./ApplicationRepository";
 
 export class ApplicationSearch implements Extension {

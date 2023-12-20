@@ -1,7 +1,7 @@
+import type { OperatingSystem } from "@common/OperatingSystem";
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { DependencyInjector } from "../../DependencyInjector";
 import type { Extension } from "../../Extension";
-import type { OperatingSystem } from "../../OperatingSystem";
 
 export class SystemColorThemeSwitcher implements Extension {
     public readonly id: string = "SystemColorThemeSwitcher";

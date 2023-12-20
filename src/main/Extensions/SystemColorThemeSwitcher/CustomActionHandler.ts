@@ -1,8 +1,8 @@
+import type { OperatingSystem } from "@common/OperatingSystem";
 import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import type { NativeTheme } from "electron";
 import type { ActionHandler } from "../../ActionHandler";
 import type { CommandlineUtility } from "../../CommandlineUtility";
-import type { OperatingSystem } from "../../OperatingSystem";
 
 export class CustomActionHandler implements ActionHandler {
     public readonly id = "SystemColorThemeSwitcher";

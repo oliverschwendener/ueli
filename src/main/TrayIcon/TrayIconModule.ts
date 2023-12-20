@@ -1,8 +1,8 @@
+import type { OperatingSystem } from "@common/OperatingSystem";
 import { Menu, Tray, type App, type NativeTheme } from "electron";
 import type { DependencyInjector } from "../DependencyInjector";
 import type { EventEmitter } from "../EventEmitter";
 import type { EventSubscriber } from "../EventSubscriber";
-import type { OperatingSystem } from "../OperatingSystem";
 import type { SettingsManager } from "../SettingsManager";
 import { getContextMenuTemplate } from "./getContextMenuTemplate";
 import { getTrayIconImage } from "./getTrayIconImage";

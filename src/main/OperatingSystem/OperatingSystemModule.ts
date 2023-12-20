@@ -1,5 +1,5 @@
+import type { OperatingSystem } from "@common/OperatingSystem";
 import type { DependencyInjector } from "../DependencyInjector";
-import type { OperatingSystem } from "./Contract";
 import { getOperatingSystemFromPlatform } from "./getOperatingSystemFromPlatform";
 
 export class OperatingSystemModule {

@@ -1,9 +1,9 @@
+import type { OperatingSystem } from "@common/OperatingSystem";
 import type { App } from "electron";
 import type { CommandlineUtility } from "../../CommandlineUtility";
 import type { DependencyInjector } from "../../DependencyInjector";
 import type { ExtensionCacheFolder } from "../../ExtensionCacheFolder";
 import type { FileSystemUtility } from "../../FileSystemUtility";
-import type { OperatingSystem } from "../../OperatingSystem";
 import type { SettingsManager } from "../../SettingsManager";
 import { ApplicationSearch } from "./ApplicationSearch";
 import { WindowsApplicationRepository } from "./Windows/WindowsApplicationRepository";
