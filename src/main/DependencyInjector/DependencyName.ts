@@ -8,6 +8,7 @@ export type DependencyName =
     | "FileSystemUtility"
     | "GlobalShortcut"
     | "IpcMain"
+    | "Logger"
     | "NativeTheme"
     | "OperatingSystem"
     | "Platform"

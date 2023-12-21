@@ -25,6 +25,7 @@ import { ExtensionManagerModule } from "./ExtensionManager";
 import { ExtensionsModule } from "./Extensions";
 import { FileSystemUtilityModule } from "./FileSystemUtility";
 import { GlobalShortcutModule } from "./GlobalShortcut";
+import { LoggerModule } from "./Logger";
 import { NativeThemeModule } from "./NativeTheme";
 import { OperatingSystemModule } from "./OperatingSystem";
 import { SearchIndexModule } from "./SearchIndex";
@@ -57,6 +58,7 @@ import { TrayIconModule } from "./TrayIcon";
     dependencyInjector.registerInstance<SystemPreferences>("SystemPreferences", systemPreferences);
 
     // Ueli Modules
+    LoggerModule.bootstrap(dependencyInjector);
     EventEmitterModule.bootstrap(dependencyInjector);
     EventSubscriberModule.bootstrap(dependencyInjector);
     SystemPreferencesModule.bootstrap(dependencyInjector);

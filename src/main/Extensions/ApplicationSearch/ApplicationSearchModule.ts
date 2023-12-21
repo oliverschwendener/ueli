@@ -4,6 +4,7 @@ import type { CommandlineUtility } from "../../CommandlineUtility";
 import type { DependencyInjector } from "../../DependencyInjector";
 import type { ExtensionCacheFolder } from "../../ExtensionCacheFolder";
 import type { FileSystemUtility } from "../../FileSystemUtility";
+import type { Logger } from "../../Logger";
 import type { SettingsManager } from "../../SettingsManager";
 import { ApplicationSearch } from "./ApplicationSearch";
 import { WindowsApplicationRepository } from "./Windows/WindowsApplicationRepository";
@@ -18,6 +19,7 @@ export class ApplicationSearchModule {
         const extensionCacheFolder = dependencyInjector.getInstance<ExtensionCacheFolder>("ExtensionCacheFolder");
         const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
         const app = dependencyInjector.getInstance<App>("App");
+        const logger = dependencyInjector.getInstance<Logger>("Logger");
 
         const applicationRepository = {
             macOS: new MacOsApplicationRepository(
@@ -25,6 +27,7 @@ export class ApplicationSearchModule {
                 commandlineUtility,
                 new MacOsApplicationIconGenerator(fileSystemUtility, commandlineUtility, extensionCacheFolder),
                 settingsManager,
+                logger,
             ),
             Windows: new WindowsApplicationRepository(
                 app,

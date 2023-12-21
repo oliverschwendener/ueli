@@ -2,6 +2,7 @@ import type { ExtensionInfo } from "@common/ExtensionInfo";
 import type { IpcMain } from "electron";
 import type { DependencyInjector } from "../DependencyInjector";
 import type { Extension } from "../Extension";
+import type { Logger } from "../Logger";
 import type { SearchIndex } from "../SearchIndex";
 import type { SettingsManager } from "../SettingsManager";
 
@@ -47,6 +48,7 @@ export class ExtensionManagerModule {
     ) {
         const searchIndex = dependencyInjector.getInstance<SearchIndex>("SearchIndex");
         const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
+        const logger = dependencyInjector.getInstance<Logger>("Logger");
 
         const enabledExtensions = extensions.filter((extension) =>
             settingsManager
@@ -65,7 +67,7 @@ export class ExtensionManagerModule {
             if (promiseResult.status === "fulfilled") {
                 searchIndex.addSearchResultItems(extensionId, promiseResult.value);
             } else {
-                console.error(
+                logger.error(
                     `Failed ot get search result items for extension with id '${extensionId}.` +
                         `Reason: ${promiseResult.reason}'`,
                 );
