@@ -24,6 +24,9 @@ export const Settings = () => {
                     display: "flex",
                     flexDirection: "row",
                     boxSizing: "border-box",
+                    height: "100%",
+                    width: "100%",
+                    overflow: "hidden",
                 }}
             >
                 <div style={{ display: "flex" }}>
