@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { useContextBridge, useSetting } from "../Hooks";
 import { ActionsMenu } from "./ActionsMenu";
+import { ConfirmationDialog } from "./ConfirmationDialog";
 import { FavoritesList } from "./FavoritesList";
 import { filterSearchResultItemsBySearchTerm } from "./Helpers";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
@@ -21,6 +22,9 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     const { contextBridge } = useContextBridge();
     const [selectedItemIndex, setSelectedItemIndex] = useState<number>(0);
     const [searchTerm, setSearchTerm] = useState<string>("");
+    const [confirmationDialogAction, setConfirmationDialogAction] = useState<SearchResultItemAction | undefined>(
+        undefined,
+    );
     const userInputRef = useRef<HTMLInputElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
@@ -63,7 +67,16 @@ export const Search = ({ searchResultItems }: SearchProps) => {
         await invokeAction(searchResultItem.defaultAction);
     };
 
-    const invokeAction = (action: SearchResultItemAction) => contextBridge.invokeAction(action);
+    const invokeAction = (action: SearchResultItemAction) => {
+        if (!action.requiresConfirmation) {
+            contextBridge.invokeAction(action);
+            return;
+        }
+
+        // This timeout is a workaround. Without it, for some reason the close button in the confirmation dialog will
+        // trigger an "onClick" event and therefore will be closed immidiately.
+        setTimeout(() => setConfirmationDialogAction(action), 100);
+    };
 
     const userInputKeyboardEventHandlers: KeyboardEventHandler[] = [
         {
@@ -114,6 +127,11 @@ export const Search = ({ searchResultItems }: SearchProps) => {
         setAdditionalActions([searchResultItem.defaultAction, ...(searchResultItem.additionalActions ?? [])]);
     };
 
+    const closeConfirmationDialog = () => {
+        setConfirmationDialogAction(undefined);
+        setFocusOnUserInput();
+    };
+
     useEffect(() => {
         setFocusOnUserInputAndSelectText();
         window.ContextBridge.windowFocused(() => setFocusOnUserInputAndSelectText());
@@ -124,6 +142,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
 
     return (
         <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+            <ConfirmationDialog closeDialog={closeConfirmationDialog} action={confirmationDialogAction} />
             <div
                 className="draggable-area"
                 style={{

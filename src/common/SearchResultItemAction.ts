@@ -4,4 +4,5 @@ export type SearchResultItemAction = {
     argument: string;
     handlerId: string;
     hideWindowAfterInvokation: boolean;
+    requiresConfirmation?: boolean;
 };

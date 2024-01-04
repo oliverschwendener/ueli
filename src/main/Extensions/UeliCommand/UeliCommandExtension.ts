@@ -24,6 +24,7 @@ export class UeliCommandExtension implements Extension {
                     description: "Quit Ueli",
                     descriptionTranslationKey: "extension[UeliCommand].quitUeli",
                     hideWindowAfterInvokation: false,
+                    requiresConfirmation: true,
                 },
             },
             settings: {
