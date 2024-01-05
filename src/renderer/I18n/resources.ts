@@ -27,6 +27,7 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "extension[UeliCommand].searchResultDescription": "Ueli Command",
             "extension[UeliCommand].quitUeli": "Quit Ueli",
             "extension[UeliCommand].openSettings": "Open Ueli Settings",
+            "extension[UeliCommand].openExtensions": "Open Ueli Extensions",
         },
     },
     "de-CH": {
@@ -57,6 +58,7 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "extension[UeliCommand].searchResultDescription": "Ueli Befehl",
             "extension[UeliCommand].quitUeli": "Ueli beenden",
             "extension[UeliCommand].openSettings": "Ueli Einstellungen öffnen",
+            "extension[UeliCommand].openExtensions": "Ueli Erweiterungen öffnen",
         },
     },
 };

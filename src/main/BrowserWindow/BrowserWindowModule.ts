@@ -55,20 +55,27 @@ export class BrowserWindowModule {
 
         eventSubscriber.subscribe("hotkeyPressed", () => toggleBrowserWindow(app, browserWindow));
 
-        eventSubscriber.subscribe("trayIconContextMenuShowClicked", () => openAndFocusBrowserWindow(browserWindow));
+        eventSubscriber.subscribe("trayIconContextMenuShowClicked", () => {
+            openAndFocusBrowserWindow(browserWindow);
+            browserWindow.webContents.send("navigateTo", { pathname: "/" });
+        });
 
         eventSubscriber.subscribe("trayIconContextMenuSettingsClicked", () => {
             openAndFocusBrowserWindow(browserWindow);
-            browserWindow.webContents.send("openSettings");
+            browserWindow.webContents.send("navigateTo", { pathname: "/settings/general" });
         });
 
         eventSubscriber.subscribe("trayIconContextMenuAboutClicked", () => {
             openAndFocusBrowserWindow(browserWindow);
-            browserWindow.webContents.send("openAbout");
+            browserWindow.webContents.send("navigateTo", { pathname: "/settings/about" });
         });
 
         eventSubscriber.subscribe("ueliCommandOpenSettingsActionInvoked", () => {
-            browserWindow.webContents.send("openSettings");
+            browserWindow.webContents.send("navigateTo", { pathname: "/settings/general" });
+        });
+
+        eventSubscriber.subscribe("ueliCommandOpenExtensionsActionInvoked", () => {
+            browserWindow.webContents.send("navigateTo", { pathname: "/settings/extensions" });
         });
     }
 

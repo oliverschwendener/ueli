@@ -43,6 +43,21 @@ export class UeliCommandExtension implements Extension {
                     hideWindowAfterInvokation: false,
                 },
             },
+            extensions: {
+                id: "ueliCommand:extensions",
+                description: "Ueli Command",
+                descriptionTranslationKey: "extension[UeliCommand].searchResultDescription",
+                name: "Open Ueli Extensions",
+                nameTranslationKey: "extension[UeliCommand].openExtensions",
+                imageUrl,
+                defaultAction: {
+                    handlerId: "UeliCommand",
+                    argument: "extensions",
+                    description: "Open Ueli extensions",
+                    descriptionTranslationKey: "extension[UeliCommand].openExtensions",
+                    hideWindowAfterInvokation: false,
+                },
+            },
         };
 
         return Object.values(map);

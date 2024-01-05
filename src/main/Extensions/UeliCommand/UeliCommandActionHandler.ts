@@ -16,6 +16,7 @@ export class UeliCommandActionHandler implements ActionHandler {
         const map: Record<UeliCommand, () => Promise<void>> = {
             quit: async () => this.app.quit(),
             settings: async () => this.eventEmitter.emitEvent("ueliCommandOpenSettingsActionInvoked"),
+            extensions: async () => this.eventEmitter.emitEvent("ueliCommandOpenExtensionsActionInvoked"),
         };
 
         return map[action.argument]();

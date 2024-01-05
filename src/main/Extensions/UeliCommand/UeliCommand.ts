@@ -1,1 +1,1 @@
-export type UeliCommand = "quit" | "settings";
+export type UeliCommand = "quit" | "settings" | "extensions";

@@ -18,8 +18,7 @@ export const App = () => {
     useScrollBar({ document, theme });
 
     useEffect(() => {
-        contextBridge.onOpenSettings(() => navigate({ pathname: "/settings/general" }));
-        contextBridge.onOpenAbout(() => navigate({ pathname: "/settings/about" }));
+        contextBridge.onNavigateTo((pathname) => navigate({ pathname }));
     }, []);
 
     const shouldUseDarkColors = contextBridge.themeShouldUseDarkColors();
