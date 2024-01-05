@@ -5,6 +5,7 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     extensionDisabled: (extensionId: string) => ipcRenderer.send("extensionDisabled", { extensionId }),
     extensionEnabled: (extensionId: string) => ipcRenderer.send("extensionEnabled", { extensionId }),
     getAboutUeli: () => ipcRenderer.sendSync("getAboutUeli"),
+    getLogs: () => ipcRenderer.sendSync("getLogs"),
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
     getSettingByKey: <T>(key: string, defaultValue: T): T =>
         ipcRenderer.sendSync("getSettingByKey", { key, defaultValue }),

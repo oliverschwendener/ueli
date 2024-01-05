@@ -1,9 +1,8 @@
 import type { Logger as LoggerInterface } from "./Contract";
 import type { LogLevel } from "./LogLevel";
-import type { LogWriter } from "./LogWriter";
 
 export class Logger implements LoggerInterface {
-    public constructor(private logWriters: LogWriter[]) {}
+    private logs: string[] = [];
 
     public error(message: string): void {
         this.writeLog("error", message);
@@ -21,9 +20,11 @@ export class Logger implements LoggerInterface {
         this.writeLog("warning", message);
     }
 
+    public getLogs(): string[] {
+        return this.logs;
+    }
+
     private writeLog(level: LogLevel, message: string) {
-        for (const logWriter of this.logWriters) {
-            logWriter.writeLog(level, message);
-        }
+        this.logs.push(`[${level.toUpperCase()}] ${message}`);
     }
 }
