@@ -40,6 +40,11 @@ export class ExtensionManagerModule {
                 ({ id, name, nameTranslationKey }): ExtensionInfo => ({ id, name, nameTranslationKey }),
             );
         });
+
+        ipcMain.on("getExtensionSettingsStructure", (event, { extensionId }: { extensionId: string }) => {
+            const extension = supportedExtensions.find((e) => e.id === extensionId);
+            event.returnValue = extension.getSettingsStructure(dependencyInjector);
+        });
     }
 
     private static async addSearchResultItemsToSearchIndex(

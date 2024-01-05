@@ -4,11 +4,14 @@ import { contextBridge, ipcRenderer } from "electron";
 contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     extensionDisabled: (extensionId: string) => ipcRenderer.send("extensionDisabled", { extensionId }),
     extensionEnabled: (extensionId: string) => ipcRenderer.send("extensionEnabled", { extensionId }),
-    getAccentColor: () => ipcRenderer.sendSync("getAccentColor"),
+    getAboutUeli: () => ipcRenderer.sendSync("getAboutUeli"),
+    getLogs: () => ipcRenderer.sendSync("getLogs"),
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
     getSettingByKey: <T>(key: string, defaultValue: T): T =>
         ipcRenderer.sendSync("getSettingByKey", { key, defaultValue }),
     getAvailableExtensions: () => ipcRenderer.sendSync("getAvailableExtensions"),
+    getExtensionSettingsStructure: (extensionId) =>
+        ipcRenderer.sendSync("getExtensionSettingsStructure", { extensionId }),
     getOperatingSystem: () => ipcRenderer.sendSync("getOperatingSystem"),
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
     onNativeThemeChanged: (callback) => ipcRenderer.on("nativeThemeChanged", callback),

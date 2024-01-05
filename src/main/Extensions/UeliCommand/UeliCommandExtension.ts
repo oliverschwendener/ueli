@@ -1,3 +1,4 @@
+import type { ExtensionSettingsStructure } from "@common/ExtensionSettingsStructure";
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { Extension } from "../../Extension";
 import type { UeliCommand } from "./UeliCommand";
@@ -24,6 +25,7 @@ export class UeliCommandExtension implements Extension {
                     description: "Quit Ueli",
                     descriptionTranslationKey: "extension[UeliCommand].quitUeli",
                     hideWindowAfterInvokation: false,
+                    requiresConfirmation: true,
                 },
             },
             settings: {
@@ -48,5 +50,9 @@ export class UeliCommandExtension implements Extension {
 
     public isSupported(): boolean {
         return true;
+    }
+
+    public getSettingsStructure(): ExtensionSettingsStructure {
+        return [];
     }
 }

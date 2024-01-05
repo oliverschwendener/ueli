@@ -1,5 +1,6 @@
 import {
-    AppsAddInRegular,
+    AppsAddIn16Regular,
+    Bug16Regular,
     Info16Regular,
     PaintBrush16Regular,
     Search16Regular,
@@ -9,6 +10,7 @@ import {
 import type { ReactElement } from "react";
 import { About } from "./About";
 import { Appearance } from "./Appearance";
+import { Debug } from "./Debug";
 import { Extensions } from "./Extensions";
 import { General } from "./General";
 import { SearchEngine } from "./SearchEngine";
@@ -52,6 +54,13 @@ export const settingsPages: SettingsPage[] = [
         icon: <Search16Regular />,
     },
     {
+        translationKey: "settingsPage.extensions",
+        relativePath: "extensions",
+        absolutePath: "/settings/extensions",
+        element: <Extensions />,
+        icon: <AppsAddIn16Regular />,
+    },
+    {
         translationKey: "settingsPage.about",
         relativePath: "about",
         absolutePath: "/settings/about",
@@ -59,10 +68,10 @@ export const settingsPages: SettingsPage[] = [
         icon: <Info16Regular />,
     },
     {
-        translationKey: "settingsPage.extensions",
-        relativePath: "extensions",
-        absolutePath: "/settings/extensions",
-        element: <Extensions />,
-        icon: <AppsAddInRegular />,
+        translationKey: "settingsPage.debug",
+        relativePath: "debug",
+        absolutePath: "/settings/debug",
+        element: <Debug />,
+        icon: <Bug16Regular />,
     },
 ];
