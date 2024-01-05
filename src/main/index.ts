@@ -14,6 +14,7 @@ import {
 } from "electron";
 import mitt, { Emitter } from "mitt";
 import { platform } from "os";
+import { AboutUeliModule } from "./AboutUeli/AboutUeliModule";
 import { ActionHandlerModule } from "./ActionHandler";
 import { BrowserWindowModule } from "./BrowserWindow";
 import { CommandlineUtilityModule } from "./CommandlineUtility";
@@ -33,7 +34,6 @@ import { SettingsFileModule } from "./SettingsFile";
 import { SettingsManagerModule } from "./SettingsManager";
 import { SettingsReaderModule } from "./SettingsReader";
 import { SettingsWriterModule } from "./SettingsWriter";
-import { SystemPreferencesModule } from "./SystemPreferences/SystemPreferencesModule";
 import { TrayIconModule } from "./TrayIcon";
 
 (async () => {
@@ -54,10 +54,10 @@ import { TrayIconModule } from "./TrayIcon";
     dependencyInjector.registerInstance<SystemPreferences>("SystemPreferences", systemPreferences);
 
     // Ueli Modules
+    AboutUeliModule.bootstrap(dependencyInjector);
     LoggerModule.bootstrap(dependencyInjector);
     EventEmitterModule.bootstrap(dependencyInjector);
     EventSubscriberModule.bootstrap(dependencyInjector);
-    SystemPreferencesModule.bootstrap(dependencyInjector);
     CommandlineUtilityModule.bootstrap(dependencyInjector);
     FileSystemUtilityModule.bootstrap(dependencyInjector);
     OperatingSystemModule.bootstrap(dependencyInjector);

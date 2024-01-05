@@ -4,7 +4,7 @@ import { contextBridge, ipcRenderer } from "electron";
 contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     extensionDisabled: (extensionId: string) => ipcRenderer.send("extensionDisabled", { extensionId }),
     extensionEnabled: (extensionId: string) => ipcRenderer.send("extensionEnabled", { extensionId }),
-    getAccentColor: () => ipcRenderer.sendSync("getAccentColor"),
+    getAboutUeli: () => ipcRenderer.sendSync("getAboutUeli"),
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
     getSettingByKey: <T>(key: string, defaultValue: T): T =>
         ipcRenderer.sendSync("getSettingByKey", { key, defaultValue }),

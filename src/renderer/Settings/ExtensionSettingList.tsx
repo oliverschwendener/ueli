@@ -27,7 +27,7 @@ export const ExtensionSettingList = ({ extensionId, setting }: ExtensionSettingL
 
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <Label>{setting.description}</Label>
+            <Label size="small">{setting.description}</Label>
             <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                 {value.map((v, index) => (
                     <Input

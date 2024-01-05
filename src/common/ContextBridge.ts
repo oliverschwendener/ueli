@@ -1,3 +1,4 @@
+import { AboutUeli } from "./AboutUeli";
 import type { ExtensionInfo } from "./ExtensionInfo";
 import type { ExtensionSettingsStructure } from "./ExtensionSettingsStructure";
 import type { OperatingSystem } from "./OperatingSystem";
@@ -7,7 +8,7 @@ import type { SearchResultItemAction } from "./SearchResultItemAction";
 export type ContextBridge = {
     extensionDisabled: (extensionId: string) => void;
     extensionEnabled: (extensionId: string) => void;
-    getAccentColor: () => string;
+    getAboutUeli: () => AboutUeli;
     getSearchResultItems: () => SearchResultItem[];
     getSettingByKey: <T>(key: string, defaultValue: T) => T;
     getAvailableExtensions: () => ExtensionInfo[];
