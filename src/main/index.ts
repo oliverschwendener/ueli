@@ -14,9 +14,10 @@ import {
 } from "electron";
 import mitt, { Emitter } from "mitt";
 import { platform } from "os";
-import { AboutUeliModule } from "./AboutUeli/AboutUeliModule";
+import { AboutUeliModule } from "./AboutUeli";
 import { ActionHandlerModule } from "./ActionHandler";
 import { BrowserWindowModule } from "./BrowserWindow";
+import { ClockModule } from "./Clock";
 import { CommandlineUtilityModule } from "./CommandlineUtility";
 import { DependencyInjectorModule } from "./DependencyInjector";
 import { EventEmitterModule } from "./EventEmitter";
@@ -54,6 +55,7 @@ import { TrayIconModule } from "./TrayIcon";
     dependencyInjector.registerInstance<SystemPreferences>("SystemPreferences", systemPreferences);
 
     // Ueli Modules
+    ClockModule.bootstrap(dependencyInjector);
     AboutUeliModule.bootstrap(dependencyInjector);
     LoggerModule.bootstrap(dependencyInjector);
     EventEmitterModule.bootstrap(dependencyInjector);
