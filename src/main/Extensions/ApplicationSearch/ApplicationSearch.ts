@@ -30,26 +30,29 @@ export class ApplicationSearch implements Extension {
         const operatingSystem = dependencyInjector.getInstance<OperatingSystem>("OperatingSystem");
 
         if (operatingSystem === "Windows") {
-            return [
-                <ExtensionSettingList>{
+            return <ExtensionSettingList[]>[
+                {
                     id: "windowsFileExtensions",
                     description: `File extensions, e.g.: "lnk" or "exe"`,
                     defaultValues: ["lnk"],
+                    newValuePlaceholder: "Add more file extensions",
                 },
-                <ExtensionSettingList>{
+                {
                     id: "windowsFolders",
                     description: "Folders",
                     defaultValues: [
                         "C:\\ProgramData\\Microsoft\\Windows\\Start Menu",
                         join(app.getPath("home"), "AppData", "Roaming", "Microsoft", "Windows", "Start Menu"),
                     ],
+                    newValuePlaceholder: "Add more folders",
+                    openDialogOptions: { properties: ["openDirectory"] },
                 },
             ];
         }
 
         if (operatingSystem === "macOS") {
-            return [
-                <ExtensionSettingList>{
+            return <ExtensionSettingList[]>[
+                {
                     defaultValues: [
                         "/System/Applications",
                         "/System/Library/CoreServices",
@@ -58,6 +61,8 @@ export class ApplicationSearch implements Extension {
                     ],
                     description: "Folders",
                     id: "macOsFolders",
+                    newValuePlaceholder: "Add more folders",
+                    openDialogOptions: { properties: ["openDirectory"] },
                 },
             ];
         }

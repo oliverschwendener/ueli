@@ -14,6 +14,7 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
         ipcRenderer.sendSync("getExtensionSettingsStructure", { extensionId }),
     getOperatingSystem: () => ipcRenderer.sendSync("getOperatingSystem"),
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
+    showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),
     onNativeThemeChanged: (callback) => ipcRenderer.on("nativeThemeChanged", callback),
     onSearchIndexUpdated: (callback) => ipcRenderer.on("searchIndexUpdated", callback),
     onNavigateTo: (callback: (pathname: string) => void) =>

@@ -1,8 +1,8 @@
 import type { ExtensionSettingList as ExtensionSettingListType } from "@common/ExtensionSettingsStructure";
 import { Button, Input, Label } from "@fluentui/react-components";
-import { AddRegular, DismissRegular } from "@fluentui/react-icons";
+import { AddRegular, DismissRegular, FolderRegular } from "@fluentui/react-icons";
 import { useState } from "react";
-import { useSetting } from "../Hooks";
+import { useContextBridge, useSetting } from "../Hooks";
 
 type ExtensionSettingListProps = {
     extensionId: string;
@@ -10,6 +10,7 @@ type ExtensionSettingListProps = {
 };
 
 export const ExtensionSettingList = ({ extensionId, setting }: ExtensionSettingListProps) => {
+    const { contextBridge } = useContextBridge();
     const { value, updateValue } = useSetting(`extension[${extensionId}].${setting.id}`, setting.defaultValues);
 
     const [newValue, setNewValue] = useState<string>("");
@@ -22,6 +23,17 @@ export const ExtensionSettingList = ({ extensionId, setting }: ExtensionSettingL
         if (newValue.trim().length) {
             updateValue([...value, newValue]);
             setNewValue("");
+        }
+    };
+
+    const chooseFolder = async () => {
+        try {
+            const result = await contextBridge.showOpenDialog(setting.openDialogOptions ?? {});
+            if (!result.canceled && result.filePaths.length) {
+                setNewValue(result.filePaths[0]);
+            }
+        } catch (error) {
+            // do nothing
         }
     };
 
@@ -47,16 +59,22 @@ export const ExtensionSettingList = ({ extensionId, setting }: ExtensionSettingL
                 ))}
             </div>
             <Input
+                placeholder={setting.newValuePlaceholder}
                 value={newValue}
                 onChange={(_, { value: v }) => setNewValue(v)}
                 size="small"
                 contentAfter={
-                    <Button
-                        onClick={() => add()}
-                        appearance="subtle"
-                        size="small"
-                        icon={<AddRegular fontSize={14} />}
-                    ></Button>
+                    <>
+                        {setting.openDialogOptions ? (
+                            <Button onClick={chooseFolder} appearance="subtle" size="small" icon={<FolderRegular />} />
+                        ) : null}
+                        <Button
+                            onClick={() => add()}
+                            appearance="subtle"
+                            size="small"
+                            icon={<AddRegular fontSize={14} />}
+                        />
+                    </>
                 }
             />
         </div>

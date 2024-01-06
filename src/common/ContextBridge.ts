@@ -1,3 +1,4 @@
+import type { OpenDialogOptions, OpenDialogReturnValue } from "electron";
 import type { AboutUeli } from "./AboutUeli";
 import type { ExtensionInfo } from "./ExtensionInfo";
 import type { ExtensionSettingsStructure } from "./ExtensionSettingsStructure";
@@ -19,6 +20,7 @@ export type ContextBridge = {
     onNativeThemeChanged: (callback: () => void) => void;
     onSearchIndexUpdated: (callback: () => void) => void;
     onNavigateTo: (callback: (pathname: string) => void) => void;
+    showOpenDialog: (options: OpenDialogOptions) => Promise<OpenDialogReturnValue>;
     themeShouldUseDarkColors: () => boolean;
     updateSettingByKey: <T>(key: string, value: T) => Promise<void>;
     windowFocused: (callback: () => void) => void;

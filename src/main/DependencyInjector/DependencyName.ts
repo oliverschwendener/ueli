@@ -2,6 +2,7 @@ export type DependencyName =
     | "App"
     | "Clock"
     | "CommandlineUtility"
+    | "Dialog"
     | "Emitter"
     | "EventEmitter"
     | "EventSubscriber"

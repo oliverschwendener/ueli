@@ -1,11 +1,13 @@
 import {
     app,
+    dialog,
     globalShortcut,
     ipcMain,
     nativeTheme,
     shell,
     systemPreferences,
     type App,
+    type Dialog,
     type GlobalShortcut,
     type IpcMain,
     type NativeTheme,
@@ -20,6 +22,7 @@ import { BrowserWindowModule } from "./BrowserWindow";
 import { ClockModule } from "./Clock";
 import { CommandlineUtilityModule } from "./CommandlineUtility";
 import { DependencyInjectorModule } from "./DependencyInjector";
+import { DialogModule } from "./Dialog/DialogModule";
 import { EventEmitterModule } from "./EventEmitter";
 import { EventSubscriberModule } from "./EventSubscriber";
 import { ExtensionCacheFolderModule } from "./ExtensionCacheFolder";
@@ -53,6 +56,7 @@ import { TrayIconModule } from "./TrayIcon";
     dependencyInjector.registerInstance<GlobalShortcut>("GlobalShortcut", globalShortcut);
     dependencyInjector.registerInstance<Emitter<Record<string, unknown>>>("Emitter", mitt<Record<string, unknown>>());
     dependencyInjector.registerInstance<SystemPreferences>("SystemPreferences", systemPreferences);
+    dependencyInjector.registerInstance<Dialog>("Dialog", dialog);
 
     // Ueli Modules
     ClockModule.bootstrap(dependencyInjector);
@@ -76,4 +80,5 @@ import { TrayIconModule } from "./TrayIcon";
     ExtensionsModule.bootstrap(dependencyInjector);
     ExtensionManagerModule.bootstrap(dependencyInjector);
     TrayIconModule.bootstrap(dependencyInjector);
+    DialogModule.bootstrap(dependencyInjector);
 })();
