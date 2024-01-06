@@ -1,5 +1,5 @@
 import type { ExtensionSettingList as ExtensionSettingListType } from "@common/ExtensionSettingsStructure";
-import { Button, Input, Label } from "@fluentui/react-components";
+import { Button, Input, Label, Tooltip } from "@fluentui/react-components";
 import { AddRegular, DismissRegular, FolderRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 import { useContextBridge, useSetting } from "../Hooks";
@@ -48,12 +48,14 @@ export const ExtensionSettingList = ({ extensionId, setting }: ExtensionSettingL
                         value={v}
                         size="small"
                         contentAfter={
-                            <Button
-                                onClick={() => remove(index)}
-                                appearance="subtle"
-                                size="small"
-                                icon={<DismissRegular fontSize={14} />}
-                            ></Button>
+                            <Tooltip content="Remove" relationship="label">
+                                <Button
+                                    onClick={() => remove(index)}
+                                    appearance="subtle"
+                                    size="small"
+                                    icon={<DismissRegular fontSize={14} />}
+                                ></Button>
+                            </Tooltip>
                         }
                     />
                 ))}
@@ -66,14 +68,23 @@ export const ExtensionSettingList = ({ extensionId, setting }: ExtensionSettingL
                 contentAfter={
                     <>
                         {setting.openDialogOptions ? (
-                            <Button onClick={chooseFolder} appearance="subtle" size="small" icon={<FolderRegular />} />
+                            <Tooltip content="Choose folder" relationship="label">
+                                <Button
+                                    onClick={chooseFolder}
+                                    appearance="subtle"
+                                    size="small"
+                                    icon={<FolderRegular />}
+                                />
+                            </Tooltip>
                         ) : null}
-                        <Button
-                            onClick={() => add()}
-                            appearance="subtle"
-                            size="small"
-                            icon={<AddRegular fontSize={14} />}
-                        />
+                        <Tooltip content="Add" relationship="label">
+                            <Button
+                                onClick={() => add()}
+                                appearance="subtle"
+                                size="small"
+                                icon={<AddRegular fontSize={14} />}
+                            />
+                        </Tooltip>
                     </>
                 }
             />
