@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { EventEmitter } from "../EventEmitter";
+import type { EventEmitter } from "../EventEmitter";
 import type { Settings } from "../Settings";
 import type { SettingsReader } from "../SettingsReader";
 import type { SettingsWriter } from "../SettingsWriter";
@@ -116,5 +116,6 @@ describe(SettingsManager, () => {
         expect(settingsManager.getSettings()).toEqual({ ...settings, ...{ key4: "value4" } });
         expect(settingsWriter.getWriteCounter()).toBe(1);
         expect(emitEventMock).toHaveBeenCalledWith("settingUpdated[key4]", { value: "value4" });
+        expect(emitEventMock).toHaveBeenCalledWith("settingUpdated", { key: "key4", value: "value4" });
     });
 });

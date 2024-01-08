@@ -19,6 +19,7 @@ export type ContextBridge = {
     onNativeThemeChanged: (callback: () => void) => void;
     onSearchIndexUpdated: (callback: () => void) => void;
     onNavigateTo: (callback: (pathname: string) => void) => void;
+    onSettingUpdated: <T>(settingKey: string, callback: (value: T) => void) => void;
     showOpenDialog: (options: OpenDialogOptions) => Promise<OpenDialogReturnValue>;
     themeShouldUseDarkColors: () => boolean;
     updateSettingByKey: <T>(key: string, value: T) => Promise<void>;

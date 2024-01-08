@@ -1,5 +1,5 @@
 import type { SearchResultItemAction } from "@common/SearchResultItemAction";
-import type { App, BrowserWindow, NativeTheme } from "electron";
+import type { App, BrowserWindow, BrowserWindowConstructorOptions, NativeTheme } from "electron";
 import { join } from "path";
 import type { DependencyInjector } from "../DependencyInjector";
 import type { EventSubscriber } from "../EventSubscriber";
@@ -7,6 +7,7 @@ import type { UeliCommandInvokedEvent } from "../Extensions/UeliCommand";
 import type { SettingsManager } from "../SettingsManager";
 import type { TrayIconMenuItemClickedEvent } from "../TrayIcon";
 import { createBrowserWindow } from "./createBrowserWindow";
+import { getBackgroundMaterial } from "./getBackgroundMaterial";
 import { openAndFocusBrowserWindow } from "./openAndFocusBrowserWindow";
 import { sendToBrowserWindow } from "./sendToBrowserWindow";
 import { toggleBrowserWindow } from "./toggleBrowserWindow";
@@ -50,6 +51,17 @@ export class BrowserWindowModule {
         });
 
         eventSubscriber.subscribe("hotkeyPressed", () => toggleBrowserWindow(app, browserWindow));
+
+        eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
+            sendToBrowserWindow(browserWindow, "settingUpdated", { key, value });
+        });
+
+        eventSubscriber.subscribe(
+            "settingUpdated[window.backgroundMaterial]",
+            ({ value }: { value: BrowserWindowConstructorOptions["backgroundMaterial"] }) => {
+                browserWindow.setBackgroundMaterial(getBackgroundMaterial(value));
+            },
+        );
 
         BrowserWindowModule.registerTrayIconEvents(browserWindow, eventSubscriber);
         BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber);

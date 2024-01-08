@@ -29,6 +29,7 @@ export class SettingsManager implements SettingsManagerInterface {
 
     public async saveSetting<T>(key: string, value: T): Promise<void> {
         this.settings[key] = value;
+        this.eventEmitter.emitEvent("settingUpdated", { key, value });
         this.eventEmitter.emitEvent(`settingUpdated[${key}]`, { value });
         return this.settingsWriter.writeSettings(this.settings);
     }
