@@ -1,11 +1,14 @@
 import { Dropdown, Option, Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
-import { useSetting } from "../../Hooks";
+import { useContextBridge, useSetting } from "../../Hooks";
 import { Section } from "../Section";
 import { SectionList } from "../SectionList";
 
 export const Window = () => {
+    const { contextBridge } = useContextBridge();
     const { t } = useTranslation();
+
+    const operatingSystem = contextBridge.getOperatingSystem();
 
     const { value: hideWindowOnBlur, updateValue: setHideWindowOnBlur } = useSetting("window.hideWindowOnBlur", true);
 
@@ -39,27 +42,29 @@ export const Window = () => {
                 />
             </Section>
 
-            <Section>
-                <label id="window.backgroundMaterial">Background material</label>
-                <Dropdown
-                    aria-labelledby="window.backgroundMaterial"
-                    value={backgroundMaterial}
-                    onOptionSelect={(_, { optionValue }) => optionValue && setBackgroundMaterial(optionValue)}
-                >
-                    <Option key="none" value="none">
-                        None
-                    </Option>
-                    <Option key="mica" value="mica">
-                        Mica
-                    </Option>
-                    <Option key="tabbed" value="tabbed">
-                        Tabbed
-                    </Option>
-                    <Option key="acrylic" value="acrylic">
-                        Acrylic
-                    </Option>
-                </Dropdown>
-            </Section>
+            {operatingSystem === "Windows" ? (
+                <Section>
+                    <label id="window.backgroundMaterial">Background material</label>
+                    <Dropdown
+                        aria-labelledby="window.backgroundMaterial"
+                        value={backgroundMaterial}
+                        onOptionSelect={(_, { optionValue }) => optionValue && setBackgroundMaterial(optionValue)}
+                    >
+                        <Option key="none" value="none">
+                            None
+                        </Option>
+                        <Option key="mica" value="mica">
+                            Mica
+                        </Option>
+                        <Option key="tabbed" value="tabbed">
+                            Tabbed
+                        </Option>
+                        <Option key="acrylic" value="acrylic">
+                            Acrylic
+                        </Option>
+                    </Dropdown>
+                </Section>
+            ) : null}
         </SectionList>
     );
 };
