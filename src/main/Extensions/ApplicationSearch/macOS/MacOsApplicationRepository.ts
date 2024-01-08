@@ -38,8 +38,8 @@ export class MacOsApplicationRepository implements ApplicationRepository {
         return this.settingsManager
             .getExtensionSettingByKey<string[]>(
                 "ApplicationSearch",
-                "macOsFolder",
-                this.settingDefaultValueProvider.getDefaultValue("macOsFolder"),
+                "macOsFolders",
+                this.settingDefaultValueProvider.getDefaultValue("macOsFolders"),
             )
             .some((folderPath) => filePath.startsWith(folderPath));
     }
