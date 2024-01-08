@@ -1,19 +1,19 @@
-import type { App } from "electron";
-import { join, normalize, parse } from "path";
+import { normalize, parse } from "path";
 import type { CommandlineUtility } from "../../../CommandlineUtility";
 import type { Logger } from "../../../Logger";
 import type { SettingsManager } from "../../../SettingsManager";
 import { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
+import type { SettingDefaultValueProvider } from "../SettingDefaultValueProvider";
 import type { MacOsApplicationIconGenerator } from "./MacOsApplicationIconGenerator";
 
 export class MacOsApplicationRepository implements ApplicationRepository {
     public constructor(
-        private readonly app: App,
         private readonly commandlineUtility: CommandlineUtility,
         private readonly macOsApplicationIconGenerator: MacOsApplicationIconGenerator,
         private readonly settingsManager: SettingsManager,
         private readonly logger: Logger,
+        private readonly settingDefaultValueProvider: SettingDefaultValueProvider,
     ) {}
 
     public async getApplications(): Promise<Application[]> {
@@ -36,7 +36,11 @@ export class MacOsApplicationRepository implements ApplicationRepository {
 
     private filterFilePathByConfiguredFolders(filePath: string): boolean {
         return this.settingsManager
-            .getExtensionSettingByKey<string[]>("ApplicationSearch", "macOsFolders", this.getDefaultFolders())
+            .getExtensionSettingByKey<string[]>(
+                "ApplicationSearch",
+                "macOsFolder",
+                this.settingDefaultValueProvider.getDefaultValue("macOsFolder"),
+            )
             .some((folderPath) => filePath.startsWith(folderPath));
     }
 
@@ -59,14 +63,5 @@ export class MacOsApplicationRepository implements ApplicationRepository {
         }
 
         return result;
-    }
-
-    private getDefaultFolders(): string[] {
-        return [
-            "/System/Applications",
-            "/System/Library/CoreServices",
-            "/Applications",
-            join(this.app.getPath("home"), "Applications"),
-        ];
     }
 }

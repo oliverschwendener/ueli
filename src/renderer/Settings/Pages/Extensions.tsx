@@ -1,8 +1,9 @@
 import { Accordion, AccordionHeader, AccordionItem, AccordionPanel } from "@fluentui/react-components";
 import { CheckboxCheckedFilled, CheckboxUncheckedRegular } from "@fluentui/react-icons";
+import type { ReactElement } from "react";
 import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting } from "../../Hooks";
-import { ExtensionSettings } from "../ExtensionSettings";
+import { ApplicationSearchSettings } from "./ExtensionSettings";
 
 export const Extensions = () => {
     const { t } = useTranslation();
@@ -19,14 +20,18 @@ export const Extensions = () => {
         ["ApplicationSearch"],
     );
 
-    const enable = (extensionId: string) => {
-        setEnabledExtensionIds([extensionId, ...enabledExtensionIds]);
+    const enable = async (extensionId: string) => {
+        await setEnabledExtensionIds([extensionId, ...enabledExtensionIds]);
         enableExtension(extensionId);
     };
 
-    const disable = (extensionId: string) => {
-        setEnabledExtensionIds(enabledExtensionIds.filter((p) => p !== extensionId));
+    const disable = async (extensionId: string) => {
+        await setEnabledExtensionIds(enabledExtensionIds.filter((p) => p !== extensionId));
         disableExtension(extensionId);
+    };
+
+    const extensionSettings: Record<string, ReactElement> = {
+        ApplicationSearch: <ApplicationSearchSettings />,
     };
 
     return (
@@ -47,9 +52,7 @@ export const Extensions = () => {
                     >
                         {nameTranslationKey ? t(nameTranslationKey) : name}
                     </AccordionHeader>
-                    <AccordionPanel>
-                        <ExtensionSettings extensionId={id} />
-                    </AccordionPanel>
+                    <AccordionPanel>{extensionSettings[id]}</AccordionPanel>
                 </AccordionItem>
             ))}
         </Accordion>

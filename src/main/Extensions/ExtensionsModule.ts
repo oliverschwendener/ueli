@@ -1,3 +1,4 @@
+import type { IpcMain } from "electron";
 import type { DependencyInjector } from "../DependencyInjector";
 import { ApplicationSearchModule } from "./ApplicationSearch";
 import { SystemColorThemeSwitcherModule } from "./SystemColorThemeSwitcher";
@@ -8,5 +9,20 @@ export class ExtensionsModule {
         ApplicationSearchModule.bootstrap(dependencyInjector);
         SystemColorThemeSwitcherModule.bootstrap(dependencyInjector);
         UeliCommandModule.bootstrap(dependencyInjector);
+
+        const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
+
+        ipcMain.on(
+            "getExtensionSettingDefaultValue",
+            (event, { extensionId, settingKey }: { extensionId: string; settingKey: string }) => {
+                const extension = dependencyInjector.getAllExtensions().find((e) => e.id === extensionId);
+
+                if (!extension) {
+                    throw new Error(`Unable to find extension by id "${extensionId}"`);
+                }
+
+                event.returnValue = extension.getSettingDefaultValue(settingKey);
+            },
+        );
     }
 }

@@ -1,4 +1,3 @@
-import type { ExtensionSettingsStructure } from "@common/ExtensionSettingsStructure";
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { DependencyInjector } from "../../DependencyInjector";
@@ -31,14 +30,14 @@ export class SystemColorThemeSwitcher implements Extension {
         ];
     }
 
+    public getSettingDefaultValue<T>(): T {
+        return undefined as T;
+    }
+
     public isSupported(dependencyInjector: DependencyInjector): boolean {
         const currentOperatingSystem = dependencyInjector.getInstance<OperatingSystem>("OperatingSystem");
         const supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
         return supportedOperatingSystems.includes(currentOperatingSystem);
-    }
-
-    public getSettingsStructure(): ExtensionSettingsStructure {
-        return [];
     }
 
     private getSearchResultItemImageUrl(): string {

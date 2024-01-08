@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { Application } from "./Application";
-import { ApplicationRepository } from "./ApplicationRepository";
+import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";
+import type { SettingDefaultValueProvider } from "./SettingDefaultValueProvider";
 
 describe(ApplicationSearch, () => {
     it("should get all applications and convert them to search result items", async () => {
@@ -16,8 +17,32 @@ describe(ApplicationSearch, () => {
             getApplications: () => getApplicationsMock(),
         };
 
-        const searchResultItems = await new ApplicationSearch(applicationRepository).getSearchResultItems();
+        const settingDefaultValueProvider = <SettingDefaultValueProvider>{};
+
+        const searchResultItems = await new ApplicationSearch(
+            applicationRepository,
+            settingDefaultValueProvider,
+        ).getSearchResultItems();
 
         expect(searchResultItems).toEqual(applications.map((application) => application.toSearchResultItem()));
+    });
+
+    it("should return a default value provided by the DefaultSettingValueProvider", () => {
+        const applicationRepository = <ApplicationRepository>{};
+
+        const settingDefaultValueProvider = <SettingDefaultValueProvider>{
+            getDefaultValue: (key) => {
+                return {
+                    key1: "value1",
+                    key2: "value2",
+                }[key];
+            },
+        };
+
+        const applicationSearch = new ApplicationSearch(applicationRepository, settingDefaultValueProvider);
+
+        expect(applicationSearch.getSettingDefaultValue("key1")).toBe("value1");
+        expect(applicationSearch.getSettingDefaultValue("key2")).toBe("value2");
+        expect(applicationSearch.getSettingDefaultValue("key3")).toBe(undefined);
     });
 });
