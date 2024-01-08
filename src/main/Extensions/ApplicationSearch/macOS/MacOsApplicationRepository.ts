@@ -1,19 +1,17 @@
 import { normalize, parse } from "path";
 import type { CommandlineUtility } from "../../../CommandlineUtility";
 import type { Logger } from "../../../Logger";
-import type { SettingsManager } from "../../../SettingsManager";
 import { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
-import type { SettingDefaultValueProvider } from "../SettingDefaultValueProvider";
+import type { Settings } from "../Settings";
 import type { MacOsApplicationIconGenerator } from "./MacOsApplicationIconGenerator";
 
 export class MacOsApplicationRepository implements ApplicationRepository {
     public constructor(
         private readonly commandlineUtility: CommandlineUtility,
         private readonly macOsApplicationIconGenerator: MacOsApplicationIconGenerator,
-        private readonly settingsManager: SettingsManager,
         private readonly logger: Logger,
-        private readonly settingDefaultValueProvider: SettingDefaultValueProvider,
+        private readonly settings: Settings,
     ) {}
 
     public async getApplications(): Promise<Application[]> {
@@ -35,13 +33,7 @@ export class MacOsApplicationRepository implements ApplicationRepository {
     }
 
     private filterFilePathByConfiguredFolders(filePath: string): boolean {
-        return this.settingsManager
-            .getExtensionSettingByKey<string[]>(
-                "ApplicationSearch",
-                "macOsFolders",
-                this.settingDefaultValueProvider.getDefaultValue("macOsFolders"),
-            )
-            .some((folderPath) => filePath.startsWith(folderPath));
+        return this.settings.getValue<string[]>("macOsFolders").some((folderPath) => filePath.startsWith(folderPath));
     }
 
     private async getAllIcons(filePaths: string[]): Promise<Record<string, string>> {

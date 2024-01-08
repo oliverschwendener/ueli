@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { Application } from "./Application";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";
-import type { SettingDefaultValueProvider } from "./SettingDefaultValueProvider";
+import type { Settings } from "./Settings";
 
 describe(ApplicationSearch, () => {
     it("should get all applications and convert them to search result items", async () => {
@@ -17,12 +17,9 @@ describe(ApplicationSearch, () => {
             getApplications: () => getApplicationsMock(),
         };
 
-        const settingDefaultValueProvider = <SettingDefaultValueProvider>{};
+        const settings = <Settings>{};
 
-        const searchResultItems = await new ApplicationSearch(
-            applicationRepository,
-            settingDefaultValueProvider,
-        ).getSearchResultItems();
+        const searchResultItems = await new ApplicationSearch(applicationRepository, settings).getSearchResultItems();
 
         expect(searchResultItems).toEqual(applications.map((application) => application.toSearchResultItem()));
     });
@@ -30,7 +27,7 @@ describe(ApplicationSearch, () => {
     it("should return a default value provided by the DefaultSettingValueProvider", () => {
         const applicationRepository = <ApplicationRepository>{};
 
-        const settingDefaultValueProvider = <SettingDefaultValueProvider>{
+        const settings = <Settings>{
             getDefaultValue: (key) => {
                 return {
                     key1: "value1",
@@ -39,7 +36,7 @@ describe(ApplicationSearch, () => {
             },
         };
 
-        const applicationSearch = new ApplicationSearch(applicationRepository, settingDefaultValueProvider);
+        const applicationSearch = new ApplicationSearch(applicationRepository, settings);
 
         expect(applicationSearch.getSettingDefaultValue("key1")).toBe("value1");
         expect(applicationSearch.getSettingDefaultValue("key2")).toBe("value2");

@@ -2,10 +2,9 @@ import { join } from "path";
 import type { CommandlineUtility } from "../../../CommandlineUtility";
 import type { ExtensionCacheFolder } from "../../../ExtensionCacheFolder";
 import type { FileSystemUtility } from "../../../FileSystemUtility";
-import type { SettingsManager } from "../../../SettingsManager";
 import { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
-import type { SettingDefaultValueProvider } from "../SettingDefaultValueProvider";
+import type { Settings } from "../Settings";
 import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
 import { usePowershellScripts } from "./usePowershellScripts";
 
@@ -14,8 +13,7 @@ export class WindowsApplicationRepository implements ApplicationRepository {
         private readonly commandlineUtility: CommandlineUtility,
         private readonly extensionCacheFolder: ExtensionCacheFolder,
         private readonly fileSystemUtility: FileSystemUtility,
-        private readonly settingsManager: SettingsManager,
-        private readonly settingDefaultValueProvider: SettingDefaultValueProvider,
+        private readonly settings: Settings,
     ) {}
 
     public async getApplications(): Promise<Application[]> {
@@ -44,21 +42,13 @@ export class WindowsApplicationRepository implements ApplicationRepository {
     }
 
     private getPowershellScript(): string {
-        const folderPaths = this.settingsManager
-            .getExtensionSettingByKey(
-                "ApplicationSearch",
-                "windowsFolders",
-                this.settingDefaultValueProvider.getDefaultValue<string[]>("windowsFolders"),
-            )
+        const folderPaths = this.settings
+            .getValue<string[]>("windowsFolders")
             .map((folderPath) => `'${folderPath}'`)
             .join(",");
 
-        const fileExtensions = this.settingsManager
-            .getExtensionSettingByKey(
-                "ApplicationSearch",
-                "windowsFileExtensions",
-                this.settingDefaultValueProvider.getDefaultValue<string[]>("windowsFileExtensions"),
-            )
+        const fileExtensions = this.settings
+            .getValue<string[]>("windowsFileExtensions")
             .map((fileExtension) => `'*.${fileExtension}'`)
             .join(",");
 

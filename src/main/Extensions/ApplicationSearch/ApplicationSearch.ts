@@ -3,7 +3,8 @@ import type { SearchResultItem } from "@common/SearchResultItem";
 import type { DependencyInjector } from "../../DependencyInjector";
 import type { Extension } from "../../Extension";
 import type { ApplicationRepository } from "./ApplicationRepository";
-import type { SettingDefaultValueProvider } from "./SettingDefaultValueProvider";
+import type { SettingKey } from "./SettingKey";
+import type { Settings } from "./Settings";
 
 export class ApplicationSearch implements Extension {
     public readonly id = "ApplicationSearch";
@@ -12,7 +13,7 @@ export class ApplicationSearch implements Extension {
 
     public constructor(
         private readonly applicationRepository: ApplicationRepository,
-        private readonly settingDefaultValueProvider: SettingDefaultValueProvider,
+        private readonly settings: Settings,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -27,6 +28,6 @@ export class ApplicationSearch implements Extension {
     }
 
     public getSettingDefaultValue<T>(key: string): T {
-        return this.settingDefaultValueProvider.getDefaultValue<T>(key);
+        return this.settings.getDefaultValue<T>(key as SettingKey);
     }
 }

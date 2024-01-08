@@ -8,12 +8,10 @@ import type { Logger } from "../../Logger";
 import type { SettingsManager } from "../../SettingsManager";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";
-import type { SettingDefaultValueProvider } from "./SettingDefaultValueProvider";
+import { Settings } from "./Settings";
 import { WindowsApplicationRepository } from "./Windows/WindowsApplicationRepository";
-import { WindowsSettingDefaultValueProvider } from "./Windows/WindowsSettingDefaultValueProvider";
 import { MacOsApplicationIconGenerator } from "./macOS/MacOsApplicationIconGenerator";
 import { MacOsApplicationRepository } from "./macOS/MacOsApplicationRepository";
-import { MacOsSettingDefaultValueProvider } from "./macOS/MacOsSettingDefaultValueProvider";
 
 export class ApplicationSearchModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {
@@ -25,35 +23,24 @@ export class ApplicationSearchModule {
         const app = dependencyInjector.getInstance<App>("App");
         const logger = dependencyInjector.getInstance<Logger>("Logger");
 
-        const settingDefaultValueProviders: Record<OperatingSystem, SettingDefaultValueProvider> = {
-            Linux: undefined, // not supported
-            macOS: new MacOsSettingDefaultValueProvider(app),
-            Windows: new WindowsSettingDefaultValueProvider(app),
-        };
+        const settings = new Settings("ApplicationSearch", settingsManager, app);
 
         const applicationRepositories: Record<OperatingSystem, ApplicationRepository> = {
             macOS: new MacOsApplicationRepository(
                 commandlineUtility,
                 new MacOsApplicationIconGenerator(fileSystemUtility, commandlineUtility, extensionCacheFolder),
-                settingsManager,
                 logger,
-                settingDefaultValueProviders[operatingSystem],
+                settings,
             ),
             Windows: new WindowsApplicationRepository(
                 commandlineUtility,
                 extensionCacheFolder,
                 fileSystemUtility,
-                settingsManager,
-                settingDefaultValueProviders[operatingSystem],
+                settings,
             ),
             Linux: undefined, // not supported
         };
 
-        dependencyInjector.registerExtension(
-            new ApplicationSearch(
-                applicationRepositories[operatingSystem],
-                settingDefaultValueProviders[operatingSystem],
-            ),
-        );
+        dependencyInjector.registerExtension(new ApplicationSearch(applicationRepositories[operatingSystem], settings));
     }
 }
