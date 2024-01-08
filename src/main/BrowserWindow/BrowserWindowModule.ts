@@ -3,8 +3,12 @@ import type { App, BrowserWindow, NativeTheme } from "electron";
 import { join } from "path";
 import type { DependencyInjector } from "../DependencyInjector";
 import type { EventSubscriber } from "../EventSubscriber";
+import type { UeliCommandInvokedEvent } from "../Extensions/UeliCommand";
 import type { SettingsManager } from "../SettingsManager";
+import type { TrayIconMenuItemClickedEvent } from "../TrayIcon";
 import { createBrowserWindow } from "./createBrowserWindow";
+import { openAndFocusBrowserWindow } from "./openAndFocusBrowserWindow";
+import { sendToBrowserWindow } from "./sendToBrowserWindow";
 import { toggleBrowserWindow } from "./toggleBrowserWindow";
 
 export class BrowserWindowModule {
@@ -35,14 +39,6 @@ export class BrowserWindowModule {
         const eventSubscriber = dependencyInjector.getInstance<EventSubscriber>("EventSubscriber");
         const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
 
-        const openAndFocusBrowserWindow = (b: BrowserWindow) => {
-            if (!b.isVisible()) {
-                b.show();
-            }
-
-            b.focus();
-        };
-
         eventSubscriber.subscribe("searchIndexUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
 
         eventSubscriber.subscribe("actionInvokationSucceeded", ({ action }: { action: SearchResultItemAction }) => {
@@ -55,27 +51,26 @@ export class BrowserWindowModule {
 
         eventSubscriber.subscribe("hotkeyPressed", () => toggleBrowserWindow(app, browserWindow));
 
-        eventSubscriber.subscribe("trayIconContextMenuShowClicked", () => {
-            openAndFocusBrowserWindow(browserWindow);
-            browserWindow.webContents.send("navigateTo", { pathname: "/" });
-        });
+        BrowserWindowModule.registerTrayIconEvents(browserWindow, eventSubscriber);
+        BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber);
+    }
 
-        eventSubscriber.subscribe("trayIconContextMenuSettingsClicked", () => {
-            openAndFocusBrowserWindow(browserWindow);
-            browserWindow.webContents.send("navigateTo", { pathname: "/settings/general" });
+    private static registerTrayIconEvents(browserWindow: BrowserWindow, eventSubscriber: EventSubscriber) {
+        eventSubscriber.subscribe("trayIconMenuItemClicked", (event: TrayIconMenuItemClickedEvent) => {
+            if (event.navigateTo) {
+                const { pathname } = event.navigateTo;
+                openAndFocusBrowserWindow(browserWindow);
+                sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
+            }
         });
+    }
 
-        eventSubscriber.subscribe("trayIconContextMenuAboutClicked", () => {
-            openAndFocusBrowserWindow(browserWindow);
-            browserWindow.webContents.send("navigateTo", { pathname: "/settings/about" });
-        });
-
-        eventSubscriber.subscribe("ueliCommandOpenSettingsActionInvoked", () => {
-            browserWindow.webContents.send("navigateTo", { pathname: "/settings/general" });
-        });
-
-        eventSubscriber.subscribe("ueliCommandOpenExtensionsActionInvoked", () => {
-            browserWindow.webContents.send("navigateTo", { pathname: "/settings/extensions" });
+    private static registerUeliCommandEvents(browserWindow: BrowserWindow, eventSubscriber: EventSubscriber) {
+        eventSubscriber.subscribe("ueliCommandInvoked", (event: UeliCommandInvokedEvent) => {
+            if (event.navigateTo) {
+                const { pathname } = event.navigateTo;
+                sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
+            }
         });
     }
 

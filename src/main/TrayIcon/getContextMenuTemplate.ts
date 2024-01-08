@@ -2,6 +2,7 @@ import type { App, MenuItemConstructorOptions } from "electron";
 import { init, t } from "i18next";
 import type { EventEmitter } from "../EventEmitter";
 import type { SettingsManager } from "../SettingsManager";
+import type { TrayIconMenuItemClickedEvent } from "./Contract";
 
 export const getContextMenuTemplate = async ({
     app,
@@ -38,15 +39,24 @@ export const getContextMenuTemplate = async ({
     return [
         {
             label: t("trayIcon.contextMenu.show"),
-            click: () => eventEmitter.emitEvent("trayIconContextMenuShowClicked"),
+            click: () =>
+                eventEmitter.emitEvent("trayIconMenuItemClicked", <TrayIconMenuItemClickedEvent>{
+                    navigateTo: { pathname: "/" },
+                }),
         },
         {
             label: t("trayIcon.contextMenu.settings"),
-            click: () => eventEmitter.emitEvent("trayIconContextMenuSettingsClicked"),
+            click: () =>
+                eventEmitter.emitEvent("trayIconMenuItemClicked", <TrayIconMenuItemClickedEvent>{
+                    navigateTo: { pathname: "/settings/general" },
+                }),
         },
         {
             label: t("trayIcon.contextMenu.about"),
-            click: () => eventEmitter.emitEvent("trayIconContextMenuAboutClicked"),
+            click: () =>
+                eventEmitter.emitEvent("trayIconMenuItemClicked", <TrayIconMenuItemClickedEvent>{
+                    navigateTo: { pathname: "/settings/about" },
+                }),
         },
         {
             label: t("trayIcon.contextMenu.quit"),
