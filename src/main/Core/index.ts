@@ -8,6 +8,7 @@ export * from "./Dialog";
 export * from "./EventEmitter";
 export * from "./EventSubscriber";
 export * from "./Extension";
+export * from "./ExtensionAssets";
 export * from "./ExtensionCacheFolder";
 export * from "./ExtensionManager";
 export * from "./FileSystemUtility";

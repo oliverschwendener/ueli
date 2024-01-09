@@ -6,6 +6,7 @@ export type DependencyName =
     | "Emitter"
     | "EventEmitter"
     | "EventSubscriber"
+    | "ExtensionAssetPathResolver"
     | "ExtensionCacheFolder"
     | "FileSystemUtility"
     | "GlobalShortcut"

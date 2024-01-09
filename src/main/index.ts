@@ -26,6 +26,7 @@ import {
     DialogModule,
     EventEmitterModule,
     EventSubscriberModule,
+    ExtensionAssetsModule,
     ExtensionCacheFolderModule,
     ExtensionManagerModule,
     FileSystemUtilityModule,
@@ -82,6 +83,7 @@ import { ExtensionsModule } from "./Extensions";
     UeliCommandModule.bootstrap(dependencyInjector);
     TrayIconModule.bootstrap(dependencyInjector);
     DialogModule.bootstrap(dependencyInjector);
+    ExtensionAssetsModule.bootstrap(dependencyInjector);
     await ExtensionCacheFolderModule.bootstrap(dependencyInjector);
     ExtensionsModule.bootstrap(dependencyInjector);
     ExtensionManagerModule.bootstrap(dependencyInjector);

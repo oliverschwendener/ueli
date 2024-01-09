@@ -1,18 +1,28 @@
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { Extension } from "@Core/Extension";
+import type { ExtensionAssetPathResolver } from "@Core/ExtensionAssets";
 
 export class UeliCommandExtension implements Extension {
     public id = "UeliCommand";
     public name = "Ueli Commands";
     public nameTranslationKey? = "extension[UeliCommand].extensionName";
 
-    public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const baseImageUrl = `file://${__dirname}/../assets`;
+    public constructor(private readonly extensionAssetPathResolver: ExtensionAssetPathResolver) {}
 
+    public async getSearchResultItems(): Promise<SearchResultItem[]> {
         const imageUrls = {
-            neutral: `${baseImageUrl}/windows-app-icon-dark-background.png`,
-            onDarkBackground: `${baseImageUrl}/ueli-icon-white-on-transparent.png`,
-            onLightBackground: `${baseImageUrl}/ueli-icon-black-on-transparent.png`,
+            neutral: `file://${this.extensionAssetPathResolver.getAssetFilePath(
+                this.id,
+                "windows-app-icon-dark-background.png",
+            )}`,
+            onDarkBackground: `file://${this.extensionAssetPathResolver.getAssetFilePath(
+                this.id,
+                "ueli-icon-white-on-transparent.png",
+            )}`,
+            onLightBackground: `file://${this.extensionAssetPathResolver.getAssetFilePath(
+                this.id,
+                "ueli-icon-black-on-transparent.png",
+            )}`,
         };
 
         const map: Record<string, SearchResultItem> = {
