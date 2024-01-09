@@ -78,36 +78,42 @@ export const Search = ({ searchResultItems }: SearchProps) => {
         setTimeout(() => setConfirmationDialogAction(action), 100);
     };
 
-    const userInputKeyboardEventHandlers: KeyboardEventHandler[] = [
-        {
-            listener: (e) => {
-                e.preventDefault();
-                selectPreviousSearchResultItem();
+    const handleUserInputKeyDownEvent = (keyboardEvent: KeyboardEvent<HTMLElement>) => {
+        const eventHandlers: KeyboardEventHandler[] = [
+            {
+                listener: (e) => {
+                    e.preventDefault();
+                    selectPreviousSearchResultItem();
+                },
+                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowUp",
             },
-            needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowUp",
-        },
-        {
-            listener: (e) => {
-                e.preventDefault();
-                selectNextSearchResultItem();
+            {
+                listener: (e) => {
+                    e.preventDefault();
+                    selectNextSearchResultItem();
+                },
+                needsToInvokeListener: (e) => e.key === "ArrowDown",
             },
-            needsToInvokeListener: (e) => e.key === "ArrowDown",
-        },
-        {
-            listener: () => invokeSelectedSearchResultItem(),
-            needsToInvokeListener: (e) => e.key === "Enter",
-        },
-        {
-            listener: () => additionalActionsButtonRef.current?.click(),
-            needsToInvokeListener: (e) => e.key === "k" && (e.metaKey || e.ctrlKey),
-        },
-    ];
+            {
+                listener: (e) => {
+                    e.preventDefault();
+                    additionalActionsButtonRef.current?.click();
+                },
+                needsToInvokeListener: (e) => e.key === "k" && (e.metaKey || e.ctrlKey),
+            },
+        ];
 
-    const handleUserInputKeyboardEvent = (keyboardEvent: KeyboardEvent<HTMLElement>) => {
-        for (const keyboardEventHandler of userInputKeyboardEventHandlers) {
-            if (keyboardEventHandler.needsToInvokeListener(keyboardEvent)) {
-                keyboardEventHandler.listener(keyboardEvent);
+        for (const eventHandler of eventHandlers) {
+            if (eventHandler.needsToInvokeListener(keyboardEvent)) {
+                eventHandler.listener(keyboardEvent);
             }
+        }
+    };
+
+    const handleUserInputKeyUpEvent = (keyboardEvent: KeyboardEvent<HTMLInputElement>) => {
+        if (keyboardEvent.key === "Enter") {
+            keyboardEvent.preventDefault();
+            invokeSelectedSearchResultItem();
         }
     };
 
@@ -160,7 +166,8 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                     size="large"
                     value={searchTerm}
                     onChange={(_, { value }) => search(value)}
-                    onKeyDown={handleUserInputKeyboardEvent}
+                    onKeyDown={handleUserInputKeyDownEvent}
+                    onKeyUp={handleUserInputKeyUpEvent}
                 />
             </div>
             <Divider appearance="subtle" />
