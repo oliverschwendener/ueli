@@ -20,7 +20,7 @@ export const Window = () => {
 
     const { value: backgroundMaterial, updateValue: setBackgroundMaterial } = useSetting(
         "window.backgroundMaterial",
-        "mica",
+        "Mica",
     );
 
     const { value: vibrancy, updateValue: setVibrancy } = useSetting("window.vibrancy", "None");
@@ -30,7 +30,7 @@ export const Window = () => {
         direction: "vertical",
     });
 
-    const backgroundMaterialOptions = ["acrylic", "mica", "none", "tabbed"];
+    const backgroundMaterialOptions = ["Acrylic", "Mica", "None", "Tabbed"];
 
     const vibrancyOptions = [
         "content",

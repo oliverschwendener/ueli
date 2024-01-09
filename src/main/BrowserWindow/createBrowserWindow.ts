@@ -39,7 +39,7 @@ export const createBrowserWindow = (dependencyInjector: DependencyInjector) => {
         Windows: extendDefaultBrowserWindowOptions({
             autoHideMenuBar: true,
             backgroundMaterial: getBackgroundMaterial(
-                settingsManager.getSettingByKey("window.backgroundMaterial", "mica"),
+                settingsManager.getSettingByKey("window.backgroundMaterial", "Mica"),
             ),
         }),
         Linux: extendDefaultBrowserWindowOptions({}),

@@ -2,8 +2,13 @@ import type { BrowserWindowConstructorOptions } from "electron";
 
 type BackgroundMaterial = BrowserWindowConstructorOptions["backgroundMaterial"];
 
-export const getBackgroundMaterial = (backgroundMaterial: BackgroundMaterial): BackgroundMaterial => {
-    const backgroundMaterials: BackgroundMaterial[] = ["acrylic", "mica", "none", "tabbed"];
+export const getBackgroundMaterial = (backgroundMaterial: string): BackgroundMaterial => {
+    const backgroundMaterials: Record<string, BackgroundMaterial> = {
+        Acrylic: "acrylic",
+        Mica: "mica",
+        None: "none",
+        Tabbed: "tabbed",
+    };
 
-    return backgroundMaterials.includes(backgroundMaterial as BackgroundMaterial) ? backgroundMaterial : "mica";
+    return backgroundMaterials[backgroundMaterial] ?? "mica";
 };

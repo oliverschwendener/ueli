@@ -6,7 +6,7 @@ const getMacOsCssProperties = (vibrancy: string): CSSProperties =>
     vibrancy === "None" ? {} : { background: "transparent" };
 
 const getWindowsCssProperties = (backgroundMaterial: string): CSSProperties => ({
-    background: backgroundMaterial === "none" ? undefined : "transparent",
+    background: backgroundMaterial === "None" ? undefined : "transparent",
 });
 
 export const useAppCssProperties = () => {
@@ -20,7 +20,7 @@ export const useAppCssProperties = () => {
         Linux: extendGlobalStyles({}),
         macOS: extendGlobalStyles(getMacOsCssProperties(contextBridge.getSettingByKey("window.vibrancy", "None"))),
         Windows: extendGlobalStyles(
-            getWindowsCssProperties(contextBridge.getSettingByKey("window.backgroundMaterial", "mica")),
+            getWindowsCssProperties(contextBridge.getSettingByKey("window.backgroundMaterial", "Mica")),
         ),
     };
 
