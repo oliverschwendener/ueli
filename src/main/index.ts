@@ -1,5 +1,6 @@
 import {
     app,
+    clipboard,
     dialog,
     globalShortcut,
     ipcMain,
@@ -7,6 +8,7 @@ import {
     shell,
     systemPreferences,
     type App,
+    type Clipboard,
     type Dialog,
     type GlobalShortcut,
     type IpcMain,
@@ -61,6 +63,7 @@ import { ExtensionsModule } from "./Extensions";
     dependencyInjector.registerInstance<Emitter<Record<string, unknown>>>("Emitter", mitt<Record<string, unknown>>());
     dependencyInjector.registerInstance<SystemPreferences>("SystemPreferences", systemPreferences);
     dependencyInjector.registerInstance<Dialog>("Dialog", dialog);
+    dependencyInjector.registerInstance<Clipboard>("Clipboard", clipboard);
 
     // Ueli Modules
     ClockModule.bootstrap(dependencyInjector);

@@ -31,6 +31,14 @@ export class Application {
                     handlerId: "ShowItemInFileExplorer",
                     hideWindowAfterInvokation: true,
                 },
+                {
+                    argument: this.filePath,
+                    description: "Copy file path to clipboard",
+                    descriptionTranslationKey:
+                        "extension[ApplicationSearch].searchResultItem.additionalAction.copyFilePathToClipboard",
+                    handlerId: "copyToClipboard",
+                    hideWindowAfterInvokation: true,
+                },
             ],
         };
     }

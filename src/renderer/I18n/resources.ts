@@ -21,6 +21,8 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "extension[ApplicationSearch].searchResultItem.defaultAction.openApplication": "Open application",
             "extension[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer":
                 "Show in file explorer",
+            "extension[ApplicationSearch].searchResultItem.additionalAction.copyFilePathToClipboard":
+                "Copy file path to clipboard",
             "extension[ApplicationSearch].extensionName": "Application Search",
             "extension[SystemColorThemeSwitcher].extensionName": "System Color Theme Switcher",
             "extension[UeliCommand].extensionName": "Ueli Commands",
@@ -53,6 +55,8 @@ export const resources: Record<string, { translation: Record<string, string> }> 
             "extension[ApplicationSearch].searchResultItem.defaultAction.openApplication": "Anwendung öffnen",
             "extension[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer":
                 "Im Datei-Explorer anzeigen",
+            "extension[ApplicationSearch].searchResultItem.additionalAction.copyFilePathToClipboard":
+                "Dateipfad in Zwischenablage kopieren",
             "extension[SystemColorThemeSwitcher].extensionName": "System Color Theme Switcher",
             "extension[UeliCommand].extensionName": "Ueli Befehle",
             "extension[UeliCommand].searchResultDescription": "Ueli Befehl",

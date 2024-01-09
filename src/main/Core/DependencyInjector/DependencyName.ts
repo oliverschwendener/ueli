@@ -1,5 +1,6 @@
 export type DependencyName =
     | "App"
+    | "Clipboard"
     | "Clock"
     | "CommandlineUtility"
     | "Dialog"

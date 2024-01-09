@@ -1,11 +1,12 @@
 import type { SearchResultItemAction } from "@common/SearchResultItemAction";
-import type { IpcMain, Shell } from "electron";
+import type { Clipboard, IpcMain, Shell } from "electron";
 import type { CommandlineUtility } from "../CommandlineUtility";
 import type { DependencyInjector } from "../DependencyInjector";
 import type { EventEmitter } from "../EventEmitter";
 import type { ActionHandler } from "./Contract";
 import {
     CommandlineActionHandler,
+    CopyToClipboardActionHandler,
     OpenFilePathActionHandler,
     PowershellActionHandler,
     ShowItemInFileExplorerActionHandler,
@@ -21,9 +22,11 @@ export class ActionHandlerModule {
     private static registerDefaultActionHandlers(dependencyInjector: DependencyInjector): void {
         const commandlineUtility = dependencyInjector.getInstance<CommandlineUtility>("CommandlineUtility");
         const shell = dependencyInjector.getInstance<Shell>("Shell");
+        const clipboard = dependencyInjector.getInstance<Clipboard>("Clipboard");
 
         const actionHandlers: ActionHandler[] = [
             new CommandlineActionHandler(commandlineUtility),
+            new CopyToClipboardActionHandler(clipboard),
             new OpenFilePathActionHandler(shell),
             new PowershellActionHandler(commandlineUtility),
             new ShowItemInFileExplorerActionHandler(shell),
