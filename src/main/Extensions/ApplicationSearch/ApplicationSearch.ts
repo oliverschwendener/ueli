@@ -1,7 +1,7 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { SearchResultItem } from "@common/SearchResultItem";
-import type { DependencyInjector } from "../../DependencyInjector";
-import type { Extension } from "../../Extension";
+import type { DependencyInjector } from "../../Core/DependencyInjector";
+import type { Extension } from "../../Core/Extension";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import type { SettingKey } from "./SettingKey";
 import type { Settings } from "./Settings";

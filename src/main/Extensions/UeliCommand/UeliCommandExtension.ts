@@ -1,5 +1,5 @@
 import type { SearchResultItem } from "@common/SearchResultItem";
-import type { Extension } from "../../Extension";
+import type { Extension } from "@Core/Extension";
 
 export class UeliCommandExtension implements Extension {
     public id = "UeliCommand";

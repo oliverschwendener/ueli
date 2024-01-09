@@ -1,7 +1,7 @@
+import type { CommandlineUtility } from "@Core/CommandlineUtility";
+import type { DependencyInjector } from "@Core/DependencyInjector";
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { NativeTheme } from "electron";
-import type { CommandlineUtility } from "../../CommandlineUtility";
-import type { DependencyInjector } from "../../DependencyInjector";
 import { CustomActionHandler } from "./CustomActionHandler";
 import { SystemColorThemeSwitcher } from "./SystemColorThemeSwitcher";
 

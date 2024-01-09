@@ -1,5 +1,5 @@
-import type { DependencyInjector } from "../../DependencyInjector";
-import type { UeliCommandInvoker } from "../../UeliCommand";
+import type { DependencyInjector } from "@Core/DependencyInjector";
+import type { UeliCommandInvoker } from "@Core/UeliCommand";
 import { UeliCommandActionHandler } from "./UeliCommandActionHandler";
 import { UeliCommandExtension } from "./UeliCommandExtension";
 

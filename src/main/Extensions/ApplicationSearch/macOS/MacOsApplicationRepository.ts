@@ -1,6 +1,6 @@
+import type { CommandlineUtility } from "@Core/CommandlineUtility";
+import type { Logger } from "@Core/Logger";
 import { normalize, parse } from "path";
-import type { CommandlineUtility } from "../../../CommandlineUtility";
-import type { Logger } from "../../../Logger";
 import { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
 import type { Settings } from "../Settings";

@@ -1,5 +1,5 @@
+import type { DependencyInjector } from "@Core/DependencyInjector";
 import type { IpcMain } from "electron";
-import type { DependencyInjector } from "../DependencyInjector";
 import { ApplicationSearchModule } from "./ApplicationSearch";
 import { SystemColorThemeSwitcherModule } from "./SystemColorThemeSwitcher";
 import { UeliCommandModule } from "./UeliCommand";

@@ -16,30 +16,32 @@ import {
 } from "electron";
 import mitt, { Emitter } from "mitt";
 import { platform } from "os";
-import { AboutUeliModule } from "./AboutUeli";
-import { ActionHandlerModule } from "./ActionHandler";
-import { BrowserWindowModule } from "./BrowserWindow";
-import { ClockModule } from "./Clock";
-import { CommandlineUtilityModule } from "./CommandlineUtility";
-import { DependencyInjectorModule } from "./DependencyInjector";
-import { DialogModule } from "./Dialog/DialogModule";
-import { EventEmitterModule } from "./EventEmitter";
-import { EventSubscriberModule } from "./EventSubscriber";
-import { ExtensionCacheFolderModule } from "./ExtensionCacheFolder";
-import { ExtensionManagerModule } from "./ExtensionManager";
+import {
+    AboutUeliModule,
+    ActionHandlerModule,
+    BrowserWindowModule,
+    ClockModule,
+    CommandlineUtilityModule,
+    DependencyInjectorModule,
+    DialogModule,
+    EventEmitterModule,
+    EventSubscriberModule,
+    ExtensionCacheFolderModule,
+    ExtensionManagerModule,
+    FileSystemUtilityModule,
+    GlobalShortcutModule,
+    LoggerModule,
+    NativeThemeModule,
+    OperatingSystemModule,
+    SearchIndexModule,
+    SettingsFileModule,
+    SettingsManagerModule,
+    SettingsReaderModule,
+    SettingsWriterModule,
+    TrayIconModule,
+    UeliCommandModule,
+} from "./Core";
 import { ExtensionsModule } from "./Extensions";
-import { FileSystemUtilityModule } from "./FileSystemUtility";
-import { GlobalShortcutModule } from "./GlobalShortcut";
-import { LoggerModule } from "./Logger";
-import { NativeThemeModule } from "./NativeTheme";
-import { OperatingSystemModule } from "./OperatingSystem";
-import { SearchIndexModule } from "./SearchIndex";
-import { SettingsFileModule } from "./SettingsFile";
-import { SettingsManagerModule } from "./SettingsManager";
-import { SettingsReaderModule } from "./SettingsReader";
-import { SettingsWriterModule } from "./SettingsWriter";
-import { TrayIconModule } from "./TrayIcon";
-import { UeliCommandModule } from "./UeliCommand";
 
 (async () => {
     await app.whenReady();

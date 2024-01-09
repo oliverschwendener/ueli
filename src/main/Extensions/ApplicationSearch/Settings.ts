@@ -1,6 +1,6 @@
+import type { SettingsManager } from "@Core/SettingsManager";
 import type { App } from "electron";
 import { join } from "path";
-import type { SettingsManager } from "../../SettingsManager";
 import type { SettingKey } from "./SettingKey";
 
 export class Settings {

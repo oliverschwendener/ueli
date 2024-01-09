@@ -1,7 +1,7 @@
+import type { CommandlineUtility } from "@Core/CommandlineUtility";
+import type { ExtensionCacheFolder } from "@Core/ExtensionCacheFolder";
+import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import { join } from "path";
-import type { CommandlineUtility } from "../../../CommandlineUtility";
-import type { ExtensionCacheFolder } from "../../../ExtensionCacheFolder";
-import type { FileSystemUtility } from "../../../FileSystemUtility";
 
 export class MacOsApplicationIconGenerator {
     public constructor(

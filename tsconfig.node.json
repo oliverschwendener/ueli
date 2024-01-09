@@ -7,7 +7,8 @@
         "allowSyntheticDefaultImports": true,
         "rootDir": "./src",
         "paths": {
-            "@common/*": ["./src/common/*"]
+            "@common/*": ["./src/common/*"],
+            "@Core/*": ["./src/main/Core/*"]
         }
     }
 }

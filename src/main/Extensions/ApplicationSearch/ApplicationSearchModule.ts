@@ -1,11 +1,11 @@
+import type { CommandlineUtility } from "@Core/CommandlineUtility";
+import type { DependencyInjector } from "@Core/DependencyInjector";
+import type { ExtensionCacheFolder } from "@Core/ExtensionCacheFolder";
+import type { FileSystemUtility } from "@Core/FileSystemUtility";
+import type { Logger } from "@Core/Logger";
+import type { SettingsManager } from "@Core/SettingsManager";
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { App } from "electron";
-import type { CommandlineUtility } from "../../CommandlineUtility";
-import type { DependencyInjector } from "../../DependencyInjector";
-import type { ExtensionCacheFolder } from "../../ExtensionCacheFolder";
-import type { FileSystemUtility } from "../../FileSystemUtility";
-import type { Logger } from "../../Logger";
-import type { SettingsManager } from "../../SettingsManager";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";
 import { Settings } from "./Settings";

@@ -1,6 +1,6 @@
 import type { SearchResultItemAction } from "@common/SearchResultItemAction";
-import type { ActionHandler } from "../../ActionHandler";
-import type { UeliCommandInvoker } from "../../UeliCommand";
+import type { ActionHandler } from "@Core/ActionHandler";
+import type { UeliCommandInvoker } from "@Core/UeliCommand";
 
 export class UeliCommandActionHandler implements ActionHandler {
     public readonly id = "UeliCommand";
