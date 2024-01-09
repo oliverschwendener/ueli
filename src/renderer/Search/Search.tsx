@@ -101,19 +101,19 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                 },
                 needsToInvokeListener: (e) => e.key === "k" && (e.metaKey || e.ctrlKey),
             },
+            {
+                listener: (e) => {
+                    e.preventDefault();
+                    invokeSelectedSearchResultItem();
+                },
+                needsToInvokeListener: (e) => e.key === "Enter",
+            },
         ];
 
         for (const eventHandler of eventHandlers) {
             if (eventHandler.needsToInvokeListener(keyboardEvent)) {
                 eventHandler.listener(keyboardEvent);
             }
-        }
-    };
-
-    const handleUserInputKeyUpEvent = (keyboardEvent: KeyboardEvent<HTMLInputElement>) => {
-        if (keyboardEvent.key === "Enter") {
-            keyboardEvent.preventDefault();
-            invokeSelectedSearchResultItem();
         }
     };
 
@@ -167,7 +167,6 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                     value={searchTerm}
                     onChange={(_, { value }) => search(value)}
                     onKeyDown={handleUserInputKeyDownEvent}
-                    onKeyUp={handleUserInputKeyUpEvent}
                 />
             </div>
             <Divider appearance="subtle" />

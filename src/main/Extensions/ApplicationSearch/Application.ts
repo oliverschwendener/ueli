@@ -39,7 +39,7 @@ export class Application {
                     descriptionTranslationKey:
                         "extension[ApplicationSearch].searchResultItem.additionalAction.copyFilePathToClipboard",
                     handlerId: "copyToClipboard",
-                    hideWindowAfterInvokation: true,
+                    hideWindowAfterInvokation: false,
                     fluentIcon: "ClipboardRegular",
                 },
             ],
