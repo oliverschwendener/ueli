@@ -7,6 +7,8 @@ export type SearchResultItem = {
     description: string;
     descriptionTranslationKey?: string;
     imageUrl?: string;
+    imageUrlOnDarkBackground?: string;
+    imageUrlOnLightBackground?: string;
     defaultAction: SearchResultItemAction;
     additionalActions?: SearchResultItemAction[];
 };

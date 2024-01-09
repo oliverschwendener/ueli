@@ -7,7 +7,13 @@ export class UeliCommandExtension implements Extension {
     public nameTranslationKey? = "extension[UeliCommand].extensionName";
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const imageUrl = `file://${__dirname}/../assets/windows-app-icon-dark-background.png`;
+        const baseImageUrl = `file://${__dirname}/../assets`;
+
+        const imageUrls = {
+            neutral: `${baseImageUrl}/windows-app-icon-dark-background.png`,
+            onDarkBackground: `${baseImageUrl}/ueli-icon-white-on-transparent.png`,
+            onLightBackground: `${baseImageUrl}/ueli-icon-black-on-transparent.png`,
+        };
 
         const map: Record<string, SearchResultItem> = {
             quit: {
@@ -16,7 +22,9 @@ export class UeliCommandExtension implements Extension {
                 descriptionTranslationKey: "extension[UeliCommand].searchResultDescription",
                 name: "Quit Ueli",
                 nameTranslationKey: "extension[UeliCommand].quitUeli",
-                imageUrl,
+                imageUrl: imageUrls.neutral,
+                imageUrlOnDarkBackground: imageUrls.onDarkBackground,
+                imageUrlOnLightBackground: imageUrls.onLightBackground,
                 defaultAction: {
                     handlerId: "UeliCommand",
                     argument: "quit",
@@ -32,7 +40,9 @@ export class UeliCommandExtension implements Extension {
                 descriptionTranslationKey: "extension[UeliCommand].searchResultDescription",
                 name: "Open Ueli Settings",
                 nameTranslationKey: "extension[UeliCommand].openSettings",
-                imageUrl,
+                imageUrl: imageUrls.neutral,
+                imageUrlOnDarkBackground: imageUrls.onDarkBackground,
+                imageUrlOnLightBackground: imageUrls.onLightBackground,
                 defaultAction: {
                     handlerId: "UeliCommand",
                     argument: "settings",
@@ -47,7 +57,9 @@ export class UeliCommandExtension implements Extension {
                 descriptionTranslationKey: "extension[UeliCommand].searchResultDescription",
                 name: "Open Ueli Extensions",
                 nameTranslationKey: "extension[UeliCommand].openExtensions",
-                imageUrl,
+                imageUrl: imageUrls.neutral,
+                imageUrlOnDarkBackground: imageUrls.onDarkBackground,
+                imageUrlOnLightBackground: imageUrls.onLightBackground,
                 defaultAction: {
                     handlerId: "UeliCommand",
                     argument: "extensions",

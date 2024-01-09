@@ -2,6 +2,7 @@ import type { SearchResultItem } from "@common/SearchResultItem";
 import { Text } from "@fluentui/react-components";
 import { useContext, useEffect, useRef, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
+import { useContextBridge } from "../Hooks";
 import { ThemeContext } from "../ThemeContext";
 import { elementIsVisible } from "./Helpers";
 
@@ -20,6 +21,7 @@ export const SearchResultListItem = ({
     onDoubleClick,
     searchResultItem,
 }: SearchResultListItemProps) => {
+    const { contextBridge } = useContextBridge();
     const { t } = useTranslation();
     const { theme } = useContext(ThemeContext);
     const ref = useRef<HTMLDivElement>(null);
@@ -29,6 +31,11 @@ export const SearchResultListItem = ({
             setTimeout(() => ref.current?.scrollIntoView({ behavior: "smooth" }), 50);
         }
     };
+
+    const imageUrl = () =>
+        contextBridge.themeShouldUseDarkColors()
+            ? searchResultItem.imageUrlOnDarkBackground ?? searchResultItem.imageUrl
+            : searchResultItem.imageUrlOnLightBackground ?? searchResultItem.imageUrl;
 
     useEffect(scrollIntoViewIfSelectedAndNotVisible, [isSelected]);
 
@@ -70,7 +77,7 @@ export const SearchResultListItem = ({
                         maxHeight: "100%",
                         maxWidth: "100%",
                     }}
-                    src={searchResultItem.imageUrl}
+                    src={imageUrl()}
                 />
             </div>
             <div
