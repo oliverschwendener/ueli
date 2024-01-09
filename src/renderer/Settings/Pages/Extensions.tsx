@@ -1,9 +1,8 @@
 import { Accordion, AccordionHeader, AccordionItem, AccordionPanel } from "@fluentui/react-components";
 import { CheckboxCheckedFilled, CheckboxUncheckedRegular } from "@fluentui/react-icons";
-import type { ReactElement } from "react";
 import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting } from "../../Hooks";
-import { ApplicationSearchSettings } from "./ExtensionSettings";
+import { ExtensionSettings } from "./ExtensionSettings";
 
 export const Extensions = () => {
     const { t } = useTranslation();
@@ -30,10 +29,6 @@ export const Extensions = () => {
         disableExtension(extensionId);
     };
 
-    const extensionSettings: Record<string, ReactElement> = {
-        ApplicationSearch: <ApplicationSearchSettings />,
-    };
-
     return (
         <Accordion
             openItems={enabledExtensionIds}
@@ -52,7 +47,9 @@ export const Extensions = () => {
                     >
                         {nameTranslationKey ? t(nameTranslationKey) : name}
                     </AccordionHeader>
-                    <AccordionPanel>{extensionSettings[id]}</AccordionPanel>
+                    <AccordionPanel>
+                        <ExtensionSettings extensionId={id} />
+                    </AccordionPanel>
                 </AccordionItem>
             ))}
         </Accordion>
