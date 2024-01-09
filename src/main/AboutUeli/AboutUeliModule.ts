@@ -7,8 +7,6 @@ export class AboutUeliModule {
         const app = dependencyInjector.getInstance<App>("App");
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
 
-        console.log();
-
         ipcMain.on("getAboutUeli", (event) => {
             event.returnValue = <AboutUeli>{
                 v8Version: process.versions.v8,
