@@ -33,6 +33,7 @@ export const Window = () => {
     const backgroundMaterialOptions = ["Acrylic", "Mica", "None", "Tabbed"];
 
     const vibrancyOptions = [
+        "None",
         "content",
         "fullscreen-ui",
         "header",
