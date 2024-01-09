@@ -26,8 +26,8 @@
     },
     "devDependencies": {
         "@types/node": "^20.8.6",
-        "@types/react": "^18.2.6",
-        "@types/react-dom": "^18.2.4",
+        "@types/react": "^18.2.47",
+        "@types/react-dom": "^18.2.18",
         "@types/react-router-dom": "^5.3.3",
         "@typescript-eslint/eslint-plugin": "^6.18.1",
         "@typescript-eslint/parser": "^6.18.1",
@@ -52,8 +52,8 @@
         "mitt": "^3.0.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-i18next": "^13.2.2",
-        "react-router": "^6.11.1",
-        "react-router-dom": "^6.11.1"
+        "react-i18next": "^14.0.0",
+        "react-router": "^6.21.1",
+        "react-router-dom": "^6.21.1"
     }
 }
