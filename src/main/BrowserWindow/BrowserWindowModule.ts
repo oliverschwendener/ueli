@@ -4,7 +4,6 @@ import { join } from "path";
 import type { DependencyInjector } from "../DependencyInjector";
 import type { EventSubscriber } from "../EventSubscriber";
 import type { SettingsManager } from "../SettingsManager";
-import type { TrayIconMenuItemClickedEvent } from "../TrayIcon";
 import type { UeliCommandInvokedEvent } from "../UeliCommand";
 import { createBrowserWindow } from "./createBrowserWindow";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
@@ -68,24 +67,14 @@ export class BrowserWindowModule {
             browserWindow.setVibrancy(getVibrancy(value));
         });
 
-        BrowserWindowModule.registerTrayIconEvents(browserWindow, eventSubscriber);
         BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber);
-    }
-
-    private static registerTrayIconEvents(browserWindow: BrowserWindow, eventSubscriber: EventSubscriber) {
-        eventSubscriber.subscribe("trayIconMenuItemClicked", (event: TrayIconMenuItemClickedEvent) => {
-            if (event.navigateTo) {
-                const { pathname } = event.navigateTo;
-                openAndFocusBrowserWindow(browserWindow);
-                sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
-            }
-        });
     }
 
     private static registerUeliCommandEvents(browserWindow: BrowserWindow, eventSubscriber: EventSubscriber) {
         eventSubscriber.subscribe("ueliCommandInvoked", (event: UeliCommandInvokedEvent) => {
             if (event.navigateTo) {
                 const { pathname } = event.navigateTo;
+                openAndFocusBrowserWindow(browserWindow);
                 sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
             }
         });

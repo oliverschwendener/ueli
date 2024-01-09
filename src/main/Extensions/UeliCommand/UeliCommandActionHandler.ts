@@ -9,7 +9,7 @@ export class UeliCommandActionHandler implements ActionHandler {
 
     public invokeAction(action: SearchResultItemAction): Promise<void> {
         const map: Record<string, () => Promise<void>> = {
-            quit: () => this.ueliCommandInvoker.invokeUeliCommand("quitUeli"),
+            quit: () => this.ueliCommandInvoker.invokeUeliCommand("quit"),
             settings: () => this.ueliCommandInvoker.invokeUeliCommand("openSettings"),
             extensions: () => this.ueliCommandInvoker.invokeUeliCommand("openExtensions"),
         };

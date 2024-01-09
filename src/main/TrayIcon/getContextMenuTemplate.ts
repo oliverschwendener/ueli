@@ -1,17 +1,14 @@
-import type { App, MenuItemConstructorOptions } from "electron";
+import type { MenuItemConstructorOptions } from "electron";
 import { init, t } from "i18next";
-import type { EventEmitter } from "../EventEmitter";
 import type { SettingsManager } from "../SettingsManager";
-import type { TrayIconMenuItemClickedEvent } from "./Contract";
+import type { UeliCommandInvoker } from "../UeliCommand";
 
 export const getContextMenuTemplate = async ({
-    app,
-    eventEmitter,
     settingsManager,
+    ueliCommandInvoker,
 }: {
-    app: App;
-    eventEmitter: EventEmitter;
     settingsManager: SettingsManager;
+    ueliCommandInvoker: UeliCommandInvoker;
 }): Promise<MenuItemConstructorOptions[]> => {
     await init({
         resources: {
@@ -39,28 +36,19 @@ export const getContextMenuTemplate = async ({
     return [
         {
             label: t("trayIcon.contextMenu.show"),
-            click: () =>
-                eventEmitter.emitEvent("trayIconMenuItemClicked", <TrayIconMenuItemClickedEvent>{
-                    navigateTo: { pathname: "/" },
-                }),
+            click: () => ueliCommandInvoker.invokeUeliCommand("show"),
         },
         {
             label: t("trayIcon.contextMenu.settings"),
-            click: () =>
-                eventEmitter.emitEvent("trayIconMenuItemClicked", <TrayIconMenuItemClickedEvent>{
-                    navigateTo: { pathname: "/settings/general" },
-                }),
+            click: () => ueliCommandInvoker.invokeUeliCommand("openSettings"),
         },
         {
             label: t("trayIcon.contextMenu.about"),
-            click: () =>
-                eventEmitter.emitEvent("trayIconMenuItemClicked", <TrayIconMenuItemClickedEvent>{
-                    navigateTo: { pathname: "/settings/about" },
-                }),
+            click: () => ueliCommandInvoker.invokeUeliCommand("openAbout"),
         },
         {
             label: t("trayIcon.contextMenu.quit"),
-            click: () => app.quit(),
+            click: () => ueliCommandInvoker.invokeUeliCommand("quit"),
         },
     ];
 };

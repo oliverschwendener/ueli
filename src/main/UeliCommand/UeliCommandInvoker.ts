@@ -22,8 +22,15 @@ export class UeliCommandInvoker implements UeliCommandInvokerInterface {
                 this.eventEmitter.emitEvent("ueliCommandInvoked", <UeliCommandInvokedEvent>{
                     navigateTo: { pathname: "/settings/general" },
                 }),
-            quitUeli: async () => this.app.quit(),
-            show: async () => console.log(ueliCommand),
+            openAbout: async () =>
+                this.eventEmitter.emitEvent("ueliCommandInvoked", <UeliCommandInvokedEvent>{
+                    navigateTo: { pathname: "/settings/about" },
+                }),
+            quit: async () => this.app.quit(),
+            show: async () =>
+                this.eventEmitter.emitEvent("ueliCommandInvoked", <UeliCommandInvokedEvent>{
+                    navigateTo: { pathname: "/" },
+                }),
         };
 
         return map[ueliCommand]();
