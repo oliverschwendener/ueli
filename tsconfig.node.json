@@ -6,6 +6,7 @@
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
         "rootDir": "./src",
+        "skipLibCheck": true,
         "paths": {
             "@common/*": ["./src/common/*"],
             "@Core/*": ["./src/main/Core/*"]

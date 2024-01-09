@@ -1,5 +1,4 @@
 import react from "@vitejs/plugin-react";
-import { rmSync } from "fs";
 import { join } from "path";
 import { defineConfig, type AliasOptions } from "vite";
 import electron from "vite-plugin-electron";
@@ -7,9 +6,6 @@ import renderer from "vite-plugin-electron-renderer";
 import pkg from "./package.json";
 
 export default defineConfig(({ command }) => {
-    rmSync("dist-main", { recursive: true, force: true });
-    rmSync("dist-preload", { recursive: true, force: true });
-
     const isServe = command === "serve";
     const isBuild = command === "build";
     const sourcemap = isServe ? "inline" : undefined;
@@ -17,6 +13,7 @@ export default defineConfig(({ command }) => {
     const resolve: { alias: AliasOptions } = {
         alias: {
             "@common": join(__dirname, "src", "common"),
+            "@Core": join(__dirname, "src", "main", "Core"),
         },
     };
 
@@ -25,6 +22,7 @@ export default defineConfig(({ command }) => {
         resolve,
         build: {
             outDir: "../../dist-renderer",
+            emptyOutDir: true,
             chunkSizeWarningLimit: 1000,
         },
         plugins: [
@@ -41,6 +39,7 @@ export default defineConfig(({ command }) => {
                             sourcemap,
                             minify: isBuild,
                             outDir: "dist-main",
+                            emptyOutDir: true,
                             rollupOptions: {
                                 external: Object.keys("dependencies" in pkg ? pkg.dependencies : {}),
                             },
@@ -60,6 +59,7 @@ export default defineConfig(({ command }) => {
                             sourcemap,
                             minify: isBuild,
                             outDir: "dist-preload",
+                            emptyOutDir: true,
                             rollupOptions: {
                                 external: Object.keys("dependencies" in pkg ? pkg.dependencies : {}),
                             },
