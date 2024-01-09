@@ -8,6 +8,7 @@ import type { SettingsManager } from "../SettingsManager";
 import type { TrayIconMenuItemClickedEvent } from "../TrayIcon";
 import { createBrowserWindow } from "./createBrowserWindow";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
+import { getVibrancy } from "./getVibrancy";
 import { openAndFocusBrowserWindow } from "./openAndFocusBrowserWindow";
 import { sendToBrowserWindow } from "./sendToBrowserWindow";
 import { toggleBrowserWindow } from "./toggleBrowserWindow";
@@ -62,6 +63,10 @@ export class BrowserWindowModule {
                 browserWindow.setBackgroundMaterial(getBackgroundMaterial(value));
             },
         );
+
+        eventSubscriber.subscribe("settingUpdated[window.vibrancy]", ({ value }: { value: string }) => {
+            browserWindow.setVibrancy(getVibrancy(value));
+        });
 
         BrowserWindowModule.registerTrayIconEvents(browserWindow, eventSubscriber);
         BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber);

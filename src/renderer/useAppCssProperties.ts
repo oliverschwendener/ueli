@@ -2,9 +2,8 @@ import type { OperatingSystem } from "@common/OperatingSystem";
 import { useEffect, useState, type CSSProperties } from "react";
 import { useContextBridge } from "./Hooks";
 
-const getMacOsCssProperties = (shouldUseDarkColors: boolean): CSSProperties => ({
-    background: shouldUseDarkColors ? "rgba(0,0,0,0.25)" : "rgba(255,255,255,0.75)",
-});
+const getMacOsCssProperties = (vibrancy: string): CSSProperties =>
+    vibrancy === "None" ? {} : { background: "transparent" };
 
 const getWindowsCssProperties = (backgroundMaterial: string): CSSProperties => ({
     background: backgroundMaterial === "none" ? undefined : "transparent",
@@ -19,7 +18,7 @@ export const useAppCssProperties = () => {
 
     const initalProperties: Record<OperatingSystem, CSSProperties> = {
         Linux: extendGlobalStyles({}),
-        macOS: extendGlobalStyles(getMacOsCssProperties(contextBridge.themeShouldUseDarkColors())),
+        macOS: extendGlobalStyles(getMacOsCssProperties(contextBridge.getSettingByKey("window.vibrancy", "None"))),
         Windows: extendGlobalStyles(
             getWindowsCssProperties(contextBridge.getSettingByKey("window.backgroundMaterial", "mica")),
         ),
@@ -28,9 +27,17 @@ export const useAppCssProperties = () => {
     const [appCssProperties, setAppCssProperties] = useState<CSSProperties>(initalProperties[operatingSystem]);
 
     useEffect(() => {
-        contextBridge.onSettingUpdated<string>("window.backgroundMaterial", (value) =>
-            setAppCssProperties({ ...appCssProperties, ...getWindowsCssProperties(value) }),
-        );
+        if (operatingSystem === "Windows") {
+            contextBridge.onSettingUpdated<string>("window.backgroundMaterial", (value) =>
+                setAppCssProperties(extendGlobalStyles(getWindowsCssProperties(value))),
+            );
+        }
+
+        if (operatingSystem === "macOS") {
+            contextBridge.onSettingUpdated<string>("window.vibrancy", (value) =>
+                setAppCssProperties(extendGlobalStyles(getMacOsCssProperties(value))),
+            );
+        }
     }, []);
 
     return { appCssProperties };

@@ -4,6 +4,7 @@ import { join } from "path";
 import type { DependencyInjector } from "../DependencyInjector";
 import type { SettingsManager } from "../SettingsManager";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
+import { getVibrancy } from "./getVibrancy";
 
 export const createBrowserWindow = (dependencyInjector: DependencyInjector) => {
     const app = dependencyInjector.getInstance<App>("App");
@@ -31,7 +32,10 @@ export const createBrowserWindow = (dependencyInjector: DependencyInjector) => {
     };
 
     const browserWindowOptionsMap: Record<OperatingSystem, BrowserWindowConstructorOptions> = {
-        macOS: extendDefaultBrowserWindowOptions({ vibrancy: "under-window" }),
+        macOS: extendDefaultBrowserWindowOptions({
+            vibrancy: getVibrancy(settingsManager.getSettingByKey("window.vibrancy", "None")),
+            transparent: true,
+        }),
         Windows: extendDefaultBrowserWindowOptions({
             autoHideMenuBar: true,
             backgroundMaterial: getBackgroundMaterial(

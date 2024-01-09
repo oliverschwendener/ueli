@@ -22,6 +22,8 @@ export const Window = () => {
         "mica",
     );
 
+    const { value: vibrancy, updateValue: setVibrancy } = useSetting("window.vibrancy", "None");
+
     return (
         <SectionList>
             <Section>
@@ -61,6 +63,63 @@ export const Window = () => {
                         </Option>
                         <Option key="acrylic" value="acrylic">
                             Acrylic
+                        </Option>
+                    </Dropdown>
+                </Section>
+            ) : null}
+
+            {operatingSystem === "macOS" ? (
+                <Section>
+                    <label id="window.vibrancy">Vibrancy</label>
+                    <Dropdown
+                        aria-labelledby="window.vibrancy"
+                        value={vibrancy}
+                        onOptionSelect={(_, { optionValue }) => optionValue && setVibrancy(optionValue)}
+                    >
+                        <Option key="None" value="None">
+                            None
+                        </Option>
+                        <Option key="titlebar" value="titlebar">
+                            titlebar
+                        </Option>
+                        <Option key="selection" value="selection">
+                            selection
+                        </Option>
+                        <Option key="menu" value="menu">
+                            menu
+                        </Option>
+                        <Option key="popover" value="popover">
+                            popover
+                        </Option>
+                        <Option key="sidebar" value="sidebar">
+                            sidebar
+                        </Option>
+                        <Option key="header" value="header">
+                            header
+                        </Option>
+                        <Option key="sheet" value="sheet">
+                            sheet
+                        </Option>
+                        <Option key="window" value="window">
+                            window
+                        </Option>
+                        <Option key="hud" value="hud">
+                            hud
+                        </Option>
+                        <Option key="fullscreen-ui" value="fullscreen-ui">
+                            fullscreen-ui
+                        </Option>
+                        <Option key="tooltip" value="tooltip">
+                            tooltip
+                        </Option>
+                        <Option key="content" value="content">
+                            content
+                        </Option>
+                        <Option key="under-window" value="under-window">
+                            under-window
+                        </Option>
+                        <Option key="under-page" value="under-page">
+                            under-page
                         </Option>
                     </Dropdown>
                 </Section>
