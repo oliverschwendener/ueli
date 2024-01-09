@@ -1,15 +1,13 @@
-import type { App } from "electron";
 import type { DependencyInjector } from "../../DependencyInjector";
-import type { EventEmitter } from "../../EventEmitter";
+import type { UeliCommandInvoker } from "../../UeliCommand";
 import { UeliCommandActionHandler } from "./UeliCommandActionHandler";
 import { UeliCommandExtension } from "./UeliCommandExtension";
 
 export class UeliCommandModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {
-        const app = dependencyInjector.getInstance<App>("App");
-        const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
+        const ueliCommandInvoker = dependencyInjector.getInstance<UeliCommandInvoker>("UeliCommandInvoker");
 
         dependencyInjector.registerExtension(new UeliCommandExtension());
-        dependencyInjector.registerActionHandler(new UeliCommandActionHandler(app, eventEmitter));
+        dependencyInjector.registerActionHandler(new UeliCommandActionHandler(ueliCommandInvoker));
     }
 }

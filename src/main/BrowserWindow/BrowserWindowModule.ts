@@ -3,9 +3,9 @@ import type { App, BrowserWindow, BrowserWindowConstructorOptions, NativeTheme }
 import { join } from "path";
 import type { DependencyInjector } from "../DependencyInjector";
 import type { EventSubscriber } from "../EventSubscriber";
-import type { UeliCommandInvokedEvent } from "../Extensions/UeliCommand";
 import type { SettingsManager } from "../SettingsManager";
 import type { TrayIconMenuItemClickedEvent } from "../TrayIcon";
+import type { UeliCommandInvokedEvent } from "../UeliCommand";
 import { createBrowserWindow } from "./createBrowserWindow";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
 import { getVibrancy } from "./getVibrancy";

@@ -1,6 +1,5 @@
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { Extension } from "../../Extension";
-import type { UeliCommand } from "./UeliCommand";
 
 export class UeliCommandExtension implements Extension {
     public id = "UeliCommand";
@@ -10,7 +9,7 @@ export class UeliCommandExtension implements Extension {
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
         const imageUrl = `file://${__dirname}/../assets/windows-app-icon-dark-background.png`;
 
-        const map: Record<UeliCommand, SearchResultItem> = {
+        const map: Record<string, SearchResultItem> = {
             quit: {
                 id: "ueliCommand:quit",
                 description: "Ueli Command",

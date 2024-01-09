@@ -39,6 +39,7 @@ import { SettingsManagerModule } from "./SettingsManager";
 import { SettingsReaderModule } from "./SettingsReader";
 import { SettingsWriterModule } from "./SettingsWriter";
 import { TrayIconModule } from "./TrayIcon";
+import { UeliCommandModule } from "./UeliCommand";
 
 (async () => {
     await app.whenReady();
@@ -76,9 +77,10 @@ import { TrayIconModule } from "./TrayIcon";
     await BrowserWindowModule.bootstrap(dependencyInjector);
     GlobalShortcutModule.bootstrap(dependencyInjector);
     ActionHandlerModule.bootstrap(dependencyInjector);
+    TrayIconModule.bootstrap(dependencyInjector);
+    DialogModule.bootstrap(dependencyInjector);
+    UeliCommandModule.bootstrap(dependencyInjector);
     await ExtensionCacheFolderModule.bootstrap(dependencyInjector);
     ExtensionsModule.bootstrap(dependencyInjector);
     ExtensionManagerModule.bootstrap(dependencyInjector);
-    TrayIconModule.bootstrap(dependencyInjector);
-    DialogModule.bootstrap(dependencyInjector);
 })();
