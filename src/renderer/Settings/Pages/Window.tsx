@@ -1,4 +1,5 @@
 import { Dropdown, Option, Switch } from "@fluentui/react-components";
+import { Virtualizer, useStaticVirtualizerMeasure } from "@fluentui/react-components/unstable";
 import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting } from "../../Hooks";
 import { Section } from "../Section";
@@ -23,6 +24,30 @@ export const Window = () => {
     );
 
     const { value: vibrancy, updateValue: setVibrancy } = useSetting("window.vibrancy", "None");
+
+    const { virtualizerLength, bufferItems, bufferSize, scrollRef } = useStaticVirtualizerMeasure({
+        defaultItemSize: 32,
+        direction: "vertical",
+    });
+
+    const backgroundMaterialOptions = ["acrylic", "mica", "none", "tabbed"];
+
+    const vibrancyOptions = [
+        "content",
+        "fullscreen-ui",
+        "header",
+        "hud",
+        "menu",
+        "popover",
+        "selection",
+        "sheet",
+        "sidebar",
+        "titlebar",
+        "tooltip",
+        "under-page",
+        "under-window",
+        "window",
+    ];
 
     return (
         <SectionList>
@@ -52,18 +77,11 @@ export const Window = () => {
                         value={backgroundMaterial}
                         onOptionSelect={(_, { optionValue }) => optionValue && setBackgroundMaterial(optionValue)}
                     >
-                        <Option key="none" value="none">
-                            None
-                        </Option>
-                        <Option key="mica" value="mica">
-                            Mica
-                        </Option>
-                        <Option key="tabbed" value="tabbed">
-                            Tabbed
-                        </Option>
-                        <Option key="acrylic" value="acrylic">
-                            Acrylic
-                        </Option>
+                        {backgroundMaterialOptions.map((b) => (
+                            <Option key={`background-material-option-${b}`} value={b}>
+                                {b}
+                            </Option>
+                        ))}
                     </Dropdown>
                 </Section>
             ) : null}
@@ -75,52 +93,28 @@ export const Window = () => {
                         aria-labelledby="window.vibrancy"
                         value={vibrancy}
                         onOptionSelect={(_, { optionValue }) => optionValue && setVibrancy(optionValue)}
+                        listbox={{ ref: scrollRef, style: { maxHeight: 146 } }}
                     >
-                        <Option key="None" value="None">
-                            None
-                        </Option>
-                        <Option key="titlebar" value="titlebar">
-                            titlebar
-                        </Option>
-                        <Option key="selection" value="selection">
-                            selection
-                        </Option>
-                        <Option key="menu" value="menu">
-                            menu
-                        </Option>
-                        <Option key="popover" value="popover">
-                            popover
-                        </Option>
-                        <Option key="sidebar" value="sidebar">
-                            sidebar
-                        </Option>
-                        <Option key="header" value="header">
-                            header
-                        </Option>
-                        <Option key="sheet" value="sheet">
-                            sheet
-                        </Option>
-                        <Option key="window" value="window">
-                            window
-                        </Option>
-                        <Option key="hud" value="hud">
-                            hud
-                        </Option>
-                        <Option key="fullscreen-ui" value="fullscreen-ui">
-                            fullscreen-ui
-                        </Option>
-                        <Option key="tooltip" value="tooltip">
-                            tooltip
-                        </Option>
-                        <Option key="content" value="content">
-                            content
-                        </Option>
-                        <Option key="under-window" value="under-window">
-                            under-window
-                        </Option>
-                        <Option key="under-page" value="under-page">
-                            under-page
-                        </Option>
+                        <Virtualizer
+                            numItems={vibrancyOptions.length}
+                            virtualizerLength={virtualizerLength}
+                            bufferItems={bufferItems}
+                            bufferSize={bufferSize}
+                            itemSize={32}
+                        >
+                            {(index) => {
+                                return (
+                                    <Option
+                                        aria-posinset={index}
+                                        aria-setsize={vibrancyOptions.length}
+                                        key={`window-vibrancy-option-${index}`}
+                                        value={vibrancyOptions[index]}
+                                    >
+                                        {vibrancyOptions[index]}
+                                    </Option>
+                                );
+                            }}
+                        </Virtualizer>
                     </Dropdown>
                 </Section>
             ) : null}
