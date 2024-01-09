@@ -2,6 +2,7 @@ import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import { Button, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger } from "@fluentui/react-components";
 import { FlashRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
+import { FluentIcon } from "./FluentIcon";
 
 type AdditionalActionsProps = {
     actions: SearchResultItemAction[];
@@ -26,7 +27,7 @@ export const ActionsMenu = ({
                     className="non-draggable-area"
                     size="small"
                     appearance="subtle"
-                    icon={<FlashRegular />}
+                    icon={<FlashRegular fontSize={16} />}
                     ref={additionalActionsButtonRef}
                 >
                     {t("general.actions")}
@@ -38,6 +39,7 @@ export const ActionsMenu = ({
                         <MenuItem
                             key={`additional-action-${action.argument}-${action.handlerId}`}
                             onClick={() => invokeAction(action)}
+                            icon={action.fluentIcon ? <FluentIcon icon={action.fluentIcon} /> : undefined}
                         >
                             {action.descriptionTranslationKey
                                 ? t(action.descriptionTranslationKey)

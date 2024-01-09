@@ -1,7 +1,7 @@
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import { Button, Divider, Input } from "@fluentui/react-components";
-import { Settings16Regular } from "@fluentui/react-icons";
+import { SettingsRegular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
@@ -203,7 +203,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                     onClick={openSettings}
                     size="small"
                     appearance="subtle"
-                    icon={<Settings16Regular />}
+                    icon={<SettingsRegular fontSize={16} />}
                 >
                     {t("general.settings")}
                 </Button>

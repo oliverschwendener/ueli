@@ -42,6 +42,7 @@ export class UeliCommandExtension implements Extension {
                     descriptionTranslationKey: "extension[UeliCommand].quitUeli",
                     hideWindowAfterInvokation: false,
                     requiresConfirmation: true,
+                    fluentIcon: "DismissCircleRegular",
                 },
             },
             settings: {
@@ -59,6 +60,7 @@ export class UeliCommandExtension implements Extension {
                     description: "Open Ueli settings",
                     descriptionTranslationKey: "extension[UeliCommand].openSettings",
                     hideWindowAfterInvokation: false,
+                    fluentIcon: "SettingsRegular",
                 },
             },
             extensions: {
@@ -76,6 +78,7 @@ export class UeliCommandExtension implements Extension {
                     description: "Open Ueli extensions",
                     descriptionTranslationKey: "extension[UeliCommand].openExtensions",
                     hideWindowAfterInvokation: false,
+                    fluentIcon: "AppsAddInRegular",
                 },
             },
         };

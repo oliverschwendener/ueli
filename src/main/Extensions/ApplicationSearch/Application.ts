@@ -21,6 +21,7 @@ export class Application {
                     "extension[ApplicationSearch].searchResultItem.defaultAction.openApplication",
                 handlerId: "OpenFilePath",
                 hideWindowAfterInvokation: true,
+                fluentIcon: "OpenRegular",
             },
             additionalActions: [
                 {
@@ -30,6 +31,7 @@ export class Application {
                         "extension[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer",
                     handlerId: "ShowItemInFileExplorer",
                     hideWindowAfterInvokation: true,
+                    fluentIcon: "DocumentFolderRegular",
                 },
                 {
                     argument: this.filePath,
@@ -38,6 +40,7 @@ export class Application {
                         "extension[ApplicationSearch].searchResultItem.additionalAction.copyFilePathToClipboard",
                     handlerId: "copyToClipboard",
                     hideWindowAfterInvokation: true,
+                    fluentIcon: "ClipboardRegular",
                 },
             ],
         };

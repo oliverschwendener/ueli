@@ -1,3 +1,5 @@
+import type { FluentIcon } from "./FluentIcon";
+
 export type SearchResultItemAction = {
     description: string;
     descriptionTranslationKey?: string;
@@ -5,4 +7,5 @@ export type SearchResultItemAction = {
     handlerId: string;
     hideWindowAfterInvokation: boolean;
     requiresConfirmation?: boolean;
+    fluentIcon?: FluentIcon;
 };
