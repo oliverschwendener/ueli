@@ -7,7 +7,7 @@ export const useTheme = (contextBridge: ContextBridge) => {
     const [theme, setTheme] = useState<Theme>(getTheme(contextBridge));
 
     useEffect(() => {
-        contextBridge.onNativeThemeChanged(() => setTheme(getTheme(contextBridge)));
+        contextBridge.ipcRenderer.on("nativeThemeChanged", () => setTheme(getTheme(contextBridge)));
     }, []);
 
     return { theme, setTheme };

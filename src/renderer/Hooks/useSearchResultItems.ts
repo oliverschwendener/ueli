@@ -8,7 +8,9 @@ export const useSearchResultItems = (contextBridge: ContextBridge) => {
     );
 
     useEffect(() => {
-        contextBridge.onSearchIndexUpdated(() => setSearchResultItems(contextBridge.getSearchResultItems()));
+        contextBridge.ipcRenderer.on("searchIndexUpdated", () => {
+            setSearchResultItems(contextBridge.getSearchResultItems());
+        });
     }, []);
 
     return { searchResultItems };

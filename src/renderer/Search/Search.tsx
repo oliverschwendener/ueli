@@ -134,7 +134,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
 
     useEffect(() => {
         setFocusOnUserInputAndSelectText();
-        window.ContextBridge.windowFocused(() => setFocusOnUserInputAndSelectText());
+        contextBridge.ipcRenderer.on("windowFocused", () => setFocusOnUserInputAndSelectText());
     }, []);
 
     useEffect(() => selectFirstSearchResultItemItem(), [searchTerm]);

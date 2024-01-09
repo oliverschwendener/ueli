@@ -54,7 +54,7 @@ export class BrowserWindowModule {
         eventSubscriber.subscribe("hotkeyPressed", () => toggleBrowserWindow(app, browserWindow));
 
         eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
-            sendToBrowserWindow(browserWindow, "settingUpdated", { key, value });
+            sendToBrowserWindow(browserWindow, `settingUpdated[${key}]`, { value });
         });
 
         eventSubscriber.subscribe(

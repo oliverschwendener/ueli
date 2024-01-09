@@ -19,7 +19,7 @@ export const App = () => {
     useScrollBar({ document, theme });
 
     useEffect(() => {
-        contextBridge.onNavigateTo((pathname) => navigate({ pathname }));
+        contextBridge.ipcRenderer.on("navigateTo", (_, { pathname }: { pathname: string }) => navigate({ pathname }));
     }, []);
 
     return (

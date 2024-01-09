@@ -2,6 +2,10 @@ import type { ContextBridge } from "@common/ContextBridge";
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
+    ipcRenderer: {
+        on: (channel, listener) => ipcRenderer.on(channel, listener),
+    },
+
     extensionDisabled: (extensionId: string) => ipcRenderer.send("extensionDisabled", { extensionId }),
     extensionEnabled: (extensionId: string) => ipcRenderer.send("extensionEnabled", { extensionId }),
     getAboutUeli: () => ipcRenderer.sendSync("getAboutUeli"),
@@ -15,17 +19,6 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
         ipcRenderer.sendSync("getExtensionSettingDefaultValue", { extensionId, settingKey }),
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
     showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),
-    onNativeThemeChanged: (callback) => ipcRenderer.on("nativeThemeChanged", callback),
-    onSearchIndexUpdated: (callback) => ipcRenderer.on("searchIndexUpdated", callback),
-    onNavigateTo: (callback: (pathname: string) => void) =>
-        ipcRenderer.on("navigateTo", (_, { pathname }: { pathname: string }) => callback(pathname)),
-    onSettingUpdated: (settingKey: string, callback: (value) => void) =>
-        ipcRenderer.on("settingUpdated", (_, { key, value }) => {
-            if (settingKey === key) {
-                callback(value);
-            }
-        }),
     themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),
     updateSettingByKey: <T>(key: string, value: T) => ipcRenderer.invoke("updateSettingByKey", { key, value }),
-    windowFocused: (callback) => ipcRenderer.on("windowFocused", callback),
 });

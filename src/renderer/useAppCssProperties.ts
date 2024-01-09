@@ -28,15 +28,18 @@ export const useAppCssProperties = () => {
 
     useEffect(() => {
         if (operatingSystem === "Windows") {
-            contextBridge.onSettingUpdated<string>("window.backgroundMaterial", (value) =>
-                setAppCssProperties(extendGlobalStyles(getWindowsCssProperties(value))),
+            contextBridge.ipcRenderer.on(
+                "settingUpdated[window.backgroundMaterial]",
+                (_, { value }: { value: string }) => {
+                    setAppCssProperties(extendGlobalStyles(getWindowsCssProperties(value)));
+                },
             );
         }
 
         if (operatingSystem === "macOS") {
-            contextBridge.onSettingUpdated<string>("window.vibrancy", (value) =>
-                setAppCssProperties(extendGlobalStyles(getMacOsCssProperties(value))),
-            );
+            contextBridge.ipcRenderer.on("settingUpdated[window.vibrancy]", (_, { value }: { value: string }) => {
+                setAppCssProperties(extendGlobalStyles(getMacOsCssProperties(value)));
+            });
         }
     }, []);
 
