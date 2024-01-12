@@ -21,7 +21,7 @@ export type ContextBridge = {
     getOperatingSystem: () => OperatingSystem;
     getExtensionSettingByKey: <T>(extensionId: string, key: string, defaultValue: T) => T;
     getExtensionSettingDefaultValue: <T>(extensionId: string, settingKey: string) => T;
-    getExtensionImageUrl: (extensionId) => string | undefined;
+    getExtensionImageUrl: (extensionId: string) => string | undefined;
     invokeAction: (action: SearchResultItemAction) => Promise<void>;
     invokeExtension: <ArgumentType, ReturnType>(
         extensionId: string,
