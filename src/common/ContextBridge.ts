@@ -21,6 +21,10 @@ export type ContextBridge = {
     getExtensionSettingByKey: <T>(extensionId: string, key: string, defaultValue: T) => T;
     getExtensionSettingDefaultValue: <T>(extensionId: string, settingKey: string) => T;
     invokeAction: (action: SearchResultItemAction) => Promise<void>;
+    invokeExtension: <ArgumentType, ReturnType>(
+        extensionId: string,
+        searchArguments: ArgumentType,
+    ) => Promise<ReturnType>;
     showOpenDialog: (options: OpenDialogOptions) => Promise<OpenDialogReturnValue>;
     themeShouldUseDarkColors: () => boolean;
     updateSettingByKey: <T>(key: string, value: T) => Promise<void>;

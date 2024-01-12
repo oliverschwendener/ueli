@@ -1,6 +1,7 @@
 import { FluentProvider } from "@fluentui/react-components";
 import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router";
+import { Extension } from "./Extension";
 import { useContextBridge, useScrollBar, useSearchResultItems, useTheme } from "./Hooks";
 import { useI18n } from "./I18n";
 import { Search } from "./Search";
@@ -28,6 +29,7 @@ export const App = () => {
                 <Routes>
                     <Route path="/" element={<Search searchResultItems={searchResultItems} />} />
                     <Route path="/settings/*" element={<Settings />} />
+                    <Route path="/extension/:extensionId" element={<Extension />} />
                 </Routes>
             </FluentProvider>
         </ThemeContext.Provider>

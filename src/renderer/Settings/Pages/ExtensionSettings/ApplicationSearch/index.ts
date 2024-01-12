@@ -1,1 +1,1 @@
-export * from "./Settings";
+export * from "./ApplicationSearchSettings";

@@ -8,4 +8,5 @@ export interface Extension {
     getSearchResultItems(): Promise<SearchResultItem[]>;
     isSupported(dependencyInjector: DependencyInjector): boolean;
     getSettingDefaultValue<T>(key: string): T;
+    invoke?(argument: unknown): Promise<unknown>;
 }
