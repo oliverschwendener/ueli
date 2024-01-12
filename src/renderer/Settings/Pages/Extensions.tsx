@@ -16,7 +16,7 @@ export const Extensions = () => {
 
     const { value: enabledExtensionIds, updateValue: setEnabledExtensionIds } = useSetting(
         "extensions.enabledExtensionIds",
-        ["ApplicationSearch"],
+        ["ApplicationSearch", "UeliCommand"],
     );
 
     const enable = async (extensionId: string) => {
