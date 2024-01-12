@@ -14,6 +14,7 @@ export type DependencyName =
     | "IpcMain"
     | "Logger"
     | "NativeTheme"
+    | "Net"
     | "OperatingSystem"
     | "Platform"
     | "SearchIndex"

@@ -5,6 +5,7 @@ import {
     globalShortcut,
     ipcMain,
     nativeTheme,
+    net,
     shell,
     systemPreferences,
     type App,
@@ -13,6 +14,7 @@ import {
     type GlobalShortcut,
     type IpcMain,
     type NativeTheme,
+    type Net,
     type Shell,
     type SystemPreferences,
 } from "electron";
@@ -64,6 +66,7 @@ import { ExtensionsModule } from "./Extensions";
     dependencyInjector.registerInstance<SystemPreferences>("SystemPreferences", systemPreferences);
     dependencyInjector.registerInstance<Dialog>("Dialog", dialog);
     dependencyInjector.registerInstance<Clipboard>("Clipboard", clipboard);
+    dependencyInjector.registerInstance<Net>("Net", net);
 
     // Ueli Modules
     ClockModule.bootstrap(dependencyInjector);
