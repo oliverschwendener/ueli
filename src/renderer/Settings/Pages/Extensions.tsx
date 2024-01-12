@@ -1,12 +1,13 @@
-import { Accordion, AccordionHeader, AccordionItem, AccordionPanel } from "@fluentui/react-components";
-import { CheckboxCheckedFilled, CheckboxUncheckedRegular } from "@fluentui/react-icons";
+import { Accordion, AccordionHeader, AccordionItem, AccordionPanel, Badge, Label } from "@fluentui/react-components";
+import { CheckmarkFilled, DismissFilled } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
-import { useContextBridge, useSetting } from "../../Hooks";
+import { useContextBridge, useSetting, useTheme } from "../../Hooks";
 import { ExtensionSettings } from "./ExtensionSettings";
 
 export const Extensions = () => {
     const { t } = useTranslation();
     const { contextBridge } = useContextBridge();
+    const { theme } = useTheme(contextBridge);
 
     const {
         getAvailableExtensions,
@@ -19,6 +20,8 @@ export const Extensions = () => {
         ["ApplicationSearch", "UeliCommand"],
     );
 
+    const isEnabled = (extensionId: string) => enabledExtensionIds.includes(extensionId);
+
     const enable = async (extensionId: string) => {
         await setEnabledExtensionIds([extensionId, ...enabledExtensionIds]);
         enableExtension(extensionId);
@@ -29,26 +32,49 @@ export const Extensions = () => {
         disableExtension(extensionId);
     };
 
+    const toggle = (extensionId: string) => (isEnabled(extensionId) ? disable(extensionId) : enable(extensionId));
+
     return (
-        <Accordion
-            openItems={enabledExtensionIds}
-            onToggle={(_, { value }) =>
-                enabledExtensionIds.includes(value as string) ? disable(value as string) : enable(value as string)
-            }
-            multiple
-            collapsible
-        >
+        <Accordion multiple collapsible>
             {getAvailableExtensions().map(({ id, name, nameTranslationKey }) => (
-                <AccordionItem key={id} value={id}>
-                    <AccordionHeader
-                        expandIcon={
-                            enabledExtensionIds.includes(id) ? <CheckboxCheckedFilled /> : <CheckboxUncheckedRegular />
-                        }
-                    >
-                        {nameTranslationKey ? t(nameTranslationKey) : name}
+                <AccordionItem
+                    key={id}
+                    value={id}
+                    style={{
+                        margin: 10,
+                        borderStyle: "solid",
+                        borderWidth: "1px",
+                        borderColor: theme.colorNeutralStroke3,
+                        borderRadius: theme.borderRadiusMedium,
+                    }}
+                >
+                    <AccordionHeader>
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                width: "100%",
+                            }}
+                        >
+                            <Label>{nameTranslationKey ? t(nameTranslationKey) : name}</Label>
+                            <Badge
+                                color={isEnabled(id) ? "success" : "subtle"}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    toggle(id);
+                                }}
+                                icon={isEnabled(id) ? <CheckmarkFilled /> : <DismissFilled />}
+                            >
+                                {isEnabled(id) ? "Enabled" : "Disabled"}
+                            </Badge>
+                        </div>
                     </AccordionHeader>
                     <AccordionPanel>
-                        <ExtensionSettings extensionId={id} />
+                        <div style={{ paddingLeft: 50, paddingTop: 10, paddingBottom: 25, boxSizing: "border-box" }}>
+                            <ExtensionSettings extensionId={id} />
+                        </div>
                     </AccordionPanel>
                 </AccordionItem>
             ))}
