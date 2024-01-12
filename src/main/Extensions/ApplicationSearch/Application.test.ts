@@ -20,6 +20,16 @@ describe(Application, () => {
                         "extension[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer",
                     handlerId: "ShowItemInFileExplorer",
                     hideWindowAfterInvokation: true,
+                    fluentIcon: "DocumentFolderRegular",
+                },
+                {
+                    argument: "/Applications/My App.app",
+                    description: "Copy file path to clipboard",
+                    descriptionTranslationKey:
+                        "extension[ApplicationSearch].searchResultItem.additionalAction.copyFilePathToClipboard",
+                    handlerId: "copyToClipboard",
+                    hideWindowAfterInvokation: false,
+                    fluentIcon: "ClipboardRegular",
                 },
             ],
             defaultAction: {
@@ -29,6 +39,7 @@ describe(Application, () => {
                     "extension[ApplicationSearch].searchResultItem.defaultAction.openApplication",
                 handlerId: "OpenFilePath",
                 hideWindowAfterInvokation: true,
+                fluentIcon: "OpenRegular",
             },
         });
     });
