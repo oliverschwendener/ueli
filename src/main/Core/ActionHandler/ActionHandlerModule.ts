@@ -7,6 +7,7 @@ import type { ActionHandler } from "./Contract";
 import {
     CommandlineActionHandler,
     CopyToClipboardActionHandler,
+    NavigateToActionHandler,
     OpenFilePathActionHandler,
     PowershellActionHandler,
     ShowItemInFileExplorerActionHandler,
@@ -23,10 +24,12 @@ export class ActionHandlerModule {
         const commandlineUtility = dependencyInjector.getInstance<CommandlineUtility>("CommandlineUtility");
         const shell = dependencyInjector.getInstance<Shell>("Shell");
         const clipboard = dependencyInjector.getInstance<Clipboard>("Clipboard");
+        const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
 
         const actionHandlers: ActionHandler[] = [
             new CommandlineActionHandler(commandlineUtility),
             new CopyToClipboardActionHandler(clipboard),
+            new NavigateToActionHandler(eventEmitter),
             new OpenFilePathActionHandler(shell),
             new PowershellActionHandler(commandlineUtility),
             new ShowItemInFileExplorerActionHandler(shell),

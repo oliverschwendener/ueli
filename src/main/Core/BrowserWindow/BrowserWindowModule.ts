@@ -67,6 +67,11 @@ export class BrowserWindowModule {
             browserWindow.setVibrancy(getVibrancy(value));
         });
 
+        eventSubscriber.subscribe("navigateTo", ({ pathname }: { pathname: string }) => {
+            openAndFocusBrowserWindow(browserWindow);
+            sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
+        });
+
         BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber);
     }
 
