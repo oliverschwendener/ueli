@@ -18,6 +18,7 @@ export type ContextBridge = {
     getSettingByKey: <T>(key: string, defaultValue: T) => T;
     getAvailableExtensions: () => ExtensionInfo[];
     getOperatingSystem: () => OperatingSystem;
+    getExtensionSettingByKey: <T>(extensionId: string, key: string, defaultValue: T) => T;
     getExtensionSettingDefaultValue: <T>(extensionId: string, settingKey: string) => T;
     invokeAction: (action: SearchResultItemAction) => Promise<void>;
     showOpenDialog: (options: OpenDialogOptions) => Promise<OpenDialogReturnValue>;

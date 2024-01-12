@@ -11,17 +11,28 @@ export class ExtensionsModule {
         UeliCommandModule.bootstrap(dependencyInjector);
 
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
+        const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
+
+        const getExtensionById = (extensionId: string): Extension => {
+            const extension = dependencyInjector.getAllExtensions().find((e) => e.id === extensionId);
+
+            if (!extension) {
+                throw new Error(`Unable to find extension by id "${extensionId}"`);
+            }
+
+            return extension;
+        };
+
+        ipcMain.on(
+            "getExtensionSettingByKey",
+            (event, { extensionId, key, defaultValue }: { extensionId: string; key: string; defaultValue: unknown }) =>
+                (event.returnValue = settingsManager.getExtensionSettingByKey(extensionId, key, defaultValue)),
+        );
 
         ipcMain.on(
             "getExtensionSettingDefaultValue",
             (event, { extensionId, settingKey }: { extensionId: string; settingKey: string }) => {
-                const extension = dependencyInjector.getAllExtensions().find((e) => e.id === extensionId);
-
-                if (!extension) {
-                    throw new Error(`Unable to find extension by id "${extensionId}"`);
-                }
-
-                event.returnValue = extension.getSettingDefaultValue(settingKey);
+                event.returnValue = getExtensionById(extensionId).getSettingDefaultValue(settingKey);
             },
         );
     }
