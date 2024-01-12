@@ -1,4 +1,6 @@
 import type { DependencyInjector } from "@Core/DependencyInjector";
+import type { Extension } from "@Core/Extension";
+import type { SettingsManager } from "@Core/SettingsManager";
 import type { IpcMain } from "electron";
 import { ApplicationSearchModule } from "./ApplicationSearch";
 import { SystemColorThemeSwitcherModule } from "./SystemColorThemeSwitcher";
