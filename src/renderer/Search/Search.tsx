@@ -1,10 +1,12 @@
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { SearchResultItemAction } from "@common/SearchResultItemAction";
-import { Button, Divider, Input } from "@fluentui/react-components";
+import { Button, Input } from "@fluentui/react-components";
 import { SettingsRegular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
+import { BaseLayout } from "../BaseLayout";
+import { Footer } from "../Footer";
 import { useContextBridge, useSetting } from "../Hooks";
 import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
@@ -147,72 +149,65 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     useEffect(() => updateAdditionalActions(), [selectedItemIndex, searchTerm]);
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-            <ConfirmationDialog closeDialog={closeConfirmationDialog} action={confirmationDialogAction} />
-            <div
-                className="draggable-area"
-                style={{
-                    boxSizing: "border-box",
-                    display: "flex",
-                    flexDirection: "column",
-                    flexShrink: 0,
-                    padding: 10,
-                }}
-            >
-                <Input
-                    className="non-draggable-area"
-                    ref={userInputRef}
-                    appearance="filled-darker"
-                    size="large"
-                    value={searchTerm}
-                    onChange={(_, { value }) => search(value)}
-                    onKeyDown={handleUserInputKeyDownEvent}
-                />
-            </div>
-            <Divider appearance="subtle" />
-            <div ref={containerRef} style={{ height: "100%", overflowY: "scroll" }}>
-                {searchTerm.length === 0 ? (
-                    <FavoritesList />
-                ) : (
-                    <SearchResultList
-                        containerRef={containerRef}
-                        selectedItemIndex={selectedItemIndex}
-                        searchResultItems={filteredSearchResultItems}
-                        onSearchResultItemClick={handleSearchResultItemClickEvent}
-                        onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
-                    />
-                )}
-            </div>
-            <Divider appearance="subtle" />
-            <div
-                className="draggable-area"
-                style={{
-                    flexShrink: 0,
-                    padding: 10,
-                    gap: 10,
-                    boxSizing: "border-box",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                }}
-            >
-                <Button
-                    className="non-draggable-area"
-                    onClick={openSettings}
-                    size="small"
-                    appearance="subtle"
-                    icon={<SettingsRegular fontSize={16} />}
+        <BaseLayout
+            header={
+                <div
+                    className="draggable-area"
+                    style={{
+                        boxSizing: "border-box",
+                        display: "flex",
+                        flexDirection: "column",
+                        flexShrink: 0,
+                        padding: 10,
+                    }}
                 >
-                    {t("general.settings")}
-                </Button>
-                <ActionsMenu
-                    actions={additionalActions}
-                    invokeAction={invokeAction}
-                    additionalActionsButtonRef={additionalActionsButtonRef}
-                    onMenuClosed={() => setFocusOnUserInput()}
-                />
-            </div>
-        </div>
+                    <Input
+                        className="non-draggable-area"
+                        ref={userInputRef}
+                        appearance="filled-darker"
+                        size="large"
+                        value={searchTerm}
+                        onChange={(_, { value }) => search(value)}
+                        onKeyDown={handleUserInputKeyDownEvent}
+                    />
+                </div>
+            }
+            contentRef={containerRef}
+            content={
+                <>
+                    <ConfirmationDialog closeDialog={closeConfirmationDialog} action={confirmationDialogAction} />
+                    {searchTerm.length === 0 ? (
+                        <FavoritesList />
+                    ) : (
+                        <SearchResultList
+                            containerRef={containerRef}
+                            selectedItemIndex={selectedItemIndex}
+                            searchResultItems={filteredSearchResultItems}
+                            onSearchResultItemClick={handleSearchResultItemClickEvent}
+                            onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
+                        />
+                    )}
+                </>
+            }
+            footer={
+                <Footer draggable>
+                    <Button
+                        className="non-draggable-area"
+                        onClick={openSettings}
+                        size="small"
+                        appearance="subtle"
+                        icon={<SettingsRegular fontSize={16} />}
+                    >
+                        {t("general.settings")}
+                    </Button>
+                    <ActionsMenu
+                        actions={additionalActions}
+                        invokeAction={invokeAction}
+                        additionalActionsButtonRef={additionalActionsButtonRef}
+                        onMenuClosed={() => setFocusOnUserInput()}
+                    />
+                </Footer>
+            }
+        />
     );
 };

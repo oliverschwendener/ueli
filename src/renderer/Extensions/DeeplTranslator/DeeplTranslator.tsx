@@ -1,7 +1,10 @@
-import { Button, Divider, Dropdown, Field, Input, Label, Option, Spinner } from "@fluentui/react-components";
-import { ArrowLeftRegular } from "@fluentui/react-icons";
+import { Button, Dropdown, Field, Input, Option, ProgressBar, Textarea } from "@fluentui/react-components";
+import { ArrowLeftFilled, CopyRegular } from "@fluentui/react-icons";
 import { useEffect, useState } from "react";
+import { BaseLayout } from "../../BaseLayout";
 import type { ExtensionProps } from "../../ExtensionProps";
+import { Footer } from "../../Footer";
+import { Header } from "../../Header";
 import { sourceLanguages } from "./sourceLanguages";
 import { targetLanguages } from "./targetLanguages";
 
@@ -20,8 +23,11 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [clearTimeoutValue, setClearTimeoutValue] = useState<NodeJS.Timeout | undefined>(undefined);
 
+    const translatedText = () => translations.join("\n");
+
     const search = async (searchTerm: string) => {
         if (!searchTerm.trim().length) {
+            setTranslations([]);
             return;
         }
 
@@ -59,93 +65,90 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
     }, [userInput, sourceLanguage, targetLanguage]);
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-            <div style={{ flexShrink: 0 }}>
-                <div
-                    className="draggable-area"
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        padding: 10,
-                        gap: 10,
-                        boxSizing: "border-box",
-                    }}
-                >
-                    <Button
-                        size="small"
-                        appearance="subtle"
-                        className="non-draggable-area"
-                        onClick={goBack}
-                        icon={<ArrowLeftRegular />}
-                    ></Button>
-                    <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
-                        <Input
+        <BaseLayout
+            header={
+                <Header
+                    text="DeepL Translator"
+                    draggable
+                    contentBefore={
+                        <Button
+                            size="small"
+                            appearance="subtle"
                             className="non-draggable-area"
-                            autoFocus
-                            value={userInput}
-                            onChange={(_, { value }) => setUserInput(value)}
-                        />
-                    </div>
-                    <div style={{ width: "250px", display: "flex", flexDirection: "column" }}>
-                        <Field>
-                            <label htmlFor="sourceLanguage">Source Language</label>
-                            <Dropdown
-                                id="sourceLanguage"
-                                className="non-draggable-area"
-                                value={sourceLanguage}
-                                onOptionSelect={(_, { optionValue }) => optionValue && setSourceLanguage(optionValue)}
-                            >
-                                {Object.keys(sourceLanguages).map((key) => (
-                                    <Option value={key} key={key}>
-                                        {sourceLanguages[key]}
-                                    </Option>
-                                ))}
-                            </Dropdown>
-                        </Field>
-                        <Field>
-                            <label htmlFor="targetLanguage">TargetLanguage</label>
-                            <Dropdown
-                                id="targetLanguage"
-                                className="non-draggable-area"
-                                value={targetLanguage}
-                                onOptionSelect={(_, { optionValue }) => optionValue && setTargetLanguage(optionValue)}
-                            >
-                                {Object.keys(targetLanguages).map((key) => (
-                                    <Option value={key} key={key}>
-                                        {targetLanguages[key]}
-                                    </Option>
-                                ))}
-                            </Dropdown>
-                        </Field>
-                    </div>
-                </div>
-                <Divider appearance="subtle" />
-            </div>
+                            onClick={goBack}
+                            icon={<ArrowLeftFilled fontSize={14} />}
+                        ></Button>
+                    }
+                />
+            }
+            content={
+                <div
+                    style={{ display: "flex", flexDirection: "column", padding: 10, boxSizing: "border-box", gap: 10 }}
+                >
+                    <Input
+                        className="non-draggable-area"
+                        autoFocus
+                        value={userInput}
+                        onChange={(_, { value }) => setUserInput(value)}
+                        placeholder="Type something in here"
+                    />
 
-            <div
-                style={{
-                    flexGrow: 1,
-                    display: "flex",
-                    flexDirection: "row",
-                    boxSizing: "border-box",
-                    height: "100%",
-                    width: "100%",
-                    overflow: "hidden",
-                }}
-            >
-                <div style={{ width: "100%", height: "100%" }}>
-                    {isLoading ? (
-                        <div
-                            style={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}
+                    <Textarea
+                        readOnly
+                        resize="vertical"
+                        style={{ width: "100%", height: 200 }}
+                        placeholder="Translated text"
+                        value={translatedText()}
+                    />
+
+                    <div>
+                        <Button
+                            disabled={translatedText().length === 0}
+                            appearance="subtle"
+                            icon={<CopyRegular />}
+                            iconPosition="after"
                         >
-                            <Spinner />
-                        </div>
-                    ) : (
-                        translations.map((t) => <Label>{t}</Label>)
-                    )}
+                            Copy text
+                        </Button>
+                    </div>
+
+                    {isLoading && <ProgressBar />}
                 </div>
-            </div>
-        </div>
+            }
+            footer={
+                <Footer>
+                    <Field>
+                        <label htmlFor="sourceLanguage">Source Language</label>
+                        <Dropdown
+                            id="sourceLanguage"
+                            className="non-draggable-area"
+                            value={sourceLanguage}
+                            onOptionSelect={(_, { optionValue }) => optionValue && setSourceLanguage(optionValue)}
+                        >
+                            {Object.keys(sourceLanguages).map((key) => (
+                                <Option value={key} key={key}>
+                                    {sourceLanguages[key]}
+                                </Option>
+                            ))}
+                        </Dropdown>
+                    </Field>
+                    <Field>
+                        <label htmlFor="targetLanguage">TargetLanguage</label>
+                        <Dropdown
+                            id="targetLanguage"
+                            className="non-draggable-area"
+                            value={targetLanguage}
+                            onOptionSelect={(_, { optionValue }) => optionValue && setTargetLanguage(optionValue)}
+                        >
+                            {Object.keys(targetLanguages).map((key) => (
+                                <Option value={key} key={key}>
+                                    {targetLanguages[key]}
+                                </Option>
+                            ))}
+                        </Dropdown>
+                    </Field>
+                </Footer>
+            }
+        />
     );
 };

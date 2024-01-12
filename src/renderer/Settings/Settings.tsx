@@ -1,20 +1,18 @@
 import { Divider } from "@fluentui/react-components";
 import { Route, Routes, useNavigate } from "react-router";
-import { Header } from "./Header";
 import { Navigation } from "./Navigation";
 import { settingsPages } from "./Pages";
+import { SettingsHeader } from "./SettingsHeader";
 
 export const Settings = () => {
     const navigate = useNavigate();
-
     const closeSettings = () => navigate({ pathname: "/" });
-
     const navigateTo = (pathname: string) => navigate({ pathname });
 
     return (
         <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
             <div style={{ flexShrink: 0 }}>
-                <Header onCloseSettingsClicked={closeSettings} />
+                <SettingsHeader onCloseSettingsClicked={closeSettings} />
                 <Divider appearance="subtle" />
             </div>
 
