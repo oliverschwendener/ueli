@@ -92,26 +92,33 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
             }
             content={
                 <div
-                    style={{ display: "flex", flexDirection: "column", padding: 10, boxSizing: "border-box", gap: 10 }}
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        padding: 10,
+                        boxSizing: "border-box",
+                        gap: 10,
+                        height: "100%",
+                    }}
                 >
-                    <Textarea
-                        autoFocus
-                        resize="vertical"
-                        style={{ width: "100%", height: 100 }}
-                        placeholder="Type something in here"
-                        value={userInput}
-                        onChange={(_, { value }) => setUserInput(value)}
-                    />
+                    <div style={{ display: "flex", flexDirection: "row", gap: 10, flexGrow: 1 }}>
+                        <Textarea
+                            autoFocus
+                            style={{ flexGrow: 1, height: "100%" }}
+                            placeholder="Type to translate"
+                            value={userInput}
+                            onChange={(_, { value }) => setUserInput(value)}
+                        />
 
-                    <Textarea
-                        readOnly
-                        resize="vertical"
-                        style={{ width: "100%", height: 100 }}
-                        placeholder="Translated text"
-                        value={translatedText()}
-                    />
-
-                    <div>
+                        <Textarea
+                            readOnly
+                            tabIndex={-1} // This makes the text are not focusable
+                            style={{ flexGrow: 1, height: "100%" }}
+                            placeholder="Translated text will appear here"
+                            value={translatedText()}
+                        />
+                    </div>
+                    <div style={{ flexShrink: 0 }}>
                         <Button
                             disabled={translatedText().length === 0}
                             appearance="subtle"
