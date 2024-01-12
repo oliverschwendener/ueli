@@ -16,7 +16,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
     );
 
     const [targetLanguage, setTargetLanguage] = useState<string>(
-        contextBridge.getExtensionSettingByKey("DeeplTranslator", "defaultTargetLanguage", "DE"),
+        contextBridge.getExtensionSettingByKey("DeeplTranslator", "defaultTargetLanguage", "EN"),
     );
 
     const [translations, setTranslations] = useState<string[]>([]);
@@ -117,8 +117,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
             }
             footer={
                 <Footer>
-                    <Field>
-                        <label htmlFor="sourceLanguage">Source Language</label>
+                    <Field label="Source language">
                         <Dropdown
                             id="sourceLanguage"
                             className="non-draggable-area"
@@ -132,8 +131,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                             ))}
                         </Dropdown>
                     </Field>
-                    <Field>
-                        <label htmlFor="targetLanguage">TargetLanguage</label>
+                    <Field label="Target language">
                         <Dropdown
                             id="targetLanguage"
                             className="non-draggable-area"

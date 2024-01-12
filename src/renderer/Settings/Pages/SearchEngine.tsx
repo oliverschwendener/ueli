@@ -21,12 +21,13 @@ export const SearchEngine = () => {
     return (
         <SectionList>
             <Section>
-                <label id="searchEngine.automaticRescan">{t("settingsSearchEngine.automaticRescan")}</label>
-                <Switch
-                    aria-labelledby="searchEngine.automaticRescan"
-                    checked={automaticRescanEnabled}
-                    onChange={(_, { checked }) => setAutomaticRescanEnabled(checked)}
-                />
+                <Field label={t("settingsSearchEngine.automaticRescan")}>
+                    <Switch
+                        aria-labelledby="searchEngine.automaticRescan"
+                        checked={automaticRescanEnabled}
+                        onChange={(_, { checked }) => setAutomaticRescanEnabled(checked)}
+                    />
+                </Field>
             </Section>
             <Section>
                 <Field label={t("settingsSearchEngine.rescanIntervalInSeconds")} validationState="none">
@@ -39,15 +40,16 @@ export const SearchEngine = () => {
                 </Field>
             </Section>
             <Section>
-                <label id="searchEngine.fuzzyness">{t("settingsSearchEngine.fuzzyness")}</label>
-                <Slider
-                    aria-labelledby="searchEngine.fuzzyness"
-                    value={fuzzyness}
-                    min={0}
-                    max={1}
-                    step={0.1}
-                    onChange={(_, { value }) => setFuzzyness(value)}
-                />
+                <Field label={t("settingsSearchEngine.fuzzyness")}>
+                    <Slider
+                        aria-labelledby="searchEngine.fuzzyness"
+                        value={fuzzyness}
+                        min={0}
+                        max={1}
+                        step={0.1}
+                        onChange={(_, { value }) => setFuzzyness(value)}
+                    />
+                </Field>
             </Section>
         </SectionList>
     );

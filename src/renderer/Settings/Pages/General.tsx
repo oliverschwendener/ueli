@@ -1,4 +1,4 @@
-import { Dropdown, Option } from "@fluentui/react-components";
+import { Dropdown, Field, Option } from "@fluentui/react-components";
 import { changeLanguage } from "i18next";
 import { useTranslation } from "react-i18next";
 import { useSetting } from "../../Hooks";
@@ -16,20 +16,18 @@ export const General = () => {
     return (
         <SectionList>
             <Section>
-                <label id="general.language">{t("settingsGeneral.language")}</label>
-                <Dropdown
-                    aria-labelledby="general.language"
-                    value={supportedLanguages.find(({ locale }) => locale === language)?.name}
-                    onOptionSelect={(_, { optionValue }) => optionValue && setLanguage(optionValue)}
-                >
-                    {supportedLanguages.map(({ name, locale }) => (
-                        <Option key={locale} value={locale} text={name}>
-                            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
-                                <label>{name}</label>
-                            </div>
-                        </Option>
-                    ))}
-                </Dropdown>
+                <Field label={t("settingsGeneral.language")}>
+                    <Dropdown
+                        value={supportedLanguages.find(({ locale }) => locale === language)?.name}
+                        onOptionSelect={(_, { optionValue }) => optionValue && setLanguage(optionValue)}
+                    >
+                        {supportedLanguages.map(({ name, locale }) => (
+                            <Option key={locale} value={locale} text={name}>
+                                {name}
+                            </Option>
+                        ))}
+                    </Dropdown>
+                </Field>
             </Section>
         </SectionList>
     );

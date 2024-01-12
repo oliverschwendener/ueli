@@ -1,4 +1,4 @@
-import { Button, Input, Tooltip } from "@fluentui/react-components";
+import { Button, Field, Input, Tooltip } from "@fluentui/react-components";
 import { AddRegular, DismissRegular, FolderRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 import { useContextBridge } from "../../../../../Hooks";
@@ -38,47 +38,48 @@ export const MacOsSettings = () => {
     return (
         <SectionList>
             <Section>
-                <label id={settingKey}>Application Folders</label>
-                {value.map((v, index) => (
+                <Field label="Application Folders">
+                    {value.map((v, index) => (
+                        <Input
+                            key={`macOsFolder-${v}`}
+                            value={v}
+                            readOnly
+                            size="small"
+                            contentAfter={
+                                <Tooltip content="Remove" relationship="label">
+                                    <Button
+                                        appearance="subtle"
+                                        size="small"
+                                        icon={<DismissRegular fontSize={14} onClick={() => removeFolder(index)} />}
+                                    />
+                                </Tooltip>
+                            }
+                        />
+                    ))}
                     <Input
-                        key={`macOsFolder-${v}`}
-                        value={v}
-                        readOnly
                         size="small"
+                        value={newValue}
+                        onChange={(_, { value }) => setNewValue(value)}
                         contentAfter={
-                            <Tooltip content="Remove" relationship="label">
-                                <Button
-                                    appearance="subtle"
-                                    size="small"
-                                    icon={<DismissRegular fontSize={14} onClick={() => removeFolder(index)} />}
-                                />
-                            </Tooltip>
+                            <>
+                                <Tooltip content="Choose folder" relationship="label">
+                                    <Button
+                                        appearance="subtle"
+                                        size="small"
+                                        icon={<FolderRegular fontSize={14} onClick={chooseFolder} />}
+                                    />
+                                </Tooltip>
+                                <Tooltip content="Add" relationship="label">
+                                    <Button
+                                        appearance="subtle"
+                                        size="small"
+                                        icon={<AddRegular fontSize={14} onClick={addFolder} />}
+                                    />
+                                </Tooltip>
+                            </>
                         }
                     />
-                ))}
-                <Input
-                    size="small"
-                    value={newValue}
-                    onChange={(_, { value }) => setNewValue(value)}
-                    contentAfter={
-                        <>
-                            <Tooltip content="Choose folder" relationship="label">
-                                <Button
-                                    appearance="subtle"
-                                    size="small"
-                                    icon={<FolderRegular fontSize={14} onClick={chooseFolder} />}
-                                />
-                            </Tooltip>
-                            <Tooltip content="Add" relationship="label">
-                                <Button
-                                    appearance="subtle"
-                                    size="small"
-                                    icon={<AddRegular fontSize={14} onClick={addFolder} />}
-                                />
-                            </Tooltip>
-                        </>
-                    }
-                />
+                </Field>
             </Section>
         </SectionList>
     );

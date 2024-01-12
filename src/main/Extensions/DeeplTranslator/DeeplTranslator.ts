@@ -60,8 +60,14 @@ export class DeeplTranslator implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(): T {
-        return undefined;
+    public getSettingDefaultValue<T>(key: string): T {
+        const defaultValues: Record<string, unknown> = {
+            apiKey: "",
+            sourceLanguage: "Auto",
+            targetLanguage: "EN",
+        };
+
+        return defaultValues[key] as T;
     }
 
     private getDeeplAssetFilePath() {

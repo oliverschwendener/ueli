@@ -1,4 +1,4 @@
-import { Dropdown, Option } from "@fluentui/react-components";
+import { Dropdown, Field, Option } from "@fluentui/react-components";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting } from "../../Hooks";
@@ -26,18 +26,19 @@ export const Appearance = () => {
     return (
         <SectionList>
             <Section>
-                <label id="appearance.themeName">{t("settingsAppearance.themeName")}</label>
-                <Dropdown
-                    aria-labelledby="appearance.themeName"
-                    value={themeName}
-                    onOptionSelect={(_, { optionValue }) => optionValue && setThemeName(optionValue)}
-                >
-                    {availableThemes.map(({ name, accentColors }) => (
-                        <Option key={`theme-option-${name}`} value={name} text={name}>
-                            <ThemeOption themeName={name} accentColors={accentColors} />
-                        </Option>
-                    ))}
-                </Dropdown>
+                <Field label={t("settingsAppearance.themeName")}>
+                    <Dropdown
+                        aria-labelledby="appearance.themeName"
+                        value={themeName}
+                        onOptionSelect={(_, { optionValue }) => optionValue && setThemeName(optionValue)}
+                    >
+                        {availableThemes.map(({ name, accentColors }) => (
+                            <Option key={`theme-option-${name}`} value={name} text={name}>
+                                <ThemeOption themeName={name} accentColors={accentColors} />
+                            </Option>
+                        ))}
+                    </Dropdown>
+                </Field>
             </Section>
         </SectionList>
     );

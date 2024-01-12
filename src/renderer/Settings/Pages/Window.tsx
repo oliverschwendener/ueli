@@ -1,5 +1,4 @@
-import { Dropdown, Option, Switch } from "@fluentui/react-components";
-import { Virtualizer, useStaticVirtualizerMeasure } from "@fluentui/react-components/unstable";
+import { Dropdown, Field, Option, Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting } from "../../Hooks";
 import { Section } from "../Section";
@@ -25,11 +24,6 @@ export const Window = () => {
 
     const { value: vibrancy, updateValue: setVibrancy } = useSetting("window.vibrancy", "None");
 
-    const { virtualizerLength, bufferItems, bufferSize, scrollRef } = useStaticVirtualizerMeasure({
-        defaultItemSize: 32,
-        direction: "vertical",
-    });
-
     const backgroundMaterialOptions = ["Acrylic", "Mica", "None", "Tabbed"];
 
     const vibrancyOptions = [
@@ -53,70 +47,58 @@ export const Window = () => {
     return (
         <SectionList>
             <Section>
-                <label id="window.hideWindowOnblur">{t("settingsWindow.hideWindowOnBlur")}</label>
-                <Switch
-                    aria-labelledby="window.hideWindowOnblur"
-                    checked={hideWindowOnBlur}
-                    onChange={(_, { checked }) => setHideWindowOnBlur(checked)}
-                />
+                <Field label={t("settingsWindow.hideWindowOnBlur")}>
+                    <Switch
+                        aria-labelledby="window.hideWindowOnblur"
+                        checked={hideWindowOnBlur}
+                        onChange={(_, { checked }) => setHideWindowOnBlur(checked)}
+                    />
+                </Field>
             </Section>
 
             <Section>
-                <label id="window.hideWindowAfterExecution">{t("settingsWindow.hideWindowAfterExecution")}</label>
-                <Switch
-                    aria-labelledby="window.hideWindowAfterExecution"
-                    checked={hideWindowAfterExecution}
-                    onChange={(_, { checked }) => setHideWindowAfterExecution(checked)}
-                />
+                <Field label={t("settingsWindow.hideWindowAfterExecution")}>
+                    <Switch
+                        aria-labelledby="window.hideWindowAfterExecution"
+                        checked={hideWindowAfterExecution}
+                        onChange={(_, { checked }) => setHideWindowAfterExecution(checked)}
+                    />
+                </Field>
             </Section>
 
             {operatingSystem === "Windows" ? (
                 <Section>
-                    <label id="window.backgroundMaterial">Background material</label>
-                    <Dropdown
-                        aria-labelledby="window.backgroundMaterial"
-                        value={backgroundMaterial}
-                        onOptionSelect={(_, { optionValue }) => optionValue && setBackgroundMaterial(optionValue)}
-                    >
-                        {backgroundMaterialOptions.map((b) => (
-                            <Option key={`background-material-option-${b}`} value={b}>
-                                {b}
-                            </Option>
-                        ))}
-                    </Dropdown>
+                    <Field label="Background material">
+                        <Dropdown
+                            aria-labelledby="window.backgroundMaterial"
+                            value={backgroundMaterial}
+                            onOptionSelect={(_, { optionValue }) => optionValue && setBackgroundMaterial(optionValue)}
+                        >
+                            {backgroundMaterialOptions.map((b) => (
+                                <Option key={`background-material-option-${b}`} value={b}>
+                                    {b}
+                                </Option>
+                            ))}
+                        </Dropdown>
+                    </Field>
                 </Section>
             ) : null}
 
             {operatingSystem === "macOS" ? (
                 <Section>
-                    <label id="window.vibrancy">Vibrancy</label>
-                    <Dropdown
-                        aria-labelledby="window.vibrancy"
-                        value={vibrancy}
-                        onOptionSelect={(_, { optionValue }) => optionValue && setVibrancy(optionValue)}
-                        listbox={{ ref: scrollRef, style: { maxHeight: 146 } }}
-                    >
-                        <Virtualizer
-                            numItems={vibrancyOptions.length}
-                            virtualizerLength={virtualizerLength}
-                            bufferItems={bufferItems}
-                            bufferSize={bufferSize}
-                            itemSize={32}
+                    <Field label="Vibrancy">
+                        <Dropdown
+                            aria-labelledby="window.vibrancy"
+                            value={vibrancy}
+                            onOptionSelect={(_, { optionValue }) => optionValue && setVibrancy(optionValue)}
                         >
-                            {(index) => {
-                                return (
-                                    <Option
-                                        aria-posinset={index}
-                                        aria-setsize={vibrancyOptions.length}
-                                        key={`window-vibrancy-option-${index}`}
-                                        value={vibrancyOptions[index]}
-                                    >
-                                        {vibrancyOptions[index]}
-                                    </Option>
-                                );
-                            }}
-                        </Virtualizer>
-                    </Dropdown>
+                            {vibrancyOptions.map((v) => (
+                                <Option key={`window-vibrancy-option-${v}`} value={v}>
+                                    {v}
+                                </Option>
+                            ))}
+                        </Dropdown>
+                    </Field>
                 </Section>
             ) : null}
         </SectionList>
