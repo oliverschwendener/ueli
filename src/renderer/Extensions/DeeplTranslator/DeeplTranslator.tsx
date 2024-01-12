@@ -1,9 +1,8 @@
-import { Button, Dropdown, Field, Option, Text, Textarea } from "@fluentui/react-components";
+import { Button, Dropdown, Option, Text, Textarea } from "@fluentui/react-components";
 import { ArrowLeftFilled, CopyRegular } from "@fluentui/react-icons";
 import { useEffect, useState } from "react";
 import { BaseLayout } from "../../BaseLayout";
 import type { ExtensionProps } from "../../ExtensionProps";
-import { Footer } from "../../Footer";
 import { Header } from "../../Header";
 import { sourceLanguages } from "./sourceLanguages";
 import { targetLanguages } from "./targetLanguages";
@@ -102,66 +101,70 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                     }}
                 >
                     <div style={{ display: "flex", flexDirection: "row", gap: 10, flexGrow: 1 }}>
-                        <Textarea
-                            autoFocus
-                            style={{ flexGrow: 1, height: "100%" }}
-                            placeholder="Type to translate"
-                            value={userInput}
-                            onChange={(_, { value }) => setUserInput(value)}
-                        />
-
-                        <Textarea
-                            readOnly
-                            tabIndex={-1} // This makes the text are not focusable
-                            style={{ flexGrow: 1, height: "100%" }}
-                            placeholder="Translated text will appear here"
-                            value={translatedText()}
-                        />
-                    </div>
-                    <div style={{ flexShrink: 0 }}>
-                        <Button
-                            disabled={translatedText().length === 0}
-                            appearance="subtle"
-                            icon={<CopyRegular />}
-                            iconPosition="after"
-                            onClick={() => contextBridge.copyTextToClipboard(translatedText())}
-                        >
-                            Copy text
-                        </Button>
+                        <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 10 }}>
+                            <Dropdown
+                                id="sourceLanguage"
+                                className="non-draggable-area"
+                                value={sourceLanguages[sourceLanguage]}
+                                onOptionSelect={(_, { optionValue }) => optionValue && setSourceLanguage(optionValue)}
+                            >
+                                {Object.keys(sourceLanguages).map((key) => (
+                                    <Option value={key} key={key}>
+                                        {sourceLanguages[key]}
+                                    </Option>
+                                ))}
+                            </Dropdown>
+                            <Textarea
+                                autoFocus
+                                style={{ flexGrow: 1, width: "100%", height: "100%" }}
+                                placeholder="Type to translate"
+                                value={userInput}
+                                onChange={(_, { value }) => setUserInput(value)}
+                            />
+                        </div>
+                        <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 10 }}>
+                            <Dropdown
+                                id="targetLanguage"
+                                className="non-draggable-area"
+                                value={targetLanguages[targetLanguage]}
+                                onOptionSelect={(_, { optionValue }) => optionValue && setTargetLanguage(optionValue)}
+                            >
+                                {Object.keys(targetLanguages).map((key) => (
+                                    <Option value={key} key={key}>
+                                        {targetLanguages[key]}
+                                    </Option>
+                                ))}
+                            </Dropdown>
+                            <Textarea
+                                readOnly
+                                style={{ flexGrow: 1, width: "100%", height: "100%" }}
+                                placeholder="Translated text will appear here"
+                                value={translatedText()}
+                            />
+                        </div>
                     </div>
                 </div>
             }
             footer={
-                <Footer>
-                    <Field label="Source language">
-                        <Dropdown
-                            id="sourceLanguage"
-                            className="non-draggable-area"
-                            value={sourceLanguages[sourceLanguage]}
-                            onOptionSelect={(_, { optionValue }) => optionValue && setSourceLanguage(optionValue)}
-                        >
-                            {Object.keys(sourceLanguages).map((key) => (
-                                <Option value={key} key={key}>
-                                    {sourceLanguages[key]}
-                                </Option>
-                            ))}
-                        </Dropdown>
-                    </Field>
-                    <Field label="Target language">
-                        <Dropdown
-                            id="targetLanguage"
-                            className="non-draggable-area"
-                            value={targetLanguages[targetLanguage]}
-                            onOptionSelect={(_, { optionValue }) => optionValue && setTargetLanguage(optionValue)}
-                        >
-                            {Object.keys(targetLanguages).map((key) => (
-                                <Option value={key} key={key}>
-                                    {targetLanguages[key]}
-                                </Option>
-                            ))}
-                        </Dropdown>
-                    </Field>
-                </Footer>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                        padding: 10,
+                        boxSizing: "border-box",
+                    }}
+                >
+                    <Button
+                        disabled={translatedText().length === 0}
+                        appearance="subtle"
+                        icon={<CopyRegular />}
+                        iconPosition="after"
+                        onClick={() => contextBridge.copyTextToClipboard(translatedText())}
+                    >
+                        Copy translated text
+                    </Button>
+                </div>
             }
         />
     );
