@@ -27,6 +27,11 @@ export class ExtensionsModule {
             return extension;
         };
 
+        ipcMain.on("getExtensionImageUrl", (event, { extensionId }: { extensionId: string }) => {
+            const extension = getExtensionById(extensionId);
+            event.returnValue = extension.getImageUrl ? extension.getImageUrl() : undefined;
+        });
+
         ipcMain.on(
             "getExtensionSettingByKey",
             (event, { extensionId, key, defaultValue }: { extensionId: string; key: string; defaultValue: unknown }) =>

@@ -24,6 +24,7 @@ import {
     AboutUeliModule,
     ActionHandlerModule,
     BrowserWindowModule,
+    ClipboardModule,
     ClockModule,
     CommandlineUtilityModule,
     DependencyInjectorModule,
@@ -69,6 +70,7 @@ import { ExtensionsModule } from "./Extensions";
     dependencyInjector.registerInstance<Net>("Net", net);
 
     // Ueli Modules
+    ClipboardModule.bootstrap(dependencyInjector);
     ClockModule.bootstrap(dependencyInjector);
     AboutUeliModule.bootstrap(dependencyInjector);
     LoggerModule.bootstrap(dependencyInjector);

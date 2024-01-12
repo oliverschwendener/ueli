@@ -1,13 +1,12 @@
-import { Text } from "@fluentui/react-components";
-import type { ReactElement } from "react";
+import type { ReactElement, ReactNode } from "react";
 
 type HeaderProps = {
-    text: string;
+    children: ReactNode;
     contentBefore?: ReactElement;
     draggable?: boolean;
 };
 
-export const Header = ({ draggable, contentBefore, text }: HeaderProps) => {
+export const Header = ({ draggable, contentBefore, children }: HeaderProps) => {
     return (
         <div
             className={draggable ? "draggable-area" : ""}
@@ -17,12 +16,11 @@ export const Header = ({ draggable, contentBefore, text }: HeaderProps) => {
                 alignItems: "center",
                 padding: 10,
                 boxSizing: "border-box",
+                gap: 10,
             }}
         >
             {contentBefore}
-            <Text weight="semibold" style={{ padding: "0 10px" }}>
-                {text}
-            </Text>
+            {children}
         </div>
     );
 };

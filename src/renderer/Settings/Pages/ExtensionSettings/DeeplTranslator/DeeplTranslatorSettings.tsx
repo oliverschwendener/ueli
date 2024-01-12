@@ -19,14 +19,14 @@ export const DeeplTranslatorSettings = () => {
 
     const { value: sourceLanguage, updateValue: setSourceLanguage } = useExtensionSetting<string>(
         extensionId,
-        "sourceLanguage",
-        contextBridge.getExtensionSettingDefaultValue(extensionId, "sourceLanguage"),
+        "defaultSourceLanguage",
+        contextBridge.getExtensionSettingDefaultValue(extensionId, "defaultSourceLanguage"),
     );
 
     const { value: targetLanguage, updateValue: setTargetLanguage } = useExtensionSetting<string>(
         extensionId,
-        "targetLanguage",
-        contextBridge.getExtensionSettingDefaultValue(extensionId, "targetLanguage"),
+        "defaultTargetLanguage",
+        contextBridge.getExtensionSettingDefaultValue(extensionId, "defaultTargetLanguage"),
     );
 
     return (
@@ -39,7 +39,7 @@ export const DeeplTranslatorSettings = () => {
             <Section>
                 <Field label="Default source language">
                     <Dropdown
-                        value={sourceLanguage}
+                        value={sourceLanguages[sourceLanguage]}
                         onOptionSelect={(_, { optionValue }) => optionValue && setSourceLanguage(optionValue)}
                     >
                         {Object.keys(sourceLanguages).map((key) => (
@@ -53,7 +53,7 @@ export const DeeplTranslatorSettings = () => {
             <Section>
                 <Field label="Default target language">
                     <Dropdown
-                        value={targetLanguage}
+                        value={targetLanguages[targetLanguage]}
                         onOptionSelect={(_, { optionValue }) => optionValue && setTargetLanguage(optionValue)}
                     >
                         {Object.keys(targetLanguages).map((key) => (

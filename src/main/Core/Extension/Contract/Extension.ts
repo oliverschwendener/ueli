@@ -9,4 +9,5 @@ export interface Extension {
     isSupported(dependencyInjector: DependencyInjector): boolean;
     getSettingDefaultValue<T>(key: string): T;
     invoke?(argument: unknown): Promise<unknown>;
+    getImageUrl?(): string;
 }

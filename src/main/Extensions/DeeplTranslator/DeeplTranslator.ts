@@ -40,7 +40,7 @@ export class DeeplTranslator implements Extension {
                 id: "DeeplTranslator:invoke",
                 description: "Translate with DeepL",
                 name: "DeepL Translator",
-                imageUrl: this.getDeeplImageUrl(),
+                imageUrl: this.getFileImageUrl(),
                 defaultAction: {
                     argument: `/extension/${this.id}`,
                     description: "Blub",
@@ -63,18 +63,22 @@ export class DeeplTranslator implements Extension {
     public getSettingDefaultValue<T>(key: string): T {
         const defaultValues: Record<string, unknown> = {
             apiKey: "",
-            sourceLanguage: "Auto",
-            targetLanguage: "EN",
+            defaultSourceLanguage: "Auto",
+            defaultTargetLanguage: "EN-US",
         };
 
         return defaultValues[key] as T;
+    }
+
+    public getImageUrl(): string {
+        return this.getFileImageUrl();
     }
 
     private getDeeplAssetFilePath() {
         return this.extensionAssetPathResolver.getAssetFilePath(this.id, "deepl-logo.svg");
     }
 
-    private getDeeplImageUrl() {
+    private getFileImageUrl() {
         return `file://${this.getDeeplAssetFilePath()}`;
     }
 

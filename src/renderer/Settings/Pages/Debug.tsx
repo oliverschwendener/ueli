@@ -1,4 +1,3 @@
-import { Field } from "@fluentui/react-components";
 import { useContextBridge, useTheme } from "../../Hooks";
 
 export const Debug = () => {
@@ -7,19 +6,19 @@ export const Debug = () => {
 
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: 5, height: "100%" }}>
-            <Field label="Logs">
-                <textarea
-                    style={{
-                        height: "100%",
-                        width: "100%",
-                        fontFamily: theme.fontFamilyMonospace,
-                        fontSize: theme.fontSizeBase200,
-                        resize: "none",
-                    }}
-                    readOnly
-                    value={contextBridge.getLogs().join("\n")}
-                />
-            </Field>
+            <label htmlFor="logs">Logs</label>
+            <textarea
+                id="logs"
+                readOnly
+                value={contextBridge.getLogs().join("\n\n")}
+                style={{
+                    height: "100%",
+                    width: "100%",
+                    fontFamily: theme.fontFamilyMonospace,
+                    fontSize: theme.fontSizeBase200,
+                    resize: "none",
+                }}
+            />
         </div>
     );
 };

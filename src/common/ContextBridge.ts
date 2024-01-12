@@ -10,6 +10,7 @@ export type ContextBridge = {
         on: IpcRenderer["on"];
     };
 
+    copyTextToClipboard: (textToCopy: string) => void;
     extensionDisabled: (extensionId: string) => void;
     extensionEnabled: (extensionId: string) => void;
     getAboutUeli: () => AboutUeli;
@@ -20,6 +21,7 @@ export type ContextBridge = {
     getOperatingSystem: () => OperatingSystem;
     getExtensionSettingByKey: <T>(extensionId: string, key: string, defaultValue: T) => T;
     getExtensionSettingDefaultValue: <T>(extensionId: string, settingKey: string) => T;
+    getExtensionImageUrl: (extensionId) => string | undefined;
     invokeAction: (action: SearchResultItemAction) => Promise<void>;
     invokeExtension: <ArgumentType, ReturnType>(
         extensionId: string,

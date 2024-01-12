@@ -1,6 +1,7 @@
 export * from "./AboutUeli";
 export * from "./ActionHandler";
 export * from "./BrowserWindow";
+export * from "./Clipboard";
 export * from "./Clock";
 export * from "./CommandlineUtility";
 export * from "./DependencyInjector";

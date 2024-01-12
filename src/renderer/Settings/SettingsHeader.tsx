@@ -1,4 +1,4 @@
-import { Button } from "@fluentui/react-components";
+import { Button, Text } from "@fluentui/react-components";
 import { ArrowLeftFilled } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 import { Header } from "../Header";
@@ -12,7 +12,6 @@ export const SettingsHeader = ({ onCloseSettingsClicked }: SettingsHeaderProps) 
 
     return (
         <Header
-            text={t("general.settings")}
             draggable
             contentBefore={
                 <Button
@@ -23,6 +22,8 @@ export const SettingsHeader = ({ onCloseSettingsClicked }: SettingsHeaderProps) 
                     icon={<ArrowLeftFilled fontSize={14} />}
                 ></Button>
             }
-        />
+        >
+            <Text weight="semibold">{t("general.settings")}</Text>
+        </Header>
     );
 };

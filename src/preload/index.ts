@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
         on: (channel, listener) => ipcRenderer.on(channel, listener),
     },
 
+    copyTextToClipboard: (textToCopy) => ipcRenderer.send("copyTextToClipboard", { textToCopy }),
     extensionDisabled: (extensionId: string) => ipcRenderer.send("extensionDisabled", { extensionId }),
     extensionEnabled: (extensionId: string) => ipcRenderer.send("extensionEnabled", { extensionId }),
     getAboutUeli: () => ipcRenderer.sendSync("getAboutUeli"),
@@ -19,6 +20,7 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
         ipcRenderer.sendSync("getExtensionSettingByKey", { extensionId, key, defaultValue }),
     getExtensionSettingDefaultValue: (extensionId, settingKey) =>
         ipcRenderer.sendSync("getExtensionSettingDefaultValue", { extensionId, settingKey }),
+    getExtensionImageUrl: (extensionId) => ipcRenderer.sendSync("getExtensionImageUrl", { extensionId }),
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
     invokeExtension: (extensionId, argument) => ipcRenderer.invoke("invokeExtension", { extensionId, argument }),
     showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),

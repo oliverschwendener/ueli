@@ -1,5 +1,5 @@
 export const sourceLanguages: Record<string, string> = {
-    Auto: "Auto",
+    Auto: "Auto detect",
     BG: "Bulgarian",
     CS: "Czech",
     DA: "Danish",
