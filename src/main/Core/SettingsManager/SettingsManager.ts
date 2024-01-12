@@ -15,10 +15,6 @@ export class SettingsManager implements SettingsManagerInterface {
         this.settings = this.settingsReader.readSettings();
     }
 
-    public getSettings(): Settings {
-        return this.settings;
-    }
-
     public getExtensionSettingByKey<T>(extensionId: string, key: string, defaultValue: T): T {
         return this.getSettingByKey<T>(`extension[${extensionId}].${key}`, defaultValue);
     }

@@ -5,31 +5,6 @@ import type { SettingsReader } from "../SettingsReader";
 import type { SettingsWriter } from "../SettingsWriter";
 import { SettingsManager } from "./SettingsManager";
 
-const getDummySettingsReader = (settings: Settings) =>
-    new (class implements SettingsReader {
-        public readSettings(): Settings {
-            return settings;
-        }
-    })();
-
-const getDummySettingsWriter = () =>
-    new (class implements SettingsWriter {
-        private writeCounter: number;
-
-        constructor() {
-            this.writeCounter = 0;
-        }
-
-        public writeSettings(): Promise<void> {
-            this.writeCounter++;
-            return Promise.resolve();
-        }
-
-        public getWriteCounter(): number {
-            return this.writeCounter;
-        }
-    })();
-
 describe(SettingsManager, () => {
     it("should read the settings when instantiating the class", () => {
         const settings: Settings = {
@@ -39,31 +14,37 @@ describe(SettingsManager, () => {
         };
 
         const emitEventMock = vi.fn();
+        const readSettingsMock = vi.fn().mockReturnValue(settings);
 
         const eventEmitter = <EventEmitter>{
             emitEvent: (eventName, data) => emitEventMock(eventName, data),
         };
 
-        const settingsReader = getDummySettingsReader(settings);
-        const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter(), eventEmitter);
-        expect(settingsManager.getSettings()).toBe(settings);
+        const settingsReader = <SettingsReader>{
+            readSettings: () => readSettingsMock(),
+        };
+
+        const settingsWriter = <SettingsWriter>{};
+
+        new SettingsManager(settingsReader, settingsWriter, eventEmitter);
+
+        expect(readSettingsMock).toHaveBeenCalledOnce();
     });
 
     it("should get a setting by key", () => {
-        const settings: Settings = {
-            key1: "value1",
-            key2: "value2",
-            key3: "value3",
-        };
-
         const emitEventMock = vi.fn();
+        const readSettingsMock = vi.fn().mockReturnValue({ key1: "value1" });
 
         const eventEmitter = <EventEmitter>{
             emitEvent: (eventName, data) => emitEventMock(eventName, data),
         };
 
-        const settingsReader = getDummySettingsReader(settings);
-        const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter(), eventEmitter);
+        const settingsReader = <SettingsReader>{
+            readSettings: () => readSettingsMock(),
+        };
+
+        const settingsManager = new SettingsManager(settingsReader, <SettingsWriter>{}, eventEmitter);
+
         expect(settingsManager.getSettingByKey("key1", undefined)).toBe("value1");
         expect(settingsManager.getSettingByKey("key4", undefined)).toBe(undefined);
         expect(settingsManager.getSettingByKey("key5", "defaultValue5")).toBe("defaultValue5");
@@ -76,13 +57,17 @@ describe(SettingsManager, () => {
         };
 
         const emitEventMock = vi.fn();
+        const readSettingsMock = vi.fn().mockReturnValue(settings);
 
         const eventEmitter = <EventEmitter>{
             emitEvent: (eventName, data) => emitEventMock(eventName, data),
         };
 
-        const settingsReader = getDummySettingsReader(settings);
-        const settingsManager = new SettingsManager(settingsReader, getDummySettingsWriter(), eventEmitter);
+        const settingsReader = <SettingsReader>{
+            readSettings: () => readSettingsMock(),
+        };
+
+        const settingsManager = new SettingsManager(settingsReader, <SettingsWriter>{}, eventEmitter);
 
         expect(settingsManager.getExtensionSettingByKey("testExtensionId", "key1", undefined)).toBe("extensionValue");
         expect(settingsManager.getExtensionSettingByKey("testExtensionId", "key2", undefined)).toBe(undefined);
@@ -100,21 +85,25 @@ describe(SettingsManager, () => {
         };
 
         const emitEventMock = vi.fn();
+        const readSettingsMock = vi.fn().mockReturnValue(settings);
+        const writeSettingsMock = vi.fn();
 
         const eventEmitter = <EventEmitter>{
             emitEvent: (eventName, data) => emitEventMock(eventName, data),
         };
 
-        const settingsReader = getDummySettingsReader(settings);
-        const settingsWriter = getDummySettingsWriter();
+        const settingsReader = <SettingsReader>{
+            readSettings: () => readSettingsMock(),
+        };
 
-        expect(settingsWriter.getWriteCounter()).toBe(0);
+        const settingsWriter = <SettingsWriter>{
+            writeSettings: (settings) => writeSettingsMock(settings),
+        };
 
         const settingsManager = new SettingsManager(settingsReader, settingsWriter, eventEmitter);
         await settingsManager.saveSetting("key4", "value4");
 
-        expect(settingsManager.getSettings()).toEqual({ ...settings, ...{ key4: "value4" } });
-        expect(settingsWriter.getWriteCounter()).toBe(1);
+        expect(writeSettingsMock).toHaveBeenCalledWith({ ...settings, ...{ key4: "value4" } });
         expect(emitEventMock).toHaveBeenCalledWith("settingUpdated[key4]", { value: "value4" });
         expect(emitEventMock).toHaveBeenCalledWith("settingUpdated", { key: "key4", value: "value4" });
     });
