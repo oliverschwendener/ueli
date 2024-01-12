@@ -15,6 +15,8 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
         ipcRenderer.sendSync("getSettingByKey", { key, defaultValue }),
     getAvailableExtensions: () => ipcRenderer.sendSync("getAvailableExtensions"),
     getOperatingSystem: () => ipcRenderer.sendSync("getOperatingSystem"),
+    getExtensionSettingByKey: (extensionId, key, defaultValue) =>
+        ipcRenderer.sendSync("getExtensionSettingByKey", { extensionId, key, defaultValue }),
     getExtensionSettingDefaultValue: (extensionId, settingKey) =>
         ipcRenderer.sendSync("getExtensionSettingDefaultValue", { extensionId, settingKey }),
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
