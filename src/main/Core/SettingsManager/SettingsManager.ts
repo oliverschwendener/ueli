@@ -16,7 +16,7 @@ export class SettingsManager implements SettingsManagerInterface {
     }
 
     public getExtensionSettingByKey<T>(extensionId: string, key: string, defaultValue: T): T {
-        return this.getSettingByKey<T>(`extension[${extensionId}].${key}`, defaultValue);
+        return this.getSettingByKey<T>(this.getExtensionSettingKey(extensionId, key), defaultValue);
     }
 
     public getSettingByKey<T>(key: string, defaultValue: T): T {
@@ -24,9 +24,21 @@ export class SettingsManager implements SettingsManagerInterface {
     }
 
     public async saveSetting<T>(key: string, value: T): Promise<void> {
+        return this.save(key, value);
+    }
+
+    public async saveExtensionSettingByKey<T>(extensionId: string, key: string, value: T): Promise<void> {
+        return this.save(this.getExtensionSettingKey(extensionId, key), value);
+    }
+
+    private async save<T>(key: string, value: T): Promise<void> {
         this.settings[key] = value;
         this.eventEmitter.emitEvent("settingUpdated", { key, value });
         this.eventEmitter.emitEvent(`settingUpdated[${key}]`, { value });
         return this.settingsWriter.writeSettings(this.settings);
+    }
+
+    private getExtensionSettingKey(extensionId: string, key: string): string {
+        return `extension[${extensionId}].${key}`;
     }
 }

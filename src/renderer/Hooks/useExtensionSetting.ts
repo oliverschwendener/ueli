@@ -9,14 +9,12 @@ export const useExtensionSetting = <T>(
 ) => {
     const { contextBridge } = useContextBridge();
 
-    const settingKey = `extension[${extensionId}].${key}`;
-
-    const [value, setValue] = useState<T>(contextBridge.getSettingByKey(settingKey, defaultValue));
+    const [value, setValue] = useState<T>(contextBridge.getExtensionSettingByKey(extensionId, key, defaultValue));
 
     const updateValue = async (updatedValue: T) => {
         setValue(updatedValue);
 
-        await contextBridge.updateSettingByKey(settingKey, updatedValue);
+        await contextBridge.updateExtensionSettingByKey(extensionId, key, updatedValue);
 
         if (onUpdate) {
             onUpdate(updatedValue);

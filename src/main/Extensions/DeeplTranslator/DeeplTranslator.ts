@@ -105,6 +105,10 @@ export class DeeplTranslator implements Extension {
             body: JSON.stringify(postBody),
         });
 
+        if (!response.ok) {
+            throw new Error(`DeepL API error: ${response.statusText}`);
+        }
+
         return (await response.json()) as ApiResponse;
     }
 

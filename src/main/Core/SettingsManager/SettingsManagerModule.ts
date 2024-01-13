@@ -28,6 +28,12 @@ export class SettingsManagerModule {
             settingsManager.saveSetting(key, value),
         );
 
+        ipcMain.handle(
+            "updateExtensionSettingByKey",
+            (_, { extensionId, key, value }: { extensionId: string; key: string; value: unknown }) =>
+                settingsManager.saveExtensionSettingByKey(extensionId, key, value),
+        );
+
         ipcMain.on(
             "getSettingByKey",
             (event, { key, defaultValue }: { key: string; defaultValue: unknown }) =>
