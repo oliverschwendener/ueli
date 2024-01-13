@@ -72,7 +72,7 @@ export const Extensions = () => {
                         </div>
                     </AccordionHeader>
                     <AccordionPanel>
-                        <div style={{ paddingLeft: 50, paddingTop: 10, paddingBottom: 25, boxSizing: "border-box" }}>
+                        <div style={{ paddingBottom: 15, boxSizing: "border-box" }}>
                             <ExtensionSettings extensionId={id} />
                         </div>
                     </AccordionPanel>
