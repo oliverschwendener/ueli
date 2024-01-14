@@ -29,7 +29,7 @@ export class BrowserWindowModule {
         const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
 
         browserWindow.on("blur", () => {
-            if (settingsManager.getSettingByKey("window.hideWindowOnBlur", true)) {
+            if (settingsManager.getValue("window.hideWindowOnBlur", true)) {
                 browserWindow.hide();
             }
         });
@@ -44,8 +44,7 @@ export class BrowserWindowModule {
 
         eventSubscriber.subscribe("actionInvokationSucceeded", ({ action }: { action: SearchResultItemAction }) => {
             const shouldHideWindow =
-                settingsManager.getSettingByKey("window.hideWindowAfterExecution", true) &&
-                action.hideWindowAfterInvokation;
+                settingsManager.getValue("window.hideWindowAfterExecution", true) && action.hideWindowAfterInvokation;
 
             shouldHideWindow && browserWindow.hide();
         });

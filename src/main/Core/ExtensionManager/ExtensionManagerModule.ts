@@ -52,7 +52,7 @@ export class ExtensionManagerModule {
 
         const enabledExtensions = extensions.filter((extension) =>
             settingsManager
-                .getSettingByKey<string[]>("extensions.enabledExtensionIds", ["ApplicationSearch", "UeliCommand"])
+                .getValue<string[]>("extensions.enabledExtensionIds", ["ApplicationSearch", "UeliCommand"])
                 .includes(extension.id),
         );
 

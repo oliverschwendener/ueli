@@ -15,19 +15,19 @@ export class SettingsManager implements SettingsManagerInterface {
         this.settings = this.settingsReader.readSettings();
     }
 
-    public getExtensionSettingByKey<T>(extensionId: string, key: string, defaultValue: T): T {
-        return this.getSettingByKey<T>(this.getExtensionSettingKey(extensionId, key), defaultValue);
+    public getExtensionValue<T>(extensionId: string, key: string, defaultValue: T): T {
+        return this.getValue<T>(this.getExtensionSettingKey(extensionId, key), defaultValue);
     }
 
-    public getSettingByKey<T>(key: string, defaultValue: T): T {
+    public getValue<T>(key: string, defaultValue: T): T {
         return (this.settings[key] as T | undefined) ?? defaultValue;
     }
 
-    public async saveSetting<T>(key: string, value: T): Promise<void> {
+    public async updateValue<T>(key: string, value: T): Promise<void> {
         return this.save(key, value);
     }
 
-    public async saveExtensionSetting<T>(extensionId: string, key: string, value: T): Promise<void> {
+    public async updateExtensionValue<T>(extensionId: string, key: string, value: T): Promise<void> {
         return this.save(this.getExtensionSettingKey(extensionId, key), value);
     }
 

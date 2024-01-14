@@ -21,7 +21,7 @@ export const Translator = ({ translatedText, setTranslatedText, contextBridge }:
     const [isLoading, setIsLoading] = useState<boolean>(userInput.length > 0);
 
     const [sourceLanguage, setSourceLanguage] = useState<string>(
-        contextBridge.getExtensionSettingByKey(
+        contextBridge.getExtensionSettingValue(
             extensionId,
             "defaultSourceLanguage",
             contextBridge.getExtensionSettingDefaultValue(extensionId, "defaultSourceLanguage"),
@@ -29,7 +29,7 @@ export const Translator = ({ translatedText, setTranslatedText, contextBridge }:
     );
 
     const [targetLanguage, setTargetLanguage] = useState<string>(
-        contextBridge.getExtensionSettingByKey(
+        contextBridge.getExtensionSettingValue(
             extensionId,
             "defaultTargetLanguage",
             contextBridge.getExtensionSettingDefaultValue(extensionId, "defaultTargetLanguage"),

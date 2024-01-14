@@ -18,9 +18,9 @@ export const useAppCssProperties = () => {
 
     const initalProperties: Record<OperatingSystem, CSSProperties> = {
         Linux: extendGlobalStyles({}),
-        macOS: extendGlobalStyles(getMacOsCssProperties(contextBridge.getSettingByKey("window.vibrancy", "None"))),
+        macOS: extendGlobalStyles(getMacOsCssProperties(contextBridge.getSettingValue("window.vibrancy", "None"))),
         Windows: extendGlobalStyles(
-            getWindowsCssProperties(contextBridge.getSettingByKey("window.backgroundMaterial", "Mica")),
+            getWindowsCssProperties(contextBridge.getSettingValue("window.backgroundMaterial", "Mica")),
         ),
     };
 

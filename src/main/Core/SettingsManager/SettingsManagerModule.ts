@@ -1,6 +1,6 @@
 import type { IpcMain } from "electron";
 import type { DependencyInjector } from "../DependencyInjector";
-import { EventEmitter } from "../EventEmitter";
+import type { EventEmitter } from "../EventEmitter";
 import type { SettingsReader } from "../SettingsReader";
 import type { SettingsWriter } from "../SettingsWriter";
 import type { SettingsManager as SettingsManagerInterface } from "./Contract";
@@ -21,23 +21,23 @@ export class SettingsManagerModule {
     }
 
     private static registerIpcEventListeners(dependencyInjector: DependencyInjector): void {
-        const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
+        const settingsManager = dependencyInjector.getInstance<SettingsManagerInterface>("SettingsManager");
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
 
-        ipcMain.handle("updateSetting", (_, { key, value }: { key: string; value: unknown }) =>
-            settingsManager.saveSetting(key, value),
+        ipcMain.handle("updateSettingValue", (_, { key, value }: { key: string; value: unknown }) =>
+            settingsManager.updateValue(key, value),
         );
 
         ipcMain.handle(
-            "updateExtensionSetting",
+            "updateExtensionSettingValue",
             (_, { extensionId, key, value }: { extensionId: string; key: string; value: unknown }) =>
-                settingsManager.saveExtensionSetting(extensionId, key, value),
+                settingsManager.updateExtensionValue(extensionId, key, value),
         );
 
         ipcMain.on(
-            "getSettingByKey",
+            "getSettingValue",
             (event, { key, defaultValue }: { key: string; defaultValue: unknown }) =>
-                (event.returnValue = settingsManager.getSettingByKey(key, defaultValue)),
+                (event.returnValue = settingsManager.getValue(key, defaultValue)),
         );
     }
 }

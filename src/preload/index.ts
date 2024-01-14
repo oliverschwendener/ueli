@@ -12,20 +12,20 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     getAboutUeli: () => ipcRenderer.sendSync("getAboutUeli"),
     getAvailableExtensions: () => ipcRenderer.sendSync("getAvailableExtensions"),
     getExtensionImageUrl: (extensionId) => ipcRenderer.sendSync("getExtensionImageUrl", { extensionId }),
-    getExtensionSettingByKey: (extensionId, key, defaultValue) =>
-        ipcRenderer.sendSync("getExtensionSettingByKey", { extensionId, key, defaultValue }),
+    getExtensionSettingValue: (extensionId, key, defaultValue) =>
+        ipcRenderer.sendSync("getExtensionSettingValue", { extensionId, key, defaultValue }),
     getExtensionSettingDefaultValue: (extensionId, settingKey) =>
         ipcRenderer.sendSync("getExtensionSettingDefaultValue", { extensionId, settingKey }),
     getLogs: () => ipcRenderer.sendSync("getLogs"),
     getOperatingSystem: () => ipcRenderer.sendSync("getOperatingSystem"),
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
-    getSettingByKey: (key, defaultValue) => ipcRenderer.sendSync("getSettingByKey", { key, defaultValue }),
+    getSettingValue: (key, defaultValue) => ipcRenderer.sendSync("getSettingValue", { key, defaultValue }),
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
     invokeExtension: (extensionId, argument) => ipcRenderer.invoke("invokeExtension", { extensionId, argument }),
     openExternal: (url, options) => ipcRenderer.invoke("openExternal", { url, options }),
     showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),
     themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),
-    updateExtensionSettingByKey: (extensionId, key, value) =>
-        ipcRenderer.invoke("updateExtensionSetting", { extensionId, key, value }),
-    updateSettingByKey: (key, value) => ipcRenderer.invoke("updateSetting", { key, value }),
+    updateExtensionSettingValue: (extensionId, key, value) =>
+        ipcRenderer.invoke("updateExtensionSettingValue", { extensionId, key, value }),
+    updateSettingValue: (key, value) => ipcRenderer.invoke("updateSettingValue", { key, value }),
 });

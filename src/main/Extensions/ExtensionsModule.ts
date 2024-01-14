@@ -33,9 +33,9 @@ export class ExtensionsModule {
         });
 
         ipcMain.on(
-            "getExtensionSettingByKey",
+            "getExtensionSettingValue",
             (event, { extensionId, key, defaultValue }: { extensionId: string; key: string; defaultValue: unknown }) =>
-                (event.returnValue = settingsManager.getExtensionSettingByKey(extensionId, key, defaultValue)),
+                (event.returnValue = settingsManager.getExtensionValue(extensionId, key, defaultValue)),
         );
 
         ipcMain.on(

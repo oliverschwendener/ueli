@@ -45,9 +45,9 @@ describe(SettingsManager, () => {
 
         const settingsManager = new SettingsManager(settingsReader, <SettingsWriter>{}, eventEmitter);
 
-        expect(settingsManager.getSettingByKey("key1", undefined)).toBe("value1");
-        expect(settingsManager.getSettingByKey("key4", undefined)).toBe(undefined);
-        expect(settingsManager.getSettingByKey("key5", "defaultValue5")).toBe("defaultValue5");
+        expect(settingsManager.getValue("key1", undefined)).toBe("value1");
+        expect(settingsManager.getValue("key4", undefined)).toBe(undefined);
+        expect(settingsManager.getValue("key5", "defaultValue5")).toBe("defaultValue5");
     });
 
     it("should get a extension setting by extension id and key", () => {
@@ -69,12 +69,10 @@ describe(SettingsManager, () => {
 
         const settingsManager = new SettingsManager(settingsReader, <SettingsWriter>{}, eventEmitter);
 
-        expect(settingsManager.getExtensionSettingByKey("testExtensionId", "key1", undefined)).toBe("extensionValue");
-        expect(settingsManager.getExtensionSettingByKey("testExtensionId", "key2", undefined)).toBe(undefined);
-        expect(settingsManager.getExtensionSettingByKey("testExtensionId", "key2", "defaultValue")).toBe(
-            "defaultValue",
-        );
-        expect(settingsManager.getExtensionSettingByKey("testExtensionId2", "key", undefined)).toBe(undefined);
+        expect(settingsManager.getExtensionValue("testExtensionId", "key1", undefined)).toBe("extensionValue");
+        expect(settingsManager.getExtensionValue("testExtensionId", "key2", undefined)).toBe(undefined);
+        expect(settingsManager.getExtensionValue("testExtensionId", "key2", "defaultValue")).toBe("defaultValue");
+        expect(settingsManager.getExtensionValue("testExtensionId2", "key", undefined)).toBe(undefined);
     });
 
     it("should save a setting by key", async () => {
@@ -101,7 +99,7 @@ describe(SettingsManager, () => {
         };
 
         const settingsManager = new SettingsManager(settingsReader, settingsWriter, eventEmitter);
-        await settingsManager.saveSetting("key4", "value4");
+        await settingsManager.updateValue("key4", "value4");
 
         expect(writeSettingsMock).toHaveBeenCalledWith({ ...settings, ...{ key4: "value4" } });
         expect(emitEventMock).toHaveBeenCalledWith("settingUpdated[key4]", { value: "value4" });

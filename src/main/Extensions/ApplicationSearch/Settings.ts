@@ -11,7 +11,7 @@ export class Settings {
     ) {}
 
     public getValue<T>(key: SettingKey): T {
-        return this.settingsManager.getExtensionSettingByKey<T>(this.extensionId, key, this.getDefaultValue(key));
+        return this.settingsManager.getExtensionValue<T>(this.extensionId, key, this.getDefaultValue(key));
     }
 
     public getDefaultValue<T>(key: SettingKey): T {

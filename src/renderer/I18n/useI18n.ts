@@ -6,7 +6,7 @@ import { resources } from "./resources";
 export const useI18n = ({ contextBridge }: { contextBridge: ContextBridge }) => {
     use(initReactI18next).init({
         resources,
-        lng: contextBridge.getSettingByKey("general.language", "en-US"),
+        lng: contextBridge.getSettingValue("general.language", "en-US"),
         fallbackLng: "en-US",
     });
 };

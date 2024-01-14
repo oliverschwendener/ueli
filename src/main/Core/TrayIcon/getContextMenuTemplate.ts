@@ -29,7 +29,7 @@ export const getContextMenuTemplate = async ({
                 },
             },
         },
-        lng: settingsManager.getSettingByKey<string>("general.language", "en-US"),
+        lng: settingsManager.getValue<string>("general.language", "en-US"),
         fallbackLng: "en-US",
     });
 

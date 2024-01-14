@@ -33,14 +33,12 @@ export const createBrowserWindow = (dependencyInjector: DependencyInjector) => {
 
     const browserWindowOptionsMap: Record<OperatingSystem, BrowserWindowConstructorOptions> = {
         macOS: extendDefaultBrowserWindowOptions({
-            vibrancy: getVibrancy(settingsManager.getSettingByKey("window.vibrancy", "None")),
+            vibrancy: getVibrancy(settingsManager.getValue("window.vibrancy", "None")),
             backgroundColor: "rgba(0,0,0,0)",
         }),
         Windows: extendDefaultBrowserWindowOptions({
             autoHideMenuBar: true,
-            backgroundMaterial: getBackgroundMaterial(
-                settingsManager.getSettingByKey("window.backgroundMaterial", "Mica"),
-            ),
+            backgroundMaterial: getBackgroundMaterial(settingsManager.getValue("window.backgroundMaterial", "Mica")),
         }),
         Linux: extendDefaultBrowserWindowOptions({}),
     };
