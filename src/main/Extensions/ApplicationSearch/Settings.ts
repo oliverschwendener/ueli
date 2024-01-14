@@ -11,9 +11,10 @@ export class Settings {
     ) {}
 
     public getValue<T>(key: string): T {
-        const settingKey = getExtensionSettingKey(this.extensionId, key);
-        const defaultValue = this.getDefaultValue<T>(settingKey);
-        return this.settingsManager.getValue<T>(settingKey, defaultValue);
+        return this.settingsManager.getValue<T>(
+            getExtensionSettingKey(this.extensionId, key),
+            this.getDefaultValue<T>(key),
+        );
     }
 
     public getDefaultValue<T>(key: string): T {
