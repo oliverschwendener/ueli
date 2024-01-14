@@ -23,5 +23,6 @@ export * from "./SettingsFile";
 export * from "./SettingsManager";
 export * from "./SettingsReader";
 export * from "./SettingsWriter";
+export * from "./Shell";
 export * from "./TrayIcon";
 export * from "./UeliCommand";

@@ -7,25 +7,25 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     },
 
     copyTextToClipboard: (textToCopy) => ipcRenderer.send("copyTextToClipboard", { textToCopy }),
-    extensionDisabled: (extensionId: string) => ipcRenderer.send("extensionDisabled", { extensionId }),
-    extensionEnabled: (extensionId: string) => ipcRenderer.send("extensionEnabled", { extensionId }),
+    extensionDisabled: (extensionId) => ipcRenderer.send("extensionDisabled", { extensionId }),
+    extensionEnabled: (extensionId) => ipcRenderer.send("extensionEnabled", { extensionId }),
     getAboutUeli: () => ipcRenderer.sendSync("getAboutUeli"),
-    getLogs: () => ipcRenderer.sendSync("getLogs"),
-    getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
-    getSettingByKey: <T>(key: string, defaultValue: T): T =>
-        ipcRenderer.sendSync("getSettingByKey", { key, defaultValue }),
     getAvailableExtensions: () => ipcRenderer.sendSync("getAvailableExtensions"),
-    getOperatingSystem: () => ipcRenderer.sendSync("getOperatingSystem"),
+    getExtensionImageUrl: (extensionId) => ipcRenderer.sendSync("getExtensionImageUrl", { extensionId }),
     getExtensionSettingByKey: (extensionId, key, defaultValue) =>
         ipcRenderer.sendSync("getExtensionSettingByKey", { extensionId, key, defaultValue }),
     getExtensionSettingDefaultValue: (extensionId, settingKey) =>
         ipcRenderer.sendSync("getExtensionSettingDefaultValue", { extensionId, settingKey }),
-    getExtensionImageUrl: (extensionId) => ipcRenderer.sendSync("getExtensionImageUrl", { extensionId }),
+    getLogs: () => ipcRenderer.sendSync("getLogs"),
+    getOperatingSystem: () => ipcRenderer.sendSync("getOperatingSystem"),
+    getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
+    getSettingByKey: (key, defaultValue) => ipcRenderer.sendSync("getSettingByKey", { key, defaultValue }),
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
     invokeExtension: (extensionId, argument) => ipcRenderer.invoke("invokeExtension", { extensionId, argument }),
+    openExternal: (url, options) => ipcRenderer.invoke("openExternal", { url, options }),
     showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),
     themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),
-    updateSettingByKey: <T>(key: string, value: T) => ipcRenderer.invoke("updateSettingByKey", { key, value }),
-    updateExtensionSettingByKey: <T>(extensionId: string, key: string, value: T) =>
+    updateExtensionSettingByKey: (extensionId, key, value) =>
         ipcRenderer.invoke("updateExtensionSettingByKey", { extensionId, key, value }),
+    updateSettingByKey: (key, value) => ipcRenderer.invoke("updateSettingByKey", { key, value }),
 });
