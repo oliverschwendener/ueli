@@ -20,6 +20,7 @@ export const Appearance = () => {
     const { value: themeName, updateValue: setThemeName } = useSetting<string>(
         "appearance.themeName",
         "Fluent UI Web",
+        false,
         updateTheme,
     );
 

@@ -17,11 +17,13 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     getLogs: () => ipcRenderer.sendSync("getLogs"),
     getOperatingSystem: () => ipcRenderer.sendSync("getOperatingSystem"),
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
-    getSettingValue: (key, defaultValue) => ipcRenderer.sendSync("getSettingValue", { key, defaultValue }),
+    getSettingValue: (key, defaultValue, isSensitive) =>
+        ipcRenderer.sendSync("getSettingValue", { key, defaultValue, isSensitive }),
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
     invokeExtension: (extensionId, argument) => ipcRenderer.invoke("invokeExtension", { extensionId, argument }),
     openExternal: (url, options) => ipcRenderer.invoke("openExternal", { url, options }),
     showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),
     themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),
-    updateSettingValue: (key, value) => ipcRenderer.invoke("updateSettingValue", { key, value }),
+    updateSettingValue: (key, value, isSensitive) =>
+        ipcRenderer.invoke("updateSettingValue", { key, value, isSensitive }),
 });

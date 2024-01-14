@@ -13,7 +13,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
 
     const extensionImageUrl = () => contextBridge.getExtensionImageUrl(extensionId);
 
-    const { value: apiKey, updateValue: setApiKey } = useExtensionSetting(extensionId, "apiKey", "");
+    const { value: apiKey, updateValue: setApiKey } = useExtensionSetting(extensionId, "apiKey", "", true);
 
     const [translatedText, setTranslatedText] = useState<string>("");
 
@@ -46,7 +46,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                         contextBridge={contextBridge}
                     />
                 ) : (
-                    <MissingApiKey onApiKeySet={(v) => setApiKey(v)} openSignUpWebsite={openDeeplWebsite} />
+                    <MissingApiKey saveApiKey={(v) => setApiKey(v)} openSignUpWebsite={openDeeplWebsite} />
                 )
             }
             footer={

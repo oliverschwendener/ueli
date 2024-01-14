@@ -20,11 +20,11 @@ export type ContextBridge = {
     getLogs: () => string[];
     getOperatingSystem: () => OperatingSystem;
     getSearchResultItems: () => SearchResultItem[];
-    getSettingValue: <T>(key: string, defaultValue: T) => T;
+    getSettingValue: <T>(key: string, defaultValue: T, isSensitive?: boolean) => T;
     invokeAction: (action: SearchResultItemAction) => Promise<void>;
     invokeExtension: <A, R>(extensionId: string, searchArguments: A) => Promise<R>;
     openExternal: (url: string, options?: OpenExternalOptions) => Promise<void>;
     showOpenDialog: (options: OpenDialogOptions) => Promise<OpenDialogReturnValue>;
     themeShouldUseDarkColors: () => boolean;
-    updateSettingValue: <T>(key: string, value: T) => Promise<void>;
+    updateSettingValue: <T>(key: string, value: T, isSensitive?: boolean) => Promise<void>;
 };

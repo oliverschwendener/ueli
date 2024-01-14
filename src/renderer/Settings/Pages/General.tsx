@@ -9,8 +9,11 @@ import { SectionList } from "../SectionList";
 export const General = () => {
     const { t } = useTranslation();
 
-    const { value: language, updateValue: setLanguage } = useSetting("general.language", "en-US", (updatedLanguage) =>
-        changeLanguage(updatedLanguage),
+    const { value: language, updateValue: setLanguage } = useSetting(
+        "general.language",
+        "en-US",
+        false,
+        (updatedLanguage) => changeLanguage(updatedLanguage),
     );
 
     return (

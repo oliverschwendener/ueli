@@ -23,8 +23,10 @@ import { ExtensionsModule } from "./Extensions";
     dependencyInjector.registerInstance<Electron.Dialog>("Dialog", Electron.dialog);
     dependencyInjector.registerInstance<Electron.Clipboard>("Clipboard", Electron.clipboard);
     dependencyInjector.registerInstance<Electron.Net>("Net", Electron.net);
+    dependencyInjector.registerInstance<Electron.SafeStorage>("SafeStorage", Electron.safeStorage);
 
     // Core Modules
+    Core.SafeStorageEncryptionModule.bootstrap(dependencyInjector);
     Core.ShellModule.bootstrap(dependencyInjector);
     Core.ClipboardModule.bootstrap(dependencyInjector);
     Core.ClockModule.bootstrap(dependencyInjector);

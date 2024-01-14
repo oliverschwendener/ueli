@@ -2,16 +2,12 @@ import { Button, Field, Input, Link, Text } from "@fluentui/react-components";
 import { useState } from "react";
 
 type MissingApiKeyProps = {
-    onApiKeySet: (apiKey: string) => void;
+    saveApiKey: (apiKey: string) => void;
     openSignUpWebsite: () => void;
 };
 
-export const MissingApiKey = ({ onApiKeySet, openSignUpWebsite }: MissingApiKeyProps) => {
+export const MissingApiKey = ({ saveApiKey, openSignUpWebsite }: MissingApiKeyProps) => {
     const [value, setValue] = useState<string>("");
-
-    const saveApiKey = async () => {
-        onApiKeySet(value);
-    };
 
     return (
         <div
@@ -36,7 +32,7 @@ export const MissingApiKey = ({ onApiKeySet, openSignUpWebsite }: MissingApiKeyP
             </Field>
 
             <div style={{ paddingBottom: 25 }}>
-                <Button onClick={() => saveApiKey()}>Continue</Button>
+                <Button onClick={() => saveApiKey(value)}>Continue</Button>
             </div>
         </div>
     );

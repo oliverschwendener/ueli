@@ -17,6 +17,8 @@ export type DependencyName =
     | "Net"
     | "OperatingSystem"
     | "Platform"
+    | "SafeStorage"
+    | "SafeStorageEncryption"
     | "SearchIndex"
     | "SettingsFile"
     | "SettingsManager"

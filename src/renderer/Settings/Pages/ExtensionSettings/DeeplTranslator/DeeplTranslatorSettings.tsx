@@ -15,6 +15,7 @@ export const DeeplTranslatorSettings = () => {
         extensionId,
         "apiKey",
         contextBridge.getExtensionSettingDefaultValue(extensionId, "apiKey"),
+        true,
     );
 
     const { value: sourceLanguage, updateValue: setSourceLanguage } = useExtensionSetting<string>(

@@ -117,6 +117,7 @@ export class DeeplTranslator implements Extension {
         const apiKey = this.settingsManager.getValue<string | undefined>(
             getExtensionSettingKey(this.id, "apiKey"),
             undefined,
+            true,
         );
 
         if (!apiKey) {

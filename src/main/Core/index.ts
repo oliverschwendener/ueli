@@ -17,6 +17,7 @@ export * from "./GlobalShortcut";
 export * from "./Logger";
 export * from "./NativeTheme";
 export * from "./OperatingSystem";
+export * from "./SafeStorageEncryption";
 export * from "./SearchIndex";
 export * from "./Settings";
 export * from "./SettingsFile";
