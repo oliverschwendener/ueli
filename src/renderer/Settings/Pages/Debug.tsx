@@ -17,6 +17,8 @@ export const Debug = () => {
                     fontFamily: theme.fontFamilyMonospace,
                     fontSize: theme.fontSizeBase200,
                     resize: "none",
+                    background: "transparent",
+                    color: theme.colorNeutralForeground1,
                 }}
             />
         </div>
