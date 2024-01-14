@@ -35,6 +35,7 @@ describe(SettingsManager, () => {
         expect(settingsManager.getValue("key1", undefined)).toBe("value1");
         expect(settingsManager.getValue("key4", undefined)).toBe(undefined);
         expect(settingsManager.getValue("key5", "defaultValue5")).toBe("defaultValue5");
+        expect(readSettingsMock).toBeCalledTimes(1);
     });
 
     it("should decrypt a value if it's sensitive", () => {

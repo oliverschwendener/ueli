@@ -19,13 +19,12 @@ export class SettingsManager implements SettingsManagerInterface {
     }
 
     public getValue<T>(key: string, defaultValue: T, isSensitive?: boolean): T {
-        const value = this.settings[key] as T | undefined;
-
-        if (!value) {
-            return defaultValue;
+        if (Object.keys(this.settings).includes(key)) {
+            const value = this.settings[key] as T;
+            return isSensitive ? this.decryptValue<T>(value as string) : value;
         }
 
-        return isSensitive ? this.decryptValue<T>(value as string) : value;
+        return defaultValue;
     }
 
     public async updateValue<T>(key: string, value: T, isSensitive?: boolean): Promise<void> {
