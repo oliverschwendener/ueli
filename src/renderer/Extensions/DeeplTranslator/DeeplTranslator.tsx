@@ -17,6 +17,8 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
 
     const [translatedText, setTranslatedText] = useState<string>("");
 
+    const openDeeplWebsite = () => contextBridge.openExternal("https://www.deepl.com/signup?cta=free-login-signup");
+
     return (
         <BaseLayout
             header={
@@ -44,7 +46,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                         contextBridge={contextBridge}
                     />
                 ) : (
-                    <MissingApiKey onApiKeySet={(v) => setApiKey(v)} />
+                    <MissingApiKey onApiKeySet={(v) => setApiKey(v)} openSignUpWebsite={openDeeplWebsite} />
                 )
             }
             footer={
