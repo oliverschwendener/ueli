@@ -27,7 +27,7 @@ export class SettingsManager implements SettingsManagerInterface {
         return this.save(key, value);
     }
 
-    public async saveExtensionSettingByKey<T>(extensionId: string, key: string, value: T): Promise<void> {
+    public async saveExtensionSetting<T>(extensionId: string, key: string, value: T): Promise<void> {
         return this.save(this.getExtensionSettingKey(extensionId, key), value);
     }
 

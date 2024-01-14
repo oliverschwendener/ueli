@@ -26,6 +26,6 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),
     themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),
     updateExtensionSettingByKey: (extensionId, key, value) =>
-        ipcRenderer.invoke("updateExtensionSettingByKey", { extensionId, key, value }),
-    updateSettingByKey: (key, value) => ipcRenderer.invoke("updateSettingByKey", { key, value }),
+        ipcRenderer.invoke("updateExtensionSetting", { extensionId, key, value }),
+    updateSettingByKey: (key, value) => ipcRenderer.invoke("updateSetting", { key, value }),
 });

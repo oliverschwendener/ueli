@@ -24,14 +24,14 @@ export class SettingsManagerModule {
         const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
 
-        ipcMain.handle("updateSettingByKey", (_, { key, value }: { key: string; value: unknown }) =>
+        ipcMain.handle("updateSetting", (_, { key, value }: { key: string; value: unknown }) =>
             settingsManager.saveSetting(key, value),
         );
 
         ipcMain.handle(
-            "updateExtensionSettingByKey",
+            "updateExtensionSetting",
             (_, { extensionId, key, value }: { extensionId: string; key: string; value: unknown }) =>
-                settingsManager.saveExtensionSettingByKey(extensionId, key, value),
+                settingsManager.saveExtensionSetting(extensionId, key, value),
         );
 
         ipcMain.on(
