@@ -3,7 +3,6 @@ import type { SearchResultItem } from "@common/SearchResultItem";
 import type { DependencyInjector } from "../../Core/DependencyInjector";
 import type { Extension } from "../../Core/Extension";
 import type { ApplicationRepository } from "./ApplicationRepository";
-import type { SettingKey } from "./SettingKey";
 import type { Settings } from "./Settings";
 
 export class ApplicationSearch implements Extension {
@@ -28,6 +27,6 @@ export class ApplicationSearch implements Extension {
     }
 
     public getSettingDefaultValue<T>(key: string): T {
-        return this.settings.getDefaultValue<T>(key as SettingKey);
+        return this.settings.getDefaultValue<T>(key);
     }
 }

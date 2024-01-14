@@ -1,3 +1,4 @@
+import { getExtensionSettingKey } from "@common/Core/Extension";
 import { useState } from "react";
 import { useContextBridge } from "./useContextBridge";
 
@@ -9,12 +10,14 @@ export const useExtensionSetting = <T>(
 ) => {
     const { contextBridge } = useContextBridge();
 
-    const [value, setValue] = useState<T>(contextBridge.getExtensionSettingValue(extensionId, key, defaultValue));
+    const settingKey = getExtensionSettingKey(extensionId, key);
+
+    const [value, setValue] = useState<T>(contextBridge.getSettingValue(settingKey, defaultValue));
 
     const updateValue = async (updatedValue: T) => {
         setValue(updatedValue);
 
-        await contextBridge.updateExtensionSettingValue(extensionId, key, updatedValue);
+        await contextBridge.updateSettingValue(settingKey, updatedValue);
 
         if (onUpdate) {
             onUpdate(updatedValue);

@@ -1,6 +1,5 @@
 import type { DependencyInjector } from "@Core/DependencyInjector";
 import type { Extension } from "@Core/Extension";
-import type { SettingsManager } from "@Core/SettingsManager";
 import type { IpcMain } from "electron";
 import { ApplicationSearchModule } from "./ApplicationSearch";
 import { DeeplTranslatorModule } from "./DeeplTranslator";
@@ -15,7 +14,6 @@ export class ExtensionsModule {
         UeliCommandModule.bootstrap(dependencyInjector);
 
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
-        const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
 
         const getExtensionById = (extensionId: string): Extension => {
             const extension = dependencyInjector.getAllExtensions().find((e) => e.id === extensionId);
@@ -31,12 +29,6 @@ export class ExtensionsModule {
             const extension = getExtensionById(extensionId);
             event.returnValue = extension.getImageUrl ? extension.getImageUrl() : undefined;
         });
-
-        ipcMain.on(
-            "getExtensionSettingValue",
-            (event, { extensionId, key, defaultValue }: { extensionId: string; key: string; defaultValue: unknown }) =>
-                (event.returnValue = settingsManager.getExtensionValue(extensionId, key, defaultValue)),
-        );
 
         ipcMain.on(
             "getExtensionSettingDefaultValue",

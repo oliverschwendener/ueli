@@ -1,6 +1,7 @@
 import type { ContextBridge } from "@common/ContextBridge";
 import { Dropdown, Option, ProgressBar, Textarea } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
+import { useExtensionSetting } from "../../Hooks/useExtensionSetting";
 import { sourceLanguages } from "./sourceLanguages";
 import { targetLanguages } from "./targetLanguages";
 
@@ -20,20 +21,16 @@ export const Translator = ({ translatedText, setTranslatedText, contextBridge }:
     const [userInput, setUserInput] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(userInput.length > 0);
 
-    const [sourceLanguage, setSourceLanguage] = useState<string>(
-        contextBridge.getExtensionSettingValue(
-            extensionId,
-            "defaultSourceLanguage",
-            contextBridge.getExtensionSettingDefaultValue(extensionId, "defaultSourceLanguage"),
-        ),
+    const { value: sourceLanguage, updateValue: setSourceLanguage } = useExtensionSetting<string>(
+        extensionId,
+        "defaultSourceLanguage",
+        contextBridge.getExtensionSettingDefaultValue(extensionId, "defaultSourceLanguage"),
     );
 
-    const [targetLanguage, setTargetLanguage] = useState<string>(
-        contextBridge.getExtensionSettingValue(
-            extensionId,
-            "defaultTargetLanguage",
-            contextBridge.getExtensionSettingDefaultValue(extensionId, "defaultTargetLanguage"),
-        ),
+    const { value: targetLanguage, updateValue: setTargetLanguage } = useExtensionSetting<string>(
+        extensionId,
+        "defaultTargetLanguage",
+        contextBridge.getExtensionSettingDefaultValue(extensionId, "defaultTargetLanguage"),
     );
 
     const [clearTimeoutValue, setClearTimeoutValue] = useState<NodeJS.Timeout | undefined>(undefined);

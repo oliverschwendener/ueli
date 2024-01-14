@@ -1,6 +1,7 @@
 import type { Extension } from "@Core/Extension";
 import type { ExtensionAssetPathResolver } from "@Core/ExtensionAssets";
 import type { SettingsManager } from "@Core/SettingsManager";
+import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { Net } from "electron";
 
@@ -113,7 +114,10 @@ export class DeeplTranslator implements Extension {
     }
 
     private getApiKey(): string {
-        const apiKey = this.settingsManager.getExtensionValue<string | undefined>(this.id, "apiKey", undefined);
+        const apiKey = this.settingsManager.getValue<string | undefined>(
+            getExtensionSettingKey(this.id, "apiKey"),
+            undefined,
+        );
 
         if (!apiKey) {
             throw new Error("Missing DeepL API key");

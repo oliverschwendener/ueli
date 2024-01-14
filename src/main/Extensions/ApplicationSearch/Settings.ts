@@ -1,7 +1,7 @@
 import type { SettingsManager } from "@Core/SettingsManager";
+import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { App } from "electron";
 import { join } from "path";
-import type { SettingKey } from "./SettingKey";
 
 export class Settings {
     public constructor(
@@ -10,12 +10,14 @@ export class Settings {
         private readonly app: App,
     ) {}
 
-    public getValue<T>(key: SettingKey): T {
-        return this.settingsManager.getExtensionValue<T>(this.extensionId, key, this.getDefaultValue(key));
+    public getValue<T>(key: string): T {
+        const settingKey = getExtensionSettingKey(this.extensionId, key);
+        const defaultValue = this.getDefaultValue<T>(settingKey);
+        return this.settingsManager.getValue<T>(settingKey, defaultValue);
     }
 
-    public getDefaultValue<T>(key: SettingKey): T {
-        const defaultValues: Record<SettingKey, unknown> = {
+    public getDefaultValue<T>(key: string): T {
+        const defaultValues: Record<string, unknown> = {
             macOsFolders: [
                 "/System/Applications",
                 "/System/Library/CoreServices",

@@ -16,7 +16,6 @@ export type ContextBridge = {
     getAboutUeli: () => AboutUeli;
     getAvailableExtensions: () => ExtensionInfo[];
     getExtensionImageUrl: (extensionId: string) => string | undefined;
-    getExtensionSettingValue: <T>(extensionId: string, key: string, defaultValue: T) => T;
     getExtensionSettingDefaultValue: <T>(extensionId: string, settingKey: string) => T;
     getLogs: () => string[];
     getOperatingSystem: () => OperatingSystem;
@@ -27,6 +26,5 @@ export type ContextBridge = {
     openExternal: (url: string, options?: OpenExternalOptions) => Promise<void>;
     showOpenDialog: (options: OpenDialogOptions) => Promise<OpenDialogReturnValue>;
     themeShouldUseDarkColors: () => boolean;
-    updateExtensionSettingValue: <T>(extensionId: string, key: string, value: T) => Promise<void>;
     updateSettingValue: <T>(key: string, value: T) => Promise<void>;
 };
