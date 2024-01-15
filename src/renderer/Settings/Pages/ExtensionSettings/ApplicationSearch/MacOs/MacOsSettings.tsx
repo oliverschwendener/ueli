@@ -38,7 +38,7 @@ export const MacOsSettings = () => {
     return (
         <SectionList>
             <Section>
-                <Field label="Application Folders">
+                <Field label="Application Folders" style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                     {value.map((v, index) => (
                         <Input
                             key={`macOsFolder-${v}`}
@@ -59,6 +59,7 @@ export const MacOsSettings = () => {
                     <Input
                         size="small"
                         value={newValue}
+                        placeholder="Add another folder"
                         onChange={(_, { value }) => setNewValue(value)}
                         contentAfter={
                             <>
