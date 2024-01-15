@@ -1,9 +1,6 @@
 import type { OperatingSystem } from "@common/OperatingSystem";
 import { Menu, Tray, type NativeTheme } from "electron";
-import type { DependencyInjector } from "../DependencyInjector";
-import type { EventSubscriber } from "../EventSubscriber";
-import type { SettingsManager } from "../SettingsManager";
-import type { UeliCommandInvoker } from "../UeliCommand";
+import type { DependencyInjector, EventSubscriber, Translator, UeliCommandInvoker } from "..";
 import { getContextMenuTemplate } from "./getContextMenuTemplate";
 import { getTrayIconImage } from "./getTrayIconImage";
 
@@ -12,19 +9,12 @@ export class TrayIconModule {
         const eventSubscriber = dependencyInjector.getInstance<EventSubscriber>("EventSubscriber");
         const nativeTheme = dependencyInjector.getInstance<NativeTheme>("NativeTheme");
         const operatingSystem = dependencyInjector.getInstance<OperatingSystem>("OperatingSystem");
-        const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
         const ueliCommandInvoker = dependencyInjector.getInstance<UeliCommandInvoker>("UeliCommandInvoker");
-
-        const getCurrentLanguage = () => settingsManager.getValue<string>("general.language", "en-US");
+        const translator = dependencyInjector.getInstance<Translator>("Translator");
 
         const setTrayContextMenu = async (tray: Tray) => {
             tray.setContextMenu(
-                Menu.buildFromTemplate(
-                    await getContextMenuTemplate({
-                        language: getCurrentLanguage(),
-                        ueliCommandInvoker,
-                    }),
-                ),
+                Menu.buildFromTemplate(await getContextMenuTemplate({ translator, ueliCommandInvoker })),
             );
         };
 

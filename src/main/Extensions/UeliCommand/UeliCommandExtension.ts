@@ -1,7 +1,7 @@
 import type { Extension } from "@Core/Extension";
 import type { ExtensionAssetPathResolver } from "@Core/ExtensionAssets";
+import type { Translator } from "@Core/Translator";
 import type { SearchResultItem } from "@common/SearchResultItem";
-import { init } from "i18next";
 import { resources } from "./resources";
 
 type ImageUrlType = "neutral" | "onDarkBackground" | "onLightBackground";
@@ -10,12 +10,15 @@ export class UeliCommandExtension implements Extension {
     public readonly id = "UeliCommand";
     public readonly name = "Ueli Commands";
     public readonly nameTranslationKey? = "extension[UeliCommand].extensionName";
-    public readonly repopulateSearchIndexOnLanguageChange = true;
+    public readonly settingKeysTriggerindReindex = ["general.language"];
 
-    public constructor(private readonly extensionAssetPathResolver: ExtensionAssetPathResolver) {}
+    public constructor(
+        private readonly extensionAssetPathResolver: ExtensionAssetPathResolver,
+        private readonly translator: Translator,
+    ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const t = await init({ resources });
+        const t = await this.translator.createInstance(resources);
 
         const map: Record<string, SearchResultItem> = {
             quit: {

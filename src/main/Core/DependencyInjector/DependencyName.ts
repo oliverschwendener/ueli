@@ -28,4 +28,5 @@ export type DependencyName =
     | "SettingsWriter"
     | "Shell"
     | "SystemPreferences"
+    | "Translator"
     | "UeliCommandInvoker";

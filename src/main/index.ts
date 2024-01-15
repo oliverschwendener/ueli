@@ -43,6 +43,7 @@ import { ExtensionsModule } from "./Extensions";
     Core.SettingsReaderModule.bootstrap(dependencyInjector);
     Core.SettingsWriterModule.bootstrap(dependencyInjector);
     Core.SettingsManagerModule.bootstrap(dependencyInjector);
+    Core.TranslatorModule.bootstrap(dependencyInjector);
     Core.SearchIndexModule.bootstrap(dependencyInjector);
     Core.NativeThemeModule.bootstrap(dependencyInjector);
     await Core.BrowserWindowModule.bootstrap(dependencyInjector);

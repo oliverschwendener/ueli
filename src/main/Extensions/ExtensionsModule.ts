@@ -10,7 +10,10 @@ import { UeliCommandModule } from "./UeliCommand";
 
 export class ExtensionsModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {
-        ExtensionsModule.registerAllExtensions(dependencyInjector);
+        ApplicationSearchModule.bootstrap(dependencyInjector);
+        DeeplTranslatorModule.bootstrap(dependencyInjector);
+        SystemColorThemeSwitcherModule.bootstrap(dependencyInjector);
+        UeliCommandModule.bootstrap(dependencyInjector);
 
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
         const eventSubscriber = dependencyInjector.getInstance<EventSubscriber>("EventSubscriber");
@@ -51,20 +54,13 @@ export class ExtensionsModule {
             },
         );
 
-        eventSubscriber.subscribe("settingUpdated[general.language]", async () => {
+        eventSubscriber.subscribe("settingUpdated", async ({ key }: { key: string }) => {
             for (const extension of dependencyInjector.getAllExtensions()) {
-                if (extension.repopulateSearchIndexOnLanguageChange) {
+                if (extension.settingKeysTriggerindReindex?.includes(key)) {
                     searchIndex.removeSearchResultItems(extension.id);
                     searchIndex.addSearchResultItems(extension.id, await extension.getSearchResultItems());
                 }
             }
         });
-    }
-
-    private static registerAllExtensions(dependencyInjector: DependencyInjector) {
-        ApplicationSearchModule.bootstrap(dependencyInjector);
-        DeeplTranslatorModule.bootstrap(dependencyInjector);
-        SystemColorThemeSwitcherModule.bootstrap(dependencyInjector);
-        UeliCommandModule.bootstrap(dependencyInjector);
     }
 }

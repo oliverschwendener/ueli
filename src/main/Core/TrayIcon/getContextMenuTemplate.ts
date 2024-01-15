@@ -1,16 +1,16 @@
 import type { MenuItemConstructorOptions } from "electron";
-import { init } from "i18next";
+import type { Translator } from "..";
 import type { UeliCommandInvoker } from "../UeliCommand";
 import { resources } from "./resources";
 
 export const getContextMenuTemplate = async ({
-    language: lng,
+    translator,
     ueliCommandInvoker,
 }: {
-    language: string;
+    translator: Translator;
     ueliCommandInvoker: UeliCommandInvoker;
 }): Promise<MenuItemConstructorOptions[]> => {
-    const t = await init({ resources, lng });
+    const t = await translator.createInstance(resources);
 
     return [
         {
