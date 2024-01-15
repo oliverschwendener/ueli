@@ -15,12 +15,17 @@ export class TrayIconModule {
         const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
         const ueliCommandInvoker = dependencyInjector.getInstance<UeliCommandInvoker>("UeliCommandInvoker");
 
+        const getCurrentLanguage = () => settingsManager.getValue<string>("general.language", "en-US");
+
         const setTrayContextMenu = async (tray: Tray) => {
-            const contextMeuTemplate = await getContextMenuTemplate({
-                settingsManager,
-                ueliCommandInvoker,
-            });
-            tray.setContextMenu(Menu.buildFromTemplate(contextMeuTemplate));
+            tray.setContextMenu(
+                Menu.buildFromTemplate(
+                    await getContextMenuTemplate({
+                        language: getCurrentLanguage(),
+                        ueliCommandInvoker,
+                    }),
+                ),
+            );
         };
 
         const tray = new Tray(getTrayIconImage(operatingSystem, nativeTheme));

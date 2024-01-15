@@ -1,37 +1,16 @@
 import type { MenuItemConstructorOptions } from "electron";
-import { init, t } from "i18next";
-import type { SettingsManager } from "../SettingsManager";
+import { init } from "i18next";
 import type { UeliCommandInvoker } from "../UeliCommand";
+import { resources } from "./resources";
 
 export const getContextMenuTemplate = async ({
-    settingsManager,
+    language: lng,
     ueliCommandInvoker,
 }: {
-    settingsManager: SettingsManager;
+    language: string;
     ueliCommandInvoker: UeliCommandInvoker;
 }): Promise<MenuItemConstructorOptions[]> => {
-    await init({
-        resources: {
-            "en-US": {
-                translation: {
-                    "trayIcon.contextMenu.about": "About",
-                    "trayIcon.contextMenu.quit": "Quit",
-                    "trayIcon.contextMenu.settings": "Settings",
-                    "trayIcon.contextMenu.show": "Show",
-                },
-            },
-            "de-CH": {
-                translation: {
-                    "trayIcon.contextMenu.about": "Über",
-                    "trayIcon.contextMenu.quit": "Beenden",
-                    "trayIcon.contextMenu.settings": "Einstellungen",
-                    "trayIcon.contextMenu.show": "Anzeigen",
-                },
-            },
-        },
-        lng: settingsManager.getValue<string>("general.language", "en-US"),
-        fallbackLng: "en-US",
-    });
+    const t = await init({ resources, lng });
 
     return [
         {

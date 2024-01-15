@@ -1,4 +1,6 @@
-export const resources: Record<string, { translation: Record<string, string> }> = {
+import type { InitOptions } from "i18next";
+
+export const resources: InitOptions["resources"] = {
     "en-US": {
         translation: {
             "general.settings": "Settings",
