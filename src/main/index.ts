@@ -26,6 +26,7 @@ import { ExtensionsModule } from "./Extensions";
     dependencyInjector.registerInstance<Electron.SafeStorage>("SafeStorage", Electron.safeStorage);
 
     // Core Modules
+    Core.RandomStringProviderModule.bootstrap(dependencyInjector);
     Core.SafeStorageEncryptionModule.bootstrap(dependencyInjector);
     Core.ShellModule.bootstrap(dependencyInjector);
     Core.ClipboardModule.bootstrap(dependencyInjector);
@@ -36,6 +37,7 @@ import { ExtensionsModule } from "./Extensions";
     Core.EventSubscriberModule.bootstrap(dependencyInjector);
     Core.CommandlineUtilityModule.bootstrap(dependencyInjector);
     Core.FileSystemUtilityModule.bootstrap(dependencyInjector);
+    await Core.PowershellUtilityModule.bootstrap(dependencyInjector);
     Core.OperatingSystemModule.bootstrap(dependencyInjector);
     Core.SettingsFileModule.bootstrap(dependencyInjector);
     Core.SettingsReaderModule.bootstrap(dependencyInjector);

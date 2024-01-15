@@ -17,6 +17,8 @@ export type DependencyName =
     | "Net"
     | "OperatingSystem"
     | "Platform"
+    | "PowershellUtility"
+    | "RandomStringProvider"
     | "SafeStorage"
     | "SafeStorageEncryption"
     | "SearchIndex"

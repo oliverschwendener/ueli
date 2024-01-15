@@ -1,9 +1,10 @@
+import type { CommandlineUtility } from "@Core/CommandlineUtility";
+import type { DependencyInjector } from "@Core/DependencyInjector";
+import type { EventEmitter } from "@Core/EventEmitter";
+import type { PowershellUtility } from "@Core/PowershellUtility/PowershellUtility";
 import type { SearchResultItemAction } from "@common/SearchResultItemAction";
 import type { Clipboard, IpcMain, Shell } from "electron";
-import type { CommandlineUtility } from "../CommandlineUtility";
-import type { DependencyInjector } from "../DependencyInjector";
-import type { EventEmitter } from "../EventEmitter";
-import type { ActionHandler } from "./Contract";
+import { ActionHandler } from "./Contract";
 import {
     CommandlineActionHandler,
     CopyToClipboardActionHandler,
@@ -22,6 +23,7 @@ export class ActionHandlerModule {
 
     private static registerDefaultActionHandlers(dependencyInjector: DependencyInjector): void {
         const commandlineUtility = dependencyInjector.getInstance<CommandlineUtility>("CommandlineUtility");
+        const powershellUtility = dependencyInjector.getInstance<PowershellUtility>("PowershellUtility");
         const shell = dependencyInjector.getInstance<Shell>("Shell");
         const clipboard = dependencyInjector.getInstance<Clipboard>("Clipboard");
         const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
@@ -31,7 +33,7 @@ export class ActionHandlerModule {
             new CopyToClipboardActionHandler(clipboard),
             new NavigateToActionHandler(eventEmitter),
             new OpenFilePathActionHandler(shell),
-            new PowershellActionHandler(commandlineUtility),
+            new PowershellActionHandler(powershellUtility),
             new ShowItemInFileExplorerActionHandler(shell),
             new UrlActionHandler(shell),
         ];

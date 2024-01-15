@@ -3,6 +3,7 @@ import type { DependencyInjector } from "@Core/DependencyInjector";
 import type { ExtensionCacheFolder } from "@Core/ExtensionCacheFolder";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Logger } from "@Core/Logger";
+import type { PowershellUtility } from "@Core/PowershellUtility";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { OperatingSystem } from "@common/OperatingSystem";
 import type { App } from "electron";
@@ -18,6 +19,7 @@ export class ApplicationSearchModule {
         const operatingSystem = dependencyInjector.getInstance<OperatingSystem>("OperatingSystem");
         const fileSystemUtility = dependencyInjector.getInstance<FileSystemUtility>("FileSystemUtility");
         const commandlineUtility = dependencyInjector.getInstance<CommandlineUtility>("CommandlineUtility");
+        const powershellUtility = dependencyInjector.getInstance<PowershellUtility>("PowershellUtility");
         const extensionCacheFolder = dependencyInjector.getInstance<ExtensionCacheFolder>("ExtensionCacheFolder");
         const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
         const app = dependencyInjector.getInstance<App>("App");
@@ -32,12 +34,7 @@ export class ApplicationSearchModule {
                 logger,
                 settings,
             ),
-            Windows: new WindowsApplicationRepository(
-                commandlineUtility,
-                extensionCacheFolder,
-                fileSystemUtility,
-                settings,
-            ),
+            Windows: new WindowsApplicationRepository(powershellUtility, extensionCacheFolder, settings),
             Linux: undefined, // not supported
         };
 
