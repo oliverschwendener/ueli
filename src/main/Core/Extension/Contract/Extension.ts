@@ -5,6 +5,8 @@ export interface Extension {
     readonly id: string;
     readonly name: string;
     readonly nameTranslationKey?: string;
+    readonly repopulateSearchIndexOnLanguageChange?: boolean;
+
     getSearchResultItems(): Promise<SearchResultItem[]>;
     isSupported(dependencyInjector: DependencyInjector): boolean;
     getSettingDefaultValue<T>(key: string): T;

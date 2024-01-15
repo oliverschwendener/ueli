@@ -1,5 +1,7 @@
 import type { DependencyInjector } from "@Core/DependencyInjector";
+import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { Extension } from "@Core/Extension";
+import type { SearchIndex } from "@Core/SearchIndex";
 import type { IpcMain } from "electron";
 import { ApplicationSearchModule } from "./ApplicationSearch";
 import { DeeplTranslatorModule } from "./DeeplTranslator";
@@ -8,12 +10,11 @@ import { UeliCommandModule } from "./UeliCommand";
 
 export class ExtensionsModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {
-        ApplicationSearchModule.bootstrap(dependencyInjector);
-        DeeplTranslatorModule.bootstrap(dependencyInjector);
-        SystemColorThemeSwitcherModule.bootstrap(dependencyInjector);
-        UeliCommandModule.bootstrap(dependencyInjector);
+        ExtensionsModule.registerAllExtensions(dependencyInjector);
 
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
+        const eventSubscriber = dependencyInjector.getInstance<EventSubscriber>("EventSubscriber");
+        const searchIndex = dependencyInjector.getInstance<SearchIndex>("SearchIndex");
 
         const getExtensionById = (extensionId: string): Extension => {
             const extension = dependencyInjector.getAllExtensions().find((e) => e.id === extensionId);
@@ -49,5 +50,21 @@ export class ExtensionsModule {
                 return extension.invoke(argument);
             },
         );
+
+        eventSubscriber.subscribe("settingUpdated[general.language]", async () => {
+            for (const extension of dependencyInjector.getAllExtensions()) {
+                if (extension.repopulateSearchIndexOnLanguageChange) {
+                    searchIndex.removeSearchResultItems(extension.id);
+                    searchIndex.addSearchResultItems(extension.id, await extension.getSearchResultItems());
+                }
+            }
+        });
+    }
+
+    private static registerAllExtensions(dependencyInjector: DependencyInjector) {
+        ApplicationSearchModule.bootstrap(dependencyInjector);
+        DeeplTranslatorModule.bootstrap(dependencyInjector);
+        SystemColorThemeSwitcherModule.bootstrap(dependencyInjector);
+        UeliCommandModule.bootstrap(dependencyInjector);
     }
 }

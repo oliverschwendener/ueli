@@ -7,9 +7,10 @@ import { resources } from "./resources";
 type ImageUrlType = "neutral" | "onDarkBackground" | "onLightBackground";
 
 export class UeliCommandExtension implements Extension {
-    public id = "UeliCommand";
-    public name = "Ueli Commands";
-    public nameTranslationKey? = "extension[UeliCommand].extensionName";
+    public readonly id = "UeliCommand";
+    public readonly name = "Ueli Commands";
+    public readonly nameTranslationKey? = "extension[UeliCommand].extensionName";
+    public readonly repopulateSearchIndexOnLanguageChange = true;
 
     public constructor(private readonly extensionAssetPathResolver: ExtensionAssetPathResolver) {}
 
