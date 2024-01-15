@@ -1,6 +1,10 @@
-import type { SearchResultItem } from "@common/SearchResultItem";
 import type { Extension } from "@Core/Extension";
 import type { ExtensionAssetPathResolver } from "@Core/ExtensionAssets";
+import type { SearchResultItem } from "@common/SearchResultItem";
+import { init } from "i18next";
+import { resources } from "./resources";
+
+type ImageUrlType = "neutral" | "onDarkBackground" | "onLightBackground";
 
 export class UeliCommandExtension implements Extension {
     public id = "UeliCommand";
@@ -10,36 +14,20 @@ export class UeliCommandExtension implements Extension {
     public constructor(private readonly extensionAssetPathResolver: ExtensionAssetPathResolver) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const imageUrls = {
-            neutral: `file://${this.extensionAssetPathResolver.getAssetFilePath(
-                this.id,
-                "windows-app-icon-dark-background.png",
-            )}`,
-            onDarkBackground: `file://${this.extensionAssetPathResolver.getAssetFilePath(
-                this.id,
-                "ueli-icon-white-on-transparent.png",
-            )}`,
-            onLightBackground: `file://${this.extensionAssetPathResolver.getAssetFilePath(
-                this.id,
-                "ueli-icon-black-on-transparent.png",
-            )}`,
-        };
+        const t = await init({ resources });
 
         const map: Record<string, SearchResultItem> = {
             quit: {
                 id: "ueliCommand:quit",
-                description: "Ueli Command",
-                descriptionTranslationKey: "extension[UeliCommand].searchResultDescription",
-                name: "Quit Ueli",
-                nameTranslationKey: "extension[UeliCommand].quitUeli",
-                imageUrl: imageUrls.neutral,
-                imageUrlOnDarkBackground: imageUrls.onDarkBackground,
-                imageUrlOnLightBackground: imageUrls.onLightBackground,
+                description: t("ueliCommand.description"),
+                name: t("ueliCommand.quitUeli"),
+                imageUrl: this.getSearchResultItemImageUrl("neutral"),
+                imageUrlOnDarkBackground: this.getSearchResultItemImageUrl("onDarkBackground"),
+                imageUrlOnLightBackground: this.getSearchResultItemImageUrl("onLightBackground"),
                 defaultAction: {
                     handlerId: "UeliCommand",
                     argument: "quit",
-                    description: "Quit Ueli",
-                    descriptionTranslationKey: "extension[UeliCommand].quitUeli",
+                    description: t("ueliCommand.quitUeli"),
                     hideWindowAfterInvokation: false,
                     requiresConfirmation: true,
                     fluentIcon: "DismissCircleRegular",
@@ -47,36 +35,30 @@ export class UeliCommandExtension implements Extension {
             },
             settings: {
                 id: "ueliCommand:settings",
-                description: "Ueli Command",
-                descriptionTranslationKey: "extension[UeliCommand].searchResultDescription",
-                name: "Open Ueli Settings",
-                nameTranslationKey: "extension[UeliCommand].openSettings",
-                imageUrl: imageUrls.neutral,
-                imageUrlOnDarkBackground: imageUrls.onDarkBackground,
-                imageUrlOnLightBackground: imageUrls.onLightBackground,
+                description: t("ueliCommand.description"),
+                name: t("ueliCommand.openSettings"),
+                imageUrl: this.getSearchResultItemImageUrl("neutral"),
+                imageUrlOnDarkBackground: this.getSearchResultItemImageUrl("onDarkBackground"),
+                imageUrlOnLightBackground: this.getSearchResultItemImageUrl("onLightBackground"),
                 defaultAction: {
                     handlerId: "UeliCommand",
                     argument: "settings",
-                    description: "Open Ueli settings",
-                    descriptionTranslationKey: "extension[UeliCommand].openSettings",
+                    description: t("ueliCommand.openSettings"),
                     hideWindowAfterInvokation: false,
                     fluentIcon: "SettingsRegular",
                 },
             },
             extensions: {
                 id: "ueliCommand:extensions",
-                description: "Ueli Command",
-                descriptionTranslationKey: "extension[UeliCommand].searchResultDescription",
-                name: "Open Ueli Extensions",
-                nameTranslationKey: "extension[UeliCommand].openExtensions",
-                imageUrl: imageUrls.neutral,
-                imageUrlOnDarkBackground: imageUrls.onDarkBackground,
-                imageUrlOnLightBackground: imageUrls.onLightBackground,
+                description: t("ueliCommand.description"),
+                name: t("ueliCommand.openExtensions"),
+                imageUrl: this.getSearchResultItemImageUrl("neutral"),
+                imageUrlOnDarkBackground: this.getSearchResultItemImageUrl("onDarkBackground"),
+                imageUrlOnLightBackground: this.getSearchResultItemImageUrl("onLightBackground"),
                 defaultAction: {
                     handlerId: "UeliCommand",
                     argument: "extensions",
-                    description: "Open Ueli extensions",
-                    descriptionTranslationKey: "extension[UeliCommand].openExtensions",
+                    description: t("ueliCommand.openExtensions"),
                     hideWindowAfterInvokation: false,
                     fluentIcon: "AppsAddInRegular",
                 },
@@ -84,6 +66,16 @@ export class UeliCommandExtension implements Extension {
         };
 
         return Object.values(map);
+    }
+
+    private getSearchResultItemImageUrl(type: ImageUrlType): string {
+        const fileName: Record<ImageUrlType, string> = {
+            neutral: "windows-app-icon-dark-background.png",
+            onDarkBackground: "ueli-icon-white-on-transparent.png",
+            onLightBackground: "ueli-icon-black-on-transparent.png",
+        };
+
+        return `file://${this.extensionAssetPathResolver.getAssetFilePath(this.id, fileName[type])}`;
     }
 
     public isSupported(): boolean {
