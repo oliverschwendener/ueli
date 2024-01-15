@@ -15,5 +15,11 @@ export const ExtensionSettings = ({ extensionId }: ExtensionSettingsProps) => {
         DeeplTranslator: <DeeplTranslatorSettings />,
     };
 
-    return map[extensionId] ?? <>{t("settings.extensions.noSettingsAvailable")}</>;
+    return (
+        map[extensionId] ?? (
+            <div style={{ textAlign: "center", padding: 10, boxSizing: "border-box" }}>
+                {t("settings.extensions.noSettingsAvailable")}
+            </div>
+        )
+    );
 };
