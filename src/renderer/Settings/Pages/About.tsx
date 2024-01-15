@@ -5,14 +5,7 @@ import { SectionList } from "../SectionList";
 export const About = () => {
     const { contextBridge } = useContextBridge();
 
-    const {
-        electronVersion,
-        fluentUiReactComponentsVersion,
-        fluentUiReactIconsVersion,
-        nodeJsVersion,
-        v8Version,
-        version,
-    } = contextBridge.getAboutUeli();
+    const { electronVersion, nodeJsVersion, v8Version, version } = contextBridge.getAboutUeli();
 
     return (
         <SectionList>
@@ -27,12 +20,6 @@ export const About = () => {
             </Section>
             <Section>
                 <label id="electronVersion">NodeJS: {nodeJsVersion}</label>
-            </Section>
-            <Section>
-                <label id="electronVersion">@fluentui/react-components: {fluentUiReactComponentsVersion}</label>
-            </Section>
-            <Section>
-                <label id="electronVersion">@fluentui/react-icons: {fluentUiReactIconsVersion}</label>
             </Section>
         </SectionList>
     );

@@ -1,6 +1,5 @@
 import type { AboutUeli } from "@common/AboutUeli";
 import type { App, IpcMain } from "electron";
-import packageJson from "../../../../package.json";
 import type { DependencyInjector } from "../DependencyInjector";
 
 export class AboutUeliModule {
@@ -11,8 +10,6 @@ export class AboutUeliModule {
         ipcMain.on("getAboutUeli", (event) => {
             event.returnValue = <AboutUeli>{
                 electronVersion: process.versions.electron,
-                fluentUiReactIconsVersion: packageJson.dependencies["@fluentui/react-icons"],
-                fluentUiReactComponentsVersion: packageJson.dependencies["@fluentui/react-components"],
                 nodeJsVersion: process.versions.node,
                 v8Version: process.versions.v8,
                 version: app.getVersion(),

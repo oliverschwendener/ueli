@@ -32,6 +32,6 @@ export class PowershellUtility implements PowershellUtilityInterface {
     }
 
     private getRandomFileName(): string {
-        return `${this.randomStringProvider.getRandomHexString(32)}.ps1`;
+        return `${this.randomStringProvider.getRandomUUid()}.ps1`;
     }
 }

@@ -39,7 +39,7 @@ describe(PowershellUtility, () => {
         };
 
         const randomStringProvider = <RandomStringProvider>{
-            getRandomHexString: (byteLength) => getRandomHexStringMock(byteLength),
+            getRandomUUid: (byteLength) => getRandomHexStringMock(byteLength),
         };
 
         const powershellUtility = new PowershellUtility(
@@ -54,6 +54,6 @@ describe(PowershellUtility, () => {
         expect(executeCommandWithOutputMock).toHaveBeenCalledWith(
             `powershell -NoProfile -NonInteractive -ExecutionPolicy bypass -File "/temp/directory/randomHexString.ps1"`,
         );
-        expect(getRandomHexStringMock).toHaveBeenCalledWith(32);
+        expect(getRandomHexStringMock).toHaveBeenCalledOnce();
     });
 });
