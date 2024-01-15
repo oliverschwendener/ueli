@@ -1,13 +1,13 @@
+import type { PowershellUtility } from "@Core/PowershellUtility";
 import type { SearchResultItemAction } from "@common/SearchResultItemAction";
-import type { CommandlineUtility } from "../../CommandlineUtility";
 import type { ActionHandler } from "../Contract/ActionHandler";
 
 export class PowershellActionHandler implements ActionHandler {
     public readonly id = "Powershell";
 
-    public constructor(private readonly commandlineUtility: CommandlineUtility) {}
+    public constructor(private readonly powershellUtility: PowershellUtility) {}
 
-    public invokeAction(action: SearchResultItemAction): Promise<void> {
-        return this.commandlineUtility.executeCommand(`powershell -Command "& {${action.argument}}"`);
+    public async invokeAction(action: SearchResultItemAction): Promise<void> {
+        await this.powershellUtility.executeCommand(`powershell -Command "& {${action.argument}}"`);
     }
 }

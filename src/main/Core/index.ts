@@ -17,6 +17,8 @@ export * from "./GlobalShortcut";
 export * from "./Logger";
 export * from "./NativeTheme";
 export * from "./OperatingSystem";
+export * from "./PowershellUtility";
+export * from "./RandomStringProvider";
 export * from "./SafeStorageEncryption";
 export * from "./SearchIndex";
 export * from "./Settings";
