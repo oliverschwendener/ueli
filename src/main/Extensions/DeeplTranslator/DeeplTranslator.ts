@@ -50,10 +50,20 @@ export class DeeplTranslator implements Extension {
                 imageUrl: this.getFileImageUrl(),
                 defaultAction: {
                     argument: `/extension/${this.id}`,
-                    description: "",
+                    description: t("searchResultItem.actionDescription"),
                     handlerId: "navigateTo",
                     hideWindowAfterInvokation: false,
+                    fluentIcon: "OpenRegular",
                 },
+                additionalActions: [
+                    {
+                        argument: `/settings/extension/${this.id}`,
+                        description: "Configure",
+                        handlerId: "navigateTo",
+                        hideWindowAfterInvokation: false,
+                        fluentIcon: "SettingsRegular",
+                    },
+                ],
             },
         ];
     }

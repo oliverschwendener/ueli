@@ -1,5 +1,6 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { Logger } from "@Core/Logger";
+import { getExtensionSettingKey } from "@common/Core/Extension";
 import { normalize, parse } from "path";
 import { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
@@ -33,7 +34,9 @@ export class MacOsApplicationRepository implements ApplicationRepository {
     }
 
     private filterFilePathByConfiguredFolders(filePath: string): boolean {
-        return this.settings.getValue<string[]>("macOsFolders").some((folderPath) => filePath.startsWith(folderPath));
+        return this.settings
+            .getValue<string[]>(getExtensionSettingKey("ApplicationSearch", "macOsFolders"))
+            .some((folderPath) => filePath.startsWith(folderPath));
     }
 
     private async getAllIcons(filePaths: string[]): Promise<Record<string, string>> {
