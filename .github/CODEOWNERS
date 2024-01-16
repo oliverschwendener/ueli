@@ -18,17 +18,22 @@ tsconfig.renderer.json @oliverschwendener
 vite.config.mts @oliverschwendener
 
 # Extensions
+
+# ApplicationSearch
 src/main/Extensions/ApplicationSearch @oliverschwendener
 src/renderer/Extensions/ApplicationSearch @oliverschwendener
 
+# DeeplTranslator
 assets/Extensions/DeeplTranslator @oliverschwendener
 src/main/Extensions/DeeplTranslator @oliverschwendener
 src/renderer/Extensions/DeeplTranslator @oliverschwendener
 
+# SystemColorThemeSwitcher
 assets/Extensions/SystemColorThemeSwitcher @oliverschwendener
 src/main/Extensions/SystemColorThemeSwitcher @oliverschwendener
 src/renderer/Extensions/SystemColorThemeSwitcher @oliverschwendener
 
+# UeliCommand
 assets/Extensions/UeliCommand @oliverschwendener
 src/main/Extensions/UeliCommand @oliverschwendener
 src/renderer/Extensions/UeliCommand @oliverschwendener
