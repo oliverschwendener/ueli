@@ -1,10 +1,10 @@
 import { Dropdown, Field, Input, Option } from "@fluentui/react-components";
-import { sourceLanguages } from "../../../../Extensions/DeeplTranslator/sourceLanguages";
-import { targetLanguages } from "../../../../Extensions/DeeplTranslator/targetLanguages";
-import { useContextBridge } from "../../../../Hooks";
-import { useExtensionSetting } from "../../../../Hooks/useExtensionSetting";
-import { Section } from "../../../Section";
-import { SectionList } from "../../../SectionList";
+import { useContextBridge } from "../../Hooks";
+import { useExtensionSetting } from "../../Hooks/useExtensionSetting";
+import { Section } from "../../Settings/Section";
+import { SectionList } from "../../Settings/SectionList";
+import { sourceLanguages } from "./sourceLanguages";
+import { targetLanguages } from "./targetLanguages";
 
 export const DeeplTranslatorSettings = () => {
     const { contextBridge } = useContextBridge();

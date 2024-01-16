@@ -1,7 +1,6 @@
 import type { ReactElement } from "react";
 import { useTranslation } from "react-i18next";
-import { ApplicationSearchSettings } from "./ApplicationSearch";
-import { DeeplTranslatorSettings } from "./DeeplTranslator";
+import { ApplicationSearchSettings, DeeplTranslatorSettings } from "../../Extensions";
 
 type ExtensionSettingsProps = {
     extensionId: string;
