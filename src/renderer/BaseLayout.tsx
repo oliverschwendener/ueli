@@ -2,10 +2,10 @@ import { Divider } from "@fluentui/react-components";
 import type { ReactNode, RefObject } from "react";
 
 type BaseLayoutProps = {
-    header: ReactNode;
+    header?: ReactNode;
     contentRef?: RefObject<HTMLDivElement>;
     content: ReactNode;
-    footer: ReactNode;
+    footer?: ReactNode;
 };
 
 export const BaseLayout = ({ header, content, contentRef, footer }: BaseLayoutProps) => {
