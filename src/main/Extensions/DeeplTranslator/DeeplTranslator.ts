@@ -2,8 +2,8 @@ import type { Extension } from "@Core/Extension";
 import type { ExtensionAssetPathResolver } from "@Core/ExtensionAssets";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
+import type { SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
-import type { SearchResultItem } from "@common/SearchResultItem";
 import type { Net } from "electron";
 import { resources } from "./resources";
 

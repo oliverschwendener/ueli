@@ -1,7 +1,7 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { DependencyInjector } from "@Core/DependencyInjector";
 import type { ExtensionAssetPathResolver } from "@Core/ExtensionAssets";
-import type { OperatingSystem } from "@common/OperatingSystem";
+import type { OperatingSystem } from "@common/Core";
 import type { NativeTheme } from "electron";
 import { CustomActionHandler } from "./CustomActionHandler";
 import { SystemColorThemeSwitcher } from "./SystemColorThemeSwitcher";

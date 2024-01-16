@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "@common/SearchResultItem";
+import type { SearchResultItem } from "@common/Core";
 import { describe, expect, it } from "vitest";
 import { filterSearchResultItemsBySearchTerm } from "./filterSearchResultItemsBySearchTerm";
 

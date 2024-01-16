@@ -1,4 +1,4 @@
-import type { ContextBridge } from "@common/ContextBridge";
+import type { ContextBridge } from "@common/Core";
 import type { Theme } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 import { getTheme } from "../Theme";

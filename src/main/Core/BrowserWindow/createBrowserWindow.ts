@@ -1,4 +1,4 @@
-import type { OperatingSystem } from "@common/OperatingSystem";
+import type { OperatingSystem } from "@common/Core";
 import { BrowserWindow, type App, type BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
 import type { DependencyInjector } from "../DependencyInjector";

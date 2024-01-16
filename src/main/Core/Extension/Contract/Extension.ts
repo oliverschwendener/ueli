@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "@common/SearchResultItem";
+import type { SearchResultItem } from "@common/Core";
 import type { DependencyInjector } from "../../DependencyInjector";
 
 export interface Extension {

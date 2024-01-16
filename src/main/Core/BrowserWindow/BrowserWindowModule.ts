@@ -1,4 +1,4 @@
-import type { SearchResultItemAction } from "@common/SearchResultItemAction";
+import type { SearchResultItemAction } from "@common/Core";
 import type { App, BrowserWindow, BrowserWindowConstructorOptions, NativeTheme } from "electron";
 import { join } from "path";
 import type { DependencyInjector } from "../DependencyInjector";

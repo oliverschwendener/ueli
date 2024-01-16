@@ -1,4 +1,4 @@
-import type { OperatingSystem } from "@common/OperatingSystem";
+import type { OperatingSystem } from "@common/Core";
 import { describe, expect, it } from "vitest";
 import { getOperatingSystemFromPlatform } from "./getOperatingSystemFromPlatform";
 

@@ -5,7 +5,7 @@ import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Logger } from "@Core/Logger";
 import type { PowershellUtility } from "@Core/PowershellUtility";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { OperatingSystem } from "@common/OperatingSystem";
+import type { OperatingSystem } from "@common/Core";
 import type { App } from "electron";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";

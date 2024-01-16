@@ -1,4 +1,4 @@
-import type { OperatingSystem } from "@common/OperatingSystem";
+import type { OperatingSystem } from "@common/Core";
 import { useEffect, useState, type CSSProperties } from "react";
 import { useContextBridge } from "./Hooks";
 

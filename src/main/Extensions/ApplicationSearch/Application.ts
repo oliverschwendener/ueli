@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "@common/SearchResultItem";
+import type { SearchResultItem } from "@common/Core";
 
 export class Application {
     public constructor(

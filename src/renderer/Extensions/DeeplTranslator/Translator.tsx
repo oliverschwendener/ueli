@@ -1,4 +1,4 @@
-import type { ContextBridge } from "@common/ContextBridge";
+import type { ContextBridge } from "@common/Core";
 import { Dropdown, Option, ProgressBar, Textarea } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 import { useExtensionSetting } from "../../Hooks/useExtensionSetting";

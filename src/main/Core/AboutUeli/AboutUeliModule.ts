@@ -1,4 +1,4 @@
-import type { AboutUeli } from "@common/AboutUeli";
+import type { AboutUeli } from "@common/Core";
 import type { App, IpcMain } from "electron";
 import type { DependencyInjector } from "../DependencyInjector";
 

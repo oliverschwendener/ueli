@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "@common/SearchResultItem";
+import type { SearchResultItem } from "@common/Core";
 import type { EventEmitter } from "../EventEmitter";
 import type { SearchIndex } from "./Contract";
 import type { InMemoryIndex } from "./InMemoryIndex";

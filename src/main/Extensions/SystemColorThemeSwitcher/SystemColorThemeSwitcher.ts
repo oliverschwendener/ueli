@@ -1,5 +1,4 @@
-import type { OperatingSystem } from "@common/OperatingSystem";
-import type { SearchResultItem } from "@common/SearchResultItem";
+import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { DependencyInjector } from "@Core/DependencyInjector";
 import type { Extension } from "@Core/Extension";
 import type { ExtensionAssetPathResolver } from "@Core/ExtensionAssets";

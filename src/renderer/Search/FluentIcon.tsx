@@ -1,4 +1,4 @@
-import type { FluentIcon as FluentIconString } from "@common/FluentIcon";
+import type { FluentIcon as FluentIconString } from "@common/Core";
 import * as FluentIcons from "@fluentui/react-icons";
 
 type FluentIconProps = {

@@ -2,9 +2,9 @@ import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { DependencyInjector } from "@Core/DependencyInjector";
 import type { EventEmitter } from "@Core/EventEmitter";
 import type { PowershellUtility } from "@Core/PowershellUtility/PowershellUtility";
-import type { SearchResultItemAction } from "@common/SearchResultItemAction";
+import type { SearchResultItemAction } from "@common/Core";
 import type { Clipboard, IpcMain, Shell } from "electron";
-import { ActionHandler } from "./Contract";
+import type { ActionHandler } from "./Contract";
 import {
     CommandlineActionHandler,
     CopyToClipboardActionHandler,

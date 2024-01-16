@@ -1,5 +1,4 @@
-import type { ContextBridge } from "@common/ContextBridge";
-import type { SearchResultItem } from "@common/SearchResultItem";
+import type { ContextBridge, SearchResultItem } from "@common/Core";
 import { useEffect, useState } from "react";
 
 export const useSearchResultItems = (contextBridge: ContextBridge) => {

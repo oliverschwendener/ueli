@@ -1,4 +1,4 @@
-import { SearchResultItemAction } from "@common/SearchResultItemAction";
+import type { SearchResultItemAction } from "@common/Core";
 import {
     Button,
     Dialog,

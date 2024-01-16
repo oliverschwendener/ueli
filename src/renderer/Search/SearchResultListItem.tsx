@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "@common/SearchResultItem";
+import type { SearchResultItem } from "@common/Core";
 import { Text } from "@fluentui/react-components";
 import { useContext, useEffect, useRef, type RefObject } from "react";
 import { useTranslation } from "react-i18next";

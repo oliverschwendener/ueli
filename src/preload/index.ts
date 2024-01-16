@@ -1,4 +1,4 @@
-import type { ContextBridge } from "@common/ContextBridge";
+import type { ContextBridge } from "@common/Core";
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{

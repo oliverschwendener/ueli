@@ -1,7 +1,7 @@
 import type { Extension } from "@Core/Extension";
 import type { ExtensionAssetPathResolver } from "@Core/ExtensionAssets";
 import type { Translator } from "@Core/Translator";
-import type { SearchResultItem } from "@common/SearchResultItem";
+import type { SearchResultItem } from "@common/Core";
 import { resources } from "./resources";
 
 type ImageUrlType = "neutral" | "onDarkBackground" | "onLightBackground";

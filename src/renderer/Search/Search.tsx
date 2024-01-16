@@ -1,5 +1,4 @@
-import type { SearchResultItem } from "@common/SearchResultItem";
-import type { SearchResultItemAction } from "@common/SearchResultItemAction";
+import type { SearchResultItem, SearchResultItemAction } from "@common/Core";
 import { Button, Input } from "@fluentui/react-components";
 import { SettingsRegular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";

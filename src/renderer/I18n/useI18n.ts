@@ -1,4 +1,4 @@
-import type { ContextBridge } from "@common/ContextBridge";
+import type { ContextBridge } from "@common/Core";
 import { use } from "i18next";
 import { initReactI18next } from "react-i18next";
 import { resources } from "./resources";

@@ -1,4 +1,4 @@
-import type { OperatingSystem } from "@common/OperatingSystem";
+import type { OperatingSystem } from "@common/Core";
 
 export const getOperatingSystemFromPlatform = (platform: string): OperatingSystem => {
     const operatingSystemMap: Record<"darwin" | "win32" | "linux", OperatingSystem> = {

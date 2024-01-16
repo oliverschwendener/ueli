@@ -1,4 +1,4 @@
-import type { SearchResultItemAction } from "@common/SearchResultItemAction";
+import type { SearchResultItemAction } from "@common/Core";
 import type { Shell } from "electron";
 import type { ActionHandler } from "../Contract/ActionHandler";
 

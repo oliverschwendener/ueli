@@ -1,4 +1,4 @@
-import type { ExtensionInfo } from "@common/ExtensionInfo";
+import type { ExtensionInfo } from "@common/Core";
 import type { IpcMain } from "electron";
 import type { DependencyInjector } from "../DependencyInjector";
 import type { Extension } from "../Extension";

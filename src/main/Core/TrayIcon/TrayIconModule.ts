@@ -1,4 +1,4 @@
-import type { OperatingSystem } from "@common/OperatingSystem";
+import type { OperatingSystem } from "@common/Core";
 import { Menu, Tray, type NativeTheme } from "electron";
 import type { DependencyInjector, EventSubscriber, Translator, UeliCommandInvoker } from "..";
 import { getContextMenuTemplate } from "./getContextMenuTemplate";

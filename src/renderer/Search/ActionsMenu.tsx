@@ -1,4 +1,4 @@
-import type { SearchResultItemAction } from "@common/SearchResultItemAction";
+import type { SearchResultItemAction } from "@common/Core";
 import { Button, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger } from "@fluentui/react-components";
 import { FlashRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";

@@ -1,4 +1,4 @@
-import type { OperatingSystem } from "@common/OperatingSystem";
+import type { OperatingSystem } from "@common/Core";
 import type { IpcMain } from "electron";
 import type { DependencyInjector } from "../DependencyInjector";
 import { getOperatingSystemFromPlatform } from "./getOperatingSystemFromPlatform";
