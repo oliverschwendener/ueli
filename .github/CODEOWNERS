@@ -1,0 +1,34 @@
+# General stuff
+src @oliverschwendener
+assets @oliverschwendener
+.github @oliverschwendener
+.vscode @oliverschwendener
+docs @oliverschwendener
+.eslintignore @oliverschwendener
+.eslintrc @oliverschwendener
+.gitignore @oliverschwendener
+.prettierrc @oliverschwendener
+electron-builder.config.js @oliverschwendener
+LICENSE @oliverschwendener
+package.json @oliverschwendener
+pnpm-lock.yaml @oliverschwendener
+README.md @oliverschwendener
+tsconfig.node.json @oliverschwendener
+tsconfig.renderer.json @oliverschwendener
+vite.config.mts @oliverschwendener
+
+# Extensions
+src/main/Extensions/ApplicationSearch @oliverschwendener
+src/renderer/Extensions/ApplicationSearch @oliverschwendener
+
+assets/Extensions/DeeplTranslator @oliverschwendener
+src/main/Extensions/DeeplTranslator @oliverschwendener
+src/renderer/Extensions/DeeplTranslator @oliverschwendener
+
+assets/Extensions/SystemColorThemeSwitcher @oliverschwendener
+src/main/Extensions/SystemColorThemeSwitcher @oliverschwendener
+src/renderer/Extensions/SystemColorThemeSwitcher @oliverschwendener
+
+assets/Extensions/UeliCommand @oliverschwendener
+src/main/Extensions/UeliCommand @oliverschwendener
+src/renderer/Extensions/UeliCommand @oliverschwendener
