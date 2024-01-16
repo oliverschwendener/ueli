@@ -1,6 +1,5 @@
 import { Dropdown, Field, Input, Option } from "@fluentui/react-components";
-import { useContextBridge } from "../../Hooks";
-import { useExtensionSetting } from "../../Hooks/useExtensionSetting";
+import { useContextBridge, useExtensionSetting } from "../../Hooks";
 import { Section } from "../../Settings/Section";
 import { SectionList } from "../../Settings/SectionList";
 import { sourceLanguages } from "./sourceLanguages";

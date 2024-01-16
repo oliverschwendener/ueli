@@ -4,7 +4,7 @@ import { useState } from "react";
 import { BaseLayout } from "../../BaseLayout";
 import type { ExtensionProps } from "../../ExtensionProps";
 import { Header } from "../../Header";
-import { useExtensionSetting } from "../../Hooks/useExtensionSetting";
+import { useExtensionSetting } from "../../Hooks";
 import { MissingApiKey } from "./MissingApiKey";
 import { Translator } from "./Translator";
 
