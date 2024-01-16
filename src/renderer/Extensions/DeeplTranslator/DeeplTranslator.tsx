@@ -50,25 +50,27 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                 )
             }
             footer={
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "flex-end",
-                        padding: 10,
-                        boxSizing: "border-box",
-                    }}
-                >
-                    <Button
-                        disabled={translatedText.length === 0}
-                        appearance="subtle"
-                        icon={<CopyRegular />}
-                        iconPosition="after"
-                        onClick={() => contextBridge.copyTextToClipboard(translatedText)}
+                apiKey ? (
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "flex-end",
+                            padding: 10,
+                            boxSizing: "border-box",
+                        }}
                     >
-                        Copy translated text
-                    </Button>
-                </div>
+                        <Button
+                            disabled={translatedText.length === 0}
+                            appearance="subtle"
+                            icon={<CopyRegular />}
+                            iconPosition="after"
+                            onClick={() => contextBridge.copyTextToClipboard(translatedText)}
+                        >
+                            Copy translated text
+                        </Button>
+                    </div>
+                ) : null
             }
         />
     );
