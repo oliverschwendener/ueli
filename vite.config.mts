@@ -1,6 +1,6 @@
 import react from "@vitejs/plugin-react";
 import { join } from "path";
-import { defineConfig, type AliasOptions } from "vite";
+import { defineConfig } from "vite";
 import electron from "vite-plugin-electron";
 import renderer from "vite-plugin-electron-renderer";
 import pkg from "./package.json";
@@ -10,16 +10,14 @@ export default defineConfig(({ command }) => {
     const isBuild = command === "build";
     const sourcemap = isServe ? "inline" : undefined;
 
-    const resolve: { alias: AliasOptions } = {
-        alias: {
-            "@common": join(__dirname, "src", "common"),
-            "@Core": join(__dirname, "src", "main", "Core"),
-        },
-    };
-
     return {
         root: "src/renderer",
-        resolve,
+        resolve: {
+            alias: {
+                "@common": join(__dirname, "src", "common"),
+                "@Core": join(__dirname, "src", "renderer", "Core"),
+            },
+        },
         build: {
             outDir: "../../dist-renderer",
             emptyOutDir: true,
@@ -34,7 +32,12 @@ export default defineConfig(({ command }) => {
                         options.startup();
                     },
                     vite: {
-                        resolve,
+                        resolve: {
+                            alias: {
+                                "@common": join(__dirname, "src", "common"),
+                                "@Core": join(__dirname, "src", "main", "Core"),
+                            },
+                        },
                         build: {
                             sourcemap,
                             minify: isBuild,
@@ -54,7 +57,11 @@ export default defineConfig(({ command }) => {
                         options.reload();
                     },
                     vite: {
-                        resolve,
+                        resolve: {
+                            alias: {
+                                "@common": join(__dirname, "src", "common"),
+                            },
+                        },
                         build: {
                             sourcemap,
                             minify: isBuild,

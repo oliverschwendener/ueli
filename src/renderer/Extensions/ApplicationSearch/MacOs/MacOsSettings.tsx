@@ -1,9 +1,9 @@
+import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
+import { Section } from "@Core/Settings/Section";
+import { SectionList } from "@Core/Settings/SectionList";
 import { Button, Field, Input, Tooltip } from "@fluentui/react-components";
 import { AddRegular, DismissRegular, FolderRegular } from "@fluentui/react-icons";
 import { useState } from "react";
-import { useContextBridge, useExtensionSetting } from "../../../Hooks";
-import { Section } from "../../../Settings/Section";
-import { SectionList } from "../../../Settings/SectionList";
 
 export const MacOsSettings = () => {
     const { contextBridge } = useContextBridge();

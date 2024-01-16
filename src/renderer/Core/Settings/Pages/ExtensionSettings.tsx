@@ -1,6 +1,5 @@
-import type { ReactElement } from "react";
 import { useTranslation } from "react-i18next";
-import { ApplicationSearchSettings, DeeplTranslatorSettings } from "../../Extensions";
+import { getExtension } from "../../../Extensions";
 
 type ExtensionSettingsProps = {
     extensionId: string;
@@ -9,13 +8,10 @@ type ExtensionSettingsProps = {
 export const ExtensionSettings = ({ extensionId }: ExtensionSettingsProps) => {
     const { t } = useTranslation();
 
-    const map: Record<string, ReactElement> = {
-        ApplicationSearch: <ApplicationSearchSettings />,
-        DeeplTranslator: <DeeplTranslatorSettings />,
-    };
+    const result = getExtension(extensionId);
 
     return (
-        map[extensionId] ?? (
+        result?.settings ?? (
             <div style={{ textAlign: "center", padding: 10, boxSizing: "border-box" }}>
                 {t("settings.extensions.noSettingsAvailable")}
             </div>

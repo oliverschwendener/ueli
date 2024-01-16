@@ -17,7 +17,8 @@
         "jsx": "react-jsx",
         "rootDir": "./src",
         "paths": {
-            "@common/*": ["./src/common/*"]
+            "@common/*": ["./src/common/*"],
+            "@Core/*": ["./src/renderer/Core/*"]
         }
     }
 }

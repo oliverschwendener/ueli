@@ -1,10 +1,10 @@
+import { BaseLayout } from "@Core/BaseLayout";
+import type { ExtensionProps } from "@Core/ExtensionProps";
+import { Header } from "@Core/Header";
+import { useExtensionSetting } from "@Core/Hooks";
 import { Button, Text } from "@fluentui/react-components";
 import { ArrowLeftFilled, CopyRegular } from "@fluentui/react-icons";
 import { useState } from "react";
-import { BaseLayout } from "../../BaseLayout";
-import type { ExtensionProps } from "../../ExtensionProps";
-import { Header } from "../../Header";
-import { useExtensionSetting } from "../../Hooks";
 import { MissingApiKey } from "./MissingApiKey";
 import { Translator } from "./Translator";
 
