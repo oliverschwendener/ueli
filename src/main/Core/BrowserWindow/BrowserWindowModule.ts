@@ -4,7 +4,7 @@ import { join } from "path";
 import type { DependencyInjector } from "../DependencyInjector";
 import type { EventSubscriber } from "../EventSubscriber";
 import type { SettingsManager } from "../SettingsManager";
-import type { UeliCommandInvokedEvent } from "../UeliCommand";
+import type { UeliCommand, UeliCommandInvokedEvent } from "../UeliCommand";
 import { createBrowserWindow } from "./createBrowserWindow";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
 import { getVibrancy } from "./getVibrancy";
@@ -75,11 +75,25 @@ export class BrowserWindowModule {
     }
 
     private static registerUeliCommandEvents(browserWindow: BrowserWindow, eventSubscriber: EventSubscriber) {
-        eventSubscriber.subscribe("ueliCommandInvoked", (event: UeliCommandInvokedEvent) => {
-            if (event.navigateTo) {
-                const { pathname } = event.navigateTo;
-                openAndFocusBrowserWindow(browserWindow);
-                sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
+        const eventHandlers: { ueliCommands: UeliCommand[]; handler: (argument: unknown) => void }[] = [
+            {
+                ueliCommands: ["openAbout", "openExtensions", "openSettings", "show"],
+                handler: ({ pathname }: { pathname: string }) => {
+                    openAndFocusBrowserWindow(browserWindow);
+                    sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
+                },
+            },
+            {
+                ueliCommands: ["centerWindow"],
+                handler: () => browserWindow.center(),
+            },
+        ];
+
+        eventSubscriber.subscribe("ueliCommandInvoked", (event: UeliCommandInvokedEvent<unknown>) => {
+            for (const eventHandler of eventHandlers) {
+                if (eventHandler.ueliCommands.includes(event.ueliCommand)) {
+                    eventHandler.handler(event.argument);
+                }
             }
         });
     }

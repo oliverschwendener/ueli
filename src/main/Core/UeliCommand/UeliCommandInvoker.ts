@@ -15,24 +15,37 @@ export class UeliCommandInvoker implements UeliCommandInvokerInterface {
     public invokeUeliCommand(ueliCommand: UeliCommand): Promise<void> {
         const map: Record<UeliCommand, () => Promise<void>> = {
             openExtensions: async () =>
-                this.eventEmitter.emitEvent("ueliCommandInvoked", <UeliCommandInvokedEvent>{
-                    navigateTo: { pathname: "/settings/extensions" },
+                this.emitUeliCommandInvokedEvent({
+                    ueliCommand: "openExtensions",
+                    argument: { pathname: "/settings/extensions" },
                 }),
             openSettings: async () =>
-                this.eventEmitter.emitEvent("ueliCommandInvoked", <UeliCommandInvokedEvent>{
-                    navigateTo: { pathname: "/settings/general" },
+                this.emitUeliCommandInvokedEvent({
+                    ueliCommand: "openSettings",
+                    argument: { pathname: "/settings/general" },
                 }),
             openAbout: async () =>
-                this.eventEmitter.emitEvent("ueliCommandInvoked", <UeliCommandInvokedEvent>{
-                    navigateTo: { pathname: "/settings/about" },
+                this.emitUeliCommandInvokedEvent({
+                    ueliCommand: "openAbout",
+                    argument: { pathname: "/settings/about" },
                 }),
             quit: async () => this.app.quit(),
             show: async () =>
-                this.eventEmitter.emitEvent("ueliCommandInvoked", <UeliCommandInvokedEvent>{
-                    navigateTo: { pathname: "/" },
+                this.emitUeliCommandInvokedEvent({
+                    ueliCommand: "show",
+                    argument: { pathname: "/" },
+                }),
+            centerWindow: () =>
+                this.emitUeliCommandInvokedEvent({
+                    ueliCommand: "centerWindow",
+                    argument: {},
                 }),
         };
 
         return map[ueliCommand]();
+    }
+
+    private async emitUeliCommandInvokedEvent<T>(event: UeliCommandInvokedEvent<T>) {
+        this.eventEmitter.emitEvent("ueliCommandInvoked", event);
     }
 }

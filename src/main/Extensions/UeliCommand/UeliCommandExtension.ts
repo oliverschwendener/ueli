@@ -1,6 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
+import type { UeliCommand } from "@Core/UeliCommand";
 import type { SearchResultItem } from "@common/Core";
 import { resources } from "./resources";
 
@@ -30,7 +31,7 @@ export class UeliCommandExtension implements Extension {
                 imageUrlOnLightBackground: this.getSearchResultItemImageUrl("onLightBackground"),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: "quit",
+                    argument: <UeliCommand>"quit",
                     description: t("ueliCommand.quitUeli"),
                     hideWindowAfterInvokation: false,
                     requiresConfirmation: true,
@@ -46,7 +47,7 @@ export class UeliCommandExtension implements Extension {
                 imageUrlOnLightBackground: this.getSearchResultItemImageUrl("onLightBackground"),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: "settings",
+                    argument: <UeliCommand>"settings",
                     description: t("ueliCommand.openSettings"),
                     hideWindowAfterInvokation: false,
                     fluentIcon: "SettingsRegular",
@@ -61,8 +62,23 @@ export class UeliCommandExtension implements Extension {
                 imageUrlOnLightBackground: this.getSearchResultItemImageUrl("onLightBackground"),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: "extensions",
+                    argument: <UeliCommand>"extensions",
                     description: t("ueliCommand.openExtensions"),
+                    hideWindowAfterInvokation: false,
+                    fluentIcon: "AppsAddInRegular",
+                },
+            },
+            centerWindow: {
+                id: "ueliCommand:centerWindow",
+                description: t("ueliCommand.description"),
+                name: t("ueliCommand.centerWindow"),
+                imageUrl: this.getSearchResultItemImageUrl("neutral"),
+                imageUrlOnDarkBackground: this.getSearchResultItemImageUrl("onDarkBackground"),
+                imageUrlOnLightBackground: this.getSearchResultItemImageUrl("onLightBackground"),
+                defaultAction: {
+                    handlerId: "UeliCommand",
+                    argument: <UeliCommand>"centerWindow",
+                    description: t("ueliCommand.centerWindow"),
                     hideWindowAfterInvokation: false,
                     fluentIcon: "AppsAddInRegular",
                 },

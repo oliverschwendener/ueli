@@ -12,6 +12,7 @@ export class UeliCommandActionHandler implements ActionHandler {
             quit: () => this.ueliCommandInvoker.invokeUeliCommand("quit"),
             settings: () => this.ueliCommandInvoker.invokeUeliCommand("openSettings"),
             extensions: () => this.ueliCommandInvoker.invokeUeliCommand("openExtensions"),
+            centerWindow: () => this.ueliCommandInvoker.invokeUeliCommand("centerWindow"),
         };
 
         return map[action.argument]();
