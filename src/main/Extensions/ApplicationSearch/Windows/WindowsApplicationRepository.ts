@@ -1,6 +1,5 @@
 import type { ExtensionCacheFolder } from "@Core/ExtensionCacheFolder";
 import type { PowershellUtility } from "@Core/PowershellUtility";
-import { getExtensionSettingKey } from "@common/Core/Extension";
 import { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
 import type { Settings } from "../Settings";
@@ -26,12 +25,12 @@ export class WindowsApplicationRepository implements ApplicationRepository {
 
     private getPowershellScript(): string {
         const folderPaths = this.settings
-            .getValue<string[]>(getExtensionSettingKey("ApplicationSearch", "windowsFolders"))
+            .getValue<string[]>("windowsFolders")
             .map((folderPath) => `'${folderPath}'`)
             .join(",");
 
         const fileExtensions = this.settings
-            .getValue<string[]>(getExtensionSettingKey("ApplicationSearch", "windowsFileExtensions"))
+            .getValue<string[]>("windowsFileExtensions")
             .map((fileExtension) => `'*.${fileExtension}'`)
             .join(",");
 
