@@ -1,5 +1,6 @@
 export type DependencyName =
     | "App"
+    | "AssetPathResolver"
     | "Clipboard"
     | "Clock"
     | "CommandlineUtility"
@@ -7,7 +8,6 @@ export type DependencyName =
     | "Emitter"
     | "EventEmitter"
     | "EventSubscriber"
-    | "ExtensionAssetPathResolver"
     | "ExtensionCacheFolder"
     | "FileSystemUtility"
     | "GlobalShortcut"

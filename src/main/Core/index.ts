@@ -1,5 +1,6 @@
 export * from "./AboutUeli";
 export * from "./ActionHandler";
+export * from "./AssetPathResolver";
 export * from "./BrowserWindow";
 export * from "./Clipboard";
 export * from "./Clock";
@@ -9,7 +10,6 @@ export * from "./Dialog";
 export * from "./EventEmitter";
 export * from "./EventSubscriber";
 export * from "./Extension";
-export * from "./ExtensionAssets";
 export * from "./ExtensionCacheFolder";
 export * from "./ExtensionManager";
 export * from "./FileSystemUtility";

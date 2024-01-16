@@ -1,21 +1,30 @@
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { OperatingSystem } from "@common/Core";
 import type { NativeTheme } from "electron";
-import { join } from "path";
 
-export const getTrayIconImage = (operatingSystem: OperatingSystem, nativeTheme: NativeTheme) => {
-    if (operatingSystem === "Windows") {
-        const fileName = nativeTheme.shouldUseDarkColors
-            ? "ueli-icon-white-on-transparent.ico"
-            : "ueli-icon-black-on-transparent.ico";
+export const getTrayIconImage = (
+    assetPathResolver: AssetPathResolver,
+    operatingSystem: OperatingSystem,
+    nativeTheme: NativeTheme,
+) => {
+    const fileNames: Record<OperatingSystem, { onLightBackground: string; onDarkBackground: string }> = {
+        Linux: {
+            onDarkBackground: "ueli-icon-white-on-transparent.png",
+            onLightBackground: "ueli-icon-black-on-transparent.png",
+        },
+        macOS: {
+            onDarkBackground: "ueliTemplate.png",
+            onLightBackground: "ueliTemplate.png",
+        },
+        Windows: {
+            onLightBackground: "ueli-icon-black-on-transparent.ico",
+            onDarkBackground: "ueli-icon-white-on-transparent.ico",
+        },
+    };
 
-        return join(__dirname, "..", "assets", fileName);
-    }
+    const fileName = nativeTheme.shouldUseDarkColors
+        ? fileNames[operatingSystem].onDarkBackground
+        : fileNames[operatingSystem].onLightBackground;
 
-    if (operatingSystem === "macOS") {
-        return join(__dirname, "..", "assets", "ueliTemplate.png");
-    }
-
-    return nativeTheme.shouldUseDarkColors
-        ? join(__dirname, "..", "assets", "ueli-icon-white-on-transparent.png")
-        : join(__dirname, "..", "assets", "ueli-icon-black-on-transparent.png");
+    return assetPathResolver.getModuleAssetPath("TrayIcon", fileName);
 };

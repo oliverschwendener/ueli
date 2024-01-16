@@ -28,6 +28,7 @@ import { ExtensionsModule } from "./Extensions";
     // Core Modules
     Core.RandomStringProviderModule.bootstrap(dependencyInjector);
     Core.SafeStorageEncryptionModule.bootstrap(dependencyInjector);
+    Core.AssetPathResolverModule.bootstrap(dependencyInjector);
     Core.ShellModule.bootstrap(dependencyInjector);
     Core.ClipboardModule.bootstrap(dependencyInjector);
     Core.ClockModule.bootstrap(dependencyInjector);
@@ -52,7 +53,6 @@ import { ExtensionsModule } from "./Extensions";
     Core.UeliCommandModule.bootstrap(dependencyInjector);
     Core.TrayIconModule.bootstrap(dependencyInjector);
     Core.DialogModule.bootstrap(dependencyInjector);
-    Core.ExtensionAssetsModule.bootstrap(dependencyInjector);
     await Core.ExtensionCacheFolderModule.bootstrap(dependencyInjector);
 
     // Extensions

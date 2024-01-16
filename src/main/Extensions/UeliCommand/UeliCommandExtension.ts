@@ -1,5 +1,5 @@
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
-import type { ExtensionAssetPathResolver } from "@Core/ExtensionAssets";
 import type { Translator } from "@Core/Translator";
 import type { SearchResultItem } from "@common/Core";
 import { resources } from "./resources";
@@ -13,7 +13,7 @@ export class UeliCommandExtension implements Extension {
     public readonly settingKeysTriggerindReindex = ["general.language"];
 
     public constructor(
-        private readonly extensionAssetPathResolver: ExtensionAssetPathResolver,
+        private readonly assetPathResolver: AssetPathResolver,
         private readonly translator: Translator,
     ) {}
 
@@ -79,7 +79,7 @@ export class UeliCommandExtension implements Extension {
             onLightBackground: "ueli-icon-black-on-transparent.png",
         };
 
-        return `file://${this.extensionAssetPathResolver.getAssetFilePath(this.id, fileName[type])}`;
+        return `file://${this.assetPathResolver.getExtensionAssetPath(this.id, fileName[type])}`;
     }
 
     public isSupported(): boolean {

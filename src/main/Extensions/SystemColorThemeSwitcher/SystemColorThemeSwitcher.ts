@@ -1,7 +1,7 @@
-import type { OperatingSystem, SearchResultItem } from "@common/Core";
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { DependencyInjector } from "@Core/DependencyInjector";
 import type { Extension } from "@Core/Extension";
-import type { ExtensionAssetPathResolver } from "@Core/ExtensionAssets";
+import type { OperatingSystem, SearchResultItem } from "@common/Core";
 
 export class SystemColorThemeSwitcher implements Extension {
     public readonly id: string = "SystemColorThemeSwitcher";
@@ -11,7 +11,7 @@ export class SystemColorThemeSwitcher implements Extension {
 
     public constructor(
         private readonly currentOperatingSystem: OperatingSystem,
-        private readonly extensionAssetPathResolver: ExtensionAssetPathResolver,
+        private readonly assetPathResolver: AssetPathResolver,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -21,7 +21,7 @@ export class SystemColorThemeSwitcher implements Extension {
                 id: "SystemColorThemeSwitcher:toggle",
                 name: "Toggle System Appearance",
                 nameTranslationKey: "",
-                imageUrl: `file://${this.extensionAssetPathResolver.getAssetFilePath(
+                imageUrl: `file://${this.assetPathResolver.getExtensionAssetPath(
                     this.id,
                     this.getSearchResultItemFileName(),
                 )}`,

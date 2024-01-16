@@ -1,5 +1,5 @@
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
-import type { ExtensionAssetPathResolver } from "@Core/ExtensionAssets";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { SearchResultItem } from "@common/Core";
@@ -34,7 +34,7 @@ export class DeeplTranslator implements Extension {
 
     public constructor(
         private readonly net: Net,
-        private readonly extensionAssetPathResolver: ExtensionAssetPathResolver,
+        private readonly assetPathResolver: AssetPathResolver,
         private readonly settingsManager: SettingsManager,
         private readonly translator: Translator,
     ) {}
@@ -82,7 +82,7 @@ export class DeeplTranslator implements Extension {
     }
 
     private getDeeplAssetFilePath() {
-        return this.extensionAssetPathResolver.getAssetFilePath(this.id, "deepl-logo.svg");
+        return this.assetPathResolver.getExtensionAssetPath(this.id, "deepl-logo.svg");
     }
 
     private getFileImageUrl() {
