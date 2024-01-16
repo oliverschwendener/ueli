@@ -1,6 +1,7 @@
 import type { DependencyInjector } from "@Core/DependencyInjector";
 import type { ExtensionAssetPathResolver } from "@Core/ExtensionAssets";
 import type { SettingsManager } from "@Core/SettingsManager";
+import type { Translator } from "@Core/Translator";
 import type { Net } from "electron";
 import { DeeplTranslator } from "./DeeplTranslator";
 
@@ -13,6 +14,10 @@ export class DeeplTranslatorModule {
 
         const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
 
-        dependencyInjector.registerExtension(new DeeplTranslator(net, extensionAssetPathResolver, settingsManager));
+        const translator = dependencyInjector.getInstance<Translator>("Translator");
+
+        dependencyInjector.registerExtension(
+            new DeeplTranslator(net, extensionAssetPathResolver, settingsManager, translator),
+        );
     }
 }

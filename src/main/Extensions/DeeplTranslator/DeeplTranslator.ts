@@ -1,9 +1,11 @@
 import type { Extension } from "@Core/Extension";
 import type { ExtensionAssetPathResolver } from "@Core/ExtensionAssets";
 import type { SettingsManager } from "@Core/SettingsManager";
+import type { Translator } from "@Core/Translator";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { SearchResultItem } from "@common/SearchResultItem";
 import type { Net } from "electron";
+import { resources } from "./resources";
 
 type InvokationArgument = {
     searchTerm: string;
@@ -25,26 +27,30 @@ type ApiResponse = {
 };
 
 export class DeeplTranslator implements Extension {
-    public id = "DeeplTranslator";
-    public name = "DeepL Translator";
-    public nameTranslationKey? = "DeeplTranslator";
+    public readonly id = "DeeplTranslator";
+    public readonly name = "DeepL Translator";
+    public readonly nameTranslationKey? = "DeeplTranslator";
+    public readonly settingKeysTriggerindReindex = ["general.language"];
 
     public constructor(
         private readonly net: Net,
         private readonly extensionAssetPathResolver: ExtensionAssetPathResolver,
         private readonly settingsManager: SettingsManager,
+        private readonly translator: Translator,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
+        const t = await this.translator.createInstance(resources);
+
         return [
             {
                 id: "DeeplTranslator:invoke",
-                description: "Translate with DeepL",
-                name: "DeepL Translator",
+                description: t("searchResultItem.description"),
+                name: t("searchResultItem.name"),
                 imageUrl: this.getFileImageUrl(),
                 defaultAction: {
                     argument: `/extension/${this.id}`,
-                    description: "Blub",
+                    description: "",
                     handlerId: "navigateTo",
                     hideWindowAfterInvokation: false,
                 },
