@@ -3,10 +3,14 @@ import type { AssetPathResolver as AssetPathResolverInterface } from "./Contract
 
 export class AssetPathResolver implements AssetPathResolverInterface {
     public getExtensionAssetPath(extensionId: string, assetFileName: string): string {
-        return join(__dirname, "..", "assets", "Extensions", extensionId, assetFileName);
+        return join(this.getAssetBasePath(), "Extensions", extensionId, assetFileName);
     }
 
     public getModuleAssetPath(moduleName: string, assetFileName: string): string {
-        return join(__dirname, "..", "assets", "Core", moduleName, assetFileName);
+        return join(this.getAssetBasePath(), "Core", moduleName, assetFileName);
+    }
+
+    private getAssetBasePath() {
+        return join(__dirname, "..", "assets");
     }
 }
