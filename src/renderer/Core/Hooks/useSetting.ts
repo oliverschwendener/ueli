@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { useContextBridge } from "./useContextBridge";
 
-export const useSetting = <T>(
+export const useSetting = <Value>(
     key: string,
-    defaultValue: T,
+    defaultValue: Value,
     isSensitive?: boolean,
-    onUpdate?: (updatedValue: T) => void,
+    onUpdate?: (updatedValue: Value) => void,
 ) => {
     const { contextBridge } = useContextBridge();
 
-    const [value, setValue] = useState<T>(contextBridge.getSettingValue(key, defaultValue, isSensitive));
+    const [value, setValue] = useState<Value>(contextBridge.getSettingValue(key, defaultValue, isSensitive));
 
-    const updateValue = async (updatedValue: T) => {
+    const updateValue = async (updatedValue: Value) => {
         setValue(updatedValue);
 
         await contextBridge.updateSettingValue(key, updatedValue, isSensitive);
