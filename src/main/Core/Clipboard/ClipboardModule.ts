@@ -1,9 +1,9 @@
-import type { DependencyInjector } from "..";
+import type { DependencyRegistry } from "..";
 
 export class ClipboardModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const clipboard = dependencyInjector.getInstance("Clipboard");
-        const ipcMain = dependencyInjector.getInstance("IpcMain");
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        const clipboard = dependencyRegistry.get("Clipboard");
+        const ipcMain = dependencyRegistry.get("IpcMain");
 
         ipcMain.on("copyTextToClipboard", (_, { textToCopy }: { textToCopy: string }) => {
             clipboard.writeText(textToCopy);

@@ -1,19 +1,19 @@
 import { join } from "path";
-import type { DependencyInjector } from "..";
+import type { DependencyRegistry } from "..";
 import { PowershellUtility } from "./PowershellUtility";
 
 export class PowershellUtilityModule {
-    public static async bootstrap(dependencyInjector: DependencyInjector) {
-        const fileSystemUtility = dependencyInjector.getInstance("FileSystemUtility");
-        const commandlineUtility = dependencyInjector.getInstance("CommandlineUtility");
-        const app = dependencyInjector.getInstance("App");
-        const randomStringProvider = dependencyInjector.getInstance("RandomStringProvider");
+    public static async bootstrap(dependencyRegistry: DependencyRegistry) {
+        const fileSystemUtility = dependencyRegistry.get("FileSystemUtility");
+        const commandlineUtility = dependencyRegistry.get("CommandlineUtility");
+        const app = dependencyRegistry.get("App");
+        const randomStringProvider = dependencyRegistry.get("RandomStringProvider");
 
         const powershellScriptFolder = join(app.getPath("userData"), "PowershellUtility");
 
         await fileSystemUtility.createFolderIfDoesntExist(powershellScriptFolder);
 
-        dependencyInjector.registerInstance(
+        dependencyRegistry.register(
             "PowershellUtility",
             new PowershellUtility(fileSystemUtility, commandlineUtility, powershellScriptFolder, randomStringProvider),
         );

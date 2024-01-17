@@ -1,11 +1,11 @@
 import { join } from "path";
-import type { DependencyInjector } from "../DependencyInjector";
+import type { DependencyRegistry } from "../DependencyRegistry";
 
 export class SettingsFileModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const app = dependencyInjector.getInstance("App");
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        const app = dependencyRegistry.get("App");
 
-        dependencyInjector.registerInstance("SettingsFile", {
+        dependencyRegistry.register("SettingsFile", {
             path: join(app.getPath("userData"), "ueli9.settings.json"),
         });
     }

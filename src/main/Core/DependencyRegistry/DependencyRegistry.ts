@@ -1,7 +1,7 @@
-import type { DependencyInjector as DependencyInjectorInterface } from "./Contract";
+import type { DependencyRegistry as DependencyRegistryInterface } from "./Contract";
 import type { Dependencies, DependencyName } from "./Dependencies";
 
-export class DependencyInjector implements DependencyInjectorInterface {
+export class DependencyRegistry implements DependencyRegistryInterface {
     private dependencies: Dependencies = {
         ActionHandlerRegistry: undefined,
         App: undefined,
@@ -38,11 +38,11 @@ export class DependencyInjector implements DependencyInjectorInterface {
         UeliCommandInvoker: undefined,
     };
 
-    public registerInstance<Name extends DependencyName>(name: Name, instance: Dependencies[Name]): void {
+    public register<Name extends DependencyName>(name: Name, instance: Dependencies[Name]): void {
         this.dependencies[name] = instance;
     }
 
-    public getInstance<Name extends DependencyName>(name: Name): Dependencies[Name] {
+    public get<Name extends DependencyName>(name: Name): Dependencies[Name] {
         if (!this.dependencies[name]) {
             throw new Error(`Instance with name "${name}" not found`);
         }

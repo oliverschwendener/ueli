@@ -1,19 +1,19 @@
 import type { ExtensionInfo } from "@common/Core";
-import type { DependencyInjector } from "..";
+import type { DependencyRegistry } from "..";
 import { ExtensionManager } from "./ExtensionManager";
 
 export class ExtensionManagerModule {
-    public static async bootstrap(dependencyInjector: DependencyInjector) {
-        const ipcMain = dependencyInjector.getInstance("IpcMain");
-        const searchIndex = dependencyInjector.getInstance("SearchIndex");
-        const settingsManager = dependencyInjector.getInstance("SettingsManager");
-        const logger = dependencyInjector.getInstance("Logger");
-        const eventSubscriber = dependencyInjector.getInstance("EventSubscriber");
-        const extensionRegistry = dependencyInjector.getInstance("ExtensionRegistry");
+    public static async bootstrap(dependencyRegistry: DependencyRegistry) {
+        const ipcMain = dependencyRegistry.get("IpcMain");
+        const searchIndex = dependencyRegistry.get("SearchIndex");
+        const settingsManager = dependencyRegistry.get("SettingsManager");
+        const logger = dependencyRegistry.get("Logger");
+        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
+        const extensionRegistry = dependencyRegistry.get("ExtensionRegistry");
 
         const extensionManager = new ExtensionManager(extensionRegistry, searchIndex, settingsManager, logger);
 
-        await extensionManager.populateSearchIndex(dependencyInjector);
+        await extensionManager.populateSearchIndex(dependencyRegistry);
 
         ipcMain.on("extensionEnabled", (_, { extensionId }: { extensionId: string }) => {
             extensionManager.populateSearchIndexByExtensionId(extensionId);
@@ -21,7 +21,7 @@ export class ExtensionManagerModule {
 
         ipcMain.on("getAvailableExtensions", (event) => {
             event.returnValue = extensionManager
-                .getSupportedExtensions(dependencyInjector)
+                .getSupportedExtensions(dependencyRegistry)
                 .map(({ id, name, nameTranslationKey }): ExtensionInfo => ({ id, name, nameTranslationKey }));
         });
 

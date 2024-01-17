@@ -1,10 +1,10 @@
-import type { DependencyInjector } from "../DependencyInjector";
+import type { DependencyRegistry } from "../DependencyRegistry";
 import { SettingsFileReader } from "./SettingsFileReader";
 
 export class SettingsReaderModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const settingsFile = dependencyInjector.getInstance("SettingsFile");
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        const settingsFile = dependencyRegistry.get("SettingsFile");
 
-        dependencyInjector.registerInstance("SettingsReader", new SettingsFileReader(settingsFile.path));
+        dependencyRegistry.register("SettingsReader", new SettingsFileReader(settingsFile.path));
     }
 }

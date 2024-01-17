@@ -1,8 +1,8 @@
-import type { DependencyInjector } from "..";
+import type { DependencyRegistry } from "..";
 import { ExtensionRegistry } from "./ExtensionRegistry";
 
 export class ExtensionRegsitryModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        dependencyInjector.registerInstance("ExtensionRegistry", new ExtensionRegistry());
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        dependencyRegistry.register("ExtensionRegistry", new ExtensionRegistry());
     }
 }

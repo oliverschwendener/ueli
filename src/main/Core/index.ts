@@ -5,7 +5,7 @@ export * from "./BrowserWindow";
 export * from "./Clipboard";
 export * from "./Clock";
 export * from "./CommandlineUtility";
-export * from "./DependencyInjector";
+export * from "./DependencyRegistry";
 export * from "./Dialog";
 export * from "./EventEmitter";
 export * from "./EventSubscriber";

@@ -1,10 +1,10 @@
-import type { DependencyInjector } from "..";
+import type { DependencyRegistry } from "..";
 import { Translator } from "./Translator";
 
 export class TranslatorModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const settingsManager = dependencyInjector.getInstance("SettingsManager");
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        const settingsManager = dependencyRegistry.get("SettingsManager");
 
-        dependencyInjector.registerInstance("Translator", new Translator(settingsManager));
+        dependencyRegistry.register("Translator", new Translator(settingsManager));
     }
 }

@@ -1,8 +1,8 @@
-import { DependencyInjector } from "..";
+import { DependencyRegistry } from "..";
 import { RandomStringProvider } from "./RandomStringProvider";
 
 export class RandomStringProviderModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        dependencyInjector.registerInstance("RandomStringProvider", new RandomStringProvider());
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        dependencyRegistry.register("RandomStringProvider", new RandomStringProvider());
     }
 }

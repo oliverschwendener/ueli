@@ -1,10 +1,10 @@
-import type { DependencyInjector } from "..";
+import type { DependencyRegistry } from "..";
 import { SafeStorageEncryption } from "./SafeStorageEncryption";
 
 export class SafeStorageEncryptionModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const safeStorage = dependencyInjector.getInstance("SafeStorage");
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        const safeStorage = dependencyRegistry.get("SafeStorage");
 
-        dependencyInjector.registerInstance("SafeStorageEncryption", new SafeStorageEncryption(safeStorage));
+        dependencyRegistry.register("SafeStorageEncryption", new SafeStorageEncryption(safeStorage));
     }
 }

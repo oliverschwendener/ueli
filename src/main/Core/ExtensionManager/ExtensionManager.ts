@@ -1,4 +1,4 @@
-import type { DependencyInjector, ExtensionRegistry, Logger, SearchIndex, SettingsManager } from "..";
+import type { DependencyRegistry, ExtensionRegistry, Logger, SearchIndex, SettingsManager } from "..";
 
 export class ExtensionManager {
     public constructor(
@@ -8,8 +8,8 @@ export class ExtensionManager {
         private readonly logger: Logger,
     ) {}
 
-    public async populateSearchIndex(dependencyInjector: DependencyInjector) {
-        const enabledExtensions = this.getEnabledExtensions(dependencyInjector);
+    public async populateSearchIndex(dependencyRegistry: DependencyRegistry) {
+        const enabledExtensions = this.getEnabledExtensions(dependencyRegistry);
 
         const promiseResults = await Promise.allSettled(
             enabledExtensions.map((extension) => extension.getSearchResultItems()),
@@ -35,12 +35,12 @@ export class ExtensionManager {
         this.searchIndex.addSearchResultItems(extension.id, await extension.getSearchResultItems());
     }
 
-    public getSupportedExtensions(dependencyInjector: DependencyInjector) {
-        return this.extensionRegistry.getAll().filter((extension) => extension.isSupported(dependencyInjector));
+    public getSupportedExtensions(dependencyRegistry: DependencyRegistry) {
+        return this.extensionRegistry.getAll().filter((extension) => extension.isSupported(dependencyRegistry));
     }
 
-    public getEnabledExtensions(dependencyInjector: DependencyInjector) {
-        return this.getSupportedExtensions(dependencyInjector).filter((extension) =>
+    public getEnabledExtensions(dependencyRegistry: DependencyRegistry) {
+        return this.getSupportedExtensions(dependencyRegistry).filter((extension) =>
             this.settingsManager
                 .getValue<string[]>("extensions.enabledExtensionIds", ["ApplicationSearch", "UeliCommand"])
                 .includes(extension.id),

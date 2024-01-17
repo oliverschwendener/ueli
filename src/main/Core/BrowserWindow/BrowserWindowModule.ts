@@ -1,7 +1,7 @@
 import type { SearchResultItemAction } from "@common/Core";
 import type { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
-import type { DependencyInjector } from "../DependencyInjector";
+import type { DependencyRegistry } from "../DependencyRegistry";
 import type { EventSubscriber } from "../EventSubscriber";
 import type { UeliCommand, UeliCommandInvokedEvent } from "../UeliCommand";
 import { createBrowserWindow } from "./createBrowserWindow";
@@ -12,20 +12,20 @@ import { sendToBrowserWindow } from "./sendToBrowserWindow";
 import { toggleBrowserWindow } from "./toggleBrowserWindow";
 
 export class BrowserWindowModule {
-    public static async bootstrap(dependencyInjector: DependencyInjector) {
-        const browserWindow = createBrowserWindow(dependencyInjector);
+    public static async bootstrap(dependencyRegistry: DependencyRegistry) {
+        const browserWindow = createBrowserWindow(dependencyRegistry);
 
-        BrowserWindowModule.registerBrowserWindowEventListeners(browserWindow, dependencyInjector);
-        BrowserWindowModule.registerNativeThemeEventListeners(browserWindow, dependencyInjector);
-        BrowserWindowModule.registerEvents(browserWindow, dependencyInjector);
-        await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyInjector);
+        BrowserWindowModule.registerBrowserWindowEventListeners(browserWindow, dependencyRegistry);
+        BrowserWindowModule.registerNativeThemeEventListeners(browserWindow, dependencyRegistry);
+        BrowserWindowModule.registerEvents(browserWindow, dependencyRegistry);
+        await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyRegistry);
     }
 
     private static registerBrowserWindowEventListeners(
         browserWindow: BrowserWindow,
-        dependencyInjector: DependencyInjector,
+        dependencyRegistry: DependencyRegistry,
     ) {
-        const settingsManager = dependencyInjector.getInstance("SettingsManager");
+        const settingsManager = dependencyRegistry.get("SettingsManager");
 
         browserWindow.on("blur", () => {
             if (settingsManager.getValue("window.hideWindowOnBlur", true)) {
@@ -34,10 +34,10 @@ export class BrowserWindowModule {
         });
     }
 
-    private static registerEvents(browserWindow: BrowserWindow, dependencyInjector: DependencyInjector) {
-        const app = dependencyInjector.getInstance("App");
-        const eventSubscriber = dependencyInjector.getInstance("EventSubscriber");
-        const settingsManager = dependencyInjector.getInstance("SettingsManager");
+    private static registerEvents(browserWindow: BrowserWindow, dependencyRegistry: DependencyRegistry) {
+        const app = dependencyRegistry.get("App");
+        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
+        const settingsManager = dependencyRegistry.get("SettingsManager");
 
         eventSubscriber.subscribe("searchIndexUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
 
@@ -99,15 +99,15 @@ export class BrowserWindowModule {
 
     private static registerNativeThemeEventListeners(
         browserWindow: BrowserWindow,
-        dependencyInjector: DependencyInjector,
+        dependencyRegistry: DependencyRegistry,
     ) {
-        const nativeTheme = dependencyInjector.getInstance("NativeTheme");
+        const nativeTheme = dependencyRegistry.get("NativeTheme");
 
         nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
     }
 
-    private static async loadFileOrUrl(browserWindow: BrowserWindow, dependencyInjector: DependencyInjector) {
-        const app = dependencyInjector.getInstance("App");
+    private static async loadFileOrUrl(browserWindow: BrowserWindow, dependencyRegistry: DependencyRegistry) {
+        const app = dependencyRegistry.get("App");
 
         await (app.isPackaged
             ? browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html"))

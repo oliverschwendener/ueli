@@ -1,14 +1,14 @@
 import type { OperatingSystem } from "@common/Core";
 import { BrowserWindow, type BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
-import type { DependencyInjector } from "../DependencyInjector";
+import type { DependencyRegistry } from "../DependencyRegistry";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
 import { getVibrancy } from "./getVibrancy";
 
-export const createBrowserWindow = (dependencyInjector: DependencyInjector) => {
-    const app = dependencyInjector.getInstance("App");
-    const operatingSystem = dependencyInjector.getInstance("OperatingSystem");
-    const settingsManager = dependencyInjector.getInstance("SettingsManager");
+export const createBrowserWindow = (dependencyRegistry: DependencyRegistry) => {
+    const app = dependencyRegistry.get("App");
+    const operatingSystem = dependencyRegistry.get("OperatingSystem");
+    const settingsManager = dependencyRegistry.get("SettingsManager");
 
     const preloadScriptFilePath = join(__dirname, "..", "dist-preload", "index.js");
 

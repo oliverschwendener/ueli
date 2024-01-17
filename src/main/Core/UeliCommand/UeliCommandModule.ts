@@ -1,11 +1,11 @@
-import type { DependencyInjector } from "../DependencyInjector";
+import type { DependencyRegistry } from "../DependencyRegistry";
 import { UeliCommandInvoker } from "./UeliCommandInvoker";
 
 export class UeliCommandModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const app = dependencyInjector.getInstance("App");
-        const eventEmitter = dependencyInjector.getInstance("EventEmitter");
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        const app = dependencyRegistry.get("App");
+        const eventEmitter = dependencyRegistry.get("EventEmitter");
 
-        dependencyInjector.registerInstance("UeliCommandInvoker", new UeliCommandInvoker(app, eventEmitter));
+        dependencyRegistry.register("UeliCommandInvoker", new UeliCommandInvoker(app, eventEmitter));
     }
 }

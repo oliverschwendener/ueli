@@ -1,8 +1,8 @@
-import type { DependencyInjector } from "..";
+import type { DependencyRegistry } from "..";
 import { AssetPathResolver } from "./AssetPathResolver";
 
 export class AssetPathResolverModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        dependencyInjector.registerInstance("AssetPathResolver", new AssetPathResolver());
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        dependencyRegistry.register("AssetPathResolver", new AssetPathResolver());
     }
 }

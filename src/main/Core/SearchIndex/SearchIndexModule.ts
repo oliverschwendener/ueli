@@ -1,18 +1,18 @@
-import type { DependencyInjector } from "../DependencyInjector";
+import type { DependencyRegistry } from "../DependencyRegistry";
 import { InMemorySearchIndex } from "./InMemorySearchIndex";
 
 export class SearchIndexModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const eventEmitter = dependencyInjector.getInstance("EventEmitter");
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        const eventEmitter = dependencyRegistry.get("EventEmitter");
 
-        dependencyInjector.registerInstance("SearchIndex", new InMemorySearchIndex(eventEmitter));
+        dependencyRegistry.register("SearchIndex", new InMemorySearchIndex(eventEmitter));
 
-        SearchIndexModule.registerIpcMainEventListeners(dependencyInjector);
+        SearchIndexModule.registerIpcMainEventListeners(dependencyRegistry);
     }
 
-    private static registerIpcMainEventListeners(dependencyInjector: DependencyInjector) {
-        const ipcMain = dependencyInjector.getInstance("IpcMain");
-        const searchIndex = dependencyInjector.getInstance("SearchIndex");
+    private static registerIpcMainEventListeners(dependencyRegistry: DependencyRegistry) {
+        const ipcMain = dependencyRegistry.get("IpcMain");
+        const searchIndex = dependencyRegistry.get("SearchIndex");
 
         ipcMain.on("extensionDisabled", (_, { extensionId }: { extensionId: string }) =>
             searchIndex.removeSearchResultItems(extensionId),

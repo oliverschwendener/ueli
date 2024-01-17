@@ -1,5 +1,5 @@
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
-import type { DependencyInjector } from "../../Core/DependencyInjector";
+import type { DependencyRegistry } from "../../Core/DependencyRegistry";
 import type { Extension } from "../../Core/Extension";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import type { Settings } from "./Settings";
@@ -19,8 +19,8 @@ export class ApplicationSearch implements Extension {
         return applications.map((application) => application.toSearchResultItem());
     }
 
-    public isSupported(dependencyInjector: DependencyInjector): boolean {
-        const currentOperatingSystem = dependencyInjector.getInstance("OperatingSystem");
+    public isSupported(dependencyRegistry: DependencyRegistry): boolean {
+        const currentOperatingSystem = dependencyRegistry.get("OperatingSystem");
         const supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
         return supportedOperatingSystems.includes(currentOperatingSystem);
     }

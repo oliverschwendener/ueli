@@ -1,5 +1,5 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { DependencyInjector } from "@Core/DependencyInjector";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
@@ -44,8 +44,8 @@ export class SystemColorThemeSwitcher implements Extension {
         return undefined as T;
     }
 
-    public isSupported(dependencyInjector: DependencyInjector): boolean {
-        const currentOperatingSystem = dependencyInjector.getInstance("OperatingSystem");
+    public isSupported(dependencyRegistry: DependencyRegistry): boolean {
+        const currentOperatingSystem = dependencyRegistry.get("OperatingSystem");
         const supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
         return supportedOperatingSystems.includes(currentOperatingSystem);
     }

@@ -1,5 +1,5 @@
 import type { SearchResultItem } from "@common/Core";
-import type { DependencyInjector } from "../../DependencyInjector";
+import type { DependencyRegistry } from "../../DependencyRegistry";
 
 export interface Extension {
     readonly id: string;
@@ -8,7 +8,7 @@ export interface Extension {
     readonly settingKeysTriggerindReindex?: string[];
 
     getSearchResultItems(): Promise<SearchResultItem[]>;
-    isSupported(dependencyInjector: DependencyInjector): boolean;
+    isSupported(dependencyRegistry: DependencyRegistry): boolean;
     getSettingDefaultValue<T>(key: string): T;
     invoke?(argument: unknown): Promise<unknown>;
     getImageUrl?(): string;

@@ -1,9 +1,9 @@
-import type { DependencyInjector } from "../DependencyInjector";
+import type { DependencyRegistry } from "../DependencyRegistry";
 import { MittEventEmitter } from "./MittEventEmitter";
 
 export class EventEmitterModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const emitter = dependencyInjector.getInstance("Emitter");
-        dependencyInjector.registerInstance("EventEmitter", new MittEventEmitter(emitter));
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        const emitter = dependencyRegistry.get("Emitter");
+        dependencyRegistry.register("EventEmitter", new MittEventEmitter(emitter));
     }
 }

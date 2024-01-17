@@ -1,8 +1,8 @@
-import type { DependencyInjector } from "../DependencyInjector";
+import type { DependencyRegistry } from "../DependencyRegistry";
 import { Clock } from "./Clock";
 
 export class ClockModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        dependencyInjector.registerInstance("Clock", new Clock());
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        dependencyRegistry.register("Clock", new Clock());
     }
 }

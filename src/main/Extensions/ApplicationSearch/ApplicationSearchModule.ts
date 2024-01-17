@@ -1,4 +1,4 @@
-import type { DependencyInjector } from "@Core/DependencyInjector";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { OperatingSystem } from "@common/Core";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ApplicationRepository } from "./ApplicationRepository";
@@ -9,15 +9,15 @@ import { MacOsApplicationIconGenerator } from "./macOS/MacOsApplicationIconGener
 import { MacOsApplicationRepository } from "./macOS/MacOsApplicationRepository";
 
 export class ApplicationSearchModule {
-    public static bootstrap(dependencyInjector: DependencyInjector): ExtensionBootstrapResult {
-        const operatingSystem = dependencyInjector.getInstance("OperatingSystem");
-        const fileSystemUtility = dependencyInjector.getInstance("FileSystemUtility");
-        const commandlineUtility = dependencyInjector.getInstance("CommandlineUtility");
-        const powershellUtility = dependencyInjector.getInstance("PowershellUtility");
-        const extensionCacheFolder = dependencyInjector.getInstance("ExtensionCacheFolder");
-        const settingsManager = dependencyInjector.getInstance("SettingsManager");
-        const app = dependencyInjector.getInstance("App");
-        const logger = dependencyInjector.getInstance("Logger");
+    public static bootstrap(dependencyRegistry: DependencyRegistry): ExtensionBootstrapResult {
+        const operatingSystem = dependencyRegistry.get("OperatingSystem");
+        const fileSystemUtility = dependencyRegistry.get("FileSystemUtility");
+        const commandlineUtility = dependencyRegistry.get("CommandlineUtility");
+        const powershellUtility = dependencyRegistry.get("PowershellUtility");
+        const extensionCacheFolder = dependencyRegistry.get("ExtensionCacheFolder");
+        const settingsManager = dependencyRegistry.get("SettingsManager");
+        const app = dependencyRegistry.get("App");
+        const logger = dependencyRegistry.get("Logger");
 
         const settings = new Settings("ApplicationSearch", settingsManager, app);
 

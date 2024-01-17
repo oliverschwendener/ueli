@@ -1,16 +1,16 @@
 import { join } from "path";
-import type { DependencyInjector } from "../DependencyInjector";
+import type { DependencyRegistry } from "../DependencyRegistry";
 import type { ExtensionCacheFolder } from "./Contract";
 
 export class ExtensionCacheFolderModule {
-    public static async bootstrap(dependencyInjector: DependencyInjector) {
-        const app = dependencyInjector.getInstance("App");
-        const fileSystemUtility = dependencyInjector.getInstance("FileSystemUtility");
+    public static async bootstrap(dependencyRegistry: DependencyRegistry) {
+        const app = dependencyRegistry.get("App");
+        const fileSystemUtility = dependencyRegistry.get("FileSystemUtility");
 
         const extensionCacheFolder: ExtensionCacheFolder = { path: join(app.getPath("userData"), "ExtensionCache") };
 
         await fileSystemUtility.createFolderIfDoesntExist(extensionCacheFolder.path);
 
-        dependencyInjector.registerInstance("ExtensionCacheFolder", extensionCacheFolder);
+        dependencyRegistry.register("ExtensionCacheFolder", extensionCacheFolder);
     }
 }

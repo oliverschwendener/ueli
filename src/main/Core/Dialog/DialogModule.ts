@@ -1,10 +1,10 @@
 import type { OpenDialogOptions } from "electron";
-import type { DependencyInjector } from "../DependencyInjector";
+import type { DependencyRegistry } from "../DependencyRegistry";
 
 export class DialogModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const dialog = dependencyInjector.getInstance("Dialog");
-        const ipcMain = dependencyInjector.getInstance("IpcMain");
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        const dialog = dependencyRegistry.get("Dialog");
+        const ipcMain = dependencyRegistry.get("IpcMain");
 
         ipcMain.handle("showOpenDialog", (_, { options }: { options: OpenDialogOptions }) =>
             dialog.showOpenDialog(options),

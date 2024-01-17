@@ -1,16 +1,16 @@
 import { Menu, Tray } from "electron";
-import type { DependencyInjector } from "..";
+import type { DependencyRegistry } from "..";
 import { getContextMenuTemplate } from "./getContextMenuTemplate";
 import { getTrayIconImage } from "./getTrayIconImage";
 
 export class TrayIconModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const eventSubscriber = dependencyInjector.getInstance("EventSubscriber");
-        const nativeTheme = dependencyInjector.getInstance("NativeTheme");
-        const operatingSystem = dependencyInjector.getInstance("OperatingSystem");
-        const ueliCommandInvoker = dependencyInjector.getInstance("UeliCommandInvoker");
-        const translator = dependencyInjector.getInstance("Translator");
-        const assetPathResolver = dependencyInjector.getInstance("AssetPathResolver");
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
+        const nativeTheme = dependencyRegistry.get("NativeTheme");
+        const operatingSystem = dependencyRegistry.get("OperatingSystem");
+        const ueliCommandInvoker = dependencyRegistry.get("UeliCommandInvoker");
+        const translator = dependencyRegistry.get("Translator");
+        const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
 
         const setTrayContextMenu = async (tray: Tray) => {
             tray.setContextMenu(

@@ -1,24 +1,24 @@
-import type { DependencyInjector } from "..";
+import type { DependencyRegistry } from "..";
 import { SettingsManager } from "./SettingsManager";
 
 export class SettingsManagerModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const settingsReader = dependencyInjector.getInstance("SettingsReader");
-        const settingsWriter = dependencyInjector.getInstance("SettingsWriter");
-        const eventEmitter = dependencyInjector.getInstance("EventEmitter");
-        const safeStorageEncryption = dependencyInjector.getInstance("SafeStorageEncryption");
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        const settingsReader = dependencyRegistry.get("SettingsReader");
+        const settingsWriter = dependencyRegistry.get("SettingsWriter");
+        const eventEmitter = dependencyRegistry.get("EventEmitter");
+        const safeStorageEncryption = dependencyRegistry.get("SafeStorageEncryption");
 
-        dependencyInjector.registerInstance(
+        dependencyRegistry.register(
             "SettingsManager",
             new SettingsManager(settingsReader, settingsWriter, eventEmitter, safeStorageEncryption),
         );
 
-        SettingsManagerModule.registerIpcEventListeners(dependencyInjector);
+        SettingsManagerModule.registerIpcEventListeners(dependencyRegistry);
     }
 
-    private static registerIpcEventListeners(dependencyInjector: DependencyInjector): void {
-        const settingsManager = dependencyInjector.getInstance("SettingsManager");
-        const ipcMain = dependencyInjector.getInstance("IpcMain");
+    private static registerIpcEventListeners(dependencyRegistry: DependencyRegistry): void {
+        const settingsManager = dependencyRegistry.get("SettingsManager");
+        const ipcMain = dependencyRegistry.get("IpcMain");
 
         ipcMain.handle(
             "updateSettingValue",

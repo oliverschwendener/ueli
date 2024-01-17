@@ -1,15 +1,15 @@
-import type { DependencyInjector } from "@Core/DependencyInjector";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import { CustomActionHandler } from "./CustomActionHandler";
 import { SystemColorThemeSwitcher } from "./SystemColorThemeSwitcher";
 
 export class SystemColorThemeSwitcherModule {
-    public static bootstrap(dependencyInjector: DependencyInjector): ExtensionBootstrapResult {
-        const operatingSystem = dependencyInjector.getInstance("OperatingSystem");
-        const commandlineUtility = dependencyInjector.getInstance("CommandlineUtility");
-        const nativeTheme = dependencyInjector.getInstance("NativeTheme");
-        const assetPathResolver = dependencyInjector.getInstance("AssetPathResolver");
-        const translator = dependencyInjector.getInstance("Translator");
+    public static bootstrap(dependencyRegistry: DependencyRegistry): ExtensionBootstrapResult {
+        const operatingSystem = dependencyRegistry.get("OperatingSystem");
+        const commandlineUtility = dependencyRegistry.get("CommandlineUtility");
+        const nativeTheme = dependencyRegistry.get("NativeTheme");
+        const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
+        const translator = dependencyRegistry.get("Translator");
 
         return {
             extension: new SystemColorThemeSwitcher(operatingSystem, assetPathResolver, translator),

@@ -1,8 +1,8 @@
-import type { DependencyInjector } from "../DependencyInjector";
+import type { DependencyRegistry } from "../DependencyRegistry";
 import { NodeJsCommandlineUtility } from "./NodeJsCommandlineUtility";
 
 export class CommandlineUtilityModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        dependencyInjector.registerInstance("CommandlineUtility", new NodeJsCommandlineUtility());
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        dependencyRegistry.register("CommandlineUtility", new NodeJsCommandlineUtility());
     }
 }

@@ -1,14 +1,14 @@
-import type { DependencyInjector } from "../DependencyInjector";
+import type { DependencyRegistry } from "../DependencyRegistry";
 import { Logger } from "./Logger";
 
 export class LoggerModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const ipcMain = dependencyInjector.getInstance("IpcMain");
-        const clock = dependencyInjector.getInstance("Clock");
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        const ipcMain = dependencyRegistry.get("IpcMain");
+        const clock = dependencyRegistry.get("Clock");
 
         const logger = new Logger(clock);
 
-        dependencyInjector.registerInstance("Logger", logger);
+        dependencyRegistry.register("Logger", logger);
         ipcMain.on("getLogs", (event) => (event.returnValue = logger.getLogs()));
     }
 }

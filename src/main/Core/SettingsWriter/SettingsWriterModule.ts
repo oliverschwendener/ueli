@@ -1,10 +1,10 @@
-import type { DependencyInjector } from "../DependencyInjector";
+import type { DependencyRegistry } from "../DependencyRegistry";
 import { SettingsFileWriter } from "./SettingsFileWriter";
 
 export class SettingsWriterModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const settingsFile = dependencyInjector.getInstance("SettingsFile");
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        const settingsFile = dependencyRegistry.get("SettingsFile");
 
-        dependencyInjector.registerInstance("SettingsWriter", new SettingsFileWriter(settingsFile.path));
+        dependencyRegistry.register("SettingsWriter", new SettingsFileWriter(settingsFile.path));
     }
 }

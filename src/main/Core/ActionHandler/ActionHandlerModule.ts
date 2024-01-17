@@ -1,4 +1,4 @@
-import type { DependencyInjector } from "@Core/DependencyInjector";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { SearchResultItemAction } from "@common/Core";
 import { ActionHandlerRegistry } from "./ActionHandlerRegistry";
 import type { ActionHandler } from "./Contract";
@@ -13,17 +13,17 @@ import {
 } from "./DefaultActionHandlers";
 
 export class ActionHandlerModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const commandlineUtility = dependencyInjector.getInstance("CommandlineUtility");
-        const powershellUtility = dependencyInjector.getInstance("PowershellUtility");
-        const shell = dependencyInjector.getInstance("Shell");
-        const clipboard = dependencyInjector.getInstance("Clipboard");
-        const eventEmitter = dependencyInjector.getInstance("EventEmitter");
-        const ipcMain = dependencyInjector.getInstance("IpcMain");
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        const commandlineUtility = dependencyRegistry.get("CommandlineUtility");
+        const powershellUtility = dependencyRegistry.get("PowershellUtility");
+        const shell = dependencyRegistry.get("Shell");
+        const clipboard = dependencyRegistry.get("Clipboard");
+        const eventEmitter = dependencyRegistry.get("EventEmitter");
+        const ipcMain = dependencyRegistry.get("IpcMain");
 
         const actionHandlerRegistry = new ActionHandlerRegistry();
 
-        dependencyInjector.registerInstance("ActionHandlerRegistry", actionHandlerRegistry);
+        dependencyRegistry.register("ActionHandlerRegistry", actionHandlerRegistry);
 
         const actionHandlers: ActionHandler[] = [
             new CommandlineActionHandler(commandlineUtility),

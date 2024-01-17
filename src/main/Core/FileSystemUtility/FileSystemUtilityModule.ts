@@ -1,8 +1,8 @@
-import type { DependencyInjector } from "../DependencyInjector";
+import type { DependencyRegistry } from "../DependencyRegistry";
 import { NodeJsFileSystemUtility } from "./NodeJsFileSystemUtility";
 
 export class FileSystemUtilityModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        dependencyInjector.registerInstance("FileSystemUtility", new NodeJsFileSystemUtility());
+    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+        dependencyRegistry.register("FileSystemUtility", new NodeJsFileSystemUtility());
     }
 }
