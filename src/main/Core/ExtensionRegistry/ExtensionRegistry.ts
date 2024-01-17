@@ -13,13 +13,11 @@ export class ExtensionRegistry implements ExtensionRegsitryInterface {
     }
 
     public getById(extensionId: string): Extension {
-        const extension = this.extensions[extensionId];
-
-        if (extension) {
-            return extension;
+        if (!this.extensions[extensionId]) {
+            throw new Error(`Unable to find extension with id "${extensionId}"`);
         }
 
-        throw new Error(`Unable to find extension with id "${extensionId}"`);
+        return this.extensions[extensionId];
     }
 
     public getAll(): Extension[] {

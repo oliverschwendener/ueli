@@ -1,9 +1,8 @@
 import type { SearchResultItemAction } from "@common/Core";
-import type { App, BrowserWindow, BrowserWindowConstructorOptions, NativeTheme } from "electron";
+import type { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
 import type { DependencyInjector } from "../DependencyInjector";
 import type { EventSubscriber } from "../EventSubscriber";
-import type { SettingsManager } from "../SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "../UeliCommand";
 import { createBrowserWindow } from "./createBrowserWindow";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
@@ -26,7 +25,7 @@ export class BrowserWindowModule {
         browserWindow: BrowserWindow,
         dependencyInjector: DependencyInjector,
     ) {
-        const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
+        const settingsManager = dependencyInjector.getInstance("SettingsManager");
 
         browserWindow.on("blur", () => {
             if (settingsManager.getValue("window.hideWindowOnBlur", true)) {
@@ -36,9 +35,9 @@ export class BrowserWindowModule {
     }
 
     private static registerEvents(browserWindow: BrowserWindow, dependencyInjector: DependencyInjector) {
-        const app = dependencyInjector.getInstance<App>("App");
-        const eventSubscriber = dependencyInjector.getInstance<EventSubscriber>("EventSubscriber");
-        const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
+        const app = dependencyInjector.getInstance("App");
+        const eventSubscriber = dependencyInjector.getInstance("EventSubscriber");
+        const settingsManager = dependencyInjector.getInstance("SettingsManager");
 
         eventSubscriber.subscribe("searchIndexUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
 
@@ -102,13 +101,13 @@ export class BrowserWindowModule {
         browserWindow: BrowserWindow,
         dependencyInjector: DependencyInjector,
     ) {
-        const nativeTheme = dependencyInjector.getInstance<NativeTheme>("NativeTheme");
+        const nativeTheme = dependencyInjector.getInstance("NativeTheme");
 
         nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
     }
 
     private static async loadFileOrUrl(browserWindow: BrowserWindow, dependencyInjector: DependencyInjector) {
-        const app = dependencyInjector.getInstance<App>("App");
+        const app = dependencyInjector.getInstance("App");
 
         await (app.isPackaged
             ? browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html"))

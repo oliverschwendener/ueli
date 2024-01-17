@@ -1,5 +1,5 @@
 import * as Electron from "electron";
-import mitt, { Emitter } from "mitt";
+import mitt from "mitt";
 import { platform } from "os";
 import * as Core from "./Core";
 import * as Extensions from "./Extensions";
@@ -12,18 +12,18 @@ import * as Extensions from "./Extensions";
     const dependencyInjector = Core.DependencyInjectorModule.bootstrap();
 
     // Electron Modules
-    dependencyInjector.registerInstance<string>("Platform", platform());
-    dependencyInjector.registerInstance<Electron.App>("App", Electron.app);
-    dependencyInjector.registerInstance<Electron.IpcMain>("IpcMain", Electron.ipcMain);
-    dependencyInjector.registerInstance<Electron.NativeTheme>("NativeTheme", Electron.nativeTheme);
-    dependencyInjector.registerInstance<Electron.Shell>("Shell", Electron.shell);
-    dependencyInjector.registerInstance<Electron.GlobalShortcut>("GlobalShortcut", Electron.globalShortcut);
-    dependencyInjector.registerInstance<Emitter<Record<string, unknown>>>("Emitter", mitt<Record<string, unknown>>());
-    dependencyInjector.registerInstance<Electron.SystemPreferences>("SystemPreferences", Electron.systemPreferences);
-    dependencyInjector.registerInstance<Electron.Dialog>("Dialog", Electron.dialog);
-    dependencyInjector.registerInstance<Electron.Clipboard>("Clipboard", Electron.clipboard);
-    dependencyInjector.registerInstance<Electron.Net>("Net", Electron.net);
-    dependencyInjector.registerInstance<Electron.SafeStorage>("SafeStorage", Electron.safeStorage);
+    dependencyInjector.registerInstance("Platform", platform());
+    dependencyInjector.registerInstance("App", Electron.app);
+    dependencyInjector.registerInstance("IpcMain", Electron.ipcMain);
+    dependencyInjector.registerInstance("NativeTheme", Electron.nativeTheme);
+    dependencyInjector.registerInstance("Shell", Electron.shell);
+    dependencyInjector.registerInstance("GlobalShortcut", Electron.globalShortcut);
+    dependencyInjector.registerInstance("Emitter", mitt<Record<string, unknown>>());
+    dependencyInjector.registerInstance("SystemPreferences", Electron.systemPreferences);
+    dependencyInjector.registerInstance("Dialog", Electron.dialog);
+    dependencyInjector.registerInstance("Clipboard", Electron.clipboard);
+    dependencyInjector.registerInstance("Net", Electron.net);
+    dependencyInjector.registerInstance("SafeStorage", Electron.safeStorage);
 
     // Core Modules
     Core.RandomStringProviderModule.bootstrap(dependencyInjector);

@@ -1,6 +1,6 @@
-import type { DependencyName } from "../DependencyName";
+import type { Dependencies, DependencyName } from "../Dependencies";
 
 export interface DependencyInjector {
-    registerInstance<T>(name: DependencyName, instance: T): void;
-    getInstance<T>(name: DependencyName): T;
+    registerInstance<Name extends DependencyName>(name: Name, instance: Dependencies[Name]): void;
+    getInstance<Name extends DependencyName>(name: Name): Dependencies[Name];
 }

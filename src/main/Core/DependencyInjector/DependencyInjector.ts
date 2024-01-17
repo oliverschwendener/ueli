@@ -1,20 +1,52 @@
 import type { DependencyInjector as DependencyInjectorInterface } from "./Contract";
-import type { DependencyName } from "./DependencyName";
+import type { Dependencies, DependencyName } from "./Dependencies";
 
 export class DependencyInjector implements DependencyInjectorInterface {
-    private dependencies: Record<DependencyName | string, unknown> = {};
+    private dependencies: Dependencies = {
+        ActionHandlerRegistry: undefined,
+        App: undefined,
+        AssetPathResolver: undefined,
+        Clipboard: undefined,
+        Clock: undefined,
+        CommandlineUtility: undefined,
+        Dialog: undefined,
+        Emitter: undefined,
+        EventEmitter: undefined,
+        EventSubscriber: undefined,
+        ExtensionCacheFolder: undefined,
+        ExtensionRegistry: undefined,
+        FileSystemUtility: undefined,
+        GlobalShortcut: undefined,
+        IpcMain: undefined,
+        Logger: undefined,
+        NativeTheme: undefined,
+        Net: undefined,
+        OperatingSystem: undefined,
+        Platform: undefined,
+        PowershellUtility: undefined,
+        RandomStringProvider: undefined,
+        SafeStorage: undefined,
+        SafeStorageEncryption: undefined,
+        SearchIndex: undefined,
+        SettingsFile: undefined,
+        SettingsManager: undefined,
+        SettingsReader: undefined,
+        SettingsWriter: undefined,
+        Shell: undefined,
+        SystemPreferences: undefined,
+        Translator: undefined,
+        UeliCommandInvoker: undefined,
+    };
 
-    public registerInstance<T>(name: DependencyName, instance: T): void {
+    public registerInstance<Name extends DependencyName>(name: Name, instance: Dependencies[Name]): void {
         this.dependencies[name] = instance;
     }
 
-    public getInstance<T>(name: DependencyName): T {
-        const instance = this.dependencies[name] as T;
-
-        if (!instance) {
+    public getInstance<Name extends DependencyName>(name: Name): Dependencies[Name] {
+        if (!this.dependencies[name]) {
             throw new Error(`Instance with name "${name}" not found`);
         }
 
-        return instance;
+        return this.dependencies[name];
     }
 }

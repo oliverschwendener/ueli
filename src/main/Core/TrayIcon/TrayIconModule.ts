@@ -1,17 +1,16 @@
-import type { OperatingSystem } from "@common/Core";
-import { Menu, Tray, type NativeTheme } from "electron";
-import type { AssetPathResolver, DependencyInjector, EventSubscriber, Translator, UeliCommandInvoker } from "..";
+import { Menu, Tray } from "electron";
+import type { DependencyInjector } from "..";
 import { getContextMenuTemplate } from "./getContextMenuTemplate";
 import { getTrayIconImage } from "./getTrayIconImage";
 
 export class TrayIconModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {
-        const eventSubscriber = dependencyInjector.getInstance<EventSubscriber>("EventSubscriber");
-        const nativeTheme = dependencyInjector.getInstance<NativeTheme>("NativeTheme");
-        const operatingSystem = dependencyInjector.getInstance<OperatingSystem>("OperatingSystem");
-        const ueliCommandInvoker = dependencyInjector.getInstance<UeliCommandInvoker>("UeliCommandInvoker");
-        const translator = dependencyInjector.getInstance<Translator>("Translator");
-        const assetPathResolver = dependencyInjector.getInstance<AssetPathResolver>("AssetPathResolver");
+        const eventSubscriber = dependencyInjector.getInstance("EventSubscriber");
+        const nativeTheme = dependencyInjector.getInstance("NativeTheme");
+        const operatingSystem = dependencyInjector.getInstance("OperatingSystem");
+        const ueliCommandInvoker = dependencyInjector.getInstance("UeliCommandInvoker");
+        const translator = dependencyInjector.getInstance("Translator");
+        const assetPathResolver = dependencyInjector.getInstance("AssetPathResolver");
 
         const setTrayContextMenu = async (tray: Tray) => {
             tray.setContextMenu(

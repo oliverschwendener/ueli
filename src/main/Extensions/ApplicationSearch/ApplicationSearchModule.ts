@@ -1,12 +1,5 @@
-import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { DependencyInjector } from "@Core/DependencyInjector";
-import type { ExtensionCacheFolder } from "@Core/ExtensionCacheFolder";
-import type { FileSystemUtility } from "@Core/FileSystemUtility";
-import type { Logger } from "@Core/Logger";
-import type { PowershellUtility } from "@Core/PowershellUtility";
-import type { SettingsManager } from "@Core/SettingsManager";
 import type { OperatingSystem } from "@common/Core";
-import type { App } from "electron";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";
@@ -17,14 +10,14 @@ import { MacOsApplicationRepository } from "./macOS/MacOsApplicationRepository";
 
 export class ApplicationSearchModule {
     public static bootstrap(dependencyInjector: DependencyInjector): ExtensionBootstrapResult {
-        const operatingSystem = dependencyInjector.getInstance<OperatingSystem>("OperatingSystem");
-        const fileSystemUtility = dependencyInjector.getInstance<FileSystemUtility>("FileSystemUtility");
-        const commandlineUtility = dependencyInjector.getInstance<CommandlineUtility>("CommandlineUtility");
-        const powershellUtility = dependencyInjector.getInstance<PowershellUtility>("PowershellUtility");
-        const extensionCacheFolder = dependencyInjector.getInstance<ExtensionCacheFolder>("ExtensionCacheFolder");
-        const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
-        const app = dependencyInjector.getInstance<App>("App");
-        const logger = dependencyInjector.getInstance<Logger>("Logger");
+        const operatingSystem = dependencyInjector.getInstance("OperatingSystem");
+        const fileSystemUtility = dependencyInjector.getInstance("FileSystemUtility");
+        const commandlineUtility = dependencyInjector.getInstance("CommandlineUtility");
+        const powershellUtility = dependencyInjector.getInstance("PowershellUtility");
+        const extensionCacheFolder = dependencyInjector.getInstance("ExtensionCacheFolder");
+        const settingsManager = dependencyInjector.getInstance("SettingsManager");
+        const app = dependencyInjector.getInstance("App");
+        const logger = dependencyInjector.getInstance("Logger");
 
         const settings = new Settings("ApplicationSearch", settingsManager, app);
 

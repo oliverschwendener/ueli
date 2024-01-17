@@ -1,19 +1,15 @@
 import type { ExtensionInfo } from "@common/Core";
-import type { IpcMain } from "electron";
-import type { DependencyInjector, EventSubscriber, ExtensionRegistry } from "..";
-import type { Logger } from "../Logger";
-import type { SearchIndex } from "../SearchIndex";
-import type { SettingsManager } from "../SettingsManager";
+import type { DependencyInjector } from "..";
 import { ExtensionManager } from "./ExtensionManager";
 
 export class ExtensionManagerModule {
     public static async bootstrap(dependencyInjector: DependencyInjector) {
-        const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
-        const searchIndex = dependencyInjector.getInstance<SearchIndex>("SearchIndex");
-        const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
-        const logger = dependencyInjector.getInstance<Logger>("Logger");
-        const eventSubscriber = dependencyInjector.getInstance<EventSubscriber>("EventSubscriber");
-        const extensionRegistry = dependencyInjector.getInstance<ExtensionRegistry>("ExtensionRegistry");
+        const ipcMain = dependencyInjector.getInstance("IpcMain");
+        const searchIndex = dependencyInjector.getInstance("SearchIndex");
+        const settingsManager = dependencyInjector.getInstance("SettingsManager");
+        const logger = dependencyInjector.getInstance("Logger");
+        const eventSubscriber = dependencyInjector.getInstance("EventSubscriber");
+        const extensionRegistry = dependencyInjector.getInstance("ExtensionRegistry");
 
         const extensionManager = new ExtensionManager(extensionRegistry, searchIndex, settingsManager, logger);
 

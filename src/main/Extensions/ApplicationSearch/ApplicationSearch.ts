@@ -20,7 +20,7 @@ export class ApplicationSearch implements Extension {
     }
 
     public isSupported(dependencyInjector: DependencyInjector): boolean {
-        const currentOperatingSystem = dependencyInjector.getInstance<OperatingSystem>("OperatingSystem");
+        const currentOperatingSystem = dependencyInjector.getInstance("OperatingSystem");
         const supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
         return supportedOperatingSystems.includes(currentOperatingSystem);
     }
