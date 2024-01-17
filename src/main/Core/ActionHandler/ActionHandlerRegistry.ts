@@ -13,7 +13,7 @@ export class ActionHandlerRegistry implements ActionHandlerRegistryInterface {
 
     public getById(actionHandlerId: string) {
         if (!this.actionHandlers[actionHandlerId]) {
-            throw new Error(`Action handler with id "${actionHandlerId}" not found`);
+            throw new Error(`Action handler with id "${actionHandlerId}" can't be found`);
         }
 
         return this.actionHandlers[actionHandlerId];
