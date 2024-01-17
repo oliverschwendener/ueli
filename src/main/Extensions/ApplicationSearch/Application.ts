@@ -20,7 +20,7 @@ export class Application {
                 descriptionTranslationKey:
                     "extension[ApplicationSearch].searchResultItem.defaultAction.openApplication",
                 handlerId: "OpenFilePath",
-                hideWindowAfterInvokation: true,
+                hideWindowAfterInvocation: true,
                 fluentIcon: "OpenRegular",
             },
             additionalActions: [
@@ -30,7 +30,7 @@ export class Application {
                     descriptionTranslationKey:
                         "extension[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer",
                     handlerId: "ShowItemInFileExplorer",
-                    hideWindowAfterInvokation: true,
+                    hideWindowAfterInvocation: true,
                     fluentIcon: "DocumentFolderRegular",
                 },
                 {
@@ -39,7 +39,7 @@ export class Application {
                     descriptionTranslationKey:
                         "extension[ApplicationSearch].searchResultItem.additionalAction.copyFilePathToClipboard",
                     handlerId: "copyToClipboard",
-                    hideWindowAfterInvokation: false,
+                    hideWindowAfterInvocation: false,
                     fluentIcon: "ClipboardRegular",
                 },
             ],

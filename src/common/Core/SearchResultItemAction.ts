@@ -5,7 +5,7 @@ export type SearchResultItemAction = {
     descriptionTranslationKey?: string;
     argument: string;
     handlerId: string;
-    hideWindowAfterInvokation: boolean;
+    hideWindowAfterInvocation: boolean;
     requiresConfirmation?: boolean;
     fluentIcon?: FluentIcon;
 };

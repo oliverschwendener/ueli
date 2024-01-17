@@ -11,9 +11,13 @@ type TranslatorProps = {
     contextBridge: ContextBridge;
 };
 
-type InvokationArgument = { searchTerm: string; sourceLanguage: string; targetLanguage: string };
+type InvocationArgument = {
+    searchTerm: string;
+    sourceLanguage: string;
+    targetLanguage: string;
+};
 
-type InvokationResult = string[];
+type InvocationResult = string[];
 
 export const Translator = ({ translatedText, setTranslatedText, contextBridge }: TranslatorProps) => {
     const extensionId = "DeeplTranslator";
@@ -43,7 +47,7 @@ export const Translator = ({ translatedText, setTranslatedText, contextBridge }:
         }
 
         try {
-            const translations = await contextBridge.invokeExtension<InvokationArgument, InvokationResult>(
+            const translations = await contextBridge.invokeExtension<InvocationArgument, InvocationResult>(
                 extensionId,
                 { searchTerm, sourceLanguage, targetLanguage },
             );

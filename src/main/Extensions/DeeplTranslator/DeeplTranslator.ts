@@ -7,7 +7,7 @@ import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Net } from "electron";
 import { resources } from "./resources";
 
-type InvokationArgument = {
+type InvocationArgument = {
     searchTerm: string;
     sourceLanguage: string;
     targetLanguage: string;
@@ -52,7 +52,7 @@ export class DeeplTranslator implements Extension {
                     argument: `/extension/${this.id}`,
                     description: t("searchResultItem.actionDescription"),
                     handlerId: "navigateTo",
-                    hideWindowAfterInvokation: false,
+                    hideWindowAfterInvocation: false,
                     fluentIcon: "OpenRegular",
                 },
                 additionalActions: [
@@ -60,7 +60,7 @@ export class DeeplTranslator implements Extension {
                         argument: `/settings/extension/${this.id}`,
                         description: "Configure",
                         handlerId: "navigateTo",
-                        hideWindowAfterInvokation: false,
+                        hideWindowAfterInvocation: false,
                         fluentIcon: "SettingsRegular",
                     },
                 ],
@@ -68,7 +68,7 @@ export class DeeplTranslator implements Extension {
         ];
     }
 
-    public async invoke(argument: InvokationArgument): Promise<string[]> {
+    public async invoke(argument: InvocationArgument): Promise<string[]> {
         const apiResponse = await this.getApiResponse(this.getPostBody(argument));
         return apiResponse.translations.map((t) => t.text);
     }
@@ -99,7 +99,7 @@ export class DeeplTranslator implements Extension {
         return `file://${this.getDeeplAssetFilePath()}`;
     }
 
-    private getPostBody({ searchTerm, sourceLanguage, targetLanguage }: InvokationArgument): PostBody {
+    private getPostBody({ searchTerm, sourceLanguage, targetLanguage }: InvocationArgument): PostBody {
         const postBody: PostBody = {
             text: [searchTerm],
             target_lang: targetLanguage,

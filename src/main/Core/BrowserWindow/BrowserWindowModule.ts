@@ -41,9 +41,9 @@ export class BrowserWindowModule {
 
         eventSubscriber.subscribe("searchIndexUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
 
-        eventSubscriber.subscribe("actionInvokationSucceeded", ({ action }: { action: SearchResultItemAction }) => {
+        eventSubscriber.subscribe("actionInvocationSucceeded", ({ action }: { action: SearchResultItemAction }) => {
             const shouldHideWindow =
-                settingsManager.getValue("window.hideWindowAfterExecution", true) && action.hideWindowAfterInvokation;
+                settingsManager.getValue("window.hideWindowAfterExecution", true) && action.hideWindowAfterInvocation;
 
             shouldHideWindow && browserWindow.hide();
         });

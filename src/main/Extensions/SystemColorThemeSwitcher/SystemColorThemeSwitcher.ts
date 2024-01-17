@@ -33,7 +33,7 @@ export class SystemColorThemeSwitcher implements Extension {
                     argument: "toggle",
                     description: t("searchResultItem.actionDescription"),
                     handlerId: "SystemColorThemeSwitcher",
-                    hideWindowAfterInvokation: false,
+                    hideWindowAfterInvocation: false,
                 },
             },
         ];

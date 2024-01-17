@@ -19,7 +19,7 @@ describe(Application, () => {
                     descriptionTranslationKey:
                         "extension[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer",
                     handlerId: "ShowItemInFileExplorer",
-                    hideWindowAfterInvokation: true,
+                    hideWindowAfterInvocation: true,
                     fluentIcon: "DocumentFolderRegular",
                 },
                 {
@@ -28,7 +28,7 @@ describe(Application, () => {
                     descriptionTranslationKey:
                         "extension[ApplicationSearch].searchResultItem.additionalAction.copyFilePathToClipboard",
                     handlerId: "copyToClipboard",
-                    hideWindowAfterInvokation: false,
+                    hideWindowAfterInvocation: false,
                     fluentIcon: "ClipboardRegular",
                 },
             ],
@@ -38,7 +38,7 @@ describe(Application, () => {
                 descriptionTranslationKey:
                     "extension[ApplicationSearch].searchResultItem.defaultAction.openApplication",
                 handlerId: "OpenFilePath",
-                hideWindowAfterInvokation: true,
+                hideWindowAfterInvocation: true,
                 fluentIcon: "OpenRegular",
             },
         });
