@@ -1,77 +1,66 @@
 import type { ExtensionInfo } from "@common/Core";
 import type { IpcMain } from "electron";
-import type { DependencyInjector } from "../DependencyInjector";
-import type { Extension } from "../Extension";
+import type { DependencyInjector, EventSubscriber, ExtensionRegistry } from "..";
 import type { Logger } from "../Logger";
 import type { SearchIndex } from "../SearchIndex";
 import type { SettingsManager } from "../SettingsManager";
+import { ExtensionManager } from "./ExtensionManager";
 
 export class ExtensionManagerModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
-        const supportedExtensions = ExtensionManagerModule.getSupportedExtensions(dependencyInjector);
-
-        ExtensionManagerModule.registerIpcMainEventListeners(dependencyInjector, supportedExtensions);
-        ExtensionManagerModule.addSearchResultItemsToSearchIndex(dependencyInjector, supportedExtensions);
-    }
-
-    private static getSupportedExtensions(dependencyInjector: DependencyInjector): Extension[] {
-        return dependencyInjector.getAllExtensions().filter((extension) => extension.isSupported(dependencyInjector));
-    }
-
-    private static registerIpcMainEventListeners(
-        dependencyInjector: DependencyInjector,
-        supportedExtensions: Extension[],
-    ) {
+    public static async bootstrap(dependencyInjector: DependencyInjector) {
         const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
-        const searchIndex = dependencyInjector.getInstance<SearchIndex>("SearchIndex");
-
-        ipcMain.on("extensionEnabled", async (_, { extensionId }: { extensionId: string }) => {
-            const extension = supportedExtensions.find(({ id }) => id === extensionId);
-
-            if (!extension) {
-                throw new Error(`Unable to find extension with id ${extensionId}`);
-            }
-
-            searchIndex.addSearchResultItems(extension.id, await extension.getSearchResultItems());
-        });
-
-        ipcMain.on("getAvailableExtensions", (event) => {
-            event.returnValue = supportedExtensions.map(
-                ({ id, name, nameTranslationKey }): ExtensionInfo => ({ id, name, nameTranslationKey }),
-            );
-        });
-    }
-
-    private static async addSearchResultItemsToSearchIndex(
-        dependencyInjector: DependencyInjector,
-        extensions: Extension[],
-    ) {
         const searchIndex = dependencyInjector.getInstance<SearchIndex>("SearchIndex");
         const settingsManager = dependencyInjector.getInstance<SettingsManager>("SettingsManager");
         const logger = dependencyInjector.getInstance<Logger>("Logger");
+        const eventSubscriber = dependencyInjector.getInstance<EventSubscriber>("EventSubscriber");
+        const extensionRegistry = dependencyInjector.getInstance<ExtensionRegistry>("ExtensionRegistry");
 
-        const enabledExtensions = extensions.filter((extension) =>
-            settingsManager
-                .getValue<string[]>("extensions.enabledExtensionIds", ["ApplicationSearch", "UeliCommand"])
-                .includes(extension.id),
+        const extensionManager = new ExtensionManager(extensionRegistry, searchIndex, settingsManager, logger);
+
+        await extensionManager.populateSearchIndex(dependencyInjector);
+
+        ipcMain.on("extensionEnabled", (_, { extensionId }: { extensionId: string }) => {
+            extensionManager.populateSearchIndexByExtensionId(extensionId);
+        });
+
+        ipcMain.on("getAvailableExtensions", (event) => {
+            event.returnValue = extensionManager
+                .getSupportedExtensions(dependencyInjector)
+                .map(({ id, name, nameTranslationKey }): ExtensionInfo => ({ id, name, nameTranslationKey }));
+        });
+
+        ipcMain.on("getExtensionImageUrl", (event, { extensionId }: { extensionId: string }) => {
+            const extension = extensionRegistry.getById(extensionId);
+            event.returnValue = extension.getImageUrl ? extension.getImageUrl() : undefined;
+        });
+
+        ipcMain.on(
+            "getExtensionSettingDefaultValue",
+            (event, { extensionId, settingKey }: { extensionId: string; settingKey: string }) => {
+                event.returnValue = extensionRegistry.getById(extensionId).getSettingDefaultValue(settingKey);
+            },
         );
 
-        const promiseResults = await Promise.allSettled(
-            enabledExtensions.map((extension) => extension.getSearchResultItems()),
+        ipcMain.handle(
+            "invokeExtension",
+            (_, { extensionId, argument }: { extensionId: string; argument: unknown }) => {
+                const extension = extensionRegistry.getById(extensionId);
+
+                if (!extension.invoke) {
+                    throw new Error(`Extension with id "${extension}" does not implement a "search" method`);
+                }
+
+                return extension.invoke(argument);
+            },
         );
 
-        for (let i = 0; i < enabledExtensions.length; i++) {
-            const promiseResult = promiseResults[i];
-            const { id: extensionId } = enabledExtensions[i];
-
-            if (promiseResult.status === "fulfilled") {
-                searchIndex.addSearchResultItems(extensionId, promiseResult.value);
-            } else {
-                logger.error(
-                    `Failed ot get search result items for extension with id '${extensionId}.` +
-                        `Reason: ${promiseResult.reason}'`,
-                );
+        eventSubscriber.subscribe("settingUpdated", async ({ key }: { key: string }) => {
+            for (const extension of extensionRegistry.getAll()) {
+                if (extension.settingKeysTriggerindReindex?.includes(key)) {
+                    searchIndex.removeSearchResultItems(extension.id);
+                    searchIndex.addSearchResultItems(extension.id, await extension.getSearchResultItems());
+                }
             }
-        }
+        });
     }
 }

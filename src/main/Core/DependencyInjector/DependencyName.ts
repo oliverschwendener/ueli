@@ -9,6 +9,7 @@ export type DependencyName =
     | "EventEmitter"
     | "EventSubscriber"
     | "ExtensionCacheFolder"
+    | "ExtensionRegistry"
     | "FileSystemUtility"
     | "GlobalShortcut"
     | "IpcMain"

@@ -7,6 +7,7 @@ import type { PowershellUtility } from "@Core/PowershellUtility";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { OperatingSystem } from "@common/Core";
 import type { App } from "electron";
+import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";
 import { Settings } from "./Settings";
@@ -15,7 +16,7 @@ import { MacOsApplicationIconGenerator } from "./macOS/MacOsApplicationIconGener
 import { MacOsApplicationRepository } from "./macOS/MacOsApplicationRepository";
 
 export class ApplicationSearchModule {
-    public static bootstrap(dependencyInjector: DependencyInjector) {
+    public static bootstrap(dependencyInjector: DependencyInjector): ExtensionBootstrapResult {
         const operatingSystem = dependencyInjector.getInstance<OperatingSystem>("OperatingSystem");
         const fileSystemUtility = dependencyInjector.getInstance<FileSystemUtility>("FileSystemUtility");
         const commandlineUtility = dependencyInjector.getInstance<CommandlineUtility>("CommandlineUtility");
@@ -38,6 +39,6 @@ export class ApplicationSearchModule {
             Linux: undefined, // not supported
         };
 
-        dependencyInjector.registerExtension(new ApplicationSearch(applicationRepositories[operatingSystem], settings));
+        return { extension: new ApplicationSearch(applicationRepositories[operatingSystem], settings) };
     }
 }

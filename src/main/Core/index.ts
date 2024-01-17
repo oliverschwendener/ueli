@@ -12,6 +12,7 @@ export * from "./EventSubscriber";
 export * from "./Extension";
 export * from "./ExtensionCacheFolder";
 export * from "./ExtensionManager";
+export * from "./ExtensionRegistry";
 export * from "./FileSystemUtility";
 export * from "./GlobalShortcut";
 export * from "./Logger";

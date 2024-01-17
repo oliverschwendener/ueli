@@ -2,7 +2,7 @@ import * as Electron from "electron";
 import mitt, { Emitter } from "mitt";
 import { platform } from "os";
 import * as Core from "./Core";
-import { ExtensionsModule } from "./Extensions";
+import * as Extensions from "./Extensions";
 
 (async () => {
     await Electron.app.whenReady();
@@ -54,8 +54,9 @@ import { ExtensionsModule } from "./Extensions";
     Core.TrayIconModule.bootstrap(dependencyInjector);
     Core.DialogModule.bootstrap(dependencyInjector);
     await Core.ExtensionCacheFolderModule.bootstrap(dependencyInjector);
+    Core.ExtensionRegsitryModule.bootstrap(dependencyInjector);
 
     // Extensions
-    ExtensionsModule.bootstrap(dependencyInjector);
-    Core.ExtensionManagerModule.bootstrap(dependencyInjector);
+    Extensions.ExtensionLoader.bootstrap(dependencyInjector);
+    await Core.ExtensionManagerModule.bootstrap(dependencyInjector);
 })();
