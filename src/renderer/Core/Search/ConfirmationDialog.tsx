@@ -19,9 +19,9 @@ type ConfirmationDialogProps = {
 export const ConfirmationDialog = ({ action, closeDialog }: ConfirmationDialogProps) => {
     const { contextBridge } = useContextBridge();
 
-    const invokeAction = () => {
+    const invokeAction = async () => {
         if (action) {
-            contextBridge.invokeAction(action);
+            await contextBridge.invokeAction(action);
         }
     };
 

@@ -9,8 +9,7 @@ export class SystemColorThemeSwitcher implements Extension {
     public readonly id: string = "SystemColorThemeSwitcher";
     public readonly name: string = "SystemColorThemeSwitcher";
     public readonly nameTranslationKey: string = "extension[SystemColorThemeSwitcher].extensionName";
-    public readonly supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
-    public readonly settingKeysTriggerindReindex = ["general.language"];
+    public readonly settingKeysTriggeringReindex = ["general.language"];
 
     public constructor(
         private readonly currentOperatingSystem: OperatingSystem,

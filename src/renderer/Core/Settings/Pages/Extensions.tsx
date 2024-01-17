@@ -61,9 +61,9 @@ export const Extensions = () => {
                             <Label>{nameTranslationKey ? t(nameTranslationKey) : name}</Label>
                             <Badge
                                 color={isEnabled(id) ? "success" : "subtle"}
-                                onClick={(e) => {
+                                onClick={async (e) => {
                                     e.preventDefault();
-                                    toggle(id);
+                                    await toggle(id);
                                 }}
                                 icon={isEnabled(id) ? <CheckmarkFilled /> : <DismissFilled />}
                             >

@@ -5,7 +5,7 @@ export interface Extension {
     readonly id: string;
     readonly name: string;
     readonly nameTranslationKey?: string;
-    readonly settingKeysTriggerindReindex?: string[];
+    readonly settingKeysTriggeringReindex?: string[];
 
     getSearchResultItems(): Promise<SearchResultItem[]>;
     isSupported(dependencyRegistry: DependencyRegistry): boolean;

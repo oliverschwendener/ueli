@@ -6,7 +6,6 @@ import type { SettingsWriter } from "../SettingsWriter";
 import type { SettingsManager as SettingsManagerInterface } from "./Contract";
 
 export class SettingsManager implements SettingsManagerInterface {
-    private readonly safeStorageEncoding: BufferEncoding = "base64";
     private readonly settings: Settings;
 
     public constructor(

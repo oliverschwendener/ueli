@@ -1,7 +1,7 @@
 import type { Extension } from "..";
-import type { ExtensionRegistry as ExtensionRegsitryInterface } from "./Contract";
+import type { ExtensionRegistry as ExtensionRegistryInterface } from "./Contract";
 
-export class ExtensionRegistry implements ExtensionRegsitryInterface {
+export class ExtensionRegistry implements ExtensionRegistryInterface {
     private readonly extensions: Record<string, Extension> = {};
 
     public register(extension: Extension) {

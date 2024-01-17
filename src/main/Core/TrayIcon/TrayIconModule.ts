@@ -4,7 +4,7 @@ import { getContextMenuTemplate } from "./getContextMenuTemplate";
 import { getTrayIconImage } from "./getTrayIconImage";
 
 export class TrayIconModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+    public static async bootstrap(dependencyRegistry: DependencyRegistry) {
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const nativeTheme = dependencyRegistry.get("NativeTheme");
         const operatingSystem = dependencyRegistry.get("OperatingSystem");
@@ -20,7 +20,7 @@ export class TrayIconModule {
 
         const tray = new Tray(getTrayIconImage(assetPathResolver, operatingSystem, nativeTheme));
 
-        setTrayContextMenu(tray);
+        await setTrayContextMenu(tray);
 
         nativeTheme.on("updated", () =>
             tray.setImage(getTrayIconImage(assetPathResolver, operatingSystem, nativeTheme)),

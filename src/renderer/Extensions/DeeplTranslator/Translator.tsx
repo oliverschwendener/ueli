@@ -64,9 +64,9 @@ export const Translator = ({ translatedText, setTranslatedText, contextBridge }:
         }
 
         setClearTimeoutValue(
-            setTimeout(() => {
+            setTimeout(async () => {
                 setClearTimeoutValue(undefined);
-                search(userInput);
+                await search(userInput);
             }, 250),
         );
     }, [userInput, sourceLanguage, targetLanguage]);

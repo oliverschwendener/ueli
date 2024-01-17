@@ -16,7 +16,7 @@ export const SearchEngine = () => {
         60,
     );
 
-    const { value: fuzzyness, updateValue: setFuzzyness } = useSetting("searchEngine.fuzzyness", 0.6);
+    const { value: fuzziness, updateValue: setFuzziness } = useSetting("searchEngine.fuzziness", 0.6);
 
     return (
         <SectionList>
@@ -40,14 +40,14 @@ export const SearchEngine = () => {
                 </Field>
             </Section>
             <Section>
-                <Field label={t("settingsSearchEngine.fuzzyness")}>
+                <Field label={t("settingsSearchEngine.fuzziness")}>
                     <Slider
-                        aria-labelledby="searchEngine.fuzzyness"
-                        value={fuzzyness}
+                        aria-labelledby="searchEngine.fuzziness"
+                        value={fuzziness}
                         min={0}
                         max={1}
                         step={0.1}
-                        onChange={(_, { value }) => setFuzzyness(value)}
+                        onChange={(_, { value }) => setFuzziness(value)}
                     />
                 </Field>
             </Section>

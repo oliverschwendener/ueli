@@ -16,7 +16,7 @@ export const useAppCssProperties = () => {
 
     const extendGlobalStyles = (cssProperties: CSSProperties) => ({ ...{ height: "100vh" }, ...cssProperties });
 
-    const initalProperties: Record<OperatingSystem, CSSProperties> = {
+    const initialProperties: Record<OperatingSystem, CSSProperties> = {
         Linux: extendGlobalStyles({}),
         macOS: extendGlobalStyles(getMacOsCssProperties(contextBridge.getSettingValue("window.vibrancy", "None"))),
         Windows: extendGlobalStyles(
@@ -24,7 +24,7 @@ export const useAppCssProperties = () => {
         ),
     };
 
-    const [appCssProperties, setAppCssProperties] = useState<CSSProperties>(initalProperties[operatingSystem]);
+    const [appCssProperties, setAppCssProperties] = useState<CSSProperties>(initialProperties[operatingSystem]);
 
     useEffect(() => {
         if (operatingSystem === "Windows") {

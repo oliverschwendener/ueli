@@ -1,6 +1,6 @@
 import type { PowershellUtility } from "@Core/PowershellUtility";
 import type { SearchResultItemAction } from "@common/Core";
-import type { ActionHandler } from "../Contract/ActionHandler";
+import type { ActionHandler } from "@Core/ActionHandler";
 
 export class PowershellActionHandler implements ActionHandler {
     public readonly id = "Powershell";

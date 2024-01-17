@@ -3,7 +3,7 @@ import Fuse from "fuse.js";
 
 type SearchOptions = {
     searchTerm: string;
-    fuzzyness: number;
+    fuzziness: number;
 };
 
 export const filterSearchResultItemsBySearchTerm = (
@@ -12,7 +12,7 @@ export const filterSearchResultItemsBySearchTerm = (
 ): SearchResultItem[] => {
     return new Fuse(searchResultItems, {
         keys: ["name"],
-        threshold: searchOptions.fuzzyness,
+        threshold: searchOptions.fuzziness,
         shouldSort: true,
     })
         .search(searchOptions.searchTerm)

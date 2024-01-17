@@ -43,9 +43,12 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     const navigate = useNavigate();
     const openSettings = () => navigate({ pathname: "/settings/general" });
     const search = (updatedSearchTerm: string) => setSearchTerm(updatedSearchTerm);
-    const { value: fuzzyness } = useSetting("searchEngine.fuzzyness", 0.6);
+    const { value: fuzziness } = useSetting("searchEngine.fuzziness", 0.6);
 
-    const filteredSearchResultItems = filterSearchResultItemsBySearchTerm(searchResultItems, { searchTerm, fuzzyness });
+    const filteredSearchResultItems = filterSearchResultItemsBySearchTerm(searchResultItems, {
+        searchTerm,
+        fuzziness,
+    });
 
     const selectNextSearchResultItem = () =>
         setSelectedItemIndex(selectedItemIndex === filteredSearchResultItems.length - 1 ? 0 : selectedItemIndex + 1);
@@ -68,14 +71,14 @@ export const Search = ({ searchResultItems }: SearchProps) => {
         await invokeAction(searchResultItem.defaultAction);
     };
 
-    const invokeAction = (action: SearchResultItemAction) => {
+    const invokeAction = async (action: SearchResultItemAction) => {
         if (!action.requiresConfirmation) {
-            contextBridge.invokeAction(action);
+            await contextBridge.invokeAction(action);
             return;
         }
 
         // This timeout is a workaround. Without it, for some reason the close button in the confirmation dialog will
-        // trigger an "onClick" event and therefore will be closed immidiately.
+        // trigger an "onClick" event and therefore will be closed immediately.
         setTimeout(() => setConfirmationDialogAction(action), 100);
     };
 
@@ -103,9 +106,9 @@ export const Search = ({ searchResultItems }: SearchProps) => {
                 needsToInvokeListener: (e) => e.key === "k" && (e.metaKey || e.ctrlKey),
             },
             {
-                listener: (e) => {
+                listener: async (e) => {
                     e.preventDefault();
-                    invokeSelectedSearchResultItem();
+                    await invokeSelectedSearchResultItem();
                 },
                 needsToInvokeListener: (e) => e.key === "Enter",
             },

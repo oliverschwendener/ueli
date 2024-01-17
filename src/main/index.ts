@@ -51,10 +51,10 @@ import * as Extensions from "./Extensions";
     Core.GlobalShortcutModule.bootstrap(dependencyRegistry);
     Core.ActionHandlerModule.bootstrap(dependencyRegistry);
     Core.UeliCommandModule.bootstrap(dependencyRegistry);
-    Core.TrayIconModule.bootstrap(dependencyRegistry);
+    await Core.TrayIconModule.bootstrap(dependencyRegistry);
     Core.DialogModule.bootstrap(dependencyRegistry);
     await Core.ExtensionCacheFolderModule.bootstrap(dependencyRegistry);
-    Core.ExtensionRegsitryModule.bootstrap(dependencyRegistry);
+    Core.ExtensionRegistryModule.bootstrap(dependencyRegistry);
 
     // Extensions
     Extensions.ExtensionLoader.bootstrap(dependencyRegistry);

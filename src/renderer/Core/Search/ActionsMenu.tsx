@@ -3,11 +3,12 @@ import { Button, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger } from "@flu
 import { FlashRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 import { FluentIcon } from "./FluentIcon";
+import type {Ref} from "react";
 
 type AdditionalActionsProps = {
     actions: SearchResultItemAction[];
     invokeAction: (action: SearchResultItemAction) => void;
-    additionalActionsButtonRef: React.Ref<HTMLButtonElement>;
+    additionalActionsButtonRef: Ref<HTMLButtonElement>;
     onMenuClosed: () => void;
 };
 

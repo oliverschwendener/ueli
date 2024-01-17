@@ -11,7 +11,7 @@ export class UeliCommandExtension implements Extension {
     public readonly id = "UeliCommand";
     public readonly name = "Ueli Commands";
     public readonly nameTranslationKey? = "extension[UeliCommand].extensionName";
-    public readonly settingKeysTriggerindReindex = ["general.language"];
+    public readonly settingKeysTriggeringReindex = ["general.language"];
 
     public constructor(
         private readonly assetPathResolver: AssetPathResolver,

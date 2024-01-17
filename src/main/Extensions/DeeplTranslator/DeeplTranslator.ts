@@ -30,7 +30,7 @@ export class DeeplTranslator implements Extension {
     public readonly id = "DeeplTranslator";
     public readonly name = "DeepL Translator";
     public readonly nameTranslationKey? = "DeeplTranslator";
-    public readonly settingKeysTriggerindReindex = ["general.language"];
+    public readonly settingKeysTriggeringReindex = ["general.language"];
 
     public constructor(
         private readonly net: Net,

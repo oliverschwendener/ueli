@@ -1,6 +1,6 @@
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
-import type { DependencyRegistry } from "../../Core/DependencyRegistry";
-import type { Extension } from "../../Core/Extension";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { Extension } from "@Core/Extension";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import type { Settings } from "./Settings";
 

@@ -16,13 +16,13 @@ export const MacOsSettings = () => {
 
     const { value, updateValue } = useExtensionSetting(extensionId, settingKey, defaultValue);
 
-    const removeFolder = (indexToRemove: number) => {
-        updateValue(value.filter((_, index) => index !== indexToRemove));
+    const removeFolder = async (indexToRemove: number) => {
+        await updateValue(value.filter((_, index) => index !== indexToRemove));
     };
 
-    const addFolder = () => {
+    const addFolder = async () => {
         if (newValue.trim().length) {
-            updateValue([...value, newValue]);
+            await updateValue([...value, newValue]);
             setNewValue("");
         }
     };
