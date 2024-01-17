@@ -1,4 +1,5 @@
 export type DependencyName =
+    | "ActionHandlerRegistry"
     | "App"
     | "AssetPathResolver"
     | "Clipboard"

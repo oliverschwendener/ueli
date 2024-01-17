@@ -4,7 +4,8 @@ import type { EventEmitter } from "@Core/EventEmitter";
 import type { PowershellUtility } from "@Core/PowershellUtility/PowershellUtility";
 import type { SearchResultItemAction } from "@common/Core";
 import type { Clipboard, IpcMain, Shell } from "electron";
-import type { ActionHandler } from "./Contract";
+import { ActionHandlerRegistry } from "./ActionHandlerRegistry";
+import type { ActionHandler, ActionHandlerRegistry as ActionHandlerRegistryInterface } from "./Contract";
 import {
     CommandlineActionHandler,
     CopyToClipboardActionHandler,
@@ -17,16 +18,19 @@ import {
 
 export class ActionHandlerModule {
     public static bootstrap(dependencyInjector: DependencyInjector) {
-        ActionHandlerModule.registerDefaultActionHandlers(dependencyInjector);
-        ActionHandlerModule.registerIpcMainEventHandlers(dependencyInjector);
-    }
-
-    private static registerDefaultActionHandlers(dependencyInjector: DependencyInjector): void {
         const commandlineUtility = dependencyInjector.getInstance<CommandlineUtility>("CommandlineUtility");
         const powershellUtility = dependencyInjector.getInstance<PowershellUtility>("PowershellUtility");
         const shell = dependencyInjector.getInstance<Shell>("Shell");
         const clipboard = dependencyInjector.getInstance<Clipboard>("Clipboard");
         const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
+        const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
+
+        const actionHandlerRegistry = new ActionHandlerRegistry();
+
+        dependencyInjector.registerInstance<ActionHandlerRegistryInterface>(
+            "ActionHandlerRegistry",
+            actionHandlerRegistry,
+        );
 
         const actionHandlers: ActionHandler[] = [
             new CommandlineActionHandler(commandlineUtility),
@@ -39,16 +43,11 @@ export class ActionHandlerModule {
         ];
 
         for (const actionHandler of actionHandlers) {
-            dependencyInjector.registerActionHandler(actionHandler);
+            actionHandlerRegistry.register(actionHandler);
         }
-    }
-
-    private static registerIpcMainEventHandlers(dependencyInjector: DependencyInjector) {
-        const eventEmitter = dependencyInjector.getInstance<EventEmitter>("EventEmitter");
-        const ipcMain = dependencyInjector.getInstance<IpcMain>("IpcMain");
 
         ipcMain.handle("invokeAction", async (_, { action }: { action: SearchResultItemAction }) => {
-            dependencyInjector.getActionHandler(action.handlerId).invokeAction(action);
+            await actionHandlerRegistry.getById(action.handlerId).invokeAction(action);
             eventEmitter.emitEvent("actionInvokationSucceeded", { action });
         });
     }
