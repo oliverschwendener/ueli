@@ -1,11 +1,12 @@
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { OperatingSystem } from "@common/Core";
 import { BrowserWindow, type BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
-import type { DependencyRegistry } from "../DependencyRegistry";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
 import { getVibrancy } from "./getVibrancy";
 
-export const createBrowserWindow = (dependencyRegistry: DependencyRegistry) => {
+export const createBrowserWindow = (dependencyRegistry: DependencyRegistry<Dependencies>) => {
     const app = dependencyRegistry.get("App");
     const operatingSystem = dependencyRegistry.get("OperatingSystem");
     const settingsManager = dependencyRegistry.get("SettingsManager");

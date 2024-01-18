@@ -1,10 +1,11 @@
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { Menu, Tray } from "electron";
-import type { DependencyRegistry } from "..";
 import { getContextMenuTemplate } from "./getContextMenuTemplate";
 import { getTrayIconImage } from "./getTrayIconImage";
 
 export class TrayIconModule {
-    public static async bootstrap(dependencyRegistry: DependencyRegistry) {
+    public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const nativeTheme = dependencyRegistry.get("NativeTheme");
         const operatingSystem = dependencyRegistry.get("OperatingSystem");

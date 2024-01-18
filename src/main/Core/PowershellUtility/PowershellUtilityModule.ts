@@ -1,9 +1,10 @@
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { join } from "path";
-import type { DependencyRegistry } from "..";
 import { PowershellUtility } from "./PowershellUtility";
 
 export class PowershellUtilityModule {
-    public static async bootstrap(dependencyRegistry: DependencyRegistry) {
+    public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const fileSystemUtility = dependencyRegistry.get("FileSystemUtility");
         const commandlineUtility = dependencyRegistry.get("CommandlineUtility");
         const app = dependencyRegistry.get("App");

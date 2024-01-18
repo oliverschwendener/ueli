@@ -4,7 +4,7 @@ export class ActionHandlerRegistry implements ActionHandlerRegistryInterface {
     private readonly actionHandlers: Record<string, ActionHandler> = {};
 
     public register(actionHandler: ActionHandler): void {
-        if (this.actionHandlers[actionHandler.id]) {
+        if (this.idIsAlreadyRegistered(actionHandler.id)) {
             throw new Error(`Action handler with id "${actionHandler.id}" is already registered`);
         }
 
@@ -12,7 +12,7 @@ export class ActionHandlerRegistry implements ActionHandlerRegistryInterface {
     }
 
     public getById(actionHandlerId: string) {
-        if (!this.actionHandlers[actionHandlerId]) {
+        if (!this.idIsAlreadyRegistered(actionHandlerId)) {
             throw new Error(`Action handler with id "${actionHandlerId}" can't be found`);
         }
 
@@ -21,5 +21,9 @@ export class ActionHandlerRegistry implements ActionHandlerRegistryInterface {
 
     public getAll(): ActionHandler[] {
         return Object.values(this.actionHandlers);
+    }
+
+    private idIsAlreadyRegistered(id: string) {
+        return Object.keys(this.actionHandlers).includes(id);
     }
 }

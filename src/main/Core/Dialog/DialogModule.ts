@@ -1,8 +1,9 @@
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { OpenDialogOptions } from "electron";
-import type { DependencyRegistry } from "../DependencyRegistry";
 
 export class DialogModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const dialog = dependencyRegistry.get("Dialog");
         const ipcMain = dependencyRegistry.get("IpcMain");
 

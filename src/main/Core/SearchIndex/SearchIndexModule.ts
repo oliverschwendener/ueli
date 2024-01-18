@@ -1,8 +1,9 @@
-import type { DependencyRegistry } from "../DependencyRegistry";
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { InMemorySearchIndex } from "./InMemorySearchIndex";
 
 export class SearchIndexModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const eventEmitter = dependencyRegistry.get("EventEmitter");
 
         dependencyRegistry.register("SearchIndex", new InMemorySearchIndex(eventEmitter));
@@ -10,7 +11,7 @@ export class SearchIndexModule {
         SearchIndexModule.registerIpcMainEventListeners(dependencyRegistry);
     }
 
-    private static registerIpcMainEventListeners(dependencyRegistry: DependencyRegistry) {
+    private static registerIpcMainEventListeners(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const ipcMain = dependencyRegistry.get("IpcMain");
         const searchIndex = dependencyRegistry.get("SearchIndex");
 

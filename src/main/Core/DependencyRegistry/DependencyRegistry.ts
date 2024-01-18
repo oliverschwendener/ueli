@@ -1,52 +1,29 @@
 import type { DependencyRegistry as DependencyRegistryInterface } from "./Contract";
-import type { Dependencies, DependencyName } from "./Dependencies";
 
-export class DependencyRegistry implements DependencyRegistryInterface {
-    private dependencies: Dependencies = {
-        ActionHandlerRegistry: undefined,
-        App: undefined,
-        AssetPathResolver: undefined,
-        Clipboard: undefined,
-        Clock: undefined,
-        CommandlineUtility: undefined,
-        Dialog: undefined,
-        Emitter: undefined,
-        EventEmitter: undefined,
-        EventSubscriber: undefined,
-        ExtensionCacheFolder: undefined,
-        ExtensionRegistry: undefined,
-        FileSystemUtility: undefined,
-        GlobalShortcut: undefined,
-        IpcMain: undefined,
-        Logger: undefined,
-        NativeTheme: undefined,
-        Net: undefined,
-        OperatingSystem: undefined,
-        Platform: undefined,
-        PowershellUtility: undefined,
-        RandomStringProvider: undefined,
-        SafeStorage: undefined,
-        SafeStorageEncryption: undefined,
-        SearchIndex: undefined,
-        SettingsFile: undefined,
-        SettingsManager: undefined,
-        SettingsReader: undefined,
-        SettingsWriter: undefined,
-        Shell: undefined,
-        SystemPreferences: undefined,
-        Translator: undefined,
-        UeliCommandInvoker: undefined,
-    };
+export class DependencyRegistry<T extends Record<string, unknown>> implements DependencyRegistryInterface<T> {
+    public constructor(private readonly dependencies: T) {}
 
-    public register<Name extends DependencyName>(name: Name, instance: Dependencies[Name]): void {
+    public register<Name extends keyof T>(name: Name, instance: T[Name]): void {
+        const key = this.nameToKey(name);
+
+        if (Object.keys(this.dependencies).includes(key)) {
+            throw new Error(`Dependency "${key}" is already registered`);
+        }
+
         this.dependencies[name] = instance;
     }
 
-    public get<Name extends DependencyName>(name: Name): Dependencies[Name] {
-        if (!this.dependencies[name]) {
-            throw new Error(`Instance with name "${name}" not found`);
+    public get<Name extends keyof T>(name: Name): T[Name] {
+        const key = this.nameToKey(name);
+
+        if (!Object.keys(this.dependencies).includes(key)) {
+            throw new Error(`Dependency with name "${key}" could not be found`);
         }
 
         return this.dependencies[name];
+    }
+
+    private nameToKey<Name extends keyof T>(name: Name): string {
+        return String(name);
     }
 }

@@ -1,8 +1,9 @@
-import type { DependencyRegistry } from "..";
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { SettingsManager } from "./SettingsManager";
 
 export class SettingsManagerModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const settingsReader = dependencyRegistry.get("SettingsReader");
         const settingsWriter = dependencyRegistry.get("SettingsWriter");
         const eventEmitter = dependencyRegistry.get("EventEmitter");
@@ -16,7 +17,7 @@ export class SettingsManagerModule {
         SettingsManagerModule.registerIpcEventListeners(dependencyRegistry);
     }
 
-    private static registerIpcEventListeners(dependencyRegistry: DependencyRegistry): void {
+    private static registerIpcEventListeners(dependencyRegistry: DependencyRegistry<Dependencies>): void {
         const settingsManager = dependencyRegistry.get("SettingsManager");
         const ipcMain = dependencyRegistry.get("IpcMain");
 

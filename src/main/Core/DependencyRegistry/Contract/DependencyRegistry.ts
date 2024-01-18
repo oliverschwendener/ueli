@@ -1,6 +1,4 @@
-import type { Dependencies, DependencyName } from "../Dependencies";
-
-export interface DependencyRegistry {
-    register<Name extends DependencyName>(name: Name, instance: Dependencies[Name]): void;
-    get<Name extends DependencyName>(name: Name): Dependencies[Name];
+export interface DependencyRegistry<T extends Record<string, unknown>> {
+    register<Name extends keyof T>(name: Name, instance: T[Name]): void;
+    get<Name extends keyof T>(name: Name): T[Name];
 }

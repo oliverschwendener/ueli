@@ -1,9 +1,10 @@
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { EventSubscriber } from "@Core/EventSubscriber";
+import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { SearchResultItemAction } from "@common/Core";
 import type { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
-import type { DependencyRegistry } from "../DependencyRegistry";
-import type { EventSubscriber } from "../EventSubscriber";
-import type { UeliCommand, UeliCommandInvokedEvent } from "../UeliCommand";
 import { createBrowserWindow } from "./createBrowserWindow";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
 import { getVibrancy } from "./getVibrancy";
@@ -12,7 +13,7 @@ import { sendToBrowserWindow } from "./sendToBrowserWindow";
 import { toggleBrowserWindow } from "./toggleBrowserWindow";
 
 export class BrowserWindowModule {
-    public static async bootstrap(dependencyRegistry: DependencyRegistry) {
+    public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const browserWindow = createBrowserWindow(dependencyRegistry);
 
         BrowserWindowModule.registerBrowserWindowEventListeners(browserWindow, dependencyRegistry);
@@ -23,7 +24,7 @@ export class BrowserWindowModule {
 
     private static registerBrowserWindowEventListeners(
         browserWindow: BrowserWindow,
-        dependencyRegistry: DependencyRegistry,
+        dependencyRegistry: DependencyRegistry<Dependencies>,
     ) {
         const settingsManager = dependencyRegistry.get("SettingsManager");
 
@@ -34,7 +35,7 @@ export class BrowserWindowModule {
         });
     }
 
-    private static registerEvents(browserWindow: BrowserWindow, dependencyRegistry: DependencyRegistry) {
+    private static registerEvents(browserWindow: BrowserWindow, dependencyRegistry: DependencyRegistry<Dependencies>) {
         const app = dependencyRegistry.get("App");
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const settingsManager = dependencyRegistry.get("SettingsManager");
@@ -99,14 +100,17 @@ export class BrowserWindowModule {
 
     private static registerNativeThemeEventListeners(
         browserWindow: BrowserWindow,
-        dependencyRegistry: DependencyRegistry,
+        dependencyRegistry: DependencyRegistry<Dependencies>,
     ) {
         const nativeTheme = dependencyRegistry.get("NativeTheme");
 
         nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
     }
 
-    private static async loadFileOrUrl(browserWindow: BrowserWindow, dependencyRegistry: DependencyRegistry) {
+    private static async loadFileOrUrl(
+        browserWindow: BrowserWindow,
+        dependencyRegistry: DependencyRegistry<Dependencies>,
+    ) {
         const app = dependencyRegistry.get("App");
 
         await (app.isPackaged

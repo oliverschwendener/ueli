@@ -1,3 +1,4 @@
+import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { SearchResultItemAction } from "@common/Core";
 import { ActionHandlerRegistry } from "./ActionHandlerRegistry";
@@ -13,7 +14,7 @@ import {
 } from "./DefaultActionHandlers";
 
 export class ActionHandlerModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const commandlineUtility = dependencyRegistry.get("CommandlineUtility");
         const powershellUtility = dependencyRegistry.get("PowershellUtility");
         const shell = dependencyRegistry.get("Shell");

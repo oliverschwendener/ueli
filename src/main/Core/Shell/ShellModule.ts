@@ -1,8 +1,9 @@
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { OpenExternalOptions } from "electron";
-import type { DependencyRegistry } from "..";
 
 export class ShellModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const shell = dependencyRegistry.get("Shell");
         const ipcMain = dependencyRegistry.get("IpcMain");
 

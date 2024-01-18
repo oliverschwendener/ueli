@@ -1,9 +1,10 @@
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { ExtensionInfo } from "@common/Core";
-import type { DependencyRegistry } from "..";
 import { ExtensionManager } from "./ExtensionManager";
 
 export class ExtensionManagerModule {
-    public static async bootstrap(dependencyRegistry: DependencyRegistry) {
+    public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const ipcMain = dependencyRegistry.get("IpcMain");
         const searchIndex = dependencyRegistry.get("SearchIndex");
         const settingsManager = dependencyRegistry.get("SettingsManager");

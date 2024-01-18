@@ -1,3 +1,4 @@
+import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { OperatingSystem } from "@common/Core";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
@@ -9,7 +10,7 @@ import { MacOsApplicationIconGenerator } from "./macOS/MacOsApplicationIconGener
 import { MacOsApplicationRepository } from "./macOS/MacOsApplicationRepository";
 
 export class ApplicationSearchModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry): ExtensionBootstrapResult {
+    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
         const operatingSystem = dependencyRegistry.get("OperatingSystem");
         const fileSystemUtility = dependencyRegistry.get("FileSystemUtility");
         const commandlineUtility = dependencyRegistry.get("CommandlineUtility");

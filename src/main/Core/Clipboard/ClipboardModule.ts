@@ -1,7 +1,8 @@
-import type { DependencyRegistry } from "..";
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 
 export class ClipboardModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const clipboard = dependencyRegistry.get("Clipboard");
         const ipcMain = dependencyRegistry.get("IpcMain");
 

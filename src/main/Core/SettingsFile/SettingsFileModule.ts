@@ -1,8 +1,9 @@
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { join } from "path";
-import type { DependencyRegistry } from "../DependencyRegistry";
 
 export class SettingsFileModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry) {
+    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const app = dependencyRegistry.get("App");
 
         dependencyRegistry.register("SettingsFile", {

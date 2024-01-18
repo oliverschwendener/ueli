@@ -1,9 +1,10 @@
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { join } from "path";
-import type { DependencyRegistry } from "../DependencyRegistry";
 import type { ExtensionCacheFolder } from "./Contract";
 
 export class ExtensionCacheFolderModule {
-    public static async bootstrap(dependencyRegistry: DependencyRegistry) {
+    public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const app = dependencyRegistry.get("App");
         const fileSystemUtility = dependencyRegistry.get("FileSystemUtility");
 
