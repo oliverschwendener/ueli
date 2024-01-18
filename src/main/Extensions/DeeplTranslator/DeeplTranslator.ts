@@ -30,7 +30,6 @@ export class DeeplTranslator implements Extension {
     public readonly id = "DeeplTranslator";
     public readonly name = "DeepL Translator";
     public readonly nameTranslationKey? = "DeeplTranslator";
-    public readonly settingKeysTriggeringReindex = ["general.language"];
 
     public constructor(
         private readonly net: Net,
@@ -89,6 +88,10 @@ export class DeeplTranslator implements Extension {
 
     public getImageUrl(): string {
         return this.getFileImageUrl();
+    }
+
+    public getSettingKeysTriggeringReindex() {
+        return ["general.language"];
     }
 
     private getDeeplAssetFilePath() {

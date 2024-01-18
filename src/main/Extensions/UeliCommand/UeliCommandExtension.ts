@@ -11,7 +11,6 @@ export class UeliCommandExtension implements Extension {
     public readonly id = "UeliCommand";
     public readonly name = "Ueli Commands";
     public readonly nameTranslationKey? = "extension[UeliCommand].extensionName";
-    public readonly settingKeysTriggeringReindex = ["general.language"];
 
     public constructor(
         private readonly assetPathResolver: AssetPathResolver,
@@ -104,5 +103,9 @@ export class UeliCommandExtension implements Extension {
 
     public getSettingDefaultValue<T>(): T {
         return undefined as T;
+    }
+
+    public getSettingKeysTriggeringReindex() {
+        return ["general.language"];
     }
 }

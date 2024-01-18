@@ -6,11 +6,11 @@ export interface Extension {
     readonly id: string;
     readonly name: string;
     readonly nameTranslationKey?: string;
-    readonly settingKeysTriggeringReindex?: string[];
 
     getSearchResultItems(): Promise<SearchResultItem[]>;
     isSupported(dependencyRegistry: DependencyRegistry<Dependencies>): boolean;
     getSettingDefaultValue<T>(key: string): T;
     invoke?(argument: unknown): Promise<unknown>;
     getImageUrl?(): string;
+    getSettingKeysTriggeringReindex?: () => string[];
 }

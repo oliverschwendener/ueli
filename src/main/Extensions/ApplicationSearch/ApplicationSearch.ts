@@ -11,12 +11,6 @@ export class ApplicationSearch implements Extension {
     public readonly name = "Application Search";
     public readonly nameTranslationKey = "extension[ApplicationSearch].extensionName";
 
-    public readonly settingKeysTriggeringReindex = [
-        getExtensionSettingKey("ApplicationSearch", "windowsFolders"),
-        getExtensionSettingKey("ApplicationSearch", "windowsFileExtensions"),
-        getExtensionSettingKey("ApplicationSearch", "macOsFolders"),
-    ];
-
     public constructor(
         private readonly applicationRepository: ApplicationRepository,
         private readonly settings: Settings,
@@ -35,5 +29,13 @@ export class ApplicationSearch implements Extension {
 
     public getSettingDefaultValue<T>(key: string): T {
         return this.settings.getDefaultValue<T>(key);
+    }
+
+    public getSettingKeysTriggeringReindex() {
+        return [
+            getExtensionSettingKey("ApplicationSearch", "windowsFolders"),
+            getExtensionSettingKey("ApplicationSearch", "windowsFileExtensions"),
+            getExtensionSettingKey("ApplicationSearch", "macOsFolders"),
+        ];
     }
 }

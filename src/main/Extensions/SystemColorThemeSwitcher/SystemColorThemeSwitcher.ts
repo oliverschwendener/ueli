@@ -10,7 +10,6 @@ export class SystemColorThemeSwitcher implements Extension {
     public readonly id: string = "SystemColorThemeSwitcher";
     public readonly name: string = "SystemColorThemeSwitcher";
     public readonly nameTranslationKey: string = "extension[SystemColorThemeSwitcher].extensionName";
-    public readonly settingKeysTriggeringReindex = ["general.language"];
 
     public constructor(
         private readonly currentOperatingSystem: OperatingSystem,
@@ -48,6 +47,10 @@ export class SystemColorThemeSwitcher implements Extension {
         const currentOperatingSystem = dependencyRegistry.get("OperatingSystem");
         const supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
         return supportedOperatingSystems.includes(currentOperatingSystem);
+    }
+
+    public getSettingKeysTriggeringReindex() {
+        return ["general.language"];
     }
 
     private getSearchResultItemFileName(): string {

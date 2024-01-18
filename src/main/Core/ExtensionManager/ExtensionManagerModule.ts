@@ -53,7 +53,10 @@ export class ExtensionManagerModule {
 
         eventSubscriber.subscribe("settingUpdated", async ({ key }: { key: string }) => {
             for (const extension of extensionRegistry.getAll()) {
-                if (extension.settingKeysTriggeringReindex?.includes(key)) {
+                if (
+                    typeof extension.getSettingKeysTriggeringReindex === "function" &&
+                    extension.getSettingKeysTriggeringReindex().includes(key)
+                ) {
                     searchIndex.removeSearchResultItems(extension.id);
                     searchIndex.addSearchResultItems(extension.id, await extension.getSearchResultItems());
                 }
