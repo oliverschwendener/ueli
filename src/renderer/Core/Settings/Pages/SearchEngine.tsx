@@ -80,7 +80,7 @@ export const SearchEngine = () => {
                                     excludedItem.imageUrl ? (
                                         <img
                                             alt="Excluded search result item image"
-                                            style={{ width: 20, height: 20 }}
+                                            style={{ width: 16, height: 16 }}
                                             src={excludedItem.imageUrl}
                                         />
                                     ) : null
