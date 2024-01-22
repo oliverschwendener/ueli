@@ -73,6 +73,7 @@ export const SearchResultListItem = ({
                 }}
             >
                 <img
+                    alt="Search Result List Item Image"
                     style={{
                         maxHeight: "100%",
                         maxWidth: "100%",

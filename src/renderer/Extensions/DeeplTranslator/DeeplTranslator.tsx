@@ -41,7 +41,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                     <div
                         style={{ display: "flex", flexDirection: "row", alignItems: "center", width: "100%", gap: 10 }}
                     >
-                        <img src={extensionImageUrl()} style={{ width: 24 }} />
+                        <img alt="DeepL Logo" src={extensionImageUrl()} style={{ width: 24 }} />
                         <div style={{ flexGrow: 1 }}>
                             <Text weight="semibold">DeepL Translator</Text>
                         </div>

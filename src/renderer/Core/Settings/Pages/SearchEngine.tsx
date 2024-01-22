@@ -78,7 +78,11 @@ export const SearchEngine = () => {
                                 value={excludedItem.name}
                                 contentBefore={
                                     excludedItem.imageUrl ? (
-                                        <img style={{ width: 20, height: 20 }} src={excludedItem.imageUrl} />
+                                        <img
+                                            alt="Excluded search result item image"
+                                            style={{ width: 20, height: 20 }}
+                                            src={excludedItem.imageUrl}
+                                        />
                                     ) : null
                                 }
                                 contentAfter={
