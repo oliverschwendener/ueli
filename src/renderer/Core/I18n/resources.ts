@@ -33,6 +33,7 @@ export const resources: InitOptions["resources"] = {
             "extension[ApplicationSearch].extensionName": "Application Search",
             "extension[SystemColorThemeSwitcher].extensionName": "System Color Theme Switcher",
             "extension[UeliCommand].extensionName": "Ueli Commands",
+            "extension[DeeplTranslator].openAccount": "Open DeepL Account",
         },
     },
     "de-CH": {
@@ -67,6 +68,7 @@ export const resources: InitOptions["resources"] = {
                 "Dateipfad in Zwischenablage kopieren",
             "extension[SystemColorThemeSwitcher].extensionName": "System Color Theme Switcher",
             "extension[UeliCommand].extensionName": "Ueli Befehle",
+            "extension[DeeplTranslator].openAccount": "DeepL Account öffnen",
         },
     },
 };

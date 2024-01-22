@@ -2,14 +2,17 @@ import { BaseLayout } from "@Core/BaseLayout";
 import type { ExtensionProps } from "@Core/ExtensionProps";
 import { Header } from "@Core/Header";
 import { useExtensionSetting } from "@Core/Hooks";
-import { Button, Text } from "@fluentui/react-components";
-import { ArrowLeftFilled, CopyRegular } from "@fluentui/react-icons";
+import { Button, Text, Tooltip } from "@fluentui/react-components";
+import { ArrowLeftFilled, CopyRegular, PersonRegular } from "@fluentui/react-icons";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { MissingApiKey } from "./MissingApiKey";
 import { Translator } from "./Translator";
 
 export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
     const extensionId = "DeeplTranslator";
+
+    const { t } = useTranslation();
 
     const extensionImageUrl = () => contextBridge.getExtensionImageUrl(extensionId);
 
@@ -18,6 +21,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
     const [translatedText, setTranslatedText] = useState<string>("");
 
     const openDeeplWebsite = () => contextBridge.openExternal("https://www.deepl.com/signup?cta=free-login-signup");
+    const openDeeplAccount = () => contextBridge.openExternal("https://www.deepl.com/account");
 
     return (
         <BaseLayout
@@ -34,8 +38,23 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                         ></Button>
                     }
                 >
-                    <img src={extensionImageUrl()} style={{ width: 24 }} />
-                    <Text weight="semibold">DeepL Translator</Text>
+                    <div
+                        style={{ display: "flex", flexDirection: "row", alignItems: "center", width: "100%", gap: 10 }}
+                    >
+                        <img src={extensionImageUrl()} style={{ width: 24 }} />
+                        <div style={{ flexGrow: 1 }}>
+                            <Text weight="semibold">DeepL Translator</Text>
+                        </div>
+                        <Tooltip content={t("extension[DeeplTranslator].openAccount")} relationship="label">
+                            <Button
+                                onClick={() => openDeeplAccount()}
+                                className="non-draggable-area"
+                                size="small"
+                                appearance="subtle"
+                                icon={<PersonRegular fontSize={14} />}
+                            />
+                        </Tooltip>
+                    </div>
                 </Header>
             }
             content={
