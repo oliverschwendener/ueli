@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "@common/Core";
+import type { ExcludedSearchResultItem, SearchResultItem } from "@common/Core";
 import { describe, expect, it } from "vitest";
 import { Application } from "./Application";
 
@@ -9,7 +9,7 @@ describe(Application, () => {
         expect(application.toSearchResultItem()).toEqual(<SearchResultItem>{
             description: "Application",
             descriptionTranslationKey: "extension[ApplicationSearch].searchResultItemDescription",
-            id: "L0FwcGxpY2F0aW9ucy9NeSBBcHAuYXBw",
+            id: "W0FwcGxpY2F0aW9uU2VhcmNoXVsvQXBwbGljYXRpb25zL015IEFwcC5hcHBd",
             name: "My App",
             imageUrl: "file:///Users/Dummy/Icons/icon.png",
             additionalActions: [
@@ -30,6 +30,18 @@ describe(Application, () => {
                     handlerId: "copyToClipboard",
                     hideWindowAfterInvocation: false,
                     fluentIcon: "ClipboardRegular",
+                },
+                {
+                    argument: JSON.stringify(<ExcludedSearchResultItem>{
+                        id: "W0FwcGxpY2F0aW9uU2VhcmNoXVsvQXBwbGljYXRpb25zL015IEFwcC5hcHBd",
+                        name: "My App",
+                        imageUrl: "file:///Users/Dummy/Icons/icon.png",
+                    }),
+                    description: "Exclude from search results",
+                    descriptionTranslationKey: "searchResultItem.action.excludeFromSearchResults",
+                    fluentIcon: "EyeOffRegular",
+                    handlerId: "excludeFromSearchResults",
+                    hideWindowAfterInvocation: false,
                 },
             ],
             defaultAction: {

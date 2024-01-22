@@ -11,6 +11,7 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     extensionEnabled: (extensionId) => ipcRenderer.send("extensionEnabled", { extensionId }),
     getAboutUeli: () => ipcRenderer.sendSync("getAboutUeli"),
     getAvailableExtensions: () => ipcRenderer.sendSync("getAvailableExtensions"),
+    getExcludedSearchResultItems: () => ipcRenderer.sendSync("getExcludedSearchResultItems"),
     getExtensionImageUrl: (extensionId) => ipcRenderer.sendSync("getExtensionImageUrl", { extensionId }),
     getExtensionSettingDefaultValue: (extensionId, settingKey) =>
         ipcRenderer.sendSync("getExtensionSettingDefaultValue", { extensionId, settingKey }),
@@ -22,6 +23,8 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
     invokeExtension: (extensionId, argument) => ipcRenderer.invoke("invokeExtension", { extensionId, argument }),
     openExternal: (url, options) => ipcRenderer.invoke("openExternal", { url, options }),
+    removeExcludedSearchResultItem: (itemId: string) =>
+        ipcRenderer.invoke("removeExcludedSearchResultItem", { itemId }),
     showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),
     themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),
     updateSettingValue: (key, value, isSensitive) =>

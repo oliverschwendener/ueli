@@ -2,7 +2,7 @@ import { FluentProvider } from "@fluentui/react-components";
 import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router";
 import { Extension } from "./Extension";
-import { useContextBridge, useScrollBar, useSearchResultItems, useTheme } from "./Hooks";
+import { useContextBridge, useExcludedSearchResultItems, useScrollBar, useSearchResultItems, useTheme } from "./Hooks";
 import { useI18n } from "./I18n";
 import { Search } from "./Search";
 import { Settings } from "./Settings";
@@ -13,6 +13,8 @@ export const App = () => {
     const { contextBridge } = useContextBridge();
     const { theme, setTheme } = useTheme(contextBridge);
     const { searchResultItems } = useSearchResultItems(contextBridge);
+    const { excludedSearchResultItems } = useExcludedSearchResultItems(contextBridge);
+
     const navigate = useNavigate();
     const { appCssProperties } = useAppCssProperties();
 
@@ -27,7 +29,15 @@ export const App = () => {
         <ThemeContext.Provider value={{ theme, setTheme }}>
             <FluentProvider theme={theme} style={appCssProperties}>
                 <Routes>
-                    <Route path="/" element={<Search searchResultItems={searchResultItems} />} />
+                    <Route
+                        path="/"
+                        element={
+                            <Search
+                                searchResultItems={searchResultItems}
+                                excludedSearchResultItems={excludedSearchResultItems}
+                            />
+                        }
+                    />
                     <Route path="/settings/*" element={<Settings />} />
                     <Route path="/extension/:extensionId" element={<Extension />} />
                 </Routes>

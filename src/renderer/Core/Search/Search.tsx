@@ -1,4 +1,4 @@
-import type { SearchResultItem, SearchResultItemAction } from "@common/Core";
+import type { ExcludedSearchResultItem, SearchResultItem, SearchResultItemAction } from "@common/Core";
 import { Button, Input } from "@fluentui/react-components";
 import { SettingsRegular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
@@ -16,9 +16,10 @@ import { SearchResultList } from "./SearchResultList";
 
 type SearchProps = {
     searchResultItems: SearchResultItem[];
+    excludedSearchResultItems: ExcludedSearchResultItem[];
 };
 
-export const Search = ({ searchResultItems }: SearchProps) => {
+export const Search = ({ searchResultItems, excludedSearchResultItems }: SearchProps) => {
     const { t } = useTranslation();
     const { contextBridge } = useContextBridge();
     const [selectedItemIndex, setSelectedItemIndex] = useState<number>(0);
@@ -45,9 +46,13 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     const search = (updatedSearchTerm: string) => setSearchTerm(updatedSearchTerm);
     const { value: fuzziness } = useSetting("searchEngine.fuzziness", 0.6);
 
-    const filteredSearchResultItems = filterSearchResultItemsBySearchTerm(searchResultItems, {
-        searchTerm,
-        fuzziness,
+    const filteredSearchResultItems = filterSearchResultItemsBySearchTerm({
+        searchResultItems,
+        excludedSearchResultItems,
+        searchOptions: {
+            searchTerm,
+            fuzziness,
+        },
     });
 
     const selectNextSearchResultItem = () =>
@@ -148,7 +153,7 @@ export const Search = ({ searchResultItems }: SearchProps) => {
     }, []);
 
     useEffect(() => selectFirstSearchResultItemItem(), [searchTerm]);
-    useEffect(() => updateAdditionalActions(), [selectedItemIndex, searchTerm]);
+    useEffect(() => updateAdditionalActions(), [selectedItemIndex, searchTerm, excludedSearchResultItems]);
 
     return (
         <BaseLayout

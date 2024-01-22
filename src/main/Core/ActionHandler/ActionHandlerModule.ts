@@ -6,6 +6,7 @@ import type { ActionHandler } from "./Contract";
 import {
     CommandlineActionHandler,
     CopyToClipboardActionHandler,
+    ExcludeFromSearchResultsActionHandler,
     NavigateToActionHandler,
     OpenFilePathActionHandler,
     PowershellActionHandler,
@@ -21,6 +22,7 @@ export class ActionHandlerModule {
         const clipboard = dependencyRegistry.get("Clipboard");
         const eventEmitter = dependencyRegistry.get("EventEmitter");
         const ipcMain = dependencyRegistry.get("IpcMain");
+        const excludedSearchResults = dependencyRegistry.get("ExcludedSearchResults");
 
         const actionHandlerRegistry = new ActionHandlerRegistry();
 
@@ -29,6 +31,7 @@ export class ActionHandlerModule {
         const actionHandlers: ActionHandler[] = [
             new CommandlineActionHandler(commandlineUtility),
             new CopyToClipboardActionHandler(clipboard),
+            new ExcludeFromSearchResultsActionHandler(excludedSearchResults),
             new NavigateToActionHandler(eventEmitter),
             new OpenFilePathActionHandler(shell),
             new PowershellActionHandler(powershellUtility),

@@ -14,6 +14,7 @@ export type Dependencies = {
     Emitter?: Emitter<Record<string, unknown>>;
     EventEmitter?: Core.EventEmitter;
     EventSubscriber?: Core.EventSubscriber;
+    ExcludedSearchResults?: Core.ExcludedSearchResults;
     ExtensionCacheFolder?: Core.ExtensionCacheFolder;
     ExtensionRegistry?: Core.ExtensionRegistry;
     FileSystemUtility?: Core.FileSystemUtility;

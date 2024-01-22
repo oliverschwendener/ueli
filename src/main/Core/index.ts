@@ -10,6 +10,7 @@ export * from "./DependencyRegistry";
 export * from "./Dialog";
 export * from "./EventEmitter";
 export * from "./EventSubscriber";
+export * from "./ExcludedSearchResults";
 export * from "./Extension";
 export * from "./ExtensionCacheFolder";
 export * from "./ExtensionManager";

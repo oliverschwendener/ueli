@@ -71,6 +71,10 @@ export class BrowserWindowModule {
             sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
         });
 
+        eventSubscriber.subscribe("excludedSearchResultItemsUpdated", () =>
+            sendToBrowserWindow(browserWindow, "excludedSearchResultItemsUpdated"),
+        );
+
         BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber);
     }
 
