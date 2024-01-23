@@ -14,7 +14,7 @@ export class ExtensionManagerModule {
 
         const extensionManager = new ExtensionManager(extensionRegistry, searchIndex, settingsManager, logger);
 
-        await extensionManager.populateSearchIndex(dependencyRegistry);
+        await extensionManager.populateSearchIndex();
 
         ipcMain.on("extensionEnabled", (_, { extensionId }: { extensionId: string }) => {
             extensionManager.populateSearchIndexByExtensionId(extensionId);
@@ -22,7 +22,7 @@ export class ExtensionManagerModule {
 
         ipcMain.on("getAvailableExtensions", (event) => {
             event.returnValue = extensionManager
-                .getSupportedExtensions(dependencyRegistry)
+                .getSupportedExtensions()
                 .map(({ id, name, nameTranslationKey }): ExtensionInfo => ({ id, name, nameTranslationKey }));
         });
 

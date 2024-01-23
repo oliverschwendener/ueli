@@ -3,6 +3,7 @@ import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { ApplicationSearchModule } from "./ApplicationSearch";
 import { DeeplTranslatorModule } from "./DeeplTranslator";
 import { SystemColorThemeSwitcherModule } from "./SystemColorThemeSwitcher";
+import { SystemSettingsModule } from "./SystemSettings/SystemSettingsModule";
 import { UeliCommandModule } from "./UeliCommand";
 
 export class ExtensionLoader {
@@ -24,6 +25,7 @@ export class ExtensionLoader {
             ApplicationSearchModule.bootstrap(dependencyRegistry),
             DeeplTranslatorModule.bootstrap(dependencyRegistry),
             SystemColorThemeSwitcherModule.bootstrap(dependencyRegistry),
+            SystemSettingsModule.bootstrap(dependencyRegistry),
             UeliCommandModule.bootstrap(dependencyRegistry),
         ];
     }

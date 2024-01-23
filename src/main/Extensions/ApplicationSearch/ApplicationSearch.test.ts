@@ -19,7 +19,11 @@ describe(ApplicationSearch, () => {
 
         const settings = <Settings>{};
 
-        const searchResultItems = await new ApplicationSearch(applicationRepository, settings).getSearchResultItems();
+        const searchResultItems = await new ApplicationSearch(
+            "Windows",
+            applicationRepository,
+            settings,
+        ).getSearchResultItems();
 
         expect(searchResultItems).toEqual(applications.map((application) => application.toSearchResultItem()));
     });
@@ -36,7 +40,7 @@ describe(ApplicationSearch, () => {
             },
         };
 
-        const applicationSearch = new ApplicationSearch(applicationRepository, settings);
+        const applicationSearch = new ApplicationSearch("Windows", applicationRepository, settings);
 
         expect(applicationSearch.getSettingDefaultValue("key1")).toBe("value1");
         expect(applicationSearch.getSettingDefaultValue("key2")).toBe("value2");

@@ -1,5 +1,3 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { Extension } from "@Core/Extension";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
@@ -12,6 +10,7 @@ export class ApplicationSearch implements Extension {
     public readonly nameTranslationKey = "extension[ApplicationSearch].extensionName";
 
     public constructor(
+        private readonly currentOperatingSystem: OperatingSystem,
         private readonly applicationRepository: ApplicationRepository,
         private readonly settings: Settings,
     ) {}
@@ -21,10 +20,9 @@ export class ApplicationSearch implements Extension {
         return applications.map((application) => application.toSearchResultItem());
     }
 
-    public isSupported(dependencyRegistry: DependencyRegistry<Dependencies>): boolean {
-        const currentOperatingSystem = dependencyRegistry.get("OperatingSystem");
+    public isSupported(): boolean {
         const supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
-        return supportedOperatingSystems.includes(currentOperatingSystem);
+        return supportedOperatingSystems.includes(this.currentOperatingSystem);
     }
 
     public getSettingDefaultValue<T>(key: string): T {

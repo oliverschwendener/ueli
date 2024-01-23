@@ -1,6 +1,4 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
@@ -43,10 +41,9 @@ export class SystemColorThemeSwitcher implements Extension {
         return undefined as T;
     }
 
-    public isSupported(dependencyRegistry: DependencyRegistry<Dependencies>): boolean {
-        const currentOperatingSystem = dependencyRegistry.get("OperatingSystem");
+    public isSupported(): boolean {
         const supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
-        return supportedOperatingSystems.includes(currentOperatingSystem);
+        return supportedOperatingSystems.includes(this.currentOperatingSystem);
     }
 
     public getSettingKeysTriggeringReindex() {

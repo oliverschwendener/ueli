@@ -33,6 +33,8 @@ export class ApplicationSearchModule {
             Linux: undefined, // not supported
         };
 
-        return { extension: new ApplicationSearch(applicationRepositories[operatingSystem], settings) };
+        return {
+            extension: new ApplicationSearch(operatingSystem, applicationRepositories[operatingSystem], settings),
+        };
     }
 }

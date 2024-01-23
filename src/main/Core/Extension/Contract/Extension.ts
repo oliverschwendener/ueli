@@ -1,5 +1,3 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { SearchResultItem } from "@common/Core";
 
 export interface Extension {
@@ -8,9 +6,9 @@ export interface Extension {
     readonly nameTranslationKey?: string;
 
     getSearchResultItems(): Promise<SearchResultItem[]>;
-    isSupported(dependencyRegistry: DependencyRegistry<Dependencies>): boolean;
+    isSupported(): boolean;
     getSettingDefaultValue<T>(key: string): T;
     invoke?(argument: unknown): Promise<unknown>;
     getImageUrl?(): string;
-    getSettingKeysTriggeringReindex?: () => string[];
+    getSettingKeysTriggeringReindex?(): string[];
 }
