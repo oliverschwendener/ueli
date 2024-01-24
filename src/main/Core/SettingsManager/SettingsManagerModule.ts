@@ -36,6 +36,9 @@ export class SettingsManagerModule {
 
         ipcMain.handle("resetAllSettings", async () => {
             await settingsManager.resetAllSettings();
+
+            // Because it's the easiest way to reset all settings to their default values in all places, we simply
+            // restart the app.
             app.relaunch();
             app.exit();
         });
