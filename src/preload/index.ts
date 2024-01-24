@@ -25,6 +25,7 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     openExternal: (url, options) => ipcRenderer.invoke("openExternal", { url, options }),
     removeExcludedSearchResultItem: (itemId: string) =>
         ipcRenderer.invoke("removeExcludedSearchResultItem", { itemId }),
+    resetAllSettings: () => ipcRenderer.invoke("resetAllSettings"),
     showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),
     themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),
     updateSettingValue: (key, value, isSensitive) =>

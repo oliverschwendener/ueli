@@ -4,22 +4,21 @@ import { SettingsManager } from "./SettingsManager";
 
 export class SettingsManagerModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
+        const app = dependencyRegistry.get("App");
+        const ipcMain = dependencyRegistry.get("IpcMain");
         const settingsReader = dependencyRegistry.get("SettingsReader");
         const settingsWriter = dependencyRegistry.get("SettingsWriter");
         const eventEmitter = dependencyRegistry.get("EventEmitter");
         const safeStorageEncryption = dependencyRegistry.get("SafeStorageEncryption");
 
-        dependencyRegistry.register(
-            "SettingsManager",
-            new SettingsManager(settingsReader, settingsWriter, eventEmitter, safeStorageEncryption),
+        const settingsManager = new SettingsManager(
+            settingsReader,
+            settingsWriter,
+            eventEmitter,
+            safeStorageEncryption,
         );
 
-        SettingsManagerModule.registerIpcEventListeners(dependencyRegistry);
-    }
-
-    private static registerIpcEventListeners(dependencyRegistry: DependencyRegistry<Dependencies>): void {
-        const settingsManager = dependencyRegistry.get("SettingsManager");
-        const ipcMain = dependencyRegistry.get("IpcMain");
+        dependencyRegistry.register("SettingsManager", settingsManager);
 
         ipcMain.handle(
             "updateSettingValue",
@@ -34,5 +33,11 @@ export class SettingsManagerModule {
                 { key, defaultValue, isSensitive }: { key: string; defaultValue: unknown; isSensitive?: boolean },
             ) => (event.returnValue = settingsManager.getValue(key, defaultValue, isSensitive)),
         );
+
+        ipcMain.handle("resetAllSettings", async () => {
+            await settingsManager.resetAllSettings();
+            app.relaunch();
+            app.exit();
+        });
     }
 }

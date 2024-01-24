@@ -27,6 +27,7 @@ export type ContextBridge = {
     invokeExtension: <Argument, Result>(extensionId: string, searchArguments: Argument) => Promise<Result>;
     openExternal: (url: string, options?: OpenExternalOptions) => Promise<void>;
     removeExcludedSearchResultItem: (itemId: string) => Promise<void>;
+    resetAllSettings: () => Promise<void>;
     showOpenDialog: (options: OpenDialogOptions) => Promise<OpenDialogReturnValue>;
     themeShouldUseDarkColors: () => boolean;
     updateSettingValue: <Value>(key: string, value: Value, isSensitive?: boolean) => Promise<void>;

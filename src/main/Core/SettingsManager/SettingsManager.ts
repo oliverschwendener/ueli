@@ -30,7 +30,19 @@ export class SettingsManager implements SettingsManagerInterface {
         this.settings[key] = isSensitive ? this.encryptValue<T>(value) : value;
         this.eventEmitter.emitEvent("settingUpdated", { key, value });
         this.eventEmitter.emitEvent(`settingUpdated[${key}]`, { value });
-        return this.settingsWriter.writeSettings(this.settings);
+        await this.saveChanges();
+    }
+
+    public async resetAllSettings(): Promise<void> {
+        for (const key of Object.keys(this.settings)) {
+            delete this.settings[key];
+        }
+
+        await this.saveChanges();
+    }
+
+    private async saveChanges(): Promise<void> {
+        await this.settingsWriter.writeSettings(this.settings);
     }
 
     private encryptValue<T>(plainText: T): T {
