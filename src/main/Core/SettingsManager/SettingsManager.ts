@@ -6,7 +6,7 @@ import type { SettingsWriter } from "../SettingsWriter";
 import type { SettingsManager as SettingsManagerInterface } from "./Contract";
 
 export class SettingsManager implements SettingsManagerInterface {
-    private readonly settings: Settings;
+    public readonly settings: Settings;
 
     public constructor(
         private readonly settingsReader: SettingsReader,

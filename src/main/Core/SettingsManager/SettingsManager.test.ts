@@ -95,4 +95,22 @@ describe(SettingsManager, () => {
         expect(emitEventMock).toHaveBeenCalledWith("settingUpdated", { key: "key1", value: "decryptedValue1" });
         expect(encryptStringMock).toHaveBeenCalledWith("decryptedValue1");
     });
+
+    it("should reset all settings", async () => {
+        const readSettingsMock = vi.fn().mockReturnValue({ key1: "value1" });
+        const writeSettingsMock = vi.fn();
+
+        const eventEmitter = <EventEmitter>{};
+        const settingsReader = <SettingsReader>{ readSettings: () => readSettingsMock() };
+        const settingsWriter = <SettingsWriter>{ writeSettings: (settings) => writeSettingsMock(settings) };
+        const safeStorage = <SafeStorageEncryption>{};
+
+        const settingsManager = new SettingsManager(settingsReader, settingsWriter, eventEmitter, safeStorage);
+
+        await settingsManager.resetAllSettings();
+
+        expect(readSettingsMock).toHaveBeenCalledOnce();
+        expect(settingsManager.settings).toEqual({});
+        expect(writeSettingsMock).toHaveBeenCalledWith({});
+    });
 });
