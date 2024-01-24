@@ -1,4 +1,5 @@
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
+import type { OperatingSystem } from "@common/Core";
 import type { App } from "electron";
 import { join } from "path";
 import { BraveBrowserBookmark } from "./BraveBrowserBookmark";
@@ -23,6 +24,7 @@ export class BraveBrowserBookmarkRepository implements BrowserBookmarkRepository
     public constructor(
         private readonly app: App,
         private readonly fileSystemUtility: FileSystemUtility,
+        private readonly operatingSystem: OperatingSystem,
     ) {}
 
     public async getAll(): Promise<BrowserBookmark[]> {
@@ -30,10 +32,27 @@ export class BraveBrowserBookmarkRepository implements BrowserBookmarkRepository
         return this.getBookmarksFromItem(fileContent.roots.bookmark_bar);
     }
 
-    private async getBookmarksFileContent(): Promise<BookmarksFileContent> {
-        const filePath = join(this.app.getPath("appData"), "BraveSoftware", "Brave-Browser", "Default", "Bookmarks");
+    private getBookmarksFilePath(): string {
+        const map: Record<OperatingSystem, string> = {
+            Linux: null, // not supported,
+            macOS: join(this.app.getPath("appData"), "BraveSoftware", "Brave-Browser", "Default", "Bookmarks"),
+            Windows: join(
+                this.app.getPath("home"),
+                "AppData",
+                "Local",
+                "BraveSoftware",
+                "Brave-Browser",
+                "User Data",
+                "Default",
+                "Bookmarks",
+            ),
+        };
 
-        return await this.fileSystemUtility.readJsonFile<BookmarksFileContent>(filePath);
+        return map[this.operatingSystem];
+    }
+
+    private async getBookmarksFileContent(): Promise<BookmarksFileContent> {
+        return await this.fileSystemUtility.readJsonFile<BookmarksFileContent>(this.getBookmarksFilePath());
     }
 
     private getBookmarksFromItem(item: BookmarkItem): BraveBrowserBookmark[] {

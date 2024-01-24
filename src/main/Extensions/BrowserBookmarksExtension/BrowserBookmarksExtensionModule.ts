@@ -9,9 +9,12 @@ export class BrowserBookmarksExtensionModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
         const app = dependencyRegistry.get("App");
         const fileSystemUtility = dependencyRegistry.get("FileSystemUtility");
+        const operatingSystem = dependencyRegistry.get("OperatingSystem");
 
         return {
-            extension: new BrowserBookmarksExtension(new BraveBrowserBookmarkRepository(app, fileSystemUtility)),
+            extension: new BrowserBookmarksExtension(
+                new BraveBrowserBookmarkRepository(app, fileSystemUtility, operatingSystem),
+            ),
         };
     }
 }
