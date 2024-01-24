@@ -2,6 +2,7 @@ import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { OperatingSystem } from "@common/Core";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
+import type { ExtensionModule } from "../ExtensionModule";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";
 import { Settings } from "./Settings";
@@ -9,8 +10,8 @@ import { WindowsApplicationRepository } from "./Windows/WindowsApplicationReposi
 import { MacOsApplicationIconGenerator } from "./macOS/MacOsApplicationIconGenerator";
 import { MacOsApplicationRepository } from "./macOS/MacOsApplicationRepository";
 
-export class ApplicationSearchModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
+export class ApplicationSearchModule implements ExtensionModule {
+    public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
         const operatingSystem = dependencyRegistry.get("OperatingSystem");
         const fileSystemUtility = dependencyRegistry.get("FileSystemUtility");
         const commandlineUtility = dependencyRegistry.get("CommandlineUtility");

@@ -44,15 +44,14 @@ export const Search = ({ searchResultItems, excludedSearchResultItems }: SearchP
     const navigate = useNavigate();
     const openSettings = () => navigate({ pathname: "/settings/general" });
     const search = (updatedSearchTerm: string) => setSearchTerm(updatedSearchTerm);
+
     const { value: fuzziness } = useSetting("searchEngine.fuzziness", 0.6);
+    const { value: maxResultLength } = useSetting("searchEngine.maxResultLength", 50);
 
     const filteredSearchResultItems = filterSearchResultItemsBySearchTerm({
         searchResultItems,
         excludedSearchResultItems,
-        searchOptions: {
-            searchTerm,
-            fuzziness,
-        },
+        searchOptions: { searchTerm, fuzziness, maxResultLength },
     });
 
     const selectNextSearchResultItem = () =>

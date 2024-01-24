@@ -1,10 +1,11 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
+import type { ExtensionModule } from "../ExtensionModule";
 import { DeeplTranslator } from "./DeeplTranslator";
 
-export class DeeplTranslatorModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
+export class DeeplTranslatorModule implements ExtensionModule {
+    public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
         const net = dependencyRegistry.get("Net");
         const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
         const settingsManager = dependencyRegistry.get("SettingsManager");

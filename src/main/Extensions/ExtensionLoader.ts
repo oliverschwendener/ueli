@@ -1,32 +1,38 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { ApplicationSearchModule } from "./ApplicationSearch";
+import { BrowserBookmarksExtensionModule } from "./BrowserBookmarksExtension/BrowserBookmarksExtensionModule";
 import { DeeplTranslatorModule } from "./DeeplTranslator";
+import { ExtensionModule } from "./ExtensionModule";
 import { SystemColorThemeSwitcherModule } from "./SystemColorThemeSwitcher";
 import { SystemSettingsModule } from "./SystemSettings/SystemSettingsModule";
 import { UeliCommandModule } from "./UeliCommand";
 
 export class ExtensionLoader {
+    private static getAllExtensionModules(): ExtensionModule[] {
+        return [
+            new ApplicationSearchModule(),
+            new BrowserBookmarksExtensionModule(),
+            new DeeplTranslatorModule(),
+            new SystemColorThemeSwitcherModule(),
+            new SystemSettingsModule(),
+            new UeliCommandModule(),
+        ];
+    }
+
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const extensionRegistry = dependencyRegistry.get("ExtensionRegistry");
         const actionHandlerRegistry = dependencyRegistry.get("ActionHandlerRegistry");
 
-        for (const bootstrapResult of ExtensionLoader.bootstrapAllExtensions(dependencyRegistry)) {
+        const extensionModules = ExtensionLoader.getAllExtensionModules();
+        const bootstrapResults = extensionModules.map((e) => e.bootstrap(dependencyRegistry));
+
+        for (const bootstrapResult of bootstrapResults) {
             extensionRegistry.register(bootstrapResult.extension);
 
             for (const actionHandler of bootstrapResult.actionHandlers || []) {
                 actionHandlerRegistry.register(actionHandler);
             }
         }
-    }
-
-    private static bootstrapAllExtensions(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        return [
-            ApplicationSearchModule.bootstrap(dependencyRegistry),
-            DeeplTranslatorModule.bootstrap(dependencyRegistry),
-            SystemColorThemeSwitcherModule.bootstrap(dependencyRegistry),
-            SystemSettingsModule.bootstrap(dependencyRegistry),
-            UeliCommandModule.bootstrap(dependencyRegistry),
-        ];
     }
 }

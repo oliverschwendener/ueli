@@ -7,22 +7,21 @@ const testFilterSearchResultItemsBySearchTerm = ({
     excludedSearchResultItems,
     searchTerm,
     fuzziness,
+    maxResultLength,
     expected,
 }: {
     expected: SearchResultItem[];
     searchResultItems: SearchResultItem[];
     excludedSearchResultItems: ExcludedSearchResultItem[];
     fuzziness: number;
+    maxResultLength: number;
     searchTerm: string;
 }) =>
     expect(
         filterSearchResultItemsBySearchTerm({
             searchResultItems,
             excludedSearchResultItems,
-            searchOptions: {
-                searchTerm,
-                fuzziness,
-            },
+            searchOptions: { searchTerm, fuzziness, maxResultLength },
         }),
     ).toEqual(expected);
 
@@ -33,6 +32,7 @@ describe(filterSearchResultItemsBySearchTerm, () => {
             excludedSearchResultItems: [],
             searchTerm: "search term",
             fuzziness: 0.6,
+            maxResultLength: 10,
             expected: [],
         }));
 
@@ -42,6 +42,7 @@ describe(filterSearchResultItemsBySearchTerm, () => {
             excludedSearchResultItems: [],
             searchTerm: "search term",
             fuzziness: 0.6,
+            maxResultLength: 10,
             expected: [],
         }));
 
@@ -54,6 +55,7 @@ describe(filterSearchResultItemsBySearchTerm, () => {
             excludedSearchResultItems: [],
             searchTerm: "Old",
             fuzziness: 0.6,
+            maxResultLength: 10,
             expected: [<SearchResultItem>{ id: "item1", name: "Old Man's War", description: "An old book" }],
         }));
 
@@ -63,6 +65,7 @@ describe(filterSearchResultItemsBySearchTerm, () => {
             excludedSearchResultItems: [],
             searchTerm: "item",
             fuzziness: 0.6,
+            maxResultLength: 10,
             expected: [<SearchResultItem>{ id: "item1", name: "Item 1", description: "Item 1" }],
         }));
 
@@ -72,6 +75,7 @@ describe(filterSearchResultItemsBySearchTerm, () => {
             excludedSearchResultItems: [],
             searchTerm: "itm",
             fuzziness: 0.6,
+            maxResultLength: 10,
             expected: [<SearchResultItem>{ id: "item1", name: "Item 1", description: "Item 1" }],
         }));
 
@@ -81,6 +85,7 @@ describe(filterSearchResultItemsBySearchTerm, () => {
             excludedSearchResultItems: [],
             searchTerm: "itm",
             fuzziness: 0.2,
+            maxResultLength: 10,
             expected: [],
         }));
 
@@ -93,6 +98,20 @@ describe(filterSearchResultItemsBySearchTerm, () => {
             excludedSearchResultItems: [{ id: "item1", name: "Some name" }],
             expected: [<SearchResultItem>{ id: "item2", name: "Item 2", description: "Item 2" }],
             fuzziness: 0.6,
+            maxResultLength: 10,
+            searchTerm: "item",
+        }));
+
+    it("should limit the search result items", () =>
+        testFilterSearchResultItemsBySearchTerm({
+            searchResultItems: [
+                <SearchResultItem>{ id: "item1", name: "Item 1", description: "Item 1" },
+                <SearchResultItem>{ id: "item2", name: "Item 2", description: "Item 2" },
+            ],
+            excludedSearchResultItems: [],
+            expected: [<SearchResultItem>{ id: "item1", name: "Item 1", description: "Item 1" }],
+            fuzziness: 0.6,
+            maxResultLength: 1,
             searchTerm: "item",
         }));
 });

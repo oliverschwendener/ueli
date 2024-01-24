@@ -22,6 +22,8 @@ export const SearchEngine = () => {
 
     const { value: fuzziness, updateValue: setFuzziness } = useSetting("searchEngine.fuzziness", 0.6);
 
+    const { value: maxResultLength, updateValue: setMaxResultLength } = useSetting("searchEngine.maxResultLength", 50);
+
     const [excludedSearchResultItems, setExcludedSearchResultItems] = useState<ExcludedSearchResultItem[]>(
         contextBridge.getExcludedSearchResultItems(),
     );
@@ -61,6 +63,17 @@ export const SearchEngine = () => {
                         max={1}
                         step={0.1}
                         onChange={(_, { value }) => setFuzziness(value)}
+                    />
+                </Field>
+            </Section>
+            <Section>
+                <Field label={t("settingsSearchEngine.maxResultLength")}>
+                    <Input
+                        value={`${maxResultLength}`}
+                        min={1}
+                        max={9999}
+                        onChange={(_, { value }) => setMaxResultLength(Number(value))}
+                        type="number"
                     />
                 </Field>
             </Section>

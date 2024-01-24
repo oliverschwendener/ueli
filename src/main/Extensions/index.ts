@@ -1,1 +1,1 @@
-export * from "./ExtensionsModule";
+export * from "./ExtensionLoader";

@@ -4,6 +4,7 @@ import Fuse from "fuse.js";
 type SearchOptions = {
     searchTerm: string;
     fuzziness: number;
+    maxResultLength: number;
 };
 
 export const filterSearchResultItemsBySearchTerm = ({
@@ -15,14 +16,22 @@ export const filterSearchResultItemsBySearchTerm = ({
     excludedSearchResultItems: ExcludedSearchResultItem[];
     searchOptions: SearchOptions;
 }): SearchResultItem[] => {
-    return new Fuse(
+    const { fuzziness, maxResultLength, searchTerm } = searchOptions;
+
+    const result = new Fuse(
         searchResultItems.filter((s) => !excludedSearchResultItems.map((e) => e.id).includes(s.id)),
         {
             keys: ["name"],
-            threshold: searchOptions.fuzziness,
+            threshold: fuzziness,
             shouldSort: true,
         },
     )
-        .search(searchOptions.searchTerm)
+        .search(searchTerm)
         .map((i) => i.item);
+
+    if (result.length > maxResultLength) {
+        result.splice(maxResultLength, result.length - maxResultLength);
+    }
+
+    return result;
 };

@@ -1,11 +1,12 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
+import type { ExtensionModule } from "../ExtensionModule";
 import { CustomActionHandler } from "./CustomActionHandler";
 import { SystemColorThemeSwitcher } from "./SystemColorThemeSwitcher";
 
-export class SystemColorThemeSwitcherModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
+export class SystemColorThemeSwitcherModule implements ExtensionModule {
+    public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
         const operatingSystem = dependencyRegistry.get("OperatingSystem");
         const commandlineUtility = dependencyRegistry.get("CommandlineUtility");
         const nativeTheme = dependencyRegistry.get("NativeTheme");

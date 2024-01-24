@@ -46,7 +46,6 @@ export const SearchResultListItem = ({
             onClick={onClick}
             onDoubleClick={onDoubleClick}
             style={{
-                alignItems: "center",
                 backgroundColor: isSelected ? theme.colorSubtleBackgroundHover : undefined,
                 boxSizing: "border-box",
                 color: isSelected ? theme.colorNeutralForeground1Selected : undefined,
@@ -55,8 +54,11 @@ export const SearchResultListItem = ({
                 borderColor: isSelected ? theme.colorNeutralStroke1 : "transparent",
                 display: "flex",
                 flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "flex-start",
                 gap: 10,
                 height: 42,
+                width: "100%",
                 padding: 10,
                 userSelect: "none",
                 borderRadius: theme.borderRadiusMedium,
@@ -70,10 +72,10 @@ export const SearchResultListItem = ({
                     flexShrink: 0,
                     justifyContent: "center",
                     width: 24,
+                    height: 24,
                 }}
             >
                 <img
-                    alt="Search Result List Item Image"
                     style={{
                         maxHeight: "100%",
                         maxWidth: "100%",
@@ -83,34 +85,20 @@ export const SearchResultListItem = ({
             </div>
             <div
                 style={{
-                    alignItems: "center",
-                    display: "flex",
-                    flexDirection: "row",
-                    flexGrow: 1,
-                    justifyContent: "space-between",
-                    gap: 10,
+                    width: "100%",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
                 }}
             >
-                <div
-                    style={{
-                        alignItems: "center",
-                        display: "flex",
-                        flexDirection: "row",
-                        flexGrow: 1,
-                        justifyContent: "space-between",
-                    }}
-                >
-                    <Text>
-                        {searchResultItem.nameTranslationKey
-                            ? t(searchResultItem.nameTranslationKey)
-                            : searchResultItem.name}
-                    </Text>
-                    <Text size={200}>
-                        {searchResultItem.descriptionTranslationKey
-                            ? t(searchResultItem.descriptionTranslationKey)
-                            : searchResultItem.description}
-                    </Text>
-                </div>
+                {searchResultItem.nameTranslationKey ? t(searchResultItem.nameTranslationKey) : searchResultItem.name}
+            </div>
+            <div style={{ flexShrink: 0 }}>
+                <Text size={200}>
+                    {searchResultItem.descriptionTranslationKey
+                        ? t(searchResultItem.descriptionTranslationKey)
+                        : searchResultItem.description}
+                </Text>
             </div>
         </div>
     );
