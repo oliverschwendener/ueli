@@ -1,6 +1,6 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { Logger } from "@Core/Logger";
-import { normalize, parse } from "path";
+import { dirname, normalize, parse } from "path";
 import { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
 import type { Settings } from "../Settings";
@@ -29,11 +29,16 @@ export class MacOsApplicationRepository implements ApplicationRepository {
             .map((filePath) => normalize(filePath).trim())
             .filter((filePath) => filePath.endsWith(".app"))
             .filter((filePath) => this.filterFilePathByConfiguredFolders(filePath))
+            .filter((filePath) => this.filterSubApps(filePath))
             .filter((filePath) => ![".", ".."].includes(filePath));
     }
 
     private filterFilePathByConfiguredFolders(filePath: string): boolean {
         return this.settings.getValue<string[]>("macOsFolders").some((folderPath) => filePath.startsWith(folderPath));
+    }
+
+    private filterSubApps(filePath: string): boolean {
+        return !dirname(filePath).includes(".app");
     }
 
     private async getAllIcons(filePaths: string[]): Promise<Record<string, string>> {
