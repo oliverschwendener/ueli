@@ -17,7 +17,7 @@ export const BrowserBookmarksSettings = () => {
         contextBridge.getExtensionSettingDefaultValue(extensionId, "browser"),
     );
 
-    const browsers: Browser[] = ["Arc", "Brave Browser", "Google Chrome", "Microsoft Edge"];
+    const browsers: Browser[] = ["Arc", "Brave Browser", "Google Chrome", "Microsoft Edge", "Yandex Browser"];
 
     const { value: searchResultStyle, updateValue: setSearchResultStyle } = useExtensionSetting<string>(
         extensionId,

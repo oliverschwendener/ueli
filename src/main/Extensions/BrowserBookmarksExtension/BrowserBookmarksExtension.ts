@@ -56,6 +56,7 @@ export class BrowserBookmarksExtension implements Extension {
             "browser:Brave Browser": "brave-browser.png",
             "browser:Google Chrome": "google-chrome.png",
             "browser:Microsoft Edge": "microsoft-edge.png",
+            "browser:Yandex Browser": "yandex-browser.svg",
         };
 
         const assetFileName = assetFileNames[key];
