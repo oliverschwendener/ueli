@@ -12,6 +12,8 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     getAboutUeli: () => ipcRenderer.sendSync("getAboutUeli"),
     getAvailableExtensions: () => ipcRenderer.sendSync("getAvailableExtensions"),
     getExcludedSearchResultItems: () => ipcRenderer.sendSync("getExcludedSearchResultItems"),
+    getExtensionAssetFilePath: (extensionId, key) =>
+        ipcRenderer.sendSync("getExtensionAssetFilePath", { extensionId, key }),
     getExtensionImageUrl: (extensionId) => ipcRenderer.sendSync("getExtensionImageUrl", { extensionId }),
     getExtensionSettingDefaultValue: (extensionId, settingKey) =>
         ipcRenderer.sendSync("getExtensionSettingDefaultValue", { extensionId, settingKey }),

@@ -17,6 +17,7 @@ export type ContextBridge = {
     getAboutUeli: () => AboutUeli;
     getAvailableExtensions: () => ExtensionInfo[];
     getExcludedSearchResultItems: () => ExcludedSearchResultItem[];
+    getExtensionAssetFilePath: (extensionId: string, key: string) => string;
     getExtensionImageUrl: (extensionId: string) => string | undefined;
     getExtensionSettingDefaultValue: <Value>(extensionId: string, settingKey: string) => Value;
     getLogs: () => string[];

@@ -26,6 +26,11 @@ export class ExtensionManagerModule {
                 .map(({ id, name, nameTranslationKey }): ExtensionInfo => ({ id, name, nameTranslationKey }));
         });
 
+        ipcMain.on("getExtensionAssetFilePath", (event, { extensionId, key }: { extensionId: string; key: string }) => {
+            const extension = extensionRegistry.getById(extensionId);
+            event.returnValue = extension.getAssetFilePath ? extension.getAssetFilePath(key) : undefined;
+        });
+
         ipcMain.on("getExtensionImageUrl", (event, { extensionId }: { extensionId: string }) => {
             const extension = extensionRegistry.getById(extensionId);
             event.returnValue = extension.getImageUrl ? extension.getImageUrl() : undefined;

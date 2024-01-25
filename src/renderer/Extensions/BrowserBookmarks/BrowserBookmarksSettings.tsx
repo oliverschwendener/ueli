@@ -17,21 +17,13 @@ export const BrowserBookmarksSettings = () => {
         contextBridge.getExtensionSettingDefaultValue(extensionId, "browser"),
     );
 
-    const browsers: Record<Browser, string> = {
-        Arc: "image[Arc]",
-        "Brave Browser": "image[BraveBrowser]",
-        "Google Chrome": "image[GoogleChrome]",
-        "Microsoft Edge": "image[MicrosoftEdge]",
-    };
+    const browsers: Browser[] = ["Arc", "Brave Browser", "Google Chrome", "Microsoft Edge"];
 
     const { value: searchResultStyle, updateValue: setSearchResultStyle } = useExtensionSetting<string>(
         extensionId,
         "searchResultStyle",
         contextBridge.getExtensionSettingDefaultValue(extensionId, "searchResultStyle"),
     );
-
-    const getImageUrlByBrowser = (browserName: string) =>
-        contextBridge.getExtensionSettingDefaultValue<string>(extensionId, browsers[browserName as Browser]);
 
     const searchResultStyles = ["nameOnly", "urlOnly", "nameAndUrl"];
 
@@ -59,12 +51,15 @@ export const BrowserBookmarksSettings = () => {
                         selectedOptions={[browser]}
                         onOptionSelect={(_, { optionValue }) => optionValue && setBrowser(optionValue as Browser)}
                     >
-                        {Object.keys(browsers).map((browserName) => (
+                        {browsers.map((browserName) => (
                             <Option key={browserName} value={browserName} text={browserName}>
                                 <img
                                     style={{ width: 20, height: 20 }}
                                     alt={browserName}
-                                    src={getImageUrlByBrowser(browserName)}
+                                    src={`file://${contextBridge.getExtensionAssetFilePath(
+                                        extensionId,
+                                        `browser:${browserName}`,
+                                    )}`}
                                 />
                                 {browserName}
                             </Option>

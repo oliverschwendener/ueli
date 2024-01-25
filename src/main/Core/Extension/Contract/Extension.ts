@@ -9,6 +9,7 @@ export interface Extension {
     isSupported(): boolean;
     getSettingDefaultValue<T>(key: string): T;
     invoke?(argument: unknown): Promise<unknown>;
+    getAssetFilePath?(key: string): string;
     getImageUrl?(): string;
     getSettingKeysTriggeringReindex?(): string[];
 }

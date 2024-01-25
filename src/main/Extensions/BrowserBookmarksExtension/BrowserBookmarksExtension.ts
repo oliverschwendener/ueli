@@ -41,10 +41,6 @@ export class BrowserBookmarksExtension implements Extension {
         const settings: Record<string, unknown> = {
             browser: "Google Chrome",
             searchResultStyle: "nameOnly",
-            "image[Arc]": this.getBrowserImageUrl("Arc"),
-            "image[BraveBrowser]": this.getBrowserImageUrl("Brave Browser"),
-            "image[GoogleChrome]": this.getBrowserImageUrl("Google Chrome"),
-            "image[MicrosoftEdge]": this.getBrowserImageUrl("Microsoft Edge"),
         };
 
         return settings[key] as T;
@@ -54,14 +50,16 @@ export class BrowserBookmarksExtension implements Extension {
         return ["extension[BrowserBookmarks].browser", "extension[BrowserBookmarks].searchResultStyle"];
     }
 
-    private getBrowserImageUrl(browser: Browser): string {
-        const map: Record<Browser, string> = {
-            Arc: "arc.png",
-            "Brave Browser": "brave-browser.png",
-            "Google Chrome": "google-chrome.png",
-            "Microsoft Edge": "microsoft-edge.png",
+    public getAssetFilePath(key: string): string {
+        const assetFileNames: Record<string, string> = {
+            "browser:Arc": "arc.png",
+            "browser:Brave Browser": "brave-browser.png",
+            "browser:Google Chrome": "google-chrome.png",
+            "browser:Microsoft Edge": "microsoft-edge.png",
         };
 
-        return `file://${this.assetPathResolver.getExtensionAssetPath(this.id, map[browser])}`;
+        const assetFileName = assetFileNames[key];
+
+        return this.assetPathResolver.getExtensionAssetPath(this.id, assetFileName);
     }
 }
