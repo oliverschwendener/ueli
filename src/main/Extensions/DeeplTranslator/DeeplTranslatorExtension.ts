@@ -26,10 +26,16 @@ type ApiResponse = {
     }[];
 };
 
-export class DeeplTranslator implements Extension {
+export class DeeplTranslatorExtension implements Extension {
     public readonly id = "DeeplTranslator";
     public readonly name = "DeepL Translator";
     public readonly nameTranslationKey = "extension[DeeplTranslator].extensionName";
+
+    private readonly defaultSettings = {
+        apiKey: "",
+        defaultSourceLanguage: "Auto",
+        defaultTargetLanguage: "EN-US",
+    };
 
     public constructor(
         private readonly net: Net,
@@ -68,13 +74,7 @@ export class DeeplTranslator implements Extension {
     }
 
     public getSettingDefaultValue<T>(key: string): T {
-        const defaultValues: Record<string, unknown> = {
-            apiKey: "",
-            defaultSourceLanguage: "Auto",
-            defaultTargetLanguage: "EN-US",
-        };
-
-        return defaultValues[key] as T;
+        return this.defaultSettings[key] as T;
     }
 
     public getImageUrl(): string {

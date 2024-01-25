@@ -36,6 +36,7 @@ export class ChromiumBrowserBookmark implements BrowserBookmark {
     private getId(): string {
         return `BrowserBookmark-${this.guid}-${this.id}`;
     }
+
     private getName(searchResultStyle: string): string {
         const nameMap: Record<string, string> = {
             nameOnly: this.name,

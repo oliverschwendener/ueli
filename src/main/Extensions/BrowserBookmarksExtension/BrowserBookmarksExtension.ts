@@ -11,6 +11,11 @@ export class BrowserBookmarksExtension implements Extension {
     public readonly name = "Browser Bookmarks";
     public readonly nameTranslationKey = "extension[BrowserBookmarks].extensionName";
 
+    private readonly defaultSettings = {
+        browser: "Google Chrome",
+        searchResultStyle: "nameOnly",
+    };
+
     public constructor(
         private readonly browserBookmarkRepository: BrowserBookmarkRepository,
         private readonly settingsManager: SettingsManager,
@@ -38,16 +43,11 @@ export class BrowserBookmarksExtension implements Extension {
     }
 
     public getSettingDefaultValue<T>(key: string): T {
-        const settings: Record<string, unknown> = {
-            browser: "Google Chrome",
-            searchResultStyle: "nameOnly",
-        };
-
-        return settings[key] as T;
+        return this.defaultSettings[key] as T;
     }
 
     public getSettingKeysTriggeringReindex(): string[] {
-        return ["extension[BrowserBookmarks].browser", "extension[BrowserBookmarks].searchResultStyle"];
+        return [getExtensionSettingKey(this.id, "browser"), getExtensionSettingKey(this.id, "searchResultStyle")];
     }
 
     public getAssetFilePath(key: string): string {
