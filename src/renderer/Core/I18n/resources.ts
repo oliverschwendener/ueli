@@ -43,6 +43,10 @@ export const resources: InitOptions["resources"] = {
             "extension[DeeplTranslator].extensionName": "DeepL Translator",
             "extension[DeeplTranslator].openAccount": "Open DeepL Account",
             "extension[SystemSettings].extensionName": "System Settings",
+            "extension[BrowserBookmarks].extensionName": "Browser Bookmarks",
+            "extension[BrowserBookmarks].searchResultStyle.nameOnly": "Name only",
+            "extension[BrowserBookmarks].searchResultStyle.urlOnly": "URL only",
+            "extension[BrowserBookmarks].searchResultStyle.nameAndUrl": "Name & URL",
         },
     },
     "de-CH": {
@@ -87,6 +91,10 @@ export const resources: InitOptions["resources"] = {
             "extension[DeeplTranslator].extensionName": "DeepL Übersetzer",
             "extension[DeeplTranslator].openAccount": "DeepL Account öffnen",
             "extension[SystemSettings].extensionName": "Systemeinstellungen",
+            "extension[BrowserBookmarks].extensionName": "Browserlesezeichen",
+            "extension[BrowserBookmarks].searchResultStyle.nameOnly": "Nur Name",
+            "extension[BrowserBookmarks].searchResultStyle.urlOnly": "Nur URL",
+            "extension[BrowserBookmarks].searchResultStyle.nameAndUrl": "Name & URL",
         },
     },
 };

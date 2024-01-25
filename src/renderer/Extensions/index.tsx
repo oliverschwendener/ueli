@@ -1,6 +1,7 @@
 import { useExtensionProps } from "@Core/Hooks";
 import type { ReactElement } from "react";
 import { ApplicationSearchSettings } from "./ApplicationSearch";
+import { BrowserBookmarksSettings } from "./BrowserBookmarks";
 import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
 
 type ExtensionReactElements = {
@@ -14,6 +15,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
     const extensions: Record<string, ExtensionReactElements> = {
         ApplicationSearch: {
             settings: <ApplicationSearchSettings />,
+        },
+        BrowserBookmarks: {
+            settings: <BrowserBookmarksSettings />,
         },
         DeeplTranslator: {
             extension: <DeeplTranslator {...props} />,

@@ -1,5 +1,6 @@
+import type { Browser } from "@common/Extensions/BrowserBookmarks";
 import type { BrowserBookmark } from "./BrowserBookmark";
 
 export interface BrowserBookmarkRepository {
-    getAll(): Promise<BrowserBookmark[]>;
+    getAll(browser: Browser): Promise<BrowserBookmark[]>;
 }

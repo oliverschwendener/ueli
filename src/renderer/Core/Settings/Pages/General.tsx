@@ -22,6 +22,7 @@ export const General = () => {
                 <Field label={t("settingsGeneral.language")}>
                     <Dropdown
                         value={supportedLanguages.find(({ locale }) => locale === language)?.name}
+                        selectedOptions={[language]}
                         onOptionSelect={(_, { optionValue }) => optionValue && setLanguage(optionValue)}
                     >
                         {supportedLanguages.map(({ name, locale }) => (
