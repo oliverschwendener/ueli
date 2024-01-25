@@ -56,6 +56,10 @@ export class ExtensionManagerModule {
             },
         );
 
+        ipcMain.handle("triggerExtensionRescan", (_, { extensionId }: { extensionId: string }) =>
+            extensionManager.populateSearchIndexByExtensionId(extensionId),
+        );
+
         eventSubscriber.subscribe("settingUpdated", async ({ key }: { key: string }) => {
             for (const extension of extensionRegistry.getAll()) {
                 if (

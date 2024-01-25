@@ -9,7 +9,7 @@ export const resources: InitOptions["resources"] = {
             "settingsAppearance.themeName": "Theme",
             "settingsPage.about": "About",
             "settingsPage.debug": "Debug",
-            "settingsPage.debug.resetAllSettings": "Reset all setting",
+            "settingsPage.debug.resetAllSettings": "Reset all settings",
             "settingsPage.debug.resetAllSettings.button": "Reset",
             "settingsPage.debug.resetAllSettings.dialogTitle": "Are you sure?",
             "settingsPage.debug.resetAllSettings.dialogContent":

@@ -1,5 +1,14 @@
-import { Accordion, AccordionHeader, AccordionItem, AccordionPanel, Badge, Label } from "@fluentui/react-components";
-import { CheckmarkFilled, DismissFilled } from "@fluentui/react-icons";
+import {
+    Accordion,
+    AccordionHeader,
+    AccordionItem,
+    AccordionPanel,
+    Badge,
+    Button,
+    Label,
+    Tooltip,
+} from "@fluentui/react-components";
+import { ArrowClockwiseRegular, CheckmarkFilled, DismissFilled } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting, useTheme } from "../../Hooks";
 import { ExtensionSettings } from "./ExtensionSettings";
@@ -34,6 +43,11 @@ export const Extensions = () => {
 
     const toggle = (extensionId: string) => (isEnabled(extensionId) ? disable(extensionId) : enable(extensionId));
 
+    const triggerExtensionRescan = (event: React.MouseEvent, extensionId: string) => {
+        event.preventDefault();
+        contextBridge.triggerExtensionRescan(extensionId);
+    };
+
     return (
         <Accordion multiple collapsible>
             {getAvailableExtensions().map(({ id, name, nameTranslationKey }) => (
@@ -56,9 +70,18 @@ export const Extensions = () => {
                                 justifyContent: "space-between",
                                 alignItems: "center",
                                 width: "100%",
+                                gap: 5,
                             }}
                         >
-                            <Label>{nameTranslationKey ? t(nameTranslationKey) : name}</Label>
+                            <Label style={{ flexGrow: 1 }}>{nameTranslationKey ? t(nameTranslationKey) : name}</Label>
+                            <Tooltip content="Rescan" relationship="label">
+                                <Button
+                                    onClick={(e) => triggerExtensionRescan(e, id)}
+                                    size="small"
+                                    appearance="subtle"
+                                    icon={<ArrowClockwiseRegular fontSize={14} />}
+                                />
+                            </Tooltip>
                             <Badge
                                 color={isEnabled(id) ? "success" : "subtle"}
                                 onClick={async (e) => {
