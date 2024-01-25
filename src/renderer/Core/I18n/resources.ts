@@ -32,10 +32,10 @@ export const resources: InitOptions["resources"] = {
             "settingsWindow.hideWindowAfterExecution": "Hide window after execution",
             "settingsWindow.hideWindowOnBlur": "Hide window on blur",
             "searchResultItem.action.excludeFromSearchResults": "Exclude from search results",
+            "searchResultItem.action.openUrlInBrowser": "Open URL in web browser",
+            "searchResultItem.action.showInFileExplorer": "Show in file explorer",
             "extension[ApplicationSearch].searchResultItemDescription": "Application",
             "extension[ApplicationSearch].searchResultItem.defaultAction.openApplication": "Open application",
-            "extension[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer":
-                "Show in file explorer",
             "extension[ApplicationSearch].searchResultItem.additionalAction.copyFilePathToClipboard":
                 "Copy file path to clipboard",
             "extension[ApplicationSearch].extensionName": "Application Search",
@@ -48,6 +48,7 @@ export const resources: InitOptions["resources"] = {
             "extension[BrowserBookmarks].searchResultStyle.nameOnly": "Name only",
             "extension[BrowserBookmarks].searchResultStyle.urlOnly": "URL only",
             "extension[BrowserBookmarks].searchResultStyle.nameAndUrl": "Name & URL",
+            "extension[BrowserBookmarks].searchResultItem.additionalAction.copyUrlToClipboard": "Copy URL to clipboard",
         },
     },
     "de-CH": {
@@ -81,11 +82,11 @@ export const resources: InitOptions["resources"] = {
             "settingsWindow.hideWindowAfterExecution": "Fenster verstecken nach Ausführung",
             "settingsWindow.hideWindowOnBlur": "Fenster verstecken bei Fokusverlust",
             "searchResultItem.action.excludeFromSearchResults": "Von Suchergebnissen ausschliessen",
+            "searchResultItem.action.openUrlInBrowser": "URL in Webbrowser öffnen",
+            "searchResultItem.action.showInFileExplorer": "Im Datei-Explorer anzeigen",
             "extension[ApplicationSearch].searchResultItemDescription": "Anwendung",
             "extension[ApplicationSearch].extensionName": "Anwendungssuche",
             "extension[ApplicationSearch].searchResultItem.defaultAction.openApplication": "Anwendung öffnen",
-            "extension[ApplicationSearch].searchResultItem.additionalAction.showInFileExplorer":
-                "Im Datei-Explorer anzeigen",
             "extension[ApplicationSearch].searchResultItem.additionalAction.copyFilePathToClipboard":
                 "Dateipfad in Zwischenablage kopieren",
             "extension[SystemColorThemeSwitcher].extensionName": "System Color Theme Switcher",
@@ -97,6 +98,8 @@ export const resources: InitOptions["resources"] = {
             "extension[BrowserBookmarks].searchResultStyle.nameOnly": "Nur Name",
             "extension[BrowserBookmarks].searchResultStyle.urlOnly": "Nur URL",
             "extension[BrowserBookmarks].searchResultStyle.nameAndUrl": "Name & URL",
+            "extension[BrowserBookmarks].searchResultItem.additionalAction.copyUrlToClipboard":
+                "URL in Zwischenablage kopieren",
         },
     },
 };

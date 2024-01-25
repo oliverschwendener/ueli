@@ -1,4 +1,4 @@
-import type { ExcludedSearchResultItem, SearchResultItem } from "@common/Core";
+import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
 
 export class MacOsSystemSetting {
     public constructor(
@@ -12,32 +12,26 @@ export class MacOsSystemSetting {
             id: this.getId(),
             name: this.name,
             description: "System Setting",
-            defaultAction: {
-                argument: this.filePath,
+            defaultAction: SearchResultItemActionUtility.createOpenFileAction({
+                filePath: this.filePath,
                 description: "Open System Setting",
-                handlerId: "OpenFilePath",
-                hideWindowAfterInvocation: true,
-                fluentIcon: "OpenRegular",
-            },
+            }),
             additionalActions: [
-                {
-                    argument: JSON.stringify(<ExcludedSearchResultItem>{
-                        id: this.getId(),
-                        name: this.name,
-                        imageUrl: `file://${this.imageFilePath}`,
-                    }),
-                    description: "Hide from search results",
-                    descriptionTranslationKey: "searchResultItem.action.excludeFromSearchResults",
-                    handlerId: "excludeFromSearchResults",
-                    hideWindowAfterInvocation: false,
-                    fluentIcon: "EyeOffRegular",
-                },
+                SearchResultItemActionUtility.createExcludeFromSearchResultsAction({
+                    id: this.getId(),
+                    name: this.name,
+                    imageUrl: this.getImageUrl(),
+                }),
             ],
-            imageUrl: `file://${this.imageFilePath}`,
+            imageUrl: this.getImageUrl(),
         };
     }
 
     private getId() {
         return `MacOsSystemSetting:${this.name}`;
+    }
+
+    private getImageUrl(): string {
+        return `file://${this.imageFilePath}`;
     }
 }

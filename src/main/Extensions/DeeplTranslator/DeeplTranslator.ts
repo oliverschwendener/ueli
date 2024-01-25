@@ -54,15 +54,6 @@ export class DeeplTranslator implements Extension {
                     hideWindowAfterInvocation: false,
                     fluentIcon: "OpenRegular",
                 },
-                additionalActions: [
-                    {
-                        argument: `/settings/extension/${this.id}`,
-                        description: "Configure",
-                        handlerId: "navigateTo",
-                        hideWindowAfterInvocation: false,
-                        fluentIcon: "SettingsRegular",
-                    },
-                ],
             },
         ];
     }

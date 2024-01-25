@@ -1,4 +1,5 @@
 import type { SearchResultItem } from "@common/Core";
+import { SearchResultItemActionUtility } from "@common/Core";
 import type { BrowserBookmark } from "./BrowserBookmark";
 
 export class ChromiumBrowserBookmark implements BrowserBookmark {
@@ -10,24 +11,42 @@ export class ChromiumBrowserBookmark implements BrowserBookmark {
     ) {}
 
     public toSearchResultItem(searchResultStyle: string): SearchResultItem {
+        return {
+            description: "Browser Bookmark",
+            defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({ url: this.url }),
+            id: this.getId(),
+            name: this.getName(searchResultStyle),
+            imageUrl: this.getImageUrl(),
+            additionalActions: [
+                SearchResultItemActionUtility.createCopyToClipboardAction({
+                    textToCopy: this.url,
+                    description: "Copy URL to clipboard",
+                    descriptionTranslationKey:
+                        "extension[BrowserBookmarks].searchResultItem.additionalAction.copyUrlToClipboard",
+                }),
+                SearchResultItemActionUtility.createExcludeFromSearchResultsAction({
+                    id: this.getId(),
+                    name: this.getName(searchResultStyle),
+                    imageUrl: this.getImageUrl(),
+                }),
+            ],
+        };
+    }
+
+    private getId(): string {
+        return `BrowserBookmark-${this.guid}-${this.id}`;
+    }
+    private getName(searchResultStyle: string): string {
         const nameMap: Record<string, string> = {
             nameOnly: this.name,
             urlOnly: this.url,
             nameAndUrl: `${this.name} - ${this.url}`,
         };
 
-        return {
-            description: "Browser Bookmark",
-            defaultAction: {
-                argument: this.url,
-                description: "Open URL in browser",
-                handlerId: "Url",
-                hideWindowAfterInvocation: true,
-                fluentIcon: "OpenRegular",
-            },
-            id: `BrowserBookmark-${this.guid}-${this.id}`,
-            name: nameMap[searchResultStyle],
-            imageUrl: `https://favicone.com/${new URL(this.url).host}?s=48`,
-        };
+        return nameMap[searchResultStyle];
+    }
+
+    private getImageUrl(): string {
+        return `https://favicone.com/${new URL(this.url).host}?s=48`;
     }
 }
