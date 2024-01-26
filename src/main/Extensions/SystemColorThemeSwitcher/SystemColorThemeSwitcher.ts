@@ -5,9 +5,9 @@ import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { resources } from "./resources";
 
 export class SystemColorThemeSwitcher implements Extension {
-    public readonly id: string = "SystemColorThemeSwitcher";
-    public readonly name: string = "SystemColorThemeSwitcher";
-    public readonly nameTranslationKey: string = "extension[SystemColorThemeSwitcher].extensionName";
+    public readonly id = "SystemColorThemeSwitcher";
+    public readonly name = "SystemColorThemeSwitcher";
+    public readonly nameTranslationKey = "extension[SystemColorThemeSwitcher].extensionName";
 
     public constructor(
         private readonly currentOperatingSystem: OperatingSystem,
