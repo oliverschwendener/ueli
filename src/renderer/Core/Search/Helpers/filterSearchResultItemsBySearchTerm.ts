@@ -29,9 +29,7 @@ export const filterSearchResultItemsBySearchTerm = ({
         .search(searchTerm)
         .map((i) => i.item);
 
-    if (result.length > maxResultLength) {
-        result.splice(maxResultLength, result.length - maxResultLength);
-    }
+    result.splice(maxResultLength, result.length - maxResultLength);
 
     return result;
 };
