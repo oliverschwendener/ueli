@@ -24,6 +24,8 @@ export const ukrainianTranslationSet: TranslationSet = {
     ueliCommandRefreshIndexesDescription: "Оновити індекси всіх плагінів",
     ueliCommandReload: "Перезавантажити",
     ueliCommandReloadDescription: "Перезавантажити ueli",
+    ueliCommandOpenDebugLogDescription: "Відкрити лог налагодження",
+    ueliCommandOpenDebugLog: "Лог налагодження",
 
     generalErrorTitle: "Щось пішло не так",
     generalErrorDescription: "Перевірте логи для отримання більшої інформації",

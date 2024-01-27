@@ -22,6 +22,8 @@ export interface TranslationSet {
     ueliCommandRefreshIndexes: string;
     ueliCommandClearCachesDescription: string;
     ueliCommandClearCaches: string;
+    ueliCommandOpenDebugLogDescription: string;
+    ueliCommandOpenDebugLog: string;
 
     generalErrorTitle: string;
     generalErrorDescription: string;

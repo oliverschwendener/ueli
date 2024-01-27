@@ -687,14 +687,14 @@ function updateSearchResults(results: SearchResultItem[], webcontents: WebConten
     webcontents.send(IpcChannels.searchResponse, results);
 }
 
-function noSearchResultsFound() {
+function showErrorSearchResultItem() {
     if (windowExists(mainWindow)) {
         updateMainWindowSize(1, config.appearanceOptions);
-        const noResultFound = getErrorSearchResultItem(
+        const errorSearchResultItem = getErrorSearchResultItem(
             translationSet.generalErrorTitle,
             translationSet.generalErrorDescription,
         );
-        mainWindow.webContents.send(IpcChannels.searchResponse, [noResultFound]);
+        mainWindow.webContents.send(IpcChannels.searchResponse, [errorSearchResultItem]);
     }
 }
 
@@ -732,7 +732,7 @@ function registerAllIpcListeners() {
             })
             .catch((err) => {
                 logger.error(err);
-                noSearchResultsFound();
+                showErrorSearchResultItem();
             });
     });
 
@@ -742,7 +742,7 @@ function registerAllIpcListeners() {
             .then((result) => updateSearchResults(result, event.sender))
             .catch((err) => {
                 logger.error(err);
-                noSearchResultsFound();
+                showErrorSearchResultItem();
             });
     });
 
@@ -777,7 +777,7 @@ function registerAllIpcListeners() {
             .then(() => hideMainWindow())
             .catch((err) => {
                 logger.error(err);
-                noSearchResultsFound();
+                showErrorSearchResultItem();
             });
     });
 
@@ -825,9 +825,6 @@ function registerAllIpcListeners() {
     ipcMain.on(IpcChannels.openDebugLogRequested, () => {
         logger
             .openLog()
-            .then(() => {
-                /* do nothing */
-            })
             .catch((err) => notifyRenderer(err, NotificationType.Error));
     });
 
@@ -864,6 +861,9 @@ function registerAllIpcListeners() {
                 break;
             case UeliCommandExecutionArgument.ClearCaches:
                 clearAllCaches();
+                break;
+            case UeliCommandExecutionArgument.OpenDebugLog:
+                ipcMain.emit(IpcChannels.openDebugLogRequested);
                 break;
             default:
                 logger.error("Unhandled ueli command execution");

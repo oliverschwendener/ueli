@@ -24,6 +24,8 @@ export const simplifiedChineseTranslationSet: TranslationSet = {
     ueliCommandRefreshIndexesDescription: "刷新所有插件的全部缓存",
     ueliCommandReload: "重载",
     ueliCommandReloadDescription: "重新加载 ueli",
+    ueliCommandOpenDebugLogDescription: "打开调试日志",
+    ueliCommandOpenDebugLog: "调试日志",
 
     generalErrorTitle: "发生错误",
     generalErrorDescription: "查看日志文件",

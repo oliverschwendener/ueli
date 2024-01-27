@@ -5,4 +5,5 @@ export enum UeliCommandExecutionArgument {
     OpenSettings = "open-settings",
     RefreshIndexes = "refresh-indexes",
     ClearCaches = "clear-caches",
+    OpenDebugLog = "open-debug-log",
 }

@@ -24,6 +24,8 @@ export const czechTranslationSet: TranslationSet = {
     ueliCommandRefreshIndexesDescription: "Aktualizuje všechny indexy všech pluginů",
     ueliCommandReload: "Obnovit",
     ueliCommandReloadDescription: "Obnovit ueli",
+    ueliCommandOpenDebugLogDescription: "Otevřít záznamy pro ladění",
+    ueliCommandOpenDebugLog: "Záznamy pro ladění",
 
     generalErrorTitle: "Vyskytla se chyba",
     generalErrorDescription: "Další podrobnosti najdete v logu",

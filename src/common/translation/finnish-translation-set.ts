@@ -24,6 +24,8 @@ export const finnishTranslationSet: TranslationSet = {
     ueliCommandRefreshIndexesDescription: "Päivittää kaikkien lisäosien indeksit",
     ueliCommandReload: "Lataa uudelleen",
     ueliCommandReloadDescription: "Lataa ueli uudelleen",
+    ueliCommandOpenDebugLogDescription: "Avaa vianmääritysloki",
+    ueliCommandOpenDebugLog: "vianmääritysloki",
 
     generalErrorTitle: "Tapahtui virhe",
     generalErrorDescription: "Tarkista lisätietoja lokista",

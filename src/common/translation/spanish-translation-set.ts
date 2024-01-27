@@ -24,6 +24,8 @@ export const spanishTranslationSet: TranslationSet = {
     ueliCommandRefreshIndexesDescription: "Refrescar todos los índices de todos los plugins",
     ueliCommandReload: "Recargar",
     ueliCommandReloadDescription: "Recargar ueli",
+    ueliCommandOpenDebugLogDescription: "Abrir log de depuración",
+    ueliCommandOpenDebugLog: "Log de depuración",
 
     generalErrorTitle: "Ha ocurrido un error",
     generalErrorDescription: "Revisa el log para más detalles",
