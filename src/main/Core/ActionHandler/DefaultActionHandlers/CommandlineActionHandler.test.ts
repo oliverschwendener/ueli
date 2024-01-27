@@ -4,19 +4,14 @@ import type { CommandlineUtility } from "../../CommandlineUtility";
 import { CommandlineActionHandler } from "./CommandlineActionHandler";
 
 describe(CommandlineActionHandler, () => {
-    it("should execute commandline commands", () => {
+    it("should execute commandline commands", async () => {
         const executeCommandMock = vi.fn();
+        const commandlineUtility = <CommandlineUtility>{ executeCommand: (command) => executeCommandMock(command) };
 
-        const commandlineUtility = <CommandlineUtility>{
-            executeCommand: (command) => executeCommandMock(command),
-        };
+        const actionHandler = new CommandlineActionHandler(commandlineUtility);
+        await actionHandler.invokeAction(<SearchResultItemAction>{ argument: "command" });
 
-        const action = <SearchResultItemAction>{
-            argument: "this is a commandline command",
-        };
-
-        new CommandlineActionHandler(commandlineUtility).invokeAction(action);
-
-        expect(executeCommandMock).toHaveBeenLastCalledWith(action.argument);
+        expect(actionHandler.id).toEqual("Commandline");
+        expect(executeCommandMock).toHaveBeenLastCalledWith("command");
     });
 });

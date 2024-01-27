@@ -8,25 +8,22 @@ describe(OpenFilePathActionHandler, () => {
         const openPathMock = vi.fn().mockReturnValue(Promise.resolve(""));
         const shell = <Shell>{ openPath: (path) => openPathMock(path) };
 
-        const action = <SearchResultItemAction>{
-            argument: "this is a file path",
-        };
+        const actionHandler = new OpenFilePathActionHandler(shell);
 
-        await new OpenFilePathActionHandler(shell).invokeAction(action);
+        await actionHandler.invokeAction(<SearchResultItemAction>{ argument: "this is a file path" });
 
-        expect(openPathMock).toHaveBeenCalledWith(action.argument);
+        expect(actionHandler.id).toEqual("OpenFilePath");
+        expect(openPathMock).toHaveBeenCalledWith("this is a file path");
     });
 
     it("should throw an error if shell's openPath function returns an error message", async () => {
         const openPathMock = vi.fn().mockReturnValue(Promise.resolve("there was an error"));
         const shell = <Shell>{ openPath: (path) => openPathMock(path) };
 
-        const action = <SearchResultItemAction>{
-            argument: "this is a file path",
-        };
+        const actionHandler = new OpenFilePathActionHandler(shell);
 
-        await expect(new OpenFilePathActionHandler(shell).invokeAction(action)).rejects.toThrowError(
-            "there was an error",
-        );
+        await expect(
+            actionHandler.invokeAction(<SearchResultItemAction>{ argument: "this is a file path" }),
+        ).rejects.toThrowError("there was an error");
     });
 });

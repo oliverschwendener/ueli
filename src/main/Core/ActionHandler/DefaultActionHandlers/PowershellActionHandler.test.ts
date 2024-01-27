@@ -4,19 +4,13 @@ import { describe, expect, it, vi } from "vitest";
 import { PowershellActionHandler } from "./PowershellActionHandler";
 
 describe(PowershellActionHandler, () => {
-    it("should execute powershell commands", () => {
+    it("should execute powershell commands", async () => {
         const executeCommandMock = vi.fn();
+        const powershellUtility = <PowershellUtility>{ executeCommand: (command) => executeCommandMock(command) };
 
-        const powershellUtility = <PowershellUtility>{
-            executeCommand: (command) => executeCommandMock(command),
-        };
+        const actionHandler = new PowershellActionHandler(powershellUtility);
+        await actionHandler.invokeAction(<SearchResultItemAction>{ argument: "ps command" });
 
-        const action = <SearchResultItemAction>{
-            argument: "this is my powershell command",
-        };
-
-        new PowershellActionHandler(powershellUtility).invokeAction(action);
-
-        expect(executeCommandMock).toHaveBeenCalledWith(`powershell -Command "& {${action.argument}}"`);
+        expect(executeCommandMock).toHaveBeenCalledWith(`powershell -Command "& {ps command}"`);
     });
 });

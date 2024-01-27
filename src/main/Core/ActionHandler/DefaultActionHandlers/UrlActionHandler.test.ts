@@ -6,15 +6,11 @@ import { UrlActionHandler } from "./UrlActionHandler";
 describe(UrlActionHandler, () => {
     it("should call shell's openExternal function", async () => {
         const openExternalMock = vi.fn().mockReturnValue(Promise.resolve());
-
         const shell = <Shell>{ openExternal: (url) => openExternalMock(url) };
 
-        const action = <SearchResultItemAction>{
-            argument: "this is a url",
-        };
+        const actionHandler = new UrlActionHandler(shell);
+        await actionHandler.invokeAction(<SearchResultItemAction>{ argument: "this is a url" });
 
-        await new UrlActionHandler(shell).invokeAction(action);
-
-        expect(openExternalMock).toHaveBeenCalledWith(action.argument);
+        expect(openExternalMock).toHaveBeenCalledWith("this is a url");
     });
 });
