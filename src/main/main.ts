@@ -823,9 +823,7 @@ function registerAllIpcListeners() {
     });
 
     ipcMain.on(IpcChannels.openDebugLogRequested, () => {
-        logger
-            .openLog()
-            .catch((err) => notifyRenderer(err, NotificationType.Error));
+        logger.openLog().catch((err) => notifyRenderer(err, NotificationType.Error));
     });
 
     ipcMain.on(IpcChannels.openTempFolderRequested, () => {
