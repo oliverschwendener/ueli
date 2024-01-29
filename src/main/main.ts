@@ -183,21 +183,27 @@ function registerGlobalKeyboardShortcut(toggleAction: () => void, newHotKey: Glo
 }
 
 function calculateX(display: Electron.Display): number {
-    return Math.round(Number(display.bounds.x + display.bounds.width / 2 - config.appearanceOptions.windowWidth / 2));
+    return Math.max(
+        0,
+        Math.round(Number(display.bounds.x + display.bounds.width / 2 - config.appearanceOptions.windowWidth / 2)),
+    );
 }
 
 function calculateY(display: Electron.Display): number {
-    return Math.round(
-        Number(
-            display.bounds.y +
-                display.bounds.height / 2 -
-                getMaxWindowHeight(
-                    config.appearanceOptions.maxSearchResultsPerPage,
-                    config.appearanceOptions.searchResultHeight,
-                    config.appearanceOptions.userInputHeight,
-                    config.appearanceOptions.userInputBottomMargin,
-                ) /
-                    2,
+    return Math.max(
+        0,
+        Math.round(
+            Number(
+                display.bounds.y +
+                    display.bounds.height / 2 -
+                    getMaxWindowHeight(
+                        config.appearanceOptions.maxSearchResultsPerPage,
+                        config.appearanceOptions.searchResultHeight,
+                        config.appearanceOptions.userInputHeight,
+                        config.appearanceOptions.userInputBottomMargin,
+                    ) /
+                        2,
+            ),
         ),
     );
 }
