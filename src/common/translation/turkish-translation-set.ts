@@ -24,6 +24,8 @@ export const turkishTranslationSet: TranslationSet = {
     ueliCommandRefreshIndexesDescription: "Tüm eklentilerin tüm dizinlerini yeniler",
     ueliCommandReload: "Yeniden başlat",
     ueliCommandReloadDescription: "Ueli'yi yeniden başlat",
+    ueliCommandOpenDebugLogDescription: "Hata ayıklama günlüğünü aç",
+    ueliCommandOpenDebugLog: "Hata ayıklama günlüğü",
 
     generalErrorTitle: "Bir hata oluştu",
     generalErrorDescription: "Daha fazla ayrıntı için günlüğü kontrol edin",

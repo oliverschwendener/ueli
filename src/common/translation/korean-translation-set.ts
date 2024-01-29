@@ -24,6 +24,8 @@ export const koreanTranslationSet: TranslationSet = {
     ueliCommandRefreshIndexesDescription: "모든 플러그인의 모든 인덱스를 갱신합니다.",
     ueliCommandReload: "다시 로드",
     ueliCommandReloadDescription: "ueli 다시 로드",
+    ueliCommandOpenDebugLogDescription: "디버그 로그 열기",
+    ueliCommandOpenDebugLog: "디버그 로그",
 
     generalErrorTitle: "오류가 발생하였습니다",
     generalErrorDescription: "로그에서 더 많은 정보를 확인하세요.",

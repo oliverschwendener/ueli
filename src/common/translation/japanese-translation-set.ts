@@ -24,6 +24,8 @@ export const japaneseTranslationSet: TranslationSet = {
     ueliCommandRefreshIndexesDescription: "全てのプラグインのインデックスを再作成",
     ueliCommandReload: "再読み込み",
     ueliCommandReloadDescription: "ueli の再読み込み",
+    ueliCommandOpenDebugLogDescription: "デバッグログを開く",
+    ueliCommandOpenDebugLog: "デバッグログ",
 
     generalErrorTitle: "エラーが発生しました",
     generalErrorDescription: "詳細はログを確認してください",

@@ -123,6 +123,12 @@ export class UeliCommandSearchPlugin implements SearchPlugin {
                 hideMainWindowAfterExecution: false,
                 name: this.translationSet.ueliCommandClearCaches,
             },
+            {
+                description: this.translationSet.ueliCommandOpenDebugLogDescription,
+                executionArgument: UeliCommandExecutionArgument.OpenDebugLog,
+                hideMainWindowAfterExecution: true,
+                name: this.translationSet.ueliCommandOpenDebugLog,
+            },
         ];
     }
 }

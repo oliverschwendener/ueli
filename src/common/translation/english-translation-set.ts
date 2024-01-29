@@ -24,9 +24,11 @@ export const englishTranslationSet: TranslationSet = {
     ueliCommandRefreshIndexesDescription: "Refreshes all indexes of all plugins",
     ueliCommandReload: "Reload",
     ueliCommandReloadDescription: "Reload ueli",
+    ueliCommandOpenDebugLogDescription: "Open debug log",
+    ueliCommandOpenDebugLog: "Debug log",
 
-    generalErrorTitle: "An error occured",
-    generalErrorDescription: "Check log for more details",
+    generalErrorTitle: "An error occurred",
+    generalErrorDescription: "Press enter to open debug log file for more details",
 
     successfullyRefreshedIndexes: "Successfully refreshed indexes",
     successfullyClearedCaches: "Successfully cleared caches",
@@ -169,7 +171,7 @@ export const englishTranslationSet: TranslationSet = {
     applicationSearchSettingsInvalidFileExtensionErrorMessage: `"{{value}}" is not a valid file extension`,
     applicationSearchSettingsNotAFolderErrorMessage: `"{{value}} is not a folder"`,
     applicationSearchSettingsDoesNotExistErrorMessage: `"{{value}} does not exist"`,
-    applicationSearchSettingsFolderValidationError: `An error occured while trying to validate "{{value}}"`,
+    applicationSearchSettingsFolderValidationError: `An error occurred while trying to validate "{{value}}"`,
     applicationSearchSettingsUseNativeIcons: "Use native icons (turned off might result in better performance)",
 
     searchEngineSettings: "Search engine",

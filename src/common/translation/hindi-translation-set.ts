@@ -24,6 +24,8 @@ export const hindiTranslationSet: TranslationSet = {
     ueliCommandRefreshIndexesDescription: "सभी प्लगइन्स के सभी इंडेक्स को रिफ्रेश करता है",
     ueliCommandReload: "पुनर्प्रारंभ करें",
     ueliCommandReloadDescription: "उएली पुनर्प्रारंभ करें",
+    ueliCommandOpenDebugLogDescription: "डीबग लॉग खोलें",
+    ueliCommandOpenDebugLog: "लॉग को डीबग करें",
 
     generalErrorTitle: "एक त्रुटि हुई",
     generalErrorDescription: "अधिक जानकारी के लिए लॉग चेक करें",

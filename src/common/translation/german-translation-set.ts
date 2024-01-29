@@ -24,9 +24,11 @@ export const germanTranslationSet: TranslationSet = {
     ueliCommandRefreshIndexesDescription: "Alle Indexe von allen Plugins aktualisieren",
     ueliCommandReload: "Neu laden",
     ueliCommandReloadDescription: "Ueli neu laden",
+    ueliCommandOpenDebugLogDescription: "Debug log öffnen",
+    ueliCommandOpenDebugLog: "Debug log",
 
     generalErrorTitle: "Es ist ein Fehler aufgetreten",
-    generalErrorDescription: "Überprüfe den Log für mehr Details",
+    generalErrorDescription: "Drücke Enter, um die Debug-Log-Datei für weitere Details zu öffnen",
 
     successfullyRefreshedIndexes: "Erfolgreich alle Indexe aktualisiert",
     successfullyClearedCaches: "Erfolgreich alle Zwischenspeicher gelöscht",

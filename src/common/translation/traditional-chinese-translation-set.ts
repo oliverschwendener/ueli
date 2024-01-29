@@ -24,6 +24,8 @@ export const traditionalChineseTranslationSet: TranslationSet = {
     ueliCommandRefreshIndexesDescription: "重新整理所有外掛程式的所有快取",
     ueliCommandReload: "重新載入",
     ueliCommandReloadDescription: "重新載入 ueli",
+    ueliCommandOpenDebugLogDescription: "打開除錯日誌",
+    ueliCommandOpenDebugLog: "调试协议",
 
     generalErrorTitle: "發生錯誤",
     generalErrorDescription: "查看日誌檔案",
