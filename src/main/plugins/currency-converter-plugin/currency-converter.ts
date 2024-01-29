@@ -1,30 +1,50 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { ConversionApiResult } from "./conversion-api-result";
 import { CurrencyConversion } from "./currency-conversion";
 
+const defaultTimeout = 5000;
+const baseUrls = {
+    jsdelivr: "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies",
+    github: "https://raw.githubusercontent.com/fawazahmed0/currency-api/1/latest/currencies",
+};
+
 export class CurrencyConverter {
-    public static convert(conversion: CurrencyConversion, precision: number): Promise<number> {
-        return new Promise((resolve, reject) => {
-            const url = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${conversion.base.toLowerCase()}/${conversion.target.toLowerCase()}.min.json`;
-            axios
-                .get(url, { timeout: 5000 })
-                .then((response: AxiosResponse) => {
+    public static async convert(conversion: CurrencyConversion, precision: number): Promise<number> {
+        const fetchWithFallback = async (urls: string[], target: string): Promise<number> => {
+            let errorMsg = "";
+            for (const url of urls) {
+                try {
+                    const response = await axios.get(url, { timeout: defaultTimeout });
                     if (!response.status.toString().startsWith("2")) {
-                        reject(
-                            `Unable to get exchange rate. Response status: ${response.status} (${response.statusText})`,
-                        );
-                        return;
+                        errorMsg = `Response status: ${response.status} (${response.statusText})`;
+                        continue;
                     }
                     const conversionResult: ConversionApiResult = response.data;
-                    if (!conversionResult[conversion.target.toLowerCase()]) {
-                        reject(`Unable to get exchange rate. Result: ${conversionResult}`);
-                        return;
+                    if (typeof conversionResult[target] !== "number" || !isFinite(conversionResult[target])) {
+                        errorMsg = `Result: ${JSON.stringify(conversionResult)}`;
+                        continue;
                     }
-                    const rate = conversionResult[conversion.target.toLowerCase()];
-                    const converted = Number.parseFloat(`${conversion.value * rate}`).toFixed(Number(precision));
-                    resolve(Number(converted));
-                })
-                .catch((err) => reject(err));
-        });
+                    return conversionResult[target];
+                } catch (err) {
+                    errorMsg = err;
+                    continue;
+                }
+            }
+            throw `Unable to get exchange rate. ${errorMsg}`;
+        };
+
+        const conversionBase = conversion.base.toLowerCase();
+        const conversionTarget = conversion.target.toLowerCase();
+        const rate = await fetchWithFallback(
+            [
+                `${baseUrls.jsdelivr}/${conversionBase}/${conversionTarget}.min.json`,
+                `${baseUrls.jsdelivr}/${conversionBase}/${conversionTarget}.json`,
+                `${baseUrls.github}/${conversionBase}/${conversionTarget}.min.json`,
+                `${baseUrls.github}/${conversionBase}/${conversionTarget}.json`,
+            ],
+            conversion.target.toLowerCase(),
+        );
+
+        return Number(Number.parseFloat(`${conversion.value * rate}`).toFixed(Number(precision)));
     }
 }
