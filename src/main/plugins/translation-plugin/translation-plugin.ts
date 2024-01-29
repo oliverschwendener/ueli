@@ -27,7 +27,7 @@ export class TranslationPlugin implements ExecutionPlugin {
             const textToTranslate = userInput.replace(this.config.prefix, "");
             const source = this.config.sourceLanguage;
             const target = this.config.targetLanguage;
-            const url = `https://linguee-api.herokuapp.com/api?q=${textToTranslate}&src=${source}&dst=${target}`;
+            const url = `https://linguee-api.fly.dev/api/v2/translations?query=${textToTranslate}&src=${source}&dst=${target}`;
 
             if (this.delay) {
                 clearTimeout(this.delay as number);
@@ -65,7 +65,7 @@ export class TranslationPlugin implements ExecutionPlugin {
                 .then((translations) => {
                     const result = translations.map((t): SearchResultItem => {
                         return {
-                            description: `${capitalize(t.word_type.pos)}`,
+                            description: `${capitalize(t.pos)}`,
                             executionArgument: t.text,
                             hideMainWindowAfterExecution: true,
                             icon: defaultTranslatorIcon,
