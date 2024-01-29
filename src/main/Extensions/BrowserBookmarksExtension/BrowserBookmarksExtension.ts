@@ -14,6 +14,7 @@ export class BrowserBookmarksExtension implements Extension {
     private readonly defaultSettings = {
         browser: "Google Chrome",
         searchResultStyle: "nameOnly",
+        faviconApi: "Google",
     };
 
     public constructor(
@@ -33,8 +34,13 @@ export class BrowserBookmarksExtension implements Extension {
             this.getSettingDefaultValue("searchResultStyle"),
         );
 
+        const faviconApi = this.settingsManager.getValue<string>(
+            getExtensionSettingKey(this.id, "faviconApi"),
+            this.getSettingDefaultValue("faviconApi"),
+        );
+
         return (await this.browserBookmarkRepository.getAll(browser)).map((browserBookmark) =>
-            browserBookmark.toSearchResultItem(searchResultStyle),
+            browserBookmark.toSearchResultItem(searchResultStyle, faviconApi),
         );
     }
 
@@ -47,7 +53,11 @@ export class BrowserBookmarksExtension implements Extension {
     }
 
     public getSettingKeysTriggeringReindex(): string[] {
-        return [getExtensionSettingKey(this.id, "browser"), getExtensionSettingKey(this.id, "searchResultStyle")];
+        return [
+            getExtensionSettingKey(this.id, "browser"),
+            getExtensionSettingKey(this.id, "searchResultStyle"),
+            getExtensionSettingKey(this.id, "faviconApi"),
+        ];
     }
 
     public getAssetFilePath(key: string): string {

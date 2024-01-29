@@ -11,13 +11,15 @@ export const BrowserBookmarksSettings = () => {
 
     const extensionId = "BrowserBookmarks";
 
+    const browsers: Browser[] = ["Arc", "Brave Browser", "Google Chrome", "Microsoft Edge", "Yandex Browser"];
+    const searchResultStyles = ["nameOnly", "urlOnly", "nameAndUrl"];
+    const faviconApis = ["Google", "favicone.com"];
+
     const { value: browser, updateValue: setBrowser } = useExtensionSetting<Browser>(
         extensionId,
         "browser",
         contextBridge.getExtensionSettingDefaultValue(extensionId, "browser"),
     );
-
-    const browsers: Browser[] = ["Arc", "Brave Browser", "Google Chrome", "Microsoft Edge", "Yandex Browser"];
 
     const { value: searchResultStyle, updateValue: setSearchResultStyle } = useExtensionSetting<string>(
         extensionId,
@@ -25,25 +27,14 @@ export const BrowserBookmarksSettings = () => {
         contextBridge.getExtensionSettingDefaultValue(extensionId, "searchResultStyle"),
     );
 
-    const searchResultStyles = ["nameOnly", "urlOnly", "nameAndUrl"];
+    const { value: faviconApi, updateValue: setFaviconApi } = useExtensionSetting<string>(
+        extensionId,
+        "faviconApi",
+        contextBridge.getExtensionSettingDefaultValue(extensionId, "faviconApi"),
+    );
 
     return (
         <SectionList>
-            <Section>
-                <Field label="Search result style">
-                    <Dropdown
-                        value={t(`extension[BrowserBookmarks].searchResultStyle.${searchResultStyle}`)}
-                        selectedOptions={[searchResultStyle]}
-                        onOptionSelect={(_, { optionValue }) => optionValue && setSearchResultStyle(optionValue)}
-                    >
-                        {searchResultStyles.map((s) => (
-                            <Option key={`searchResultStyle.${s}`} value={s}>
-                                {t(`extension[BrowserBookmarks].searchResultStyle.${s}`)}
-                            </Option>
-                        ))}
-                    </Dropdown>
-                </Field>
-            </Section>
             <Section>
                 <Field label="Browser">
                     <Dropdown
@@ -62,6 +53,36 @@ export const BrowserBookmarksSettings = () => {
                                     )}`}
                                 />
                                 {browserName}
+                            </Option>
+                        ))}
+                    </Dropdown>
+                </Field>
+            </Section>
+            <Section>
+                <Field label="Search result style">
+                    <Dropdown
+                        value={t(`extension[BrowserBookmarks].searchResultStyle.${searchResultStyle}`)}
+                        selectedOptions={[searchResultStyle]}
+                        onOptionSelect={(_, { optionValue }) => optionValue && setSearchResultStyle(optionValue)}
+                    >
+                        {searchResultStyles.map((s) => (
+                            <Option key={`searchResultStyle.${s}`} value={s}>
+                                {t(`extension[BrowserBookmarks].searchResultStyle.${s}`)}
+                            </Option>
+                        ))}
+                    </Dropdown>
+                </Field>
+            </Section>
+            <Section>
+                <Field label="Favicon API" hint="This API is used to generate the search result icon">
+                    <Dropdown
+                        value={faviconApi}
+                        selectedOptions={[faviconApi]}
+                        onOptionSelect={(_, { optionValue }) => optionValue && setFaviconApi(optionValue)}
+                    >
+                        {faviconApis.map((f) => (
+                            <Option key={`faviconApi-${f}`} value={f} text={f}>
+                                {f}
                             </Option>
                         ))}
                     </Dropdown>

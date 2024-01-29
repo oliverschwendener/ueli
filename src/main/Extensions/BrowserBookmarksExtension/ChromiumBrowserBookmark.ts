@@ -10,13 +10,13 @@ export class ChromiumBrowserBookmark implements BrowserBookmark {
         private readonly id: string,
     ) {}
 
-    public toSearchResultItem(searchResultStyle: string): SearchResultItem {
+    public toSearchResultItem(searchResultStyle: string, faviconApi: string): SearchResultItem {
         return {
             description: "Browser Bookmark",
             defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({ url: this.url }),
             id: this.getId(),
             name: this.getName(searchResultStyle),
-            imageUrl: this.getImageUrl(),
+            imageUrl: this.getImageUrl(faviconApi),
             additionalActions: [
                 SearchResultItemActionUtility.createCopyToClipboardAction({
                     textToCopy: this.url,
@@ -27,7 +27,7 @@ export class ChromiumBrowserBookmark implements BrowserBookmark {
                 SearchResultItemActionUtility.createExcludeFromSearchResultsAction({
                     id: this.getId(),
                     name: this.getName(searchResultStyle),
-                    imageUrl: this.getImageUrl(),
+                    imageUrl: this.getImageUrl(faviconApi),
                 }),
             ],
         };
@@ -47,7 +47,12 @@ export class ChromiumBrowserBookmark implements BrowserBookmark {
         return nameMap[searchResultStyle];
     }
 
-    private getImageUrl(): string {
-        return `https://favicone.com/${new URL(this.url).host}?s=48`;
+    private getImageUrl(faviconApi: string): string {
+        const { host } = new URL(this.url);
+        const size = 48;
+
+        return faviconApi === "Google"
+            ? `https://www.google.com/s2/favicons?domain=${host}&sz=${size}`
+            : `https://favicone.com/${host}?s=${size}`;
     }
 }
