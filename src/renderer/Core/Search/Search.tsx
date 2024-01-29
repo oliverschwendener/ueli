@@ -184,13 +184,14 @@ export const Search = ({ searchResultItems, excludedSearchResultItems }: SearchP
             content={
                 <>
                     <ConfirmationDialog closeDialog={closeConfirmationDialog} action={confirmationDialogAction} />
-                    {searchTerm.length === 0 ? (
+                    {!searchTerm.length ? (
                         <FavoritesList />
                     ) : (
                         <SearchResultList
                             containerRef={containerRef}
                             selectedItemIndex={selectedItemIndex}
                             searchResultItems={filteredSearchResultItems}
+                            searchTerm={searchTerm}
                             onSearchResultItemClick={handleSearchResultItemClickEvent}
                             onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
                         />
