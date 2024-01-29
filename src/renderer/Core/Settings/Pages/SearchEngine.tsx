@@ -55,7 +55,10 @@ export const SearchEngine = () => {
                 </Field>
             </Section>
             <Section>
-                <Field label={t("settingsSearchEngine.fuzziness")}>
+                <Field
+                    label={`${t("settingsSearchEngine.fuzziness")}: ${fuzziness}`}
+                    hint="0 = strict search, 1 = loose search"
+                >
                     <Slider
                         aria-labelledby="searchEngine.fuzziness"
                         value={fuzziness}

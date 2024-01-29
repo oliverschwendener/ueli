@@ -1,6 +1,6 @@
 import type { ExcludedSearchResultItem, SearchResultItem, SearchResultItemAction } from "@common/Core";
 import { Button, Input } from "@fluentui/react-components";
-import { SettingsRegular } from "@fluentui/react-icons";
+import { SearchRegular, SettingsRegular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
@@ -175,6 +175,8 @@ export const Search = ({ searchResultItems, excludedSearchResultItems }: SearchP
                         value={searchTerm}
                         onChange={(_, { value }) => search(value)}
                         onKeyDown={handleUserInputKeyDownEvent}
+                        contentBefore={<SearchRegular />}
+                        placeholder={t("search.placeholder")}
                     />
                 </div>
             }

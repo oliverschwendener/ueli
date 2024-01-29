@@ -3,6 +3,7 @@ import type { InitOptions } from "i18next";
 export const resources: InitOptions["resources"] = {
     "en-US": {
         translation: {
+            "search.placeholder": "Type to search...",
             "general.settings": "Settings",
             "general.actions": "Actions",
             "settingsGeneral.language": "Language",
@@ -53,6 +54,7 @@ export const resources: InitOptions["resources"] = {
     },
     "de-CH": {
         translation: {
+            "search.placeholder": "Suchbegriff eingeben...",
             "general.settings": "Einstellungen",
             "general.actions": "Aktionen",
             "settingsGeneral.language": "Sprache",
