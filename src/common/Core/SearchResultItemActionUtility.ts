@@ -1,7 +1,26 @@
 import type { ExcludedSearchResultItem } from "./ExcludedSearchResultItem";
+import type { FluentIcon } from "./FluentIcon";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
 
 export class SearchResultItemActionUtility {
+    public static createInvokeExtensionAction({
+        extensionId,
+        description,
+        fluentIcon,
+    }: {
+        extensionId: string;
+        description: string;
+        fluentIcon?: FluentIcon;
+    }): SearchResultItemAction {
+        return {
+            argument: `/extension/${extensionId}`,
+            description,
+            handlerId: "navigateTo",
+            hideWindowAfterInvocation: false,
+            fluentIcon,
+        };
+    }
+
     public static createOpenFileAction({
         filePath,
         description,

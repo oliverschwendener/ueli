@@ -3,6 +3,8 @@ import type { ReactElement } from "react";
 import { ApplicationSearchSettings } from "./ApplicationSearch";
 import { BrowserBookmarksSettings } from "./BrowserBookmarks";
 import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
+import { WebSearchExtension } from "./WebSearch";
+import { WebSearchSettings } from "./WebSearch/WebSearchSettings";
 
 type ExtensionReactElements = {
     extension?: ReactElement;
@@ -22,6 +24,10 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         DeeplTranslator: {
             extension: <DeeplTranslator {...props} />,
             settings: <DeeplTranslatorSettings />,
+        },
+        WebSearch: {
+            extension: <WebSearchExtension {...props} />,
+            settings: <WebSearchSettings />,
         },
     };
 

@@ -22,6 +22,7 @@ export const SearchResultList = ({
     onSearchResultItemDoubleClick,
 }: SearchResultListProps) => {
     const { t } = useTranslation();
+
     const noResultsFoundMessage = searchTerm
         ? `${t("search.noResultsFoundFor")} "${searchTerm}"`
         : t("search.noResultsFound");
@@ -36,22 +37,21 @@ export const SearchResultList = ({
                 boxSizing: "border-box",
             }}
         >
-            {searchResultItems.length ? (
-                searchResultItems.map((searchResultItem, index) => (
-                    <SearchResultListItem
-                        containerRef={containerRef}
-                        key={searchResultItem.id}
-                        isSelected={selectedItemIndex === index}
-                        searchResultItem={searchResultItem}
-                        onClick={() => onSearchResultItemClick(index)}
-                        onDoubleClick={() => onSearchResultItemDoubleClick(searchResultItem)}
-                    />
-                ))
-            ) : (
+            {searchTerm?.length && !searchResultItems.length ? (
                 <div style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <Text>{noResultsFoundMessage}</Text>
                 </div>
-            )}
+            ) : null}
+            {searchResultItems.map((searchResultItem, index) => (
+                <SearchResultListItem
+                    containerRef={containerRef}
+                    key={searchResultItem.id}
+                    isSelected={selectedItemIndex === index}
+                    searchResultItem={searchResultItem}
+                    onClick={() => onSearchResultItemClick(index)}
+                    onDoubleClick={() => onSearchResultItemDoubleClick(searchResultItem)}
+                />
+            ))}
         </div>
     );
 };

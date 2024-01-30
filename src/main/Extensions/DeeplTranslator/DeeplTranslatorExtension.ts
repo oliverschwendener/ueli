@@ -2,7 +2,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
-import type { SearchResultItem } from "@common/Core";
+import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Net } from "electron";
 import { resources } from "./resources";
@@ -53,13 +53,10 @@ export class DeeplTranslatorExtension implements Extension {
                 description: t("searchResultItem.description"),
                 name: t("searchResultItem.name"),
                 imageUrl: this.getFileImageUrl(),
-                defaultAction: {
-                    argument: `/extension/${this.id}`,
+                defaultAction: SearchResultItemActionUtility.createInvokeExtensionAction({
+                    extensionId: this.id,
                     description: t("searchResultItem.actionDescription"),
-                    handlerId: "navigateTo",
-                    hideWindowAfterInvocation: false,
-                    fluentIcon: "OpenRegular",
-                },
+                }),
             },
         ];
     }

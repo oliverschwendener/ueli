@@ -7,6 +7,7 @@ import { ExtensionModule } from "./ExtensionModule";
 import { SystemColorThemeSwitcherModule } from "./SystemColorThemeSwitcher";
 import { SystemSettingsModule } from "./SystemSettings/SystemSettingsModule";
 import { UeliCommandModule } from "./UeliCommand";
+import { WebSearchExtensionModule } from "./WebSearch/WebSearchExtensionModule.ts";
 
 export class ExtensionLoader {
     private static getAllExtensionModules(): ExtensionModule[] {
@@ -17,6 +18,7 @@ export class ExtensionLoader {
             new SystemColorThemeSwitcherModule(),
             new SystemSettingsModule(),
             new UeliCommandModule(),
+            new WebSearchExtensionModule(),
         ];
     }
 
