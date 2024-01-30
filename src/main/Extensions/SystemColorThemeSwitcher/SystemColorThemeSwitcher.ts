@@ -46,7 +46,7 @@ export class SystemColorThemeSwitcher implements Extension {
         return supportedOperatingSystems.includes(this.currentOperatingSystem);
     }
 
-    public getSettingKeysTriggeringReindex() {
+    public getSettingKeysTriggeringRescan() {
         return ["general.language"];
     }
 

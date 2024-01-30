@@ -29,7 +29,7 @@ export class ApplicationSearch implements Extension {
         return this.settings.getDefaultValue<T>(key);
     }
 
-    public getSettingKeysTriggeringReindex() {
+    public getSettingKeysTriggeringRescan() {
         return [
             getExtensionSettingKey("ApplicationSearch", "windowsFolders"),
             getExtensionSettingKey("ApplicationSearch", "windowsFileExtensions"),

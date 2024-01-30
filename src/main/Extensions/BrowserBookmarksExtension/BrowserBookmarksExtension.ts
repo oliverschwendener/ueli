@@ -52,7 +52,7 @@ export class BrowserBookmarksExtension implements Extension {
         return this.defaultSettings[key] as T;
     }
 
-    public getSettingKeysTriggeringReindex(): string[] {
+    public getSettingKeysTriggeringRescan(): string[] {
         return [
             getExtensionSettingKey(this.id, "browser"),
             getExtensionSettingKey(this.id, "searchResultStyle"),
@@ -69,8 +69,6 @@ export class BrowserBookmarksExtension implements Extension {
             "browser:Yandex Browser": "yandex-browser.svg",
         };
 
-        const assetFileName = assetFileNames[key];
-
-        return this.assetPathResolver.getExtensionAssetPath(this.id, assetFileName);
+        return this.assetPathResolver.getExtensionAssetPath(this.id, assetFileNames[key]);
     }
 }

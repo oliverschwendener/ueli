@@ -105,7 +105,7 @@ export class UeliCommandExtension implements Extension {
         return undefined as T;
     }
 
-    public getSettingKeysTriggeringReindex() {
+    public getSettingKeysTriggeringRescan() {
         return ["general.language"];
     }
 }

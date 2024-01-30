@@ -78,7 +78,7 @@ export class DeeplTranslatorExtension implements Extension {
         return this.getFileImageUrl();
     }
 
-    public getSettingKeysTriggeringReindex() {
+    public getSettingKeysTriggeringRescan() {
         return ["general.language"];
     }
 

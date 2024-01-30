@@ -78,7 +78,7 @@ export class WebSearchExtension implements Extension {
         ];
     }
 
-    public getSettingKeysTriggeringReindex(): string[] {
+    public getSettingKeysTriggeringRescan(): string[] {
         return ["general.language", getExtensionSettingKey(this.id, "searchEngine")];
     }
 

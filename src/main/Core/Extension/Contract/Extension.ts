@@ -11,5 +11,5 @@ export interface Extension {
     invoke?(argument: unknown): Promise<unknown>;
     getAssetFilePath?(key: string): string;
     getImageUrl?(): string;
-    getSettingKeysTriggeringReindex?(): string[];
+    getSettingKeysTriggeringRescan?(): string[];
 }
