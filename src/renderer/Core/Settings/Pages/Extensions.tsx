@@ -79,7 +79,9 @@ export const Extensions = () => {
                                     src={contextBridge.getExtensionImageUrl(id)}
                                 />
                             </div>
-                            <Label style={{ flexGrow: 1 }}>{nameTranslationKey ? t(nameTranslationKey) : name}</Label>
+                            <Label weight="semibold" style={{ flexGrow: 1 }}>
+                                {nameTranslationKey ? t(nameTranslationKey) : name}
+                            </Label>
                             <Tooltip content="Rescan" relationship="label">
                                 <Button
                                     onClick={(e) => triggerExtensionRescan(e, id)}
