@@ -79,7 +79,7 @@ export class WebSearchExtension implements Extension {
     }
 
     public getSettingKeysTriggeringReindex(): string[] {
-        return [getExtensionSettingKey(this.id, "searchEngine")];
+        return ["general.language", getExtensionSettingKey(this.id, "searchEngine")];
     }
 
     public getAssetFilePath(key: string): string {
