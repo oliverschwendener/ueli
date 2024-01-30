@@ -11,7 +11,7 @@ export class WebSearchExtension implements Extension {
     // TODO: public readonly nameTranslationKey = "";
 
     private readonly defaultSettings = {
-        searchEngine: "DuckDuckGo",
+        searchEngine: "Google",
         locale: "en-US",
     };
 
