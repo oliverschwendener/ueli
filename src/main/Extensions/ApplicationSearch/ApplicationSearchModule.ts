@@ -20,6 +20,7 @@ export class ApplicationSearchModule implements ExtensionModule {
         const settingsManager = dependencyRegistry.get("SettingsManager");
         const app = dependencyRegistry.get("App");
         const logger = dependencyRegistry.get("Logger");
+        const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
 
         const settings = new Settings("ApplicationSearch", settingsManager, app);
 
@@ -35,7 +36,12 @@ export class ApplicationSearchModule implements ExtensionModule {
         };
 
         return {
-            extension: new ApplicationSearch(operatingSystem, applicationRepositories[operatingSystem], settings),
+            extension: new ApplicationSearch(
+                operatingSystem,
+                applicationRepositories[operatingSystem],
+                settings,
+                assetPathResolver,
+            ),
         };
     }
 }

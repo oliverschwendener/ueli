@@ -1,6 +1,7 @@
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
-import { MacOsSystemSettingRepository } from "./MacOsSystemSettingRepository";
+import type { MacOsSystemSettingRepository } from "./MacOsSystemSettingRepository";
 
 export class SystemSettingsExtension implements Extension {
     public readonly id = "SystemSettings";
@@ -10,6 +11,7 @@ export class SystemSettingsExtension implements Extension {
     public constructor(
         private readonly currentOperatingSystem: OperatingSystem,
         private readonly macOsSystemSettingRepository: MacOsSystemSettingRepository,
+        private readonly assetPathResolver: AssetPathResolver,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -22,5 +24,9 @@ export class SystemSettingsExtension implements Extension {
 
     public getSettingDefaultValue<T>(): T {
         return undefined;
+    }
+
+    public getImageUrl(): string {
+        return `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "macos-system-settings.png")}`;
     }
 }

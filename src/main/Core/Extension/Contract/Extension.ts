@@ -8,8 +8,9 @@ export interface Extension {
     getSearchResultItems(): Promise<SearchResultItem[]>;
     isSupported(): boolean;
     getSettingDefaultValue<T>(key: string): T;
+    getImageUrl(): string;
+
     invoke?(argument: unknown): Promise<unknown>;
     getAssetFilePath?(key: string): string;
-    getImageUrl?(): string;
     getSettingKeysTriggeringRescan?(): string[];
 }

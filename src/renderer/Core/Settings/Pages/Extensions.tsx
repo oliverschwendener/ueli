@@ -73,6 +73,12 @@ export const Extensions = () => {
                                 gap: 5,
                             }}
                         >
+                            <div style={{ width: 20, height: 20, display: "flex", alignItems: "center" }}>
+                                <img
+                                    style={{ maxWidth: "100%", maxHeight: "100%" }}
+                                    src={contextBridge.getExtensionImageUrl(id)}
+                                />
+                            </div>
                             <Label style={{ flexGrow: 1 }}>{nameTranslationKey ? t(nameTranslationKey) : name}</Label>
                             <Tooltip content="Rescan" relationship="label">
                                 <Button

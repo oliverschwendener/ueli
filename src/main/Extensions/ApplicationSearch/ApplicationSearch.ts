@@ -1,3 +1,4 @@
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
@@ -13,6 +14,7 @@ export class ApplicationSearch implements Extension {
         private readonly currentOperatingSystem: OperatingSystem,
         private readonly applicationRepository: ApplicationRepository,
         private readonly settings: Settings,
+        private readonly assetPathResolver: AssetPathResolver,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -35,5 +37,9 @@ export class ApplicationSearch implements Extension {
             getExtensionSettingKey("ApplicationSearch", "windowsFileExtensions"),
             getExtensionSettingKey("ApplicationSearch", "macOsFolders"),
         ];
+    }
+
+    public getImageUrl(): string {
+        return `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "macos-applications.png")}`;
     }
 }

@@ -24,10 +24,7 @@ export class BrowserBookmarksExtension implements Extension {
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const browser = this.settingsManager.getValue<Browser>(
-            getExtensionSettingKey("BrowserBookmarks", "browser"),
-            this.getSettingDefaultValue("browser"),
-        );
+        const browser = this.getCurrentlyConfiguredBrowser();
 
         const searchResultStyle = this.settingsManager.getValue<string>(
             getExtensionSettingKey(this.id, "searchResultStyle"),
@@ -60,13 +57,28 @@ export class BrowserBookmarksExtension implements Extension {
         ];
     }
 
+    public getImageUrl(): string {
+        return `file://${this.getAssetFilePath(this.getCurrentlyConfiguredBrowser())}`;
+    }
+
     public getAssetFilePath(key: string): string {
-        const assetFileNames: Record<string, string> = {
-            "browser:Arc": "arc.png",
-            "browser:Brave Browser": "brave-browser.png",
-            "browser:Google Chrome": "google-chrome.png",
-            "browser:Microsoft Edge": "microsoft-edge.png",
-            "browser:Yandex Browser": "yandex-browser.svg",
+        return this.getBrowserImageFilePath(key as Browser);
+    }
+
+    private getCurrentlyConfiguredBrowser(): Browser {
+        return this.settingsManager.getValue<Browser>(
+            getExtensionSettingKey("BrowserBookmarks", "browser"),
+            this.getSettingDefaultValue("browser"),
+        );
+    }
+
+    private getBrowserImageFilePath(key: Browser): string {
+        const assetFileNames: Record<Browser, string> = {
+            Arc: "arc.png",
+            "Brave Browser": "brave-browser.png",
+            "Google Chrome": "google-chrome.png",
+            "Microsoft Edge": "microsoft-edge.png",
+            "Yandex Browser": "yandex-browser.svg",
         };
 
         return this.assetPathResolver.getExtensionAssetPath(this.id, assetFileNames[key]);

@@ -83,12 +83,11 @@ export class WebSearchExtension implements Extension {
     }
 
     public getAssetFilePath(key: string): string {
-        const map = {
-            Google: "google.png",
-            DuckDuckGo: "duckduckgo.svg",
-        };
+        return this.getSearchEngineAssetFilePath(key);
+    }
 
-        return this.assetPathResolver.getExtensionAssetPath(this.id, map[key]);
+    public getImageUrl(): string {
+        return this.getSearchResultImageUrl(this.getWebSearchEngine());
     }
 
     private getWebSearchEngine(): WebSearchEngine {
@@ -108,5 +107,14 @@ export class WebSearchExtension implements Extension {
 
     private getSearchResultImageUrl(webSearchEngine: WebSearchEngine): string {
         return `file://${this.assetPathResolver.getExtensionAssetPath(this.id, webSearchEngine.getImageFileName())}`;
+    }
+
+    private getSearchEngineAssetFilePath(searchEngine: string) {
+        const fileNames = {
+            Google: "google.png",
+            DuckDuckGo: "duckduckgo.svg",
+        };
+
+        return this.assetPathResolver.getExtensionAssetPath(this.id, fileNames[searchEngine]);
     }
 }

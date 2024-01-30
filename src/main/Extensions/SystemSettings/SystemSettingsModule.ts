@@ -14,6 +14,7 @@ export class SystemSettingsModule implements ExtensionModule {
             extension: new SystemSettingsExtension(
                 operatingSystem,
                 new MacOsSystemSettingRepository(assetPathResolver),
+                assetPathResolver,
             ),
         };
     }

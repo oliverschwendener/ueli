@@ -1,3 +1,4 @@
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import { describe, expect, it, vi } from "vitest";
 import { Application } from "./Application";
 import type { ApplicationRepository } from "./ApplicationRepository";
@@ -17,20 +18,17 @@ describe(ApplicationSearch, () => {
             getApplications: () => getApplicationsMock(),
         };
 
-        const settings = <Settings>{};
-
         const searchResultItems = await new ApplicationSearch(
             "Windows",
             applicationRepository,
-            settings,
+            <Settings>{},
+            <AssetPathResolver>{},
         ).getSearchResultItems();
 
         expect(searchResultItems).toEqual(applications.map((application) => application.toSearchResultItem()));
     });
 
     it("should return a default value provided by the DefaultSettingValueProvider", () => {
-        const applicationRepository = <ApplicationRepository>{};
-
         const settings = <Settings>{
             getDefaultValue: (key) => {
                 return {
@@ -40,7 +38,12 @@ describe(ApplicationSearch, () => {
             },
         };
 
-        const applicationSearch = new ApplicationSearch("Windows", applicationRepository, settings);
+        const applicationSearch = new ApplicationSearch(
+            "Windows",
+            <ApplicationRepository>{},
+            settings,
+            <AssetPathResolver>{},
+        );
 
         expect(applicationSearch.getSettingDefaultValue("key1")).toBe("value1");
         expect(applicationSearch.getSettingDefaultValue("key2")).toBe("value2");

@@ -47,10 +47,7 @@ export const BrowserBookmarksSettings = () => {
                                 <img
                                     style={{ width: 20, height: 20 }}
                                     alt={browserName}
-                                    src={`file://${contextBridge.getExtensionAssetFilePath(
-                                        extensionId,
-                                        `browser:${browserName}`,
-                                    )}`}
+                                    src={`file://${contextBridge.getExtensionAssetFilePath(extensionId, browserName)}`}
                                 />
                                 {browserName}
                             </Option>

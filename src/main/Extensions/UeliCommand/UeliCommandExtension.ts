@@ -108,4 +108,8 @@ export class UeliCommandExtension implements Extension {
     public getSettingKeysTriggeringRescan() {
         return ["general.language"];
     }
+
+    public getImageUrl(): string {
+        return this.getSearchResultItemImageUrl("neutral");
+    }
 }

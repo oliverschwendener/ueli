@@ -23,10 +23,7 @@ export class SystemColorThemeSwitcher implements Extension {
                 description: t("searchResultItem.description"),
                 id: "SystemColorThemeSwitcher:toggle",
                 name: t("searchResultItem.name"),
-                imageUrl: `file://${this.assetPathResolver.getExtensionAssetPath(
-                    this.id,
-                    this.getSearchResultItemFileName(),
-                )}`,
+                imageUrl: this.getSearchResultItemImageUrl(),
                 defaultAction: {
                     argument: "toggle",
                     description: t("searchResultItem.actionDescription"),
@@ -50,10 +47,16 @@ export class SystemColorThemeSwitcher implements Extension {
         return ["general.language"];
     }
 
-    private getSearchResultItemFileName(): string {
-        return {
-            macOS: "macos-system-settings-icon.png",
+    public getImageUrl(): string {
+        return this.getSearchResultItemImageUrl();
+    }
+
+    private getSearchResultItemImageUrl(): string {
+        const map = {
+            macOS: "macos-toggle-appearance-2.png",
             Windows: "windows-11-logo.webp",
-        }[this.currentOperatingSystem];
+        };
+
+        return `file://${this.assetPathResolver.getExtensionAssetPath(this.id, map[this.currentOperatingSystem])}`;
     }
 }
