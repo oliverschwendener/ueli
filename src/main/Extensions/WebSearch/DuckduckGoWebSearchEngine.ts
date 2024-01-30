@@ -10,8 +10,6 @@ export class DuckduckGoWebSearchEngine implements WebSearchEngine {
     public constructor(private readonly net: Net) {}
 
     public async getSuggestions(searchTerm: string, locale: string): Promise<Suggestion[]> {
-        console.log(locale);
-
         const response = await this.net.fetch(
             `https://duckduckgo.com/ac/?q=${encodeURIComponent(searchTerm)}&kl=${this.getLocaleString(locale)}`,
         );

@@ -20,8 +20,6 @@ export const WebSearchSettings = () => {
 
     const searchEngines = ["Google", "DuckDuckGo"];
 
-    console.log(searchEngines);
-
     const locales = [
         { locale: "en-US", label: "English (US)" },
         { locale: "de-CH", label: "Deutsch (Schweiz)" },
