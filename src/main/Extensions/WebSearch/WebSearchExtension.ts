@@ -8,7 +8,7 @@ import type { WebSearchEngine } from "./WebSearchEngine";
 export class WebSearchExtension implements Extension {
     public readonly id = "WebSearch";
     public readonly name = "Web Search";
-    // TODO: public readonly nameTranslationKey = "";
+    public readonly nameTranslationKey = "extension[WebSearch].extensionName";
 
     private readonly defaultSettings = {
         searchEngine: "Google",

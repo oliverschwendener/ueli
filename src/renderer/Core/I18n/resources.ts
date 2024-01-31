@@ -57,6 +57,7 @@ export const resources: InitOptions["resources"] = {
             "extension[BrowserBookmarks].searchResultStyle.urlOnly": "URL only",
             "extension[BrowserBookmarks].searchResultStyle.nameAndUrl": "Name & URL",
             "extension[BrowserBookmarks].searchResultItem.additionalAction.copyUrlToClipboard": "Copy URL to clipboard",
+            "extension[WebSearch].extensionName": "Web Search",
         },
     },
     "de-CH": {
@@ -116,6 +117,7 @@ export const resources: InitOptions["resources"] = {
             "extension[BrowserBookmarks].searchResultStyle.nameAndUrl": "Name & URL",
             "extension[BrowserBookmarks].searchResultItem.additionalAction.copyUrlToClipboard":
                 "URL in Zwischenablage kopieren",
+            "extension[WebSearch].extensionName": "Websuche",
         },
     },
 };
