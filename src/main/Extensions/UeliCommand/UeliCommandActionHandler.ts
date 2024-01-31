@@ -7,7 +7,7 @@ export class UeliCommandActionHandler implements ActionHandler {
 
     public constructor(private readonly ueliCommandInvoker: UeliCommandInvoker) {}
 
-    public invokeAction(action: SearchResultItemAction): Promise<void> {
+    public async invokeAction(action: SearchResultItemAction): Promise<void> {
         const map: Record<string, () => Promise<void>> = {
             quit: () => this.ueliCommandInvoker.invokeUeliCommand("quit"),
             settings: () => this.ueliCommandInvoker.invokeUeliCommand("openSettings"),
@@ -15,6 +15,10 @@ export class UeliCommandActionHandler implements ActionHandler {
             centerWindow: () => this.ueliCommandInvoker.invokeUeliCommand("centerWindow"),
         };
 
-        return map[action.argument]();
+        if (!Object.keys(map).includes(action.argument)) {
+            throw new Error(`Unexpected argument: ${action.argument}`);
+        }
+
+        await map[action.argument]();
     }
 }

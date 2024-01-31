@@ -1,7 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
-import type { UeliCommand } from "@Core/UeliCommand";
 import type { SearchResultItem } from "@common/Core";
 import { resources } from "./resources";
 
@@ -30,7 +29,7 @@ export class UeliCommandExtension implements Extension {
                 imageUrlOnLightBackground: this.getSearchResultItemImageUrl("onLightBackground"),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: <UeliCommand>"quit",
+                    argument: "quit",
                     description: t("ueliCommand.quitUeli"),
                     hideWindowAfterInvocation: false,
                     requiresConfirmation: true,
@@ -46,7 +45,7 @@ export class UeliCommandExtension implements Extension {
                 imageUrlOnLightBackground: this.getSearchResultItemImageUrl("onLightBackground"),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: <UeliCommand>"settings",
+                    argument: "settings",
                     description: t("ueliCommand.openSettings"),
                     hideWindowAfterInvocation: false,
                     fluentIcon: "SettingsRegular",
@@ -61,7 +60,7 @@ export class UeliCommandExtension implements Extension {
                 imageUrlOnLightBackground: this.getSearchResultItemImageUrl("onLightBackground"),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: <UeliCommand>"extensions",
+                    argument: "extensions",
                     description: t("ueliCommand.openExtensions"),
                     hideWindowAfterInvocation: false,
                     fluentIcon: "AppsAddInRegular",
@@ -76,7 +75,7 @@ export class UeliCommandExtension implements Extension {
                 imageUrlOnLightBackground: this.getSearchResultItemImageUrl("onLightBackground"),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: <UeliCommand>"centerWindow",
+                    argument: "centerWindow",
                     description: t("ueliCommand.centerWindow"),
                     hideWindowAfterInvocation: false,
                     fluentIcon: "AppsAddInRegular",
