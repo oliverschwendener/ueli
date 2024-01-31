@@ -1,6 +1,5 @@
-import { Clock } from "../Clock";
+import type { Clock } from "../Clock";
 import type { Logger as LoggerInterface } from "./Contract";
-import type { LogLevel } from "./LogLevel";
 
 export class Logger implements LoggerInterface {
     private logs: string[] = [];
@@ -8,26 +7,26 @@ export class Logger implements LoggerInterface {
     public constructor(private readonly clock: Clock) {}
 
     public error(message: string): void {
-        this.writeLog("error", message);
+        this.writeLog("ERROR", message);
     }
 
     public info(message: string): void {
-        this.writeLog("info", message);
+        this.writeLog("INFO", message);
     }
 
     public debug(message: string): void {
-        this.writeLog("debug", message);
+        this.writeLog("DEBUG", message);
     }
 
     public warn(message: string): void {
-        this.writeLog("warning", message);
+        this.writeLog("WARNING", message);
     }
 
     public getLogs(): string[] {
         return this.logs;
     }
 
-    private writeLog(level: LogLevel, message: string) {
-        this.logs.push(`[${this.clock.getCurrentTimeAsString()}][${level.toUpperCase()}] ${message}`);
+    private writeLog(logLevel: string, message: string) {
+        this.logs.push(`[${this.clock.getCurrentTimeAsString()}][${logLevel}] ${message}`);
     }
 }
