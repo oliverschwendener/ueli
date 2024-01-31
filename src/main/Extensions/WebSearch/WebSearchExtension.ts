@@ -22,11 +22,11 @@ export class WebSearchExtension implements Extension {
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const webSearchEngine = this.getWebSearchEngine();
+        const webSearchEngine = this.getCurrentWebSearchEngine();
 
         return [
             {
-                id: "webSearch:DuckDuckGo",
+                id: "webSearch:invoke",
                 defaultAction: SearchResultItemActionUtility.createInvokeExtensionAction({
                     description: `Search ${webSearchEngine.getName()}`,
                     extensionId: this.id,
@@ -52,26 +52,24 @@ export class WebSearchExtension implements Extension {
             this.getSettingDefaultValue("locale"),
         );
 
-        const webSearchEngine = this.getWebSearchEngine();
+        const webSearchEngine = this.getCurrentWebSearchEngine();
 
         const suggestions = await webSearchEngine.getSuggestions(searchTerm, locale);
 
-        const searchResultItem = <SearchResultItem>{
-            defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({
-                url: webSearchEngine.getSearchUrl(searchTerm, locale),
-            }),
-            description: webSearchEngine.getName(),
-            id: `search-${webSearchEngine.getName()}`,
-            name: `Search "${searchTerm}"`,
-            imageUrl: this.getSearchResultImageUrl(webSearchEngine),
-        };
-
         return [
-            searchResultItem,
+            {
+                defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({
+                    url: webSearchEngine.getSearchUrl(searchTerm, locale),
+                }),
+                description: webSearchEngine.getName(),
+                id: `search-${webSearchEngine.getName()}`,
+                name: `Search "${searchTerm}"`,
+                imageUrl: this.getSearchResultImageUrl(webSearchEngine),
+            },
             ...suggestions.map((s, i) => ({
                 defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({ url: s.url }),
                 description: "Suggestion",
-                id: `suggestion-${s}-${i}`,
+                id: `suggestion-${i}`,
                 name: s.text,
                 imageUrl: this.getSearchResultImageUrl(webSearchEngine),
             })),
@@ -83,23 +81,30 @@ export class WebSearchExtension implements Extension {
     }
 
     public getAssetFilePath(key: string): string {
-        return this.getSearchEngineAssetFilePath(key);
+        return this.assetPathResolver.getExtensionAssetPath(
+            this.id,
+            this.getWebSearchEngineByName(key).getImageFileName(),
+        );
     }
 
     public getImageUrl(): string {
-        return this.getSearchResultImageUrl(this.getWebSearchEngine());
+        return this.getSearchResultImageUrl(this.getCurrentWebSearchEngine());
     }
 
-    private getWebSearchEngine(): WebSearchEngine {
+    private getCurrentWebSearchEngine(): WebSearchEngine {
         const searchEngine = this.settingsManager.getValue<string>(
             getExtensionSettingKey(this.id, "searchEngine"),
             this.getSettingDefaultValue("searchEngine"),
         );
 
-        const webSearchEngine = this.webSearchEngines.find((w) => w.getName() === searchEngine);
+        return this.getWebSearchEngineByName(searchEngine);
+    }
+
+    private getWebSearchEngineByName(name: string): WebSearchEngine {
+        const webSearchEngine = this.webSearchEngines.find((w) => w.getName() === name);
 
         if (!webSearchEngine) {
-            throw new Error(`Unable to find web search engine with name '${searchEngine}'`);
+            throw new Error(`Unable to find web search engine with name '${name}'`);
         }
 
         return webSearchEngine;
@@ -107,14 +112,5 @@ export class WebSearchExtension implements Extension {
 
     private getSearchResultImageUrl(webSearchEngine: WebSearchEngine): string {
         return `file://${this.assetPathResolver.getExtensionAssetPath(this.id, webSearchEngine.getImageFileName())}`;
-    }
-
-    private getSearchEngineAssetFilePath(searchEngine: string) {
-        const fileNames = {
-            Google: "google.png",
-            DuckDuckGo: "duckduckgo.svg",
-        };
-
-        return this.assetPathResolver.getExtensionAssetPath(this.id, fileNames[searchEngine]);
     }
 }
