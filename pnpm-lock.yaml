@@ -62,8 +62,8 @@ devDependencies:
     specifier: ^1.1.3
     version: 1.1.3(vitest@1.1.3)
   electron:
-    specifier: ^28.1.1
-    version: 28.1.1
+    specifier: ^28.2.0
+    version: 28.2.0
   electron-builder:
     specifier: ^24.9.1
     version: 24.9.1
@@ -87,7 +87,7 @@ devDependencies:
     version: 5.0.12(@types/node@20.8.6)
   vite-plugin-electron:
     specifier: ^0.28.0
-    version: 0.28.0(electron@28.1.1)(tree-kill@1.2.2)(vite-plugin-electron-renderer@0.14.5)
+    version: 0.28.0(electron@28.2.0)(tree-kill@1.2.2)(vite-plugin-electron-renderer@0.14.5)
   vite-plugin-electron-renderer:
     specifier: ^0.14.5
     version: 0.14.5
@@ -3279,8 +3279,8 @@ packages:
     resolution: {integrity: sha512-DENMhh3MFgaPDoXWrVIqSPInQoLImywfCwrSmVl3cf9QHzoZSiutHwGaB/Ql3VkqcQV30rzgdM+BjKqBAJxo5Q==}
     dev: true
 
-  /electron@28.1.1:
-    resolution: {integrity: sha512-HJSbGHpRl46jWCp5G4OH57KSm2F5u15tB10ixD8iFiz9dhwojqlSQTRAcjSwvga+Vqs1jv7iqwQRrolXP4DgOA==}
+  /electron@28.2.0:
+    resolution: {integrity: sha512-22SylXQQ9IHtwLw4D+Z4Si7OUpeDtpHfJVTjy3yv53iLg5zJKKPOCWT4ZwgYGHQZ0eldyBrYBHF/P9FPd2CcVQ==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
@@ -5199,7 +5199,7 @@ packages:
     resolution: {integrity: sha512-EQ7ORuPp8vFPCqfuGnVo7d36fXS0IFH4/RUlKb1drseix3TQEPcgwEuFADdXBxRgqMp70njz/1m0kdf5lEsm8w==}
     dev: true
 
-  /vite-plugin-electron@0.28.0(electron@28.1.1)(tree-kill@1.2.2)(vite-plugin-electron-renderer@0.14.5):
+  /vite-plugin-electron@0.28.0(electron@28.2.0)(tree-kill@1.2.2)(vite-plugin-electron-renderer@0.14.5):
     resolution: {integrity: sha512-0sAgFKQnMHR1o8iTM/rs1D6VUmeUiyc/RNUFhN5uq13LONv6Ss3grX3PwJztczxMWVSr6rp2gpAhfKQQJM3Kvg==}
     peerDependencies:
       electron: ^28.0.0
@@ -5213,7 +5213,7 @@ packages:
       vite-plugin-electron-renderer:
         optional: true
     dependencies:
-      electron: 28.1.1
+      electron: 28.2.0
       tree-kill: 1.2.2
       vite-plugin-electron-renderer: 0.14.5
     dev: true
