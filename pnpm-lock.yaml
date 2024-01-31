@@ -12,8 +12,8 @@ dependencies:
     specifier: ^2.0.226
     version: 2.0.226(react@18.2.0)
   fuse.js:
-    specifier: ^6.6.2
-    version: 6.6.2
+    specifier: ^7.0.0
+    version: 7.0.0
   i18next:
     specifier: ^23.8.1
     version: 23.8.1
@@ -3652,8 +3652,8 @@ packages:
     dev: true
     optional: true
 
-  /fuse.js@6.6.2:
-    resolution: {integrity: sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==}
+  /fuse.js@7.0.0:
+    resolution: {integrity: sha512-14F4hBIxqKvD4Zz/XjDc3y94mNZN6pRv3U13Udo0lNLCWRBUsrMv2xwcF/y/Z5sV6+FQW+/ow68cHpm4sunt8Q==}
     engines: {node: '>=10'}
     dev: false
 
