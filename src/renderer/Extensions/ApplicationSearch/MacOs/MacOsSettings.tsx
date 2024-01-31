@@ -43,7 +43,6 @@ export const MacOsSettings = () => {
                             key={`macOsFolder-${v}`}
                             value={v}
                             readOnly
-                            size="small"
                             contentAfter={
                                 <Tooltip content="Remove" relationship="label">
                                     <Button
@@ -56,7 +55,6 @@ export const MacOsSettings = () => {
                         />
                     ))}
                     <Input
-                        size="small"
                         value={newValue}
                         placeholder="Add another folder"
                         onChange={(_, { value }) => setNewValue(value)}

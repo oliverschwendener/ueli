@@ -89,7 +89,6 @@ export const SearchEngine = () => {
                         {excludedSearchResultItems.map((excludedItem) => (
                             <Input
                                 key={`excludedItem-${excludedItem.id}`}
-                                size="small"
                                 readOnly
                                 value={excludedItem.name}
                                 contentBefore={
