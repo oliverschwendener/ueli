@@ -43,7 +43,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                     >
                         <img alt="DeepL Logo" src={extensionImageUrl()} style={{ width: 24 }} />
                         <div style={{ flexGrow: 1 }}>
-                            <Text weight="semibold">DeepL Translator</Text>
+                            <Text weight="semibold">{t("extension[DeeplTranslator].extensionName")}</Text>
                         </div>
                         <Tooltip content={t("extension[DeeplTranslator].openAccount")} relationship="label">
                             <Button
