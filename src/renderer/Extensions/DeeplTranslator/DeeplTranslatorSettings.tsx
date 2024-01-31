@@ -1,7 +1,22 @@
 import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
 import { Section } from "@Core/Settings/Section";
 import { SectionList } from "@Core/Settings/SectionList";
-import { Dropdown, Field, Input, Option } from "@fluentui/react-components";
+import {
+    Button,
+    Dropdown,
+    Field,
+    Input,
+    Option,
+    Toast,
+    ToastTitle,
+    Toaster,
+    Tooltip,
+    useId,
+    useToastController,
+} from "@fluentui/react-components";
+import { Virtualizer, useStaticVirtualizerMeasure } from "@fluentui/react-components/unstable";
+import { DismissRegular, SaveRegular } from "@fluentui/react-icons";
+import { useState } from "react";
 import { sourceLanguages } from "./sourceLanguages";
 import { targetLanguages } from "./targetLanguages";
 
@@ -17,6 +32,32 @@ export const DeeplTranslatorSettings = () => {
         true,
     );
 
+    const apiKeyToasterId = useId("apiKeyToaster");
+    const { dispatchToast } = useToastController(apiKeyToasterId);
+
+    const [temporaryApiKey, setTemporaryApiKey] = useState<string>(apiKey);
+
+    const saveApiKey = () => {
+        setApiKey(temporaryApiKey);
+        dispatchToast(
+            <Toast>
+                <ToastTitle>API Key saved</ToastTitle>
+            </Toast>,
+            { intent: "success" },
+        );
+    };
+
+    const removeApiKey = () => {
+        setTemporaryApiKey("");
+        setApiKey("");
+        dispatchToast(
+            <Toast>
+                <ToastTitle>API Key removed</ToastTitle>
+            </Toast>,
+            { intent: "success" },
+        );
+    };
+
     const { value: sourceLanguage, updateValue: setSourceLanguage } = useExtensionSetting<string>(
         extensionId,
         "defaultSourceLanguage",
@@ -29,11 +70,45 @@ export const DeeplTranslatorSettings = () => {
         contextBridge.getExtensionSettingDefaultValue(extensionId, "defaultTargetLanguage"),
     );
 
+    const sourceLanguageVirutalizer = useStaticVirtualizerMeasure({
+        defaultItemSize: 20,
+        direction: "vertical",
+    });
+
+    const targetLanguageVirutalizer = useStaticVirtualizerMeasure({
+        defaultItemSize: 20,
+        direction: "vertical",
+    });
+
     return (
         <SectionList>
             <Section>
                 <Field label="API Key">
-                    <Input value={apiKey} onChange={(_, { value }) => setApiKey(value)} />
+                    <Toaster toasterId={apiKeyToasterId} />
+                    <Input
+                        value={temporaryApiKey}
+                        onChange={(_, { value }) => setTemporaryApiKey(value)}
+                        contentAfter={
+                            <>
+                                <Tooltip content="Delete" relationship="label">
+                                    <Button
+                                        size="small"
+                                        appearance="subtle"
+                                        onClick={() => removeApiKey()}
+                                        icon={<DismissRegular />}
+                                    />
+                                </Tooltip>
+                                <Tooltip content="Save" relationship="label">
+                                    <Button
+                                        size="small"
+                                        appearance="subtle"
+                                        onClick={() => saveApiKey()}
+                                        icon={<SaveRegular />}
+                                    />
+                                </Tooltip>
+                            </>
+                        }
+                    />
                 </Field>
             </Section>
             <Section>
@@ -41,12 +116,26 @@ export const DeeplTranslatorSettings = () => {
                     <Dropdown
                         value={sourceLanguages[sourceLanguage]}
                         onOptionSelect={(_, { optionValue }) => optionValue && setSourceLanguage(optionValue)}
+                        selectedOptions={[sourceLanguage]}
+                        listbox={{ ref: sourceLanguageVirutalizer.scrollRef, style: { maxHeight: 145 } }}
                     >
-                        {Object.keys(sourceLanguages).map((key) => (
-                            <Option key={key} value={key}>
-                                {sourceLanguages[key]}
-                            </Option>
-                        ))}
+                        <Virtualizer
+                            numItems={Object.keys(sourceLanguages).length}
+                            virtualizerLength={sourceLanguageVirutalizer.virtualizerLength}
+                            bufferItems={sourceLanguageVirutalizer.bufferItems}
+                            bufferSize={sourceLanguageVirutalizer.bufferSize}
+                            itemSize={20}
+                        >
+                            {(i) => (
+                                <Option
+                                    key={Object.keys(sourceLanguages)[i]}
+                                    value={Object.keys(sourceLanguages)[i]}
+                                    text={Object.values(sourceLanguages)[i]}
+                                >
+                                    {Object.values(sourceLanguages)[i]}
+                                </Option>
+                            )}
+                        </Virtualizer>
                     </Dropdown>
                 </Field>
             </Section>
@@ -55,12 +144,26 @@ export const DeeplTranslatorSettings = () => {
                     <Dropdown
                         value={targetLanguages[targetLanguage]}
                         onOptionSelect={(_, { optionValue }) => optionValue && setTargetLanguage(optionValue)}
+                        selectedOptions={[targetLanguage]}
+                        listbox={{ ref: targetLanguageVirutalizer.scrollRef, style: { maxHeight: 145 } }}
                     >
-                        {Object.keys(targetLanguages).map((key) => (
-                            <Option key={key} value={key}>
-                                {targetLanguages[key]}
-                            </Option>
-                        ))}
+                        <Virtualizer
+                            numItems={Object.keys(targetLanguages).length}
+                            virtualizerLength={targetLanguageVirutalizer.virtualizerLength}
+                            bufferItems={targetLanguageVirutalizer.bufferItems}
+                            bufferSize={targetLanguageVirutalizer.bufferSize}
+                            itemSize={20}
+                        >
+                            {(i) => (
+                                <Option
+                                    key={Object.keys(targetLanguages)[i]}
+                                    value={Object.keys(targetLanguages)[i]}
+                                    text={Object.values(targetLanguages)[i]}
+                                >
+                                    {Object.values(targetLanguages)[i]}
+                                </Option>
+                            )}
+                        </Virtualizer>
                     </Dropdown>
                 </Field>
             </Section>

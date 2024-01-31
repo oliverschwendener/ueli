@@ -32,7 +32,9 @@ export const MissingApiKey = ({ saveApiKey, openSignUpWebsite }: MissingApiKeyPr
             </Field>
 
             <div style={{ paddingBottom: 25 }}>
-                <Button onClick={() => saveApiKey(value)}>Continue</Button>
+                <Button appearance="primary" onClick={() => saveApiKey(value)}>
+                    Continue
+                </Button>
             </div>
         </div>
     );
