@@ -1,4 +1,5 @@
 import { Dropdown, Field, Option, Switch } from "@fluentui/react-components";
+import { Virtualizer, useStaticVirtualizerMeasure } from "@fluentui/react-components/unstable";
 import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting } from "../../Hooks";
 import { Section } from "../Section";
@@ -44,6 +45,11 @@ export const Window = () => {
         "window",
     ];
 
+    const { virtualizerLength, bufferItems, bufferSize, scrollRef } = useStaticVirtualizerMeasure({
+        defaultItemSize: 20,
+        direction: "vertical",
+    });
+
     return (
         <SectionList>
             <Section>
@@ -88,15 +94,26 @@ export const Window = () => {
                 <Section>
                     <Field label="Vibrancy">
                         <Dropdown
-                            aria-labelledby="window.vibrancy"
                             value={vibrancy}
                             onOptionSelect={(_, { optionValue }) => optionValue && setVibrancy(optionValue)}
+                            listbox={{ ref: scrollRef, style: { maxHeight: 145 } }}
                         >
-                            {vibrancyOptions.map((v) => (
-                                <Option key={`window-vibrancy-option-${v}`} value={v}>
-                                    {v}
-                                </Option>
-                            ))}
+                            <Virtualizer
+                                numItems={vibrancyOptions.length}
+                                virtualizerLength={virtualizerLength}
+                                bufferItems={bufferItems}
+                                bufferSize={bufferSize}
+                                itemSize={20}
+                            >
+                                {(i) => (
+                                    <Option
+                                        key={`window-vibrancy-option-${vibrancyOptions[i]}`}
+                                        value={vibrancyOptions[i]}
+                                    >
+                                        {vibrancyOptions[i]}
+                                    </Option>
+                                )}
+                            </Virtualizer>
                         </Dropdown>
                     </Field>
                 </Section>
