@@ -41,28 +41,24 @@ export const useAppCssProperties = () => {
     const [appCssProperties, setAppCssProperties] = useState<CSSProperties>(initialProperties[operatingSystem]);
 
     useEffect(() => {
-        if (operatingSystem === "Windows") {
-            contextBridge.ipcRenderer.on("nativeThemeChanged", () => {
-                setAppCssProperties(extendGlobalStyles(getWindowsCssProperties(contextBridge)));
-            });
+        const eventHandlers: Record<OperatingSystem, () => void> = {
+            Linux: () => null,
+            macOS: () => setAppCssProperties(extendGlobalStyles(getMacOsCssProperties(contextBridge))),
+            Windows: () => setAppCssProperties(extendGlobalStyles(getWindowsCssProperties(contextBridge))),
+        };
 
-            contextBridge.ipcRenderer.on("settingUpdated[window.backgroundMaterial]", () => {
-                setAppCssProperties(extendGlobalStyles(getWindowsCssProperties(contextBridge)));
-            });
+        const channels: Record<OperatingSystem, string[]> = {
+            Linux: [],
+            macOS: ["nativeThemeChanged", "settingUpdated[window.vibrancy]"],
+            Windows: [
+                "nativeThemeChanged",
+                "settingUpdated[window.backgroundMaterial]",
+                "settingUpdated[window.acrylicOpacity]",
+            ],
+        };
 
-            contextBridge.ipcRenderer.on("settingUpdated[window.acrylicOpacity]", () => {
-                setAppCssProperties(extendGlobalStyles(getWindowsCssProperties(contextBridge)));
-            });
-        }
-
-        if (operatingSystem === "macOS") {
-            contextBridge.ipcRenderer.on("nativeThemeChanged", () => {
-                setAppCssProperties(extendGlobalStyles(getMacOsCssProperties(contextBridge)));
-            });
-
-            contextBridge.ipcRenderer.on("settingUpdated[window.vibrancy]", () => {
-                setAppCssProperties(extendGlobalStyles(getMacOsCssProperties(contextBridge)));
-            });
+        for (const channel of channels[operatingSystem]) {
+            contextBridge.ipcRenderer.on(channel, () => eventHandlers[operatingSystem]());
         }
     }, []);
 
