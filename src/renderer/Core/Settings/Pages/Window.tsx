@@ -1,4 +1,4 @@
-import { Dropdown, Field, Option, Switch } from "@fluentui/react-components";
+import { Dropdown, Field, Option, Slider, Switch } from "@fluentui/react-components";
 import { Virtualizer, useStaticVirtualizerMeasure } from "@fluentui/react-components/unstable";
 import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting } from "../../Hooks";
@@ -22,6 +22,8 @@ export const Window = () => {
         "window.backgroundMaterial",
         "Mica",
     );
+
+    const { value: acrylicOpacity, updateValue: setAcrylicOpacity } = useSetting("window.acrylicOpacity", 0.6);
 
     const { value: vibrancy, updateValue: setVibrancy } = useSetting("window.vibrancy", "None");
 
@@ -86,6 +88,20 @@ export const Window = () => {
                                 </Option>
                             ))}
                         </Dropdown>
+                    </Field>
+                </Section>
+            ) : null}
+
+            {backgroundMaterial === "Acrylic" ? (
+                <Section>
+                    <Field label={`Opacity: ${acrylicOpacity}`}>
+                        <Slider
+                            min={0}
+                            max={1}
+                            step={0.05}
+                            value={acrylicOpacity}
+                            onChange={(_, { value }) => setAcrylicOpacity(value)}
+                        />
                     </Field>
                 </Section>
             ) : null}
