@@ -1,6 +1,7 @@
 export * from "./AboutUeli";
 export * from "./ActionHandler";
 export * from "./AssetPathResolver";
+export * from "./Autostart";
 export * from "./BrowserWindow";
 export * from "./Clipboard";
 export * from "./Clock";

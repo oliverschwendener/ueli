@@ -49,6 +49,7 @@ import * as Extensions from "./Extensions";
     Core.NativeThemeModule.bootstrap(dependencyRegistry);
     await Core.BrowserWindowModule.bootstrap(dependencyRegistry);
     Core.GlobalShortcutModule.bootstrap(dependencyRegistry);
+    Core.AutostartModule.bootstrap(dependencyRegistry);
     Core.ExcludedSearchResultsModule.bootstrap(dependencyRegistry);
     Core.ActionHandlerModule.bootstrap(dependencyRegistry);
     Core.UeliCommandModule.bootstrap(dependencyRegistry);
