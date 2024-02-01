@@ -205,7 +205,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItems }: SearchP
                         onClick={openSettings}
                         size="small"
                         appearance="subtle"
-                        icon={<SettingsRegular fontSize={16} />}
+                        icon={<SettingsRegular fontSize={14} />}
                     >
                         {t("general.settings")}
                     </Button>

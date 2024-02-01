@@ -1,4 +1,6 @@
-import { Dropdown, Field, Option } from "@fluentui/react-components";
+import { darkTheme, lightTheme } from "@Core/Theme/defaultValues";
+import { BrandVariants, Button, Dropdown, Field, Input, Option, Tooltip } from "@fluentui/react-components";
+import { ArrowCounterclockwiseRegular } from "@fluentui/react-icons";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting } from "../../Hooks";
@@ -24,23 +26,127 @@ export const Appearance = () => {
         updateTheme,
     );
 
+    const { value: darkVariants, updateValue: setDarkVariants } = useSetting<BrandVariants>(
+        "appearance.customDarkThemeVariants",
+        darkTheme,
+        false,
+        updateTheme,
+    );
+
+    const { value: lightVariants, updateValue: setLightVariants } = useSetting<BrandVariants>(
+        "appearance.customLightThemeVariants",
+        lightTheme,
+        false,
+        updateTheme,
+    );
+
+    const themes = [
+        { value: "Microsoft Teams", label: "Microsoft Teams" },
+        { value: "Fluent UI Web", label: "Fluent UI Web" },
+        { value: "Custom", label: t("settingsAppearance.customTheme") },
+    ];
+
     return (
         <SectionList>
             <Section>
                 <Field label={t("settingsAppearance.themeName")}>
                     <Dropdown
-                        aria-labelledby="appearance.themeName"
-                        value={themeName}
+                        value={themes.find((t) => t.value === themeName)?.label}
                         onOptionSelect={(_, { optionValue }) => optionValue && setThemeName(optionValue)}
+                        selectedOptions={[themeName]}
                     >
                         {availableThemes.map(({ name, accentColors }) => (
                             <Option key={`theme-option-${name}`} value={name} text={name}>
                                 <ThemeOption themeName={name} accentColors={accentColors} />
                             </Option>
                         ))}
+                        <Option key="theme-option-custom" value={"Custom"} text={t("settingsAppearance.customTheme")}>
+                            <ThemeOption
+                                themeName={t("settingsAppearance.customTheme")}
+                                accentColors={{ dark: darkVariants["100"], light: lightVariants["100"] }}
+                            />
+                        </Option>
                     </Dropdown>
                 </Field>
             </Section>
+            {themeName === "Custom" ? (
+                <Section>
+                    <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
+                        <div style={{ width: "50%", display: "flex", flexDirection: "column", gap: 5 }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                                {t("settingsAppearance.customTheme.darkShades")}{" "}
+                                <Tooltip content={t("settingsAppearance.customTheme.reset")} relationship="label">
+                                    <Button
+                                        size="small"
+                                        appearance="subtle"
+                                        icon={<ArrowCounterclockwiseRegular fontSize={14} />}
+                                        onClick={() => setDarkVariants(darkTheme)}
+                                    />
+                                </Tooltip>
+                            </div>
+                            {Object.keys(darkVariants).map((shade: string | keyof BrandVariants) => (
+                                <Input
+                                    key={`dark-variant-${shade}`}
+                                    appearance="filled-darker"
+                                    size="small"
+                                    style={{ width: "100%" }}
+                                    contentBefore={<>{shade}:</>}
+                                    contentAfter={
+                                        <div
+                                            style={{
+                                                width: 16,
+                                                height: 16,
+                                                borderRadius: "50%",
+                                                backgroundColor: darkVariants[shade as keyof BrandVariants],
+                                            }}
+                                        ></div>
+                                    }
+                                    value={darkVariants[shade as keyof BrandVariants]}
+                                    onChange={(_, { value }) =>
+                                        setDarkVariants({ ...darkVariants, ...{ [shade]: value } })
+                                    }
+                                />
+                            ))}
+                        </div>
+                        <div style={{ width: "50%", display: "flex", flexDirection: "column", gap: 5 }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                                {t("settingsAppearance.customTheme.lightShades")}{" "}
+                                <Tooltip content={t("settingsAppearance.customTheme.reset")} relationship="label">
+                                    <Button
+                                        size="small"
+                                        appearance="subtle"
+                                        icon={<ArrowCounterclockwiseRegular fontSize={14} />}
+                                        onClick={() => setLightVariants(lightTheme)}
+                                    />
+                                </Tooltip>
+                            </div>
+                            {Object.keys(lightVariants).map((shade: string | keyof BrandVariants) => (
+                                <Input
+                                    key={`light-variant-${shade}`}
+                                    appearance="filled-darker"
+                                    size="small"
+                                    style={{ width: "100%" }}
+                                    contentBefore={<>{shade}:</>}
+                                    contentAfter={
+                                        <div
+                                            style={{
+                                                width: 16,
+                                                height: 16,
+                                                borderRadius: "50%",
+                                                backgroundColor: lightVariants[shade as keyof BrandVariants],
+                                            }}
+                                        ></div>
+                                    }
+                                    value={lightVariants[shade as keyof BrandVariants]}
+                                    onChange={(_, { value }) =>
+                                        setLightVariants({ ...lightVariants, ...{ [shade]: value } })
+                                    }
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </Section>
+            ) : null}
         </SectionList>
     );
 };

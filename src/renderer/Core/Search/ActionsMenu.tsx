@@ -1,9 +1,9 @@
 import type { SearchResultItemAction } from "@common/Core";
 import { Button, Menu, MenuItem, MenuList, MenuPopover, MenuTrigger } from "@fluentui/react-components";
 import { FlashRegular } from "@fluentui/react-icons";
+import type { Ref } from "react";
 import { useTranslation } from "react-i18next";
 import { FluentIcon } from "./FluentIcon";
-import type {Ref} from "react";
 
 type AdditionalActionsProps = {
     actions: SearchResultItemAction[];
@@ -28,7 +28,7 @@ export const ActionsMenu = ({
                     className="non-draggable-area"
                     size="small"
                     appearance="subtle"
-                    icon={<FlashRegular fontSize={16} />}
+                    icon={<FlashRegular fontSize={14} />}
                     ref={additionalActionsButtonRef}
                 >
                     {t("general.actions")}
