@@ -133,10 +133,11 @@ export const Extensions = () => {
                                         }}
                                     >
                                         <Button
-                                            onClick={(e) => triggerExtensionRescan(e, id)}
+                                            size="small"
                                             appearance="subtle"
+                                            onClick={(event) => triggerExtensionRescan(event, id)}
                                             disabled={!isEnabled(id)}
-                                            icon={<ArrowClockwiseRegular />}
+                                            icon={<ArrowClockwiseRegular fontSize={14} />}
                                         />
                                     </div>
                                 </TableCell>

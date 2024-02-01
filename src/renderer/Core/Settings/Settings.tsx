@@ -52,7 +52,7 @@ export const Settings = () => {
                     style={{
                         height: "100%",
                         flexGrow: 1,
-                        overflowY: "scroll",
+                        overflowY: "auto",
                         padding: 20,
                         boxSizing: "border-box",
                     }}
