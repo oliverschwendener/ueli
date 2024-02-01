@@ -4,7 +4,7 @@ import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
 import type { NativeTheme } from "electron";
 
 export class CustomActionHandler implements ActionHandler {
-    public readonly id = "SystemColorThemeSwitcher";
+    public readonly id = "AppearanceSwitcher";
 
     public constructor(
         private readonly operatingSystem: OperatingSystem,
@@ -20,7 +20,7 @@ export class CustomActionHandler implements ActionHandler {
         const switchTo = this.nativeTheme.shouldUseDarkColors ? "light" : "dark";
 
         if (this.operatingSystem === "Windows") {
-            return this.toggleWindowsSystemColor(switchTo);
+            return this.toggleWindowsSystemAppearance(switchTo);
         }
 
         if (this.operatingSystem === "macOS") {
@@ -30,7 +30,7 @@ export class CustomActionHandler implements ActionHandler {
         throw new Error(`Operating system "${this.operatingSystem} not supported"`);
     }
 
-    private async toggleWindowsSystemColor(to: "dark" | "light") {
+    private async toggleWindowsSystemAppearance(to: "dark" | "light") {
         const windowsRegistryPath = "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
         const windowsRegistryValue = to === "light" ? "1" : "0";
 

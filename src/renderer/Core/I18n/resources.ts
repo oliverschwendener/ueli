@@ -52,7 +52,7 @@ export const resources: InitOptions["resources"] = {
             "extension[ApplicationSearch].searchResultItem.additionalAction.copyFilePathToClipboard":
                 "Copy file path to clipboard",
             "extension[ApplicationSearch].extensionName": "Application Search",
-            "extension[SystemColorThemeSwitcher].extensionName": "System Color Theme Switcher",
+            "extension[AppearanceSwitcher].extensionName": "Appearance Switcher",
             "extension[UeliCommand].extensionName": "Ueli Commands",
             "extension[DeeplTranslator].extensionName": "DeepL Translator",
             "extension[DeeplTranslator].openAccount": "Open DeepL Account",
@@ -116,7 +116,7 @@ export const resources: InitOptions["resources"] = {
             "extension[ApplicationSearch].searchResultItem.defaultAction.openApplication": "Anwendung öffnen",
             "extension[ApplicationSearch].searchResultItem.additionalAction.copyFilePathToClipboard":
                 "Dateipfad in Zwischenablage kopieren",
-            "extension[SystemColorThemeSwitcher].extensionName": "System Color Theme Switcher",
+            "extension[AppearanceSwitcher].extensionName": "Erscheinungsbildwechsler",
             "extension[UeliCommand].extensionName": "Ueli Befehle",
             "extension[DeeplTranslator].extensionName": "DeepL Übersetzer",
             "extension[DeeplTranslator].openAccount": "DeepL Account öffnen",

@@ -1,10 +1,10 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import { AppearanceSwitcherModule } from "./AppearanceSwitcher";
 import { ApplicationSearchModule } from "./ApplicationSearch";
 import { BrowserBookmarksExtensionModule } from "./BrowserBookmarksExtension/BrowserBookmarksExtensionModule";
 import { DeeplTranslatorModule } from "./DeeplTranslator";
 import { ExtensionModule } from "./ExtensionModule";
-import { SystemColorThemeSwitcherModule } from "./SystemColorThemeSwitcher";
 import { SystemSettingsModule } from "./SystemSettings/SystemSettingsModule";
 import { UeliCommandModule } from "./UeliCommand";
 import { WebSearchExtensionModule } from "./WebSearch/WebSearchExtensionModule.ts";
@@ -12,10 +12,10 @@ import { WebSearchExtensionModule } from "./WebSearch/WebSearchExtensionModule.t
 export class ExtensionLoader {
     private static getAllExtensionModules(): ExtensionModule[] {
         return [
+            new AppearanceSwitcherModule(),
             new ApplicationSearchModule(),
             new BrowserBookmarksExtensionModule(),
             new DeeplTranslatorModule(),
-            new SystemColorThemeSwitcherModule(),
             new SystemSettingsModule(),
             new UeliCommandModule(),
             new WebSearchExtensionModule(),

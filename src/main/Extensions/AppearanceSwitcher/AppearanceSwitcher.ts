@@ -4,10 +4,10 @@ import type { Translator } from "@Core/Translator";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { resources } from "./resources";
 
-export class SystemColorThemeSwitcher implements Extension {
-    public readonly id = "SystemColorThemeSwitcher";
-    public readonly name = "SystemColorThemeSwitcher";
-    public readonly nameTranslationKey = "extension[SystemColorThemeSwitcher].extensionName";
+export class AppearanceSwitcher implements Extension {
+    public readonly id = "AppearanceSwitcher";
+    public readonly name = "Appearance Switcher";
+    public readonly nameTranslationKey = "extension[AppearanceSwitcher].extensionName";
 
     public readonly author = {
         name: "Oliver Schwendener",
@@ -26,13 +26,13 @@ export class SystemColorThemeSwitcher implements Extension {
         return [
             {
                 description: t("searchResultItem.description"),
-                id: "SystemColorThemeSwitcher:toggle",
+                id: "AppearanceSwitcher:toggle",
                 name: t("searchResultItem.name"),
                 imageUrl: this.getSearchResultItemImageUrl(),
                 defaultAction: {
                     argument: "toggle",
                     description: t("searchResultItem.actionDescription"),
-                    handlerId: "SystemColorThemeSwitcher",
+                    handlerId: "AppearanceSwitcher",
                     hideWindowAfterInvocation: false,
                 },
             },
