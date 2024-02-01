@@ -15,6 +15,7 @@ const getWindowsCssProperties = (contextBridge: ContextBridge): CSSProperties =>
     const map: Record<string, CSSProperties["background"]> = {
         None: undefined,
         Mica: "transparent",
+        Tabbed: "transparent",
         Acrylic: contextBridge.themeShouldUseDarkColors()
             ? `rgba(0,0,0,${acrylicOpacity})`
             : `rgba(255,255,255,${acrylicOpacity})`,
