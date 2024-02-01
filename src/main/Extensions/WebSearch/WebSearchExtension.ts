@@ -10,6 +10,11 @@ export class WebSearchExtension implements Extension {
     public readonly name = "Web Search";
     public readonly nameTranslationKey = "extension[WebSearch].extensionName";
 
+    public readonly author = {
+        name: "Oliver Schwendener",
+        githubUserName: "oliverschwendener",
+    };
+
     private readonly defaultSettings = {
         searchEngine: "Google",
         locale: "en-US",

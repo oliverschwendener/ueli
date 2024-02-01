@@ -31,6 +31,11 @@ export class DeeplTranslatorExtension implements Extension {
     public readonly name = "DeepL Translator";
     public readonly nameTranslationKey = "extension[DeeplTranslator].extensionName";
 
+    public readonly author = {
+        name: "Oliver Schwendener",
+        githubUserName: "oliverschwendener",
+    };
+
     private readonly defaultSettings = {
         apiKey: "",
         defaultSourceLanguage: "Auto",

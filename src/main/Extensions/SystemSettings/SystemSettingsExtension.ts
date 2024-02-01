@@ -8,6 +8,11 @@ export class SystemSettingsExtension implements Extension {
     public readonly name = "System Settings";
     public readonly nameTranslationKey = "extension[SystemSettings].extensionName";
 
+    public readonly author = {
+        name: "Oliver Schwendener",
+        githubUserName: "oliverschwendener",
+    };
+
     public constructor(
         private readonly currentOperatingSystem: OperatingSystem,
         private readonly macOsSystemSettingRepository: MacOsSystemSettingRepository,

@@ -11,6 +11,11 @@ export class UeliCommandExtension implements Extension {
     public readonly name = "Ueli Commands";
     public readonly nameTranslationKey = "extension[UeliCommand].extensionName";
 
+    public readonly author = {
+        name: "Oliver Schwendener",
+        githubUserName: "oliverschwendener",
+    };
+
     public constructor(
         private readonly assetPathResolver: AssetPathResolver,
         private readonly translator: Translator,

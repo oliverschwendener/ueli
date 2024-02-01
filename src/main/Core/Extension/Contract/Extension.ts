@@ -5,6 +5,11 @@ export interface Extension {
     readonly name: string;
     readonly nameTranslationKey?: string;
 
+    readonly author: {
+        name: string;
+        githubUserName: string;
+    };
+
     getSearchResultItems(): Promise<SearchResultItem[]>;
     isSupported(): boolean;
     getSettingDefaultValue<T>(key: string): T;

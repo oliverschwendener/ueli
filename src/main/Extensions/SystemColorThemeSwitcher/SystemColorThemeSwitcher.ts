@@ -9,6 +9,11 @@ export class SystemColorThemeSwitcher implements Extension {
     public readonly name = "SystemColorThemeSwitcher";
     public readonly nameTranslationKey = "extension[SystemColorThemeSwitcher].extensionName";
 
+    public readonly author = {
+        name: "Oliver Schwendener",
+        githubUserName: "oliverschwendener",
+    };
+
     public constructor(
         private readonly currentOperatingSystem: OperatingSystem,
         private readonly assetPathResolver: AssetPathResolver,

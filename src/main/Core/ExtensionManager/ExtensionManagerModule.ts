@@ -1,7 +1,16 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { Extension } from "@Core/Extension";
 import type { ExtensionInfo } from "@common/Core";
 import { ExtensionManager } from "./ExtensionManager";
+
+const mapExtensionToInfo = (extension: Extension): ExtensionInfo => ({
+    id: extension.id,
+    name: extension.name,
+    nameTranslationKey: extension.nameTranslationKey,
+    imageUrl: extension.getImageUrl ? extension.getImageUrl() : undefined,
+    author: extension.author,
+});
 
 export class ExtensionManagerModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
@@ -21,9 +30,11 @@ export class ExtensionManagerModule {
         });
 
         ipcMain.on("getAvailableExtensions", (event) => {
-            event.returnValue = extensionManager
-                .getSupportedExtensions()
-                .map(({ id, name, nameTranslationKey }): ExtensionInfo => ({ id, name, nameTranslationKey }));
+            event.returnValue = extensionManager.getSupportedExtensions().map(mapExtensionToInfo);
+        });
+
+        ipcMain.on("getEnabledExtensions", (event) => {
+            event.returnValue = extensionManager.getEnabledExtensions().map(mapExtensionToInfo);
         });
 
         ipcMain.on("getExtensionAssetFilePath", (event, { extensionId, key }: { extensionId: string; key: string }) => {
@@ -31,9 +42,8 @@ export class ExtensionManagerModule {
             event.returnValue = extension.getAssetFilePath ? extension.getAssetFilePath(key) : undefined;
         });
 
-        ipcMain.on("getExtensionImageUrl", (event, { extensionId }: { extensionId: string }) => {
-            const extension = extensionRegistry.getById(extensionId);
-            event.returnValue = extension.getImageUrl ? extension.getImageUrl() : undefined;
+        ipcMain.on("getExtension", (event, { extensionId }: { extensionId: string }) => {
+            event.returnValue = mapExtensionToInfo(extensionRegistry.getById(extensionId));
         });
 
         ipcMain.on(

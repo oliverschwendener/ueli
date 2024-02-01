@@ -11,10 +11,11 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     extensionEnabled: (extensionId) => ipcRenderer.send("extensionEnabled", { extensionId }),
     getAboutUeli: () => ipcRenderer.sendSync("getAboutUeli"),
     getAvailableExtensions: () => ipcRenderer.sendSync("getAvailableExtensions"),
+    getEnabledExtensions: () => ipcRenderer.sendSync("getEnabledExtensions"),
+    getExtension: (extensionId) => ipcRenderer.sendSync("getExtension", { extensionId }),
     getExcludedSearchResultItems: () => ipcRenderer.sendSync("getExcludedSearchResultItems"),
     getExtensionAssetFilePath: (extensionId, key) =>
         ipcRenderer.sendSync("getExtensionAssetFilePath", { extensionId, key }),
-    getExtensionImageUrl: (extensionId) => ipcRenderer.sendSync("getExtensionImageUrl", { extensionId }),
     getExtensionSettingDefaultValue: (extensionId, settingKey) =>
         ipcRenderer.sendSync("getExtensionSettingDefaultValue", { extensionId, settingKey }),
     getLogs: () => ipcRenderer.sendSync("getLogs"),

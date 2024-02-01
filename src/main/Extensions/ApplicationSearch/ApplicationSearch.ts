@@ -10,6 +10,11 @@ export class ApplicationSearch implements Extension {
     public readonly name = "Application Search";
     public readonly nameTranslationKey = "extension[ApplicationSearch].extensionName";
 
+    public readonly author = {
+        name: "Oliver Schwendener",
+        githubUserName: "oliverschwendener",
+    };
+
     public constructor(
         private readonly currentOperatingSystem: OperatingSystem,
         private readonly applicationRepository: ApplicationRepository,

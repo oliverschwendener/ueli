@@ -1,13 +1,15 @@
+import { useContextBridge } from "@Core/Hooks";
 import { Divider } from "@fluentui/react-components";
 import { Route, Routes, useNavigate } from "react-router";
+import { ExtensionSettings } from "./ExtensionSettings";
 import { Navigation } from "./Navigation";
 import { settingsPages } from "./Pages";
 import { SettingsHeader } from "./SettingsHeader";
 
 export const Settings = () => {
+    const { contextBridge } = useContextBridge();
     const navigate = useNavigate();
     const closeSettings = () => navigate({ pathname: "/" });
-    const navigateTo = (pathname: string) => navigate({ pathname });
 
     return (
         <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -27,9 +29,22 @@ export const Settings = () => {
                     overflow: "hidden",
                 }}
             >
-                <div style={{ display: "flex" }}>
-                    <div style={{ display: "flex", width: "200px", padding: 10, boxSizing: "border-box" }}>
-                        <Navigation settingsPages={settingsPages} onNavigate={navigateTo} />
+                <div style={{ display: "flex", flexShrink: 0 }}>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            padding: 10,
+                            gap: 20,
+                            boxSizing: "border-box",
+                            overflowX: "auto",
+                            overflowY: "auto",
+                        }}
+                    >
+                        <Navigation
+                            settingsPages={settingsPages}
+                            enabledExtensions={contextBridge.getEnabledExtensions()}
+                        />
                     </div>
                     <Divider appearance="subtle" vertical />
                 </div>
@@ -50,6 +65,7 @@ export const Settings = () => {
                                 element={element}
                             />
                         ))}
+                        <Route path="extension/:extensionId" element={<ExtensionSettings />} />
                     </Routes>
                 </div>
             </div>

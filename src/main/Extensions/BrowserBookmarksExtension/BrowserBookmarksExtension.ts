@@ -11,6 +11,11 @@ export class BrowserBookmarksExtension implements Extension {
     public readonly name = "Browser Bookmarks";
     public readonly nameTranslationKey = "extension[BrowserBookmarks].extensionName";
 
+    public readonly author = {
+        name: "Oliver Schwendener",
+        githubUserName: "oliverschwendener",
+    };
+
     private readonly defaultSettings = {
         browser: "Google Chrome",
         searchResultStyle: "nameOnly",
