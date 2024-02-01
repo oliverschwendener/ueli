@@ -21,7 +21,7 @@ module.exports = {
         ],
     },
     win: {
-        icon: "build/windows-app-icon-dark-background.png",
+        icon: "assets/Build/windows-app-icon-dark-background.png",
         target: [{ target: "msi" }, { target: "nsis" }, { target: "zip" }],
     },
     linux: {
