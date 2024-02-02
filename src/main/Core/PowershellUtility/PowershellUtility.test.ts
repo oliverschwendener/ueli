@@ -1,5 +1,6 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
+import { join } from "path";
 import { describe, expect, it, vi } from "vitest";
 import { RandomStringProvider } from "..";
 import { PowershellUtility } from "./PowershellUtility";
@@ -45,14 +46,14 @@ describe(PowershellUtility, () => {
         const powershellUtility = new PowershellUtility(
             fileSystemUtility,
             commandlineUtility,
-            "/temp/directory",
+            join("temp", "directory"),
             randomStringProvider,
         );
 
         expect(await powershellUtility.executeScript("my script")).toBe("test output");
-        expect(writeTextFileMock).toHaveBeenCalledWith("my script", "/temp/directory/randomHexString.ps1");
+        expect(writeTextFileMock).toHaveBeenCalledWith("my script", join("temp", "directory", "randomHexString.ps1"));
         expect(executeCommandWithOutputMock).toHaveBeenCalledWith(
-            `powershell -NoProfile -NonInteractive -ExecutionPolicy bypass -File "/temp/directory/randomHexString.ps1"`,
+            `powershell -NoProfile -NonInteractive -ExecutionPolicy bypass -File "${join("temp", "directory", "randomHexString.ps1")}"`,
         );
         expect(getRandomHexStringMock).toHaveBeenCalledOnce();
     });

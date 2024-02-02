@@ -16,8 +16,8 @@ describe(Application, () => {
                 filePath: "/Applications/My App.app",
                 description: "Open application",
                 descriptionTranslation: {
-                    key: "searchResultItem.defaultAction.openApplication",
-                    namespace: "extension[ApplicationSearch].",
+                    key: "openApplication",
+                    namespace: "extension[ApplicationSearch]",
                 },
             }),
             additionalActions: [
@@ -28,7 +28,7 @@ describe(Application, () => {
                     textToCopy: "/Applications/My App.app",
                     description: "Copy file path to clipboard",
                     descriptionTranslation: {
-                        key: "searchResultItem.additionalAction.copyFilePathToClipboard",
+                        key: "copyFilePathToClipboard",
                         namespace: "extension[ApplicationSearch]",
                     },
                 }),
