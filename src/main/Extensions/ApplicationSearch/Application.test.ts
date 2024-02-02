@@ -8,7 +8,10 @@ describe(Application, () => {
 
         expect(application.toSearchResultItem()).toEqual(<SearchResultItem>{
             description: "Application",
-            descriptionTranslationKey: "extension[ApplicationSearch].searchResultItemDescription",
+            descriptionTranslation: {
+                key: "searchResultItemDescription",
+                namespace: "extension[ApplicationSearch]",
+            },
             id: "W0FwcGxpY2F0aW9uU2VhcmNoXVsvQXBwbGljYXRpb25zL015IEFwcC5hcHBd",
             name: "My App",
             imageUrl: "file:///Users/Dummy/Icons/icon.png",

@@ -3,9 +3,8 @@ import type { SearchResultItemAction } from "./SearchResultItemAction";
 export type SearchResultItem = {
     id: string;
     name: string;
-    nameTranslationKey?: string;
     description: string;
-    descriptionTranslationKey?: string;
+    descriptionTranslation?: { key: string; namespace: string };
     imageUrl?: string;
     imageUrlOnDarkBackground?: string;
     imageUrlOnLightBackground?: string;

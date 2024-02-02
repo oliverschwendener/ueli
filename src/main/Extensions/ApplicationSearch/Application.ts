@@ -11,7 +11,10 @@ export class Application {
     public toSearchResultItem(): SearchResultItem {
         return {
             description: "Application",
-            descriptionTranslationKey: "extension[ApplicationSearch].searchResultItemDescription",
+            descriptionTranslation: {
+                key: "searchResultItemDescription",
+                namespace: "extension[ApplicationSearch]",
+            },
             id: this.getId(),
             name: this.name,
             imageUrl: this.getImageUrl(),

@@ -91,12 +91,14 @@ export const SearchResultListItem = ({
                     whiteSpace: "nowrap",
                 }}
             >
-                {searchResultItem.nameTranslationKey ? t(searchResultItem.nameTranslationKey) : searchResultItem.name}
+                {searchResultItem.name}
             </div>
             <div style={{ flexShrink: 0 }}>
                 <Text size={200}>
-                    {searchResultItem.descriptionTranslationKey
-                        ? t(searchResultItem.descriptionTranslationKey)
+                    {searchResultItem.descriptionTranslation
+                        ? t(searchResultItem.descriptionTranslation.key, {
+                              ns: searchResultItem.descriptionTranslation.namespace,
+                          })
                         : searchResultItem.description}
                 </Text>
             </div>
