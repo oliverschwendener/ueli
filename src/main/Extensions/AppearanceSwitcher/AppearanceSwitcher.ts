@@ -7,7 +7,11 @@ import { resources } from "./resources";
 export class AppearanceSwitcher implements Extension {
     public readonly id = "AppearanceSwitcher";
     public readonly name = "Appearance Switcher";
-    public readonly nameTranslationKey = "extension[AppearanceSwitcher].extensionName";
+
+    public readonly nameTranslation = {
+        key: "extensionName",
+        namespace: "extension[AppearanceSwitcher]",
+    };
 
     public readonly author = {
         name: "Oliver Schwendener",

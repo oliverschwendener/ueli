@@ -45,7 +45,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItems }: SearchP
     const openSettings = () => navigate({ pathname: "/settings/general" });
     const search = (updatedSearchTerm: string) => setSearchTerm(updatedSearchTerm);
 
-    const { value: fuzziness } = useSetting("searchEngine.fuzziness", 0.6);
+    const { value: fuzziness } = useSetting("searchEngine.fuzziness", 0.5);
     const { value: maxResultLength } = useSetting("searchEngine.maxResultLength", 50);
 
     const filteredSearchResultItems = filterSearchResultItemsBySearchTerm({
@@ -176,7 +176,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItems }: SearchP
                         onChange={(_, { value }) => search(value)}
                         onKeyDown={handleUserInputKeyDownEvent}
                         contentBefore={<SearchRegular />}
-                        placeholder={t("search.placeholder")}
+                        placeholder={t("placeholder", { ns: "search" })}
                     />
                 </div>
             }
@@ -207,7 +207,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItems }: SearchP
                         appearance="subtle"
                         icon={<SettingsRegular fontSize={14} />}
                     >
-                        {t("general.settings")}
+                        {t("settings", { ns: "general" })}
                     </Button>
                     <ActionsMenu
                         actions={additionalActions}

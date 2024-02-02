@@ -21,8 +21,10 @@ export class ChromiumBrowserBookmark implements BrowserBookmark {
                 SearchResultItemActionUtility.createCopyToClipboardAction({
                     textToCopy: this.url,
                     description: "Copy URL to clipboard",
-                    descriptionTranslationKey:
-                        "extension[BrowserBookmarks].searchResultItem.additionalAction.copyUrlToClipboard",
+                    descriptionTranslation: {
+                        key: "copyUrlToClipboard",
+                        namespace: "extension[BrowserBookmarks]",
+                    },
                 }),
                 SearchResultItemActionUtility.createExcludeFromSearchResultsAction({
                     id: this.getId(),

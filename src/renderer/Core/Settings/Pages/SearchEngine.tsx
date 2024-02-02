@@ -9,6 +9,7 @@ import { SectionList } from "../SectionList";
 
 export const SearchEngine = () => {
     const { t } = useTranslation();
+    const ns = "settingsSearchEngine";
     const { contextBridge } = useContextBridge();
 
     const { value: automaticRescanEnabled, updateValue: setAutomaticRescanEnabled } = useSetting(
@@ -20,7 +21,7 @@ export const SearchEngine = () => {
         60,
     );
 
-    const { value: fuzziness, updateValue: setFuzziness } = useSetting("searchEngine.fuzziness", 0.6);
+    const { value: fuzziness, updateValue: setFuzziness } = useSetting("searchEngine.fuzziness", 0.5);
 
     const { value: maxResultLength, updateValue: setMaxResultLength } = useSetting("searchEngine.maxResultLength", 50);
 
@@ -36,7 +37,7 @@ export const SearchEngine = () => {
     return (
         <SectionList>
             <Section>
-                <Field label={t("settingsSearchEngine.automaticRescan")}>
+                <Field label={t("automaticRescan", { ns })}>
                     <Switch
                         aria-labelledby="searchEngine.automaticRescan"
                         checked={automaticRescanEnabled}
@@ -45,7 +46,7 @@ export const SearchEngine = () => {
                 </Field>
             </Section>
             <Section>
-                <Field label={t("settingsSearchEngine.rescanIntervalInSeconds")} validationState="none">
+                <Field label={t("rescanIntervalInSeconds", { ns })} validationState="none">
                     <Input
                         value={`${rescanIntervalInSeconds}`}
                         onChange={(_, { value }) => setRescanIntervalInSeconds(Number(value))}
@@ -55,10 +56,7 @@ export const SearchEngine = () => {
                 </Field>
             </Section>
             <Section>
-                <Field
-                    label={`${t("settingsSearchEngine.fuzziness")}: ${fuzziness}`}
-                    hint="0 = strict search, 1 = loose search"
-                >
+                <Field label={`${t("fuzziness", { ns })}: ${fuzziness}`} hint="0 = strict search, 1 = loose search">
                     <Slider
                         aria-labelledby="searchEngine.fuzziness"
                         value={fuzziness}
@@ -70,7 +68,7 @@ export const SearchEngine = () => {
                 </Field>
             </Section>
             <Section>
-                <Field label={t("settingsSearchEngine.maxResultLength")}>
+                <Field label={t("maxResultLength", { ns })}>
                     <Input
                         value={`${maxResultLength}`}
                         min={1}
@@ -81,11 +79,9 @@ export const SearchEngine = () => {
                 </Field>
             </Section>
             <Section>
-                <Field label={t("settingsSearchEngine.excludedItems")}>
+                <Field label={t("excludedItems", { ns })}>
                     <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                        {excludedSearchResultItems.length ? null : (
-                            <Text italic>{t("settingsSearchEngine.noExcludedItems")}</Text>
-                        )}
+                        {excludedSearchResultItems.length ? null : <Text italic>{t("noExcludedItems", { ns })}</Text>}
                         {excludedSearchResultItems.map((excludedItem) => (
                             <Input
                                 key={`excludedItem-${excludedItem.id}`}
@@ -106,10 +102,7 @@ export const SearchEngine = () => {
                                         appearance="subtle"
                                         onClick={() => removeExcludedSearchResultItem(excludedItem.id)}
                                         icon={
-                                            <Tooltip
-                                                content={t("settingsSearchEngine.removeExcludedItem")}
-                                                relationship="label"
-                                            >
+                                            <Tooltip content={t("removeExcludedItem", { ns })} relationship="label">
                                                 <DismissRegular fontSize={14} />
                                             </Tooltip>
                                         }

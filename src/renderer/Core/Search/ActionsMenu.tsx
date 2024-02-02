@@ -31,7 +31,7 @@ export const ActionsMenu = ({
                     icon={<FlashRegular fontSize={14} />}
                     ref={additionalActionsButtonRef}
                 >
-                    {t("general.actions")}
+                    {t("actions", { ns: "general" })}
                 </Button>
             </MenuTrigger>
             <MenuPopover>
@@ -42,8 +42,8 @@ export const ActionsMenu = ({
                             onClick={() => invokeAction(action)}
                             icon={action.fluentIcon ? <FluentIcon icon={action.fluentIcon} /> : undefined}
                         >
-                            {action.descriptionTranslationKey
-                                ? t(action.descriptionTranslationKey)
+                            {action.descriptionTranslation
+                                ? t(action.descriptionTranslation.key, { ns: action.descriptionTranslation.namespace })
                                 : action.description}
                         </MenuItem>
                     ))}

@@ -9,7 +9,11 @@ type ImageUrlType = "neutral" | "onDarkBackground" | "onLightBackground";
 export class UeliCommandExtension implements Extension {
     public readonly id = "UeliCommand";
     public readonly name = "Ueli Commands";
-    public readonly nameTranslationKey = "extension[UeliCommand].extensionName";
+
+    public readonly nameTranslation = {
+        key: "extensionName",
+        namespace: "extension[UeliCommand]",
+    };
 
     public readonly author = {
         name: "Oliver Schwendener",

@@ -18,16 +18,20 @@ export class Application {
             defaultAction: SearchResultItemActionUtility.createOpenFileAction({
                 filePath: this.filePath,
                 description: "Open application",
-                descriptionTranslationKey:
-                    "extension[ApplicationSearch].searchResultItem.defaultAction.openApplication",
+                descriptionTranslation: {
+                    key: "openApplication",
+                    namespace: "extension[ApplicationSearch]",
+                },
             }),
             additionalActions: [
                 SearchResultItemActionUtility.createShowItemInFileExplorerAction({ filePath: this.filePath }),
                 SearchResultItemActionUtility.createCopyToClipboardAction({
                     textToCopy: this.filePath,
                     description: "Copy file path to clipboard",
-                    descriptionTranslationKey:
-                        "extension[ApplicationSearch].searchResultItem.additionalAction.copyFilePathToClipboard",
+                    descriptionTranslation: {
+                        key: "copyFilePathToClipboard",
+                        namespace: "extension[ApplicationSearch]",
+                    },
                 }),
                 SearchResultItemActionUtility.createExcludeFromSearchResultsAction({
                     id: this.getId(),

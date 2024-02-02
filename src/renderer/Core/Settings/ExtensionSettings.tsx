@@ -18,7 +18,7 @@ export const ExtensionSettings = () => {
                     justifyContent: "center",
                 }}
             >
-                {t("settings.extensions.noSettingsAvailable")}
+                {t("noSettingsAvailable", { ns: "settingsExtensions" })}
             </div>
         )
     );

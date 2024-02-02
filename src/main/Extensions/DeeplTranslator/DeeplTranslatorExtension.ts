@@ -29,7 +29,11 @@ type ApiResponse = {
 export class DeeplTranslatorExtension implements Extension {
     public readonly id = "DeeplTranslator";
     public readonly name = "DeepL Translator";
-    public readonly nameTranslationKey = "extension[DeeplTranslator].extensionName";
+
+    public readonly nameTranslation = {
+        key: "extensionName",
+        namespace: "extension[DeeplTranslator]",
+    };
 
     public readonly author = {
         name: "Oliver Schwendener",

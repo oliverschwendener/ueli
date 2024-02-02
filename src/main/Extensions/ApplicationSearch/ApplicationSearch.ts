@@ -8,7 +8,11 @@ import type { Settings } from "./Settings";
 export class ApplicationSearch implements Extension {
     public readonly id = "ApplicationSearch";
     public readonly name = "Application Search";
-    public readonly nameTranslationKey = "extension[ApplicationSearch].extensionName";
+
+    public readonly nameTranslation = {
+        key: "extensionName",
+        namespace: "extension[ApplicationSearch]",
+    };
 
     public readonly author = {
         name: "Oliver Schwendener",

@@ -21,6 +21,7 @@ import { useContextBridge, useSetting } from "../../Hooks";
 
 export const Extensions = () => {
     const { t } = useTranslation();
+    const ns = "settingsExtensions";
     const { contextBridge } = useContextBridge();
     const toasterId = useId("rescanToasterId");
     const { dispatchToast } = useToastController(toasterId);
@@ -51,12 +52,13 @@ export const Extensions = () => {
     const triggerExtensionRescan = async (event: React.MouseEvent, extensionId: string) => {
         event.preventDefault();
         await contextBridge.triggerExtensionRescan(extensionId);
-        const { name, nameTranslationKey } = contextBridge.getExtension(extensionId);
+        const { name, nameTranslation } = contextBridge.getExtension(extensionId);
 
         dispatchToast(
             <Toast>
                 <ToastTitle>
-                    {nameTranslationKey ? t(nameTranslationKey) : name}: {t("settingsPage.extensions.successfulRescan")}
+                    {nameTranslation ? t(nameTranslation.key, { ns: nameTranslation.namespace }) : name}:{" "}
+                    {t("successfulRescan", { ns })}
                 </ToastTitle>
             </Toast>,
             { intent: "success" },
@@ -69,18 +71,18 @@ export const Extensions = () => {
             <Table arial-label="Default table">
                 <TableHeader>
                     <TableRow>
-                        <TableHeaderCell key="name">{t("settingsPage.extensions.name")}</TableHeaderCell>
-                        <TableHeaderCell key="author">{t("settingsPage.extensions.author")}</TableHeaderCell>
+                        <TableHeaderCell key="name">{t("name", { ns })}</TableHeaderCell>
+                        <TableHeaderCell key="author">{t("author", { ns })}</TableHeaderCell>
                         <TableHeaderCell style={{ width: 50 }} key="enabled">
-                            {t("settingsPage.extensions.enabled")}
+                            {t("enabled", { ns })}
                         </TableHeaderCell>
                         <TableHeaderCell style={{ width: 50 }} key="rescan">
-                            {t("settingsPage.extensions.rescan")}
+                            {t("rescan", { ns })}
                         </TableHeaderCell>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {getAvailableExtensions().map(({ author, id, name, nameTranslationKey, imageUrl }) => {
+                    {getAvailableExtensions().map(({ author, id, name, nameTranslation, imageUrl }) => {
                         return (
                             <TableRow key={id}>
                                 <TableCell>
@@ -96,7 +98,9 @@ export const Extensions = () => {
                                             <div style={{ width: 20, height: 20 }}>
                                                 <img style={{ maxWidth: "100%", maxHeight: "100%" }} src={imageUrl} />
                                             </div>
-                                            {nameTranslationKey ? t(nameTranslationKey) : name}
+                                            {nameTranslation
+                                                ? t(nameTranslation.key, { ns: nameTranslation.namespace })
+                                                : name}
                                         </div>
                                     </TableCellLayout>
                                 </TableCell>

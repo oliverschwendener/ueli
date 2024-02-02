@@ -9,7 +9,11 @@ import type { BrowserBookmarkRepository } from "./BrowserBookmarkRepository";
 export class BrowserBookmarksExtension implements Extension {
     public readonly id = "BrowserBookmarks";
     public readonly name = "Browser Bookmarks";
-    public readonly nameTranslationKey = "extension[BrowserBookmarks].extensionName";
+
+    public readonly nameTranslation = {
+        key: "extensionName",
+        namespace: "extension[BrowserBookmarks]",
+    };
 
     public readonly author = {
         name: "Oliver Schwendener",

@@ -9,13 +9,19 @@ describe(SearchResultItemActionUtility, () => {
             const actual = SearchResultItemActionUtility.createCopyToClipboardAction({
                 description: "test description",
                 textToCopy: "text to copy",
-                descriptionTranslationKey: "translation key",
+                descriptionTranslation: {
+                    key: "translation key",
+                    namespace: "translation namespace",
+                },
             });
 
             const expected = <SearchResultItemAction>{
                 argument: "text to copy",
                 description: "test description",
-                descriptionTranslationKey: "translation key",
+                descriptionTranslation: {
+                    key: "translation key",
+                    namespace: "translation namespace",
+                },
                 fluentIcon: "CopyRegular",
                 handlerId: "copyToClipboard",
                 hideWindowAfterInvocation: false,
@@ -40,7 +46,10 @@ describe(SearchResultItemActionUtility, () => {
                     imageUrl: "image url",
                 }),
                 description: "Exclude from search results",
-                descriptionTranslationKey: "searchResultItem.action.excludeFromSearchResults",
+                descriptionTranslation: {
+                    key: "excludeFromSearchResults",
+                    namespace: "searchResultItemAction",
+                },
                 fluentIcon: "EyeOffRegular",
                 handlerId: "excludeFromSearchResults",
                 hideWindowAfterInvocation: false,
@@ -55,13 +64,19 @@ describe(SearchResultItemActionUtility, () => {
             const actual = SearchResultItemActionUtility.createOpenFileAction({
                 description: "test description",
                 filePath: "test file path",
-                descriptionTranslationKey: "test translation key",
+                descriptionTranslation: {
+                    key: "test translation key",
+                    namespace: "test namespace",
+                },
             });
 
             const expected = <SearchResultItemAction>{
                 argument: "test file path",
                 description: "test description",
-                descriptionTranslationKey: "test translation key",
+                descriptionTranslation: {
+                    key: "test translation key",
+                    namespace: "test namespace",
+                },
                 handlerId: "OpenFilePath",
                 fluentIcon: "OpenRegular",
                 hideWindowAfterInvocation: true,
@@ -78,7 +93,10 @@ describe(SearchResultItemActionUtility, () => {
             const expected = <SearchResultItemAction>{
                 argument: "this is an url",
                 description: "Open URL in browser",
-                descriptionTranslationKey: "searchResultItem.action.openUrlInBrowser",
+                descriptionTranslation: {
+                    key: "openUrlInBrowser",
+                    namespace: "searchResultItemAction",
+                },
                 handlerId: "Url",
                 hideWindowAfterInvocation: true,
                 fluentIcon: "OpenRegular",
@@ -99,7 +117,10 @@ describe(SearchResultItemActionUtility, () => {
                 description: "Show in file explorer",
                 handlerId: "ShowItemInFileExplorer",
                 hideWindowAfterInvocation: true,
-                descriptionTranslationKey: "searchResultItem.action.showInFileExplorer",
+                descriptionTranslation: {
+                    key: "showInFileExplorer",
+                    namespace: "searchResultItemAction",
+                },
                 fluentIcon: "DocumentFolderRegular",
             };
 

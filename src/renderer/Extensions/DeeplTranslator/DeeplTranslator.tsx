@@ -13,6 +13,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
     const extensionId = "DeeplTranslator";
 
     const { t } = useTranslation();
+    const ns = "extension[DeeplTranslator]";
 
     const extensionImageUrl = () => contextBridge.getExtension(extensionId).imageUrl;
 
@@ -43,9 +44,9 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                     >
                         <img alt="DeepL Logo" src={extensionImageUrl()} style={{ width: 24 }} />
                         <div style={{ flexGrow: 1 }}>
-                            <Text weight="semibold">{t("extension[DeeplTranslator].extensionName")}</Text>
+                            <Text weight="semibold">{t("extensionName", { ns })}</Text>
                         </div>
-                        <Tooltip content={t("extension[DeeplTranslator].openAccount")} relationship="label">
+                        <Tooltip content={t("openAccount", { ns })} relationship="label">
                             <Button
                                 onClick={() => openDeeplAccount()}
                                 className="non-draggable-area"

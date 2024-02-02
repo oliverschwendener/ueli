@@ -23,7 +23,7 @@ export const SettingsHeader = ({ onCloseSettingsClicked }: SettingsHeaderProps) 
                 ></Button>
             }
         >
-            <Text weight="semibold">{t("general.settings")}</Text>
+            <Text weight="semibold">{t("settings", { ns: "settingsGeneral" })}</Text>
         </Header>
     );
 };

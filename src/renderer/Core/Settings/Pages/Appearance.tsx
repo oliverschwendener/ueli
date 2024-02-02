@@ -12,6 +12,7 @@ import { ThemeOption } from "./ThemeOption";
 
 export const Appearance = () => {
     const { t } = useTranslation();
+    const ns = "settingsAppearance";
     const { contextBridge } = useContextBridge();
     const { setTheme } = useContext(ThemeContext);
 
@@ -43,13 +44,13 @@ export const Appearance = () => {
     const themes = [
         { value: "Microsoft Teams", label: "Microsoft Teams" },
         { value: "Fluent UI Web", label: "Fluent UI Web" },
-        { value: "Custom", label: t("settingsAppearance.customTheme") },
+        { value: "Custom", label: t("customTheme", { ns }) },
     ];
 
     return (
         <SectionList>
             <Section>
-                <Field label={t("settingsAppearance.themeName")}>
+                <Field label={t("themeName", { ns })}>
                     <Dropdown
                         value={themes.find((t) => t.value === themeName)?.label}
                         onOptionSelect={(_, { optionValue }) => optionValue && setThemeName(optionValue)}
@@ -60,9 +61,9 @@ export const Appearance = () => {
                                 <ThemeOption themeName={name} accentColors={accentColors} />
                             </Option>
                         ))}
-                        <Option key="theme-option-custom" value={"Custom"} text={t("settingsAppearance.customTheme")}>
+                        <Option key="theme-option-custom" value={"Custom"} text={t("customTheme", { ns })}>
                             <ThemeOption
-                                themeName={t("settingsAppearance.customTheme")}
+                                themeName={t("customTheme", { ns })}
                                 accentColors={{ dark: darkVariants["100"], light: lightVariants["100"] }}
                             />
                         </Option>
@@ -74,8 +75,8 @@ export const Appearance = () => {
                     <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
                         <div style={{ width: "50%", display: "flex", flexDirection: "column", gap: 5 }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                                {t("settingsAppearance.customTheme.darkShades")}{" "}
-                                <Tooltip content={t("settingsAppearance.customTheme.reset")} relationship="label">
+                                {t("customThemeDarkShades", { ns })}{" "}
+                                <Tooltip content={t("customThemeReset", { ns })} relationship="label">
                                     <Button
                                         size="small"
                                         appearance="subtle"
@@ -110,8 +111,8 @@ export const Appearance = () => {
                         </div>
                         <div style={{ width: "50%", display: "flex", flexDirection: "column", gap: 5 }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                                {t("settingsAppearance.customTheme.lightShades")}{" "}
-                                <Tooltip content={t("settingsAppearance.customTheme.reset")} relationship="label">
+                                {t("customThemeLightShades", { ns })}{" "}
+                                <Tooltip content={t("customThemeReset", { ns })} relationship="label">
                                     <Button
                                         size="small"
                                         appearance="subtle"

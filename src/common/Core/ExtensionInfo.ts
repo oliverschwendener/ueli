@@ -1,10 +1,7 @@
 export type ExtensionInfo = {
     id: string;
     name: string;
-    nameTranslationKey: string;
-    author: {
-        name: string;
-        githubUserName: string;
-    };
+    author: { name: string; githubUserName: string };
+    nameTranslation?: { key: string; namespace: string };
     imageUrl?: string;
 };

@@ -24,8 +24,8 @@ export const SearchResultList = ({
     const { t } = useTranslation();
 
     const noResultsFoundMessage = searchTerm
-        ? `${t("search.noResultsFoundFor")} "${searchTerm}"`
-        : t("search.noResultsFound");
+        ? `${t("noResultsFoundFor", { ns: "search" })} "${searchTerm}"`
+        : t("noResultsFound", { ns: "search" });
 
     return (
         <div

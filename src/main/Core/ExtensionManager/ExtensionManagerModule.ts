@@ -7,7 +7,7 @@ import { ExtensionManager } from "./ExtensionManager";
 const mapExtensionToInfo = (extension: Extension): ExtensionInfo => ({
     id: extension.id,
     name: extension.name,
-    nameTranslationKey: extension.nameTranslationKey,
+    nameTranslation: extension.nameTranslation,
     imageUrl: extension.getImageUrl(),
     author: extension.author,
 });

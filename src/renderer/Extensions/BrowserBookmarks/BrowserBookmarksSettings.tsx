@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 
 export const BrowserBookmarksSettings = () => {
     const { t } = useTranslation();
+    const ns = "extension[BrowserBookmarks]";
     const { contextBridge } = useContextBridge();
 
     const extensionId = "BrowserBookmarks";
@@ -58,13 +59,13 @@ export const BrowserBookmarksSettings = () => {
             <Section>
                 <Field label="Search result style">
                     <Dropdown
-                        value={t(`extension[BrowserBookmarks].searchResultStyle.${searchResultStyle}`)}
+                        value={t(`searchResultStyle.${searchResultStyle}`, { ns })}
                         selectedOptions={[searchResultStyle]}
                         onOptionSelect={(_, { optionValue }) => optionValue && setSearchResultStyle(optionValue)}
                     >
                         {searchResultStyles.map((s) => (
                             <Option key={`searchResultStyle.${s}`} value={s}>
-                                {t(`extension[BrowserBookmarks].searchResultStyle.${s}`)}
+                                {t(`searchResultStyle.${s}`, { ns })}
                             </Option>
                         ))}
                     </Dropdown>

@@ -19,21 +19,9 @@ vite.config.mts @oliverschwendener
 
 # Extensions
 
-# ApplicationSearch
+# ApplicationSearch (example how to take ownership of an extension)
+assets/Extensions/ApplicationSearch @oliverschwendener
+src/common/Extensions/ApplicationSearch @oliverschwendener
 src/main/Extensions/ApplicationSearch @oliverschwendener
 src/renderer/Extensions/ApplicationSearch @oliverschwendener
-
-# DeeplTranslator
-assets/Extensions/DeeplTranslator @oliverschwendener
-src/main/Extensions/DeeplTranslator @oliverschwendener
-src/renderer/Extensions/DeeplTranslator @oliverschwendener
-
-# AppearanceSwitcher
-assets/Extensions/AppearanceSwitcher @oliverschwendener
-src/main/Extensions/AppearanceSwitcher @oliverschwendener
-src/renderer/Extensions/AppearanceSwitcher @oliverschwendener
-
-# UeliCommand
-assets/Extensions/UeliCommand @oliverschwendener
-src/main/Extensions/UeliCommand @oliverschwendener
-src/renderer/Extensions/UeliCommand @oliverschwendener
+src/renderer/Core/I18n/Extensions/extension[ApplicationSearch].ts @oliverschwendener

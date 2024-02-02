@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 
 export const HotKey = () => {
     const { t } = useTranslation();
+    const ns = "settingsGeneral";
 
     const hotkeyToasterId = useId("hotkeyToasterId");
 
@@ -44,8 +45,8 @@ export const HotKey = () => {
 
     return (
         <Field
-            label={t("general.hotkey")}
-            validationMessage={isValidTemporaryHotkey ? t("general.hotkey.valid") : t("general.hotkey.invalid")}
+            label={t("hotkey", { ns })}
+            validationMessage={isValidTemporaryHotkey ? t("validHotkey", { ns }) : t("invalidHotkey", { ns })}
             validationState={isValidTemporaryHotkey ? "success" : "error"}
         >
             <Toaster toasterId={hotkeyToasterId} />
@@ -57,7 +58,7 @@ export const HotKey = () => {
                 }}
                 contentAfter={
                     <>
-                        <Tooltip content={t("general.hotkey.save")} relationship="label">
+                        <Tooltip content={t("saveHotkey", { ns })} relationship="label">
                             <Button
                                 appearance="subtle"
                                 size="small"
@@ -66,7 +67,7 @@ export const HotKey = () => {
                                 onClick={() => saveHotkey()}
                             />
                         </Tooltip>
-                        <Tooltip content={t("general.hotkey.moreInfo")} relationship="label">
+                        <Tooltip content={t("hotkeyMoreInfo", { ns })} relationship="label">
                             <Button
                                 appearance="subtle"
                                 size="small"

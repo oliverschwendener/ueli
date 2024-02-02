@@ -8,6 +8,7 @@ import { SectionList } from "../SectionList";
 export const Window = () => {
     const { contextBridge } = useContextBridge();
     const { t } = useTranslation();
+    const ns = "settingsWindow";
 
     const operatingSystem = contextBridge.getOperatingSystem();
 
@@ -55,7 +56,7 @@ export const Window = () => {
     return (
         <SectionList>
             <Section>
-                <Field label={t("settingsWindow.hideWindowOnBlur")}>
+                <Field label={t("hideWindowOnBlur", { ns })}>
                     <Switch
                         aria-labelledby="window.hideWindowOnblur"
                         checked={hideWindowOnBlur}
@@ -65,7 +66,7 @@ export const Window = () => {
             </Section>
 
             <Section>
-                <Field label={t("settingsWindow.hideWindowAfterExecution")}>
+                <Field label={t("hideWindowAfterExecution", { ns })}>
                     <Switch
                         aria-labelledby="window.hideWindowAfterExecution"
                         checked={hideWindowAfterExecution}

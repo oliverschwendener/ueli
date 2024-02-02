@@ -16,31 +16,30 @@ import { SectionList } from "../SectionList";
 
 export const Debug = () => {
     const { t } = useTranslation();
+    const ns = "settingsDebug";
     const { contextBridge } = useContextBridge();
     const { theme } = useTheme(contextBridge);
 
     return (
         <SectionList>
             <Section>
-                <Field label={t("settingsPage.debug.resetAllSettings")}>
+                <Field label={t("resetAllSettings", { ns })}>
                     <Dialog>
                         <DialogTrigger disableButtonEnhancement>
                             <div>
-                                <Button>{t("settingsPage.debug.resetAllSettings.button")}</Button>
+                                <Button>{t("resetAllSettingsButton", { ns })}</Button>
                             </div>
                         </DialogTrigger>
                         <DialogSurface>
                             <DialogBody>
-                                <DialogTitle>{t("settingsPage.debug.resetAllSettings.dialogTitle")}</DialogTitle>
-                                <DialogContent>{t("settingsPage.debug.resetAllSettings.dialogContent")}</DialogContent>
+                                <DialogTitle>{t("resetAllSettingsDialogTitle", { ns })}</DialogTitle>
+                                <DialogContent>{t("resetAllSettingsDialogContent", { ns })}</DialogContent>
                                 <DialogActions>
                                     <DialogTrigger disableButtonEnhancement>
-                                        <Button appearance="secondary">
-                                            {t("settingsPage.debug.resetAllSettings.cancel")}
-                                        </Button>
+                                        <Button appearance="secondary">{t("resetAllSettingsCancel", { ns })}</Button>
                                     </DialogTrigger>
                                     <Button onClick={() => contextBridge.resetAllSettings()} appearance="primary">
-                                        {t("settingsPage.debug.resetAllSettings.confirm")}
+                                        {t("resetAllSettingsConfirm", { ns })}
                                     </Button>
                                 </DialogActions>
                             </DialogBody>

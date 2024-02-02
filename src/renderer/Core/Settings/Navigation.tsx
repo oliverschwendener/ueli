@@ -22,14 +22,14 @@ export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps
             appearance="subtle"
             style={{ width: "100%" }}
         >
-            {settingsPages.map(({ translationKey, absolutePath, icon }, i) => (
+            {settingsPages.map(({ translation, absolutePath, icon }, i) => (
                 <Tab
                     style={{ marginBottom: settingsPages.length - 1 === i ? 10 : undefined }}
                     key={`settings-page-tab-${absolutePath}`}
                     value={absolutePath}
                     icon={icon}
                 >
-                    {t(translationKey)}
+                    {t(translation.key, { ns: translation.namespace })}
                 </Tab>
             ))}
             {enabledExtensions.map((e) => (
@@ -53,7 +53,7 @@ export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps
                         >
                             <img style={{ maxWidth: "100%", maxHeight: "100%" }} src={e.imageUrl} />
                         </div>
-                        {e.nameTranslationKey ? t(e.nameTranslationKey) : e.name}
+                        {e.nameTranslation ? t(e.nameTranslation.key, { ns: e.nameTranslation.namespace }) : e.name}
                     </div>
                 </Tab>
             ))}

@@ -6,7 +6,11 @@ import type { MacOsSystemSettingRepository } from "./MacOsSystemSettingRepositor
 export class SystemSettingsExtension implements Extension {
     public readonly id = "SystemSettings";
     public readonly name = "System Settings";
-    public readonly nameTranslationKey = "extension[SystemSettings].extensionName";
+
+    public readonly nameTranslation = {
+        key: "extensionName",
+        namespace: "extension[SystemSettings]",
+    };
 
     public readonly author = {
         name: "Oliver Schwendener",

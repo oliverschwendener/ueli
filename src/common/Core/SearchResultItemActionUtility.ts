@@ -24,16 +24,16 @@ export class SearchResultItemActionUtility {
     public static createOpenFileAction({
         filePath,
         description,
-        descriptionTranslationKey,
+        descriptionTranslation,
     }: {
         filePath: string;
         description: string;
-        descriptionTranslationKey?: string;
+        descriptionTranslation?: { key: string; namespace: string };
     }): SearchResultItemAction {
         return {
             argument: filePath,
             description,
-            descriptionTranslationKey,
+            descriptionTranslation,
             handlerId: "OpenFilePath",
             hideWindowAfterInvocation: true,
             fluentIcon: "OpenRegular",
@@ -52,7 +52,10 @@ export class SearchResultItemActionUtility {
         return {
             argument: JSON.stringify(<ExcludedSearchResultItem>{ id, name, imageUrl }),
             description: "Exclude from search results",
-            descriptionTranslationKey: "searchResultItem.action.excludeFromSearchResults",
+            descriptionTranslation: {
+                key: "excludeFromSearchResults",
+                namespace: "searchResultItemAction",
+            },
             handlerId: "excludeFromSearchResults",
             hideWindowAfterInvocation: false,
             fluentIcon: "EyeOffRegular",
@@ -63,7 +66,10 @@ export class SearchResultItemActionUtility {
         return {
             argument: url,
             description: "Open URL in browser",
-            descriptionTranslationKey: "searchResultItem.action.openUrlInBrowser",
+            descriptionTranslation: {
+                key: "openUrlInBrowser",
+                namespace: "searchResultItemAction",
+            },
             handlerId: "Url",
             hideWindowAfterInvocation: true,
             fluentIcon: "OpenRegular",
@@ -73,16 +79,16 @@ export class SearchResultItemActionUtility {
     public static createCopyToClipboardAction({
         textToCopy,
         description,
-        descriptionTranslationKey,
+        descriptionTranslation,
     }: {
         textToCopy: string;
         description: string;
-        descriptionTranslationKey?: string;
+        descriptionTranslation?: { key: string; namespace: string };
     }): SearchResultItemAction {
         return {
             argument: textToCopy,
             description,
-            descriptionTranslationKey,
+            descriptionTranslation,
             handlerId: "copyToClipboard",
             hideWindowAfterInvocation: false,
             fluentIcon: "CopyRegular",
@@ -93,7 +99,10 @@ export class SearchResultItemActionUtility {
         return {
             argument: filePath,
             description: "Show in file explorer",
-            descriptionTranslationKey: "searchResultItem.action.showInFileExplorer",
+            descriptionTranslation: {
+                key: "showInFileExplorer",
+                namespace: "searchResultItemAction",
+            },
             handlerId: "ShowItemInFileExplorer",
             hideWindowAfterInvocation: true,
             fluentIcon: "DocumentFolderRegular",

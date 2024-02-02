@@ -15,8 +15,10 @@ describe(Application, () => {
             defaultAction: SearchResultItemActionUtility.createOpenFileAction({
                 filePath: "/Applications/My App.app",
                 description: "Open application",
-                descriptionTranslationKey:
-                    "extension[ApplicationSearch].searchResultItem.defaultAction.openApplication",
+                descriptionTranslation: {
+                    key: "searchResultItem.defaultAction.openApplication",
+                    namespace: "extension[ApplicationSearch].",
+                },
             }),
             additionalActions: [
                 SearchResultItemActionUtility.createShowItemInFileExplorerAction({
@@ -25,8 +27,10 @@ describe(Application, () => {
                 SearchResultItemActionUtility.createCopyToClipboardAction({
                     textToCopy: "/Applications/My App.app",
                     description: "Copy file path to clipboard",
-                    descriptionTranslationKey:
-                        "extension[ApplicationSearch].searchResultItem.additionalAction.copyFilePathToClipboard",
+                    descriptionTranslation: {
+                        key: "searchResultItem.additionalAction.copyFilePathToClipboard",
+                        namespace: "extension[ApplicationSearch]",
+                    },
                 }),
                 SearchResultItemActionUtility.createExcludeFromSearchResultsAction({
                     id: "W0FwcGxpY2F0aW9uU2VhcmNoXVsvQXBwbGljYXRpb25zL015IEFwcC5hcHBd",

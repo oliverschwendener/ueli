@@ -8,7 +8,7 @@ export const Autostart = () => {
     const { value: autostartApp, updateValue: setAutostartApp } = useSetting<boolean>("general.autostartApp", false);
 
     return (
-        <Field label={t("settingsGeneral.autostart")}>
+        <Field label={t("autostart", { ns: "settingsGeneral" })}>
             <Switch checked={autostartApp} onChange={(_, { checked }) => setAutostartApp(checked)} />
         </Field>
     );

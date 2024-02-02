@@ -39,7 +39,9 @@ export const ConfirmationDialog = ({ action, closeDialog }: ConfirmationDialogPr
                     <DialogTitle>Are you sure?</DialogTitle>
                     <DialogContent>
                         You are about to "
-                        {action?.descriptionTranslationKey ? t(action?.descriptionTranslationKey) : action?.description}
+                        {action?.descriptionTranslation
+                            ? t(action?.descriptionTranslation.key, { ns: action?.descriptionTranslation.namespace })
+                            : action?.description}
                         "
                     </DialogContent>
                     <DialogActions>

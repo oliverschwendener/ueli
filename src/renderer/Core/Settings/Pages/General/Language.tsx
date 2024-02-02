@@ -19,7 +19,7 @@ export const Language = () => {
     );
 
     return (
-        <Field label={t("settingsGeneral.language")}>
+        <Field label={t("language", { ns: "settingsGeneral" })}>
             <Dropdown
                 value={languages.find(({ locale }) => locale === language)?.name}
                 selectedOptions={[language]}

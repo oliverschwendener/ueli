@@ -17,7 +17,7 @@ import { SearchEngine } from "./SearchEngine";
 import { Window } from "./Window";
 
 export type SettingsPage = {
-    translationKey: string;
+    translation: { key: string; namespace: string };
     absolutePath: string;
     relativePath: string;
     element: ReactElement;
@@ -26,49 +26,49 @@ export type SettingsPage = {
 
 export const settingsPages: SettingsPage[] = [
     {
-        translationKey: "settingsPage.general",
+        translation: { key: "title", namespace: "settingsGeneral" },
         relativePath: "general",
         absolutePath: "/settings/general",
         element: <General />,
         icon: <Settings16Regular />,
     },
     {
-        translationKey: "settingsPage.window",
+        translation: { key: "title", namespace: "settingsWindow" },
         relativePath: "window",
         absolutePath: "/settings/window",
         element: <Window />,
         icon: <Window16Regular />,
     },
     {
-        translationKey: "settingsPage.appearance",
+        translation: { key: "title", namespace: "settingsAppearance" },
         relativePath: "appearance",
         absolutePath: "/settings/appearance",
         element: <Appearance />,
         icon: <PaintBrush16Regular />,
     },
     {
-        translationKey: "settingsPage.searchEngine",
+        translation: { key: "title", namespace: "settingsSearchEngine" },
         relativePath: "search-engine",
         absolutePath: "/settings/search-engine",
         element: <SearchEngine />,
         icon: <Search16Regular />,
     },
     {
-        translationKey: "settingsPage.extensions",
+        translation: { key: "title", namespace: "settingsExtensions" },
         relativePath: "extensions",
         absolutePath: "/settings/extensions",
         element: <Extensions />,
         icon: <AppsAddIn16Regular />,
     },
     {
-        translationKey: "settingsPage.about",
+        translation: { key: "title", namespace: "settingsAbout" },
         relativePath: "about",
         absolutePath: "/settings/about",
         element: <About />,
         icon: <Info16Regular />,
     },
     {
-        translationKey: "settingsPage.debug",
+        translation: { key: "title", namespace: "settingsDebug" },
         relativePath: "debug",
         absolutePath: "/settings/debug",
         element: <Debug />,
