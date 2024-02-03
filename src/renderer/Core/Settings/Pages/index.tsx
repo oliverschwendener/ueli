@@ -5,6 +5,7 @@ import {
     PaintBrush16Regular,
     Search16Regular,
     Settings16Regular,
+    StarRegular,
     Window16Regular,
 } from "@fluentui/react-icons";
 import type { ReactElement } from "react";
@@ -12,6 +13,7 @@ import { About } from "./About";
 import { Appearance } from "./Appearance";
 import { Debug } from "./Debug";
 import { Extensions } from "./Extensions";
+import { Favorites } from "./Favorites";
 import { General } from "./General";
 import { SearchEngine } from "./SearchEngine";
 import { Window } from "./Window";
@@ -52,6 +54,13 @@ export const settingsPages: SettingsPage[] = [
         absolutePath: "/settings/search-engine",
         element: <SearchEngine />,
         icon: <Search16Regular />,
+    },
+    {
+        translation: { key: "title", namespace: "settingsFavorites" },
+        relativePath: "favorites",
+        absolutePath: "/settings/favorites",
+        element: <Favorites />,
+        icon: <StarRegular />,
     },
     {
         translation: { key: "title", namespace: "settingsExtensions" },

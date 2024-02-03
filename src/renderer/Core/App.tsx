@@ -2,7 +2,14 @@ import { FluentProvider } from "@fluentui/react-components";
 import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router";
 import { Extension } from "./Extension";
-import { useContextBridge, useExcludedSearchResultItems, useScrollBar, useSearchResultItems, useTheme } from "./Hooks";
+import {
+    useContextBridge,
+    useExcludedSearchResultItems,
+    useFavorites,
+    useScrollBar,
+    useSearchResultItems,
+    useTheme,
+} from "./Hooks";
 import { useI18n } from "./I18n";
 import { Search } from "./Search";
 import { Settings } from "./Settings";
@@ -11,9 +18,10 @@ import { useAppCssProperties } from "./useAppCssProperties";
 
 export const App = () => {
     const { contextBridge } = useContextBridge();
-    const { theme, setTheme } = useTheme(contextBridge);
-    const { searchResultItems } = useSearchResultItems(contextBridge);
-    const { excludedSearchResultItems } = useExcludedSearchResultItems(contextBridge);
+    const { theme, setTheme } = useTheme();
+    const { searchResultItems } = useSearchResultItems();
+    const { excludedSearchResultItems } = useExcludedSearchResultItems();
+    const { favorites } = useFavorites();
 
     const navigate = useNavigate();
     const { appCssProperties } = useAppCssProperties();
@@ -35,6 +43,7 @@ export const App = () => {
                             <Search
                                 searchResultItems={searchResultItems}
                                 excludedSearchResultItems={excludedSearchResultItems}
+                                favorites={favorites}
                             />
                         }
                     />

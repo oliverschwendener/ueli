@@ -17,6 +17,7 @@ export type Dependencies = {
     ExcludedSearchResults?: Core.ExcludedSearchResults;
     ExtensionCacheFolder?: Core.ExtensionCacheFolder;
     ExtensionRegistry?: Core.ExtensionRegistry;
+    FavoriteManager?: Core.FavoriteManager;
     FileSystemUtility?: Core.FileSystemUtility;
     GlobalShortcut?: Electron.GlobalShortcut;
     IpcMain?: Electron.IpcMain;

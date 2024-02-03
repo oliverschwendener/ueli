@@ -5,6 +5,7 @@ export * from "./settingsAbout";
 export * from "./settingsAppearance";
 export * from "./settingsDebug";
 export * from "./settingsExtensions";
+export * from "./settingsFavorites";
 export * from "./settingsGeneral";
 export * from "./settingsSearchEngine";
 export * from "./settingsWindow";

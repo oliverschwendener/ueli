@@ -5,7 +5,7 @@ export type SearchResultItem = {
     name: string;
     description: string;
     descriptionTranslation?: { key: string; namespace: string };
-    imageUrl?: string;
+    imageUrl: string;
     imageUrlOnDarkBackground?: string;
     imageUrlOnLightBackground?: string;
     defaultAction: SearchResultItemAction;

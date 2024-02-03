@@ -1,4 +1,9 @@
-import type { ExcludedSearchResultItem, SearchResultItem, SearchResultItemAction } from "@common/Core";
+import {
+    SearchResultItemActionUtility,
+    type ExcludedSearchResultItem,
+    type SearchResultItem,
+    type SearchResultItemAction,
+} from "@common/Core";
 import { Button, Input } from "@fluentui/react-components";
 import { SearchRegular, SettingsRegular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
@@ -17,9 +22,10 @@ import { SearchResultList } from "./SearchResultList";
 type SearchProps = {
     searchResultItems: SearchResultItem[];
     excludedSearchResultItems: ExcludedSearchResultItem[];
+    favorites: SearchResultItem[];
 };
 
-export const Search = ({ searchResultItems, excludedSearchResultItems }: SearchProps) => {
+export const Search = ({ searchResultItems, excludedSearchResultItems, favorites }: SearchProps) => {
     const { t } = useTranslation();
     const { contextBridge } = useContextBridge();
     const [selectedItemIndex, setSelectedItemIndex] = useState<number>(0);
@@ -138,7 +144,18 @@ export const Search = ({ searchResultItems, excludedSearchResultItems }: SearchP
             return;
         }
 
-        setAdditionalActions([searchResultItem.defaultAction, ...(searchResultItem.additionalActions ?? [])]);
+        const defaultAdditionalActions = [
+            favorites.find((f) => f.id === searchResultItem.id)
+                ? SearchResultItemActionUtility.createRemoveFromFavoritesAction({ id: searchResultItem.id })
+                : SearchResultItemActionUtility.createAddToFavoritesAction(searchResultItem),
+            SearchResultItemActionUtility.createExcludeFromSearchResultsAction(searchResultItem),
+        ];
+
+        setAdditionalActions([
+            searchResultItem.defaultAction,
+            ...defaultAdditionalActions,
+            ...(searchResultItem.additionalActions ?? []),
+        ]);
     };
 
     const closeConfirmationDialog = () => {
@@ -152,7 +169,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItems }: SearchP
     }, []);
 
     useEffect(() => selectFirstSearchResultItemItem(), [searchTerm]);
-    useEffect(() => updateAdditionalActions(), [selectedItemIndex, searchTerm, excludedSearchResultItems]);
+    useEffect(() => updateAdditionalActions(), [selectedItemIndex, searchTerm, excludedSearchResultItems, favorites]);
 
     return (
         <BaseLayout
@@ -170,7 +187,9 @@ export const Search = ({ searchResultItems, excludedSearchResultItems }: SearchP
                     <Input
                         className="non-draggable-area"
                         ref={userInputRef}
-                        appearance="filled-darker"
+                        appearance={
+                            contextBridge.themeShouldUseDarkColors() ? "filled-darker-shadow" : "filled-lighter-shadow"
+                        }
                         size="large"
                         value={searchTerm}
                         onChange={(_, { value }) => search(value)}
@@ -185,7 +204,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItems }: SearchP
                 <>
                     <ConfirmationDialog closeDialog={closeConfirmationDialog} action={confirmationDialogAction} />
                     {!searchTerm.length ? (
-                        <FavoritesList />
+                        <FavoritesList invokeSearchResultItem={({ defaultAction }) => invokeAction(defaultAction)} />
                     ) : (
                         <SearchResultList
                             containerRef={containerRef}

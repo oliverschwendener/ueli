@@ -7,6 +7,7 @@ import {
     CommandlineActionHandler,
     CopyToClipboardActionHandler,
     ExcludeFromSearchResultsActionHandler,
+    FavoritesActionHandler,
     NavigateToActionHandler,
     OpenFilePathActionHandler,
     PowershellActionHandler,
@@ -16,27 +17,23 @@ import {
 
 export class ActionHandlerModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const commandlineUtility = dependencyRegistry.get("CommandlineUtility");
-        const powershellUtility = dependencyRegistry.get("PowershellUtility");
-        const shell = dependencyRegistry.get("Shell");
-        const clipboard = dependencyRegistry.get("Clipboard");
         const eventEmitter = dependencyRegistry.get("EventEmitter");
         const ipcMain = dependencyRegistry.get("IpcMain");
-        const excludedSearchResults = dependencyRegistry.get("ExcludedSearchResults");
 
         const actionHandlerRegistry = new ActionHandlerRegistry();
 
         dependencyRegistry.register("ActionHandlerRegistry", actionHandlerRegistry);
 
         const actionHandlers: ActionHandler[] = [
-            new CommandlineActionHandler(commandlineUtility),
-            new CopyToClipboardActionHandler(clipboard),
-            new ExcludeFromSearchResultsActionHandler(excludedSearchResults),
+            new CommandlineActionHandler(dependencyRegistry.get("CommandlineUtility")),
+            new CopyToClipboardActionHandler(dependencyRegistry.get("Clipboard")),
+            new ExcludeFromSearchResultsActionHandler(dependencyRegistry.get("ExcludedSearchResults")),
+            new FavoritesActionHandler(dependencyRegistry.get("FavoriteManager")),
             new NavigateToActionHandler(eventEmitter),
-            new OpenFilePathActionHandler(shell),
-            new PowershellActionHandler(powershellUtility),
-            new ShowItemInFileExplorerActionHandler(shell),
-            new UrlActionHandler(shell),
+            new OpenFilePathActionHandler(dependencyRegistry.get("Shell")),
+            new PowershellActionHandler(dependencyRegistry.get("PowershellUtility")),
+            new ShowItemInFileExplorerActionHandler(dependencyRegistry.get("Shell")),
+            new UrlActionHandler(dependencyRegistry.get("Shell")),
         ];
 
         for (const actionHandler of actionHandlers) {

@@ -26,11 +26,6 @@ export class ChromiumBrowserBookmark implements BrowserBookmark {
                         namespace: "extension[BrowserBookmarks]",
                     },
                 }),
-                SearchResultItemActionUtility.createExcludeFromSearchResultsAction({
-                    id: this.getId(),
-                    name: this.getName(searchResultStyle),
-                    imageUrl: this.getImageUrl(faviconApi),
-                }),
             ],
         };
     }

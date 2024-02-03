@@ -51,6 +51,7 @@ import * as Extensions from "./Extensions";
     Core.GlobalShortcutModule.bootstrap(dependencyRegistry);
     Core.AutostartModule.bootstrap(dependencyRegistry);
     Core.ExcludedSearchResultsModule.bootstrap(dependencyRegistry);
+    Core.FavoriteManagerModule.bootstrap(dependencyRegistry);
     Core.ActionHandlerModule.bootstrap(dependencyRegistry);
     Core.UeliCommandModule.bootstrap(dependencyRegistry);
     await Core.TrayIconModule.bootstrap(dependencyRegistry);

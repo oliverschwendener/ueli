@@ -36,11 +36,6 @@ export class Application {
                         namespace: "extension[ApplicationSearch]",
                     },
                 }),
-                SearchResultItemActionUtility.createExcludeFromSearchResultsAction({
-                    id: this.getId(),
-                    name: this.name,
-                    imageUrl: this.getImageUrl(),
-                }),
             ],
         };
     }

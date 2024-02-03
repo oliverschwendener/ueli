@@ -16,13 +16,6 @@ export class MacOsSystemSetting {
                 filePath: this.filePath,
                 description: "Open System Setting",
             }),
-            additionalActions: [
-                SearchResultItemActionUtility.createExcludeFromSearchResultsAction({
-                    id: this.getId(),
-                    name: this.name,
-                    imageUrl: this.getImageUrl(),
-                }),
-            ],
             imageUrl: this.getImageUrl(),
         };
     }

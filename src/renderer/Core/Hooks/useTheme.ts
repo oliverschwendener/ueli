@@ -1,9 +1,11 @@
-import type { ContextBridge } from "@common/Core";
 import type { Theme } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 import { getTheme } from "../Theme";
+import { useContextBridge } from "./useContextBridge";
 
-export const useTheme = (contextBridge: ContextBridge) => {
+export const useTheme = () => {
+    const { contextBridge } = useContextBridge();
+
     const [theme, setTheme] = useState<Theme>(getTheme(contextBridge));
 
     useEffect(() => {

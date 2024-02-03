@@ -95,7 +95,7 @@ describe(filterSearchResultItemsBySearchTerm, () => {
                 <SearchResultItem>{ id: "item1", name: "Item 1", description: "Item 1" },
                 <SearchResultItem>{ id: "item2", name: "Item 2", description: "Item 2" },
             ],
-            excludedSearchResultItems: [{ id: "item1", name: "Some name" }],
+            excludedSearchResultItems: [{ id: "item1", name: "Some name", imageUrl: "imageUrl" }],
             expected: [<SearchResultItem>{ id: "item2", name: "Item 2", description: "Item 2" }],
             fuzziness: 0.6,
             maxResultLength: 10,

@@ -1,8 +1,37 @@
 import type { ExcludedSearchResultItem } from "./ExcludedSearchResultItem";
 import type { FluentIcon } from "./FluentIcon";
+import type { SearchResultItem } from "./SearchResultItem";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
 
 export class SearchResultItemActionUtility {
+    public static createAddToFavoritesAction(favorite: SearchResultItem): SearchResultItemAction {
+        return {
+            argument: JSON.stringify({ action: "Add", data: favorite }),
+            description: "Add to favorites",
+            descriptionTranslation: {
+                key: "addToFavorites",
+                namespace: "searchResultItemAction",
+            },
+            handlerId: "Favorites",
+            hideWindowAfterInvocation: false,
+            fluentIcon: "StarRegular",
+        };
+    }
+
+    public static createRemoveFromFavoritesAction({ id }: { id: string }): SearchResultItemAction {
+        return {
+            argument: JSON.stringify({ action: "Remove", data: id }),
+            description: "Remove from favorites",
+            descriptionTranslation: {
+                key: "removeFromFavorites",
+                namespace: "searchResultItemAction",
+            },
+            handlerId: "Favorites",
+            hideWindowAfterInvocation: false,
+            fluentIcon: "StarOffRegular",
+        };
+    }
+
     public static createInvokeExtensionAction({
         extensionId,
         description,
@@ -40,17 +69,9 @@ export class SearchResultItemActionUtility {
         };
     }
 
-    public static createExcludeFromSearchResultsAction({
-        id,
-        name,
-        imageUrl,
-    }: {
-        id: string;
-        name: string;
-        imageUrl?: string;
-    }): SearchResultItemAction {
+    public static createExcludeFromSearchResultsAction(item: ExcludedSearchResultItem): SearchResultItemAction {
         return {
-            argument: JSON.stringify(<ExcludedSearchResultItem>{ id, name, imageUrl }),
+            argument: JSON.stringify(item),
             description: "Exclude from search results",
             descriptionTranslation: {
                 key: "excludeFromSearchResults",

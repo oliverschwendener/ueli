@@ -18,7 +18,7 @@ export const Debug = () => {
     const { t } = useTranslation();
     const ns = "settingsDebug";
     const { contextBridge } = useContextBridge();
-    const { theme } = useTheme(contextBridge);
+    const { theme } = useTheme();
 
     return (
         <SectionList>

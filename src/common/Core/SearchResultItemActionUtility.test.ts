@@ -1,10 +1,53 @@
 import { describe, expect, it } from "vitest";
 import type { ExcludedSearchResultItem } from "./ExcludedSearchResultItem";
+import type { SearchResultItem } from "./SearchResultItem";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
 import { SearchResultItemActionUtility } from "./SearchResultItemActionUtility";
 
 describe(SearchResultItemActionUtility, () => {
     describe(SearchResultItemActionUtility.createCopyToClipboardAction, () => {
+        it("should create an 'add to favorites' action", () => {
+            const searchResultItem = <SearchResultItem>{
+                id: "My Id",
+                name: "My Name",
+                imageUrl: "My Image URL",
+            };
+
+            const actual = SearchResultItemActionUtility.createAddToFavoritesAction(searchResultItem);
+
+            const expected = <SearchResultItemAction>{
+                argument: JSON.stringify({ action: "Add", data: searchResultItem }),
+                description: "Add to favorites",
+                descriptionTranslation: {
+                    key: "addToFavorites",
+                    namespace: "searchResultItemAction",
+                },
+                handlerId: "Favorites",
+                hideWindowAfterInvocation: false,
+                fluentIcon: "StarRegular",
+            };
+
+            expect(actual).toEqual(expected);
+        });
+
+        it("should create a 'remove from favorites' action", () => {
+            const actual = SearchResultItemActionUtility.createRemoveFromFavoritesAction({ id: "myId" });
+
+            const expected = <SearchResultItemAction>{
+                argument: JSON.stringify({ action: "Remove", data: "myId" }),
+                description: "Remove from favorites",
+                descriptionTranslation: {
+                    key: "removeFromFavorites",
+                    namespace: "searchResultItemAction",
+                },
+                handlerId: "Favorites",
+                hideWindowAfterInvocation: false,
+                fluentIcon: "StarOffRegular",
+            };
+
+            expect(actual).toEqual(expected);
+        });
+
         it("should create an 'copy to clipboard' action", () => {
             const actual = SearchResultItemActionUtility.createCopyToClipboardAction({
                 description: "test description",

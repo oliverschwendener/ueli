@@ -18,6 +18,7 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
         ipcRenderer.sendSync("getExtensionAssetFilePath", { extensionId, key }),
     getExtensionSettingDefaultValue: (extensionId, settingKey) =>
         ipcRenderer.sendSync("getExtensionSettingDefaultValue", { extensionId, settingKey }),
+    getFavorites: () => ipcRenderer.sendSync("getFavorites"),
     getLogs: () => ipcRenderer.sendSync("getLogs"),
     getOperatingSystem: () => ipcRenderer.sendSync("getOperatingSystem"),
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
@@ -28,6 +29,7 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     openExternal: (url, options) => ipcRenderer.invoke("openExternal", { url, options }),
     removeExcludedSearchResultItem: (itemId: string) =>
         ipcRenderer.invoke("removeExcludedSearchResultItem", { itemId }),
+    removeFavorite: (id) => ipcRenderer.invoke("removeFavorite", { id }),
     resetAllSettings: () => ipcRenderer.invoke("resetAllSettings"),
     showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),
     themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),

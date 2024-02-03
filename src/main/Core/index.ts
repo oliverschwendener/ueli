@@ -16,6 +16,7 @@ export * from "./Extension";
 export * from "./ExtensionCacheFolder";
 export * from "./ExtensionManager";
 export * from "./ExtensionRegistry";
+export * from "./FavoriteManager";
 export * from "./FileSystemUtility";
 export * from "./GlobalShortcut";
 export * from "./Logger";

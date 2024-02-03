@@ -35,11 +35,6 @@ describe(Application, () => {
                         namespace: "extension[ApplicationSearch]",
                     },
                 }),
-                SearchResultItemActionUtility.createExcludeFromSearchResultsAction({
-                    id: "W0FwcGxpY2F0aW9uU2VhcmNoXVsvQXBwbGljYXRpb25zL015IEFwcC5hcHBd",
-                    name: "My App",
-                    imageUrl: "file:///Users/Dummy/Icons/icon.png",
-                }),
             ],
         });
     });
