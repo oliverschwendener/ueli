@@ -187,9 +187,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItems, favorites
                     <Input
                         className="non-draggable-area"
                         ref={userInputRef}
-                        appearance={
-                            contextBridge.themeShouldUseDarkColors() ? "filled-darker-shadow" : "filled-lighter-shadow"
-                        }
+                        appearance={contextBridge.themeShouldUseDarkColors() ? "filled-darker" : "filled-lighter"}
                         size="large"
                         value={searchTerm}
                         onChange={(_, { value }) => search(value)}
