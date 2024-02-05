@@ -1,4 +1,4 @@
-import { SearchResultItemActionUtility, type SearchResultItem, type SearchResultItemAction } from "@common/Core";
+import { type SearchResultItem, type SearchResultItemAction } from "@common/Core";
 import { Button, Input } from "@fluentui/react-components";
 import { SearchRegular, SettingsRegular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
@@ -138,27 +138,6 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
     const handleSearchResultItemDoubleClickEvent = (searchResultItem: SearchResultItem) =>
         searchResultItem.defaultAction && invokeAction(searchResultItem.defaultAction);
 
-    const getActionsOfSelectedSearchResultItem = (): SearchResultItemAction[] => {
-        const searchResultItem = getSelectedSearchResultItem();
-
-        if (!searchResultItem) {
-            return [];
-        }
-
-        const defaultAdditionalActions = [
-            favorites.includes(searchResultItem.id)
-                ? SearchResultItemActionUtility.createRemoveFromFavoritesAction({ id: searchResultItem.id })
-                : SearchResultItemActionUtility.createAddToFavoritesAction(searchResultItem),
-            SearchResultItemActionUtility.createExcludeFromSearchResultsAction(searchResultItem),
-        ];
-
-        return [
-            searchResultItem.defaultAction,
-            ...defaultAdditionalActions,
-            ...(searchResultItem.additionalActions ?? []),
-        ];
-    };
-
     const closeConfirmationDialog = () => {
         setConfirmationDialogAction(undefined);
         setFocusOnUserInput();
@@ -230,7 +209,8 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
                         {t("settings", { ns: "general" })}
                     </Button>
                     <ActionsMenu
-                        actions={hasSearchTerm ? getActionsOfSelectedSearchResultItem() : []}
+                        searchResultItem={getSelectedSearchResultItem()}
+                        favorites={favorites}
                         invokeAction={invokeAction}
                         additionalActionsButtonRef={additionalActionsButtonRef}
                         onMenuClosed={() => setFocusOnUserInput()}
