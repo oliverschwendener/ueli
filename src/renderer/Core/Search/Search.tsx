@@ -36,7 +36,6 @@ export const Search = ({ searchResultItems, excludedSearchResultItems, favorites
     const userInputRef = useRef<HTMLInputElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
-    const [additionalActions, setAdditionalActions] = useState<SearchResultItemAction[]>([]);
 
     const setFocusOnUserInput = () => {
         userInputRef?.current?.focus();
@@ -136,12 +135,11 @@ export const Search = ({ searchResultItems, excludedSearchResultItems, favorites
     const handleSearchResultItemDoubleClickEvent = (searchResultItem: SearchResultItem) =>
         searchResultItem.defaultAction && invokeAction(searchResultItem.defaultAction);
 
-    const updateAdditionalActions = () => {
+    const getActionsOfSelectedSearchResultItem = (): SearchResultItemAction[] => {
         const searchResultItem = getSelectedSearchResultItem();
 
         if (!searchResultItem) {
-            setAdditionalActions([]);
-            return;
+            return [];
         }
 
         const defaultAdditionalActions = [
@@ -151,11 +149,11 @@ export const Search = ({ searchResultItems, excludedSearchResultItems, favorites
             SearchResultItemActionUtility.createExcludeFromSearchResultsAction(searchResultItem),
         ];
 
-        setAdditionalActions([
+        return [
             searchResultItem.defaultAction,
             ...defaultAdditionalActions,
             ...(searchResultItem.additionalActions ?? []),
-        ]);
+        ];
     };
 
     const closeConfirmationDialog = () => {
@@ -169,7 +167,6 @@ export const Search = ({ searchResultItems, excludedSearchResultItems, favorites
     }, []);
 
     useEffect(() => selectFirstSearchResultItemItem(), [searchTerm]);
-    useEffect(() => updateAdditionalActions(), [selectedItemIndex, searchTerm, excludedSearchResultItems, favorites]);
 
     return (
         <BaseLayout
@@ -227,7 +224,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItems, favorites
                         {t("settings", { ns: "general" })}
                     </Button>
                     <ActionsMenu
-                        actions={additionalActions}
+                        actions={getActionsOfSelectedSearchResultItem()}
                         invokeAction={invokeAction}
                         additionalActionsButtonRef={additionalActionsButtonRef}
                         onMenuClosed={() => setFocusOnUserInput()}
