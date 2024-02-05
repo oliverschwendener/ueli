@@ -13,7 +13,7 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     getAvailableExtensions: () => ipcRenderer.sendSync("getAvailableExtensions"),
     getEnabledExtensions: () => ipcRenderer.sendSync("getEnabledExtensions"),
     getExtension: (extensionId) => ipcRenderer.sendSync("getExtension", { extensionId }),
-    getExcludedSearchResultItems: () => ipcRenderer.sendSync("getExcludedSearchResultItems"),
+    getExcludedSearchResultItemIds: () => ipcRenderer.sendSync("getExcludedSearchResultItemIds"),
     getExtensionAssetFilePath: (extensionId, key) =>
         ipcRenderer.sendSync("getExtensionAssetFilePath", { extensionId, key }),
     getExtensionSettingDefaultValue: (extensionId, settingKey) =>

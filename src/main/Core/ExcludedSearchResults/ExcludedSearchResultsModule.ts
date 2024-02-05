@@ -11,12 +11,12 @@ export class ExcludedSearchResultsModule {
 
         dependencyRegistry.register("ExcludedSearchResults", excludedSearchResults);
 
-        ipcMain.on("getExcludedSearchResultItems", (event) => {
-            event.returnValue = excludedSearchResults.getExcludedItems();
+        ipcMain.on("getExcludedSearchResultItemIds", (event) => {
+            event.returnValue = excludedSearchResults.getExcludedIds();
         });
 
         ipcMain.handle("removeExcludedSearchResultItem", (_, { itemId }: { itemId: string }) =>
-            excludedSearchResults.removeItem(itemId),
+            excludedSearchResults.remove(itemId),
         );
     }
 }

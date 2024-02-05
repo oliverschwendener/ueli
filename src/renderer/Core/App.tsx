@@ -20,7 +20,7 @@ export const App = () => {
     const { contextBridge } = useContextBridge();
     const { theme, setTheme } = useTheme();
     const { searchResultItems } = useSearchResultItems();
-    const { excludedSearchResultItems } = useExcludedSearchResultItems();
+    const { excludedSearchResultItemIds } = useExcludedSearchResultItems();
     const { favorites } = useFavorites();
 
     const navigate = useNavigate();
@@ -42,7 +42,7 @@ export const App = () => {
                         element={
                             <Search
                                 searchResultItems={searchResultItems}
-                                excludedSearchResultItems={excludedSearchResultItems}
+                                excludedSearchResultItemIds={excludedSearchResultItemIds}
                                 favorites={favorites}
                             />
                         }

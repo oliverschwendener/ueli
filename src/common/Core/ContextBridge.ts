@@ -1,6 +1,5 @@
 import type { IpcRenderer, OpenDialogOptions, OpenDialogReturnValue, OpenExternalOptions } from "electron";
 import type { AboutUeli } from "./AboutUeli";
-import type { ExcludedSearchResultItem } from "./ExcludedSearchResultItem";
 import type { ExtensionInfo } from "./ExtensionInfo";
 import type { OperatingSystem } from "./OperatingSystem";
 import type { SearchResultItem } from "./SearchResultItem";
@@ -18,7 +17,7 @@ export type ContextBridge = {
     getAvailableExtensions: () => ExtensionInfo[];
     getEnabledExtensions: () => ExtensionInfo[];
     getExtension: (extensionId: string) => ExtensionInfo;
-    getExcludedSearchResultItems: () => ExcludedSearchResultItem[];
+    getExcludedSearchResultItemIds: () => string[];
     getExtensionAssetFilePath: (extensionId: string, key: string) => string;
     getExtensionSettingDefaultValue: <Value>(extensionId: string, settingKey: string) => Value;
     getFavorites: () => string[];

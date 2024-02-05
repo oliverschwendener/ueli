@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import type { ExcludedSearchResultItem } from "./ExcludedSearchResultItem";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
 import { SearchResultItemActionUtility } from "./SearchResultItemActionUtility";
 
@@ -69,18 +68,10 @@ describe(SearchResultItemActionUtility, () => {
 
     describe(SearchResultItemActionUtility.createExcludeFromSearchResultsAction, () => {
         it("should create an 'exclude from search results' action", () => {
-            const actual = SearchResultItemActionUtility.createExcludeFromSearchResultsAction({
-                id: "test id",
-                name: "test name",
-                imageUrl: "image url",
-            });
+            const actual = SearchResultItemActionUtility.createExcludeFromSearchResultsAction({ id: "test id" });
 
             const expected = <SearchResultItemAction>{
-                argument: JSON.stringify(<ExcludedSearchResultItem>{
-                    id: "test id",
-                    name: "test name",
-                    imageUrl: "image url",
-                }),
+                argument: "test id",
                 description: "Exclude from search results",
                 descriptionTranslation: {
                     key: "excludeFromSearchResults",

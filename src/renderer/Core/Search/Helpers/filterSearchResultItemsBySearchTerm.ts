@@ -1,4 +1,4 @@
-import type { ExcludedSearchResultItem, SearchResultItem } from "@common/Core";
+import type { SearchResultItem } from "@common/Core";
 import Fuse from "fuse.js";
 
 type SearchOptions = {
@@ -9,17 +9,17 @@ type SearchOptions = {
 
 export const filterSearchResultItemsBySearchTerm = ({
     searchOptions,
-    excludedSearchResultItems,
+    excludedIds,
     searchResultItems,
 }: {
     searchResultItems: SearchResultItem[];
-    excludedSearchResultItems: ExcludedSearchResultItem[];
+    excludedIds: string[];
     searchOptions: SearchOptions;
 }): SearchResultItem[] => {
     const { fuzziness, maxResultLength, searchTerm } = searchOptions;
 
     const result = new Fuse(
-        searchResultItems.filter((s) => !excludedSearchResultItems.map((e) => e.id).includes(s.id)),
+        searchResultItems.filter((s) => !excludedIds.includes(s.id)),
         {
             keys: ["name"],
             threshold: fuzziness,

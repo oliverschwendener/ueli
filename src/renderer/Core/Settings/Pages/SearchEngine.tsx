@@ -1,9 +1,8 @@
-import { ExcludedSearchResultItem } from "@common/Core";
-import { Button, Field, Input, Slider, Switch, Text, Tooltip } from "@fluentui/react-components";
+import { useContextBridge, useSearchResultItems, useSetting } from "@Core/Hooks";
+import { Badge, Button, Field, Input, Slider, Switch, Text, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useContextBridge, useSetting } from "../../Hooks";
 import { Section } from "../Section";
 import { SectionList } from "../SectionList";
 
@@ -11,6 +10,7 @@ export const SearchEngine = () => {
     const { t } = useTranslation();
     const ns = "settingsSearchEngine";
     const { contextBridge } = useContextBridge();
+    const { searchResultItems } = useSearchResultItems();
 
     const { value: automaticRescanEnabled, updateValue: setAutomaticRescanEnabled } = useSetting(
         "searchEngine.automaticRescan",
@@ -25,14 +25,14 @@ export const SearchEngine = () => {
 
     const { value: maxResultLength, updateValue: setMaxResultLength } = useSetting("searchEngine.maxResultLength", 50);
 
-    const [excludedSearchResultItems, setExcludedSearchResultItems] = useState<ExcludedSearchResultItem[]>(
-        contextBridge.getExcludedSearchResultItems(),
-    );
+    const [excludedIds, setExcludedIds] = useState<string[]>(contextBridge.getExcludedSearchResultItemIds());
 
     const removeExcludedSearchResultItem = async (id: string) => {
         await contextBridge.removeExcludedSearchResultItem(id);
-        setExcludedSearchResultItems(contextBridge.getExcludedSearchResultItems());
+        setExcludedIds(contextBridge.getExcludedSearchResultItemIds());
     };
+
+    const excludedSearchResultItems = searchResultItems.filter((f) => excludedIds.includes(f.id));
 
     return (
         <SectionList>
@@ -82,31 +82,36 @@ export const SearchEngine = () => {
                 <Field label={t("excludedItems", { ns })}>
                     <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                         {excludedSearchResultItems.length ? null : <Text italic>{t("noExcludedItems", { ns })}</Text>}
-                        {excludedSearchResultItems.map((excludedItem) => (
+                        {excludedSearchResultItems.map(({ id, name, imageUrl, description }) => (
                             <Input
-                                key={`excludedItem-${excludedItem.id}`}
+                                key={`excludedItem-${id}`}
                                 readOnly
-                                value={excludedItem.name}
+                                value={name}
                                 contentBefore={
-                                    excludedItem.imageUrl ? (
+                                    imageUrl ? (
                                         <img
                                             alt="Excluded search result item image"
                                             style={{ width: 16, height: 16 }}
-                                            src={excludedItem.imageUrl}
+                                            src={imageUrl}
                                         />
                                     ) : null
                                 }
                                 contentAfter={
-                                    <Button
-                                        size="small"
-                                        appearance="subtle"
-                                        onClick={() => removeExcludedSearchResultItem(excludedItem.id)}
-                                        icon={
-                                            <Tooltip content={t("removeExcludedItem", { ns })} relationship="label">
-                                                <DismissRegular fontSize={14} />
-                                            </Tooltip>
-                                        }
-                                    />
+                                    <div>
+                                        <Badge size="small" appearance="ghost">
+                                            {description}
+                                        </Badge>
+                                        <Button
+                                            size="small"
+                                            appearance="subtle"
+                                            onClick={() => removeExcludedSearchResultItem(id)}
+                                            icon={
+                                                <Tooltip content={t("removeExcludedItem", { ns })} relationship="label">
+                                                    <DismissRegular fontSize={14} />
+                                                </Tooltip>
+                                            }
+                                        />
+                                    </div>
                                 }
                             />
                         ))}

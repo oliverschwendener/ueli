@@ -1,4 +1,3 @@
-import type { ExcludedSearchResultItem } from "./ExcludedSearchResultItem";
 import type { FluentIcon } from "./FluentIcon";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
 
@@ -68,9 +67,9 @@ export class SearchResultItemActionUtility {
         };
     }
 
-    public static createExcludeFromSearchResultsAction(item: ExcludedSearchResultItem): SearchResultItemAction {
+    public static createExcludeFromSearchResultsAction({ id }: { id: string }): SearchResultItemAction {
         return {
-            argument: JSON.stringify(item),
+            argument: id,
             description: "Exclude from search results",
             descriptionTranslation: {
                 key: "excludeFromSearchResults",

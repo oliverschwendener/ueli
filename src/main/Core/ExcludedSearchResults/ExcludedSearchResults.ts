@@ -1,51 +1,50 @@
 import type { EventEmitter } from "@Core/EventEmitter";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { ExcludedSearchResultItem } from "@common/Core";
 import type { ExcludedSearchResults as ExcludedSearchResultsInterface } from "./Contract";
 
 export class ExcludedSearchResults implements ExcludedSearchResultsInterface {
     private static readonly settingKey = "searchEngine.excludedItems";
 
-    private items: Record<string, ExcludedSearchResultItem> = {};
+    private readonly items: string[] = [];
 
     public constructor(
         private readonly eventEmitter: EventEmitter,
         private readonly settingsManager: SettingsManager,
     ) {
-        const items = settingsManager.getValue<ExcludedSearchResultItem[]>(ExcludedSearchResults.settingKey, []);
+        this.items = settingsManager.getValue<string[]>(ExcludedSearchResults.settingKey, []);
+    }
 
-        for (const item of items) {
-            this.items[item.id] = item;
+    public async add(id: string): Promise<void> {
+        if (this.exists(id)) {
+            throw new Error(`Failed to add item. Reason: item with id "${id}" already exists`);
         }
-    }
 
-    public async addItem(item: ExcludedSearchResultItem): Promise<void> {
-        this.items[item.id] = item;
+        this.items.push(id);
         await this.saveChanges();
         this.emitItemsUpdatedEvent();
     }
 
-    public async removeItem(itemId: string): Promise<void> {
-        delete this.items[itemId];
+    public async remove(id: string): Promise<void> {
+        if (!this.exists(id)) {
+            throw new Error(`Failed to remove item. Reason: item with id "${id}" not found`);
+        }
+
+        const indexToDelete = this.items.findIndex((i) => i === id);
+        this.items.splice(indexToDelete, 1);
         await this.saveChanges();
         this.emitItemsUpdatedEvent();
     }
 
-    public getExcludedItems(): ExcludedSearchResultItem[] {
-        return Object.keys(this.items).map(
-            (id): ExcludedSearchResultItem => ({
-                id,
-                name: this.items[id].name,
-                imageUrl: this.items[id].imageUrl,
-            }),
-        );
+    public getExcludedIds(): string[] {
+        return this.items;
     }
 
     private async saveChanges(): Promise<void> {
-        await this.settingsManager.updateValue<ExcludedSearchResultItem[]>(
-            ExcludedSearchResults.settingKey,
-            this.getExcludedItems(),
-        );
+        await this.settingsManager.updateValue<string[]>(ExcludedSearchResults.settingKey, this.items);
+    }
+
+    private exists(id: string): boolean {
+        return this.items.includes(id);
     }
 
     private emitItemsUpdatedEvent() {

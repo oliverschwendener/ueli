@@ -1,19 +1,18 @@
-import type { ExcludedSearchResultItem } from "@common/Core";
 import { useEffect, useState } from "react";
 import { useContextBridge } from "./useContextBridge";
 
 export const useExcludedSearchResultItems = () => {
     const { contextBridge } = useContextBridge();
 
-    const [excludedSearchResultItems, setExcludedSearchResultItems] = useState<ExcludedSearchResultItem[]>(
-        contextBridge.getExcludedSearchResultItems(),
+    const [excludedSearchResultItemIds, setExcludedSearchResultItemIds] = useState<string[]>(
+        contextBridge.getExcludedSearchResultItemIds(),
     );
 
     useEffect(() => {
         contextBridge.ipcRenderer.on("excludedSearchResultItemsUpdated", () => {
-            setExcludedSearchResultItems(contextBridge.getExcludedSearchResultItems());
+            setExcludedSearchResultItemIds(contextBridge.getExcludedSearchResultItemIds());
         });
     }, []);
 
-    return { excludedSearchResultItems };
+    return { excludedSearchResultItemIds };
 };

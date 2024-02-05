@@ -1,7 +1,5 @@
-import type { ExcludedSearchResultItem } from "@common/Core";
-
 export interface ExcludedSearchResults {
-    addItem(item: ExcludedSearchResultItem): Promise<void>;
-    removeItem(itemId: string): Promise<void>;
-    getExcludedItems(): ExcludedSearchResultItem[];
+    add(id: string): Promise<void>;
+    remove(id: string): Promise<void>;
+    getExcludedIds(): string[];
 }
