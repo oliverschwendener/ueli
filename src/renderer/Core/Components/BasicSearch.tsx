@@ -130,6 +130,7 @@ export const BasicSearch = ({
                         onSearchResultItemClick={(i) => setSelectedItemIndex(i)}
                         onSearchResultItemDoubleClick={(s) => contextBridge.invokeAction(s.defaultAction)}
                         searchResultItems={searchResultItems}
+                        favorites={[]}
                         selectedItemIndex={selectedItemIndex}
                         searchTerm={searchTerm}
                     />

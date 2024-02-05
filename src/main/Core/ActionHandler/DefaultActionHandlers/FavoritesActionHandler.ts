@@ -1,5 +1,5 @@
 import type { FavoriteManager } from "@Core/FavoriteManager";
-import type { SearchResultItem, SearchResultItemAction } from "@common/Core";
+import type { SearchResultItemAction } from "@common/Core";
 import type { ActionHandler } from "../Contract";
 
 export class FavoritesActionHandler implements ActionHandler {
@@ -8,12 +8,12 @@ export class FavoritesActionHandler implements ActionHandler {
     public constructor(private readonly favoriteManager: FavoriteManager) {}
 
     public async invokeAction({ argument }: SearchResultItemAction): Promise<void> {
-        const { action, data } = JSON.parse(argument) as { action: "Add" | "Remove"; data: unknown };
+        const { action, id } = JSON.parse(argument) as { action: "Add" | "Remove"; id: string };
 
         if (action === "Add") {
-            await this.favoriteManager.add(data as SearchResultItem);
+            await this.favoriteManager.add(id);
         } else if (action === "Remove") {
-            await this.favoriteManager.remove(data as string);
+            await this.favoriteManager.remove(id);
         } else {
             throw new Error(`Unexpected action: ${action}`);
         }

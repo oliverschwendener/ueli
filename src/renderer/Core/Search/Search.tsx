@@ -22,13 +22,13 @@ import { SearchResultList } from "./SearchResultList";
 type SearchProps = {
     searchResultItems: SearchResultItem[];
     excludedSearchResultItems: ExcludedSearchResultItem[];
-    favorites: SearchResultItem[];
+    favorites: string[];
 };
 
 export const Search = ({ searchResultItems, excludedSearchResultItems, favorites }: SearchProps) => {
     const { t } = useTranslation();
     const { contextBridge } = useContextBridge();
-    const [selectedItemIndex, setSelectedItemIndex] = useState<number>(0);
+    const [selectedSearchResultItemIndex, setSelectedSearchResultItemIndex] = useState<number>(0);
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [confirmationDialogAction, setConfirmationDialogAction] = useState<SearchResultItemAction | undefined>(
         undefined,
@@ -60,15 +60,23 @@ export const Search = ({ searchResultItems, excludedSearchResultItems, favorites
     });
 
     const selectNextSearchResultItem = () =>
-        setSelectedItemIndex(selectedItemIndex === filteredSearchResultItems.length - 1 ? 0 : selectedItemIndex + 1);
+        setSelectedSearchResultItemIndex(
+            selectedSearchResultItemIndex === filteredSearchResultItems.length - 1
+                ? 0
+                : selectedSearchResultItemIndex + 1,
+        );
 
     const selectPreviousSearchResultItem = () =>
-        setSelectedItemIndex(selectedItemIndex === 0 ? filteredSearchResultItems.length - 1 : selectedItemIndex - 1);
+        setSelectedSearchResultItemIndex(
+            selectedSearchResultItemIndex === 0
+                ? filteredSearchResultItems.length - 1
+                : selectedSearchResultItemIndex - 1,
+        );
 
-    const selectFirstSearchResultItemItem = () => setSelectedItemIndex(0);
+    const selectFirstSearchResultItemItem = () => setSelectedSearchResultItemIndex(0);
 
     const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
-        filteredSearchResultItems[selectedItemIndex];
+        filteredSearchResultItems[selectedSearchResultItemIndex];
 
     const invokeSelectedSearchResultItem = async () => {
         const searchResultItem = getSelectedSearchResultItem();
@@ -130,7 +138,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItems, favorites
         }
     };
 
-    const handleSearchResultItemClickEvent = (index: number) => setSelectedItemIndex(index);
+    const handleSearchResultItemClickEvent = (index: number) => setSelectedSearchResultItemIndex(index);
 
     const handleSearchResultItemDoubleClickEvent = (searchResultItem: SearchResultItem) =>
         searchResultItem.defaultAction && invokeAction(searchResultItem.defaultAction);
@@ -143,7 +151,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItems, favorites
         }
 
         const defaultAdditionalActions = [
-            favorites.find((f) => f.id === searchResultItem.id)
+            favorites.includes(searchResultItem.id)
                 ? SearchResultItemActionUtility.createRemoveFromFavoritesAction({ id: searchResultItem.id })
                 : SearchResultItemActionUtility.createAddToFavoritesAction(searchResultItem),
             SearchResultItemActionUtility.createExcludeFromSearchResultsAction(searchResultItem),
@@ -160,6 +168,8 @@ export const Search = ({ searchResultItems, excludedSearchResultItems, favorites
         setConfirmationDialogAction(undefined);
         setFocusOnUserInput();
     };
+
+    const hasSearchTerm = !!searchTerm.length;
 
     useEffect(() => {
         setFocusOnUserInputAndSelectText();
@@ -198,17 +208,18 @@ export const Search = ({ searchResultItems, excludedSearchResultItems, favorites
             content={
                 <>
                     <ConfirmationDialog closeDialog={closeConfirmationDialog} action={confirmationDialogAction} />
-                    {!searchTerm.length ? (
-                        <FavoritesList invokeSearchResultItem={({ defaultAction }) => invokeAction(defaultAction)} />
-                    ) : (
+                    {hasSearchTerm ? (
                         <SearchResultList
                             containerRef={containerRef}
-                            selectedItemIndex={selectedItemIndex}
+                            selectedItemIndex={selectedSearchResultItemIndex}
                             searchResultItems={filteredSearchResultItems}
+                            favorites={favorites}
                             searchTerm={searchTerm}
                             onSearchResultItemClick={handleSearchResultItemClickEvent}
                             onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
                         />
+                    ) : (
+                        <FavoritesList invokeSearchResultItem={({ defaultAction }) => invokeAction(defaultAction)} />
                     )}
                 </>
             }
@@ -224,7 +235,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItems, favorites
                         {t("settings", { ns: "general" })}
                     </Button>
                     <ActionsMenu
-                        actions={getActionsOfSelectedSearchResultItem()}
+                        actions={hasSearchTerm ? getActionsOfSelectedSearchResultItem() : []}
                         invokeAction={invokeAction}
                         additionalActionsButtonRef={additionalActionsButtonRef}
                         onMenuClosed={() => setFocusOnUserInput()}

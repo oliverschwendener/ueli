@@ -1,5 +1,6 @@
 import type { SearchResultItem } from "@common/Core";
 import { Text } from "@fluentui/react-components";
+import { StarFilled } from "@fluentui/react-icons";
 import { useContext, useEffect, useRef, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import { useContextBridge } from "../Hooks";
@@ -9,6 +10,7 @@ import { elementIsVisible } from "./Helpers";
 type SearchResultListItemProps = {
     containerRef: RefObject<HTMLDivElement>;
     isSelected: boolean;
+    isFavorite: boolean;
     onClick: () => void;
     onDoubleClick: () => void;
     searchResultItem: SearchResultItem;
@@ -17,6 +19,7 @@ type SearchResultListItemProps = {
 export const SearchResultListItem = ({
     containerRef,
     isSelected,
+    isFavorite,
     onClick,
     onDoubleClick,
     searchResultItem,
@@ -89,9 +92,13 @@ export const SearchResultListItem = ({
                     overflow: "hidden",
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 5,
                 }}
             >
                 {searchResultItem.name}
+                {isFavorite ? <StarFilled /> : null}
             </div>
             <div style={{ flexShrink: 0 }}>
                 <Text size={200}>

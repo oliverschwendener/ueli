@@ -1,12 +1,11 @@
 import type { ExcludedSearchResultItem } from "./ExcludedSearchResultItem";
 import type { FluentIcon } from "./FluentIcon";
-import type { SearchResultItem } from "./SearchResultItem";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
 
 export class SearchResultItemActionUtility {
-    public static createAddToFavoritesAction(favorite: SearchResultItem): SearchResultItemAction {
+    public static createAddToFavoritesAction({ id }: { id: string }): SearchResultItemAction {
         return {
-            argument: JSON.stringify({ action: "Add", data: favorite }),
+            argument: JSON.stringify({ action: "Add", id }),
             description: "Add to favorites",
             descriptionTranslation: {
                 key: "addToFavorites",
@@ -20,7 +19,7 @@ export class SearchResultItemActionUtility {
 
     public static createRemoveFromFavoritesAction({ id }: { id: string }): SearchResultItemAction {
         return {
-            argument: JSON.stringify({ action: "Remove", data: id }),
+            argument: JSON.stringify({ action: "Remove", id }),
             description: "Remove from favorites",
             descriptionTranslation: {
                 key: "removeFromFavorites",

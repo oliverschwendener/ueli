@@ -4,4 +4,5 @@ export interface SearchIndex {
     getSearchResultItems(): SearchResultItem[];
     addSearchResultItems(extensionId: string, searchResultItems: SearchResultItem[]): void;
     removeSearchResultItems(extensionId: string): void;
+    getById(id: string): SearchResultItem | undefined;
 }

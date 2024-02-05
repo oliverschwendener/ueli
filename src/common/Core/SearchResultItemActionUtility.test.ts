@@ -1,22 +1,15 @@
 import { describe, expect, it } from "vitest";
 import type { ExcludedSearchResultItem } from "./ExcludedSearchResultItem";
-import type { SearchResultItem } from "./SearchResultItem";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
 import { SearchResultItemActionUtility } from "./SearchResultItemActionUtility";
 
 describe(SearchResultItemActionUtility, () => {
     describe(SearchResultItemActionUtility.createCopyToClipboardAction, () => {
         it("should create an 'add to favorites' action", () => {
-            const searchResultItem = <SearchResultItem>{
-                id: "My Id",
-                name: "My Name",
-                imageUrl: "My Image URL",
-            };
-
-            const actual = SearchResultItemActionUtility.createAddToFavoritesAction(searchResultItem);
+            const actual = SearchResultItemActionUtility.createAddToFavoritesAction({ id: "id_1" });
 
             const expected = <SearchResultItemAction>{
-                argument: JSON.stringify({ action: "Add", data: searchResultItem }),
+                argument: JSON.stringify({ action: "Add", id: "id_1" }),
                 description: "Add to favorites",
                 descriptionTranslation: {
                     key: "addToFavorites",
@@ -31,10 +24,10 @@ describe(SearchResultItemActionUtility, () => {
         });
 
         it("should create a 'remove from favorites' action", () => {
-            const actual = SearchResultItemActionUtility.createRemoveFromFavoritesAction({ id: "myId" });
+            const actual = SearchResultItemActionUtility.createRemoveFromFavoritesAction({ id: "id_1" });
 
             const expected = <SearchResultItemAction>{
-                argument: JSON.stringify({ action: "Remove", data: "myId" }),
+                argument: JSON.stringify({ action: "Remove", id: "id_1" }),
                 description: "Remove from favorites",
                 descriptionTranslation: {
                     key: "removeFromFavorites",

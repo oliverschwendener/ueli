@@ -1,5 +1,5 @@
 import type { FavoriteManager } from "@Core/FavoriteManager";
-import type { SearchResultItem, SearchResultItemAction } from "@common/Core";
+import type { SearchResultItemAction } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
 import { FavoritesActionHandler } from "./FavoritesActionHandler";
 
@@ -10,22 +10,16 @@ describe(FavoritesActionHandler, () => {
 
         const actionHandler = new FavoritesActionHandler(favoriteManager);
 
-        const favorite = <SearchResultItem>{
-            id: "myId",
-            imageUrl: "myImageUrl",
-            name: "myName",
-        };
-
         expect(actionHandler.id).toEqual("Favorites");
 
         await actionHandler.invokeAction(<SearchResultItemAction>{
             argument: JSON.stringify({
                 action: "Add",
-                data: favorite,
+                id: "id_1",
             }),
         });
 
-        expect(addMock).toHaveBeenCalledWith(favorite);
+        expect(addMock).toHaveBeenCalledWith("id_1");
     });
 
     it("should remove an item from the favorites", async () => {
@@ -37,24 +31,18 @@ describe(FavoritesActionHandler, () => {
         await actionHandler.invokeAction(<SearchResultItemAction>{
             argument: JSON.stringify({
                 action: "Remove",
-                data: "someId",
+                id: "id_1",
             }),
         });
 
-        expect(removeMock).toHaveBeenCalledWith("someId");
+        expect(removeMock).toHaveBeenCalledWith("id_1");
     });
 
     it("should throw an error if the action is unexpected", async () => {
-        const favoriteManager = <FavoriteManager>{};
-        const actionHandler = new FavoritesActionHandler(favoriteManager);
+        const actionHandler = new FavoritesActionHandler(<FavoriteManager>{});
 
         await expect(
-            actionHandler.invokeAction(<SearchResultItemAction>{
-                argument: JSON.stringify({
-                    action: "Update",
-                    data: {},
-                }),
-            }),
+            actionHandler.invokeAction(<SearchResultItemAction>{ argument: JSON.stringify({ action: "Update" }) }),
         ).rejects.toThrowError("Unexpected action: Update");
     });
 });

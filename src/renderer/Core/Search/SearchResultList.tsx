@@ -8,6 +8,7 @@ type SearchResultListProps = {
     containerRef: RefObject<HTMLDivElement>;
     selectedItemIndex: number;
     searchResultItems: SearchResultItem[];
+    favorites: string[];
     searchTerm?: string;
     onSearchResultItemClick: (index: number) => void;
     onSearchResultItemDoubleClick: (searchResultItem: SearchResultItem) => void;
@@ -17,6 +18,7 @@ export const SearchResultList = ({
     containerRef,
     selectedItemIndex,
     searchResultItems,
+    favorites,
     searchTerm,
     onSearchResultItemClick,
     onSearchResultItemDoubleClick,
@@ -47,6 +49,7 @@ export const SearchResultList = ({
                     containerRef={containerRef}
                     key={searchResultItem.id}
                     isSelected={selectedItemIndex === index}
+                    isFavorite={favorites.includes(searchResultItem.id)}
                     searchResultItem={searchResultItem}
                     onClick={() => onSearchResultItemClick(index)}
                     onDoubleClick={() => onSearchResultItemDoubleClick(searchResultItem)}

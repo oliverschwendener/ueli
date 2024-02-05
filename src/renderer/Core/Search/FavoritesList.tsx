@@ -1,4 +1,4 @@
-import { useFavorites, useSetting } from "@Core/Hooks";
+import { useFavorites, useSearchResultItems, useSetting } from "@Core/Hooks";
 import type { SearchResultItem } from "@common/Core";
 import { Body1, Caption1, Card, CardHeader, CardPreview, Subtitle2, Text } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
@@ -20,13 +20,16 @@ const getGridTemplateColumns = (numberOfColumns: number) => {
 export const FavoritesList = ({ invokeSearchResultItem }: FavoritesListProps) => {
     const { t } = useTranslation();
     const ns = "settingsFavorites";
+    const { searchResultItems } = useSearchResultItems();
     const { favorites } = useFavorites();
 
     const { value: numberOfColumns } = useSetting("favorites.numberOfColumns", 3);
 
+    const favoriteSearchResultItems = searchResultItems.filter((s) => favorites.includes(s.id));
+
     return (
         <div style={{ padding: 20, boxSizing: "border-box", display: "flex", flexDirection: "column", gap: 10 }}>
-            {favorites.length ? (
+            {favoriteSearchResultItems.length ? (
                 <Subtitle2>{t("title", { ns })}</Subtitle2>
             ) : (
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -42,26 +45,26 @@ export const FavoritesList = ({ invokeSearchResultItem }: FavoritesListProps) =>
                     gap: 10,
                 }}
             >
-                {favorites.map((favorite) => (
+                {favoriteSearchResultItems.map((searchResultItem) => (
                     <Card
-                        key={`favorite-${favorite.id}`}
+                        key={`favorite-${searchResultItem.id}`}
                         selected={false}
                         orientation="horizontal"
-                        onClick={() => invokeSearchResultItem(favorite)}
-                        onKeyDown={(e) => e.key === "Enter" && invokeSearchResultItem(favorite)}
+                        onClick={() => invokeSearchResultItem(searchResultItem)}
+                        onKeyDown={(e) => e.key === "Enter" && invokeSearchResultItem(searchResultItem)}
                     >
                         <CardPreview style={{ paddingLeft: 12, width: 24 }}>
-                            <img style={{ width: "100%" }} src={favorite.imageUrl} alt="App Name Document" />
+                            <img style={{ width: "100%" }} src={searchResultItem.imageUrl} alt="App Name Document" />
                         </CardPreview>
                         <CardHeader
-                            header={<Text weight="semibold">{favorite.name}</Text>}
+                            header={<Text weight="semibold">{searchResultItem.name}</Text>}
                             description={
                                 <Caption1>
-                                    {favorite.descriptionTranslation
-                                        ? t(favorite.descriptionTranslation.key, {
-                                              ns: favorite.descriptionTranslation.namespace,
+                                    {searchResultItem.descriptionTranslation
+                                        ? t(searchResultItem.descriptionTranslation.key, {
+                                              ns: searchResultItem.descriptionTranslation.namespace,
                                           })
-                                        : favorite.description}
+                                        : searchResultItem.description}
                                 </Caption1>
                             }
                         />

@@ -10,6 +10,18 @@ export class InMemorySearchIndex implements SearchIndex {
         this.index = {};
     }
 
+    public getById(id: string): SearchResultItem {
+        for (const searchResultItems of Object.values(this.index)) {
+            for (const searchResultItem of searchResultItems) {
+                if (searchResultItem.id === id) {
+                    return searchResultItem;
+                }
+            }
+        }
+
+        return undefined;
+    }
+
     public getSearchResultItems(): SearchResultItem[] {
         let result: SearchResultItem[] = [];
 
