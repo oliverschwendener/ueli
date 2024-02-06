@@ -1,7 +1,7 @@
 import type { SearchResultItem } from "@common/Core";
 import { Text } from "@fluentui/react-components";
 import { StarFilled } from "@fluentui/react-icons";
-import { useContext, useEffect, useRef, type RefObject } from "react";
+import { useContext, useEffect, useRef, useState, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import { useContextBridge } from "../Hooks";
 import { ThemeContext } from "../ThemeContext";
@@ -28,6 +28,7 @@ export const SearchResultListItem = ({
     const { t } = useTranslation();
     const { theme } = useContext(ThemeContext);
     const ref = useRef<HTMLDivElement>(null);
+    const [isHovered, setIsHovered] = useState<boolean>(false);
 
     const scrollIntoViewIfSelectedAndNotVisible = () => {
         if (containerRef.current && ref.current && isSelected && !elementIsVisible(ref.current, containerRef.current)) {
@@ -40,6 +41,14 @@ export const SearchResultListItem = ({
             ? searchResultItem.imageUrlOnDarkBackground ?? searchResultItem.imageUrl
             : searchResultItem.imageUrlOnLightBackground ?? searchResultItem.imageUrl;
 
+    const selectedBackgroundColor = contextBridge.themeShouldUseDarkColors()
+        ? theme.colorNeutralBackground1Selected
+        : theme.colorNeutralBackground1Selected;
+
+    const hoveredBackgroundColor = contextBridge.themeShouldUseDarkColors()
+        ? theme.colorNeutralBackground1Hover
+        : theme.colorNeutralBackground1Hover;
+
     useEffect(scrollIntoViewIfSelectedAndNotVisible, [isSelected]);
 
     return (
@@ -48,9 +57,11 @@ export const SearchResultListItem = ({
             key={searchResultItem.id}
             onClick={onClick}
             onDoubleClick={onDoubleClick}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
             style={{
                 position: "relative",
-                backgroundColor: isSelected ? theme.colorSubtleBackgroundSelected : undefined,
+                backgroundColor: isSelected ? selectedBackgroundColor : isHovered ? hoveredBackgroundColor : undefined,
                 boxSizing: "border-box",
                 color: isSelected ? theme.colorNeutralForeground1Selected : undefined,
                 display: "flex",
@@ -63,6 +74,7 @@ export const SearchResultListItem = ({
                 padding: 10,
                 userSelect: "none",
                 borderRadius: theme.borderRadiusMedium,
+                cursor: "pointer",
             }}
         >
             <div
@@ -96,7 +108,9 @@ export const SearchResultListItem = ({
                     src={imageUrl()}
                 />
             </div>
-            <div
+            <Text
+                size={300}
+                weight={isSelected ? "medium" : "regular"}
                 style={{
                     width: "100%",
                     overflow: "hidden",
@@ -109,16 +123,14 @@ export const SearchResultListItem = ({
             >
                 {searchResultItem.name}
                 {isFavorite ? <StarFilled /> : null}
-            </div>
-            <div style={{ flexShrink: 0 }}>
-                <Text size={200}>
-                    {searchResultItem.descriptionTranslation
-                        ? t(searchResultItem.descriptionTranslation.key, {
-                              ns: searchResultItem.descriptionTranslation.namespace,
-                          })
-                        : searchResultItem.description}
-                </Text>
-            </div>
+            </Text>
+            <Text size={200} style={{ flexShrink: 0 }}>
+                {searchResultItem.descriptionTranslation
+                    ? t(searchResultItem.descriptionTranslation.key, {
+                          ns: searchResultItem.descriptionTranslation.namespace,
+                      })
+                    : searchResultItem.description}
+            </Text>
         </div>
     );
 };
