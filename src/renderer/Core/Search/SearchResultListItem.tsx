@@ -49,12 +49,10 @@ export const SearchResultListItem = ({
             onClick={onClick}
             onDoubleClick={onDoubleClick}
             style={{
-                backgroundColor: isSelected ? theme.colorSubtleBackgroundHover : undefined,
+                position: "relative",
+                backgroundColor: isSelected ? theme.colorSubtleBackgroundSelected : undefined,
                 boxSizing: "border-box",
                 color: isSelected ? theme.colorNeutralForeground1Selected : undefined,
-                borderStyle: "solid",
-                borderWidth: "1px",
-                borderColor: isSelected ? theme.colorNeutralStroke1 : "transparent",
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
@@ -67,6 +65,18 @@ export const SearchResultListItem = ({
                 borderRadius: theme.borderRadiusMedium,
             }}
         >
+            <div
+                style={{
+                    position: "absolute",
+                    left: 0,
+                    top: "50%",
+                    backgroundColor: isSelected ? theme.colorBrandForeground1 : "transparent",
+                    height: 16,
+                    width: 3,
+                    transform: "translateY(-50%)",
+                    borderRadius: theme.borderRadiusLarge,
+                }}
+            ></div>
             <div
                 style={{
                     alignItems: "center",
