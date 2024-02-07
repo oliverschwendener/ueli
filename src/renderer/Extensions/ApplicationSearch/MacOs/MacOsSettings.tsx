@@ -9,12 +9,10 @@ export const MacOsSettings = () => {
     const { contextBridge } = useContextBridge();
 
     const extensionId = "ApplicationSearch";
-    const settingKey = "macOsFolders";
-    const defaultValue = contextBridge.getExtensionSettingDefaultValue<string[]>(extensionId, settingKey);
 
     const [newValue, setNewValue] = useState<string>("");
 
-    const { value, updateValue } = useExtensionSetting(extensionId, settingKey, defaultValue);
+    const { value, updateValue } = useExtensionSetting<string[]>({ extensionId, key: "macOsFolders" });
 
     const removeFolder = async (indexToRemove: number) => {
         await updateValue(value.filter((_, index) => index !== indexToRemove));

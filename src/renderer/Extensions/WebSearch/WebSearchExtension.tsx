@@ -6,11 +6,7 @@ import type { SearchResultItem } from "@common/Core";
 export const WebSearchExtension = (props: ExtensionProps) => {
     const { contextBridge } = props;
 
-    const { value: searchEngine } = useExtensionSetting<string>(
-        "WebSearch",
-        "searchEngine",
-        contextBridge.getExtensionSettingDefaultValue("WebSearch", "searchEngine"),
-    );
+    const { value: searchEngine } = useExtensionSetting<string>({ extensionId: "WebSearch", key: "searchEngine" });
 
     const search = async (searchTerm: string) => {
         return searchTerm

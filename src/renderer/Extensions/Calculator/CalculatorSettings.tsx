@@ -1,4 +1,4 @@
-import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
+import { useExtensionSetting } from "@Core/Hooks";
 import { Section } from "@Core/Settings/Section";
 import { SectionList } from "@Core/Settings/SectionList";
 import { Field, Input, SpinButton } from "@fluentui/react-components";
@@ -7,27 +7,23 @@ import { useTranslation } from "react-i18next";
 export const CalculatorSettings = () => {
     const extensionId = "Calculator";
 
-    const { contextBridge } = useContextBridge();
     const { t } = useTranslation();
     const ns = "extension[Calculator]";
 
-    const { value: precision, updateValue: setPrecision } = useExtensionSetting<number>(
+    const { value: precision, updateValue: setPrecision } = useExtensionSetting<number>({
         extensionId,
-        "precision",
-        contextBridge.getExtensionSettingDefaultValue(extensionId, "precision"),
-    );
+        key: "precision",
+    });
 
-    const { value: decimalSeparator, updateValue: setDecimalSeparator } = useExtensionSetting<string>(
+    const { value: decimalSeparator, updateValue: setDecimalSeparator } = useExtensionSetting<string>({
         extensionId,
-        "decimalSeparator",
-        contextBridge.getExtensionSettingDefaultValue(extensionId, "decimalSeparator"),
-    );
+        key: "decimalSeparator",
+    });
 
-    const { value: argumentSeparator, updateValue: setArgumentSeparator } = useExtensionSetting<string>(
+    const { value: argumentSeparator, updateValue: setArgumentSeparator } = useExtensionSetting<string>({
         extensionId,
-        "argumentSeparator",
-        contextBridge.getExtensionSettingDefaultValue(extensionId, "argumentSeparator"),
-    );
+        key: "argumentSeparator",
+    });
 
     return (
         <SectionList>

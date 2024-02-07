@@ -25,17 +25,15 @@ export const Translator = ({ translatedText, setTranslatedText, contextBridge }:
     const [userInput, setUserInput] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(userInput.length > 0);
 
-    const { value: sourceLanguage, updateValue: setSourceLanguage } = useExtensionSetting<string>(
+    const { value: sourceLanguage, updateValue: setSourceLanguage } = useExtensionSetting<string>({
         extensionId,
-        "defaultSourceLanguage",
-        contextBridge.getExtensionSettingDefaultValue(extensionId, "defaultSourceLanguage"),
-    );
+        key: "defaultSourceLanguage",
+    });
 
-    const { value: targetLanguage, updateValue: setTargetLanguage } = useExtensionSetting<string>(
+    const { value: targetLanguage, updateValue: setTargetLanguage } = useExtensionSetting<string>({
         extensionId,
-        "defaultTargetLanguage",
-        contextBridge.getExtensionSettingDefaultValue(extensionId, "defaultTargetLanguage"),
-    );
+        key: "defaultTargetLanguage",
+    });
 
     const [clearTimeoutValue, setClearTimeoutValue] = useState<NodeJS.Timeout | undefined>(undefined);
 

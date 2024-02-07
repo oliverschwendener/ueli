@@ -1,4 +1,4 @@
-import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
+import { useExtensionSetting } from "@Core/Hooks";
 import { Section } from "@Core/Settings/Section";
 import { SectionList } from "@Core/Settings/SectionList";
 import {
@@ -21,16 +21,13 @@ import { sourceLanguages } from "./sourceLanguages";
 import { targetLanguages } from "./targetLanguages";
 
 export const DeeplTranslatorSettings = () => {
-    const { contextBridge } = useContextBridge();
-
     const extensionId = "DeeplTranslator";
 
-    const { value: apiKey, updateValue: setApiKey } = useExtensionSetting<string>(
+    const { value: apiKey, updateValue: setApiKey } = useExtensionSetting<string>({
         extensionId,
-        "apiKey",
-        contextBridge.getExtensionSettingDefaultValue(extensionId, "apiKey"),
-        true,
-    );
+        key: "apiKey",
+        isSensitive: true,
+    });
 
     const apiKeyToasterId = useId("apiKeyToaster");
     const { dispatchToast } = useToastController(apiKeyToasterId);
@@ -58,17 +55,15 @@ export const DeeplTranslatorSettings = () => {
         );
     };
 
-    const { value: sourceLanguage, updateValue: setSourceLanguage } = useExtensionSetting<string>(
+    const { value: sourceLanguage, updateValue: setSourceLanguage } = useExtensionSetting<string>({
         extensionId,
-        "defaultSourceLanguage",
-        contextBridge.getExtensionSettingDefaultValue(extensionId, "defaultSourceLanguage"),
-    );
+        key: "defaultSourceLanguage",
+    });
 
-    const { value: targetLanguage, updateValue: setTargetLanguage } = useExtensionSetting<string>(
+    const { value: targetLanguage, updateValue: setTargetLanguage } = useExtensionSetting<string>({
         extensionId,
-        "defaultTargetLanguage",
-        contextBridge.getExtensionSettingDefaultValue(extensionId, "defaultTargetLanguage"),
-    );
+        key: "defaultTargetLanguage",
+    });
 
     const sourceLanguageVirutalizer = useStaticVirtualizerMeasure({
         defaultItemSize: 20,

@@ -5,18 +5,14 @@ import { Dropdown, Field, Option } from "@fluentui/react-components";
 
 export const WebSearchSettings = () => {
     const { contextBridge } = useContextBridge();
+    const extensionId = "WebSearch";
 
-    const { value: searchEngine, updateValue: setSearchEngine } = useExtensionSetting<string>(
-        "WebSearch",
-        "searchEngine",
-        contextBridge.getExtensionSettingDefaultValue("WebSearch", "searchEngine"),
-    );
+    const { value: searchEngine, updateValue: setSearchEngine } = useExtensionSetting<string>({
+        extensionId,
+        key: "searchEngine",
+    });
 
-    const { value: locale, updateValue: setLocale } = useExtensionSetting<string>(
-        "WebSearch",
-        "locale",
-        contextBridge.getExtensionSettingDefaultValue("WebSearch", "locale"),
-    );
+    const { value: locale, updateValue: setLocale } = useExtensionSetting<string>({ extensionId, key: "locale" });
 
     const searchEngines = ["Google", "DuckDuckGo"];
 

@@ -17,7 +17,11 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
 
     const extensionImageUrl = () => contextBridge.getExtension(extensionId).imageUrl;
 
-    const { value: apiKey, updateValue: setApiKey } = useExtensionSetting(extensionId, "apiKey", "", true);
+    const { value: apiKey, updateValue: setApiKey } = useExtensionSetting({
+        extensionId,
+        key: "apiKey",
+        isSensitive: true,
+    });
 
     const [translatedText, setTranslatedText] = useState<string>("");
 

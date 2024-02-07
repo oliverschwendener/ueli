@@ -16,23 +16,17 @@ export const BrowserBookmarksSettings = () => {
     const searchResultStyles = ["nameOnly", "urlOnly", "nameAndUrl"];
     const faviconApis = ["Google", "favicone.com"];
 
-    const { value: browser, updateValue: setBrowser } = useExtensionSetting<Browser>(
-        extensionId,
-        "browser",
-        contextBridge.getExtensionSettingDefaultValue(extensionId, "browser"),
-    );
+    const { value: browser, updateValue: setBrowser } = useExtensionSetting<Browser>({ extensionId, key: "browser" });
 
-    const { value: searchResultStyle, updateValue: setSearchResultStyle } = useExtensionSetting<string>(
+    const { value: searchResultStyle, updateValue: setSearchResultStyle } = useExtensionSetting<string>({
         extensionId,
-        "searchResultStyle",
-        contextBridge.getExtensionSettingDefaultValue(extensionId, "searchResultStyle"),
-    );
+        key: "searchResultStyle",
+    });
 
-    const { value: faviconApi, updateValue: setFaviconApi } = useExtensionSetting<string>(
+    const { value: faviconApi, updateValue: setFaviconApi } = useExtensionSetting<string>({
         extensionId,
-        "faviconApi",
-        contextBridge.getExtensionSettingDefaultValue(extensionId, "faviconApi"),
-    );
+        key: "faviconApi",
+    });
 
     return (
         <SectionList>
