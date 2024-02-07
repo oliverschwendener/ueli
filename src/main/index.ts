@@ -47,7 +47,6 @@ import * as Extensions from "./Extensions";
     Core.TranslatorModule.bootstrap(dependencyRegistry);
     Core.SearchIndexModule.bootstrap(dependencyRegistry);
     Core.NativeThemeModule.bootstrap(dependencyRegistry);
-    await Core.BrowserWindowModule.bootstrap(dependencyRegistry);
     Core.GlobalShortcutModule.bootstrap(dependencyRegistry);
     Core.AutostartModule.bootstrap(dependencyRegistry);
     Core.ExcludedSearchResultsModule.bootstrap(dependencyRegistry);
@@ -62,4 +61,7 @@ import * as Extensions from "./Extensions";
     // Extensions
     Extensions.ExtensionLoader.bootstrap(dependencyRegistry);
     await Core.ExtensionManagerModule.bootstrap(dependencyRegistry);
+
+    // BrowserWindow
+    await Core.BrowserWindowModule.bootstrap(dependencyRegistry);
 })();
