@@ -5,6 +5,11 @@ import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Co
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { WebSearchEngine } from "./WebSearchEngine";
 
+type Settings = {
+    searchEngine: string;
+    locale: string;
+};
+
 export class WebSearchExtension implements Extension {
     public readonly id = "WebSearch";
     public readonly name = "Web Search";
@@ -19,7 +24,7 @@ export class WebSearchExtension implements Extension {
         githubUserName: "oliverschwendener",
     };
 
-    private readonly defaultSettings = {
+    private readonly defaultSettings: Settings = {
         searchEngine: "Google",
         locale: "en-US",
     };

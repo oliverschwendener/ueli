@@ -26,6 +26,12 @@ type ApiResponse = {
     }[];
 };
 
+type Settings = {
+    apiKey: string;
+    defaultSourceLanguage: string;
+    defaultTargetLanguage: string;
+};
+
 export class DeeplTranslatorExtension implements Extension {
     public readonly id = "DeeplTranslator";
     public readonly name = "DeepL Translator";
@@ -40,7 +46,7 @@ export class DeeplTranslatorExtension implements Extension {
         githubUserName: "oliverschwendener",
     };
 
-    private readonly defaultSettings = {
+    private readonly defaultSettings: Settings = {
         apiKey: "",
         defaultSourceLanguage: "Auto",
         defaultTargetLanguage: "EN-US",

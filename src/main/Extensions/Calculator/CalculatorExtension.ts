@@ -5,6 +5,12 @@ import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Co
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import { Calculator } from "./Calculator";
 
+type Settings = {
+    precision: number;
+    decimalSeparator: string;
+    argumentSeparator: string;
+};
+
 export class CalculatorExtension implements Extension {
     public readonly id = "Calculator";
     public readonly name = "Calculator";
@@ -14,7 +20,7 @@ export class CalculatorExtension implements Extension {
         namespace: "extension[Calculator]",
     };
 
-    private readonly defaultSettings = {
+    private readonly defaultSettings: Settings = {
         precision: 8,
         decimalSeparator: ".",
         argumentSeparator: ",",

@@ -6,6 +6,12 @@ import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Browser } from "@common/Extensions/BrowserBookmarks";
 import type { BrowserBookmarkRepository } from "./BrowserBookmarkRepository";
 
+type Settings = {
+    browser: Browser;
+    searchResultStyle: string;
+    faviconApi: string;
+};
+
 export class BrowserBookmarks implements Extension {
     public readonly id = "BrowserBookmarks";
     public readonly name = "Browser Bookmarks";
@@ -20,7 +26,7 @@ export class BrowserBookmarks implements Extension {
         githubUserName: "oliverschwendener",
     };
 
-    private readonly defaultSettings = {
+    private readonly defaultSettings: Settings = {
         browser: "Google Chrome",
         searchResultStyle: "nameOnly",
         faviconApi: "Google",
