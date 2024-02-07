@@ -11,7 +11,11 @@ export const Favorites = () => {
     const ns = "settingsFavorites";
     const { searchResultItems } = useSearchResultItems();
     const { favorites } = useFavorites();
-    const { value: numberOfColumns, updateValue: setNumberOfColumns } = useSetting("favorites.numberOfColumns", 3);
+
+    const { value: numberOfColumns, updateValue: setNumberOfColumns } = useSetting({
+        key: "favorites.numberOfColumns",
+        defaultValue: 3,
+    });
 
     const removeFavorite = async (id: string) => {
         await contextBridge.removeFavorite(id);

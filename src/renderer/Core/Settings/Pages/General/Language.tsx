@@ -11,12 +11,12 @@ export const Language = () => {
         { name: "Deutsch (Schweiz)", locale: "de-CH" },
     ];
 
-    const { value: language, updateValue: setLanguage } = useSetting(
-        "general.language",
-        "en-US",
-        false,
-        (updatedLanguage) => changeLanguage(updatedLanguage),
-    );
+    const { value: language, updateValue: setLanguage } = useSetting({
+        key: "general.language",
+        defaultValue: "en-US",
+        isSensitive: false,
+        onUpdate: (updatedLanguage) => changeLanguage(updatedLanguage),
+    });
 
     return (
         <Field label={t("language", { ns: "settingsGeneral" })}>

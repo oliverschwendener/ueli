@@ -23,7 +23,7 @@ export const FavoritesList = ({ invokeSearchResultItem }: FavoritesListProps) =>
     const { searchResultItems } = useSearchResultItems();
     const { favorites } = useFavorites();
 
-    const { value: numberOfColumns } = useSetting("favorites.numberOfColumns", 3);
+    const { value: numberOfColumns } = useSetting({ key: "favorites.numberOfColumns", defaultValue: 3 });
 
     const favoriteSearchResultItems = searchResultItems.filter((s) => favorites.includes(s.id));
 

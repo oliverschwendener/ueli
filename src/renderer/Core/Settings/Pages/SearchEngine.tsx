@@ -12,18 +12,25 @@ export const SearchEngine = () => {
     const { contextBridge } = useContextBridge();
     const { searchResultItems } = useSearchResultItems();
 
-    const { value: automaticRescanEnabled, updateValue: setAutomaticRescanEnabled } = useSetting(
-        "searchEngine.automaticRescan",
-        true,
-    );
-    const { value: rescanIntervalInSeconds, updateValue: setRescanIntervalInSeconds } = useSetting(
-        "searchEngine.rescanIntervalInSeconds",
-        60,
-    );
+    const { value: automaticRescanEnabled, updateValue: setAutomaticRescanEnabled } = useSetting({
+        key: "searchEngine.automaticRescan",
+        defaultValue: true,
+    });
 
-    const { value: fuzziness, updateValue: setFuzziness } = useSetting("searchEngine.fuzziness", 0.5);
+    const { value: rescanIntervalInSeconds, updateValue: setRescanIntervalInSeconds } = useSetting({
+        key: "searchEngine.rescanIntervalInSeconds",
+        defaultValue: 60,
+    });
 
-    const { value: maxResultLength, updateValue: setMaxResultLength } = useSetting("searchEngine.maxResultLength", 50);
+    const { value: fuzziness, updateValue: setFuzziness } = useSetting({
+        key: "searchEngine.fuzziness",
+        defaultValue: 0.5,
+    });
+
+    const { value: maxResultLength, updateValue: setMaxResultLength } = useSetting({
+        key: "searchEngine.maxResultLength",
+        defaultValue: 50,
+    });
 
     const [excludedIds, setExcludedIds] = useState<string[]>(contextBridge.getExcludedSearchResultItemIds());
 

@@ -24,7 +24,7 @@ export const HotKey = () => {
     const { contextBridge } = useContextBridge();
     const { dispatchToast } = useToastController(hotkeyToasterId);
 
-    const { value: hotkey, updateValue: setHotkey } = useSetting("general.hotkey", "Alt+Space");
+    const { value: hotkey, updateValue: setHotkey } = useSetting({ key: "general.hotkey", defaultValue: "Alt+Space" });
 
     const [temporaryHotkey, setTemporaryHotkey] = useState<string>(hotkey);
     const [isValidTemporaryHotkey, setIsValidTemporaryHotkey] = useState<boolean>(true);

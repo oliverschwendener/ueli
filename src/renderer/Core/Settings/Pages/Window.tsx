@@ -12,21 +12,27 @@ export const Window = () => {
 
     const operatingSystem = contextBridge.getOperatingSystem();
 
-    const { value: hideWindowOnBlur, updateValue: setHideWindowOnBlur } = useSetting("window.hideWindowOnBlur", true);
+    const { value: hideWindowOnBlur, updateValue: setHideWindowOnBlur } = useSetting({
+        key: "window.hideWindowOnBlur",
+        defaultValue: true,
+    });
 
-    const { value: hideWindowAfterExecution, updateValue: setHideWindowAfterExecution } = useSetting(
-        "window.hideWindowAfterExecution",
-        true,
-    );
+    const { value: hideWindowAfterExecution, updateValue: setHideWindowAfterExecution } = useSetting({
+        key: "window.hideWindowAfterExecution",
+        defaultValue: true,
+    });
 
-    const { value: backgroundMaterial, updateValue: setBackgroundMaterial } = useSetting(
-        "window.backgroundMaterial",
-        "Mica",
-    );
+    const { value: backgroundMaterial, updateValue: setBackgroundMaterial } = useSetting({
+        key: "window.backgroundMaterial",
+        defaultValue: "Mica",
+    });
 
-    const { value: acrylicOpacity, updateValue: setAcrylicOpacity } = useSetting("window.acrylicOpacity", 0.6);
+    const { value: acrylicOpacity, updateValue: setAcrylicOpacity } = useSetting({
+        key: "window.acrylicOpacity",
+        defaultValue: 0.6,
+    });
 
-    const { value: vibrancy, updateValue: setVibrancy } = useSetting("window.vibrancy", "None");
+    const { value: vibrancy, updateValue: setVibrancy } = useSetting({ key: "window.vibrancy", defaultValue: "None" });
 
     const backgroundMaterialOptions = ["Acrylic", "Mica", "None", "Tabbed"];
 

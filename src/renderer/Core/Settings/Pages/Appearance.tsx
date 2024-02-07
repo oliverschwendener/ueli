@@ -20,26 +20,26 @@ export const Appearance = () => {
 
     const updateTheme = () => setTheme(getTheme(contextBridge));
 
-    const { value: themeName, updateValue: setThemeName } = useSetting<string>(
-        "appearance.themeName",
-        "Fluent UI Web",
-        false,
-        updateTheme,
-    );
+    const { value: themeName, updateValue: setThemeName } = useSetting<string>({
+        key: "appearance.themeName",
+        defaultValue: "Fluent UI Web",
+        isSensitive: false,
+        onUpdate: () => updateTheme(),
+    });
 
-    const { value: darkVariants, updateValue: setDarkVariants } = useSetting<BrandVariants>(
-        "appearance.customDarkThemeVariants",
-        darkTheme,
-        false,
-        updateTheme,
-    );
+    const { value: darkVariants, updateValue: setDarkVariants } = useSetting<BrandVariants>({
+        key: "appearance.customDarkThemeVariants",
+        defaultValue: darkTheme,
+        isSensitive: false,
+        onUpdate: () => updateTheme,
+    });
 
-    const { value: lightVariants, updateValue: setLightVariants } = useSetting<BrandVariants>(
-        "appearance.customLightThemeVariants",
-        lightTheme,
-        false,
-        updateTheme,
-    );
+    const { value: lightVariants, updateValue: setLightVariants } = useSetting<BrandVariants>({
+        key: "appearance.customLightThemeVariants",
+        defaultValue: lightTheme,
+        isSensitive: false,
+        onUpdate: () => updateTheme,
+    });
 
     const themes = [
         { value: "Microsoft Teams", label: "Microsoft Teams" },

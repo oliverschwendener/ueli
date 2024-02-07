@@ -50,8 +50,8 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
         setInstantSearchResultItems(contextBridge.getInstantSearchResultItems(updatedSearchTerm));
     };
 
-    const { value: fuzziness } = useSetting("searchEngine.fuzziness", 0.5);
-    const { value: maxResultLength } = useSetting("searchEngine.maxResultLength", 50);
+    const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
+    const { value: maxResultLength } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
 
     const filteredSearchResultItems = [
         ...instantSearchResultItems,

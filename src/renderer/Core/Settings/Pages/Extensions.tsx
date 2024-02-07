@@ -32,10 +32,10 @@ export const Extensions = () => {
         extensionEnabled: enableExtension,
     } = contextBridge;
 
-    const { value: enabledExtensionIds, updateValue: setEnabledExtensionIds } = useSetting(
-        "extensions.enabledExtensionIds",
-        ["ApplicationSearch", "UeliCommand"],
-    );
+    const { value: enabledExtensionIds, updateValue: setEnabledExtensionIds } = useSetting({
+        key: "extensions.enabledExtensionIds",
+        defaultValue: ["ApplicationSearch", "UeliCommand"],
+    });
 
     const isEnabled = (extensionId: string) => enabledExtensionIds.includes(extensionId);
 

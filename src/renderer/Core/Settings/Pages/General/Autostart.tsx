@@ -5,7 +5,10 @@ import { useTranslation } from "react-i18next";
 export const Autostart = () => {
     const { t } = useTranslation();
 
-    const { value: autostartApp, updateValue: setAutostartApp } = useSetting<boolean>("general.autostartApp", false);
+    const { value: autostartApp, updateValue: setAutostartApp } = useSetting<boolean>({
+        key: "general.autostartApp",
+        defaultValue: false,
+    });
 
     return (
         <Field label={t("autostart", { ns: "settingsGeneral" })}>
