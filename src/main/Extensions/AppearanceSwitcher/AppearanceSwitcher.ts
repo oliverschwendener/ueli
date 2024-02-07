@@ -33,6 +33,8 @@ export class AppearanceSwitcher implements Extension {
                 id: "AppearanceSwitcher:toggle",
                 name: t("searchResultItem.name"),
                 imageUrl: this.getSearchResultItemImageUrl(),
+                imageUrlOnDarkBackground: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "switch-to-light-mode.png")}`,
+                imageUrlOnLightBackground: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "switch-to-dark-mode.png")}`,
                 defaultAction: {
                     argument: "toggle",
                     description: t("searchResultItem.actionDescription"),
@@ -63,7 +65,7 @@ export class AppearanceSwitcher implements Extension {
 
     private getSearchResultItemImageUrl(): string {
         const map = {
-            macOS: "macos-toggle-appearance-2.png",
+            macOS: "macos-appearance.png",
             Windows: "windows-11-logo.webp",
         };
 

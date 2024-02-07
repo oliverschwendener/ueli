@@ -22,6 +22,7 @@ export type ContextBridge = {
     getExtensionSettingDefaultValue: <Value>(extensionId: string, settingKey: string) => Value;
     getFavorites: () => string[];
     getLogs: () => string[];
+    getInstantSearchResultItems: (searchTerm: string) => SearchResultItem[];
     getOperatingSystem: () => OperatingSystem;
     getSearchResultItems: () => SearchResultItem[];
     getSettingValue: <Value>(key: string, defaultValue: Value, isSensitive?: boolean) => Value;

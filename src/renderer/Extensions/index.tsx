@@ -2,6 +2,7 @@ import { useExtensionProps } from "@Core/Hooks";
 import type { ReactElement } from "react";
 import { ApplicationSearchSettings } from "./ApplicationSearch";
 import { BrowserBookmarksSettings } from "./BrowserBookmarks";
+import { CalculatorSettings } from "./Calculator";
 import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
 import { WebSearchExtension } from "./WebSearch";
 import { WebSearchSettings } from "./WebSearch/WebSearchSettings";
@@ -20,6 +21,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         },
         BrowserBookmarks: {
             settings: <BrowserBookmarksSettings />,
+        },
+        Calculator: {
+            settings: <CalculatorSettings />,
         },
         DeeplTranslator: {
             extension: <DeeplTranslator {...props} />,

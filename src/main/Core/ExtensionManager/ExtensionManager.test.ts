@@ -68,4 +68,41 @@ describe(ExtensionManager, () => {
 
         expect(extensionManager.getEnabledExtensions()).toEqual([extension1]);
     });
+
+    it("should get all instant search result items", () => {
+        const getInstantSearchResultItem = (extensionId: string): SearchResultItem =>
+            <SearchResultItem>{ id: `instant-result-item-${extensionId}` };
+
+        const getInstantSearchResultItemsMock = vi.fn();
+
+        const extension1 = <Extension>{
+            id: "extension1",
+            isSupported: () => true,
+            getInstantSearchResultItems: (s) => {
+                getInstantSearchResultItemsMock(s);
+                return [getInstantSearchResultItem("extension1")];
+            },
+        };
+
+        const extension2 = <Extension>{
+            id: "extension2",
+            isSupported: () => true,
+            getInstantSearchResultItems: (s) => {
+                getInstantSearchResultItemsMock(s);
+                return [getInstantSearchResultItem("extension2")];
+            },
+        };
+
+        const extensionRegistry = <ExtensionRegistry>{ getAll: () => [extension1, extension2] };
+        const getValueMock = vi.fn().mockReturnValue([extension1.id, extension2.id]);
+        const settingsManager = <SettingsManager>{ getValue: (key, defaultValue) => getValueMock(key, defaultValue) };
+
+        const extensionManager = new ExtensionManager(extensionRegistry, <SearchIndex>{}, settingsManager, <Logger>{});
+
+        const actual = extensionManager.getInstantSearchResultItems("search term");
+
+        expect(actual).toEqual([getInstantSearchResultItem("extension1"), getInstantSearchResultItem("extension2")]);
+        expect(getInstantSearchResultItemsMock).toHaveBeenCalledTimes(2);
+        expect(getInstantSearchResultItemsMock).toHaveBeenCalledWith("search term");
+    });
 });

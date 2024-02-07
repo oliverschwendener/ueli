@@ -2,10 +2,10 @@ import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
-import { BrowserBookmarksExtension } from "./BrowserBookmarksExtension";
+import { BrowserBookmarks } from "./BrowserBookmarks";
 import { ChromiumBrowserBookmarkRepository } from "./ChromiumBrowserBookmarkRepository";
 
-export class BrowserBookmarksExtensionModule implements ExtensionModule {
+export class BrowserBookmarksModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
         const app = dependencyRegistry.get("App");
         const fileSystemUtility = dependencyRegistry.get("FileSystemUtility");
@@ -14,7 +14,7 @@ export class BrowserBookmarksExtensionModule implements ExtensionModule {
         const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
 
         return {
-            extension: new BrowserBookmarksExtension(
+            extension: new BrowserBookmarks(
                 new ChromiumBrowserBookmarkRepository(app, fileSystemUtility, operatingSystem),
                 settingsManager,
                 assetPathResolver,

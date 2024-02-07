@@ -2,19 +2,21 @@ import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { AppearanceSwitcherModule } from "./AppearanceSwitcher";
 import { ApplicationSearchModule } from "./ApplicationSearch";
-import { BrowserBookmarksExtensionModule } from "./BrowserBookmarksExtension/BrowserBookmarksExtensionModule";
+import { BrowserBookmarksModule } from "./BrowserBookmarks";
+import { CalculatorModule } from "./Calculator";
 import { DeeplTranslatorModule } from "./DeeplTranslator";
 import { ExtensionModule } from "./ExtensionModule";
-import { SystemSettingsModule } from "./SystemSettings/SystemSettingsModule";
+import { SystemSettingsModule } from "./SystemSettings";
 import { UeliCommandModule } from "./UeliCommand";
-import { WebSearchExtensionModule } from "./WebSearch/WebSearchExtensionModule.ts";
+import { WebSearchExtensionModule } from "./WebSearch";
 
 export class ExtensionLoader {
     private static getAllExtensionModules(): ExtensionModule[] {
         return [
             new AppearanceSwitcherModule(),
             new ApplicationSearchModule(),
-            new BrowserBookmarksExtensionModule(),
+            new BrowserBookmarksModule(),
+            new CalculatorModule(),
             new DeeplTranslatorModule(),
             new SystemSettingsModule(),
             new UeliCommandModule(),

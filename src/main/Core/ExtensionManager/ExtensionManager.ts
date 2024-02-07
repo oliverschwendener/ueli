@@ -2,6 +2,7 @@ import type { ExtensionRegistry } from "@Core/ExtensionRegistry";
 import type { Logger } from "@Core/Logger";
 import type { SearchIndex } from "@Core/SearchIndex";
 import type { SettingsManager } from "@Core/SettingsManager";
+import type { SearchResultItem } from "@common/Core";
 
 export class ExtensionManager {
     public constructor(
@@ -48,5 +49,21 @@ export class ExtensionManager {
                 .getValue<string[]>("extensions.enabledExtensionIds", ["ApplicationSearch", "UeliCommand"])
                 .includes(extension.id),
         );
+    }
+
+    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
+        const result: SearchResultItem[] = [];
+
+        for (const extension of this.getEnabledExtensions()) {
+            const searchResultItems = extension.getInstantSearchResultItems
+                ? extension.getInstantSearchResultItems(searchTerm)
+                : [];
+
+            for (const searchResultItem of searchResultItems) {
+                result.push(searchResultItem);
+            }
+        }
+
+        return result;
     }
 }

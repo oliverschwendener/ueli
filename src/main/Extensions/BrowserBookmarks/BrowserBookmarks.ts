@@ -6,7 +6,7 @@ import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Browser } from "@common/Extensions/BrowserBookmarks";
 import type { BrowserBookmarkRepository } from "./BrowserBookmarkRepository";
 
-export class BrowserBookmarksExtension implements Extension {
+export class BrowserBookmarks implements Extension {
     public readonly id = "BrowserBookmarks";
     public readonly name = "Browser Bookmarks";
 

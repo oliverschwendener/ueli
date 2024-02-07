@@ -19,6 +19,7 @@ export interface Extension {
     getSettingDefaultValue<T>(key: string): T;
     getImageUrl(): string;
 
+    getInstantSearchResultItems?(searchTerm: string): SearchResultItem[];
     invoke?(argument: unknown): Promise<unknown>;
     getAssetFilePath?(key: string): string;
     getSettingKeysTriggeringRescan?(): string[];

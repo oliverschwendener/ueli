@@ -20,6 +20,8 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
         ipcRenderer.sendSync("getExtensionSettingDefaultValue", { extensionId, settingKey }),
     getFavorites: () => ipcRenderer.sendSync("getFavorites"),
     getLogs: () => ipcRenderer.sendSync("getLogs"),
+    getInstantSearchResultItems: (searchTerm: string) =>
+        ipcRenderer.sendSync("getInstantSearchResultItems", { searchTerm }),
     getOperatingSystem: () => ipcRenderer.sendSync("getOperatingSystem"),
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
     getSettingValue: (key, defaultValue, isSensitive) =>

@@ -28,6 +28,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
     const [confirmationDialogAction, setConfirmationDialogAction] = useState<SearchResultItemAction | undefined>(
         undefined,
     );
+    const [instantSearchResultItems, setInstantSearchResultItems] = useState<SearchResultItem[]>([]);
     const userInputRef = useRef<HTMLInputElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
@@ -43,16 +44,23 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
 
     const navigate = useNavigate();
     const openSettings = () => navigate({ pathname: "/settings/general" });
-    const search = (updatedSearchTerm: string) => setSearchTerm(updatedSearchTerm);
+
+    const search = (updatedSearchTerm: string) => {
+        setSearchTerm(updatedSearchTerm);
+        setInstantSearchResultItems(contextBridge.getInstantSearchResultItems(updatedSearchTerm));
+    };
 
     const { value: fuzziness } = useSetting("searchEngine.fuzziness", 0.5);
     const { value: maxResultLength } = useSetting("searchEngine.maxResultLength", 50);
 
-    const filteredSearchResultItems = filterSearchResultItemsBySearchTerm({
-        searchResultItems,
-        excludedIds: excludedSearchResultItemIds,
-        searchOptions: { searchTerm, fuzziness, maxResultLength },
-    });
+    const filteredSearchResultItems = [
+        ...instantSearchResultItems,
+        ...filterSearchResultItemsBySearchTerm({
+            searchResultItems,
+            excludedIds: excludedSearchResultItemIds,
+            searchOptions: { searchTerm, fuzziness, maxResultLength },
+        }),
+    ];
 
     const selectNextSearchResultItem = () =>
         setSelectedSearchResultItemIndex(
