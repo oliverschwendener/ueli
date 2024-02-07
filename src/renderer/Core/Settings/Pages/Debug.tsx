@@ -59,8 +59,11 @@ export const Debug = () => {
                             fontFamily: theme.fontFamilyMonospace,
                             fontSize: theme.fontSizeBase200,
                             resize: "vertical",
-                            background: "transparent",
+                            background: theme.colorNeutralBackground1,
                             color: theme.colorNeutralForeground1,
+                            borderRadius: theme.borderRadiusMedium,
+                            padding: 10,
+                            boxSizing: "border-box",
                         }}
                     />
                 </Field>
