@@ -1,7 +1,7 @@
 import { darkTheme, lightTheme } from "@Core/Theme/defaultValues";
 import { BrandVariants, Button, Dropdown, Field, Input, Option, Tooltip } from "@fluentui/react-components";
 import { ArrowCounterclockwiseRegular } from "@fluentui/react-icons";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting } from "../../Hooks";
 import { getAvailableThemes, getTheme } from "../../Theme";
@@ -18,27 +18,22 @@ export const Appearance = () => {
 
     const availableThemes = getAvailableThemes();
 
-    const updateTheme = () => setTheme(getTheme(contextBridge));
-
     const { value: themeName, updateValue: setThemeName } = useSetting<string>({
         key: "appearance.themeName",
         defaultValue: "Fluent UI Web",
         isSensitive: false,
-        onUpdate: () => updateTheme(),
     });
 
     const { value: darkVariants, updateValue: setDarkVariants } = useSetting<BrandVariants>({
         key: "appearance.customDarkThemeVariants",
         defaultValue: darkTheme,
         isSensitive: false,
-        onUpdate: () => updateTheme,
     });
 
     const { value: lightVariants, updateValue: setLightVariants } = useSetting<BrandVariants>({
         key: "appearance.customLightThemeVariants",
         defaultValue: lightTheme,
         isSensitive: false,
-        onUpdate: () => updateTheme,
     });
 
     const themes = [
@@ -46,6 +41,18 @@ export const Appearance = () => {
         { value: "Fluent UI Web", label: "Fluent UI Web" },
         { value: "Custom", label: t("customTheme", { ns }) },
     ];
+
+    useEffect(() => {
+        const keys = [
+            "appearance.themeName",
+            "appearance.customDarkThemeVariants",
+            "appearance.customLightThemeVariants",
+        ];
+
+        for (const key of keys) {
+            contextBridge.ipcRenderer.on(`settingUpdated[${key}]`, () => setTheme(getTheme(contextBridge)));
+        }
+    }, []);
 
     return (
         <SectionList>

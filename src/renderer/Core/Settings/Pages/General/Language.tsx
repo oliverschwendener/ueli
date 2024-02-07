@@ -1,6 +1,5 @@
 import { useSetting } from "@Core/Hooks";
 import { Dropdown, Field, Option } from "@fluentui/react-components";
-import { changeLanguage } from "i18next";
 import { useTranslation } from "react-i18next";
 
 export const Language = () => {
@@ -15,7 +14,6 @@ export const Language = () => {
         key: "general.language",
         defaultValue: "en-US",
         isSensitive: false,
-        onUpdate: (updatedLanguage) => changeLanguage(updatedLanguage),
     });
 
     return (

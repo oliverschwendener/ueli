@@ -5,12 +5,10 @@ export const useSetting = <Value>({
     key,
     defaultValue,
     isSensitive,
-    onUpdate,
 }: {
     key: string;
     defaultValue: Value;
     isSensitive?: boolean;
-    onUpdate?: (updatedValue: Value) => void;
 }) => {
     const { contextBridge } = useContextBridge();
 
@@ -18,12 +16,7 @@ export const useSetting = <Value>({
 
     const updateValue = async (updatedValue: Value) => {
         setValue(updatedValue);
-
         await contextBridge.updateSettingValue(key, updatedValue, isSensitive);
-
-        if (onUpdate) {
-            onUpdate(updatedValue);
-        }
     };
 
     return { value, updateValue };
