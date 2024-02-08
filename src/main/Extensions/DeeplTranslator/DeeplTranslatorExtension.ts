@@ -71,6 +71,7 @@ export class DeeplTranslatorExtension implements Extension {
                 defaultAction: SearchResultItemActionUtility.createInvokeExtensionAction({
                     extensionId: this.id,
                     description: t("searchResultItem.actionDescription"),
+                    fluentIcon: "OpenRegular",
                 }),
             },
         ];
