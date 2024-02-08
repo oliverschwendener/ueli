@@ -26,7 +26,10 @@ export class ActionHandlerModule {
 
         const actionHandlers: ActionHandler[] = [
             new CommandlineActionHandler(dependencyRegistry.get("CommandlineUtility")),
-            new CopyToClipboardActionHandler(dependencyRegistry.get("Clipboard")),
+            new CopyToClipboardActionHandler(
+                dependencyRegistry.get("Clipboard"),
+                dependencyRegistry.get("EventEmitter"),
+            ),
             new ExcludeFromSearchResultsActionHandler(dependencyRegistry.get("ExcludedSearchResults")),
             new FavoritesActionHandler(dependencyRegistry.get("FavoriteManager")),
             new NavigateToActionHandler(eventEmitter),

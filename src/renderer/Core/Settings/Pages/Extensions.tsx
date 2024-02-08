@@ -61,7 +61,7 @@ export const Extensions = () => {
                     {t("successfulRescan", { ns })}
                 </ToastTitle>
             </Toast>,
-            { intent: "success" },
+            { intent: "success", position: "bottom" },
         );
     };
 
