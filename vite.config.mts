@@ -21,6 +21,7 @@ export default defineConfig(({ command }) => {
         build: {
             outDir: "../../dist-renderer",
             emptyOutDir: true,
+            chunkSizeWarningLimit: 1000,
         },
         plugins: [
             react(),
