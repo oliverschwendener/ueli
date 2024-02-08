@@ -46,7 +46,6 @@ export const SearchEngine = () => {
             <Section>
                 <Field label={t("automaticRescan", { ns })}>
                     <Switch
-                        aria-labelledby="searchEngine.automaticRescan"
                         checked={automaticRescanEnabled}
                         onChange={(_, { checked }) => setAutomaticRescanEnabled(checked)}
                     />
@@ -65,7 +64,6 @@ export const SearchEngine = () => {
             <Section>
                 <Field label={`${t("fuzziness", { ns })}: ${fuzziness}`} hint="0 = strict search, 1 = loose search">
                     <Slider
-                        aria-labelledby="searchEngine.fuzziness"
                         value={fuzziness}
                         min={0}
                         max={1}

@@ -4,6 +4,13 @@ import { NodeJsFileSystemUtility } from "./NodeJsFileSystemUtility";
 
 export class FileSystemUtilityModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        dependencyRegistry.register("FileSystemUtility", new NodeJsFileSystemUtility());
+        const ipcMain = dependencyRegistry.get("IpcMain");
+
+        const fileSystemUtility = new NodeJsFileSystemUtility();
+        dependencyRegistry.register("FileSystemUtility", fileSystemUtility);
+
+        ipcMain.on("fileExists", (event, { filePath }: { filePath: string }) => {
+            event.returnValue = fileSystemUtility.existsSync(filePath);
+        });
     }
 }

@@ -13,6 +13,7 @@ export type ContextBridge = {
     copyTextToClipboard: (textToCopy: string) => void;
     extensionDisabled: (extensionId: string) => void;
     extensionEnabled: (extensionId: string) => void;
+    fileExists: (filePath: string) => boolean;
     getAboutUeli: () => AboutUeli;
     getAvailableExtensions: () => ExtensionInfo[];
     getEnabledExtensions: () => ExtensionInfo[];

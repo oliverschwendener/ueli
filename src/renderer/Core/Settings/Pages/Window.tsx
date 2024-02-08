@@ -63,18 +63,13 @@ export const Window = () => {
         <SectionList>
             <Section>
                 <Field label={t("hideWindowOnBlur", { ns })}>
-                    <Switch
-                        aria-labelledby="window.hideWindowOnblur"
-                        checked={hideWindowOnBlur}
-                        onChange={(_, { checked }) => setHideWindowOnBlur(checked)}
-                    />
+                    <Switch checked={hideWindowOnBlur} onChange={(_, { checked }) => setHideWindowOnBlur(checked)} />
                 </Field>
             </Section>
 
             <Section>
                 <Field label={t("hideWindowAfterExecution", { ns })}>
                     <Switch
-                        aria-labelledby="window.hideWindowAfterExecution"
                         checked={hideWindowAfterExecution}
                         onChange={(_, { checked }) => setHideWindowAfterExecution(checked)}
                     />
@@ -85,7 +80,6 @@ export const Window = () => {
                 <Section>
                     <Field label="Background material">
                         <Dropdown
-                            aria-labelledby="window.backgroundMaterial"
                             value={backgroundMaterial}
                             onOptionSelect={(_, { optionValue }) => optionValue && setBackgroundMaterial(optionValue)}
                         >

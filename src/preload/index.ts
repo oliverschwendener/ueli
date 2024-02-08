@@ -1,7 +1,7 @@
 import type { ContextBridge } from "@common/Core";
 import { contextBridge, ipcRenderer } from "electron";
 
-contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
+const contextBridgeImplementation: ContextBridge = {
     ipcRenderer: {
         on: (channel, listener) => ipcRenderer.on(channel, listener),
     },
@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     copyTextToClipboard: (textToCopy) => ipcRenderer.send("copyTextToClipboard", { textToCopy }),
     extensionDisabled: (extensionId) => ipcRenderer.send("extensionDisabled", { extensionId }),
     extensionEnabled: (extensionId) => ipcRenderer.send("extensionEnabled", { extensionId }),
+    fileExists: (filePath: string) => ipcRenderer.sendSync("fileExists", { filePath }),
     getAboutUeli: () => ipcRenderer.sendSync("getAboutUeli"),
     getAvailableExtensions: () => ipcRenderer.sendSync("getAvailableExtensions"),
     getEnabledExtensions: () => ipcRenderer.sendSync("getEnabledExtensions"),
@@ -38,4 +39,6 @@ contextBridge.exposeInMainWorld("ContextBridge", <ContextBridge>{
     triggerExtensionRescan: (extensionId) => ipcRenderer.invoke("triggerExtensionRescan", { extensionId }),
     updateSettingValue: (key, value, isSensitive) =>
         ipcRenderer.invoke("updateSettingValue", { key, value, isSensitive }),
-});
+};
+
+contextBridge.exposeInMainWorld("ContextBridge", contextBridgeImplementation);
