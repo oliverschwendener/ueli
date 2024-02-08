@@ -63,7 +63,7 @@ export class Shortcuts implements Extension {
     }
 
     public isSupported(): boolean {
-        return this.operatingSystem === "macOS";
+        return true;
     }
 
     public getSettingDefaultValue<T>(key: string): T {
