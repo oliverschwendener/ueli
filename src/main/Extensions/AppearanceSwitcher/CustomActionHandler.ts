@@ -2,9 +2,16 @@ import type { ActionHandler } from "@Core/ActionHandler";
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
 import type { NativeTheme } from "electron";
+import type { SwitchTo } from "./SwitchTo";
 
 export class CustomActionHandler implements ActionHandler {
     public readonly id = "AppearanceSwitcher";
+
+    private readonly togglers: Record<OperatingSystem, (switchTo: SwitchTo) => Promise<void>> = {
+        Linux: () => null, // not supported
+        macOS: async (s) => await this.toggleMacOsSystemAppearance(s),
+        Windows: async (s) => await this.toggleWindowsSystemAppearance(s),
+    };
 
     public constructor(
         private readonly operatingSystem: OperatingSystem,
@@ -12,25 +19,15 @@ export class CustomActionHandler implements ActionHandler {
         private readonly nativeTheme: NativeTheme,
     ) {}
 
-    public invokeAction(action: SearchResultItemAction): Promise<void> {
+    public async invokeAction(action: SearchResultItemAction): Promise<void> {
         if (action.argument !== "toggle") {
             throw new Error(`Argument "${action.argument}" is not supported`);
         }
 
-        const switchTo = this.nativeTheme.shouldUseDarkColors ? "light" : "dark";
-
-        if (this.operatingSystem === "Windows") {
-            return this.toggleWindowsSystemAppearance(switchTo);
-        }
-
-        if (this.operatingSystem === "macOS") {
-            return this.toggleMacOsSystemAppearance(switchTo);
-        }
-
-        throw new Error(`Operating system "${this.operatingSystem} not supported"`);
+        await this.togglers[this.operatingSystem](this.nativeTheme.shouldUseDarkColors ? "light" : "dark");
     }
 
-    private async toggleWindowsSystemAppearance(to: "dark" | "light") {
+    private async toggleWindowsSystemAppearance(to: SwitchTo) {
         const windowsRegistryPath = "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
         const windowsRegistryValue = to === "light" ? "1" : "0";
 
@@ -42,7 +39,7 @@ export class CustomActionHandler implements ActionHandler {
         await this.commandlineUtility.executeCommand(`powershell -Command "& {${powershellCommands}}"`);
     }
 
-    private async toggleMacOsSystemAppearance(to: "dark" | "light") {
+    private async toggleMacOsSystemAppearance(to: SwitchTo) {
         const osaScriptValue = to === "light" ? "false" : "true";
 
         await this.commandlineUtility.executeCommand(
