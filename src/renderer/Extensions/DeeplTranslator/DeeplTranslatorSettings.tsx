@@ -1,22 +1,8 @@
 import { useExtensionSetting } from "@Core/Hooks";
 import { Section } from "@Core/Settings/Section";
 import { SectionList } from "@Core/Settings/SectionList";
-import {
-    Button,
-    Dropdown,
-    Field,
-    Input,
-    Option,
-    Toast,
-    ToastTitle,
-    Toaster,
-    Tooltip,
-    useId,
-    useToastController,
-} from "@fluentui/react-components";
+import { Dropdown, Field, Input, Option } from "@fluentui/react-components";
 import { Virtualizer, useStaticVirtualizerMeasure } from "@fluentui/react-components/unstable";
-import { DismissRegular, SaveRegular } from "@fluentui/react-icons";
-import { useState } from "react";
 import { sourceLanguages } from "./sourceLanguages";
 import { targetLanguages } from "./targetLanguages";
 
@@ -28,32 +14,6 @@ export const DeeplTranslatorSettings = () => {
         key: "apiKey",
         isSensitive: true,
     });
-
-    const apiKeyToasterId = useId("apiKeyToaster");
-    const { dispatchToast } = useToastController(apiKeyToasterId);
-
-    const [temporaryApiKey, setTemporaryApiKey] = useState<string>(apiKey);
-
-    const saveApiKey = () => {
-        setApiKey(temporaryApiKey);
-        dispatchToast(
-            <Toast>
-                <ToastTitle>API Key saved</ToastTitle>
-            </Toast>,
-            { intent: "success" },
-        );
-    };
-
-    const removeApiKey = () => {
-        setTemporaryApiKey("");
-        setApiKey("");
-        dispatchToast(
-            <Toast>
-                <ToastTitle>API Key removed</ToastTitle>
-            </Toast>,
-            { intent: "success" },
-        );
-    };
 
     const { value: sourceLanguage, updateValue: setSourceLanguage } = useExtensionSetting<string>({
         extensionId,
@@ -79,31 +39,7 @@ export const DeeplTranslatorSettings = () => {
         <SectionList>
             <Section>
                 <Field label="API Key">
-                    <Toaster toasterId={apiKeyToasterId} />
-                    <Input
-                        value={temporaryApiKey}
-                        onChange={(_, { value }) => setTemporaryApiKey(value)}
-                        contentAfter={
-                            <>
-                                <Tooltip content="Delete" relationship="label">
-                                    <Button
-                                        size="small"
-                                        appearance="subtle"
-                                        onClick={() => removeApiKey()}
-                                        icon={<DismissRegular />}
-                                    />
-                                </Tooltip>
-                                <Tooltip content="Save" relationship="label">
-                                    <Button
-                                        size="small"
-                                        appearance="subtle"
-                                        onClick={() => saveApiKey()}
-                                        icon={<SaveRegular />}
-                                    />
-                                </Tooltip>
-                            </>
-                        }
-                    />
+                    <Input value={apiKey} onChange={(_, { value }) => setApiKey(value)} />
                 </Field>
             </Section>
             <Section>
