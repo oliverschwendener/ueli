@@ -21,7 +21,6 @@ export class BrowserWindowModule {
         eventEmitter.emitEvent("browserWindowCreated", { browserWindow });
 
         BrowserWindowModule.registerBrowserWindowEventListeners(browserWindow, dependencyRegistry);
-        BrowserWindowModule.registerNativeThemeEventListeners(browserWindow, dependencyRegistry);
         BrowserWindowModule.registerEvents(browserWindow, dependencyRegistry);
         await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyRegistry);
     }
@@ -98,15 +97,6 @@ export class BrowserWindowModule {
                 }
             }
         });
-    }
-
-    private static registerNativeThemeEventListeners(
-        browserWindow: BrowserWindow,
-        dependencyRegistry: DependencyRegistry<Dependencies>,
-    ) {
-        const nativeTheme = dependencyRegistry.get("NativeTheme");
-
-        nativeTheme.addListener("updated", () => browserWindow.webContents.send("nativeThemeChanged"));
     }
 
     private static async loadFileOrUrl(
