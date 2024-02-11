@@ -4,20 +4,17 @@ import { FavoriteManager } from "./FavoriteManager";
 
 export class FavoriteManagerModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const settingsManager = dependencyRegistry.get("SettingsManager");
         const ipcMain = dependencyRegistry.get("IpcMain");
-        const eventEmitter = dependencyRegistry.get("EventEmitter");
 
-        const f = new FavoriteManager(settingsManager, eventEmitter);
+        const favoriteManager = new FavoriteManager(
+            dependencyRegistry.get("SettingsManager"),
+            dependencyRegistry.get("BrowserWindowNotifier"),
+        );
 
-        dependencyRegistry.register("FavoriteManager", f);
+        dependencyRegistry.register("FavoriteManager", favoriteManager);
 
-        ipcMain.on("getFavorites", (event) => {
-            event.returnValue = f.getAll();
-        });
+        ipcMain.on("getFavorites", (event) => (event.returnValue = favoriteManager.getAll()));
 
-        ipcMain.handle("removeFavorite", async (_, { id }: { id: string }) => {
-            await f.remove(id);
-        });
+        ipcMain.handle("removeFavorite", async (_, { id }: { id: string }) => await favoriteManager.remove(id));
     }
 }

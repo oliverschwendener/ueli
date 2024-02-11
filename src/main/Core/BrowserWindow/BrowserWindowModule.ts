@@ -77,8 +77,6 @@ export class BrowserWindowModule {
             sendToBrowserWindow(browserWindow, "excludedSearchResultItemsUpdated"),
         );
 
-        eventSubscriber.subscribe("favoritesUpdated", () => sendToBrowserWindow(browserWindow, "favoritesUpdated"));
-
         BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber);
     }
 

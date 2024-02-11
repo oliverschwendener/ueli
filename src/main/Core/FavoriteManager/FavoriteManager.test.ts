@@ -1,4 +1,4 @@
-import type { EventEmitter } from "@Core/EventEmitter";
+import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { SettingsManager } from "@Core/SettingsManager/SettingsManager";
 import { describe, expect, it, vi } from "vitest";
 import { FavoriteManager } from "./FavoriteManager";
@@ -10,7 +10,7 @@ describe(FavoriteManager, () => {
         const getValueMock = vi.fn().mockReturnValue(favorites);
         const settingsManager = <SettingsManager>{ getValue: (k, d) => getValueMock(k, d) };
 
-        const favoriteManager = new FavoriteManager(settingsManager, <EventEmitter>{});
+        const favoriteManager = new FavoriteManager(settingsManager, <BrowserWindowNotifier>{});
 
         expect(favoriteManager.favorites).toBe(favorites);
         expect(favoriteManager.getAll()).toEqual(Object.values(favorites));
@@ -26,17 +26,17 @@ describe(FavoriteManager, () => {
             updateValue: (k, v) => updateValueMock(k, v),
         };
 
-        const emitEventMock = vi.fn();
-        const eventEmitter = <EventEmitter>{ emitEvent: (e) => emitEventMock(e) };
+        const notifyMock = vi.fn();
+        const browserWindowNotifier = <BrowserWindowNotifier>{ notify: (e) => notifyMock(e) };
 
-        const favoriteManager = new FavoriteManager(settingsManager, eventEmitter);
+        const favoriteManager = new FavoriteManager(settingsManager, browserWindowNotifier);
 
         await favoriteManager.add("id_1");
 
         expect(favoriteManager.favorites).toEqual(["id_1"]);
         expect(getValueMock).toHaveBeenCalledWith("favorites", []);
         expect(updateValueMock).toHaveBeenCalledWith("favorites", ["id_1"]);
-        expect(emitEventMock).toHaveBeenCalledWith("favoritesUpdated");
+        expect(notifyMock).toHaveBeenCalledWith("favoritesUpdated");
     });
 
     it("should remove a favorite", async () => {
@@ -48,8 +48,8 @@ describe(FavoriteManager, () => {
             updateValue: (k, v) => updateValueMock(k, v),
         };
 
-        const emitEventMock = vi.fn();
-        const eventEmitter = <EventEmitter>{ emitEvent: (e) => emitEventMock(e) };
+        const notifyMock = vi.fn();
+        const eventEmitter = <BrowserWindowNotifier>{ notify: (c) => notifyMock(c) };
 
         const favoriteManager = new FavoriteManager(settingsManager, eventEmitter);
 
@@ -58,6 +58,6 @@ describe(FavoriteManager, () => {
         expect(favoriteManager.favorites).toEqual([]);
         expect(getValueMock).toHaveBeenCalledWith("favorites", []);
         expect(updateValueMock).toHaveBeenCalledWith("favorites", []);
-        expect(emitEventMock).toHaveBeenCalledWith("favoritesUpdated");
+        expect(notifyMock).toHaveBeenCalledWith("favoritesUpdated");
     });
 });

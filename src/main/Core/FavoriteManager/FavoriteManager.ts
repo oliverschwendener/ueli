@@ -1,4 +1,4 @@
-import type { EventEmitter } from "@Core/EventEmitter";
+import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { FavoriteManager as FavoriteManagerInterface } from "./Contract";
 
@@ -9,7 +9,7 @@ export class FavoriteManager implements FavoriteManagerInterface {
 
     public constructor(
         private readonly settingsManager: SettingsManager,
-        private readonly eventEmitter: EventEmitter,
+        private readonly browserWindowNotifier: BrowserWindowNotifier,
     ) {
         this.favorites = settingsManager.getValue<string[]>(this.settingKey, []);
     }
@@ -21,14 +21,14 @@ export class FavoriteManager implements FavoriteManagerInterface {
 
         this.favorites.push(id);
         await this.saveChanges();
-        this.eventEmitter.emitEvent("favoritesUpdated");
+        this.browserWindowNotifier.notify("favoritesUpdated");
     }
 
     public async remove(id: string): Promise<void> {
         const indexToDelete = this.favorites.findIndex((f) => f === id);
         this.favorites.splice(indexToDelete, 1);
         await this.saveChanges();
-        this.eventEmitter.emitEvent("favoritesUpdated");
+        this.browserWindowNotifier.notify("favoritesUpdated");
     }
 
     public getAll(): string[] {
