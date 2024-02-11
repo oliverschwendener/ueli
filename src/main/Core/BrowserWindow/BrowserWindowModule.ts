@@ -14,7 +14,11 @@ import { toggleBrowserWindow } from "./toggleBrowserWindow";
 
 export class BrowserWindowModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
+        const eventEmitter = dependencyRegistry.get("EventEmitter");
+
         const browserWindow = createBrowserWindow(dependencyRegistry);
+
+        eventEmitter.emitEvent("browserWindowCreated", { browserWindow });
 
         BrowserWindowModule.registerBrowserWindowEventListeners(browserWindow, dependencyRegistry);
         BrowserWindowModule.registerNativeThemeEventListeners(browserWindow, dependencyRegistry);
@@ -39,8 +43,6 @@ export class BrowserWindowModule {
         const app = dependencyRegistry.get("App");
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const settingsManager = dependencyRegistry.get("SettingsManager");
-
-        eventSubscriber.subscribe("searchIndexUpdated", () => browserWindow.webContents.send("searchIndexUpdated"));
 
         eventSubscriber.subscribe("actionInvocationSucceeded", ({ action }: { action: SearchResultItemAction }) => {
             const shouldHideWindow =

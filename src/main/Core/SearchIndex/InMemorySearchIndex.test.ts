@@ -1,11 +1,11 @@
+import { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { SearchResultItem } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
-import type { EventEmitter } from "../EventEmitter";
 import { InMemorySearchIndex } from "./InMemorySearchIndex";
 
 describe(InMemorySearchIndex, () => {
     it("should return an empty list of search result items if the search index is empty", () => {
-        const searchIndex = new InMemorySearchIndex(<EventEmitter>{});
+        const searchIndex = new InMemorySearchIndex(<BrowserWindowNotifier>{});
 
         searchIndex.setIndex({});
 
@@ -19,7 +19,7 @@ describe(InMemorySearchIndex, () => {
             <SearchResultItem>{ description: "item3", id: "item3", name: "item3" },
         ];
 
-        const searchIndex = new InMemorySearchIndex(<EventEmitter>{});
+        const searchIndex = new InMemorySearchIndex(<BrowserWindowNotifier>{});
 
         searchIndex.setIndex({ testExtensionId: searchResultItems });
 
@@ -27,11 +27,8 @@ describe(InMemorySearchIndex, () => {
     });
 
     it("should add search result items to the index with the extension id as a key and emit an event", () => {
-        const emitEventMock = vi.fn();
-
-        const eventEmitter = <EventEmitter>{
-            emitEvent: (eventName) => emitEventMock(eventName),
-        };
+        const notifyMock = vi.fn();
+        const eventEmitter = <BrowserWindowNotifier>{ notify: (c) => notifyMock(c) };
 
         const searchResultItems: SearchResultItem[] = [
             <SearchResultItem>{ description: "item1", id: "item1", name: "item1" },
@@ -44,15 +41,12 @@ describe(InMemorySearchIndex, () => {
         searchIndex.addSearchResultItems("extensionId1", searchResultItems);
 
         expect(searchIndex.getIndex()).toEqual({ extensionId1: searchResultItems });
-        expect(emitEventMock).toHaveBeenCalledWith("searchIndexUpdated");
+        expect(notifyMock).toHaveBeenCalledWith("searchIndexUpdated");
     });
 
     it("should delete the key from the index and emit an event when removing search result items by extension id", () => {
-        const emitEventMock = vi.fn();
-
-        const eventEmitter = <EventEmitter>{
-            emitEvent: (eventName) => emitEventMock(eventName),
-        };
+        const notifyMock = vi.fn();
+        const eventEmitter = <BrowserWindowNotifier>{ notify: (c) => notifyMock(c) };
 
         const searchIndex = new InMemorySearchIndex(eventEmitter);
 
@@ -67,6 +61,6 @@ describe(InMemorySearchIndex, () => {
         searchIndex.removeSearchResultItems("extensionId1");
 
         expect(searchIndex.getIndex()).toEqual({});
-        expect(emitEventMock).toHaveBeenCalledWith("searchIndexUpdated");
+        expect(notifyMock).toHaveBeenCalledWith("searchIndexUpdated");
     });
 });

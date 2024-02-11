@@ -4,16 +4,11 @@ import { InMemorySearchIndex } from "./InMemorySearchIndex";
 
 export class SearchIndexModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const eventEmitter = dependencyRegistry.get("EventEmitter");
-
-        dependencyRegistry.register("SearchIndex", new InMemorySearchIndex(eventEmitter));
-
-        SearchIndexModule.registerIpcMainEventListeners(dependencyRegistry);
-    }
-
-    private static registerIpcMainEventListeners(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const ipcMain = dependencyRegistry.get("IpcMain");
-        const searchIndex = dependencyRegistry.get("SearchIndex");
+
+        const searchIndex = new InMemorySearchIndex(dependencyRegistry.get("BrowserWindowNotifier"));
+
+        dependencyRegistry.register("SearchIndex", searchIndex);
 
         ipcMain.on("extensionDisabled", (_, { extensionId }: { extensionId: string }) =>
             searchIndex.removeSearchResultItems(extensionId),

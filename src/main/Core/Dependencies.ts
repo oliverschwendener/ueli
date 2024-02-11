@@ -7,6 +7,7 @@ export type Dependencies = {
     ActionHandlerRegistry?: Core.ActionHandlerRegistry;
     App?: Electron.App;
     AssetPathResolver?: Core.AssetPathResolver;
+    BrowserWindowNotifier?: Core.BrowserWindowNotifier;
     Clipboard?: Electron.Clipboard;
     Clock?: Core.Clock;
     CommandlineUtility?: Core.CommandlineUtility;

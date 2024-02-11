@@ -36,6 +36,7 @@ import * as Extensions from "./Extensions";
     Core.LoggerModule.bootstrap(dependencyRegistry);
     Core.EventEmitterModule.bootstrap(dependencyRegistry);
     Core.EventSubscriberModule.bootstrap(dependencyRegistry);
+    Core.BrowserWindowNotifierModule.bootstrap(dependencyRegistry);
     Core.CommandlineUtilityModule.bootstrap(dependencyRegistry);
     Core.FileSystemUtilityModule.bootstrap(dependencyRegistry);
     await Core.PowershellUtilityModule.bootstrap(dependencyRegistry);

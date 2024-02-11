@@ -3,6 +3,7 @@ export * from "./ActionHandler";
 export * from "./AssetPathResolver";
 export * from "./Autostart";
 export * from "./BrowserWindow";
+export * from "./BrowserWindowNotifier";
 export * from "./Clipboard";
 export * from "./Clock";
 export * from "./CommandlineUtility";

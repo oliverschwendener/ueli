@@ -1,12 +1,12 @@
+import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { SearchResultItem } from "@common/Core";
-import type { EventEmitter } from "../EventEmitter";
 import type { SearchIndex } from "./Contract";
 import type { InMemoryIndex } from "./InMemoryIndex";
 
 export class InMemorySearchIndex implements SearchIndex {
     private index: InMemoryIndex;
 
-    public constructor(private readonly eventEmitter: EventEmitter) {
+    public constructor(private readonly browserWindowNotifier: BrowserWindowNotifier) {
         this.index = {};
     }
 
@@ -34,14 +34,12 @@ export class InMemorySearchIndex implements SearchIndex {
 
     public addSearchResultItems(extensionId: string, searchResultItems: SearchResultItem[]): void {
         this.index[extensionId] = searchResultItems;
-
-        this.eventEmitter.emitEvent("searchIndexUpdated");
+        this.browserWindowNotifier.notify("searchIndexUpdated");
     }
 
     public removeSearchResultItems(extensionId: string): void {
         delete this.index[extensionId];
-
-        this.eventEmitter.emitEvent("searchIndexUpdated");
+        this.browserWindowNotifier.notify("searchIndexUpdated");
     }
 
     public getIndex(): InMemoryIndex {
