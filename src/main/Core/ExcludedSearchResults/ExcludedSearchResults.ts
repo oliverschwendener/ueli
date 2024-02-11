@@ -1,4 +1,4 @@
-import type { EventEmitter } from "@Core/EventEmitter";
+import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { ExcludedSearchResults as ExcludedSearchResultsInterface } from "./Contract";
 
@@ -8,7 +8,7 @@ export class ExcludedSearchResults implements ExcludedSearchResultsInterface {
     private readonly items: string[] = [];
 
     public constructor(
-        private readonly eventEmitter: EventEmitter,
+        private readonly browserWindowNotifier: BrowserWindowNotifier,
         private readonly settingsManager: SettingsManager,
     ) {
         this.items = settingsManager.getValue<string[]>(ExcludedSearchResults.settingKey, []);
@@ -48,6 +48,6 @@ export class ExcludedSearchResults implements ExcludedSearchResultsInterface {
     }
 
     private emitItemsUpdatedEvent() {
-        this.eventEmitter.emitEvent("excludedSearchResultItemsUpdated");
+        this.browserWindowNotifier.notify("excludedSearchResultItemsUpdated");
     }
 }

@@ -3,17 +3,19 @@ import { ExcludedSearchResults } from "./ExcludedSearchResults";
 
 export class ExcludedSearchResultsModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const eventEmitter = dependencyRegistry.get("EventEmitter");
-        const settingsManager = dependencyRegistry.get("SettingsManager");
         const ipcMain = dependencyRegistry.get("IpcMain");
 
-        const excludedSearchResults = new ExcludedSearchResults(eventEmitter, settingsManager);
+        const excludedSearchResults = new ExcludedSearchResults(
+            dependencyRegistry.get("BrowserWindowNotifier"),
+            dependencyRegistry.get("SettingsManager"),
+        );
 
         dependencyRegistry.register("ExcludedSearchResults", excludedSearchResults);
 
-        ipcMain.on("getExcludedSearchResultItemIds", (event) => {
-            event.returnValue = excludedSearchResults.getExcludedIds();
-        });
+        ipcMain.on(
+            "getExcludedSearchResultItemIds",
+            (event) => (event.returnValue = excludedSearchResults.getExcludedIds()),
+        );
 
         ipcMain.handle("removeExcludedSearchResultItem", (_, { itemId }: { itemId: string }) =>
             excludedSearchResults.remove(itemId),
