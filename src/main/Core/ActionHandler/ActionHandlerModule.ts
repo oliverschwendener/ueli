@@ -28,7 +28,7 @@ export class ActionHandlerModule {
             new CommandlineActionHandler(dependencyRegistry.get("CommandlineUtility")),
             new CopyToClipboardActionHandler(
                 dependencyRegistry.get("Clipboard"),
-                dependencyRegistry.get("EventEmitter"),
+                dependencyRegistry.get("BrowserWindowNotifier"),
             ),
             new ExcludeFromSearchResultsActionHandler(dependencyRegistry.get("ExcludedSearchResults")),
             new FavoritesActionHandler(dependencyRegistry.get("FavoriteManager")),

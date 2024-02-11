@@ -79,8 +79,6 @@ export class BrowserWindowModule {
 
         eventSubscriber.subscribe("favoritesUpdated", () => sendToBrowserWindow(browserWindow, "favoritesUpdated"));
 
-        eventSubscriber.subscribe("copiedToClipboard", () => sendToBrowserWindow(browserWindow, "copiedToClipboard"));
-
         BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber);
     }
 

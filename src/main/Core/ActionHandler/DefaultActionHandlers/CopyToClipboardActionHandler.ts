@@ -1,4 +1,4 @@
-import type { EventEmitter } from "@Core/EventEmitter";
+import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { SearchResultItemAction } from "@common/Core";
 import type { Clipboard } from "electron";
 import type { ActionHandler } from "../Contract";
@@ -8,11 +8,11 @@ export class CopyToClipboardActionHandler implements ActionHandler {
 
     public constructor(
         private readonly clipboard: Clipboard,
-        private readonly eventEmitter: EventEmitter,
+        private readonly browserWindowNotifer: BrowserWindowNotifier,
     ) {}
 
     public async invokeAction(action: SearchResultItemAction): Promise<void> {
         this.clipboard.writeText(action.argument);
-        this.eventEmitter.emitEvent("copiedToClipboard");
+        this.browserWindowNotifer.notify("copiedToClipboard");
     }
 }
