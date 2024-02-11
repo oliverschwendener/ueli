@@ -14,7 +14,16 @@ export class WindowsApplicationRepository implements ApplicationRepository {
     ) {}
 
     public async getApplications(): Promise<Application[]> {
-        const stdout = await this.powershellUtility.executeScript(this.getPowershellScript());
+        const folderPaths = this.settings.getValue<string[]>("windowsFolders");
+        const fileExtensions = this.settings.getValue<string[]>("windowsFileExtensions");
+
+        if (!folderPaths.length || !fileExtensions.length) {
+            return [];
+        }
+
+        const stdout = await this.powershellUtility.executeScript(
+            this.getPowershellScript(folderPaths, fileExtensions),
+        );
 
         const windowsApplicationRetrieverResults = <WindowsApplicationRetrieverResult[]>JSON.parse(stdout);
 
@@ -23,16 +32,9 @@ export class WindowsApplicationRepository implements ApplicationRepository {
         );
     }
 
-    private getPowershellScript(): string {
-        const folderPaths = this.settings
-            .getValue<string[]>("windowsFolders")
-            .map((folderPath) => `'${folderPath}'`)
-            .join(",");
-
-        const fileExtensions = this.settings
-            .getValue<string[]>("windowsFileExtensions")
-            .map((fileExtension) => `'*.${fileExtension}'`)
-            .join(",");
+    private getPowershellScript(folderPaths: string[], fileExtensions: string[]): string {
+        const concatenatedFolderPaths = folderPaths.map((folderPath) => `'${folderPath}'`).join(",");
+        const concatenatedFileExtensions = fileExtensions.map((fileExtension) => `'*.${fileExtension}'`).join(",");
 
         const { extractShortcutPowershellScript, getWindowsAppsPowershellScript } = usePowershellScripts();
 
@@ -40,6 +42,6 @@ export class WindowsApplicationRepository implements ApplicationRepository {
             ${extractShortcutPowershellScript}
             ${getWindowsAppsPowershellScript}
 
-            Get-WindowsApps -FolderPaths ${folderPaths} -FileExtensions ${fileExtensions} -AppIconFolder '${this.extensionCacheFolder.path}';`;
+            Get-WindowsApps -FolderPaths ${concatenatedFolderPaths} -FileExtensions ${concatenatedFileExtensions} -AppIconFolder '${this.extensionCacheFolder.path}';`;
     }
 }

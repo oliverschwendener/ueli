@@ -10,25 +10,28 @@ export const MacOsSettings = () => {
 
     const extensionId = "ApplicationSearch";
 
-    const [newValue, setNewValue] = useState<string>("");
+    const [newFolder, setNewFolder] = useState<string>("");
 
-    const { value, updateValue } = useExtensionSetting<string[]>({ extensionId, key: "macOsFolders" });
+    const { value: folders, updateValue: setFolders } = useExtensionSetting<string[]>({
+        extensionId,
+        key: "macOsFolders",
+    });
 
     const removeFolder = async (indexToRemove: number) => {
-        await updateValue(value.filter((_, index) => index !== indexToRemove));
+        await setFolders(folders.filter((_, index) => index !== indexToRemove));
     };
 
     const addFolder = async () => {
-        if (newValue.trim().length) {
-            await updateValue([...value, newValue]);
-            setNewValue("");
+        if (newFolder.trim().length) {
+            await setFolders([...folders, newFolder]);
+            setNewFolder("");
         }
     };
 
     const chooseFolder = async () => {
         const result = await contextBridge.showOpenDialog({ properties: ["openDirectory"] });
         if (!result.canceled && result.filePaths.length) {
-            setNewValue(result.filePaths[0]);
+            setNewFolder(result.filePaths[0]);
         }
     };
 
@@ -36,10 +39,10 @@ export const MacOsSettings = () => {
         <SectionList>
             <Section>
                 <Field label="Application Folders" style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                    {value.map((v, index) => (
+                    {folders.map((folder, index) => (
                         <Input
-                            key={`macOsFolder-${v}`}
-                            value={v}
+                            key={`macOsFolder-${folder}`}
+                            value={folder}
                             readOnly
                             contentAfter={
                                 <Tooltip content="Remove" relationship="label">
@@ -53,23 +56,25 @@ export const MacOsSettings = () => {
                         />
                     ))}
                     <Input
-                        value={newValue}
+                        value={newFolder}
                         placeholder="Add another folder"
-                        onChange={(_, { value }) => setNewValue(value)}
+                        onChange={(_, { value }) => setNewFolder(value)}
                         contentAfter={
                             <>
                                 <Tooltip content="Choose folder" relationship="label">
                                     <Button
                                         appearance="subtle"
                                         size="small"
-                                        icon={<FolderRegular fontSize={14} onClick={chooseFolder} />}
+                                        icon={<FolderRegular fontSize={14} />}
+                                        onClick={chooseFolder}
                                     />
                                 </Tooltip>
                                 <Tooltip content="Add" relationship="label">
                                     <Button
                                         appearance="subtle"
                                         size="small"
-                                        icon={<AddRegular fontSize={14} onClick={addFolder} />}
+                                        icon={<AddRegular fontSize={14} />}
+                                        onClick={addFolder}
                                     />
                                 </Tooltip>
                             </>
