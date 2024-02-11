@@ -1,3 +1,5 @@
+const icon = "assets/Build/app-icon-dark.png";
+
 /**
  * @type {import('electron-builder').Configuration}
  * @see https://www.electron.build/configuration/configuration
@@ -15,16 +17,18 @@ module.exports = {
     mac: {
         hardenedRuntime: true,
         gatekeeperAssess: false,
+        icon,
         target: [
             { target: "dmg", arch: "universal" },
             { target: "zip", arch: "universal" },
         ],
     },
     win: {
-        icon: "assets/Build/windows-app-icon-dark-background.png",
+        icon,
         target: [{ target: "msi" }, { target: "nsis" }, { target: "zip" }],
     },
     linux: {
+        icon,
         category: "Utility",
         target: [{ target: "AppImage" }, { target: "deb" }, { target: "zip" }],
     },
