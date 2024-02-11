@@ -5,7 +5,7 @@ export class Application {
     public constructor(
         private readonly name: string,
         private readonly filePath: string,
-        private readonly iconFilePath: string,
+        private readonly imageUrl: string,
     ) {}
 
     public toSearchResultItem(): SearchResultItem {
@@ -17,7 +17,7 @@ export class Application {
             },
             id: this.getId(),
             name: this.name,
-            imageUrl: this.getImageUrl(),
+            imageUrl: this.imageUrl,
             defaultAction: SearchResultItemActionUtility.createOpenFileAction({
                 filePath: this.filePath,
                 description: "Open application",
@@ -42,9 +42,5 @@ export class Application {
 
     private getId(): string {
         return Buffer.from(`[ApplicationSearch][${this.filePath}]`).toString("base64");
-    }
-
-    private getImageUrl(): string {
-        return `file://${this.iconFilePath}`;
     }
 }

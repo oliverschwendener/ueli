@@ -25,6 +25,7 @@ export class Settings {
                 "/Applications",
                 join(this.app.getPath("home"), "Applications"),
             ],
+            includeWindowsStoreApps: true,
             windowsFileExtensions: ["lnk"],
             windowsFolders: [
                 "C:\\ProgramData\\Microsoft\\Windows\\Start Menu",

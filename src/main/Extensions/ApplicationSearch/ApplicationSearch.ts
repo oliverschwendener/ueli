@@ -44,6 +44,7 @@ export class ApplicationSearch implements Extension {
         return [
             getExtensionSettingKey("ApplicationSearch", "windowsFolders"),
             getExtensionSettingKey("ApplicationSearch", "windowsFileExtensions"),
+            getExtensionSettingKey("ApplicationSearch", "includeWindowsStoreApps"),
             getExtensionSettingKey("ApplicationSearch", "macOsFolders"),
         ];
     }

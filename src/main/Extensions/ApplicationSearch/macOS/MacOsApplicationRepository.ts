@@ -20,7 +20,7 @@ export class MacOsApplicationRepository implements ApplicationRepository {
 
         return filePaths
             .filter((filePath) => !!icons[filePath])
-            .map((filePath) => new Application(parse(filePath).name, filePath, icons[filePath]));
+            .map((filePath) => new Application(parse(filePath).name, filePath, `file://${icons[filePath]}`));
     }
 
     private async getAllFilePaths(): Promise<string[]> {
