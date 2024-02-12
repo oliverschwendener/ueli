@@ -1,10 +1,10 @@
 import { useContextBridge, useFavorites, useSearchResultItems, useSetting } from "@Core/Hooks";
+import { Section } from "@Core/Settings/Section";
+import { SectionList } from "@Core/Settings/SectionList";
+import { getImageUrl } from "@Core/getImageUrl";
 import { Badge, Button, Field, Input, SpinButton, Text, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
-import { getImageUrl } from "../../../getImageUrl";
-import { Section } from "../Section";
-import { SectionList } from "../SectionList";
 
 export const Favorites = () => {
     const { contextBridge } = useContextBridge();

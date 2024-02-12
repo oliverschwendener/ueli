@@ -1,11 +1,11 @@
 import { useContextBridge, useSearchResultItems, useSetting } from "@Core/Hooks";
+import { Section } from "@Core/Settings/Section";
+import { SectionList } from "@Core/Settings/SectionList";
+import { getImageUrl } from "@Core/getImageUrl";
 import { Badge, Button, Field, Input, Slider, Switch, Text, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getImageUrl } from "../../../getImageUrl";
-import { Section } from "../Section";
-import { SectionList } from "../SectionList";
 
 export const SearchEngine = () => {
     const { t } = useTranslation();

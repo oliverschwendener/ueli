@@ -1,3 +1,5 @@
+import { useContextBridge, useSetting } from "@Core/Hooks";
+import { getImageUrl } from "@Core/getImageUrl";
 import {
     Button,
     Link,
@@ -17,8 +19,6 @@ import {
 } from "@fluentui/react-components";
 import { ArrowClockwiseRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
-import { getImageUrl } from "../../../getImageUrl";
-import { useContextBridge, useSetting } from "../../Hooks";
 
 export const Extensions = () => {
     const { t } = useTranslation();

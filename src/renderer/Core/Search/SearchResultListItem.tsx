@@ -1,11 +1,11 @@
+import { useContextBridge } from "@Core/Hooks";
+import { ThemeContext } from "@Core/ThemeContext";
+import { getImageUrl } from "@Core/getImageUrl";
 import type { SearchResultItem } from "@common/Core";
 import { Text } from "@fluentui/react-components";
 import { StarFilled } from "@fluentui/react-icons";
 import { useContext, useEffect, useRef, useState, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
-import { getImageUrl } from "../../getImageUrl";
-import { useContextBridge } from "../Hooks";
-import { ThemeContext } from "../ThemeContext";
 import { elementIsVisible } from "./Helpers";
 
 type SearchResultListItemProps = {

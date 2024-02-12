@@ -1,8 +1,8 @@
 import { useContextBridge, useFavorites, useSearchResultItems, useSetting } from "@Core/Hooks";
+import { getImageUrl } from "@Core/getImageUrl";
 import type { SearchResultItem } from "@common/Core";
 import { Body1, Caption1, Card, CardHeader, CardPreview, Subtitle2, Text } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
-import { getImageUrl } from "../../getImageUrl";
 
 type FavoritesListProps = {
     invokeSearchResultItem: (s: SearchResultItem) => Promise<void>;

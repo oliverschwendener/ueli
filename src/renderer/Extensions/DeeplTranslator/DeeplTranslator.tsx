@@ -2,11 +2,11 @@ import { BaseLayout } from "@Core/BaseLayout";
 import type { ExtensionProps } from "@Core/ExtensionProps";
 import { Header } from "@Core/Header";
 import { useExtensionSetting } from "@Core/Hooks";
+import { getImageUrl } from "@Core/getImageUrl";
 import { Button, Text, Tooltip } from "@fluentui/react-components";
 import { ArrowLeftFilled, CopyRegular, PersonRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getImageUrl } from "../../getImageUrl";
 import { MissingApiKey } from "./MissingApiKey";
 import { Translator } from "./Translator";
 
