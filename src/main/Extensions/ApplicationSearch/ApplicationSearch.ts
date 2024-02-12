@@ -1,7 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
-import { getExtensionSettingKey } from "@common/Core/Extension";
+import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import type { Settings } from "./Settings";
@@ -53,6 +53,23 @@ export class ApplicationSearch implements Extension {
     public getImage(): Image {
         return {
             url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "macos-applications.png")}`,
+        };
+    }
+
+    public getTranslations(): Translations {
+        return {
+            "en-US": {
+                extensionName: "Application Search",
+                searchResultItemDescription: "Application",
+                openApplication: "Open application",
+                copyFilePathToClipboard: "Copy file path to clipboard",
+            },
+            "de-CH": {
+                extensionName: "Anwendungssuche",
+                searchResultItemDescription: "Anwendung",
+                openApplication: "Anwendung öffnen",
+                copyFilePathToClipboard: "Dateipfad in Zwischenablage kopieren",
+            },
         };
     }
 }

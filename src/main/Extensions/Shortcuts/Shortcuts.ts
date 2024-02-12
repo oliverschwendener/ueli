@@ -2,7 +2,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
-import { getExtensionSettingKey } from "@common/Core/Extension";
+import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Shortcut } from "@common/Extensions/Shortcuts";
 
@@ -79,5 +79,50 @@ export class Shortcuts implements Extension {
 
     public getSettingKeysTriggeringRescan(): string[] {
         return [getExtensionSettingKey(this.id, "shortcuts")];
+    }
+
+    public getTranslations(): Translations {
+        return {
+            "en-US": {
+                extensionName: "Shortcuts",
+                shortcut: "Shortcut",
+                shortcuts: "Shortcuts",
+                invokeShortcut: "Invoke shortcut",
+                type: "Type",
+                typeFile: "File",
+                typeUrl: "URL",
+                filePath: "File Path",
+                fileOrFolderDoesNotExist: "File/folder does not exist",
+                name: "Name",
+                invalidName: "Invalid name",
+                hideWindowAfterInvokation: "Hide window after invokation",
+                createShortcut: "Create Shortcut",
+                editShortcut: "Edit Shortcut",
+                save: "Save",
+                cancel: "Cancel",
+                edit: "Edit",
+                remove: "Remove",
+            },
+            "de-CH": {
+                extensionName: "Verknüpfungen",
+                shortcut: "Verknüpfung",
+                shortcuts: "Verknüpfungen",
+                invokeShortcut: "Verknüpfung aufrufen",
+                type: "Typ",
+                typeFile: "Datei",
+                typeUrl: "URL",
+                filePath: "Dateipfad",
+                fileOrFolderDoesNotExist: "Datei/Ordner existiert nicht",
+                name: "Name",
+                invalidName: "Ungültiger Name",
+                hideWindowAfterInvokation: "Fester verstecken nach Ausführung",
+                createShortcut: "Verknüpfung erstellen",
+                editShortcut: "Verknüpfung bearbeiten",
+                save: "Speichern",
+                cancel: "Abbrechen",
+                edit: "Bearbeiten",
+                remove: "Entfernen",
+            },
+        };
     }
 }

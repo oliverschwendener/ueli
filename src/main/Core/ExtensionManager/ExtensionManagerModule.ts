@@ -25,6 +25,13 @@ export class ExtensionManagerModule {
 
         await extensionManager.populateSearchIndex();
 
+        ipcMain.on("getExtensionTranslations", (event) => {
+            event.returnValue = extensionManager.getEnabledExtensions().map((extension) => ({
+                extensionId: extension.id,
+                translations: extension.getTranslations(),
+            }));
+        });
+
         ipcMain.on("getInstantSearchResultItems", (event, { searchTerm }: { searchTerm: string }) => {
             event.returnValue = extensionManager.getInstantSearchResultItems(searchTerm);
         });

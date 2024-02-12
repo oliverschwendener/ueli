@@ -1,10 +1,10 @@
+import type { SearchResultItem } from "@common/Core";
+import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
+import type { Image } from "@common/Core/Image";
+import type { Browser } from "@common/Extensions/BrowserBookmarks";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { SearchResultItem } from "@common/Core";
-import { getExtensionSettingKey } from "@common/Core/Extension";
-import type { Image } from "@common/Core/Image";
-import type { Browser } from "@common/Extensions/BrowserBookmarks";
 import type { BrowserBookmarkRepository } from "./BrowserBookmarkRepository";
 
 type Settings = {
@@ -81,6 +81,25 @@ export class BrowserBookmarks implements Extension {
 
     public getAssetFilePath(key: string): string {
         return this.getBrowserImageFilePath(key as Browser);
+    }
+
+    public getTranslations(): Translations {
+        return {
+            "en-US": {
+                extensionName: "Browser Bookmarks",
+                "searchResultStyle.nameOnly": "Name only",
+                "searchResultStyle.urlOnly": "URL only",
+                "searchResultStyle.nameAndUrl": "Name & URL",
+                copyUrlToClipboard: "Copy URL to clipboard",
+            },
+            "de-CH": {
+                extensionName: "Browserlesezeichen",
+                "searchResultStyle.nameOnly": "Nur Name",
+                "searchResultStyle.urlOnly": "Nur URL",
+                "searchResultStyle.nameAndUrl": "Name & URL",
+                copyUrlToClipboard: "URL in Zwischenablage kopieren",
+            },
+        };
     }
 
     private getCurrentlyConfiguredBrowser(): Browser {

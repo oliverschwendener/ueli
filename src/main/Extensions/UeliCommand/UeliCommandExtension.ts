@@ -2,8 +2,8 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
 import type { SearchResultItem } from "@common/Core";
+import { Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
-import { resources } from "./resources";
 
 export class UeliCommandExtension implements Extension {
     public readonly id = "UeliCommand";
@@ -25,7 +25,7 @@ export class UeliCommandExtension implements Extension {
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const t = await this.translator.createInstance(resources);
+        const t = await this.translator.createInstance(this.getTranslations());
 
         const map: Record<string, SearchResultItem> = {
             quit: {
@@ -104,5 +104,26 @@ export class UeliCommandExtension implements Extension {
 
     public getSettingKeysTriggeringRescan() {
         return ["general.language"];
+    }
+
+    public getTranslations(): Translations {
+        return {
+            "en-US": {
+                extensionName: "Ueli Commands",
+                "ueliCommand.description": "Ueli Command",
+                "ueliCommand.openSettings": "Open Ueli settings",
+                "ueliCommand.openExtensions": "Browse Ueli extensions",
+                "ueliCommand.centerWindow": "Center Ueli window",
+                "ueliCommand.quitUeli": "Quit Ueli",
+            },
+            "de-CH": {
+                extensionName: "Ueli Befehle",
+                "ueliCommand.description": "Ueli Befehl",
+                "ueliCommand.openSettings": "Ueli-Einstellungen öffnen",
+                "ueliCommand.openExtensions": "Ueli-Erweiterungen durchsuchen",
+                "ueliCommand.centerWindow": "Ueli-Fenster zentrieren",
+                "ueliCommand.quitUeli": "Ueli Beenden",
+            },
+        };
     }
 }

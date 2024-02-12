@@ -2,7 +2,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
-import { getExtensionSettingKey } from "@common/Core/Extension";
+import { Translations, getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { WebSearchEngine } from "./WebSearchEngine";
 
@@ -122,6 +122,23 @@ export class WebSearchExtension implements Extension {
     public getImage(): Image {
         return {
             url: this.getSearchResultImageUrl(this.getCurrentWebSearchEngine()),
+        };
+    }
+
+    public getTranslations(): Translations {
+        return {
+            "en-US": {
+                extensionName: "Web Search",
+                searchEngine: "Search Engine",
+                locale: "Locale",
+                showInstantSearchResult: "Show instant search result",
+            },
+            "de-CH": {
+                extensionName: "Websuche",
+                searchEngine: "Suchmaschine",
+                locale: "Sprachregion",
+                showInstantSearchResult: "Sofortiges Suchergebnis anzeigen",
+            },
         };
     }
 

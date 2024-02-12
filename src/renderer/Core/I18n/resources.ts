@@ -1,6 +1,5 @@
 import type { InitOptions } from "i18next";
 import * as Core from "./Core";
-import * as Extensions from "./Extensions";
 
 export const resources: InitOptions["resources"] = {
     "en-US": {
@@ -15,15 +14,6 @@ export const resources: InitOptions["resources"] = {
         settingsFavorites: Core.settingsFavorites["en-US"],
         settingsWindow: Core.settingsWindow["en-US"],
         searchResultItemAction: Core.searchResultItemAction["en-US"],
-        "extension[AppearanceSwitcher]": Extensions.extensionAppearanceSwitcher["en-US"],
-        "extension[ApplicationSearch]": Extensions.extensionApplicationSearch["en-US"],
-        "extension[BrowserBookmarks]": Extensions.extensionBrowserBookmarks["en-US"],
-        "extension[Calculator]": Extensions.extensionCalculator["en-US"],
-        "extension[DeeplTranslator]": Extensions.extensionDeeplTranslator["en-US"],
-        "extension[Shortcuts]": Extensions.extensionShortcuts["en-US"],
-        "extension[SystemSettings]": Extensions.extensionSystemSettings["en-US"],
-        "extension[UeliCommand]": Extensions.extensionUeliCommand["en-US"],
-        "extension[WebSearch]": Extensions.extensionWebSearch["en-US"],
     },
     "de-CH": {
         general: Core.general["de-CH"],
@@ -37,14 +27,5 @@ export const resources: InitOptions["resources"] = {
         settingsFavorites: Core.settingsFavorites["de-CH"],
         settingsWindow: Core.settingsWindow["de-CH"],
         searchResultItemAction: Core.searchResultItemAction["de-CH"],
-        "extension[AppearanceSwitcher]": Extensions.extensionAppearanceSwitcher["de-CH"],
-        "extension[ApplicationSearch]": Extensions.extensionApplicationSearch["de-CH"],
-        "extension[BrowserBookmarks]": Extensions.extensionBrowserBookmarks["de-CH"],
-        "extension[Calculator]": Extensions.extensionCalculator["de-CH"],
-        "extension[DeeplTranslator]": Extensions.extensionDeeplTranslator["de-CH"],
-        "extension[Shortcuts]": Extensions.extensionShortcuts["de-CH"],
-        "extension[SystemSettings]": Extensions.extensionSystemSettings["de-CH"],
-        "extension[UeliCommand]": Extensions.extensionUeliCommand["de-CH"],
-        "extension[WebSearch]": Extensions.extensionWebSearch["de-CH"],
     },
 };

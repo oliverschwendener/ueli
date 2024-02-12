@@ -1,5 +1,6 @@
-import type { InitOptions, TFunction } from "i18next";
+import type { Translations } from "@common/Core/Extension";
+import type { TFunction } from "i18next";
 
 export interface Translator {
-    createInstance(resources: InitOptions["resources"]): Promise<TFunction<"translation", undefined>>;
+    createInstance(translations: Translations): Promise<TFunction<"translation", undefined>>;
 }

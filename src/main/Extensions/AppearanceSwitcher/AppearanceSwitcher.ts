@@ -2,8 +2,9 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
+import type { Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
-import { resources } from "./resources";
+import { translations } from "./translations";
 
 export class AppearanceSwitcher implements Extension {
     public readonly id = "AppearanceSwitcher";
@@ -26,7 +27,7 @@ export class AppearanceSwitcher implements Extension {
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const t = await this.translator.createInstance(resources);
+        const t = await this.translator.createInstance(translations);
 
         return [
             {
@@ -64,5 +65,9 @@ export class AppearanceSwitcher implements Extension {
             urlOnDarkBackground: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "switch-to-light-mode.png")}`,
             urlOnLightBackground: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "switch-to-dark-mode.png")}`,
         };
+    }
+
+    public getTranslations(): Translations {
+        return translations;
     }
 }

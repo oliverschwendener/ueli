@@ -3,7 +3,7 @@ import type { UeliCommandInvoker } from "@Core/UeliCommand";
 import { MenuItemConstructorOptions } from "electron";
 import { describe, expect, it, vi } from "vitest";
 import { getContextMenuTemplate } from "./getContextMenuTemplate";
-import { resources } from "./resources";
+import { translations } from "./translations";
 
 describe(getContextMenuTemplate, () => {
     it("should do something", async () => {
@@ -20,7 +20,7 @@ describe(getContextMenuTemplate, () => {
             { label: "translation[trayIcon.contextMenu.quit]", click: () => null },
         ];
 
-        expect(createInstanceMock).toHaveBeenCalledWith(resources);
+        expect(createInstanceMock).toHaveBeenCalledWith(translations);
         expect(JSON.stringify(actual)).toEqual(JSON.stringify(expected));
     });
 });

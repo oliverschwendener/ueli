@@ -3,35 +3,11 @@ import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
-import { getExtensionSettingKey } from "@common/Core/Extension";
+import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
 import { Image } from "@common/Core/Image";
 import type { Net } from "electron";
-import { resources } from "./resources";
-
-type InvocationArgument = {
-    searchTerm: string;
-    sourceLanguage: string;
-    targetLanguage: string;
-};
-
-type PostBody = {
-    text: string[];
-    target_lang: string;
-    source_lang?: string;
-};
-
-type ApiResponse = {
-    translations: {
-        detected_source_language: string;
-        text: string;
-    }[];
-};
-
-type Settings = {
-    apiKey: string;
-    defaultSourceLanguage: string;
-    defaultTargetLanguage: string;
-};
+import type { ApiResponse, InvocationArgument, PostBody, Settings } from "./Types";
+import { translations } from "./translations";
 
 export class DeeplTranslatorExtension implements Extension {
     public readonly id = "DeeplTranslator";
@@ -61,7 +37,7 @@ export class DeeplTranslatorExtension implements Extension {
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const t = await this.translator.createInstance(resources);
+        const t = await this.translator.createInstance(translations);
 
         return [
             {
@@ -99,6 +75,25 @@ export class DeeplTranslatorExtension implements Extension {
 
     public getSettingKeysTriggeringRescan() {
         return ["general.language"];
+    }
+
+    public getTranslations(): Translations {
+        return {
+            "en-US": {
+                extensionName: "DeepL Translator",
+                openAccount: "Open DeepL Account",
+                "searchResultItem.description": "Translate with DeepL",
+                "searchResultItem.name": "DeepL Translator",
+                "searchResultItem.actionDescription": "Open DeepL Translator",
+            },
+            "de-CH": {
+                extensionName: "DeepL Übersetzer",
+                openAccount: "DeepL Account öffnen",
+                "searchResultItem.description": "Mit DeepL übersetzen",
+                "searchResultItem.name": "DeepL Übersetzer",
+                "searchResultItem.actionDescription": "DeepL Übersetzer öffnen",
+            },
+        };
     }
 
     private getDeeplAssetFilePath() {

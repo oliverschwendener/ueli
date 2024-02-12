@@ -2,8 +2,8 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
-import { getExtensionSettingKey } from "@common/Core/Extension";
-import { Image } from "@common/Core/Image";
+import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
+import type { Image } from "@common/Core/Image";
 import { Calculator } from "./Calculator";
 
 type Settings = {
@@ -86,6 +86,27 @@ export class CalculatorExtension implements Extension {
 
     public getSettingKeysTriggeringRescan(): string[] {
         return [];
+    }
+
+    public getTranslations(): Translations {
+        return {
+            "en-US": {
+                extensionName: "Calculator",
+                calculatorResult: "Calculation Result",
+                copyResultToClipboard: "Copy result to clipboard",
+                precision: "Precision",
+                decimalSeparator: "Decimal Separator",
+                argumentSeparator: "Argument Separator",
+            },
+            "de-CH": {
+                extensionName: "Rechner",
+                calculatorResult: "Rechnungsresultat",
+                copyResultToClipboard: "Resultat in Zwischenablage kopieren",
+                precision: "Präzision",
+                decimalSeparator: "Dezimaltrennzeichen",
+                argumentSeparator: "Argumententrennzeichen",
+            },
+        };
     }
 
     private getResultForExpression(expression: string): string | undefined {

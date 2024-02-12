@@ -1,4 +1,5 @@
 import type { SearchResultItem } from "@common/Core";
+import type { Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 
 export interface Extension {
@@ -19,6 +20,7 @@ export interface Extension {
     isSupported(): boolean;
     getSettingDefaultValue<T>(key: string): T;
     getImage(): Image;
+    getTranslations(): Translations;
 
     getInstantSearchResultItems?(searchTerm: string): SearchResultItem[];
     invoke?(argument: unknown): Promise<unknown>;
