@@ -26,7 +26,7 @@ export class ExtensionManagerModule {
         await extensionManager.populateSearchIndex();
 
         ipcMain.on("getExtensionTranslations", (event) => {
-            event.returnValue = extensionManager.getEnabledExtensions().map((extension) => ({
+            event.returnValue = extensionManager.getSupportedExtensions().map((extension) => ({
                 extensionId: extension.id,
                 translations: extension.getTranslations(),
             }));
