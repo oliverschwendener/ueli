@@ -8,6 +8,7 @@ docs @oliverschwendener
 .eslintrc @oliverschwendener
 .gitignore @oliverschwendener
 .prettierrc @oliverschwendener
+.npmrc @oliverschwendener
 electron-builder.config.js @oliverschwendener
 LICENSE @oliverschwendener
 package.json @oliverschwendener
@@ -19,9 +20,8 @@ vite.config.mts @oliverschwendener
 
 # Extensions
 
-# ApplicationSearch (example how to take ownership of an extension)
+# [EXAMPLE] ApplicationSearch
 assets/Extensions/ApplicationSearch @oliverschwendener
 src/common/Extensions/ApplicationSearch @oliverschwendener
 src/main/Extensions/ApplicationSearch @oliverschwendener
 src/renderer/Extensions/ApplicationSearch @oliverschwendener
-src/renderer/Core/I18n/Extensions/extension[ApplicationSearch].ts @oliverschwendener
