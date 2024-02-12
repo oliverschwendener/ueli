@@ -1,7 +1,7 @@
 import { useContextBridge, useFavorites, useSearchResultItems, useSetting } from "@Core/Hooks";
 import { getImageUrl } from "@Core/getImageUrl";
 import type { SearchResultItem } from "@common/Core";
-import { Body1, Caption1, Card, CardHeader, CardPreview, Subtitle2, Text } from "@fluentui/react-components";
+import { Caption1, Card, CardHeader, CardPreview, Subtitle2, Text } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 type FavoritesListProps = {
@@ -31,14 +31,7 @@ export const FavoritesList = ({ invokeSearchResultItem }: FavoritesListProps) =>
 
     return (
         <div style={{ padding: 20, boxSizing: "border-box", display: "flex", flexDirection: "column", gap: 10 }}>
-            {favoriteSearchResultItems.length ? (
-                <Subtitle2>{t("title", { ns })}</Subtitle2>
-            ) : (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <Body1>{t("noFavorites", { ns })}</Body1>
-                </div>
-            )}
-
+            {favoriteSearchResultItems.length ? <Subtitle2>{t("title", { ns })}</Subtitle2> : null}
             <div
                 style={{
                     width: "100%",
