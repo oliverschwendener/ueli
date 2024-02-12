@@ -2,7 +2,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
 import type { SearchResultItem } from "@common/Core";
-import { Translations } from "@common/Core/Extension";
+import type { Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 
 export class UeliCommandExtension implements Extension {
@@ -30,13 +30,13 @@ export class UeliCommandExtension implements Extension {
         const map: Record<string, SearchResultItem> = {
             quit: {
                 id: "ueliCommand:quit",
-                description: t("ueliCommand.description"),
-                name: t("ueliCommand.quitUeli"),
+                description: t("description"),
+                name: t("quitUeli"),
                 image: this.getImage(),
                 defaultAction: {
                     handlerId: "UeliCommand",
                     argument: "quit",
-                    description: t("ueliCommand.quitUeli"),
+                    description: t("quitUeli"),
                     hideWindowAfterInvocation: false,
                     requiresConfirmation: true,
                     fluentIcon: "DismissCircleRegular",
@@ -44,39 +44,39 @@ export class UeliCommandExtension implements Extension {
             },
             settings: {
                 id: "ueliCommand:settings",
-                description: t("ueliCommand.description"),
-                name: t("ueliCommand.openSettings"),
+                description: t("description"),
+                name: t("openSettings"),
                 image: this.getImage(),
                 defaultAction: {
                     handlerId: "UeliCommand",
                     argument: "settings",
-                    description: t("ueliCommand.openSettings"),
+                    description: t("openSettings"),
                     hideWindowAfterInvocation: false,
                     fluentIcon: "SettingsRegular",
                 },
             },
             extensions: {
                 id: "ueliCommand:extensions",
-                description: t("ueliCommand.description"),
-                name: t("ueliCommand.openExtensions"),
+                description: t("description"),
+                name: t("openExtensions"),
                 image: this.getImage(),
                 defaultAction: {
                     handlerId: "UeliCommand",
                     argument: "extensions",
-                    description: t("ueliCommand.openExtensions"),
+                    description: t("openExtensions"),
                     hideWindowAfterInvocation: false,
                     fluentIcon: "AppsAddInRegular",
                 },
             },
             centerWindow: {
                 id: "ueliCommand:centerWindow",
-                description: t("ueliCommand.description"),
-                name: t("ueliCommand.centerWindow"),
+                description: t("description"),
+                name: t("centerWindow"),
                 image: this.getImage(),
                 defaultAction: {
                     handlerId: "UeliCommand",
                     argument: "centerWindow",
-                    description: t("ueliCommand.centerWindow"),
+                    description: t("centerWindow"),
                     hideWindowAfterInvocation: false,
                     fluentIcon: "AppsAddInRegular",
                 },
@@ -110,19 +110,19 @@ export class UeliCommandExtension implements Extension {
         return {
             "en-US": {
                 extensionName: "Ueli Commands",
-                "ueliCommand.description": "Ueli Command",
-                "ueliCommand.openSettings": "Open Ueli settings",
-                "ueliCommand.openExtensions": "Browse Ueli extensions",
-                "ueliCommand.centerWindow": "Center Ueli window",
-                "ueliCommand.quitUeli": "Quit Ueli",
+                description: "Ueli Command",
+                openSettings: "Open Ueli settings",
+                openExtensions: "Browse Ueli extensions",
+                centerWindow: "Center Ueli window",
+                quitUeli: "Quit Ueli",
             },
             "de-CH": {
                 extensionName: "Ueli Befehle",
-                "ueliCommand.description": "Ueli Befehl",
-                "ueliCommand.openSettings": "Ueli-Einstellungen öffnen",
-                "ueliCommand.openExtensions": "Ueli-Erweiterungen durchsuchen",
-                "ueliCommand.centerWindow": "Ueli-Fenster zentrieren",
-                "ueliCommand.quitUeli": "Ueli Beenden",
+                description: "Ueli Befehl",
+                openSettings: "Ueli-Einstellungen öffnen",
+                openExtensions: "Ueli-Erweiterungen durchsuchen",
+                centerWindow: "Ueli-Fenster zentrieren",
+                quitUeli: "Ueli Beenden",
             },
         };
     }
