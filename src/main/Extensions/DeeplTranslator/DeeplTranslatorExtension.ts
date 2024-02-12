@@ -4,7 +4,7 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
-import { Image } from "@common/Core/Image";
+import type { Image } from "@common/Core/Image";
 import type { Net } from "electron";
 import type { ApiResponse, InvocationArgument, PostBody, Settings } from "./Types";
 import { translations } from "./translations";
@@ -42,12 +42,12 @@ export class DeeplTranslatorExtension implements Extension {
         return [
             {
                 id: "DeeplTranslator:invoke",
-                description: t("searchResultItem.description"),
-                name: t("searchResultItem.name"),
+                description: t("searchResultItemDescription"),
+                name: t("searchResultItemName"),
                 image: this.getImage(),
                 defaultAction: SearchResultItemActionUtility.createInvokeExtensionAction({
                     extensionId: this.id,
-                    description: t("searchResultItem.actionDescription"),
+                    description: t("searchResultItemActionDescription"),
                     fluentIcon: "OpenRegular",
                 }),
             },
@@ -82,16 +82,16 @@ export class DeeplTranslatorExtension implements Extension {
             "en-US": {
                 extensionName: "DeepL Translator",
                 openAccount: "Open DeepL Account",
-                "searchResultItem.description": "Translate with DeepL",
-                "searchResultItem.name": "DeepL Translator",
-                "searchResultItem.actionDescription": "Open DeepL Translator",
+                searchResultItemDescription: "Translate with DeepL",
+                searchResultItemName: "DeepL Translator",
+                searchResultItemActionDescription: "Open DeepL Translator",
             },
             "de-CH": {
                 extensionName: "DeepL Übersetzer",
                 openAccount: "DeepL Account öffnen",
-                "searchResultItem.description": "Mit DeepL übersetzen",
-                "searchResultItem.name": "DeepL Übersetzer",
-                "searchResultItem.actionDescription": "DeepL Übersetzer öffnen",
+                searchResultItemDescription: "Mit DeepL übersetzen",
+                searchResultItemName: "DeepL Übersetzer",
+                searchResultItemActionDescription: "DeepL Übersetzer öffnen",
             },
         };
     }

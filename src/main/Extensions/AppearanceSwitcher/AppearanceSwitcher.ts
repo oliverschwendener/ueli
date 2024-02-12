@@ -31,13 +31,13 @@ export class AppearanceSwitcher implements Extension {
 
         return [
             {
-                description: t("searchResultItem.description"),
+                description: t("searchResultItemDescription"),
                 id: "AppearanceSwitcher:toggle",
-                name: t("searchResultItem.name"),
+                name: t("searchResultItemName"),
                 image: this.getImage(),
                 defaultAction: {
                     argument: "toggle",
-                    description: t("searchResultItem.actionDescription"),
+                    description: t("searchResultItemActionDescription"),
                     handlerId: "AppearanceSwitcher",
                     hideWindowAfterInvocation: false,
                     fluentIcon: "ToggleMultipleRegular",
