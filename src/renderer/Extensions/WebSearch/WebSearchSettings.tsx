@@ -1,11 +1,13 @@
 import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
 import { Section } from "@Core/Settings/Section";
 import { SectionList } from "@Core/Settings/SectionList";
-import { Dropdown, Field, Option } from "@fluentui/react-components";
+import { Dropdown, Field, Option, Switch } from "@fluentui/react-components";
+import { t } from "i18next";
 
 export const WebSearchSettings = () => {
     const { contextBridge } = useContextBridge();
     const extensionId = "WebSearch";
+    const ns = "extension[WebSearch]";
 
     const { value: searchEngine, updateValue: setSearchEngine } = useExtensionSetting<string>({
         extensionId,
@@ -13,6 +15,11 @@ export const WebSearchSettings = () => {
     });
 
     const { value: locale, updateValue: setLocale } = useExtensionSetting<string>({ extensionId, key: "locale" });
+
+    const { value: showInstantSearchResult, updateValue: setShowInstantSearchResult } = useExtensionSetting<boolean>({
+        extensionId,
+        key: "showInstantSearchResult",
+    });
 
     const searchEngines = ["Google", "DuckDuckGo"];
 
@@ -24,21 +31,21 @@ export const WebSearchSettings = () => {
     return (
         <SectionList>
             <Section>
-                <Field label="Search Engine">
+                <Field label={t("searchEngine", { ns })}>
                     <Dropdown
                         value={searchEngine}
                         selectedOptions={[searchEngine]}
                         onOptionSelect={(_, { optionValue }) => optionValue && setSearchEngine(optionValue)}
                     >
-                        {searchEngines.map((s) => (
-                            <Option key={s} value={s} text={s}>
+                        {searchEngines.map((searchEngine) => (
+                            <Option key={searchEngine} value={searchEngine} text={searchEngine}>
                                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
                                     <img
                                         style={{ width: 16, height: 16 }}
-                                        alt={s}
-                                        src={`file://${contextBridge.getExtensionAssetFilePath("WebSearch", s)}`}
+                                        alt={searchEngine}
+                                        src={`file://${contextBridge.getExtensionAssetFilePath("WebSearch", searchEngine)}`}
                                     />
-                                    {s}
+                                    {searchEngine}
                                 </div>
                             </Option>
                         ))}
@@ -46,7 +53,7 @@ export const WebSearchSettings = () => {
                 </Field>
             </Section>
             <Section>
-                <Field label="Locale">
+                <Field label={t("locale", { ns })}>
                     <Dropdown
                         value={locales.find((l) => l.locale === locale)?.label}
                         selectedOptions={[locale]}
@@ -58,6 +65,14 @@ export const WebSearchSettings = () => {
                             </Option>
                         ))}
                     </Dropdown>
+                </Field>
+            </Section>
+            <Section>
+                <Field label={t("showInstantSearchResult", { ns })}>
+                    <Switch
+                        checked={showInstantSearchResult}
+                        onChange={(_, { checked }) => setShowInstantSearchResult(checked)}
+                    />
                 </Field>
             </Section>
         </SectionList>

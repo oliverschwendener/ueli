@@ -3,12 +3,13 @@ import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
-import { Image } from "@common/Core/Image";
+import type { Image } from "@common/Core/Image";
 import type { WebSearchEngine } from "./WebSearchEngine";
 
 type Settings = {
     searchEngine: string;
     locale: string;
+    showInstantSearchResult: boolean;
 };
 
 export class WebSearchExtension implements Extension {
@@ -28,6 +29,7 @@ export class WebSearchExtension implements Extension {
     private readonly defaultSettings: Settings = {
         searchEngine: "Google",
         locale: "en-US",
+        showInstantSearchResult: false,
     };
 
     public constructor(
@@ -35,6 +37,26 @@ export class WebSearchExtension implements Extension {
         private readonly settingsManager: SettingsManager,
         private readonly webSearchEngines: WebSearchEngine[],
     ) {}
+
+    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
+        const showInstantSearchResult = this.settingsManager.getValue(
+            getExtensionSettingKey(this.id, "showInstantSearchResult"),
+            this.getSettingDefaultValue("showInstantSearchResult"),
+        );
+
+        if (searchTerm.trim().length && showInstantSearchResult) {
+            const locale = this.settingsManager.getValue<string>(
+                getExtensionSettingKey(this.id, "locale"),
+                this.getSettingDefaultValue("locale"),
+            );
+
+            const webSearchEngine = this.getCurrentWebSearchEngine();
+
+            return [this.getInstantSearchResultItem(searchTerm, locale, webSearchEngine)];
+        }
+
+        return [];
+    }
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
         const webSearchEngine = this.getCurrentWebSearchEngine();
@@ -72,15 +94,7 @@ export class WebSearchExtension implements Extension {
         const suggestions = await webSearchEngine.getSuggestions(searchTerm, locale);
 
         return [
-            {
-                defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({
-                    url: webSearchEngine.getSearchUrl(searchTerm, locale),
-                }),
-                description: webSearchEngine.getName(),
-                id: `search-${webSearchEngine.getName()}`,
-                name: `Search "${searchTerm}"`,
-                image: { url: this.getSearchResultImageUrl(webSearchEngine) },
-            },
+            this.getInstantSearchResultItem(searchTerm, locale, webSearchEngine),
             ...suggestions.map(
                 (s, i) =>
                     <SearchResultItem>{
@@ -108,6 +122,22 @@ export class WebSearchExtension implements Extension {
     public getImage(): Image {
         return {
             url: this.getSearchResultImageUrl(this.getCurrentWebSearchEngine()),
+        };
+    }
+
+    private getInstantSearchResultItem(
+        searchTerm: string,
+        locale: string,
+        webSearchEngine: WebSearchEngine,
+    ): SearchResultItem {
+        return {
+            defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({
+                url: webSearchEngine.getSearchUrl(searchTerm, locale),
+            }),
+            description: webSearchEngine.getName(),
+            id: `search-${webSearchEngine.getName()}`,
+            name: `Search "${searchTerm}"`,
+            image: { url: this.getSearchResultImageUrl(webSearchEngine) },
         };
     }
 

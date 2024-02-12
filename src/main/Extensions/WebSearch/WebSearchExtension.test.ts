@@ -9,6 +9,97 @@ import type { WebSearchEngine } from "./WebSearchEngine";
 import { WebSearchExtension } from "./WebSearchExtension";
 
 describe(WebSearchExtension, () => {
+    it("should return no instant search result items when search term is empty or whitespace", () => {
+        const getValueMock = vi.fn().mockReturnValue(true);
+        const webSearchExtension = new WebSearchExtension(
+            <AssetPathResolver>{},
+            <SettingsManager>{ getValue: (k, d) => getValueMock(k, d) },
+            [],
+        );
+        expect(webSearchExtension.getInstantSearchResultItems("")).toEqual([]);
+        expect(webSearchExtension.getInstantSearchResultItems(" ")).toEqual([]);
+
+        expect(getValueMock).toHaveBeenCalledWith(
+            getExtensionSettingKey("WebSearch", "showInstantSearchResult"),
+            false,
+        );
+    });
+
+    it("should return no instant search result items when instant search result items are disabled", () => {
+        const getValueMock = vi.fn().mockReturnValue(false);
+
+        const webSearchExtension = new WebSearchExtension(
+            <AssetPathResolver>{},
+            <SettingsManager>{ getValue: (k, d) => getValueMock(k, d) },
+            [],
+        );
+
+        expect(webSearchExtension.getInstantSearchResultItems("blub")).toEqual([]);
+
+        expect(getValueMock).toHaveBeenCalledWith(
+            getExtensionSettingKey("WebSearch", "showInstantSearchResult"),
+            false,
+        );
+    });
+
+    it("should return one instant search result item when search term is not empty", () => {
+        const getSearchUrlMock = vi.fn().mockReturnValue("mySearchUrl");
+
+        const webSearchEngine = <WebSearchEngine>{
+            getName: () => "searchEngine1",
+            getSearchUrl: (s, l) => getSearchUrlMock(s, l),
+            getImageFileName: () => "imageFileName",
+        };
+
+        const getWebSearchEngineMock = vi.fn().mockReturnValue("searchEngine1");
+        const getLocaleMock = vi.fn().mockReturnValue("de-CH");
+        const getShowInstantSearchResultMock = vi.fn().mockReturnValue(true);
+
+        const settingsManager = <SettingsManager>{
+            getValue: (k, d) => {
+                const resolvers = {
+                    [getExtensionSettingKey("WebSearch", "searchEngine")]: () => getWebSearchEngineMock(k, d),
+                    [getExtensionSettingKey("WebSearch", "locale")]: () => getLocaleMock(k, d),
+                    [getExtensionSettingKey("WebSearch", "showInstantSearchResult")]: () =>
+                        getShowInstantSearchResultMock(k, d),
+                };
+
+                return resolvers[k] ? resolvers[k]() : undefined;
+            },
+        };
+
+        const getExtensionAssetPathMock = vi.fn().mockReturnValue("myAssetFilePath");
+
+        const assetPathResolver = <AssetPathResolver>{
+            getExtensionAssetPath: (e, a) => getExtensionAssetPathMock(e, a),
+        };
+
+        const webSearchExtension = new WebSearchExtension(assetPathResolver, settingsManager, [webSearchEngine]);
+
+        expect(webSearchExtension.getInstantSearchResultItems("my search term")).toEqual([
+            <SearchResultItem>{
+                defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({ url: "mySearchUrl" }),
+                description: "searchEngine1",
+                id: "search-searchEngine1",
+                image: { url: "file://myAssetFilePath" },
+                name: `Search "my search term"`,
+            },
+        ]);
+
+        expect(getWebSearchEngineMock).toHaveBeenCalledWith(
+            getExtensionSettingKey("WebSearch", "searchEngine"),
+            "Google",
+        );
+
+        expect(getLocaleMock).toHaveBeenCalledWith(getExtensionSettingKey("WebSearch", "locale"), "en-US");
+        expect(getSearchUrlMock).toHaveBeenCalledWith("my search term", "de-CH");
+        expect(getExtensionAssetPathMock).toHaveBeenCalledWith("WebSearch", "imageFileName");
+        expect(getShowInstantSearchResultMock).toHaveBeenCalledWith(
+            getExtensionSettingKey("WebSearch", "showInstantSearchResult"),
+            false,
+        );
+    });
+
     it("should return the correct default values", () => {
         const webSearchExtension = new WebSearchExtension(<AssetPathResolver>{}, <SettingsManager>{}, []);
         expect(webSearchExtension.getSettingDefaultValue("searchEngine")).toBe("Google");
