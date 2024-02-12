@@ -4,6 +4,7 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
+import { Image } from "@common/Core/Image";
 import type { Net } from "electron";
 import { resources } from "./resources";
 
@@ -67,7 +68,7 @@ export class DeeplTranslatorExtension implements Extension {
                 id: "DeeplTranslator:invoke",
                 description: t("searchResultItem.description"),
                 name: t("searchResultItem.name"),
-                imageUrl: this.getFileImageUrl(),
+                image: this.getImage(),
                 defaultAction: SearchResultItemActionUtility.createInvokeExtensionAction({
                     extensionId: this.id,
                     description: t("searchResultItem.actionDescription"),
@@ -90,8 +91,10 @@ export class DeeplTranslatorExtension implements Extension {
         return this.defaultSettings[key] as T;
     }
 
-    public getImageUrl(): string {
-        return this.getFileImageUrl();
+    public getImage(): Image {
+        return {
+            url: `file://${this.getDeeplAssetFilePath()}`,
+        };
     }
 
     public getSettingKeysTriggeringRescan() {
@@ -100,10 +103,6 @@ export class DeeplTranslatorExtension implements Extension {
 
     private getDeeplAssetFilePath() {
         return this.assetPathResolver.getExtensionAssetPath(this.id, "deepl-logo.svg");
-    }
-
-    private getFileImageUrl() {
-        return `file://${this.getDeeplAssetFilePath()}`;
     }
 
     private getPostBody({ searchTerm, sourceLanguage, targetLanguage }: InvocationArgument): PostBody {

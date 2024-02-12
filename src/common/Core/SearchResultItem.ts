@@ -1,3 +1,4 @@
+import type { Image } from "./Image";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
 
 export type SearchResultItem = {
@@ -5,9 +6,7 @@ export type SearchResultItem = {
     name: string;
     description: string;
     descriptionTranslation?: { key: string; namespace: string };
-    imageUrl: string;
-    imageUrlOnDarkBackground?: string;
-    imageUrlOnLightBackground?: string;
+    image: Image;
     defaultAction: SearchResultItemAction;
     additionalActions?: SearchResultItemAction[];
 };

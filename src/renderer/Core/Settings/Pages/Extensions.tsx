@@ -17,6 +17,7 @@ import {
 } from "@fluentui/react-components";
 import { ArrowClockwiseRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
+import { getImageUrl } from "../../../getImageUrl";
 import { useContextBridge, useSetting } from "../../Hooks";
 
 export const Extensions = () => {
@@ -82,7 +83,7 @@ export const Extensions = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {getAvailableExtensions().map(({ author, id, name, nameTranslation, imageUrl }) => {
+                    {getAvailableExtensions().map(({ author, id, name, nameTranslation, image }) => {
                         return (
                             <TableRow key={id}>
                                 <TableCell>
@@ -96,7 +97,13 @@ export const Extensions = () => {
                                             }}
                                         >
                                             <div style={{ width: 20, height: 20 }}>
-                                                <img style={{ maxWidth: "100%", maxHeight: "100%" }} src={imageUrl} />
+                                                <img
+                                                    style={{ maxWidth: "100%", maxHeight: "100%" }}
+                                                    src={getImageUrl({
+                                                        image,
+                                                        onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                                                    })}
+                                                />
                                             </div>
                                             {nameTranslation
                                                 ? t(nameTranslation.key, { ns: nameTranslation.namespace })

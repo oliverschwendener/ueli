@@ -2,8 +2,9 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { SettingsManager } from "@Core/SettingsManager";
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
+import type { Image } from "@common/Core/Image";
 import { describe, expect, it, vi } from "vitest";
-import { Suggestion } from "./Suggestion";
+import type { Suggestion } from "./Suggestion";
 import type { WebSearchEngine } from "./WebSearchEngine";
 import { WebSearchExtension } from "./WebSearchExtension";
 
@@ -31,7 +32,7 @@ describe(WebSearchExtension, () => {
 
         const webSearchExtension = new WebSearchExtension(assetPathResolver, settingsManager, [googleWebSearchEngine]);
 
-        expect(webSearchExtension.getImageUrl()).toBe("file://assets/asset.png");
+        expect(webSearchExtension.getImage()).toEqual(<Image>{ url: "file://assets/asset.png" });
         expect(getExtensionAssetPathMock).toHaveBeenCalledWith("WebSearch", "google.png");
         expect(getValueMock).toHaveBeenCalledWith(getExtensionSettingKey("WebSearch", "searchEngine"), "Google");
     });
@@ -96,7 +97,7 @@ describe(WebSearchExtension, () => {
                 description: "Web Search",
                 id: "webSearch:invoke",
                 name: "MyEngine",
-                imageUrl: "file://assets/asset.png",
+                image: { url: "file://assets/asset.png" },
             },
         ]);
 
@@ -137,14 +138,14 @@ describe(WebSearchExtension, () => {
                 description: "MyEngine",
                 id: `search-MyEngine`,
                 name: `Search "mySearchTerm"`,
-                imageUrl: "file://assets/asset.png",
+                image: { url: "file://assets/asset.png" },
             },
             {
                 defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({ url: "suggestion-url" }),
                 description: "Suggestion",
                 id: "suggestion-0",
                 name: "suggestion-mySearchTerm-de-CH",
-                imageUrl: "file://assets/asset.png",
+                image: { url: "file://assets/asset.png" },
             },
         ]);
     });

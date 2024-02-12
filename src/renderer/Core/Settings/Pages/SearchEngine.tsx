@@ -3,6 +3,7 @@ import { Badge, Button, Field, Input, Slider, Switch, Text, Tooltip } from "@flu
 import { DismissRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { getImageUrl } from "../../../getImageUrl";
 import { Section } from "../Section";
 import { SectionList } from "../SectionList";
 
@@ -87,19 +88,20 @@ export const SearchEngine = () => {
                 <Field label={t("excludedItems", { ns })}>
                     <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                         {excludedSearchResultItems.length ? null : <Text italic>{t("noExcludedItems", { ns })}</Text>}
-                        {excludedSearchResultItems.map(({ id, name, imageUrl, description }) => (
+                        {excludedSearchResultItems.map(({ id, name, image, description }) => (
                             <Input
                                 key={`excludedItem-${id}`}
                                 readOnly
                                 value={name}
                                 contentBefore={
-                                    imageUrl ? (
-                                        <img
-                                            alt="Excluded search result item image"
-                                            style={{ width: 16, height: 16 }}
-                                            src={imageUrl}
-                                        />
-                                    ) : null
+                                    <img
+                                        alt="Excluded search result item image"
+                                        style={{ width: 16, height: 16 }}
+                                        src={getImageUrl({
+                                            image,
+                                            onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                                        })}
+                                    />
                                 }
                                 contentAfter={
                                     <div>

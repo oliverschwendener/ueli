@@ -16,7 +16,7 @@ export class ChromiumBrowserBookmark implements BrowserBookmark {
             defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({ url: this.url }),
             id: this.getId(),
             name: this.getName(searchResultStyle),
-            imageUrl: this.getImageUrl(faviconApi),
+            image: { url: this.getImageUrl(faviconApi) },
             additionalActions: [
                 SearchResultItemActionUtility.createCopyToClipboardAction({
                     textToCopy: this.url,

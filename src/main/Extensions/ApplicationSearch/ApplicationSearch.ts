@@ -2,6 +2,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
+import type { Image } from "@common/Core/Image";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import type { Settings } from "./Settings";
 
@@ -49,7 +50,9 @@ export class ApplicationSearch implements Extension {
         ];
     }
 
-    public getImageUrl(): string {
-        return `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "macos-applications.png")}`;
+    public getImage(): Image {
+        return {
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "macos-applications.png")}`,
+        };
     }
 }

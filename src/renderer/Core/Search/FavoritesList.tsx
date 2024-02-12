@@ -1,7 +1,8 @@
-import { useFavorites, useSearchResultItems, useSetting } from "@Core/Hooks";
+import { useContextBridge, useFavorites, useSearchResultItems, useSetting } from "@Core/Hooks";
 import type { SearchResultItem } from "@common/Core";
 import { Body1, Caption1, Card, CardHeader, CardPreview, Subtitle2, Text } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
+import { getImageUrl } from "../../getImageUrl";
 
 type FavoritesListProps = {
     invokeSearchResultItem: (s: SearchResultItem) => Promise<void>;
@@ -19,6 +20,7 @@ const getGridTemplateColumns = (numberOfColumns: number) => {
 
 export const FavoritesList = ({ invokeSearchResultItem }: FavoritesListProps) => {
     const { t } = useTranslation();
+    const { contextBridge } = useContextBridge();
     const ns = "settingsFavorites";
     const { searchResultItems } = useSearchResultItems();
     const { favorites } = useFavorites();
@@ -54,7 +56,14 @@ export const FavoritesList = ({ invokeSearchResultItem }: FavoritesListProps) =>
                         onKeyDown={(e) => e.key === "Enter" && invokeSearchResultItem(searchResultItem)}
                     >
                         <CardPreview style={{ paddingLeft: 12, width: 24 }}>
-                            <img style={{ width: "100%" }} src={searchResultItem.imageUrl} alt="App Name Document" />
+                            <img
+                                style={{ width: "100%" }}
+                                src={getImageUrl({
+                                    image: searchResultItem.image,
+                                    onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                                })}
+                                alt="App Name Document"
+                            />
                         </CardPreview>
                         <CardHeader
                             header={<Text weight="semibold">{searchResultItem.name}</Text>}

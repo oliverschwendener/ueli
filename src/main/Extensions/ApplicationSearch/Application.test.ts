@@ -14,7 +14,7 @@ describe(Application, () => {
             },
             id: "W0FwcGxpY2F0aW9uU2VhcmNoXVsvQXBwbGljYXRpb25zL015IEFwcC5hcHBd",
             name: "My App",
-            imageUrl: "file:///Users/Dummy/Icons/icon.png",
+            image: { url: "file:///Users/Dummy/Icons/icon.png" },
             defaultAction: SearchResultItemActionUtility.createOpenFileAction({
                 filePath: "/Applications/My App.app",
                 description: "Open application",

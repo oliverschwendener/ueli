@@ -16,7 +16,7 @@ export class MacOsSystemSetting {
                 filePath: this.filePath,
                 description: "Open System Setting",
             }),
-            imageUrl: this.getImageUrl(),
+            image: { url: this.getImageUrl() },
         };
     }
 

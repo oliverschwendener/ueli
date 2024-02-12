@@ -3,6 +3,7 @@ import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
+import type { Image } from "@common/Core/Image";
 import type { Browser } from "@common/Extensions/BrowserBookmarks";
 import type { BrowserBookmarkRepository } from "./BrowserBookmarkRepository";
 
@@ -72,8 +73,10 @@ export class BrowserBookmarks implements Extension {
         ];
     }
 
-    public getImageUrl(): string {
-        return `file://${this.getAssetFilePath(this.getCurrentlyConfiguredBrowser())}`;
+    public getImage(): Image {
+        return {
+            url: `file://${this.getAssetFilePath(this.getCurrentlyConfiguredBrowser())}`,
+        };
     }
 
     public getAssetFilePath(key: string): string {

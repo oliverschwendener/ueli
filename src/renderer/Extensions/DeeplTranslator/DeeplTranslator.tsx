@@ -6,6 +6,7 @@ import { Button, Text, Tooltip } from "@fluentui/react-components";
 import { ArrowLeftFilled, CopyRegular, PersonRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { getImageUrl } from "../../getImageUrl";
 import { MissingApiKey } from "./MissingApiKey";
 import { Translator } from "./Translator";
 
@@ -14,8 +15,6 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
 
     const { t } = useTranslation();
     const ns = "extension[DeeplTranslator]";
-
-    const extensionImageUrl = () => contextBridge.getExtension(extensionId).imageUrl;
 
     const { value: apiKey, updateValue: setApiKey } = useExtensionSetting({
         extensionId,
@@ -46,7 +45,14 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                     <div
                         style={{ display: "flex", flexDirection: "row", alignItems: "center", width: "100%", gap: 10 }}
                     >
-                        <img alt="DeepL Logo" src={extensionImageUrl()} style={{ width: 24 }} />
+                        <img
+                            alt="DeepL Logo"
+                            src={getImageUrl({
+                                image: contextBridge.getExtension(extensionId).image,
+                                onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                            })}
+                            style={{ width: 24 }}
+                        />
                         <div style={{ flexGrow: 1 }}>
                             <Text weight="semibold">{t("extensionName", { ns })}</Text>
                         </div>

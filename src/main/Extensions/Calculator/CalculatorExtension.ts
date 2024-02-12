@@ -3,6 +3,7 @@ import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
+import { Image } from "@common/Core/Image";
 import { Calculator } from "./Calculator";
 
 type Settings = {
@@ -52,7 +53,7 @@ export class CalculatorExtension implements Extension {
                     namespace: "extension[Calculator]",
                 },
                 id: "calculator:instantResult",
-                imageUrl: this.getImageUrl(),
+                image: this.getImage(),
                 defaultAction: SearchResultItemActionUtility.createCopyToClipboardAction({
                     textToCopy: result,
                     description: "Copy result to clipboard",
@@ -77,8 +78,10 @@ export class CalculatorExtension implements Extension {
         return this.defaultSettings[key];
     }
 
-    public getImageUrl(): string {
-        return `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "calculator.png")}`;
+    public getImage(): Image {
+        return {
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "calculator.png")}`,
+        };
     }
 
     public getSettingKeysTriggeringRescan(): string[] {

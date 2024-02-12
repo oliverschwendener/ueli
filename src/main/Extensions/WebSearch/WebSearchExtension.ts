@@ -3,6 +3,7 @@ import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
+import { Image } from "@common/Core/Image";
 import type { WebSearchEngine } from "./WebSearchEngine";
 
 type Settings = {
@@ -47,7 +48,7 @@ export class WebSearchExtension implements Extension {
                 }),
                 description: "Web Search",
                 name: webSearchEngine.getName(),
-                imageUrl: this.getSearchResultImageUrl(webSearchEngine),
+                image: { url: this.getSearchResultImageUrl(webSearchEngine) },
             },
         ];
     }
@@ -78,15 +79,18 @@ export class WebSearchExtension implements Extension {
                 description: webSearchEngine.getName(),
                 id: `search-${webSearchEngine.getName()}`,
                 name: `Search "${searchTerm}"`,
-                imageUrl: this.getSearchResultImageUrl(webSearchEngine),
+                image: { url: this.getSearchResultImageUrl(webSearchEngine) },
             },
-            ...suggestions.map((s, i) => ({
-                defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({ url: s.url }),
-                description: "Suggestion",
-                id: `suggestion-${i}`,
-                name: s.text,
-                imageUrl: this.getSearchResultImageUrl(webSearchEngine),
-            })),
+            ...suggestions.map(
+                (s, i) =>
+                    <SearchResultItem>{
+                        defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({ url: s.url }),
+                        description: "Suggestion",
+                        id: `suggestion-${i}`,
+                        name: s.text,
+                        image: { url: this.getSearchResultImageUrl(webSearchEngine) },
+                    },
+            ),
         ];
     }
 
@@ -101,8 +105,10 @@ export class WebSearchExtension implements Extension {
         );
     }
 
-    public getImageUrl(): string {
-        return this.getSearchResultImageUrl(this.getCurrentWebSearchEngine());
+    public getImage(): Image {
+        return {
+            url: this.getSearchResultImageUrl(this.getCurrentWebSearchEngine()),
+        };
     }
 
     private getCurrentWebSearchEngine(): WebSearchEngine {

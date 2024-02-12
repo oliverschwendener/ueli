@@ -3,6 +3,7 @@ import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
+import type { Image } from "@common/Core/Image";
 import type { Shortcut } from "@common/Extensions/Shortcuts";
 
 export class Shortcuts implements Extension {
@@ -46,7 +47,7 @@ export class Shortcuts implements Extension {
                     namespace: Shortcuts.translationNamespace,
                 },
                 id: `shorcut-${id}`,
-                imageUrl: this.getImageUrl(),
+                image: this.getImage(),
                 defaultAction: {
                     argument: JSON.stringify({ type, argument }),
                     description: "Invoke shortcut",
@@ -70,8 +71,10 @@ export class Shortcuts implements Extension {
         return this.defaultSettings[key];
     }
 
-    public getImageUrl(): string {
-        return `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "bolt.square.svg")}`;
+    public getImage(): Image {
+        return {
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "bolt.square.svg")}`,
+        };
     }
 
     public getSettingKeysTriggeringRescan(): string[] {

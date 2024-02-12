@@ -3,6 +3,7 @@ import { Text } from "@fluentui/react-components";
 import { StarFilled } from "@fluentui/react-icons";
 import { useContext, useEffect, useRef, useState, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
+import { getImageUrl } from "../../getImageUrl";
 import { useContextBridge } from "../Hooks";
 import { ThemeContext } from "../ThemeContext";
 import { elementIsVisible } from "./Helpers";
@@ -35,11 +36,6 @@ export const SearchResultListItem = ({
             setTimeout(() => ref.current?.scrollIntoView({ behavior: "smooth" }), 50);
         }
     };
-
-    const imageUrl = () =>
-        contextBridge.themeShouldUseDarkColors()
-            ? searchResultItem.imageUrlOnDarkBackground ?? searchResultItem.imageUrl
-            : searchResultItem.imageUrlOnLightBackground ?? searchResultItem.imageUrl;
 
     const selectedBackgroundColor = contextBridge.themeShouldUseDarkColors()
         ? theme.colorNeutralBackground1Selected
@@ -105,7 +101,10 @@ export const SearchResultListItem = ({
                         maxHeight: "100%",
                         maxWidth: "100%",
                     }}
-                    src={imageUrl()}
+                    src={getImageUrl({
+                        image: searchResultItem.image,
+                        onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                    })}
                 />
             </div>
             <Text

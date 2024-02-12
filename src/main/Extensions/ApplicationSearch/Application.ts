@@ -17,7 +17,7 @@ export class Application {
             },
             id: this.getId(),
             name: this.name,
-            imageUrl: this.imageUrl,
+            image: { url: this.imageUrl },
             defaultAction: SearchResultItemActionUtility.createOpenFileAction({
                 filePath: this.filePath,
                 description: "Open application",

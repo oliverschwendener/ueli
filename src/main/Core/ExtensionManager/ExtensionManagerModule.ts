@@ -8,7 +8,7 @@ const mapExtensionToInfo = (extension: Extension): ExtensionInfo => ({
     id: extension.id,
     name: extension.name,
     nameTranslation: extension.nameTranslation,
-    imageUrl: extension.getImageUrl(),
+    image: extension.getImage(),
     author: extension.author,
 });
 

@@ -2,6 +2,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
+import type { Image } from "@common/Core/Image";
 import { resources } from "./resources";
 
 export class AppearanceSwitcher implements Extension {
@@ -32,9 +33,7 @@ export class AppearanceSwitcher implements Extension {
                 description: t("searchResultItem.description"),
                 id: "AppearanceSwitcher:toggle",
                 name: t("searchResultItem.name"),
-                imageUrl: this.getSearchResultItemImageUrl(),
-                imageUrlOnDarkBackground: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "switch-to-light-mode.png")}`,
-                imageUrlOnLightBackground: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "switch-to-dark-mode.png")}`,
+                image: this.getImage(),
                 defaultAction: {
                     argument: "toggle",
                     description: t("searchResultItem.actionDescription"),
@@ -59,16 +58,11 @@ export class AppearanceSwitcher implements Extension {
         return ["general.language"];
     }
 
-    public getImageUrl(): string {
-        return this.getSearchResultItemImageUrl();
-    }
-
-    private getSearchResultItemImageUrl(): string {
-        const map = {
-            macOS: "macos-appearance.png",
-            Windows: "windows-11-logo.webp",
+    public getImage(): Image {
+        return {
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "switch-to-light-mode.png")}`,
+            urlOnDarkBackground: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "switch-to-light-mode.png")}`,
+            urlOnLightBackground: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "switch-to-dark-mode.png")}`,
         };
-
-        return `file://${this.assetPathResolver.getExtensionAssetPath(this.id, map[this.currentOperatingSystem])}`;
     }
 }

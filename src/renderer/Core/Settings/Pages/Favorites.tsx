@@ -2,6 +2,7 @@ import { useContextBridge, useFavorites, useSearchResultItems, useSetting } from
 import { Badge, Button, Field, Input, SpinButton, Text, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
+import { getImageUrl } from "../../../getImageUrl";
 import { Section } from "../Section";
 import { SectionList } from "../SectionList";
 
@@ -45,7 +46,13 @@ export const Favorites = () => {
                                 readOnly
                                 contentBefore={
                                     <div style={{ width: 16, height: 16, display: "flex", alignItems: "center" }}>
-                                        <img style={{ maxWidth: "100%", maxHeight: "100%" }} src={s.imageUrl} />
+                                        <img
+                                            style={{ maxWidth: "100%", maxHeight: "100%" }}
+                                            src={getImageUrl({
+                                                image: s.image,
+                                                onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                                            })}
+                                        />
                                     </div>
                                 }
                                 contentAfter={

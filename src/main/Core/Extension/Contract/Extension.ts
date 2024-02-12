@@ -1,4 +1,5 @@
 import type { SearchResultItem } from "@common/Core";
+import type { Image } from "@common/Core/Image";
 
 export interface Extension {
     readonly id: string;
@@ -17,7 +18,7 @@ export interface Extension {
     getSearchResultItems(): Promise<SearchResultItem[]>;
     isSupported(): boolean;
     getSettingDefaultValue<T>(key: string): T;
-    getImageUrl(): string;
+    getImage(): Image;
 
     getInstantSearchResultItems?(searchTerm: string): SearchResultItem[];
     invoke?(argument: unknown): Promise<unknown>;

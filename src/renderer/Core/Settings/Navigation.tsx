@@ -1,7 +1,9 @@
+import { useContextBridge } from "@Core/Hooks";
 import { ExtensionInfo } from "@common/Core";
 import { Tab, TabList } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router";
+import { getImageUrl } from "../../getImageUrl";
 import { SettingsPage } from "./Pages";
 
 type NavigationProps = {
@@ -11,6 +13,7 @@ type NavigationProps = {
 
 export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps) => {
     const { t } = useTranslation();
+    const { contextBridge } = useContextBridge();
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
@@ -51,7 +54,13 @@ export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps
                                 alignItems: "center",
                             }}
                         >
-                            <img style={{ maxWidth: "100%", maxHeight: "100%" }} src={e.imageUrl} />
+                            <img
+                                style={{ maxWidth: "100%", maxHeight: "100%" }}
+                                src={getImageUrl({
+                                    image: e.image,
+                                    onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                                })}
+                            />
                         </div>
                         {e.nameTranslation ? t(e.nameTranslation.key, { ns: e.nameTranslation.namespace }) : e.name}
                     </div>

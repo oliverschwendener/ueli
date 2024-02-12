@@ -1,6 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
+import type { Image } from "@common/Core/Image";
 import type { MacOsSystemSettingRepository } from "./MacOsSystemSettingRepository";
 
 export class SystemSettingsExtension implements Extension {
@@ -35,7 +36,9 @@ export class SystemSettingsExtension implements Extension {
         return undefined;
     }
 
-    public getImageUrl(): string {
-        return `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "macos-system-settings.png")}`;
+    public getImage(): Image {
+        return {
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "macos-system-settings.png")}`,
+        };
     }
 }
