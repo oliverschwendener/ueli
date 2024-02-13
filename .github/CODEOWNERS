@@ -6,6 +6,7 @@ assets @oliverschwendener
 docs @oliverschwendener
 .eslintignore @oliverschwendener
 .eslintrc @oliverschwendener
+.gitattributes @oliverschwendener
 .gitignore @oliverschwendener
 .prettierrc @oliverschwendener
 .npmrc @oliverschwendener
