@@ -1,26 +1,33 @@
 import { BasicSearch } from "@Core/Components";
 import type { ExtensionProps } from "@Core/ExtensionProps";
+import { useExtensionSetting } from "@Core/Hooks";
 import { SearchResultItem } from "@common/Core";
+import { MissingEverythingCliFilePath } from "./MissingEverythingCliFilePath";
 
-type InvokationArgument = {
-    searchTerm: string;
-};
+export const FileSearch = ({ contextBridge, goBack }: ExtensionProps) => {
+    const { value: esFilePath, updateValue: setEsFilePath } = useExtensionSetting<string>({
+        extensionId: "FileSearch",
+        key: "everythingCliFilePath",
+    });
 
-type InvokationResponse = Promise<SearchResultItem[]>;
-
-export const FileSearch = ({ contextBridge }: ExtensionProps) => {
     const getSearchResultItems = async (searchTerm: string) => {
         try {
-            const searchResultItems = await contextBridge.invokeExtension<InvokationArgument, InvokationResponse>(
-                "FileSearch",
-                { searchTerm },
-            );
+            const searchResultItems = await contextBridge.invokeExtension<
+                { searchTerm: string },
+                Promise<SearchResultItem[]>
+            >("FileSearch", { searchTerm });
             return searchResultItems;
         } catch (error) {
             console.log(`error: ${error}`);
             return [];
         }
     };
+
+    if (contextBridge.getOperatingSystem() === "Windows" && !esFilePath) {
+        return (
+            <MissingEverythingCliFilePath contextBridge={contextBridge} goBack={goBack} setEsFilePath={setEsFilePath} />
+        );
+    }
 
     return <BasicSearch getSearchResultItems={getSearchResultItems} showGoBackButton />;
 };

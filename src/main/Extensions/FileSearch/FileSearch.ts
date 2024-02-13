@@ -1,5 +1,4 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { Extension } from "@Core/Extension";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Logger } from "@Core/Logger";
@@ -9,6 +8,7 @@ import { getExtensionSettingKey, type Translations } from "@common/Core/Extensio
 import type { Image } from "@common/Core/Image";
 import type { App } from "electron";
 import { basename } from "path";
+import type { FileSearcher } from "./FileSearcher";
 
 export class FileSearch implements Extension {
     public readonly id = "FileSearch";
@@ -26,16 +26,17 @@ export class FileSearch implements Extension {
 
     private readonly defaultSettings = {
         maxSearchResultCount: 20,
+        everythingCliFilePath: "",
     };
 
     public constructor(
         private readonly operatingSystem: OperatingSystem,
         private readonly assetPathResolver: AssetPathResolver,
-        private readonly commandlineUtility: CommandlineUtility,
         private readonly fileSystemUtility: FileSystemUtility,
         private readonly settingsManager: SettingsManager,
         private readonly app: App,
         private readonly logger: Logger,
+        private readonly fileSearcher: FileSearcher,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -54,7 +55,7 @@ export class FileSearch implements Extension {
     }
 
     public isSupported(): boolean {
-        return this.operatingSystem === "macOS";
+        return this.operatingSystem == "macOS" || this.operatingSystem === "Windows";
     }
 
     public getSettingDefaultValue<T>(key: string): T {
@@ -65,7 +66,7 @@ export class FileSearch implements Extension {
         const fileNames: Record<OperatingSystem, string> = {
             Linux: null, // Currently not supported,
             macOS: "macos-folder-icon.png",
-            Windows: null, // Currently not supported,
+            Windows: "macos-folder-icon.png", // Currently not supported,
         };
 
         return {
@@ -89,11 +90,12 @@ export class FileSearch implements Extension {
     }
 
     public async invoke({ searchTerm }: { searchTerm: string }): Promise<SearchResultItem[]> {
-        const filePaths = await this.getFilePathsBySearchTerm(searchTerm);
+        const filePaths = await this.fileSearcher.getFilePathsBySearchTerm(searchTerm, this.getMaxSearchResultCount());
         const filePathIconMap = await this.getFileIconMap(filePaths);
 
         return filePaths.map((filePath) => {
-            const isDirectory = this.fileSystemUtility.isDirectory(filePath);
+            const isDirectory =
+                this.fileSystemUtility.isAccessibleSync(filePath) && this.fileSystemUtility.isDirectory(filePath);
 
             return {
                 defaultAction: SearchResultItemActionUtility.createOpenFileAction({
@@ -106,13 +108,6 @@ export class FileSearch implements Extension {
                 name: basename(filePath),
             };
         });
-    }
-
-    private async getFilePathsBySearchTerm(searchTerm: string): Promise<string[]> {
-        const maxSearchResultCount = this.getMaxSearchResultCount();
-        const commands = [`mdfind -name "${searchTerm}"`, `head -n ${maxSearchResultCount}`];
-        const stdout = await this.commandlineUtility.executeCommandWithOutput(commands.join(" | "), true);
-        return stdout.split("\n").filter((filePath) => filePath.trim().length > 0);
     }
 
     private getMaxSearchResultCount(): number {
