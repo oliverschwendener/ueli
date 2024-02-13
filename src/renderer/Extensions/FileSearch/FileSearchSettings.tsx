@@ -2,8 +2,11 @@ import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
 import { Section } from "@Core/Settings/Section";
 import { SectionList } from "@Core/Settings/SectionList";
 import { Field, Input, SpinButton } from "@fluentui/react-components";
+import { useTranslation } from "react-i18next";
 
 export const FileSearchSettings = () => {
+    const { t } = useTranslation();
+    const ns = "extension[FileSearch]";
     const { contextBridge } = useContextBridge();
 
     const { value: maxSearchResultCount, updateValue: setMaxSearchResultCount } = useExtensionSetting<number>({
@@ -19,7 +22,7 @@ export const FileSearchSettings = () => {
     return (
         <SectionList>
             <Section>
-                <Field label="Max Search Results">
+                <Field label={t("maxSearchResults", { ns })}>
                     <SpinButton
                         value={maxSearchResultCount}
                         min={1}
@@ -30,8 +33,10 @@ export const FileSearchSettings = () => {
             {contextBridge.getOperatingSystem() === "Windows" ? (
                 <Section>
                     <Field
-                        label="Everything CLI file path"
-                        validationMessage={contextBridge.fileExists(esFilePath) ? undefined : "File does not exist"}
+                        label={t("esFilePath", { ns })}
+                        validationMessage={
+                            contextBridge.fileExists(esFilePath) ? undefined : t("fileDoesNotExist", { ns })
+                        }
                         validationState={contextBridge.fileExists(esFilePath) ? "success" : "error"}
                     >
                         <Input value={esFilePath} onChange={(_, { value }) => setEsFilePath(value)} />

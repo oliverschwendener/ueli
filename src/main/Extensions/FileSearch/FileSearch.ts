@@ -3,6 +3,7 @@ import type { Extension } from "@Core/Extension";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
+import type { Translator } from "@Core/Translator";
 import { SearchResultItemActionUtility, type OperatingSystem, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
@@ -36,20 +37,23 @@ export class FileSearch implements Extension {
         private readonly settingsManager: SettingsManager,
         private readonly app: App,
         private readonly logger: Logger,
+        private readonly translator: Translator,
         private readonly fileSearcher: FileSearcher,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
+        const t = await this.translator.createInstance(this.getTranslations());
+
         return [
             {
                 defaultAction: SearchResultItemActionUtility.createInvokeExtensionAction({
                     extensionId: this.id,
                     description: "Search files",
                 }),
-                description: "File Search",
+                description: t("extensionName"),
                 id: "file-search:invoke",
                 image: this.getImage(),
-                name: "Search files",
+                name: t("searchResultItemName"),
             },
         ];
     }
@@ -78,9 +82,17 @@ export class FileSearch implements Extension {
         return {
             "en-US": {
                 extensionName: "File Search",
+                esFilePath: "Everything CLI file path",
+                fileDoesNotExist: "File does not exist",
+                maxSearchResults: "Max search results",
+                searchResultItemName: "Search files",
             },
             "de-CH": {
                 extensionName: "Dateisuche",
+                esFilePath: "Everything CLI-Dateipfad",
+                fileDoesNotExist: "File does not exist",
+                maxSearchResults: "Maximale Suchergebnisse",
+                searchResultItemName: "Dateien suchen",
             },
         };
     }

@@ -18,7 +18,6 @@ export const FileSearch = ({ contextBridge, goBack }: ExtensionProps) => {
             >("FileSearch", { searchTerm });
             return searchResultItems;
         } catch (error) {
-            console.log(`error: ${error}`);
             return [];
         }
     };

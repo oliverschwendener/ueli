@@ -4,12 +4,16 @@ import { Header } from "@Core/Header";
 import { Button, Field, Input, Text } from "@fluentui/react-components";
 import { ArrowLeftRegular } from "@fluentui/react-icons";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const MissingEverythingCliFilePath = ({
     contextBridge,
     goBack,
     setEsFilePath,
 }: ExtensionProps & { setEsFilePath: (esFilePath: string) => void }) => {
+    const { t } = useTranslation();
+    const ns = "extension[FileSearch]";
+
     const [temporaryEsFilePath, setTemporaryEsCliFilePath] = useState<string>("");
 
     const temporaryEsFilePathExists = contextBridge.fileExists(temporaryEsFilePath);
@@ -18,7 +22,7 @@ export const MissingEverythingCliFilePath = ({
         <BaseLayout
             header={
                 <Header
-                    children={<Text>File Search</Text>}
+                    children={<Text>{t("extensionName", { ns })}</Text>}
                     contentBefore={
                         <Button size="small" appearance="subtle" onClick={() => goBack()} icon={<ArrowLeftRegular />} />
                     }
@@ -36,8 +40,8 @@ export const MissingEverythingCliFilePath = ({
                     }}
                 >
                     <Field
-                        label="Everything CLI file path"
-                        validationMessage={temporaryEsFilePathExists ? undefined : "File does not exist"}
+                        label={t("esFilePath", { ns })}
+                        validationMessage={temporaryEsFilePathExists ? undefined : t("fileDoesNotExist", { ns })}
                         validationState={temporaryEsFilePathExists ? "success" : "error"}
                     >
                         <Input

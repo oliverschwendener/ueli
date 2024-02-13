@@ -28,6 +28,7 @@ export class FileSearchModule implements ExtensionModule {
                 dependencyRegistry.get("SettingsManager"),
                 dependencyRegistry.get("App"),
                 dependencyRegistry.get("Logger"),
+                dependencyRegistry.get("Translator"),
                 fileSearchers[dependencyRegistry.get("OperatingSystem")],
             ),
         };
