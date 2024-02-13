@@ -1,4 +1,4 @@
-import { access, existsSync, mkdir, readFile, readFileSync, unlink, writeFile, writeFileSync } from "fs";
+import { access, existsSync, mkdir, readFile, readFileSync, statSync, unlink, writeFile, writeFileSync } from "fs";
 import type { FileSystemUtility } from "./Contract";
 
 export class NodeJsFileSystemUtility implements FileSystemUtility {
@@ -69,6 +69,10 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
 
     public existsSync(filePath: string): boolean {
         return existsSync(filePath);
+    }
+
+    public isDirectory(filePath: string): boolean {
+        return statSync(filePath).isDirectory();
     }
 
     private readFile(filePath: string): Promise<Buffer> {

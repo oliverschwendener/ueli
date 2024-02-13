@@ -9,4 +9,5 @@ export interface FileSystemUtility {
     writeJsonFileSync<T>(data: T, filePath: string): void;
     writePng(buffer: Buffer, filePath: string): Promise<void>;
     existsSync(filePath: string): boolean;
+    isDirectory(filePath: string): boolean;
 }

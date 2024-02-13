@@ -1,11 +1,13 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import { CommandlineUtility } from "@Core/CommandlineUtility";
+import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { Extension } from "@Core/Extension";
-import { SettingsManager } from "@Core/SettingsManager";
+import type { FileSystemUtility } from "@Core/FileSystemUtility";
+import type { Logger } from "@Core/Logger";
+import type { SettingsManager } from "@Core/SettingsManager";
 import { SearchResultItemActionUtility, type OperatingSystem, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
-import { statSync } from "fs";
+import type { App } from "electron";
 import { basename } from "path";
 
 export class FileSearch implements Extension {
@@ -30,7 +32,10 @@ export class FileSearch implements Extension {
         private readonly operatingSystem: OperatingSystem,
         private readonly assetPathResolver: AssetPathResolver,
         private readonly commandlineUtility: CommandlineUtility,
+        private readonly fileSystemUtility: FileSystemUtility,
         private readonly settingsManager: SettingsManager,
+        private readonly app: App,
+        private readonly logger: Logger,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -45,7 +50,7 @@ export class FileSearch implements Extension {
                 image: this.getImage(),
                 name: "Search files",
             },
-        ]; // TODO
+        ];
     }
 
     public isSupported(): boolean {
@@ -57,8 +62,14 @@ export class FileSearch implements Extension {
     }
 
     public getImage(): Image {
+        const fileNames: Record<OperatingSystem, string> = {
+            Linux: null, // Currently not supported,
+            macOS: "macos-folder-icon.png",
+            Windows: null, // Currently not supported,
+        };
+
         return {
-            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "macos-folder-icon.png")}`,
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, fileNames[this.operatingSystem])}`,
         };
     }
 
@@ -79,9 +90,10 @@ export class FileSearch implements Extension {
 
     public async invoke({ searchTerm }: { searchTerm: string }): Promise<SearchResultItem[]> {
         const filePaths = await this.getFilePathsBySearchTerm(searchTerm);
+        const filePathIconMap = await this.getFileIconMap(filePaths);
 
         return filePaths.map((filePath) => {
-            const isDirectory = statSync(filePath).isDirectory();
+            const isDirectory = this.fileSystemUtility.isDirectory(filePath);
 
             return {
                 defaultAction: SearchResultItemActionUtility.createOpenFileAction({
@@ -90,7 +102,7 @@ export class FileSearch implements Extension {
                 }),
                 description: isDirectory ? "Folder" : "File",
                 id: `file-search-result:${Buffer.from(filePath).toString("base64")}`,
-                image: this.getImage(),
+                image: { url: filePathIconMap[filePath] },
                 name: basename(filePath),
             };
         });
@@ -98,12 +110,8 @@ export class FileSearch implements Extension {
 
     private async getFilePathsBySearchTerm(searchTerm: string): Promise<string[]> {
         const maxSearchResultCount = this.getMaxSearchResultCount();
-
-        const stdout = await this.commandlineUtility.executeCommandWithOutput(
-            `mdfind -name "${searchTerm}" -onlyin "/Users/oliverschwendener" | head -n ${maxSearchResultCount}`,
-            true,
-        );
-
+        const commands = [`mdfind -name "${searchTerm}"`, `head -n ${maxSearchResultCount}`];
+        const stdout = await this.commandlineUtility.executeCommandWithOutput(commands.join(" | "), true);
         return stdout.split("\n").filter((filePath) => filePath.trim().length > 0);
     }
 
@@ -112,5 +120,24 @@ export class FileSearch implements Extension {
             getExtensionSettingKey(this.id, "maxSearchResultCount"),
             this.defaultSettings.maxSearchResultCount,
         );
+    }
+
+    private async getFileIconMap(filePaths: string[]): Promise<Record<string, string>> {
+        const result: Record<string, string> = {};
+        const promiseResults = await Promise.allSettled(filePaths.map((filePath) => this.app.getFileIcon(filePath)));
+
+        for (let i = 0; i < promiseResults.length; i++) {
+            const promiseResult = promiseResults[i];
+
+            if (promiseResult.status === "fulfilled") {
+                result[filePaths[i]] = promiseResult.value.toDataURL();
+            } else if (promiseResult.status === "rejected") {
+                this.logger.error(
+                    `Failed to generate icon for file path "${filePaths[i]}". Reason: ${promiseResult.reason}`,
+                );
+            }
+        }
+
+        return result;
     }
 }
