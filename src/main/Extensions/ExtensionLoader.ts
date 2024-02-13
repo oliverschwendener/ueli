@@ -6,6 +6,7 @@ import { BrowserBookmarksModule } from "./BrowserBookmarks";
 import { CalculatorModule } from "./Calculator";
 import { DeeplTranslatorModule } from "./DeeplTranslator";
 import { ExtensionModule } from "./ExtensionModule";
+import { FileSearchModule } from "./FileSearch/FileSearchModule";
 import { ShortcutsModule } from "./Shortcuts";
 import { SystemSettingsModule } from "./SystemSettings";
 import { UeliCommandModule } from "./UeliCommand";
@@ -19,6 +20,7 @@ export class ExtensionLoader {
             new BrowserBookmarksModule(),
             new CalculatorModule(),
             new DeeplTranslatorModule(),
+            new FileSearchModule(),
             new ShortcutsModule(),
             new SystemSettingsModule(),
             new UeliCommandModule(),

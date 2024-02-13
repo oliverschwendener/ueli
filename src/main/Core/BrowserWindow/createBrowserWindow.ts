@@ -20,6 +20,7 @@ export const createBrowserWindow = (dependencyRegistry: DependencyRegistry<Depen
         webPreferences: {
             preload: preloadScriptFilePath,
             webSecurity: app.isPackaged,
+            allowRunningInsecureContent: !app.isPackaged,
             spellcheck: false,
         },
     };

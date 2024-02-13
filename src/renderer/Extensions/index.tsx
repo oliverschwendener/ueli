@@ -4,6 +4,7 @@ import { ApplicationSearchSettings } from "./ApplicationSearch";
 import { BrowserBookmarksSettings } from "./BrowserBookmarks";
 import { CalculatorSettings } from "./Calculator";
 import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
+import { FileSearch } from "./FileSearch/FileSearch";
 import { ShortcutsSettings } from "./Shortcuts";
 import { WebSearchExtension } from "./WebSearch";
 import { WebSearchSettings } from "./WebSearch/WebSearchSettings";
@@ -29,6 +30,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         DeeplTranslator: {
             extension: <DeeplTranslator {...props} />,
             settings: <DeeplTranslatorSettings />,
+        },
+        FileSearch: {
+            extension: <FileSearch {...props} />,
         },
         Shortcuts: {
             settings: <ShortcutsSettings />,

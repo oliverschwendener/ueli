@@ -32,7 +32,6 @@ export const SearchResultList = ({
     return (
         <div
             style={{
-                height: "100%",
                 display: "flex",
                 flexDirection: "column",
                 padding: 10,
