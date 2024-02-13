@@ -1,6 +1,6 @@
+import type { ActionHandler } from "@Core/ActionHandler";
 import type { SearchResultItemAction } from "@common/Core";
 import type { Shell } from "electron";
-import type { ActionHandler } from "@Core/ActionHandler";
 
 export class ShowItemInFileExplorerActionHandler implements ActionHandler {
     public readonly id = "ShowItemInFileExplorer";
