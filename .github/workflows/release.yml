@@ -27,6 +27,12 @@ jobs:
                   node-version: 18
                   cache: pnpm
 
+            - name: Configure pnpm for release
+              run: |
+                  pnpm config set shamefully-hoist true --location=project
+                  pnpm config set auto-install-peers true --location=project
+                  pnpm config set strict-peer-dependencies true --location=project
+
             - name: Install dependencies
               run: pnpm install
               env:
