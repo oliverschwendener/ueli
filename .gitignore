@@ -6,6 +6,9 @@ tsconfig.tsbuildinfo
 
 .DS_Store
 
+# npmrc
+.npmrc
+
 #Visual Studio Code files
 .vscode/*
 !.vscode/launch.example.json
