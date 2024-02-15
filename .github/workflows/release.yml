@@ -37,9 +37,6 @@ jobs:
               run: pnpm install
               env:
                   NODE_ENV: development
-                  AUTO_INSTALL_PEERS: true
-                  STRICT_PEER_DEPENDENCIES: true
-                  SHAMEFULLY_HOIST: true
 
             - name: Run typecheck
               run: pnpm typecheck
