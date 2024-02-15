@@ -23,7 +23,7 @@ module.exports = {
     },
     win: {
         icon: "assets/Build/app-icon-dark-transparent.png",
-        target: [{ target: "msi" }, { target: "nsis" }, { target: "zip" }],
+        target: [{ target: "msi" }, { target: "nsis" }, { target: "zip" }, { target: "appx" }],
     },
     linux: {
         icon: "assets/Build/app-icon-dark.png",
