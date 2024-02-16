@@ -4,7 +4,6 @@ import type { Translator } from "@Core/Translator";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
-import { translations } from "./translations";
 
 export class AppearanceSwitcher implements Extension {
     public readonly id = "AppearanceSwitcher";
@@ -27,7 +26,7 @@ export class AppearanceSwitcher implements Extension {
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const t = await this.translator.createInstance(translations);
+        const t = await this.translator.createInstance(this.getTranslations());
 
         return [
             {
@@ -68,6 +67,19 @@ export class AppearanceSwitcher implements Extension {
     }
 
     public getTranslations(): Translations {
-        return translations;
+        return {
+            "en-US": {
+                extensionName: "Appearance Switcher",
+                searchResultItemDescription: "System",
+                searchResultItemName: "Toggle System Appearance",
+                searchResultItemActionDescription: "Toggle System Appearance",
+            },
+            "de-CH": {
+                extensionName: "Erscheinungsbildwechsler",
+                searchResultItemDescription: "System",
+                searchResultItemName: "System-Farbschema umschalten",
+                searchResultItemActionDescription: "System-Farbschema umschalten",
+            },
+        };
     }
 }
