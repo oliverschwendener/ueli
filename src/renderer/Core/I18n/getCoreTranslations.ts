@@ -185,11 +185,13 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
                     title: "Window",
                     hideWindowAfterExecution: "Hide window after execution",
                     hideWindowOnBlur: "Hide window on blur",
+                    alwaysOnTop: "Always on top",
                 },
                 "de-CH": {
                     title: "Fenster",
                     hideWindowAfterExecution: "Fenster verstecken nach Ausführung",
                     hideWindowOnBlur: "Fenster verstecken bei Fokusverlust",
+                    alwaysOnTop: "Immer im Vordergrund",
                 },
             },
         },

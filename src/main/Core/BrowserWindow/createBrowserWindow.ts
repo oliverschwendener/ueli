@@ -11,7 +11,8 @@ export const createBrowserWindow = (dependencyRegistry: DependencyRegistry<Depen
     const operatingSystem = dependencyRegistry.get("OperatingSystem");
     const settingsManager = dependencyRegistry.get("SettingsManager");
 
-    const startHidden = settingsManager.getValue<boolean>("general.startHidden", false);
+    const startHidden = settingsManager.getValue<boolean>("window.showOnStartup", false);
+    const alwaysOnTop = settingsManager.getValue<boolean>("window.alwaysOnTop", false);
 
     const preloadScriptFilePath = join(__dirname, "..", "dist-preload", "index.js");
 
@@ -26,6 +27,7 @@ export const createBrowserWindow = (dependencyRegistry: DependencyRegistry<Depen
             allowRunningInsecureContent: !app.isPackaged,
             spellcheck: false,
         },
+        alwaysOnTop,
     };
 
     const extendDefaultBrowserWindowOptions = (browserWindowOptions: BrowserWindowConstructorOptions) => {

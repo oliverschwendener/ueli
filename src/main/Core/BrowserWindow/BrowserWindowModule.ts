@@ -56,6 +56,10 @@ export class BrowserWindowModule {
             sendToBrowserWindow(browserWindow, `settingUpdated[${key}]`, { value });
         });
 
+        eventSubscriber.subscribe("settingUpdated[window.alwaysOnTop]", ({ value }: { value: boolean }) => {
+            browserWindow.setAlwaysOnTop(value);
+        });
+
         eventSubscriber.subscribe(
             "settingUpdated[window.backgroundMaterial]",
             ({ value }: { value: BrowserWindowConstructorOptions["backgroundMaterial"] }) => {
