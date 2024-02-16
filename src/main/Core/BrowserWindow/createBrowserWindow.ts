@@ -11,12 +11,15 @@ export const createBrowserWindow = (dependencyRegistry: DependencyRegistry<Depen
     const operatingSystem = dependencyRegistry.get("OperatingSystem");
     const settingsManager = dependencyRegistry.get("SettingsManager");
 
+    const startHidden = settingsManager.getValue<boolean>("general.startHidden", false);
+
     const preloadScriptFilePath = join(__dirname, "..", "dist-preload", "index.js");
 
     const defaultBrowserWindowOptions: BrowserWindowConstructorOptions = {
         width: 750,
         height: 500,
         frame: false,
+        show: !startHidden,
         webPreferences: {
             preload: preloadScriptFilePath,
             webSecurity: app.isPackaged,

@@ -44,6 +44,7 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
                     hotkeyMoreInfo: "More info",
                     language: "Language",
                     autostart: "Start Ueli automatically after you log into the computer",
+                    startHidden: "Start hidden",
                 },
                 "de-CH": {
                     title: "Allgemein",
@@ -54,6 +55,7 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
                     hotkeyMoreInfo: "Mehr Informationen",
                     language: "Sprache",
                     autostart: "Ueli automatisch starten, nach Anmelden am Computer",
+                    startHidden: "Versteckt starten",
                 },
             },
         },

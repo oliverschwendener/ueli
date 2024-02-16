@@ -3,6 +3,7 @@ import { SectionList } from "../../SectionList";
 import { Autostart } from "./Autostart";
 import { HotKey } from "./HotKey";
 import { Language } from "./Language";
+import { StartHidden } from "./StartHidden";
 
 export const General = () => {
     return (
@@ -15,6 +16,9 @@ export const General = () => {
             </Section>
             <Section>
                 <Autostart />
+            </Section>
+            <Section>
+                <StartHidden />
             </Section>
         </SectionList>
     );
