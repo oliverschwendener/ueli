@@ -6,6 +6,7 @@ import { BackgroundMaterial } from "./BackgroundMaterial";
 import { HideWindowAfterExecution } from "./HideWindowAfterExecution";
 import { HideWindowOnBlur } from "./HideWindowOnBlur";
 import { Opacity } from "./Opacity";
+import { ShowOnStartup } from "./ShowOnStartup";
 import { Vibrancy } from "./Vibrancy";
 
 export const Window = () => {
@@ -22,6 +23,9 @@ export const Window = () => {
         <SectionList>
             <Section>
                 <AlwaysOnTop />
+            </Section>
+            <Section>
+                <ShowOnStartup />
             </Section>
             <Section>
                 <HideWindowOnBlur />
