@@ -1,6 +1,7 @@
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import type { SystemSetting } from "./SystemSetting";
 
-export class MacOsSystemSetting {
+export class MacOsSystemSetting implements SystemSetting {
     public constructor(
         private readonly name: string,
         private readonly filePath: string,

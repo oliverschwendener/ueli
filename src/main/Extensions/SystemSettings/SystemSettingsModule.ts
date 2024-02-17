@@ -1,21 +1,29 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { OperatingSystem } from "@common/Core";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { MacOsSystemSettingRepository } from "./MacOsSystemSettingRepository";
+import type { SystemSettingRepository } from "./SystemSettingRepository";
 import { SystemSettingsExtension } from "./SystemSettingsExtension";
+import { WindowsSystemSettingsRepository } from "./WindowsSystemRepository";
+import { WindowsSystemSettingActionHandler } from "./WindowsSystemSettingActionHandler";
 
 export class SystemSettingsModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
-        const operatingSystem = dependencyRegistry.get("OperatingSystem");
-        const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
+        const systemSettingRepositories: Record<OperatingSystem, SystemSettingRepository> = {
+            Linux: null, // not supported
+            macOS: new MacOsSystemSettingRepository(dependencyRegistry.get("AssetPathResolver")),
+            Windows: new WindowsSystemSettingsRepository(dependencyRegistry.get("AssetPathResolver")),
+        };
 
         return {
             extension: new SystemSettingsExtension(
-                operatingSystem,
-                new MacOsSystemSettingRepository(assetPathResolver),
-                assetPathResolver,
+                dependencyRegistry.get("OperatingSystem"),
+                systemSettingRepositories[dependencyRegistry.get("OperatingSystem")],
+                dependencyRegistry.get("AssetPathResolver"),
             ),
+            actionHandlers: [new WindowsSystemSettingActionHandler(dependencyRegistry.get("PowershellUtility"))],
         };
     }
 }

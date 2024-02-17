@@ -1,7 +1,8 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import { MacOsSystemSetting } from "./MacOsSystemSetting";
+import type { SystemSettingRepository } from "./SystemSettingRepository";
 
-export class MacOsSystemSettingRepository {
+export class MacOsSystemSettingRepository implements SystemSettingRepository {
     public constructor(private readonly assetPathResolver: AssetPathResolver) {}
 
     public getAll(): MacOsSystemSetting[] {

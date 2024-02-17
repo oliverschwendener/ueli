@@ -3,7 +3,7 @@ import type { Extension } from "@Core/Extension";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
-import type { MacOsSystemSettingRepository } from "./MacOsSystemSettingRepository";
+import { SystemSettingRepository } from "./SystemSettingRepository";
 
 export class SystemSettingsExtension implements Extension {
     public readonly id = "SystemSettings";
@@ -20,17 +20,17 @@ export class SystemSettingsExtension implements Extension {
     };
 
     public constructor(
-        private readonly currentOperatingSystem: OperatingSystem,
-        private readonly macOsSystemSettingRepository: MacOsSystemSettingRepository,
+        private readonly operatingSystem: OperatingSystem,
+        private readonly systemSettingRepository: SystemSettingRepository,
         private readonly assetPathResolver: AssetPathResolver,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        return this.macOsSystemSettingRepository.getAll().map((s) => s.toSearchResultItem());
+        return this.systemSettingRepository.getAll().map((s) => s.toSearchResultItem());
     }
 
     public isSupported(): boolean {
-        return this.currentOperatingSystem === "macOS";
+        return (<OperatingSystem[]>["Windows", "macOS"]).includes(this.operatingSystem);
     }
 
     public getSettingDefaultValue<T>(): T {
@@ -38,8 +38,14 @@ export class SystemSettingsExtension implements Extension {
     }
 
     public getImage(): Image {
+        const filenames: Record<OperatingSystem, string> = {
+            Linux: null, // not supported,
+            macOS: "macos-system-settings.png",
+            Windows: "windows-11-settings.png",
+        };
+
         return {
-            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "macos-system-settings.png")}`,
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, filenames[this.operatingSystem])}`,
         };
     }
 
