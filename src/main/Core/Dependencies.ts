@@ -40,4 +40,5 @@ export type Dependencies = {
     SystemPreferences?: Electron.SystemPreferences;
     Translator?: Core.Translator;
     UeliCommandInvoker?: Core.UeliCommandInvoker;
+    UrlImageGenerator?: Core.UrlImageGenerator;
 };

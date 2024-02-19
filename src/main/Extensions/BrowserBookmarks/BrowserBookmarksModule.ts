@@ -12,12 +12,14 @@ export class BrowserBookmarksModule implements ExtensionModule {
         const operatingSystem = dependencyRegistry.get("OperatingSystem");
         const settingsManager = dependencyRegistry.get("SettingsManager");
         const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
+        const urlImageGenerator = dependencyRegistry.get("UrlImageGenerator");
 
         return {
             extension: new BrowserBookmarks(
                 new ChromiumBrowserBookmarkRepository(app, fileSystemUtility, operatingSystem),
                 settingsManager,
                 assetPathResolver,
+                urlImageGenerator,
             ),
         };
     }

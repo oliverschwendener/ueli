@@ -45,6 +45,7 @@ import * as Extensions from "./Extensions";
     Core.SettingsReaderModule.bootstrap(dependencyRegistry);
     Core.SettingsWriterModule.bootstrap(dependencyRegistry);
     Core.SettingsManagerModule.bootstrap(dependencyRegistry);
+    Core.ImageGeneratorModule.bootstrap(dependencyRegistry);
     Core.TranslatorModule.bootstrap(dependencyRegistry);
     Core.SearchIndexModule.bootstrap(dependencyRegistry);
     Core.NativeThemeModule.bootstrap(dependencyRegistry);

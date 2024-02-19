@@ -1,5 +1,5 @@
-import type { SearchResultItem } from "@common/Core";
-
 export interface BrowserBookmark {
-    toSearchResultItem(...args: unknown[]): SearchResultItem;
+    getName(): string;
+    getUrl(): string;
+    getId(): string;
 }

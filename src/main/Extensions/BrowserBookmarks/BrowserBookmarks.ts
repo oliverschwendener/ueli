@@ -1,16 +1,17 @@
-import type { SearchResultItem } from "@common/Core";
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { Extension } from "@Core/Extension";
+import type { UrlImageGenerator } from "@Core/ImageGenerator";
+import type { SettingsManager } from "@Core/SettingsManager";
+import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Browser } from "@common/Extensions/BrowserBookmarks";
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Extension } from "@Core/Extension";
-import type { SettingsManager } from "@Core/SettingsManager";
+import type { BrowserBookmark } from "./BrowserBookmark";
 import type { BrowserBookmarkRepository } from "./BrowserBookmarkRepository";
 
 type Settings = {
     browser: Browser;
     searchResultStyle: string;
-    faviconApi: string;
 };
 
 export class BrowserBookmarks implements Extension {
@@ -30,31 +31,18 @@ export class BrowserBookmarks implements Extension {
     private readonly defaultSettings: Settings = {
         browser: "Google Chrome",
         searchResultStyle: "nameOnly",
-        faviconApi: "Google",
     };
 
     public constructor(
         private readonly browserBookmarkRepository: BrowserBookmarkRepository,
         private readonly settingsManager: SettingsManager,
         private readonly assetPathResolver: AssetPathResolver,
+        private readonly urlImageGenerator: UrlImageGenerator,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const browser = this.getCurrentlyConfiguredBrowser();
-
-        const searchResultStyle = this.settingsManager.getValue<string>(
-            getExtensionSettingKey(this.id, "searchResultStyle"),
-            this.getSettingDefaultValue("searchResultStyle"),
-        );
-
-        const faviconApi = this.settingsManager.getValue<string>(
-            getExtensionSettingKey(this.id, "faviconApi"),
-            this.getSettingDefaultValue("faviconApi"),
-        );
-
-        return (await this.browserBookmarkRepository.getAll(browser)).map((browserBookmark) =>
-            browserBookmark.toSearchResultItem(searchResultStyle, faviconApi),
-        );
+        const browserBookmarks = await this.browserBookmarkRepository.getAll(this.getCurrentlyConfiguredBrowser());
+        return browserBookmarks.map((browserBookmark) => this.toSearchResultItem(browserBookmark));
     }
 
     public isSupported(): boolean {
@@ -67,9 +55,9 @@ export class BrowserBookmarks implements Extension {
 
     public getSettingKeysTriggeringRescan(): string[] {
         return [
+            "imageGenerator.faviconApiProvider",
             getExtensionSettingKey(this.id, "browser"),
             getExtensionSettingKey(this.id, "searchResultStyle"),
-            getExtensionSettingKey(this.id, "faviconApi"),
         ];
     }
 
@@ -100,6 +88,43 @@ export class BrowserBookmarks implements Extension {
                 copyUrlToClipboard: "URL in Zwischenablage kopieren",
             },
         };
+    }
+
+    private toSearchResultItem(browserBookmark: BrowserBookmark): SearchResultItem {
+        return {
+            description: "Browser Bookmark",
+            defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({
+                url: browserBookmark.getUrl(),
+            }),
+            id: browserBookmark.getId(),
+            name: this.getName(browserBookmark),
+            image: this.urlImageGenerator.getImage(browserBookmark.getUrl()),
+            additionalActions: [
+                SearchResultItemActionUtility.createCopyToClipboardAction({
+                    textToCopy: browserBookmark.getUrl(),
+                    description: "Copy URL to clipboard",
+                    descriptionTranslation: {
+                        key: "copyUrlToClipboard",
+                        namespace: "extension[BrowserBookmarks]",
+                    },
+                }),
+            ],
+        };
+    }
+
+    private getName(browserBookmark: BrowserBookmark): string {
+        const searchResultStyle = this.settingsManager.getValue<string>(
+            getExtensionSettingKey(this.id, "searchResultStyle"),
+            this.getSettingDefaultValue("searchResultStyle"),
+        );
+
+        const names: Record<string, () => string> = {
+            nameOnly: () => browserBookmark.getName(),
+            urlOnly: () => browserBookmark.getUrl(),
+            nameAndUrl: () => `${browserBookmark.getName()} - ${browserBookmark.getUrl()}`,
+        };
+
+        return Object.keys(names).includes(searchResultStyle) ? names[searchResultStyle]() : names["nameOnly"]();
     }
 
     private getCurrentlyConfiguredBrowser(): Browser {

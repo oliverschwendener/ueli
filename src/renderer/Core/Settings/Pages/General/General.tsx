@@ -3,6 +3,7 @@ import { SectionList } from "../../SectionList";
 import { Autostart } from "./Autostart";
 import { HotKey } from "./HotKey";
 import { Language } from "./Language";
+import { UrlImageGenerator } from "./UrlImageGenerator";
 
 export const General = () => {
     return (
@@ -15,6 +16,9 @@ export const General = () => {
             </Section>
             <Section>
                 <Autostart />
+            </Section>
+            <Section>
+                <UrlImageGenerator />
             </Section>
         </SectionList>
     );

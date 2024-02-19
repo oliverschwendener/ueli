@@ -14,18 +14,12 @@ export const BrowserBookmarksSettings = () => {
 
     const browsers: Browser[] = ["Arc", "Brave Browser", "Google Chrome", "Microsoft Edge", "Yandex Browser"];
     const searchResultStyles = ["nameOnly", "urlOnly", "nameAndUrl"];
-    const faviconApis = ["Google", "favicone.com"];
 
     const { value: browser, updateValue: setBrowser } = useExtensionSetting<Browser>({ extensionId, key: "browser" });
 
     const { value: searchResultStyle, updateValue: setSearchResultStyle } = useExtensionSetting<string>({
         extensionId,
         key: "searchResultStyle",
-    });
-
-    const { value: faviconApi, updateValue: setFaviconApi } = useExtensionSetting<string>({
-        extensionId,
-        key: "faviconApi",
     });
 
     return (
@@ -65,21 +59,7 @@ export const BrowserBookmarksSettings = () => {
                     </Dropdown>
                 </Field>
             </Section>
-            <Section>
-                <Field label="Favicon API" hint="This API is used to generate the search result icon">
-                    <Dropdown
-                        value={faviconApi}
-                        selectedOptions={[faviconApi]}
-                        onOptionSelect={(_, { optionValue }) => optionValue && setFaviconApi(optionValue)}
-                    >
-                        {faviconApis.map((f) => (
-                            <Option key={`faviconApi-${f}`} value={f} text={f}>
-                                {f}
-                            </Option>
-                        ))}
-                    </Dropdown>
-                </Field>
-            </Section>
+            <Section></Section>
         </SectionList>
     );
 };
