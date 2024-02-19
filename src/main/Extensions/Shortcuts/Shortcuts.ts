@@ -1,10 +1,11 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
+import type { UrlImageGenerator } from "@Core/ImageGenerator";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { OperatingSystem, SearchResultItem } from "@common/Core";
+import type { SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
-import type { Shortcut } from "@common/Extensions/Shortcuts";
+import type { Shortcut, ShortcutType } from "@common/Extensions/Shortcuts";
 
 export class Shortcuts implements Extension {
     private static readonly translationNamespace = "extension[Shortcuts]";
@@ -27,9 +28,9 @@ export class Shortcuts implements Extension {
     };
 
     public constructor(
-        private readonly operatingSystem: OperatingSystem,
         private readonly settingsManager: SettingsManager,
         private readonly assetPathResolver: AssetPathResolver,
+        private readonly urlImageGenerator: UrlImageGenerator,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -46,8 +47,8 @@ export class Shortcuts implements Extension {
                     key: "shortcut",
                     namespace: Shortcuts.translationNamespace,
                 },
-                id: `shorcut-${id}`,
-                image: this.getImage(),
+                id,
+                image: this.getSearchResultItemImage(type, argument),
                 defaultAction: {
                     argument: JSON.stringify({ type, argument }),
                     description: "Invoke shortcut",
@@ -124,5 +125,13 @@ export class Shortcuts implements Extension {
                 remove: "Entfernen",
             },
         };
+    }
+
+    private getSearchResultItemImage(shortcutType: ShortcutType, shortcutArgument: string): Image {
+        if (shortcutType === "Url") {
+            return this.urlImageGenerator.getImage(shortcutArgument);
+        }
+
+        return this.getImage();
     }
 }

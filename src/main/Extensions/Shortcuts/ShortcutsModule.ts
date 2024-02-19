@@ -9,9 +9,9 @@ export class ShortcutsModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
         return {
             extension: new Shortcuts(
-                dependencyRegistry.get("OperatingSystem"),
                 dependencyRegistry.get("SettingsManager"),
                 dependencyRegistry.get("AssetPathResolver"),
+                dependencyRegistry.get("UrlImageGenerator"),
             ),
             actionHandlers: [new ShortcutActionHandler(dependencyRegistry.get("Shell"))],
         };

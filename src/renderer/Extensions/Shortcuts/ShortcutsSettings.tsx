@@ -1,6 +1,7 @@
-import { useExtensionSetting } from "@Core/Hooks";
+import { useContextBridge, useExtensionSetting, useSearchResultItems } from "@Core/Hooks";
 import { Section } from "@Core/Settings/Section";
 import { SectionList } from "@Core/Settings/SectionList";
+import { getImageUrl } from "@Core/getImageUrl";
 import type { Shortcut } from "@common/Extensions/Shortcuts";
 import { Button, Field, Input, Tooltip } from "@fluentui/react-components";
 import { AddCircleRegular, DismissRegular, EditRegular } from "@fluentui/react-icons";
@@ -9,8 +10,11 @@ import { EditModal } from "./EditModal";
 import { createTemporaryShortcut } from "./createTemporaryShortcut";
 
 export const ShortcutsSettings = () => {
+    const { contextBridge } = useContextBridge();
     const { t } = useTranslation();
     const ns = "extension[Shortcuts]";
+
+    const { searchResultItems } = useSearchResultItems();
 
     const { value: shortcuts, updateValue: setShortcuts } = useExtensionSetting<Shortcut[]>({
         extensionId: "Shortcuts",
@@ -29,47 +33,79 @@ export const ShortcutsSettings = () => {
         setShortcuts([...shortcuts, shortcut]);
     };
 
+    const getSearchResultItemByShortcutId = (id: string) => {
+        const s = searchResultItems.find((s) => s.id === id);
+        if (s) {
+            return s;
+        }
+    };
+
     return (
         <SectionList>
             <Section>
                 <Field label={t("shortcuts", { ns })}>
                     {!shortcuts.length ? <>No shortcuts yet</> : null}
                     <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                        {shortcuts.map((s) => (
-                            <div style={{ display: "flex", flexDirection: "column" }}>
-                                <Input
-                                    value={s.name}
-                                    readOnly
-                                    contentAfter={
-                                        <>
-                                            <EditModal
-                                                title={t("editShortcut", { ns })}
-                                                shortcutToEdit={{ ...s }}
-                                                save={editShortcut}
-                                                dialogTrigger={
-                                                    <Tooltip content={t("edit", { ns })} relationship="label">
-                                                        <Button
-                                                            size="small"
-                                                            appearance="subtle"
-                                                            icon={<EditRegular />}
-                                                        />
-                                                    </Tooltip>
-                                                }
-                                            />
+                        {shortcuts.map((s) => {
+                            const searchResultItem = getSearchResultItemByShortcutId(s.id);
 
-                                            <Tooltip content={t("remove", { ns })} relationship="label">
-                                                <Button
-                                                    size="small"
-                                                    appearance="subtle"
-                                                    icon={<DismissRegular />}
-                                                    onClick={() => removeShortcut(s.id)}
+                            return (
+                                <div style={{ display: "flex", flexDirection: "column" }}>
+                                    <Input
+                                        value={s.name}
+                                        readOnly
+                                        contentBefore={
+                                            searchResultItem ? (
+                                                <div
+                                                    style={{
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                        height: 20,
+                                                        width: 20,
+                                                    }}
+                                                >
+                                                    <img
+                                                        style={{ maxWidth: "100%", maxHeight: "100%" }}
+                                                        src={getImageUrl({
+                                                            image: searchResultItem.image,
+                                                            onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                                                        })}
+                                                    />
+                                                </div>
+                                            ) : null
+                                        }
+                                        contentAfter={
+                                            <>
+                                                <EditModal
+                                                    title={t("editShortcut", { ns })}
+                                                    shortcutToEdit={{ ...s }}
+                                                    save={editShortcut}
+                                                    dialogTrigger={
+                                                        <Tooltip content={t("edit", { ns })} relationship="label">
+                                                            <Button
+                                                                size="small"
+                                                                appearance="subtle"
+                                                                icon={<EditRegular />}
+                                                            />
+                                                        </Tooltip>
+                                                    }
                                                 />
-                                            </Tooltip>
-                                        </>
-                                    }
-                                />
-                            </div>
-                        ))}
+
+                                                <Tooltip content={t("remove", { ns })} relationship="label">
+                                                    <Button
+                                                        size="small"
+                                                        appearance="subtle"
+                                                        icon={<DismissRegular />}
+                                                        onClick={() => removeShortcut(s.id)}
+                                                    />
+                                                </Tooltip>
+                                            </>
+                                        }
+                                    />
+                                </div>
+                            );
+                        })}
                     </div>
                 </Field>
             </Section>
