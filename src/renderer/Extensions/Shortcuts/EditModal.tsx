@@ -1,3 +1,4 @@
+import { useContextBridge } from "@Core/Hooks";
 import type { Shortcut, ShortcutType } from "@common/Extensions/Shortcuts";
 import {
     Button,
@@ -14,7 +15,9 @@ import {
     Input,
     Option,
     Switch,
+    Tooltip,
 } from "@fluentui/react-components";
+import { FolderRegular } from "@fluentui/react-icons";
 import { useState, type ReactElement } from "react";
 import { useTranslation } from "react-i18next";
 import { isValidFilePath } from "./isValidFilePath";
@@ -37,8 +40,10 @@ export const EditModal = ({
     dialogTrigger,
     canEditType,
 }: EditModalProps) => {
+    const { contextBridge } = useContextBridge();
     const { t } = useTranslation();
     const ns = "extension[Shortcuts]";
+
     const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
     const [temporaryShortcut, setTemporaryShortcut] = useState<Shortcut>(initialShortcut);
 
@@ -55,6 +60,14 @@ export const EditModal = ({
         Url: t("typeUrl", { ns }),
     };
 
+    const openFileDialog = async () => {
+        const result = await contextBridge.showOpenDialog({ properties: ["openFile", "openDirectory"] });
+
+        if (result.filePaths.length) {
+            setProperty("argument", result.filePaths[0]);
+        }
+    };
+
     const argumentElements: Record<ShortcutType, ReactElement> = {
         File: (
             <Field
@@ -68,6 +81,16 @@ export const EditModal = ({
                     value={temporaryShortcut.argument}
                     onChange={(_, { value }) => setProperty("argument", value)}
                     placeholder={t("typeFile", { ns })}
+                    contentAfter={
+                        <Tooltip content={t("chooseFile", { ns })} relationship="label">
+                            <Button
+                                size="small"
+                                appearance="subtle"
+                                icon={<FolderRegular />}
+                                onClick={() => openFileDialog()}
+                            />
+                        </Tooltip>
+                    }
                 />
             </Field>
         ),

@@ -108,6 +108,7 @@ export class Shortcuts implements Extension {
                 cancel: "Cancel",
                 edit: "Edit",
                 remove: "Remove",
+                chooseFile: "Choose file or folder",
             },
             "de-CH": {
                 extensionName: "Verknüpfungen",
@@ -128,6 +129,7 @@ export class Shortcuts implements Extension {
                 cancel: "Abbrechen",
                 edit: "Bearbeiten",
                 remove: "Entfernen",
+                chooseFile: "Datei oder Ordner auswählen",
             },
         };
     }
