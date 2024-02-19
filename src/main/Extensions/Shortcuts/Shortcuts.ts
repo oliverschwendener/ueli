@@ -1,6 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
-import type { UrlImageGenerator } from "@Core/ImageGenerator";
+import type { FileImageGenerator, UrlImageGenerator } from "@Core/ImageGenerator";
+import { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
@@ -31,6 +32,8 @@ export class Shortcuts implements Extension {
         private readonly settingsManager: SettingsManager,
         private readonly assetPathResolver: AssetPathResolver,
         private readonly urlImageGenerator: UrlImageGenerator,
+        private readonly fileImageGenerator: FileImageGenerator,
+        private readonly logger: Logger,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -38,6 +41,8 @@ export class Shortcuts implements Extension {
             getExtensionSettingKey(this.id, "shortcuts"),
             this.defaultSettings.shortcuts,
         );
+
+        const images = await this.getSearchResultItemImages(shortcuts);
 
         return shortcuts.map(
             ({ name, id, type, argument, hideWindowAfterInvokation }): SearchResultItem => ({
@@ -48,7 +53,7 @@ export class Shortcuts implements Extension {
                     namespace: Shortcuts.translationNamespace,
                 },
                 id,
-                image: this.getSearchResultItemImage(type, argument),
+                image: Object.keys(images).includes(id) ? images[id] : this.getImage(),
                 defaultAction: {
                     argument: JSON.stringify({ type, argument }),
                     description: "Invoke shortcut",
@@ -127,11 +132,31 @@ export class Shortcuts implements Extension {
         };
     }
 
-    private getSearchResultItemImage(shortcutType: ShortcutType, shortcutArgument: string): Image {
-        if (shortcutType === "Url") {
-            return this.urlImageGenerator.getImage(shortcutArgument);
+    private async getSearchResultItemImages(shortcuts: Shortcut[]): Promise<Record<string, Image>> {
+        const promiseResults = await Promise.allSettled(shortcuts.map((s) => this.getSearchResultItemImage(s)));
+
+        const result: Record<string, Image> = {};
+
+        for (let i = 0; i < shortcuts.length; i++) {
+            const promiseResult = promiseResults[i];
+            if (promiseResult.status === "fulfilled") {
+                result[shortcuts[i].id] = promiseResult.value;
+            } else {
+                this.logger.error(
+                    `Failed to create shortcut image for shortcut argument "${shortcuts[i].argument}". Reason: ${promiseResult.reason}`,
+                );
+            }
         }
 
-        return this.getImage();
+        return result;
+    }
+
+    private async getSearchResultItemImage(shortcut: Shortcut): Promise<Image> {
+        const map: Record<ShortcutType, (s: Shortcut) => Promise<Image>> = {
+            File: async (s) => await this.fileImageGenerator.getImage(s.argument),
+            Url: async (s) => this.urlImageGenerator.getImage(s.argument),
+        };
+
+        return await map[shortcut.type](shortcut);
     }
 }

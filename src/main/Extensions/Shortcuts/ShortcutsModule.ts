@@ -12,6 +12,8 @@ export class ShortcutsModule implements ExtensionModule {
                 dependencyRegistry.get("SettingsManager"),
                 dependencyRegistry.get("AssetPathResolver"),
                 dependencyRegistry.get("UrlImageGenerator"),
+                dependencyRegistry.get("FileImageGenerator"),
+                dependencyRegistry.get("Logger"),
             ),
             actionHandlers: [new ShortcutActionHandler(dependencyRegistry.get("Shell"))],
         };

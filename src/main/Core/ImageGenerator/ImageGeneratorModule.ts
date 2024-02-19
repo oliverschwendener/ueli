@@ -1,5 +1,6 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import { FileImageGenerator } from "./FileImageGenerator";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 
 export class ImageGeneratorModule {
@@ -8,5 +9,7 @@ export class ImageGeneratorModule {
             "UrlImageGenerator",
             new UrlImageGenerator(dependencyRegistry.get("SettingsManager")),
         );
+
+        dependencyRegistry.register("FileImageGenerator", new FileImageGenerator(dependencyRegistry.get("App")));
     }
 }

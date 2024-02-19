@@ -19,6 +19,7 @@ export type Dependencies = {
     ExtensionCacheFolder?: Core.ExtensionCacheFolder;
     ExtensionRegistry?: Core.ExtensionRegistry;
     FavoriteManager?: Core.FavoriteManager;
+    FileImageGenerator?: Core.FileImageGenerator;
     FileSystemUtility?: Core.FileSystemUtility;
     GlobalShortcut?: Electron.GlobalShortcut;
     IpcMain?: Electron.IpcMain;
