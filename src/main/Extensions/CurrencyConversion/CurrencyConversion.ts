@@ -42,9 +42,9 @@ export class CurrencyConversion implements Extension {
         const validators = [
             () => parts.length === 4,
             () => !isNaN(Number(parts[0])),
-            () => Object.keys(this.rates).includes(parts[1]),
+            () => Object.keys(this.rates).includes(parts[1].toLowerCase()),
             () => ["in", "to"].includes(parts[2].toLowerCase()),
-            () => Object.keys(this.rates[parts[1]]).includes(parts[3]),
+            () => Object.keys(this.rates[parts[1].toLowerCase()]).includes(parts[3].toLowerCase()),
         ];
 
         for (const validator of validators) {
@@ -124,7 +124,7 @@ export class CurrencyConversion implements Extension {
     }
 
     private convert({ value, base, target }: { value: number; base: string; target: string }): number {
-        return value * this.rates[base][target];
+        return value * this.rates[base.toLowerCase()][target.toLowerCase()];
     }
 
     private async setRates(): Promise<void> {
