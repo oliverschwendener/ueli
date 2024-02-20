@@ -3,6 +3,7 @@ import type { ReactElement } from "react";
 import { ApplicationSearchSettings } from "./ApplicationSearch";
 import { BrowserBookmarksSettings } from "./BrowserBookmarks";
 import { CalculatorSettings } from "./Calculator";
+import { CurrencyConversionSettings } from "./CurrencyConversion";
 import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
 import { FileSearch, FileSearchSettings } from "./FileSearch";
 import { ShortcutsSettings } from "./Shortcuts";
@@ -26,6 +27,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         },
         Calculator: {
             settings: <CalculatorSettings />,
+        },
+        CurrencyConversion: {
+            settings: <CurrencyConversionSettings />,
         },
         DeeplTranslator: {
             extension: <DeeplTranslator {...props} />,
