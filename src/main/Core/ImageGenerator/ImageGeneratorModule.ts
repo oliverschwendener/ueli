@@ -15,6 +15,7 @@ export class ImageGeneratorModule {
             new FileImageGenerator(
                 dependencyRegistry.get("ExtensionCacheFolder"),
                 dependencyRegistry.get("FileSystemUtility"),
+                dependencyRegistry.get("OperatingSystem"),
             ),
         );
     }

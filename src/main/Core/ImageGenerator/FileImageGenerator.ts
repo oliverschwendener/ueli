@@ -1,5 +1,6 @@
 import type { ExtensionCacheFolder } from "@Core/ExtensionCacheFolder";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
+import type { OperatingSystem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import { createHash } from "crypto";
 import getFileIcon from "extract-file-icon";
@@ -10,6 +11,7 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
     public constructor(
         private readonly extensionCacheFolder: ExtensionCacheFolder,
         private readonly fileSystemUtility: FileSystemUtility,
+        private readonly operatingSystem: OperatingSystem,
     ) {}
 
     public async getImage(filePath: string): Promise<Image> {
@@ -19,10 +21,7 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
     }
 
     private async ensureCachedPngFileExists(filePath: string): Promise<string> {
-        const cachedPngFilePath = join(
-            this.extensionCacheFolder.path,
-            `${createHash("md5").update(filePath).digest("base64url")}.png`,
-        );
+        const cachedPngFilePath = join(this.extensionCacheFolder.path, `${this.generateCacheFileName(filePath)}.png`);
 
         const exists = await this.fileSystemUtility.pathExists(cachedPngFilePath);
 
@@ -31,5 +30,15 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
         }
 
         return cachedPngFilePath;
+    }
+
+    private generateCacheFileName(filePath: string): string {
+        const generators: Record<OperatingSystem, () => string> = {
+            Linux: () => createHash("md5").update(filePath).digest("base64"),
+            macOS: () => createHash("md5").update(filePath).digest("base64"),
+            Windows: () => createHash("sha1").update(filePath).digest("hex"),
+        };
+
+        return generators[this.operatingSystem]();
     }
 }

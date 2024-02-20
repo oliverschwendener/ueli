@@ -1,5 +1,8 @@
 import type { ExtensionCacheFolder } from "@Core/ExtensionCacheFolder";
+import type { FileImageGenerator } from "@Core/ImageGenerator";
+import type { Logger } from "@Core/Logger";
 import type { PowershellUtility } from "@Core/PowershellUtility";
+import type { Image } from "@common/Core/Image";
 import { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
 import type { Settings } from "../Settings";
@@ -12,6 +15,8 @@ export class WindowsApplicationRepository implements ApplicationRepository {
         private readonly powershellUtility: PowershellUtility,
         private readonly extensionCacheFolder: ExtensionCacheFolder,
         private readonly settings: Settings,
+        private readonly fileImageGenerator: FileImageGenerator,
+        private readonly logger: Logger,
     ) {}
 
     public async getApplications(): Promise<Application[]> {
@@ -34,11 +39,30 @@ export class WindowsApplicationRepository implements ApplicationRepository {
         );
 
         const windowsApplicationRetrieverResults = <WindowsApplicationRetrieverResult[]>JSON.parse(stdout);
+        const appIcons = await this.getAppIcons(windowsApplicationRetrieverResults.map(({ FullName }) => FullName));
 
         return windowsApplicationRetrieverResults.map(
-            ({ BaseName, FullName, IconFilePath }) =>
-                new Application(BaseName, FullName, { url: `file://${IconFilePath}` }),
+            ({ BaseName, FullName }) => new Application(BaseName, FullName, appIcons[FullName]),
         );
+    }
+
+    private async getAppIcons(filePaths: string[]): Promise<Record<string, Image>> {
+        const result: Record<string, Image> = {};
+
+        const promiseResults = await Promise.allSettled(
+            filePaths.map((filePath) => this.fileImageGenerator.getImage(filePath)),
+        );
+
+        for (let i = 0; i < filePaths.length; i++) {
+            const promiseResult = promiseResults[i];
+            if (promiseResult.status === "fulfilled") {
+                result[filePaths[i]] = promiseResult.value;
+            } else {
+                this.logger.error(`Failed to generate app icon for "${filePaths[i]}". Reason: ${promiseResult.reason}`);
+            }
+        }
+
+        return result;
     }
 
     private async getWindowsStoreApps(): Promise<Application[]> {
@@ -49,6 +73,7 @@ export class WindowsApplicationRepository implements ApplicationRepository {
         }
 
         const { getWindowsStoreApps } = usePowershellScripts();
+
         const stdout = await this.powershellUtility.executeScript(getWindowsStoreApps);
 
         const windowStoreApplications = <WindowsStoreApplication[]>JSON.parse(stdout);
@@ -65,12 +90,11 @@ export class WindowsApplicationRepository implements ApplicationRepository {
         const concatenatedFolderPaths = folderPaths.map((folderPath) => `'${folderPath}'`).join(",");
         const concatenatedFileExtensions = fileExtensions.map((fileExtension) => `'*.${fileExtension}'`).join(",");
 
-        const { extractShortcutPowershellScript, getWindowsAppsPowershellScript } = usePowershellScripts();
+        const { getWindowsAppsPowershellScript } = usePowershellScripts();
 
         return `
-            ${extractShortcutPowershellScript}
             ${getWindowsAppsPowershellScript}
 
-            Get-WindowsApps -FolderPaths ${concatenatedFolderPaths} -FileExtensions ${concatenatedFileExtensions} -AppIconFolder '${this.extensionCacheFolder.path}';`;
+            Get-WindowsApps -FolderPaths ${concatenatedFolderPaths} -FileExtensions ${concatenatedFileExtensions};`;
     }
 }

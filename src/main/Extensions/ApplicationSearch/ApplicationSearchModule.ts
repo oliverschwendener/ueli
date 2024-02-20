@@ -28,6 +28,8 @@ export class ApplicationSearchModule implements ExtensionModule {
                 dependencyRegistry.get("PowershellUtility"),
                 dependencyRegistry.get("ExtensionCacheFolder"),
                 settings,
+                dependencyRegistry.get("FileImageGenerator"),
+                dependencyRegistry.get("Logger"),
             ),
             Linux: undefined, // not supported
         };

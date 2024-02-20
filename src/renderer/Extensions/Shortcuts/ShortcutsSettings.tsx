@@ -50,7 +50,7 @@ export const ShortcutsSettings = () => {
                             const searchResultItem = getSearchResultItemByShortcutId(s.id);
 
                             return (
-                                <div style={{ display: "flex", flexDirection: "column" }}>
+                                <div key={s.id} style={{ display: "flex", flexDirection: "column" }}>
                                     <Input
                                         value={s.name}
                                         readOnly
