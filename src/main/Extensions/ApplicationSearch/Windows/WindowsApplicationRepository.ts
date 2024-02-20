@@ -36,7 +36,8 @@ export class WindowsApplicationRepository implements ApplicationRepository {
         const windowsApplicationRetrieverResults = <WindowsApplicationRetrieverResult[]>JSON.parse(stdout);
 
         return windowsApplicationRetrieverResults.map(
-            ({ BaseName, FullName, IconFilePath }) => new Application(BaseName, FullName, `file://${IconFilePath}`),
+            ({ BaseName, FullName, IconFilePath }) =>
+                new Application(BaseName, FullName, { url: `file://${IconFilePath}` }),
         );
     }
 
@@ -54,7 +55,9 @@ export class WindowsApplicationRepository implements ApplicationRepository {
 
         return windowStoreApplications.map(
             ({ AppId, DisplayName, LogoBase64 }) =>
-                new Application(DisplayName, `shell:AppsFolder\\${AppId}`, `data:image/png;base64,${LogoBase64}`),
+                new Application(DisplayName, `shell:AppsFolder\\${AppId}`, {
+                    url: `data:image/png;base64,${LogoBase64}`,
+                }),
         );
     }
 

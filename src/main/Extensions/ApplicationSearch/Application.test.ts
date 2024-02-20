@@ -4,7 +4,9 @@ import { Application } from "./Application";
 
 describe(Application, () => {
     it("should correctly serialize to SearchResultItem", () => {
-        const application = new Application("My App", "/Applications/My App.app", "file:///Users/Dummy/Icons/icon.png");
+        const application = new Application("My App", "/Applications/My App.app", {
+            url: "file:///Users/Dummy/Icons/icon.png",
+        });
 
         expect(application.toSearchResultItem()).toEqual(<SearchResultItem>{
             description: "Application",

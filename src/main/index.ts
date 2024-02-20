@@ -41,6 +41,7 @@ import * as Extensions from "./Extensions";
     Core.FileSystemUtilityModule.bootstrap(dependencyRegistry);
     await Core.PowershellUtilityModule.bootstrap(dependencyRegistry);
     Core.OperatingSystemModule.bootstrap(dependencyRegistry);
+    await Core.ExtensionCacheFolderModule.bootstrap(dependencyRegistry);
     Core.SettingsFileModule.bootstrap(dependencyRegistry);
     Core.SettingsReaderModule.bootstrap(dependencyRegistry);
     Core.SettingsWriterModule.bootstrap(dependencyRegistry);
@@ -57,7 +58,6 @@ import * as Extensions from "./Extensions";
     Core.UeliCommandModule.bootstrap(dependencyRegistry);
     await Core.TrayIconModule.bootstrap(dependencyRegistry);
     Core.DialogModule.bootstrap(dependencyRegistry);
-    await Core.ExtensionCacheFolderModule.bootstrap(dependencyRegistry);
     Core.ExtensionRegistryModule.bootstrap(dependencyRegistry);
 
     // Extensions

@@ -1,15 +1,16 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
+import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
+import type { Image } from "@common/Core/Image";
 import { dirname, normalize, parse } from "path";
 import { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
 import type { Settings } from "../Settings";
-import type { MacOsApplicationIconGenerator } from "./MacOsApplicationIconGenerator";
 
 export class MacOsApplicationRepository implements ApplicationRepository {
     public constructor(
         private readonly commandlineUtility: CommandlineUtility,
-        private readonly macOsApplicationIconGenerator: MacOsApplicationIconGenerator,
+        private readonly fileImageGenerator: FileImageGenerator,
         private readonly logger: Logger,
         private readonly settings: Settings,
     ) {}
@@ -20,7 +21,7 @@ export class MacOsApplicationRepository implements ApplicationRepository {
 
         return filePaths
             .filter((filePath) => !!icons[filePath])
-            .map((filePath) => new Application(parse(filePath).name, filePath, `file://${icons[filePath]}`));
+            .map((filePath) => new Application(parse(filePath).name, filePath, icons[filePath]));
     }
 
     private async getAllFilePaths(): Promise<string[]> {
@@ -41,11 +42,11 @@ export class MacOsApplicationRepository implements ApplicationRepository {
         return !dirname(filePath).includes(".app");
     }
 
-    private async getAllIcons(filePaths: string[]): Promise<Record<string, string>> {
-        const result: Record<string, string> = {};
+    private async getAllIcons(filePaths: string[]): Promise<Record<string, Image>> {
+        const result: Record<string, Image> = {};
 
         const promiseResults = await Promise.allSettled(
-            filePaths.map((filePath) => this.macOsApplicationIconGenerator.generateApplicationIcon(filePath)),
+            filePaths.map((filePath) => this.fileImageGenerator.getImage(filePath)),
         );
 
         for (let i = 0; i < filePaths.length; i++) {
@@ -53,7 +54,7 @@ export class MacOsApplicationRepository implements ApplicationRepository {
             const promiseResult = promiseResults[i];
 
             if (promiseResult.status === "fulfilled") {
-                result[filePath] = promiseResult.value.iconFilePath;
+                result[filePath] = promiseResult.value;
             } else {
                 this.logger.error(`Failed to generate icon for '${filePath}. Reason: ${promiseResult.reason}'`);
             }

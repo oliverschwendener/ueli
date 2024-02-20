@@ -10,6 +10,12 @@ export class ImageGeneratorModule {
             new UrlImageGenerator(dependencyRegistry.get("SettingsManager")),
         );
 
-        dependencyRegistry.register("FileImageGenerator", new FileImageGenerator(dependencyRegistry.get("App")));
+        dependencyRegistry.register(
+            "FileImageGenerator",
+            new FileImageGenerator(
+                dependencyRegistry.get("ExtensionCacheFolder"),
+                dependencyRegistry.get("FileSystemUtility"),
+            ),
+        );
     }
 }

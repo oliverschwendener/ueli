@@ -1,11 +1,12 @@
 import type { SearchResultItem } from "@common/Core";
 import { SearchResultItemActionUtility } from "@common/Core";
+import type { Image } from "@common/Core/Image";
 
 export class Application {
     public constructor(
         private readonly name: string,
         private readonly filePath: string,
-        private readonly imageUrl: string,
+        private readonly image: Image,
     ) {}
 
     public toSearchResultItem(): SearchResultItem {
@@ -17,7 +18,7 @@ export class Application {
             },
             id: this.getId(),
             name: this.name,
-            image: { url: this.imageUrl },
+            image: this.image,
             defaultAction: SearchResultItemActionUtility.createOpenFileAction({
                 filePath: this.filePath,
                 description: "Open application",
