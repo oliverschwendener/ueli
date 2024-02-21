@@ -79,6 +79,25 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
             },
         },
         {
+            namespace: "settingsKeyboardAndMouse",
+            translations: {
+                "en-US": {
+                    title: "Keyboard & Mouse",
+                    singleClickBehavior: "Single click behavior",
+                    doubleClickBehavior: "Double click behavior",
+                    selectSearchResultItem: "Select search result item",
+                    invokeSearchResultItem: "Invoke search result item",
+                },
+                "de-CH": {
+                    title: "Tastatur & Maus",
+                    singleClickBehavior: "Einfachklick-Verhalten",
+                    doubleClickBehavior: "Doppelklick-Verhalten",
+                    selectSearchResultItem: "Suchergebniss anwählen",
+                    invokeSearchResultItem: "Suchergebniss ausführen",
+                },
+            },
+        },
+        {
             namespace: "settingsDebug",
             translations: {
                 "en-US": {

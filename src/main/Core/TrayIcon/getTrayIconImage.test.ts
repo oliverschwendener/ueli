@@ -30,13 +30,13 @@ describe(getTrayIconImage, () => {
 
     it("should return the correct tray icon image", () => {
         testGetTrayIconImage({
-            expectedFileName: "ueli-icon-white-on-transparent.ico",
+            expectedFileName: "app-icon-dark-transparent.png",
             operatingSystem: "Windows",
             shouldUseDarkColors: true,
         });
 
         testGetTrayIconImage({
-            expectedFileName: "ueli-icon-black-on-transparent.ico",
+            expectedFileName: "app-icon-light-transparent.png",
             operatingSystem: "Windows",
             shouldUseDarkColors: false,
         });

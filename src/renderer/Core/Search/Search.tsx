@@ -50,6 +50,16 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
         setInstantSearchResultItems(contextBridge.getInstantSearchResultItems(updatedSearchTerm));
     };
 
+    const { value: singleClickBehavior } = useSetting({
+        key: "keyboardAndMouse.singleClickBehavior",
+        defaultValue: "selectSearchResultItem",
+    });
+
+    const { value: doubleClickBehavior } = useSetting({
+        defaultValue: "invokeSearchResultItem",
+        key: "keyboardAndMouse.doubleClickBehavior",
+    });
+
     const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
     const { value: maxResultLength } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
 
@@ -141,10 +151,21 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
         }
     };
 
-    const handleSearchResultItemClickEvent = (index: number) => setSelectedSearchResultItemIndex(index);
+    const clickHandlers: Record<string, (s: SearchResultItem) => void> = {
+        selectSearchResultItem: (s) =>
+            setSelectedSearchResultItemIndex(
+                filteredSearchResultItems.findIndex((searchResultItem) => searchResultItem.id === s.id),
+            ),
+        invokeSearchResultItem: (s) => invokeAction(s.defaultAction),
+    };
 
-    const handleSearchResultItemDoubleClickEvent = (searchResultItem: SearchResultItem) =>
-        searchResultItem.defaultAction && invokeAction(searchResultItem.defaultAction);
+    const handleSearchResultItemClickEvent = (searchResultItem: SearchResultItem) => {
+        clickHandlers[singleClickBehavior](searchResultItem);
+    };
+
+    const handleSearchResultItemDoubleClickEvent = (searchResultItem: SearchResultItem) => {
+        clickHandlers[doubleClickBehavior](searchResultItem);
+    };
 
     const closeConfirmationDialog = () => {
         setConfirmationDialogAction(undefined);

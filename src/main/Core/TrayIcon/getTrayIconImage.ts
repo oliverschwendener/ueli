@@ -17,8 +17,8 @@ export const getTrayIconImage = (
             onLightBackground: "ueliTemplate.png",
         },
         Windows: {
-            onLightBackground: "ueli-icon-black-on-transparent.ico",
-            onDarkBackground: "ueli-icon-white-on-transparent.ico",
+            onLightBackground: "app-icon-light-transparent.png",
+            onDarkBackground: "app-icon-dark-transparent.png",
         },
     };
 
