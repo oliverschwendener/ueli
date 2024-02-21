@@ -34,8 +34,8 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
 
     private generateCacheFileName(filePath: string): string {
         const generators: Record<OperatingSystem, () => string> = {
-            Linux: () => createHash("md5").update(filePath).digest("base64"),
-            macOS: () => createHash("md5").update(filePath).digest("base64"),
+            Linux: () => createHash("sha1").update(filePath).digest("hex"),
+            macOS: () => createHash("sha1").update(filePath).digest("hex"),
             Windows: () => createHash("sha1").update(filePath).digest("hex"),
         };
 
