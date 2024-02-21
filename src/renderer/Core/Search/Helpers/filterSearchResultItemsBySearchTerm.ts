@@ -26,7 +26,7 @@ export const filterSearchResultItemsBySearchTerm = ({
             shouldSort: true,
         },
     )
-        .search(searchTerm)
+        .search(searchTerm.trim())
         .map((i) => i.item);
 
     result.splice(maxResultLength, result.length - maxResultLength);
