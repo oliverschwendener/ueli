@@ -114,4 +114,17 @@ describe(filterSearchResultItemsBySearchTerm, () => {
             maxResultLength: 1,
             searchTerm: "item",
         }));
+
+    it("should trim the given search term", () =>
+        testFilterSearchResultItemsBySearchTerm({
+            searchResultItems: [
+                <SearchResultItem>{ id: "item1", name: "Item 1", description: "Item 1" },
+                <SearchResultItem>{ id: "item2", name: " Item 1 ", description: "Item 2" },
+            ],
+            excludedIds: [],
+            expected: [<SearchResultItem>{ id: "item1", name: "Item 1", description: "Item 1" }],
+            fuzziness: 0.3,
+            maxResultLength: 1,
+            searchTerm: " item1 ",
+        }));
 });
