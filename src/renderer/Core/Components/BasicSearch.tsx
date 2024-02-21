@@ -64,6 +64,30 @@ export const BasicSearch = ({
         }
     };
 
+    const clickHandlers: Record<string, (s: SearchResultItem) => void> = {
+        selectSearchResultItem: (s) =>
+            setSelectedItemIndex(searchResultItems.findIndex((searchResultItem) => searchResultItem.id === s.id)),
+        invokeSearchResultItem: (s) => contextBridge.invokeAction(s.defaultAction),
+    };
+
+    const handleSearchResultItemClickEvent = (searchResultItem: SearchResultItem) => {
+        const singleClickBehavior = contextBridge.getSettingValue(
+            "keyboardAndMouse.singleClickBehavior",
+            "selectSearchResultItem",
+        );
+
+        clickHandlers[singleClickBehavior](searchResultItem);
+    };
+
+    const handleSearchResultItemDoubleClickEvent = (searchResultItem: SearchResultItem) => {
+        const doubleClickBehavior = contextBridge.getSettingValue(
+            "keyboardAndMouse.doubleClickBehavior",
+            "invokeSearchResultItem",
+        );
+
+        clickHandlers[doubleClickBehavior](searchResultItem);
+    };
+
     useEffect(() => {
         if (!searchTerm) {
             setIsLoading(false);
@@ -127,8 +151,8 @@ export const BasicSearch = ({
                 ) : (
                     <SearchResultList
                         containerRef={contentRef}
-                        onSearchResultItemClick={(i) => setSelectedItemIndex(i)}
-                        onSearchResultItemDoubleClick={(s) => contextBridge.invokeAction(s.defaultAction)}
+                        onSearchResultItemClick={(s) => handleSearchResultItemClickEvent(s)}
+                        onSearchResultItemDoubleClick={(s) => handleSearchResultItemDoubleClickEvent(s)}
                         searchResultItems={searchResultItems}
                         favorites={[]}
                         selectedItemIndex={selectedItemIndex}

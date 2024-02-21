@@ -10,7 +10,7 @@ type SearchResultListProps = {
     searchResultItems: SearchResultItem[];
     favorites: string[];
     searchTerm?: string;
-    onSearchResultItemClick: (index: number) => void;
+    onSearchResultItemClick: (searchResultItem: SearchResultItem) => void;
     onSearchResultItemDoubleClick: (searchResultItem: SearchResultItem) => void;
 };
 
@@ -50,7 +50,7 @@ export const SearchResultList = ({
                     isSelected={selectedItemIndex === index}
                     isFavorite={favorites.includes(searchResultItem.id)}
                     searchResultItem={searchResultItem}
-                    onClick={() => onSearchResultItemClick(index)}
+                    onClick={() => onSearchResultItemClick(searchResultItem)}
                     onDoubleClick={() => onSearchResultItemDoubleClick(searchResultItem)}
                 />
             ))}
