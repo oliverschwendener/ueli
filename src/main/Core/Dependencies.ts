@@ -16,7 +16,6 @@ export type Dependencies = {
     EventEmitter?: Core.EventEmitter;
     EventSubscriber?: Core.EventSubscriber;
     ExcludedSearchResults?: Core.ExcludedSearchResults;
-    ExtensionCacheFolder?: Core.ExtensionCacheFolder;
     ExtensionRegistry?: Core.ExtensionRegistry;
     FavoriteManager?: Core.FavoriteManager;
     FileImageGenerator?: Core.FileImageGenerator;

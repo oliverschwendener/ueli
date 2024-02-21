@@ -1,4 +1,3 @@
-import type { ExtensionCacheFolder } from "@Core/ExtensionCacheFolder";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { PowershellUtility } from "@Core/PowershellUtility";
@@ -13,7 +12,6 @@ import { usePowershellScripts } from "./usePowershellScripts";
 export class WindowsApplicationRepository implements ApplicationRepository {
     public constructor(
         private readonly powershellUtility: PowershellUtility,
-        private readonly extensionCacheFolder: ExtensionCacheFolder,
         private readonly settings: Settings,
         private readonly fileImageGenerator: FileImageGenerator,
         private readonly logger: Logger,

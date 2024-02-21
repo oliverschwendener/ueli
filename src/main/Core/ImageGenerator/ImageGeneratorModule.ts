@@ -1,10 +1,18 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import { join } from "path";
 import { FileImageGenerator } from "./FileImageGenerator";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 
 export class ImageGeneratorModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
+    public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
+        const app = dependencyRegistry.get("App");
+        const fileSystemUtility = dependencyRegistry.get("FileSystemUtility");
+
+        const cacheFolderPath = join(app.getPath("userData"), "FileImageImageGenerator");
+
+        await fileSystemUtility.createFolderIfDoesntExist(cacheFolderPath);
+
         dependencyRegistry.register(
             "UrlImageGenerator",
             new UrlImageGenerator(dependencyRegistry.get("SettingsManager")),
@@ -12,10 +20,7 @@ export class ImageGeneratorModule {
 
         dependencyRegistry.register(
             "FileImageGenerator",
-            new FileImageGenerator(
-                dependencyRegistry.get("ExtensionCacheFolder"),
-                dependencyRegistry.get("FileSystemUtility"),
-            ),
+            new FileImageGenerator(cacheFolderPath, dependencyRegistry.get("FileSystemUtility")),
         );
     }
 }

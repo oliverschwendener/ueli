@@ -1,4 +1,3 @@
-import type { ExtensionCacheFolder } from "@Core/ExtensionCacheFolder";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Image } from "@common/Core/Image";
 import { createHash } from "crypto";
@@ -8,7 +7,7 @@ import type { FileImageGenerator as FileImageGeneratorInterface } from "./Contra
 
 export class FileImageGenerator implements FileImageGeneratorInterface {
     public constructor(
-        private readonly extensionCacheFolder: ExtensionCacheFolder,
+        private readonly cacheFolderPath: string,
         private readonly fileSystemUtility: FileSystemUtility,
     ) {}
 
@@ -19,7 +18,7 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
     }
 
     private async ensureCachedPngFileExists(filePath: string): Promise<string> {
-        const cachedPngFilePath = join(this.extensionCacheFolder.path, `${this.generateCacheFileName(filePath)}.png`);
+        const cachedPngFilePath = join(this.cacheFolderPath, `${this.generateCacheFileName(filePath)}.png`);
 
         const exists = await this.fileSystemUtility.pathExists(cachedPngFilePath);
 
