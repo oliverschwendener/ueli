@@ -1,6 +1,5 @@
 import type { ExtensionCacheFolder } from "@Core/ExtensionCacheFolder";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
-import type { OperatingSystem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import { createHash } from "crypto";
 import getFileIcon from "extract-file-icon";
@@ -11,7 +10,6 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
     public constructor(
         private readonly extensionCacheFolder: ExtensionCacheFolder,
         private readonly fileSystemUtility: FileSystemUtility,
-        private readonly operatingSystem: OperatingSystem,
     ) {}
 
     public async getImage(filePath: string): Promise<Image> {
@@ -33,12 +31,6 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
     }
 
     private generateCacheFileName(filePath: string): string {
-        const generators: Record<OperatingSystem, () => string> = {
-            Linux: () => createHash("sha1").update(filePath).digest("hex"),
-            macOS: () => createHash("sha1").update(filePath).digest("hex"),
-            Windows: () => createHash("sha1").update(filePath).digest("hex"),
-        };
-
-        return generators[this.operatingSystem]();
+        return createHash("sha1").update(filePath).digest("hex");
     }
 }
