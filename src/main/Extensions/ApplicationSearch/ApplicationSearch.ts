@@ -51,14 +51,24 @@ export class ApplicationSearch implements Extension {
     }
 
     public getImage(): Image {
-        const fileNames: Record<OperatingSystem, string> = {
+        const fileNames: Record<OperatingSystem, { neutral: string; dark?: string; light?: string }> = {
             Linux: null, // not supported,
-            macOS: "macos-applications.png",
-            Windows: "windows-applications.png",
+            macOS: { neutral: "macos-applications.png" },
+            Windows: {
+                neutral: "windows-applications-light.png",
+                dark: "windows-applications-light.png",
+                light: "windows-applications-dark.png",
+            },
         };
 
         return {
-            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, fileNames[this.operatingSystem])}`,
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, fileNames[this.operatingSystem].neutral)}`,
+            urlOnDarkBackground: fileNames[this.operatingSystem].dark
+                ? `file://${this.assetPathResolver.getExtensionAssetPath(this.id, fileNames[this.operatingSystem].dark)}`
+                : undefined,
+            urlOnLightBackground: fileNames[this.operatingSystem].light
+                ? `file://${this.assetPathResolver.getExtensionAssetPath(this.id, fileNames[this.operatingSystem].light)}`
+                : undefined,
         };
     }
 
