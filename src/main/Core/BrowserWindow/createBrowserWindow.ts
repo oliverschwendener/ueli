@@ -3,6 +3,7 @@ import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { OperatingSystem } from "@common/Core";
 import { BrowserWindow, type BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
+import { getAppIconFilePath } from "./getAppIconFilePath";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
 import { getVibrancy } from "./getVibrancy";
 
@@ -28,6 +29,11 @@ export const createBrowserWindow = (dependencyRegistry: DependencyRegistry<Depen
             spellcheck: false,
         },
         alwaysOnTop,
+        icon: getAppIconFilePath(
+            dependencyRegistry.get("NativeTheme"),
+            dependencyRegistry.get("AssetPathResolver"),
+            dependencyRegistry.get("OperatingSystem"),
+        ),
     };
 
     const extendDefaultBrowserWindowOptions = (browserWindowOptions: BrowserWindowConstructorOptions) => {

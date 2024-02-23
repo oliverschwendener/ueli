@@ -6,6 +6,7 @@ import type { SearchResultItemAction } from "@common/Core";
 import type { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
 import { createBrowserWindow } from "./createBrowserWindow";
+import { getAppIconFilePath } from "./getAppIconFilePath";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
 import { getVibrancy } from "./getVibrancy";
 import { openAndFocusBrowserWindow } from "./openAndFocusBrowserWindow";
@@ -15,10 +16,21 @@ import { toggleBrowserWindow } from "./toggleBrowserWindow";
 export class BrowserWindowModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const eventEmitter = dependencyRegistry.get("EventEmitter");
+        const nativeTheme = dependencyRegistry.get("NativeTheme");
 
         const browserWindow = createBrowserWindow(dependencyRegistry);
 
         eventEmitter.emitEvent("browserWindowCreated", { browserWindow });
+
+        nativeTheme.addListener("updated", () =>
+            browserWindow.setIcon(
+                getAppIconFilePath(
+                    dependencyRegistry.get("NativeTheme"),
+                    dependencyRegistry.get("AssetPathResolver"),
+                    dependencyRegistry.get("OperatingSystem"),
+                ),
+            ),
+        );
 
         BrowserWindowModule.registerBrowserWindowEventListeners(browserWindow, dependencyRegistry);
         BrowserWindowModule.registerEvents(browserWindow, dependencyRegistry);
