@@ -1,5 +1,6 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import getFileIcon from "extract-file-icon";
 import { join } from "path";
 import { FileImageGenerator } from "./FileImageGenerator";
 import { UrlImageGenerator } from "./UrlImageGenerator";
@@ -20,7 +21,9 @@ export class ImageGeneratorModule {
 
         dependencyRegistry.register(
             "FileImageGenerator",
-            new FileImageGenerator(cacheFolderPath, dependencyRegistry.get("FileSystemUtility")),
+            new FileImageGenerator(cacheFolderPath, dependencyRegistry.get("FileSystemUtility"), (filePath: string) =>
+                getFileIcon(filePath),
+            ),
         );
     }
 }

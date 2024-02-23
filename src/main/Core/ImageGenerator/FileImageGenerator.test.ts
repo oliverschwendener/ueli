@@ -17,7 +17,7 @@ describe(FileImageGenerator, () => {
             clearFolder: (f) => clearFolderMock(f),
         };
 
-        const fileImageGenerator = new FileImageGenerator(cacheFolderPath, fileSystemUtility);
+        const fileImageGenerator = new FileImageGenerator(cacheFolderPath, fileSystemUtility, () => null);
 
         await fileImageGenerator.clearCache();
         expect(pathExistsMock).toHaveBeenCalledWith(cacheFolderPath);
@@ -28,7 +28,7 @@ describe(FileImageGenerator, () => {
         const pathExistsMock = vi.fn().mockReturnValue(false);
         const fileSystemUtility = <FileSystemUtility>{ pathExists: (f) => pathExistsMock(f) };
 
-        const fileImageGenerator = new FileImageGenerator(cacheFolderPath, fileSystemUtility);
+        const fileImageGenerator = new FileImageGenerator(cacheFolderPath, fileSystemUtility, () => null);
 
         await fileImageGenerator.clearCache();
         expect(pathExistsMock).toHaveBeenCalledWith(cacheFolderPath);
@@ -37,25 +37,22 @@ describe(FileImageGenerator, () => {
     it("should create the cached file if it doesn't exist and return the image", async () => {
         const pathExistsMock = vi.fn().mockReturnValue(false);
         const writePngMock = vi.fn().mockReturnValue(Promise.resolve());
+        const buffer = Buffer.from("testBuffer");
 
         const fileSystemUtility = <FileSystemUtility>{
             pathExists: (f) => pathExistsMock(f),
             writePng: (b, f) => writePngMock(b, f),
         };
 
-        vi.mock("extract-file-icon", () => {
-            return {
-                default: () => Buffer.from("testBuffer"),
-            };
-        });
-
         const cachedPngFilePath = join(cacheFolderPath, `${createHash("sha1").update("my file").digest("hex")}.png`);
 
-        const actual = await new FileImageGenerator(cacheFolderPath, fileSystemUtility).getImage("my file");
+        const actual = await new FileImageGenerator(cacheFolderPath, fileSystemUtility, () => buffer).getImage(
+            "my file",
+        );
 
         expect(actual).toEqual(<Image>{ url: `file://${cachedPngFilePath}` });
         expect(pathExistsMock).toHaveBeenCalledWith(cachedPngFilePath);
-        expect(writePngMock).toHaveBeenCalledWith(Buffer.from("testBuffer"), cachedPngFilePath);
+        expect(writePngMock).toHaveBeenCalledWith(buffer, cachedPngFilePath);
     });
 
     it("should not write a new cached file if it already exists and return the image", async () => {
@@ -69,10 +66,24 @@ describe(FileImageGenerator, () => {
 
         const cachedPngFilePath = join(cacheFolderPath, `${createHash("sha1").update("my file").digest("hex")}.png`);
 
-        const actual = await new FileImageGenerator(cacheFolderPath, fileSystemUtility).getImage("my file");
+        const actual = await new FileImageGenerator(cacheFolderPath, fileSystemUtility, () => null).getImage("my file");
 
         expect(actual).toEqual(<Image>{ url: `file://${cachedPngFilePath}` });
         expect(pathExistsMock).toHaveBeenCalledWith(cachedPngFilePath);
         expect(writePngMock).not.toHaveBeenCalled();
+    });
+
+    it("should throw an error if getFileIcon returns buffer with empty buffer length", async () => {
+        const pathExistsMock = vi.fn().mockReturnValue(false);
+        const fileSystemUtility = <FileSystemUtility>{ pathExists: (f) => pathExistsMock(f) };
+
+        const cachedPngFilePath = join(cacheFolderPath, `${createHash("sha1").update("my file").digest("hex")}.png`);
+
+        const fileImageGenerator = new FileImageGenerator(cacheFolderPath, fileSystemUtility, () => Buffer.alloc(0));
+
+        expect(() => fileImageGenerator.getImage("my file")).rejects.toThrow(
+            "getFileIcon returned Buffer with length 0",
+        );
+        expect(pathExistsMock).toHaveBeenCalledWith(cachedPngFilePath);
     });
 });

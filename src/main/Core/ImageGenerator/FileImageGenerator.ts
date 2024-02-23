@@ -1,7 +1,6 @@
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Image } from "@common/Core/Image";
 import { createHash } from "crypto";
-import getFileIcon from "extract-file-icon";
 import { join } from "path";
 import type { FileImageGenerator as FileImageGeneratorInterface } from "./Contract";
 
@@ -9,6 +8,7 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
     public constructor(
         private readonly cacheFolderPath: string,
         private readonly fileSystemUtility: FileSystemUtility,
+        private readonly getFileIcon: (filePath: string) => Buffer,
     ) {}
 
     public async clearCache(): Promise<void> {
@@ -31,10 +31,10 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
         const exists = await this.fileSystemUtility.pathExists(cachedPngFilePath);
 
         if (!exists) {
-            const buffer = getFileIcon(filePath);
+            const buffer = this.getFileIcon(filePath);
 
             if (!buffer.byteLength) {
-                throw new Error(`getFileIcon returned Buffer with length 0`);
+                throw new Error("getFileIcon returned Buffer with length 0");
             }
 
             await this.fileSystemUtility.writePng(buffer, cachedPngFilePath);
