@@ -69,7 +69,8 @@ export const ShortcutsSettings = () => {
                                                         style={{ maxWidth: "100%", maxHeight: "100%" }}
                                                         src={getImageUrl({
                                                             image: searchResultItem.image,
-                                                            onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                                                            shouldPreferDarkColors:
+                                                                contextBridge.themeShouldUseDarkColors(),
                                                         })}
                                                     />
                                                 </div>

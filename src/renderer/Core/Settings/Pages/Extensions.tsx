@@ -101,7 +101,8 @@ export const Extensions = () => {
                                                     style={{ maxWidth: "100%", maxHeight: "100%" }}
                                                     src={getImageUrl({
                                                         image,
-                                                        onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                                                        shouldPreferDarkColors:
+                                                            contextBridge.themeShouldUseDarkColors(),
                                                     })}
                                                 />
                                             </div>

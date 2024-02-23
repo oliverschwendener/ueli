@@ -26,6 +26,8 @@ import * as Extensions from "./Extensions";
     dependencyRegistry.register("SafeStorage", Electron.safeStorage);
 
     // Core Modules
+    Core.EventEmitterModule.bootstrap(dependencyRegistry);
+    Core.EventSubscriberModule.bootstrap(dependencyRegistry);
     Core.RandomStringProviderModule.bootstrap(dependencyRegistry);
     Core.SafeStorageEncryptionModule.bootstrap(dependencyRegistry);
     Core.AssetPathResolverModule.bootstrap(dependencyRegistry);
@@ -33,10 +35,8 @@ import * as Extensions from "./Extensions";
     Core.ClipboardModule.bootstrap(dependencyRegistry);
     Core.ClockModule.bootstrap(dependencyRegistry);
     Core.AboutUeliModule.bootstrap(dependencyRegistry);
-    Core.LoggerModule.bootstrap(dependencyRegistry);
-    Core.EventEmitterModule.bootstrap(dependencyRegistry);
-    Core.EventSubscriberModule.bootstrap(dependencyRegistry);
     Core.BrowserWindowNotifierModule.bootstrap(dependencyRegistry);
+    Core.LoggerModule.bootstrap(dependencyRegistry);
     Core.CommandlineUtilityModule.bootstrap(dependencyRegistry);
     Core.FileSystemUtilityModule.bootstrap(dependencyRegistry);
     await Core.PowershellUtilityModule.bootstrap(dependencyRegistry);

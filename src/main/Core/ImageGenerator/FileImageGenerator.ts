@@ -11,6 +11,14 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
         private readonly fileSystemUtility: FileSystemUtility,
     ) {}
 
+    public async clearCache(): Promise<void> {
+        const exists = await this.fileSystemUtility.pathExists(this.cacheFolderPath);
+
+        if (exists) {
+            await this.fileSystemUtility.clearFolder(this.cacheFolderPath);
+        }
+    }
+
     public async getImage(filePath: string): Promise<Image> {
         const cachedPngFilePath = await this.ensureCachedPngFileExists(filePath);
 
@@ -23,7 +31,13 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
         const exists = await this.fileSystemUtility.pathExists(cachedPngFilePath);
 
         if (!exists) {
-            await this.fileSystemUtility.writePng(getFileIcon(filePath), cachedPngFilePath);
+            const buffer = getFileIcon(filePath);
+
+            if (!buffer.byteLength) {
+                throw new Error(`getFileIcon returned Buffer with length 0`);
+            }
+
+            await this.fileSystemUtility.writePng(buffer, cachedPngFilePath);
         }
 
         return cachedPngFilePath;

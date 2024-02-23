@@ -1,3 +1,4 @@
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { PowershellUtility } from "@Core/PowershellUtility";
@@ -15,6 +16,7 @@ export class WindowsApplicationRepository implements ApplicationRepository {
         private readonly settings: Settings,
         private readonly fileImageGenerator: FileImageGenerator,
         private readonly logger: Logger,
+        private readonly assetPathResolver: AssetPathResolver,
     ) {}
 
     public async getApplications(): Promise<Application[]> {
@@ -40,7 +42,14 @@ export class WindowsApplicationRepository implements ApplicationRepository {
         const appIcons = await this.getAppIcons(windowsApplicationRetrieverResults.map(({ FullName }) => FullName));
 
         return windowsApplicationRetrieverResults.map(
-            ({ BaseName, FullName }) => new Application(BaseName, FullName, appIcons[FullName]),
+            ({ BaseName, FullName }) =>
+                new Application(
+                    BaseName,
+                    FullName,
+                    appIcons[FullName] ?? {
+                        url: `file://${this.assetPathResolver.getExtensionAssetPath("ApplicationSearch", "windows-generic-app-icon.png")}`,
+                    },
+                ),
         );
     }
 

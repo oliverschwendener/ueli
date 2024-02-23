@@ -1,3 +1,4 @@
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
@@ -13,6 +14,7 @@ export class MacOsApplicationRepository implements ApplicationRepository {
         private readonly fileImageGenerator: FileImageGenerator,
         private readonly logger: Logger,
         private readonly settings: Settings,
+        private readonly assetPathResolver: AssetPathResolver,
     ) {}
 
     public async getApplications(): Promise<Application[]> {
@@ -21,7 +23,16 @@ export class MacOsApplicationRepository implements ApplicationRepository {
 
         return filePaths
             .filter((filePath) => !!icons[filePath])
-            .map((filePath) => new Application(parse(filePath).name, filePath, icons[filePath]));
+            .map(
+                (filePath) =>
+                    new Application(
+                        parse(filePath).name,
+                        filePath,
+                        icons[filePath] ?? {
+                            url: `file://${this.assetPathResolver.getExtensionAssetPath("ApplicationSearch", "macos-generic-app-icon.png")}`,
+                        },
+                    ),
+            );
     }
 
     private async getAllFilePaths(): Promise<string[]> {

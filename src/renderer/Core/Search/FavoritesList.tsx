@@ -53,7 +53,7 @@ export const FavoritesList = ({ invokeSearchResultItem }: FavoritesListProps) =>
                                 style={{ width: "100%" }}
                                 src={getImageUrl({
                                     image: searchResultItem.image,
-                                    onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                                    shouldPreferDarkColors: contextBridge.themeShouldUseDarkColors(),
                                 })}
                                 alt="App Name Document"
                             />

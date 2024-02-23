@@ -5,9 +5,8 @@ import { Logger } from "./Logger";
 export class LoggerModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const ipcMain = dependencyRegistry.get("IpcMain");
-        const clock = dependencyRegistry.get("Clock");
 
-        const logger = new Logger(clock);
+        const logger = new Logger(dependencyRegistry.get("Clock"), dependencyRegistry.get("BrowserWindowNotifier"));
 
         dependencyRegistry.register("Logger", logger);
         ipcMain.on("getLogs", (event) => (event.returnValue = logger.getLogs()));

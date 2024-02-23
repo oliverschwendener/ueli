@@ -23,12 +23,14 @@ export class ApplicationSearchModule implements ExtensionModule {
                 dependencyRegistry.get("FileImageGenerator"),
                 dependencyRegistry.get("Logger"),
                 settings,
+                dependencyRegistry.get("AssetPathResolver"),
             ),
             Windows: new WindowsApplicationRepository(
                 dependencyRegistry.get("PowershellUtility"),
                 settings,
                 dependencyRegistry.get("FileImageGenerator"),
                 dependencyRegistry.get("Logger"),
+                dependencyRegistry.get("AssetPathResolver"),
             ),
             Linux: undefined, // not supported
         };

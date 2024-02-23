@@ -25,6 +25,11 @@ export class ExtensionManagerModule {
 
         await extensionManager.populateSearchIndex();
 
+        ipcMain.handle("resetCache", async () => {
+            await dependencyRegistry.get("FileImageGenerator").clearCache();
+            await extensionManager.populateSearchIndex();
+        });
+
         ipcMain.on("getExtensionTranslations", (event) => {
             event.returnValue = extensionManager.getSupportedExtensions().map((extension) => ({
                 extensionId: extension.id,

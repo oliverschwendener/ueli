@@ -6,7 +6,7 @@ describe(getImageUrl, () => {
         expect(
             getImageUrl({
                 image: { url: "neutral", urlOnDarkBackground: "dark", urlOnLightBackground: "light" },
-                onDarkBackground: true,
+                shouldPreferDarkColors: true,
             }),
         ).toBe("dark");
     });
@@ -15,7 +15,7 @@ describe(getImageUrl, () => {
         expect(
             getImageUrl({
                 image: { url: "neutral", urlOnDarkBackground: "dark", urlOnLightBackground: "light" },
-                onDarkBackground: false,
+                shouldPreferDarkColors: false,
             }),
         ).toBe("light");
     });
@@ -24,7 +24,7 @@ describe(getImageUrl, () => {
         expect(
             getImageUrl({
                 image: { url: "neutral", urlOnLightBackground: "light" },
-                onDarkBackground: true,
+                shouldPreferDarkColors: true,
             }),
         ).toBe("neutral");
     });
@@ -33,7 +33,7 @@ describe(getImageUrl, () => {
         expect(
             getImageUrl({
                 image: { url: "neutral", urlOnDarkBackground: "dark" },
-                onDarkBackground: false,
+                shouldPreferDarkColors: false,
             }),
         ).toBe("neutral");
     });

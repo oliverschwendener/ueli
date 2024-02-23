@@ -99,7 +99,7 @@ export const SearchEngine = () => {
                                         style={{ width: 16, height: 16 }}
                                         src={getImageUrl({
                                             image,
-                                            onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                                            shouldPreferDarkColors: contextBridge.themeShouldUseDarkColors(),
                                         })}
                                     />
                                 }

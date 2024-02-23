@@ -102,7 +102,16 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
             translations: {
                 "en-US": {
                     title: "Debug",
+                    resetCache: "Reset cache",
+                    resetCacheHint: "This might help when troubleshooting issues with icons.",
+                    resettingCache: "Resetting cache...",
+                    resetCacheDialogTitle: "Are you sure?",
+                    resetCacheDialogContent: "You are about to reset the cache. This might take a few seconds.",
+                    resetCacheCancel: "Cancel",
+                    resetCacheConfirm: "Reset Cache",
                     resetAllSettings: "Reset all settings",
+                    resetAllSettingsHint:
+                        "This resets all settings to their default values. You will lose all settings that you changed.",
                     resetAllSettingsButton: "Reset",
                     resetAllSettingsDialogTitle: "Are you sure?",
                     resetAllSettingsDialogContent: "You are about to reset all settings to their default values.",
@@ -111,7 +120,17 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
                 },
                 "de-CH": {
                     title: "Fehlerbehebung",
+                    resetCache: "Zwischenspeicher zurücksetzen",
+                    resetCacheHint: "Dies kann bei der Behebung von Problemen mit Symbolen hilfreich sein.",
+                    resettingCache: "Zwischenspeicher wird zurückgesetzt...",
+                    resetCacheDialogTitle: "Bist du sicher?",
+                    resetCacheDialogContent:
+                        "Du bist dabei, den Cache zurückzusetzen. Dies kann ein paar Sekunden dauern.",
+                    resetCacheCancel: "Abbrechen",
+                    resetCacheConfirm: "Zwischenspeicher zurücksetzen",
                     resetAllSettings: "Alle Einstellungen zurücksetzen",
+                    resetAllSettingsHint:
+                        "Dadurch werden alle Einstellungen auf ihre Standardwerte zurückgesetzt. Du verlierst alle Einstellungen, die du geändert hast.",
                     resetAllSettingsButton: "Zurücksetzen",
                     resetAllSettingsDialogTitle: "Bist du sicher?",
                     resetAllSettingsDialogContent:

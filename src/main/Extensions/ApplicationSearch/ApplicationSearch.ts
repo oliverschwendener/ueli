@@ -21,7 +21,7 @@ export class ApplicationSearch implements Extension {
     };
 
     public constructor(
-        private readonly currentOperatingSystem: OperatingSystem,
+        private readonly operatingSystem: OperatingSystem,
         private readonly applicationRepository: ApplicationRepository,
         private readonly settings: Settings,
         private readonly assetPathResolver: AssetPathResolver,
@@ -34,7 +34,7 @@ export class ApplicationSearch implements Extension {
 
     public isSupported(): boolean {
         const supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
-        return supportedOperatingSystems.includes(this.currentOperatingSystem);
+        return supportedOperatingSystems.includes(this.operatingSystem);
     }
 
     public getSettingDefaultValue<T>(key: string): T {
@@ -51,8 +51,14 @@ export class ApplicationSearch implements Extension {
     }
 
     public getImage(): Image {
+        const fileNames: Record<OperatingSystem, string> = {
+            Linux: null, // not supported,
+            macOS: "macos-applications.png",
+            Windows: "windows-applications.png",
+        };
+
         return {
-            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "macos-applications.png")}`,
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, fileNames[this.operatingSystem])}`,
         };
     }
 

@@ -1,10 +1,14 @@
+import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { Clock } from "../Clock";
 import type { Logger as LoggerInterface } from "./Contract";
 
 export class Logger implements LoggerInterface {
     private logs: string[] = [];
 
-    public constructor(private readonly clock: Clock) {}
+    public constructor(
+        private readonly clock: Clock,
+        private readonly browserWindowNotifier: BrowserWindowNotifier,
+    ) {}
 
     public error(message: string): void {
         this.writeLog("ERROR", message);
@@ -28,5 +32,6 @@ export class Logger implements LoggerInterface {
 
     private writeLog(logLevel: string, message: string) {
         this.logs.push(`[${this.clock.getCurrentTimeAsString()}][${logLevel}] ${message}`);
+        this.browserWindowNotifier.notify("logsUpdated");
     }
 }

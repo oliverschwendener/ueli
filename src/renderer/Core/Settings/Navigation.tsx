@@ -58,7 +58,7 @@ export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps
                                 style={{ maxWidth: "100%", maxHeight: "100%" }}
                                 src={getImageUrl({
                                     image: e.image,
-                                    onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                                    shouldPreferDarkColors: contextBridge.themeShouldUseDarkColors(),
                                 })}
                             />
                         </div>

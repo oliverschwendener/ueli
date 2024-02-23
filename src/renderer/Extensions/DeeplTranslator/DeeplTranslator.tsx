@@ -49,7 +49,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                             alt="DeepL Logo"
                             src={getImageUrl({
                                 image: contextBridge.getExtension(extensionId).image,
-                                onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                                shouldPreferDarkColors: contextBridge.themeShouldUseDarkColors(),
                             })}
                             style={{ width: 24 }}
                         />

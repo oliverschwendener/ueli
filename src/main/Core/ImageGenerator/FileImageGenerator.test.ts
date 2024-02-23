@@ -8,6 +8,32 @@ import { FileImageGenerator } from "./FileImageGenerator";
 describe(FileImageGenerator, () => {
     const cacheFolderPath = "cacheFolderPath";
 
+    it("should clear cache folder if it exists", async () => {
+        const pathExistsMock = vi.fn().mockReturnValue(true);
+        const clearFolderMock = vi.fn().mockReturnValue(Promise.resolve());
+
+        const fileSystemUtility = <FileSystemUtility>{
+            pathExists: (f) => pathExistsMock(f),
+            clearFolder: (f) => clearFolderMock(f),
+        };
+
+        const fileImageGenerator = new FileImageGenerator(cacheFolderPath, fileSystemUtility);
+
+        await fileImageGenerator.clearCache();
+        expect(pathExistsMock).toHaveBeenCalledWith(cacheFolderPath);
+        expect(clearFolderMock).toHaveBeenCalledWith(cacheFolderPath);
+    });
+
+    it("should do nothing if cache folder does not exist", async () => {
+        const pathExistsMock = vi.fn().mockReturnValue(false);
+        const fileSystemUtility = <FileSystemUtility>{ pathExists: (f) => pathExistsMock(f) };
+
+        const fileImageGenerator = new FileImageGenerator(cacheFolderPath, fileSystemUtility);
+
+        await fileImageGenerator.clearCache();
+        expect(pathExistsMock).toHaveBeenCalledWith(cacheFolderPath);
+    });
+
     it("should create the cached file if it doesn't exist and return the image", async () => {
         const pathExistsMock = vi.fn().mockReturnValue(false);
         const writePngMock = vi.fn().mockReturnValue(Promise.resolve());

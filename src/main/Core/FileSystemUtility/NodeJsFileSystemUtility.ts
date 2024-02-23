@@ -5,14 +5,21 @@ import {
     mkdir,
     readFile,
     readFileSync,
+    readdir,
     statSync,
     unlink,
     writeFile,
     writeFileSync,
 } from "fs";
+import { join } from "path";
 import type { FileSystemUtility } from "./Contract";
 
 export class NodeJsFileSystemUtility implements FileSystemUtility {
+    public async clearFolder(folderPath: string): Promise<void> {
+        const filePaths = await this.readDirectory(folderPath);
+        await Promise.all(filePaths.map((filePath) => this.removeFile(filePath)));
+    }
+
     public async createFolderIfDoesntExist(folderPath: string): Promise<void> {
         const exists = await this.pathExists(folderPath);
 
@@ -109,5 +116,17 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
 
     private readFileSync(filePath: string): Buffer {
         return readFileSync(filePath);
+    }
+
+    private readDirectory(folderPath: string): Promise<string[]> {
+        return new Promise((resolve, reject) => {
+            readdir(folderPath, (error, fileNames) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(fileNames.map((fileName) => join(folderPath, fileName)));
+                }
+            });
+        });
     }
 }

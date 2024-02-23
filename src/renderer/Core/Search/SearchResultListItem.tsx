@@ -103,7 +103,7 @@ export const SearchResultListItem = ({
                     }}
                     src={getImageUrl({
                         image: searchResultItem.image,
-                        onDarkBackground: contextBridge.themeShouldUseDarkColors(),
+                        shouldPreferDarkColors: contextBridge.themeShouldUseDarkColors(),
                     })}
                 />
             </div>
