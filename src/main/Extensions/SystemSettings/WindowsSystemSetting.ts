@@ -26,6 +26,6 @@ export class WindowsSystemSetting implements SystemSetting {
     }
 
     private getId(): string {
-        return `WindowsSystemSetting:${this.name}`;
+        return `WindowsSystemSetting:${this.name}[${this.settingsUrl}]`;
     }
 }

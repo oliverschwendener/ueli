@@ -6,8 +6,8 @@ import type { ExtensionModule } from "../ExtensionModule";
 import { MacOsSystemSettingRepository } from "./MacOsSystemSettingRepository";
 import type { SystemSettingRepository } from "./SystemSettingRepository";
 import { SystemSettingsExtension } from "./SystemSettingsExtension";
-import { WindowsSystemSettingsRepository } from "./WindowsSystemRepository";
 import { WindowsSystemSettingActionHandler } from "./WindowsSystemSettingActionHandler";
+import { WindowsSystemSettingsRepository } from "./WindowsSystemSettingRepository";
 
 export class SystemSettingsModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
