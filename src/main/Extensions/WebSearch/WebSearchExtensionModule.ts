@@ -2,7 +2,7 @@ import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
-import { DuckduckGoWebSearchEngine } from "./DuckduckGoWebSearchEngine";
+import { DuckDuckGoWebSearchEngine } from "./DuckDuckGoWebSearchEngine";
 import { GoogleWebSearchEngine } from "./GoogleWebSearchEngine";
 import { WebSearchExtension } from "./WebSearchExtension";
 
@@ -14,7 +14,7 @@ export class WebSearchExtensionModule implements ExtensionModule {
 
         return {
             extension: new WebSearchExtension(assetPathResolver, settingsManager, [
-                new DuckduckGoWebSearchEngine(net),
+                new DuckDuckGoWebSearchEngine(net),
                 new GoogleWebSearchEngine(net),
             ]),
         };

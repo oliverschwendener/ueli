@@ -12,11 +12,10 @@ export const FileSearch = ({ contextBridge, goBack }: ExtensionProps) => {
 
     const getSearchResultItems = async (searchTerm: string) => {
         try {
-            const searchResultItems = await contextBridge.invokeExtension<
-                { searchTerm: string },
-                Promise<SearchResultItem[]>
-            >("FileSearch", { searchTerm });
-            return searchResultItems;
+            return await contextBridge.invokeExtension<{ searchTerm: string }, Promise<SearchResultItem[]>>(
+                "FileSearch",
+                { searchTerm },
+            );
         } catch (error) {
             return [];
         }

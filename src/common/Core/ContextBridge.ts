@@ -11,7 +11,7 @@ export type ContextBridge = {
         on: IpcRenderer["on"];
     };
 
-    resetChache: () => Promise<void>;
+    resetCache: () => Promise<void>;
     copyTextToClipboard: (textToCopy: string) => void;
     extensionDisabled: (extensionId: string) => void;
     extensionEnabled: (extensionId: string) => void;

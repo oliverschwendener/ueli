@@ -5,7 +5,7 @@ import { SearchResultList } from "@Core/Search/SearchResultList";
 import type { SearchResultItem } from "@common/Core";
 import { Button, Input, ProgressBar } from "@fluentui/react-components";
 import { ArrowLeftFilled, SearchRegular } from "@fluentui/react-icons";
-import { useEffect, useRef, useState } from "react";
+import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 
 type BasicSearchProps = {
@@ -43,7 +43,7 @@ export const BasicSearch = ({
 
     const goBack = () => navigate({ pathname: "/" });
 
-    const handleKeyDownEvent = (event: React.KeyboardEvent) => {
+    const handleKeyDownEvent = async (event: KeyboardEvent) => {
         if (event.key === "ArrowDown") {
             event.preventDefault();
             selectNextSearchResultItem();
@@ -52,15 +52,15 @@ export const BasicSearch = ({
             selectPreviousSearchResultItem();
         } else if (event.key === "Enter") {
             event.preventDefault();
-            invokeSelectedSearchResultItem();
+            await invokeSelectedSearchResultItem();
         }
     };
 
-    const invokeSelectedSearchResultItem = () => {
+    const invokeSelectedSearchResultItem = async () => {
         const selectedSearchResultItem = getSelectedSearchResultItem();
 
         if (selectedSearchResultItem) {
-            contextBridge.invokeAction(selectedSearchResultItem.defaultAction);
+            await contextBridge.invokeAction(selectedSearchResultItem.defaultAction);
         }
     };
 

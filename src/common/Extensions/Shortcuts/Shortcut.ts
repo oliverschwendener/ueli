@@ -5,5 +5,5 @@ export type Shortcut = {
     id: string;
     type: ShortcutType;
     argument: string;
-    hideWindowAfterInvokation?: boolean;
+    hideWindowAfterInvocation?: boolean;
 };

@@ -24,22 +24,22 @@ describe(UeliCommandActionHandler, () => {
     };
 
     it("should invoke an ueli command", async () => {
-        testInvokeAction({
+        await testInvokeAction({
             searchResultItemAction: <SearchResultItemAction>{ argument: "quit" },
             expectedUeliCommand: "quit",
         });
 
-        testInvokeAction({
+        await testInvokeAction({
             searchResultItemAction: <SearchResultItemAction>{ argument: "settings" },
             expectedUeliCommand: "openSettings",
         });
 
-        testInvokeAction({
+        await testInvokeAction({
             searchResultItemAction: <SearchResultItemAction>{ argument: "extensions" },
             expectedUeliCommand: "openExtensions",
         });
 
-        testInvokeAction({
+        await testInvokeAction({
             searchResultItemAction: <SearchResultItemAction>{ argument: "centerWindow" },
             expectedUeliCommand: "centerWindow",
         });

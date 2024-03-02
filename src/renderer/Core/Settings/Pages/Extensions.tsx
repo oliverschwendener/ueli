@@ -18,6 +18,7 @@ import {
     useToastController,
 } from "@fluentui/react-components";
 import { ArrowClockwiseRegular } from "@fluentui/react-icons";
+import { MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 export const Extensions = () => {
@@ -50,7 +51,7 @@ export const Extensions = () => {
         disableExtension(extensionId);
     };
 
-    const triggerExtensionRescan = async (event: React.MouseEvent, extensionId: string) => {
+    const triggerExtensionRescan = async (event: MouseEvent, extensionId: string) => {
         event.preventDefault();
         await contextBridge.triggerExtensionRescan(extensionId);
         const { name, nameTranslation } = contextBridge.getExtension(extensionId);
@@ -116,9 +117,9 @@ export const Extensions = () => {
                                     <TableCellLayout>
                                         <Link
                                             appearance="subtle"
-                                            onClick={(e) => {
+                                            onClick={async (e) => {
                                                 e.preventDefault();
-                                                contextBridge.openExternal(
+                                                await contextBridge.openExternal(
                                                     `https://github.com/${author.githubUserName}`,
                                                 );
                                             }}

@@ -25,12 +25,12 @@ export const DeeplTranslatorSettings = () => {
         key: "defaultTargetLanguage",
     });
 
-    const sourceLanguageVirutalizer = useStaticVirtualizerMeasure({
+    const sourceLanguageVirtualizerMeasure = useStaticVirtualizerMeasure({
         defaultItemSize: 20,
         direction: "vertical",
     });
 
-    const targetLanguageVirutalizer = useStaticVirtualizerMeasure({
+    const targetLanguageVirtzalizerMeasure = useStaticVirtualizerMeasure({
         defaultItemSize: 20,
         direction: "vertical",
     });
@@ -48,13 +48,13 @@ export const DeeplTranslatorSettings = () => {
                         value={sourceLanguages[sourceLanguage]}
                         onOptionSelect={(_, { optionValue }) => optionValue && setSourceLanguage(optionValue)}
                         selectedOptions={[sourceLanguage]}
-                        listbox={{ ref: sourceLanguageVirutalizer.scrollRef, style: { maxHeight: 145 } }}
+                        listbox={{ ref: sourceLanguageVirtualizerMeasure.scrollRef, style: { maxHeight: 145 } }}
                     >
                         <Virtualizer
                             numItems={Object.keys(sourceLanguages).length}
-                            virtualizerLength={sourceLanguageVirutalizer.virtualizerLength}
-                            bufferItems={sourceLanguageVirutalizer.bufferItems}
-                            bufferSize={sourceLanguageVirutalizer.bufferSize}
+                            virtualizerLength={sourceLanguageVirtualizerMeasure.virtualizerLength}
+                            bufferItems={sourceLanguageVirtualizerMeasure.bufferItems}
+                            bufferSize={sourceLanguageVirtualizerMeasure.bufferSize}
                             itemSize={20}
                         >
                             {(i) => (
@@ -76,13 +76,13 @@ export const DeeplTranslatorSettings = () => {
                         value={targetLanguages[targetLanguage]}
                         onOptionSelect={(_, { optionValue }) => optionValue && setTargetLanguage(optionValue)}
                         selectedOptions={[targetLanguage]}
-                        listbox={{ ref: targetLanguageVirutalizer.scrollRef, style: { maxHeight: 145 } }}
+                        listbox={{ ref: targetLanguageVirtzalizerMeasure.scrollRef, style: { maxHeight: 145 } }}
                     >
                         <Virtualizer
                             numItems={Object.keys(targetLanguages).length}
-                            virtualizerLength={targetLanguageVirutalizer.virtualizerLength}
-                            bufferItems={targetLanguageVirutalizer.bufferItems}
-                            bufferSize={targetLanguageVirutalizer.bufferSize}
+                            virtualizerLength={targetLanguageVirtzalizerMeasure.virtualizerLength}
+                            bufferItems={targetLanguageVirtzalizerMeasure.bufferItems}
+                            bufferSize={targetLanguageVirtzalizerMeasure.bufferSize}
                             itemSize={20}
                         >
                             {(i) => (

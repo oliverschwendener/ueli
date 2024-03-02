@@ -13,12 +13,12 @@ export const Folders = () => {
 
     const [newFolder, setNewFolder] = useState<string>("");
 
-    const removeFolder = (folder: string) => {
-        setFolders(folders.filter((f) => f !== folder));
+    const removeFolder = async (folder: string) => {
+        await setFolders(folders.filter((f) => f !== folder));
     };
 
-    const addFolder = (folder: string) => {
-        setFolders([...folders, folder]);
+    const addFolder = async (folder: string) => {
+        await setFolders([...folders, folder]);
         setNewFolder("");
     };
 

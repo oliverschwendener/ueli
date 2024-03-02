@@ -21,16 +21,16 @@ export const ShortcutsSettings = () => {
         key: "shortcuts",
     });
 
-    const removeShortcut = (id: string) => {
-        setShortcuts(shortcuts.filter((s) => s.id !== id));
+    const removeShortcut = async (id: string) => {
+        await setShortcuts(shortcuts.filter((s) => s.id !== id));
     };
 
-    const editShortcut = (shortcut: Shortcut) => {
-        setShortcuts(shortcuts.map((s) => (s.id === shortcut.id ? shortcut : s)));
+    const editShortcut = async (shortcut: Shortcut) => {
+        await setShortcuts(shortcuts.map((s) => (s.id === shortcut.id ? shortcut : s)));
     };
 
-    const addShortcut = (shortcut: Shortcut) => {
-        setShortcuts([...shortcuts, shortcut]);
+    const addShortcut = async (shortcut: Shortcut) => {
+        await setShortcuts([...shortcuts, shortcut]);
     };
 
     const getSearchResultItemByShortcutId = (id: string) => {

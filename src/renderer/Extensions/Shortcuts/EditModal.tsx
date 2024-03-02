@@ -156,10 +156,10 @@ export const EditModal = ({
                                 />
                             </Field>
                             {argumentElements[temporaryShortcut.type]}
-                            <Field label={t("hideWindowAfterInvokation", { ns })}>
+                            <Field label={t("hideWindowAfterInvocation", { ns })}>
                                 <Switch
-                                    checked={temporaryShortcut.hideWindowAfterInvokation}
-                                    onChange={(_, { checked }) => setProperty("hideWindowAfterInvokation", checked)}
+                                    checked={temporaryShortcut.hideWindowAfterInvocation}
+                                    onChange={(_, { checked }) => setProperty("hideWindowAfterInvocation", checked)}
                                 />
                             </Field>
                         </div>

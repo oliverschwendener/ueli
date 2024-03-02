@@ -1,4 +1,4 @@
-import { useContextBridge, useSetting } from "../../../Hooks";
+import { useContextBridge, useSetting } from "@Core/Hooks";
 import { Section } from "../../Section";
 import { SectionList } from "../../SectionList";
 import { AlwaysOnTop } from "./AlwaysOnTop";

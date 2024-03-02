@@ -6,7 +6,7 @@ type DuckDuckGoSuggestion = {
     phrase: string;
 };
 
-export class DuckduckGoWebSearchEngine implements WebSearchEngine {
+export class DuckDuckGoWebSearchEngine implements WebSearchEngine {
     public constructor(private readonly net: Net) {}
 
     public async getSuggestions(searchTerm: string, locale: string): Promise<Suggestion[]> {

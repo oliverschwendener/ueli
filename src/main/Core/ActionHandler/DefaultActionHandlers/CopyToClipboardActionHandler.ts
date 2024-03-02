@@ -8,11 +8,11 @@ export class CopyToClipboardActionHandler implements ActionHandler {
 
     public constructor(
         private readonly clipboard: Clipboard,
-        private readonly browserWindowNotifer: BrowserWindowNotifier,
+        private readonly browserWindowNotifier: BrowserWindowNotifier,
     ) {}
 
     public async invokeAction(action: SearchResultItemAction): Promise<void> {
         this.clipboard.writeText(action.argument);
-        this.browserWindowNotifer.notify("copiedToClipboard");
+        this.browserWindowNotifier.notify("copiedToClipboard");
     }
 }

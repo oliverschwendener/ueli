@@ -87,10 +87,6 @@ export class Calculator {
     private static isValidMathType(value: any): boolean {
         const mathType = typeOf(value);
 
-        if ((mathType === "Unit" && value.value === null) || mathType === "function") {
-            return false;
-        }
-
-        return true;
+        return !((mathType === "Unit" && value.value === null) || mathType === "function");
     }
 }

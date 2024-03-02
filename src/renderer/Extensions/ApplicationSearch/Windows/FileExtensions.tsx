@@ -11,12 +11,12 @@ export const FileExtensions = () => {
         key: "windowsFileExtensions",
     });
 
-    const removeFileExtension = (fileExtension: string) => {
-        setFileExtensions(fileExtensions.filter((f) => f !== fileExtension));
+    const removeFileExtension = async (fileExtension: string) => {
+        await setFileExtensions(fileExtensions.filter((f) => f !== fileExtension));
     };
 
-    const addFileExtension = (fileExtension: string) => {
-        setFileExtensions([...fileExtensions, fileExtension]);
+    const addFileExtension = async (fileExtension: string) => {
+        await setFileExtensions([...fileExtensions, fileExtension]);
         setNewFileExtension("");
     };
 

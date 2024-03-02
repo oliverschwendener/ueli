@@ -21,11 +21,11 @@ export const ResetCache = () => {
     const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
     const [resetIsRunning, setResetIsRunning] = useState<boolean>(false);
 
-    const resetChache = async () => {
+    const resetCache = async () => {
         setResetIsRunning(true);
 
         try {
-            await contextBridge.resetChache();
+            await contextBridge.resetCache();
         } catch (error) {
             // do nothing
         } finally {
@@ -71,7 +71,7 @@ export const ResetCache = () => {
                             >
                                 {t("resetCacheCancel", { ns })}
                             </Button>
-                            <Button disabled={resetIsRunning} onClick={() => resetChache()} appearance="primary">
+                            <Button disabled={resetIsRunning} onClick={() => resetCache()} appearance="primary">
                                 {t("resetCacheConfirm", { ns })}
                             </Button>
                         </DialogActions>

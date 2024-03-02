@@ -195,7 +195,7 @@ describe(WebSearchExtension, () => {
         expect(getValueMock).toHaveBeenCalledWith(getExtensionSettingKey("WebSearch", "searchEngine"), "Google");
     });
 
-    it("should return the suggestions on invokation", async () => {
+    it("should return the suggestions on invocation", async () => {
         const getSearchEngineMock = vi.fn().mockReturnValue("MyEngine");
         const getLocaleMock = vi.fn().mockReturnValue("de-CH");
         const getExtensionAssetPathMock = vi.fn().mockReturnValue("assets/asset.png");
