@@ -33,7 +33,7 @@ export class ApplicationSearch implements Extension {
     }
 
     public isSupported(): boolean {
-        const supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
+        const supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS", "Linux"];
         return supportedOperatingSystems.includes(this.operatingSystem);
     }
 

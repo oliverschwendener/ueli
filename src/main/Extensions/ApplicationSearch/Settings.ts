@@ -31,6 +31,24 @@ export class Settings {
                 "C:\\ProgramData\\Microsoft\\Windows\\Start Menu",
                 join(this.app.getPath("home"), "AppData", "Roaming", "Microsoft", "Windows", "Start Menu"),
             ],
+            // This is hardcoded for the Linux DEs tested, DO NOT CHANGE
+            // Linux only is able to launch applications files stored in these directories
+            linuxApplicationFolders: [
+                "/usr/share/applications",
+                join(this.app.getPath("home"), ".local", "share", "applications"),
+            ],
+            linuxFileExtensions: [".desktop"],
+            // https://specifications.freedesktop.org/icon-theme-spec/latest/ar01s03.html
+            linuxBaseSearchDirectories: [
+                join(this.app.getPath("home"), ".icons"),
+                join(process.env["XDG_DATA_HOME"] || join(this.app.getPath("home"), ".local", "share"), "icons"),
+                ...(
+                    process.env["XDG_DATA_DIRS"] || `${join("/", "usr", "local", "share")}:${join("/", "usr", "share")}`
+                )
+                    .split(":")
+                    .map((dir) => join(dir, "icons")),
+                join("/", "usr", "share", "pixmaps"),
+            ],
         };
 
         return defaultValues[key] as T;
