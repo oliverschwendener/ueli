@@ -1,6 +1,8 @@
 import type { ActionHandler } from "@Core/ActionHandler";
+import { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { SearchResultItemAction } from "@common/Core";
 import type { Shell } from "electron";
+import { basename, extname } from "path";
 
 /**
  * Action handler for opening a file path.
@@ -8,7 +10,10 @@ import type { Shell } from "electron";
 export class OpenFilePathActionHandler implements ActionHandler {
     public readonly id = "OpenFilePath";
 
-    public constructor(private readonly shell: Shell) {}
+    public constructor(
+        private readonly shell: Shell,
+        private readonly commandlineUtility: CommandlineUtility,
+    ) {}
 
     /**
      * Opens the given file path with the system's default application.
