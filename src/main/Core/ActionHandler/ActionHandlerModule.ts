@@ -33,7 +33,10 @@ export class ActionHandlerModule {
             new ExcludeFromSearchResultsActionHandler(dependencyRegistry.get("ExcludedSearchResults")),
             new FavoritesActionHandler(dependencyRegistry.get("FavoriteManager")),
             new NavigateToActionHandler(eventEmitter),
-            new OpenFilePathActionHandler(dependencyRegistry.get("Shell")),
+            new OpenFilePathActionHandler(
+                dependencyRegistry.get("Shell"),
+                dependencyRegistry.get("CommandlineUtility"),
+            ),
             new PowershellActionHandler(dependencyRegistry.get("PowershellUtility")),
             new ShowItemInFileExplorerActionHandler(dependencyRegistry.get("Shell")),
             new UrlActionHandler(dependencyRegistry.get("Shell")),
