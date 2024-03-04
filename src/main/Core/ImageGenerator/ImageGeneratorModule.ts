@@ -10,6 +10,7 @@ import { MacOsApplicationIconExtractor } from "./MacOsApplicationIconExtractor";
 import { MacOsFolderIconExtractor } from "./MacOsFolderIconExtractor";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 import { WindowsApplicationIconExtractor } from "./WindowsApplicationIconExtractor";
+import { WindowsFolderIconExtractor } from "./WindowsFolderIconExtractor";
 
 export class ImageGeneratorModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
@@ -63,6 +64,10 @@ export class ImageGeneratorModule {
                 ),
             ],
             Windows: [
+                new WindowsFolderIconExtractor(
+                    dependencyRegistry.get("AssetPathResolver"),
+                    dependencyRegistry.get("FileSystemUtility"),
+                ),
                 new WindowsApplicationIconExtractor(
                     dependencyRegistry.get("FileSystemUtility"),
                     dependencyRegistry.get("PowershellUtility"),
