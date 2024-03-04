@@ -9,6 +9,7 @@ import { DeeplTranslatorModule } from "./DeeplTranslator";
 import { ExtensionModule } from "./ExtensionModule";
 import { FileSearchModule } from "./FileSearch/FileSearchModule";
 import { ShortcutsModule } from "./Shortcuts";
+import { SystemCommandsModule } from "./SystemCommands";
 import { SystemSettingsModule } from "./SystemSettings";
 import { UeliCommandModule } from "./UeliCommand";
 import { WebSearchExtensionModule } from "./WebSearch";
@@ -24,6 +25,7 @@ export class ExtensionLoader {
             new DeeplTranslatorModule(),
             new FileSearchModule(),
             new ShortcutsModule(),
+            new SystemCommandsModule(),
             new SystemSettingsModule(),
             new UeliCommandModule(),
             new WebSearchExtensionModule(),
