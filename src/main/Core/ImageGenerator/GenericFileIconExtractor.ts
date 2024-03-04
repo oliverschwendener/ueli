@@ -4,7 +4,7 @@ import type { FileIconExtractor } from "./FileIconExtractor";
 export class GenericFileIconExtractor implements FileIconExtractor {
     public constructor(private readonly app: App) {}
 
-    public validate() {
+    public machtes() {
         return true;
     }
 

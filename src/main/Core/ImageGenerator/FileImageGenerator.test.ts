@@ -6,15 +6,15 @@ describe(FileImageGenerator, () => {
     it("should return the extracted image from the first matching file icon extractor", async () => {
         const fileImageGenerator = new FileImageGenerator([
             {
-                validate: () => false,
+                machtes: () => false,
                 extractFileIcon: async () => <Image>{ url: "test url 1" },
             },
             {
-                validate: () => false,
+                machtes: () => false,
                 extractFileIcon: async () => <Image>{ url: "test url 2" },
             },
             {
-                validate: () => true,
+                machtes: () => true,
                 extractFileIcon: async () => <Image>{ url: "test url 3" },
             },
         ]);
@@ -25,15 +25,15 @@ describe(FileImageGenerator, () => {
     it("should throw an error if all file icon extractors don't match the given file path", async () => {
         const fileImageGenerator = new FileImageGenerator([
             {
-                validate: () => false,
+                machtes: () => false,
                 extractFileIcon: async () => <Image>{ url: "test url 1" },
             },
             {
-                validate: () => false,
+                machtes: () => false,
                 extractFileIcon: async () => <Image>{ url: "test url 2" },
             },
             {
-                validate: () => false,
+                machtes: () => false,
                 extractFileIcon: async () => <Image>{ url: "test url 3" },
             },
         ]);

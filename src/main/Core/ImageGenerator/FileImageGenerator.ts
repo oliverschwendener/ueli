@@ -7,7 +7,7 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
 
     public async getImage(filePath: string): Promise<Image> {
         for (const fileIconExtractor of this.fileIconExtractors) {
-            if (fileIconExtractor.validate(filePath)) {
+            if (fileIconExtractor.machtes(filePath)) {
                 return await fileIconExtractor.extractFileIcon(filePath);
             }
         }
