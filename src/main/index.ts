@@ -7,7 +7,7 @@ import * as Extensions from "./Extensions";
 (async () => {
     await Electron.app.whenReady();
 
-    Electron.app.dock?.hide();
+        Electron.app.dock?.hide();
 
     const dependencyRegistry = Core.DependencyRegistryModule.bootstrap();
 
