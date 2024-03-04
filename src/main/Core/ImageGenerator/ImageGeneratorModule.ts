@@ -9,6 +9,7 @@ import { GenericFileIconExtractor } from "./GenericFileIconExtractor";
 import { MacOsApplicationIconExtractor } from "./MacOsApplicationIconExtractor";
 import { MacOsFolderIconExtractor } from "./MacOsFolderIconExtractor";
 import { UrlImageGenerator } from "./UrlImageGenerator";
+import { WindowsApplicationIconExtractor } from "./WindowsApplicationIconExtractor";
 
 export class ImageGeneratorModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
@@ -61,7 +62,14 @@ export class ImageGeneratorModule {
                     cacheFolderPath,
                 ),
             ],
-            Windows: [],
+            Windows: [
+                new WindowsApplicationIconExtractor(
+                    dependencyRegistry.get("FileSystemUtility"),
+                    dependencyRegistry.get("PowershellUtility"),
+                    cacheFileNameGenerator,
+                    cacheFolderPath,
+                ),
+            ],
         };
 
         return operatingSystemSpecificIconExtractors[dependencyRegistry.get("OperatingSystem")];
