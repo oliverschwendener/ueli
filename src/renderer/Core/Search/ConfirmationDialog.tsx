@@ -21,6 +21,7 @@ export const ConfirmationDialog = ({ action, closeDialog }: ConfirmationDialogPr
 
     const invokeAction = async () => {
         if (action) {
+            closeDialog();
             await contextBridge.invokeAction(action);
         }
     };
