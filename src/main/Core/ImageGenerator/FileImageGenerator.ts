@@ -13,7 +13,17 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
         }
 
         throw new Error(
-            `Failed to extract file icon from path "${filePath}". Reason: file path did not match any file icon extractors`,
+            `Failed to extract file icon from path "${filePath}". Reason: file path did not match any file icon extractor`,
         );
+    }
+
+    public async getImages(filePaths: string[]): Promise<Record<string, Image>> {
+        for (const fileIconExtractor of this.fileIconExtractors) {
+            if (filePaths.every((filePath) => fileIconExtractor.machtes(filePath))) {
+                return await fileIconExtractor.extractFileIcons(filePaths);
+            }
+        }
+
+        throw new Error(`Failed to extract file icons. Reason: file paths did not match any file icon extractor`);
     }
 }

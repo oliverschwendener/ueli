@@ -19,20 +19,19 @@ export class MacOsApplicationRepository implements ApplicationRepository {
 
     public async getApplications(): Promise<Application[]> {
         const filePaths = await this.getAllFilePaths();
-        const icons = await this.getAllIcons(filePaths);
+        const icons = await this.fileImageGenerator.getImages(filePaths);
 
         return filePaths
             .filter((filePath) => !!icons[filePath])
-            .map(
-                (filePath) =>
-                    new Application(
-                        parse(filePath).name,
-                        filePath,
-                        icons[filePath] ?? {
-                            url: `file://${this.assetPathResolver.getExtensionAssetPath("ApplicationSearch", "macos-generic-app-icon.png")}`,
-                        },
-                    ),
-            );
+            .map((filePath) => {
+                const icon = icons[filePath];
+
+                if (!icon) {
+                    this.logger.warn(`Failed to generate icon for "${filePath}". Using generic icon instead.`);
+                }
+
+                return new Application(parse(filePath).name, filePath, icon ?? this.getGenericAppIcon());
+            });
     }
 
     private async getAllFilePaths(): Promise<string[]> {
@@ -53,24 +52,9 @@ export class MacOsApplicationRepository implements ApplicationRepository {
         return !dirname(filePath).includes(".app");
     }
 
-    private async getAllIcons(filePaths: string[]): Promise<Record<string, Image>> {
-        const result: Record<string, Image> = {};
-
-        const promiseResults = await Promise.allSettled(
-            filePaths.map((filePath) => this.fileImageGenerator.getImage(filePath)),
-        );
-
-        for (let i = 0; i < filePaths.length; i++) {
-            const filePath = filePaths[i];
-            const promiseResult = promiseResults[i];
-
-            if (promiseResult.status === "fulfilled") {
-                result[filePath] = promiseResult.value;
-            } else {
-                this.logger.error(`Failed to generate icon for '${filePath}. Reason: ${promiseResult.reason}'`);
-            }
-        }
-
-        return result;
+    private getGenericAppIcon(): Image {
+        return {
+            url: `file://${this.assetPathResolver.getExtensionAssetPath("ApplicationSearch", "macos-generic-app-icon.png")}`,
+        };
     }
 }

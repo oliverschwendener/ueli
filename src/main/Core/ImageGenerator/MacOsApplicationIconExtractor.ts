@@ -26,6 +26,23 @@ export class MacOsApplicationIconExtractor implements FileIconExtractor {
         return { url: `file://${iconFilePath}` };
     }
 
+    public async extractFileIcons(filePaths: string[]) {
+        const result: Record<string, Image> = {};
+
+        const promiseResults = await Promise.allSettled(filePaths.map((filePath) => this.extractFileIcon(filePath)));
+
+        for (let i = 0; i < filePaths.length; i++) {
+            const filePath = filePaths[i];
+            const promiseResult = promiseResults[i];
+
+            if (promiseResult.status === "fulfilled") {
+                result[filePath] = promiseResult.value;
+            }
+        }
+
+        return result;
+    }
+
     private async ensureCachedIconExists(applicationFilePath: string): Promise<string> {
         const iconFilePath = this.getIconFilePath(applicationFilePath);
 

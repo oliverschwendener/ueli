@@ -1,5 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
+import type { Image } from "@common/Core/Image";
 import type { App } from "electron";
 import { join } from "path";
 import type { FileIconExtractor } from "./FileIconExtractor";
@@ -49,5 +50,22 @@ export class MacOsFolderIconExtractor implements FileIconExtractor {
         return {
             url: `file://${this.assetPathResolver.getModuleAssetPath("FileImageGenerator", assetFileName)}`,
         };
+    }
+
+    public async extractFileIcons(filePaths: string[]) {
+        const result: Record<string, Image> = {};
+
+        const promiseResults = await Promise.allSettled(filePaths.map((filePath) => this.extractFileIcon(filePath)));
+
+        for (let i = 0; i < filePaths.length; i++) {
+            const filePath = filePaths[i];
+            const promiseResult = promiseResults[i];
+
+            if (promiseResult.status === "fulfilled") {
+                result[filePath] = promiseResult.value;
+            }
+        }
+
+        return result;
     }
 }
