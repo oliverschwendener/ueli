@@ -6,7 +6,6 @@ const contextBridgeImplementation: ContextBridge = {
         on: (channel, listener) => ipcRenderer.on(channel, listener),
     },
 
-    resetCache: () => ipcRenderer.invoke("resetCache"),
     copyTextToClipboard: (textToCopy) => ipcRenderer.send("copyTextToClipboard", { textToCopy }),
     extensionDisabled: (extensionId) => ipcRenderer.send("extensionDisabled", { extensionId }),
     extensionEnabled: (extensionId) => ipcRenderer.send("extensionEnabled", { extensionId }),

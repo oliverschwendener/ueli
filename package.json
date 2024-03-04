@@ -48,7 +48,6 @@
     "dependencies": {
         "@fluentui/react-components": "^9.46.3",
         "@fluentui/react-icons": "^2.0.226",
-        "extract-file-icon": "^0.3.2",
         "fuse.js": "^7.0.0",
         "i18next": "^23.8.1",
         "mathjs": "^12.3.1",

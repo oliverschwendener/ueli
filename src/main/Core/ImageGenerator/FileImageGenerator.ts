@@ -1,49 +1,13 @@
-import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Image } from "@common/Core/Image";
-import { createHash } from "crypto";
-import { join } from "path";
+import type { App } from "electron";
 import type { FileImageGenerator as FileImageGeneratorInterface } from "./Contract";
 
 export class FileImageGenerator implements FileImageGeneratorInterface {
-    public constructor(
-        private readonly cacheFolderPath: string,
-        private readonly fileSystemUtility: FileSystemUtility,
-        private readonly getFileIcon: (filePath: string) => Buffer,
-    ) {}
-
-    public async clearCache(): Promise<void> {
-        const exists = await this.fileSystemUtility.pathExists(this.cacheFolderPath);
-
-        if (exists) {
-            await this.fileSystemUtility.clearFolder(this.cacheFolderPath);
-        }
-    }
+    public constructor(private readonly app: App) {}
 
     public async getImage(filePath: string): Promise<Image> {
-        const cachedPngFilePath = await this.ensureCachedPngFileExists(filePath);
+        const image = await this.app.getFileIcon(filePath);
 
-        return { url: `file://${cachedPngFilePath}` };
-    }
-
-    private async ensureCachedPngFileExists(filePath: string): Promise<string> {
-        const cachedPngFilePath = join(this.cacheFolderPath, `${this.generateCacheFileName(filePath)}.png`);
-
-        const exists = await this.fileSystemUtility.pathExists(cachedPngFilePath);
-
-        if (!exists) {
-            const buffer = this.getFileIcon(filePath);
-
-            if (!buffer.byteLength) {
-                throw new Error("getFileIcon returned Buffer with length 0");
-            }
-
-            await this.fileSystemUtility.writePng(buffer, cachedPngFilePath);
-        }
-
-        return cachedPngFilePath;
-    }
-
-    private generateCacheFileName(filePath: string): string {
-        return createHash("sha1").update(filePath).digest("hex");
+        return { url: image.toDataURL() };
     }
 }
