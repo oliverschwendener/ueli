@@ -7,6 +7,7 @@ import type { FileIconExtractor } from "./FileIconExtractor";
 import { FileImageGenerator } from "./FileImageGenerator";
 import { GenericFileIconExtractor } from "./GenericFileIconExtractor";
 import { MacOsApplicationIconExtractor } from "./MacOsApplicationIconExtractor";
+import { MacOsFolderIconExtractor } from "./MacOsFolderIconExtractor";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 
 export class ImageGeneratorModule {
@@ -46,11 +47,18 @@ export class ImageGeneratorModule {
         const operatingSystemSpecificIconExtractors: Record<OperatingSystem, FileIconExtractor[]> = {
             Linux: [],
             macOS: [
+                new MacOsFolderIconExtractor(
+                    dependencyRegistry.get("AssetPathResolver"),
+                    dependencyRegistry.get("FileSystemUtility"),
+                    dependencyRegistry.get("App"),
+                ),
                 new MacOsApplicationIconExtractor(
                     dependencyRegistry.get("FileSystemUtility"),
                     dependencyRegistry.get("CommandlineUtility"),
-                    cacheFolderPath,
+                    dependencyRegistry.get("AssetPathResolver"),
+                    dependencyRegistry.get("Logger"),
                     cacheFileNameGenerator,
+                    cacheFolderPath,
                 ),
             ],
             Windows: [],
