@@ -1,16 +1,45 @@
 import type { Image } from "@common/Core/Image";
-import type { App, NativeImage } from "electron";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { FileImageGenerator } from "./FileImageGenerator";
 
 describe(FileImageGenerator, () => {
-    it("should return the data url of the native image returned by app.getFileIcon", async () => {
-        const nativeImage = <NativeImage>{ toDataURL: () => "test data url" };
-        const getFileIconMock = vi.fn().mockResolvedValue(nativeImage);
-        const app = <App>{ getFileIcon: (p) => getFileIconMock(p) };
+    it("should return the extracted image from the first matching file icon extractor", async () => {
+        const fileImageGenerator = new FileImageGenerator([
+            {
+                validate: () => false,
+                extractFileIcon: async () => <Image>{ url: "test url 1" },
+            },
+            {
+                validate: () => false,
+                extractFileIcon: async () => <Image>{ url: "test url 2" },
+            },
+            {
+                validate: () => true,
+                extractFileIcon: async () => <Image>{ url: "test url 3" },
+            },
+        ]);
 
-        const fileImageGenerator = new FileImageGenerator(app);
+        expect(await fileImageGenerator.getImage("my file path")).toEqual(<Image>{ url: "test url 3" });
+    });
 
-        expect(await fileImageGenerator.getImage("my file path")).toEqual(<Image>{ url: "test data url" });
+    it("should throw an error if all file icon extractors don't match the given file path", async () => {
+        const fileImageGenerator = new FileImageGenerator([
+            {
+                validate: () => false,
+                extractFileIcon: async () => <Image>{ url: "test url 1" },
+            },
+            {
+                validate: () => false,
+                extractFileIcon: async () => <Image>{ url: "test url 2" },
+            },
+            {
+                validate: () => false,
+                extractFileIcon: async () => <Image>{ url: "test url 3" },
+            },
+        ]);
+
+        await expect(fileImageGenerator.getImage("my file path")).rejects.toThrowError(
+            `Failed to extract file icon from path "my file path". Reason: file path did not match any file icon extractors`,
+        );
     });
 });
