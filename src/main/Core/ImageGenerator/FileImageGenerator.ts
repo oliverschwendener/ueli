@@ -1,49 +1,29 @@
-import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Image } from "@common/Core/Image";
-import { createHash } from "crypto";
-import { join } from "path";
 import type { FileImageGenerator as FileImageGeneratorInterface } from "./Contract";
+import type { FileIconExtractor } from "./FileIconExtractor";
 
 export class FileImageGenerator implements FileImageGeneratorInterface {
-    public constructor(
-        private readonly cacheFolderPath: string,
-        private readonly fileSystemUtility: FileSystemUtility,
-        private readonly getFileIcon: (filePath: string) => Buffer,
-    ) {}
-
-    public async clearCache(): Promise<void> {
-        const exists = await this.fileSystemUtility.pathExists(this.cacheFolderPath);
-
-        if (exists) {
-            await this.fileSystemUtility.clearFolder(this.cacheFolderPath);
-        }
-    }
+    public constructor(private readonly fileIconExtractors: FileIconExtractor[]) {}
 
     public async getImage(filePath: string): Promise<Image> {
-        const cachedPngFilePath = await this.ensureCachedPngFileExists(filePath);
-
-        return { url: `file://${cachedPngFilePath}` };
-    }
-
-    private async ensureCachedPngFileExists(filePath: string): Promise<string> {
-        const cachedPngFilePath = join(this.cacheFolderPath, `${this.generateCacheFileName(filePath)}.png`);
-
-        const exists = await this.fileSystemUtility.pathExists(cachedPngFilePath);
-
-        if (!exists) {
-            const buffer = this.getFileIcon(filePath);
-
-            if (!buffer.byteLength) {
-                throw new Error("getFileIcon returned Buffer with length 0");
+        for (const fileIconExtractor of this.fileIconExtractors) {
+            if (fileIconExtractor.machtes(filePath)) {
+                return await fileIconExtractor.extractFileIcon(filePath);
             }
-
-            await this.fileSystemUtility.writePng(buffer, cachedPngFilePath);
         }
 
-        return cachedPngFilePath;
+        throw new Error(
+            `Failed to extract file icon from path "${filePath}". Reason: file path did not match any file icon extractor`,
+        );
     }
 
-    private generateCacheFileName(filePath: string): string {
-        return createHash("sha1").update(filePath).digest("hex");
+    public async getImages(filePaths: string[]): Promise<Record<string, Image>> {
+        for (const fileIconExtractor of this.fileIconExtractors) {
+            if (filePaths.every((filePath) => fileIconExtractor.machtes(filePath))) {
+                return await fileIconExtractor.extractFileIcons(filePaths);
+            }
+        }
+
+        throw new Error(`Failed to extract file icons. Reason: file paths did not match any file icon extractor`);
     }
 }

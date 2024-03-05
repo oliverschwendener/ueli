@@ -39,37 +39,19 @@ export class WindowsApplicationRepository implements ApplicationRepository {
         );
 
         const windowsApplicationRetrieverResults = <WindowsApplicationRetrieverResult[]>JSON.parse(stdout);
-        const appIcons = await this.getAppIcons(windowsApplicationRetrieverResults.map(({ FullName }) => FullName));
-
-        return windowsApplicationRetrieverResults.map(
-            ({ BaseName, FullName }) =>
-                new Application(
-                    BaseName,
-                    FullName,
-                    appIcons[FullName] ?? {
-                        url: `file://${this.assetPathResolver.getExtensionAssetPath("ApplicationSearch", "windows-generic-app-icon.png")}`,
-                    },
-                ),
-        );
-    }
-
-    private async getAppIcons(filePaths: string[]): Promise<Record<string, Image>> {
-        const result: Record<string, Image> = {};
-
-        const promiseResults = await Promise.allSettled(
-            filePaths.map((filePath) => this.fileImageGenerator.getImage(filePath)),
+        const appIcons = await this.fileImageGenerator.getImages(
+            windowsApplicationRetrieverResults.map(({ FullName }) => FullName),
         );
 
-        for (let i = 0; i < filePaths.length; i++) {
-            const promiseResult = promiseResults[i];
-            if (promiseResult.status === "fulfilled") {
-                result[filePaths[i]] = promiseResult.value;
-            } else {
-                this.logger.error(`Failed to generate app icon for "${filePaths[i]}". Reason: ${promiseResult.reason}`);
+        return windowsApplicationRetrieverResults.map(({ BaseName, FullName }) => {
+            const icon = appIcons[FullName];
+
+            if (!icon) {
+                this.logger.warn(`Failed to generate icon for "${FullName}". Using generic icon instead`);
             }
-        }
 
-        return result;
+            return new Application(BaseName, FullName, icon ?? this.getGenericAppIcon());
+        });
     }
 
     private async getWindowsStoreApps(): Promise<Application[]> {
@@ -103,5 +85,11 @@ export class WindowsApplicationRepository implements ApplicationRepository {
             ${getWindowsAppsPowershellScript}
 
             Get-WindowsApps -FolderPaths ${concatenatedFolderPaths} -FileExtensions ${concatenatedFileExtensions};`;
+    }
+
+    private getGenericAppIcon(): Image {
+        return {
+            url: `file://${this.assetPathResolver.getExtensionAssetPath("ApplicationSearch", "windows-generic-app-icon.png")}`,
+        };
     }
 }

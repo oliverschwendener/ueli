@@ -2,5 +2,5 @@ import type { Image } from "@common/Core/Image";
 
 export interface FileImageGenerator {
     getImage(filePath: string): Promise<Image>;
-    clearCache: () => Promise<void>;
+    getImages(filePaths: string[]): Promise<Record<string, Image>>;
 }
