@@ -4,6 +4,9 @@ import type { Image } from "@common/Core/Image";
 
 /**
  * Represents an Extension. Implement this interface to create a custom Extension.
+ *
+ * The constructor for every extension is called once when the application is started, so make sure to keep it empty or
+ * do only lightweight operations in it.
  */
 export interface Extension {
     /**

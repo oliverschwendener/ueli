@@ -11,7 +11,7 @@ export class PowershellUtility implements PowershellUtilityInterface {
     ) {}
 
     public async executeCommand(command: string): Promise<string> {
-        return this.commandlineUtility.executeCommandWithOutput(`powershell -Command "& {${command}}"`);
+        return this.commandlineUtility.executeCommand(`powershell -Command "& {${command}}"`);
     }
 
     public async executeScript(script: string): Promise<string> {
@@ -20,7 +20,7 @@ export class PowershellUtility implements PowershellUtilityInterface {
         await this.fileSystemUtility.writeTextFile(script, filePath);
 
         const powershellCommand = `powershell -NoProfile -NonInteractive -ExecutionPolicy bypass -File "${filePath}"`;
-        const stdout = await this.commandlineUtility.executeCommandWithOutput(powershellCommand);
+        const stdout = await this.commandlineUtility.executeCommand(powershellCommand);
 
         await this.fileSystemUtility.removeFile(filePath);
 

@@ -33,7 +33,7 @@ export class MacOsApplicationRepository implements ApplicationRepository {
     }
 
     private async getAllFilePaths(): Promise<string[]> {
-        return (await this.commandlineUtility.executeCommandWithOutput(`mdfind "kMDItemKind == 'Application'"`))
+        return (await this.commandlineUtility.executeCommand(`mdfind "kMDItemKind == 'Application'"`))
             .split("\n")
             .map((filePath) => normalize(filePath).trim())
             .filter((filePath) => filePath.endsWith(".app"))

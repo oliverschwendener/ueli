@@ -23,7 +23,7 @@ export class EverythingFileSearcher implements FileSearcher {
             return [];
         }
 
-        const stdout = await this.commandlineUtility.executeCommandWithOutput(
+        const stdout = await this.commandlineUtility.executeCommand(
             `cmd /c chcp 65001>nul && "${everythingCliFilePath}" -max-results ${maxSearchResultCount} ${searchTerm}`,
         );
 

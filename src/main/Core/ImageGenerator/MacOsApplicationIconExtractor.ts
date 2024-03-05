@@ -64,7 +64,7 @@ export class MacOsApplicationIconExtractor implements FileIconExtractor {
     private async getIcnsIconFilePath(applicationFilePath: string): Promise<string> {
         const infoPlistFilePath = join(applicationFilePath, "Contents", "Info.plist");
 
-        const relativeIcnsFilePath = await this.commandlineUtility.executeCommandWithOutput(
+        const relativeIcnsFilePath = await this.commandlineUtility.executeCommand(
             `defaults read "${infoPlistFilePath}" CFBundleIconFile`,
         );
 
