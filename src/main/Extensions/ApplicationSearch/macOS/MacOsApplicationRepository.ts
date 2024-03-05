@@ -25,7 +25,6 @@ export class MacOsApplicationRepository implements ApplicationRepository {
             const icon = icons[filePath];
 
             if (!icon) {
-                console.log(filePath);
                 this.logger.warn(`Failed to generate icon for "${filePath}". Using generic icon instead.`);
             }
 
