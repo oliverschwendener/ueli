@@ -6,6 +6,9 @@ import type { OperatingSystem } from "./OperatingSystem";
 import type { SearchResultItem } from "./SearchResultItem";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
 
+/**
+ * Represents the context bridge that is used to expose Electron APIs to the renderer process.
+ */
 export type ContextBridge = {
     ipcRenderer: {
         on: IpcRenderer["on"];
