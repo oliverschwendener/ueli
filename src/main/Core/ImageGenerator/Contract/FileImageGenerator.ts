@@ -15,8 +15,8 @@ export interface FileImageGenerator {
      * @param filePaths The file paths, e.g.: `["C:/path/to/image1.png", "C:/path/to/image2.png"]`.
      * @returns A promise that resolves to a record of images, where the key is the file path.
      *
-     * Silently fails if it fails to generate an image for one of the file paths. The failing file path wont be included
-     * in the resulting record.
+     * Silently fails if it fails to generate an image for one of the file paths. The failing file path won't be
+     * included in the resulting record.
      */
     getImages(filePaths: string[]): Promise<Record<string, Image>>;
 }

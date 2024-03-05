@@ -37,7 +37,7 @@ export interface Extension {
     /**
      * Gets the search result items for this Extension. The result of this method is put into a global search index and
      * can be searched in the search result list. This method is called when the application is started, when settings
-     * are changed or when triggering a rescan via the UI. As this method is asynchroneous, heavier operations like
+     * are changed or when triggering a rescan via the UI. As this method is asynchronous, heavier operations like
      * fetching APIs or scanning the file system can go here.
      */
     getSearchResultItems(): Promise<SearchResultItem[]>;

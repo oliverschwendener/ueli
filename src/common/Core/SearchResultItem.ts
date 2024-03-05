@@ -31,13 +31,13 @@ export type SearchResultItem = {
     image: Image;
 
     /**
-     * The default action of the search result item. By default this will be invoked when pressing enter or clicking on
+     * The default action of the search result item. By default, this will be invoked when pressing enter or clicking on
      * the search result item in the search result list.
      */
     defaultAction: SearchResultItemAction;
 
     /**
-     * Additional actions that can be invoked via the additional actions menu.
+     * Additional actions that can be invoked via the additional action menu.
      */
     additionalActions?: SearchResultItemAction[];
 };

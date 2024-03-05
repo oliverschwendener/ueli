@@ -14,7 +14,7 @@ export class WindowsApplicationIconExtractor implements FileIconExtractor {
         private readonly cacheFolderPath: string,
     ) {}
 
-    public machtes(filePath: string) {
+    public matchesFilePath(filePath: string) {
         return (
             filePath.endsWith(".lnk") ||
             filePath.endsWith(".url") ||

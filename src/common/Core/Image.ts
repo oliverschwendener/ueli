@@ -4,7 +4,7 @@
 export type Image = {
     /**
      * The URL of the image, e.g.: `https://example.com/my-image.png` or `file://C:\example\my-image.png`.
-     * This URL is being used when urlonDarkBackground and urlOnLightBackground are not set.
+     * This URL is being used when urlOnDarkBackground and urlOnLightBackground are not set.
      */
     url: string;
 

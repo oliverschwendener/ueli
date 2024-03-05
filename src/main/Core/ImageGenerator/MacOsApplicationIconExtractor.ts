@@ -13,7 +13,7 @@ export class MacOsApplicationIconExtractor implements FileIconExtractor {
         private readonly cacheFolder: string,
     ) {}
 
-    public machtes(filePath: string) {
+    public matchesFilePath(filePath: string) {
         return filePath.endsWith(".app");
     }
 

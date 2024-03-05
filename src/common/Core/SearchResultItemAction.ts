@@ -5,7 +5,7 @@ import type { FluentIcon } from "./FluentIcon";
  */
 export type SearchResultItemAction = {
     /**
-     * The description of the action. This will be shown in the flyout of the additional actions menu.
+     * The description of the action. This will be shown in the flyout of the additional action menu.
      */
     description: string;
 
@@ -35,7 +35,7 @@ export type SearchResultItemAction = {
     requiresConfirmation?: boolean;
 
     /**
-     * The icon of the action. This icon will be used in the additional actions menu.
+     * The icon of the action. This icon will be used in the additional action menu.
      */
     fluentIcon?: FluentIcon;
 };

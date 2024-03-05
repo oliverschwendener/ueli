@@ -7,7 +7,7 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
 
     public async getImage(filePath: string): Promise<Image> {
         for (const fileIconExtractor of this.fileIconExtractors) {
-            if (fileIconExtractor.machtes(filePath)) {
+            if (fileIconExtractor.matchesFilePath(filePath)) {
                 return await fileIconExtractor.extractFileIcon(filePath);
             }
         }
@@ -19,7 +19,7 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
 
     public async getImages(filePaths: string[]): Promise<Record<string, Image>> {
         for (const fileIconExtractor of this.fileIconExtractors) {
-            if (filePaths.every((filePath) => fileIconExtractor.machtes(filePath))) {
+            if (filePaths.every((filePath) => fileIconExtractor.matchesFilePath(filePath))) {
                 return await fileIconExtractor.extractFileIcons(filePaths);
             }
         }

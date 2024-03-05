@@ -6,7 +6,7 @@ import type { SearchResultItemAction } from "./SearchResultItemAction";
  */
 export class SearchResultItemActionUtility {
     /**
-     * Creates an action to add the given SearchResultItem to the favorites by it's ID.
+     * Creates an action to add the given SearchResultItem to the favorites by its ID.
      */
     public static createAddToFavoritesAction({ id }: { id: string }): SearchResultItemAction {
         return {
@@ -23,7 +23,7 @@ export class SearchResultItemActionUtility {
     }
 
     /**
-     * Creates an action to remove the given SearchResultItem from the favorites by it's ID.
+     * Creates an action to remove the given SearchResultItem from the favorites by its ID.
      */
     public static createRemoveFromFavoritesAction({ id }: { id: string }): SearchResultItemAction {
         return {
@@ -40,7 +40,7 @@ export class SearchResultItemActionUtility {
     }
 
     /**
-     * Creates an action to navigate to the given extension by it's ID.
+     * Creates an action to navigate to the given extension by its ID.
      * When returned action is invoked, the UI will navigate to the extension's custom UI page.
      */
     public static createInvokeExtensionAction({
@@ -84,7 +84,7 @@ export class SearchResultItemActionUtility {
     }
 
     /**
-     * Creates an action to exclude the given SearchResultItem from the search results by it's ID.
+     * Creates an action to exclude the given SearchResultItem from the search results by its ID.
      */
     public static createExcludeFromSearchResultsAction({ id }: { id: string }): SearchResultItemAction {
         return {

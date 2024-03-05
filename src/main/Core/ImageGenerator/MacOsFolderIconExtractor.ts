@@ -35,7 +35,7 @@ export class MacOsFolderIconExtractor implements FileIconExtractor {
         };
     }
 
-    public machtes(filePath: string) {
+    public matchesFilePath(filePath: string) {
         return (
             Object.keys(this.folderPaths).some((f) => f === filePath) ||
             (this.fileSystemUtility.isDirectory(filePath) && !filePath.endsWith(".app"))

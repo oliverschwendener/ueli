@@ -1,5 +1,5 @@
 /**
- * Represents the about information of Ueli.
+ * Represents the information shown on the "About" page.
  */
 export type AboutUeli = {
     /**

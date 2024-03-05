@@ -6,17 +6,17 @@ describe(FileImageGenerator, () => {
     it("should return the extracted image from the first matching file icon extractor", async () => {
         const fileImageGenerator = new FileImageGenerator([
             {
-                machtes: () => false,
+                matchesFilePath: () => false,
                 extractFileIcon: async () => <Image>{ url: "test url 1" },
                 extractFileIcons: async () => <Record<string, Image>>{},
             },
             {
-                machtes: () => false,
+                matchesFilePath: () => false,
                 extractFileIcon: async () => <Image>{ url: "test url 2" },
                 extractFileIcons: async () => <Record<string, Image>>{},
             },
             {
-                machtes: () => true,
+                matchesFilePath: () => true,
                 extractFileIcon: async () => <Image>{ url: "test url 3" },
                 extractFileIcons: async () => <Record<string, Image>>{},
             },
@@ -28,17 +28,17 @@ describe(FileImageGenerator, () => {
     it("should throw an error if all file icon extractors don't match the given file path", async () => {
         const fileImageGenerator = new FileImageGenerator([
             {
-                machtes: () => false,
+                matchesFilePath: () => false,
                 extractFileIcon: async () => <Image>{ url: "test url 1" },
                 extractFileIcons: async () => <Record<string, Image>>{},
             },
             {
-                machtes: () => false,
+                matchesFilePath: () => false,
                 extractFileIcon: async () => <Image>{ url: "test url 2" },
                 extractFileIcons: async () => <Record<string, Image>>{},
             },
             {
-                machtes: () => false,
+                matchesFilePath: () => false,
                 extractFileIcon: async () => <Image>{ url: "test url 3" },
                 extractFileIcons: async () => <Record<string, Image>>{},
             },
@@ -52,17 +52,17 @@ describe(FileImageGenerator, () => {
     it("should bulk extract file icons", async () => {
         const fileImageGenerator = new FileImageGenerator([
             {
-                machtes: () => false,
+                matchesFilePath: () => false,
                 extractFileIcon: async () => <Image>{},
                 extractFileIcons: async () => <Record<string, Image>>{},
             },
             {
-                machtes: () => false,
+                matchesFilePath: () => false,
                 extractFileIcon: async () => <Image>{},
                 extractFileIcons: async () => <Record<string, Image>>{},
             },
             {
-                machtes: () => true,
+                matchesFilePath: () => true,
                 extractFileIcon: async () => <Image>{},
                 extractFileIcons: async () =>
                     <Record<string, Image>>{
@@ -83,17 +83,17 @@ describe(FileImageGenerator, () => {
     it("should throw an error when no file image extractor matches all given file paths", async () => {
         const fileImageGenerator = new FileImageGenerator([
             {
-                machtes: () => false,
+                matchesFilePath: () => false,
                 extractFileIcon: async () => <Image>{},
                 extractFileIcons: async () => <Record<string, Image>>{},
             },
             {
-                machtes: () => false,
+                matchesFilePath: () => false,
                 extractFileIcon: async () => <Image>{},
                 extractFileIcons: async () => <Record<string, Image>>{},
             },
             {
-                machtes: () => false,
+                matchesFilePath: () => false,
                 extractFileIcon: async () => <Image>{},
                 extractFileIcons: async () => <Record<string, Image>>{},
             },

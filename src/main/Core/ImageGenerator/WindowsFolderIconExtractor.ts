@@ -9,7 +9,7 @@ export class WindowsFolderIconExtractor implements FileIconExtractor {
         private readonly fileSystemUtility: FileSystemUtility,
     ) {}
 
-    public machtes(filePath: string) {
+    public matchesFilePath(filePath: string) {
         return this.fileSystemUtility.isDirectory(filePath);
     }
 
