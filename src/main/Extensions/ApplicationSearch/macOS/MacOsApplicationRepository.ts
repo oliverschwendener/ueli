@@ -21,17 +21,16 @@ export class MacOsApplicationRepository implements ApplicationRepository {
         const filePaths = await this.getAllFilePaths();
         const icons = await this.fileImageGenerator.getImages(filePaths);
 
-        return filePaths
-            .filter((filePath) => !!icons[filePath])
-            .map((filePath) => {
-                const icon = icons[filePath];
+        return filePaths.map((filePath) => {
+            const icon = icons[filePath];
 
-                if (!icon) {
-                    this.logger.warn(`Failed to generate icon for "${filePath}". Using generic icon instead.`);
-                }
+            if (!icon) {
+                console.log(filePath);
+                this.logger.warn(`Failed to generate icon for "${filePath}". Using generic icon instead.`);
+            }
 
-                return new Application(parse(filePath).name, filePath, icon ?? this.getGenericAppIcon());
-            });
+            return new Application(parse(filePath).name, filePath, icon ?? this.getGenericAppIcon());
+        });
     }
 
     private async getAllFilePaths(): Promise<string[]> {

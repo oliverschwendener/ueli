@@ -57,8 +57,6 @@ export class ImageGeneratorModule {
                 new MacOsApplicationIconExtractor(
                     dependencyRegistry.get("FileSystemUtility"),
                     dependencyRegistry.get("CommandlineUtility"),
-                    dependencyRegistry.get("AssetPathResolver"),
-                    dependencyRegistry.get("Logger"),
                     cacheFileNameGenerator,
                     cacheFolderPath,
                 ),

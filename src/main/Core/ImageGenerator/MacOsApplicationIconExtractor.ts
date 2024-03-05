@@ -1,7 +1,5 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
-import type { Logger } from "@Core/Logger";
 import type { Image } from "@common/Core/Image";
 import { join } from "path";
 import type { CacheFileNameGenerator } from "./CacheFileNameGenerator";
@@ -11,8 +9,6 @@ export class MacOsApplicationIconExtractor implements FileIconExtractor {
     public constructor(
         private readonly fileSystemUtility: FileSystemUtility,
         private readonly commandlineUtility: CommandlineUtility,
-        private readonly assetPathResolver: AssetPathResolver,
-        private readonly logger: Logger,
         private readonly cacheFileNameGenerator: CacheFileNameGenerator,
         private readonly cacheFolder: string,
     ) {}
@@ -49,15 +45,7 @@ export class MacOsApplicationIconExtractor implements FileIconExtractor {
         const iconFileAlreadyExists = await this.fileSystemUtility.pathExists(iconFilePath);
 
         if (!iconFileAlreadyExists) {
-            try {
-                await this.generateAppIcon(applicationFilePath, iconFilePath);
-            } catch (error) {
-                this.logger.warn(
-                    `Unable to generate app icon for "${applicationFilePath}". Reason: ${error}. Using generic app icon instead.`,
-                );
-
-                return this.assetPathResolver.getModuleAssetPath("FileImageGenerator", "GenericApplicationIcon.png");
-            }
+            await this.generateAppIcon(applicationFilePath, iconFilePath);
         }
 
         return iconFilePath;
