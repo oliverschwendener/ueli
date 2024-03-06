@@ -20,9 +20,8 @@ export interface Extension {
     readonly name: string;
 
     /**
-     * The optional translation of the name of this Extension, e.g.:
+     * The optional translation of the name of this Extension. If given, this will be used instead of the name.
      * The namespace must be of this format: `extension[<EXTENSION_ID>]`.
-     * If given, this will be used instead of the name.
      */
     readonly nameTranslation?: {
         key: string;
