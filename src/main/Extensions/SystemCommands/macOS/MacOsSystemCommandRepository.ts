@@ -19,7 +19,7 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
             new MacOsSystemCommand(
                 t("shutdown"),
                 t("searchResultItemDescription"),
-                `osascript -e 'tell app "System Events" to shut down'`,
+                `tell app "System Events" to shut down`,
                 this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-shutdown-on-dark.png",
@@ -31,7 +31,7 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
             new MacOsSystemCommand(
                 t("restart"),
                 t("searchResultItemDescription"),
-                `osascript -e 'tell app "System Events" to restart'`,
+                `tell app "System Events" to restart`,
                 this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-restart-on-dark.png",
@@ -43,7 +43,7 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
             new MacOsSystemCommand(
                 t("logOut"),
                 t("searchResultItemDescription"),
-                `osascript -e 'tell application "System Events" to log out'`,
+                `tell application "System Events" to log out`,
                 this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-logout-on-dark.png",
@@ -55,7 +55,7 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
             new MacOsSystemCommand(
                 t("sleep"),
                 t("searchResultItemDescription"),
-                `osascript -e 'tell application "System Events" to sleep'`,
+                `tell application "System Events" to sleep`,
                 this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-sleep-on-dark.png",
@@ -67,7 +67,7 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
             new MacOsSystemCommand(
                 t("lock"),
                 t("searchResultItemDescription"),
-                `osascript -e 'tell application "System Events" to keystroke "q" using {control down, command down}'`,
+                `tell application "System Events" to keystroke "q" using {control down, command down}`,
                 this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-lock-on-dark.png",

@@ -1,4 +1,5 @@
 import type { ActionHandler } from "@Core/ActionHandler";
+import type { AppleScriptUtility } from "@Core/AppleScriptUtility";
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
 import type { NativeTheme } from "electron";
@@ -16,6 +17,7 @@ export class CustomActionHandler implements ActionHandler {
     public constructor(
         private readonly operatingSystem: OperatingSystem,
         private readonly commandlineUtility: CommandlineUtility,
+        private readonly appleScriptUtility: AppleScriptUtility,
         private readonly nativeTheme: NativeTheme,
     ) {}
 
@@ -42,8 +44,8 @@ export class CustomActionHandler implements ActionHandler {
     private async toggleMacOsSystemAppearance(to: SwitchTo) {
         const osaScriptValue = to === "light" ? "false" : "true";
 
-        await this.commandlineUtility.executeCommand(
-            `osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to ${osaScriptValue}'`,
+        await this.appleScriptUtility.executeAppleScript(
+            `tell app "System Events" to tell appearance preferences to set dark mode to ${osaScriptValue}`,
         );
     }
 }

@@ -6,6 +6,7 @@ import type * as Core from ".";
 export type Dependencies = {
     ActionHandlerRegistry?: Core.ActionHandlerRegistry;
     App?: Electron.App;
+    AppleScriptUtility?: Core.AppleScriptUtility;
     AssetPathResolver?: Core.AssetPathResolver;
     BrowserWindowNotifier?: Core.BrowserWindowNotifier;
     Clipboard?: Electron.Clipboard;

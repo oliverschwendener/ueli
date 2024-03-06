@@ -24,7 +24,7 @@ export class SystemCommandsModule implements ExtensionModule {
                 ),
                 translations[dependencyRegistry.get("OperatingSystem")],
             ),
-            actionHandlers: [new MacOsSystemCommandActionHandler(dependencyRegistry.get("CommandlineUtility"))],
+            actionHandlers: [new MacOsSystemCommandActionHandler(dependencyRegistry.get("AppleScriptUtility"))],
         };
     }
 }

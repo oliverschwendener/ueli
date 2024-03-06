@@ -38,6 +38,7 @@ import * as Extensions from "./Extensions";
     Core.BrowserWindowNotifierModule.bootstrap(dependencyRegistry);
     Core.LoggerModule.bootstrap(dependencyRegistry);
     Core.CommandlineUtilityModule.bootstrap(dependencyRegistry);
+    Core.AppleScriptUtilityModule.bootstrap(dependencyRegistry);
     Core.FileSystemUtilityModule.bootstrap(dependencyRegistry);
     await Core.PowershellUtilityModule.bootstrap(dependencyRegistry);
     Core.OperatingSystemModule.bootstrap(dependencyRegistry);

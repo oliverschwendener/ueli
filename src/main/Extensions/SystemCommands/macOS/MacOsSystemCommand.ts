@@ -6,7 +6,7 @@ export class MacOsSystemCommand implements SystemCommand {
     public constructor(
         private readonly name: string,
         private readonly description: string,
-        private readonly command: string,
+        private readonly appleScript: string,
         private readonly image: Image,
         private readonly hideWindowAfterInvocation?: boolean,
         private readonly requiresConfirmation?: boolean,
@@ -15,14 +15,14 @@ export class MacOsSystemCommand implements SystemCommand {
     public toSearchResultItem(): SearchResultItem {
         return {
             defaultAction: {
-                argument: this.command,
+                argument: this.appleScript,
                 description: this.description,
                 handlerId: "MacOsSystemCommandActionHandler",
                 hideWindowAfterInvocation: this.hideWindowAfterInvocation,
                 requiresConfirmation: this.requiresConfirmation,
             },
             description: this.description,
-            id: `SystemCommand[${Buffer.from(`${this.name}${this.command}`).toString("hex")}]`,
+            id: `SystemCommand[${Buffer.from(`${this.name}${this.appleScript}`).toString("hex")}]`,
             image: this.image,
             name: this.name,
         };
