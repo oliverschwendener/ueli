@@ -1,4 +1,4 @@
-import type { Extension } from "..";
+import type { Extension } from "@Core/Extension";
 import type { ExtensionRegistry as ExtensionRegistryInterface } from "./Contract";
 
 export class ExtensionRegistry implements ExtensionRegistryInterface {

@@ -1,6 +1,6 @@
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { AboutUeli } from "@common/Core";
-import type { Dependencies } from "..";
-import type { DependencyRegistry } from "../DependencyRegistry";
 
 export class AboutUeliModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {

@@ -1,5 +1,5 @@
+import type { Translator } from "@Core/Translator";
 import type { MenuItemConstructorOptions } from "electron";
-import type { Translator } from "..";
 import type { UeliCommandInvoker } from "../UeliCommand";
 import { translations } from "./translations";
 

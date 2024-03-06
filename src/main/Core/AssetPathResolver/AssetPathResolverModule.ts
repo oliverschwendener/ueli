@@ -1,4 +1,5 @@
-import type { Dependencies, DependencyRegistry } from "..";
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { AssetPathResolver } from "./AssetPathResolver";
 
 export class AssetPathResolverModule {

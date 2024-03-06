@@ -1,6 +1,6 @@
 import type { Translations } from "@common/Core/Extension";
+import type { SettingsManager } from "@Core/SettingsManager";
 import { createInstance, InitOptions, type TFunction } from "i18next";
-import type { SettingsManager } from "..";
 import type { Translator as TranslatorInterface } from "./Contract";
 
 export class Translator implements TranslatorInterface {

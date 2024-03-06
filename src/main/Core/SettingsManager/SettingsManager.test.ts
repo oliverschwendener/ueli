@@ -1,5 +1,5 @@
+import type { SafeStorageEncryption } from "@Core/SafeStorageEncryption";
 import { describe, expect, it, vi } from "vitest";
-import type { SafeStorageEncryption } from "..";
 import type { EventEmitter } from "../EventEmitter";
 import type { Settings } from "../Settings";
 import type { SettingsReader } from "../SettingsReader";
