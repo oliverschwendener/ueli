@@ -16,7 +16,7 @@ export class AppearanceSwitcherModule implements ExtensionModule {
             actionHandlers: [
                 new CustomActionHandler(
                     dependencyRegistry.get("OperatingSystem"),
-                    dependencyRegistry.get("CommandlineUtility"),
+                    dependencyRegistry.get("PowershellUtility"),
                     dependencyRegistry.get("AppleScriptUtility"),
                     dependencyRegistry.get("NativeTheme"),
                 ),

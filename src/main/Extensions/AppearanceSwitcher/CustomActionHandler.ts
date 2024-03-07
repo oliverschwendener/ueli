@@ -1,6 +1,6 @@
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { AppleScriptUtility } from "@Core/AppleScriptUtility";
-import type { CommandlineUtility } from "@Core/CommandlineUtility";
+import type { PowershellUtility } from "@Core/PowershellUtility";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
 import type { NativeTheme } from "electron";
 import type { SwitchTo } from "./SwitchTo";
@@ -16,7 +16,7 @@ export class CustomActionHandler implements ActionHandler {
 
     public constructor(
         private readonly operatingSystem: OperatingSystem,
-        private readonly commandlineUtility: CommandlineUtility,
+        private readonly powershellUtility: PowershellUtility,
         private readonly appleScriptUtility: AppleScriptUtility,
         private readonly nativeTheme: NativeTheme,
     ) {}
@@ -36,9 +36,9 @@ export class CustomActionHandler implements ActionHandler {
         const powershellCommands = [
             `Set-ItemProperty -Path ${windowsRegistryPath} -Name SystemUsesLightTheme -Value ${windowsRegistryValue}`,
             `Set-ItemProperty -Path ${windowsRegistryPath} -Name AppsUseLightTheme -Value ${windowsRegistryValue}`,
-        ].join("; ");
+        ];
 
-        await this.commandlineUtility.executeCommand(`powershell -Command "& {${powershellCommands}}"`);
+        await this.powershellUtility.executeCommand(powershellCommands.join(";"));
     }
 
     private async toggleMacOsSystemAppearance(to: SwitchTo) {
