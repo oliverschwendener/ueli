@@ -5,7 +5,7 @@ import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";
-import { LinuxApplicationIconGenerator } from "./Linux/LinuxApplicationIconGenerator";
+import { LinuxApplicationIconGenerator } from "../../Core/ImageGenerator/LinuxApplicationIconGenerator";
 import { LinuxApplicationRepository } from "./Linux/LinuxApplicationRepository";
 import { Settings } from "./Settings";
 import { WindowsApplicationRepository } from "./Windows/WindowsApplicationRepository";
