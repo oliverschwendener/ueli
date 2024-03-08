@@ -1,3 +1,4 @@
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Translations } from "@common/Core/Extension";
@@ -25,6 +26,7 @@ export class SystemCommands implements Extension {
         private readonly operatingSystem: OperatingSystem,
         private readonly systemCommandRepository: SystemCommandRepository,
         private readonly translations: Translations,
+        private readonly assetPathResolver: AssetPathResolver,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -32,7 +34,7 @@ export class SystemCommands implements Extension {
     }
 
     public isSupported(): boolean {
-        return this.operatingSystem === "macOS";
+        return (<OperatingSystem[]>["macOS", "Windows"]).includes(this.operatingSystem);
     }
 
     public getSettingDefaultValue<T>(key: string): T {
@@ -40,8 +42,14 @@ export class SystemCommands implements Extension {
     }
 
     public getImage(): Image {
+        const filenames: Record<OperatingSystem, string> = {
+            Linux: null, // not supported
+            macOS: "macos-system-command.png",
+            Windows: "windows-11-system-command.png",
+        };
+
         return {
-            url: "", // TODO
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, filenames[this.operatingSystem])}`,
         };
     }
 

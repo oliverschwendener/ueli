@@ -2,26 +2,26 @@ import type { SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { SystemCommand } from "../SystemCommand";
 
-export class MacOsSystemCommand implements SystemCommand {
+export class WindowsSystemCommand implements SystemCommand {
     public static create({
         name,
         description,
-        appleScript,
+        command,
         image,
         hideWindowAfterInvocation,
         requiresConfirmation,
     }: {
         name: string;
         description: string;
-        appleScript: string;
+        command: string;
         image: Image;
         hideWindowAfterInvocation?: boolean;
         requiresConfirmation?: boolean;
-    }): MacOsSystemCommand {
-        return new MacOsSystemCommand(
+    }): WindowsSystemCommand {
+        return new WindowsSystemCommand(
             name,
             description,
-            appleScript,
+            command,
             image,
             hideWindowAfterInvocation,
             requiresConfirmation,
@@ -31,7 +31,7 @@ export class MacOsSystemCommand implements SystemCommand {
     private constructor(
         private readonly name: string,
         private readonly description: string,
-        private readonly appleScript: string,
+        private readonly command: string,
         private readonly image: Image,
         private readonly hideWindowAfterInvocation?: boolean,
         private readonly requiresConfirmation?: boolean,
@@ -40,14 +40,14 @@ export class MacOsSystemCommand implements SystemCommand {
     public toSearchResultItem(): SearchResultItem {
         return {
             defaultAction: {
-                argument: this.appleScript,
+                argument: this.command,
                 description: this.description,
-                handlerId: "MacOsSystemCommandActionHandler",
+                handlerId: "WindowsSystemCommandActionHandler",
                 hideWindowAfterInvocation: this.hideWindowAfterInvocation,
                 requiresConfirmation: this.requiresConfirmation,
             },
             description: this.description,
-            id: `SystemCommand[${Buffer.from(`${this.name}${this.appleScript}`).toString("hex")}]`,
+            id: `SystemCommand[${Buffer.from(`${this.name}${this.command}`).toString("hex")}]`,
             image: this.image,
             name: this.name,
         };

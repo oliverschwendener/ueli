@@ -16,66 +16,66 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
         const t = await this.translator.createInstance(translations);
 
         return [
-            new MacOsSystemCommand(
-                t("shutdown"),
-                t("searchResultItemDescription"),
-                `tell app "System Events" to shut down`,
-                this.getImage({
+            MacOsSystemCommand.create({
+                name: t("shutdown"),
+                description: t("searchResultItemDescription"),
+                appleScript: `tell app "System Events" to shut down`,
+                image: this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-shutdown-on-dark.png",
                     fileNameOnLightBackground: "macos-shutdown-on-light.png",
                 }),
-                true,
-                true,
-            ),
-            new MacOsSystemCommand(
-                t("restart"),
-                t("searchResultItemDescription"),
-                `tell app "System Events" to restart`,
-                this.getImage({
+                hideWindowAfterInvocation: true,
+                requiresConfirmation: true,
+            }),
+            MacOsSystemCommand.create({
+                name: t("restart"),
+                description: t("searchResultItemDescription"),
+                appleScript: `tell app "System Events" to restart`,
+                image: this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-restart-on-dark.png",
                     fileNameOnLightBackground: "macos-restart-on-light.png",
                 }),
-                true,
-                true,
-            ),
-            new MacOsSystemCommand(
-                t("logOut"),
-                t("searchResultItemDescription"),
-                `tell application "System Events" to log out`,
-                this.getImage({
+                hideWindowAfterInvocation: true,
+                requiresConfirmation: true,
+            }),
+            MacOsSystemCommand.create({
+                name: t("logOut"),
+                description: t("searchResultItemDescription"),
+                appleScript: `tell application "System Events" to log out`,
+                image: this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-logout-on-dark.png",
                     fileNameOnLightBackground: "macos-logout-on-light.png",
                 }),
-                true,
-                true,
-            ),
-            new MacOsSystemCommand(
-                t("sleep"),
-                t("searchResultItemDescription"),
-                `tell application "System Events" to sleep`,
-                this.getImage({
+                hideWindowAfterInvocation: true,
+                requiresConfirmation: true,
+            }),
+            MacOsSystemCommand.create({
+                name: t("sleep"),
+                description: t("searchResultItemDescription"),
+                appleScript: `tell application "System Events" to sleep`,
+                image: this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-sleep-on-dark.png",
                     fileNameOnLightBackground: "macos-sleep-on-light.png",
                 }),
-                true,
-                true,
-            ),
-            new MacOsSystemCommand(
-                t("lock"),
-                t("searchResultItemDescription"),
-                `tell application "System Events" to keystroke "q" using {control down, command down}`,
-                this.getImage({
+                hideWindowAfterInvocation: true,
+                requiresConfirmation: true,
+            }),
+            MacOsSystemCommand.create({
+                name: t("lock"),
+                description: t("searchResultItemDescription"),
+                appleScript: `tell application "System Events" to keystroke "q" using {control down, command down}`,
+                image: this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-lock-on-dark.png",
                     fileNameOnLightBackground: "macos-lock-on-light.png",
                 }),
-                true,
-                true,
-            ),
+                hideWindowAfterInvocation: true,
+                requiresConfirmation: true,
+            }),
         ];
     }
 
