@@ -8,5 +8,5 @@ export interface CommandlineUtility {
      * @param ignoreStdErr If `true`, the standard error output is ignored and not thrown as an error.
      * @returns A promise that resolves with the output of the command.
      */
-    executeCommand(command: string, ignoreStdErr?: boolean): Promise<string>;
+    executeCommand(command: string, ignoreStdErr?: boolean, ignoreErr?: boolean): Promise<string>;
 }
