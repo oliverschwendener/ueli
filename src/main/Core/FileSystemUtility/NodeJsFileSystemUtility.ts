@@ -1,6 +1,7 @@
 import {
     access,
     accessSync,
+    copyFile,
     existsSync,
     mkdir,
     readFile,
@@ -104,6 +105,14 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         } catch (error) {
             return false;
         }
+    }
+
+    public copyFile(filePath: string, destinationFilePath: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            copyFile(filePath, destinationFilePath, (error) => {
+                error ? reject(error) : resolve();
+            });
+        });
     }
 
     private readFile(filePath: string): Promise<Buffer> {

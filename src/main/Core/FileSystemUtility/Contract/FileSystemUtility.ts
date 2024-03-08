@@ -12,4 +12,5 @@ export interface FileSystemUtility {
     existsSync(filePath: string): boolean;
     isAccessibleSync(filePath: string): boolean;
     isDirectory(filePath: string): boolean;
+    copyFile(filePath: string, destinationFilePath: string): Promise<void>;
 }
