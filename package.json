@@ -48,6 +48,7 @@
     "dependencies": {
         "@fluentui/react-components": "^9.46.3",
         "@fluentui/react-icons": "^2.0.226",
+        "@types/ini": "^4.1.0",
         "fuse.js": "^7.0.0",
         "i18next": "^23.8.1",
         "ini": "^4.1.2",
