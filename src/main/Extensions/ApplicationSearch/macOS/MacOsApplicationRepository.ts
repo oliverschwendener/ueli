@@ -4,9 +4,10 @@ import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { Image } from "@common/Core/Image";
 import { dirname, normalize, parse } from "path";
-import { Application } from "../Application";
+import type { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
 import type { Settings } from "../Settings";
+import { MacOsApplication } from "./MacOsApplication";
 
 export class MacOsApplicationRepository implements ApplicationRepository {
     public constructor(
@@ -21,14 +22,14 @@ export class MacOsApplicationRepository implements ApplicationRepository {
         const filePaths = await this.getAllFilePaths();
         const icons = await this.fileImageGenerator.getImages(filePaths);
 
-        return filePaths.map((filePath) => {
+        return filePaths.map((filePath): Application => {
             const icon = icons[filePath];
 
             if (!icon) {
                 this.logger.warn(`Failed to generate icon for "${filePath}". Using generic icon instead.`);
             }
 
-            return new Application(parse(filePath).name, filePath, icon ?? this.getGenericAppIcon());
+            return new MacOsApplication(parse(filePath).name, filePath, icon ?? this.getGenericAppIcon());
         });
     }
 

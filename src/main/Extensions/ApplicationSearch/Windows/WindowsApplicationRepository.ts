@@ -3,9 +3,10 @@ import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { PowershellUtility } from "@Core/PowershellUtility";
 import type { Image } from "@common/Core/Image";
-import { Application } from "../Application";
+import type { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
 import type { Settings } from "../Settings";
+import { WindowsApplication } from "./WindowsApplication";
 import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
 import type { WindowsStoreApplication } from "./WindowsStoreApplication";
 import { usePowershellScripts } from "./usePowershellScripts";
@@ -26,7 +27,7 @@ export class WindowsApplicationRepository implements ApplicationRepository {
         return [...manuallyInstalledApps, ...windowsStoreApps];
     }
 
-    private async getManuallyInstalledApps(): Promise<Application[]> {
+    private async getManuallyInstalledApps(): Promise<WindowsApplication[]> {
         const folderPaths = this.settings.getValue<string[]>("windowsFolders");
         const fileExtensions = this.settings.getValue<string[]>("windowsFileExtensions");
 
@@ -50,11 +51,11 @@ export class WindowsApplicationRepository implements ApplicationRepository {
                 this.logger.warn(`Failed to generate icon for "${FullName}". Using generic icon instead`);
             }
 
-            return new Application(BaseName, FullName, icon ?? this.getGenericAppIcon());
+            return new WindowsApplication(BaseName, FullName, icon ?? this.getGenericAppIcon());
         });
     }
 
-    private async getWindowsStoreApps(): Promise<Application[]> {
+    private async getWindowsStoreApps(): Promise<WindowsApplication[]> {
         const includeWindowsStoreApps = this.settings.getValue<boolean>("includeWindowsStoreApps");
 
         if (!includeWindowsStoreApps) {
@@ -69,7 +70,7 @@ export class WindowsApplicationRepository implements ApplicationRepository {
 
         return windowStoreApplications.map(
             ({ AppId, DisplayName, LogoBase64 }) =>
-                new Application(DisplayName, `shell:AppsFolder\\${AppId}`, {
+                new WindowsApplication(DisplayName, `shell:AppsFolder\\${AppId}`, {
                     url: `data:image/png;base64,${LogoBase64}`,
                 }),
         );
