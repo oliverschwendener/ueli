@@ -21,6 +21,7 @@ export * from "./FavoriteManager";
 export * from "./FileSystemUtility";
 export * from "./GlobalShortcut";
 export * from "./ImageGenerator";
+export * from "./IniFileParser";
 export * from "./Logger";
 export * from "./NativeTheme";
 export * from "./OperatingSystem";

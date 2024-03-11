@@ -19,6 +19,10 @@ tsconfig.node.json @oliverschwendener
 tsconfig.renderer.json @oliverschwendener
 vite.config.mts @oliverschwendener
 
+# Core Modules
+
+src/main/Core/IniFileParser @ke1v
+
 # Extensions
 
 # [EXAMPLE] ApplicationSearch

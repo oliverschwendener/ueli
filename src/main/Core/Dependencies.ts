@@ -22,6 +22,7 @@ export type Dependencies = {
     FileImageGenerator?: Core.FileImageGenerator;
     FileSystemUtility?: Core.FileSystemUtility;
     GlobalShortcut?: Electron.GlobalShortcut;
+    IniFileParser?: Core.IniFileParser;
     IpcMain?: Electron.IpcMain;
     Logger?: Core.Logger;
     NativeTheme?: Electron.NativeTheme;
