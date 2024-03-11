@@ -11,7 +11,9 @@ export interface IniFileParser {
      * nuser = dbuser
      * password = dbpassword
      * ```
+     * @param [commentDelimiter=';'] The symbol used to indicate comments
+     * @param [allowInlineComments] Whether inline comments are parsed
      * @returns The parsed ini file content as an object. Global entries are stored in the empty string key.
      */
-    parseIniFileContent(fileString: string): Record<string, unknown>;
+    parseIniFileContent(fileString: string, commentDelimiter?: string, allowInlineComments?: boolean): Record<string, unknown>;
 }
