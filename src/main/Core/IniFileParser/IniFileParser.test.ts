@@ -4,8 +4,9 @@ import { IniFileParser } from "./IniFileParser";
 describe(IniFileParser, () => {
     it("should parse an ini file", () => {
         const iniFileString = `
-# This comment is being ignored
+; This comment is being ignored
 scope = global
+comments = no;inline;comments
 
 [database]
 user = dbuser
@@ -19,6 +20,7 @@ datadir = /var/lib/data
         expect(new IniFileParser().parseIniFileContent(iniFileString.trim())).toEqual({
             "": {
                 scope: "global",
+                comments: "no;inline;comments",
             },
             database: {
                 user: "dbuser",
@@ -47,7 +49,7 @@ database = use_this_database
 datadir = /var/lib/data
         `;
 
-        expect(new IniFileParser().parseIniFileContent(iniFileString.trim())).toEqual({
+        expect(new IniFileParser().parseIniFileContent(iniFileString.trim(), "#", true)).toEqual({
             "": {
                 scope: "global",
                 notcomment: "this;is;not;a;comment",

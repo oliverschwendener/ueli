@@ -4,14 +4,17 @@ export class IniFileParser implements IniFileParserInterface {
     // Defaults to ';' as comment
     public parseIniFileContent(
         fileString: string,
-        commentDelimiter: string = ';',
+        commentDelimiter: string = ";",
         allowInlineComments?: boolean,
     ): Record<string, Record<string, string>> {
         let fileLines = fileString.split("\n");
 
         fileLines = fileLines.filter((line) => !line.startsWith(commentDelimiter) && line.trim() !== "");
         if (allowInlineComments) {
-            fileLines = fileLines.map((line) => line.slice(0, line.indexOf(commentDelimiter)));
+            fileLines = fileLines.map((line) => {
+                const index = line.indexOf(commentDelimiter);
+                return index >= 0 ? line.slice(0, line.indexOf(commentDelimiter)) : line;
+            });
         }
 
         const entries: Record<string, Record<string, string>> = {};
@@ -25,7 +28,7 @@ export class IniFileParser implements IniFileParserInterface {
                 entries[group] = {};
             } else {
                 // Entry
-                const [key, ...entrySplit] = line.split("=");
+                const [key, ...entrySplit] = line.split("=").map((text) => text.trim());
                 const entry = entrySplit.join("=");
                 if (entries[group][key]) throw `Ini Format Error! Duplicate key in ${group} in file ${fileString}`;
                 entries[group][key] = entry;
