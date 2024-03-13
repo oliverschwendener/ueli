@@ -6,6 +6,9 @@ const contextBridgeImplementation: ContextBridge = {
         on: (channel, listener) => ipcRenderer.on(channel, listener),
     },
 
+    autostartIsEnabled: () => ipcRenderer.sendSync("autostartIsEnabled"),
+    autostartSettingsChanged: (autostartIsEnabled) =>
+        ipcRenderer.send("autostartSettingsChanged", { autostartIsEnabled }),
     copyTextToClipboard: (textToCopy) => ipcRenderer.send("copyTextToClipboard", { textToCopy }),
     extensionDisabled: (extensionId) => ipcRenderer.send("extensionDisabled", { extensionId }),
     extensionEnabled: (extensionId) => ipcRenderer.send("extensionEnabled", { extensionId }),

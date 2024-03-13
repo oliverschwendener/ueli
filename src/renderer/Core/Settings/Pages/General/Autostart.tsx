@@ -1,18 +1,22 @@
-import { useSetting } from "@Core/Hooks";
+import { useContextBridge } from "@Core/Hooks";
 import { Field, Switch } from "@fluentui/react-components";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const Autostart = () => {
     const { t } = useTranslation();
+    const { contextBridge } = useContextBridge();
 
-    const { value: autostartApp, updateValue: setAutostartApp } = useSetting<boolean>({
-        key: "general.autostartApp",
-        defaultValue: false,
-    });
+    const [autostartIsEnabled, setAutostartIsEnabled] = useState<boolean>(contextBridge.autostartIsEnabled());
+
+    const updateAutostartSettings = (autostartIsEnabled: boolean) => {
+        contextBridge.autostartSettingsChanged(autostartIsEnabled);
+        setAutostartIsEnabled(autostartIsEnabled);
+    };
 
     return (
         <Field label={t("autostart", { ns: "settingsGeneral" })}>
-            <Switch checked={autostartApp} onChange={(_, { checked }) => setAutostartApp(checked)} />
+            <Switch checked={autostartIsEnabled} onChange={(_, { checked }) => updateAutostartSettings(checked)} />
         </Field>
     );
 };

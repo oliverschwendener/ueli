@@ -4,11 +4,10 @@ import type { DependencyRegistry } from "@Core/DependencyRegistry";
 export class AutostartModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const app = dependencyRegistry.get("App");
-        const settingsManager = dependencyRegistry.get("SettingsManager");
-        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const logger = dependencyRegistry.get("Logger");
+        const ipcMain = dependencyRegistry.get("IpcMain");
 
-        const setAutostartOptions = () => {
+        const setAutostartOptions = (openAtLogin: boolean) => {
             if (!app.isPackaged) {
                 logger.info("Skipping setAutostartOptions. Reason: app is not packaged");
                 return;
@@ -16,13 +15,15 @@ export class AutostartModule {
 
             app.setLoginItemSettings({
                 args: [],
-                openAtLogin: settingsManager.getValue("general.autostartApp", false),
+                openAtLogin,
                 path: process.execPath,
             });
         };
 
-        eventSubscriber.subscribe("settingUpdated[general.autostartApp]", () => setAutostartOptions());
+        ipcMain.on("autostartIsEnabled", (event) => (event.returnValue = app.getLoginItemSettings().openAtLogin));
 
-        setAutostartOptions();
+        ipcMain.on("autostartSettingsChanged", (_, { autostartIsEnabled }: { autostartIsEnabled: boolean }) =>
+            setAutostartOptions(autostartIsEnabled),
+        );
     }
 }

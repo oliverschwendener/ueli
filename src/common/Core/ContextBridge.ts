@@ -14,6 +14,8 @@ export type ContextBridge = {
         on: IpcRenderer["on"];
     };
 
+    autostartIsEnabled: () => boolean;
+    autostartSettingsChanged: (autostartIsEnabled: boolean) => void;
     copyTextToClipboard: (textToCopy: string) => void;
     extensionDisabled: (extensionId: string) => void;
     extensionEnabled: (extensionId: string) => void;
