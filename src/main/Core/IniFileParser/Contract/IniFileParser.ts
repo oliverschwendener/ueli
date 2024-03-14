@@ -19,5 +19,5 @@ export interface IniFileParser {
         fileString: string,
         commentDelimiter?: string,
         allowInlineComments?: boolean,
-    ): Record<string, unknown>;
+    ): Record<string, Record<string, string>>;
 }
