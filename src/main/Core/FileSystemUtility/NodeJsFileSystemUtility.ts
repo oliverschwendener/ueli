@@ -50,14 +50,6 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         return JSON.parse(this.readFileSync(filePath).toString());
     }
 
-    public async readIniFile(filePath: string): Promise<Record<string, Record<string, string>>> {
-        return this.parseIni((await this.readFile(filePath)).toString());
-    }
-
-    public readIniFileSync(filePath: string): Record<string, Record<string, string>> {
-        return this.parseIni(this.readFileSync(filePath).toString());
-    }
-
     public copyFile(srcPath: string, destPath: string): Promise<void> {
         return new Promise((resolve, reject) => {
             copyFile(srcPath, destPath, (error) => {
@@ -139,7 +131,7 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         });
     }
 
-    private readFileSync(filePath: string): Buffer {
+    public readFileSync(filePath: string): Buffer {
         return readFileSync(filePath);
     }
 
@@ -153,29 +145,5 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
                 }
             });
         });
-    }
-
-    private parseIni(fileString: string): Record<string, Record<string, string>> {
-        const fileContent = fileString.split("\n").filter((v) => !v.startsWith("#") && v !== "");
-        const entries: Record<string, Record<string, string>> = {};
-        let group = "";
-        entries[group] = {};
-        for (const line of fileContent) {
-            // Comments
-            if (line.startsWith('#') || line === "") continue;
-            // New group
-            if (line.startsWith("[") && line.endsWith("]") && !line.slice(1, -1).match(/\[\]/m)) {
-                if (entries[line]) throw `Ini Format Error! Duplicate groups found in ${fileString}`;
-                group = line.slice(1, -1);
-                entries[group] = {};
-            } else {
-                // Entry
-                const [key, ...entrySplit] = line.split('=')
-                const entry = entrySplit.join('=');
-                if (entries[group][key]) throw `Ini Format Error! Duplicate key in ${group} in file ${fileString}`;
-                entries[group][key] = entry;
-            }
-        }
-        return entries;
     }
 }

@@ -1,6 +1,9 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
-import { extname, join } from "path";
+import type { IniFileParser } from "@Core/IniFileParser/IniFileParser";
+// import { Logger } from "@Core/Logger/Logger";
+import type { Image } from "@common/Core/Image";
+import { dirname, extname, join } from "path";
 import type { CacheFileNameGenerator } from "./CacheFileNameGenerator";
 import type { FileIconExtractor } from "./FileIconExtractor";
 
@@ -25,108 +28,111 @@ interface IconTheme {
     parents: string[];
 }
 
-interface IconSearchCache {
-    // Map<themeName, IconTheme[]>
-    themeData: Map<string, IconTheme[]>;
-    baseDirectories: string[];
-}
-
 export class LinuxApplicationIconExtractor implements FileIconExtractor {
-    private themeCache: IconSearchCache = {
-        themeData: new Map(),
-        baseDirectories: [],
-    };
-    private theme: string;
+    private searchCache: Map<string, IconTheme[]>;
+    private userTheme: string;
+    private baseDirectories: string[];
+
     public constructor(
         private readonly fileSystemUtility: FileSystemUtility,
         private readonly commandlineUtility: CommandlineUtility,
+        private readonly iniFileParser: IniFileParser,
+        // private readonly logger: Logger,
         private readonly cacheFileNameGenerator: CacheFileNameGenerator,
         private readonly cacheFolder: string,
-    ) {}
+        private readonly homePath: string,
+    ) {
+        this.baseDirectories = [
+            join(homePath, ".icons"),
+            join(process.env["XDG_DATA_HOME"] || join(homePath, ".local", "share"), "icons"),
+            ...(process.env["XDG_DATA_DIRS"] || `${join("/", "usr", "local", "share")}:${join("/", "usr", "share")}`)
+                .split(":")
+                .map((dir) => join(dir, "icons")),
+            join("/", "usr", "share", "pixmaps"),
+        ];
+    }
 
-    public matches(filePath: string) {
+    public matchesFilePath(filePath: string) {
         // TODO: Add AppImage support
         return filePath.endsWith(".desktop");
     }
 
     public async extractFileIcon(filePath: string): Promise<Image> {
-        const iconFilePath = await this.ensureCachedIconExists(applicationFilePath);
+        const appConfig = this.iniFileParser.parseIniFileContent(
+            (await this.fileSystemUtility.readFile(filePath)).toString(),
+        )["Desktop Entry"];
+
+        if (!appConfig["Icon"]) throw `${filePath} doesn't have an icon!`;
+        const iconFilePath = await this.ensureCachedIconExists(appConfig["Icon"]);
         return { url: `file://${iconFilePath}` };
     }
 
     public async extractFileIcons(filePaths: string[]): Promise<Record<string, Image>> {
-        //TODO
-        await this.generateThemeSearchCache();
+        const promises = filePaths.map((file) => this.extractFileIcon(file));
+
+        const results = await Promise.allSettled(promises);
+
+        const values: Record<string, Image> = {};
+        for (let i = 0; i < filePaths.length; i++) {
+            const result = results[i];
+            if (result.status !== "fulfilled") {
+                console.error(result.reason);
+                continue;
+            }
+            values[filePaths[i]] = result.value;
+        }
+        return values;
     }
 
-    private async ensureCachedIconExists(applicationFilePath: string): Promise<string> {
-        const iconFilePath = this.getIconFilePath(applicationFilePath);
+    private async ensureCachedIconExists(iconName: string): Promise<string> {
+        const iconFilePath = this.getIconFilePath(iconName);
 
-        const iconFileAlreadyExists = await this.fileSystemUtility.pathExists(iconFilePath);
+        // speed test
+        const iconFileAlreadyExists = this.fileSystemUtility.existsSync(iconFilePath);
 
         if (!iconFileAlreadyExists) {
-            await this.generateAppIcon(applicationFilePath, iconFilePath);
+            await this.generateAppIcon(iconName, iconFilePath);
         }
 
         return iconFilePath;
     }
 
-    private getIconFilePath(applicationFilePath: string): string {
-        return `${join(this.cacheFolder, this.cacheFileNameGenerator.generateCacheFileName(applicationFilePath))}.png`;
+    private getIconFilePath(iconName: string): string {
+        return `${join(this.cacheFolder, this.cacheFileNameGenerator.generateCacheFileName(iconName))}.png`;
     }
 
-    private async generateAppIcon(applicationFilePath: string, iconFilePath: string): Promise<void> {
-        const config: Record<string, string> = this.fileSystemUtility.readIniFileSync(applicationFilePath)["Desktop Entry"];
-        // Checks if app is supposed to be shown, returns null if not
-        // https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#recognized-keys
-        const desktopEnv = process.env["XDG_CURRENT_DESKTOP"].split(":") || ["GNOME"];
-        if (
-            !config ||
-            !config["Icon"] ||
-            config.NoDisplay ||
-            (config.OnlyShowIn !== undefined && !config.OnlyShowIn.split(";").some((i) => desktopEnv.includes(i))) ||
-            (config.NotShowIn !== undefined && config.NotShowIn.split(";").some((i) => desktopEnv.includes(i)))
-        )
-            return;
+    private async generateAppIcon(iconName: string, iconFilePath: string): Promise<void> {
+        if (!this.searchCache || !this.userTheme) await this.generateThemeSearchCache();
 
-        if (!config["Icon"]) return;
-        const iconPath = this.findIcon(config["Icon"], 64, 1);
+        const iconPath = this.findIcon(iconName, 64, 1, this.userTheme);
+        if (!iconPath) throw `Icon ${iconName} could not be found!`;
 
-        return this.saveIcon(src, iconFilePath);
+        return this.saveIcon(iconPath, iconFilePath);
     }
 
     private async generateThemeSearchCache(): Promise<void> {
         try {
-            const baseDirectories = [
-                join(this.app.getPath("home"), ".icons"),
-                join(process.env["XDG_DATA_HOME"] || join(this.app.getPath("home"), ".local", "share"), "icons"),
-                ...(
-                    process.env["XDG_DATA_DIRS"] || `${join("/", "usr", "local", "share")}:${join("/", "usr", "share")}`
-                )
-                    .split(":")
-                    .map((dir) => join(dir, "icons")),
-                join("/", "usr", "share", "pixmaps"),
-            ];
-
-            const themeName = await this.getIconThemeName();
-            const validThemeDirectories = await this.getValidThemeDirectories(themeName, baseDirectories);
+            this.searchCache = new Map();
+            this.userTheme = await this.getIconThemeName();
+            const validThemeDirectories = await this.getValidThemeDirectories(this.userTheme, this.baseDirectories);
 
             while (validThemeDirectories.length !== 0) {
                 const themeFile = join(validThemeDirectories.pop(), "index.theme");
                 if (!this.fileSystemUtility.existsSync(themeFile)) {
-                    this.logger.info(`File ${themeFile} doesn't exist!`);
+                    // this.logger.info(`File ${themeFile} doesn't exist!`);
+                    console.log(`File ${themeFile} doesn't exist!`);
                     continue;
                 }
                 const themeData = await this.parseThemeIndex(themeFile);
                 for (const parent of themeData.parents) {
-                    validThemeDirectories.concat(await this.getValidThemeDirectories(parent, baseDirectories));
+                    validThemeDirectories.concat(await this.getValidThemeDirectories(parent, this.baseDirectories));
                 }
                 const themeName = themeData.name;
-                if (!this.themeCache.themeData.has(themeName)) this.themeCache.themeData.set(themeName, []);
-                this.themeCache.themeData.get(themeName).push(themeData);
+                if (!this.searchCache.has(themeName)) this.searchCache.set(themeName, [themeData]);
             }
         } catch (error) {
             // Handle Error
+            console.error(error);
         }
     }
 
@@ -146,7 +152,9 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
 
     // https://specifications.freedesktop.org/icon-theme-spec/latest/ar01s04.html
     private async parseThemeIndex(file: string): Promise<IconTheme> {
-        const themeIndex = await this.fileSystemUtility.readIniFile(file);
+        const themeIndex = this.iniFileParser.parseIniFileContent(
+            (await this.fileSystemUtility.readFile(file)).toString(),
+        );
         const iconThemeData: Record<string, string> = themeIndex["Icon Theme"];
         const subdirectories: string[] = [];
         const subdirData = new Map<string, IconThemeSubdir>();
@@ -155,20 +163,22 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
 
             if (!themeIndex[dir]) {
                 // Fake folders
-                this.logger.error(`Theme index ${file} is invalid! Group ${dir} doesn't exist!`);
+                // this.logger.error(`Theme index ${file} is invalid! Group ${dir} doesn't exist!`);
+                console.error(`Theme index ${file} is invalid! Group ${dir} doesn't exist!`);
                 continue;
             }
 
             // Required Value
             if (!themeIndex[dir].Size) {
                 // Apparently some themes don't have size
-                this.logger.error(`Theme index ${file} is invalid! Size key does not exist in group ${dir}!`);
+                // this.logger.error(`Theme index ${file} is invalid! Size key does not exist in group ${dir}!`);
+                console.error(`Theme index ${file} is invalid! Size key does not exist in group ${dir}!`);
                 themeIndex[dir].Size = "0";
             }
 
             const subdir: IconThemeSubdir = {
-                Size: parseInt(themeIndex[dir].Size),
                 //Default values
+                Size: parseInt(themeIndex[dir].Size),
                 Type: "Threshold",
                 Scale: 1,
                 MinSize: parseInt(themeIndex[dir].Size),
@@ -189,7 +199,7 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
     }
 
     private async saveIcon(source: string, output: string): Promise<void> {
-        return extname(source) !== "png"
+        extname(source) !== "png"
             ? await this.commandlineUtility.executeCommand(`convert -background none -resize 48x ${source} ${output}`)
             : await this.fileSystemUtility.copyFile(source, output);
     }
@@ -198,7 +208,7 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
         switch (process.env["XDG_SESSION_DESKTOP"]) {
             case "cinnamon":
                 return (
-                    await this.commandlineUtility.executeCommandWithOutput(
+                    await this.commandlineUtility.executeCommand(
                         "gsettings get org.cinnamon.desktop.interface icon-theme",
                     )
                 )
@@ -206,9 +216,7 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
                     .slice(1, -1);
             case "gnome":
                 return (
-                    await this.commandlineUtility.executeCommandWithOutput(
-                        "gsettings get org.gnome.desktop.interface icon-theme",
-                    )
+                    await this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme")
                 )
                     .trim()
                     .slice(1, -1);
@@ -218,25 +226,25 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
     }
 
     // https://specifications.freedesktop.org/icon-theme-spec/latest/ar01s05.html
-    public findIcon(icon: string, size: number, scale: number, theme: string, cache: IconSearchCache): string {
-        let fileName = this.findIconHelper(icon, size, scale, theme, cache);
+    public findIcon(icon: string, size: number, scale: number, theme: string): string {
+        let fileName = this.findIconHelper(icon, size, scale, theme);
         if (fileName) return fileName;
 
-        fileName = this.findIconHelper(icon, size, scale, "hicolor", cache);
+        fileName = this.findIconHelper(icon, size, scale, "hicolor");
         if (fileName) return fileName;
 
-        return this.lookupFallbackIcon(icon, cache);
+        return this.lookupFallbackIcon(icon);
     }
 
-    private findIconHelper(icon: string, size: number, scale: number, theme: string, cache: IconSearchCache): string {
-        if (!cache.themeData.has(theme)) return "";
-        let fileName = this.lookupIcon(icon, size, scale, theme, cache);
+    private findIconHelper(icon: string, size: number, scale: number, theme: string): string {
+        if (!this.searchCache.has(theme)) return "";
+        let fileName = this.lookupIcon(icon, size, scale, theme);
         if (fileName) return fileName;
 
-        for (const themeIndex of cache.themeData.get(theme)) {
+        for (const themeIndex of this.searchCache.get(theme)) {
             if (themeIndex.parents) {
                 for (const parent of themeIndex.parents) {
-                    fileName = this.findIconHelper(icon, size, scale, parent, cache);
+                    fileName = this.findIconHelper(icon, size, scale, parent);
                     if (fileName) return fileName;
                 }
             }
@@ -244,8 +252,8 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
         return "";
     }
 
-    private lookupIcon(iconName: string, size: number, scale: number, theme: string, cache: IconSearchCache): string {
-        for (const themeIndex of cache.themeData.get(theme)) {
+    private lookupIcon(iconName: string, size: number, scale: number, theme: string): string {
+        for (const themeIndex of this.searchCache.get(theme)) {
             for (const subdir of themeIndex.subdirectories) {
                 for (const extension of ["png", "svg", "xpm"]) {
                     if (
@@ -260,7 +268,7 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
         }
         let minimalSize = Number.MAX_SAFE_INTEGER;
         let closestFilename = "";
-        for (const themeIndex of cache.themeData.get(theme)) {
+        for (const themeIndex of this.searchCache.get(theme)) {
             for (const subdir of themeIndex.subdirectories) {
                 for (const extension of ["png", "svg", "xpm"]) {
                     if (!themeIndex.subdirData.has(subdir)) continue;
@@ -276,8 +284,8 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
         return closestFilename;
     }
 
-    private lookupFallbackIcon(iconName: string, cache: IconSearchCache): string {
-        for (const directory of cache.baseDirectories) {
+    private lookupFallbackIcon(iconName: string): string {
+        for (const directory of this.baseDirectories) {
             for (const extension of ["png", "svg", "xpm"]) {
                 const fileName = `${join(directory, iconName)}.${extension}`;
                 if (this.fileSystemUtility.existsSync(fileName)) return fileName;

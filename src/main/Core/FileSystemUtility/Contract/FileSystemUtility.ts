@@ -4,8 +4,8 @@ export interface FileSystemUtility {
     pathExists(fileOrFolderPath: string): Promise<boolean>;
     readJsonFile<T>(filePath: string): Promise<T>;
     readJsonFileSync<T>(filePath: string): T;
-    readIniFile(filePath: string): Promise<Record<string, Record<string, string>>>;
-    readIniFileSync(filePath: string): Record<string, Record<string, string>>;
+    readFile(filePath: string): Promise<Buffer>;
+    readFileSync(filePath: string): Buffer;
     copyFile(srcPath: string, destPath: string): Promise<void>;
     removeFile(filePath: string): Promise<void>;
     writeTextFile(data: string, filePath: string): Promise<void>;

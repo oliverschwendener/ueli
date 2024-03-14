@@ -5,7 +5,6 @@ import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";
-import { LinuxApplicationIconGenerator } from "../../Core/ImageGenerator/LinuxApplicationIconGenerator";
 import { LinuxApplicationRepository } from "./Linux/LinuxApplicationRepository";
 import { Settings } from "./Settings";
 import { WindowsApplicationRepository } from "./Windows/WindowsApplicationRepository";
@@ -38,12 +37,8 @@ export class ApplicationSearchModule implements ExtensionModule {
             Linux: new LinuxApplicationRepository(
                 dependencyRegistry.get("CommandlineUtility"),
                 dependencyRegistry.get("FileSystemUtility"),
-                new LinuxApplicationIconGenerator(
-                    dependencyRegistry.get("FileSystemUtility"),
-                    dependencyRegistry.get("CommandlineUtility"),
-                    dependencyRegistry.get("Logger"),
-                    dependencyRegistry.get("AssetPathResolver"),
-                ),
+                dependencyRegistry.get("FileImageGenerator"),
+                dependencyRegistry.get("IniFileParser"),
                 dependencyRegistry.get("Logger"),
                 settings,
             ),
