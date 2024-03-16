@@ -1,7 +1,7 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { IniFileParser } from "@Core/IniFileParser/IniFileParser";
-// import { Logger } from "@Core/Logger/Logger";
+import type { Logger } from "@Core/Logger";
 import type { Image } from "@common/Core/Image";
 import { dirname, extname, join } from "path";
 import type { CacheFileNameGenerator } from "./CacheFileNameGenerator";
@@ -37,14 +37,14 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
         private readonly fileSystemUtility: FileSystemUtility,
         private readonly commandlineUtility: CommandlineUtility,
         private readonly iniFileParser: IniFileParser,
-        // private readonly logger: Logger,
+        private readonly logger: Logger,
         private readonly cacheFileNameGenerator: CacheFileNameGenerator,
         private readonly cacheFolder: string,
         private readonly homePath: string,
     ) {
         this.baseDirectories = [
-            join(homePath, ".icons"),
-            join(process.env["XDG_DATA_HOME"] || join(homePath, ".local", "share"), "icons"),
+            join(this.homePath, ".icons"),
+            join(process.env["XDG_DATA_HOME"] || join(this.homePath, ".local", "share"), "icons"),
             ...(process.env["XDG_DATA_DIRS"] || `${join("/", "usr", "local", "share")}:${join("/", "usr", "share")}`)
                 .split(":")
                 .map((dir) => join(dir, "icons")),
@@ -76,7 +76,7 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
         for (let i = 0; i < filePaths.length; i++) {
             const result = results[i];
             if (result.status !== "fulfilled") {
-                console.error(result.reason);
+                this.logger.error(result.reason);
                 continue;
             }
             values[filePaths[i]] = result.value;
@@ -87,8 +87,7 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
     private async ensureCachedIconExists(iconName: string): Promise<string> {
         const iconFilePath = this.getIconFilePath(iconName);
 
-        // speed test
-        const iconFileAlreadyExists = this.fileSystemUtility.existsSync(iconFilePath);
+        const iconFileAlreadyExists = await this.fileSystemUtility.pathExists(iconFilePath);
 
         if (!iconFileAlreadyExists) {
             await this.generateAppIcon(iconName, iconFilePath);
@@ -119,8 +118,7 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
             while (validThemeDirectories.length !== 0) {
                 const themeFile = join(validThemeDirectories.pop(), "index.theme");
                 if (!this.fileSystemUtility.existsSync(themeFile)) {
-                    // this.logger.info(`File ${themeFile} doesn't exist!`);
-                    console.log(`File ${themeFile} doesn't exist!`);
+                    this.logger.info(`File ${themeFile} doesn't exist!`);
                     continue;
                 }
                 const themeData = await this.parseThemeIndex(themeFile);
@@ -132,7 +130,8 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
             }
         } catch (error) {
             // Handle Error
-            console.error(error);
+            this.logger.error(`Failed to generate a cache for theme! Reason: ${error}`);
+            throw error;
         }
     }
 
@@ -163,16 +162,14 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
 
             if (!themeIndex[dir]) {
                 // Fake folders
-                // this.logger.error(`Theme index ${file} is invalid! Group ${dir} doesn't exist!`);
-                console.error(`Theme index ${file} is invalid! Group ${dir} doesn't exist!`);
+                this.logger.error(`Theme index ${file} is invalid! Group ${dir} doesn't exist!`);
                 continue;
             }
 
             // Required Value
             if (!themeIndex[dir].Size) {
                 // Apparently some themes don't have size
-                // this.logger.error(`Theme index ${file} is invalid! Size key does not exist in group ${dir}!`);
-                console.error(`Theme index ${file} is invalid! Size key does not exist in group ${dir}!`);
+                this.logger.error(`Theme index ${file} is invalid! Size key does not exist in group ${dir}!`);
                 themeIndex[dir].Size = "0";
             }
 

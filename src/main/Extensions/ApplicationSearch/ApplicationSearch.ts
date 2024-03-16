@@ -52,7 +52,7 @@ export class ApplicationSearch implements Extension {
 
     public getImage(): Image {
         const fileNames: Record<OperatingSystem, { neutral: string; dark?: string; light?: string }> = {
-            Linux: null, // not supported,
+            Linux: { neutral: "linux-applications.png" },
             macOS: { neutral: "macos-applications.png" },
             Windows: {
                 neutral: "windows-applications-light.png",

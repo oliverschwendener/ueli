@@ -17,6 +17,6 @@ export class GtkLaunchActionHandler implements ActionHandler {
      * Throws an error if the file could not be launched.
      */
     public async invokeAction(action: SearchResultItemAction): Promise<void> {
-        this.commandlineUtility.executeCommand(`gtk-launch ${basename(action.argument)}`);
+        await this.commandlineUtility.executeCommand(`gtk-launch ${basename(action.argument)}`, true);
     }
 }
