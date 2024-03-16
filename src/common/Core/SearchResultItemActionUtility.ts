@@ -82,7 +82,7 @@ export class SearchResultItemActionUtility {
             fluentIcon: "OpenRegular",
         };
     }
-    
+
     public static createGtkLaunchAction({
         filePath,
         description,
