@@ -39,6 +39,7 @@ export class ApplicationSearchModule implements ExtensionModule {
                 dependencyRegistry.get("FileSystemUtility"),
                 dependencyRegistry.get("FileImageGenerator"),
                 dependencyRegistry.get("IniFileParser"),
+                dependencyRegistry.get("AssetPathResolver"),
                 dependencyRegistry.get("Logger"),
                 settings,
             ),
