@@ -50,6 +50,14 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         return JSON.parse(this.readFileSync(filePath).toString());
     }
 
+    public copyFile(srcPath: string, destPath: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            copyFile(srcPath, destPath, (error) => {
+                error ? reject(error) : resolve();
+            });
+        });
+    }
+
     public removeFile(filePath: string): Promise<void> {
         return new Promise((resolve, reject) => {
             unlink(filePath, (error) => {
@@ -107,15 +115,7 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         }
     }
 
-    public copyFile(filePath: string, destinationFilePath: string): Promise<void> {
-        return new Promise((resolve, reject) => {
-            copyFile(filePath, destinationFilePath, (error) => {
-                error ? reject(error) : resolve();
-            });
-        });
-    }
-
-    private readFile(filePath: string): Promise<Buffer> {
+    public readFile(filePath: string): Promise<Buffer> {
         return new Promise((resolve, reject) => {
             readFile(filePath, (error, data) => {
                 error ? reject(error) : resolve(data);
@@ -123,7 +123,7 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         });
     }
 
-    private readFileSync(filePath: string): Buffer {
+    public readFileSync(filePath: string): Buffer {
         return readFileSync(filePath);
     }
 

@@ -31,6 +31,14 @@ export class Settings {
                 "C:\\ProgramData\\Microsoft\\Windows\\Start Menu",
                 join(this.app.getPath("home"), "AppData", "Roaming", "Microsoft", "Windows", "Start Menu"),
             ],
+            // This is hardcoded for the Linux DEs tested, DO NOT CHANGE
+            // `gtk-launch` can only launch in these directories
+            linuxFolders: (
+                process.env["XDG_DATA_DIRS"] || `${join("/", "usr", "local", "share")}:${join("/", "usr", "share")}`
+            )
+                .split(":")
+                .map((dir) => join(dir, "applications")),
+            linuxFileExtensions: [".desktop"],
         };
 
         return defaultValues[key] as T;
