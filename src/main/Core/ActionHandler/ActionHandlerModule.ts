@@ -35,9 +35,7 @@ export class ActionHandlerModule {
             new FavoritesActionHandler(dependencyRegistry.get("FavoriteManager")),
             new GtkLaunchActionHandler(dependencyRegistry.get("CommandlineUtility")),
             new NavigateToActionHandler(eventEmitter),
-            new OpenFilePathActionHandler(
-                dependencyRegistry.get("Shell"),
-            ),
+            new OpenFilePathActionHandler(dependencyRegistry.get("Shell")),
             new PowershellActionHandler(dependencyRegistry.get("PowershellUtility")),
             new ShowItemInFileExplorerActionHandler(dependencyRegistry.get("Shell")),
             new UrlActionHandler(dependencyRegistry.get("Shell")),
