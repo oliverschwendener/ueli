@@ -65,6 +65,7 @@ export class ImageGeneratorModule {
                 new WindowsFolderIconExtractor(
                     dependencyRegistry.get("AssetPathResolver"),
                     dependencyRegistry.get("FileSystemUtility"),
+                    dependencyRegistry.get("App"),
                 ),
                 new WindowsApplicationIconExtractor(
                     dependencyRegistry.get("FileSystemUtility"),

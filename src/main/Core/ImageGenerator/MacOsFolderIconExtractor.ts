@@ -48,22 +48,15 @@ export class MacOsFolderIconExtractor implements FileIconExtractor {
             : "GenericFolderIcon.png";
 
         return {
-            url: `file://${this.assetPathResolver.getModuleAssetPath("FileImageGenerator", assetFileName)}`,
+            url: `file://${this.assetPathResolver.getModuleAssetPath("FileImageGenerator", join("macOS", assetFileName))}`,
         };
     }
 
     public async extractFileIcons(filePaths: string[]) {
         const result: Record<string, Image> = {};
 
-        const promiseResults = await Promise.allSettled(filePaths.map((filePath) => this.extractFileIcon(filePath)));
-
-        for (let i = 0; i < filePaths.length; i++) {
-            const filePath = filePaths[i];
-            const promiseResult = promiseResults[i];
-
-            if (promiseResult.status === "fulfilled") {
-                result[filePath] = promiseResult.value;
-            }
+        for (const filePath of filePaths) {
+            result[filePath] = await this.extractFileIcon(filePath);
         }
 
         return result;
