@@ -28,10 +28,11 @@ interface IconTheme {
     parents: string[];
 }
 
-export class LinuxApplicationIconExtractor implements FileIconExtractor {
+export class LinuxIconExtractor implements FileIconExtractor {
     private searchCache: Map<string, IconTheme[]>;
     private userTheme: string;
-    private baseDirectories: string[];
+    private readonly baseDirectories: string[];
+    private readonly folderPaths: Record<string, string>;
 
     public constructor(
         private readonly fileSystemUtility: FileSystemUtility,
@@ -50,20 +51,31 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
                 .map((dir) => join(dir, "icons")),
             join("/", "usr", "share", "pixmaps"),
         ];
+
+        this.folderPaths = {
+            [homePath]: "user-home",
+            [join(homePath, "Desktop")]: "user-desktop",
+            [join(homePath, "Documents")]: "folder-documents",
+            [join(homePath, "Downloads")]: "folder-download",
+            [join(homePath, "Videos")]: "folder-videos",
+            [join(homePath, "Music")]: "folder-music",
+            [join(homePath, "Pictures")]: "folder-pictures",
+            [join(homePath, "Public")]: "folder-publicshare",
+            [join(homePath, "Templates")]: "folder-templates",
+            [join(homePath, "Bookmarks")]: "user-bookmarks",
+        };
     }
 
     public matchesFilePath(filePath: string) {
         // TODO: Add AppImage support
-        return filePath.endsWith(".desktop");
+        return filePath.endsWith(".desktop") || this.fileSystemUtility.isDirectory(filePath);
     }
 
     public async extractFileIcon(filePath: string): Promise<Image> {
-        const appConfig = this.iniFileParser.parseIniFileContent(
-            (await this.fileSystemUtility.readFile(filePath)).toString(),
-        )["Desktop Entry"];
-
-        if (!appConfig["Icon"]) throw `${filePath} doesn't have an icon!`;
-        const iconFilePath = await this.ensureCachedIconExists(appConfig["Icon"]);
+        const iconName = filePath.endsWith(".desktop")
+            ? await this.extractAppIconName(filePath)
+            : this.extractFolderIconName(filePath);
+        const iconFilePath = await this.ensureCachedIconExists(iconName);
         return { url: `file://${iconFilePath}` };
     }
 
@@ -82,6 +94,19 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
             values[filePaths[i]] = result.value;
         }
         return values;
+    }
+
+    private async extractAppIconName(filePath: string) {
+        const appConfig = this.iniFileParser.parseIniFileContent(
+            (await this.fileSystemUtility.readFile(filePath)).toString(),
+        )["Desktop Entry"];
+
+        if (!appConfig["Icon"]) throw `${filePath} doesn't have an icon!`;
+        return appConfig["Icon"];
+    }
+
+    private extractFolderIconName(filePath: string) {
+        return this.folderPaths[filePath] ?? "folder";
     }
 
     private async ensureCachedIconExists(iconName: string): Promise<string> {
@@ -103,17 +128,19 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
     private async generateAppIcon(iconName: string, iconFilePath: string): Promise<void> {
         if (!this.searchCache || !this.userTheme) await this.generateThemeSearchCache();
 
-        const iconPath = this.findIcon(iconName, 64, 1, this.userTheme);
+        const iconSize = 128;
+
+        const iconPath = this.findIcon(iconName, iconSize, 1, this.userTheme);
         if (!iconPath) throw `Icon ${iconName} could not be found!`;
 
-        return this.saveIcon(iconPath, iconFilePath);
+        return this.saveIcon(iconPath, iconFilePath, iconSize);
     }
 
     private async generateThemeSearchCache(): Promise<void> {
         try {
             this.searchCache = new Map();
             this.userTheme = await this.getIconThemeName();
-            const validThemeDirectories = await this.getValidThemeDirectories(this.userTheme, this.baseDirectories);
+            const validThemeDirectories = await this.getExistingThemeDirectories(this.userTheme, this.baseDirectories);
 
             while (validThemeDirectories.length !== 0) {
                 const themeFile = join(validThemeDirectories.pop(), "index.theme");
@@ -123,7 +150,7 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
                 }
                 const themeData = await this.parseThemeIndex(themeFile);
                 for (const parent of themeData.parents) {
-                    validThemeDirectories.concat(await this.getValidThemeDirectories(parent, this.baseDirectories));
+                    validThemeDirectories.concat(await this.getExistingThemeDirectories(parent, this.baseDirectories));
                 }
                 const themeName = themeData.name;
                 if (!this.searchCache.has(themeName)) this.searchCache.set(themeName, [themeData]);
@@ -135,7 +162,7 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
         }
     }
 
-    private async getValidThemeDirectories(theme: string, searchDirectories: string[]): Promise<string[]> {
+    private async getExistingThemeDirectories(theme: string, searchDirectories: string[]): Promise<string[]> {
         return (
             await Promise.allSettled(
                 searchDirectories.map(async (dir) =>
@@ -195,9 +222,11 @@ export class LinuxApplicationIconExtractor implements FileIconExtractor {
         };
     }
 
-    private async saveIcon(source: string, output: string): Promise<void> {
+    private async saveIcon(source: string, output: string, iconSize: number): Promise<void> {
         extname(source) !== "png"
-            ? await this.commandlineUtility.executeCommand(`convert -background none -resize 48x ${source} ${output}`)
+            ? await this.commandlineUtility.executeCommand(
+                  `convert -background none -resize ${iconSize}x ${source} ${output}`,
+              )
             : await this.fileSystemUtility.copyFile(source, output);
     }
 

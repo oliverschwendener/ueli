@@ -6,8 +6,7 @@ import { CacheFileNameGenerator } from "./CacheFileNameGenerator";
 import type { FileIconExtractor } from "./FileIconExtractor";
 import { FileImageGenerator } from "./FileImageGenerator";
 import { GenericFileIconExtractor } from "./GenericFileIconExtractor";
-import { LinuxApplicationIconExtractor } from "./LinuxApplicationIconExtractor";
-import { LinuxFolderIconExtractor } from "./LinuxFolderIconExtractor";
+import { LinuxIconExtractor } from "./LinuxIconExtractor";
 import { MacOsApplicationIconExtractor } from "./MacOsApplicationIconExtractor";
 import { MacOsFolderIconExtractor } from "./MacOsFolderIconExtractor";
 import { UrlImageGenerator } from "./UrlImageGenerator";
@@ -50,12 +49,7 @@ export class ImageGeneratorModule {
 
         const operatingSystemSpecificIconExtractors: Record<OperatingSystem, FileIconExtractor[]> = {
             Linux: [
-                new LinuxFolderIconExtractor(
-                    dependencyRegistry.get("AssetPathResolver"),
-                    dependencyRegistry.get("FileSystemUtility"),
-                    dependencyRegistry.get("App"),
-                ),
-                new LinuxApplicationIconExtractor(
+                new LinuxIconExtractor(
                     dependencyRegistry.get("FileSystemUtility"),
                     dependencyRegistry.get("CommandlineUtility"),
                     dependencyRegistry.get("IniFileParser"),
