@@ -65,8 +65,8 @@ devDependencies:
     specifier: ^1.4.0
     version: 1.4.0(vitest@1.4.0)
   electron:
-    specifier: ^29.1.0
-    version: 29.1.0
+    specifier: ^29.2.0
+    version: 29.2.0
   electron-builder:
     specifier: ^24.13.3
     version: 24.13.3(electron-builder-squirrel-windows@24.13.3)
@@ -3419,8 +3419,8 @@ packages:
     resolution: {integrity: sha512-DENMhh3MFgaPDoXWrVIqSPInQoLImywfCwrSmVl3cf9QHzoZSiutHwGaB/Ql3VkqcQV30rzgdM+BjKqBAJxo5Q==}
     dev: true
 
-  /electron@29.1.0:
-    resolution: {integrity: sha512-giJVIm0sWVp+8V1GXrKqKTb+h7no0P3ooYqEd34AD9wMJzGnAeL+usj+R0155/0pdvvP1mgydnA7lcaFA2M9lw==}
+  /electron@29.2.0:
+    resolution: {integrity: sha512-ALKrCN52RG4g9prx4DriXSPnY5WoiyRUCNp7zEVQuoiNOpHTNqMMpRidQAHzntV4hajF1LMWHVoBkwqIs1jHhg==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
