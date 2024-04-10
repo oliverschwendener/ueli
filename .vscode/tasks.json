@@ -1,0 +1,24 @@
+{
+    "tasks": [
+        {
+            "type": "process",
+            "label": "Before Debug",
+            "command": "${workspaceFolder}/node_modules/.bin/vite",
+            "args": ["build", "--sourcemap"]
+        },
+        {
+            "type": "process",
+            "label": "Build",
+            "command": "${workspaceFolder}/node_modules/.bin/vite",
+            "args": ["build"],
+            "isBuildCommand": true
+        },
+        {
+            "type": "process",
+            "label": "Run tests",
+            "command": "${workspaceFolder}/node_modules/.bin/vitest",
+            "args": ["run", "--root=src"],
+            "isTestCommand": true
+        }
+    ]
+}

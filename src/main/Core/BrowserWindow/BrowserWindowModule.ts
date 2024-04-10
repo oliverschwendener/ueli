@@ -34,7 +34,7 @@ export class BrowserWindowModule {
 
         BrowserWindowModule.registerBrowserWindowEventListeners(browserWindow, dependencyRegistry);
         BrowserWindowModule.registerEvents(browserWindow, dependencyRegistry);
-        await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyRegistry);
+        await BrowserWindowModule.loadFileOrUrl(browserWindow);
     }
 
     private static registerBrowserWindowEventListeners(
@@ -115,14 +115,9 @@ export class BrowserWindowModule {
         });
     }
 
-    private static async loadFileOrUrl(
-        browserWindow: BrowserWindow,
-        dependencyRegistry: DependencyRegistry<Dependencies>,
-    ) {
-        const app = dependencyRegistry.get("App");
-
-        await (app.isPackaged
-            ? browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html"))
-            : browserWindow.loadURL(process.env.VITE_DEV_SERVER_URL));
+    private static async loadFileOrUrl(browserWindow: BrowserWindow) {
+        await (process.env.VITE_DEV_SERVER_URL
+            ? browserWindow.loadURL(process.env.VITE_DEV_SERVER_URL)
+            : browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html")));
     }
 }

@@ -8,7 +8,7 @@ import pkg from "./package.json";
 export default defineConfig(({ command }) => {
     const isServe = command === "serve";
     const isBuild = command === "build";
-    const sourcemap = isServe ? "inline" : undefined;
+    const sourcemap = isServe || process.argv.includes("--sourcemap");
 
     return {
         root: "src/renderer",
