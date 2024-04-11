@@ -1,15 +1,22 @@
 {
+    "version": "2.0.0",
     "tasks": [
         {
             "type": "process",
             "label": "Before Debug",
             "command": "${workspaceFolder}/node_modules/.bin/vite",
+            "windows": {
+                "command": "${workspaceFolder}/node_modules/.bin/vite.cmd"
+            },
             "args": ["build", "--sourcemap"]
         },
         {
             "type": "process",
             "label": "Build",
             "command": "${workspaceFolder}/node_modules/.bin/vite",
+            "windows": {
+                "command": "${workspaceFolder}/node_modules/.bin/vite.cmd"
+            },
             "args": ["build"],
             "isBuildCommand": true
         },
@@ -17,7 +24,10 @@
             "type": "process",
             "label": "Run tests",
             "command": "${workspaceFolder}/node_modules/.bin/vitest",
-            "args": ["run", "--root=src"],
+            "windows": {
+                "command": "${workspaceFolder}/node_modules/.bin/vitest.cmd"
+            },
+            "args": ["run"],
             "isTestCommand": true
         }
     ]
