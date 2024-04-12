@@ -54,11 +54,7 @@ export class ApplicationSearch implements Extension {
         const fileNames: Record<OperatingSystem, { neutral: string; dark?: string; light?: string }> = {
             Linux: null, // not supported,
             macOS: { neutral: "macos-applications.png" },
-            Windows: {
-                neutral: "windows-applications-light.png",
-                dark: "windows-applications-light.png",
-                light: "windows-applications-dark.png",
-            },
+            Windows: { neutral: "windows-generic-app-icon.png" },
         };
 
         return {
