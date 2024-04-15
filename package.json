@@ -15,16 +15,20 @@
         "lint": "eslint . --ext js,ts,tsx",
         "package:publish": "electron-builder --config electron-builder.config.js --publish always",
         "package": "electron-builder --config electron-builder.config.js",
+        "postinstall": "pnpm run rebuild",
         "prettier:check": "prettier --check src/**/*",
+        "rebuild": "electron rebuild.js",
         "test:coverage": "vitest run --coverage",
         "test:watch": "vitest",
         "test": "vitest run",
-        "typecheck": "pnpm typecheck:main && pnpm typecheck:preload && pnpm typecheck:renderer",
         "typecheck:main": "tsc -p src/main/tsconfig.json --noEmit",
         "typecheck:preload": "tsc -p src/preload/tsconfig.json --noEmit",
-        "typecheck:renderer": "tsc -p src/renderer/tsconfig.json --noEmit"
+        "typecheck:renderer": "tsc -p src/renderer/tsconfig.json --noEmit",
+        "typecheck": "pnpm typecheck:main && pnpm typecheck:preload && pnpm typecheck:renderer"
     },
     "devDependencies": {
+        "@electron/rebuild": "^3.6.0",
+        "@types/better-sqlite3": "^7.6.9",
         "@types/node": "^20.8.6",
         "@types/react": "^18.2.48",
         "@types/react-dom": "^18.2.18",
@@ -48,6 +52,7 @@
     "dependencies": {
         "@fluentui/react-components": "^9.47.3",
         "@fluentui/react-icons": "^2.0.233",
+        "better-sqlite3": "^9.5.0",
         "fuse.js": "^7.0.0",
         "i18next": "^23.8.1",
         "mathjs": "^12.3.1",

@@ -34,14 +34,14 @@ export class BrowserBookmarks implements Extension {
     };
 
     public constructor(
-        private readonly browserBookmarkRepository: BrowserBookmarkRepository,
+        private readonly browserBookmarkRepositories: Record<Browser, BrowserBookmarkRepository>,
         private readonly settingsManager: SettingsManager,
         private readonly assetPathResolver: AssetPathResolver,
         private readonly urlImageGenerator: UrlImageGenerator,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const browserBookmarks = await this.browserBookmarkRepository.getAll(this.getCurrentlyConfiguredBrowser());
+        const browserBookmarks = await this.browserBookmarkRepositories[this.getCurrentlyConfiguredBrowser()].getAll();
         return browserBookmarks.map((browserBookmark) => this.toSearchResultItem(browserBookmark));
     }
 
@@ -136,6 +136,7 @@ export class BrowserBookmarks implements Extension {
 
     private getBrowserImageFilePath(key: Browser): string {
         const assetFileNames: Record<Browser, string> = {
+            Firefox: "firefox.png",
             Arc: "arc.png",
             "Brave Browser": "brave-browser.png",
             "Google Chrome": "google-chrome.png",

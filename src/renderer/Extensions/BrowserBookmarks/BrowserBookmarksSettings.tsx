@@ -12,7 +12,15 @@ export const BrowserBookmarksSettings = () => {
 
     const extensionId = "BrowserBookmarks";
 
-    const browsers: Browser[] = ["Arc", "Brave Browser", "Google Chrome", "Microsoft Edge", "Yandex Browser"];
+    const browsers: Browser[] = [
+        "Arc",
+        "Brave Browser",
+        "Google Chrome",
+        "Microsoft Edge",
+        "Yandex Browser",
+        "Firefox",
+    ];
+
     const searchResultStyles = ["nameOnly", "urlOnly", "nameAndUrl"];
 
     const { value: browser, updateValue: setBrowser } = useExtensionSetting<Browser>({ extensionId, key: "browser" });
