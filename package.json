@@ -36,7 +36,7 @@
         "@typescript-eslint/eslint-plugin": "^6.20.0",
         "@typescript-eslint/parser": "^6.20.0",
         "@vitejs/plugin-react": "^4.2.1",
-        "@vitest/coverage-v8": "^1.4.0",
+        "@vitest/coverage-v8": "^1.5.0",
         "electron": "^29.2.0",
         "electron-builder": "^24.13.3",
         "eslint": "^8.56.0",
@@ -47,7 +47,7 @@
         "vite": "^5.2.8",
         "vite-plugin-electron": "^0.28.4",
         "vite-plugin-electron-renderer": "^0.14.5",
-        "vitest": "^1.4.0"
+        "vitest": "^1.5.0"
     },
     "dependencies": {
         "@fluentui/react-components": "^9.47.3",
