@@ -1,15 +1,11 @@
 import type { BrowserBookmark } from "./BrowserBookmark";
 
-export class ChromiumBrowserBookmark implements BrowserBookmark {
+export class FirefoxBrowserBookmark implements BrowserBookmark {
     public constructor(
         private readonly name: string,
         private readonly url: string,
-        private readonly guid: string,
+        private readonly id: string,
     ) {}
-
-    public getId(): string {
-        return `ChromiumBrowserBookmark[${this.guid}]`;
-    }
 
     public getName(): string {
         return this.name;
@@ -17,5 +13,9 @@ export class ChromiumBrowserBookmark implements BrowserBookmark {
 
     public getUrl(): string {
         return this.url;
+    }
+
+    public getId(): string {
+        return `FirefoxBrowserBookmark[${this.id}]`;
     }
 }

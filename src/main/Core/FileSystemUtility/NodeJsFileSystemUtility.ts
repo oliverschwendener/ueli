@@ -7,6 +7,7 @@ import {
     readFile,
     readFileSync,
     readdir,
+    readdirSync,
     statSync,
     unlink,
     writeFile,
@@ -16,6 +17,10 @@ import { join } from "path";
 import type { FileSystemUtility } from "./Contract";
 
 export class NodeJsFileSystemUtility implements FileSystemUtility {
+    public readFolderSync(folderPath: string): string[] {
+        return readdirSync(folderPath);
+    }
+
     public async clearFolder(folderPath: string): Promise<void> {
         const filePaths = await this.readDirectory(folderPath);
         await Promise.all(filePaths.map((filePath) => this.removeFile(filePath)));

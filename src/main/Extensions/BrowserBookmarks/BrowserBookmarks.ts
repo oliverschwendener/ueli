@@ -2,7 +2,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { UrlImageGenerator } from "@Core/ImageGenerator";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import { SearchResultItemActionUtility, type OperatingSystem, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Browser } from "@common/Extensions/BrowserBookmarks";
@@ -34,19 +34,20 @@ export class BrowserBookmarks implements Extension {
     };
 
     public constructor(
-        private readonly browserBookmarkRepository: BrowserBookmarkRepository,
+        private readonly browserBookmarkRepositories: Record<Browser, BrowserBookmarkRepository>,
         private readonly settingsManager: SettingsManager,
         private readonly assetPathResolver: AssetPathResolver,
         private readonly urlImageGenerator: UrlImageGenerator,
+        private readonly operatingSystem: OperatingSystem,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const browserBookmarks = await this.browserBookmarkRepository.getAll(this.getCurrentlyConfiguredBrowser());
+        const browserBookmarks = await this.browserBookmarkRepositories[this.getCurrentlyConfiguredBrowser()].getAll();
         return browserBookmarks.map((browserBookmark) => this.toSearchResultItem(browserBookmark));
     }
 
     public isSupported(): boolean {
-        return true;
+        return (<OperatingSystem[]>["Windows", "macOS"]).includes(this.operatingSystem);
     }
 
     public getSettingDefaultValue<T>(key: string): T {
@@ -136,6 +137,7 @@ export class BrowserBookmarks implements Extension {
 
     private getBrowserImageFilePath(key: Browser): string {
         const assetFileNames: Record<Browser, string> = {
+            Firefox: "firefox.png",
             Arc: "arc.png",
             "Brave Browser": "brave-browser.png",
             "Google Chrome": "google-chrome.png",
