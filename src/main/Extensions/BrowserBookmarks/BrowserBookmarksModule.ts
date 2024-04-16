@@ -46,6 +46,7 @@ export class BrowserBookmarksModule implements ExtensionModule {
                 settingsManager,
                 assetPathResolver,
                 urlImageGenerator,
+                operatingSystem,
             ),
         };
     }
