@@ -16,11 +16,14 @@ type BookmarksFileContent = { roots: { bookmark_bar: BookmarkItem } };
 export class ChromiumBrowserBookmarkRepository implements BrowserBookmarkRepository {
     public constructor(
         private readonly fileSystemUtility: FileSystemUtility,
-        private readonly bookmarksFilePath: string,
+        private readonly bookmarksFilePathResolver: () => string,
     ) {}
 
     public async getAll(): Promise<BrowserBookmark[]> {
-        const fileContent = await this.fileSystemUtility.readJsonFile<BookmarksFileContent>(this.bookmarksFilePath);
+        const fileContent = await this.fileSystemUtility.readJsonFile<BookmarksFileContent>(
+            this.bookmarksFilePathResolver(),
+        );
+
         return this.getBookmarksFromItem(fileContent.roots.bookmark_bar);
     }
 

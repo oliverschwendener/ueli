@@ -4,10 +4,10 @@ import type { BrowserBookmarkRepository } from "./BrowserBookmarkRepository";
 import { FirefoxBrowserBookmark } from "./FirefoxBrowserBookmark";
 
 export class FirefoxBrowserBookmarkRepository implements BrowserBookmarkRepository {
-    public constructor(private readonly sqliteFilePath: string) {}
+    public constructor(private readonly sqliteFilePathResolver: () => string) {}
 
     public async getAll(): Promise<BrowserBookmark[]> {
-        const rows = new Database(this.sqliteFilePath)
+        const rows = new Database(this.sqliteFilePathResolver())
             .prepare(
                 `SELECT
                     b.title,
