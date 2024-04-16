@@ -16,6 +16,6 @@ export class FirefoxBrowserBookmark implements BrowserBookmark {
     }
 
     public getId(): string {
-        return `FirefoxBookmark[${this.id}]`;
+        return `FirefoxBrowserBookmark[${this.id}]`;
     }
 }

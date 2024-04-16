@@ -5,11 +5,7 @@ import { ChromiumBrowserBookmark } from "./ChromiumBrowserBookmark";
 
 type BookmarkItem = {
     children: BookmarkItem[];
-    date_added: string;
-    date_last_used: string;
-    date_modified: string;
     guid: string;
-    id: string;
     name: string;
     type: "folder" | "url";
     url?: string;
@@ -44,9 +40,7 @@ export class ChromiumBrowserBookmarkRepository implements BrowserBookmarkReposit
                 );
 
                 result = result.concat(
-                    bookmarks.map(
-                        (item: BookmarkItem) => new ChromiumBrowserBookmark(item.name, item.url, item.guid, item.id),
-                    ),
+                    bookmarks.map((item: BookmarkItem) => new ChromiumBrowserBookmark(item.name, item.url, item.guid)),
                 );
 
                 for (const folder of folders) {

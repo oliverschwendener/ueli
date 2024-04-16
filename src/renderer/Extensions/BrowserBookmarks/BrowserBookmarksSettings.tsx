@@ -15,10 +15,10 @@ export const BrowserBookmarksSettings = () => {
     const browsers: Browser[] = [
         "Arc",
         "Brave Browser",
+        "Firefox",
         "Google Chrome",
         "Microsoft Edge",
         "Yandex Browser",
-        "Firefox",
     ];
 
     const searchResultStyles = ["nameOnly", "urlOnly", "nameAndUrl"];

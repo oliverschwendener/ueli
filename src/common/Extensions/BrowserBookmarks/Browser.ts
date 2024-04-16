@@ -1,1 +1,1 @@
-export type Browser = "Firefox" | "Brave Browser" | "Google Chrome" | "Arc" | "Microsoft Edge" | "Yandex Browser";
+export type Browser = "Arc" | "Brave Browser" | "Firefox" | "Google Chrome" | "Microsoft Edge" | "Yandex Browser";

@@ -5,11 +5,10 @@ export class ChromiumBrowserBookmark implements BrowserBookmark {
         private readonly name: string,
         private readonly url: string,
         private readonly guid: string,
-        private readonly id: string,
     ) {}
 
     public getId(): string {
-        return `BrowserBookmark[Chromium]-${this.guid}-${this.id}`;
+        return `ChromiumBrowserBookmark[${this.guid}]`;
     }
 
     public getName(): string {
