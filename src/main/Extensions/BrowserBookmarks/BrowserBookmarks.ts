@@ -2,7 +2,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { UrlImageGenerator } from "@Core/ImageGenerator";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import { SearchResultItemActionUtility, type OperatingSystem, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Browser } from "@common/Extensions/BrowserBookmarks";
@@ -38,6 +38,7 @@ export class BrowserBookmarks implements Extension {
         private readonly settingsManager: SettingsManager,
         private readonly assetPathResolver: AssetPathResolver,
         private readonly urlImageGenerator: UrlImageGenerator,
+        private readonly operatingSystem: OperatingSystem,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -46,7 +47,7 @@ export class BrowserBookmarks implements Extension {
     }
 
     public isSupported(): boolean {
-        return true;
+        return (<OperatingSystem[]>["Windows", "macOS"]).includes(this.operatingSystem);
     }
 
     public getSettingDefaultValue<T>(key: string): T {
