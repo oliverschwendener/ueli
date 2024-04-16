@@ -17,7 +17,7 @@
         "package": "electron-builder --config electron-builder.config.js",
         "postinstall": "pnpm run rebuild",
         "prettier:check": "prettier --check src/**/*",
-        "rebuild": "electron rebuild.js",
+        "rebuild": "./node_modules/.bin/electron-rebuild rebuild.js",
         "test:coverage": "vitest run --coverage",
         "test:watch": "vitest",
         "test": "vitest run",
