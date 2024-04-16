@@ -45,7 +45,7 @@ export class Shortcuts implements Extension {
         const images = await this.getSearchResultItemImages(shortcuts);
 
         return shortcuts.map(
-            ({ name, id, type, argument, hideWindowAfterInvocation }): SearchResultItem => ({
+            ({ name, id, type, argument }): SearchResultItem => ({
                 name: name,
                 description: "Shortcut",
                 descriptionTranslation: {
@@ -62,7 +62,6 @@ export class Shortcuts implements Extension {
                         namespace: Shortcuts.translationNamespace,
                     },
                     handlerId: "Shortcut",
-                    hideWindowAfterInvocation,
                     fluentIcon: "ArrowSquareUpRightRegular",
                 },
             }),
@@ -97,11 +96,11 @@ export class Shortcuts implements Extension {
                 type: "Type",
                 typeFile: "File",
                 typeUrl: "URL",
+                typeCommand: "Command",
                 filePath: "File Path",
                 fileOrFolderDoesNotExist: "File/folder does not exist",
                 name: "Name",
                 invalidName: "Invalid name",
-                hideWindowAfterInvocation: "Hide window after invocation",
                 createShortcut: "Create Shortcut",
                 editShortcut: "Edit Shortcut",
                 save: "Save",
@@ -109,6 +108,7 @@ export class Shortcuts implements Extension {
                 edit: "Edit",
                 remove: "Remove",
                 chooseFile: "Choose file or folder",
+                command: "Command",
             },
             "de-CH": {
                 extensionName: "Verknüpfungen",
@@ -118,11 +118,11 @@ export class Shortcuts implements Extension {
                 type: "Typ",
                 typeFile: "Datei",
                 typeUrl: "URL",
+                typeCommand: "Befehl",
                 filePath: "Dateipfad",
                 fileOrFolderDoesNotExist: "Datei/Ordner existiert nicht",
                 name: "Name",
                 invalidName: "Ungültiger Name",
-                hideWindowAfterInvocation: "Fester verstecken nach Ausführung",
                 createShortcut: "Verknüpfung erstellen",
                 editShortcut: "Verknüpfung bearbeiten",
                 save: "Speichern",
@@ -130,6 +130,7 @@ export class Shortcuts implements Extension {
                 edit: "Bearbeiten",
                 remove: "Entfernen",
                 chooseFile: "Datei oder Ordner auswählen",
+                command: "Befehl",
             },
         };
     }
@@ -157,6 +158,7 @@ export class Shortcuts implements Extension {
         const map: Record<ShortcutType, (s: Shortcut) => Promise<Image>> = {
             File: async (s) => await this.fileImageGenerator.getImage(s.argument),
             Url: async (s) => this.urlImageGenerator.getImage(s.argument),
+            Command: async () => this.getImage(), // TODO: Add image for command shortcuts
         };
 
         return await map[shortcut.type](shortcut);

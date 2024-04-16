@@ -8,24 +8,15 @@ export class WindowsSystemCommand implements SystemCommand {
         description,
         command,
         image,
-        hideWindowAfterInvocation,
         requiresConfirmation,
     }: {
         name: string;
         description: string;
         command: string;
         image: Image;
-        hideWindowAfterInvocation?: boolean;
         requiresConfirmation?: boolean;
     }): WindowsSystemCommand {
-        return new WindowsSystemCommand(
-            name,
-            description,
-            command,
-            image,
-            hideWindowAfterInvocation,
-            requiresConfirmation,
-        );
+        return new WindowsSystemCommand(name, description, command, image, requiresConfirmation);
     }
 
     private constructor(
@@ -33,7 +24,6 @@ export class WindowsSystemCommand implements SystemCommand {
         private readonly description: string,
         private readonly command: string,
         private readonly image: Image,
-        private readonly hideWindowAfterInvocation?: boolean,
         private readonly requiresConfirmation?: boolean,
     ) {}
 
@@ -43,7 +33,6 @@ export class WindowsSystemCommand implements SystemCommand {
                 argument: this.command,
                 description: this.description,
                 handlerId: "WindowsSystemCommandActionHandler",
-                hideWindowAfterInvocation: this.hideWindowAfterInvocation,
                 requiresConfirmation: this.requiresConfirmation,
             },
             description: this.description,

@@ -25,7 +25,6 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
                     fileNameOnDarkBackground: "macos-shutdown-on-dark.png",
                     fileNameOnLightBackground: "macos-shutdown-on-light.png",
                 }),
-                hideWindowAfterInvocation: true,
                 requiresConfirmation: true,
             }),
             MacOsSystemCommand.create({
@@ -37,7 +36,6 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
                     fileNameOnDarkBackground: "macos-restart-on-dark.png",
                     fileNameOnLightBackground: "macos-restart-on-light.png",
                 }),
-                hideWindowAfterInvocation: true,
                 requiresConfirmation: true,
             }),
             MacOsSystemCommand.create({
@@ -49,7 +47,6 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
                     fileNameOnDarkBackground: "macos-logout-on-dark.png",
                     fileNameOnLightBackground: "macos-logout-on-light.png",
                 }),
-                hideWindowAfterInvocation: true,
                 requiresConfirmation: true,
             }),
             MacOsSystemCommand.create({
@@ -61,7 +58,6 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
                     fileNameOnDarkBackground: "macos-sleep-on-dark.png",
                     fileNameOnLightBackground: "macos-sleep-on-light.png",
                 }),
-                hideWindowAfterInvocation: true,
                 requiresConfirmation: true,
             }),
             MacOsSystemCommand.create({
@@ -73,7 +69,6 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
                     fileNameOnDarkBackground: "macos-lock-on-dark.png",
                     fileNameOnLightBackground: "macos-lock-on-light.png",
                 }),
-                hideWindowAfterInvocation: true,
                 requiresConfirmation: true,
             }),
         ];

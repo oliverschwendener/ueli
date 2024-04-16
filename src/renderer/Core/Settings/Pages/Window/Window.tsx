@@ -3,7 +3,6 @@ import { Section } from "../../Section";
 import { SectionList } from "../../SectionList";
 import { AlwaysOnTop } from "./AlwaysOnTop";
 import { BackgroundMaterial } from "./BackgroundMaterial";
-import { HideWindowAfterExecution } from "./HideWindowAfterExecution";
 import { HideWindowOnBlur } from "./HideWindowOnBlur";
 import { Opacity } from "./Opacity";
 import { ShowOnStartup } from "./ShowOnStartup";
@@ -30,9 +29,7 @@ export const Window = () => {
             <Section>
                 <HideWindowOnBlur />
             </Section>
-            <Section>
-                <HideWindowAfterExecution />
-            </Section>
+
             {operatingSystem === "Windows" ? (
                 <Section>
                     <BackgroundMaterial

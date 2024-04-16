@@ -2,7 +2,6 @@ import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
-import type { SearchResultItemAction } from "@common/Core";
 import type { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
 import { createBrowserWindow } from "./createBrowserWindow";
@@ -53,14 +52,6 @@ export class BrowserWindowModule {
     private static registerEvents(browserWindow: BrowserWindow, dependencyRegistry: DependencyRegistry<Dependencies>) {
         const app = dependencyRegistry.get("App");
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
-        const settingsManager = dependencyRegistry.get("SettingsManager");
-
-        eventSubscriber.subscribe("actionInvocationSucceeded", ({ action }: { action: SearchResultItemAction }) => {
-            const shouldHideWindow =
-                settingsManager.getValue("window.hideWindowAfterExecution", true) && action.hideWindowAfterInvocation;
-
-            shouldHideWindow && browserWindow.hide();
-        });
 
         eventSubscriber.subscribe("hotkeyPressed", () => toggleBrowserWindow(app, browserWindow));
 

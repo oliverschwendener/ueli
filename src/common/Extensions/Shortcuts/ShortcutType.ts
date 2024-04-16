@@ -1,1 +1,1 @@
-export type ShortcutType = "File" | "Url";
+export type ShortcutType = "File" | "Url" | "Command";

@@ -204,14 +204,12 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
             translations: {
                 "en-US": {
                     title: "Window",
-                    hideWindowAfterExecution: "Hide window after execution",
                     hideWindowOnBlur: "Hide window on blur",
                     alwaysOnTop: "Always on top",
                     showOnStartup: "Show on startup",
                 },
                 "de-CH": {
                     title: "Fenster",
-                    hideWindowAfterExecution: "Fenster verstecken nach Ausführung",
                     hideWindowOnBlur: "Fenster verstecken bei Fokusverlust",
                     alwaysOnTop: "Immer im Vordergrund",
                     showOnStartup: "Beim Start anzeigen",

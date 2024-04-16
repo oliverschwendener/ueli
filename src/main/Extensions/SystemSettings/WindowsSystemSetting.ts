@@ -14,7 +14,6 @@ export class WindowsSystemSetting implements SystemSetting {
                 argument: this.settingsUrl,
                 description: "Open System Settings",
                 handlerId: "WindowsSystemSetting",
-                hideWindowAfterInvocation: true,
             },
             description: "System Setting",
             id: this.getId(),
