@@ -77,9 +77,7 @@ export class Shortcuts implements Extension {
     }
 
     public getImage(): Image {
-        return {
-            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "bolt.square.svg")}`,
-        };
+        return { url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "bolt.png")}` };
     }
 
     public getSettingKeysTriggeringRescan(): string[] {
