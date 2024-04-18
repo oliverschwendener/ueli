@@ -4,9 +4,9 @@ import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { BrowserBookmarks } from "./BrowserBookmarks";
 import { ChromiumBrowserBookmarkRepository } from "./ChromiumBrowserBookmarkRepository";
+import { FirefoxBookmarkFileResolver } from "./FirefoxBookmarkFileResolver";
 import { FirefoxBrowserBookmarkRepository } from "./FirefoxBrowserBookmarkRepository";
 import { resolveChromiumBookmarksFilePath } from "./resolveChromiumBookmarksFilePath";
-import { resolveFirefoxBookmarksFilePath } from "./resolveFirefoxBookmarksFilePath";
 
 export class BrowserBookmarksModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
@@ -20,8 +20,13 @@ export class BrowserBookmarksModule implements ExtensionModule {
         return {
             extension: new BrowserBookmarks(
                 {
-                    Firefox: new FirefoxBrowserBookmarkRepository(() =>
-                        resolveFirefoxBookmarksFilePath({ operatingSystem, app, fileSystemUtility }),
+                    Firefox: new FirefoxBrowserBookmarkRepository(
+                        new FirefoxBookmarkFileResolver(
+                            operatingSystem,
+                            app,
+                            fileSystemUtility,
+                            dependencyRegistry.get("IniFileParser"),
+                        ),
                     ),
                     Arc: new ChromiumBrowserBookmarkRepository(fileSystemUtility, () =>
                         resolveChromiumBookmarksFilePath({ browser: "Arc", operatingSystem, app }),
