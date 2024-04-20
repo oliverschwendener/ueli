@@ -8,8 +8,6 @@ export class FirefoxBrowserBookmarkRepository implements BrowserBookmarkReposito
     public constructor(private readonly bookmarkFilePathResolver: FirefoxBookmarkFileResolver) {}
 
     public async getAll(): Promise<BrowserBookmark[]> {
-        console.log(this.bookmarkFilePathResolver.getSqliteFilePath());
-
         const rows = new Database(this.bookmarkFilePathResolver.getSqliteFilePath())
             .prepare(
                 `SELECT
