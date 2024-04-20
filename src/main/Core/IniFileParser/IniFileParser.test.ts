@@ -65,4 +65,27 @@ datadir = /var/lib/data
             },
         });
     });
+
+    it("should be able to handle \r\n line endings", () => {
+        const iniFileString =
+            "[Profile1]\r\nName=default\r\nIsRelative=1\r\nPath=Profiles/f0u1l8pa.default\r\nDefault=1\r\n\r\n" +
+            "[Profile0]\r\nName=default-release\r\nIsRelative=1\r\nPath=Profiles/0p40tli3.default-release";
+
+        const iniFileContent = new IniFileParser().parseIniFileContent(iniFileString.trim());
+
+        expect(iniFileContent).toEqual({
+            "": {},
+            Profile1: {
+                Name: "default",
+                IsRelative: "1",
+                Path: "Profiles/f0u1l8pa.default",
+                Default: "1",
+            },
+            Profile0: {
+                Name: "default-release",
+                IsRelative: "1",
+                Path: "Profiles/0p40tli3.default-release",
+            },
+        });
+    });
 });
