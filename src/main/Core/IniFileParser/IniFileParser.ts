@@ -7,7 +7,7 @@ export class IniFileParser implements IniFileParserInterface {
         commentDelimiter: string = ";",
         allowInlineComments?: boolean,
     ): Record<string, Record<string, string>> {
-        let fileLines = fileString.split("\n");
+        let fileLines = fileString.split(/(\r\n|\r|\n)/);
 
         fileLines = fileLines.filter((line) => !line.startsWith(commentDelimiter) && line.trim() !== "");
         if (allowInlineComments) {
