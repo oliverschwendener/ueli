@@ -27,10 +27,6 @@ export class LinuxApplicationRepository implements ApplicationRepository {
             const linuxFolders = this.settings.getValue<string[]>("linuxFolders");
             const appExtensions = this.settings.getValue<string[]>("linuxFileExtensions");
 
-            this.logger.info(
-                `find -L ${linuxFolders.join(" ")} -type f -name "*${appExtensions.join('" -o -name "')}"`,
-            );
-
             // Finds all application files
             const promises = (
                 await this.commandlineUtility.executeCommand(
@@ -57,24 +53,25 @@ export class LinuxApplicationRepository implements ApplicationRepository {
                                 !config.OnlyShowIn.split(";").some((i) => desktopEnv.includes(i))) ||
                             (config.NotShowIn !== undefined &&
                                 config.NotShowIn.split(";").some((i) => desktopEnv.includes(i)))
-                        )
+                        ) {
                             return null;
+                        }
 
                         const iconImage =
                             (await this.fileImageGenerator.getImage(filePath)) ?? this.getGenericAppIcon();
                         return new LinuxApplication(config["Name"], filePath, iconImage);
                     } catch (error) {
-                        this.logger.error(`Error in ApplicationSearch! Reason: ${error}`);
+                        this.logger.error(`Error in ApplicationSearch Reason: ${error}`);
                     }
                 });
 
-            const results = (await Promise.allSettled(promises))
-                .map((result) => (result.status === "fulfilled" ? result.value : null))
-                .filter((result) => result);
+            const promiseResults = await Promise.allSettled(promises);
 
-            return results;
+            return promiseResults.map((promiseResult) =>
+                promiseResult.status === "fulfilled" ? promiseResult.value : null,
+            );
         } catch (error) {
-            this.logger.error(`Error in ApplicationSearch! Error: ${error}`);
+            this.logger.error(`Error in ApplicationSearch Error: ${error}`);
         }
     }
 

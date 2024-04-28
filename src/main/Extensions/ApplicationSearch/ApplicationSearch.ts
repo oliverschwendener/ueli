@@ -33,8 +33,16 @@ export class ApplicationSearch implements Extension {
     }
 
     public isSupported(): boolean {
-        const supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS", "Linux"];
-        return supportedOperatingSystems.includes(this.operatingSystem);
+        const checks: Record<OperatingSystem, () => boolean> = {
+            Linux: () => {
+                const supportedLinuxDesktopEnvironments = ["cinnamon", "gnome"];
+                return supportedLinuxDesktopEnvironments.includes(process.env["XDG_SESSION_DESKTOP"]);
+            },
+            macOS: () => true,
+            Windows: () => true,
+        };
+
+        return checks[this.operatingSystem]();
     }
 
     public getSettingDefaultValue<T>(key: string): T {

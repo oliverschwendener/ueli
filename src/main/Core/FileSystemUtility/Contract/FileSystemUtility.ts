@@ -7,7 +7,6 @@ export interface FileSystemUtility {
     readJsonFileSync<T>(filePath: string): T;
     readFile(filePath: string): Promise<Buffer>;
     readFileSync(filePath: string): string;
-    copyFile(srcPath: string, destPath: string): Promise<void>;
     removeFile(filePath: string): Promise<void>;
     writeTextFile(data: string, filePath: string): Promise<void>;
     writeJsonFile<T>(data: T, filePath: string): Promise<void>;
