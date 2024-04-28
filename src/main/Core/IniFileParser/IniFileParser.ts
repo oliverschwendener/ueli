@@ -18,32 +18,33 @@ export class IniFileParser implements IniFileParserInterface {
             });
         }
 
-        const entries: Record<string, Record<string, string>> = {};
+        const result: Record<string, Record<string, string>> = {};
 
         let group = "";
-        entries[group] = {};
+        result[group] = {};
 
         for (const line of fileLines) {
             // New group
             if (line.startsWith("[") && line.endsWith("]") && !line.slice(1, -1).match(/\[\]/m)) {
-                if (entries[line]) {
+                if (result[line]) {
                     throw `Ini Format Error! Duplicate groups found in ${fileString}`;
                 }
 
                 group = line.slice(1, -1);
-                entries[group] = {};
+                result[group] = {};
             } else {
                 // Entry
                 const [key, ...entrySplit] = line.split("=").map((text) => text.trim());
                 const entry = entrySplit.join("=");
 
-                if (entries[group][key]) {
+                if (result[group][key]) {
                     throw `Ini Format Error! Duplicate key in ${group} in file ${fileString}`;
                 }
 
-                entries[group][key] = entry;
+                result[group][key] = entry;
             }
         }
-        return entries;
+
+        return result;
     }
 }
