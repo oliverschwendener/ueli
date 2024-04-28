@@ -42,12 +42,12 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
     }
 
     public async readJsonFile<T>(filePath: string): Promise<T> {
-        const fileContent = await this.readFile(filePath);
-        return JSON.parse(fileContent.toString());
+        const fileContent = await this.readTextFile(filePath);
+        return JSON.parse(fileContent);
     }
 
     public readJsonFileSync<T>(filePath: string): T {
-        return JSON.parse(this.readFileSync(filePath));
+        return JSON.parse(this.readTextFileSync(filePath));
     }
 
     public removeFile(filePath: string): Promise<void> {
@@ -115,7 +115,7 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         });
     }
 
-    private readFile(filePath: string): Promise<Buffer> {
+    public readFile(filePath: string): Promise<Buffer> {
         return new Promise((resolve, reject) => {
             readFile(filePath, (error, data) => {
                 error ? reject(error) : resolve(data);
@@ -123,8 +123,16 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         });
     }
 
-    public readFileSync(filePath: string): string {
-        return readFileSync(filePath).toString();
+    public readFileSync(filePath: string): Buffer {
+        return readFileSync(filePath);
+    }
+
+    public readTextFileSync(filePath: string): string {
+        return this.readFileSync(filePath).toString();
+    }
+
+    public async readTextFile(filePath: string): Promise<string> {
+        return (await this.readFile(filePath)).toString();
     }
 
     private readDirectory(folderPath: string): Promise<string[]> {

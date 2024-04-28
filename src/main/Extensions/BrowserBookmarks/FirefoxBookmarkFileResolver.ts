@@ -27,7 +27,7 @@ export class FirefoxBookmarkFileResolver {
     }
 
     private getRelativeProfilePath(): string {
-        const iniFileContent = this.fileSystemUtility.readFileSync(join(this.getAppDataFilePath(), "profiles.ini"));
+        const iniFileContent = this.fileSystemUtility.readTextFileSync(join(this.getAppDataFilePath(), "profiles.ini"));
         const ini = this.iniFileParser.parseIniFileContent(iniFileContent);
 
         for (const key of Object.keys(ini)) {

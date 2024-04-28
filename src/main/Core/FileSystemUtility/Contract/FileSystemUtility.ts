@@ -2,7 +2,10 @@ export interface FileSystemUtility {
     createFolderIfDoesntExist(folderPath: string): Promise<void>;
     clearFolder(folderPath: string): Promise<void>;
     pathExists(fileOrFolderPath: string): Promise<boolean>;
-    readFileSync(filePath: string): string;
+    readFileSync(filePath: string): Buffer;
+    readFile(filePath: string): Promise<Buffer>;
+    readTextFileSync(filePath: string): string;
+    readTextFile(filePath: string): Promise<string>;
     readJsonFile<T>(filePath: string): Promise<T>;
     readJsonFileSync<T>(filePath: string): T;
     removeFile(filePath: string): Promise<void>;
