@@ -13,12 +13,11 @@ import { MacOsApplicationRepository } from "./macOS/MacOsApplicationRepository";
 
 export class ApplicationSearchModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
-        const operatingSystem = dependencyRegistry.get("OperatingSystem");
-        const settingsManager = dependencyRegistry.get("SettingsManager");
-        const app = dependencyRegistry.get("App");
-        const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
-
-        const settings = new Settings("ApplicationSearch", settingsManager, app);
+        const settings = new Settings(
+            "ApplicationSearch",
+            dependencyRegistry.get("SettingsManager"),
+            dependencyRegistry.get("App"),
+        );
 
         const applicationRepositories: Record<OperatingSystem, ApplicationRepository> = {
             macOS: new MacOsApplicationRepository(
@@ -48,13 +47,14 @@ export class ApplicationSearchModule implements ExtensionModule {
 
         return {
             extension: new ApplicationSearch(
-                operatingSystem,
-                applicationRepositories[operatingSystem],
+                dependencyRegistry.get("OperatingSystem"),
+                applicationRepositories[dependencyRegistry.get("OperatingSystem")],
                 settings,
-                assetPathResolver,
+                dependencyRegistry.get("AssetPathResolver"),
+                dependencyRegistry.get("EnvironmentVariableProvider"),
             ),
             actionHandlers:
-                operatingSystem === "Linux"
+                dependencyRegistry.get("OperatingSystem") === "Linux"
                     ? [new GtkLaunchActionHandler(dependencyRegistry.get("CommandlineUtility"))]
                     : [],
         };

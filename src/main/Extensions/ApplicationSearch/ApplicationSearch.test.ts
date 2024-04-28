@@ -34,6 +34,7 @@ describe(ApplicationSearch, () => {
             applicationRepository,
             <Settings>{},
             <AssetPathResolver>{},
+            <EnvironmentVariableProvider>{},
         ).getSearchResultItems();
 
         expect(searchResultItems).toEqual(applications.map((application) => application.toSearchResultItem()));
@@ -55,6 +56,7 @@ describe(ApplicationSearch, () => {
             <ApplicationRepository>{},
             settings,
             <AssetPathResolver>{},
+            <EnvironmentVariableProvider>{},
         );
 
         expect(applicationSearch.getSettingDefaultValue("key1")).toBe("value1");
