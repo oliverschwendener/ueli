@@ -14,6 +14,7 @@ export type Dependencies = {
     CommandlineUtility?: Core.CommandlineUtility;
     Dialog?: Electron.Dialog;
     Emitter?: Emitter<Record<string, unknown>>;
+    EnvironmentVariableProvider?: Core.EnvironmentVariableProvider;
     EventEmitter?: Core.EventEmitter;
     EventSubscriber?: Core.EventSubscriber;
     ExcludedSearchResults?: Core.ExcludedSearchResults;

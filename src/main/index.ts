@@ -27,6 +27,7 @@ import * as Extensions from "./Extensions";
     dependencyRegistry.register("SafeStorage", Electron.safeStorage);
 
     // Core Modules
+    Core.EnvironmentVariableProviderModule.bootstrap(dependencyRegistry);
     Core.IniFileParserModule.bootstrap(dependencyRegistry);
     Core.EventEmitterModule.bootstrap(dependencyRegistry);
     Core.EventSubscriberModule.bootstrap(dependencyRegistry);
