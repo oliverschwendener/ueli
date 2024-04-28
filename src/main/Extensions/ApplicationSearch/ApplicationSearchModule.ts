@@ -5,6 +5,7 @@ import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";
+import { GtkLaunchActionHandler } from "./Linux/GtkLaunchActionHandler";
 import { LinuxApplicationRepository } from "./Linux/LinuxApplicationRepository";
 import { Settings } from "./Settings";
 import { WindowsApplicationRepository } from "./Windows/WindowsApplicationRepository";
@@ -52,6 +53,10 @@ export class ApplicationSearchModule implements ExtensionModule {
                 settings,
                 assetPathResolver,
             ),
+            actionHandlers:
+                operatingSystem === "Linux"
+                    ? [new GtkLaunchActionHandler(dependencyRegistry.get("CommandlineUtility"))]
+                    : [],
         };
     }
 }
