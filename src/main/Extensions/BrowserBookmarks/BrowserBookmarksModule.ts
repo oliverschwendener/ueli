@@ -4,6 +4,9 @@ import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { BrowserBookmarks } from "./BrowserBookmarks";
 import { ChromiumBrowserBookmarkRepository } from "./ChromiumBrowserBookmarkRepository";
+import { FirefoxBookmarkFileResolver } from "./FirefoxBookmarkFileResolver";
+import { FirefoxBrowserBookmarkRepository } from "./FirefoxBrowserBookmarkRepository";
+import { resolveChromiumBookmarksFilePath } from "./resolveChromiumBookmarksFilePath";
 
 export class BrowserBookmarksModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
@@ -16,10 +19,35 @@ export class BrowserBookmarksModule implements ExtensionModule {
 
         return {
             extension: new BrowserBookmarks(
-                new ChromiumBrowserBookmarkRepository(app, fileSystemUtility, operatingSystem),
+                {
+                    Firefox: new FirefoxBrowserBookmarkRepository(
+                        new FirefoxBookmarkFileResolver(
+                            operatingSystem,
+                            app,
+                            fileSystemUtility,
+                            dependencyRegistry.get("IniFileParser"),
+                        ),
+                    ),
+                    Arc: new ChromiumBrowserBookmarkRepository(fileSystemUtility, () =>
+                        resolveChromiumBookmarksFilePath({ browser: "Arc", operatingSystem, app }),
+                    ),
+                    "Brave Browser": new ChromiumBrowserBookmarkRepository(fileSystemUtility, () =>
+                        resolveChromiumBookmarksFilePath({ browser: "Brave Browser", operatingSystem, app }),
+                    ),
+                    "Google Chrome": new ChromiumBrowserBookmarkRepository(fileSystemUtility, () =>
+                        resolveChromiumBookmarksFilePath({ browser: "Google Chrome", operatingSystem, app }),
+                    ),
+                    "Microsoft Edge": new ChromiumBrowserBookmarkRepository(fileSystemUtility, () =>
+                        resolveChromiumBookmarksFilePath({ browser: "Microsoft Edge", operatingSystem, app }),
+                    ),
+                    "Yandex Browser": new ChromiumBrowserBookmarkRepository(fileSystemUtility, () =>
+                        resolveChromiumBookmarksFilePath({ browser: "Yandex Browser", operatingSystem, app }),
+                    ),
+                },
                 settingsManager,
                 assetPathResolver,
                 urlImageGenerator,
+                operatingSystem,
             ),
         };
     }

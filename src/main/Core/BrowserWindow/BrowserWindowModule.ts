@@ -2,7 +2,6 @@ import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
-import type { SearchResultItemAction } from "@common/Core";
 import type { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
 import { createBrowserWindow } from "./createBrowserWindow";
@@ -34,7 +33,7 @@ export class BrowserWindowModule {
 
         BrowserWindowModule.registerBrowserWindowEventListeners(browserWindow, dependencyRegistry);
         BrowserWindowModule.registerEvents(browserWindow, dependencyRegistry);
-        await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyRegistry);
+        await BrowserWindowModule.loadFileOrUrl(browserWindow);
     }
 
     private static registerBrowserWindowEventListeners(
@@ -53,14 +52,6 @@ export class BrowserWindowModule {
     private static registerEvents(browserWindow: BrowserWindow, dependencyRegistry: DependencyRegistry<Dependencies>) {
         const app = dependencyRegistry.get("App");
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
-        const settingsManager = dependencyRegistry.get("SettingsManager");
-
-        eventSubscriber.subscribe("actionInvocationSucceeded", ({ action }: { action: SearchResultItemAction }) => {
-            const shouldHideWindow =
-                settingsManager.getValue("window.hideWindowAfterExecution", true) && action.hideWindowAfterInvocation;
-
-            shouldHideWindow && browserWindow.hide();
-        });
 
         eventSubscriber.subscribe("hotkeyPressed", () => toggleBrowserWindow(app, browserWindow));
 
@@ -115,14 +106,9 @@ export class BrowserWindowModule {
         });
     }
 
-    private static async loadFileOrUrl(
-        browserWindow: BrowserWindow,
-        dependencyRegistry: DependencyRegistry<Dependencies>,
-    ) {
-        const app = dependencyRegistry.get("App");
-
-        await (app.isPackaged
-            ? browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html"))
-            : browserWindow.loadURL(process.env.VITE_DEV_SERVER_URL));
+    private static async loadFileOrUrl(browserWindow: BrowserWindow) {
+        await (process.env.VITE_DEV_SERVER_URL
+            ? browserWindow.loadURL(process.env.VITE_DEV_SERVER_URL)
+            : browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html")));
     }
 }

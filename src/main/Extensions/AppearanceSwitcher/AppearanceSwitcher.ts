@@ -38,7 +38,6 @@ export class AppearanceSwitcher implements Extension {
                     argument: "toggle",
                     description: t("searchResultItemActionDescription"),
                     handlerId: "AppearanceSwitcher",
-                    hideWindowAfterInvocation: false,
                     fluentIcon: "ToggleMultipleRegular",
                 },
             },

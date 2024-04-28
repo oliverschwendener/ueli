@@ -23,7 +23,6 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
                 description: t("searchResultItemDescription"),
                 command: "shutdown -s -t 0",
                 image: this.getImage({ fileName: "windows-11-system-command.png" }),
-                hideWindowAfterInvocation: true,
                 requiresConfirmation: true,
             }),
             WindowsSystemCommand.create({
@@ -31,7 +30,6 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
                 description: t("searchResultItemDescription"),
                 command: "shutdown -r -t 0",
                 image: this.getImage({ fileName: "windows-11-system-command.png" }),
-                hideWindowAfterInvocation: true,
                 requiresConfirmation: true,
             }),
             WindowsSystemCommand.create({
@@ -39,7 +37,6 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
                 description: t("searchResultItemDescription"),
                 command: "shutdown /l",
                 image: this.getImage({ fileName: "windows-11-system-command.png" }),
-                hideWindowAfterInvocation: true,
                 requiresConfirmation: true,
             }),
             WindowsSystemCommand.create({
@@ -47,7 +44,6 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
                 description: t("searchResultItemDescription"),
                 command: "rundll32 user32.dll,LockWorkStation",
                 image: this.getImage({ fileName: "windows-11-system-command.png" }),
-                hideWindowAfterInvocation: true,
                 requiresConfirmation: true,
             }),
             WindowsSystemCommand.create({
@@ -55,7 +51,6 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
                 description: t("searchResultItemDescription"),
                 command: `powershell -NonInteractive -NoProfile -C "$m='[DllImport(\\"Powrprof.dll\\",SetLastError=true)]static extern bool SetSuspendState(bool hibernate,bool forceCritical,bool disableWakeEvent);public static void PowerSleep(){SetSuspendState(false,false,false); }';add-type -name Import -member $m -namespace Dll; [Dll.Import]::PowerSleep();`,
                 image: this.getImage({ fileName: "windows-11-system-command.png" }),
-                hideWindowAfterInvocation: true,
                 requiresConfirmation: true,
             }),
             WindowsSystemCommand.create({
@@ -63,7 +58,6 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
                 description: t("searchResultItemDescription"),
                 command: "shutdown /h",
                 image: this.getImage({ fileName: "windows-11-system-command.png" }),
-                hideWindowAfterInvocation: true,
                 requiresConfirmation: true,
             }),
         ];

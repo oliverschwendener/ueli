@@ -47,7 +47,6 @@ export class ActionHandlerModule {
 
         ipcMain.handle("invokeAction", async (_, { action }: { action: SearchResultItemAction }) => {
             await actionHandlerRegistry.getById(action.handlerId).invokeAction(action);
-            eventEmitter.emitEvent("actionInvocationSucceeded", { action });
         });
     }
 }

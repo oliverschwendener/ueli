@@ -5,7 +5,7 @@ assets @oliverschwendener
 .vscode @oliverschwendener
 docs @oliverschwendener
 .eslintignore @oliverschwendener
-.eslintrc @oliverschwendener
+.eslintrc.json @oliverschwendener
 .gitattributes @oliverschwendener
 .gitignore @oliverschwendener
 .prettierrc @oliverschwendener

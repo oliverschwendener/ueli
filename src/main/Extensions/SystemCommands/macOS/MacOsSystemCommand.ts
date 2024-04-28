@@ -8,24 +8,15 @@ export class MacOsSystemCommand implements SystemCommand {
         description,
         appleScript,
         image,
-        hideWindowAfterInvocation,
         requiresConfirmation,
     }: {
         name: string;
         description: string;
         appleScript: string;
         image: Image;
-        hideWindowAfterInvocation?: boolean;
         requiresConfirmation?: boolean;
     }): MacOsSystemCommand {
-        return new MacOsSystemCommand(
-            name,
-            description,
-            appleScript,
-            image,
-            hideWindowAfterInvocation,
-            requiresConfirmation,
-        );
+        return new MacOsSystemCommand(name, description, appleScript, image, requiresConfirmation);
     }
 
     private constructor(
@@ -33,7 +24,6 @@ export class MacOsSystemCommand implements SystemCommand {
         private readonly description: string,
         private readonly appleScript: string,
         private readonly image: Image,
-        private readonly hideWindowAfterInvocation?: boolean,
         private readonly requiresConfirmation?: boolean,
     ) {}
 
@@ -43,7 +33,6 @@ export class MacOsSystemCommand implements SystemCommand {
                 argument: this.appleScript,
                 description: this.description,
                 handlerId: "MacOsSystemCommandActionHandler",
-                hideWindowAfterInvocation: this.hideWindowAfterInvocation,
                 requiresConfirmation: this.requiresConfirmation,
             },
             description: this.description,

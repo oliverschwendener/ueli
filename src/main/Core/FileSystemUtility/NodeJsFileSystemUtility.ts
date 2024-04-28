@@ -47,7 +47,7 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
     }
 
     public readJsonFileSync<T>(filePath: string): T {
-        return JSON.parse(this.readFileSync(filePath).toString());
+        return JSON.parse(this.readFileSync(filePath));
     }
 
     public removeFile(filePath: string): Promise<void> {
@@ -123,8 +123,8 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         });
     }
 
-    public readFileSync(filePath: string): Buffer {
-        return readFileSync(filePath);
+    public readFileSync(filePath: string): string {
+        return readFileSync(filePath).toString();
     }
 
     private readDirectory(folderPath: string): Promise<string[]> {

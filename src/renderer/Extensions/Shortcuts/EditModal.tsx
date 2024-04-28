@@ -14,12 +14,12 @@ import {
     Field,
     Input,
     Option,
-    Switch,
     Tooltip,
 } from "@fluentui/react-components";
 import { FolderRegular } from "@fluentui/react-icons";
 import { useState, type ReactElement } from "react";
 import { useTranslation } from "react-i18next";
+import { isValidCommand } from "./isValidCommand";
 import { isValidFilePath } from "./isValidFilePath";
 import { isValidName } from "./isValidName";
 import { isValidShortcut } from "./isValidShortcut";
@@ -58,6 +58,7 @@ export const EditModal = ({
     const types: Record<ShortcutType, string> = {
         File: t("typeFile", { ns }),
         Url: t("typeUrl", { ns }),
+        Command: t("typeCommand", { ns }),
     };
 
     const openFileDialog = async () => {
@@ -69,6 +70,19 @@ export const EditModal = ({
     };
 
     const argumentElements: Record<ShortcutType, ReactElement> = {
+        Command: (
+            <Field
+                label={t("command", { ns })}
+                validationMessage={isValidCommand(temporaryShortcut.argument) ? undefined : "invalid command"}
+                validationState={isValidCommand(temporaryShortcut.argument) ? "success" : "error"}
+            >
+                <Input
+                    value={temporaryShortcut.argument}
+                    onChange={(_, { value }) => setProperty("argument", value)}
+                    placeholder="Command"
+                />
+            </Field>
+        ),
         File: (
             <Field
                 label={t("filePath", { ns })}
@@ -156,12 +170,6 @@ export const EditModal = ({
                                 />
                             </Field>
                             {argumentElements[temporaryShortcut.type]}
-                            <Field label={t("hideWindowAfterInvocation", { ns })}>
-                                <Switch
-                                    checked={temporaryShortcut.hideWindowAfterInvocation}
-                                    onChange={(_, { checked }) => setProperty("hideWindowAfterInvocation", checked)}
-                                />
-                            </Field>
                         </div>
                     </DialogContent>
                     <DialogActions>

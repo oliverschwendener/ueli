@@ -8,7 +8,7 @@ import pkg from "./package.json";
 export default defineConfig(({ command }) => {
     const isServe = command === "serve";
     const isBuild = command === "build";
-    const sourcemap = isServe ? "inline" : undefined;
+    const sourcemap = isServe || process.argv.includes("--sourcemap");
 
     return {
         root: "src/renderer",
@@ -74,12 +74,15 @@ export default defineConfig(({ command }) => {
                     },
                 },
             ]),
-            renderer(),
+            process.env.NODE_ENV === "test" ? null : renderer(),
         ],
         server: (() => ({
             host: "127.0.0.1",
             port: 7777,
         }))(),
         clearScreen: false,
+        test: {
+            root: "src",
+        },
     };
 });

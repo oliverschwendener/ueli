@@ -25,11 +25,6 @@ export type SearchResultItemAction = {
     handlerId: string;
 
     /**
-     * Determines if the window should be hidden after invoking the action.
-     */
-    hideWindowAfterInvocation: boolean;
-
-    /**
      * Determines if the action requires confirmation before invoking.
      */
     requiresConfirmation?: boolean;

@@ -15,7 +15,6 @@ describe(SearchResultItemActionUtility, () => {
                     namespace: "searchResultItemAction",
                 },
                 handlerId: "Favorites",
-                hideWindowAfterInvocation: false,
                 fluentIcon: "StarRegular",
             };
 
@@ -33,7 +32,6 @@ describe(SearchResultItemActionUtility, () => {
                     namespace: "searchResultItemAction",
                 },
                 handlerId: "Favorites",
-                hideWindowAfterInvocation: false,
                 fluentIcon: "StarOffRegular",
             };
 
@@ -59,7 +57,6 @@ describe(SearchResultItemActionUtility, () => {
                 },
                 fluentIcon: "CopyRegular",
                 handlerId: "copyToClipboard",
-                hideWindowAfterInvocation: false,
             };
 
             expect(actual).toEqual(expected);
@@ -79,7 +76,6 @@ describe(SearchResultItemActionUtility, () => {
                 },
                 fluentIcon: "EyeOffRegular",
                 handlerId: "excludeFromSearchResults",
-                hideWindowAfterInvocation: false,
             };
 
             expect(actual).toEqual(expected);
@@ -106,7 +102,6 @@ describe(SearchResultItemActionUtility, () => {
                 },
                 handlerId: "OpenFilePath",
                 fluentIcon: "OpenRegular",
-                hideWindowAfterInvocation: true,
             };
 
             expect(actual).toEqual(expected);
@@ -125,7 +120,6 @@ describe(SearchResultItemActionUtility, () => {
                     namespace: "searchResultItemAction",
                 },
                 handlerId: "Url",
-                hideWindowAfterInvocation: true,
                 fluentIcon: "OpenRegular",
             };
 
@@ -143,7 +137,6 @@ describe(SearchResultItemActionUtility, () => {
                 argument: "this is a file path",
                 description: "Show in file explorer",
                 handlerId: "ShowItemInFileExplorer",
-                hideWindowAfterInvocation: true,
                 descriptionTranslation: {
                     key: "showInFileExplorer",
                     namespace: "searchResultItemAction",

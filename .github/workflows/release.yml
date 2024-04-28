@@ -9,7 +9,7 @@ jobs:
     release:
         strategy:
             matrix:
-                os: [macos-12, windows-2022, ubuntu-22.04]
+                os: [macos-14, windows-2022, ubuntu-22.04]
         runs-on: ${{ matrix.os }}
         name: Publish new release
         steps:
@@ -19,7 +19,7 @@ jobs:
             - name: Set up pnpm
               uses: pnpm/action-setup@v3
               with:
-                  version: 8
+                  version: 9
 
             - name: Set up Node.js
               uses: actions/setup-node@v4

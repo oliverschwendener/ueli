@@ -17,7 +17,6 @@ export class SearchResultItemActionUtility {
                 namespace: "searchResultItemAction",
             },
             handlerId: "Favorites",
-            hideWindowAfterInvocation: false,
             fluentIcon: "StarRegular",
         };
     }
@@ -34,7 +33,6 @@ export class SearchResultItemActionUtility {
                 namespace: "searchResultItemAction",
             },
             handlerId: "Favorites",
-            hideWindowAfterInvocation: false,
             fluentIcon: "StarOffRegular",
         };
     }
@@ -56,7 +54,6 @@ export class SearchResultItemActionUtility {
             argument: `/extension/${extensionId}`,
             description,
             handlerId: "navigateTo",
-            hideWindowAfterInvocation: false,
             fluentIcon,
         };
     }
@@ -78,7 +75,6 @@ export class SearchResultItemActionUtility {
             description,
             descriptionTranslation,
             handlerId: "OpenFilePath",
-            hideWindowAfterInvocation: true,
             fluentIcon: "OpenRegular",
         };
     }
@@ -97,7 +93,6 @@ export class SearchResultItemActionUtility {
             description,
             descriptionTranslation,
             handlerId: "GtkLaunch",
-            hideWindowAfterInvocation: true,
             fluentIcon: "OpenRegular",
         };
     }
@@ -114,7 +109,6 @@ export class SearchResultItemActionUtility {
                 namespace: "searchResultItemAction",
             },
             handlerId: "excludeFromSearchResults",
-            hideWindowAfterInvocation: false,
             fluentIcon: "EyeOffRegular",
         };
     }
@@ -131,7 +125,6 @@ export class SearchResultItemActionUtility {
                 namespace: "searchResultItemAction",
             },
             handlerId: "Url",
-            hideWindowAfterInvocation: true,
             fluentIcon: "OpenRegular",
         };
     }
@@ -153,7 +146,6 @@ export class SearchResultItemActionUtility {
             description,
             descriptionTranslation,
             handlerId: "copyToClipboard",
-            hideWindowAfterInvocation: false,
             fluentIcon: "CopyRegular",
         };
     }
@@ -170,7 +162,6 @@ export class SearchResultItemActionUtility {
                 namespace: "searchResultItemAction",
             },
             handlerId: "ShowItemInFileExplorer",
-            hideWindowAfterInvocation: true,
             fluentIcon: "DocumentFolderRegular",
         };
     }
