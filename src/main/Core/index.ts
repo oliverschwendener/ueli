@@ -12,6 +12,7 @@ export * from "./Dependencies";
 export * from "./DependencyRegistry";
 export * from "./Dialog";
 export * from "./Dock";
+export * from "./EnvironmentVariableProvider";
 export * from "./EventEmitter";
 export * from "./EventSubscriber";
 export * from "./ExcludedSearchResults";
