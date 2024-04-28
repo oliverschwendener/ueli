@@ -82,7 +82,7 @@ importers:
         specifier: ^8.56.0
         version: 8.57.0
       prettier:
-        specifier: ^3.2.4
+        specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-organize-imports:
         specifier: ^3.2.4
