@@ -79,24 +79,6 @@ export class SearchResultItemActionUtility {
         };
     }
 
-    public static createGtkLaunchAction({
-        filePath,
-        description,
-        descriptionTranslation,
-    }: {
-        filePath: string;
-        description: string;
-        descriptionTranslation?: { key: string; namespace: string };
-    }): SearchResultItemAction {
-        return {
-            argument: filePath,
-            description,
-            descriptionTranslation,
-            handlerId: "GtkLaunch",
-            fluentIcon: "OpenRegular",
-        };
-    }
-
     /**
      * Creates an action to exclude the given SearchResultItem from the search results by its ID.
      */
