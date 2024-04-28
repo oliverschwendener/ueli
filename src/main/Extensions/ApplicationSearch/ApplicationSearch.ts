@@ -1,4 +1,5 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { Extension } from "@Core/Extension";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
@@ -25,6 +26,7 @@ export class ApplicationSearch implements Extension {
         private readonly applicationRepository: ApplicationRepository,
         private readonly settings: Settings,
         private readonly assetPathResolver: AssetPathResolver,
+        private readonly environmentVariableProvider: EnvironmentVariableProvider,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -34,10 +36,7 @@ export class ApplicationSearch implements Extension {
 
     public isSupported(): boolean {
         const checks: Record<OperatingSystem, () => boolean> = {
-            Linux: () => {
-                const supportedLinuxDesktopEnvironments = ["cinnamon", "gnome"];
-                return supportedLinuxDesktopEnvironments.includes(process.env["XDG_SESSION_DESKTOP"]);
-            },
+            Linux: () => ["cinnamon", "gnome"].includes(this.environmentVariableProvider.get("XDG_SESSION_DESKTOP")),
             macOS: () => true,
             Windows: () => true,
         };
