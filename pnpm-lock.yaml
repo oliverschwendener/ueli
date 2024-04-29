@@ -15,8 +15,8 @@ importers:
         specifier: ^2.0.233
         version: 2.0.235(react@18.2.0)
       better-sqlite3:
-        specifier: ^9.5.0
-        version: 9.5.0
+        specifier: ^9.6.0
+        version: 9.6.0
       fuse.js:
         specifier: ^7.0.0
         version: 7.0.0
@@ -46,8 +46,8 @@ importers:
         version: 6.22.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
     devDependencies:
       '@types/better-sqlite3':
-        specifier: ^7.6.9
-        version: 7.6.9
+        specifier: ^7.6.10
+        version: 7.6.10
       '@types/node':
         specifier: ^20.8.6
         version: 20.12.7
@@ -73,8 +73,8 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0(vitest@1.5.0(@types/node@20.12.7))
       electron:
-        specifier: ^29.3.0
-        version: 29.3.0
+        specifier: ^30.0.1
+        version: 30.0.1
       electron-builder:
         specifier: ^24.13.3
         version: 24.13.3(electron-builder-squirrel-windows@24.13.3(dmg-builder@24.13.3))
@@ -1062,8 +1062,8 @@ packages:
   '@types/babel__traverse@7.20.5':
     resolution: {integrity: sha512-WXCyOcRtH37HAUkpXhUduaxdm82b4GSlyTqajXviN4EfiuPgNYR109xMCKvpl6zPIpua0DGlMEDCq+g8EdoheQ==}
 
-  '@types/better-sqlite3@7.6.9':
-    resolution: {integrity: sha512-FvktcujPDj9XKMJQWFcl2vVl7OdRIqsSRX9b0acWwTmwLK9CF2eqo/FRcmMLNpugKoX/avA6pb7TorDLmpgTnQ==}
+  '@types/better-sqlite3@7.6.10':
+    resolution: {integrity: sha512-TZBjD+yOsyrUJGmcUj6OS3JADk3+UZcNv3NOBqGkM09bZdi28fNZw8ODqbMOLfKCu7RYCO62/ldq1iHbzxqoPw==}
 
   '@types/cacheable-request@6.0.3':
     resolution: {integrity: sha512-IQ3EbTzGxIigb1I3qPZc1rWJnH0BmSKv5QYTalEwweFvyBDLSAe24zP0le/hyi7ecGfZVlIVAg4BZqb8WBwKqw==}
@@ -1326,8 +1326,8 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  better-sqlite3@9.5.0:
-    resolution: {integrity: sha512-01qVcM4gPNwE+PX7ARNiHINwzVuD6nx0gdldaAAcu+MrzyIAukQ31ZDKEpzRO/CNA9sHpxoTZ8rdjoyAin4dyg==}
+  better-sqlite3@9.6.0:
+    resolution: {integrity: sha512-yR5HATnqeYNVnkaUTf4bOP2dJSnyhP4puJN/QPRyx4YkBEEUxib422n2XzPqDEHjQQqazoYoADdAm5vE15+dAQ==}
 
   bindings@1.5.0:
     resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
@@ -1610,8 +1610,8 @@ packages:
   electron-to-chromium@1.4.738:
     resolution: {integrity: sha512-lwKft2CLFztD+vEIpesrOtCrko/TFnEJlHFdRhazU7Y/jx5qc4cqsocfVrBg4So4gGe9lvxnbLIoev47WMpg+A==}
 
-  electron@29.3.0:
-    resolution: {integrity: sha512-ZxFKm0/v48GSoBuO3DdnMlCYXefEUKUHLMsKxyXY4nZGgzbBKpF/X8haZa2paNj23CLfsCKBOtfc2vsEQiOOsA==}
+  electron@30.0.1:
+    resolution: {integrity: sha512-iwxkI/n2wBd29NH7TH0ZY8aWGzCoKpzJz+D10u7aGSJi1TV6d4MSM3rWyKvT/UkAHkTKOEgYfUyCa2vWQm8L0g==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -4410,7 +4410,7 @@ snapshots:
     dependencies:
       '@babel/types': 7.24.0
 
-  '@types/better-sqlite3@7.6.9':
+  '@types/better-sqlite3@7.6.10':
     dependencies:
       '@types/node': 20.12.7
 
@@ -4775,7 +4775,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  better-sqlite3@9.5.0:
+  better-sqlite3@9.6.0:
     dependencies:
       bindings: 1.5.0
       prebuild-install: 7.1.2
@@ -5126,7 +5126,7 @@ snapshots:
 
   electron-to-chromium@1.4.738: {}
 
-  electron@29.3.0:
+  electron@30.0.1:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 20.12.7
