@@ -35,9 +35,7 @@ Make sure you have [pnpm](https://pnpm.io/) installed.
 -   Perform typecheck
 
     ```
-    $ pnpm typecheck:main
-    $ pnpm typecheck:preload
-    $ pnpm typecheck:renderer
+    $ pnpm typecheck
     ```
 
 -   Run tests
