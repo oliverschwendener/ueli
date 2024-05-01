@@ -7,10 +7,12 @@ import { RescanOrchestrator } from "./RescanOrchestrator";
 describe(RescanOrchestrator, () => {
     describe("cancel", () => {
         it("should cancel the next rescan if cancellation token is set", () => {
-            const getValueMock = vi.fn().mockReturnValue(300);
-
             const eventEmitter = <EventEmitter>{ emitEvent: vi.fn() };
-            const settingsManager = <SettingsManager>{ getValue: (k, d) => getValueMock(k, d) };
+
+            const settingsManager = <SettingsManager>{
+                getValue: vi.fn().mockReturnValue(300),
+                updateValue: vi.fn(),
+            };
 
             const taskScheduler = <TaskScheduler>{
                 scheduleTask: vi.fn().mockReturnValue(1),
@@ -22,7 +24,7 @@ describe(RescanOrchestrator, () => {
             rescanOrchestrator.scanUntilCancelled();
             rescanOrchestrator.cancel();
 
-            expect(getValueMock).toHaveBeenCalledWith("general.rescanIntervalInSeconds", 300);
+            expect(settingsManager.getValue).toHaveBeenCalledWith("general.rescanIntervalInSeconds", 300);
             expect(eventEmitter.emitEvent).toHaveBeenCalledWith("RescanOrchestrator:timeElapsed");
             expect(taskScheduler.scheduleTask).toHaveBeenCalledWith(expect.any(Function), 300 * 1000);
             expect(taskScheduler.abortTask).toHaveBeenCalledWith(1);
@@ -34,9 +36,7 @@ describe(RescanOrchestrator, () => {
                 abortTask: vi.fn(),
             };
 
-            const rescanOrchestrator = new RescanOrchestrator(<EventEmitter>{}, <SettingsManager>{}, taskScheduler);
-
-            rescanOrchestrator.cancel();
+            new RescanOrchestrator(<EventEmitter>{}, <SettingsManager>{}, taskScheduler).cancel();
 
             expect(taskScheduler.abortTask).not.toHaveBeenCalled();
         });
@@ -44,7 +44,43 @@ describe(RescanOrchestrator, () => {
 
     describe("scanUntilCancelled", () => {
         it("should emit the timeElapsed event and schedule the next scan", () => {
-            // TODO: Implement this test
+            const eventEmitter = <EventEmitter>{ emitEvent: vi.fn() };
+
+            const settingsManager = <SettingsManager>{
+                getValue: vi.fn().mockReturnValue(20),
+                updateValue: vi.fn(),
+            };
+
+            const taskScheduler = <TaskScheduler>{
+                scheduleTask: vi.fn().mockReturnValue(1),
+                abortTask: vi.fn(),
+            };
+
+            new RescanOrchestrator(eventEmitter, settingsManager, taskScheduler).scanUntilCancelled();
+
+            expect(eventEmitter.emitEvent).toHaveBeenCalledWith("RescanOrchestrator:timeElapsed");
+            expect(settingsManager.getValue).toHaveBeenCalledWith("general.rescanIntervalInSeconds", 300);
+            expect(taskScheduler.scheduleTask).toHaveBeenCalledWith(expect.any(Function), 20000);
+        });
+
+        it("should use the default rescan duration when the configured value is under 10 seconds", () => {
+            const eventEmitter = <EventEmitter>{ emitEvent: vi.fn() };
+
+            const settingsManager = <SettingsManager>{
+                getValue: vi.fn().mockReturnValue(9),
+                updateValue: vi.fn(),
+            };
+
+            const taskScheduler = <TaskScheduler>{
+                scheduleTask: vi.fn().mockReturnValue(1),
+                abortTask: vi.fn(),
+            };
+
+            new RescanOrchestrator(eventEmitter, settingsManager, taskScheduler).scanUntilCancelled();
+
+            expect(eventEmitter.emitEvent).toHaveBeenCalledWith("RescanOrchestrator:timeElapsed");
+            expect(settingsManager.getValue).toHaveBeenCalledWith("general.rescanIntervalInSeconds", 300);
+            expect(taskScheduler.scheduleTask).toHaveBeenCalledWith(expect.any(Function), 300000);
         });
     });
 });
