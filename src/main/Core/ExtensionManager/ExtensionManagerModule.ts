@@ -23,7 +23,7 @@ export class ExtensionManagerModule {
 
         const extensionManager = new ExtensionManager(extensionRegistry, searchIndex, settingsManager, logger);
 
-        await extensionManager.populateSearchIndex();
+        // await extensionManager.populateSearchIndex();
 
         ipcMain.on("getExtensionTranslations", (event) => {
             event.returnValue = extensionManager.getSupportedExtensions().map((extension) => ({
@@ -79,6 +79,11 @@ export class ExtensionManagerModule {
 
         ipcMain.handle("triggerExtensionRescan", (_, { extensionId }: { extensionId: string }) =>
             extensionManager.populateSearchIndexByExtensionId(extensionId),
+        );
+
+        eventSubscriber.subscribe(
+            "RescanOrchestrator:timeElapsed",
+            async () => await extensionManager.populateSearchIndex(),
         );
 
         eventSubscriber.subscribe("settingUpdated", async ({ key }: { key: string }) => {

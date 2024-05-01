@@ -41,6 +41,7 @@ export type Dependencies = {
     SettingsWriter?: Core.SettingsWriter;
     Shell?: Electron.Shell;
     SystemPreferences?: Electron.SystemPreferences;
+    TaskScheduler?: Core.TaskScheduler;
     Translator?: Core.Translator;
     UeliCommandInvoker?: Core.UeliCommandInvoker;
     UrlImageGenerator?: Core.UrlImageGenerator;

@@ -27,6 +27,7 @@ import * as Extensions from "./Extensions";
     dependencyRegistry.register("SafeStorage", Electron.safeStorage);
 
     // Core Modules
+    Core.TaskSchedulerModule.bootstrap(dependencyRegistry);
     Core.EnvironmentVariableProviderModule.bootstrap(dependencyRegistry);
     Core.IniFileParserModule.bootstrap(dependencyRegistry);
     Core.EventEmitterModule.bootstrap(dependencyRegistry);
@@ -69,4 +70,6 @@ import * as Extensions from "./Extensions";
 
     // BrowserWindow
     await Core.BrowserWindowModule.bootstrap(dependencyRegistry);
+
+    Core.RescanOrchestratorModule.bootstrap(dependencyRegistry);
 })();
