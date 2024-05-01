@@ -41,4 +41,10 @@ describe(RescanOrchestrator, () => {
             expect(taskScheduler.abortTask).not.toHaveBeenCalled();
         });
     });
+
+    describe("scanUntilCancelled", () => {
+        it("should emit the timeElapsed event and schedule the next scan", () => {
+            // TODO: Implement this test
+        });
+    });
 });
