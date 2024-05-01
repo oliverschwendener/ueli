@@ -1,7 +1,7 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import { describe, expect, it, vi } from "vitest";
-import type { CacheFileNameGenerator } from "./CacheFileNameGenerator";
+import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";
 import { MacOsApplicationIconExtractor } from "./MacOsApplicationIconExtractor";
 
 describe(MacOsApplicationIconExtractor, () => {
