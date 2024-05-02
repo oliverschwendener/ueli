@@ -3,8 +3,6 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { TaskScheduler } from "@Core/TaskScheduler";
 
 export class RescanOrchestrator {
-    private static DefaultRescanDurationInSeconds = 300; // 5 minutes
-
     private cancellationToken?: NodeJS.Timeout = undefined;
 
     public constructor(
@@ -29,13 +27,13 @@ export class RescanOrchestrator {
     }
 
     private getRescanDurationInSeconds(): number {
+        const defaultRescanDurationInSeconds = 60;
+
         const rescanDurationInSeconds = this.settingsManager.getValue(
-            "general.rescanIntervalInSeconds",
-            RescanOrchestrator.DefaultRescanDurationInSeconds,
+            "searchEngine.rescanIntervalInSeconds",
+            defaultRescanDurationInSeconds,
         );
 
-        return rescanDurationInSeconds < 10
-            ? RescanOrchestrator.DefaultRescanDurationInSeconds
-            : rescanDurationInSeconds;
+        return rescanDurationInSeconds < 10 ? defaultRescanDurationInSeconds : rescanDurationInSeconds;
     }
 }

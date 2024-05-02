@@ -12,8 +12,10 @@ export class RescanOrchestratorModule {
 
         rescanOrchestrator.scanUntilCancelled();
 
-        // TODO: subscribe to rescan duration change event
-        // const eventSubscriber = dependencyRegistry.get("EventSubscriber");
-        // eventSubscriber.subscribe()
+        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
+        eventSubscriber.subscribe("settingUpdated[searchEngine.rescanIntervalInSeconds]", () => {
+            rescanOrchestrator.cancel();
+            rescanOrchestrator.scanUntilCancelled();
+        });
     }
 }
