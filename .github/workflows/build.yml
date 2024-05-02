@@ -8,46 +8,53 @@ on:
         branches:
             - main
 
-jobs:
-    release:
-        strategy:
-            matrix:
-                os: [macos-14, windows-2022, ubuntu-22.04]
-        runs-on: ${{ matrix.os }}
-        name: Build
-        steps:
-            - name: Checkout current commit/branch/tag
-              uses: actions/checkout@v4
-
-            - name: Set up pnpm
-              uses: pnpm/action-setup@v3
-              with:
-                  version: 9
-
-            - name: Set up Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 20
-                  cache: pnpm
-
-            - name: Install dependencies
-              run: pnpm install
-              env:
-                  NODE_ENV: development
-
-            - name: Run typecheck
-              run: pnpm typecheck
-
-            - name: Run linter
-              run: pnpm lint
-
-            - name: Run prettier
-              run: pnpm prettier:check
-
-            - name: Run tests
-              run: pnpm test
-
-            - name: Build app
-              run: pnpm build
-              env:
-                  NODE_ENV: production
+            jobs:
+              release:
+                  strategy:
+                      matrix:
+                          os: [macos-14, windows-2022, ubuntu-22.04]
+                  runs-on: ${{ matrix.os }}
+                  name: Build
+                  steps:
+                      - name: Checkout current commit/branch/tag
+                        uses: actions/checkout@v4
+          
+                      - name: Set up pnpm
+                        uses: pnpm/action-setup@v3
+                        with:
+                            version: 9
+          
+                      - name: Set up Node.js
+                        uses: actions/setup-node@v4
+                        with:
+                            node-version: 20
+                            cache: pnpm
+          
+                      - name: Configure pnpm
+                        run: |
+                            pnpm config set shamefully-hoist true --location=project
+                            pnpm config set auto-install-peers true --location=project
+                            pnpm config set strict-peer-dependencies true --location=project
+          
+                      - name: Install dependencies
+                        run: pnpm install
+                        env:
+                            NODE_ENV: development
+          
+                      - name: Run typecheck
+                        run: pnpm typecheck
+          
+                      - name: Run linter
+                        run: pnpm lint
+          
+                      - name: Run prettier
+                        run: pnpm prettier:check
+          
+                      - name: Run tests
+                        run: pnpm test
+          
+                      - name: Build app
+                        run: pnpm build
+                        env:
+                            NODE_ENV: production
+          
