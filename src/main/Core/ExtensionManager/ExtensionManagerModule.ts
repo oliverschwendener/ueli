@@ -79,10 +79,10 @@ export class ExtensionManagerModule {
             extensionManager.populateSearchIndexByExtensionId(extensionId),
         );
 
-        eventSubscriber.subscribe(
-            "RescanOrchestrator:timeElapsed",
-            async () => await extensionManager.populateSearchIndex(),
-        );
+        eventSubscriber.subscribe("RescanOrchestrator:timeElapsed", async () => {
+            logger.info("Automatic rescan triggered");
+            await extensionManager.populateSearchIndex();
+        });
 
         eventSubscriber.subscribe("settingUpdated", async ({ key }: { key: string }) => {
             for (const extension of extensionRegistry.getAll()) {
