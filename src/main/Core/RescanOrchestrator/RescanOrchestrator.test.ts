@@ -10,7 +10,7 @@ describe(RescanOrchestrator, () => {
             const eventEmitter = <EventEmitter>{ emitEvent: vi.fn() };
 
             const settingsManager = <SettingsManager>{
-                getValue: vi.fn().mockReturnValue(300),
+                getValue: vi.fn().mockReturnValue(20),
                 updateValue: vi.fn(),
             };
 
@@ -24,9 +24,9 @@ describe(RescanOrchestrator, () => {
             rescanOrchestrator.scanUntilCancelled();
             rescanOrchestrator.cancel();
 
-            expect(settingsManager.getValue).toHaveBeenCalledWith("general.rescanIntervalInSeconds", 300);
+            expect(settingsManager.getValue).toHaveBeenCalledWith("searchEngine.rescanIntervalInSeconds", 60);
             expect(eventEmitter.emitEvent).toHaveBeenCalledWith("RescanOrchestrator:timeElapsed");
-            expect(taskScheduler.scheduleTask).toHaveBeenCalledWith(expect.any(Function), 300 * 1000);
+            expect(taskScheduler.scheduleTask).toHaveBeenCalledWith(expect.any(Function), 20 * 1000);
             expect(taskScheduler.abortTask).toHaveBeenCalledWith(1);
         });
 
@@ -47,7 +47,7 @@ describe(RescanOrchestrator, () => {
             const eventEmitter = <EventEmitter>{ emitEvent: vi.fn() };
 
             const settingsManager = <SettingsManager>{
-                getValue: vi.fn().mockReturnValue(20),
+                getValue: vi.fn().mockReturnValue(40),
                 updateValue: vi.fn(),
             };
 
@@ -59,8 +59,8 @@ describe(RescanOrchestrator, () => {
             new RescanOrchestrator(eventEmitter, settingsManager, taskScheduler).scanUntilCancelled();
 
             expect(eventEmitter.emitEvent).toHaveBeenCalledWith("RescanOrchestrator:timeElapsed");
-            expect(settingsManager.getValue).toHaveBeenCalledWith("general.rescanIntervalInSeconds", 300);
-            expect(taskScheduler.scheduleTask).toHaveBeenCalledWith(expect.any(Function), 20000);
+            expect(settingsManager.getValue).toHaveBeenCalledWith("searchEngine.rescanIntervalInSeconds", 60);
+            expect(taskScheduler.scheduleTask).toHaveBeenCalledWith(expect.any(Function), 40000);
         });
 
         it("should use the default rescan duration when the configured value is under 10 seconds", () => {
@@ -79,8 +79,8 @@ describe(RescanOrchestrator, () => {
             new RescanOrchestrator(eventEmitter, settingsManager, taskScheduler).scanUntilCancelled();
 
             expect(eventEmitter.emitEvent).toHaveBeenCalledWith("RescanOrchestrator:timeElapsed");
-            expect(settingsManager.getValue).toHaveBeenCalledWith("general.rescanIntervalInSeconds", 300);
-            expect(taskScheduler.scheduleTask).toHaveBeenCalledWith(expect.any(Function), 300000);
+            expect(settingsManager.getValue).toHaveBeenCalledWith("searchEngine.rescanIntervalInSeconds", 60);
+            expect(taskScheduler.scheduleTask).toHaveBeenCalledWith(expect.any(Function), 60000);
         });
     });
 });
