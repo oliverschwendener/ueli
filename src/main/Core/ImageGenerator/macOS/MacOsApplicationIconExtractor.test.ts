@@ -1,5 +1,6 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
+import { join } from "path";
 import { describe, expect, it, vi } from "vitest";
 import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";
 import { MacOsApplicationIconExtractor } from "./MacOsApplicationIconExtractor";
@@ -14,10 +15,10 @@ describe(MacOsApplicationIconExtractor, () => {
         );
 
         it("should return true for .app file paths", () =>
-            expect(extractor.matchesFilePath("path/to/file.app")).toBe(true));
+            expect(extractor.matchesFilePath(join("path", "to", "file.app"))).toBe(true));
 
         it("should return false for non-.app file paths", () =>
-            expect(extractor.matchesFilePath("path/to/file.txt")).toBe(false));
+            expect(extractor.matchesFilePath(join("path", "to", "file.txt"))).toBe(false));
     });
 
     describe("extractFileIcon", () => {
@@ -33,20 +34,23 @@ describe(MacOsApplicationIconExtractor, () => {
                 "cache",
             );
 
-            const actual = await extractor.extractFileIcon("path/to/file.app");
+            const appFilePath = join("path", "to", "file.app");
+            const cachedFilePath = join("cache", "cache-file-name.png");
 
-            expect(actual).toEqual({ url: "file://cache/cache-file-name.png" });
-            expect(pathExistsMock).toHaveBeenCalledWith("cache/cache-file-name.png");
+            const actual = await extractor.extractFileIcon(appFilePath);
+
+            expect(actual).toEqual({ url: `file://${cachedFilePath}` });
+            expect(pathExistsMock).toHaveBeenCalledWith(cachedFilePath);
 
             expect(executeCommandMock).toHaveBeenCalledWith(
-                `defaults read "path/to/file.app/Contents/Info.plist" CFBundleIconFile`,
+                `defaults read "${join(appFilePath, "Contents", "Info.plist")}" CFBundleIconFile`,
             );
 
             expect(executeCommandMock).toHaveBeenCalledWith(
-                `sips -s format png "path/to/file.app/Contents/Resources/output.icns" -o "cache/cache-file-name.png"`,
+                `sips -s format png "${join(appFilePath, "Contents", "Resources", "output.icns")}" -o "${cachedFilePath}"`,
             );
 
-            expect(generateCacheFileNameMock).toHaveBeenCalledWith("path/to/file.app");
+            expect(generateCacheFileNameMock).toHaveBeenCalledWith(appFilePath);
         });
 
         it("should use the cached icon if it already exists", async () => {
@@ -60,16 +64,18 @@ describe(MacOsApplicationIconExtractor, () => {
                 "cache",
             );
 
-            const actual = await extractor.extractFileIcon("path/to/file.app");
+            const appFilePath = join("path", "to", "file.app");
+            const cachedFilePath = join("cache", "cache-file-name.png");
+            const actual = await extractor.extractFileIcon(appFilePath);
 
-            expect(actual).toEqual({ url: "file://cache/cache-file-name.png" });
-            expect(pathExistsMock).toHaveBeenCalledWith("cache/cache-file-name.png");
-            expect(generateCacheFileNameMock).toHaveBeenCalledWith("path/to/file.app");
+            expect(actual).toEqual({ url: `file://${cachedFilePath}` });
+            expect(pathExistsMock).toHaveBeenCalledWith(cachedFilePath);
+            expect(generateCacheFileNameMock).toHaveBeenCalledWith(appFilePath);
         });
     });
 
     describe("extractFileIcons", () => {
-        it("should ", async () => {
+        it("should extract multiple icons", async () => {
             const pathExistsMock = vi.fn().mockResolvedValue(true);
 
             const generateCacheFileNameMock = vi.fn().mockImplementation((filePath: string) => {
@@ -90,14 +96,14 @@ describe(MacOsApplicationIconExtractor, () => {
             );
 
             expect(await extractor.extractFileIcons(["file1.app", "file2.app", "file3.app"])).toEqual({
-                "file1.app": { url: "file://cache/cache-file-name-1.png" },
-                "file2.app": { url: "file://cache/cache-file-name-2.png" },
-                "file3.app": { url: "file://cache/cache-file-name-3.png" },
+                "file1.app": { url: `file://${join("cache", "cache-file-name-1.png")}` },
+                "file2.app": { url: `file://${join("cache", "cache-file-name-2.png")}` },
+                "file3.app": { url: `file://${join("cache", "cache-file-name-3.png")}` },
             });
 
-            expect(pathExistsMock).toHaveBeenCalledWith("cache/cache-file-name-1.png");
-            expect(pathExistsMock).toHaveBeenCalledWith("cache/cache-file-name-2.png");
-            expect(pathExistsMock).toHaveBeenCalledWith("cache/cache-file-name-3.png");
+            expect(pathExistsMock).toHaveBeenCalledWith(join("cache", "cache-file-name-1.png"));
+            expect(pathExistsMock).toHaveBeenCalledWith(join("cache", "cache-file-name-2.png"));
+            expect(pathExistsMock).toHaveBeenCalledWith(join("cache", "cache-file-name-3.png"));
 
             expect(generateCacheFileNameMock).toHaveBeenCalledWith("file1.app");
             expect(generateCacheFileNameMock).toHaveBeenCalledWith("file2.app");
