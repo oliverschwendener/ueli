@@ -31,9 +31,7 @@ jobs:
                   cache: pnpm
 
             - name: Install dependencies
-              run: |
-                  pnpm install --ignore-scripts
-                  ./node_modules/.bin/electron-builder install-app-deps
+              run: pnpm install
               env:
                   NODE_ENV: development
 
