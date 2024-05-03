@@ -1,6 +1,7 @@
 import { useContextBridge, useSetting } from "@Core/Hooks";
 import { Section } from "../../Section";
 import { SectionList } from "../../SectionList";
+import { AlwaysCenter } from "./AlwaysCenter";
 import { AlwaysOnTop } from "./AlwaysOnTop";
 import { BackgroundMaterial } from "./BackgroundMaterial";
 import { HideWindowOnBlur } from "./HideWindowOnBlur";
@@ -28,6 +29,9 @@ export const Window = () => {
             </Section>
             <Section>
                 <HideWindowOnBlur />
+            </Section>
+            <Section>
+                <AlwaysCenter />
             </Section>
 
             {operatingSystem === "Windows" ? (
