@@ -1,13 +1,13 @@
 import type { App } from "electron";
 import { describe, expect, it, vi } from "vitest";
-import { SingleInstaneLockModule } from "./SingleInstanceLockModule";
+import { SingleInstanceLockModule } from "./SingleInstanceLockModule";
 
-describe(SingleInstaneLockModule, () => {
+describe(SingleInstanceLockModule, () => {
     it("should request single instance lock", () => {
         const requestSingleInstanceLockMock = vi.fn().mockReturnValue(true);
         const quickMock = vi.fn();
 
-        SingleInstaneLockModule.bootstrap(<App>{
+        SingleInstanceLockModule.bootstrap(<App>{
             requestSingleInstanceLock: () => requestSingleInstanceLockMock(),
             quit: () => quickMock(),
         });
@@ -21,7 +21,7 @@ describe(SingleInstaneLockModule, () => {
 
         const quickMock = vi.fn();
 
-        SingleInstaneLockModule.bootstrap(<App>{
+        SingleInstanceLockModule.bootstrap(<App>{
             requestSingleInstanceLock: () => requestSingleInstanceLockMock(),
             quit: () => quickMock(),
         });

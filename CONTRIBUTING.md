@@ -26,4 +26,4 @@ We accept pull requests only in English. When a pull request is posted in a lang
 
 ### Coding style
 
-Please use [eslint](.eslintrc.json) to verify that your contribution matches our coding style. Additionally we use [prettier](.prettierrc) to auto-format the code. All pull requests that don't match the coding style won't be accepted.
+Please use [eslint](.eslintrc.json) to verify that your contribution matches our coding style. Additionally, we use [prettier](.prettierrc) to auto-format the code. All pull requests that don't match the coding style won't be accepted.

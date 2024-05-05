@@ -7,7 +7,7 @@ import * as Extensions from "./Extensions";
 (async () => {
     await Electron.app.whenReady();
 
-    Core.SingleInstaneLockModule.bootstrap(Electron.app);
+    Core.SingleInstanceLockModule.bootstrap(Electron.app);
     Core.DockModule.bootstrap(Electron.app);
 
     const dependencyRegistry = Core.DependencyRegistryModule.bootstrap();
