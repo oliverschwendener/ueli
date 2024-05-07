@@ -17,6 +17,7 @@ export class ApplicationSearchModule implements ExtensionModule {
             "ApplicationSearch",
             dependencyRegistry.get("SettingsManager"),
             dependencyRegistry.get("App"),
+            dependencyRegistry.get("EnvironmentVariableProvider"),
         );
 
         const applicationRepositories: Record<OperatingSystem, ApplicationRepository> = {
@@ -35,10 +36,10 @@ export class ApplicationSearchModule implements ExtensionModule {
                 dependencyRegistry.get("AssetPathResolver"),
             ),
             Linux: new LinuxApplicationRepository(
-                dependencyRegistry.get("CommandlineUtility"),
                 dependencyRegistry.get("FileSystemUtility"),
                 dependencyRegistry.get("FileImageGenerator"),
                 dependencyRegistry.get("IniFileParser"),
+                dependencyRegistry.get("EnvironmentVariableProvider"),
                 dependencyRegistry.get("AssetPathResolver"),
                 dependencyRegistry.get("Logger"),
                 settings,
