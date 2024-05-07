@@ -57,6 +57,7 @@ export class ImageGeneratorModule {
                     cacheFileNameGenerator,
                     cacheFolderPath,
                     dependencyRegistry.get("App").getPath("home"),
+                    dependencyRegistry.get("EnvironmentVariableProvider"),
                 ),
             ],
             macOS: [
