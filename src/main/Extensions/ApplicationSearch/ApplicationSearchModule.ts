@@ -5,11 +5,10 @@ import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";
-import { LaunchDesktopFileActionHandler } from "./Linux/LaunchDesktopFileActionHandler";
-import { LinuxApplicationRepository } from "./Linux/LinuxApplicationRepository";
+import { LaunchDesktopFileActionHandler, LinuxApplicationRepository } from "./Linux";
 import { Settings } from "./Settings";
-import { WindowsApplicationRepository } from "./Windows/WindowsApplicationRepository";
-import { MacOsApplicationRepository } from "./macOS/MacOsApplicationRepository";
+import { WindowsApplicationRepository } from "./Windows";
+import { MacOsApplicationRepository } from "./macOS";
 
 export class ApplicationSearchModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
