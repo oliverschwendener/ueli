@@ -9,7 +9,7 @@ export class Settings {
         private readonly extensionId: string,
         private readonly settingsManager: SettingsManager,
         private readonly app: App,
-        private readonly processEnv: EnvironmentVariableProvider,
+        private readonly environmentVariableProvider: EnvironmentVariableProvider,
     ) {}
 
     public getValue<T>(key: string): T {
@@ -34,7 +34,7 @@ export class Settings {
                 join(this.app.getPath("home"), "AppData", "Roaming", "Microsoft", "Windows", "Start Menu"),
             ],
             linuxFolders: (
-                this.processEnv.get("XDG_DATA_DIRS") ||
+                this.environmentVariableProvider.get("XDG_DATA_DIRS") ||
                 `${join("/", "usr", "local", "share")}:${join("/", "usr", "share")}`
             )
                 .split(":")
