@@ -3,7 +3,7 @@ import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Image } from "@common/Core/Image";
 import type { App } from "electron";
 import { join } from "path";
-import type { FileIconExtractor } from "./FileIconExtractor";
+import type { FileIconExtractor } from "../FileIconExtractor";
 
 export class MacOsFolderIconExtractor implements FileIconExtractor {
     private readonly folderPaths: Record<string, string>;

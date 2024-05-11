@@ -3,7 +3,7 @@ import { Section } from "@Core/Settings/Section";
 import { SectionList } from "@Core/Settings/SectionList";
 import { getImageUrl } from "@Core/getImageUrl";
 import { Badge, Button, Field, Input, Slider, Switch, Text, Tooltip } from "@fluentui/react-components";
-import { DismissRegular } from "@fluentui/react-icons";
+import { ArrowCounterclockwiseRegular, DismissRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -18,10 +18,11 @@ export const SearchEngine = () => {
         defaultValue: true,
     });
 
-    const { value: rescanIntervalInSeconds, updateValue: setRescanIntervalInSeconds } = useSetting({
-        key: "searchEngine.rescanIntervalInSeconds",
-        defaultValue: 60,
-    });
+    const rescanIntervalInSeconds = contextBridge.getSettingValue("searchEngine.rescanIntervalInSeconds", 60);
+    const [tempRescanIntervalInSeconds, setTempRescanIntervalInSeconds] = useState<number>(rescanIntervalInSeconds);
+
+    const setRescanIntervalInSeconds = (value: number) =>
+        contextBridge.updateSettingValue("searchEngine.rescanIntervalInSeconds", value);
 
     const { value: fuzziness, updateValue: setFuzziness } = useSetting({
         key: "searchEngine.fuzziness",
@@ -53,12 +54,36 @@ export const SearchEngine = () => {
                 </Field>
             </Section>
             <Section>
-                <Field label={t("rescanIntervalInSeconds", { ns })} validationState="none">
+                <Field
+                    label={t("rescanIntervalInSeconds", { ns })}
+                    validationState={tempRescanIntervalInSeconds < 10 ? "error" : "success"}
+                    validationMessage={
+                        tempRescanIntervalInSeconds < 10 ? t("rescanIntervalTooShort", { ns }) : undefined
+                    }
+                >
                     <Input
-                        value={`${rescanIntervalInSeconds}`}
-                        onChange={(_, { value }) => setRescanIntervalInSeconds(Number(value))}
+                        value={`${tempRescanIntervalInSeconds}`}
+                        onChange={(_, { value }) => setTempRescanIntervalInSeconds(Number(value))}
+                        onBlur={() => {
+                            tempRescanIntervalInSeconds < 10
+                                ? setTempRescanIntervalInSeconds(rescanIntervalInSeconds)
+                                : setRescanIntervalInSeconds(tempRescanIntervalInSeconds);
+                        }}
                         type="number"
                         disabled={!automaticRescanEnabled}
+                        contentAfter={
+                            <Tooltip content={t("rescanIntervalResetToDefault", { ns })} relationship="label">
+                                <Button
+                                    size="small"
+                                    appearance="subtle"
+                                    icon={<ArrowCounterclockwiseRegular fontSize={14} />}
+                                    onClick={() => {
+                                        setTempRescanIntervalInSeconds(60);
+                                        setRescanIntervalInSeconds(60);
+                                    }}
+                                />
+                            </Tooltip>
+                        }
                     />
                 </Field>
             </Section>

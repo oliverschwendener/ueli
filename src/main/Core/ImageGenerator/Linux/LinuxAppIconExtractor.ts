@@ -5,8 +5,8 @@ import type { IniFileParser } from "@Core/IniFileParser";
 import type { Logger } from "@Core/Logger";
 import type { Image } from "@common/Core/Image";
 import { basename, dirname, extname, join } from "path";
-import type { CacheFileNameGenerator } from "./CacheFileNameGenerator";
-import type { FileIconExtractor } from "./FileIconExtractor";
+import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";
+import type { FileIconExtractor } from "../FileIconExtractor";
 
 // Specs from https://specifications.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html
 type IconThemeSubdir = {
@@ -28,7 +28,7 @@ type IconTheme = {
     parents: string[];
 };
 
-export class LinuxIconExtractor implements FileIconExtractor {
+export class LinuxAppIconExtractor implements FileIconExtractor {
     private searchCache: Map<string, IconTheme[]>;
     private userTheme: string;
     private readonly baseDirectories: string[];
@@ -46,13 +46,16 @@ export class LinuxIconExtractor implements FileIconExtractor {
         private readonly cacheFileNameGenerator: CacheFileNameGenerator,
         private readonly cacheFolder: string,
         private readonly homePath: string,
-        private readonly processEnv: EnvironmentVariableProvider,
+        private readonly environmentVariablePRovider: EnvironmentVariableProvider,
     ) {
         this.baseDirectories = [
             join(this.homePath, ".icons"),
-            join(this.processEnv.get("XDG_DATA_HOME") || join(this.homePath, ".local", "share"), "icons"),
+            join(
+                this.environmentVariablePRovider.get("XDG_DATA_HOME") || join(this.homePath, ".local", "share"),
+                "icons",
+            ),
             ...(
-                this.processEnv.get("XDG_DATA_DIRS") ||
+                this.environmentVariablePRovider.get("XDG_DATA_DIRS") ||
                 `${join("/", "usr", "local", "share")}:${join("/", "usr", "share")}`
             )
                 .split(":")
@@ -269,7 +272,7 @@ export class LinuxIconExtractor implements FileIconExtractor {
     }
 
     private async getIconThemeName(): Promise<string> {
-        const currentDesktopEnvironment = process.env["XDG_SESSION_DESKTOP"] as "cinnamon" | "gnome";
+        const currentDesktopEnvironment = this.environmentVariablePRovider.get("XDG_SESSION_DESKTOP");
 
         const iconThemeNameMap: Record<"cinnamon" | "gnome", () => Promise<string>> = {
             cinnamon: () =>

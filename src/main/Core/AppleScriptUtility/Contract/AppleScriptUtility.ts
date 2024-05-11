@@ -1,5 +1,5 @@
 /**
- * Offers methots to execute AppleScript commands.
+ * Offers methods to execute AppleScript commands.
  */
 export interface AppleScriptUtility {
     /**

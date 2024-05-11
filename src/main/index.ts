@@ -7,26 +7,28 @@ import * as Extensions from "./Extensions";
 (async () => {
     await Electron.app.whenReady();
 
-    Core.SingleInstaneLockModule.bootstrap(Electron.app);
+    Core.SingleInstanceLockModule.bootstrap(Electron.app);
     Core.DockModule.bootstrap(Electron.app);
 
     const dependencyRegistry = Core.DependencyRegistryModule.bootstrap();
 
     // Electron Modules
-    dependencyRegistry.register("Platform", platform());
     dependencyRegistry.register("App", Electron.app);
+    dependencyRegistry.register("Clipboard", Electron.clipboard);
+    dependencyRegistry.register("Dialog", Electron.dialog);
+    dependencyRegistry.register("Emitter", mitt<Record<string, unknown>>());
+    dependencyRegistry.register("GlobalShortcut", Electron.globalShortcut);
     dependencyRegistry.register("IpcMain", Electron.ipcMain);
     dependencyRegistry.register("NativeTheme", Electron.nativeTheme);
-    dependencyRegistry.register("Shell", Electron.shell);
-    dependencyRegistry.register("GlobalShortcut", Electron.globalShortcut);
-    dependencyRegistry.register("Emitter", mitt<Record<string, unknown>>());
-    dependencyRegistry.register("SystemPreferences", Electron.systemPreferences);
-    dependencyRegistry.register("Dialog", Electron.dialog);
-    dependencyRegistry.register("Clipboard", Electron.clipboard);
     dependencyRegistry.register("Net", Electron.net);
+    dependencyRegistry.register("Platform", platform());
     dependencyRegistry.register("SafeStorage", Electron.safeStorage);
+    dependencyRegistry.register("Screen", Electron.screen);
+    dependencyRegistry.register("Shell", Electron.shell);
+    dependencyRegistry.register("SystemPreferences", Electron.systemPreferences);
 
     // Core Modules
+    Core.TaskSchedulerModule.bootstrap(dependencyRegistry);
     Core.EnvironmentVariableProviderModule.bootstrap(dependencyRegistry);
     Core.IniFileParserModule.bootstrap(dependencyRegistry);
     Core.EventEmitterModule.bootstrap(dependencyRegistry);
@@ -69,4 +71,6 @@ import * as Extensions from "./Extensions";
 
     // BrowserWindow
     await Core.BrowserWindowModule.bootstrap(dependencyRegistry);
+
+    Core.RescanOrchestratorModule.bootstrap(dependencyRegistry);
 })();
