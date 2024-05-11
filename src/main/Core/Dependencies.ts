@@ -34,6 +34,7 @@ export type Dependencies = {
     RandomStringProvider?: Core.RandomStringProvider;
     SafeStorage?: Electron.SafeStorage;
     SafeStorageEncryption?: Core.SafeStorageEncryption;
+    Screen?: Electron.Screen;
     SearchIndex?: Core.SearchIndex;
     SettingsFile?: Core.SettingsFile;
     SettingsManager?: Core.SettingsManager;
@@ -41,6 +42,7 @@ export type Dependencies = {
     SettingsWriter?: Core.SettingsWriter;
     Shell?: Electron.Shell;
     SystemPreferences?: Electron.SystemPreferences;
+    TaskScheduler?: Core.TaskScheduler;
     Translator?: Core.Translator;
     UeliCommandInvoker?: Core.UeliCommandInvoker;
     UrlImageGenerator?: Core.UrlImageGenerator;

@@ -2,8 +2,8 @@ import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Image } from "@common/Core/Image";
 import { join } from "path";
-import type { CacheFileNameGenerator } from "./CacheFileNameGenerator";
-import type { FileIconExtractor } from "./FileIconExtractor";
+import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";
+import type { FileIconExtractor } from "../FileIconExtractor";
 
 export class MacOsApplicationIconExtractor implements FileIconExtractor {
     public constructor(

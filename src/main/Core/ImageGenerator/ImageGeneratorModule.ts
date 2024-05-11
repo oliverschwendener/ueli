@@ -7,11 +7,9 @@ import type { FileIconExtractor } from "./FileIconExtractor";
 import { FileImageGenerator } from "./FileImageGenerator";
 import { GenericFileIconExtractor } from "./GenericFileIconExtractor";
 import { LinuxIconExtractor } from "./LinuxIconExtractor";
-import { MacOsApplicationIconExtractor } from "./MacOsApplicationIconExtractor";
-import { MacOsFolderIconExtractor } from "./MacOsFolderIconExtractor";
 import { UrlImageGenerator } from "./UrlImageGenerator";
-import { WindowsApplicationIconExtractor } from "./WindowsApplicationIconExtractor";
-import { WindowsFolderIconExtractor } from "./WindowsFolderIconExtractor";
+import { WindowsApplicationIconExtractor, WindowsFolderIconExtractor } from "./Windows";
+import { MacOsApplicationIconExtractor, MacOsFolderIconExtractor } from "./macOS";
 
 export class ImageGeneratorModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {

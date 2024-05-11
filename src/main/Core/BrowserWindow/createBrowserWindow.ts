@@ -3,6 +3,7 @@ import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { OperatingSystem } from "@common/Core";
 import { BrowserWindow, type BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
+import { defaultWindowSize } from "./defaultWindowSize";
 import { getAppIconFilePath } from "./getAppIconFilePath";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
 import { getVibrancy } from "./getVibrancy";
@@ -18,8 +19,7 @@ export const createBrowserWindow = (dependencyRegistry: DependencyRegistry<Depen
     const preloadScriptFilePath = join(__dirname, "..", "dist-preload", "index.js");
 
     const defaultBrowserWindowOptions: BrowserWindowConstructorOptions = {
-        width: 750,
-        height: 500,
+        ...defaultWindowSize,
         frame: false,
         show,
         webPreferences: {

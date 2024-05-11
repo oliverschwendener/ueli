@@ -27,7 +27,7 @@ export class ExtensionManager {
                 this.searchIndex.addSearchResultItems(extensionId, promiseResult.value);
             } else {
                 this.logger.error(
-                    `Failed ot get search result items for extension with id '${extensionId}.` +
+                    `Failed to get search result items for extension with id '${extensionId}.` +
                         `Reason: ${promiseResult.reason}'`,
                 );
             }
