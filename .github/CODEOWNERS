@@ -25,8 +25,6 @@ src/main/Core/IniFileParser @ke1v
 
 # Extensions
 
-# [EXAMPLE] ApplicationSearch
-assets/Extensions/ApplicationSearch @oliverschwendener
-src/common/Extensions/ApplicationSearch @oliverschwendener
-src/main/Extensions/ApplicationSearch @oliverschwendener
-src/renderer/Extensions/ApplicationSearch @oliverschwendener
+# ApplicationSearch
+src/main/Extensions/ApplicationSearch/Linux @ke1v
+src/renderer/Extensions/ApplicationSearch/Linux @ke1v
