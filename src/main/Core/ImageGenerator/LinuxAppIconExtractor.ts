@@ -28,7 +28,7 @@ type IconTheme = {
     parents: string[];
 };
 
-export class LinuxIconExtractor implements FileIconExtractor {
+export class LinuxAppIconExtractor implements FileIconExtractor {
     private searchCache: Map<string, IconTheme[]>;
     private userTheme: string;
     private readonly baseDirectories: string[];
