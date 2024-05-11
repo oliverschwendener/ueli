@@ -53,7 +53,9 @@ export class LaunchDesktopFileActionHandler implements ActionHandler {
         const desktops = this.environmentVariableProvider
             .get("XDG_CURRENT_DESKTOP")
             .split(":") as LinuxDesktopEnvironment[];
+
         let command: string;
+
         for (const desktop of desktops) {
             command = desktopLaunchCommands[desktop];
             if (command) {
