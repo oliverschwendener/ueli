@@ -16,7 +16,7 @@ export class LinuxApplicationRepository implements ApplicationRepository {
         private readonly fileSystemUtility: FileSystemUtility,
         private readonly fileImageGenerator: FileImageGenerator,
         private readonly iniParser: IniFileParser,
-        private readonly processEnv: EnvironmentVariableProvider,
+        private readonly environmentVariableProvider: EnvironmentVariableProvider,
         private readonly assetPathResolver: AssetPathResolver,
         private readonly logger: Logger,
         private readonly settings: Settings,
@@ -63,7 +63,7 @@ export class LinuxApplicationRepository implements ApplicationRepository {
             (await this.fileSystemUtility.readFile(filePath)).toString(),
         )["Desktop Entry"];
         // https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#recognized-keys
-        const desktopEnv = this.processEnv.get("XDG_CURRENT_DESKTOP")?.split(":");
+        const desktopEnv = this.environmentVariableProvider.get("XDG_CURRENT_DESKTOP")?.split(":");
         if (
             !config ||
             !config["Icon"] ||
