@@ -1,3 +1,4 @@
+import type { ActionHandler } from "@Core/ActionHandler";
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { OperatingSystem } from "@common/Core";
@@ -19,49 +20,55 @@ export class ApplicationSearchModule implements ExtensionModule {
             dependencyRegistry.get("EnvironmentVariableProvider"),
         );
 
-        const applicationRepositories: Record<OperatingSystem, ApplicationRepository> = {
-            macOS: new MacOsApplicationRepository(
-                dependencyRegistry.get("CommandlineUtility"),
-                dependencyRegistry.get("FileImageGenerator"),
-                dependencyRegistry.get("Logger"),
-                settings,
-                dependencyRegistry.get("AssetPathResolver"),
-            ),
-            Windows: new WindowsApplicationRepository(
-                dependencyRegistry.get("PowershellUtility"),
-                settings,
-                dependencyRegistry.get("FileImageGenerator"),
-                dependencyRegistry.get("Logger"),
-                dependencyRegistry.get("AssetPathResolver"),
-            ),
-            Linux: new LinuxApplicationRepository(
-                dependencyRegistry.get("FileSystemUtility"),
-                dependencyRegistry.get("FileImageGenerator"),
-                dependencyRegistry.get("IniFileParser"),
-                dependencyRegistry.get("EnvironmentVariableProvider"),
-                dependencyRegistry.get("AssetPathResolver"),
-                dependencyRegistry.get("Logger"),
-                settings,
-            ),
+        const applicationRepositories: Record<OperatingSystem, () => ApplicationRepository> = {
+            macOS: () =>
+                new MacOsApplicationRepository(
+                    dependencyRegistry.get("CommandlineUtility"),
+                    dependencyRegistry.get("FileImageGenerator"),
+                    dependencyRegistry.get("Logger"),
+                    settings,
+                    dependencyRegistry.get("AssetPathResolver"),
+                ),
+            Windows: () =>
+                new WindowsApplicationRepository(
+                    dependencyRegistry.get("PowershellUtility"),
+                    settings,
+                    dependencyRegistry.get("FileImageGenerator"),
+                    dependencyRegistry.get("Logger"),
+                    dependencyRegistry.get("AssetPathResolver"),
+                ),
+            Linux: () =>
+                new LinuxApplicationRepository(
+                    dependencyRegistry.get("FileSystemUtility"),
+                    dependencyRegistry.get("FileImageGenerator"),
+                    dependencyRegistry.get("IniFileParser"),
+                    dependencyRegistry.get("EnvironmentVariableProvider"),
+                    dependencyRegistry.get("AssetPathResolver"),
+                    dependencyRegistry.get("Logger"),
+                    settings,
+                ),
+        };
+
+        const actionHandlers: Record<OperatingSystem, () => ActionHandler[]> = {
+            Linux: () => [
+                new LaunchDesktopFileActionHandler(
+                    dependencyRegistry.get("CommandlineUtility"),
+                    dependencyRegistry.get("EnvironmentVariableProvider"),
+                ),
+            ],
+            macOS: () => [],
+            Windows: () => [],
         };
 
         return {
             extension: new ApplicationSearch(
                 dependencyRegistry.get("OperatingSystem"),
-                applicationRepositories[dependencyRegistry.get("OperatingSystem")],
+                applicationRepositories[dependencyRegistry.get("OperatingSystem")](),
                 settings,
                 dependencyRegistry.get("AssetPathResolver"),
                 dependencyRegistry.get("EnvironmentVariableProvider"),
             ),
-            actionHandlers:
-                dependencyRegistry.get("OperatingSystem") === "Linux"
-                    ? [
-                          new LaunchDesktopFileActionHandler(
-                              dependencyRegistry.get("CommandlineUtility"),
-                              dependencyRegistry.get("EnvironmentVariableProvider"),
-                          ),
-                      ]
-                    : [],
+            actionHandlers: actionHandlers[dependencyRegistry.get("OperatingSystem")](),
         };
     }
 }
