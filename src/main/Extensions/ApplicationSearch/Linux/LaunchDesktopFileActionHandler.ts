@@ -27,7 +27,7 @@ export class LaunchDesktopFileActionHandler implements ActionHandler {
 
     public constructor(
         private readonly commandlineUtility: CommandlineUtility,
-        private readonly processEnv: EnvironmentVariableProvider,
+        private readonly environmentVariableProvider: EnvironmentVariableProvider,
     ) {}
 
     /**
@@ -50,7 +50,9 @@ export class LaunchDesktopFileActionHandler implements ActionHandler {
             DDE: "dde-open",
         };
 
-        const desktops = this.processEnv.get("XDG_CURRENT_DESKTOP").split(":") as LinuxDesktopEnvironment[];
+        const desktops = this.environmentVariableProvider
+            .get("XDG_CURRENT_DESKTOP")
+            .split(":") as LinuxDesktopEnvironment[];
         let command: string;
         for (const desktop of desktops) {
             command = desktopLaunchCommands[desktop];
