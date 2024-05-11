@@ -6,6 +6,7 @@ import { CacheFileNameGenerator } from "./CacheFileNameGenerator";
 import type { FileIconExtractor } from "./FileIconExtractor";
 import { FileImageGenerator } from "./FileImageGenerator";
 import { GenericFileIconExtractor } from "./GenericFileIconExtractor";
+import { LinuxAppIconExtractor } from "./Linux";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 import { WindowsApplicationIconExtractor, WindowsFolderIconExtractor } from "./Windows";
 import { MacOsApplicationIconExtractor, MacOsFolderIconExtractor } from "./macOS";
@@ -44,9 +45,22 @@ export class ImageGeneratorModule {
     ): FileIconExtractor[] {
         const cacheFileNameGenerator = new CacheFileNameGenerator();
 
-        const operatingSystemSpecificIconExtractors: Record<OperatingSystem, FileIconExtractor[]> = {
-            Linux: [],
-            macOS: [
+        // To prevent the execution of all icon extractor constructors, we use a function here that is only invoked
+        // for the current operating system.
+        const operatingSystemSpecificIconExtractors: Record<OperatingSystem, () => FileIconExtractor[]> = {
+            Linux: () => [
+                new LinuxAppIconExtractor(
+                    dependencyRegistry.get("FileSystemUtility"),
+                    dependencyRegistry.get("CommandlineUtility"),
+                    dependencyRegistry.get("IniFileParser"),
+                    dependencyRegistry.get("Logger"),
+                    cacheFileNameGenerator,
+                    cacheFolderPath,
+                    dependencyRegistry.get("App").getPath("home"),
+                    dependencyRegistry.get("EnvironmentVariableProvider"),
+                ),
+            ],
+            macOS: () => [
                 new MacOsFolderIconExtractor(
                     dependencyRegistry.get("AssetPathResolver"),
                     dependencyRegistry.get("FileSystemUtility"),
@@ -59,7 +73,7 @@ export class ImageGeneratorModule {
                     cacheFolderPath,
                 ),
             ],
-            Windows: [
+            Windows: () => [
                 new WindowsFolderIconExtractor(
                     dependencyRegistry.get("AssetPathResolver"),
                     dependencyRegistry.get("FileSystemUtility"),
@@ -74,6 +88,6 @@ export class ImageGeneratorModule {
             ],
         };
 
-        return operatingSystemSpecificIconExtractors[dependencyRegistry.get("OperatingSystem")];
+        return operatingSystemSpecificIconExtractors[dependencyRegistry.get("OperatingSystem")]();
     }
 }

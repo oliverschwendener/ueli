@@ -1,10 +1,14 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { EventSubscriber } from "@Core/EventSubscriber";
+import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
-import type { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
+import type { App, BrowserWindow, BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
+import { WindowBoundsMemory } from "./WindowBoundsMemory";
 import { createBrowserWindow } from "./createBrowserWindow";
+import { defaultWindowSize } from "./defaultWindowSize";
 import { getAppIconFilePath } from "./getAppIconFilePath";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
 import { getVibrancy } from "./getVibrancy";
@@ -16,6 +20,8 @@ export class BrowserWindowModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const eventEmitter = dependencyRegistry.get("EventEmitter");
         const nativeTheme = dependencyRegistry.get("NativeTheme");
+
+        const windowBoundsMemory = new WindowBoundsMemory(dependencyRegistry.get("Screen"), {});
 
         const browserWindow = createBrowserWindow(dependencyRegistry);
 
@@ -31,29 +37,51 @@ export class BrowserWindowModule {
             ),
         );
 
-        BrowserWindowModule.registerBrowserWindowEventListeners(browserWindow, dependencyRegistry);
-        BrowserWindowModule.registerEvents(browserWindow, dependencyRegistry);
-        await BrowserWindowModule.loadFileOrUrl(browserWindow);
+        BrowserWindowModule.registerBrowserWindowEventListeners(
+            browserWindow,
+            dependencyRegistry.get("SettingsManager"),
+            windowBoundsMemory,
+        );
+
+        BrowserWindowModule.registerEvents(
+            browserWindow,
+            dependencyRegistry.get("App"),
+            dependencyRegistry.get("EventSubscriber"),
+            windowBoundsMemory,
+            dependencyRegistry.get("SettingsManager"),
+        );
+
+        await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyRegistry.get("EnvironmentVariableProvider"));
     }
 
     private static registerBrowserWindowEventListeners(
         browserWindow: BrowserWindow,
-        dependencyRegistry: DependencyRegistry<Dependencies>,
+        settingsManager: SettingsManager,
+        windowBoundsMemory: WindowBoundsMemory,
     ) {
-        const settingsManager = dependencyRegistry.get("SettingsManager");
+        const shouldHideWindowOnBlur = () => settingsManager.getValue("window.hideWindowOnBlur", true);
 
-        browserWindow.on("blur", () => {
-            if (settingsManager.getValue("window.hideWindowOnBlur", true)) {
-                browserWindow.hide();
-            }
-        });
+        browserWindow.on("blur", () => shouldHideWindowOnBlur() && browserWindow.hide());
+        browserWindow.on("moved", () => windowBoundsMemory.saveWindowBounds(browserWindow));
+        browserWindow.on("resized", () => windowBoundsMemory.saveWindowBounds(browserWindow));
     }
 
-    private static registerEvents(browserWindow: BrowserWindow, dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const app = dependencyRegistry.get("App");
-        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
-
-        eventSubscriber.subscribe("hotkeyPressed", () => toggleBrowserWindow(app, browserWindow));
+    private static registerEvents(
+        browserWindow: BrowserWindow,
+        app: App,
+        eventSubscriber: EventSubscriber,
+        windowBoundsMemory: WindowBoundsMemory,
+        settingsManager: SettingsManager,
+    ) {
+        eventSubscriber.subscribe("hotkeyPressed", () => {
+            toggleBrowserWindow({
+                app,
+                browserWindow,
+                defaultSize: defaultWindowSize,
+                alwaysCenter: settingsManager.getValue("window.alwaysCenter", false),
+                bounds: windowBoundsMemory.getBoundsNearestToCursor(),
+            });
+        });
 
         eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
             sendToBrowserWindow(browserWindow, `settingUpdated[${key}]`, { value });
@@ -106,9 +134,12 @@ export class BrowserWindowModule {
         });
     }
 
-    private static async loadFileOrUrl(browserWindow: BrowserWindow) {
-        await (process.env.VITE_DEV_SERVER_URL
-            ? browserWindow.loadURL(process.env.VITE_DEV_SERVER_URL)
+    private static async loadFileOrUrl(
+        browserWindow: BrowserWindow,
+        environmentVariableProvider: EnvironmentVariableProvider,
+    ) {
+        await (environmentVariableProvider.get("VITE_DEV_SERVER_URL")
+            ? browserWindow.loadURL(environmentVariableProvider.get("VITE_DEV_SERVER_URL"))
             : browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html")));
     }
 }

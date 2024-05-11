@@ -1,3 +1,4 @@
+import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { SettingsManager } from "@Core/SettingsManager";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { App } from "electron";
@@ -8,6 +9,7 @@ export class Settings {
         private readonly extensionId: string,
         private readonly settingsManager: SettingsManager,
         private readonly app: App,
+        private readonly environmentVariableProvider: EnvironmentVariableProvider,
     ) {}
 
     public getValue<T>(key: string): T {
@@ -31,6 +33,12 @@ export class Settings {
                 "C:\\ProgramData\\Microsoft\\Windows\\Start Menu",
                 join(this.app.getPath("home"), "AppData", "Roaming", "Microsoft", "Windows", "Start Menu"),
             ],
+            linuxFolders: (
+                this.environmentVariableProvider.get("XDG_DATA_DIRS") ||
+                `${join("/", "usr", "local", "share")}:${join("/", "usr", "share")}`
+            )
+                .split(":")
+                .map((dir) => join(dir, "applications")),
         };
 
         return defaultValues[key] as T;

@@ -1,5 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import { SearchResultItem } from "@common/Core";
+import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
+import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import { describe, expect, it, vi } from "vitest";
 import { Application } from "./Application";
@@ -33,6 +34,7 @@ describe(ApplicationSearch, () => {
             applicationRepository,
             <Settings>{},
             <AssetPathResolver>{},
+            <EnvironmentVariableProvider>{},
         ).getSearchResultItems();
 
         expect(searchResultItems).toEqual(applications.map((application) => application.toSearchResultItem()));
@@ -54,6 +56,7 @@ describe(ApplicationSearch, () => {
             <ApplicationRepository>{},
             settings,
             <AssetPathResolver>{},
+            <EnvironmentVariableProvider>{},
         );
 
         expect(applicationSearch.getSettingDefaultValue("key1")).toBe("value1");
@@ -61,33 +64,55 @@ describe(ApplicationSearch, () => {
         expect(applicationSearch.getSettingDefaultValue("key3")).toBe(undefined);
     });
 
-    it("should support Windows and macOS", () => {
-        expect(
-            new ApplicationSearch(
-                "Windows",
-                <ApplicationRepository>{},
-                <Settings>{},
-                <AssetPathResolver>{},
-            ).isSupported(),
-        ).toBe(true);
+    describe("isSupported", () => {
+        const testIsSupported = ({
+            expected,
+            operatingSystem,
+            environmentVariables,
+        }: {
+            expected: boolean;
+            operatingSystem: OperatingSystem;
+            environmentVariables?: Record<string, string>;
+        }) => {
+            const environmentVariableProvider = <EnvironmentVariableProvider>{
+                get: (name: string) => environmentVariables[name],
+                getAll: () => environmentVariables,
+            };
 
-        expect(
-            new ApplicationSearch(
-                "macOS",
-                <ApplicationRepository>{},
-                <Settings>{},
-                <AssetPathResolver>{},
-            ).isSupported(),
-        ).toBe(true);
+            expect(
+                new ApplicationSearch(
+                    operatingSystem,
+                    <ApplicationRepository>{},
+                    <Settings>{},
+                    <AssetPathResolver>{},
+                    environmentVariableProvider,
+                ).isSupported(),
+            ).toBe(expected);
+        };
 
-        expect(
-            new ApplicationSearch(
-                "Linux",
-                <ApplicationRepository>{},
-                <Settings>{},
-                <AssetPathResolver>{},
-            ).isSupported(),
-        ).toBe(false);
+        it("should return true on Windows", () => testIsSupported({ expected: true, operatingSystem: "Windows" }));
+        it("should return true on macOS", () => testIsSupported({ expected: true, operatingSystem: "macOS" }));
+
+        it("should return true on Linux with cinnamon desktop environment", () =>
+            testIsSupported({
+                expected: true,
+                operatingSystem: "Linux",
+                environmentVariables: { XDG_SESSION_DESKTOP: "cinnamon" },
+            }));
+
+        it("should return true on Linux with gnome desktop environment", () =>
+            testIsSupported({
+                expected: true,
+                operatingSystem: "Linux",
+                environmentVariables: { XDG_SESSION_DESKTOP: "gnome" },
+            }));
+
+        it("should return false on Linux with other desktop environment", () =>
+            testIsSupported({
+                expected: false,
+                operatingSystem: "Linux",
+                environmentVariables: { XDG_SESSION_DESKTOP: "KDE" },
+            }));
     });
 
     it("should support en-US and de-DE translations", () => {
@@ -96,6 +121,7 @@ describe(ApplicationSearch, () => {
             <ApplicationRepository>{},
             <Settings>{},
             <AssetPathResolver>{},
+            <EnvironmentVariableProvider>{},
         ).getTranslations();
 
         expect(Object.keys(translations)).to.include("en-US");
@@ -110,11 +136,23 @@ describe(ApplicationSearch, () => {
         };
 
         expect(
-            new ApplicationSearch("Windows", <ApplicationRepository>{}, <Settings>{}, assetPathResolver).getImage(),
+            new ApplicationSearch(
+                "Windows",
+                <ApplicationRepository>{},
+                <Settings>{},
+                assetPathResolver,
+                <EnvironmentVariableProvider>{},
+            ).getImage(),
         ).toEqual({ url: "file://someFilePath" });
 
         expect(
-            new ApplicationSearch("macOS", <ApplicationRepository>{}, <Settings>{}, assetPathResolver).getImage(),
+            new ApplicationSearch(
+                "macOS",
+                <ApplicationRepository>{},
+                <Settings>{},
+                assetPathResolver,
+                <EnvironmentVariableProvider>{},
+            ).getImage(),
         ).toEqual({ url: "file://someFilePath" });
 
         expect(getExtensionAssetPathMock).toHaveBeenCalledWith("ApplicationSearch", "windows-generic-app-icon.png");
@@ -128,6 +166,7 @@ describe(ApplicationSearch, () => {
             <ApplicationRepository>{},
             <Settings>{},
             <AssetPathResolver>{},
+            <EnvironmentVariableProvider>{},
         ).getSettingKeysTriggeringRescan();
 
         expect(settingKeys).toEqual([

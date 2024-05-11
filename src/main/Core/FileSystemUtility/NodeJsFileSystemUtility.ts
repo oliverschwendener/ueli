@@ -135,7 +135,7 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         return (await this.readFile(filePath)).toString();
     }
 
-    private readDirectory(folderPath: string): Promise<string[]> {
+    public async readDirectory(folderPath: string): Promise<string[]> {
         return new Promise((resolve, reject) => {
             readdir(folderPath, (error, fileNames) => {
                 if (error) {

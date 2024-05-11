@@ -1,7 +1,7 @@
 {
     "name": "ueli",
     "description": "Keystroke launcher for Windows, macOS and Linux",
-    "version": "9.0.0-alpha.12",
+    "version": "9.0.0-beta.0",
     "license": "MIT",
     "author": {
         "email": "oliver.schwendener@proton.me",
@@ -17,6 +17,7 @@
         "package": "electron-builder --config electron-builder.config.js",
         "postinstall": "pnpm run rebuild",
         "prettier:check": "prettier --check src/**/*",
+        "prettier:write": "prettier --write src/**/*",
         "rebuild": "electron-builder install-app-deps",
         "test:coverage": "vitest run --coverage",
         "test:watch": "vitest",

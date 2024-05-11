@@ -7,8 +7,6 @@ import type { SystemCommandRepository } from "../SystemCommandRepository";
 import { WindowsSystemCommand } from "./WindowsSystemCommand";
 
 export class WindowsSystemCommandRepository implements SystemCommandRepository {
-    private readonly extensionId = "SystemCommands";
-
     public constructor(
         private readonly translator: Translator,
         private readonly assetPathResolver: AssetPathResolver,

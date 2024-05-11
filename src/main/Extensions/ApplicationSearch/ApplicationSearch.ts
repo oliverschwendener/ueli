@@ -1,4 +1,5 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { Extension } from "@Core/Extension";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
@@ -25,6 +26,7 @@ export class ApplicationSearch implements Extension {
         private readonly applicationRepository: ApplicationRepository,
         private readonly settings: Settings,
         private readonly assetPathResolver: AssetPathResolver,
+        private readonly environmentVariableProvider: EnvironmentVariableProvider,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -33,8 +35,13 @@ export class ApplicationSearch implements Extension {
     }
 
     public isSupported(): boolean {
-        const supportedOperatingSystems: OperatingSystem[] = ["Windows", "macOS"];
-        return supportedOperatingSystems.includes(this.operatingSystem);
+        const checks: Record<OperatingSystem, () => boolean> = {
+            Linux: () => ["cinnamon", "gnome"].includes(this.environmentVariableProvider.get("XDG_SESSION_DESKTOP")),
+            macOS: () => true,
+            Windows: () => true,
+        };
+
+        return checks[this.operatingSystem]();
     }
 
     public getSettingDefaultValue<T>(key: string): T {
@@ -51,7 +58,8 @@ export class ApplicationSearch implements Extension {
     }
 
     public getImage(): Image {
-        const fileNames: Record<Exclude<OperatingSystem, "Linux">, { neutral: string }> = {
+        const fileNames: Record<OperatingSystem, { neutral: string }> = {
+            Linux: { neutral: "linux-applications.png" },
             macOS: { neutral: "macos-applications.png" },
             Windows: { neutral: "windows-generic-app-icon.png" },
         };

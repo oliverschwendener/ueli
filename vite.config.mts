@@ -1,8 +1,8 @@
 import react from "@vitejs/plugin-react";
 import { join } from "path";
-import { defineConfig } from "vite";
 import electron from "vite-plugin-electron";
 import renderer from "vite-plugin-electron-renderer";
+import { defineConfig } from "vitest/config";
 import pkg from "./package.json";
 
 const rendererRoot = join(__dirname, "src", "renderer");
@@ -92,6 +92,10 @@ export default defineConfig(({ command }) => {
         clearScreen: false,
         test: {
             root: "src",
+            coverage: {
+                include: ["**/*.ts"],
+                exclude: ["**/index.ts", "**/*.test.ts"],
+            },
         },
     };
 });

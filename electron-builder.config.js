@@ -25,6 +25,15 @@ module.exports = {
         icon: "assets/Build/app-icon-dark-transparent.png",
         target: [{ target: "msi" }, { target: "nsis" }, { target: "zip" }, { target: "appx" }],
     },
+    appx: {
+        applicationId: "OliverSchwendener.Ueli",
+        backgroundColor: "#1F1F1F",
+        displayName: "Ueli",
+        identityName: "1915OliverSchwendener.Ueli",
+        publisher: "CN=AD6BF16D-50E3-4FD4-B769-78A606AFF75E",
+        publisherDisplayName: "Oliver Schwendener",
+        languages: ["en-US", "de-CH"],
+    },
     linux: {
         icon: "assets/Build/app-icon-dark.png",
         category: "Utility",

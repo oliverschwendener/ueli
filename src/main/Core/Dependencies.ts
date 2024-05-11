@@ -34,6 +34,7 @@ export type Dependencies = {
     RandomStringProvider?: Core.RandomStringProvider;
     SafeStorage?: Electron.SafeStorage;
     SafeStorageEncryption?: Core.SafeStorageEncryption;
+    Screen?: Electron.Screen;
     SearchIndex?: Core.SearchIndex;
     SettingsFile?: Core.SettingsFile;
     SettingsManager?: Core.SettingsManager;
