@@ -44,9 +44,11 @@ export class ImageGeneratorModule {
     ): FileIconExtractor[] {
         const cacheFileNameGenerator = new CacheFileNameGenerator();
 
-        const operatingSystemSpecificIconExtractors: Record<OperatingSystem, FileIconExtractor[]> = {
-            Linux: [],
-            macOS: [
+        // To prevent the execution of all icon extractor constructors, we use a function here that is only invoked
+        // for the current operating system.
+        const operatingSystemSpecificIconExtractors: Record<OperatingSystem, () => FileIconExtractor[]> = {
+            Linux: () => [],
+            macOS: () => [
                 new MacOsFolderIconExtractor(
                     dependencyRegistry.get("AssetPathResolver"),
                     dependencyRegistry.get("FileSystemUtility"),
@@ -59,7 +61,7 @@ export class ImageGeneratorModule {
                     cacheFolderPath,
                 ),
             ],
-            Windows: [
+            Windows: () => [
                 new WindowsFolderIconExtractor(
                     dependencyRegistry.get("AssetPathResolver"),
                     dependencyRegistry.get("FileSystemUtility"),
@@ -74,6 +76,6 @@ export class ImageGeneratorModule {
             ],
         };
 
-        return operatingSystemSpecificIconExtractors[dependencyRegistry.get("OperatingSystem")];
+        return operatingSystemSpecificIconExtractors[dependencyRegistry.get("OperatingSystem")]();
     }
 }
