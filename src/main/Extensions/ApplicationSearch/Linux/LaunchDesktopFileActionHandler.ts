@@ -11,6 +11,7 @@ type LinuxDesktopEnvironment =
     | "GNOME-Classic"
     | "GNOME-Flashback"
     | "Cinnamon"
+    | "X-Cinnamon"
     | "MATE"
     | "Pantheon"
     | "KDE"
@@ -38,6 +39,7 @@ export class LaunchDesktopFileActionHandler implements ActionHandler {
     public async invokeAction(action: SearchResultItemAction): Promise<void> {
         const desktopLaunchCommands: Record<LinuxDesktopEnvironment, string> = {
             Cinnamon: "gio launch",
+            "X-Cinnamon": "gio launch",
             GNOME: "gio launch",
             "GNOME-Classic": "gio launch",
             "GNOME-Flashback": "gio launch",
