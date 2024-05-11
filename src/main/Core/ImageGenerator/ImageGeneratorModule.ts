@@ -6,7 +6,7 @@ import { CacheFileNameGenerator } from "./CacheFileNameGenerator";
 import type { FileIconExtractor } from "./FileIconExtractor";
 import { FileImageGenerator } from "./FileImageGenerator";
 import { GenericFileIconExtractor } from "./GenericFileIconExtractor";
-import { LinuxAppIconExtractor } from "./LinuxAppIconExtractor";
+import { LinuxAppIconExtractor } from "./Linux";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 import { WindowsApplicationIconExtractor, WindowsFolderIconExtractor } from "./Windows";
 import { MacOsApplicationIconExtractor, MacOsFolderIconExtractor } from "./macOS";

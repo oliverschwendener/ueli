@@ -5,8 +5,8 @@ import type { IniFileParser } from "@Core/IniFileParser";
 import type { Logger } from "@Core/Logger";
 import type { Image } from "@common/Core/Image";
 import { basename, dirname, extname, join } from "path";
-import type { CacheFileNameGenerator } from "./CacheFileNameGenerator";
-import type { FileIconExtractor } from "./FileIconExtractor";
+import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";
+import type { FileIconExtractor } from "../FileIconExtractor";
 
 // Specs from https://specifications.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html
 type IconThemeSubdir = {
