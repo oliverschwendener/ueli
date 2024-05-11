@@ -1,5 +1,6 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
@@ -50,7 +51,7 @@ export class BrowserWindowModule {
             dependencyRegistry.get("SettingsManager"),
         );
 
-        await BrowserWindowModule.loadFileOrUrl(browserWindow);
+        await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyRegistry.get("EnvironmentVariableProvider"));
     }
 
     private static registerBrowserWindowEventListeners(
@@ -133,9 +134,12 @@ export class BrowserWindowModule {
         });
     }
 
-    private static async loadFileOrUrl(browserWindow: BrowserWindow) {
-        await (process.env.VITE_DEV_SERVER_URL
-            ? browserWindow.loadURL(process.env.VITE_DEV_SERVER_URL)
+    private static async loadFileOrUrl(
+        browserWindow: BrowserWindow,
+        environmentVariableProvider: EnvironmentVariableProvider,
+    ) {
+        await (environmentVariableProvider.get("VITE_DEV_SERVER_URL")
+            ? browserWindow.loadURL(environmentVariableProvider.get("VITE_DEV_SERVER_URL"))
             : browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html")));
     }
 }
