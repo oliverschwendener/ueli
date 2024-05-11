@@ -52,23 +52,16 @@ export class LaunchDesktopFileActionHandler implements ActionHandler {
             DDE: "dde-open",
         };
 
-        const desktops = this.environmentVariableProvider
-            .get("XDG_CURRENT_DESKTOP")
-            .split(":") as LinuxDesktopEnvironment[];
-
-        let command: string;
+        const desktops = this.environmentVariableProvider.get("XDG_CURRENT_DESKTOP").split(":");
 
         for (const desktop of desktops) {
-            command = desktopLaunchCommands[desktop];
-            if (command) {
-                break;
+            if (Object.keys(desktopLaunchCommands).includes(desktop)) {
+                const command = `${desktopLaunchCommands[desktop]} ${action.argument}`;
+                await this.commandlineUtility.executeCommand(command, true);
+                return;
             }
         }
 
-        if (!command) {
-            throw new Error(`Unable to launch ${action.argument}. Unsupported desktop environment: ${desktops}`);
-        }
-
-        await this.commandlineUtility.executeCommand(`${command} ${action.argument}`, true);
+        throw new Error(`Unable to launch ${action.argument}. Unsupported desktop environment: ${desktops}`);
     }
 }
