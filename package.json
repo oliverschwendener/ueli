@@ -17,6 +17,7 @@
         "package": "electron-builder --config electron-builder.config.js",
         "postinstall": "pnpm run rebuild",
         "prettier:check": "prettier --check src/**/*",
+        "prettier:write": "prettier --write src/**/*",
         "rebuild": "electron-builder install-app-deps",
         "test:coverage": "vitest run --coverage",
         "test:watch": "vitest",
