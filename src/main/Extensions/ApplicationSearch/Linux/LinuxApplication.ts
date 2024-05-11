@@ -2,7 +2,7 @@ import type { SearchResultItem } from "@common/Core";
 import { SearchResultItemActionUtility } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { Application } from "../Application";
-import { createGtkLaunchAction } from "./creatGtkLaunchAction";
+import { createLaunchDesktopFileAction } from "./createLaunchDesktopFileAction";
 
 export class LinuxApplication implements Application {
     public constructor(
@@ -21,7 +21,7 @@ export class LinuxApplication implements Application {
             id: this.getId(),
             name: this.name,
             image: this.image,
-            defaultAction: createGtkLaunchAction({
+            defaultAction: createLaunchDesktopFileAction({
                 filePath: this.filePath,
                 description: "Open application",
                 descriptionTranslation: {
