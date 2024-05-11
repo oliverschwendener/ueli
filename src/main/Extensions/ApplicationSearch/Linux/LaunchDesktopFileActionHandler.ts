@@ -1,6 +1,6 @@
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
-import { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
+import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { SearchResultItemAction } from "@common/Core";
 
 /**
