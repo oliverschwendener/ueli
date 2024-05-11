@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { createGtkLaunchAction } from "./creatGtkLaunchAction";
+import { createLaunchDesktopFileAction } from "./createLaunchDesktopFileAction";
 
-describe(createGtkLaunchAction, () => {
+describe(createLaunchDesktopFileAction, () => {
     it("should create a 'launch application' action", () => {
         expect(
-            createGtkLaunchAction({
-                filePath: "/usr/bin/firefox",
+            createLaunchDesktopFileAction({
+                filePath: "/usr/share/application/firefox.desktop",
                 description: "Open application",
                 descriptionTranslation: {
                     key: "openApplication",
@@ -13,13 +13,13 @@ describe(createGtkLaunchAction, () => {
                 },
             }),
         ).toEqual({
-            argument: "/usr/bin/firefox",
+            argument: "/usr/share/application/firefox.desktop",
             description: "Open application",
             descriptionTranslation: {
                 key: "openApplication",
                 namespace: "extension[ApplicationSearch]",
             },
-            handlerId: "GtkLaunch",
+            handlerId: "LaunchDesktopFile",
             fluentIcon: "OpenRegular",
         });
     });

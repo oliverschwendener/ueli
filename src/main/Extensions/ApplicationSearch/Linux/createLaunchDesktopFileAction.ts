@@ -1,6 +1,6 @@
 import type { SearchResultItemAction } from "@common/Core";
 
-export const createGtkLaunchAction = ({
+export const createLaunchDesktopFileAction = ({
     filePath,
     description,
     descriptionTranslation,
@@ -13,7 +13,7 @@ export const createGtkLaunchAction = ({
         argument: filePath,
         description,
         descriptionTranslation,
-        handlerId: "GtkLaunch",
+        handlerId: "LaunchDesktopFile",
         fluentIcon: "OpenRegular",
     };
 };
