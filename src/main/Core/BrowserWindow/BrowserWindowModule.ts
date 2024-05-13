@@ -6,10 +6,10 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { App, BrowserWindow, BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
+import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 import { WindowBoundsMemory } from "./WindowBoundsMemory";
 import { createBrowserWindow } from "./createBrowserWindow";
 import { defaultWindowSize } from "./defaultWindowSize";
-import { getAppIconFilePath } from "./getAppIconFilePath";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
 import { getVibrancy } from "./getVibrancy";
 import { openAndFocusBrowserWindow } from "./openAndFocusBrowserWindow";
@@ -18,24 +18,27 @@ import { toggleBrowserWindow } from "./toggleBrowserWindow";
 
 export class BrowserWindowModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
+        const app = dependencyRegistry.get("App");
+        const operatingSystem = dependencyRegistry.get("OperatingSystem");
+        const settingsManager = dependencyRegistry.get("SettingsManager");
         const eventEmitter = dependencyRegistry.get("EventEmitter");
         const nativeTheme = dependencyRegistry.get("NativeTheme");
+        const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
 
         const windowBoundsMemory = new WindowBoundsMemory(dependencyRegistry.get("Screen"), {});
 
-        const browserWindow = createBrowserWindow(dependencyRegistry);
+        const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, operatingSystem);
+
+        const browserWindow = createBrowserWindow({
+            app,
+            operatingSystem,
+            settingsManager,
+            appIconFilePathResolver,
+        });
 
         eventEmitter.emitEvent("browserWindowCreated", { browserWindow });
 
-        nativeTheme.addListener("updated", () =>
-            browserWindow.setIcon(
-                getAppIconFilePath(
-                    dependencyRegistry.get("NativeTheme"),
-                    dependencyRegistry.get("AssetPathResolver"),
-                    dependencyRegistry.get("OperatingSystem"),
-                ),
-            ),
-        );
+        nativeTheme.addListener("updated", () => browserWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
 
         BrowserWindowModule.registerBrowserWindowEventListeners(
             browserWindow,

@@ -1,18 +1,28 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { SettingsManager } from "@Core/SettingsManager";
 import type { OperatingSystem } from "@common/Core";
-import { BrowserWindow, type BrowserWindowConstructorOptions } from "electron";
+import { BrowserWindow, type App, type BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
+import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 import { defaultWindowSize } from "./defaultWindowSize";
-import { getAppIconFilePath } from "./getAppIconFilePath";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
 import { getVibrancy } from "./getVibrancy";
 
-export const createBrowserWindow = (dependencyRegistry: DependencyRegistry<Dependencies>) => {
-    const app = dependencyRegistry.get("App");
-    const operatingSystem = dependencyRegistry.get("OperatingSystem");
-    const settingsManager = dependencyRegistry.get("SettingsManager");
+const extendDefaultBrowserWindowOptions = (
+    defaultBrowserWindowOptions: BrowserWindowConstructorOptions,
+    browserWindowOptions: BrowserWindowConstructorOptions,
+) => ({ ...defaultBrowserWindowOptions, ...browserWindowOptions });
 
+export const createBrowserWindow = ({
+    app,
+    operatingSystem,
+    settingsManager,
+    appIconFilePathResolver,
+}: {
+    app: App;
+    operatingSystem: OperatingSystem;
+    settingsManager: SettingsManager;
+    appIconFilePathResolver: AppIconFilePathResolver;
+}) => {
     const show = settingsManager.getValue<boolean>("window.showOnStartup", true);
     const alwaysOnTop = settingsManager.getValue<boolean>("window.alwaysOnTop", false);
 
@@ -29,30 +39,19 @@ export const createBrowserWindow = (dependencyRegistry: DependencyRegistry<Depen
             spellcheck: false,
         },
         alwaysOnTop,
-        icon: getAppIconFilePath(
-            dependencyRegistry.get("NativeTheme"),
-            dependencyRegistry.get("AssetPathResolver"),
-            dependencyRegistry.get("OperatingSystem"),
-        ),
-    };
-
-    const extendDefaultBrowserWindowOptions = (browserWindowOptions: BrowserWindowConstructorOptions) => {
-        return {
-            ...defaultBrowserWindowOptions,
-            ...browserWindowOptions,
-        };
+        icon: appIconFilePathResolver.getAppIconFilePath(),
     };
 
     const browserWindowOptionsMap: Record<OperatingSystem, BrowserWindowConstructorOptions> = {
-        macOS: extendDefaultBrowserWindowOptions({
+        macOS: extendDefaultBrowserWindowOptions(defaultBrowserWindowOptions, {
             vibrancy: getVibrancy(settingsManager.getValue("window.vibrancy", "None")),
             backgroundColor: "rgba(0,0,0,0)",
         }),
-        Windows: extendDefaultBrowserWindowOptions({
+        Windows: extendDefaultBrowserWindowOptions(defaultBrowserWindowOptions, {
             autoHideMenuBar: true,
             backgroundMaterial: getBackgroundMaterial(settingsManager.getValue("window.backgroundMaterial", "Mica")),
         }),
-        Linux: extendDefaultBrowserWindowOptions({}),
+        Linux: extendDefaultBrowserWindowOptions(defaultBrowserWindowOptions, {}),
     };
 
     return new BrowserWindow(browserWindowOptionsMap[operatingSystem]);

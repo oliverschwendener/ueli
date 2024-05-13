@@ -1,15 +1,17 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { NativeTheme } from "electron";
 import { describe, expect, it, vi } from "vitest";
-import { getAppIconFilePath } from "./getAppIconFilePath";
+import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 
-describe(getAppIconFilePath, () => {
+describe(AppIconFilePathResolver, () => {
     it("it should return the correct app icon file path on Windows' dark theme", () => {
         const getModuleAssetPathMock = vi.fn().mockReturnValue("windows-dark-theme-icon.png");
         const assetPathResolver = <AssetPathResolver>{ getModuleAssetPath: (m, a) => getModuleAssetPathMock(m, a) };
         const nativeTheme = <NativeTheme>{ shouldUseDarkColors: true };
 
-        expect(getAppIconFilePath(nativeTheme, assetPathResolver, "Windows")).toBe("windows-dark-theme-icon.png");
+        const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, "Windows");
+
+        expect(appIconFilePathResolver.getAppIconFilePath()).toBe("windows-dark-theme-icon.png");
         expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-dark-transparent.png");
     });
 
@@ -18,7 +20,9 @@ describe(getAppIconFilePath, () => {
         const assetPathResolver = <AssetPathResolver>{ getModuleAssetPath: (m, a) => getModuleAssetPathMock(m, a) };
         const nativeTheme = <NativeTheme>{ shouldUseDarkColors: false };
 
-        expect(getAppIconFilePath(nativeTheme, assetPathResolver, "Windows")).toBe("windows-light-theme-icon.png");
+        const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, "Windows");
+
+        expect(appIconFilePathResolver.getAppIconFilePath()).toBe("windows-light-theme-icon.png");
         expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-light-transparent.png");
     });
 
@@ -27,7 +31,9 @@ describe(getAppIconFilePath, () => {
         const assetPathResolver = <AssetPathResolver>{ getModuleAssetPath: (m, a) => getModuleAssetPathMock(m, a) };
         const nativeTheme = <NativeTheme>{ shouldUseDarkColors: true };
 
-        expect(getAppIconFilePath(nativeTheme, assetPathResolver, "macOS")).toBe("macos-dark-theme-icon.png");
+        const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, "macOS");
+
+        expect(appIconFilePathResolver.getAppIconFilePath()).toBe("macos-dark-theme-icon.png");
         expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-dark.png");
     });
 
@@ -36,7 +42,9 @@ describe(getAppIconFilePath, () => {
         const assetPathResolver = <AssetPathResolver>{ getModuleAssetPath: (m, a) => getModuleAssetPathMock(m, a) };
         const nativeTheme = <NativeTheme>{ shouldUseDarkColors: false };
 
-        expect(getAppIconFilePath(nativeTheme, assetPathResolver, "macOS")).toBe("macos-light-theme-icon.png");
+        const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, "macOS");
+
+        expect(appIconFilePathResolver.getAppIconFilePath()).toBe("macos-light-theme-icon.png");
         expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-light.png");
     });
 
@@ -45,7 +53,9 @@ describe(getAppIconFilePath, () => {
         const assetPathResolver = <AssetPathResolver>{ getModuleAssetPath: (m, a) => getModuleAssetPathMock(m, a) };
         const nativeTheme = <NativeTheme>{ shouldUseDarkColors: true };
 
-        expect(getAppIconFilePath(nativeTheme, assetPathResolver, "macOS")).toBe("linux-dark-theme-icon.png");
+        const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, "Linux");
+
+        expect(appIconFilePathResolver.getAppIconFilePath()).toBe("linux-dark-theme-icon.png");
         expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-dark.png");
     });
 
@@ -54,7 +64,9 @@ describe(getAppIconFilePath, () => {
         const assetPathResolver = <AssetPathResolver>{ getModuleAssetPath: (m, a) => getModuleAssetPathMock(m, a) };
         const nativeTheme = <NativeTheme>{ shouldUseDarkColors: false };
 
-        expect(getAppIconFilePath(nativeTheme, assetPathResolver, "macOS")).toBe("linux-light-theme-icon.png");
+        const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, "Linux");
+
+        expect(appIconFilePathResolver.getAppIconFilePath()).toBe("linux-light-theme-icon.png");
         expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-light.png");
     });
 });
