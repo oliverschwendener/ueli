@@ -5,7 +5,7 @@ import { WindowsBrowserWindowConstructorOptionsProvider } from "./WindowsBrowser
 
 describe(WindowsBrowserWindowConstructorOptionsProvider, () => {
     describe(WindowsBrowserWindowConstructorOptionsProvider.prototype.get, () => {
-        it("it should return the windows constructor options", () => {
+        it("should return the windows constructor options", () => {
             const defaultOptions = <BrowserWindowConstructorOptions>{
                 frame: false,
                 center: true,

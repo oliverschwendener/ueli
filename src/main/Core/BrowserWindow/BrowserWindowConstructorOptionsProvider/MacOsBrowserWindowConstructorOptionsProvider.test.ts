@@ -5,7 +5,7 @@ import type { VibrancyProvider } from "./Vibrancy";
 
 describe(MacOsBrowserWindowConstructorOptionsProvider, () => {
     describe(MacOsBrowserWindowConstructorOptionsProvider.prototype.get, () => {
-        it("it should return the macOS window options", () => {
+        it("should return the macOS window options", () => {
             const defaultOptions = <BrowserWindowConstructorOptions>{
                 alwaysOnTop: true,
                 vibrancy: null,

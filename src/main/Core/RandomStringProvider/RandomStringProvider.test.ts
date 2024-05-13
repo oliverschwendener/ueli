@@ -3,7 +3,7 @@ import { RandomStringProvider } from "./RandomStringProvider";
 
 describe(RandomStringProvider, () => {
     describe(RandomStringProvider.prototype.getRandomUUid, () => {
-        it("it should not return the same string twice", () => {
+        it("should not return the same string twice", () => {
             const randomStringProvider = new RandomStringProvider();
             expect(randomStringProvider.getRandomUUid()).not.toEqual(randomStringProvider.getRandomUUid());
         });

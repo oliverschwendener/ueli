@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 
 describe(AppIconFilePathResolver, () => {
-    it("it should return the correct app icon file path on Windows' dark theme", () => {
+    it("should return the correct app icon file path on Windows' dark theme", () => {
         const getModuleAssetPathMock = vi.fn().mockReturnValue("windows-dark-theme-icon.png");
         const assetPathResolver = <AssetPathResolver>{ getModuleAssetPath: (m, a) => getModuleAssetPathMock(m, a) };
         const nativeTheme = <NativeTheme>{ shouldUseDarkColors: true };
@@ -15,7 +15,7 @@ describe(AppIconFilePathResolver, () => {
         expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-dark-transparent.png");
     });
 
-    it("it should return the correct app icon file path on Windows' light theme", () => {
+    it("should return the correct app icon file path on Windows' light theme", () => {
         const getModuleAssetPathMock = vi.fn().mockReturnValue("windows-light-theme-icon.png");
         const assetPathResolver = <AssetPathResolver>{ getModuleAssetPath: (m, a) => getModuleAssetPathMock(m, a) };
         const nativeTheme = <NativeTheme>{ shouldUseDarkColors: false };
@@ -26,7 +26,7 @@ describe(AppIconFilePathResolver, () => {
         expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-light-transparent.png");
     });
 
-    it("it should return the correct app icon file path on macOS' dark theme", () => {
+    it("should return the correct app icon file path on macOS' dark theme", () => {
         const getModuleAssetPathMock = vi.fn().mockReturnValue("macos-dark-theme-icon.png");
         const assetPathResolver = <AssetPathResolver>{ getModuleAssetPath: (m, a) => getModuleAssetPathMock(m, a) };
         const nativeTheme = <NativeTheme>{ shouldUseDarkColors: true };
@@ -37,7 +37,7 @@ describe(AppIconFilePathResolver, () => {
         expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-dark.png");
     });
 
-    it("it should return the correct app icon file path on macOS' light theme", () => {
+    it("should return the correct app icon file path on macOS' light theme", () => {
         const getModuleAssetPathMock = vi.fn().mockReturnValue("macos-light-theme-icon.png");
         const assetPathResolver = <AssetPathResolver>{ getModuleAssetPath: (m, a) => getModuleAssetPathMock(m, a) };
         const nativeTheme = <NativeTheme>{ shouldUseDarkColors: false };
@@ -48,7 +48,7 @@ describe(AppIconFilePathResolver, () => {
         expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-light.png");
     });
 
-    it("it should return the correct app icon file path on Linux' dark theme", () => {
+    it("should return the correct app icon file path on Linux' dark theme", () => {
         const getModuleAssetPathMock = vi.fn().mockReturnValue("linux-dark-theme-icon.png");
         const assetPathResolver = <AssetPathResolver>{ getModuleAssetPath: (m, a) => getModuleAssetPathMock(m, a) };
         const nativeTheme = <NativeTheme>{ shouldUseDarkColors: true };
@@ -59,7 +59,7 @@ describe(AppIconFilePathResolver, () => {
         expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-dark.png");
     });
 
-    it("it should return the correct app icon file path on Linux' light theme", () => {
+    it("should return the correct app icon file path on Linux' light theme", () => {
         const getModuleAssetPathMock = vi.fn().mockReturnValue("linux-light-theme-icon.png");
         const assetPathResolver = <AssetPathResolver>{ getModuleAssetPath: (m, a) => getModuleAssetPathMock(m, a) };
         const nativeTheme = <NativeTheme>{ shouldUseDarkColors: false };

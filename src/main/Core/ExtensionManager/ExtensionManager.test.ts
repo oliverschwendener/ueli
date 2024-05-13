@@ -8,7 +8,7 @@ import { describe, expect, it, vi } from "vitest";
 import { ExtensionManager } from "./ExtensionManager";
 
 describe(ExtensionManager, () => {
-    it("it should populate search index by extension id", async () => {
+    it("should populate search index by extension id", async () => {
         const searchResultItems = [
             <SearchResultItem>{ id: "searchResultItem1" },
             <SearchResultItem>{ id: "searchResultItem2" },
