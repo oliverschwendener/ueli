@@ -6,7 +6,10 @@ export class LoggerModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const ipcMain = dependencyRegistry.get("IpcMain");
 
-        const logger = new Logger(dependencyRegistry.get("Clock"), dependencyRegistry.get("BrowserWindowNotifier"));
+        const logger = new Logger(
+            dependencyRegistry.get("DateProvider"),
+            dependencyRegistry.get("BrowserWindowNotifier"),
+        );
 
         dependencyRegistry.register("Logger", logger);
         ipcMain.on("getLogs", (event) => (event.returnValue = logger.getLogs()));

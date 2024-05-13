@@ -38,7 +38,7 @@ import * as Extensions from "./Extensions";
     Core.AssetPathResolverModule.bootstrap(dependencyRegistry);
     Core.ShellModule.bootstrap(dependencyRegistry);
     Core.ClipboardModule.bootstrap(dependencyRegistry);
-    Core.ClockModule.bootstrap(dependencyRegistry);
+    Core.DateProviderModule.bootstrap(dependencyRegistry);
     Core.AboutUeliModule.bootstrap(dependencyRegistry);
     Core.BrowserWindowNotifierModule.bootstrap(dependencyRegistry);
     Core.LoggerModule.bootstrap(dependencyRegistry);

@@ -10,7 +10,7 @@ export type Dependencies = {
     AssetPathResolver?: Core.AssetPathResolver;
     BrowserWindowNotifier?: Core.BrowserWindowNotifier;
     Clipboard?: Electron.Clipboard;
-    Clock?: Core.Clock;
+    DateProvider?: Core.DateProvider;
     CommandlineUtility?: Core.CommandlineUtility;
     Dialog?: Electron.Dialog;
     Emitter?: Emitter<Record<string, unknown>>;

@@ -1,9 +1,9 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
-import { Clock } from "./Clock";
+import { DateProvider } from "./DateProvider";
 
-export class ClockModule {
+export class DateProviderModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        dependencyRegistry.register("Clock", new Clock());
+        dependencyRegistry.register("DateProvider", new DateProvider());
     }
 }

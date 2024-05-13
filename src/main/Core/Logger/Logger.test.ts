@@ -1,72 +1,72 @@
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
-import type { Clock } from "@Core/Clock/Clock";
+import type { DateProvider } from "@Core/DateProvider/DateProvider";
 import { describe, expect, it, vi } from "vitest";
 import { Logger } from "./Logger";
 
 describe(Logger, () => {
-    const nowAsString = "2024-01-13 11:31:52";
+    const date = new Date();
 
     it("should log an error", () => {
-        const getCurrentTimeAsStringMock = vi.fn().mockReturnValue(nowAsString);
+        const getDateMock = vi.fn().mockReturnValue(date);
         const notifyMock = vi.fn();
 
         const logger = new Logger(
-            <Clock>{ getCurrentTimeAsString: () => getCurrentTimeAsStringMock() },
+            <DateProvider>{ get: () => getDateMock() },
             <BrowserWindowNotifier>{ notify: (c) => notifyMock(c) },
         );
 
         logger.error("This is an error");
 
-        expect(logger.getLogs()).toEqual([`[${nowAsString}][ERROR] This is an error`]);
-        expect(getCurrentTimeAsStringMock).toHaveBeenCalledOnce();
+        expect(logger.getLogs()).toEqual([`[${date.toLocaleString()}][ERROR] This is an error`]);
+        expect(getDateMock).toHaveBeenCalledOnce();
         expect(notifyMock).toHaveBeenCalledWith("logsUpdated");
     });
 
     it("should log a debug message", () => {
-        const getCurrentTimeAsStringMock = vi.fn().mockReturnValue(nowAsString);
+        const getDateMock = vi.fn().mockReturnValue(date);
         const notifyMock = vi.fn();
 
         const logger = new Logger(
-            <Clock>{ getCurrentTimeAsString: () => getCurrentTimeAsStringMock() },
+            <DateProvider>{ get: () => getDateMock() },
             <BrowserWindowNotifier>{ notify: (c) => notifyMock(c) },
         );
 
         logger.debug("This is a debug message");
 
-        expect(logger.getLogs()).toEqual([`[${nowAsString}][DEBUG] This is a debug message`]);
-        expect(getCurrentTimeAsStringMock).toHaveBeenCalledOnce();
+        expect(logger.getLogs()).toEqual([`[${date.toLocaleString()}][DEBUG] This is a debug message`]);
+        expect(getDateMock).toHaveBeenCalledOnce();
         expect(notifyMock).toHaveBeenCalledWith("logsUpdated");
     });
 
     it("should log a info message", () => {
-        const getCurrentTimeAsStringMock = vi.fn().mockReturnValue(nowAsString);
+        const getDateMock = vi.fn().mockReturnValue(date);
         const notifyMock = vi.fn();
 
         const logger = new Logger(
-            <Clock>{ getCurrentTimeAsString: () => getCurrentTimeAsStringMock() },
+            <DateProvider>{ get: () => getDateMock() },
             <BrowserWindowNotifier>{ notify: (c) => notifyMock(c) },
         );
 
         logger.info("This is a info message");
 
-        expect(logger.getLogs()).toEqual([`[${nowAsString}][INFO] This is a info message`]);
-        expect(getCurrentTimeAsStringMock).toHaveBeenCalledOnce();
+        expect(logger.getLogs()).toEqual([`[${date.toLocaleString()}][INFO] This is a info message`]);
+        expect(getDateMock).toHaveBeenCalledOnce();
         expect(notifyMock).toHaveBeenCalledWith("logsUpdated");
     });
 
     it("should log a warning", () => {
-        const getCurrentTimeAsStringMock = vi.fn().mockReturnValue(nowAsString);
+        const getDateMock = vi.fn().mockReturnValue(date);
         const notifyMock = vi.fn();
 
         const logger = new Logger(
-            <Clock>{ getCurrentTimeAsString: () => getCurrentTimeAsStringMock() },
+            <DateProvider>{ get: () => getDateMock() },
             <BrowserWindowNotifier>{ notify: (c) => notifyMock(c) },
         );
 
         logger.warn("This is a warning");
 
-        expect(logger.getLogs()).toEqual([`[${nowAsString}][WARNING] This is a warning`]);
-        expect(getCurrentTimeAsStringMock).toHaveBeenCalledOnce();
+        expect(logger.getLogs()).toEqual([`[${date.toLocaleString()}][WARNING] This is a warning`]);
+        expect(getDateMock).toHaveBeenCalledOnce();
         expect(notifyMock).toHaveBeenCalledWith("logsUpdated");
     });
 });

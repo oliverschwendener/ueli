@@ -1,12 +1,12 @@
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
-import type { Clock } from "../Clock";
+import type { DateProvider } from "@Core/DateProvider";
 import type { Logger as LoggerInterface } from "./Contract";
 
 export class Logger implements LoggerInterface {
     private logs: string[] = [];
 
     public constructor(
-        private readonly clock: Clock,
+        private readonly dateProvider: DateProvider,
         private readonly browserWindowNotifier: BrowserWindowNotifier,
     ) {}
 
@@ -31,7 +31,7 @@ export class Logger implements LoggerInterface {
     }
 
     private writeLog(logLevel: string, message: string) {
-        this.logs.push(`[${this.clock.getCurrentTimeAsString()}][${logLevel}] ${message}`);
+        this.logs.push(`[${this.dateProvider.get().toLocaleString()}][${logLevel}] ${message}`);
         this.browserWindowNotifier.notify("logsUpdated");
     }
 }
