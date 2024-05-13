@@ -6,6 +6,4 @@ Ueli is a keystroke launcher for Windows, macOS and Linux.
 
 > Ueli v9 is currently under development, more documentation is about to come.
 
-Documentation:
-
--   [Development](docs/development/development.md)
+For the documentation, check out the [wiki](https://github.com/oliverschwendener/ueli/wiki).
