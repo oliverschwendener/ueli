@@ -42,6 +42,6 @@ export class DuckDuckGoWebSearchEngine implements WebSearchEngine {
             "de-CH": "ch-de",
         };
 
-        return map[locale] ?? "";
+        return map[locale] ?? map["en-US"];
     }
 }
