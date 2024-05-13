@@ -25,7 +25,7 @@ describe(MacOsApplicationIconExtractor, () => {
         it("should generate a new icon if it's not cached on the file system", async () => {
             const pathExistsMock = vi.fn().mockResolvedValue(false);
             const generateCacheFileNameMock = vi.fn().mockReturnValue("cache-file-name");
-            const executeCommandMock = vi.fn().mockResolvedValue("output");
+            const executeCommandMock = vi.fn().mockResolvedValue("icnsFileName.icns");
 
             const extractor = new MacOsApplicationIconExtractor(
                 <FileSystemUtility>{ pathExists: (filePath) => pathExistsMock(filePath) },
@@ -47,7 +47,38 @@ describe(MacOsApplicationIconExtractor, () => {
             );
 
             expect(executeCommandMock).toHaveBeenCalledWith(
-                `sips -s format png "${join(appFilePath, "Contents", "Resources", "output.icns")}" -o "${cachedFilePath}"`,
+                `sips -s format png "${join(appFilePath, "Contents", "Resources", "icnsFileName.icns")}" -o "${cachedFilePath}"`,
+            );
+
+            expect(generateCacheFileNameMock).toHaveBeenCalledWith(appFilePath);
+        });
+
+        it("should append the `.icns` file extension if it's not specified in the CFBundleIconFile", async () => {
+            const pathExistsMock = vi.fn().mockResolvedValue(false);
+            const generateCacheFileNameMock = vi.fn().mockReturnValue("cache-file-name");
+            const executeCommandMock = vi.fn().mockResolvedValue("icnsFileName");
+
+            const extractor = new MacOsApplicationIconExtractor(
+                <FileSystemUtility>{ pathExists: (filePath) => pathExistsMock(filePath) },
+                <CommandlineUtility>{ executeCommand: (command) => executeCommandMock(command) },
+                <CacheFileNameGenerator>{ generateCacheFileName: (filePath) => generateCacheFileNameMock(filePath) },
+                "cache",
+            );
+
+            const appFilePath = join("path", "to", "file.app");
+            const cachedFilePath = join("cache", "cache-file-name.png");
+
+            const actual = await extractor.extractFileIcon(appFilePath);
+
+            expect(actual).toEqual({ url: `file://${cachedFilePath}` });
+            expect(pathExistsMock).toHaveBeenCalledWith(cachedFilePath);
+
+            expect(executeCommandMock).toHaveBeenCalledWith(
+                `defaults read "${join(appFilePath, "Contents", "Info.plist")}" CFBundleIconFile`,
+            );
+
+            expect(executeCommandMock).toHaveBeenCalledWith(
+                `sips -s format png "${join(appFilePath, "Contents", "Resources", "icnsFileName.icns")}" -o "${cachedFilePath}"`,
             );
 
             expect(generateCacheFileNameMock).toHaveBeenCalledWith(appFilePath);
