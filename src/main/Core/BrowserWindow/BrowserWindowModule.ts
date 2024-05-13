@@ -4,14 +4,22 @@ import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvi
 import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
-import type { App, BrowserWindow, BrowserWindowConstructorOptions } from "electron";
+import { OperatingSystem } from "@common/Core";
+import type { App, BrowserWindow } from "electron";
 import { join } from "path";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
+import {
+    BackgroundMaterialProvider,
+    BrowserWindowConstructorOptionsProvider,
+    DefaultBrowserWindowConstructorOptionsProvider,
+    LinuxBrowserWindowConstructorOptionsProvider,
+    MacOsBrowserWindowConstructorOptionsProvider,
+    VibrancyProvider,
+    WindowsBrowserWindowConstructorOptionsProvider,
+    defaultWindowSize,
+} from "./BrowserWindowConstructorOptionsProvider";
+import { BrowserWindowCreator } from "./BrowserWindowCreator";
 import { WindowBoundsMemory } from "./WindowBoundsMemory";
-import { createBrowserWindow } from "./createBrowserWindow";
-import { defaultWindowSize } from "./defaultWindowSize";
-import { getBackgroundMaterial } from "./getBackgroundMaterial";
-import { getVibrancy } from "./getVibrancy";
 import { openAndFocusBrowserWindow } from "./openAndFocusBrowserWindow";
 import { sendToBrowserWindow } from "./sendToBrowserWindow";
 import { toggleBrowserWindow } from "./toggleBrowserWindow";
@@ -29,12 +37,30 @@ export class BrowserWindowModule {
 
         const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, operatingSystem);
 
-        const browserWindow = createBrowserWindow({
+        const defaultBrowserWindowOptions = new DefaultBrowserWindowConstructorOptionsProvider(
             app,
-            operatingSystem,
             settingsManager,
             appIconFilePathResolver,
-        });
+        ).get();
+
+        const virancyProvider = new VibrancyProvider(settingsManager);
+        const backgroundMaterialProvider = new BackgroundMaterialProvider(settingsManager);
+
+        const browserWindowConstructorOptionsProviders: Record<
+            OperatingSystem,
+            BrowserWindowConstructorOptionsProvider
+        > = {
+            Linux: new LinuxBrowserWindowConstructorOptionsProvider(defaultBrowserWindowOptions),
+            macOS: new MacOsBrowserWindowConstructorOptionsProvider(defaultBrowserWindowOptions, virancyProvider),
+            Windows: new WindowsBrowserWindowConstructorOptionsProvider(
+                defaultBrowserWindowOptions,
+                backgroundMaterialProvider,
+            ),
+        };
+
+        const browserWindow = new BrowserWindowCreator(
+            browserWindowConstructorOptionsProviders[operatingSystem],
+        ).create();
 
         eventEmitter.emitEvent("browserWindowCreated", { browserWindow });
 
@@ -48,10 +74,12 @@ export class BrowserWindowModule {
 
         BrowserWindowModule.registerEvents(
             browserWindow,
-            dependencyRegistry.get("App"),
+            app,
             dependencyRegistry.get("EventSubscriber"),
             windowBoundsMemory,
-            dependencyRegistry.get("SettingsManager"),
+            settingsManager,
+            virancyProvider,
+            backgroundMaterialProvider,
         );
 
         await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyRegistry.get("EnvironmentVariableProvider"));
@@ -75,6 +103,8 @@ export class BrowserWindowModule {
         eventSubscriber: EventSubscriber,
         windowBoundsMemory: WindowBoundsMemory,
         settingsManager: SettingsManager,
+        vibrancyProvider: VibrancyProvider,
+        backgroundMaterialProvider: BackgroundMaterialProvider,
     ) {
         eventSubscriber.subscribe("hotkeyPressed", () => {
             toggleBrowserWindow({
@@ -94,15 +124,12 @@ export class BrowserWindowModule {
             browserWindow.setAlwaysOnTop(value);
         });
 
-        eventSubscriber.subscribe(
-            "settingUpdated[window.backgroundMaterial]",
-            ({ value }: { value: BrowserWindowConstructorOptions["backgroundMaterial"] }) => {
-                browserWindow.setBackgroundMaterial(getBackgroundMaterial(value));
-            },
-        );
+        eventSubscriber.subscribe("settingUpdated[window.backgroundMaterial]", () => {
+            browserWindow.setBackgroundMaterial(backgroundMaterialProvider.get());
+        });
 
-        eventSubscriber.subscribe("settingUpdated[window.vibrancy]", ({ value }: { value: string }) => {
-            browserWindow.setVibrancy(getVibrancy(value));
+        eventSubscriber.subscribe("settingUpdated[window.vibrancy]", () => {
+            browserWindow.setVibrancy(vibrancyProvider.get());
         });
 
         eventSubscriber.subscribe("navigateTo", ({ pathname }: { pathname: string }) => {
