@@ -29,9 +29,11 @@ export const createBrowserWindow = ({
         show: settingsManager.getValue<boolean>("window.showOnStartup", true),
         webPreferences: {
             preload: join(__dirname, "..", "dist-preload", "index.js"),
-            webSecurity: app.isPackaged,
-            allowRunningInsecureContent: !app.isPackaged,
             spellcheck: false,
+
+            // The following options are needed for images with `file://` URLs to work during development
+            allowRunningInsecureContent: !app.isPackaged,
+            webSecurity: app.isPackaged,
         },
         alwaysOnTop: settingsManager.getValue<boolean>("window.alwaysOnTop", false),
         icon: appIconFilePathResolver.getAppIconFilePath(),
