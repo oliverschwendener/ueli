@@ -2,7 +2,7 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { OperatingSystem } from "@common/Core";
 import { BrowserWindow, type App, type BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
-import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
+import type { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 import { defaultWindowSize } from "./defaultWindowSize";
 import { getBackgroundMaterial } from "./getBackgroundMaterial";
 import { getVibrancy } from "./getVibrancy";
@@ -23,22 +23,17 @@ export const createBrowserWindow = ({
     settingsManager: SettingsManager;
     appIconFilePathResolver: AppIconFilePathResolver;
 }) => {
-    const show = settingsManager.getValue<boolean>("window.showOnStartup", true);
-    const alwaysOnTop = settingsManager.getValue<boolean>("window.alwaysOnTop", false);
-
-    const preloadScriptFilePath = join(__dirname, "..", "dist-preload", "index.js");
-
     const defaultBrowserWindowOptions: BrowserWindowConstructorOptions = {
         ...defaultWindowSize,
         frame: false,
-        show,
+        show: settingsManager.getValue<boolean>("window.showOnStartup", true),
         webPreferences: {
-            preload: preloadScriptFilePath,
+            preload: join(__dirname, "..", "dist-preload", "index.js"),
             webSecurity: app.isPackaged,
             allowRunningInsecureContent: !app.isPackaged,
             spellcheck: false,
         },
-        alwaysOnTop,
+        alwaysOnTop: settingsManager.getValue<boolean>("window.alwaysOnTop", false),
         icon: appIconFilePathResolver.getAppIconFilePath(),
     };
 
