@@ -1,23 +1,26 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
-import { OperatingSystem } from "@common/Core";
-import { Menu, Tray } from "electron";
+import type { OperatingSystem } from "@common/Core";
+import { ContextMenuBuilder } from "./ContextMenuBuilder";
+import { ContextMenuTemplateProvider } from "./ContextMenuTemplateProvider";
+import { TrayCreator } from "./TrayCreator";
 import {
     LinuxTrayIconFilePathResolver,
     MacOsTrayIconFilePathResolver,
-    TrayIconFilePathResolver,
     WindowsTrayIconFilePathResolver,
+    type TrayIconFilePathResolver,
 } from "./TrayIconFilePathResolver";
-import { getContextMenuTemplate } from "./getContextMenuTemplate";
+import { TrayIconManager } from "./TrayIconManager";
+import { translations } from "./translations";
 
 export class TrayIconModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const nativeTheme = dependencyRegistry.get("NativeTheme");
-        const operatingSystem = dependencyRegistry.get("OperatingSystem");
-        const ueliCommandInvoker = dependencyRegistry.get("UeliCommandInvoker");
-        const translator = dependencyRegistry.get("Translator");
         const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
+        const operatingSystem = dependencyRegistry.get("OperatingSystem");
+        const translator = dependencyRegistry.get("Translator");
+        const ueliCommandInvoker = dependencyRegistry.get("UeliCommandInvoker");
+        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
 
         const trayIconFilePathResolvers: Record<OperatingSystem, () => TrayIconFilePathResolver> = {
             Linux: () => new LinuxTrayIconFilePathResolver(nativeTheme, assetPathResolver),
@@ -25,19 +28,17 @@ export class TrayIconModule {
             Windows: () => new WindowsTrayIconFilePathResolver(nativeTheme, assetPathResolver),
         };
 
-        const trayIconFilePathResolver = trayIconFilePathResolvers[operatingSystem]();
+        const trayIconManager = new TrayIconManager(
+            new TrayCreator(),
+            trayIconFilePathResolvers[operatingSystem](),
+            new ContextMenuTemplateProvider(translator, ueliCommandInvoker, translations),
+            new ContextMenuBuilder(),
+            nativeTheme,
+            eventSubscriber,
+        );
 
-        const setTrayContextMenu = async (tray: Tray) => {
-            const template = await getContextMenuTemplate({ translator, ueliCommandInvoker });
-            tray.setContextMenu(Menu.buildFromTemplate(template));
-        };
+        await trayIconManager.createTrayIcon();
 
-        const tray = new Tray(trayIconFilePathResolver.resolve());
-
-        await setTrayContextMenu(tray);
-
-        nativeTheme.on("updated", () => tray.setImage(trayIconFilePathResolver.resolve()));
-
-        eventSubscriber.subscribe("settingUpdated[general.language]", () => setTrayContextMenu(tray));
+        trayIconManager.registerEventListeners();
     }
 }
