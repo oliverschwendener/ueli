@@ -36,7 +36,7 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
             expect(getValueMock).toHaveBeenCalledWith("window.alwaysOnTop", false);
         });
 
-        it("should allow insecure content and disable websecurity if app is not packaged", () => {
+        it("should allow insecure content and disable web security if app is not packaged", () => {
             const getValueMock = vi.fn();
 
             const app = <App>{ isPackaged: false };

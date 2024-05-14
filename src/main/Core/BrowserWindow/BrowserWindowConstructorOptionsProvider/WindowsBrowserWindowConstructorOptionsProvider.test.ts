@@ -15,12 +15,12 @@ describe(WindowsBrowserWindowConstructorOptionsProvider, () => {
 
             const backgroundMaterialProvider = <BackgroundMaterialProvider>{ get: () => getBackgroundMaterialMock() };
 
-            const actaul = new WindowsBrowserWindowConstructorOptionsProvider(
+            const actual = new WindowsBrowserWindowConstructorOptionsProvider(
                 defaultOptions,
                 backgroundMaterialProvider,
             ).get();
 
-            expect(actaul).toEqual(<BrowserWindowConstructorOptions>{
+            expect(actual).toEqual(<BrowserWindowConstructorOptions>{
                 frame: false,
                 center: true,
                 autoHideMenuBar: true,
