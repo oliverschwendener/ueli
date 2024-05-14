@@ -1,6 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { App } from "electron";
+import { join } from "path";
 import { describe, expect, it, vi } from "vitest";
 import { MacOsFolderIconExtractor } from "./MacOsFolderIconExtractor";
 
@@ -20,7 +21,7 @@ describe(MacOsFolderIconExtractor, () => {
             homePath?: string;
         }) => {
             const isDirectoryMock = vi.fn().mockReturnValue(isDirectory);
-            const getPathMock = vi.fn().mockReturnValue(homePath ?? "/home");
+            const getPathMock = vi.fn().mockReturnValue(homePath ?? "homeFolderPath");
 
             const extractor = new MacOsFolderIconExtractor(
                 <AssetPathResolver>{},
@@ -39,7 +40,7 @@ describe(MacOsFolderIconExtractor, () => {
         it("should return true when given path is a directory and does not end with .app", () =>
             testMatchesFilePath({
                 expected: true,
-                candidate: "/some-folder-path",
+                candidate: "someFolderPath",
                 expectIsDirectoryCheck: true,
                 isDirectory: true,
             }));
@@ -47,7 +48,7 @@ describe(MacOsFolderIconExtractor, () => {
         it("should return false when given path is a directory but ends with .app", () =>
             testMatchesFilePath({
                 expected: false,
-                candidate: "/some-folder-path.app",
+                candidate: "someFolderPath.app",
                 expectIsDirectoryCheck: true,
                 isDirectory: true,
             }));
@@ -55,8 +56,8 @@ describe(MacOsFolderIconExtractor, () => {
         it("should return true for the home folder path", () =>
             testMatchesFilePath({
                 expected: true,
-                candidate: "/home",
-                homePath: "/home",
+                candidate: "homeFolderPath",
+                homePath: "homeFolderPath",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -64,8 +65,8 @@ describe(MacOsFolderIconExtractor, () => {
         it("should return true for the home Applications folder path", () =>
             testMatchesFilePath({
                 expected: true,
-                candidate: "/home/Applications",
-                homePath: "/home",
+                candidate: join("home", "Applications"),
+                homePath: "home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -73,8 +74,8 @@ describe(MacOsFolderIconExtractor, () => {
         it("should return true for the Desktop folder path", () =>
             testMatchesFilePath({
                 expected: true,
-                candidate: "/home/Desktop",
-                homePath: "/home",
+                candidate: join("home", "Desktop"),
+                homePath: "home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -82,8 +83,8 @@ describe(MacOsFolderIconExtractor, () => {
         it("should return true for the Documents folder path", () =>
             testMatchesFilePath({
                 expected: true,
-                candidate: "/home/Documents",
-                homePath: "/home",
+                candidate: join("home", "Documents"),
+                homePath: "home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -91,8 +92,8 @@ describe(MacOsFolderIconExtractor, () => {
         it("should return true for the Downloads folder path", () =>
             testMatchesFilePath({
                 expected: true,
-                candidate: "/home/Downloads",
-                homePath: "/home",
+                candidate: join("home", "Downloads"),
+                homePath: "home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -100,8 +101,8 @@ describe(MacOsFolderIconExtractor, () => {
         it("should return true for the Library folder path", () =>
             testMatchesFilePath({
                 expected: true,
-                candidate: "/home/Library",
-                homePath: "/home",
+                candidate: join("home", "Library"),
+                homePath: "home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -109,8 +110,8 @@ describe(MacOsFolderIconExtractor, () => {
         it("should return true for the Movies folder path", () =>
             testMatchesFilePath({
                 expected: true,
-                candidate: "/home/Movies",
-                homePath: "/home",
+                candidate: join("home", "Movies"),
+                homePath: "home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -118,8 +119,8 @@ describe(MacOsFolderIconExtractor, () => {
         it("should return true for the Music folder path", () =>
             testMatchesFilePath({
                 expected: true,
-                candidate: "/home/Music",
-                homePath: "/home",
+                candidate: join("home", "Music"),
+                homePath: "home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -127,8 +128,8 @@ describe(MacOsFolderIconExtractor, () => {
         it("should return true for the Pictures folder path", () =>
             testMatchesFilePath({
                 expected: true,
-                candidate: "/home/Pictures",
-                homePath: "/home",
+                candidate: join("home", "Pictures"),
+                homePath: "home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -136,8 +137,8 @@ describe(MacOsFolderIconExtractor, () => {
         it("should return true for the Public folder path", () =>
             testMatchesFilePath({
                 expected: true,
-                candidate: "/home/Public",
-                homePath: "/home",
+                candidate: join("home", "Public"),
+                homePath: "home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -146,7 +147,6 @@ describe(MacOsFolderIconExtractor, () => {
             testMatchesFilePath({
                 expected: true,
                 candidate: "/Applications",
-                homePath: "/home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -155,7 +155,6 @@ describe(MacOsFolderIconExtractor, () => {
             testMatchesFilePath({
                 expected: true,
                 candidate: "/Library",
-                homePath: "/home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -164,7 +163,6 @@ describe(MacOsFolderIconExtractor, () => {
             testMatchesFilePath({
                 expected: true,
                 candidate: "/System/Applications",
-                homePath: "/home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -173,7 +171,6 @@ describe(MacOsFolderIconExtractor, () => {
             testMatchesFilePath({
                 expected: true,
                 candidate: "/Users",
-                homePath: "/home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -182,7 +179,6 @@ describe(MacOsFolderIconExtractor, () => {
             testMatchesFilePath({
                 expected: true,
                 candidate: "/System",
-                homePath: "/home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -191,7 +187,6 @@ describe(MacOsFolderIconExtractor, () => {
             testMatchesFilePath({
                 expected: true,
                 candidate: "/System/Library",
-                homePath: "/home",
                 expectIsDirectoryCheck: false,
                 isDirectory: false, // This will be ignored
             }));
@@ -199,8 +194,11 @@ describe(MacOsFolderIconExtractor, () => {
 
     describe(MacOsFolderIconExtractor.prototype.extractFileIcons, () => {
         it("should return the correct icons for all provided file paths", async () => {
-            const getPathMock = vi.fn().mockReturnValue("/home");
-            const getModuleAssetPath = vi.fn().mockImplementation((m, p) => `path/to/${p}`);
+            const homePath = "homePath";
+            const moduleAssetFolderPath = "moduleAssetFolderPath";
+
+            const getPathMock = vi.fn().mockReturnValue(homePath);
+            const getModuleAssetPath = vi.fn().mockImplementation((m, a) => join(moduleAssetFolderPath, a));
 
             const extractor = new MacOsFolderIconExtractor(
                 <AssetPathResolver>{ getModuleAssetPath: (m, p) => getModuleAssetPath(m, p) },
@@ -208,10 +206,17 @@ describe(MacOsFolderIconExtractor, () => {
                 <App>{ getPath: (n) => getPathMock(n) },
             );
 
-            expect(await extractor.extractFileIcons(["/home", "/home/Downloads", "/some/random/folder"])).toEqual({
-                "/home": { url: "file://path/to/macOS/HomeFolderIcon.png" },
-                "/home/Downloads": { url: "file://path/to/macOS/DownloadsFolderIcon.png" },
-                "/some/random/folder": { url: "file://path/to/macOS/GenericFolderIcon.png" },
+            const downloadsFolderPath = join(homePath, "Downloads");
+            const someRandomFolderPath = join("some", "random", "folder");
+
+            expect(await extractor.extractFileIcons([homePath, downloadsFolderPath, someRandomFolderPath])).toEqual({
+                [homePath]: { url: `file://${join(moduleAssetFolderPath, "macOS", "HomeFolderIcon.png")}` },
+                [downloadsFolderPath]: {
+                    url: `file://${join(moduleAssetFolderPath, "macOS", "DownloadsFolderIcon.png")}`,
+                },
+                [someRandomFolderPath]: {
+                    url: `file://${join(moduleAssetFolderPath, "macOS", "GenericFolderIcon.png")}`,
+                },
             });
 
             expect(getPathMock).toHaveBeenCalledWith("home");
