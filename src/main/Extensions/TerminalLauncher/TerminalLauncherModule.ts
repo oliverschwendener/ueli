@@ -14,6 +14,7 @@ export class TerminalLauncherModule implements ExtensionModule {
                 dependencyRegistry.get("OperatingSystem"),
                 dependencyRegistry.get("AssetPathResolver"),
                 dependencyRegistry.get("SettingsManager"),
+                dependencyRegistry.get("Translator"),
             ),
             actionHandlers: [
                 new LaunchTerminalActionHandler([

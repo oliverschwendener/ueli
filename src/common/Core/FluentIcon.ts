@@ -14,4 +14,5 @@ export type FluentIcon =
     | "SettingsRegular"
     | "StarOffRegular"
     | "StarRegular"
-    | "ToggleMultipleRegular";
+    | "ToggleMultipleRegular"
+    | "WindowConsoleRegular";

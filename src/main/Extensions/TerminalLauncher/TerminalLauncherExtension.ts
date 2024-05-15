@@ -1,6 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
+import type { Translator } from "@Core/Translator";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
@@ -25,6 +26,7 @@ export class TerminalLauncherExtension implements Extension {
         private readonly operatingSystem: OperatingSystem,
         private readonly assetPathResolver: AssetPathResolver,
         private readonly settingsManager: SettingsManager,
+        private readonly translator: Translator,
     ) {}
 
     async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -54,10 +56,16 @@ export class TerminalLauncherExtension implements Extension {
             "en-US": {
                 extensionName: "Terminal Launcher",
                 terminal: "Terminal",
+                defaultActionDescription: "Launch command in {{terminal}}",
+                searchResultItemDescription: "Launch in Terminal",
+                searchResultItemName: `Run "{{command}}" in {{terminalId}}`,
             },
             "de-CH": {
                 extensionName: "Terminal Launcher",
                 terminal: "Terminal",
+                defaultActionDescription: "Befehl in {{terminal}} ausführen",
+                searchResultItemDescription: "Im Terminal öffnen",
+                searchResultItemName: `"{{command}}" mit {{terminalId}} ausführen`,
             },
         };
     }
@@ -69,16 +77,19 @@ export class TerminalLauncherExtension implements Extension {
 
         const command = searchTerm.replace(">", "").trim();
 
+        const { t } = this.translator.createInstance(this.getTranslations());
+
         return this.getEnabledTerminalIds().map((terminalId) => ({
             defaultAction: {
                 argument: JSON.stringify(<ActionArgument>{ command, terminalId }),
-                description: "Run command in terminal",
+                description: t("defaultActionDescription", { terminal: terminalId }),
                 handlerId: "LaunchTerminalActionHandler",
+                fluentIcon: "WindowConsoleRegular",
             },
-            description: "Open terminal",
+            description: t("searchResultItemDescription", { terminal: terminalId }),
             id: "[TerminalLauncher][instantSearchResultItem]",
             image: this.getImage(),
-            name: `Run "${command}" in ${terminalId}`,
+            name: t("searchResultItemName", { command, terminalId }),
         }));
     }
 
