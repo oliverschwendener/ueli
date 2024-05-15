@@ -1,6 +1,7 @@
 import { useContextBridge, useSetting } from "@Core/Hooks";
 import { getImageUrl } from "@Core/getImageUrl";
 import {
+    Avatar,
     Button,
     Link,
     Switch,
@@ -116,6 +117,8 @@ export const Extensions = () => {
                                 <TableCell>
                                     <TableCellLayout>
                                         <Link
+                                            // In order to align the avatar and the text horizontally
+                                            style={{ display: "flex", gap: 5, alignItems: "center" }}
                                             appearance="subtle"
                                             onClick={async (e) => {
                                                 e.preventDefault();
@@ -124,6 +127,13 @@ export const Extensions = () => {
                                                 );
                                             }}
                                         >
+                                            <Avatar
+                                                name={author.name}
+                                                size={16}
+                                                image={{
+                                                    src: `https://avatars.githubusercontent.com/${author.githubUserName}`,
+                                                }}
+                                            />
                                             {author.name}
                                         </Link>
                                     </TableCellLayout>
