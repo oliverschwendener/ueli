@@ -11,7 +11,7 @@ export class ContextMenuTemplateProvider {
     ) {}
 
     public async get(): Promise<MenuItemConstructorOptions[]> {
-        const t = await this.translator.createInstance(this.translations);
+        const { t } = this.translator.createInstance(this.translations);
 
         return [
             {

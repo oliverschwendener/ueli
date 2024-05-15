@@ -13,7 +13,7 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
     ) {}
 
     public async getAll(translations: Translations): Promise<SystemCommand[]> {
-        const t = await this.translator.createInstance(translations);
+        const { t } = this.translator.createInstance(translations);
 
         return [
             WindowsSystemCommand.create({
