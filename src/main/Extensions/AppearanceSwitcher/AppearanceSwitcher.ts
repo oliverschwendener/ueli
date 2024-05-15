@@ -26,7 +26,7 @@ export class AppearanceSwitcher implements Extension {
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const t = await this.translator.createInstance(this.getTranslations());
+        const { t } = this.translator.createInstance(this.getTranslations());
 
         return [
             {
