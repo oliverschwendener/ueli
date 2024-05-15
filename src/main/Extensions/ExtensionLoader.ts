@@ -11,6 +11,7 @@ import { FileSearchModule } from "./FileSearch/FileSearchModule";
 import { ShortcutsModule } from "./Shortcuts";
 import { SystemCommandsModule } from "./SystemCommands";
 import { SystemSettingsModule } from "./SystemSettings";
+import { TerminalLauncherModule } from "./TerminalLauncher";
 import { UeliCommandModule } from "./UeliCommand";
 import { WebSearchExtensionModule } from "./WebSearch";
 
@@ -27,6 +28,7 @@ export class ExtensionLoader {
             new ShortcutsModule(),
             new SystemCommandsModule(),
             new SystemSettingsModule(),
+            new TerminalLauncherModule(),
             new UeliCommandModule(),
             new WebSearchExtensionModule(),
         ];
