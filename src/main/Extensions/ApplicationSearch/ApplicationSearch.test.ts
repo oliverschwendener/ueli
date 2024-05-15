@@ -122,7 +122,7 @@ describe(ApplicationSearch, () => {
             <Settings>{},
             <AssetPathResolver>{},
             <EnvironmentVariableProvider>{},
-        ).getTranslations();
+        ).getI18nResources();
 
         expect(Object.keys(translations)).to.include("en-US");
         expect(Object.keys(translations)).to.include("de-CH");

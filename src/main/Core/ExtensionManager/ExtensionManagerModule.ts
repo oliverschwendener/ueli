@@ -23,10 +23,10 @@ export class ExtensionManagerModule {
 
         const extensionManager = new ExtensionManager(extensionRegistry, searchIndex, settingsManager, logger);
 
-        ipcMain.on("getExtensionTranslations", (event) => {
+        ipcMain.on("getExtensionResources", (event) => {
             event.returnValue = extensionManager.getSupportedExtensions().map((extension) => ({
                 extensionId: extension.id,
-                translations: extension.getTranslations(),
+                resources: extension.getI18nResources(),
             }));
         });
 

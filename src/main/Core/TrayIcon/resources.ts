@@ -1,6 +1,7 @@
-import type { Translations } from "@common/Core/Extension";
+import type { Resources } from "@common/Core/Translator";
+import type { TrayIconTranslations } from "./TrayIconTranslations";
 
-export const translations: Translations = {
+export const resources: Resources<TrayIconTranslations> = {
     "en-US": {
         "trayIcon.contextMenu.about": "About",
         "trayIcon.contextMenu.quit": "Quit",

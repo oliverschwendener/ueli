@@ -4,7 +4,7 @@ import type { FileImageGenerator, UrlImageGenerator } from "@Core/ImageGenerator
 import { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { SearchResultItem } from "@common/Core";
-import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
+import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Shortcut, ShortcutType } from "@common/Extensions/Shortcuts";
 
@@ -84,7 +84,7 @@ export class Shortcuts implements Extension {
         return [getExtensionSettingKey(this.id, "shortcuts")];
     }
 
-    public getTranslations(): Translations {
+    public getI18nResources() {
         return {
             "en-US": {
                 extensionName: "Shortcuts",

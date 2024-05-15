@@ -2,7 +2,6 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
 import type { SearchResultItem } from "@common/Core";
-import type { Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 
 export class UeliCommandExtension implements Extension {
@@ -25,7 +24,7 @@ export class UeliCommandExtension implements Extension {
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const { t } = this.translator.createInstance(this.getTranslations());
+        const { t } = this.translator.createT(this.getI18nResources());
 
         const map: Record<string, SearchResultItem> = {
             quit: {
@@ -102,7 +101,7 @@ export class UeliCommandExtension implements Extension {
         return ["general.language"];
     }
 
-    public getTranslations(): Translations {
+    public getI18nResources() {
         return {
             "en-US": {
                 extensionName: "Ueli Commands",

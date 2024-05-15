@@ -1,6 +1,6 @@
-import type { Translations } from "@common/Core/Extension";
+import type { Resources, Translations } from "@common/Core/Translator";
 import type { SystemCommand } from "./SystemCommand";
 
 export interface SystemCommandRepository {
-    getAll(translations: Translations): Promise<SystemCommand[]>;
+    getAll(resources: Resources<Translations>): Promise<SystemCommand[]>;
 }

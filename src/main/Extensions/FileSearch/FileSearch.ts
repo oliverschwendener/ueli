@@ -5,7 +5,7 @@ import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import { SearchResultItemActionUtility, type OperatingSystem, type SearchResultItem } from "@common/Core";
-import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
+import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { App } from "electron";
 import { basename } from "path";
@@ -42,7 +42,7 @@ export class FileSearch implements Extension {
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const { t } = this.translator.createInstance(this.getTranslations());
+        const { t } = this.translator.createT(this.getI18nResources());
 
         return [
             {
@@ -78,7 +78,7 @@ export class FileSearch implements Extension {
         };
     }
 
-    public getTranslations(): Translations {
+    public getI18nResources() {
         return {
             "en-US": {
                 extensionName: "File Search",

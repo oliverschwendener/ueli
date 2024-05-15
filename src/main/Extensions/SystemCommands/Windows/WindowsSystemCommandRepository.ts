@@ -1,10 +1,11 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Translator } from "@Core/Translator";
-import type { Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
+import type { Resources } from "@common/Core/Translator";
 import type { SystemCommand } from "../SystemCommand";
 import type { SystemCommandRepository } from "../SystemCommandRepository";
 import { WindowsSystemCommand } from "./WindowsSystemCommand";
+import type { WindowsTranslations } from "./windowsTranslations";
 
 export class WindowsSystemCommandRepository implements SystemCommandRepository {
     public constructor(
@@ -12,8 +13,8 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
         private readonly assetPathResolver: AssetPathResolver,
     ) {}
 
-    public async getAll(translations: Translations): Promise<SystemCommand[]> {
-        const { t } = this.translator.createInstance(translations);
+    public async getAll(resources: Resources<WindowsTranslations>): Promise<SystemCommand[]> {
+        const { t } = this.translator.createT(resources);
 
         return [
             WindowsSystemCommand.create({
