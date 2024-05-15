@@ -3,7 +3,6 @@ import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
-import type { Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { ActionArgument } from "./ActionArgument";
 
@@ -51,7 +50,7 @@ export class TerminalLauncherExtension implements Extension {
         };
     }
 
-    public getTranslations(): Translations {
+    public getI18nResources() {
         return {
             "en-US": {
                 extensionName: "Terminal Launcher",
@@ -75,7 +74,7 @@ export class TerminalLauncherExtension implements Extension {
 
         const command = searchTerm.replace(">", "").trim();
 
-        const { t } = this.translator.createInstance(this.getTranslations());
+        const { t } = this.translator.createT(this.getI18nResources());
 
         return this.getEnabledTerminalIds().map((terminalId) => ({
             defaultAction: {
