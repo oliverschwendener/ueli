@@ -64,12 +64,12 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
     const { value: maxResultLength } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
 
     const filteredSearchResultItems = [
+        ...instantSearchResultItems,
         ...filterSearchResultItemsBySearchTerm({
             searchResultItems,
             excludedIds: excludedSearchResultItemIds,
             searchOptions: { searchTerm, fuzziness, maxResultLength },
         }),
-        ...instantSearchResultItems,
     ];
 
     const selectNextSearchResultItem = () =>
