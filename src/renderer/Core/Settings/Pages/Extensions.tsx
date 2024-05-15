@@ -131,7 +131,7 @@ export const Extensions = () => {
                                                 name={author.name}
                                                 size={16}
                                                 image={{
-                                                    src: `https://avatars.githubusercontent.com/${author.githubUserName}`,
+                                                    src: `https://github.com/${author.githubUserName}.png?size=16`,
                                                 }}
                                             />
                                             {author.name}
