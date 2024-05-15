@@ -3,7 +3,7 @@ import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
-import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
+import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Net } from "electron";
 import type { ApiResponse, InvocationArgument, PostBody, Settings } from "./Types";
@@ -36,7 +36,7 @@ export class DeeplTranslatorExtension implements Extension {
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const { t } = this.translator.createInstance(this.getTranslations());
+        const { t } = this.translator.createT(this.getI18nResources());
 
         return [
             {
@@ -76,7 +76,7 @@ export class DeeplTranslatorExtension implements Extension {
         return ["general.language"];
     }
 
-    public getTranslations(): Translations {
+    public getI18nResources() {
         return {
             "en-US": {
                 extensionName: "DeepL Translator",

@@ -1,20 +1,20 @@
-import type { Translations } from "@common/Core/Extension";
+import type { Resources, Translations } from "@common/Core/Translator";
 import type { InitOptions } from "i18next";
 
 export const createResources = (
-    namespacedTranslations: { namespace: string; translations: Translations }[],
+    namespacedResources: { namespace: string; resources: Resources<Translations> }[],
 ): InitOptions["resources"] => {
-    const resources: InitOptions["resources"] = {};
+    const result: InitOptions["resources"] = {};
 
-    for (const { namespace, translations } of namespacedTranslations) {
-        for (const locale of Object.keys(translations)) {
-            if (!Object.keys(resources).includes(locale)) {
-                resources[locale] = {};
+    for (const { namespace, resources } of namespacedResources) {
+        for (const locale of Object.keys(resources)) {
+            if (!Object.keys(result).includes(locale)) {
+                result[locale] = {};
             }
 
-            resources[locale][namespace] = translations[locale];
+            result[locale][namespace] = resources[locale];
         }
     }
 
-    return resources;
+    return result;
 };

@@ -243,7 +243,7 @@ describe(WebSearchExtension, () => {
 
     it("should support en-US and de-CH locales", () => {
         expect(
-            Object.keys(new WebSearchExtension(<AssetPathResolver>{}, <SettingsManager>{}, []).getTranslations()),
+            Object.keys(new WebSearchExtension(<AssetPathResolver>{}, <SettingsManager>{}, []).getI18nResources()),
         ).toEqual(["en-US", "de-CH"]);
     });
 });

@@ -17,7 +17,7 @@ const contextBridgeImplementation: ContextBridge = {
     getAvailableExtensions: () => ipcRenderer.sendSync("getAvailableExtensions"),
     getEnabledExtensions: () => ipcRenderer.sendSync("getEnabledExtensions"),
     getExtension: (extensionId) => ipcRenderer.sendSync("getExtension", { extensionId }),
-    getExtensionTranslations: () => ipcRenderer.sendSync("getExtensionTranslations"),
+    getExtensionResources: () => ipcRenderer.sendSync("getExtensionResources"),
     getExcludedSearchResultItemIds: () => ipcRenderer.sendSync("getExcludedSearchResultItemIds"),
     getExtensionAssetFilePath: (extensionId, key) =>
         ipcRenderer.sendSync("getExtensionAssetFilePath", { extensionId, key }),

@@ -1,6 +1,16 @@
-import type { Translations } from "@common/Core/Extension";
+import type { Resources } from "@common/Core/Translator";
 
-export const macOsTranslations: Translations = {
+export type MacOsTranslations = {
+    extensionName: string;
+    searchResultItemDescription: string;
+    shutdown: string;
+    restart: string;
+    logOut: string;
+    sleep: string;
+    lock: string;
+};
+
+export const macOsResources: Resources<MacOsTranslations> = {
     "en-US": {
         extensionName: "System Commands",
         searchResultItemDescription: "System Command",

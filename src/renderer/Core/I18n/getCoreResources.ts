@@ -1,10 +1,10 @@
-import type { Translations } from "@common/Core/Extension";
+import type { Resources, Translations } from "@common/Core/Translator";
 
-export const getCoreTranslations = (): { namespace: string; translations: Translations }[] => {
+export const getCoreResources = (): { namespace: string; resources: Resources<Translations> }[] => {
     return [
         {
             namespace: "general",
-            translations: {
+            resources: {
                 "en-US": {
                     settings: "Settings",
                     actions: "Actions",
@@ -19,7 +19,7 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
         },
         {
             namespace: "search",
-            translations: {
+            resources: {
                 "en-US": {
                     placeholder: "Type to search...",
                     noResultsFoundFor: "No results found for",
@@ -34,7 +34,7 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
         },
         {
             namespace: "settingsGeneral",
-            translations: {
+            resources: {
                 "en-US": {
                     title: "General",
                     hotkey: "Hotkey",
@@ -59,7 +59,7 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
         },
         {
             namespace: "settingsAppearance",
-            translations: {
+            resources: {
                 "en-US": {
                     title: "Appearance",
                     themeName: "Theme",
@@ -80,7 +80,7 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
         },
         {
             namespace: "settingsKeyboardAndMouse",
-            translations: {
+            resources: {
                 "en-US": {
                     title: "Keyboard & Mouse",
                     singleClickBehavior: "Single click behavior",
@@ -99,7 +99,7 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
         },
         {
             namespace: "settingsDebug",
-            translations: {
+            resources: {
                 "en-US": {
                     title: "Debug",
                     resetAllSettings: "Reset all settings",
@@ -127,7 +127,7 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
         },
         {
             namespace: "settingsAbout",
-            translations: {
+            resources: {
                 "en-US": {
                     title: "About",
                 },
@@ -138,7 +138,7 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
         },
         {
             namespace: "settingsExtensions",
-            translations: {
+            resources: {
                 "en-US": {
                     title: "Extensions",
                     name: "Name",
@@ -161,7 +161,7 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
         },
         {
             namespace: "settingsSearchEngine",
-            translations: {
+            resources: {
                 "en-US": {
                     title: "Search Engine",
                     automaticRescan: "Automatic rescan",
@@ -190,7 +190,7 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
         },
         {
             namespace: "settingsFavorites",
-            translations: {
+            resources: {
                 "en-US": {
                     title: "Favorites",
                     numberOfColumns: "Number of columns",
@@ -205,7 +205,7 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
         },
         {
             namespace: "settingsWindow",
-            translations: {
+            resources: {
                 "en-US": {
                     title: "Window",
                     hideWindowOnBlur: "Hide window on blur",
@@ -224,7 +224,7 @@ export const getCoreTranslations = (): { namespace: string; translations: Transl
         },
         {
             namespace: "searchResultItemAction",
-            translations: {
+            resources: {
                 "en-US": {
                     excludeFromSearchResults: "Exclude from search results",
                     openUrlInBrowser: "Open URL in web browser",

@@ -1,10 +1,10 @@
 import type { IpcRenderer, OpenDialogOptions, OpenDialogReturnValue, OpenExternalOptions } from "electron";
 import type { AboutUeli } from "./AboutUeli";
-import { Translations } from "./Extension";
 import type { ExtensionInfo } from "./ExtensionInfo";
 import type { OperatingSystem } from "./OperatingSystem";
 import type { SearchResultItem } from "./SearchResultItem";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
+import type { Resources, Translations } from "./Translator";
 
 /**
  * Represents the context bridge that is used to expose Electron APIs to the renderer process.
@@ -24,7 +24,7 @@ export type ContextBridge = {
     getAvailableExtensions: () => ExtensionInfo[];
     getEnabledExtensions: () => ExtensionInfo[];
     getExtension: (extensionId: string) => ExtensionInfo;
-    getExtensionTranslations: () => { extensionId: string; translations: Translations }[];
+    getExtensionResources: <T extends Translations>() => { extensionId: string; resources: Resources<T> }[];
     getExcludedSearchResultItemIds: () => string[];
     getExtensionAssetFilePath: (extensionId: string, key: string) => string;
     getExtensionSettingDefaultValue: <Value>(extensionId: string, settingKey: string) => Value;

@@ -1,8 +1,8 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
-import type { Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
+import type { Resources, Translations } from "@common/Core/Translator";
 import type { SystemCommandRepository } from "./SystemCommandRepository";
 
 export class SystemCommands implements Extension {
@@ -25,12 +25,12 @@ export class SystemCommands implements Extension {
     public constructor(
         private readonly operatingSystem: OperatingSystem,
         private readonly systemCommandRepository: SystemCommandRepository,
-        private readonly translations: Translations,
+        private readonly resources: Resources<Translations>,
         private readonly assetPathResolver: AssetPathResolver,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        return (await this.systemCommandRepository.getAll(this.translations)).map((s) => s.toSearchResultItem());
+        return (await this.systemCommandRepository.getAll(this.resources)).map((s) => s.toSearchResultItem());
     }
 
     public isSupported(): boolean {
@@ -53,8 +53,8 @@ export class SystemCommands implements Extension {
         };
     }
 
-    public getTranslations(): Translations {
-        return this.translations;
+    public getI18nResources() {
+        return this.resources;
     }
 
     public getSettingKeysTriggeringRescan(): string[] {
