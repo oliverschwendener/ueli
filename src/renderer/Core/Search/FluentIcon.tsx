@@ -11,6 +11,7 @@ import {
     StarOffRegular,
     StarRegular,
     ToggleMultipleRegular,
+    WindowConsoleRegular,
 } from "@fluentui/react-icons";
 import type { ReactElement } from "react";
 
@@ -27,6 +28,7 @@ export const FluentIcon = ({ icon }: { icon: FluentIconString }) => {
         StarOffRegular: <StarOffRegular />,
         StarRegular: <StarRegular />,
         ToggleMultipleRegular: <ToggleMultipleRegular />,
+        WindowConsoleRegular: <WindowConsoleRegular />,
     };
 
     return icons[icon] ?? <>Unknown Icon</>;
