@@ -56,16 +56,14 @@ export class TerminalLauncherExtension implements Extension {
             "en-US": {
                 extensionName: "Terminal Launcher",
                 terminal: "Terminal",
-                defaultActionDescription: "Launch command in {{terminal}}",
-                searchResultItemDescription: "Launch in Terminal",
-                searchResultItemName: `Run "{{command}}" in {{terminalId}}`,
+                defaultActionDescription: "Launch command in {{terminalId}}",
+                searchResultItemDescription: "Launch in {{terminalId}}",
             },
             "de-CH": {
                 extensionName: "Terminal Launcher",
                 terminal: "Terminal",
-                defaultActionDescription: "Befehl in {{terminal}} ausführen",
-                searchResultItemDescription: "Im Terminal öffnen",
-                searchResultItemName: `"{{command}}" mit {{terminalId}} ausführen`,
+                defaultActionDescription: "Befehl in {{terminalId}} ausführen",
+                searchResultItemDescription: "In {{terminalId}} öffnen",
             },
         };
     }
@@ -82,14 +80,14 @@ export class TerminalLauncherExtension implements Extension {
         return this.getEnabledTerminalIds().map((terminalId) => ({
             defaultAction: {
                 argument: JSON.stringify(<ActionArgument>{ command, terminalId }),
-                description: t("defaultActionDescription", { terminal: terminalId }),
+                description: t("defaultActionDescription", { terminalId }),
                 handlerId: "LaunchTerminalActionHandler",
                 fluentIcon: "WindowConsoleRegular",
             },
-            description: t("searchResultItemDescription", { terminal: terminalId }),
+            description: t("searchResultItemDescription", { terminalId }),
             id: "[TerminalLauncher][instantSearchResultItem]",
             image: this.getImage(),
-            name: t("searchResultItemName", { command, terminalId }),
+            name: `$ ${command}`,
         }));
     }
 
