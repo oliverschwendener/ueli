@@ -1,10 +1,11 @@
-import { useExtensionSetting } from "@Core/Hooks";
+import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
 import { Section } from "@Core/Settings/Section";
 import { SectionList } from "@Core/Settings/SectionList";
 import { Dropdown, Field, Option } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const TerminalLauncherSettings = () => {
+    const { contextBridge } = useContextBridge();
     const { t } = useTranslation();
 
     const extensionId = "TerminalLauncher";
@@ -28,8 +29,13 @@ export const TerminalLauncherSettings = () => {
                         onOptionSelect={(_, { selectedOptions }) => setTerminalIds(selectedOptions)}
                     >
                         {options.map((option) => (
-                            <Option key={option} value={option}>
-                                {option}
+                            <Option key={option} value={option} text={option}>
+                                <img
+                                    src={`file://${contextBridge.getExtensionAssetFilePath(extensionId, option)}`}
+                                    width={32}
+                                    alt={option}
+                                />
+                                <span>{option}</span>
                             </Option>
                         ))}
                     </Dropdown>

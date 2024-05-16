@@ -21,6 +21,11 @@ export class TerminalLauncherExtension implements Extension {
         githubUserName: "oliverschwendener",
     };
 
+    private readonly terminalImageFileNames = {
+        Terminal: "terminal.png",
+        iTerm: "iterm.png",
+    };
+
     public constructor(
         private readonly operatingSystem: OperatingSystem,
         private readonly assetPathResolver: AssetPathResolver,
@@ -85,9 +90,13 @@ export class TerminalLauncherExtension implements Extension {
             },
             description: t("searchResultItemDescription", { terminalId }),
             id: "[TerminalLauncher][instantSearchResultItem]",
-            image: this.getImage(),
+            image: this.getTerminalImage(terminalId),
             name: `$ ${command}`,
         }));
+    }
+
+    public getAssetFilePath(terminalId: string): string {
+        return this.assetPathResolver.getExtensionAssetPath(this.id, this.terminalImageFileNames[terminalId]);
     }
 
     private getEnabledTerminalIds(): string[] {
@@ -95,5 +104,11 @@ export class TerminalLauncherExtension implements Extension {
             "extension[TerminalLauncher].terminalIds",
             this.getSettingDefaultValue("terminalIds"),
         );
+    }
+
+    private getTerminalImage(terminalId: string): Image {
+        return {
+            url: `file://${this.getAssetFilePath(terminalId)}`,
+        };
     }
 }
