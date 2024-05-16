@@ -5,6 +5,7 @@ import type { IniFileParser } from "@Core/IniFileParser";
 import type { Logger } from "@Core/Logger";
 import type { Image } from "@common/Core/Image";
 import { basename, dirname, extname, join } from "path";
+import sharp from "sharp";
 import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";
 import type { FileIconExtractor } from "../FileIconExtractor";
 
@@ -265,9 +266,7 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
 
     private async saveIcon(source: string, output: string, iconSize: number): Promise<void> {
         extname(source) !== "png"
-            ? await this.commandlineUtility.executeCommand(
-                  `convert -background none -resize ${iconSize}x ${source} ${output}`,
-              )
+            ? await sharp(source).resize(iconSize).toFile(output)
             : await this.fileSystemUtility.copyFile(source, output);
     }
 

@@ -3,6 +3,11 @@
  * @see https://www.electron.build/configuration/configuration
  */
 module.exports = {
+    asar: true,
+    asarUnpack: [
+        "**/node_modules/sharp/**/*",
+        "**/node_modules/@img/**/*"
+    ],
     productName: "Ueli",
     directories: {
         output: "release",
