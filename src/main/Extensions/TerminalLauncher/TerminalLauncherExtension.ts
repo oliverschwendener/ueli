@@ -99,7 +99,7 @@ export class TerminalLauncherExtension implements Extension {
             description: t("searchResultItemDescription", { terminalId }),
             id: "[TerminalLauncher][instantSearchResultItem]",
             image: this.getTerminalImage(terminalId),
-            name: `$ ${command}`,
+            name: command,
         }));
     }
 
