@@ -5,6 +5,7 @@ import type { Translator } from "@Core/Translator";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { ActionArgument } from "./ActionArgument";
+import type { Settings } from "./Settings";
 
 export class TerminalLauncherExtension implements Extension {
     public readonly id = "TerminalLauncher";
@@ -24,6 +25,16 @@ export class TerminalLauncherExtension implements Extension {
     private readonly terminalImageFileNames = {
         Terminal: "terminal.png",
         iTerm: "iterm.png",
+        "Command Prompt": "command-prompt.png",
+        Powershell: "powershell.png",
+        "Powershell Core": "powershell-core.svg",
+        WSL: "wsl.png",
+    };
+
+    private readonly defaultSettings: Record<OperatingSystem, Settings> = {
+        macOS: { terminalIds: ["Terminal"] },
+        Windows: { terminalIds: ["Command Prompt"] },
+        Linux: { terminalIds: [] },
     };
 
     public constructor(
@@ -38,15 +49,11 @@ export class TerminalLauncherExtension implements Extension {
     }
 
     public isSupported(): boolean {
-        return this.operatingSystem === "macOS";
+        return ["macOS", "Windows"].includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
-        const defaultSettings = {
-            terminalIds: ["Terminal"],
-        };
-
-        return defaultSettings[key];
+    public getSettingDefaultValue<T>(key: string) {
+        return this.defaultSettings[this.operatingSystem][key] as T;
     }
 
     public getImage(): Image {
@@ -59,13 +66,13 @@ export class TerminalLauncherExtension implements Extension {
         return {
             "en-US": {
                 extensionName: "Terminal Launcher",
-                terminal: "Terminal",
+                terminals: "Terminals",
                 defaultActionDescription: "Launch command in {{terminalId}}",
                 searchResultItemDescription: "Launch in {{terminalId}}",
             },
             "de-CH": {
                 extensionName: "Terminal Launcher",
-                terminal: "Terminal",
+                terminals: "Terminals",
                 defaultActionDescription: "Befehl in {{terminalId}} ausführen",
                 searchResultItemDescription: "In {{terminalId}} öffnen",
             },
@@ -100,15 +107,18 @@ export class TerminalLauncherExtension implements Extension {
     }
 
     private getEnabledTerminalIds(): string[] {
-        return this.settingsManager.getValue<string[]>(
-            "extension[TerminalLauncher].terminalIds",
-            this.getSettingDefaultValue("terminalIds"),
-        );
+        return this.settingsManager
+            .getValue<string[]>("extension[TerminalLauncher].terminalIds", this.getSettingDefaultValue("terminalIds"))
+            .filter((terminalId) => this.getSupportedTerminalIds().includes(terminalId));
     }
 
     private getTerminalImage(terminalId: string): Image {
         return {
             url: `file://${this.getAssetFilePath(terminalId)}`,
         };
+    }
+
+    private getSupportedTerminalIds(): string[] {
+        return Object.keys(this.terminalImageFileNames);
     }
 }
