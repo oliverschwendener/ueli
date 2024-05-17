@@ -63,6 +63,7 @@ export class TerminalLauncherExtension implements Extension {
                 prefixDescription:
                     "The prefix to trigger the terminal launcher. Launch the terminal with this pattern: <prefix> <command>",
                 terminals: "Terminals",
+                selectTerminals: "Select terminals",
                 defaultActionDescription: "Launch command in {{terminalId}}",
                 searchResultItemDescription: "Launch in {{terminalId}}",
             },
@@ -72,6 +73,7 @@ export class TerminalLauncherExtension implements Extension {
                 prefixDescription:
                     "Das Präfix, um den Terminal Launcher zu starten. Starten Sie den Terminal mit diesem Muster: <präfix> <befehl>",
                 terminals: "Terminals",
+                selectTerminals: "Terminal auswählen",
                 defaultActionDescription: "Befehl in {{terminalId}} ausführen",
                 searchResultItemDescription: "In {{terminalId}} öffnen",
             },

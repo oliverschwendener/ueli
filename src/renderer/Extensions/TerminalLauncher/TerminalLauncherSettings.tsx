@@ -37,6 +37,7 @@ export const TerminalLauncherSettings = () => {
                     <Dropdown
                         selectedOptions={terminalIds}
                         value={terminalIds.join(", ")}
+                        placeholder={t("selectTerminals", { ns })}
                         multiselect
                         onOptionSelect={(_, { selectedOptions }) => setTerminalIds(selectedOptions)}
                     >
