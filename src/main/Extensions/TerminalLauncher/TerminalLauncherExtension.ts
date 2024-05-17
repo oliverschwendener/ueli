@@ -40,6 +40,7 @@ export class TerminalLauncherExtension implements Extension {
 
     public getSettingDefaultValue<T>(key: string) {
         const defaultSettings = {
+            prefix: ">",
             terminals: this.terminals
                 .filter((terminal) => terminal.isEnabledByDefault)
                 .map((terminal) => terminal.terminalId),
@@ -58,12 +59,18 @@ export class TerminalLauncherExtension implements Extension {
         return {
             "en-US": {
                 extensionName: "Terminal Launcher",
+                prefix: "Prefix",
+                prefixDescription:
+                    "The prefix to trigger the terminal launcher. Launch the terminal with this pattern: <prefix> <command>",
                 terminals: "Terminals",
                 defaultActionDescription: "Launch command in {{terminalId}}",
                 searchResultItemDescription: "Launch in {{terminalId}}",
             },
             "de-CH": {
                 extensionName: "Terminal Launcher",
+                prefix: "Präfix",
+                prefixDescription:
+                    "Das Präfix, um den Terminal Launcher zu starten. Starten Sie den Terminal mit diesem Muster: <präfix> <befehl>",
                 terminals: "Terminals",
                 defaultActionDescription: "Befehl in {{terminalId}} ausführen",
                 searchResultItemDescription: "In {{terminalId}} öffnen",
@@ -72,7 +79,7 @@ export class TerminalLauncherExtension implements Extension {
     }
 
     public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
-        if (!searchTerm.startsWith(">") || searchTerm.length < 2) {
+        if (!searchTerm.startsWith(this.getPrefix()) || searchTerm.replace(this.getPrefix(), "").trim().length === 0) {
             return [];
         }
 
@@ -94,8 +101,15 @@ export class TerminalLauncherExtension implements Extension {
         }));
     }
 
+    private getPrefix(): string {
+        return this.settingsManager.getValue<string>(
+            "extension[TerminalLauncher].prefix",
+            this.getSettingDefaultValue("prefix"),
+        );
+    }
+
     private extractCommandFromSearchTerm(searchTerm: string): string {
-        return searchTerm.replace(">", "").trim();
+        return searchTerm.replace(this.getPrefix(), "").trim();
     }
 
     public getAssetFilePath(terminalId: string): string {

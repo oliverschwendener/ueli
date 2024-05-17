@@ -2,7 +2,7 @@ import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
 import { Section } from "@Core/Settings/Section";
 import { SectionList } from "@Core/Settings/SectionList";
 import type { OperatingSystem } from "@common/Core";
-import { Dropdown, Field, Option } from "@fluentui/react-components";
+import { Dropdown, Field, Input, Option } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const TerminalLauncherSettings = () => {
@@ -18,6 +18,8 @@ export const TerminalLauncherSettings = () => {
         Linux: [],
     };
 
+    const { value: prefix, updateValue: setPrefix } = useExtensionSetting<string>({ extensionId, key: "prefix" });
+
     const { value: terminalIds, updateValue: setTerminalIds } = useExtensionSetting<string[]>({
         extensionId,
         key: "terminalIds",
@@ -26,7 +28,12 @@ export const TerminalLauncherSettings = () => {
     return (
         <SectionList>
             <Section>
-                <Field label={t("terminal", { ns })}>
+                <Field label={t("prefix", { ns })} hint={t("prefixDescription", { ns })}>
+                    <Input value={prefix} onChange={(_, { value }) => setPrefix(value)} />
+                </Field>
+            </Section>
+            <Section>
+                <Field label={t("terminals", { ns })}>
                     <Dropdown
                         selectedOptions={terminalIds}
                         value={terminalIds.join(", ")}
