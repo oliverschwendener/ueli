@@ -1,10 +1,20 @@
 import type { AppleScriptUtility } from "@Core/AppleScriptUtility";
-import type { TerminalLauncher } from "./TerminalLauncher";
+import type { Terminal } from "./Terminal";
 
-export class MacOsTerminalLauncher implements TerminalLauncher {
+export class MacOsTerminal implements Terminal {
     public readonly terminalId = "Terminal";
 
+    public readonly isEnabledByDefault = true;
+
     public constructor(private readonly appleScriptUtility: AppleScriptUtility) {}
+
+    public getTerminalName(): string {
+        return "Terminal";
+    }
+
+    public getAssetFileName(): string {
+        return "terminal.png";
+    }
 
     public async launchWithCommand(command: string): Promise<void> {
         await this.appleScriptUtility.executeAppleScript(`tell application "Terminal"

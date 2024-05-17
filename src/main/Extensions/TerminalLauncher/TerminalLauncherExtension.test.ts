@@ -1,59 +1,66 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Image } from "@common/Core/Image";
+import { AssetPathResolver } from "@Core/AssetPathResolver";
 import { describe, expect, it, vi } from "vitest";
+import { Terminal } from "./Terminal";
 import { TerminalLauncherExtension } from "./TerminalLauncherExtension";
 
 describe(TerminalLauncherExtension, () => {
-    describe(TerminalLauncherExtension.prototype.getSearchResultItems, () => {
-        it("should return an empty array", async () => {
-            const extension = new TerminalLauncherExtension(null, null, null, null);
-            const searchResultItems = await extension.getSearchResultItems();
-            expect(searchResultItems).toEqual([]);
-        });
-    });
+    describe(TerminalLauncherExtension.prototype.id, () =>
+        it(`should be "TerminalLauncher"`, () =>
+            expect(new TerminalLauncherExtension(null, null, null, null, []).id).toBe("TerminalLauncher")),
+    );
+
+    describe(TerminalLauncherExtension.prototype.name, () =>
+        it(`should be "Terminal Launcher"`, () =>
+            expect(new TerminalLauncherExtension(null, null, null, null, []).name).toBe("Terminal Launcher")),
+    );
+
+    describe("author", () =>
+        it(`should be "Oliver Schwendener"`, () =>
+            expect(new TerminalLauncherExtension(null, null, null, null, []).author.name).toBe("Oliver Schwendener")));
+
+    describe(TerminalLauncherExtension.prototype.getSearchResultItems, () =>
+        it("should return an empty array", async () =>
+            expect(await new TerminalLauncherExtension(null, null, null, null, []).getSearchResultItems()).toEqual([])),
+    );
 
     describe(TerminalLauncherExtension.prototype.isSupported, () => {
-        it("should return true for macOS and Windows", () =>
-            expect(new TerminalLauncherExtension("macOS", null, null, null).isSupported()).toBe(true));
+        it("should return true for macOS", () =>
+            expect(new TerminalLauncherExtension("macOS", null, null, null, []).isSupported()).toBe(true));
+
+        it("should return true for Windows", () =>
+            expect(new TerminalLauncherExtension("Windows", null, null, null, []).isSupported()).toBe(true));
 
         it("should return false for Linux", () =>
-            expect(new TerminalLauncherExtension("Linux", null, null, null).isSupported()).toBe(false));
+            expect(new TerminalLauncherExtension("Linux", null, null, null, []).isSupported()).toBe(false));
     });
 
     describe(TerminalLauncherExtension.prototype.getSettingDefaultValue, () => {
-        it("should return the default settings for macOS", () => {
-            const extension = new TerminalLauncherExtension("macOS", null, null, null);
-            expect(extension.getSettingDefaultValue("terminalIds")).toEqual(["Terminal"]);
+        it("should the terminal ids of the default terminals when passing in 'terminals'", () => {
+            const extension = new TerminalLauncherExtension(null, null, null, null, <Terminal[]>[
+                { terminalId: "1", isEnabledByDefault: true },
+                { terminalId: "2", isEnabledByDefault: false },
+                { terminalId: "3", isEnabledByDefault: true },
+            ]);
+
+            expect(extension.getSettingDefaultValue<string[]>("terminals")).toEqual(["1", "3"]);
         });
 
-        it("should return the default settings for Windows", () => {
-            const extension = new TerminalLauncherExtension("Windows", null, null, null);
-            expect(extension.getSettingDefaultValue("terminalIds")).toEqual(["Command Prompt"]);
-        });
-    });
-
-    describe(TerminalLauncherExtension.prototype.getSettingDefaultValue, () => {
-        it("should return the default settings for macOS", () => {
-            const extension = new TerminalLauncherExtension("macOS", null, null, null);
-            expect(extension.getSettingDefaultValue<string[]>("terminalIds")).toEqual(["Terminal"]);
-        });
-
-        it("should return the default settings for Windows", () => {
-            const extension = new TerminalLauncherExtension("Windows", null, null, null);
-            expect(extension.getSettingDefaultValue<string[]>("terminalIds")).toEqual(["Command Prompt"]);
+        it("should return undefined when the key is not found", () => {
+            const extension = new TerminalLauncherExtension(null, null, null, null, []);
+            expect(extension.getSettingDefaultValue<string[]>("something")).toBeUndefined();
         });
     });
 
     describe(TerminalLauncherExtension.prototype.getImage, () => {
-        it("should return an image", () => {
+        it("should return the image URL", () => {
             const assetPathResolver = <AssetPathResolver>{
-                getExtensionAssetPath: vi.fn().mockReturnValue("assets/images/windows-terminal.png"),
+                getExtensionAssetPath: vi.fn().mockReturnValue("path/to/image"),
                 getModuleAssetPath: vi.fn(),
             };
 
-            const extension = new TerminalLauncherExtension(null, assetPathResolver, null, null);
+            const extension = new TerminalLauncherExtension(null, assetPathResolver, null, null, []);
 
-            expect(extension.getImage()).toEqual(<Image>{ url: "file://assets/images/windows-terminal.png" });
+            expect(extension.getImage()).toEqual({ url: "file://path/to/image" });
 
             expect(assetPathResolver.getExtensionAssetPath).toHaveBeenCalledWith(
                 "TerminalLauncher",
@@ -62,34 +69,10 @@ describe(TerminalLauncherExtension, () => {
         });
     });
 
-    describe(TerminalLauncherExtension.prototype.getI18nResources, () =>
-        it("should support en-US and de-CH", () =>
-            expect(Object.keys(new TerminalLauncherExtension(null, null, null, null).getI18nResources())).toEqual([
-                "en-US",
-                "de-CH",
-            ])),
-    );
-
-    describe(TerminalLauncherExtension.prototype.getAssetFilePath, () => {
-        const testGetAssetFilePath = ({ expectedAssetName, key }: { expectedAssetName?: string; key: string }) => {
-            const assetPathResolver = <AssetPathResolver>{
-                getExtensionAssetPath: vi.fn().mockReturnValue("assetFilePath"),
-                getModuleAssetPath: vi.fn(),
-            };
-
-            const extension = new TerminalLauncherExtension(null, assetPathResolver, null, null);
-
-            expect(extension.getAssetFilePath(key)).toEqual("assetFilePath");
-            expect(assetPathResolver.getExtensionAssetPath).toHaveBeenCalledWith("TerminalLauncher", expectedAssetName);
-        };
-
-        it("should return the image asset path when a valid terminal id is provided", () => {
-            testGetAssetFilePath({ key: "Terminal", expectedAssetName: "terminal.png" });
-            testGetAssetFilePath({ key: "iTerm", expectedAssetName: "iterm.png" });
-            testGetAssetFilePath({ key: "Command Prompt", expectedAssetName: "command-prompt.png" });
-            testGetAssetFilePath({ key: "Powershell", expectedAssetName: "powershell.png" });
-            testGetAssetFilePath({ key: "Powershell Core", expectedAssetName: "powershell-core.svg" });
-            testGetAssetFilePath({ key: "WSL", expectedAssetName: "wsl.png" });
+    describe(TerminalLauncherExtension.prototype.getI18nResources, () => {
+        it("should return i18n resources for en-US and de-CH", () => {
+            const extension = new TerminalLauncherExtension(null, null, null, null, []);
+            expect(Object.keys(extension.getI18nResources())).toEqual(["en-US", "de-CH"]);
         });
     });
 });

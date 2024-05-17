@@ -5,12 +5,12 @@ import type { Translator } from "@Core/Translator";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { ActionArgument } from "./ActionArgument";
-import type { Settings } from "./Settings";
+import type { Terminal } from "./Terminal";
 
 export class TerminalLauncherExtension implements Extension {
     public readonly id = "TerminalLauncher";
 
-    public readonly name: string;
+    public readonly name = "Terminal Launcher";
 
     public readonly nameTranslation = {
         key: "extensionName",
@@ -22,26 +22,12 @@ export class TerminalLauncherExtension implements Extension {
         githubUserName: "oliverschwendener",
     };
 
-    private readonly terminalImageFileNames = {
-        Terminal: "terminal.png",
-        iTerm: "iterm.png",
-        "Command Prompt": "command-prompt.png",
-        Powershell: "powershell.png",
-        "Powershell Core": "powershell-core.svg",
-        WSL: "wsl.png",
-    };
-
-    private readonly defaultSettings: Record<OperatingSystem, Settings> = {
-        macOS: { terminalIds: ["Terminal"] },
-        Windows: { terminalIds: ["Command Prompt"] },
-        Linux: { terminalIds: [] },
-    };
-
     public constructor(
         private readonly operatingSystem: OperatingSystem,
         private readonly assetPathResolver: AssetPathResolver,
         private readonly settingsManager: SettingsManager,
         private readonly translator: Translator,
+        private readonly terminals: Terminal[],
     ) {}
 
     async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -53,7 +39,13 @@ export class TerminalLauncherExtension implements Extension {
     }
 
     public getSettingDefaultValue<T>(key: string) {
-        return this.defaultSettings[this.operatingSystem][key] as T;
+        const defaultSettings = {
+            terminals: this.terminals
+                .filter((terminal) => terminal.isEnabledByDefault)
+                .map((terminal) => terminal.terminalId),
+        };
+
+        return defaultSettings[key] as T;
     }
 
     public getImage(): Image {
@@ -84,9 +76,9 @@ export class TerminalLauncherExtension implements Extension {
             return [];
         }
 
-        const command = searchTerm.replace(">", "").trim();
-
         const { t } = this.translator.createT(this.getI18nResources());
+
+        const command = this.extractCommandFromSearchTerm(searchTerm);
 
         return this.getEnabledTerminalIds().map((terminalId) => ({
             defaultAction: {
@@ -102,23 +94,36 @@ export class TerminalLauncherExtension implements Extension {
         }));
     }
 
+    private extractCommandFromSearchTerm(searchTerm: string): string {
+        return searchTerm.replace(">", "").trim();
+    }
+
     public getAssetFilePath(terminalId: string): string {
-        return this.assetPathResolver.getExtensionAssetPath(this.id, this.terminalImageFileNames[terminalId]);
+        return this.assetPathResolver.getExtensionAssetPath(
+            this.id,
+            this.getTerminalById(terminalId).getAssetFileName(),
+        );
+    }
+
+    private getTerminalById(terminalId: string): Terminal {
+        const terminal = this.terminals.find((t) => t.terminalId === terminalId);
+
+        if (!terminal) {
+            throw new Error(`Unable to find terminal with id ${terminalId}`);
+        }
+
+        return terminal;
     }
 
     private getEnabledTerminalIds(): string[] {
         return this.settingsManager
             .getValue<string[]>("extension[TerminalLauncher].terminalIds", this.getSettingDefaultValue("terminalIds"))
-            .filter((terminalId) => this.getSupportedTerminalIds().includes(terminalId));
+            .filter((terminalId) => this.terminals.map((terminal) => terminal.terminalId).includes(terminalId));
     }
 
     private getTerminalImage(terminalId: string): Image {
         return {
             url: `file://${this.getAssetFilePath(terminalId)}`,
         };
-    }
-
-    private getSupportedTerminalIds(): string[] {
-        return Object.keys(this.terminalImageFileNames);
     }
 }

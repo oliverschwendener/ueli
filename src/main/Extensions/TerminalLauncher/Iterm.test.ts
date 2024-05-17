@@ -1,13 +1,20 @@
 import type { AppleScriptUtility } from "@Core/AppleScriptUtility";
-import type { TerminalLauncher } from "./TerminalLauncher";
+import { describe, expect, it, vi } from "vitest";
+import { Iterm } from "./Iterm";
 
-export class ItermLauncher implements TerminalLauncher {
-    public readonly terminalId = "iTerm";
+describe(Iterm, () => {
+    describe(Iterm.prototype.terminalId, () =>
+        it(`should be "iTerm"`, () => expect(new Iterm(null).terminalId).toBe("iTerm")),
+    );
 
-    public constructor(private readonly appleScriptUtility: AppleScriptUtility) {}
+    describe(Iterm.prototype.launchWithCommand, () => {
+        it("should execute the AppleScript to launch iTerm with the given command", async () => {
+            const appleScriptUtility = <AppleScriptUtility>{ executeAppleScript: vi.fn() };
+            const itermLauncher = new Iterm(appleScriptUtility);
 
-    public async launchWithCommand(command: string): Promise<void> {
-        await this.appleScriptUtility.executeAppleScript(`tell application "iTerm"
+            await itermLauncher.launchWithCommand("ls");
+
+            expect(appleScriptUtility.executeAppleScript).toHaveBeenCalledWith(`tell application "iTerm"
                                                             if not (exists window 1) then
                                                                 reopen
                                                             else
@@ -19,8 +26,9 @@ export class ItermLauncher implements TerminalLauncher {
                                                             activate
 
                                                             tell first session of current tab of current window
-                                                                write text "${command}"
+                                                                write text "ls"
                                                             end tell
                                                         end tell`);
-    }
-}
+        });
+    });
+});

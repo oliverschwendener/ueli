@@ -1,20 +1,21 @@
 import type { AppleScriptUtility } from "@Core/AppleScriptUtility";
-import { describe, expect, it, vi } from "vitest";
-import { ItermLauncher } from "./ItermLauncher";
+import type { Terminal } from "./Terminal";
 
-describe(ItermLauncher, () => {
-    describe(ItermLauncher.prototype.terminalId, () =>
-        it(`should be "iTerm"`, () => expect(new ItermLauncher(null).terminalId).toBe("iTerm")),
-    );
+export class Iterm implements Terminal {
+    public readonly terminalId = "iTerm";
 
-    describe(ItermLauncher.prototype.launchWithCommand, () => {
-        it("should execute the AppleScript to launch iTerm with the given command", async () => {
-            const appleScriptUtility = <AppleScriptUtility>{ executeAppleScript: vi.fn() };
-            const itermLauncher = new ItermLauncher(appleScriptUtility);
+    public constructor(private readonly appleScriptUtility: AppleScriptUtility) {}
 
-            await itermLauncher.launchWithCommand("ls");
+    public getTerminalName(): string {
+        return "iTerm";
+    }
 
-            expect(appleScriptUtility.executeAppleScript).toHaveBeenCalledWith(`tell application "iTerm"
+    public getAssetFileName(): string {
+        return "iterm.png";
+    }
+
+    public async launchWithCommand(command: string): Promise<void> {
+        await this.appleScriptUtility.executeAppleScript(`tell application "iTerm"
                                                             if not (exists window 1) then
                                                                 reopen
                                                             else
@@ -26,9 +27,8 @@ describe(ItermLauncher, () => {
                                                             activate
 
                                                             tell first session of current tab of current window
-                                                                write text "ls"
+                                                                write text "${command}"
                                                             end tell
                                                         end tell`);
-        });
-    });
-});
+    }
+}
