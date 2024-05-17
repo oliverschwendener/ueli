@@ -16,7 +16,7 @@ export class LaunchTerminalActionHandler implements ActionHandler {
         );
 
         if (!terminalLauncher) {
-            // handle error
+            throw new Error(`Unable to launch terminal with id  ${terminalId}. Reason: no launcher found`);
         }
 
         await terminalLauncher.launchWithCommand(command);
