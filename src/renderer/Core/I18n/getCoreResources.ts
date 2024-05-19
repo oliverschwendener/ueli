@@ -164,6 +164,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
             resources: {
                 "en-US": {
                     title: "Search Engine",
+                    searchEngine: "Search Engine",
                     automaticRescan: "Automatic rescan",
                     fuzziness: "Fuzziness",
                     maxResultLength: "Maximum search result items",
@@ -176,6 +177,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                 },
                 "de-CH": {
                     title: "Suchmaschine",
+                    searchEngine: "Suchmaschine",
                     automaticRescan: "Automatisches Neuscannen",
                     fuzziness: "Fuzziness",
                     maxResultLength: "Maximale Anzahl Suchergebnisse",

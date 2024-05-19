@@ -54,6 +54,7 @@
         "@fluentui/react-icons": "^2.0.239",
         "better-sqlite3": "^9.6.0",
         "fuse.js": "^7.0.0",
+        "fuzzysort": "^3.0.1",
         "i18next": "^23.8.1",
         "mathjs": "^12.3.1",
         "mitt": "^3.0.1",

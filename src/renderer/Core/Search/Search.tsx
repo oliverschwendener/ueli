@@ -10,7 +10,9 @@ import { useContextBridge, useSetting } from "../Hooks";
 import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 import { FavoritesList } from "./FavoritesList";
-import { filterSearchResultItemsBySearchTerm } from "./Helpers";
+import { SearchFilter } from "./Helpers";
+import { fuseJsSearchFilter } from "./Helpers/fuseJsSearchFilter";
+import { fuzzySortFilter } from "./Helpers/fuzzySortFilter";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
 import { SearchResultList } from "./SearchResultList";
 
@@ -61,14 +63,22 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
     });
 
     const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
-    const { value: maxResultLength } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
+    const { value: maxSearchResultItems } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
+
+    const searchFilters: Record<string, SearchFilter> = {
+        "Fuse.js": (options) => fuseJsSearchFilter(options),
+        fuzzysort: (options) => fuzzySortFilter(options),
+    };
+
+    const searchFilter = searchFilters[contextBridge.getSettingValue("searchEngine.id", "Fuse.js")];
 
     const filteredSearchResultItems = [
         ...instantSearchResultItems,
-        ...filterSearchResultItemsBySearchTerm({
-            searchResultItems,
-            excludedIds: excludedSearchResultItemIds,
-            searchOptions: { searchTerm, fuzziness, maxResultLength },
+        ...searchFilter({
+            searchResultItems: searchResultItems.filter((s) => !excludedSearchResultItemIds.includes(s.id)),
+            searchTerm: searchTerm.trim(),
+            fuzziness,
+            maxSearchResultItems,
         }),
     ];
 
