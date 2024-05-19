@@ -10,8 +10,8 @@ export type Dependencies = {
     AssetPathResolver?: Core.AssetPathResolver;
     BrowserWindowNotifier?: Core.BrowserWindowNotifier;
     Clipboard?: Electron.Clipboard;
-    DateProvider?: Core.DateProvider;
     CommandlineUtility?: Core.CommandlineUtility;
+    DateProvider?: Core.DateProvider;
     Dialog?: Electron.Dialog;
     Emitter?: Emitter<Record<string, unknown>>;
     EnvironmentVariableProvider?: Core.EnvironmentVariableProvider;
@@ -43,6 +43,7 @@ export type Dependencies = {
     Shell?: Electron.Shell;
     SystemPreferences?: Electron.SystemPreferences;
     TaskScheduler?: Core.TaskScheduler;
+    TerminalRegistry?: Core.TerminalRegistry;
     Translator?: Core.Translator;
     UeliCommandInvoker?: Core.UeliCommandInvoker;
     UrlImageGenerator?: Core.UrlImageGenerator;

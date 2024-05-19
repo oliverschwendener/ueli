@@ -1,5 +1,5 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
-import type { Terminal } from "./Terminal";
+import type { Terminal } from "../Contract";
 
 export class CommandPromp implements Terminal {
     public readonly terminalId = "Command Prompt";

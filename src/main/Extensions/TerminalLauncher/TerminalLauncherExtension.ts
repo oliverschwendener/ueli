@@ -1,11 +1,11 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
+import type { TerminalRegistry } from "@Core/Terminal";
 import type { Translator } from "@Core/Translator";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { ActionArgument } from "./ActionArgument";
-import type { Terminal } from "./Terminal";
 
 export class TerminalLauncherExtension implements Extension {
     public readonly id = "TerminalLauncher";
@@ -27,7 +27,7 @@ export class TerminalLauncherExtension implements Extension {
         private readonly assetPathResolver: AssetPathResolver,
         private readonly settingsManager: SettingsManager,
         private readonly translator: Translator,
-        private readonly terminals: Terminal[],
+        private readonly terminalRegistry: TerminalRegistry,
     ) {}
 
     async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -41,7 +41,8 @@ export class TerminalLauncherExtension implements Extension {
     public getSettingDefaultValue<T>(key: string) {
         const defaultSettings = {
             prefix: ">",
-            terminals: this.terminals
+            terminals: this.terminalRegistry
+                .getAll()
                 .filter((terminal) => terminal.isEnabledByDefault)
                 .map((terminal) => terminal.terminalId),
         };
@@ -117,24 +118,19 @@ export class TerminalLauncherExtension implements Extension {
     public getAssetFilePath(terminalId: string): string {
         return this.assetPathResolver.getExtensionAssetPath(
             this.id,
-            this.getTerminalById(terminalId).getAssetFileName(),
+            this.terminalRegistry.getById(terminalId).getAssetFileName(),
         );
-    }
-
-    private getTerminalById(terminalId: string): Terminal {
-        const terminal = this.terminals.find((t) => t.terminalId === terminalId);
-
-        if (!terminal) {
-            throw new Error(`Unable to find terminal with id ${terminalId}`);
-        }
-
-        return terminal;
     }
 
     private getEnabledTerminalIds(): string[] {
         return this.settingsManager
             .getValue<string[]>("extension[TerminalLauncher].terminalIds", this.getSettingDefaultValue("terminalIds"))
-            .filter((terminalId) => this.terminals.map((terminal) => terminal.terminalId).includes(terminalId));
+            .filter((terminalId) =>
+                this.terminalRegistry
+                    .getAll()
+                    .map((terminal) => terminal.terminalId)
+                    .includes(terminalId),
+            );
     }
 
     private getTerminalImage(terminalId: string): Image {

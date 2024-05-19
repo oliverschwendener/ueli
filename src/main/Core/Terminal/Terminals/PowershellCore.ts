@@ -1,5 +1,5 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
-import type { Terminal } from "./Terminal";
+import type { Terminal } from "../Contract";
 
 export class PowershellCore implements Terminal {
     public readonly terminalId = "Powershell Core";

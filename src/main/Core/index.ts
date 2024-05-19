@@ -40,6 +40,7 @@ export * from "./SettingsWriter";
 export * from "./Shell";
 export * from "./SingleInstanceLock";
 export * from "./TaskScheduler";
+export * from "./Terminal";
 export * from "./Translator";
 export * from "./TrayIcon";
 export * from "./UeliCommand";

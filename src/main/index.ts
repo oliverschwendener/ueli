@@ -63,6 +63,7 @@ import * as Extensions from "./Extensions";
     Core.UeliCommandModule.bootstrap(dependencyRegistry);
     await Core.TrayIconModule.bootstrap(dependencyRegistry);
     Core.DialogModule.bootstrap(dependencyRegistry);
+    Core.TerminalModule.bootstrap(dependencyRegistry);
     Core.ExtensionRegistryModule.bootstrap(dependencyRegistry);
 
     // Extensions
