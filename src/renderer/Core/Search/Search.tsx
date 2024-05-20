@@ -181,7 +181,7 @@ export const Search = ({
         contextBridge.ipcRenderer.on("windowFocused", () => setFocusOnUserInputAndSelectText());
     }, []);
 
-    useEffect(() => selectFirstSearchResultItemItem(), [searchTerm]);
+    useEffect(() => selectFirstSearchResultItemItem(), [searchTerm, searchResultItems]);
 
     return (
         <BaseLayout
@@ -215,7 +215,7 @@ export const Search = ({
                     <ConfirmationDialog closeDialog={closeConfirmationDialog} action={confirmationDialogAction} />
                     <SearchResultList
                         containerRef={containerRef}
-                        selectedItemId={selectedItemId || filteredSearchResultItems[0]?.id}
+                        selectedItemId={selectedItemId}
                         searchResultItems={filteredSearchResultItems}
                         favorites={favoriteSearchResultItemIds}
                         searchTerm={searchTerm}
