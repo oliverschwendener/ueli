@@ -98,7 +98,7 @@ export class TerminalLauncherExtension implements Extension {
                 fluentIcon: "WindowConsoleRegular",
             },
             description: t("searchResultItemDescription", { terminalId }),
-            id: "[TerminalLauncher][instantSearchResultItem]",
+            id: `[${this.id}][instantSearchResultItem][${terminalId}]`,
             image: this.getTerminalImage(terminalId),
             name: command,
         }));
@@ -106,7 +106,7 @@ export class TerminalLauncherExtension implements Extension {
 
     private getPrefix(): string {
         return this.settingsManager.getValue<string>(
-            "extension[TerminalLauncher].prefix",
+            `extension[${this.id}].prefix`,
             this.getSettingDefaultValue("prefix"),
         );
     }
@@ -124,7 +124,7 @@ export class TerminalLauncherExtension implements Extension {
 
     private getEnabledTerminalIds(): string[] {
         return this.settingsManager
-            .getValue<string[]>("extension[TerminalLauncher].terminalIds", this.getSettingDefaultValue("terminalIds"))
+            .getValue<string[]>(`extension[${this.id}].terminalIds`, this.getSettingDefaultValue("terminalIds"))
             .filter((terminalId) =>
                 this.terminalRegistry
                     .getAll()
