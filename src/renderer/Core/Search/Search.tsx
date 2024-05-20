@@ -9,10 +9,10 @@ import { Footer } from "../Footer";
 import { useContextBridge, useSetting } from "../Hooks";
 import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
-import { FavoritesList } from "./FavoritesList";
 import { SearchFilter } from "./Helpers";
 import { fuseJsSearchFilter } from "./Helpers/fuseJsSearchFilter";
 import { fuzzySortFilter } from "./Helpers/fuzzySortFilter";
+import { getFilteredSearchResultItems } from "./Helpers/getFilteredSearchResultItems";
 import { getNextSearchResultItemId } from "./Helpers/getNextSearchResultItemId";
 import { getPreviousSearchResultItemId } from "./Helpers/getPreviousSearchResultItemId";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
@@ -21,10 +21,14 @@ import { SearchResultList } from "./SearchResultList";
 type SearchProps = {
     searchResultItems: SearchResultItem[];
     excludedSearchResultItemIds: string[];
-    favorites: string[];
+    favoriteSearchResultItemIds: string[];
 };
 
-export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorites }: SearchProps) => {
+export const Search = ({
+    searchResultItems,
+    excludedSearchResultItemIds,
+    favoriteSearchResultItemIds,
+}: SearchProps) => {
     const { t } = useTranslation();
     const { contextBridge } = useContextBridge();
     const [selectedItemId, setSelectedItemId] = useState<string>("");
@@ -72,20 +76,16 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
         fuzzysort: (options) => fuzzySortFilter(options),
     };
 
-    const searchFilter = searchFilters[contextBridge.getSettingValue("searchEngine.id", "Fuse.js")];
-
-    const searchFilterItems = searchFilter({
-        searchResultItems: searchResultItems.filter((s) => !excludedSearchResultItemIds.includes(s.id)),
-        searchTerm: searchTerm.trim(),
+    const filteredSearchResultItems = getFilteredSearchResultItems({
+        searchFilter: searchFilters[contextBridge.getSettingValue("searchEngine.id", "Fuse.js")],
+        excludedSearchResultItemIds,
+        favoriteSearchResultItemIds,
         fuzziness,
+        instantSearchResultItems,
         maxSearchResultItems,
+        searchResultItems,
+        searchTerm,
     });
-
-    const filteredSearchResultItems = [
-        ...instantSearchResultItems,
-        ...searchFilterItems.filter((s) => favorites.includes(s.id)),
-        ...searchFilterItems.filter((s) => !favorites.includes(s.id)),
-    ];
 
     const selectNextSearchResultItem = () =>
         setSelectedItemId(getNextSearchResultItemId(selectedItemId, filteredSearchResultItems));
@@ -176,8 +176,6 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
         setFocusOnUserInput();
     };
 
-    const hasSearchTerm = !!searchTerm.length;
-
     useEffect(() => {
         setFocusOnUserInputAndSelectText();
         contextBridge.ipcRenderer.on("windowFocused", () => setFocusOnUserInputAndSelectText());
@@ -215,19 +213,15 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
             content={
                 <>
                     <ConfirmationDialog closeDialog={closeConfirmationDialog} action={confirmationDialogAction} />
-                    {hasSearchTerm ? (
-                        <SearchResultList
-                            containerRef={containerRef}
-                            selectedItemId={selectedItemId}
-                            searchResultItems={filteredSearchResultItems}
-                            favorites={favorites}
-                            searchTerm={searchTerm}
-                            onSearchResultItemClick={handleSearchResultItemClickEvent}
-                            onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
-                        />
-                    ) : (
-                        <FavoritesList invokeSearchResultItem={({ defaultAction }) => invokeAction(defaultAction)} />
-                    )}
+                    <SearchResultList
+                        containerRef={containerRef}
+                        selectedItemId={selectedItemId}
+                        searchResultItems={filteredSearchResultItems}
+                        favorites={favoriteSearchResultItemIds}
+                        searchTerm={searchTerm}
+                        onSearchResultItemClick={handleSearchResultItemClickEvent}
+                        onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
+                    />
                 </>
             }
             footer={
@@ -243,7 +237,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
                     </Button>
                     <ActionsMenu
                         searchResultItem={getSelectedSearchResultItem()}
-                        favorites={favorites}
+                        favorites={favoriteSearchResultItemIds}
                         invokeAction={invokeAction}
                         additionalActionsButtonRef={additionalActionsButtonRef}
                         onMenuClosed={() => setFocusOnUserInput()}

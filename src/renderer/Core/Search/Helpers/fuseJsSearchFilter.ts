@@ -2,6 +2,7 @@ import type { SearchResultItem } from "@common/Core";
 import Fuse from "fuse.js";
 import type { SearchFilter } from "./SearchFilter";
 import type { SearchOptions } from "./SearchOptions";
+import { limitSearchResultItems } from "./limitSearchResultItems";
 
 export const fuseJsSearchFilter: SearchFilter = ({
     searchResultItems,
@@ -17,7 +18,5 @@ export const fuseJsSearchFilter: SearchFilter = ({
         .search(searchTerm)
         .map((i) => i.item);
 
-    result.splice(maxSearchResultItems, result.length - maxSearchResultItems);
-
-    return result;
+    return limitSearchResultItems(result, maxSearchResultItems);
 };
