@@ -74,14 +74,17 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
 
     const searchFilter = searchFilters[contextBridge.getSettingValue("searchEngine.id", "Fuse.js")];
 
+    const searchFilterItems = searchFilter({
+        searchResultItems: searchResultItems.filter((s) => !excludedSearchResultItemIds.includes(s.id)),
+        searchTerm: searchTerm.trim(),
+        fuzziness,
+        maxSearchResultItems,
+    });
+
     const filteredSearchResultItems = [
         ...instantSearchResultItems,
-        ...searchFilter({
-            searchResultItems: searchResultItems.filter((s) => !excludedSearchResultItemIds.includes(s.id)),
-            searchTerm: searchTerm.trim(),
-            fuzziness,
-            maxSearchResultItems,
-        }),
+        ...searchFilterItems.filter((s) => favorites.includes(s.id)),
+        ...searchFilterItems.filter((s) => !favorites.includes(s.id)),
     ];
 
     const selectNextSearchResultItem = () =>
