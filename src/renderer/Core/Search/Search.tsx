@@ -215,7 +215,7 @@ export const Search = ({
                     <ConfirmationDialog closeDialog={closeConfirmationDialog} action={confirmationDialogAction} />
                     <SearchResultList
                         containerRef={containerRef}
-                        selectedItemId={selectedItemId}
+                        selectedItemId={selectedItemId || filteredSearchResultItems[0]?.id}
                         searchResultItems={filteredSearchResultItems}
                         favorites={favoriteSearchResultItemIds}
                         searchTerm={searchTerm}
