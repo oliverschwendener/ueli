@@ -6,7 +6,7 @@ import { SearchResultListItem } from "./SearchResultListItem";
 
 type SearchResultListProps = {
     containerRef: RefObject<HTMLDivElement>;
-    selectedItemIndex: number;
+    selectedItemId: string;
     searchResultItems: SearchResultItem[];
     favorites: string[];
     searchTerm?: string;
@@ -16,7 +16,7 @@ type SearchResultListProps = {
 
 export const SearchResultList = ({
     containerRef,
-    selectedItemIndex,
+    selectedItemId,
     searchResultItems,
     favorites,
     searchTerm,
@@ -43,11 +43,11 @@ export const SearchResultList = ({
                     <Text>{noResultsFoundMessage}</Text>
                 </div>
             ) : null}
-            {searchResultItems.map((searchResultItem, index) => (
+            {searchResultItems.map((searchResultItem) => (
                 <SearchResultListItem
                     containerRef={containerRef}
                     key={searchResultItem.id}
-                    isSelected={selectedItemIndex === index}
+                    isSelected={selectedItemId === searchResultItem.id}
                     isFavorite={favorites.includes(searchResultItem.id)}
                     searchResultItem={searchResultItem}
                     onClick={() => onSearchResultItemClick(searchResultItem)}

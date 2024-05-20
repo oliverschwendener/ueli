@@ -13,6 +13,8 @@ import { FavoritesList } from "./FavoritesList";
 import { SearchFilter } from "./Helpers";
 import { fuseJsSearchFilter } from "./Helpers/fuseJsSearchFilter";
 import { fuzzySortFilter } from "./Helpers/fuzzySortFilter";
+import { getNextSearchResultItemId } from "./Helpers/getNextSearchResultItemId";
+import { getPreviousSearchResultItemId } from "./Helpers/getPreviousSearchResultItemId";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
 import { SearchResultList } from "./SearchResultList";
 
@@ -25,7 +27,7 @@ type SearchProps = {
 export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorites }: SearchProps) => {
     const { t } = useTranslation();
     const { contextBridge } = useContextBridge();
-    const [selectedSearchResultItemIndex, setSelectedSearchResultItemIndex] = useState<number>(0);
+    const [selectedItemId, setSelectedItemId] = useState<string>("");
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [confirmationDialogAction, setConfirmationDialogAction] = useState<SearchResultItemAction | undefined>(
         undefined,
@@ -83,23 +85,15 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
     ];
 
     const selectNextSearchResultItem = () =>
-        setSelectedSearchResultItemIndex(
-            selectedSearchResultItemIndex === filteredSearchResultItems.length - 1
-                ? 0
-                : selectedSearchResultItemIndex + 1,
-        );
+        setSelectedItemId(getNextSearchResultItemId(selectedItemId, filteredSearchResultItems));
 
     const selectPreviousSearchResultItem = () =>
-        setSelectedSearchResultItemIndex(
-            selectedSearchResultItemIndex === 0
-                ? filteredSearchResultItems.length - 1
-                : selectedSearchResultItemIndex - 1,
-        );
+        setSelectedItemId(getPreviousSearchResultItemId(selectedItemId, filteredSearchResultItems));
 
-    const selectFirstSearchResultItemItem = () => setSelectedSearchResultItemIndex(0);
+    const selectFirstSearchResultItemItem = () => setSelectedItemId(filteredSearchResultItems[0]?.id ?? "");
 
     const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
-        filteredSearchResultItems[selectedSearchResultItemIndex];
+        filteredSearchResultItems.find((s) => s.id === selectedItemId);
 
     const invokeSelectedSearchResultItem = async () => {
         const searchResultItem = getSelectedSearchResultItem();
@@ -162,10 +156,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
     };
 
     const clickHandlers: Record<string, (s: SearchResultItem) => void> = {
-        selectSearchResultItem: (s) =>
-            setSelectedSearchResultItemIndex(
-                filteredSearchResultItems.findIndex((searchResultItem) => searchResultItem.id === s.id),
-            ),
+        selectSearchResultItem: (s) => setSelectedItemId(s.id),
         invokeSearchResultItem: (s) => invokeAction(s.defaultAction),
     };
 
@@ -224,7 +215,7 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
                     {hasSearchTerm ? (
                         <SearchResultList
                             containerRef={containerRef}
-                            selectedItemIndex={selectedSearchResultItemIndex}
+                            selectedItemId={selectedItemId}
                             searchResultItems={filteredSearchResultItems}
                             favorites={favorites}
                             searchTerm={searchTerm}
