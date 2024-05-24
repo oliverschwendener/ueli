@@ -190,7 +190,7 @@ export const Search = ({
 
         setFocusOnUserInputAndSelectText();
 
-        contextBridge.ipcRenderer.on("windowFocused", () => setFocusOnUserInputAndSelectText);
+        contextBridge.ipcRenderer.on("windowFocused", () => setFocusOnUserInputAndSelectText());
     }, []);
 
     useEffect(() => {
