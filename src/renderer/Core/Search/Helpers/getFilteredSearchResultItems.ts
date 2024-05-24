@@ -41,6 +41,7 @@ export const getFilteredSearchResultItems = ({
             ...SearchResultItemFilter.createFrom(searchResultItems).pick(favoriteSearchResultItemIds).get(),
             ...SearchResultItemFilter.createFrom(searchResultItems)
                 .exclude(favoriteSearchResultItemIds)
+                .sortAlphabetically()
                 .limit(maxSearchResultItems)
                 .get(),
         ];

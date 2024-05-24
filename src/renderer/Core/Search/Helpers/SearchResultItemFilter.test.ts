@@ -32,4 +32,14 @@ describe(SearchResultItemFilter, () => {
             expect(result).toEqual([{ id: "1" }, { id: "2" }, { id: "3" }]);
         });
     });
+
+    describe(SearchResultItemFilter.prototype.sortAlphabetically, () => {
+        it("should sort search result items alphabetically", () => {
+            const a = <SearchResultItem>{ id: "1", name: "a" };
+            const b = <SearchResultItem>{ id: "2", name: "b" };
+            const c = <SearchResultItem>{ id: "3", name: "c" };
+
+            expect(SearchResultItemFilter.createFrom([c, a, b]).sortAlphabetically().get()).toEqual([a, b, c]);
+        });
+    });
 });

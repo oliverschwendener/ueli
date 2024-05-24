@@ -22,6 +22,11 @@ export class SearchResultItemFilter {
         return this;
     }
 
+    public sortAlphabetically(): SearchResultItemFilter {
+        this.searchResultItems.sort((a, b) => a.name.localeCompare(b.name));
+        return this;
+    }
+
     public get(): SearchResultItem[] {
         return this.searchResultItems;
     }
