@@ -37,11 +37,11 @@ describe(getFilteredSearchResultItems, () => {
         });
 
         expect(actual).toEqual([
-            ...instantSearchResultItems,
             ...[
                 { id: "item3", name: "Item 3" },
                 { id: "item2", name: "Item 2" },
             ],
+            ...instantSearchResultItems,
         ]);
 
         expect(searchFilter).toHaveBeenCalledOnce();

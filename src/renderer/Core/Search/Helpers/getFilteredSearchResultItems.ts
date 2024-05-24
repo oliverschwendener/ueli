@@ -32,9 +32,9 @@ export const getFilteredSearchResultItems = ({
         });
 
         return [
-            ...instantSearchResultItems,
             ...SearchResultItemFilter.createFrom(searchFilterItems).pick(favoriteSearchResultItemIds).get(),
             ...SearchResultItemFilter.createFrom(searchFilterItems).exclude(favoriteSearchResultItemIds).get(),
+            ...instantSearchResultItems,
         ];
     } else {
         return [
