@@ -1,4 +1,4 @@
-export * from "./CommandPromp";
+export * from "./CommandPrompt";
 export * from "./Iterm";
 export * from "./MacOsTerminal";
 export * from "./Powershell";

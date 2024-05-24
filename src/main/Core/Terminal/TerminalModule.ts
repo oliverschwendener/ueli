@@ -1,7 +1,7 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { TerminalRegistry } from "./TerminalRegistry";
-import { CommandPromp, Iterm, MacOsTerminal, Powershell, PowershellCore, Wsl } from "./Terminals";
+import { CommandPrompt, Iterm, MacOsTerminal, Powershell, PowershellCore, Wsl } from "./Terminals";
 
 export class TerminalModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
@@ -12,7 +12,7 @@ export class TerminalModule {
                 new Iterm(dependencyRegistry.get("AppleScriptUtility")),
             ],
             Windows: () => [
-                new CommandPromp(dependencyRegistry.get("CommandlineUtility")),
+                new CommandPrompt(dependencyRegistry.get("CommandlineUtility")),
                 new Powershell(dependencyRegistry.get("CommandlineUtility")),
                 new PowershellCore(dependencyRegistry.get("CommandlineUtility")),
                 new Wsl(dependencyRegistry.get("CommandlineUtility")),

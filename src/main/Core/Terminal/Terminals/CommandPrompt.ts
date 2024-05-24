@@ -1,7 +1,7 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { Terminal } from "../Contract";
 
-export class CommandPromp implements Terminal {
+export class CommandPrompt implements Terminal {
     public readonly terminalId = "Command Prompt";
 
     public readonly isEnabledByDefault = true;

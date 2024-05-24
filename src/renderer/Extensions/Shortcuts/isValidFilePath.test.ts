@@ -12,7 +12,7 @@ describe(isValidFilePath, () => {
         expect(isValidFilePath("test")).toBe(true);
     });
 
-    it("should return false for an inexisting file path", () => {
+    it("should return false for an non-existent file path", () => {
         vi.stubGlobal("window", { ContextBridge: { fileExists: () => false } });
         expect(isValidFilePath("test")).toBe(false);
     });

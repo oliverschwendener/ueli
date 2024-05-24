@@ -43,7 +43,7 @@ export class BrowserWindowModule {
             appIconFilePathResolver,
         ).get();
 
-        const virancyProvider = new VibrancyProvider(settingsManager);
+        const vibrancyProvider = new VibrancyProvider(settingsManager);
         const backgroundMaterialProvider = new BackgroundMaterialProvider(settingsManager);
 
         const browserWindowConstructorOptionsProviders: Record<
@@ -51,7 +51,7 @@ export class BrowserWindowModule {
             BrowserWindowConstructorOptionsProvider
         > = {
             Linux: new LinuxBrowserWindowConstructorOptionsProvider(defaultBrowserWindowOptions),
-            macOS: new MacOsBrowserWindowConstructorOptionsProvider(defaultBrowserWindowOptions, virancyProvider),
+            macOS: new MacOsBrowserWindowConstructorOptionsProvider(defaultBrowserWindowOptions, vibrancyProvider),
             Windows: new WindowsBrowserWindowConstructorOptionsProvider(
                 defaultBrowserWindowOptions,
                 backgroundMaterialProvider,
@@ -78,7 +78,7 @@ export class BrowserWindowModule {
             dependencyRegistry.get("EventSubscriber"),
             windowBoundsMemory,
             settingsManager,
-            virancyProvider,
+            vibrancyProvider,
             backgroundMaterialProvider,
         );
 
