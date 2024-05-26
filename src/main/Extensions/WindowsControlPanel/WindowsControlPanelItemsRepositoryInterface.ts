@@ -1,4 +1,4 @@
-import { WindowsControlPanelItem } from "../WindowsControlPanelItem";
+import { WindowsControlPanelItem } from "./WindowsControlPanelItem";
 
 export interface WindowsControlPanelItemsRepository {
     retrieveControlPanelItems(alreadyKnownItems: WindowsControlPanelItem[]): Promise<WindowsControlPanelItem[]>;

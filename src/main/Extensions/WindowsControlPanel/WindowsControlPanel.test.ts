@@ -1,17 +1,19 @@
-import { Translator } from "@Core/Translator";
+import type { AssetPathResolver } from "@Core/AssetPathResolver/AssetPathResolver";
+import type { Translator } from "@Core/Translator";
 import { describe, expect, it, vi } from "vitest";
-import { WindowsControlPanelItemsRepository } from "./Contract/WindowsControlPanelItemsRepository";
 import { WindowsControlPanel } from "./WindowsControlPanel";
+import type { WindowsControlPanelItemsRepository } from "./WindowsControlPanelItemsRepositoryInterface";
 
 describe(WindowsControlPanel, () => {
     describe(WindowsControlPanel.prototype.isSupported, () => {
         it("should only be supported on Windows", () => {
             const translator = <Translator>{};
+            const assetPathResolver = <AssetPathResolver>{};
             const repo = <WindowsControlPanelItemsRepository>{};
 
-            expect(new WindowsControlPanel("Windows", translator, repo).isSupported()).toBe(true);
-            expect(new WindowsControlPanel("Linux", translator, repo).isSupported()).toBe(false);
-            expect(new WindowsControlPanel("macOS", translator, repo).isSupported()).toBe(false);
+            expect(new WindowsControlPanel("Windows", translator, assetPathResolver, repo).isSupported()).toBe(true);
+            expect(new WindowsControlPanel("Linux", translator, assetPathResolver, repo).isSupported()).toBe(false);
+            expect(new WindowsControlPanel("macOS", translator, assetPathResolver, repo).isSupported()).toBe(false);
         });
     });
 
@@ -20,6 +22,7 @@ describe(WindowsControlPanel, () => {
             const t = (key: string) => `translation[${key}]`;
             const createTMock = vi.fn().mockReturnValue({ t });
             const translator = <Translator>{ createT: createTMock };
+            const assetPathResolver = <AssetPathResolver>{};
             const repo = <WindowsControlPanelItemsRepository>{
                 retrieveControlPanelItems: vi.fn().mockResolvedValue([
                     {
@@ -36,7 +39,7 @@ describe(WindowsControlPanel, () => {
                     },
                 ]),
             };
-            const extension = new WindowsControlPanel("Windows", translator, repo);
+            const extension = new WindowsControlPanel("Windows", translator, assetPathResolver, repo);
             extension["knownControlPanelItems"] = [
                 {
                     Name: "item 1 name",

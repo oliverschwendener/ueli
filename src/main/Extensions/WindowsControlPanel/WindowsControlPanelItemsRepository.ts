@@ -1,6 +1,6 @@
-import { PowershellUtility } from "@Core/PowershellUtility/Contract";
-import { WindowsControlPanelItemsRepository as WindowsControlPanelItemsRepositoryInterface } from "./Contract/WindowsControlPanelItemsRepository";
-import { WindowsControlPanelItem } from "./WindowsControlPanelItem";
+import type { PowershellUtility } from "@Core/PowershellUtility/Contract";
+import type { WindowsControlPanelItem } from "./WindowsControlPanelItem";
+import type { WindowsControlPanelItemsRepository as WindowsControlPanelItemsRepositoryInterface } from "./WindowsControlPanelItemsRepositoryInterface";
 
 export class WindowsControlPanelItemsRepository implements WindowsControlPanelItemsRepositoryInterface {
     constructor(private readonly powershellUtility: PowershellUtility) {}

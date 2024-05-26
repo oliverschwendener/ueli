@@ -13,6 +13,7 @@ export class WindowsControlPanelModule implements ExtensionModule {
             extension: new WindowsControlPanel(
                 dependencyRegistry.get("OperatingSystem"),
                 dependencyRegistry.get("Translator"),
+                dependencyRegistry.get("AssetPathResolver"),
                 new WindowsControlPanelItemsRepository(powershellUtility),
             ),
             actionHandlers: [new WindowsControlPanelActionHandler(powershellUtility)],

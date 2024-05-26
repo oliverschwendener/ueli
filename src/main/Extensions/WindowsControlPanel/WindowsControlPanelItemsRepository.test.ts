@@ -1,4 +1,4 @@
-import { PowershellUtility } from "@Core/PowershellUtility/Contract";
+import type { PowershellUtility } from "@Core/PowershellUtility/Contract";
 import { describe, expect, it, vi } from "vitest";
 import { WindowsControlPanelItemsRepository } from "./WindowsControlPanelItemsRepository";
 
