@@ -16,6 +16,8 @@ import { join } from "path";
 import type { FileSystemUtility } from "./Contract";
 
 export class NodeJsFileSystemUtility implements FileSystemUtility {
+    private byteOrderMark: string = "\ufeff";
+
     public async clearFolder(folderPath: string): Promise<void> {
         const filePaths = await this.readDirectory(folderPath);
         await Promise.all(filePaths.map((filePath) => this.removeFile(filePath)));
@@ -60,7 +62,7 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
 
     public writeTextFile(data: string, filePath: string): Promise<void> {
         return new Promise((resolve, reject) => {
-            writeFile(filePath, data, "utf-8", (error) => {
+            writeFile(filePath, `${this.byteOrderMark}${data}`, "utf-8", (error) => {
                 error ? reject(error) : resolve();
             });
         });

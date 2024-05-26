@@ -30,15 +30,9 @@ function Get-Associated-Icon {
         $InFilePath = Get-Shortcut-Target -ShortcutFilePath $InFilePath
     }
 
-    # ExtractAssociatedIcon will crash if the file path contains special characters
-    # e.g. "Über iTunes" will crash the script and thus no search results are shown
-    try {
-        $Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($InFilePath)
+    $Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($InFilePath)
 
-        if ($null -ne $Icon) {
-            $Icon.ToBitmap().Save($OutFilePath, [System.Drawing.Imaging.ImageFormat]::Png)
-        }
-    } catch {
-        # Do nothing and continue
+    if ($null -ne $Icon) {
+        $Icon.ToBitmap().Save($OutFilePath, [System.Drawing.Imaging.ImageFormat]::Png)
     }
 }`;
