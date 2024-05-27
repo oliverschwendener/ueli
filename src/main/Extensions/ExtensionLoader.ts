@@ -14,6 +14,7 @@ import { SystemSettingsModule } from "./SystemSettings";
 import { TerminalLauncherModule } from "./TerminalLauncher";
 import { UeliCommandModule } from "./UeliCommand";
 import { WebSearchExtensionModule } from "./WebSearch";
+import { WindowsControlPanelModule } from "./WindowsControlPanel";
 
 export class ExtensionLoader {
     private static getAllExtensionModules(): ExtensionModule[] {
@@ -31,6 +32,7 @@ export class ExtensionLoader {
             new TerminalLauncherModule(),
             new UeliCommandModule(),
             new WebSearchExtensionModule(),
+            new WindowsControlPanelModule(),
         ];
     }
 
