@@ -4,19 +4,18 @@ import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { WindowsControlPanel } from "./WindowsControlPanel";
 import { WindowsControlPanelActionHandler } from "./WindowsControlPanelActionHandler";
-import { WindowsControlPanelItemsRepository } from "./WindowsControlPanelItemsRepository";
+import { WindowsControlPanelItemRepository } from "./WindowsControlPanelItemRepository";
 
 export class WindowsControlPanelModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
-        const powershellUtility = dependencyRegistry.get("PowershellUtility");
         return {
             extension: new WindowsControlPanel(
                 dependencyRegistry.get("OperatingSystem"),
                 dependencyRegistry.get("Translator"),
                 dependencyRegistry.get("AssetPathResolver"),
-                new WindowsControlPanelItemsRepository(powershellUtility),
+                new WindowsControlPanelItemRepository(dependencyRegistry.get("PowershellUtility")),
             ),
-            actionHandlers: [new WindowsControlPanelActionHandler(powershellUtility)],
+            actionHandlers: [new WindowsControlPanelActionHandler(dependencyRegistry.get("PowershellUtility"))],
         };
     }
 }

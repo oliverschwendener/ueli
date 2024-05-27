@@ -1,9 +1,9 @@
 import type { PowershellUtility } from "@Core/PowershellUtility/Contract";
 import { describe, expect, it, vi } from "vitest";
-import { WindowsControlPanelItemsRepository } from "./WindowsControlPanelItemsRepository";
+import { WindowsControlPanelItemRepository } from "./WindowsControlPanelItemRepository";
 
-describe(WindowsControlPanelItemsRepository, () => {
-    describe(WindowsControlPanelItemsRepository.prototype.retrieveControlPanelItems, () => {
+describe(WindowsControlPanelItemRepository, () => {
+    describe(WindowsControlPanelItemRepository.prototype.retrieveControlPanelItems, () => {
         it("should retrieve items and icons", async () => {
             const mockedItems = JSON.stringify([
                 {
@@ -31,7 +31,7 @@ describe(WindowsControlPanelItemsRepository, () => {
                 executeCommand: vi.fn().mockResolvedValue(mockedItems),
                 executeScript: vi.fn().mockResolvedValue(mockedAppIcons),
             };
-            const repository = new WindowsControlPanelItemsRepository(powershellUtility);
+            const repository = new WindowsControlPanelItemRepository(powershellUtility);
 
             const items = await repository.retrieveControlPanelItems([]);
 
@@ -68,7 +68,7 @@ describe(WindowsControlPanelItemsRepository, () => {
                 executeCommand: vi.fn().mockResolvedValue(mockedItems),
                 executeScript: vi.fn().mockResolvedValue(""),
             };
-            const repository = new WindowsControlPanelItemsRepository(powershellUtility);
+            const repository = new WindowsControlPanelItemRepository(powershellUtility);
             const knownItems = [
                 {
                     Name: "name 1",

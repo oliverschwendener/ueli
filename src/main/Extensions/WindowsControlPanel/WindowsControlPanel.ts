@@ -4,7 +4,7 @@ import type { Translator } from "@Core/Translator";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { WindowsControlPanelItem } from "./WindowsControlPanelItem";
-import type { WindowsControlPanelItemsRepository } from "./WindowsControlPanelItemsRepositoryInterface";
+import type { WindowsControlPanelItemRepository } from "./WindowsControlPanelItemRepositoryInterface";
 
 export class WindowsControlPanel implements Extension {
     public readonly id = "WindowsControlPanel";
@@ -26,20 +26,21 @@ export class WindowsControlPanel implements Extension {
         private readonly currentOperatingSystem: OperatingSystem,
         private readonly translator: Translator,
         private readonly assetPathResolver: AssetPathResolver,
-        private readonly repository: WindowsControlPanelItemsRepository,
+        private readonly repository: WindowsControlPanelItemRepository,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
         const { t } = this.translator.createT(this.getI18nResources());
 
         this.knownControlPanelItems = await this.repository.retrieveControlPanelItems(this.knownControlPanelItems);
-        return this.knownControlPanelItems.map((i) => ({
-            id: i.CanonicalName,
-            name: i.Name,
-            description: i.Description,
-            image: { url: `data:image/png;base64,${i.IconBase64}` },
+
+        return this.knownControlPanelItems.map((controlPanelItem) => ({
+            id: controlPanelItem.CanonicalName,
+            name: controlPanelItem.Name,
+            description: t("searchResultItemDescription"),
+            image: { url: `data:image/png;base64,${controlPanelItem.IconBase64}` },
             defaultAction: {
-                argument: i.Name,
+                argument: controlPanelItem.Name,
                 description: t("openItem"),
                 fluentIcon: "OpenRegular",
                 handlerId: this.id,
