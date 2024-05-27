@@ -10,7 +10,7 @@ const getWindowsAppsPowershellScript = `
 
 const getWindowsStoreApps = `
     $ErrorActionPreference = 'SilentlyContinue';
-    [System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8;
+    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8;
 
     filter ArrayToHash
     {

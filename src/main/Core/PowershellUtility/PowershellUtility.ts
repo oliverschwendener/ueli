@@ -5,6 +5,8 @@ import { join } from "path";
 import type { PowershellUtility as PowershellUtilityInterface } from "./Contract";
 
 export class PowershellUtility implements PowershellUtilityInterface {
+    private readonly byteOrderMark: string = "\ufeff";
+
     public constructor(
         private readonly fileSystemUtility: FileSystemUtility,
         private readonly commandlineUtility: CommandlineUtility,
@@ -19,7 +21,7 @@ export class PowershellUtility implements PowershellUtilityInterface {
     public async executeScript(script: string): Promise<string> {
         const filePath = this.getTemporaryPowershellFilePath();
 
-        await this.fileSystemUtility.writeTextFile(script, filePath);
+        await this.fileSystemUtility.writeTextFile(`${this.byteOrderMark}${script}`, filePath);
 
         const powershellCommand = `powershell -NoProfile -NonInteractive -ExecutionPolicy bypass -File "${filePath}"`;
         const stdout = await this.commandlineUtility.executeCommand(powershellCommand);
