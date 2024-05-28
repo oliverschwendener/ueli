@@ -14,7 +14,7 @@ export const RescanInterval = ({ automaticRescanEnabled }: RescanIntervalProps) 
     const { t } = useTranslation();
     const { contextBridge } = useContextBridge();
 
-    const rescanIntervalInSeconds = contextBridge.getSettingValue("searchEngine.rescanIntervalInSeconds", 60);
+    const rescanIntervalInSeconds = contextBridge.getSettingValue("searchEngine.rescanIntervalInSeconds", 300);
     const [tempRescanIntervalInSeconds, setTempRescanIntervalInSeconds] = useState<number>(rescanIntervalInSeconds);
 
     const setRescanIntervalInSeconds = (value: number) =>
