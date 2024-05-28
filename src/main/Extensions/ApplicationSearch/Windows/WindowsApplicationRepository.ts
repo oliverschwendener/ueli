@@ -83,8 +83,8 @@ export class WindowsApplicationRepository implements ApplicationRepository {
         const { getWindowsAppsPowershellScript } = usePowershellScripts();
 
         return `
+            [Console]::OutputEncoding = [System.Text.Encoding]::UTF8;
             ${getWindowsAppsPowershellScript}
-
             Get-WindowsApps -FolderPaths ${concatenatedFolderPaths} -FileExtensions ${concatenatedFileExtensions};`;
     }
 

@@ -60,23 +60,21 @@ describe(getFilteredSearchResultItems, () => {
         const item4 = <SearchResultItem>{ id: "item4", name: "Item 4" };
         const item5 = <SearchResultItem>{ id: "item5", name: "Item 5" };
 
-        const excludedItemIds = ["item1"];
-
         const actual = getFilteredSearchResultItems({
             searchFilter: vi.fn(),
-            favoriteSearchResultItemIds: ["item3"],
-            excludedSearchResultItemIds: excludedItemIds,
+            favoriteSearchResultItemIds: ["item2", "item3"],
+            excludedSearchResultItemIds: ["item1"],
             instantSearchResultItems: <SearchResultItem[]>[
                 { id: "instant1", name: "Instant Item 1" },
                 { id: "instant2", name: "Instant Item 2" },
                 { id: "instant3", name: "Instant Item 3" },
             ],
-            searchResultItems: [item2, item1, item4, item5, item3],
+            searchResultItems: [item5, item1, item3, item2, item4],
             searchTerm: "",
             fuzziness: 0, // will be ignored
             maxSearchResultItems: 3,
         });
 
-        expect(actual).toEqual([...[{ id: "item3", name: "Item 3" }], ...[item2, item4, item5]]);
+        expect(actual).toEqual([item2, item3, item4, item5]);
     });
 });

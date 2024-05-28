@@ -38,7 +38,10 @@ export const getFilteredSearchResultItems = ({
         ];
     } else {
         return [
-            ...SearchResultItemFilter.createFrom(searchResultItems).pick(favoriteSearchResultItemIds).get(),
+            ...SearchResultItemFilter.createFrom(searchResultItems)
+                .pick(favoriteSearchResultItemIds)
+                .sortAlphabetically()
+                .get(),
             ...SearchResultItemFilter.createFrom(searchResultItems)
                 .exclude(favoriteSearchResultItemIds)
                 .sortAlphabetically()
