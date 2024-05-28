@@ -33,9 +33,12 @@ export const toggleBrowserWindow = ({
 }) => {
     if (browserWindow.isVisible() && browserWindow.isFocused()) {
         app.hide && app.hide();
+        browserWindow.minimize();
         browserWindow.hide();
     } else {
         app.show && app.show();
+
+        browserWindow.restore();
 
         repositionWindow({ browserWindow, defaultSize, alwaysCenter, bounds });
 
