@@ -42,6 +42,16 @@ describe(RescanOrchestrator, () => {
         });
     });
 
+    describe("scanOnce", () => {
+        it("should emit the timeElapsed event", () => {
+            const eventEmitter = <EventEmitter>{ emitEvent: vi.fn() };
+
+            new RescanOrchestrator(eventEmitter, <SettingsManager>{}, <TaskScheduler>{}).scanOnce();
+
+            expect(eventEmitter.emitEvent).toHaveBeenCalledWith("RescanOrchestrator:timeElapsed");
+        });
+    });
+
     describe("scanUntilCancelled", () => {
         it("should emit the timeElapsed event and schedule the next scan", () => {
             const eventEmitter = <EventEmitter>{ emitEvent: vi.fn() };

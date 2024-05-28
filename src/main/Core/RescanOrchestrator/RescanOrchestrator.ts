@@ -12,6 +12,10 @@ export class RescanOrchestrator {
         private readonly taskScheduler: TaskScheduler,
     ) {}
 
+    public scanOnce(): void {
+        this.eventEmitter.emitEvent("RescanOrchestrator:timeElapsed");
+    }
+
     public scanUntilCancelled(): void {
         this.eventEmitter.emitEvent("RescanOrchestrator:timeElapsed");
 
