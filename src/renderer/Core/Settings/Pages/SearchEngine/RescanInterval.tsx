@@ -14,7 +14,13 @@ export const RescanInterval = ({ automaticRescanEnabled }: RescanIntervalProps) 
     const { t } = useTranslation();
     const { contextBridge } = useContextBridge();
 
-    const rescanIntervalInSeconds = contextBridge.getSettingValue("searchEngine.rescanIntervalInSeconds", 300);
+    const defaultRescanIntervalInSeconds = 300;
+
+    const rescanIntervalInSeconds = contextBridge.getSettingValue(
+        "searchEngine.rescanIntervalInSeconds",
+        defaultRescanIntervalInSeconds,
+    );
+
     const [tempRescanIntervalInSeconds, setTempRescanIntervalInSeconds] = useState<number>(rescanIntervalInSeconds);
 
     const setRescanIntervalInSeconds = (value: number) =>
@@ -43,8 +49,8 @@ export const RescanInterval = ({ automaticRescanEnabled }: RescanIntervalProps) 
                             appearance="subtle"
                             icon={<ArrowCounterclockwiseRegular fontSize={14} />}
                             onClick={() => {
-                                setTempRescanIntervalInSeconds(60);
-                                setRescanIntervalInSeconds(60);
+                                setTempRescanIntervalInSeconds(defaultRescanIntervalInSeconds);
+                                setRescanIntervalInSeconds(defaultRescanIntervalInSeconds);
                             }}
                         />
                     </Tooltip>
