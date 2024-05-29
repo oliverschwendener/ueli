@@ -29,6 +29,7 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
                     preload: join(__dirname, "..", "dist-preload", "index.js"),
                     allowRunningInsecureContent: false,
                     webSecurity: true,
+                    devTools: false,
                 },
             });
 
@@ -43,14 +44,15 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
             const settingsManager = <SettingsManager>{ getValue: (k, d) => getValueMock(k, d) };
             const appIconFilePathResolver = <AppIconFilePathResolver>{ getAppIconFilePath: () => "appIconFilePath" };
 
-            const actual = new DefaultBrowserWindowConstructorOptionsProvider(
+            const { webPreferences } = new DefaultBrowserWindowConstructorOptionsProvider(
                 app,
                 settingsManager,
                 appIconFilePathResolver,
             ).get();
 
-            expect(actual.webPreferences.webSecurity).toEqual(false);
-            expect(actual.webPreferences.allowRunningInsecureContent).toEqual(true);
+            expect(webPreferences.webSecurity).toBe(false);
+            expect(webPreferences.allowRunningInsecureContent).toBe(true);
+            expect(webPreferences.devTools).toBe(true);
         });
     });
 });
