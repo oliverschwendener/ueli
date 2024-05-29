@@ -4,8 +4,8 @@ import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvi
 import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
-import { OperatingSystem } from "@common/Core";
-import type { App, BrowserWindow } from "electron";
+import type { OperatingSystem } from "@common/Core";
+import type { BrowserWindow } from "electron";
 import { join } from "path";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 import {
@@ -19,10 +19,10 @@ import {
     defaultWindowSize,
 } from "./BrowserWindowConstructorOptionsProvider";
 import { BrowserWindowCreator } from "./BrowserWindowCreator";
+import { BrowserWindowToggler } from "./BrowserWindowToggler";
 import { WindowBoundsMemory } from "./WindowBoundsMemory";
 import { openAndFocusBrowserWindow } from "./openAndFocusBrowserWindow";
 import { sendToBrowserWindow } from "./sendToBrowserWindow";
-import { toggleBrowserWindow } from "./toggleBrowserWindow";
 
 export class BrowserWindowModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
@@ -62,6 +62,14 @@ export class BrowserWindowModule {
             browserWindowConstructorOptionsProviders[operatingSystem],
         ).create();
 
+        const browserWindowToggler = new BrowserWindowToggler(
+            operatingSystem,
+            app,
+            browserWindow,
+            defaultWindowSize,
+            settingsManager,
+        );
+
         eventEmitter.emitEvent("browserWindowCreated", { browserWindow });
 
         nativeTheme.addListener("updated", () => browserWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
@@ -74,12 +82,11 @@ export class BrowserWindowModule {
 
         BrowserWindowModule.registerEvents(
             browserWindow,
-            app,
             dependencyRegistry.get("EventSubscriber"),
             windowBoundsMemory,
-            settingsManager,
             vibrancyProvider,
             backgroundMaterialProvider,
+            browserWindowToggler,
         );
 
         await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyRegistry.get("EnvironmentVariableProvider"));
@@ -99,22 +106,15 @@ export class BrowserWindowModule {
 
     private static registerEvents(
         browserWindow: BrowserWindow,
-        app: App,
         eventSubscriber: EventSubscriber,
         windowBoundsMemory: WindowBoundsMemory,
-        settingsManager: SettingsManager,
         vibrancyProvider: VibrancyProvider,
         backgroundMaterialProvider: BackgroundMaterialProvider,
+        browserWindowToggler: BrowserWindowToggler,
     ) {
-        eventSubscriber.subscribe("hotkeyPressed", () => {
-            toggleBrowserWindow({
-                app,
-                browserWindow,
-                defaultSize: defaultWindowSize,
-                alwaysCenter: settingsManager.getValue("window.alwaysCenter", false),
-                bounds: windowBoundsMemory.getBoundsNearestToCursor(),
-            });
-        });
+        eventSubscriber.subscribe("hotkeyPressed", () =>
+            browserWindowToggler.toggle(windowBoundsMemory.getBoundsNearestToCursor()),
+        );
 
         eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
             sendToBrowserWindow(browserWindow, `settingUpdated[${key}]`, { value });
