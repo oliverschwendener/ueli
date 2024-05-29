@@ -47,6 +47,7 @@ export const BrowserBookmarksSettings = () => {
                         selectedOptions={browsers}
                         onOptionSelect={(_, { selectedOptions }) => setBrowsers(selectedOptions as Browser[])}
                         multiselect
+                        placeholder={t("selectBrowsers", { ns })}
                     >
                         {browserOptions.map((browserName) => (
                             <Option key={browserName} value={browserName} text={browserName}>

@@ -31,7 +31,7 @@ export class BrowserBookmarks implements Extension {
     };
 
     private readonly defaultSettings: Settings = {
-        browsers: ["Google Chrome"],
+        browsers: [],
         searchResultStyle: "nameOnly",
         iconType: "favicon",
     };
@@ -113,9 +113,8 @@ export class BrowserBookmarks implements Extension {
     }
 
     public getImage(): Image {
-        // TODO
         return {
-            url: `file://`,
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "browser-bookmarks.png")}`,
         };
     }
 
@@ -136,6 +135,7 @@ export class BrowserBookmarks implements Extension {
                 "searchResultStyle.nameOnly": "Name only",
                 "searchResultStyle.urlOnly": "URL only",
                 "searchResultStyle.nameAndUrl": "Name & URL",
+                selectBrowsers: "Select browsers",
                 iconType: "Icon Type",
                 "iconType.favicon": "Favicon",
                 "iconType.browserIcon": "Browser icon",
@@ -147,6 +147,7 @@ export class BrowserBookmarks implements Extension {
                 "searchResultStyle.nameOnly": "Nur Name",
                 "searchResultStyle.urlOnly": "Nur URL",
                 "searchResultStyle.nameAndUrl": "Name & URL",
+                selectBrowsers: "Browser auswählen",
                 iconType: "Symboltyp",
                 "iconType.favicon": "Favicon",
                 "iconType.browserIcon": "Browsersymbol",
