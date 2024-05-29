@@ -2,6 +2,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { UrlImageGenerator } from "@Core/ImageGenerator";
 import type { SettingsManager } from "@Core/SettingsManager";
+import type { Translator } from "@Core/Translator";
 import { SearchResultItemActionUtility, type OperatingSystem, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
@@ -10,8 +11,9 @@ import type { BrowserBookmark } from "./BrowserBookmark";
 import type { BrowserBookmarkRepository } from "./BrowserBookmarkRepository";
 
 type Settings = {
-    browser: Browser;
+    browsers: Browser[];
     searchResultStyle: string;
+    iconType: string;
 };
 
 export class BrowserBookmarks implements Extension {
@@ -29,8 +31,9 @@ export class BrowserBookmarks implements Extension {
     };
 
     private readonly defaultSettings: Settings = {
-        browser: "Google Chrome",
+        browsers: [],
         searchResultStyle: "nameOnly",
+        iconType: "favicon",
     };
 
     public constructor(
@@ -39,11 +42,57 @@ export class BrowserBookmarks implements Extension {
         private readonly assetPathResolver: AssetPathResolver,
         private readonly urlImageGenerator: UrlImageGenerator,
         private readonly operatingSystem: OperatingSystem,
+        private readonly translator: Translator,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const browserBookmarks = await this.browserBookmarkRepositories[this.getCurrentlyConfiguredBrowser()].getAll();
-        return browserBookmarks.map((browserBookmark) => this.toSearchResultItem(browserBookmark));
+        const { t } = this.translator.createT(this.getI18nResources());
+        const browsers = this.getCurrentlyConfiguredBrowsers();
+
+        const toSearchResultItem = (browserBookmark: BrowserBookmark, browserName: Browser) => {
+            return {
+                description: t("searchResultItemDescription", { browserName }),
+                defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({
+                    url: browserBookmark.getUrl(),
+                }),
+                id: browserBookmark.getId(),
+                name: this.getName(browserBookmark),
+                image: this.getBrowserBookmarkImage(browserBookmark, browserName),
+                additionalActions: [
+                    SearchResultItemActionUtility.createCopyToClipboardAction({
+                        textToCopy: browserBookmark.getUrl(),
+                        description: "Copy URL to clipboard",
+                        descriptionTranslation: {
+                            key: "copyUrlToClipboard",
+                            namespace: "extension[BrowserBookmarks]",
+                        },
+                    }),
+                ],
+            };
+        };
+
+        let result: SearchResultItem[] = [];
+
+        for (const browser of browsers) {
+            const repository: BrowserBookmarkRepository | undefined = this.browserBookmarkRepositories[browser];
+
+            if (repository) {
+                result = [...result, ...(await repository.getAll()).map((b) => toSearchResultItem(b, browser))];
+            }
+        }
+
+        return result;
+    }
+
+    private getBrowserBookmarkImage(browserBookmark: BrowserBookmark, browser: Browser): Image {
+        const iconType = this.settingsManager.getValue<string>(
+            `extension[${this.id}].iconType`,
+            this.defaultSettings["iconType"],
+        );
+
+        return iconType === "browserIcon"
+            ? this.getBrowserImage(browser)
+            : this.urlImageGenerator.getImage(browserBookmark.getUrl());
     }
 
     public isSupported(): boolean {
@@ -57,19 +106,26 @@ export class BrowserBookmarks implements Extension {
     public getSettingKeysTriggeringRescan(): string[] {
         return [
             "imageGenerator.faviconApiProvider",
-            getExtensionSettingKey(this.id, "browser"),
+            getExtensionSettingKey(this.id, "browsers"),
             getExtensionSettingKey(this.id, "searchResultStyle"),
+            getExtensionSettingKey(this.id, "iconType"),
         ];
     }
 
     public getImage(): Image {
         return {
-            url: `file://${this.getAssetFilePath(this.getCurrentlyConfiguredBrowser())}`,
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "browser-bookmarks.png")}`,
         };
     }
 
     public getAssetFilePath(key: string): string {
         return this.getBrowserImageFilePath(key as Browser);
+    }
+
+    private getBrowserImage(browser: Browser): Image {
+        return {
+            url: `file://${this.getBrowserImageFilePath(browser)}`,
+        };
     }
 
     public getI18nResources() {
@@ -79,37 +135,25 @@ export class BrowserBookmarks implements Extension {
                 "searchResultStyle.nameOnly": "Name only",
                 "searchResultStyle.urlOnly": "URL only",
                 "searchResultStyle.nameAndUrl": "Name & URL",
+                selectBrowsers: "Select browsers",
+                iconType: "Icon Type",
+                "iconType.favicon": "Favicon",
+                "iconType.browserIcon": "Browser icon",
                 copyUrlToClipboard: "Copy URL to clipboard",
+                searchResultItemDescription: "{{browserName}} Bookmark",
             },
             "de-CH": {
                 extensionName: "Browserlesezeichen",
                 "searchResultStyle.nameOnly": "Nur Name",
                 "searchResultStyle.urlOnly": "Nur URL",
                 "searchResultStyle.nameAndUrl": "Name & URL",
+                selectBrowsers: "Browser auswählen",
+                iconType: "Symboltyp",
+                "iconType.favicon": "Favicon",
+                "iconType.browserIcon": "Browsersymbol",
                 copyUrlToClipboard: "URL in Zwischenablage kopieren",
+                searchResultItemDescription: "{{browserName}} Lesezeichen",
             },
-        };
-    }
-
-    private toSearchResultItem(browserBookmark: BrowserBookmark): SearchResultItem {
-        return {
-            description: "Browser Bookmark",
-            defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({
-                url: browserBookmark.getUrl(),
-            }),
-            id: browserBookmark.getId(),
-            name: this.getName(browserBookmark),
-            image: this.urlImageGenerator.getImage(browserBookmark.getUrl()),
-            additionalActions: [
-                SearchResultItemActionUtility.createCopyToClipboardAction({
-                    textToCopy: browserBookmark.getUrl(),
-                    description: "Copy URL to clipboard",
-                    descriptionTranslation: {
-                        key: "copyUrlToClipboard",
-                        namespace: "extension[BrowserBookmarks]",
-                    },
-                }),
-            ],
         };
     }
 
@@ -128,10 +172,10 @@ export class BrowserBookmarks implements Extension {
         return Object.keys(names).includes(searchResultStyle) ? names[searchResultStyle]() : names["nameOnly"]();
     }
 
-    private getCurrentlyConfiguredBrowser(): Browser {
-        return this.settingsManager.getValue<Browser>(
-            getExtensionSettingKey("BrowserBookmarks", "browser"),
-            this.getSettingDefaultValue("browser"),
+    private getCurrentlyConfiguredBrowsers(): Browser[] {
+        return this.settingsManager.getValue<Browser[]>(
+            getExtensionSettingKey("BrowserBookmarks", "browsers"),
+            this.getSettingDefaultValue("browsers"),
         );
     }
 
