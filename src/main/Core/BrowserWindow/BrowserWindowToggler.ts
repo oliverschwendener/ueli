@@ -26,6 +26,8 @@ export class BrowserWindowToggler {
     private hide(): void {
         this.app.hide && this.app.hide();
 
+        // In order to restore focus correctly to the previously focused window, we need to minimize the window on
+        // Windows.
         if (this.operatingSystem === "Windows") {
             this.browserWindow.minimize();
         }
@@ -36,6 +38,7 @@ export class BrowserWindowToggler {
     private showAndFocus(bounds?: Rectangle): void {
         this.app.show && this.app.show();
 
+        // Because the window is minimized on Windows when hidden, we need to restore it before focusing it.
         if (this.operatingSystem === "Windows") {
             this.browserWindow.restore();
         }
