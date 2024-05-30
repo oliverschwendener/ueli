@@ -6,6 +6,7 @@ export * from "./Autostart";
 export * from "./BrowserWindow";
 export * from "./BrowserWindowNotifier";
 export * from "./Clipboard";
+export * from "./CommandlineSwitch";
 export * from "./CommandlineUtility";
 export * from "./DateProvider";
 export * from "./Dependencies";

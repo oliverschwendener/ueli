@@ -21,7 +21,6 @@ import {
 import { BrowserWindowCreator } from "./BrowserWindowCreator";
 import { BrowserWindowToggler } from "./BrowserWindowToggler";
 import { WindowBoundsMemory } from "./WindowBoundsMemory";
-import { openAndFocusBrowserWindow } from "./openAndFocusBrowserWindow";
 import { sendToBrowserWindow } from "./sendToBrowserWindow";
 
 export class BrowserWindowModule {
@@ -75,6 +74,7 @@ export class BrowserWindowModule {
         nativeTheme.addListener("updated", () => browserWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
 
         BrowserWindowModule.registerBrowserWindowEventListeners(
+            browserWindowToggler,
             browserWindow,
             dependencyRegistry.get("SettingsManager"),
             windowBoundsMemory,
@@ -94,13 +94,14 @@ export class BrowserWindowModule {
     }
 
     private static registerBrowserWindowEventListeners(
+        browserWindowToggler: BrowserWindowToggler,
         browserWindow: BrowserWindow,
         settingsManager: SettingsManager,
         windowBoundsMemory: WindowBoundsMemory,
     ) {
         const shouldHideWindowOnBlur = () => settingsManager.getValue("window.hideWindowOn", ["blur"]).includes("blur");
 
-        browserWindow.on("blur", () => shouldHideWindowOnBlur() && browserWindow.hide());
+        browserWindow.on("blur", () => shouldHideWindowOnBlur() && browserWindowToggler.hide());
         browserWindow.on("moved", () => windowBoundsMemory.saveWindowBounds(browserWindow));
         browserWindow.on("resized", () => windowBoundsMemory.saveWindowBounds(browserWindow));
     }
@@ -117,7 +118,10 @@ export class BrowserWindowModule {
         const shouldHideWindowAfterInvocation = () =>
             settingsManager.getValue("window.hideWindowOn", ["blur"]).includes("afterInvocation");
 
-        eventSubscriber.subscribe("actionInvoked", () => shouldHideWindowAfterInvocation() && browserWindow.hide());
+        eventSubscriber.subscribe(
+            "actionInvoked",
+            () => shouldHideWindowAfterInvocation() && browserWindowToggler.hide(),
+        );
 
         eventSubscriber.subscribe("hotkeyPressed", () =>
             browserWindowToggler.toggle(windowBoundsMemory.getBoundsNearestToCursor()),
@@ -140,19 +144,23 @@ export class BrowserWindowModule {
         });
 
         eventSubscriber.subscribe("navigateTo", ({ pathname }: { pathname: string }) => {
-            openAndFocusBrowserWindow(browserWindow);
+            browserWindowToggler.showAndFocus();
             sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
         });
 
-        BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber);
+        BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber, browserWindowToggler);
     }
 
-    private static registerUeliCommandEvents(browserWindow: BrowserWindow, eventSubscriber: EventSubscriber) {
+    private static registerUeliCommandEvents(
+        browserWindow: BrowserWindow,
+        eventSubscriber: EventSubscriber,
+        browserWindowToggler: BrowserWindowToggler,
+    ) {
         const eventHandlers: { ueliCommands: UeliCommand[]; handler: (argument: unknown) => void }[] = [
             {
                 ueliCommands: ["openAbout", "openExtensions", "openSettings", "show"],
                 handler: ({ pathname }: { pathname: string }) => {
-                    openAndFocusBrowserWindow(browserWindow);
+                    browserWindowToggler.showAndFocus();
                     sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
                 },
             },

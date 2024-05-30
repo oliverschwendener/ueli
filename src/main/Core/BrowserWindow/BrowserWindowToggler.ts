@@ -19,11 +19,11 @@ export class BrowserWindowToggler {
         }
     }
 
-    private isVisibleAndFocused(): boolean {
+    public isVisibleAndFocused(): boolean {
         return this.browserWindow.isVisible() && this.browserWindow.isFocused();
     }
 
-    private hide(): void {
+    public hide(): void {
         this.app.hide && this.app.hide();
 
         // In order to restore focus correctly to the previously focused window, we need to minimize the window on
@@ -35,8 +35,10 @@ export class BrowserWindowToggler {
         this.browserWindow.hide();
     }
 
-    private showAndFocus(bounds?: Rectangle): void {
+    public showAndFocus(bounds?: Rectangle): void {
         this.app.show && this.app.show();
+
+        this.browserWindow.show();
 
         // Because the window is minimized on Windows when hidden, we need to restore it before focusing it.
         if (this.operatingSystem === "Windows") {
@@ -45,7 +47,6 @@ export class BrowserWindowToggler {
 
         this.repositionWindow(bounds);
 
-        this.browserWindow.show();
         this.browserWindow.focus();
         this.browserWindow.webContents.send("windowFocused");
     }
