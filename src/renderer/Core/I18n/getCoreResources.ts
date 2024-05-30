@@ -210,14 +210,20 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
             resources: {
                 "en-US": {
                     title: "Window",
-                    hideWindowOnBlur: "Hide window on blur",
+                    hideWindowOn: "Hide window on",
+                    "hideWidnowOn.placeholder": "Select events",
+                    "hideWindowOn.blur": "Blur",
+                    "hideWindowOn.afterInvocation": "After invocation",
                     alwaysOnTop: "Always on top",
                     showOnStartup: "Show on startup",
                     alwaysCenter: "Always center window",
                 },
                 "de-CH": {
                     title: "Fenster",
-                    hideWindowOnBlur: "Fenster verstecken bei Fokusverlust",
+                    hideWindowOn: "Fenster verstecken bei",
+                    "hideWidnowOn.placeholder": "Wähle Ereignisse",
+                    "hideWindowOn.blur": "Fokusverlust",
+                    "hideWindowOn.afterInvocation": "Nach Ausführung",
                     alwaysOnTop: "Immer im Vordergrund",
                     showOnStartup: "Beim Start anzeigen",
                     alwaysCenter: "Fenster immer zentrieren",

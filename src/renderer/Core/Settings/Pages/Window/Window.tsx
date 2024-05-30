@@ -4,7 +4,7 @@ import { SectionList } from "../../SectionList";
 import { AlwaysCenter } from "./AlwaysCenter";
 import { AlwaysOnTop } from "./AlwaysOnTop";
 import { BackgroundMaterial } from "./BackgroundMaterial";
-import { HideWindowOnBlur } from "./HideWindowOnBlur";
+import { HideWindowOn } from "./HideWindowOn";
 import { Opacity } from "./Opacity";
 import { ShowOnStartup } from "./ShowOnStartup";
 import { Vibrancy } from "./Vibrancy";
@@ -28,7 +28,7 @@ export const Window = () => {
                 <ShowOnStartup />
             </Section>
             <Section>
-                <HideWindowOnBlur />
+                <HideWindowOn />
             </Section>
             <Section>
                 <AlwaysCenter />

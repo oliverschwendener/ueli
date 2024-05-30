@@ -87,6 +87,7 @@ export class BrowserWindowModule {
             vibrancyProvider,
             backgroundMaterialProvider,
             browserWindowToggler,
+            settingsManager,
         );
 
         await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyRegistry.get("EnvironmentVariableProvider"));
@@ -97,7 +98,7 @@ export class BrowserWindowModule {
         settingsManager: SettingsManager,
         windowBoundsMemory: WindowBoundsMemory,
     ) {
-        const shouldHideWindowOnBlur = () => settingsManager.getValue("window.hideWindowOnBlur", true);
+        const shouldHideWindowOnBlur = () => settingsManager.getValue("window.hideWindowOn", ["blur"]).includes("blur");
 
         browserWindow.on("blur", () => shouldHideWindowOnBlur() && browserWindow.hide());
         browserWindow.on("moved", () => windowBoundsMemory.saveWindowBounds(browserWindow));
@@ -111,7 +112,13 @@ export class BrowserWindowModule {
         vibrancyProvider: VibrancyProvider,
         backgroundMaterialProvider: BackgroundMaterialProvider,
         browserWindowToggler: BrowserWindowToggler,
+        settingsManager: SettingsManager,
     ) {
+        const shouldHideWindowAfterInvocation = () =>
+            settingsManager.getValue("window.hideWindowOn", ["blur"]).includes("afterInvocation");
+
+        eventSubscriber.subscribe("actionInvoked", () => shouldHideWindowAfterInvocation() && browserWindow.hide());
+
         eventSubscriber.subscribe("hotkeyPressed", () =>
             browserWindowToggler.toggle(windowBoundsMemory.getBoundsNearestToCursor()),
         );
