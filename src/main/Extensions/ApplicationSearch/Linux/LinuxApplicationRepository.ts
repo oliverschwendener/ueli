@@ -29,10 +29,9 @@ export class LinuxApplicationRepository implements ApplicationRepository {
             if (!this.fileSystemUtility.isDirectory(folderPath)) {
                 throw `${folderPath} doesn't exist or isn't a folder.`;
             }
-            const files = (await this.fileSystemUtility.readDirectory(folderPath)).filter(
+            return (await this.fileSystemUtility.readDirectory(folderPath)).filter(
                 (file) => extname(file) === ".desktop",
             );
-            return files;
         });
 
         const files = (await Promise.allSettled(filePromises))
@@ -45,7 +44,7 @@ export class LinuxApplicationRepository implements ApplicationRepository {
             })
             .filter((value) => value);
 
-        const applications = (await Promise.allSettled(files.map((file) => this.generateLinuxApplication(file))))
+        return (await Promise.allSettled(files.map((file) => this.generateLinuxApplication(file))))
             .map((result, index) => {
                 if (result.status === "rejected") {
                     this.logger.warn(`Unable to generate Application for ${files[index]}. Reason: ${result.reason}`);
@@ -54,8 +53,6 @@ export class LinuxApplicationRepository implements ApplicationRepository {
                 return result.value;
             })
             .filter((value) => value);
-
-        return applications;
     }
 
     private async generateLinuxApplication(filePath: string): Promise<LinuxApplication> {
