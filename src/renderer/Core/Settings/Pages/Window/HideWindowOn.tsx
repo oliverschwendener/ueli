@@ -20,7 +20,7 @@ export const HideWindowOn = () => {
                 value={hideWindowOn.map((o) => t(`hideWindowOn.${o}`, { ns })).join(", ")}
                 onOptionSelect={(_, { selectedOptions }) => setHideWindowOn(selectedOptions)}
                 multiselect
-                placeholder={t("hideWidnowOn.placeholder", { ns })}
+                placeholder={t("hideWindow.placeholder", { ns })}
             >
                 {options.map((option) => (
                     <Option key={option} value={option}>

@@ -211,7 +211,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                 "en-US": {
                     title: "Window",
                     hideWindowOn: "Hide window on",
-                    "hideWidnowOn.placeholder": "Select events",
+                    "hideWindow.placeholder": "Select events",
                     "hideWindowOn.blur": "Blur",
                     "hideWindowOn.afterInvocation": "After invocation",
                     alwaysOnTop: "Always on top",
@@ -221,7 +221,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                 "de-CH": {
                     title: "Fenster",
                     hideWindowOn: "Fenster verstecken bei",
-                    "hideWidnowOn.placeholder": "Wähle Ereignisse",
+                    "hideWindow.placeholder": "Wähle Ereignisse",
                     "hideWindowOn.blur": "Fokusverlust",
                     "hideWindowOn.afterInvocation": "Nach Ausführung",
                     alwaysOnTop: "Immer im Vordergrund",

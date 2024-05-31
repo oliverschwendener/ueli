@@ -55,7 +55,7 @@ describe(BrowserWindowToggler, () => {
     };
 
     describe(BrowserWindowToggler.prototype.toggle, () => {
-        it("should show and focus the window if its visible but not focused, recentering it and resizing it to the default size", () => {
+        it("should show and focus the window if its visible but not focused, re-centering it and resizing it to the default size", () => {
             const testShowAndFocus = ({ operatingSystem }: { operatingSystem: OperatingSystem }) => {
                 const { app, showMock: appShowMock } = createApp();
 
@@ -96,7 +96,7 @@ describe(BrowserWindowToggler, () => {
             testShowAndFocus({ operatingSystem: "Linux" });
         });
 
-        it("should show and focus the window if its hidden, recentering it and resizing it to the default size", () => {
+        it("should show and focus the window if its hidden, re-centering it and resizing it to the default size", () => {
             const { app, showMock: appShowMock } = createApp();
 
             const {
@@ -157,7 +157,7 @@ describe(BrowserWindowToggler, () => {
             expect(centerMock).not.toHaveBeenCalled();
         });
 
-        it("should show and focus the window if its hidden, repositioning it with the given bounds and recentering it if alwaysCenter is set to true", () => {
+        it("should show and focus the window if its hidden, repositioning it with the given bounds and re-centering it if alwaysCenter is set to true", () => {
             const { app, showMock: appShowMock } = createApp();
 
             const {
