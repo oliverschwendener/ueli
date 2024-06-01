@@ -10,6 +10,7 @@ import { ShortcutsSettings } from "./Shortcuts";
 import { TerminalLauncherSettings } from "./TerminalLauncher";
 import { WebSearchExtension } from "./WebSearch";
 import { WebSearchSettings } from "./WebSearch/WebSearchSettings";
+import { WorkflowSettings } from "./Workflow";
 
 type ExtensionReactElements = {
     extension?: ReactElement;
@@ -49,6 +50,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         WebSearch: {
             extension: <WebSearchExtension {...props} />,
             settings: <WebSearchSettings />,
+        },
+        Workflow: {
+            settings: <WorkflowSettings />,
         },
     };
 

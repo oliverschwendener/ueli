@@ -4,8 +4,8 @@ import type { SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
+import type { Workflow } from "@common/Extensions/Workflow";
 import { WorkflowActionArgumentEncoder } from "./Utility";
-import { Workflow } from "./Workflow";
 import { WorkflowRepository } from "./WorkflowRepository";
 
 export class WorkflowExtension implements Extension {
