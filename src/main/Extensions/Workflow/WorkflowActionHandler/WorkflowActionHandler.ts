@@ -1,3 +1,5 @@
-export interface WorkflowActionHandler<T> {
-    invokeWorkflowAction(workflowAction: T): Promise<void>;
+import type { WorkflowAction } from "../WorkflowAction/WorkflowAction";
+
+export interface WorkflowActionHandler {
+    invokeWorkflowAction(workflowAction: WorkflowAction<unknown>): Promise<void>;
 }

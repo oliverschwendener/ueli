@@ -1,4 +1,4 @@
-export * from "./ExecuteCommandWorkflowAction";
-export * from "./OpenFileWorkflowAction";
-export * from "./OpenUrlWorkflowAction";
+export * from "./ExecuteCommandActionArgs";
+export * from "./OpenFileActionArgs";
+export * from "./OpenUrlActionArgs";
 export * from "./WorkflowAction";

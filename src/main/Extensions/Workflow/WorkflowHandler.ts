@@ -1,7 +1,7 @@
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { Logger } from "@Core/Logger";
 import type { SearchResultItemAction } from "@common/Core";
-import { WorkflowActionArgumentDecoder } from "./WorkflowActionArgumentDecoder";
+import { WorkflowActionArgumentDecoder } from "./Utility";
 import type { WorkflowActionHandler } from "./WorkflowActionHandler/WorkflowActionHandler";
 
 export class WorkflowHandler implements ActionHandler {
@@ -9,7 +9,7 @@ export class WorkflowHandler implements ActionHandler {
 
     public constructor(
         private readonly logger: Logger,
-        private workflowActionHandlers: Record<string, WorkflowActionHandler<unknown>>,
+        private workflowActionHandlers: Record<string, WorkflowActionHandler>,
     ) {}
 
     public async invokeAction(action: SearchResultItemAction): Promise<void> {

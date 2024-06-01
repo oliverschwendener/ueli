@@ -1,11 +1,11 @@
 import type { Shell } from "electron";
-import type { OpenUrlWorkflowAction } from "../WorkflowAction";
+import type { OpenUrlActionArgs, WorkflowAction } from "../WorkflowAction";
 import type { WorkflowActionHandler } from "./WorkflowActionHandler";
 
-export class OpenUrlWorkflowActionHandler implements WorkflowActionHandler<OpenUrlWorkflowAction> {
+export class OpenUrlWorkflowActionHandler implements WorkflowActionHandler {
     public constructor(private readonly shell: Shell) {}
 
-    public async invokeWorkflowAction({ url }: OpenUrlWorkflowAction): Promise<void> {
-        await this.shell.openExternal(url);
+    public async invokeWorkflowAction(action: WorkflowAction<OpenUrlActionArgs>): Promise<void> {
+        await this.shell.openExternal(action.args.url);
     }
 }

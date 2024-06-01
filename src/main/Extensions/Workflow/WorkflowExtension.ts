@@ -1,8 +1,11 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SearchResultItem } from "@common/Core";
+import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
+import { WorkflowActionArgumentEncoder } from "./Utility";
+import { Workflow } from "./Workflow";
 import { WorkflowRepository } from "./WorkflowRepository";
 
 export class WorkflowExtension implements Extension {
@@ -24,7 +27,7 @@ export class WorkflowExtension implements Extension {
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
         const workflows = await this.workflowRepository.getAll();
-        return workflows.map((w) => w.toSearchResultItem(this.getImage()));
+        return workflows.map((workflow) => this.workflowToSearchResultItem(workflow));
     }
 
     public isSupported(): boolean {
@@ -43,5 +46,23 @@ export class WorkflowExtension implements Extension {
 
     public getI18nResources(): Resources<Translations> {
         return {};
+    }
+
+    public getSettingKeysTriggeringRescan(): string[] {
+        return [getExtensionSettingKey(this.id, "workflows")];
+    }
+
+    private workflowToSearchResultItem(workflow: Workflow): SearchResultItem {
+        return {
+            defaultAction: {
+                argument: WorkflowActionArgumentEncoder.encodeArgument(workflow.actions),
+                description: "Invoke workflow",
+                handlerId: "Workflow",
+            },
+            description: "Workflow",
+            id: workflow.id,
+            image: this.getImage(),
+            name: workflow.name,
+        };
     }
 }
