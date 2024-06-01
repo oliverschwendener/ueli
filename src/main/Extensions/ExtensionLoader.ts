@@ -15,6 +15,7 @@ import { TerminalLauncherModule } from "./TerminalLauncher";
 import { UeliCommandModule } from "./UeliCommand";
 import { WebSearchExtensionModule } from "./WebSearch";
 import { WindowsControlPanelModule } from "./WindowsControlPanel";
+import { WorkflowExtensionModule } from "./Workflow";
 
 export class ExtensionLoader {
     private static getAllExtensionModules(): ExtensionModule[] {
@@ -33,6 +34,7 @@ export class ExtensionLoader {
             new UeliCommandModule(),
             new WebSearchExtensionModule(),
             new WindowsControlPanelModule(),
+            new WorkflowExtensionModule(),
         ];
     }
 
