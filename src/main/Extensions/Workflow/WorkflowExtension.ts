@@ -20,6 +20,10 @@ export class WorkflowExtension implements Extension {
         githubUserName: "oliverschwendener",
     };
 
+    private readonly defaultSettings = {
+        workflows: <Workflow[]>[],
+    };
+
     public constructor(
         private readonly assetPathResolver: AssetPathResolver,
         private readonly workflowRepository: WorkflowRepository,
@@ -34,8 +38,8 @@ export class WorkflowExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(): T {
-        return undefined;
+    public getSettingDefaultValue<T>(key): T {
+        return this.defaultSettings[key] as T;
     }
 
     public getImage(): Image {
