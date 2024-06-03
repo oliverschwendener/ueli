@@ -7,15 +7,14 @@ import {
     AccordionPanel,
     Body1Strong,
     Button,
-    Caption1Strong,
+    Caption1,
+    Card,
+    CardHeader,
     Dropdown,
     Field,
     Input,
     Option,
-    Table,
-    TableBody,
-    TableCell,
-    TableRow,
+    Tooltip,
 } from "@fluentui/react-components";
 import { AddRegular, DismissRegular, FolderRegular } from "@fluentui/react-icons";
 import { useState } from "react";
@@ -133,119 +132,100 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
                 />
             </Field>
 
-            <Field label="Actions">
-                <Accordion collapsible>
-                    {workflow.actions.map((action, index) => {
-                        return (
-                            <AccordionItem value={action.id} key={action.id}>
-                                <AccordionHeader>
+            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                {workflow.actions.map((action, index) => {
+                    return (
+                        <Card key={action.id} appearance="filled" focusMode="tab-only" orientation="horizontal">
+                            <CardHeader
+                                header={
                                     <Body1Strong>
                                         {index + 1}. {action.name}
                                     </Body1Strong>
-                                </AccordionHeader>
-                                <AccordionPanel>
-                                    <div
-                                        style={{
-                                            paddingLeft: 20,
-                                            boxSizing: "border-box",
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            alignItems: "flex-end",
-                                            gap: 10,
-                                        }}
-                                    >
-                                        <Table size="small">
-                                            <TableBody>
-                                                <TableRow>
-                                                    <TableCell style={{ width: 75 }}>
-                                                        <Caption1Strong>Type</Caption1Strong>
-                                                    </TableCell>
-                                                    <TableCell>{types[action.handlerId]}</TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell style={{ width: 75 }}>
-                                                        <Caption1Strong>{argTypes[action.handlerId]}</Caption1Strong>
-                                                    </TableCell>
-                                                    <TableCell>{getActionArgs(action)}</TableCell>
-                                                </TableRow>
-                                            </TableBody>
-                                        </Table>
+                                }
+                                description={
+                                    <Caption1>
+                                        {argTypes[action.handlerId]}: {getActionArgs(action)}
+                                    </Caption1>
+                                }
+                                action={
+                                    <Tooltip relationship="label" content="Remove action">
                                         <Button
                                             size="small"
                                             appearance="subtle"
                                             onClick={() => removeAction(action.id)}
                                             icon={<DismissRegular fontSize={14} />}
-                                        >
-                                            Remove action
-                                        </Button>
-                                    </div>
-                                </AccordionPanel>
-                            </AccordionItem>
-                        );
-                    })}
+                                        />
+                                    </Tooltip>
+                                }
+                            />
+                        </Card>
+                    );
+                })}
+            </div>
 
-                    <AccordionItem value={newAction.id} key={newAction.id}>
-                        <AccordionHeader>
-                            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
-                                <Body1Strong>Add new action</Body1Strong>
+            <Accordion collapsible>
+                <AccordionItem value="newAction">
+                    <AccordionHeader>
+                        <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
+                            <Body1Strong>Add new action</Body1Strong>
+                        </div>
+                    </AccordionHeader>
+                    <AccordionPanel>
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: 10,
+                                paddingLeft: 20,
+                                boxSizing: "border-box",
+                            }}
+                        >
+                            <Field label="Action name">
+                                <Input
+                                    value={newAction.name}
+                                    onChange={(_, { value }) => setNewActionName(value)}
+                                    placeholder="Add a name for the action"
+                                    size="small"
+                                />
+                            </Field>
+                            <Field label="Type">
+                                <Dropdown
+                                    value={types[newAction.handlerId]}
+                                    selectedOptions={[newAction.handlerId]}
+                                    onOptionSelect={(_, { optionValue }) =>
+                                        optionValue && setNewActionHandlerId(optionValue)
+                                    }
+                                    size="small"
+                                >
+                                    {handlerIds.map((handlerId) => (
+                                        <Option key={handlerId} value={handlerId}>
+                                            {types[handlerId]}
+                                        </Option>
+                                    ))}
+                                </Dropdown>
+                            </Field>
+                            <Field label={argTypes[newAction.handlerId]}>
+                                <Input
+                                    value={getActionArgs(newAction)}
+                                    onChange={(_, { value }) => setNewActionArgs(value)}
+                                    contentAfter={getAdditions()}
+                                    size="small"
+                                />
+                            </Field>
+                            <div>
+                                <Button
+                                    size="small"
+                                    icon={<AddRegular fontSize={14} />}
+                                    onClick={() => addAction(newAction)}
+                                >
+                                    Add action
+                                </Button>
                             </div>
-                        </AccordionHeader>
-                        <AccordionPanel>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    gap: 10,
-                                    paddingLeft: 20,
-                                    boxSizing: "border-box",
-                                }}
-                            >
-                                <Field label="Action name">
-                                    <Input
-                                        value={newAction.name}
-                                        onChange={(_, { value }) => setNewActionName(value)}
-                                        placeholder="Add a name for the action"
-                                        size="small"
-                                    />
-                                </Field>
-                                <Field label="Type">
-                                    <Dropdown
-                                        value={types[newAction.handlerId]}
-                                        selectedOptions={[newAction.handlerId]}
-                                        onOptionSelect={(_, { optionValue }) =>
-                                            optionValue && setNewActionHandlerId(optionValue)
-                                        }
-                                        size="small"
-                                    >
-                                        {handlerIds.map((handlerId) => (
-                                            <Option key={handlerId} value={handlerId}>
-                                                {types[handlerId]}
-                                            </Option>
-                                        ))}
-                                    </Dropdown>
-                                </Field>
-                                <Field label={argTypes[newAction.handlerId]}>
-                                    <Input
-                                        value={getActionArgs(newAction)}
-                                        onChange={(_, { value }) => setNewActionArgs(value)}
-                                        contentAfter={getAdditions()}
-                                        size="small"
-                                    />
-                                </Field>
-                                <div>
-                                    <Button
-                                        size="small"
-                                        icon={<AddRegular fontSize={14} />}
-                                        onClick={() => addAction(newAction)}
-                                    >
-                                        Add action
-                                    </Button>
-                                </div>
-                            </div>
-                        </AccordionPanel>
-                    </AccordionItem>
-                </Accordion>
-            </Field>
+                        </div>
+                    </AccordionPanel>
+                </AccordionItem>
+            </Accordion>
+
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
                 <Button onClick={cancel}>Cancel</Button>
                 <Button onClick={() => save(workflow)} appearance="primary">
