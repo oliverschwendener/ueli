@@ -42,7 +42,7 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
     const generateNewAction = (): WorkflowAction<unknown> => {
         return {
             id: `workflow-action-${crypto.randomUUID()}`,
-            args: { filePath: "" },
+            args: { filePath: "", url: "", command: "" },
             name: "",
             handlerId: "OpenFile",
         };
@@ -57,11 +57,11 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
     // TODO: fing more elegant solution
     const getActionArgs = (action: WorkflowAction<unknown>) => {
         if (action.handlerId === "OpenFile") {
-            return (action.args as { filePath: string }).filePath;
+            return (action.args as { filePath: string }).filePath ?? "";
         } else if (action.handlerId === "OpenUrl") {
-            return (action.args as { url: string }).url;
+            return (action.args as { url: string }).url ?? "";
         } else if (action.handlerId === "ExecuteCommand") {
-            return (action.args as { command: string }).command;
+            return (action.args as { command: string }).command ?? "";
         }
     };
 
@@ -75,8 +75,6 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
             setNewAction({ ...newAction, args: { command: args } });
         }
     };
-
-    // C:\Users\Oliver\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Discord Inc\Discord.lnk
 
     const addAction = (action: WorkflowAction<unknown>) => {
         setWorkflow({ ...workflow, actions: [...workflow.actions, action] });
@@ -136,7 +134,7 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
             </Field>
 
             <Field label="Actions">
-                <Accordion collapsible defaultOpenItems={[newAction.id]}>
+                <Accordion collapsible>
                     {workflow.actions.map((action, index) => {
                         return (
                             <AccordionItem value={action.id} key={action.id}>
