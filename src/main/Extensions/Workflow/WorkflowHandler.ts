@@ -15,15 +15,16 @@ export class WorkflowHandler implements ActionHandler {
     public async invokeAction(action: SearchResultItemAction): Promise<void> {
         const workflowActions = WorkflowActionArgumentDecoder.decodeArgument(action.argument);
 
-        for (const workflowAction of workflowActions) {
-            const workflowActionHandler = this.workflowActionHandlers[workflowAction.handlerId];
+        const promises = workflowActions
+            .filter((w) => Object.keys(this.workflowActionHandlers).includes(w.handlerId))
+            .map((w) => this.workflowActionHandlers[w.handlerId].invokeWorkflowAction(w));
 
-            if (!workflowActionHandler) {
-                this.logger.error(`No workflow action handler found for handler ID: ${workflowAction.handlerId}`);
-                continue;
+        const promiseResults = await Promise.allSettled(promises);
+
+        for (const promiseResult of promiseResults) {
+            if (promiseResult.status === "rejected") {
+                this.logger.error(`Error occured while invoking workflow action: ${promiseResult.reason}`);
             }
-
-            await workflowActionHandler.invokeWorkflowAction(workflowAction);
         }
     }
 }
