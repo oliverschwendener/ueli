@@ -2,15 +2,7 @@ import { useExtensionSetting } from "@Core/Hooks";
 import { Section } from "@Core/Settings/Section";
 import { SectionList } from "@Core/Settings/SectionList";
 import type { Workflow } from "@common/Extensions/Workflow";
-import {
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableHeader,
-    TableHeaderCell,
-    TableRow,
-} from "@fluentui/react-components";
+import { Body1Strong, Button, Divider } from "@fluentui/react-components";
 import { AddRegular, DeleteRegular, EditRegular } from "@fluentui/react-icons";
 import { EditWorkflow } from "./EditWorkflow";
 
@@ -46,25 +38,29 @@ export const WorkflowSettings = () => {
                 />
             </Section>
             <Section>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHeaderCell>Name</TableHeaderCell>
-                            <TableHeaderCell style={{ width: 80 }}>Action</TableHeaderCell>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {workflows.map((workflow) => (
-                            <TableRow key={workflow.id}>
-                                <TableCell>{workflow.name}</TableCell>
-                                <TableCell>
+                <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                    {workflows.map((workflow) => (
+                        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                            <div
+                                key={workflow.id}
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Body1Strong>{workflow.name}</Body1Strong>
+                                <div>
                                     <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
                                         <EditWorkflow
                                             dialogTitle="Edit Workflow"
                                             workflow={workflow}
                                             save={updateWorkflow}
                                             trigger={
-                                                <Button size="small" icon={<EditRegular fontSize={14} />}></Button>
+                                                <Button size="small" icon={<EditRegular fontSize={14} />}>
+                                                    Edit
+                                                </Button>
                                             }
                                         />
                                         <Button
@@ -75,13 +71,16 @@ export const WorkflowSettings = () => {
                                                     fontSize={14}
                                                 />
                                             }
-                                        ></Button>
+                                        >
+                                            Delete
+                                        </Button>
                                     </div>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                                </div>
+                            </div>
+                            <Divider />
+                        </div>
+                    ))}
+                </div>
             </Section>
         </SectionList>
     );
