@@ -53,7 +53,6 @@ export class ApplicationSearchModule implements ExtensionModule {
             Linux: () => [
                 new LaunchDesktopFileActionHandler(
                     dependencyRegistry.get("CommandlineUtility"),
-                    dependencyRegistry.get("EnvironmentVariableProvider"),
                 ),
             ],
             macOS: () => [],
