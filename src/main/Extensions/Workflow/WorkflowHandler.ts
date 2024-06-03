@@ -9,15 +9,15 @@ export class WorkflowHandler implements ActionHandler {
 
     public constructor(
         private readonly logger: Logger,
-        private workflowActionHandlers: Record<string, WorkflowActionHandler>,
+        private readonly workflowActionHandlers: Record<string, WorkflowActionHandler>,
     ) {}
 
     public async invokeAction(action: SearchResultItemAction): Promise<void> {
         const workflowActions = WorkflowActionArgumentDecoder.decodeArgument(action.argument);
 
         const promises = workflowActions
-            .filter((w) => Object.keys(this.workflowActionHandlers).includes(w.handlerId))
-            .map((w) => this.workflowActionHandlers[w.handlerId].invokeWorkflowAction(w));
+            .filter((workflow) => Object.keys(this.workflowActionHandlers).includes(workflow.handlerId))
+            .map((workflow) => this.workflowActionHandlers[workflow.handlerId].invokeWorkflowAction(workflow));
 
         const promiseResults = await Promise.allSettled(promises);
 
