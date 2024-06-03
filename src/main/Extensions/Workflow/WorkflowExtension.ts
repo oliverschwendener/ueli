@@ -13,8 +13,6 @@ export class WorkflowExtension implements Extension {
 
     public readonly name = "Workflow";
 
-    // TODO: public readonly nameTranslation?: { key: string; namespace: string };
-
     public readonly author = {
         name: "Oliver Schwendener",
         githubUserName: "oliverschwendener",

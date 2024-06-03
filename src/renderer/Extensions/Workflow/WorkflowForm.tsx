@@ -25,13 +25,13 @@ type AddWorkflowFormProps = {
     cancel: () => void;
 };
 
-export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormProps) => {
-    const generateTemporaryWorkflow = (): Workflow => ({
-        actions: [],
-        name: "",
-        id: `workflow-${crypto.randomUUID()}`,
-    });
+const generateTemporaryWorkflow = (): Workflow => ({
+    actions: [],
+    name: "",
+    id: `workflow-${crypto.randomUUID()}`,
+});
 
+export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormProps) => {
     const [workflow, setWorkflow] = useState<Workflow>(initialWorkflow ?? generateTemporaryWorkflow());
 
     const { contextBridge } = useContextBridge();
@@ -53,26 +53,24 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
 
     const setNewActionName = (name: string) => setNewAction({ ...newAction, name });
 
-    // TODO: fing more elegant solution
     const getActionArgs = (action: WorkflowAction<unknown>) => {
-        if (action.handlerId === "OpenFile") {
-            return (action.args as { filePath: string }).filePath ?? "";
-        } else if (action.handlerId === "OpenUrl") {
-            return (action.args as { url: string }).url ?? "";
-        } else if (action.handlerId === "ExecuteCommand") {
-            return (action.args as { command: string }).command ?? "";
-        }
+        const extractors: Record<string, () => string> = {
+            OpenFile: () => (action.args as { filePath: string }).filePath,
+            OpenUrl: () => (action.args as { url: string }).url,
+            ExecuteCommand: () => (action.args as { command: string }).command,
+        };
+
+        return extractors[action.handlerId]();
     };
 
-    // TODO: fing more elegant solution
     const setNewActionArgs = (args: string) => {
-        if (newAction.handlerId === "OpenFile") {
-            setNewAction({ ...newAction, args: { filePath: args } });
-        } else if (newAction.handlerId === "OpenUrl") {
-            setNewAction({ ...newAction, args: { url: args } });
-        } else if (newAction.handlerId === "ExecuteCommand") {
-            setNewAction({ ...newAction, args: { command: args } });
-        }
+        const argsCreators: Record<string, () => unknown> = {
+            OpenFile: () => ({ filePath: args }),
+            OpenUrl: () => ({ url: args }),
+            ExecuteCommand: () => ({ command: args }),
+        };
+
+        setNewAction({ ...newAction, args: argsCreators[newAction.handlerId]() });
     };
 
     const addAction = (action: WorkflowAction<unknown>) => {
@@ -80,9 +78,8 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
         setNewAction(generateNewAction());
     };
 
-    const removeAction = (actionId: string) => {
+    const removeAction = (actionId: string) =>
         setWorkflow({ ...workflow, actions: workflow.actions.filter((action) => action.id !== actionId) });
-    };
 
     const handlerIds = ["OpenFile", "OpenUrl", "ExecuteCommand"];
 
@@ -105,18 +102,15 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
         }
     };
 
-    // TODO: find better name
-    const getAdditions = () => {
+    const argsFieldContentAfter = () => {
         if (newAction.handlerId === "OpenFile") {
             return (
-                <>
-                    <Button
-                        size="small"
-                        icon={<FolderRegular fontSize={14} />}
-                        appearance="subtle"
-                        onClick={() => selectFile()}
-                    ></Button>
-                </>
+                <Button
+                    size="small"
+                    icon={<FolderRegular fontSize={14} />}
+                    appearance="subtle"
+                    onClick={() => selectFile()}
+                ></Button>
             );
         }
     };
@@ -132,10 +126,10 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
                 />
             </Field>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {workflow.actions.map((action, index) => {
                     return (
-                        <Card key={action.id} appearance="filled" focusMode="tab-only" orientation="horizontal">
+                        <Card key={action.id} appearance="outline" orientation="horizontal">
                             <CardHeader
                                 header={
                                     <Body1Strong>
@@ -176,8 +170,6 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
                                 display: "flex",
                                 flexDirection: "column",
                                 gap: 10,
-                                paddingLeft: 20,
-                                boxSizing: "border-box",
                             }}
                         >
                             <Field label="Action name">
@@ -208,7 +200,7 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
                                 <Input
                                     value={getActionArgs(newAction)}
                                     onChange={(_, { value }) => setNewActionArgs(value)}
-                                    contentAfter={getAdditions()}
+                                    contentAfter={argsFieldContentAfter()}
                                     size="small"
                                 />
                             </Field>
