@@ -21,9 +21,8 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
 
     const setWorkflowName = (name: string) => setWorkflow({ ...workflow, name });
 
-    const addAction = (action: WorkflowAction<unknown>) => {
+    const addAction = (action: WorkflowAction<unknown>) =>
         setWorkflow({ ...workflow, actions: [...workflow.actions, action] });
-    };
 
     const removeAction = (actionId: string) =>
         setWorkflow({ ...workflow, actions: workflow.actions.filter((action) => action.id !== actionId) });
