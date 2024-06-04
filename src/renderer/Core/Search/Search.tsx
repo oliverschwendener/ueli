@@ -109,20 +109,25 @@ export const Search = ({
     const handleUserInputKeyDownEvent = (keyboardEvent: KeyboardEvent<HTMLElement>) => {
         const eventHandlers: KeyboardEventHandler[] = [
             {
+                listener: () => contextBridge.ipcRenderer.send("escapePressed"),
+                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Escape",
+            },
+            {
                 listener: () => selectPreviousSearchResultItem(),
                 needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowUp",
             },
             {
                 listener: () => selectNextSearchResultItem(),
-                needsToInvokeListener: (e) => e.key === "ArrowDown",
+                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowDown",
             },
             {
                 listener: () => additionalActionsButtonRef.current?.click(),
-                needsToInvokeListener: (e) => e.key === "k" && (e.metaKey || e.ctrlKey),
+                needsToInvokeListener: (keyboardEvent) =>
+                    keyboardEvent.key === "k" && (keyboardEvent.metaKey || keyboardEvent.ctrlKey),
             },
             {
                 listener: async () => await invokeSelectedSearchResultItem(),
-                needsToInvokeListener: (e) => e.key === "Enter",
+                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Enter",
             },
         ];
 

@@ -4,6 +4,7 @@ import { contextBridge, ipcRenderer } from "electron";
 const contextBridgeImplementation: ContextBridge = {
     ipcRenderer: {
         on: (channel, listener) => ipcRenderer.on(channel, listener),
+        send: (channel, args) => ipcRenderer.send(channel, args),
     },
 
     autostartIsEnabled: () => ipcRenderer.sendSync("autostartIsEnabled"),

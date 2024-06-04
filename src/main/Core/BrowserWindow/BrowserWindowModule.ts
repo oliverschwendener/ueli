@@ -5,7 +5,7 @@ import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
-import type { BrowserWindow } from "electron";
+import type { BrowserWindow, IpcMain } from "electron";
 import { join } from "path";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 import {
@@ -31,6 +31,7 @@ export class BrowserWindowModule {
         const eventEmitter = dependencyRegistry.get("EventEmitter");
         const nativeTheme = dependencyRegistry.get("NativeTheme");
         const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
+        const ipcMain = dependencyRegistry.get("IpcMain");
 
         const windowBoundsMemory = new WindowBoundsMemory(dependencyRegistry.get("Screen"), {});
 
@@ -88,6 +89,7 @@ export class BrowserWindowModule {
             backgroundMaterialProvider,
             browserWindowToggler,
             settingsManager,
+            ipcMain,
         );
 
         await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyRegistry.get("EnvironmentVariableProvider"));
@@ -114,10 +116,14 @@ export class BrowserWindowModule {
         backgroundMaterialProvider: BackgroundMaterialProvider,
         browserWindowToggler: BrowserWindowToggler,
         settingsManager: SettingsManager,
+        ipcMain: IpcMain,
     ) {
         const shouldHideWindowAfterInvocation = (action: SearchResultItemAction) =>
             action.hideWindowAfterInvocation &&
             settingsManager.getValue("window.hideWindowOn", ["blur"]).includes("afterInvocation");
+
+        const shouldHideWindowOnEscapePressed = () =>
+            settingsManager.getValue("window.hideWindowOn", ["blur"]).includes("escapePressed");
 
         eventSubscriber.subscribe(
             "actionInvoked",
@@ -149,6 +155,8 @@ export class BrowserWindowModule {
             browserWindowToggler.showAndFocus();
             sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
         });
+
+        ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
 
         BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber, browserWindowToggler);
     }

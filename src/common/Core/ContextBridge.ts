@@ -12,6 +12,7 @@ import type { Resources, Translations } from "./Translator";
 export type ContextBridge = {
     ipcRenderer: {
         on: IpcRenderer["on"];
+        send: IpcRenderer["send"];
     };
 
     autostartIsEnabled: () => boolean;

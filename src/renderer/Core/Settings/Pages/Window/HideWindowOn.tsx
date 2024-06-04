@@ -11,7 +11,7 @@ export const HideWindowOn = () => {
         defaultValue: ["blur"],
     });
 
-    const options = ["blur", "afterInvocation"];
+    const options = ["blur", "afterInvocation", "escapePressed"];
 
     return (
         <Field label={`${t("hideWindowOn", { ns: "settingsWindow" })}:`}>
