@@ -4,7 +4,7 @@ import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvi
 import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
-import type { OperatingSystem } from "@common/Core";
+import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
 import type { BrowserWindow } from "electron";
 import { join } from "path";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
@@ -115,12 +115,14 @@ export class BrowserWindowModule {
         browserWindowToggler: BrowserWindowToggler,
         settingsManager: SettingsManager,
     ) {
-        const shouldHideWindowAfterInvocation = () =>
+        const shouldHideWindowAfterInvocation = (action: SearchResultItemAction) =>
+            action.hideWindowAfterInvocation &&
             settingsManager.getValue("window.hideWindowOn", ["blur"]).includes("afterInvocation");
 
         eventSubscriber.subscribe(
             "actionInvoked",
-            () => shouldHideWindowAfterInvocation() && browserWindowToggler.hide(),
+            ({ action }: { action: SearchResultItemAction }) =>
+                shouldHideWindowAfterInvocation(action) && browserWindowToggler.hide(),
         );
 
         eventSubscriber.subscribe("hotkeyPressed", () =>

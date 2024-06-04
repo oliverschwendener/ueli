@@ -34,6 +34,7 @@ export class WindowsSystemCommand implements SystemCommand {
                 description: this.description,
                 handlerId: "WindowsSystemCommandActionHandler",
                 requiresConfirmation: this.requiresConfirmation,
+                hideWindowAfterInvocation: true,
             },
             description: this.description,
             id: `SystemCommand[${Buffer.from(`${this.name}${this.command}`).toString("hex")}]`,

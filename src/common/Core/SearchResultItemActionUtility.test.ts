@@ -102,6 +102,7 @@ describe(SearchResultItemActionUtility, () => {
                 },
                 handlerId: "OpenFilePath",
                 fluentIcon: "OpenRegular",
+                hideWindowAfterInvocation: true,
             };
 
             expect(actual).toEqual(expected);
@@ -121,6 +122,7 @@ describe(SearchResultItemActionUtility, () => {
                 },
                 handlerId: "Url",
                 fluentIcon: "OpenRegular",
+                hideWindowAfterInvocation: true,
             };
 
             expect(actual).toEqual(expected);
@@ -142,6 +144,7 @@ describe(SearchResultItemActionUtility, () => {
                     namespace: "searchResultItemAction",
                 },
                 fluentIcon: "DocumentFolderRegular",
+                hideWindowAfterInvocation: true,
             };
 
             expect(actual).toEqual(expected);
