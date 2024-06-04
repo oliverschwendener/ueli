@@ -1,3 +1,4 @@
+import { SearchResultItemAction } from "@common/Core";
 import { describe, expect, it } from "vitest";
 import { createLaunchDesktopFileAction } from "./createLaunchDesktopFileAction";
 
@@ -12,7 +13,7 @@ describe(createLaunchDesktopFileAction, () => {
                     namespace: "extension[ApplicationSearch]",
                 },
             }),
-        ).toEqual({
+        ).toEqual(<SearchResultItemAction>{
             argument: "/usr/share/application/firefox.desktop",
             description: "Open application",
             descriptionTranslation: {
@@ -21,6 +22,7 @@ describe(createLaunchDesktopFileAction, () => {
             },
             handlerId: "LaunchDesktopFile",
             fluentIcon: "OpenRegular",
+            hideWindowAfterInvocation: true,
         });
     });
 });

@@ -69,6 +69,7 @@ describe(WindowsControlPanel, () => {
                         description: "translation[openItem]",
                         fluentIcon: "OpenRegular",
                         handlerId: "WindowsControlPanel",
+                        hideWindowAfterInvocation: true,
                     },
                 },
                 {
@@ -81,6 +82,7 @@ describe(WindowsControlPanel, () => {
                         description: "translation[openItem]",
                         fluentIcon: "OpenRegular",
                         handlerId: "WindowsControlPanel",
+                        hideWindowAfterInvocation: true,
                     },
                 },
             ]);

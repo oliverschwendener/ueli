@@ -44,6 +44,7 @@ export class WindowsControlPanel implements Extension {
                 description: t("openItem"),
                 fluentIcon: "OpenRegular",
                 handlerId: this.id,
+                hideWindowAfterInvocation: true,
             },
         }));
     }

@@ -15,5 +15,6 @@ export const createLaunchDesktopFileAction = ({
         descriptionTranslation,
         handlerId: "LaunchDesktopFile",
         fluentIcon: "OpenRegular",
+        hideWindowAfterInvocation: true,
     };
 };

@@ -96,6 +96,7 @@ export class TerminalLauncherExtension implements Extension {
                 description: t("defaultActionDescription", { terminalId }),
                 handlerId: "LaunchTerminalActionHandler",
                 fluentIcon: "WindowConsoleRegular",
+                hideWindowAfterInvocation: true,
             },
             description: t("searchResultItemDescription", { terminalId }),
             id: `[${this.id}][instantSearchResultItem][${terminalId}]`,

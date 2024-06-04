@@ -33,4 +33,10 @@ export type SearchResultItemAction = {
      * The icon of the action. This icon will be used in the additional action menu.
      */
     fluentIcon?: FluentIcon;
+
+    /**
+     * Determines if the window should be hidden after invoking the action. The option "Hide window after invocation"
+     * in the settings is disabled, this option will be ignored.
+     */
+    hideWindowAfterInvocation?: boolean;
 };

@@ -38,6 +38,7 @@ export class UeliCommandExtension implements Extension {
                     description: t("quitUeli"),
                     requiresConfirmation: true,
                     fluentIcon: "DismissCircleRegular",
+                    hideWindowAfterInvocation: true,
                 },
             },
             settings: {
