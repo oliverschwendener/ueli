@@ -8,7 +8,6 @@ import { CurrencyConversionModule } from "./CurrencyConversion/CurrencyConversio
 import { DeeplTranslatorModule } from "./DeeplTranslator";
 import { ExtensionModule } from "./ExtensionModule";
 import { FileSearchModule } from "./FileSearch/FileSearchModule";
-import { ShortcutsModule } from "./Shortcuts";
 import { SystemCommandsModule } from "./SystemCommands";
 import { SystemSettingsModule } from "./SystemSettings";
 import { TerminalLauncherModule } from "./TerminalLauncher";
@@ -27,7 +26,6 @@ export class ExtensionLoader {
             new CurrencyConversionModule(),
             new DeeplTranslatorModule(),
             new FileSearchModule(),
-            new ShortcutsModule(),
             new SystemCommandsModule(),
             new SystemSettingsModule(),
             new TerminalLauncherModule(),

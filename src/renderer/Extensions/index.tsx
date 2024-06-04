@@ -6,7 +6,6 @@ import { CalculatorSettings } from "./Calculator";
 import { CurrencyConversionSettings } from "./CurrencyConversion";
 import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
 import { FileSearch, FileSearchSettings } from "./FileSearch";
-import { ShortcutsSettings } from "./Shortcuts";
 import { TerminalLauncherSettings } from "./TerminalLauncher";
 import { WebSearchExtension } from "./WebSearch";
 import { WebSearchSettings } from "./WebSearch/WebSearchSettings";
@@ -40,9 +39,6 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         FileSearch: {
             extension: <FileSearch {...props} />,
             settings: <FileSearchSettings />,
-        },
-        Shortcuts: {
-            settings: <ShortcutsSettings />,
         },
         TerminalLauncher: {
             settings: <TerminalLauncherSettings />,
