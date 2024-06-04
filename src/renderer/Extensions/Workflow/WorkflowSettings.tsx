@@ -17,9 +17,13 @@ import {
     Tooltip,
 } from "@fluentui/react-components";
 import { AddRegular, DeleteRegular, EditRegular } from "@fluentui/react-icons";
+import { useTranslation } from "react-i18next";
 import { EditWorkflow } from "./EditWorkflow";
 
 export const WorkflowSettings = () => {
+    const ns = "extension[Workflow]";
+    const { t } = useTranslation();
+
     const { value: workflows, updateValue: setWorkflows } = useExtensionSetting<Workflow[]>({
         extensionId: "Workflow",
         key: "workflows",
@@ -41,11 +45,10 @@ export const WorkflowSettings = () => {
         <SectionList>
             <Section>
                 <EditWorkflow
-                    dialogTitle="Add new workflow"
                     save={addWorkflow}
                     trigger={
                         <div>
-                            <Button icon={<AddRegular />}>Add new workflow</Button>
+                            <Button icon={<AddRegular />}>{t("addWorkflow", { ns })}</Button>
                         </div>
                     }
                 />
@@ -54,7 +57,7 @@ export const WorkflowSettings = () => {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHeaderCell style={{ width: "calc(100% - 40px)" }}>Workflows</TableHeaderCell>
+                            <TableHeaderCell>{t("workflows", { ns })}</TableHeaderCell>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -63,21 +66,22 @@ export const WorkflowSettings = () => {
                                 <TableCell>
                                     <TableCellLayout>
                                         <Body1Strong style={{ marginRight: 5 }}>{workflow.name}</Body1Strong>
-                                        <Caption1>- {workflow.actions.length} Actions</Caption1>
+                                        <Caption1>
+                                            - {workflow.actions.length} {t("actions", { ns })}
+                                        </Caption1>
                                     </TableCellLayout>
                                     <TableCellActions>
                                         <div style={{ display: "flex", flexDirection: "row", gap: 5, marginRight: 10 }}>
                                             <EditWorkflow
-                                                dialogTitle="Edit Workflow"
                                                 workflow={workflow}
                                                 save={updateWorkflow}
                                                 trigger={
-                                                    <Tooltip relationship="label" content="Edit Workflow">
+                                                    <Tooltip relationship="label" content={t("editWorkflow", { ns })}>
                                                         <Button size="small" icon={<EditRegular fontSize={14} />} />
                                                     </Tooltip>
                                                 }
                                             />
-                                            <Tooltip relationship="label" content="Delete Workflow">
+                                            <Tooltip relationship="label" content={t("deleteWorkflow", { ns })}>
                                                 <Button
                                                     size="small"
                                                     icon={

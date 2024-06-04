@@ -1,23 +1,15 @@
 import type { Workflow } from "@common/Extensions/Workflow";
-import {
-    Dialog,
-    DialogBody,
-    DialogContent,
-    DialogSurface,
-    DialogTitle,
-    DialogTrigger,
-} from "@fluentui/react-components";
+import { Dialog, DialogBody, DialogContent, DialogSurface, DialogTrigger } from "@fluentui/react-components";
 import { useState, type ReactElement } from "react";
 import { WorkflowForm } from "./WorkflowForm";
 
 type EditWorkflowProps = {
-    dialogTitle: string;
     trigger: ReactElement;
     workflow?: Workflow;
     save: (workflow: Workflow) => void;
 };
 
-export const EditWorkflow = ({ trigger, workflow, save, dialogTitle }: EditWorkflowProps) => {
+export const EditWorkflow = ({ trigger, workflow, save }: EditWorkflowProps) => {
     const [open, setOpen] = useState(false);
 
     const closeModal = () => setOpen(false);
@@ -27,7 +19,6 @@ export const EditWorkflow = ({ trigger, workflow, save, dialogTitle }: EditWorkf
             <DialogTrigger disableButtonEnhancement>{trigger}</DialogTrigger>
             <DialogSurface>
                 <DialogBody>
-                    <DialogTitle>{dialogTitle}</DialogTitle>
                     <DialogContent>
                         <WorkflowForm
                             cancel={closeModal}

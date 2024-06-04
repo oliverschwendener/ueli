@@ -24,6 +24,7 @@ export class WorkflowExtensionModule implements ExtensionModule {
             extension: new WorkflowExtension(
                 dependencyRegistry.get("AssetPathResolver"),
                 new WorkflowRepository(dependencyRegistry.get("SettingsManager")),
+                dependencyRegistry.get("Translator"),
             ),
             actionHandlers: [new WorkflowHandler(dependencyRegistry.get("Logger"), workflowActionHandlers)],
         };

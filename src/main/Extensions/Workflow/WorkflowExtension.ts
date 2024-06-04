@@ -1,5 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
+import type { Translator } from "@Core/Translator";
 import type { SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
@@ -13,6 +14,11 @@ export class WorkflowExtension implements Extension {
 
     public readonly name = "Workflow";
 
+    public readonly nameTranslation = {
+        key: "extensionName",
+        namespace: "extension[Workflow]",
+    };
+
     public readonly author = {
         name: "Oliver Schwendener",
         githubUserName: "oliverschwendener",
@@ -25,11 +31,29 @@ export class WorkflowExtension implements Extension {
     public constructor(
         private readonly assetPathResolver: AssetPathResolver,
         private readonly workflowRepository: WorkflowRepository,
+        private readonly translator: Translator,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
         const workflows = await this.workflowRepository.getAll();
-        return workflows.map((workflow) => this.workflowToSearchResultItem(workflow));
+
+        const { t } = this.translator.createT(this.getI18nResources());
+
+        const workflowToSearchResultItem = (workflow: Workflow): SearchResultItem => {
+            return {
+                defaultAction: {
+                    argument: WorkflowActionArgumentEncoder.encodeArgument(workflow.actions),
+                    description: t("searchResultItemActionDescription"),
+                    handlerId: "Workflow",
+                },
+                description: t("searchResultItemDescription"),
+                id: workflow.id,
+                image: this.getImage(),
+                name: workflow.name,
+            };
+        };
+
+        return workflows.map((workflow) => workflowToSearchResultItem(workflow));
     }
 
     public isSupported(): boolean {
@@ -47,24 +71,73 @@ export class WorkflowExtension implements Extension {
     }
 
     public getI18nResources(): Resources<Translations> {
-        return {};
+        return {
+            "en-US": {
+                extensionName: "Workflows",
+                searchResultItemDescription: "Workflow",
+                searchResultItemActionDescription: "Invoke workflow",
+
+                // Settings
+                addWorkflow: "Add workflow",
+                editWorkflow: "Edit workflow",
+                deleteWorkflow: "Delete workflow",
+                workflows: "Workflows",
+                actions: "Actions",
+                workflowName: "Workflow name",
+                workflowNamePlaceholder: "Add a name for the workflow",
+                cancel: "Cancel",
+                save: "Save",
+                type: "Type",
+                "type.OpenFile": "Open file",
+                "type.OpenUrl": "Open URL",
+                "type.ExecuteCommand": "Execute command",
+                newAction: "New Action",
+                actionName: "Action name",
+                actionNamePlaceholder: "Add a name for the action",
+                addAction: "Add Action",
+                "argType.OpenFile": "File path",
+                "argType.OpenUrl": "URL",
+                "argType.ExecuteCommand": "Command",
+                "argType.OpenFile.placeholder": "Add a file path",
+                "argType.OpenUrl.placeholder": "Add a URL",
+                "argType.ExecuteCommand.placeholder": "Add a command",
+                removeAction: "Remove Action",
+            },
+            "de-CH": {
+                extensionName: "Arbeitsabläufe",
+                searchResultItemDescription: "Arbeitsablauf",
+                searchResultItemActionDescription: "Arbeitsablauf ausführen",
+
+                // Settings
+                addWorkflow: "Arbeitsablauf hinzufügen",
+                editWorkflow: "Arbeitsablauf bearbeiten",
+                deleteWorkflow: "Arbeitsablauf löschen",
+                workflows: "Arbeitsabläufe",
+                actions: "Aktionen",
+                workflowName: "Name des Arbeitsablaufs",
+                workflowNamePlaceholder: "Füge einen Namen für den Arbeitsablauf hinzu",
+                cancel: "Abbrechen",
+                save: "Speichern",
+                type: "Typ",
+                "type.OpenFile": "Datei öffnen",
+                "type.OpenUrl": "URL öffnen",
+                "type.ExecuteCommand": "Befehl ausführen",
+                newAction: "Neue Aktion",
+                actionName: "Name der Aktion",
+                actionNamePlaceholder: "Füge einen Namen für die Aktion hinzu",
+                addAction: "Aktion hinzufügen",
+                "argType.OpenFile": "Dateipfad",
+                "argType.OpenUrl": "URL",
+                "argType.ExecuteCommand": "Befehl",
+                "argType.OpenFile.placeholder": "Füge einen Dateipfad hinzu",
+                "argType.OpenUrl.placeholder": "Füge eine URL hinzu",
+                "argType.ExecuteCommand.placeholder": "Füge einen Befehl hinzu",
+                removeAction: "Aktion entfernen",
+            },
+        };
     }
 
     public getSettingKeysTriggeringRescan(): string[] {
         return [getExtensionSettingKey(this.id, "workflows")];
-    }
-
-    private workflowToSearchResultItem(workflow: Workflow): SearchResultItem {
-        return {
-            defaultAction: {
-                argument: WorkflowActionArgumentEncoder.encodeArgument(workflow.actions),
-                description: "Invoke workflow",
-                handlerId: "Workflow",
-            },
-            description: "Workflow",
-            id: workflow.id,
-            image: this.getImage(),
-            name: workflow.name,
-        };
     }
 }

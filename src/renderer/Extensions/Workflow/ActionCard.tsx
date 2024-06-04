@@ -1,6 +1,7 @@
 import type { WorkflowAction } from "@common/Extensions/Workflow";
 import { Body1Strong, Button, Card, CardHeader, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
+import { useTranslation } from "react-i18next";
 
 type ActionCardProps = {
     action: WorkflowAction<unknown>;
@@ -9,6 +10,9 @@ type ActionCardProps = {
 };
 
 export const ActionCard = ({ action, index, removeAction }: ActionCardProps) => {
+    const ns = "extension[Workflow]";
+    const { t } = useTranslation();
+
     return (
         <Card appearance="outline" orientation="horizontal">
             <CardHeader
@@ -18,7 +22,7 @@ export const ActionCard = ({ action, index, removeAction }: ActionCardProps) => 
                     </Body1Strong>
                 }
                 action={
-                    <Tooltip relationship="label" content="Remove action">
+                    <Tooltip relationship="label" content={t("removeAction", { ns })}>
                         <Button
                             size="small"
                             appearance="subtle"

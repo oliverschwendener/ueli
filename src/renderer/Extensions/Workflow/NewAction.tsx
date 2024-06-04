@@ -14,6 +14,7 @@ import {
 } from "@fluentui/react-components";
 import { AddRegular, FolderRegular } from "@fluentui/react-icons";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const generateNewAction = (): WorkflowAction<unknown> => {
     return {
@@ -29,6 +30,9 @@ type NewActionProps = {
 };
 
 export const NewAction = ({ add }: NewActionProps) => {
+    const ns = "extension[Workflow]";
+    const { t } = useTranslation();
+
     const { contextBridge } = useContextBridge();
 
     const [newAction, setNewAction] = useState<WorkflowAction<unknown>>(generateNewAction());
@@ -79,30 +83,12 @@ export const NewAction = ({ add }: NewActionProps) => {
         return extractors[action.handlerId]();
     };
 
-    const types: Record<string, string> = {
-        OpenFile: "Open File",
-        OpenUrl: "Open URL",
-        ExecuteCommand: "Execute command",
-    };
-
-    const argTypes: Record<string, string> = {
-        OpenFile: "File path",
-        OpenUrl: "URL",
-        ExecuteCommand: "Command",
-    };
-
-    const argTypesPlaceholder: Record<string, string> = {
-        OpenFile: "Enter a File path",
-        OpenUrl: "Enter a URL",
-        ExecuteCommand: "Enter a Command",
-    };
-
     return (
         <Accordion collapsible>
             <AccordionItem value="newAction">
                 <AccordionHeader>
                     <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
-                        <Body1Strong>Add new action</Body1Strong>
+                        <Body1Strong>{t("newAction", { ns })}</Body1Strong>
                     </div>
                 </AccordionHeader>
                 <AccordionPanel>
@@ -113,17 +99,17 @@ export const NewAction = ({ add }: NewActionProps) => {
                             gap: 10,
                         }}
                     >
-                        <Field label="Action name">
+                        <Field label={t("actionName", { ns })}>
                             <Input
                                 value={newAction.name}
                                 onChange={(_, { value }) => setNewActionName(value)}
-                                placeholder="Add a name for the action"
+                                placeholder={t("actionNamePlaceholder", { ns })}
                                 size="small"
                             />
                         </Field>
-                        <Field label="Type">
+                        <Field label={t("type", { ns })}>
                             <Dropdown
-                                value={types[newAction.handlerId]}
+                                value={t(`type.${newAction.handlerId}`, { ns })}
                                 selectedOptions={[newAction.handlerId]}
                                 onOptionSelect={(_, { optionValue }) =>
                                     optionValue && setNewActionHandlerId(optionValue)
@@ -132,17 +118,17 @@ export const NewAction = ({ add }: NewActionProps) => {
                             >
                                 {handlerIds.map((handlerId) => (
                                     <Option key={handlerId} value={handlerId}>
-                                        {types[handlerId]}
+                                        {t(`type.${handlerId}`, { ns })}
                                     </Option>
                                 ))}
                             </Dropdown>
                         </Field>
-                        <Field label={argTypes[newAction.handlerId]}>
+                        <Field label={t(`argType.${newAction.handlerId}`, { ns })}>
                             <Input
                                 value={getActionArgs(newAction)}
                                 onChange={(_, { value }) => setNewActionArgs(value)}
                                 contentAfter={argsFieldContentAfter()}
-                                placeholder={argTypesPlaceholder[newAction.handlerId]}
+                                placeholder={t(`argType.${newAction.handlerId}.placeholder`, { ns })}
                                 size="small"
                             />
                         </Field>
@@ -155,7 +141,7 @@ export const NewAction = ({ add }: NewActionProps) => {
                                     setNewAction(generateNewAction());
                                 }}
                             >
-                                Add action
+                                {t("addAction", { ns })}
                             </Button>
                         </div>
                     </div>

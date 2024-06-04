@@ -1,6 +1,7 @@
 import type { Workflow, WorkflowAction } from "@common/Extensions/Workflow";
 import { Button, Field, Input } from "@fluentui/react-components";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ActionCardList } from "./ActionCardList";
 import { NewAction } from "./NewAction";
 
@@ -17,6 +18,9 @@ const generateTemporaryWorkflow = (): Workflow => ({
 });
 
 export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormProps) => {
+    const ns = "extension[Workflow]";
+    const { t } = useTranslation();
+
     const [workflow, setWorkflow] = useState<Workflow>(initialWorkflow ?? generateTemporaryWorkflow());
 
     const setWorkflowName = (name: string) => setWorkflow({ ...workflow, name });
@@ -29,23 +33,23 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
 
     return (
         <form style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            <Field label="Workflow name">
+            <Field label={t("workflowName", { ns })}>
                 <Input
                     value={workflow.name}
                     onChange={(_, { value }) => setWorkflowName(value)}
                     autoFocus
-                    placeholder="Add a name for the workflow"
+                    placeholder={t("workflowNamePlaceholder", { ns })}
                 />
             </Field>
 
-            <ActionCardList actions={workflow.actions} removeAction={removeAction} />
+            {workflow.actions.length > 0 && <ActionCardList actions={workflow.actions} removeAction={removeAction} />}
 
             <NewAction add={addAction} />
 
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
-                <Button onClick={cancel}>Cancel</Button>
+                <Button onClick={cancel}>{t("cancel", { ns })}</Button>
                 <Button onClick={() => save(workflow)} appearance="primary">
-                    Save
+                    {t("save", { ns })}
                 </Button>
             </div>
         </form>
