@@ -3,6 +3,7 @@ import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { Extension } from "@Core/Extension";
 import type { ExtensionInfo } from "@common/Core";
 import { ExtensionManager } from "./ExtensionManager";
+import { ScanCounter } from "./ScanCounter";
 
 const mapExtensionToInfo = (extension: Extension): ExtensionInfo => ({
     id: extension.id,
@@ -21,7 +22,17 @@ export class ExtensionManagerModule {
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const extensionRegistry = dependencyRegistry.get("ExtensionRegistry");
 
-        const extensionManager = new ExtensionManager(extensionRegistry, searchIndex, settingsManager, logger);
+        const scanCounter = new ScanCounter();
+
+        const extensionManager = new ExtensionManager(
+            extensionRegistry,
+            searchIndex,
+            settingsManager,
+            logger,
+            scanCounter,
+        );
+
+        ipcMain.on("getScanCount", (event) => (event.returnValue = scanCounter.getScanCount()));
 
         ipcMain.on("getExtensionResources", (event) => {
             event.returnValue = extensionManager.getSupportedExtensions().map((extension) => ({

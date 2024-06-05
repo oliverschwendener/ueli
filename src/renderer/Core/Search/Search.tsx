@@ -16,6 +16,7 @@ import { getFilteredSearchResultItems } from "./Helpers/getFilteredSearchResultI
 import { getNextSearchResultItemId } from "./Helpers/getNextSearchResultItemId";
 import { getPreviousSearchResultItemId } from "./Helpers/getPreviousSearchResultItemId";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
+import { ScanIndicator } from "./ScanIndicator";
 import { SearchResultList } from "./SearchResultList";
 
 type SearchProps = {
@@ -234,18 +235,22 @@ export const Search = ({
             }
             contentRef={containerRef}
             content={
-                <>
-                    <ConfirmationDialog closeDialog={closeConfirmationDialog} action={confirmationDialogAction} />
-                    <SearchResultList
-                        containerRef={containerRef}
-                        selectedItemId={viewModel.selectedItemId}
-                        searchResultItems={viewModel.filteredSearchResultItems}
-                        favorites={favoriteSearchResultItemIds}
-                        searchTerm={viewModel.searchTerm}
-                        onSearchResultItemClick={handleSearchResultItemClickEvent}
-                        onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
-                    />
-                </>
+                contextBridge.getScanCount() === 0 ? (
+                    <ScanIndicator />
+                ) : (
+                    <>
+                        <ConfirmationDialog closeDialog={closeConfirmationDialog} action={confirmationDialogAction} />
+                        <SearchResultList
+                            containerRef={containerRef}
+                            selectedItemId={viewModel.selectedItemId}
+                            searchResultItems={viewModel.filteredSearchResultItems}
+                            favorites={favoriteSearchResultItemIds}
+                            searchTerm={viewModel.searchTerm}
+                            onSearchResultItemClick={handleSearchResultItemClickEvent}
+                            onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
+                        />
+                    </>
+                )
             }
             footer={
                 <Footer draggable>

@@ -35,6 +35,7 @@ export type ContextBridge = {
     getOperatingSystem: () => OperatingSystem;
     getSearchResultItems: () => SearchResultItem[];
     getSettingValue: <Value>(key: string, defaultValue: Value, isSensitive?: boolean) => Value;
+    getScanCount: () => number;
     invokeAction: (action: SearchResultItemAction) => Promise<void>;
     invokeExtension: <Argument, Result>(extensionId: string, searchArguments: Argument) => Promise<Result>;
     openExternal: (url: string, options?: OpenExternalOptions) => Promise<void>;
