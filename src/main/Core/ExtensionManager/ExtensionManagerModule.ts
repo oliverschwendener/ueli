@@ -79,21 +79,21 @@ export class ExtensionManagerModule {
             extensionManager.populateSearchIndexByExtensionId(extensionId),
         );
 
-        eventSubscriber.subscribe("RescanOrchestrator:timeElapsed", async () => {
-            logger.info("Automatic rescan triggered");
-            await extensionManager.populateSearchIndex();
-        });
+        eventSubscriber.subscribe(
+            "RescanOrchestrator:timeElapsed",
+            async () => await extensionManager.populateSearchIndex(),
+        );
 
         eventSubscriber.subscribe("settingUpdated", async ({ key }: { key: string }) => {
-            for (const extension of extensionRegistry.getAll()) {
-                if (
-                    typeof extension.getSettingKeysTriggeringRescan === "function" &&
-                    extension.getSettingKeysTriggeringRescan().includes(key)
-                ) {
-                    searchIndex.removeSearchResultItems(extension.id);
-                    searchIndex.addSearchResultItems(extension.id, await extension.getSearchResultItems());
-                }
-            }
+            const extensionNeedsRescan = (extension: Extension) =>
+                extension.getSettingKeysTriggeringRescan && extension.getSettingKeysTriggeringRescan().includes(key);
+
+            await Promise.allSettled(
+                extensionManager
+                    .getSupportedExtensions()
+                    .filter((extension) => extensionNeedsRescan(extension))
+                    .map((extension) => extensionManager.populateSearchIndexByExtensionId(extension.id)),
+            );
         });
     }
 }
