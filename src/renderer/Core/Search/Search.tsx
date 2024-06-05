@@ -1,4 +1,4 @@
-import { type SearchResultItem, type SearchResultItemAction } from "@common/Core";
+import type { SearchResultItem, SearchResultItemAction } from "@common/Core";
 import { Button, Input } from "@fluentui/react-components";
 import { SearchRegular, SettingsRegular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
@@ -9,26 +9,15 @@ import { Footer } from "../Footer";
 import { useContextBridge, useSetting } from "../Hooks";
 import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
-import { SearchFilter } from "./Helpers";
-import { fuseJsSearchFilter } from "./Helpers/fuseJsSearchFilter";
-import { fuzzySortFilter } from "./Helpers/fuzzySortFilter";
-import { getFilteredSearchResultItems } from "./Helpers/getFilteredSearchResultItems";
-import { getNextSearchResultItemId } from "./Helpers/getNextSearchResultItemId";
-import { getPreviousSearchResultItemId } from "./Helpers/getPreviousSearchResultItemId";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
 import { ScanIndicator } from "./ScanIndicator";
 import { SearchResultList } from "./SearchResultList";
+import { useSearchViewcontroller } from "./SearchViewController";
 
 type SearchProps = {
     searchResultItems: SearchResultItem[];
     excludedSearchResultItemIds: string[];
     favoriteSearchResultItemIds: string[];
-};
-
-type ViewModel = {
-    searchTerm: string;
-    selectedItemId: string;
-    filteredSearchResultItems: SearchResultItem[];
 };
 
 export const Search = ({
@@ -39,10 +28,11 @@ export const Search = ({
     const { t } = useTranslation();
     const { contextBridge } = useContextBridge();
 
-    const [viewModel, setViewModel] = useState<ViewModel>({
-        filteredSearchResultItems: [],
-        searchTerm: "",
-        selectedItemId: "",
+    const { filteredSearchResultItems, searchTerm, selectedItemId, search } = useSearchViewcontroller({
+        contextBridge,
+        searchResultItems,
+        excludedSearchResultItemIds,
+        favoriteSearchResultItemIds,
     });
 
     const [confirmationDialogAction, setConfirmationDialogAction] = useState<SearchResultItemAction | undefined>(
@@ -68,26 +58,8 @@ export const Search = ({
         key: "keyboardAndMouse.doubleClickBehavior",
     });
 
-    const selectNextSearchResultItem = () =>
-        setViewModel({
-            ...viewModel,
-            selectedItemId: getNextSearchResultItemId(viewModel.selectedItemId, viewModel.filteredSearchResultItems),
-        });
-
-    const selectPreviousSearchResultItem = () =>
-        setViewModel({
-            ...viewModel,
-            selectedItemId: getPreviousSearchResultItemId(
-                viewModel.selectedItemId,
-                viewModel.filteredSearchResultItems,
-            ),
-        });
-
-    const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
-        viewModel.filteredSearchResultItems.find((s) => s.id === viewModel.selectedItemId);
-
     const invokeSelectedSearchResultItem = async () => {
-        const searchResultItem = getSelectedSearchResultItem();
+        const searchResultItem = filteredSearchResultItems.current();
 
         if (!searchResultItem || !searchResultItem.defaultAction) {
             return;
@@ -114,11 +86,11 @@ export const Search = ({
                 needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Escape",
             },
             {
-                listener: () => selectPreviousSearchResultItem(),
+                listener: () => selectedItemId.previous(),
                 needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowUp",
             },
             {
-                listener: () => selectNextSearchResultItem(),
+                listener: () => selectedItemId.next(),
                 needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowDown",
             },
             {
@@ -141,7 +113,7 @@ export const Search = ({
     };
 
     const clickHandlers: Record<string, (s: SearchResultItem) => void> = {
-        selectSearchResultItem: (s) => setViewModel({ ...viewModel, selectedItemId: s.id }),
+        selectSearchResultItem: (s) => selectedItemId.set(s.id),
         invokeSearchResultItem: (s) => invokeAction(s.defaultAction),
     };
 
@@ -158,36 +130,6 @@ export const Search = ({
         setFocusOnUserInput();
     };
 
-    const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
-    const { value: maxSearchResultItems } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
-
-    const searchFilters: Record<string, SearchFilter> = {
-        "Fuse.js": (options) => fuseJsSearchFilter(options),
-        fuzzysort: (options) => fuzzySortFilter(options),
-    };
-
-    const search = (searchTerm: string, selectedItemId?: string) => {
-        const filteredSearchResultItems = getFilteredSearchResultItems({
-            searchFilter: searchFilters[contextBridge.getSettingValue("searchEngine.id", "Fuse.js")],
-            excludedSearchResultItemIds,
-            favoriteSearchResultItemIds,
-            fuzziness,
-            instantSearchResultItems: contextBridge.getInstantSearchResultItems(searchTerm),
-            maxSearchResultItems,
-            searchResultItems,
-            searchTerm,
-        });
-
-        setViewModel({
-            ...viewModel,
-            ...{
-                searchTerm,
-                selectedItemId: selectedItemId ?? filteredSearchResultItems[0]?.id,
-                filteredSearchResultItems,
-            },
-        });
-    };
-
     useEffect(() => {
         const setFocusOnUserInputAndSelectText = () => {
             userInputRef?.current?.focus();
@@ -200,11 +142,11 @@ export const Search = ({
     }, []);
 
     useEffect(() => {
-        search(viewModel.searchTerm, viewModel.selectedItemId);
+        search(searchTerm.value, selectedItemId.value);
     }, [searchResultItems]);
 
     useEffect(() => {
-        search(viewModel.searchTerm);
+        search(searchTerm.value);
     }, [favoriteSearchResultItemIds, excludedSearchResultItemIds]);
 
     return (
@@ -225,7 +167,7 @@ export const Search = ({
                         ref={userInputRef}
                         appearance={contextBridge.themeShouldUseDarkColors() ? "filled-darker" : "filled-lighter"}
                         size="large"
-                        value={viewModel.searchTerm}
+                        value={searchTerm.value}
                         onChange={(_, { value }) => search(value)}
                         onKeyDown={handleUserInputKeyDownEvent}
                         contentBefore={<SearchRegular />}
@@ -242,10 +184,10 @@ export const Search = ({
                         <ConfirmationDialog closeDialog={closeConfirmationDialog} action={confirmationDialogAction} />
                         <SearchResultList
                             containerRef={containerRef}
-                            selectedItemId={viewModel.selectedItemId}
-                            searchResultItems={viewModel.filteredSearchResultItems}
+                            selectedItemId={selectedItemId.value}
+                            searchResultItems={filteredSearchResultItems.value}
                             favorites={favoriteSearchResultItemIds}
-                            searchTerm={viewModel.searchTerm}
+                            searchTerm={searchTerm.value}
                             onSearchResultItemClick={handleSearchResultItemClickEvent}
                             onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
                         />
@@ -264,7 +206,7 @@ export const Search = ({
                         {t("settings", { ns: "general" })}
                     </Button>
                     <ActionsMenu
-                        searchResultItem={getSelectedSearchResultItem()}
+                        searchResultItem={filteredSearchResultItems.current()}
                         favorites={favoriteSearchResultItemIds}
                         invokeAction={invokeAction}
                         additionalActionsButtonRef={additionalActionsButtonRef}
