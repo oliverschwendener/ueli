@@ -1,6 +1,6 @@
 import { useSetting } from "@Core/Hooks";
-import type { ContextBridge, SearchResultItem } from "@common/Core";
-import { useState } from "react";
+import type { ContextBridge, SearchResultItem, SearchResultItemAction } from "@common/Core";
+import { useRef, useState } from "react";
 import type { SearchFilter } from "./Helpers";
 import { fuseJsSearchFilter } from "./Helpers/fuseJsSearchFilter";
 import { fuzzySortFilter } from "./Helpers/fuzzySortFilter";
@@ -32,6 +32,8 @@ export const useSearchViewcontroller = ({
         searchTerm: "",
         selectedItemId: "",
     });
+
+    const userInputRef = useRef<HTMLInputElement>(null);
 
     const setSearchTerm = (searchTerm: string) => setViewModel({ ...viewModel, searchTerm });
 
@@ -77,7 +79,37 @@ export const useSearchViewcontroller = ({
         });
     };
 
+    const focusUserInput = () => userInputRef.current?.focus();
+    const selectUserInput = () => userInputRef.current?.select();
+
+    const [confirmationDialogAction, setConfirmationDialogAction] = useState<SearchResultItemAction | undefined>(
+        undefined,
+    );
+
+    const invokeSelectedSearchResultItem = async () => {
+        const searchResultItem = getSelectedSearchResultItem();
+
+        if (!searchResultItem || !searchResultItem.defaultAction) {
+            return;
+        }
+
+        await invokeAction(searchResultItem.defaultAction);
+    };
+
+    const invokeAction = async (action: SearchResultItemAction) => {
+        if (!action.requiresConfirmation) {
+            await contextBridge.invokeAction(action);
+            return;
+        }
+
+        // This timeout is a workaround. Without it, for some reason the close button in the confirmation dialog will
+        // trigger an "onClick" event and therefore will be closed immediately.
+        setTimeout(() => setConfirmationDialogAction(action), 100);
+    };
+
     return {
+        invokeAction,
+        invokeSelectedSearchResultItem,
         search,
         searchTerm: {
             set: setSearchTerm,
@@ -93,6 +125,18 @@ export const useSearchViewcontroller = ({
             set: setFilteredSearchResultItems,
             value: viewModel.filteredSearchResultItems,
             current: getSelectedSearchResultItem,
+        },
+        userInput: {
+            ref: userInputRef,
+            focus: focusUserInput,
+            select: selectUserInput,
+        },
+        confirmationDialog: {
+            action: {
+                set: setConfirmationDialogAction,
+                reset: () => setConfirmationDialogAction(undefined),
+                value: confirmationDialogAction,
+            },
         },
     };
 };

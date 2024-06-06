@@ -1,7 +1,7 @@
-import type { SearchResultItem, SearchResultItemAction } from "@common/Core";
+import type { SearchResultItem } from "@common/Core";
 import { Button, Input } from "@fluentui/react-components";
 import { SearchRegular, SettingsRegular } from "@fluentui/react-icons";
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { BaseLayout } from "../BaseLayout";
@@ -28,22 +28,24 @@ export const Search = ({
     const { t } = useTranslation();
     const { contextBridge } = useContextBridge();
 
-    const { filteredSearchResultItems, searchTerm, selectedItemId, search } = useSearchViewcontroller({
+    const {
+        filteredSearchResultItems,
+        searchTerm,
+        selectedItemId,
+        search,
+        userInput,
+        confirmationDialog,
+        invokeAction,
+        invokeSelectedSearchResultItem,
+    } = useSearchViewcontroller({
         contextBridge,
         searchResultItems,
         excludedSearchResultItemIds,
         favoriteSearchResultItemIds,
     });
 
-    const [confirmationDialogAction, setConfirmationDialogAction] = useState<SearchResultItemAction | undefined>(
-        undefined,
-    );
-
-    const userInputRef = useRef<HTMLInputElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
-
-    const setFocusOnUserInput = () => userInputRef?.current?.focus();
 
     const navigate = useNavigate();
     const openSettings = () => navigate({ pathname: "/settings/general" });
@@ -57,27 +59,6 @@ export const Search = ({
         defaultValue: "invokeSearchResultItem",
         key: "keyboardAndMouse.doubleClickBehavior",
     });
-
-    const invokeSelectedSearchResultItem = async () => {
-        const searchResultItem = filteredSearchResultItems.current();
-
-        if (!searchResultItem || !searchResultItem.defaultAction) {
-            return;
-        }
-
-        await invokeAction(searchResultItem.defaultAction);
-    };
-
-    const invokeAction = async (action: SearchResultItemAction) => {
-        if (!action.requiresConfirmation) {
-            await contextBridge.invokeAction(action);
-            return;
-        }
-
-        // This timeout is a workaround. Without it, for some reason the close button in the confirmation dialog will
-        // trigger an "onClick" event and therefore will be closed immediately.
-        setTimeout(() => setConfirmationDialogAction(action), 100);
-    };
 
     const handleUserInputKeyDownEvent = (keyboardEvent: KeyboardEvent<HTMLElement>) => {
         const eventHandlers: KeyboardEventHandler[] = [
@@ -126,14 +107,14 @@ export const Search = ({
     };
 
     const closeConfirmationDialog = () => {
-        setConfirmationDialogAction(undefined);
-        setFocusOnUserInput();
+        confirmationDialog.action.reset();
+        userInput.focus();
     };
 
     useEffect(() => {
         const setFocusOnUserInputAndSelectText = () => {
-            userInputRef?.current?.focus();
-            userInputRef?.current?.select();
+            userInput.focus();
+            userInput.select();
         };
 
         setFocusOnUserInputAndSelectText();
@@ -164,7 +145,7 @@ export const Search = ({
                 >
                     <Input
                         className="non-draggable-area"
-                        ref={userInputRef}
+                        ref={userInput.ref}
                         appearance={contextBridge.themeShouldUseDarkColors() ? "filled-darker" : "filled-lighter"}
                         size="large"
                         value={searchTerm.value}
@@ -181,7 +162,10 @@ export const Search = ({
                     <ScanIndicator />
                 ) : (
                     <>
-                        <ConfirmationDialog closeDialog={closeConfirmationDialog} action={confirmationDialogAction} />
+                        <ConfirmationDialog
+                            closeDialog={closeConfirmationDialog}
+                            action={confirmationDialog.action.value}
+                        />
                         <SearchResultList
                             containerRef={containerRef}
                             selectedItemId={selectedItemId.value}
@@ -210,7 +194,7 @@ export const Search = ({
                         favorites={favoriteSearchResultItemIds}
                         invokeAction={invokeAction}
                         additionalActionsButtonRef={additionalActionsButtonRef}
-                        onMenuClosed={() => setFocusOnUserInput()}
+                        onMenuClosed={() => userInput.focus()}
                     />
                 </Footer>
             }
