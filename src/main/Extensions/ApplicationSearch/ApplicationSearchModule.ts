@@ -8,7 +8,7 @@ import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";
 import { LaunchDesktopFileActionHandler, LinuxApplicationRepository } from "./Linux";
 import { Settings } from "./Settings";
-import { WindowsApplicationRepository } from "./Windows";
+import { OpenAsAdministrator, WindowsApplicationRepository } from "./Windows";
 import { MacOsApplicationRepository } from "./macOS";
 
 export class ApplicationSearchModule implements ExtensionModule {
@@ -57,7 +57,7 @@ export class ApplicationSearchModule implements ExtensionModule {
                 ),
             ],
             macOS: () => [],
-            Windows: () => [],
+            Windows: () => [new OpenAsAdministrator(dependencyRegistry.get("PowershellUtility"))],
         };
 
         return {

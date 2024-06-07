@@ -12,6 +12,7 @@ export type FluentIcon =
     | "EyeOffRegular"
     | "OpenRegular"
     | "SettingsRegular"
+    | "ShieldPersonRegular"
     | "StarOffRegular"
     | "StarRegular"
     | "ToggleMultipleRegular"
