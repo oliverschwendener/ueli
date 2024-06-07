@@ -3,17 +3,30 @@ import { HistoryRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 
 type SearchHistoryProps = {
-    searchHistory: string[];
+    onItemSelected: (historyItem: string) => void;
     menuIsOpen: boolean;
+    onMenuClosed: () => void;
+    searchHistory: string[];
     setMenuIsOpen: (menuIsOpen: boolean) => void;
-    itemSelected: (historyItem: string) => void;
 };
 
-export const SearchHistory = ({ searchHistory, menuIsOpen, setMenuIsOpen, itemSelected }: SearchHistoryProps) => {
+export const SearchHistory = ({
+    onItemSelected,
+    menuIsOpen,
+    onMenuClosed,
+    searchHistory,
+    setMenuIsOpen,
+}: SearchHistoryProps) => {
     const { t } = useTranslation("search");
 
     return (
-        <Menu open={menuIsOpen} onOpenChange={(_, { open }) => setMenuIsOpen(open)}>
+        <Menu
+            open={menuIsOpen}
+            onOpenChange={(_, { open }) => {
+                setMenuIsOpen(open);
+                !open && onMenuClosed();
+            }}
+        >
             <MenuTrigger>
                 <Tooltip relationship="label" content={t("searchHistory")}>
                     <Button
@@ -29,7 +42,7 @@ export const SearchHistory = ({ searchHistory, menuIsOpen, setMenuIsOpen, itemSe
                     {searchHistory.map((historyItem) => (
                         <MenuItem
                             key={`search-term-history-item[${historyItem}]`}
-                            onFocus={() => itemSelected(historyItem)}
+                            onFocus={() => onItemSelected(historyItem)}
                         >
                             {historyItem}
                         </MenuItem>

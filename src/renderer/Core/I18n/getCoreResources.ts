@@ -48,6 +48,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     autostart: "Start Ueli automatically after you log into the computer",
                     searchHistoryEnabled: "Search History",
                     searchHistoryLimit: "Search History Limit",
+                    searchHistoryLimitHint: "Limits the maximum number of search history items",
                 },
                 "de-CH": {
                     title: "Allgemein",
@@ -60,6 +61,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     autostart: "Ueli automatisch starten, nach Anmelden am Computer",
                     searchHistoryEnabled: "Suchverlauf",
                     searchHistoryLimit: "Suchverlauf Limit",
+                    searchHistoryLimitHint: "Begrenzt die maximale Anzahl an Suchverlaufseinträgen",
                 },
             },
         },

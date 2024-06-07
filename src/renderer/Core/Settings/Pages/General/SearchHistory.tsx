@@ -34,7 +34,7 @@ export const SearchHistory = () => {
             </Section>
             {enabled && (
                 <Section>
-                    <Field label={t("searchHistoryLimit")}>
+                    <Field label={t("searchHistoryLimit")} hint={t("searchHistoryLimitHint")}>
                         <SpinButton
                             type="number"
                             minLength={1}

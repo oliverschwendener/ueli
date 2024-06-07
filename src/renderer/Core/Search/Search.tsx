@@ -168,7 +168,14 @@ export const Search = ({
                         contentBefore={<SearchRegular />}
                         contentAfter={
                             searchHistory.isEnabled() ? (
-                                <SearchHistory {...searchHistory} itemSelected={search} />
+                                <SearchHistory
+                                    {...searchHistory}
+                                    onItemSelected={search}
+                                    onMenuClosed={() => {
+                                        userInput.focus();
+                                        userInput.select();
+                                    }}
+                                />
                             ) : undefined
                         }
                         placeholder={t("placeholder", { ns: "search" })}
