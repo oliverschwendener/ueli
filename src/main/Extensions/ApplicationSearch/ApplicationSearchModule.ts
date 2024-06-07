@@ -50,12 +50,7 @@ export class ApplicationSearchModule implements ExtensionModule {
         };
 
         const actionHandlers: Record<OperatingSystem, () => ActionHandler[]> = {
-            Linux: () => [
-                new LaunchDesktopFileActionHandler(
-                    dependencyRegistry.get("CommandlineUtility"),
-                    dependencyRegistry.get("EnvironmentVariableProvider"),
-                ),
-            ],
+            Linux: () => [new LaunchDesktopFileActionHandler(dependencyRegistry.get("CommandlineUtility"))],
             macOS: () => [],
             Windows: () => [new OpenAsAdministrator(dependencyRegistry.get("PowershellUtility"))],
         };
