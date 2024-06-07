@@ -34,6 +34,7 @@ export class MacOsSystemCommand implements SystemCommand {
                 description: this.description,
                 handlerId: "MacOsSystemCommandActionHandler",
                 requiresConfirmation: this.requiresConfirmation,
+                hideWindowAfterInvocation: true,
             },
             description: this.description,
             id: `SystemCommand[${Buffer.from(`${this.name}${this.appleScript}`).toString("hex")}]`,

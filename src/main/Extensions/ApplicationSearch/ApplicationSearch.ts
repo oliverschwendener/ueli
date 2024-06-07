@@ -2,7 +2,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { Extension } from "@Core/Extension";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
-import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
+import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import type { Settings } from "./Settings";
@@ -69,18 +69,20 @@ export class ApplicationSearch implements Extension {
         };
     }
 
-    public getTranslations(): Translations {
+    public getI18nResources() {
         return {
             "en-US": {
                 extensionName: "Application Search",
                 searchResultItemDescription: "Application",
                 openApplication: "Open application",
+                openApplicatioAsAdministrator: "Open application as administrator",
                 copyFilePathToClipboard: "Copy file path to clipboard",
             },
             "de-CH": {
                 extensionName: "Anwendungssuche",
                 searchResultItemDescription: "Anwendung",
-                openApplication: "Anwendung öffnen",
+                openApplication: "Anwendung starten",
+                openApplicatioAsAdministrator: "Anwendung als Administrator starten",
                 copyFilePathToClipboard: "Dateipfad in Zwischenablage kopieren",
             },
         };

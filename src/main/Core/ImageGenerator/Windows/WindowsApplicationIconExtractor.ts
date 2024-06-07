@@ -86,7 +86,7 @@ export class WindowsApplicationIconExtractor implements FileIconExtractor {
     }
 
     private getPowershellCommand(inFilePath: string, outFilePath: string): string {
-        return `Get-Associated-Icon -InFilePath "${inFilePath}" -OutFilePath "${outFilePath}"`;
+        return `Get-Associated-Icon -InFilePath '${inFilePath}' -OutFilePath '${outFilePath}'`;
     }
 
     private getCacheFilePaths(filePaths: string[]): Record<string, string> {

@@ -1,7 +1,7 @@
 {
     "name": "ueli",
     "description": "Keystroke launcher for Windows, macOS and Linux",
-    "version": "9.0.0-beta.1",
+    "version": "9.0.0-beta.7",
     "license": "MIT",
     "author": {
         "email": "oliver.schwendener@proton.me",
@@ -36,7 +36,7 @@
         "@typescript-eslint/eslint-plugin": "^7.7.0",
         "@typescript-eslint/parser": "^7.7.0",
         "@vitejs/plugin-react": "^4.2.1",
-        "@vitest/coverage-v8": "^1.5.3",
+        "@vitest/coverage-v8": "^1.6.0",
         "electron": "^30.0.1",
         "electron-builder": "^24.13.3",
         "eslint": "^8.56.0",
@@ -47,13 +47,14 @@
         "vite": "^5.2.11",
         "vite-plugin-electron": "^0.28.4",
         "vite-plugin-electron-renderer": "^0.14.5",
-        "vitest": "^1.5.3"
+        "vitest": "^1.6.0"
     },
     "dependencies": {
-        "@fluentui/react-components": "^9.49.0",
-        "@fluentui/react-icons": "^2.0.237",
+        "@fluentui/react-components": "^9.51.0",
+        "@fluentui/react-icons": "^2.0.239",
         "better-sqlite3": "^9.6.0",
         "fuse.js": "^7.0.0",
+        "fuzzysort": "^3.0.1",
         "i18next": "^23.8.1",
         "mathjs": "^12.3.1",
         "mitt": "^3.0.1",

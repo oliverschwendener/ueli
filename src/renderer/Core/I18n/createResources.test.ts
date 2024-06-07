@@ -7,11 +7,11 @@ describe(createResources, () => {
             createResources([
                 {
                     namespace: "general",
-                    translations: { "en-US": { label: "Hello" }, "de-CH": { label: "Hallo" } },
+                    resources: { "en-US": { label: "Hello" }, "de-CH": { label: "Hallo" } },
                 },
                 {
                     namespace: "search",
-                    translations: { "en-US": { label: "Search" }, "fr-FR": { label: "Recherche" } },
+                    resources: { "en-US": { label: "Search" }, "fr-FR": { label: "Recherche" } },
                 },
             ]),
         ).toEqual({

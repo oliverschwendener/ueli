@@ -1,8 +1,8 @@
-import { useContextBridge, useFavorites, useSearchResultItems, useSetting } from "@Core/Hooks";
+import { useContextBridge, useFavorites, useSearchResultItems } from "@Core/Hooks";
 import { Section } from "@Core/Settings/Section";
 import { SectionList } from "@Core/Settings/SectionList";
 import { getImageUrl } from "@Core/getImageUrl";
-import { Badge, Button, Field, Input, SpinButton, Text, Tooltip } from "@fluentui/react-components";
+import { Badge, Button, Field, Input, Text, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 
@@ -13,11 +13,6 @@ export const Favorites = () => {
     const { searchResultItems } = useSearchResultItems();
     const { favorites } = useFavorites();
 
-    const { value: numberOfColumns, updateValue: setNumberOfColumns } = useSetting({
-        key: "favorites.numberOfColumns",
-        defaultValue: 3,
-    });
-
     const removeFavorite = async (id: string) => {
         await contextBridge.removeFavorite(id);
     };
@@ -26,15 +21,6 @@ export const Favorites = () => {
 
     return (
         <SectionList>
-            <Section>
-                <Field label={t("numberOfColumns", { ns })}>
-                    <SpinButton
-                        value={numberOfColumns}
-                        onChange={(_, { value }) => value && setNumberOfColumns(value)}
-                        min={1}
-                    />
-                </Field>
-            </Section>
             <Section>
                 <Field label={t("title", { ns })}>
                     {!favoriteSearchResultItems.length ? <Text italic>You don't have any favorites</Text> : null}

@@ -1,7 +1,7 @@
-import { type SearchResultItem, type SearchResultItemAction } from "@common/Core";
+import type { SearchResultItem } from "@common/Core";
 import { Button, Input } from "@fluentui/react-components";
 import { SearchRegular, SettingsRegular } from "@fluentui/react-icons";
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { BaseLayout } from "../BaseLayout";
@@ -9,46 +9,46 @@ import { Footer } from "../Footer";
 import { useContextBridge, useSetting } from "../Hooks";
 import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
-import { FavoritesList } from "./FavoritesList";
-import { filterSearchResultItemsBySearchTerm } from "./Helpers";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
+import { ScanIndicator } from "./ScanIndicator";
 import { SearchResultList } from "./SearchResultList";
+import { useSearchViewcontroller } from "./SearchViewController";
 
 type SearchProps = {
     searchResultItems: SearchResultItem[];
     excludedSearchResultItemIds: string[];
-    favorites: string[];
+    favoriteSearchResultItemIds: string[];
 };
 
-export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorites }: SearchProps) => {
+export const Search = ({
+    searchResultItems,
+    excludedSearchResultItemIds,
+    favoriteSearchResultItemIds,
+}: SearchProps) => {
     const { t } = useTranslation();
     const { contextBridge } = useContextBridge();
-    const [selectedSearchResultItemIndex, setSelectedSearchResultItemIndex] = useState<number>(0);
-    const [searchTerm, setSearchTerm] = useState<string>("");
-    const [confirmationDialogAction, setConfirmationDialogAction] = useState<SearchResultItemAction | undefined>(
-        undefined,
-    );
-    const [instantSearchResultItems, setInstantSearchResultItems] = useState<SearchResultItem[]>([]);
-    const userInputRef = useRef<HTMLInputElement>(null);
+
+    const {
+        filteredSearchResultItems,
+        searchTerm,
+        selectedItemId,
+        search,
+        userInput,
+        confirmationDialog,
+        invokeAction,
+        invokeSelectedSearchResultItem,
+    } = useSearchViewcontroller({
+        contextBridge,
+        searchResultItems,
+        excludedSearchResultItemIds,
+        favoriteSearchResultItemIds,
+    });
+
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
 
-    const setFocusOnUserInput = () => {
-        userInputRef?.current?.focus();
-    };
-
-    const setFocusOnUserInputAndSelectText = () => {
-        userInputRef?.current?.focus();
-        userInputRef?.current?.select();
-    };
-
     const navigate = useNavigate();
     const openSettings = () => navigate({ pathname: "/settings/general" });
-
-    const search = (updatedSearchTerm: string) => {
-        setSearchTerm(updatedSearchTerm);
-        setInstantSearchResultItems(contextBridge.getInstantSearchResultItems(updatedSearchTerm));
-    };
 
     const { value: singleClickBehavior } = useSetting({
         key: "keyboardAndMouse.singleClickBehavior",
@@ -60,102 +60,41 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
         key: "keyboardAndMouse.doubleClickBehavior",
     });
 
-    const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
-    const { value: maxResultLength } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
-
-    const filteredSearchResultItems = [
-        ...filterSearchResultItemsBySearchTerm({
-            searchResultItems,
-            excludedIds: excludedSearchResultItemIds,
-            searchOptions: { searchTerm, fuzziness, maxResultLength },
-        }),
-        ...instantSearchResultItems,
-    ];
-
-    const selectNextSearchResultItem = () =>
-        setSelectedSearchResultItemIndex(
-            selectedSearchResultItemIndex === filteredSearchResultItems.length - 1
-                ? 0
-                : selectedSearchResultItemIndex + 1,
-        );
-
-    const selectPreviousSearchResultItem = () =>
-        setSelectedSearchResultItemIndex(
-            selectedSearchResultItemIndex === 0
-                ? filteredSearchResultItems.length - 1
-                : selectedSearchResultItemIndex - 1,
-        );
-
-    const selectFirstSearchResultItemItem = () => setSelectedSearchResultItemIndex(0);
-
-    const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
-        filteredSearchResultItems[selectedSearchResultItemIndex];
-
-    const invokeSelectedSearchResultItem = async () => {
-        const searchResultItem = getSelectedSearchResultItem();
-
-        if (!searchResultItem || !searchResultItem.defaultAction) {
-            return;
-        }
-
-        await invokeAction(searchResultItem.defaultAction);
-    };
-
-    const invokeAction = async (action: SearchResultItemAction) => {
-        if (!action.requiresConfirmation) {
-            await contextBridge.invokeAction(action);
-            return;
-        }
-
-        // This timeout is a workaround. Without it, for some reason the close button in the confirmation dialog will
-        // trigger an "onClick" event and therefore will be closed immediately.
-        setTimeout(() => setConfirmationDialogAction(action), 100);
-    };
-
     const handleUserInputKeyDownEvent = (keyboardEvent: KeyboardEvent<HTMLElement>) => {
         const eventHandlers: KeyboardEventHandler[] = [
             {
-                listener: (e) => {
-                    e.preventDefault();
-                    selectPreviousSearchResultItem();
-                },
+                listener: () => contextBridge.ipcRenderer.send("escapePressed"),
+                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Escape",
+            },
+            {
+                listener: () => selectedItemId.previous(),
                 needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowUp",
             },
             {
-                listener: (e) => {
-                    e.preventDefault();
-                    selectNextSearchResultItem();
-                },
-                needsToInvokeListener: (e) => e.key === "ArrowDown",
+                listener: () => selectedItemId.next(),
+                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowDown",
             },
             {
-                listener: (e) => {
-                    e.preventDefault();
-                    additionalActionsButtonRef.current?.click();
-                },
-                needsToInvokeListener: (e) => e.key === "k" && (e.metaKey || e.ctrlKey),
+                listener: () => additionalActionsButtonRef.current?.click(),
+                needsToInvokeListener: (keyboardEvent) =>
+                    keyboardEvent.key === "k" && (keyboardEvent.metaKey || keyboardEvent.ctrlKey),
             },
             {
-                listener: async (e) => {
-                    e.preventDefault();
-                    await invokeSelectedSearchResultItem();
-                },
-                needsToInvokeListener: (e) => e.key === "Enter",
+                listener: async () => await invokeSelectedSearchResultItem(),
+                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Enter",
             },
         ];
 
         for (const eventHandler of eventHandlers) {
             if (eventHandler.needsToInvokeListener(keyboardEvent)) {
-                eventHandler.listener(keyboardEvent);
+                keyboardEvent.preventDefault();
+                eventHandler.listener();
             }
         }
     };
 
     const clickHandlers: Record<string, (s: SearchResultItem) => void> = {
-        selectSearchResultItem: (s) =>
-            setSelectedSearchResultItemIndex(
-                filteredSearchResultItems.findIndex((searchResultItem) => searchResultItem.id === s.id),
-            ),
+        selectSearchResultItem: (s) => selectedItemId.set(s.id),
         invokeSearchResultItem: (s) => invokeAction(s.defaultAction),
     };
 
@@ -168,18 +107,28 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
     };
 
     const closeConfirmationDialog = () => {
-        setConfirmationDialogAction(undefined);
-        setFocusOnUserInput();
+        confirmationDialog.action.reset();
+        userInput.focus();
     };
 
-    const hasSearchTerm = !!searchTerm.length;
-
     useEffect(() => {
+        const setFocusOnUserInputAndSelectText = () => {
+            userInput.focus();
+            userInput.select();
+        };
+
         setFocusOnUserInputAndSelectText();
+
         contextBridge.ipcRenderer.on("windowFocused", () => setFocusOnUserInputAndSelectText());
     }, []);
 
-    useEffect(() => selectFirstSearchResultItemItem(), [searchTerm]);
+    useEffect(() => {
+        search(searchTerm.value, selectedItemId.value);
+    }, [searchResultItems]);
+
+    useEffect(() => {
+        search(searchTerm.value);
+    }, [favoriteSearchResultItemIds, excludedSearchResultItemIds]);
 
     return (
         <BaseLayout
@@ -196,10 +145,10 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
                 >
                     <Input
                         className="non-draggable-area"
-                        ref={userInputRef}
+                        ref={userInput.ref}
                         appearance={contextBridge.themeShouldUseDarkColors() ? "filled-darker" : "filled-lighter"}
                         size="large"
-                        value={searchTerm}
+                        value={searchTerm.value}
                         onChange={(_, { value }) => search(value)}
                         onKeyDown={handleUserInputKeyDownEvent}
                         contentBefore={<SearchRegular />}
@@ -209,22 +158,25 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
             }
             contentRef={containerRef}
             content={
-                <>
-                    <ConfirmationDialog closeDialog={closeConfirmationDialog} action={confirmationDialogAction} />
-                    {hasSearchTerm ? (
+                contextBridge.getScanCount() === 0 ? (
+                    <ScanIndicator />
+                ) : (
+                    <>
+                        <ConfirmationDialog
+                            closeDialog={closeConfirmationDialog}
+                            action={confirmationDialog.action.value}
+                        />
                         <SearchResultList
                             containerRef={containerRef}
-                            selectedItemIndex={selectedSearchResultItemIndex}
-                            searchResultItems={filteredSearchResultItems}
-                            favorites={favorites}
-                            searchTerm={searchTerm}
+                            selectedItemId={selectedItemId.value}
+                            searchResultItems={filteredSearchResultItems.value}
+                            favorites={favoriteSearchResultItemIds}
+                            searchTerm={searchTerm.value}
                             onSearchResultItemClick={handleSearchResultItemClickEvent}
                             onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
                         />
-                    ) : (
-                        <FavoritesList invokeSearchResultItem={({ defaultAction }) => invokeAction(defaultAction)} />
-                    )}
-                </>
+                    </>
+                )
             }
             footer={
                 <Footer draggable>
@@ -238,11 +190,11 @@ export const Search = ({ searchResultItems, excludedSearchResultItemIds, favorit
                         {t("settings", { ns: "general" })}
                     </Button>
                     <ActionsMenu
-                        searchResultItem={getSelectedSearchResultItem()}
-                        favorites={favorites}
+                        searchResultItem={filteredSearchResultItems.current()}
+                        favorites={favoriteSearchResultItemIds}
                         invokeAction={invokeAction}
                         additionalActionsButtonRef={additionalActionsButtonRef}
-                        onMenuClosed={() => setFocusOnUserInput()}
+                        onMenuClosed={() => userInput.focus()}
                     />
                 </Footer>
             }

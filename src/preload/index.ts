@@ -4,6 +4,7 @@ import { contextBridge, ipcRenderer } from "electron";
 const contextBridgeImplementation: ContextBridge = {
     ipcRenderer: {
         on: (channel, listener) => ipcRenderer.on(channel, listener),
+        send: (channel, args) => ipcRenderer.send(channel, args),
     },
 
     autostartIsEnabled: () => ipcRenderer.sendSync("autostartIsEnabled"),
@@ -17,7 +18,7 @@ const contextBridgeImplementation: ContextBridge = {
     getAvailableExtensions: () => ipcRenderer.sendSync("getAvailableExtensions"),
     getEnabledExtensions: () => ipcRenderer.sendSync("getEnabledExtensions"),
     getExtension: (extensionId) => ipcRenderer.sendSync("getExtension", { extensionId }),
-    getExtensionTranslations: () => ipcRenderer.sendSync("getExtensionTranslations"),
+    getExtensionResources: () => ipcRenderer.sendSync("getExtensionResources"),
     getExcludedSearchResultItemIds: () => ipcRenderer.sendSync("getExcludedSearchResultItemIds"),
     getExtensionAssetFilePath: (extensionId, key) =>
         ipcRenderer.sendSync("getExtensionAssetFilePath", { extensionId, key }),
@@ -31,6 +32,7 @@ const contextBridgeImplementation: ContextBridge = {
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
     getSettingValue: (key, defaultValue, isSensitive) =>
         ipcRenderer.sendSync("getSettingValue", { key, defaultValue, isSensitive }),
+    getScanCount: () => ipcRenderer.sendSync("getScanCount"),
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
     invokeExtension: (extensionId, argument) => ipcRenderer.invoke("invokeExtension", { extensionId, argument }),
     openExternal: (url, options) => ipcRenderer.invoke("openExternal", { url, options }),

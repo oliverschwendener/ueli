@@ -3,6 +3,7 @@ import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { Extension } from "@Core/Extension";
 import type { ExtensionInfo } from "@common/Core";
 import { ExtensionManager } from "./ExtensionManager";
+import { ScanCounter } from "./ScanCounter";
 
 const mapExtensionToInfo = (extension: Extension): ExtensionInfo => ({
     id: extension.id,
@@ -21,12 +22,22 @@ export class ExtensionManagerModule {
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const extensionRegistry = dependencyRegistry.get("ExtensionRegistry");
 
-        const extensionManager = new ExtensionManager(extensionRegistry, searchIndex, settingsManager, logger);
+        const scanCounter = new ScanCounter();
 
-        ipcMain.on("getExtensionTranslations", (event) => {
+        const extensionManager = new ExtensionManager(
+            extensionRegistry,
+            searchIndex,
+            settingsManager,
+            logger,
+            scanCounter,
+        );
+
+        ipcMain.on("getScanCount", (event) => (event.returnValue = scanCounter.getScanCount()));
+
+        ipcMain.on("getExtensionResources", (event) => {
             event.returnValue = extensionManager.getSupportedExtensions().map((extension) => ({
                 extensionId: extension.id,
-                translations: extension.getTranslations(),
+                resources: extension.getI18nResources(),
             }));
         });
 
@@ -79,21 +90,21 @@ export class ExtensionManagerModule {
             extensionManager.populateSearchIndexByExtensionId(extensionId),
         );
 
-        eventSubscriber.subscribe("RescanOrchestrator:timeElapsed", async () => {
-            logger.info("Automatic rescan triggered");
-            await extensionManager.populateSearchIndex();
-        });
+        eventSubscriber.subscribe(
+            "RescanOrchestrator:timeElapsed",
+            async () => await extensionManager.populateSearchIndex(),
+        );
 
         eventSubscriber.subscribe("settingUpdated", async ({ key }: { key: string }) => {
-            for (const extension of extensionRegistry.getAll()) {
-                if (
-                    typeof extension.getSettingKeysTriggeringRescan === "function" &&
-                    extension.getSettingKeysTriggeringRescan().includes(key)
-                ) {
-                    searchIndex.removeSearchResultItems(extension.id);
-                    searchIndex.addSearchResultItems(extension.id, await extension.getSearchResultItems());
-                }
-            }
+            const extensionNeedsRescan = (extension: Extension) =>
+                extension.getSettingKeysTriggeringRescan && extension.getSettingKeysTriggeringRescan().includes(key);
+
+            await Promise.allSettled(
+                extensionManager
+                    .getSupportedExtensions()
+                    .filter((extension) => extensionNeedsRescan(extension))
+                    .map((extension) => extensionManager.populateSearchIndexByExtensionId(extension.id)),
+            );
         });
     }
 }

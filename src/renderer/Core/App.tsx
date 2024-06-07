@@ -43,7 +43,7 @@ export const App = () => {
                             <Search
                                 searchResultItems={searchResultItems}
                                 excludedSearchResultItemIds={excludedSearchResultItemIds}
-                                favorites={favorites}
+                                favoriteSearchResultItemIds={favorites}
                             />
                         }
                     />

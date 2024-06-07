@@ -8,5 +8,5 @@ export const getActions = (searchResultItem: SearchResultItem, favorites: string
         SearchResultItemActionUtility.createExcludeFromSearchResultsAction(searchResultItem),
     ];
 
-    return [searchResultItem.defaultAction, ...defaultAdditionalActions, ...(searchResultItem.additionalActions ?? [])];
+    return [searchResultItem.defaultAction, ...(searchResultItem.additionalActions ?? []), ...defaultAdditionalActions];
 };

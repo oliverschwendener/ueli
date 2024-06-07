@@ -29,6 +29,17 @@ export class WindowsApplication implements Application {
                 },
             }),
             additionalActions: [
+                {
+                    argument: this.filePath,
+                    description: "Open application as administrator",
+                    descriptionTranslation: {
+                        key: "openApplicatioAsAdministrator",
+                        namespace: "extension[ApplicationSearch]",
+                    },
+                    fluentIcon: "ShieldPersonRegular",
+                    hideWindowAfterInvocation: true,
+                    handlerId: "WindowsOpenAsAdministrator",
+                },
                 SearchResultItemActionUtility.createShowItemInFileExplorerAction({ filePath: this.filePath }),
                 SearchResultItemActionUtility.createCopyToClipboardAction({
                     textToCopy: this.filePath,

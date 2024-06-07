@@ -2,7 +2,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
-import { getExtensionSettingKey, type Translations } from "@common/Core/Extension";
+import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Net } from "electron";
 
@@ -100,7 +100,7 @@ export class CurrencyConversion implements Extension {
         };
     }
 
-    public getTranslations(): Translations {
+    public getI18nResources() {
         return {
             "en-US": {
                 extensionName: "Currency Conversion",

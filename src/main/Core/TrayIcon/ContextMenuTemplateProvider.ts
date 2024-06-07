@@ -1,17 +1,18 @@
 import type { Translator } from "@Core/Translator";
 import type { UeliCommandInvoker } from "@Core/UeliCommand";
-import type { Translations } from "@common/Core/Extension";
+import type { Resources } from "@common/Core/Translator";
 import type { MenuItemConstructorOptions } from "electron";
+import type { TrayIconTranslations } from "./TrayIconTranslations";
 
 export class ContextMenuTemplateProvider {
     public constructor(
         private readonly translator: Translator,
         private readonly ueliCommandInvoker: UeliCommandInvoker,
-        private readonly translations: Translations,
+        private readonly resources: Resources<TrayIconTranslations>,
     ) {}
 
     public async get(): Promise<MenuItemConstructorOptions[]> {
-        const t = await this.translator.createInstance(this.translations);
+        const { t } = this.translator.createT(this.resources);
 
         return [
             {

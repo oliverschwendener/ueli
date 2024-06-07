@@ -28,6 +28,8 @@ import * as Extensions from "./Extensions";
     dependencyRegistry.register("SystemPreferences", Electron.systemPreferences);
 
     // Core Modules
+    Core.OperatingSystemModule.bootstrap(dependencyRegistry);
+    Core.CommandlineSwitchModule.bootstrap(dependencyRegistry);
     Core.TaskSchedulerModule.bootstrap(dependencyRegistry);
     Core.EnvironmentVariableProviderModule.bootstrap(dependencyRegistry);
     Core.IniFileParserModule.bootstrap(dependencyRegistry);
@@ -46,7 +48,6 @@ import * as Extensions from "./Extensions";
     Core.AppleScriptUtilityModule.bootstrap(dependencyRegistry);
     Core.FileSystemUtilityModule.bootstrap(dependencyRegistry);
     await Core.PowershellUtilityModule.bootstrap(dependencyRegistry);
-    Core.OperatingSystemModule.bootstrap(dependencyRegistry);
     Core.SettingsFileModule.bootstrap(dependencyRegistry);
     Core.SettingsReaderModule.bootstrap(dependencyRegistry);
     Core.SettingsWriterModule.bootstrap(dependencyRegistry);
@@ -63,6 +64,7 @@ import * as Extensions from "./Extensions";
     Core.UeliCommandModule.bootstrap(dependencyRegistry);
     await Core.TrayIconModule.bootstrap(dependencyRegistry);
     Core.DialogModule.bootstrap(dependencyRegistry);
+    Core.TerminalModule.bootstrap(dependencyRegistry);
     Core.ExtensionRegistryModule.bootstrap(dependencyRegistry);
 
     // Extensions

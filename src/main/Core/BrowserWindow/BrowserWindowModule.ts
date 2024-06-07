@@ -4,8 +4,8 @@ import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvi
 import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
-import { OperatingSystem } from "@common/Core";
-import type { App, BrowserWindow } from "electron";
+import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
+import type { BrowserWindow, IpcMain } from "electron";
 import { join } from "path";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 import {
@@ -19,10 +19,9 @@ import {
     defaultWindowSize,
 } from "./BrowserWindowConstructorOptionsProvider";
 import { BrowserWindowCreator } from "./BrowserWindowCreator";
+import { BrowserWindowToggler } from "./BrowserWindowToggler";
 import { WindowBoundsMemory } from "./WindowBoundsMemory";
-import { openAndFocusBrowserWindow } from "./openAndFocusBrowserWindow";
 import { sendToBrowserWindow } from "./sendToBrowserWindow";
-import { toggleBrowserWindow } from "./toggleBrowserWindow";
 
 export class BrowserWindowModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
@@ -32,6 +31,7 @@ export class BrowserWindowModule {
         const eventEmitter = dependencyRegistry.get("EventEmitter");
         const nativeTheme = dependencyRegistry.get("NativeTheme");
         const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
+        const ipcMain = dependencyRegistry.get("IpcMain");
 
         const windowBoundsMemory = new WindowBoundsMemory(dependencyRegistry.get("Screen"), {});
 
@@ -43,7 +43,7 @@ export class BrowserWindowModule {
             appIconFilePathResolver,
         ).get();
 
-        const virancyProvider = new VibrancyProvider(settingsManager);
+        const vibrancyProvider = new VibrancyProvider(settingsManager);
         const backgroundMaterialProvider = new BackgroundMaterialProvider(settingsManager);
 
         const browserWindowConstructorOptionsProviders: Record<
@@ -51,7 +51,7 @@ export class BrowserWindowModule {
             BrowserWindowConstructorOptionsProvider
         > = {
             Linux: new LinuxBrowserWindowConstructorOptionsProvider(defaultBrowserWindowOptions),
-            macOS: new MacOsBrowserWindowConstructorOptionsProvider(defaultBrowserWindowOptions, virancyProvider),
+            macOS: new MacOsBrowserWindowConstructorOptionsProvider(defaultBrowserWindowOptions, vibrancyProvider),
             Windows: new WindowsBrowserWindowConstructorOptionsProvider(
                 defaultBrowserWindowOptions,
                 backgroundMaterialProvider,
@@ -62,11 +62,20 @@ export class BrowserWindowModule {
             browserWindowConstructorOptionsProviders[operatingSystem],
         ).create();
 
+        const browserWindowToggler = new BrowserWindowToggler(
+            operatingSystem,
+            app,
+            browserWindow,
+            defaultWindowSize,
+            settingsManager,
+        );
+
         eventEmitter.emitEvent("browserWindowCreated", { browserWindow });
 
         nativeTheme.addListener("updated", () => browserWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
 
         BrowserWindowModule.registerBrowserWindowEventListeners(
+            browserWindowToggler,
             browserWindow,
             dependencyRegistry.get("SettingsManager"),
             windowBoundsMemory,
@@ -74,47 +83,57 @@ export class BrowserWindowModule {
 
         BrowserWindowModule.registerEvents(
             browserWindow,
-            app,
             dependencyRegistry.get("EventSubscriber"),
             windowBoundsMemory,
-            settingsManager,
-            virancyProvider,
+            vibrancyProvider,
             backgroundMaterialProvider,
+            browserWindowToggler,
+            settingsManager,
+            ipcMain,
         );
 
         await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyRegistry.get("EnvironmentVariableProvider"));
     }
 
     private static registerBrowserWindowEventListeners(
+        browserWindowToggler: BrowserWindowToggler,
         browserWindow: BrowserWindow,
         settingsManager: SettingsManager,
         windowBoundsMemory: WindowBoundsMemory,
     ) {
-        const shouldHideWindowOnBlur = () => settingsManager.getValue("window.hideWindowOnBlur", true);
+        const shouldHideWindowOnBlur = () => settingsManager.getValue("window.hideWindowOn", ["blur"]).includes("blur");
 
-        browserWindow.on("blur", () => shouldHideWindowOnBlur() && browserWindow.hide());
+        browserWindow.on("blur", () => shouldHideWindowOnBlur() && browserWindowToggler.hide());
         browserWindow.on("moved", () => windowBoundsMemory.saveWindowBounds(browserWindow));
         browserWindow.on("resized", () => windowBoundsMemory.saveWindowBounds(browserWindow));
     }
 
     private static registerEvents(
         browserWindow: BrowserWindow,
-        app: App,
         eventSubscriber: EventSubscriber,
         windowBoundsMemory: WindowBoundsMemory,
-        settingsManager: SettingsManager,
         vibrancyProvider: VibrancyProvider,
         backgroundMaterialProvider: BackgroundMaterialProvider,
+        browserWindowToggler: BrowserWindowToggler,
+        settingsManager: SettingsManager,
+        ipcMain: IpcMain,
     ) {
-        eventSubscriber.subscribe("hotkeyPressed", () => {
-            toggleBrowserWindow({
-                app,
-                browserWindow,
-                defaultSize: defaultWindowSize,
-                alwaysCenter: settingsManager.getValue("window.alwaysCenter", false),
-                bounds: windowBoundsMemory.getBoundsNearestToCursor(),
-            });
-        });
+        const shouldHideWindowAfterInvocation = (action: SearchResultItemAction) =>
+            action.hideWindowAfterInvocation &&
+            settingsManager.getValue("window.hideWindowOn", ["blur"]).includes("afterInvocation");
+
+        const shouldHideWindowOnEscapePressed = () =>
+            settingsManager.getValue("window.hideWindowOn", ["blur"]).includes("escapePressed");
+
+        eventSubscriber.subscribe(
+            "actionInvoked",
+            ({ action }: { action: SearchResultItemAction }) =>
+                shouldHideWindowAfterInvocation(action) && browserWindowToggler.hide(),
+        );
+
+        eventSubscriber.subscribe("hotkeyPressed", () =>
+            browserWindowToggler.toggle(windowBoundsMemory.getBoundsNearestToCursor()),
+        );
 
         eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
             sendToBrowserWindow(browserWindow, `settingUpdated[${key}]`, { value });
@@ -133,19 +152,25 @@ export class BrowserWindowModule {
         });
 
         eventSubscriber.subscribe("navigateTo", ({ pathname }: { pathname: string }) => {
-            openAndFocusBrowserWindow(browserWindow);
+            browserWindowToggler.showAndFocus();
             sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
         });
 
-        BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber);
+        ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
+
+        BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber, browserWindowToggler);
     }
 
-    private static registerUeliCommandEvents(browserWindow: BrowserWindow, eventSubscriber: EventSubscriber) {
+    private static registerUeliCommandEvents(
+        browserWindow: BrowserWindow,
+        eventSubscriber: EventSubscriber,
+        browserWindowToggler: BrowserWindowToggler,
+    ) {
         const eventHandlers: { ueliCommands: UeliCommand[]; handler: (argument: unknown) => void }[] = [
             {
                 ueliCommands: ["openAbout", "openExtensions", "openSettings", "show"],
                 handler: ({ pathname }: { pathname: string }) => {
-                    openAndFocusBrowserWindow(browserWindow);
+                    browserWindowToggler.showAndFocus();
                     sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
                 },
             },

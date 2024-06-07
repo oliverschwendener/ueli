@@ -36,7 +36,7 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
     private readonly folderPaths: Record<string, string>;
 
     // The icon extractor needs to be asynchronously initialized, await isReady before performing any icon searches
-    private isReady: Promise<boolean>;
+    private readonly isReady: Promise<boolean>;
     private finishedInit: (value: boolean) => void;
 
     public constructor(

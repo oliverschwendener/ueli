@@ -15,9 +15,9 @@ describe(getActions, () => {
 
         expect(getActions(searchResultItem, [])).toEqual(<SearchResultItemAction[]>[
             { argument: "default action argument", handlerId: "default handler id" },
+            { argument: "additional argument", handlerId: "additional handler id" },
             SearchResultItemActionUtility.createAddToFavoritesAction({ id: searchResultItem.id }),
             SearchResultItemActionUtility.createExcludeFromSearchResultsAction({ id: searchResultItem.id }),
-            { argument: "additional argument", handlerId: "additional handler id" },
         ]);
     });
 

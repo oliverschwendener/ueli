@@ -16,6 +16,7 @@ export class BrowserBookmarksModule implements ExtensionModule {
         const settingsManager = dependencyRegistry.get("SettingsManager");
         const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
         const urlImageGenerator = dependencyRegistry.get("UrlImageGenerator");
+        const translator = dependencyRegistry.get("Translator");
 
         return {
             extension: new BrowserBookmarks(
@@ -48,6 +49,7 @@ export class BrowserBookmarksModule implements ExtensionModule {
                 assetPathResolver,
                 urlImageGenerator,
                 operatingSystem,
+                translator,
             ),
         };
     }

@@ -35,13 +35,8 @@ describe(PowershellUtility, () => {
             removeFile: (filePath) => removeFileMock(filePath),
         };
 
-        const commandlineUtility = <CommandlineUtility>{
-            executeCommand: (command) => executeCommandMock(command),
-        };
-
-        const randomStringProvider = <RandomStringProvider>{
-            getRandomUUid: (byteLength) => getRandomHexStringMock(byteLength),
-        };
+        const commandlineUtility = <CommandlineUtility>{ executeCommand: (command) => executeCommandMock(command) };
+        const randomStringProvider = <RandomStringProvider>{ getRandomUUid: () => getRandomHexStringMock() };
 
         const powershellUtility = new PowershellUtility(
             fileSystemUtility,
@@ -51,7 +46,10 @@ describe(PowershellUtility, () => {
         );
 
         expect(await powershellUtility.executeScript("my script")).toBe("test output");
-        expect(writeTextFileMock).toHaveBeenCalledWith("my script", join("temp", "directory", "randomHexString.ps1"));
+        expect(writeTextFileMock).toHaveBeenCalledWith(
+            "\ufeffmy script",
+            join("temp", "directory", "randomHexString.ps1"),
+        );
         expect(executeCommandMock).toHaveBeenCalledWith(
             `powershell -NoProfile -NonInteractive -ExecutionPolicy bypass -File "${join("temp", "directory", "randomHexString.ps1")}"`,
         );

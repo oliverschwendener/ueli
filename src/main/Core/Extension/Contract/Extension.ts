@@ -1,6 +1,6 @@
 import type { SearchResultItem } from "@common/Core";
-import type { Translations } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
+import type { Resources, Translations } from "@common/Core/Translator";
 
 /**
  * Represents an Extension. Implement this interface to create a custom Extension.
@@ -66,7 +66,7 @@ export interface Extension {
      * extension. You can access these translations in the renderer process with the namespace
      * `extension[<EXTENSION_ID>]`.
      */
-    getTranslations(): Translations;
+    getI18nResources(): Resources<Translations>;
 
     /**
      * Gets the instant search result items for this Extension. The results of this method are displayed immediately in

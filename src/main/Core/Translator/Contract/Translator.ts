@@ -1,15 +1,15 @@
-import type { Translations } from "@common/Core/Extension";
-import type { TFunction } from "i18next";
+import type { Resources, Translations } from "@common/Core/Translator";
 
 /**
  * Offers a method to create a translation function.
  */
 export interface Translator {
     /**
-     * Creates a translation function. This can be used in extensions or modules to translate strings separately from
-     * other extensions modules.
-     * @param translations The translations to use.
-     * @returns A promise which resolves to a translation function.
+     * Creates a translation function. This can be used in extensions or modules to translate strings separately from other parts of the app.
+     * @param resources The resources for the translations.
+     * @returns A translate function
      */
-    createInstance(translations: Translations): Promise<TFunction<"translation", undefined>>;
+    createT<T extends Translations>(
+        resources: Resources<T>,
+    ): { t: (key: keyof T, interpolation?: Record<string, string>) => string };
 }

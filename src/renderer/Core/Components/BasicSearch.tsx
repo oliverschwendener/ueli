@@ -1,6 +1,8 @@
 import { BaseLayout } from "@Core/BaseLayout";
 import { Header } from "@Core/Header";
 import { useContextBridge } from "@Core/Hooks";
+import { getNextSearchResultItemId } from "@Core/Search/Helpers/getNextSearchResultItemId";
+import { getPreviousSearchResultItemId } from "@Core/Search/Helpers/getPreviousSearchResultItemId";
 import { SearchResultList } from "@Core/Search/SearchResultList";
 import type { SearchResultItem } from "@common/Core";
 import { Button, Input, ProgressBar } from "@fluentui/react-components";
@@ -25,21 +27,22 @@ export const BasicSearch = ({
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [selectedItemIndex, setSelectedItemIndex] = useState<number>(0);
+    const [selectedItemId, setSelectedItemId] = useState<string>("");
     const [clearTimeoutValue, setClearTimeoutValue] = useState<NodeJS.Timeout | undefined>(undefined);
     const contentRef = useRef(null);
 
     const [searchResultItems, setSearchResultItems] = useState<SearchResultItem[]>([]);
 
     const selectNextSearchResultItem = () =>
-        setSelectedItemIndex(selectedItemIndex === searchResultItems.length - 1 ? 0 : selectedItemIndex + 1);
+        setSelectedItemId(getNextSearchResultItemId(selectedItemId, searchResultItems));
 
     const selectPreviousSearchResultItem = () =>
-        setSelectedItemIndex(selectedItemIndex === 0 ? searchResultItems.length - 1 : selectedItemIndex - 1);
+        setSelectedItemId(getPreviousSearchResultItemId(selectedItemId, searchResultItems));
 
-    const selectFirstSearchResultItemItem = () => setSelectedItemIndex(0);
+    const selectFirstSearchResultItemItem = () => setSelectedItemId(searchResultItems[0]?.id ?? "");
 
-    const getSelectedSearchResultItem = (): SearchResultItem | undefined => searchResultItems[selectedItemIndex];
+    const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
+        searchResultItems.find((s) => s.id === selectedItemId);
 
     const goBack = () => navigate({ pathname: "/" });
 
@@ -65,8 +68,7 @@ export const BasicSearch = ({
     };
 
     const clickHandlers: Record<string, (s: SearchResultItem) => void> = {
-        selectSearchResultItem: (s) =>
-            setSelectedItemIndex(searchResultItems.findIndex((searchResultItem) => searchResultItem.id === s.id)),
+        selectSearchResultItem: (s) => setSelectedItemId(s.id),
         invokeSearchResultItem: (s) => contextBridge.invokeAction(s.defaultAction),
     };
 
@@ -155,7 +157,7 @@ export const BasicSearch = ({
                         onSearchResultItemDoubleClick={(s) => handleSearchResultItemDoubleClickEvent(s)}
                         searchResultItems={searchResultItems}
                         favorites={[]}
-                        selectedItemIndex={selectedItemIndex}
+                        selectedItemId={selectedItemId}
                         searchTerm={searchTerm}
                     />
                 )

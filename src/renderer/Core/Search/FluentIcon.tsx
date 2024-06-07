@@ -8,9 +8,11 @@ import {
     EyeOffRegular,
     OpenRegular,
     SettingsRegular,
+    ShieldPersonRegular,
     StarOffRegular,
     StarRegular,
     ToggleMultipleRegular,
+    WindowConsoleRegular,
 } from "@fluentui/react-icons";
 import type { ReactElement } from "react";
 
@@ -24,9 +26,11 @@ export const FluentIcon = ({ icon }: { icon: FluentIconString }) => {
         EyeOffRegular: <EyeOffRegular />,
         OpenRegular: <OpenRegular />,
         SettingsRegular: <SettingsRegular />,
+        ShieldPersonRegular: <ShieldPersonRegular />,
         StarOffRegular: <StarOffRegular />,
         StarRegular: <StarRegular />,
         ToggleMultipleRegular: <ToggleMultipleRegular />,
+        WindowConsoleRegular: <WindowConsoleRegular />,
     };
 
     return icons[icon] ?? <>Unknown Icon</>;

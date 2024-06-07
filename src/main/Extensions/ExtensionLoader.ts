@@ -8,11 +8,13 @@ import { CurrencyConversionModule } from "./CurrencyConversion/CurrencyConversio
 import { DeeplTranslatorModule } from "./DeeplTranslator";
 import { ExtensionModule } from "./ExtensionModule";
 import { FileSearchModule } from "./FileSearch/FileSearchModule";
-import { ShortcutsModule } from "./Shortcuts";
 import { SystemCommandsModule } from "./SystemCommands";
 import { SystemSettingsModule } from "./SystemSettings";
+import { TerminalLauncherModule } from "./TerminalLauncher";
 import { UeliCommandModule } from "./UeliCommand";
 import { WebSearchExtensionModule } from "./WebSearch";
+import { WindowsControlPanelModule } from "./WindowsControlPanel";
+import { WorkflowExtensionModule } from "./Workflow";
 
 export class ExtensionLoader {
     private static getAllExtensionModules(): ExtensionModule[] {
@@ -24,11 +26,13 @@ export class ExtensionLoader {
             new CurrencyConversionModule(),
             new DeeplTranslatorModule(),
             new FileSearchModule(),
-            new ShortcutsModule(),
             new SystemCommandsModule(),
             new SystemSettingsModule(),
+            new TerminalLauncherModule(),
             new UeliCommandModule(),
             new WebSearchExtensionModule(),
+            new WindowsControlPanelModule(),
+            new WorkflowExtensionModule(),
         ];
     }
 

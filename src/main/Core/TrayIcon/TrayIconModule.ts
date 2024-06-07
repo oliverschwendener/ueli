@@ -11,7 +11,7 @@ import {
     type TrayIconFilePathResolver,
 } from "./TrayIconFilePathResolver";
 import { TrayIconManager } from "./TrayIconManager";
-import { translations } from "./translations";
+import { resources } from "./resources";
 
 export class TrayIconModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
@@ -31,7 +31,7 @@ export class TrayIconModule {
         const trayIconManager = new TrayIconManager(
             new TrayCreator(),
             trayIconFilePathResolvers[operatingSystem](),
-            new ContextMenuTemplateProvider(translator, ueliCommandInvoker, translations),
+            new ContextMenuTemplateProvider(translator, ueliCommandInvoker, resources),
             new ContextMenuBuilder(),
             nativeTheme,
             eventSubscriber,

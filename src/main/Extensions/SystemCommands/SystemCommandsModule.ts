@@ -2,21 +2,21 @@ import type { ActionHandler } from "@Core/ActionHandler";
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { OperatingSystem } from "@common/Core";
-import type { Translations } from "@common/Core/Extension";
+import type { Resources, Translations } from "@common/Core/Translator";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import type { SystemCommandRepository } from "./SystemCommandRepository";
 import { SystemCommands } from "./SystemCommands";
-import { WindowsSystemCommandRepository, windowsTranslations } from "./Windows";
+import { WindowsSystemCommandRepository, windowsResources } from "./Windows";
 import { WindowsSystemCommandActionHandler } from "./Windows/WindowsSystemCommandActionHandler";
-import { MacOsSystemCommandActionHandler, MacOsSystemCommandRepository, macOsTranslations } from "./macOS";
+import { MacOsSystemCommandActionHandler, MacOsSystemCommandRepository, macOsResources } from "./macOS";
 
 export class SystemCommandsModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
-        const translations: Record<OperatingSystem, Translations> = {
+        const resources: Record<OperatingSystem, Resources<Translations>> = {
             Linux: {}, // not supported,
-            macOS: macOsTranslations,
-            Windows: windowsTranslations,
+            macOS: macOsResources,
+            Windows: windowsResources,
         };
 
         const repositories: Record<OperatingSystem, SystemCommandRepository> = {
@@ -41,7 +41,7 @@ export class SystemCommandsModule implements ExtensionModule {
             extension: new SystemCommands(
                 dependencyRegistry.get("OperatingSystem"),
                 repositories[dependencyRegistry.get("OperatingSystem")],
-                translations[dependencyRegistry.get("OperatingSystem")],
+                resources[dependencyRegistry.get("OperatingSystem")],
                 dependencyRegistry.get("AssetPathResolver"),
             ),
             actionHandlers: actionHandlers[dependencyRegistry.get("OperatingSystem")],

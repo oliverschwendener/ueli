@@ -24,7 +24,7 @@ describe(RescanOrchestrator, () => {
             rescanOrchestrator.scanUntilCancelled();
             rescanOrchestrator.cancel();
 
-            expect(settingsManager.getValue).toHaveBeenCalledWith("searchEngine.rescanIntervalInSeconds", 60);
+            expect(settingsManager.getValue).toHaveBeenCalledWith("searchEngine.rescanIntervalInSeconds", 300);
             expect(eventEmitter.emitEvent).toHaveBeenCalledWith("RescanOrchestrator:timeElapsed");
             expect(taskScheduler.scheduleTask).toHaveBeenCalledWith(expect.any(Function), 20 * 1000);
             expect(taskScheduler.abortTask).toHaveBeenCalledWith(1);
@@ -39,6 +39,16 @@ describe(RescanOrchestrator, () => {
             new RescanOrchestrator(<EventEmitter>{}, <SettingsManager>{}, taskScheduler).cancel();
 
             expect(taskScheduler.abortTask).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("scanOnce", () => {
+        it("should emit the timeElapsed event", () => {
+            const eventEmitter = <EventEmitter>{ emitEvent: vi.fn() };
+
+            new RescanOrchestrator(eventEmitter, <SettingsManager>{}, <TaskScheduler>{}).scanOnce();
+
+            expect(eventEmitter.emitEvent).toHaveBeenCalledWith("RescanOrchestrator:timeElapsed");
         });
     });
 
@@ -59,7 +69,7 @@ describe(RescanOrchestrator, () => {
             new RescanOrchestrator(eventEmitter, settingsManager, taskScheduler).scanUntilCancelled();
 
             expect(eventEmitter.emitEvent).toHaveBeenCalledWith("RescanOrchestrator:timeElapsed");
-            expect(settingsManager.getValue).toHaveBeenCalledWith("searchEngine.rescanIntervalInSeconds", 60);
+            expect(settingsManager.getValue).toHaveBeenCalledWith("searchEngine.rescanIntervalInSeconds", 300);
             expect(taskScheduler.scheduleTask).toHaveBeenCalledWith(expect.any(Function), 40000);
         });
 
@@ -79,8 +89,8 @@ describe(RescanOrchestrator, () => {
             new RescanOrchestrator(eventEmitter, settingsManager, taskScheduler).scanUntilCancelled();
 
             expect(eventEmitter.emitEvent).toHaveBeenCalledWith("RescanOrchestrator:timeElapsed");
-            expect(settingsManager.getValue).toHaveBeenCalledWith("searchEngine.rescanIntervalInSeconds", 60);
-            expect(taskScheduler.scheduleTask).toHaveBeenCalledWith(expect.any(Function), 60000);
+            expect(settingsManager.getValue).toHaveBeenCalledWith("searchEngine.rescanIntervalInSeconds", 300);
+            expect(taskScheduler.scheduleTask).toHaveBeenCalledWith(expect.any(Function), 300000);
         });
     });
 });

@@ -1,6 +1,6 @@
 import type { Size } from "electron";
 
 export const defaultWindowSize: Size = {
-    height: 500,
-    width: 750,
+    height: 400,
+    width: 600,
 };

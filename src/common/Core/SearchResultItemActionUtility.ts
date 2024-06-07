@@ -76,6 +76,7 @@ export class SearchResultItemActionUtility {
             descriptionTranslation,
             handlerId: "OpenFilePath",
             fluentIcon: "OpenRegular",
+            hideWindowAfterInvocation: true,
         };
     }
 
@@ -108,6 +109,7 @@ export class SearchResultItemActionUtility {
             },
             handlerId: "Url",
             fluentIcon: "OpenRegular",
+            hideWindowAfterInvocation: true,
         };
     }
 
@@ -145,6 +147,7 @@ export class SearchResultItemActionUtility {
             },
             handlerId: "ShowItemInFileExplorer",
             fluentIcon: "DocumentFolderRegular",
+            hideWindowAfterInvocation: true,
         };
     }
 }

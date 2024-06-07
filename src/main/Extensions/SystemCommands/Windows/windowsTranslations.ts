@@ -1,6 +1,17 @@
-import type { Translations } from "@common/Core/Extension";
+import type { Resources } from "@common/Core/Translator";
 
-export const windowsTranslations: Translations = {
+export type WindowsTranslations = {
+    extensionName: string;
+    shutdown: string;
+    restart: string;
+    signOut: string;
+    lock: string;
+    sleep: string;
+    hibernate: string;
+    searchResultItemDescription: string;
+};
+
+export const windowsResources: Resources<WindowsTranslations> = {
     "en-US": {
         extensionName: "System Commands",
         shutdown: "Shutdown",
