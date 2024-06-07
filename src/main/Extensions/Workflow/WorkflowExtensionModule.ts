@@ -6,6 +6,7 @@ import type { WorkflowActionHandler } from "./WorkflowActionHandler";
 import {
     ExecuteCommandWorkflowActionHandler,
     OpenFileWorkflowActionHandler,
+    OpenTerminalWorkflowActionHandler,
     OpenUrlWorkflowActionHandler,
 } from "./WorkflowActionHandler";
 import { WorkflowExtension } from "./WorkflowExtension";
@@ -17,6 +18,7 @@ export class WorkflowExtensionModule implements ExtensionModule {
         const workflowActionHandlers: Record<string, WorkflowActionHandler> = {
             OpenFile: new OpenFileWorkflowActionHandler(dependencyRegistry.get("Shell")),
             OpenUrl: new OpenUrlWorkflowActionHandler(dependencyRegistry.get("Shell")),
+            OpenTerminal: new OpenTerminalWorkflowActionHandler(dependencyRegistry.get("TerminalRegistry")),
             ExecuteCommand: new ExecuteCommandWorkflowActionHandler(dependencyRegistry.get("CommandlineUtility")),
         };
 

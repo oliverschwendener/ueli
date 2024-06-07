@@ -1,4 +1,3 @@
-import { useContextBridge } from "@Core/Hooks";
 import type { WorkflowAction } from "@common/Extensions/Workflow";
 import {
     Accordion,
@@ -9,17 +8,26 @@ import {
     Button,
     Dropdown,
     Field,
-    Input,
     Option,
 } from "@fluentui/react-components";
-import { AddRegular, FolderRegular } from "@fluentui/react-icons";
+import { AddRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { NewActionExecuteCommand } from "./NewActionExecuteCommand";
+import { NewActionName } from "./NewActionName";
+import { NewActionOpenFile } from "./NewActionOpenFile";
+import { NewActionOpenTerminal } from "./NewActionOpenTerminal";
+import { NewActionOpenUrl } from "./NewActionOpenUrl";
 
 const generateNewAction = (): WorkflowAction<unknown> => {
     return {
         id: `workflow-action-${crypto.randomUUID()}`,
-        args: { filePath: "", url: "", command: "" },
+        args: {
+            filePath: "",
+            url: "",
+            command: "",
+            terminalId: "Command Prompt",
+        },
         name: "",
         handlerId: "OpenFile",
     };
@@ -30,10 +38,7 @@ type NewActionProps = {
 };
 
 export const NewAction = ({ add }: NewActionProps) => {
-    const ns = "extension[Workflow]";
-    const { t } = useTranslation();
-
-    const { contextBridge } = useContextBridge();
+    const { t } = useTranslation("extension[Workflow]");
 
     const [newAction, setNewAction] = useState<WorkflowAction<unknown>>(generateNewAction());
 
@@ -41,54 +46,16 @@ export const NewAction = ({ add }: NewActionProps) => {
 
     const setNewActionName = (name: string) => setNewAction({ ...newAction, name });
 
-    const setNewActionArgs = (args: string) => {
-        const argsCreators: Record<string, () => unknown> = {
-            OpenFile: () => ({ filePath: args }),
-            OpenUrl: () => ({ url: args }),
-            ExecuteCommand: () => ({ command: args }),
-        };
+    const setNewActionArgs = (args: unknown) => setNewAction({ ...newAction, args });
 
-        setNewAction({ ...newAction, args: argsCreators[newAction.handlerId]() });
-    };
-
-    const selectFile = async () => {
-        const result = await contextBridge.showOpenDialog({ properties: ["openFile"] });
-        if (!result.canceled && result.filePaths.length > 0) {
-            setNewActionArgs(result.filePaths[0]);
-        }
-    };
-
-    const argsFieldContentAfter = () => {
-        if (newAction.handlerId === "OpenFile") {
-            return (
-                <Button
-                    size="small"
-                    icon={<FolderRegular fontSize={14} />}
-                    appearance="subtle"
-                    onClick={() => selectFile()}
-                ></Button>
-            );
-        }
-    };
-
-    const handlerIds = ["OpenFile", "OpenUrl", "ExecuteCommand"];
-
-    const getActionArgs = (action: WorkflowAction<unknown>) => {
-        const extractors: Record<string, () => string> = {
-            OpenFile: () => (action.args as { filePath: string }).filePath,
-            OpenUrl: () => (action.args as { url: string }).url,
-            ExecuteCommand: () => (action.args as { command: string }).command,
-        };
-
-        return extractors[action.handlerId]();
-    };
+    const handlerIds = ["OpenFile", "OpenUrl", "OpenTerminal", "ExecuteCommand"];
 
     return (
         <Accordion collapsible>
             <AccordionItem value="newAction">
                 <AccordionHeader>
                     <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
-                        <Body1Strong>{t("newAction", { ns })}</Body1Strong>
+                        <Body1Strong>{t("newAction")}</Body1Strong>
                     </div>
                 </AccordionHeader>
                 <AccordionPanel>
@@ -99,17 +66,11 @@ export const NewAction = ({ add }: NewActionProps) => {
                             gap: 10,
                         }}
                     >
-                        <Field label={t("actionName", { ns })}>
-                            <Input
-                                value={newAction.name}
-                                onChange={(_, { value }) => setNewActionName(value)}
-                                placeholder={t("actionNamePlaceholder", { ns })}
-                                size="small"
-                            />
-                        </Field>
-                        <Field label={t("type", { ns })}>
+                        <NewActionName name={newAction.name} setName={setNewActionName} />
+
+                        <Field label={t("type")}>
                             <Dropdown
-                                value={t(`type.${newAction.handlerId}`, { ns })}
+                                value={t(`type.${newAction.handlerId}`)}
                                 selectedOptions={[newAction.handlerId]}
                                 onOptionSelect={(_, { optionValue }) =>
                                     optionValue && setNewActionHandlerId(optionValue)
@@ -118,20 +79,28 @@ export const NewAction = ({ add }: NewActionProps) => {
                             >
                                 {handlerIds.map((handlerId) => (
                                     <Option key={handlerId} value={handlerId}>
-                                        {t(`type.${handlerId}`, { ns })}
+                                        {t(`type.${handlerId}`)}
                                     </Option>
                                 ))}
                             </Dropdown>
                         </Field>
-                        <Field label={t(`argType.${newAction.handlerId}`, { ns })}>
-                            <Input
-                                value={getActionArgs(newAction)}
-                                onChange={(_, { value }) => setNewActionArgs(value)}
-                                contentAfter={argsFieldContentAfter()}
-                                placeholder={t(`argType.${newAction.handlerId}.placeholder`, { ns })}
-                                size="small"
-                            />
-                        </Field>
+
+                        {newAction.handlerId === "OpenFile" && (
+                            <NewActionOpenFile args={newAction.args} setArgs={setNewActionArgs} />
+                        )}
+
+                        {newAction.handlerId === "OpenUrl" && (
+                            <NewActionOpenUrl args={newAction.args} setArgs={setNewActionArgs} />
+                        )}
+
+                        {newAction.handlerId === "OpenTerminal" && (
+                            <NewActionOpenTerminal args={newAction.args} setArgs={setNewActionArgs} />
+                        )}
+
+                        {newAction.handlerId === "ExecuteCommand" && (
+                            <NewActionExecuteCommand args={newAction.args} setArgs={setNewActionArgs} />
+                        )}
+
                         <div>
                             <Button
                                 size="small"
@@ -141,7 +110,7 @@ export const NewAction = ({ add }: NewActionProps) => {
                                     setNewAction(generateNewAction());
                                 }}
                             >
-                                {t("addAction", { ns })}
+                                {t("addAction")}
                             </Button>
                         </div>
                     </div>
