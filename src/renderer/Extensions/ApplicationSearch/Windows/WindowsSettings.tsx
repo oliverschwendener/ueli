@@ -1,7 +1,7 @@
 import { useExtensionSetting } from "@Core/Hooks";
 import { Section } from "@Core/Settings/Section";
 import { SectionList } from "@Core/Settings/SectionList";
-import { Field, Switch } from "@fluentui/react-components";
+import { Switch } from "@fluentui/react-components";
 import { FileExtensions } from "./FileExtensions";
 import { Folders } from "./Folders";
 
@@ -20,12 +20,11 @@ export const WindowsSettings = () => {
                 <FileExtensions />
             </Section>
             <Section>
-                <Field label="Include Apps from Windows Store">
-                    <Switch
-                        checked={includeWindowsStoreApps}
-                        onChange={(_, { checked }) => setIncludeWindowsStoreApps(checked)}
-                    />
-                </Field>
+                <Switch
+                    label="Include Apps from Windows Store"
+                    checked={includeWindowsStoreApps}
+                    onChange={(_, { checked }) => setIncludeWindowsStoreApps(checked)}
+                />
             </Section>
         </SectionList>
     );

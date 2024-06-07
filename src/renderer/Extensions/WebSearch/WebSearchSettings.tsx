@@ -2,12 +2,13 @@ import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
 import { Section } from "@Core/Settings/Section";
 import { SectionList } from "@Core/Settings/SectionList";
 import { Dropdown, Field, Option, Switch } from "@fluentui/react-components";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 export const WebSearchSettings = () => {
     const { contextBridge } = useContextBridge();
     const extensionId = "WebSearch";
-    const ns = "extension[WebSearch]";
+
+    const { t } = useTranslation("extension[WebSearch]");
 
     const { value: searchEngine, updateValue: setSearchEngine } = useExtensionSetting<string>({
         extensionId,
@@ -31,7 +32,7 @@ export const WebSearchSettings = () => {
     return (
         <SectionList>
             <Section>
-                <Field label={t("searchEngine", { ns })}>
+                <Field label={t("searchEngine")}>
                     <Dropdown
                         value={searchEngine}
                         selectedOptions={[searchEngine]}
@@ -53,7 +54,7 @@ export const WebSearchSettings = () => {
                 </Field>
             </Section>
             <Section>
-                <Field label={t("locale", { ns })}>
+                <Field label={t("locale")}>
                     <Dropdown
                         value={locales.find((l) => l.locale === locale)?.label}
                         selectedOptions={[locale]}
@@ -68,12 +69,11 @@ export const WebSearchSettings = () => {
                 </Field>
             </Section>
             <Section>
-                <Field label={t("showInstantSearchResult", { ns })}>
-                    <Switch
-                        checked={showInstantSearchResult}
-                        onChange={(_, { checked }) => setShowInstantSearchResult(checked)}
-                    />
-                </Field>
+                <Switch
+                    label={t("showInstantSearchResult")}
+                    checked={showInstantSearchResult}
+                    onChange={(_, { checked }) => setShowInstantSearchResult(checked)}
+                />
             </Section>
         </SectionList>
     );

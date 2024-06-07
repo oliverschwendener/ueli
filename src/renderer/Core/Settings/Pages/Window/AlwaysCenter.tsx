@@ -1,9 +1,9 @@
 import { useSetting } from "@Core/Hooks";
-import { Field, Switch } from "@fluentui/react-components";
+import { Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const AlwaysCenter = () => {
-    const { t } = useTranslation();
+    const { t } = useTranslation("settingsWindow");
 
     const { value: alwaysCenter, updateValue: setAlwaysCenter } = useSetting({
         key: "window.alwaysCenter",
@@ -11,8 +11,10 @@ export const AlwaysCenter = () => {
     });
 
     return (
-        <Field label={t("alwaysCenter", { ns: "settingsWindow" })}>
-            <Switch checked={alwaysCenter} onChange={(_, { checked }) => setAlwaysCenter(checked)} />
-        </Field>
+        <Switch
+            label={t("alwaysCenter")}
+            checked={alwaysCenter}
+            onChange={(_, { checked }) => setAlwaysCenter(checked)}
+        />
     );
 };

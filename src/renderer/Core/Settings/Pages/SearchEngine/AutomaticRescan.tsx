@@ -1,4 +1,4 @@
-import { Field, Switch } from "@fluentui/react-components";
+import { Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 type AutomaticRescanProps = {
@@ -7,15 +7,13 @@ type AutomaticRescanProps = {
 };
 
 export const AutomaticRescan = ({ automaticRescanEnabled, setAutomaticRescanEnabled }: AutomaticRescanProps) => {
-    const ns = "settingsSearchEngine";
-    const { t } = useTranslation();
+    const { t } = useTranslation("settingsSearchEngine");
 
     return (
-        <Field label={t("automaticRescan", { ns })}>
-            <Switch
-                checked={automaticRescanEnabled}
-                onChange={(_, { checked }) => setAutomaticRescanEnabled(checked)}
-            />
-        </Field>
+        <Switch
+            label={t("automaticRescan")}
+            checked={automaticRescanEnabled}
+            onChange={(_, { checked }) => setAutomaticRescanEnabled(checked)}
+        />
     );
 };
