@@ -3,6 +3,7 @@ import { SectionList } from "../../SectionList";
 import { Autostart } from "./Autostart";
 import { HotKey } from "./HotKey";
 import { Language } from "./Language";
+import { SearchHistory } from "./SearchHistory";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 
 export const General = () => {
@@ -20,6 +21,7 @@ export const General = () => {
             <Section>
                 <UrlImageGenerator />
             </Section>
+            <SearchHistory />
         </SectionList>
     );
 };

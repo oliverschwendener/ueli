@@ -6,11 +6,13 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { BaseLayout } from "../BaseLayout";
 import { Footer } from "../Footer";
-import { useContextBridge, useSetting } from "../Hooks";
+import { useContextBridge } from "../Hooks";
 import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
 import { ScanIndicator } from "./ScanIndicator";
+import { SearchHistory } from "./SearchHistory";
+import { useSearchHistoryController } from "./SearchHistoryController";
 import { SearchResultList } from "./SearchResultList";
 import { useSearchViewcontroller } from "./SearchViewController";
 
@@ -44,21 +46,23 @@ export const Search = ({
         favoriteSearchResultItemIds,
     });
 
+    const searchHistory = useSearchHistoryController({ contextBridge });
+
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
 
     const navigate = useNavigate();
     const openSettings = () => navigate({ pathname: "/settings/general" });
 
-    const { value: singleClickBehavior } = useSetting({
-        key: "keyboardAndMouse.singleClickBehavior",
-        defaultValue: "selectSearchResultItem",
-    });
+    const singleClickBehavior = contextBridge.getSettingValue(
+        "keyboardAndMouse.singleClickBehavior",
+        "selectSearchResultItem",
+    );
 
-    const { value: doubleClickBehavior } = useSetting({
-        defaultValue: "invokeSearchResultItem",
-        key: "keyboardAndMouse.doubleClickBehavior",
-    });
+    const doubleClickBehavior = contextBridge.getSettingValue(
+        "invokeSearchResultItem",
+        "keyboardAndMouse.doubleClickBehavior",
+    );
 
     const handleUserInputKeyDownEvent = (keyboardEvent: KeyboardEvent<HTMLElement>) => {
         const eventHandlers: KeyboardEventHandler[] = [
@@ -80,7 +84,10 @@ export const Search = ({
                     keyboardEvent.key === "k" && (keyboardEvent.metaKey || keyboardEvent.ctrlKey),
             },
             {
-                listener: async () => await invokeSelectedSearchResultItem(),
+                listener: async () => {
+                    searchHistory.add(searchTerm.value);
+                    await invokeSelectedSearchResultItem();
+                },
                 needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Enter",
             },
         ];
@@ -119,14 +126,21 @@ export const Search = ({
 
         setFocusOnUserInputAndSelectText();
 
-        contextBridge.ipcRenderer.on("windowFocused", () => setFocusOnUserInputAndSelectText());
+        searchHistory.closeMenu();
+
+        contextBridge.ipcRenderer.on("windowFocused", () => {
+            setFocusOnUserInputAndSelectText();
+            searchHistory.closeMenu();
+        });
     }, []);
 
     useEffect(() => {
+        searchHistory.closeMenu();
         search(searchTerm.value, selectedItemId.value);
     }, [searchResultItems]);
 
     useEffect(() => {
+        searchHistory.closeMenu();
         search(searchTerm.value);
     }, [favoriteSearchResultItemIds, excludedSearchResultItemIds]);
 
@@ -152,6 +166,11 @@ export const Search = ({
                         onChange={(_, { value }) => search(value)}
                         onKeyDown={handleUserInputKeyDownEvent}
                         contentBefore={<SearchRegular />}
+                        contentAfter={
+                            searchHistory.isEnabled() ? (
+                                <SearchHistory {...searchHistory} itemSelected={search} />
+                            ) : undefined
+                        }
                         placeholder={t("placeholder", { ns: "search" })}
                     />
                 </div>
