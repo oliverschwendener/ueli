@@ -32,6 +32,7 @@ export const Vibrancy = () => {
         <Field label="Vibrancy">
             <Dropdown
                 value={vibrancy}
+                selectedOptions={[vibrancy]}
                 onOptionSelect={(_, { optionValue }) => optionValue && setVibrancy(optionValue)}
                 listbox={{ ref: scrollRef, style: { maxHeight: 145 } }}
             >

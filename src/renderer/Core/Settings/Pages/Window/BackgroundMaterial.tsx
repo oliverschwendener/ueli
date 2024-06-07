@@ -13,6 +13,7 @@ export const BackgroundMaterial = ({ backgroundMaterial, setBackgroundMaterial }
             <Dropdown
                 value={backgroundMaterial}
                 onOptionSelect={(_, { optionValue }) => optionValue && setBackgroundMaterial(optionValue)}
+                selectedOptions={[backgroundMaterial]}
             >
                 {backgroundMaterialOptions.map((b) => (
                     <Option key={`background-material-option-${b}`} value={b}>
