@@ -4,8 +4,7 @@ import { Field, SpinButton, Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const SearchHistory = () => {
-    const ns = "settingsGeneral";
-    const { t } = useTranslation();
+    const { t } = useTranslation("settingsGeneral");
 
     const { value: enabled, updateValue: setEnabled } = useSetting({
         key: "general.searchHistory.enabled",
@@ -23,7 +22,7 @@ export const SearchHistory = () => {
         <>
             <Section>
                 <Switch
-                    label={t("searchHistoryEnabled", { ns })}
+                    label={t("searchHistoryEnabled")}
                     checked={enabled}
                     onChange={(_, { checked }) => {
                         setEnabled(checked);
@@ -35,7 +34,7 @@ export const SearchHistory = () => {
             </Section>
             {enabled && (
                 <Section>
-                    <Field>
+                    <Field label={t("searchHistoryLimit")}>
                         <SpinButton
                             type="number"
                             minLength={1}
