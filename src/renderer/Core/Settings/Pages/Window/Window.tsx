@@ -28,10 +28,10 @@ export const Window = () => {
                 <ShowOnStartup />
             </Section>
             <Section>
-                <HideWindowOn />
+                <AlwaysCenter />
             </Section>
             <Section>
-                <AlwaysCenter />
+                <HideWindowOn />
             </Section>
 
             {operatingSystem === "Windows" ? (
