@@ -1,15 +1,9 @@
 import { useContextBridge } from "@Core/Hooks";
-import { OperatingSystem } from "@common/Core";
 import type { OpenTerminalActionArgs } from "@common/Extensions/Workflow";
 import { Dropdown, Field, Input, Option } from "@fluentui/react-components";
 import type { NewActionTypeProps } from "./NewActionTypeProps";
 
 export const NewActionOpenTerminal = ({ args, setArgs }: NewActionTypeProps) => {
-    console.log({
-        m: "render",
-        args,
-    });
-
     const { contextBridge } = useContextBridge();
 
     const { terminalId, command } = args as OpenTerminalActionArgs;
@@ -18,31 +12,34 @@ export const NewActionOpenTerminal = ({ args, setArgs }: NewActionTypeProps) => 
 
     const setCommand = (newCommand: string) => setArgs({ terminalId, command: newCommand });
 
-    const terminalIds: Record<OperatingSystem, string[]> = {
-        Linux: [],
-        macOS: ["Terminal", "iTerm"],
-        Windows: ["Command Prompt", "PowerShell", "Windows Terminal"],
-    };
+    const defaultTerminalId = contextBridge.getAvailableTerminals()[0]?.id;
 
     return (
         <>
             <Field label="Terminal">
                 <Dropdown
-                    selectedOptions={[terminalId]}
+                    selectedOptions={[terminalId || defaultTerminalId]}
                     value={terminalId}
                     placeholder="Select a terminal"
                     onOptionSelect={(_, { optionValue }) => optionValue && setTerminalId(optionValue)}
                     disabled={!terminalId}
+                    size="small"
                 >
-                    {terminalIds[contextBridge.getOperatingSystem()].map((terminalId) => (
-                        <Option key={terminalId} value={terminalId}>
-                            {terminalId}
+                    {contextBridge.getAvailableTerminals().map(({ id, name, assetFilePath }) => (
+                        <Option key={id} value={id} text={name}>
+                            <img src={`file://${assetFilePath}`} alt={name} width={16} />
+                            <span>{name}</span>
                         </Option>
                     ))}
                 </Dropdown>
             </Field>
             <Field label="Command">
-                <Input value={command} onChange={(_, { value }) => setCommand(value)} placeholder="Enter a command" />
+                <Input
+                    value={command}
+                    onChange={(_, { value }) => setCommand(value)}
+                    placeholder="Enter a command"
+                    size="small"
+                />
             </Field>
         </>
     );

@@ -4,6 +4,7 @@ import type { ExtensionInfo } from "./ExtensionInfo";
 import type { OperatingSystem } from "./OperatingSystem";
 import type { SearchResultItem } from "./SearchResultItem";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
+import { Terminal } from "./Terminal";
 import type { Resources, Translations } from "./Translator";
 
 /**
@@ -23,6 +24,7 @@ export type ContextBridge = {
     fileExists: (filePath: string) => boolean;
     getAboutUeli: () => AboutUeli;
     getAvailableExtensions: () => ExtensionInfo[];
+    getAvailableTerminals: () => Terminal[];
     getEnabledExtensions: () => ExtensionInfo[];
     getExtension: (extensionId: string) => ExtensionInfo;
     getExtensionResources: <T extends Translations>() => { extensionId: string; resources: Resources<T> }[];

@@ -52,7 +52,7 @@ export class TerminalLauncherExtension implements Extension {
 
     public getImage(): Image {
         return {
-            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "windows-terminal.png")}`,
+            url: `file://${this.assetPathResolver.getModuleAssetPath("Terminal", "windows-terminal.png")}`,
         };
     }
 
@@ -117,8 +117,8 @@ export class TerminalLauncherExtension implements Extension {
     }
 
     public getAssetFilePath(terminalId: string): string {
-        return this.assetPathResolver.getExtensionAssetPath(
-            this.id,
+        return this.assetPathResolver.getModuleAssetPath(
+            "Terminal",
             this.terminalRegistry.getById(terminalId).getAssetFileName(),
         );
     }

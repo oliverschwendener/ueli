@@ -16,6 +16,7 @@ const contextBridgeImplementation: ContextBridge = {
     fileExists: (filePath: string) => ipcRenderer.sendSync("fileExists", { filePath }),
     getAboutUeli: () => ipcRenderer.sendSync("getAboutUeli"),
     getAvailableExtensions: () => ipcRenderer.sendSync("getAvailableExtensions"),
+    getAvailableTerminals: () => ipcRenderer.sendSync("getAvailableTerminals"),
     getEnabledExtensions: () => ipcRenderer.sendSync("getEnabledExtensions"),
     getExtension: (extensionId) => ipcRenderer.sendSync("getExtension", { extensionId }),
     getExtensionResources: () => ipcRenderer.sendSync("getExtensionResources"),
