@@ -1,10 +1,12 @@
 import { useContextBridge } from "@Core/Hooks";
 import type { OpenTerminalActionArgs } from "@common/Extensions/Workflow";
 import { Dropdown, Field, Input, Option } from "@fluentui/react-components";
+import { useTranslation } from "react-i18next";
 import type { NewActionTypeProps } from "./NewActionTypeProps";
 
 export const NewActionOpenTerminal = ({ args, setArgs }: NewActionTypeProps) => {
     const { contextBridge } = useContextBridge();
+    const { t } = useTranslation("extension[Workflow]");
 
     const { terminalId, command } = args as OpenTerminalActionArgs;
 
@@ -20,7 +22,7 @@ export const NewActionOpenTerminal = ({ args, setArgs }: NewActionTypeProps) => 
                 <Dropdown
                     selectedOptions={[terminalId || defaultTerminalId]}
                     value={terminalId}
-                    placeholder="Select a terminal"
+                    placeholder={t("argType.OpenTerminal.terminal.placeholder")}
                     onOptionSelect={(_, { optionValue }) => optionValue && setTerminalId(optionValue)}
                     disabled={!terminalId}
                     size="small"
@@ -33,11 +35,11 @@ export const NewActionOpenTerminal = ({ args, setArgs }: NewActionTypeProps) => 
                     ))}
                 </Dropdown>
             </Field>
-            <Field label="Command">
+            <Field label={t("argType.OpenTerminal.command")}>
                 <Input
                     value={command}
                     onChange={(_, { value }) => setCommand(value)}
-                    placeholder="Enter a command"
+                    placeholder={t("argType.OpenTerminal.command.placeholder")}
                     size="small"
                 />
             </Field>

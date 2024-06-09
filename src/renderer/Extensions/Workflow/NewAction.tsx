@@ -1,3 +1,4 @@
+import { OperatingSystem } from "@common/Core";
 import type { WorkflowAction } from "@common/Extensions/Workflow";
 import {
     Accordion,
@@ -19,6 +20,12 @@ import { NewActionOpenFile } from "./NewActionOpenFile";
 import { NewActionOpenTerminal } from "./NewActionOpenTerminal";
 import { NewActionOpenUrl } from "./NewActionOpenUrl";
 
+const defaultTerminalIds: Record<OperatingSystem, string> = {
+    Linux: "",
+    macOS: "Terminal",
+    Windows: "Command Prompt",
+};
+
 const generateNewAction = (): WorkflowAction<unknown> => {
     return {
         id: `workflow-action-${crypto.randomUUID()}`,
@@ -26,7 +33,7 @@ const generateNewAction = (): WorkflowAction<unknown> => {
             filePath: "",
             url: "",
             command: "",
-            terminalId: "Command Prompt",
+            terminalId: defaultTerminalIds[window.ContextBridge.getOperatingSystem()],
         },
         name: "",
         handlerId: "OpenFile",
