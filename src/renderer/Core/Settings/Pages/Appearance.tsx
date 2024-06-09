@@ -80,7 +80,10 @@ export const Appearance = () => {
                         </Dropdown>
                     }
                 />
-                {themeName === "Custom" && (
+            </SettingGroup>
+
+            {themeName === "Custom" && (
+                <SettingGroup title="Custom colors">
                     <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
                         <div style={{ width: "50%", display: "flex", flexDirection: "column", gap: 5 }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
@@ -155,8 +158,8 @@ export const Appearance = () => {
                             ))}
                         </div>
                     </div>
-                )}
-            </SettingGroup>
+                </SettingGroup>
+            )}
         </SettingGroupList>
     );
 };
