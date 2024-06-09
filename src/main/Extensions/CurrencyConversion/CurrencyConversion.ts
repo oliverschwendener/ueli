@@ -138,7 +138,7 @@ export class CurrencyConversion implements Extension {
 
     private async setRate(currency: string): Promise<void> {
         const response = await this.net.fetch(
-            `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${currency}.json`,
+            `https://cdn.jsdelivr.net/npm/@fawazahmed0/exchange-api@latest/v1/currencies/${currency}.json`,
         );
 
         const responseJson = await response.json();
