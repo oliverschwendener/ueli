@@ -1,4 +1,4 @@
-import { OperatingSystem } from "@common/Core";
+import type { OperatingSystem } from "@common/Core";
 import type { WorkflowAction } from "@common/Extensions/Workflow";
 import {
     Accordion,
