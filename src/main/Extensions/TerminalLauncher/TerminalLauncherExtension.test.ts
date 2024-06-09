@@ -68,18 +68,16 @@ describe(TerminalLauncherExtension, () => {
     describe(TerminalLauncherExtension.prototype.getImage, () => {
         it("should return the image URL", () => {
             const assetPathResolver = <AssetPathResolver>{
-                getExtensionAssetPath: vi.fn().mockReturnValue("path/to/image"),
-                getModuleAssetPath: vi.fn(),
+                getExtensionAssetPath: vi.fn(),
+                getModuleAssetPath: vi.fn().mockReturnValue("path/to/image"),
             };
 
-            const extension = new TerminalLauncherExtension(null, assetPathResolver, null, null, null);
+            const actual = new TerminalLauncherExtension(null, assetPathResolver, null, null, null).getImage();
 
-            expect(extension.getImage()).toEqual({ url: "file://path/to/image" });
+            expect(actual).toEqual({ url: "file://path/to/image" });
 
-            expect(assetPathResolver.getExtensionAssetPath).toHaveBeenCalledWith(
-                "TerminalLauncher",
-                "windows-terminal.png",
-            );
+            expect(assetPathResolver.getModuleAssetPath).toHaveBeenCalledOnce();
+            expect(assetPathResolver.getModuleAssetPath).toHaveBeenCalledWith("Terminal", "windows-terminal.png");
         });
     });
 

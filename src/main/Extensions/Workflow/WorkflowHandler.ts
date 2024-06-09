@@ -23,7 +23,7 @@ export class WorkflowHandler implements ActionHandler {
 
         for (const promiseResult of promiseResults) {
             if (promiseResult.status === "rejected") {
-                this.logger.error(`Error occured while invoking workflow action: ${promiseResult.reason}`);
+                this.logger.error(`Unable to invoke workflow action. Reason: ${promiseResult.reason}`);
             }
         }
     }

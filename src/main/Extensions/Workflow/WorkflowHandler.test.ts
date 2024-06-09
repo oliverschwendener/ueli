@@ -39,7 +39,7 @@ describe(WorkflowHandler, () => {
             expect(handler4.invokeWorkflowAction).not.toHaveBeenCalled();
 
             expect(errorMock).toHaveBeenCalledOnce();
-            expect(errorMock).toHaveBeenCalledWith("Error occured while invoking workflow action: error");
+            expect(errorMock).toHaveBeenCalledWith("Unable to invoke workflow action. Reason: error");
         });
     });
 });
