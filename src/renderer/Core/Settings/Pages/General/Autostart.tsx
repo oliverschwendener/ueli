@@ -1,4 +1,5 @@
 import { useContextBridge } from "@Core/Hooks";
+import { Setting } from "@Core/Settings/Setting";
 import { Switch } from "@fluentui/react-components";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -15,10 +16,12 @@ export const Autostart = () => {
     };
 
     return (
-        <Switch
+        <Setting
             label={t("autostart")}
-            checked={autostartIsEnabled}
-            onChange={(_, { checked }) => updateAutostartSettings(checked)}
+            description={t("autostartDescription")}
+            control={
+                <Switch checked={autostartIsEnabled} onChange={(_, { checked }) => updateAutostartSettings(checked)} />
+            }
         />
     );
 };

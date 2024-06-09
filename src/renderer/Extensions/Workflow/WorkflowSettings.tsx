@@ -1,6 +1,6 @@
 import { useExtensionSetting } from "@Core/Hooks";
-import { Section } from "@Core/Settings/Section";
-import { SectionList } from "@Core/Settings/SectionList";
+import { SettingGroup } from "@Core/Settings/SettingGroup";
+import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import type { Workflow } from "@common/Extensions/Workflow";
 import {
     Body1Strong,
@@ -42,8 +42,8 @@ export const WorkflowSettings = () => {
     };
 
     return (
-        <SectionList>
-            <Section>
+        <SettingGroupList>
+            <SettingGroup title={t("newWorkflow", { ns })}>
                 <EditWorkflow
                     save={addWorkflow}
                     trigger={
@@ -52,8 +52,8 @@ export const WorkflowSettings = () => {
                         </div>
                     }
                 />
-            </Section>
-            <Section>
+            </SettingGroup>
+            <SettingGroup>
                 <Table>
                     <TableHeader>
                         <TableRow>
@@ -71,7 +71,14 @@ export const WorkflowSettings = () => {
                                         </Caption1>
                                     </TableCellLayout>
                                     <TableCellActions>
-                                        <div style={{ display: "flex", flexDirection: "row", gap: 5, marginRight: 10 }}>
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                gap: 5,
+                                                marginRight: 10,
+                                            }}
+                                        >
                                             <EditWorkflow
                                                 workflow={workflow}
                                                 save={updateWorkflow}
@@ -99,7 +106,7 @@ export const WorkflowSettings = () => {
                         ))}
                     </TableBody>
                 </Table>
-            </Section>
-        </SectionList>
+            </SettingGroup>
+        </SettingGroupList>
     );
 };

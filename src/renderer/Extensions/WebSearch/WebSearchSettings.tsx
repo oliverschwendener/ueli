@@ -1,7 +1,8 @@
 import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
-import { Section } from "@Core/Settings/Section";
-import { SectionList } from "@Core/Settings/SectionList";
-import { Dropdown, Field, Option, Switch } from "@fluentui/react-components";
+import { Setting } from "@Core/Settings/Setting";
+import { SettingGroup } from "@Core/Settings/SettingGroup";
+import { SettingGroupList } from "@Core/Settings/SettingGroupList";
+import { Dropdown, Option, Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const WebSearchSettings = () => {
@@ -30,51 +31,59 @@ export const WebSearchSettings = () => {
     ];
 
     return (
-        <SectionList>
-            <Section>
-                <Field label={t("searchEngine")}>
-                    <Dropdown
-                        value={searchEngine}
-                        selectedOptions={[searchEngine]}
-                        onOptionSelect={(_, { optionValue }) => optionValue && setSearchEngine(optionValue)}
-                    >
-                        {searchEngines.map((searchEngine) => (
-                            <Option key={searchEngine} value={searchEngine} text={searchEngine}>
-                                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
-                                    <img
-                                        style={{ width: 16, height: 16 }}
-                                        alt={searchEngine}
-                                        src={`file://${contextBridge.getExtensionAssetFilePath("WebSearch", searchEngine)}`}
-                                    />
-                                    {searchEngine}
-                                </div>
-                            </Option>
-                        ))}
-                    </Dropdown>
-                </Field>
-            </Section>
-            <Section>
-                <Field label={t("locale")}>
-                    <Dropdown
-                        value={locales.find((l) => l.locale === locale)?.label}
-                        selectedOptions={[locale]}
-                        onOptionSelect={(_, { optionValue }) => optionValue && setLocale(optionValue)}
-                    >
-                        {locales.map(({ label, locale }) => (
-                            <Option key={locale} value={locale}>
-                                {label}
-                            </Option>
-                        ))}
-                    </Dropdown>
-                </Field>
-            </Section>
-            <Section>
-                <Switch
-                    label={t("showInstantSearchResult")}
-                    checked={showInstantSearchResult}
-                    onChange={(_, { checked }) => setShowInstantSearchResult(checked)}
+        <SettingGroupList>
+            <SettingGroup title={t("extensionName")}>
+                <Setting
+                    label={t("searchEngine")}
+                    control={
+                        <Dropdown
+                            value={searchEngine}
+                            selectedOptions={[searchEngine]}
+                            onOptionSelect={(_, { optionValue }) => optionValue && setSearchEngine(optionValue)}
+                        >
+                            {searchEngines.map((searchEngine) => (
+                                <Option key={searchEngine} value={searchEngine} text={searchEngine}>
+                                    <div
+                                        style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}
+                                    >
+                                        <img
+                                            style={{ width: 16, height: 16 }}
+                                            alt={searchEngine}
+                                            src={`file://${contextBridge.getExtensionAssetFilePath("WebSearch", searchEngine)}`}
+                                        />
+                                        {searchEngine}
+                                    </div>
+                                </Option>
+                            ))}
+                        </Dropdown>
+                    }
                 />
-            </Section>
-        </SectionList>
+                <Setting
+                    label={t("locale")}
+                    control={
+                        <Dropdown
+                            value={locales.find((l) => l.locale === locale)?.label}
+                            selectedOptions={[locale]}
+                            onOptionSelect={(_, { optionValue }) => optionValue && setLocale(optionValue)}
+                        >
+                            {locales.map(({ label, locale }) => (
+                                <Option key={locale} value={locale}>
+                                    {label}
+                                </Option>
+                            ))}
+                        </Dropdown>
+                    }
+                />
+                <Setting
+                    label={t("showInstantSearchResult")}
+                    control={
+                        <Switch
+                            checked={showInstantSearchResult}
+                            onChange={(_, { checked }) => setShowInstantSearchResult(checked)}
+                        />
+                    }
+                />
+            </SettingGroup>
+        </SettingGroupList>
     );
 };

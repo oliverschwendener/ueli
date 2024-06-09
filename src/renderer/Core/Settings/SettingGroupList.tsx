@@ -4,13 +4,13 @@ type SectionListProps = {
     children?: ReactNode;
 };
 
-export const SectionList = ({ children }: SectionListProps) => {
+export const SettingGroupList = ({ children }: SectionListProps) => {
     return (
         <div
             style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: 20,
+                gap: 40,
             }}
         >
             {children}

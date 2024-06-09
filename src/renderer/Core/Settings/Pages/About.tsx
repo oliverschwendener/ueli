@@ -1,6 +1,7 @@
 import { useContextBridge } from "../../Hooks";
-import { Section } from "../Section";
-import { SectionList } from "../SectionList";
+import { Setting } from "../Setting";
+import { SettingGroup } from "../SettingGroup";
+import { SettingGroupList } from "../SettingGroupList";
 
 export const About = () => {
     const { contextBridge } = useContextBridge();
@@ -8,19 +9,13 @@ export const About = () => {
     const { electronVersion, nodeJsVersion, v8Version, version } = contextBridge.getAboutUeli();
 
     return (
-        <SectionList>
-            <Section>
-                <label id="ueliVersion">Ueli: {version}</label>
-            </Section>
-            <Section>
-                <label id="electronVersion">Electron: {electronVersion}</label>
-            </Section>
-            <Section>
-                <label id="electronVersion">V8: {v8Version}</label>
-            </Section>
-            <Section>
-                <label id="electronVersion">NodeJS: {nodeJsVersion}</label>
-            </Section>
-        </SectionList>
+        <SettingGroupList>
+            <SettingGroup title="Versions">
+                <Setting label="Ueli" control={<>{version}</>} />
+                <Setting label="Electron" control={<>{electronVersion}</>} />
+                <Setting label="Node.js" control={<>{nodeJsVersion}</>} />
+                <Setting label="V8" control={<>{v8Version}</>} />
+            </SettingGroup>
+        </SettingGroupList>
     );
 };

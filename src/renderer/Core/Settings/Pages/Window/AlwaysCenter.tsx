@@ -1,4 +1,5 @@
 import { useSetting } from "@Core/Hooks";
+import { Setting } from "@Core/Settings/Setting";
 import { Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
@@ -11,10 +12,9 @@ export const AlwaysCenter = () => {
     });
 
     return (
-        <Switch
+        <Setting
             label={t("alwaysCenter")}
-            checked={alwaysCenter}
-            onChange={(_, { checked }) => setAlwaysCenter(checked)}
+            control={<Switch checked={alwaysCenter} onChange={(_, { checked }) => setAlwaysCenter(checked)} />}
         />
     );
 };

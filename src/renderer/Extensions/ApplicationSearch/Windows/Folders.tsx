@@ -1,5 +1,5 @@
 import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
-import { Button, Field, Input, Tooltip } from "@fluentui/react-components";
+import { Button, Input, Tooltip } from "@fluentui/react-components";
 import { AddRegular, DismissRegular, FolderRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 
@@ -30,50 +30,48 @@ export const Folders = () => {
     };
 
     return (
-        <Field label="Folders">
-            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                {folders.map((folder) => (
-                    <Input
-                        readOnly
-                        value={folder}
-                        contentAfter={
-                            <Tooltip content="Remove" relationship="label">
-                                <Button
-                                    size="small"
-                                    appearance="subtle"
-                                    icon={<DismissRegular />}
-                                    onClick={() => removeFolder(folder)}
-                                />
-                            </Tooltip>
-                        }
-                    />
-                ))}
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+            {folders.map((folder) => (
                 <Input
-                    value={newFolder}
-                    placeholder="Add another folder"
-                    onChange={(_, { value }) => setNewFolder(value)}
+                    readOnly
+                    value={folder}
                     contentAfter={
-                        <>
-                            <Tooltip content="Choose folder" relationship="label">
-                                <Button
-                                    appearance="subtle"
-                                    size="small"
-                                    icon={<FolderRegular />}
-                                    onClick={() => chooseFolder()}
-                                />
-                            </Tooltip>
-                            <Tooltip content="Add" relationship="label">
-                                <Button
-                                    appearance="subtle"
-                                    size="small"
-                                    icon={<AddRegular />}
-                                    onClick={() => addFolder(newFolder)}
-                                />
-                            </Tooltip>
-                        </>
+                        <Tooltip content="Remove" relationship="label">
+                            <Button
+                                size="small"
+                                appearance="subtle"
+                                icon={<DismissRegular />}
+                                onClick={() => removeFolder(folder)}
+                            />
+                        </Tooltip>
                     }
                 />
-            </div>
-        </Field>
+            ))}
+            <Input
+                value={newFolder}
+                placeholder="Add another folder"
+                onChange={(_, { value }) => setNewFolder(value)}
+                contentAfter={
+                    <>
+                        <Tooltip content="Choose folder" relationship="label">
+                            <Button
+                                appearance="subtle"
+                                size="small"
+                                icon={<FolderRegular />}
+                                onClick={() => chooseFolder()}
+                            />
+                        </Tooltip>
+                        <Tooltip content="Add" relationship="label">
+                            <Button
+                                appearance="subtle"
+                                size="small"
+                                icon={<AddRegular />}
+                                onClick={() => addFolder(newFolder)}
+                            />
+                        </Tooltip>
+                    </>
+                }
+            />
+        </div>
     );
 };

@@ -1,5 +1,4 @@
 import { useContextBridge } from "@Core/Hooks";
-import { Divider } from "@fluentui/react-components";
 import { Route, Routes, useNavigate } from "react-router";
 import { ExtensionSettings } from "./ExtensionSettings";
 import { Navigation } from "./Navigation";
@@ -15,7 +14,6 @@ export const Settings = () => {
         <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
             <div style={{ flexShrink: 0 }}>
                 <SettingsHeader onCloseSettingsClicked={closeSettings} />
-                <Divider appearance="subtle" />
             </div>
 
             <div
@@ -46,7 +44,6 @@ export const Settings = () => {
                             enabledExtensions={contextBridge.getEnabledExtensions()}
                         />
                     </div>
-                    <Divider appearance="subtle" vertical />
                 </div>
                 <div
                     style={{

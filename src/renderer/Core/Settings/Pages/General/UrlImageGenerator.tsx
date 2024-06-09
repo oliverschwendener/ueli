@@ -1,5 +1,6 @@
 import { useSetting } from "@Core/Hooks";
-import { Dropdown, Field, Option } from "@fluentui/react-components";
+import { Setting } from "@Core/Settings/Setting";
+import { Dropdown, Option } from "@fluentui/react-components";
 
 export const UrlImageGenerator = () => {
     const faviconApiProviders = ["Google", "Favicone"];
@@ -10,18 +11,22 @@ export const UrlImageGenerator = () => {
     });
 
     return (
-        <Field label="Favicon API" hint="This API is used to generate icons for URLs">
-            <Dropdown
-                value={faviconApiProvider}
-                selectedOptions={[faviconApiProvider]}
-                onOptionSelect={(_, { optionValue }) => optionValue && setFaviconApiProvider(optionValue)}
-            >
-                {faviconApiProviders.map((f) => (
-                    <Option key={`faviconApi-${f}`} value={f} text={f}>
-                        {f}
-                    </Option>
-                ))}
-            </Dropdown>
-        </Field>
+        <Setting
+            label="Favicon API"
+            description="This API is used to generate icons for URLs"
+            control={
+                <Dropdown
+                    value={faviconApiProvider}
+                    selectedOptions={[faviconApiProvider]}
+                    onOptionSelect={(_, { optionValue }) => optionValue && setFaviconApiProvider(optionValue)}
+                >
+                    {faviconApiProviders.map((f) => (
+                        <Option key={`faviconApi-${f}`} value={f} text={f}>
+                            {f}
+                        </Option>
+                    ))}
+                </Dropdown>
+            }
+        />
     );
 };

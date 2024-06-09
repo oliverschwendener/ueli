@@ -1,6 +1,6 @@
 import { useContextBridge, useSetting } from "@Core/Hooks";
-import { Section } from "../../Section";
-import { SectionList } from "../../SectionList";
+import { SettingGroup } from "@Core/Settings/SettingGroup";
+import { SettingGroupList } from "../../SettingGroupList";
 import { AlwaysCenter } from "./AlwaysCenter";
 import { AlwaysOnTop } from "./AlwaysOnTop";
 import { BackgroundMaterial } from "./BackgroundMaterial";
@@ -20,40 +20,24 @@ export const Window = () => {
     });
 
     return (
-        <SectionList>
-            <Section>
+        <SettingGroupList>
+            <SettingGroup title="Behavior">
                 <AlwaysOnTop />
-            </Section>
-            <Section>
                 <ShowOnStartup />
-            </Section>
-            <Section>
                 <AlwaysCenter />
-            </Section>
-            <Section>
                 <HideWindowOn />
-            </Section>
+            </SettingGroup>
 
-            {operatingSystem === "Windows" ? (
-                <Section>
+            <SettingGroup title="Appearance">
+                {operatingSystem === "Windows" && (
                     <BackgroundMaterial
                         backgroundMaterial={backgroundMaterial}
                         setBackgroundMaterial={setBackgroundMaterial}
                     />
-                </Section>
-            ) : null}
-
-            {operatingSystem === "Windows" && backgroundMaterial === "Acrylic" ? (
-                <Section>
-                    <Opacity />
-                </Section>
-            ) : null}
-
-            {operatingSystem === "macOS" ? (
-                <Section>
-                    <Vibrancy />
-                </Section>
-            ) : null}
-        </SectionList>
+                )}
+                {operatingSystem === "Windows" && backgroundMaterial === "Acrylic" && <Opacity />}
+                {operatingSystem === "macOS" && <Vibrancy />}
+            </SettingGroup>
+        </SettingGroupList>
     );
 };

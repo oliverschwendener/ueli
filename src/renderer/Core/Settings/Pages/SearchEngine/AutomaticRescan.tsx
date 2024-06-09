@@ -1,3 +1,4 @@
+import { Setting } from "@Core/Settings/Setting";
 import { Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
@@ -10,10 +11,14 @@ export const AutomaticRescan = ({ automaticRescanEnabled, setAutomaticRescanEnab
     const { t } = useTranslation("settingsSearchEngine");
 
     return (
-        <Switch
+        <Setting
             label={t("automaticRescan")}
-            checked={automaticRescanEnabled}
-            onChange={(_, { checked }) => setAutomaticRescanEnabled(checked)}
+            control={
+                <Switch
+                    checked={automaticRescanEnabled}
+                    onChange={(_, { checked }) => setAutomaticRescanEnabled(checked)}
+                />
+            }
         />
     );
 };

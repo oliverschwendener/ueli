@@ -1,5 +1,5 @@
-import { Section } from "../../Section";
-import { SectionList } from "../../SectionList";
+import { SettingGroup } from "@Core/Settings/SettingGroup";
+import { SettingGroupList } from "../../SettingGroupList";
 import { Autostart } from "./Autostart";
 import { HotKey } from "./HotKey";
 import { Language } from "./Language";
@@ -8,20 +8,18 @@ import { UrlImageGenerator } from "./UrlImageGenerator";
 
 export const General = () => {
     return (
-        <SectionList>
-            <Section>
+        <SettingGroupList>
+            <SettingGroup title="General">
                 <Language />
-            </Section>
-            <Section>
                 <HotKey />
-            </Section>
-            <Section>
                 <Autostart />
-            </Section>
-            <Section>
+            </SettingGroup>
+            <SettingGroup title="Search History">
+                <SearchHistory />
+            </SettingGroup>
+            <SettingGroup title="Icons">
                 <UrlImageGenerator />
-            </Section>
-            <SearchHistory />
-        </SectionList>
+            </SettingGroup>
+        </SettingGroupList>
     );
 };

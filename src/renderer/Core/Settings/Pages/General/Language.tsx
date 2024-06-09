@@ -1,5 +1,6 @@
 import { useSetting } from "@Core/Hooks";
-import { Dropdown, Field, Option } from "@fluentui/react-components";
+import { Setting } from "@Core/Settings/Setting";
+import { Dropdown, Option } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const Language = () => {
@@ -17,18 +18,21 @@ export const Language = () => {
     });
 
     return (
-        <Field label={t("language", { ns: "settingsGeneral" })}>
-            <Dropdown
-                value={languages.find(({ locale }) => locale === language)?.name}
-                selectedOptions={[language]}
-                onOptionSelect={(_, { optionValue }) => optionValue && setLanguage(optionValue)}
-            >
-                {languages.map(({ name, locale }) => (
-                    <Option key={locale} value={locale} text={name}>
-                        {name}
-                    </Option>
-                ))}
-            </Dropdown>
-        </Field>
+        <Setting
+            label={t("language", { ns: "settingsGeneral" })}
+            control={
+                <Dropdown
+                    value={languages.find(({ locale }) => locale === language)?.name}
+                    selectedOptions={[language]}
+                    onOptionSelect={(_, { optionValue }) => optionValue && setLanguage(optionValue)}
+                >
+                    {languages.map(({ name, locale }) => (
+                        <Option key={locale} value={locale} text={name}>
+                            {name}
+                        </Option>
+                    ))}
+                </Dropdown>
+            }
+        />
     );
 };

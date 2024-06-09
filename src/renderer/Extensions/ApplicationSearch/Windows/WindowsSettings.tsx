@@ -1,6 +1,7 @@
 import { useExtensionSetting } from "@Core/Hooks";
-import { Section } from "@Core/Settings/Section";
-import { SectionList } from "@Core/Settings/SectionList";
+import { Setting } from "@Core/Settings/Setting";
+import { SettingGroup } from "@Core/Settings/SettingGroup";
+import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { Switch } from "@fluentui/react-components";
 import { FileExtensions } from "./FileExtensions";
 import { Folders } from "./Folders";
@@ -12,20 +13,24 @@ export const WindowsSettings = () => {
     });
 
     return (
-        <SectionList>
-            <Section>
-                <Folders />
-            </Section>
-            <Section>
-                <FileExtensions />
-            </Section>
-            <Section>
-                <Switch
+        <SettingGroupList>
+            <SettingGroup title="General">
+                <Setting
                     label="Include Apps from Windows Store"
-                    checked={includeWindowsStoreApps}
-                    onChange={(_, { checked }) => setIncludeWindowsStoreApps(checked)}
+                    control={
+                        <Switch
+                            checked={includeWindowsStoreApps}
+                            onChange={(_, { checked }) => setIncludeWindowsStoreApps(checked)}
+                        />
+                    }
                 />
-            </Section>
-        </SectionList>
+            </SettingGroup>
+            <SettingGroup title="Folders">
+                <Folders />
+            </SettingGroup>
+            <SettingGroup title="File Extensions">
+                <FileExtensions />
+            </SettingGroup>
+        </SettingGroupList>
     );
 };

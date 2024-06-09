@@ -1,7 +1,7 @@
 import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
-import { Section } from "@Core/Settings/Section";
-import { SectionList } from "@Core/Settings/SectionList";
-import { Button, Field, Input, Tooltip } from "@fluentui/react-components";
+import { SettingGroup } from "@Core/Settings/SettingGroup";
+import { SettingGroupList } from "@Core/Settings/SettingGroupList";
+import { Button, Input, Tooltip } from "@fluentui/react-components";
 import { AddRegular, DismissRegular, FolderRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 
@@ -36,9 +36,9 @@ export const MacOsSettings = () => {
     };
 
     return (
-        <SectionList>
-            <Section>
-                <Field label="Application Folders" style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+        <SettingGroupList>
+            <SettingGroup title="Application Folders">
+                <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                     {folders.map((folder, index) => (
                         <Input
                             key={`macOsFolder-${folder}`}
@@ -80,8 +80,8 @@ export const MacOsSettings = () => {
                             </>
                         }
                     />
-                </Field>
-            </Section>
-        </SectionList>
+                </div>
+            </SettingGroup>
+        </SettingGroupList>
     );
 };

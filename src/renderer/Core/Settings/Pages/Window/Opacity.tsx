@@ -1,5 +1,6 @@
 import { useSetting } from "@Core/Hooks";
-import { Field, Slider } from "@fluentui/react-components";
+import { Setting } from "@Core/Settings/Setting";
+import { Slider } from "@fluentui/react-components";
 
 export const Opacity = () => {
     const { value: acrylicOpacity, updateValue: setAcrylicOpacity } = useSetting({
@@ -8,14 +9,18 @@ export const Opacity = () => {
     });
 
     return (
-        <Field label={`Opacity: ${acrylicOpacity}`}>
-            <Slider
-                min={0}
-                max={1}
-                step={0.05}
-                value={acrylicOpacity}
-                onChange={(_, { value }) => setAcrylicOpacity(value)}
-            />
-        </Field>
+        <Setting
+            label={`Opacity: ${acrylicOpacity}`}
+            control={
+                <Slider
+                    style={{ width: "50%" }}
+                    min={0}
+                    max={1}
+                    step={0.05}
+                    value={acrylicOpacity}
+                    onChange={(_, { value }) => setAcrylicOpacity(value)}
+                />
+            }
+        />
     );
 };

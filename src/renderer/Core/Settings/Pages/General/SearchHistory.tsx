@@ -1,6 +1,6 @@
 import { useSetting } from "@Core/Hooks";
-import { Section } from "@Core/Settings/Section";
-import { Field, SpinButton, Switch } from "@fluentui/react-components";
+import { Setting } from "@Core/Settings/Setting";
+import { SpinButton, Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const SearchHistory = () => {
@@ -20,30 +20,34 @@ export const SearchHistory = () => {
 
     return (
         <>
-            <Section>
-                <Switch
-                    label={t("searchHistoryEnabled")}
-                    checked={enabled}
-                    onChange={(_, { checked }) => {
-                        setEnabled(checked);
+            <Setting
+                label={t("searchHistoryEnabled")}
+                description={t("searchHistoryEnabledDescription")}
+                control={
+                    <Switch
+                        checked={enabled}
+                        onChange={(_, { checked }) => {
+                            setEnabled(checked);
 
-                        // When search history is disabled we clear the history
-                        !checked && setSearchHistory([]);
-                    }}
-                />
-            </Section>
-            {enabled && (
-                <Section>
-                    <Field label={t("searchHistoryLimit")} hint={t("searchHistoryLimitHint")}>
-                        <SpinButton
-                            type="number"
-                            minLength={1}
-                            value={limit}
-                            onChange={(_, { value }) => value && setLimit(value)}
-                        />
-                    </Field>
-                </Section>
-            )}
+                            // When search history is disabled we clear the history
+                            !checked && setSearchHistory([]);
+                        }}
+                    />
+                }
+            />
+            <Setting
+                label={t("searchHistoryLimit")}
+                description={t("searchHistoryLimitHint")}
+                control={
+                    <SpinButton
+                        type="number"
+                        minLength={1}
+                        value={limit}
+                        onChange={(_, { value }) => value && setLimit(value)}
+                        disabled={!enabled}
+                    />
+                }
+            />
         </>
     );
 };

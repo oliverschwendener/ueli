@@ -1,13 +1,14 @@
 import { darkTheme, lightTheme } from "@Core/Theme/defaultValues";
-import { BrandVariants, Button, Dropdown, Field, Input, Option, Tooltip } from "@fluentui/react-components";
+import { BrandVariants, Button, Dropdown, Input, Option, Tooltip } from "@fluentui/react-components";
 import { ArrowCounterclockwiseRegular } from "@fluentui/react-icons";
 import { useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting } from "../../Hooks";
 import { getAvailableThemes, getTheme } from "../../Theme";
 import { ThemeContext } from "../../ThemeContext";
-import { Section } from "../Section";
-import { SectionList } from "../SectionList";
+import { Setting } from "../Setting";
+import { SettingGroup } from "../SettingGroup";
+import { SettingGroupList } from "../SettingGroupList";
 import { ThemeOption } from "./ThemeOption";
 
 export const Appearance = () => {
@@ -55,30 +56,31 @@ export const Appearance = () => {
     }, []);
 
     return (
-        <SectionList>
-            <Section>
-                <Field label={t("themeName", { ns })}>
-                    <Dropdown
-                        value={themes.find((t) => t.value === themeName)?.label}
-                        onOptionSelect={(_, { optionValue }) => optionValue && setThemeName(optionValue)}
-                        selectedOptions={[themeName]}
-                    >
-                        {availableThemes.map(({ name, accentColors }) => (
-                            <Option key={`theme-option-${name}`} value={name} text={name}>
-                                <ThemeOption themeName={name} accentColors={accentColors} />
+        <SettingGroupList>
+            <SettingGroup title="Colors">
+                <Setting
+                    label={t("themeName", { ns })}
+                    control={
+                        <Dropdown
+                            value={themes.find((t) => t.value === themeName)?.label}
+                            onOptionSelect={(_, { optionValue }) => optionValue && setThemeName(optionValue)}
+                            selectedOptions={[themeName]}
+                        >
+                            {availableThemes.map(({ name, accentColors }) => (
+                                <Option key={`theme-option-${name}`} value={name} text={name}>
+                                    <ThemeOption themeName={name} accentColors={accentColors} />
+                                </Option>
+                            ))}
+                            <Option key="theme-option-custom" value={"Custom"} text={t("customTheme", { ns })}>
+                                <ThemeOption
+                                    themeName={t("customTheme", { ns })}
+                                    accentColors={{ dark: darkVariants["100"], light: lightVariants["100"] }}
+                                />
                             </Option>
-                        ))}
-                        <Option key="theme-option-custom" value={"Custom"} text={t("customTheme", { ns })}>
-                            <ThemeOption
-                                themeName={t("customTheme", { ns })}
-                                accentColors={{ dark: darkVariants["100"], light: lightVariants["100"] }}
-                            />
-                        </Option>
-                    </Dropdown>
-                </Field>
-            </Section>
-            {themeName === "Custom" ? (
-                <Section>
+                        </Dropdown>
+                    }
+                />
+                {themeName === "Custom" && (
                     <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
                         <div style={{ width: "50%", display: "flex", flexDirection: "column", gap: 5 }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
@@ -153,8 +155,8 @@ export const Appearance = () => {
                             ))}
                         </div>
                     </div>
-                </Section>
-            ) : null}
-        </SectionList>
+                )}
+            </SettingGroup>
+        </SettingGroupList>
     );
 };

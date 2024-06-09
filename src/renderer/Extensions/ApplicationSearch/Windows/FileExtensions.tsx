@@ -1,5 +1,5 @@
 import { useExtensionSetting } from "@Core/Hooks";
-import { Button, Field, Input, Tooltip } from "@fluentui/react-components";
+import { Button, Input, Tooltip } from "@fluentui/react-components";
 import { AddRegular, DismissRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 
@@ -21,40 +21,38 @@ export const FileExtensions = () => {
     };
 
     return (
-        <Field label="File Extensions (e.g.: lnk, exe)">
-            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                {fileExtensions.map((fileExtension) => (
-                    <Input
-                        readOnly
-                        value={fileExtension}
-                        contentAfter={
-                            <Tooltip content="Remove" relationship="label">
-                                <Button
-                                    size="small"
-                                    appearance="subtle"
-                                    icon={<DismissRegular />}
-                                    onClick={() => removeFileExtension(fileExtension)}
-                                />
-                            </Tooltip>
-                        }
-                    />
-                ))}
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+            {fileExtensions.map((fileExtension) => (
                 <Input
-                    value={newFileExtension}
-                    placeholder="Add another file extension"
-                    onChange={(_, { value }) => setNewFileExtension(value)}
+                    readOnly
+                    value={fileExtension}
                     contentAfter={
-                        <Tooltip content="Add" relationship="label">
+                        <Tooltip content="Remove" relationship="label">
                             <Button
-                                appearance="subtle"
                                 size="small"
-                                icon={<AddRegular />}
-                                onClick={() => addFileExtension(newFileExtension)}
+                                appearance="subtle"
+                                icon={<DismissRegular />}
+                                onClick={() => removeFileExtension(fileExtension)}
                             />
                         </Tooltip>
                     }
                 />
-            </div>
-        </Field>
+            ))}
+            <Input
+                value={newFileExtension}
+                placeholder="Add another file extension"
+                onChange={(_, { value }) => setNewFileExtension(value)}
+                contentAfter={
+                    <Tooltip content="Add" relationship="label">
+                        <Button
+                            appearance="subtle"
+                            size="small"
+                            icon={<AddRegular />}
+                            onClick={() => addFileExtension(newFileExtension)}
+                        />
+                    </Tooltip>
+                }
+            />
+        </div>
     );
 };

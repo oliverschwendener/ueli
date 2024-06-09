@@ -1,13 +1,13 @@
 import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
-import { Section } from "@Core/Settings/Section";
-import { SectionList } from "@Core/Settings/SectionList";
+import { Setting } from "@Core/Settings/Setting";
+import { SettingGroup } from "@Core/Settings/SettingGroup";
+import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import type { Browser } from "@common/Extensions/BrowserBookmarks";
-import { Dropdown, Field, Option } from "@fluentui/react-components";
+import { Dropdown, Option } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const BrowserBookmarksSettings = () => {
-    const { t } = useTranslation();
-    const ns = "extension[BrowserBookmarks]";
+    const { t } = useTranslation("extension[BrowserBookmarks]");
     const { contextBridge } = useContextBridge();
 
     const extensionId = "BrowserBookmarks";
@@ -39,56 +39,61 @@ export const BrowserBookmarksSettings = () => {
     });
 
     return (
-        <SectionList>
-            <Section>
-                <Field label="Browsers">
-                    <Dropdown
-                        value={browsers.join(", ")}
-                        selectedOptions={browsers}
-                        onOptionSelect={(_, { selectedOptions }) => setBrowsers(selectedOptions as Browser[])}
-                        multiselect
-                        placeholder={t("selectBrowsers", { ns })}
-                    >
-                        {browserOptions.map((browserName) => (
-                            <Option key={browserName} value={browserName} text={browserName}>
-                                <img
-                                    style={{ width: 20, height: 20 }}
-                                    alt={browserName}
-                                    src={`file://${contextBridge.getExtensionAssetFilePath(extensionId, browserName)}`}
-                                />
-                                {browserName}
-                            </Option>
-                        ))}
-                    </Dropdown>
-                </Field>
-            </Section>
-            <Section>
-                <Field label="Search result style">
-                    <Dropdown
-                        value={t(`searchResultStyle.${searchResultStyle}`, { ns })}
-                        selectedOptions={[searchResultStyle]}
-                        onOptionSelect={(_, { optionValue }) => optionValue && setSearchResultStyle(optionValue)}
-                    >
-                        {searchResultStyles.map((s) => (
-                            <Option key={`searchResultStyle.${s}`} value={s}>
-                                {t(`searchResultStyle.${s}`, { ns })}
-                            </Option>
-                        ))}
-                    </Dropdown>
-                </Field>
-            </Section>
-            <Section>
-                <Field label="Icon Type">
-                    <Dropdown
-                        value={t(`iconType.${iconType}`, { ns })}
-                        selectedOptions={[iconType]}
-                        onOptionSelect={(_, { optionValue }) => optionValue && setIconType(optionValue)}
-                    >
-                        <Option value="favicon">{t("iconType.favicon", { ns })}</Option>
-                        <Option value="browserIcon">{t("iconType.browserIcon", { ns })}</Option>
-                    </Dropdown>
-                </Field>
-            </Section>
-        </SectionList>
+        <SettingGroupList>
+            <SettingGroup title={t("extensionName")}>
+                <Setting
+                    label="Browsers"
+                    control={
+                        <Dropdown
+                            value={browsers.join(", ")}
+                            selectedOptions={browsers}
+                            onOptionSelect={(_, { selectedOptions }) => setBrowsers(selectedOptions as Browser[])}
+                            multiselect
+                            placeholder={t("selectBrowsers")}
+                        >
+                            {browserOptions.map((browserName) => (
+                                <Option key={browserName} value={browserName} text={browserName}>
+                                    <img
+                                        style={{ width: 20, height: 20 }}
+                                        alt={browserName}
+                                        src={`file://${contextBridge.getExtensionAssetFilePath(extensionId, browserName)}`}
+                                    />
+                                    {browserName}
+                                </Option>
+                            ))}
+                        </Dropdown>
+                    }
+                />
+                <Setting
+                    label="Search result style"
+                    control={
+                        <Dropdown
+                            value={t(`searchResultStyle.${searchResultStyle}`)}
+                            selectedOptions={[searchResultStyle]}
+                            onOptionSelect={(_, { optionValue }) => optionValue && setSearchResultStyle(optionValue)}
+                        >
+                            {searchResultStyles.map((s) => (
+                                <Option key={`searchResultStyle.${s}`} value={s}>
+                                    {t(`searchResultStyle.${s}`)}
+                                </Option>
+                            ))}
+                        </Dropdown>
+                    }
+                />
+                <Setting
+                    label="Icon Type"
+                    control={
+                        <Dropdown
+                            value={t(`iconType.${iconType}`)}
+                            selectedOptions={[iconType]}
+                            onOptionSelect={(_, { optionValue }) => optionValue && setIconType(optionValue)}
+                        >
+                            <Option value="favicon">{t("iconType.favicon")}</Option>
+                            <Option value="browserIcon">{t("iconType.browserIcon")}</Option>
+                        </Dropdown>
+                    }
+                />
+            </SettingGroup>
+        </SettingGroupList>
     );
 };

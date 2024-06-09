@@ -1,17 +1,17 @@
-import { Section } from "../../Section";
-import { SectionList } from "../../SectionList";
+import { SettingGroup } from "@Core/Settings/SettingGroup";
+import { SettingGroupList } from "../../SettingGroupList";
 import { Logs } from "./Logs";
 import { ResetSettings } from "./ResetSettings";
 
 export const Debug = () => {
     return (
-        <SectionList>
-            <Section>
+        <SettingGroupList>
+            <SettingGroup title="Repair">
                 <ResetSettings />
-            </Section>
-            <Section>
+            </SettingGroup>
+            <SettingGroup title="Logs">
                 <Logs />
-            </Section>
-        </SectionList>
+            </SettingGroup>
+        </SettingGroupList>
     );
 };

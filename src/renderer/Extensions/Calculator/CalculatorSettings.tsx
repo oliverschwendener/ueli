@@ -1,14 +1,14 @@
 import { useExtensionSetting } from "@Core/Hooks";
-import { Section } from "@Core/Settings/Section";
-import { SectionList } from "@Core/Settings/SectionList";
-import { Field, Input, SpinButton } from "@fluentui/react-components";
+import { Setting } from "@Core/Settings/Setting";
+import { SettingGroup } from "@Core/Settings/SettingGroup";
+import { SettingGroupList } from "@Core/Settings/SettingGroupList";
+import { Input, SpinButton } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const CalculatorSettings = () => {
     const extensionId = "Calculator";
 
-    const { t } = useTranslation();
-    const ns = "extension[Calculator]";
+    const { t } = useTranslation("extension[Calculator]");
 
     const { value: precision, updateValue: setPrecision } = useExtensionSetting<number>({
         extensionId,
@@ -26,28 +26,31 @@ export const CalculatorSettings = () => {
     });
 
     return (
-        <SectionList>
-            <Section>
-                <Field label={t("precision", { ns })}>
-                    <SpinButton
-                        value={precision}
-                        onChange={(_, { value }) => value && setPrecision(value)}
-                        min={1}
-                        max={32}
-                        step={1}
-                    />
-                </Field>
-            </Section>
-            <Section>
-                <Field label={t("decimalSeparator", { ns })}>
-                    <Input value={decimalSeparator} onChange={(_, { value }) => setDecimalSeparator(value)} />
-                </Field>
-            </Section>
-            <Section>
-                <Field label={t("argumentSeparator", { ns })}>
-                    <Input value={argumentSeparator} onChange={(_, { value }) => setArgumentSeparator(value)} />
-                </Field>
-            </Section>
-        </SectionList>
+        <SettingGroupList>
+            <SettingGroup title={t("extensionName")}>
+                <Setting
+                    label={t("precision")}
+                    control={
+                        <SpinButton
+                            value={precision}
+                            onChange={(_, { value }) => value && setPrecision(value)}
+                            min={1}
+                            max={32}
+                            step={1}
+                        />
+                    }
+                />
+                <Setting
+                    label={t("decimalSeparator")}
+                    control={<Input value={decimalSeparator} onChange={(_, { value }) => setDecimalSeparator(value)} />}
+                />
+                <Setting
+                    label={t("argumentSeparator")}
+                    control={
+                        <Input value={argumentSeparator} onChange={(_, { value }) => setArgumentSeparator(value)} />
+                    }
+                />
+            </SettingGroup>
+        </SettingGroupList>
     );
 };

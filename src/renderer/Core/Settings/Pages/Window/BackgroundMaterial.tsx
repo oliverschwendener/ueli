@@ -1,4 +1,5 @@
-import { Dropdown, Field, Option } from "@fluentui/react-components";
+import { Setting } from "@Core/Settings/Setting";
+import { Dropdown, Option } from "@fluentui/react-components";
 
 type Props = {
     backgroundMaterial: string;
@@ -9,18 +10,21 @@ export const BackgroundMaterial = ({ backgroundMaterial, setBackgroundMaterial }
     const backgroundMaterialOptions = ["Acrylic", "Mica", "None", "Tabbed"];
 
     return (
-        <Field label="Background material">
-            <Dropdown
-                value={backgroundMaterial}
-                onOptionSelect={(_, { optionValue }) => optionValue && setBackgroundMaterial(optionValue)}
-                selectedOptions={[backgroundMaterial]}
-            >
-                {backgroundMaterialOptions.map((b) => (
-                    <Option key={`background-material-option-${b}`} value={b}>
-                        {b}
-                    </Option>
-                ))}
-            </Dropdown>
-        </Field>
+        <Setting
+            label="Background material"
+            control={
+                <Dropdown
+                    value={backgroundMaterial}
+                    onOptionSelect={(_, { optionValue }) => optionValue && setBackgroundMaterial(optionValue)}
+                    selectedOptions={[backgroundMaterial]}
+                >
+                    {backgroundMaterialOptions.map((b) => (
+                        <Option key={`background-material-option-${b}`} value={b}>
+                            {b}
+                        </Option>
+                    ))}
+                </Dropdown>
+            }
+        />
     );
 };

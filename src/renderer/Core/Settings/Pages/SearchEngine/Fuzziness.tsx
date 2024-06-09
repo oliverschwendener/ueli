@@ -1,5 +1,6 @@
 import { useSetting } from "@Core/Hooks";
-import { Field, Slider } from "@fluentui/react-components";
+import { Setting } from "@Core/Settings/Setting";
+import { Slider } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const Fuzziness = () => {
@@ -12,8 +13,19 @@ export const Fuzziness = () => {
     });
 
     return (
-        <Field label={`${t("fuzziness", { ns })}: ${fuzziness}`} hint="0 = strict search, 1 = loose search">
-            <Slider value={fuzziness} min={0} max={1} step={0.1} onChange={(_, { value }) => setFuzziness(value)} />
-        </Field>
+        <Setting
+            label={`${t("fuzziness", { ns })}: ${fuzziness}`}
+            description="0 = strict search, 1 = loose search"
+            control={
+                <Slider
+                    style={{ width: "70%" }}
+                    value={fuzziness}
+                    min={0}
+                    max={1}
+                    step={0.1}
+                    onChange={(_, { value }) => setFuzziness(value)}
+                />
+            }
+        />
     );
 };
