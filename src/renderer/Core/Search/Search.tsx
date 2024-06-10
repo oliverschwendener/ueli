@@ -60,8 +60,8 @@ export const Search = ({
     );
 
     const doubleClickBehavior = contextBridge.getSettingValue(
-        "invokeSearchResultItem",
         "keyboardAndMouse.doubleClickBehavior",
+        "invokeSearchResultItem",
     );
 
     const handleUserInputKeyDownEvent = (keyboardEvent: KeyboardEvent<HTMLElement>) => {
@@ -102,7 +102,10 @@ export const Search = ({
 
     const clickHandlers: Record<string, (s: SearchResultItem) => void> = {
         selectSearchResultItem: (s) => selectedItemId.set(s.id),
-        invokeSearchResultItem: (s) => invokeAction(s.defaultAction),
+        invokeSearchResultItem: (s) => {
+            searchHistory.add(searchTerm.value);
+            invokeAction(s.defaultAction);
+        },
     };
 
     const handleSearchResultItemClickEvent = (searchResultItem: SearchResultItem) => {
