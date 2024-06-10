@@ -51,7 +51,6 @@ import { GeneralOptions } from "../common/config/general-options";
 import { simpleFolderSearchEditingModalComponent } from "./settings/modals/simple-folder-search-editing-modal-component";
 import { operatingSystemSettingsSettingsComponent } from "./settings/operating-system-settings-settings-component";
 import { userConfirmationDialog } from "./settings/modals/user-confirmation-component";
-import { UpdateCheckResult } from "../common/update-check-result";
 import { uwpSettingsComponent } from "./settings/uwp-settings-component";
 import { colorConverterSettingsComponent } from "./settings/color-converter-settings-component";
 import { pluginToggle } from "./settings/elements/plugin-toggle";
@@ -183,14 +182,6 @@ const app = new Vue({
             ipcRenderer.send(IpcChannels.selectInputHistoryItem, direction);
         });
 
-        vueEventDispatcher.$on(VueEventChannels.checkForUpdate, () => {
-            ipcRenderer.send(IpcChannels.checkForUpdate);
-        });
-
-        vueEventDispatcher.$on(VueEventChannels.downloadUpdate, () => {
-            ipcRenderer.send(IpcChannels.downloadUpdate);
-        });
-
         ipcRenderer.on(IpcChannels.executionFinished, () => {
             vueEventDispatcher.$emit(VueEventChannels.executionFinished);
         });
@@ -254,13 +245,6 @@ const app = new Vue({
         ipcRenderer.on(IpcChannels.refreshIndexesCompleted, () => {
             vueEventDispatcher.$emit(VueEventChannels.refreshIndexesFinished);
         });
-
-        ipcRenderer.on(
-            IpcChannels.checkForUpdateResponse,
-            (event: Electron.Event, updateCheckResult: UpdateCheckResult) => {
-                vueEventDispatcher.$emit(VueEventChannels.checkForUpdateResponse, updateCheckResult);
-            },
-        );
 
         ipcRenderer.on(IpcChannels.autoCompleteResponse, (event: Electron.Event, updatedUserInput: string) => {
             vueEventDispatcher.$emit(VueEventChannels.autoCompletionResponse, updatedUserInput);

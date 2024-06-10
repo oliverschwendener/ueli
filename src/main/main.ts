@@ -10,7 +10,6 @@ import {
     ipcMain,
     screen,
 } from "electron";
-import { autoUpdater } from "electron-updater";
 import { platform, release } from "os";
 import { join } from "path";
 import { AppearanceOptions } from "../common/config/appearance-options";
@@ -33,10 +32,8 @@ import { NotificationType } from "../common/notification-type";
 import { OperatingSystem } from "../common/operating-system";
 import { SearchResultItem } from "../common/search-result-item";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
-import { UpdateCheckResult } from "../common/update-check-result";
 import { FileHelpers } from "./../common/helpers/file-helpers";
 import { executeFilePathMacOs, executeFilePathWindows } from "./executors/file-path-executor";
-import { openUrlInBrowser } from "./executors/url-executor";
 import { getRescanIntervalInMilliseconds } from "./helpers/rescan-interval-helpers";
 import { trayIconPathMacOs, trayIconPathWindows } from "./helpers/tray-icon-helpers";
 import { windowIconMacOs, windowIconWindows } from "./helpers/window-icon-helpers";
@@ -60,10 +57,7 @@ const filePathExecutor = operatingSystem === OperatingSystem.Windows ? executeFi
 const trayIconFilePath = operatingSystem === OperatingSystem.Windows ? trayIconPathWindows : trayIconPathMacOs;
 const windowIconFilePath = operatingSystem === OperatingSystem.Windows ? windowIconWindows : windowIconMacOs;
 const userInputHistoryManager = new UserInputHistoryManager();
-const releaseUrl = "https://github.com/oliverschwendener/ueli/releases/latest";
 const windowsPowerShellPath = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0";
-
-autoUpdater.autoDownload = false;
 
 if (operatingSystem === OperatingSystem.macOS) {
     app.dock.hide();
@@ -704,12 +698,6 @@ function showErrorSearchResultItem() {
     }
 }
 
-function sendMessageToSettingsWindow(ipcChannel: IpcChannels, message: string) {
-    if (windowExists(settingsWindow)) {
-        settingsWindow.webContents.send(ipcChannel, message);
-    }
-}
-
 function windowExists(window: BrowserWindow): boolean {
     return window && !window.isDestroyed();
 }
@@ -874,28 +862,6 @@ function registerAllIpcListeners() {
                 break;
         }
     });
-
-    ipcMain.on(IpcChannels.checkForUpdate, () => {
-        logger.debug("Check for updates");
-        if (appIsInDevelopment) {
-            sendMessageToSettingsWindow(IpcChannels.checkForUpdateResponse, UpdateCheckResult.NoUpdateAvailable);
-        } else {
-            autoUpdater.checkForUpdates();
-        }
-    });
-
-    ipcMain.on(IpcChannels.downloadUpdate, () => {
-        if (operatingSystem === OperatingSystem.Windows) {
-            logger.debug("Downloading updated");
-            autoUpdater.downloadUpdate();
-        } else if (operatingSystem === OperatingSystem.macOS) {
-            openUrlInBrowser(releaseUrl)
-                .then(() => {
-                    /* do nothing */
-                })
-                .catch((err) => logger.error(err));
-        }
-    });
 }
 
 function addPowershellToPathVariableIfMissing() {
@@ -919,25 +885,3 @@ app.on("ready", () => {
 app.on("window-all-closed", quitApp);
 app.on("quit", app.quit);
 app.commandLine.appendSwitch("force-color-profile", "srgb");
-
-autoUpdater.on("update-available", () => {
-    logger.debug("Update check result: update available");
-    sendMessageToSettingsWindow(IpcChannels.checkForUpdateResponse, UpdateCheckResult.UpdateAvailable);
-});
-
-autoUpdater.on("update-not-available", () => {
-    logger.debug("Update check result: update not available");
-    sendMessageToSettingsWindow(IpcChannels.checkForUpdateResponse, UpdateCheckResult.NoUpdateAvailable);
-});
-
-autoUpdater.on("error", (error) => {
-    logger.error(`Update check result: ${error}`);
-    sendMessageToSettingsWindow(IpcChannels.checkForUpdateResponse, UpdateCheckResult.Error);
-});
-
-if (operatingSystem === OperatingSystem.Windows) {
-    autoUpdater.on("update-downloaded", () => {
-        logger.debug("Update downloaded");
-        autoUpdater.quitAndInstall();
-    });
-}
