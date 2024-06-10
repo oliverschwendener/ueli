@@ -43,6 +43,7 @@ export const SearchHistory = ({
                         <MenuItem
                             key={`search-term-history-item[${historyItem}]`}
                             onFocus={() => onItemSelected(historyItem)}
+                            onClick={() => onItemSelected(historyItem)}
                         >
                             {historyItem}
                         </MenuItem>
