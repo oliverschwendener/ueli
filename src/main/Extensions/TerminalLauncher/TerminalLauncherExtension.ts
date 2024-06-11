@@ -41,7 +41,7 @@ export class TerminalLauncherExtension implements Extension {
     public getSettingDefaultValue<T>(key: string) {
         const defaultSettings = {
             prefix: ">",
-            terminals: this.terminalRegistry
+            terminalIds: this.terminalRegistry
                 .getAll()
                 .filter((terminal) => terminal.isEnabledByDefault)
                 .map((terminal) => terminal.terminalId),
