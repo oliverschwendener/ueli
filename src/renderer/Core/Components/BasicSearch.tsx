@@ -156,7 +156,6 @@ export const BasicSearch = ({
                         onSearchResultItemClick={(s) => handleSearchResultItemClickEvent(s)}
                         onSearchResultItemDoubleClick={(s) => handleSearchResultItemDoubleClickEvent(s)}
                         searchResultItems={searchResultItems}
-                        favorites={[]}
                         selectedItemId={selectedItemId}
                         searchTerm={searchTerm}
                     />

@@ -4,14 +4,14 @@ import { useRef, useState } from "react";
 import type { SearchFilter } from "./Helpers";
 import { fuseJsSearchFilter } from "./Helpers/fuseJsSearchFilter";
 import { fuzzySortFilter } from "./Helpers/fuzzySortFilter";
-import { getFilteredSearchResultItems } from "./Helpers/getFilteredSearchResultItems";
 import { getNextSearchResultItemId } from "./Helpers/getNextSearchResultItemId";
 import { getPreviousSearchResultItemId } from "./Helpers/getPreviousSearchResultItemId";
+import { getSearchResult } from "./Helpers/getSearchResult";
 
 type ViewModel = {
     searchTerm: string;
     selectedItemId: string;
-    filteredSearchResultItems: SearchResultItem[];
+    searchResult: Record<string, SearchResultItem[]>;
 };
 
 type SearchViewControllerProps = {
@@ -21,6 +21,16 @@ type SearchViewControllerProps = {
     favoriteSearchResultItemIds: string[];
 };
 
+const collectSearchResultItems = (searchResult: Record<string, SearchResultItem[]>) => {
+    const result = [];
+
+    for (const key of Object.keys(searchResult)) {
+        result.push(...searchResult[key]);
+    }
+
+    return result;
+};
+
 export const useSearchViewcontroller = ({
     contextBridge,
     searchResultItems,
@@ -28,7 +38,7 @@ export const useSearchViewcontroller = ({
     favoriteSearchResultItemIds,
 }: SearchViewControllerProps) => {
     const [viewModel, setViewModel] = useState<ViewModel>({
-        filteredSearchResultItems: [],
+        searchResult: {},
         searchTerm: "",
         selectedItemId: "",
     });
@@ -39,17 +49,21 @@ export const useSearchViewcontroller = ({
 
     const setSelectedItemId = (selectedItemId: string) => setViewModel({ ...viewModel, selectedItemId });
 
-    const setFilteredSearchResultItems = (filteredSearchResultItems: SearchResultItem[]) =>
-        setViewModel({ ...viewModel, filteredSearchResultItems });
+    const setSearchResult = (searchResult: Record<string, SearchResultItem[]>) =>
+        setViewModel({ ...viewModel, searchResult });
 
     const selectNextSearchResultItem = () =>
-        setSelectedItemId(getNextSearchResultItemId(viewModel.selectedItemId, viewModel.filteredSearchResultItems));
+        setSelectedItemId(
+            getNextSearchResultItemId(viewModel.selectedItemId, collectSearchResultItems(viewModel.searchResult)),
+        );
 
     const selectPreviousSearchResultItem = () =>
-        setSelectedItemId(getPreviousSearchResultItemId(viewModel.selectedItemId, viewModel.filteredSearchResultItems));
+        setSelectedItemId(
+            getPreviousSearchResultItemId(viewModel.selectedItemId, collectSearchResultItems(viewModel.searchResult)),
+        );
 
     const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
-        viewModel.filteredSearchResultItems.find((s) => s.id === viewModel.selectedItemId);
+        collectSearchResultItems(viewModel.searchResult).find((s) => s.id === viewModel.selectedItemId);
 
     const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
     const { value: maxSearchResultItems } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
@@ -61,7 +75,7 @@ export const useSearchViewcontroller = ({
     };
 
     const search = (searchTerm: string, selectedItemId?: string) => {
-        const filteredSearchResultItems = getFilteredSearchResultItems({
+        const searchResult = getSearchResult({
             searchFilter: searchFilters[searchEngineId],
             excludedSearchResultItemIds,
             favoriteSearchResultItemIds,
@@ -74,8 +88,8 @@ export const useSearchViewcontroller = ({
 
         setViewModel({
             searchTerm,
-            selectedItemId: selectedItemId ?? filteredSearchResultItems[0]?.id,
-            filteredSearchResultItems,
+            selectedItemId: selectedItemId ?? collectSearchResultItems(searchResult)[0]?.id,
+            searchResult,
         });
     };
 
@@ -121,10 +135,10 @@ export const useSearchViewcontroller = ({
             next: selectNextSearchResultItem,
             previous: selectPreviousSearchResultItem,
         },
-        filteredSearchResultItems: {
-            set: setFilteredSearchResultItems,
-            value: viewModel.filteredSearchResultItems,
-            current: getSelectedSearchResultItem,
+        searchResult: {
+            value: viewModel.searchResult,
+            set: setSearchResult,
+            current: () => getSelectedSearchResultItem(),
         },
         userInput: {
             ref: userInputRef,

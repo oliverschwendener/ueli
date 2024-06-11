@@ -3,7 +3,6 @@ import { ThemeContext } from "@Core/ThemeContext";
 import { getImageUrl } from "@Core/getImageUrl";
 import type { SearchResultItem } from "@common/Core";
 import { Text } from "@fluentui/react-components";
-import { StarFilled } from "@fluentui/react-icons";
 import { useContext, useEffect, useRef, useState, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import { elementIsVisible } from "./Helpers";
@@ -11,7 +10,6 @@ import { elementIsVisible } from "./Helpers";
 type SearchResultListItemProps = {
     containerRef: RefObject<HTMLDivElement>;
     isSelected: boolean;
-    isFavorite: boolean;
     onClick: () => void;
     onDoubleClick: () => void;
     searchResultItem: SearchResultItem;
@@ -20,7 +18,6 @@ type SearchResultListItemProps = {
 export const SearchResultListItem = ({
     containerRef,
     isSelected,
-    isFavorite,
     onClick,
     onDoubleClick,
     searchResultItem,
@@ -121,7 +118,6 @@ export const SearchResultListItem = ({
                 }}
             >
                 {searchResultItem.name}
-                {isFavorite ? <StarFilled /> : null}
             </Text>
             <Text size={200} style={{ flexShrink: 0 }}>
                 {searchResultItem.descriptionTranslation

@@ -1,5 +1,5 @@
 import type { SearchResultItem } from "@common/Core";
-import { Button, Input } from "@fluentui/react-components";
+import { Body1Strong, Button, Input } from "@fluentui/react-components";
 import { SearchRegular, SettingsRegular } from "@fluentui/react-icons";
 import { useEffect, useRef, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
@@ -27,11 +27,11 @@ export const Search = ({
     excludedSearchResultItemIds,
     favoriteSearchResultItemIds,
 }: SearchProps) => {
-    const { t } = useTranslation();
+    const { t } = useTranslation("search");
     const { contextBridge } = useContextBridge();
 
     const {
-        filteredSearchResultItems,
+        searchResult,
         searchTerm,
         selectedItemId,
         search,
@@ -181,7 +181,7 @@ export const Search = ({
                                 />
                             ) : undefined
                         }
-                        placeholder={t("placeholder", { ns: "search" })}
+                        placeholder={t("placeholder")}
                     />
                 </div>
             }
@@ -195,15 +195,33 @@ export const Search = ({
                             closeDialog={closeConfirmationDialog}
                             action={confirmationDialog.action.value}
                         />
-                        <SearchResultList
-                            containerRef={containerRef}
-                            selectedItemId={selectedItemId.value}
-                            searchResultItems={filteredSearchResultItems.value}
-                            favorites={favoriteSearchResultItemIds}
-                            searchTerm={searchTerm.value}
-                            onSearchResultItemClick={handleSearchResultItemClickEvent}
-                            onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
-                        />
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: 20,
+                                padding: 10,
+                                boxSizing: "border-box",
+                            }}
+                        >
+                            {Object.keys(searchResult.value)
+                                .filter((group) => searchResult.value[group].length)
+                                .map((group) => (
+                                    <div key={`search-result-group-${group}`}>
+                                        <div style={{ paddingBottom: 5, paddingLeft: 5 }}>
+                                            <Body1Strong>{t(`searchResultGroup.${group}`)}</Body1Strong>
+                                        </div>
+                                        <SearchResultList
+                                            containerRef={containerRef}
+                                            selectedItemId={selectedItemId.value}
+                                            searchResultItems={searchResult.value[group]}
+                                            searchTerm={searchTerm.value}
+                                            onSearchResultItemClick={handleSearchResultItemClickEvent}
+                                            onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
+                                        />
+                                    </div>
+                                ))}
+                        </div>
                     </>
                 )
             }
@@ -219,7 +237,7 @@ export const Search = ({
                         {t("settings", { ns: "general" })}
                     </Button>
                     <ActionsMenu
-                        searchResultItem={filteredSearchResultItems.current()}
+                        searchResultItem={searchResult.current()}
                         favorites={favoriteSearchResultItemIds}
                         invokeAction={invokeAction}
                         additionalActionsButtonRef={additionalActionsButtonRef}

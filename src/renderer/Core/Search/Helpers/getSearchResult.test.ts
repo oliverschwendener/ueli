@@ -1,8 +1,8 @@
 import type { SearchResultItem } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
-import { getFilteredSearchResultItems } from "./getFilteredSearchResultItems";
+import { getSearchResult } from "./getSearchResult";
 
-describe(getFilteredSearchResultItems, () => {
+describe(getSearchResult, () => {
     it("should return an array of instant search result items, favorites and other matches if a search term is given", () => {
         const instantSearchResultItems = <SearchResultItem[]>[
             { id: "instant1", name: "Instant Item 1" },
@@ -25,7 +25,7 @@ describe(getFilteredSearchResultItems, () => {
 
         const excludedItemIds = ["item1"];
 
-        const actual = getFilteredSearchResultItems({
+        const actual = getSearchResult({
             searchFilter,
             favoriteSearchResultItemIds: ["item3"],
             excludedSearchResultItemIds: excludedItemIds,
@@ -36,13 +36,10 @@ describe(getFilteredSearchResultItems, () => {
             maxSearchResultItems: 5,
         });
 
-        expect(actual).toEqual([
-            ...[
-                { id: "item3", name: "Item 3" },
-                { id: "item2", name: "Item 2" },
-            ],
-            ...instantSearchResultItems,
-        ]);
+        expect(actual).toEqual({
+            favorites: [{ id: "item3", name: "Item 3" }],
+            searchResults: [{ id: "item2", name: "Item 2" }, ...instantSearchResultItems],
+        });
 
         expect(searchFilter).toHaveBeenCalledOnce();
         expect(searchFilter).toHaveBeenCalledWith({
@@ -60,7 +57,7 @@ describe(getFilteredSearchResultItems, () => {
         const item4 = <SearchResultItem>{ id: "item4", name: "Item 4" };
         const item5 = <SearchResultItem>{ id: "item5", name: "Item 5" };
 
-        const actual = getFilteredSearchResultItems({
+        const actual = getSearchResult({
             searchFilter: vi.fn(),
             favoriteSearchResultItemIds: ["item2", "item3"],
             excludedSearchResultItemIds: ["item1"],
@@ -75,6 +72,9 @@ describe(getFilteredSearchResultItems, () => {
             maxSearchResultItems: 3,
         });
 
-        expect(actual).toEqual([item2, item3, item4, item5]);
+        expect(actual).toEqual({
+            favorites: [item2, item3],
+            searchResults: [item4, item5],
+        });
     });
 });

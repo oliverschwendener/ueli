@@ -2,7 +2,7 @@ import type { SearchResultItem } from "@common/Core";
 import type { SearchFilter } from "./SearchFilter";
 import { SearchResultItemFilter } from "./SearchResultItemFilter";
 
-export const getFilteredSearchResultItems = ({
+export const getSearchResult = ({
     searchFilter,
     favoriteSearchResultItemIds,
     excludedSearchResultItemIds,
@@ -20,7 +20,7 @@ export const getFilteredSearchResultItems = ({
     searchTerm: string;
     fuzziness: number;
     maxSearchResultItems: number;
-}): SearchResultItem[] => {
+}): Record<string, SearchResultItem[]> => {
     searchResultItems = SearchResultItemFilter.createFrom(searchResultItems).exclude(excludedSearchResultItemIds).get();
 
     if (searchTerm.length > 0) {
@@ -31,22 +31,24 @@ export const getFilteredSearchResultItems = ({
             maxSearchResultItems,
         });
 
-        return [
-            ...SearchResultItemFilter.createFrom(searchFilterItems).pick(favoriteSearchResultItemIds).get(),
-            ...SearchResultItemFilter.createFrom(searchFilterItems).exclude(favoriteSearchResultItemIds).get(),
-            ...instantSearchResultItems,
-        ];
+        return {
+            favorites: SearchResultItemFilter.createFrom(searchFilterItems).pick(favoriteSearchResultItemIds).get(),
+            searchResults: [
+                ...SearchResultItemFilter.createFrom(searchFilterItems).exclude(favoriteSearchResultItemIds).get(),
+                ...instantSearchResultItems,
+            ],
+        };
     } else {
-        return [
-            ...SearchResultItemFilter.createFrom(searchResultItems)
+        return {
+            favorites: SearchResultItemFilter.createFrom(searchResultItems)
                 .pick(favoriteSearchResultItemIds)
                 .sortAlphabetically()
                 .get(),
-            ...SearchResultItemFilter.createFrom(searchResultItems)
+            searchResults: SearchResultItemFilter.createFrom(searchResultItems)
                 .exclude(favoriteSearchResultItemIds)
                 .sortAlphabetically()
                 .limit(maxSearchResultItems)
                 .get(),
-        ];
+        };
     }
 };
