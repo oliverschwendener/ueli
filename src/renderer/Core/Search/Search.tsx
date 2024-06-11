@@ -1,12 +1,12 @@
 import type { SearchResultItem } from "@common/Core";
-import { Body1Strong, Button, Input } from "@fluentui/react-components";
+import { Button, Input, Text } from "@fluentui/react-components";
 import { SearchRegular, SettingsRegular } from "@fluentui/react-icons";
 import { useEffect, useRef, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { BaseLayout } from "../BaseLayout";
 import { Footer } from "../Footer";
-import { useContextBridge } from "../Hooks";
+import { useContextBridge, useTheme } from "../Hooks";
 import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
@@ -47,6 +47,8 @@ export const Search = ({
     });
 
     const searchHistory = useSearchHistoryController({ contextBridge });
+
+    const { theme } = useTheme();
 
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
@@ -199,7 +201,7 @@ export const Search = ({
                             style={{
                                 display: "flex",
                                 flexDirection: "column",
-                                gap: 20,
+                                gap: 10,
                                 padding: 10,
                                 boxSizing: "border-box",
                             }}
@@ -209,7 +211,13 @@ export const Search = ({
                                 .map((group) => (
                                     <div key={`search-result-group-${group}`}>
                                         <div style={{ paddingBottom: 5, paddingLeft: 5 }}>
-                                            <Body1Strong>{t(`searchResultGroup.${group}`)}</Body1Strong>
+                                            <Text
+                                                size={200}
+                                                weight="medium"
+                                                style={{ color: theme.colorNeutralForeground4 }}
+                                            >
+                                                {t(`searchResultGroup.${group}`)}
+                                            </Text>
                                         </div>
                                         <SearchResultList
                                             containerRef={containerRef}
