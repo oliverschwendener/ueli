@@ -18,6 +18,11 @@ import { useSearchHistoryController } from "./SearchHistoryController";
 import { SearchResultList } from "./SearchResultList";
 import { useSearchViewcontroller } from "./SearchViewController";
 
+type KeyboardShortcut = {
+    shortcut: string;
+    listener: (event: KeyboardEvent) => void;
+};
+
 type SearchProps = {
     searchResultItems: SearchResultItem[];
     excludedSearchResultItemIds: string[];
@@ -119,6 +124,46 @@ export const Search = ({
         userInput.focus();
     };
 
+    const keyboardShortcuts: Record<string, KeyboardShortcut> = {
+        openSettings: {
+            shortcut: contextBridge.getOperatingSystem() === "macOS" ? "⌘+," : "⌃+,",
+            listener: (event: KeyboardEvent) => {
+                const shouldInvoke =
+                    contextBridge.getOperatingSystem() === "macOS"
+                        ? event.key === "," && event.metaKey
+                        : event.key === "," && event.ctrlKey;
+
+                if (shouldInvoke) {
+                    event.preventDefault();
+                    openSettings();
+                }
+            },
+        },
+        invokeSelectedItem: {
+            shortcut: "↵",
+            listener: (event: KeyboardEvent) => {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    invokeSelectedSearchResultItem();
+                }
+            },
+        },
+        openAdditionalActionsMenu: {
+            shortcut: contextBridge.getOperatingSystem() === "macOS" ? "⌘+K" : "⌃+K",
+            listener: (event: KeyboardEvent) => {
+                const shouldInvoke =
+                    contextBridge.getOperatingSystem() === "macOS"
+                        ? event.key === "k" && event.metaKey
+                        : event.key === "k" && event.ctrlKey;
+
+                if (shouldInvoke) {
+                    event.preventDefault();
+                    additionalActionsButtonRef.current?.click();
+                }
+            },
+        },
+    };
+
     useEffect(() => {
         const setFocusOnUserInputAndSelectText = () => {
             userInput.focus();
@@ -136,21 +181,25 @@ export const Search = ({
 
         contextBridge.ipcRenderer.on("windowFocused", windowFocusedEventHandler);
 
-        const keyDownEventHandler = (event: KeyboardEvent) => {
-            if (event.key === "k" && (event.ctrlKey || event.metaKey)) {
-                event.preventDefault();
-                additionalActionsButtonRef.current?.click();
-            } else if (event.key === "," && event.metaKey) {
-                event.preventDefault();
-                openSettings();
+        const registerAllEventListeners = () => {
+            for (const k of Object.keys(keyboardShortcuts)) {
+                const keyboardShortcut = keyboardShortcuts[k] as KeyboardShortcut;
+                window.addEventListener("keydown", keyboardShortcut.listener);
             }
         };
 
-        window.addEventListener("keydown", keyDownEventHandler);
+        const unregisterAllEventListeners = () => {
+            for (const k of Object.keys(keyboardShortcuts)) {
+                const keyboardShortcut = keyboardShortcuts[k] as KeyboardShortcut;
+                window.removeEventListener("keydown", keyboardShortcut.listener);
+            }
+        };
+
+        registerAllEventListeners();
 
         return () => {
             contextBridge.ipcRenderer.off("windowFocused", windowFocusedEventHandler);
-            window.removeEventListener("keydown", keyDownEventHandler);
+            unregisterAllEventListeners();
         };
     }, []);
 
@@ -259,7 +308,7 @@ export const Search = ({
                     >
                         {t("settings", { ns: "general" })}
                         <div style={{ paddingLeft: 5 }}>
-                            <KeyboardShortcut shortcut="⌘+," />
+                            <KeyboardShortcut shortcut={keyboardShortcuts["openSettings"].shortcut} />
                         </div>
                     </Button>
                     <div>
