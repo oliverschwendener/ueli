@@ -1,3 +1,4 @@
+import { KeyboardShortcut } from "@Core/Components";
 import { useContextBridge } from "@Core/Hooks";
 import { type SearchResultItem, type SearchResultItemAction } from "@common/Core";
 import {
@@ -13,7 +14,6 @@ import {
     useId,
     useToastController,
 } from "@fluentui/react-components";
-import { FlashRegular } from "@fluentui/react-icons";
 import { useEffect, type Ref } from "react";
 import { useTranslation } from "react-i18next";
 import { FluentIcon } from "../FluentIcon";
@@ -63,10 +63,12 @@ export const ActionsMenu = ({
                         className="non-draggable-area"
                         size="small"
                         appearance="subtle"
-                        icon={<FlashRegular fontSize={14} />}
                         ref={additionalActionsButtonRef}
                     >
                         {t("actions", { ns: "general" })}
+                        <div style={{ paddingLeft: 5 }}>
+                            <KeyboardShortcut shortcut="⌘+K" />
+                        </div>
                     </Button>
                 </MenuTrigger>
                 <MenuPopover>

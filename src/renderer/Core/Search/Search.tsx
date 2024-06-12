@@ -1,7 +1,8 @@
+import { KeyboardShortcut } from "@Core/Components";
 import type { SearchResultItem } from "@common/Core";
 import { Button, Input, Text } from "@fluentui/react-components";
 import { SearchRegular, SettingsRegular } from "@fluentui/react-icons";
-import { useEffect, useRef, type KeyboardEvent } from "react";
+import { useEffect, useRef, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { BaseLayout } from "../BaseLayout";
@@ -66,7 +67,7 @@ export const Search = ({
         "invokeSearchResultItem",
     );
 
-    const handleUserInputKeyDownEvent = (keyboardEvent: KeyboardEvent<HTMLElement>) => {
+    const handleUserInputKeyDownEvent = (keyboardEvent: ReactKeyboardEvent<HTMLElement>) => {
         const eventHandlers: KeyboardEventHandler[] = [
             {
                 listener: () => contextBridge.ipcRenderer.send("escapePressed"),
@@ -79,11 +80,6 @@ export const Search = ({
             {
                 listener: () => selectedItemId.next(),
                 needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowDown",
-            },
-            {
-                listener: () => additionalActionsButtonRef.current?.click(),
-                needsToInvokeListener: (keyboardEvent) =>
-                    keyboardEvent.key === "k" && (keyboardEvent.metaKey || keyboardEvent.ctrlKey),
             },
             {
                 listener: async () => {
@@ -137,6 +133,22 @@ export const Search = ({
             setFocusOnUserInputAndSelectText();
             searchHistory.closeMenu();
         });
+
+        const keyDownEventHandler = (event: KeyboardEvent) => {
+            if (event.key === "k" && (event.ctrlKey || event.metaKey)) {
+                event.preventDefault();
+                additionalActionsButtonRef.current?.click();
+            } else if (event.key === "," && event.metaKey) {
+                event.preventDefault();
+                openSettings();
+            }
+        };
+
+        window.addEventListener("keydown", keyDownEventHandler);
+
+        return () => {
+            window.removeEventListener("keydown", keyDownEventHandler);
+        };
     }, []);
 
     useEffect(() => {
@@ -243,14 +255,32 @@ export const Search = ({
                         icon={<SettingsRegular fontSize={14} />}
                     >
                         {t("settings", { ns: "general" })}
+                        <div style={{ paddingLeft: 5 }}>
+                            <KeyboardShortcut shortcut="⌘+," />
+                        </div>
                     </Button>
-                    <ActionsMenu
-                        searchResultItem={searchResult.current()}
-                        favorites={favoriteSearchResultItemIds}
-                        invokeAction={invokeAction}
-                        additionalActionsButtonRef={additionalActionsButtonRef}
-                        onMenuClosed={() => userInput.focus()}
-                    />
+                    <div>
+                        {searchResult.current() ? (
+                            <Button
+                                className="non-draggable-area"
+                                size="small"
+                                appearance="subtle"
+                                onClick={invokeSelectedSearchResultItem}
+                            >
+                                {searchResult.current()?.defaultAction.description}
+                                <div style={{ paddingLeft: 5 }}>
+                                    <KeyboardShortcut shortcut="↵" />
+                                </div>
+                            </Button>
+                        ) : null}
+                        <ActionsMenu
+                            searchResultItem={searchResult.current()}
+                            favorites={favoriteSearchResultItemIds}
+                            invokeAction={invokeAction}
+                            additionalActionsButtonRef={additionalActionsButtonRef}
+                            onMenuClosed={() => userInput.focus()}
+                        />
+                    </div>
                 </Footer>
             }
         />
