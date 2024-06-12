@@ -10,9 +10,13 @@ export const useSearchResultItems = () => {
     );
 
     useEffect(() => {
-        contextBridge.ipcRenderer.on("searchIndexUpdated", () => {
-            setSearchResultItems(contextBridge.getSearchResultItems());
-        });
+        const searchIndexUpdatedEventHandler = () => setSearchResultItems(contextBridge.getSearchResultItems());
+
+        contextBridge.ipcRenderer.on("searchIndexUpdated", searchIndexUpdatedEventHandler);
+
+        return () => {
+            contextBridge.ipcRenderer.off("searchIndexUpdated", searchIndexUpdatedEventHandler);
+        };
     }, []);
 
     return { searchResultItems };

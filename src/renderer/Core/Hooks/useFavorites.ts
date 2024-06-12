@@ -7,9 +7,13 @@ export const useFavorites = () => {
     const [favorites, setFavorites] = useState<string[]>(contextBridge.getFavorites());
 
     useEffect(() => {
-        contextBridge.ipcRenderer.on("favoritesUpdated", () => {
-            setFavorites(contextBridge.getFavorites());
-        });
+        const favoritesUpdatedEventHandler = () => setFavorites(contextBridge.getFavorites());
+
+        contextBridge.ipcRenderer.on("favoritesUpdated", favoritesUpdatedEventHandler);
+
+        return () => {
+            contextBridge.ipcRenderer.off("favoritesUpdated", favoritesUpdatedEventHandler);
+        };
     }, []);
 
     return { favorites };

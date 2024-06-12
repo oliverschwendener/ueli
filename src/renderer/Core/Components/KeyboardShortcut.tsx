@@ -1,11 +1,12 @@
-import { useTheme } from "@Core/Hooks";
+import { ThemeContext } from "@Core/ThemeContext";
+import { useContext } from "react";
 
 type KeyboardShortcutProps = {
     shortcut: string;
 };
 
 export const KeyboardShortcut = ({ shortcut }: KeyboardShortcutProps) => {
-    const { theme } = useTheme();
+    const { theme } = useContext(ThemeContext);
 
     return (
         <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 2 }}>

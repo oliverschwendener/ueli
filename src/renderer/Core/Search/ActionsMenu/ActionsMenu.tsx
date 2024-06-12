@@ -43,14 +43,19 @@ export const ActionsMenu = ({
     const actions = searchResultItem ? getActions(searchResultItem, favorites) : [];
 
     useEffect(() => {
-        contextBridge.ipcRenderer.on("copiedToClipboard", () =>
+        const copiedToClipboardHandler = () =>
             dispatchToast(
                 <Toast>
                     <ToastTitle>{t("copiedToClipboard", { ns: "general" })}</ToastTitle>
                 </Toast>,
                 { intent: "success", position: "bottom" },
-            ),
-        );
+            );
+
+        contextBridge.ipcRenderer.on("copiedToClipboard", copiedToClipboardHandler);
+
+        return () => {
+            contextBridge.ipcRenderer.off("copiedToClipboard", copiedToClipboardHandler);
+        };
     }, []);
 
     return (

@@ -1,13 +1,14 @@
 import { KeyboardShortcut } from "@Core/Components";
+import { ThemeContext } from "@Core/ThemeContext";
 import type { SearchResultItem } from "@common/Core";
 import { Button, Input, Text } from "@fluentui/react-components";
 import { SearchRegular, SettingsRegular } from "@fluentui/react-icons";
-import { useEffect, useRef, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import { useContext, useEffect, useRef, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { BaseLayout } from "../BaseLayout";
 import { Footer } from "../Footer";
-import { useContextBridge, useTheme } from "../Hooks";
+import { useContextBridge } from "../Hooks";
 import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
@@ -30,6 +31,7 @@ export const Search = ({
 }: SearchProps) => {
     const { t } = useTranslation("search");
     const { contextBridge } = useContextBridge();
+    const { theme } = useContext(ThemeContext);
 
     const {
         searchResult,
@@ -48,8 +50,6 @@ export const Search = ({
     });
 
     const searchHistory = useSearchHistoryController({ contextBridge });
-
-    const { theme } = useTheme();
 
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
@@ -129,10 +129,12 @@ export const Search = ({
 
         searchHistory.closeMenu();
 
-        contextBridge.ipcRenderer.on("windowFocused", () => {
+        const windowFocusedEventHandler = () => {
             setFocusOnUserInputAndSelectText();
             searchHistory.closeMenu();
-        });
+        };
+
+        contextBridge.ipcRenderer.on("windowFocused", windowFocusedEventHandler);
 
         const keyDownEventHandler = (event: KeyboardEvent) => {
             if (event.key === "k" && (event.ctrlKey || event.metaKey)) {
@@ -147,6 +149,7 @@ export const Search = ({
         window.addEventListener("keydown", keyDownEventHandler);
 
         return () => {
+            contextBridge.ipcRenderer.off("windowFocused", windowFocusedEventHandler);
             window.removeEventListener("keydown", keyDownEventHandler);
         };
     }, []);

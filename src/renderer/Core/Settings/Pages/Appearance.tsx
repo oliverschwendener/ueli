@@ -44,15 +44,29 @@ export const Appearance = () => {
     ];
 
     useEffect(() => {
-        const keys = [
-            "appearance.themeName",
-            "appearance.customDarkThemeVariants",
-            "appearance.customLightThemeVariants",
-        ];
+        const eventListeners: Record<string, () => void> = {
+            "settingUpdated[appearance.themeName]": () => setTheme(getTheme(contextBridge)),
+            "settingUpdated[appearance.customDarkThemeVariants]": () => setTheme(getTheme(contextBridge)),
+            "settingUpdated[appearance.customLightThemeVariants]": () => setTheme(getTheme(contextBridge)),
+        };
 
-        for (const key of keys) {
-            contextBridge.ipcRenderer.on(`settingUpdated[${key}]`, () => setTheme(getTheme(contextBridge)));
-        }
+        const registerEventListeners = () => {
+            for (const channel of Object.keys(eventListeners)) {
+                contextBridge.ipcRenderer.on(channel, eventListeners[channel]);
+            }
+        };
+
+        const unregisterEventListeners = () => {
+            for (const channel of Object.keys(eventListeners)) {
+                contextBridge.ipcRenderer.off(channel, eventListeners[channel]);
+            }
+        };
+
+        registerEventListeners();
+
+        return () => {
+            unregisterEventListeners();
+        };
     }, []);
 
     return (

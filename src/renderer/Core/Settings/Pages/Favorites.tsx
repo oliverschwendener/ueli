@@ -26,6 +26,7 @@ export const Favorites = () => {
                 <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                     {favoriteSearchResultItems.map((s) => (
                         <Input
+                            key={s.id}
                             width={"100%"}
                             value={s.name}
                             readOnly
