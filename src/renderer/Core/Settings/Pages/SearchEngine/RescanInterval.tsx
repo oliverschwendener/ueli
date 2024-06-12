@@ -1,7 +1,7 @@
 import { useContextBridge } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { Button, Input, Tooltip } from "@fluentui/react-components";
-import { ArrowCounterclockwiseRegular } from "@fluentui/react-icons";
+import { DismissRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -47,7 +47,7 @@ export const RescanInterval = ({ automaticRescanEnabled }: RescanIntervalProps) 
                             <Button
                                 size="small"
                                 appearance="subtle"
-                                icon={<ArrowCounterclockwiseRegular fontSize={14} />}
+                                icon={<DismissRegular fontSize={14} />}
                                 onClick={() => {
                                     setTempRescanIntervalInSeconds(defaultRescanIntervalInSeconds);
                                     setRescanIntervalInSeconds(defaultRescanIntervalInSeconds);
