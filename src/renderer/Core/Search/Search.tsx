@@ -139,15 +139,6 @@ export const Search = ({
                 }
             },
         },
-        invokeSelectedItem: {
-            shortcut: "↵",
-            listener: (event: KeyboardEvent) => {
-                if (event.key === "Enter") {
-                    event.preventDefault();
-                    invokeSelectedSearchResultItem();
-                }
-            },
-        },
         openAdditionalActionsMenu: {
             shortcut: contextBridge.getOperatingSystem() === "macOS" ? "⌘+K" : "⌃+K",
             listener: (event: KeyboardEvent) => {
@@ -331,6 +322,7 @@ export const Search = ({
                             invokeAction={invokeAction}
                             additionalActionsButtonRef={additionalActionsButtonRef}
                             onMenuClosed={() => userInput.focus()}
+                            keyboardShortcut={keyboardShortcuts["openAdditionalActionsMenu"].shortcut}
                         />
                     </div>
                 </Footer>

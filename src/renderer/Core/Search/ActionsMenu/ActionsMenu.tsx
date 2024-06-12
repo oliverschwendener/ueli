@@ -25,6 +25,7 @@ type AdditionalActionsProps = {
     invokeAction: (action: SearchResultItemAction) => void;
     additionalActionsButtonRef: Ref<HTMLButtonElement>;
     onMenuClosed: () => void;
+    keyboardShortcut: string;
 };
 
 export const ActionsMenu = ({
@@ -33,6 +34,7 @@ export const ActionsMenu = ({
     invokeAction,
     additionalActionsButtonRef,
     onMenuClosed,
+    keyboardShortcut,
 }: AdditionalActionsProps) => {
     const { contextBridge } = useContextBridge();
     const { t } = useTranslation();
@@ -72,7 +74,7 @@ export const ActionsMenu = ({
                     >
                         {t("actions", { ns: "general" })}
                         <div style={{ paddingLeft: 5 }}>
-                            <KeyboardShortcut shortcut="⌘+K" />
+                            <KeyboardShortcut shortcut={keyboardShortcut} />
                         </div>
                     </Button>
                 </MenuTrigger>
