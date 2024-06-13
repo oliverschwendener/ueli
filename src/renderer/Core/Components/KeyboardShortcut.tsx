@@ -18,7 +18,6 @@ export const KeyboardShortcut = ({ shortcut }: KeyboardShortcutProps) => {
                         borderStyle: "solid",
                         borderColor: theme.colorNeutralStroke1,
                         borderRadius: theme.borderRadiusSmall,
-                        fontFamily: theme.fontFamilyMonospace,
                         padding: "0px 5px",
                     }}
                 >
