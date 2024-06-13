@@ -1,8 +1,8 @@
 import { KeyboardShortcut } from "@Core/Components";
 import { ThemeContext } from "@Core/ThemeContext";
 import type { SearchResultItem } from "@common/Core";
-import { Button, Input, Text } from "@fluentui/react-components";
-import { SearchRegular, SettingsRegular } from "@fluentui/react-icons";
+import { Button, Text } from "@fluentui/react-components";
+import { SettingsRegular } from "@fluentui/react-icons";
 import { useContext, useEffect, useRef, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
@@ -13,10 +13,13 @@ import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
 import { ScanIndicator } from "./ScanIndicator";
+import { SearchBar } from "./SearchBar";
+import { SearchBarAppearance } from "./SearchBarAppearance";
+import { SearchBarSize } from "./SearchBarSize";
 import { SearchHistory } from "./SearchHistory";
 import { useSearchHistoryController } from "./SearchHistoryController";
 import { SearchResultList } from "./SearchResultList";
-import { useSearchViewcontroller } from "./SearchViewController";
+import { useSearchViewController } from "./SearchViewController";
 
 type KeyboardShortcut = {
     shortcut: string;
@@ -47,7 +50,7 @@ export const Search = ({
         confirmationDialog,
         invokeAction,
         invokeSelectedSearchResultItem,
-    } = useSearchViewcontroller({
+    } = useSearchViewController({
         contextBridge,
         searchResultItems,
         excludedSearchResultItemIds,
@@ -217,15 +220,24 @@ export const Search = ({
                         padding: 10,
                     }}
                 >
-                    <Input
-                        className="non-draggable-area"
-                        ref={userInput.ref}
-                        appearance={contextBridge.themeShouldUseDarkColors() ? "filled-darker" : "filled-lighter"}
-                        size="large"
-                        value={searchTerm.value}
-                        onChange={(_, { value }) => search(value)}
+                    <SearchBar
+                        refObject={userInput.ref}
                         onKeyDown={handleUserInputKeyDownEvent}
-                        contentBefore={<SearchRegular />}
+                        onSearchTermUpdated={search}
+                        searchTerm={searchTerm.value}
+                        searchBarSize={contextBridge.getSettingValue<SearchBarSize>(
+                            "appearance.searchBarSize",
+                            "large",
+                        )}
+                        searchBarAppearance={contextBridge.getSettingValue<SearchBarAppearance>(
+                            "appearance.searchBarAppearance",
+                            "auto",
+                        )}
+                        searchBarPlaceholderText={contextBridge.getSettingValue(
+                            "appearance.searchBarPlaceholderText",
+                            t("searchBarPlaceholderText"),
+                        )}
+                        showIcon={contextBridge.getSettingValue("appearance.showSearchIcon", true)}
                         contentAfter={
                             searchHistory.isEnabled() ? (
                                 <SearchHistory
@@ -238,7 +250,6 @@ export const Search = ({
                                 />
                             ) : undefined
                         }
-                        placeholder={t("placeholder")}
                     />
                 </div>
             }
