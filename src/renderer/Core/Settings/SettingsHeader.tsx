@@ -14,7 +14,7 @@ export const SettingsHeader = ({ onCloseSettingsClicked }: SettingsHeaderProps) 
         <Header
             draggable
             contentBefore={
-                <Tooltip relationship="label" content="Go back">
+                <Tooltip relationship="label" content="Go back" withArrow>
                     <Button
                         size="small"
                         appearance="subtle"

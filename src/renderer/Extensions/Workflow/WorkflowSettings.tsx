@@ -83,12 +83,20 @@ export const WorkflowSettings = () => {
                                                 workflow={workflow}
                                                 save={updateWorkflow}
                                                 trigger={
-                                                    <Tooltip relationship="label" content={t("editWorkflow", { ns })}>
+                                                    <Tooltip
+                                                        relationship="label"
+                                                        content={t("editWorkflow", { ns })}
+                                                        withArrow
+                                                    >
                                                         <Button size="small" icon={<EditRegular fontSize={14} />} />
                                                     </Tooltip>
                                                 }
                                             />
-                                            <Tooltip relationship="label" content={t("deleteWorkflow", { ns })}>
+                                            <Tooltip
+                                                relationship="label"
+                                                content={t("deleteWorkflow", { ns })}
+                                                withArrow
+                                            >
                                                 <Button
                                                     size="small"
                                                     icon={

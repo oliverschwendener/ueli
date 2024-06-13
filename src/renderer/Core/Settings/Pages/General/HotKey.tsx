@@ -33,7 +33,7 @@ export const HotKey = () => {
                             isValidHotkey(temporaryHotkey) ? setHotkey(temporaryHotkey) : setTemporaryHotkey(hotkey)
                         }
                         contentAfter={
-                            <Tooltip content={t("hotkeyMoreInfo", { ns })} relationship="label">
+                            <Tooltip content={t("hotkeyMoreInfo", { ns })} relationship="label" withArrow>
                                 <Button
                                     appearance="subtle"
                                     size="small"

@@ -56,7 +56,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                         <div style={{ flexGrow: 1 }}>
                             <Text weight="semibold">{t("extensionName", { ns })}</Text>
                         </div>
-                        <Tooltip content={t("openAccount", { ns })} relationship="label">
+                        <Tooltip content={t("openAccount", { ns })} relationship="label" withArrow>
                             <Button
                                 onClick={() => openDeeplAccount()}
                                 className="non-draggable-area"

@@ -45,7 +45,7 @@ export const LinuxSettings = () => {
                             value={folder}
                             readOnly
                             contentAfter={
-                                <Tooltip content="Remove" relationship="label">
+                                <Tooltip content="Remove" relationship="label" withArrow>
                                     <Button
                                         appearance="subtle"
                                         size="small"
@@ -61,7 +61,7 @@ export const LinuxSettings = () => {
                         onChange={(_, { value }) => setNewFolder(value)}
                         contentAfter={
                             <>
-                                <Tooltip content="Choose folder" relationship="label">
+                                <Tooltip content="Choose folder" relationship="label" withArrow>
                                     <Button
                                         appearance="subtle"
                                         size="small"
@@ -69,7 +69,7 @@ export const LinuxSettings = () => {
                                         onClick={chooseFolder}
                                     />
                                 </Tooltip>
-                                <Tooltip content="Add" relationship="label">
+                                <Tooltip content="Add" relationship="label" withArrow>
                                     <Button
                                         appearance="subtle"
                                         size="small"

@@ -51,7 +51,7 @@ export const FileSearchSettings = () => {
                                     value={esFilePath}
                                     onChange={(_, { value }) => setEsFilePath(value)}
                                     contentAfter={
-                                        <Tooltip relationship="label" content="Choose file">
+                                        <Tooltip relationship="label" content="Choose file" withArrow>
                                             <Button
                                                 size="small"
                                                 appearance="subtle"

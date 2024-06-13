@@ -28,7 +28,7 @@ export const SearchHistory = ({
             }}
         >
             <MenuTrigger>
-                <Tooltip relationship="label" content={t("searchHistory")}>
+                <Tooltip relationship="label" content={t("searchHistory")} withArrow>
                     <Button
                         appearance="subtle"
                         size="small"

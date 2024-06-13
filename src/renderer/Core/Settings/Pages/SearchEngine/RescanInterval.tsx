@@ -43,7 +43,7 @@ export const RescanInterval = ({ automaticRescanEnabled }: RescanIntervalProps) 
                     type="number"
                     disabled={!automaticRescanEnabled}
                     contentAfter={
-                        <Tooltip content={t("rescanIntervalResetToDefault", { ns })} relationship="label">
+                        <Tooltip content={t("rescanIntervalResetToDefault", { ns })} relationship="label" withArrow>
                             <Button
                                 size="small"
                                 appearance="subtle"
