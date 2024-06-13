@@ -26,6 +26,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     searchHistory: "Search History",
                     "searchResultGroup.favorites": "Favorites",
                     "searchResultGroup.searchResults": "Search Results",
+                    searchBarPlaceholderText: "Type to search...",
                 },
                 "de-CH": {
                     noResultsFoundFor: "Keine Suchergebnisse gefunden für",
@@ -33,6 +34,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     searchHistory: "Suchverlauf",
                     "searchResultGroup.favorites": "Favoriten",
                     "searchResultGroup.searchResults": "Suchergebnisse",
+                    searchBarPlaceholderText: "Suchbegriff eingeben...",
                 },
             },
         },
@@ -76,7 +78,6 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
             resources: {
                 "en-US": {
                     title: "Appearance",
-                    searchBarPlaceholderText: "Type to search...",
                     themeName: "Theme",
                     customTheme: "Custom",
                     customThemeDarkShades: "Dark shades",
@@ -87,7 +88,6 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                 },
                 "de-CH": {
                     title: "Erscheinungsbild",
-                    searchBarPlaceholderText: "Suchbegriff eingeben...",
                     themeName: "Farbschema",
                     customTheme: "Benutzerdefiniert",
                     customThemeDarkShades: "Dunkle Farben",

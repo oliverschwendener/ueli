@@ -31,7 +31,7 @@ const collectSearchResultItems = (searchResult: Record<string, SearchResultItem[
     return result;
 };
 
-export const useSearchViewcontroller = ({
+export const useSearchViewController = ({
     contextBridge,
     searchResultItems,
     excludedSearchResultItemIds,

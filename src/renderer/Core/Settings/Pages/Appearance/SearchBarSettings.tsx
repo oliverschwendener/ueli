@@ -1,15 +1,15 @@
-import { useContextBridge, useSetting } from "@Core/Hooks";
+import { useSetting } from "@Core/Hooks";
+import { SearchBar } from "@Core/Search/SearchBar";
+import type { SearchBarAppearance } from "@Core/Search/SearchBarAppearance";
+import type { SearchBarSize } from "@Core/Search/SearchBarSize";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
-import { Caption1, Dropdown, Input, Option } from "@fluentui/react-components";
+import { Button, Dropdown, Input, Option, Switch, Tooltip } from "@fluentui/react-components";
+import { ArrowCounterclockwiseRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 
-type SearchBarSize = "small" | "medium" | "large";
-type SearchBarAppearance = "outline" | "underline" | "filled-darker" | "filled-lighter" | "auto";
-
 export const SearchBarSettings = () => {
-    const { t } = useTranslation("settingsAppearance");
-    const { contextBridge } = useContextBridge();
+    const { t } = useTranslation();
 
     const { value: searchBarSize, updateValue: setSearchBarSize } = useSetting<SearchBarSize>({
         key: "appearance.searchBarSize",
@@ -23,25 +23,31 @@ export const SearchBarSettings = () => {
 
     const { value: searchBarPlaceholderText, updateValue: setSearchBarPlaceholderText } = useSetting<string>({
         key: "appearance.searchBarPlaceholderText",
-        defaultValue: t("searchBarPlaceholderText"),
+        defaultValue: t("searchBarPlaceholderText", { ns: "search" }),
     });
+
+    const { value: showIcon, updateValue: setShowIcon } = useSetting<boolean>({
+        key: "appearance.showSearchIcon",
+        defaultValue: true,
+    });
+
+    const resetPlaceholderText = () => setSearchBarPlaceholderText(t("searchBarPlaceholderText", { ns: "search" }));
 
     return (
         <SettingGroup title="Search bar">
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, paddingBottom: 10 }}>
-                <Caption1>Preview</Caption1>
-                <Input
-                    size={searchBarSize}
-                    appearance={
-                        searchBarAppearance === "auto"
-                            ? contextBridge.themeShouldUseDarkColors()
-                                ? "filled-darker"
-                                : "filled-lighter"
-                            : searchBarAppearance
-                    }
-                    placeholder={searchBarPlaceholderText}
-                />
-            </div>
+            <Setting
+                label="Preview"
+                control={
+                    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+                        <SearchBar
+                            searchBarSize={searchBarSize}
+                            searchBarAppearance={searchBarAppearance}
+                            searchBarPlaceholderText={searchBarPlaceholderText}
+                            showIcon={showIcon}
+                        />
+                    </div>
+                }
+            />
             <Setting
                 label="Size"
                 control={
@@ -83,9 +89,24 @@ export const SearchBarSettings = () => {
                         <Input
                             value={searchBarPlaceholderText}
                             onChange={(_, { value }) => setSearchBarPlaceholderText(value)}
+                            contentAfter={
+                                <Tooltip content="Reset" relationship="label" withArrow>
+                                    <Button
+                                        size="small"
+                                        appearance="subtle"
+                                        icon={<ArrowCounterclockwiseRegular fontSize={14} />}
+                                        onClick={resetPlaceholderText}
+                                    />
+                                </Tooltip>
+                            }
                         />
                     </div>
                 }
+            />
+            <Setting
+                label="Icon"
+                description="Wether to show the search icon in the search bar"
+                control={<Switch checked={showIcon} onChange={(_, { checked }) => setShowIcon(checked)} />}
             />
         </SettingGroup>
     );
