@@ -1,7 +1,7 @@
 import { darkTheme, lightTheme } from "@Core/Theme/defaultValues";
-import { BrandVariants, Button, Dropdown, Input, Option, Tooltip } from "@fluentui/react-components";
+import { Body1, Button, Dropdown, Input, Option, Tooltip, type BrandVariants } from "@fluentui/react-components";
 import { ArrowCounterclockwiseRegular } from "@fluentui/react-icons";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useContextBridge, useSetting } from "../../Hooks";
 import { getAvailableThemes, getTheme } from "../../Theme";
@@ -12,8 +12,7 @@ import { SettingGroupList } from "../SettingGroupList";
 import { ThemeOption } from "./ThemeOption";
 
 export const Appearance = () => {
-    const { t } = useTranslation();
-    const ns = "settingsAppearance";
+    const { t } = useTranslation("settingsAppearance");
     const { contextBridge } = useContextBridge();
     const { setTheme } = useContext(ThemeContext);
 
@@ -22,62 +21,58 @@ export const Appearance = () => {
     const { value: themeName, updateValue: setThemeName } = useSetting<string>({
         key: "appearance.themeName",
         defaultValue: "Fluent UI Web",
-        isSensitive: false,
     });
 
     const { value: darkVariants, updateValue: setDarkVariants } = useSetting<BrandVariants>({
         key: "appearance.customDarkThemeVariants",
         defaultValue: darkTheme,
-        isSensitive: false,
     });
 
     const { value: lightVariants, updateValue: setLightVariants } = useSetting<BrandVariants>({
         key: "appearance.customLightThemeVariants",
         defaultValue: lightTheme,
-        isSensitive: false,
     });
 
     const themes = [
         { value: "Microsoft Teams", label: "Microsoft Teams" },
         { value: "Fluent UI Web", label: "Fluent UI Web" },
-        { value: "Custom", label: t("customTheme", { ns }) },
+        { value: "Custom", label: t("customTheme") },
     ];
 
-    useEffect(() => {
-        const eventListeners: Record<string, () => void> = {
-            "settingUpdated[appearance.themeName]": () => setTheme(getTheme(contextBridge)),
-            "settingUpdated[appearance.customDarkThemeVariants]": () => setTheme(getTheme(contextBridge)),
-            "settingUpdated[appearance.customLightThemeVariants]": () => setTheme(getTheme(contextBridge)),
-        };
+    const updateTheme = (themeName: string) => {
+        setThemeName(themeName);
+        setTheme(getTheme(contextBridge));
+    };
 
-        const registerEventListeners = () => {
-            for (const channel of Object.keys(eventListeners)) {
-                contextBridge.ipcRenderer.on(channel, eventListeners[channel]);
-            }
-        };
+    const resetDarkVariants = () => {
+        setDarkVariants(darkTheme);
+        setTheme(getTheme(contextBridge));
+    };
 
-        const unregisterEventListeners = () => {
-            for (const channel of Object.keys(eventListeners)) {
-                contextBridge.ipcRenderer.off(channel, eventListeners[channel]);
-            }
-        };
+    const updateDarkVariants = (shade: keyof BrandVariants, value: string) => {
+        setDarkVariants({ ...darkVariants, ...{ [shade]: value } });
+        setTheme(getTheme(contextBridge));
+    };
 
-        registerEventListeners();
+    const resetLightVariants = () => {
+        setLightVariants(lightTheme);
+        setTheme(getTheme(contextBridge));
+    };
 
-        return () => {
-            unregisterEventListeners();
-        };
-    }, []);
+    const updateLightVariants = (shade: keyof BrandVariants, value: string) => {
+        setLightVariants({ ...lightVariants, ...{ [shade]: value } });
+        setTheme(getTheme(contextBridge));
+    };
 
     return (
         <SettingGroupList>
             <SettingGroup title="Colors">
                 <Setting
-                    label={t("themeName", { ns })}
+                    label={t("themeName")}
                     control={
                         <Dropdown
                             value={themes.find((t) => t.value === themeName)?.label}
-                            onOptionSelect={(_, { optionValue }) => optionValue && setThemeName(optionValue)}
+                            onOptionSelect={(_, { optionValue }) => optionValue && updateTheme(optionValue)}
                             selectedOptions={[themeName]}
                         >
                             {availableThemes.map(({ name, accentColors }) => (
@@ -85,9 +80,9 @@ export const Appearance = () => {
                                     <ThemeOption themeName={name} accentColors={accentColors} />
                                 </Option>
                             ))}
-                            <Option key="theme-option-custom" value={"Custom"} text={t("customTheme", { ns })}>
+                            <Option key="theme-option-custom" value={"Custom"} text={t("customTheme")}>
                                 <ThemeOption
-                                    themeName={t("customTheme", { ns })}
+                                    themeName={t("customTheme")}
                                     accentColors={{ dark: darkVariants["100"], light: lightVariants["100"] }}
                                 />
                             </Option>
@@ -101,13 +96,15 @@ export const Appearance = () => {
                     <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
                         <div style={{ width: "50%", display: "flex", flexDirection: "column", gap: 5 }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                                {t("customThemeDarkShades", { ns })}{" "}
-                                <Tooltip content={t("customThemeReset", { ns })} relationship="label">
+                                <Tooltip relationship="label" content={t("customThemeDarkShadesHint")}>
+                                    <Body1>{t("customThemeDarkShades")}</Body1>
+                                </Tooltip>
+                                <Tooltip content={t("customThemeReset")} relationship="label">
                                     <Button
                                         size="small"
                                         appearance="subtle"
                                         icon={<ArrowCounterclockwiseRegular fontSize={14} />}
-                                        onClick={() => setDarkVariants(darkTheme)}
+                                        onClick={resetDarkVariants}
                                     />
                                 </Tooltip>
                             </div>
@@ -129,21 +126,21 @@ export const Appearance = () => {
                                         ></div>
                                     }
                                     value={darkVariants[shade as keyof BrandVariants]}
-                                    onChange={(_, { value }) =>
-                                        setDarkVariants({ ...darkVariants, ...{ [shade]: value } })
-                                    }
+                                    onChange={(_, { value }) => updateDarkVariants(shade as keyof BrandVariants, value)}
                                 />
                             ))}
                         </div>
                         <div style={{ width: "50%", display: "flex", flexDirection: "column", gap: 5 }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                                {t("customThemeLightShades", { ns })}{" "}
-                                <Tooltip content={t("customThemeReset", { ns })} relationship="label">
+                                <Tooltip relationship="label" content={t("customThemeLightShadesHint")}>
+                                    <Body1>{t("customThemeLightShades")}</Body1>
+                                </Tooltip>
+                                <Tooltip content={t("customThemeReset")} relationship="label">
                                     <Button
                                         size="small"
                                         appearance="subtle"
                                         icon={<ArrowCounterclockwiseRegular fontSize={14} />}
-                                        onClick={() => setLightVariants(lightTheme)}
+                                        onClick={resetLightVariants}
                                     />
                                 </Tooltip>
                             </div>
@@ -166,7 +163,7 @@ export const Appearance = () => {
                                     }
                                     value={lightVariants[shade as keyof BrandVariants]}
                                     onChange={(_, { value }) =>
-                                        setLightVariants({ ...lightVariants, ...{ [shade]: value } })
+                                        updateLightVariants(shade as keyof BrandVariants, value)
                                     }
                                 />
                             ))}
