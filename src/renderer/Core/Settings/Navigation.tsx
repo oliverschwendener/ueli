@@ -24,9 +24,11 @@ export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps
             vertical
             appearance="subtle"
             style={{ width: "100%" }}
+            selectTabOnFocus
         >
             {settingsPages.map(({ translation, absolutePath, icon }, i) => (
                 <Tab
+                    autoFocus={i === 0}
                     style={{ marginBottom: settingsPages.length - 1 === i ? 10 : undefined }}
                     key={`settings-page-tab-${absolutePath}`}
                     value={absolutePath}
