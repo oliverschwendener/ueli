@@ -9,6 +9,7 @@ import { ArrowCounterclockwiseRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 
 export const SearchBarSettings = () => {
+    const ns = "settingsAppearance";
     const { t } = useTranslation();
 
     const { value: searchBarSize, updateValue: setSearchBarSize } = useSetting<SearchBarSize>({
@@ -34,9 +35,9 @@ export const SearchBarSettings = () => {
     const resetPlaceholderText = () => setSearchBarPlaceholderText(t("searchBarPlaceholderText", { ns: "search" }));
 
     return (
-        <SettingGroup title="Search bar">
+        <SettingGroup title={t("searchBar", { ns })}>
             <Setting
-                label="Preview"
+                label={t("searchBarPreview", { ns })}
                 control={
                     <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
                         <SearchBar
@@ -49,48 +50,52 @@ export const SearchBarSettings = () => {
                 }
             />
             <Setting
-                label="Size"
+                label={t("searchBarSize", { ns })}
                 control={
                     <Dropdown
-                        value={searchBarSize}
+                        value={t(`searchBarSize.${searchBarSize}`, { ns })}
                         selectedOptions={[searchBarSize]}
                         onOptionSelect={(_, { optionValue }) =>
                             optionValue && setSearchBarSize(optionValue as SearchBarSize)
                         }
                     >
-                        <Option value="small">small</Option>
-                        <Option value="medium">medium</Option>
-                        <Option value="large">large</Option>
+                        <Option value="small">{t("searchBarSize.small", { ns })}</Option>
+                        <Option value="medium">{t("searchBarSize.medium", { ns })}</Option>
+                        <Option value="large">{t("searchBarSize.large", { ns })}</Option>
                     </Dropdown>
                 }
             />
             <Setting
-                label="Appearance"
+                label={t("searchBarAppearance", { ns })}
                 control={
                     <Dropdown
-                        value={searchBarAppearance}
+                        value={t(`searchBarAppearance.${searchBarAppearance}`, { ns })}
                         selectedOptions={[searchBarAppearance]}
                         onOptionSelect={(_, { optionValue }) =>
                             optionValue && setSearchBarAppearance(optionValue as SearchBarAppearance)
                         }
                     >
-                        <Option value="auto">auto</Option>
-                        <Option value="outline">outline</Option>
-                        <Option value="underline">underline</Option>
-                        <Option value="filled-darker">filled-darker</Option>
-                        <Option value="filled-lighter">filled-lighter</Option>
+                        <Option value="auto">{t("searchBarAppearance.auto", { ns })}</Option>
+                        <Option value="outline">{t("searchBarAppearance.outline", { ns })}</Option>
+                        <Option value="underline">{t("searchBarAppearance.underline", { ns })}</Option>
+                        <Option value="filled-darker">{t("searchBarAppearance.filled-darker", { ns })}</Option>
+                        <Option value="filled-lighter">{t("searchBarAppearance.filled-lighter", { ns })}</Option>
                     </Dropdown>
                 }
             />
             <Setting
-                label="Placeholder text"
+                label={t("searchBarPlaceholderText", { ns })}
                 control={
                     <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
                         <Input
                             value={searchBarPlaceholderText}
                             onChange={(_, { value }) => setSearchBarPlaceholderText(value)}
                             contentAfter={
-                                <Tooltip content="Reset" relationship="label" withArrow>
+                                <Tooltip
+                                    content={t("searchBarPlaceholderTextReset", { ns })}
+                                    relationship="label"
+                                    withArrow
+                                >
                                     <Button
                                         size="small"
                                         appearance="subtle"
@@ -104,8 +109,7 @@ export const SearchBarSettings = () => {
                 }
             />
             <Setting
-                label="Icon"
-                description="Wether to show the search icon in the search bar"
+                label={t("searchBarShowIcon", { ns })}
                 control={<Switch checked={showIcon} onChange={(_, { checked }) => setShowIcon(checked)} />}
             />
         </SettingGroup>
