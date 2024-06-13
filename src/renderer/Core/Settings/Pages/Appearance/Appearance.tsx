@@ -3,13 +3,14 @@ import { Body1, Button, Dropdown, Input, Option, Tooltip, type BrandVariants } f
 import { ArrowCounterclockwiseRegular } from "@fluentui/react-icons";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { useContextBridge, useSetting } from "../../Hooks";
-import { getAvailableThemes, getTheme } from "../../Theme";
-import { ThemeContext } from "../../ThemeContext";
-import { Setting } from "../Setting";
-import { SettingGroup } from "../SettingGroup";
-import { SettingGroupList } from "../SettingGroupList";
-import { ThemeOption } from "./ThemeOption";
+import { useContextBridge, useSetting } from "../../../Hooks";
+import { getAvailableThemes, getTheme } from "../../../Theme";
+import { ThemeContext } from "../../../ThemeContext";
+import { Setting } from "../../Setting";
+import { SettingGroup } from "../../SettingGroup";
+import { SettingGroupList } from "../../SettingGroupList";
+import { ThemeOption } from "../ThemeOption";
+import { SearchBarSettings } from "./SearchBarSettings";
 
 export const Appearance = () => {
     const { t } = useTranslation("settingsAppearance");
@@ -66,6 +67,7 @@ export const Appearance = () => {
 
     return (
         <SettingGroupList>
+            <SearchBarSettings />
             <SettingGroup title="Colors">
                 <Setting
                     label={t("themeName")}
