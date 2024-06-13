@@ -48,7 +48,7 @@ export const ExcludedItems = () => {
                                 appearance="subtle"
                                 onClick={() => removeExcludedSearchResultItem(id)}
                                 icon={
-                                    <Tooltip content={t("removeExcludedItem", { ns })} relationship="label">
+                                    <Tooltip content={t("removeExcludedItem", { ns })} relationship="label" withArrow>
                                         <DismissRegular fontSize={14} />
                                     </Tooltip>
                                 }

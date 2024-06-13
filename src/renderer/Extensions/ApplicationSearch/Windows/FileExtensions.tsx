@@ -27,7 +27,7 @@ export const FileExtensions = () => {
                     readOnly
                     value={fileExtension}
                     contentAfter={
-                        <Tooltip content="Remove" relationship="label">
+                        <Tooltip content="Remove" relationship="label" withArrow>
                             <Button
                                 size="small"
                                 appearance="subtle"
@@ -43,7 +43,7 @@ export const FileExtensions = () => {
                 placeholder="Add another file extension"
                 onChange={(_, { value }) => setNewFileExtension(value)}
                 contentAfter={
-                    <Tooltip content="Add" relationship="label">
+                    <Tooltip content="Add" relationship="label" withArrow>
                         <Button
                             appearance="subtle"
                             size="small"

@@ -96,10 +96,10 @@ export const Appearance = () => {
                     <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
                         <div style={{ width: "50%", display: "flex", flexDirection: "column", gap: 5 }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                                <Tooltip relationship="label" content={t("customThemeDarkShadesHint")}>
+                                <Tooltip relationship="label" content={t("customThemeDarkShadesHint")} withArrow>
                                     <Body1>{t("customThemeDarkShades")}</Body1>
                                 </Tooltip>
-                                <Tooltip content={t("customThemeReset")} relationship="label">
+                                <Tooltip content={t("customThemeReset")} relationship="label" withArrow>
                                     <Button
                                         size="small"
                                         appearance="subtle"
@@ -132,10 +132,10 @@ export const Appearance = () => {
                         </div>
                         <div style={{ width: "50%", display: "flex", flexDirection: "column", gap: 5 }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                                <Tooltip relationship="label" content={t("customThemeLightShadesHint")}>
+                                <Tooltip relationship="label" content={t("customThemeLightShadesHint")} withArrow>
                                     <Body1>{t("customThemeLightShades")}</Body1>
                                 </Tooltip>
-                                <Tooltip content={t("customThemeReset")} relationship="label">
+                                <Tooltip content={t("customThemeReset")} relationship="label" withArrow>
                                     <Button
                                         size="small"
                                         appearance="subtle"

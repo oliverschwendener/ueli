@@ -36,7 +36,7 @@ export const Folders = () => {
                     readOnly
                     value={folder}
                     contentAfter={
-                        <Tooltip content="Remove" relationship="label">
+                        <Tooltip content="Remove" relationship="label" withArrow>
                             <Button
                                 size="small"
                                 appearance="subtle"
@@ -53,7 +53,7 @@ export const Folders = () => {
                 onChange={(_, { value }) => setNewFolder(value)}
                 contentAfter={
                     <>
-                        <Tooltip content="Choose folder" relationship="label">
+                        <Tooltip content="Choose folder" relationship="label" withArrow>
                             <Button
                                 appearance="subtle"
                                 size="small"
@@ -61,7 +61,7 @@ export const Folders = () => {
                                 onClick={() => chooseFolder()}
                             />
                         </Tooltip>
-                        <Tooltip content="Add" relationship="label">
+                        <Tooltip content="Add" relationship="label" withArrow>
                             <Button
                                 appearance="subtle"
                                 size="small"

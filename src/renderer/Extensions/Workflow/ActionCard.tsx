@@ -22,7 +22,7 @@ export const ActionCard = ({ action, index, removeAction }: ActionCardProps) => 
                     </Body1Strong>
                 }
                 action={
-                    <Tooltip relationship="label" content={t("removeAction", { ns })}>
+                    <Tooltip relationship="label" content={t("removeAction", { ns })} withArrow>
                         <Button
                             size="small"
                             appearance="subtle"

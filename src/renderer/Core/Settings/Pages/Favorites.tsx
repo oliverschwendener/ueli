@@ -46,7 +46,7 @@ export const Favorites = () => {
                                     <Badge size="small" appearance="ghost">
                                         {s.description}
                                     </Badge>
-                                    <Tooltip content={t("remove", { ns })} relationship="label">
+                                    <Tooltip content={t("remove", { ns })} relationship="label" withArrow>
                                         <Button
                                             size="small"
                                             appearance="subtle"
