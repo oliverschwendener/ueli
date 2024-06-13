@@ -45,6 +45,7 @@ export class WorkflowExtension implements Extension {
                     argument: WorkflowActionArgumentEncoder.encodeArgument(workflow.actions),
                     description: t("searchResultItemActionDescription"),
                     handlerId: "Workflow",
+                    fluentIcon: "OpenRegular",
                 },
                 description: t("searchResultItemDescription"),
                 id: workflow.id,

@@ -29,9 +29,7 @@ export const useAppCssProperties = () => {
 
     const operatingSystem = contextBridge.getOperatingSystem();
 
-    const extendGlobalStyles = (cssProperties: CSSProperties) => {
-        return { ...{ height: "100vh" }, ...cssProperties };
-    };
+    const extendGlobalStyles = (cssProperties: CSSProperties) => ({ height: "100vh", ...cssProperties });
 
     const initialProperties: Record<OperatingSystem, CSSProperties> = {
         Linux: extendGlobalStyles({}),
@@ -50,7 +48,7 @@ export const useAppCssProperties = () => {
 
         const channels: Record<OperatingSystem, string[]> = {
             Linux: [],
-            macOS: ["nativeThemeChanged", "settingUpdated[window.vibrancy]"],
+            macOS: ["settingUpdated[window.vibrancy]"],
             Windows: [
                 "nativeThemeChanged",
                 "settingUpdated[window.backgroundMaterial]",
@@ -58,9 +56,23 @@ export const useAppCssProperties = () => {
             ],
         };
 
-        for (const channel of channels[operatingSystem]) {
-            contextBridge.ipcRenderer.on(channel, () => eventHandlers[operatingSystem]());
-        }
+        const registerEventListeners = () => {
+            for (const channel of channels[operatingSystem]) {
+                contextBridge.ipcRenderer.on(channel, eventHandlers[operatingSystem]);
+            }
+        };
+
+        const unregisterEventListeners = () => {
+            for (const channel of channels[operatingSystem]) {
+                contextBridge.ipcRenderer.off(channel, eventHandlers[operatingSystem]);
+            }
+        };
+
+        registerEventListeners();
+
+        return () => {
+            unregisterEventListeners();
+        };
     }, []);
 
     return { appCssProperties };

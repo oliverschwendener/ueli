@@ -1,5 +1,6 @@
-import { FluentProvider } from "@fluentui/react-components";
-import { useEffect } from "react";
+import { FluentProvider, Theme } from "@fluentui/react-components";
+import { IpcRendererEvent } from "electron";
+import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router";
 import { Extension } from "./Extension";
 import {
@@ -8,17 +9,17 @@ import {
     useFavorites,
     useScrollBar,
     useSearchResultItems,
-    useTheme,
 } from "./Hooks";
 import { useI18n } from "./I18n";
 import { Search } from "./Search";
 import { Settings } from "./Settings";
+import { getTheme } from "./Theme";
 import { ThemeContext } from "./ThemeContext";
 import { useAppCssProperties } from "./useAppCssProperties";
 
 export const App = () => {
     const { contextBridge } = useContextBridge();
-    const { theme, setTheme } = useTheme();
+    const [theme, setTheme] = useState<Theme>(getTheme(contextBridge));
     const { searchResultItems } = useSearchResultItems();
     const { excludedSearchResultItemIds } = useExcludedSearchResultItems();
     const { favorites } = useFavorites();
@@ -30,7 +31,18 @@ export const App = () => {
     useScrollBar({ document, theme });
 
     useEffect(() => {
-        contextBridge.ipcRenderer.on("navigateTo", (_, { pathname }: { pathname: string }) => navigate({ pathname }));
+        const navigateToEventHandler = (_: IpcRendererEvent, { pathname }: { pathname: string }) =>
+            navigate({ pathname });
+
+        const nativeThemeChangedEventHandler = () => setTheme(getTheme(contextBridge));
+
+        contextBridge.ipcRenderer.on("navigateTo", navigateToEventHandler);
+        contextBridge.ipcRenderer.on("nativeThemeChanged", nativeThemeChangedEventHandler);
+
+        return () => {
+            contextBridge.ipcRenderer.off("navigateTo", navigateToEventHandler);
+            contextBridge.ipcRenderer.off("nativeThemeChanged", nativeThemeChangedEventHandler);
+        };
     }, []);
 
     return (

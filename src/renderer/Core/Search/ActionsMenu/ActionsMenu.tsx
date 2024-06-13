@@ -1,3 +1,4 @@
+import { KeyboardShortcut } from "@Core/Components";
 import { useContextBridge } from "@Core/Hooks";
 import { type SearchResultItem, type SearchResultItemAction } from "@common/Core";
 import {
@@ -13,7 +14,6 @@ import {
     useId,
     useToastController,
 } from "@fluentui/react-components";
-import { FlashRegular } from "@fluentui/react-icons";
 import { useEffect, type Ref } from "react";
 import { useTranslation } from "react-i18next";
 import { FluentIcon } from "../FluentIcon";
@@ -25,6 +25,7 @@ type AdditionalActionsProps = {
     invokeAction: (action: SearchResultItemAction) => void;
     additionalActionsButtonRef: Ref<HTMLButtonElement>;
     onMenuClosed: () => void;
+    keyboardShortcut: string;
 };
 
 export const ActionsMenu = ({
@@ -33,6 +34,7 @@ export const ActionsMenu = ({
     invokeAction,
     additionalActionsButtonRef,
     onMenuClosed,
+    keyboardShortcut,
 }: AdditionalActionsProps) => {
     const { contextBridge } = useContextBridge();
     const { t } = useTranslation();
@@ -43,14 +45,19 @@ export const ActionsMenu = ({
     const actions = searchResultItem ? getActions(searchResultItem, favorites) : [];
 
     useEffect(() => {
-        contextBridge.ipcRenderer.on("copiedToClipboard", () =>
+        const copiedToClipboardHandler = () =>
             dispatchToast(
                 <Toast>
                     <ToastTitle>{t("copiedToClipboard", { ns: "general" })}</ToastTitle>
                 </Toast>,
                 { intent: "success", position: "bottom" },
-            ),
-        );
+            );
+
+        contextBridge.ipcRenderer.on("copiedToClipboard", copiedToClipboardHandler);
+
+        return () => {
+            contextBridge.ipcRenderer.off("copiedToClipboard", copiedToClipboardHandler);
+        };
     }, []);
 
     return (
@@ -63,10 +70,12 @@ export const ActionsMenu = ({
                         className="non-draggable-area"
                         size="small"
                         appearance="subtle"
-                        icon={<FlashRegular fontSize={14} />}
                         ref={additionalActionsButtonRef}
                     >
                         {t("actions", { ns: "general" })}
+                        <div style={{ paddingLeft: 5 }}>
+                            <KeyboardShortcut shortcut={keyboardShortcut} />
+                        </div>
                     </Button>
                 </MenuTrigger>
                 <MenuPopover>

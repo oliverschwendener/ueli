@@ -13,6 +13,7 @@ import type { Resources, Translations } from "./Translator";
 export type ContextBridge = {
     ipcRenderer: {
         on: IpcRenderer["on"];
+        off: IpcRenderer["off"];
         send: IpcRenderer["send"];
     };
 

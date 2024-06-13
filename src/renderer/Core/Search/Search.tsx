@@ -1,12 +1,14 @@
+import { KeyboardShortcut } from "@Core/Components";
+import { ThemeContext } from "@Core/ThemeContext";
 import type { SearchResultItem } from "@common/Core";
 import { Button, Input, Text } from "@fluentui/react-components";
 import { SearchRegular, SettingsRegular } from "@fluentui/react-icons";
-import { useEffect, useRef, type KeyboardEvent } from "react";
+import { useContext, useEffect, useRef, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { BaseLayout } from "../BaseLayout";
 import { Footer } from "../Footer";
-import { useContextBridge, useTheme } from "../Hooks";
+import { useContextBridge } from "../Hooks";
 import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
@@ -15,6 +17,11 @@ import { SearchHistory } from "./SearchHistory";
 import { useSearchHistoryController } from "./SearchHistoryController";
 import { SearchResultList } from "./SearchResultList";
 import { useSearchViewcontroller } from "./SearchViewController";
+
+type KeyboardShortcut = {
+    shortcut: string;
+    listener: (event: KeyboardEvent) => void;
+};
 
 type SearchProps = {
     searchResultItems: SearchResultItem[];
@@ -29,6 +36,7 @@ export const Search = ({
 }: SearchProps) => {
     const { t } = useTranslation("search");
     const { contextBridge } = useContextBridge();
+    const { theme } = useContext(ThemeContext);
 
     const {
         searchResult,
@@ -48,8 +56,6 @@ export const Search = ({
 
     const searchHistory = useSearchHistoryController({ contextBridge });
 
-    const { theme } = useTheme();
-
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -66,7 +72,7 @@ export const Search = ({
         "invokeSearchResultItem",
     );
 
-    const handleUserInputKeyDownEvent = (keyboardEvent: KeyboardEvent<HTMLElement>) => {
+    const handleUserInputKeyDownEvent = (keyboardEvent: ReactKeyboardEvent<HTMLElement>) => {
         const eventHandlers: KeyboardEventHandler[] = [
             {
                 listener: () => contextBridge.ipcRenderer.send("escapePressed"),
@@ -79,11 +85,6 @@ export const Search = ({
             {
                 listener: () => selectedItemId.next(),
                 needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowDown",
-            },
-            {
-                listener: () => additionalActionsButtonRef.current?.click(),
-                needsToInvokeListener: (keyboardEvent) =>
-                    keyboardEvent.key === "k" && (keyboardEvent.metaKey || keyboardEvent.ctrlKey),
             },
             {
                 listener: async () => {
@@ -123,6 +124,37 @@ export const Search = ({
         userInput.focus();
     };
 
+    const keyboardShortcuts: Record<string, KeyboardShortcut> = {
+        openSettings: {
+            shortcut: contextBridge.getOperatingSystem() === "macOS" ? "⌘+," : "⌃+,",
+            listener: (event: KeyboardEvent) => {
+                const shouldInvoke =
+                    contextBridge.getOperatingSystem() === "macOS"
+                        ? event.key === "," && event.metaKey
+                        : event.key === "," && event.ctrlKey;
+
+                if (shouldInvoke) {
+                    event.preventDefault();
+                    openSettings();
+                }
+            },
+        },
+        openAdditionalActionsMenu: {
+            shortcut: contextBridge.getOperatingSystem() === "macOS" ? "⌘+K" : "⌃+K",
+            listener: (event: KeyboardEvent) => {
+                const shouldInvoke =
+                    contextBridge.getOperatingSystem() === "macOS"
+                        ? event.key === "k" && event.metaKey
+                        : event.key === "k" && event.ctrlKey;
+
+                if (shouldInvoke) {
+                    event.preventDefault();
+                    additionalActionsButtonRef.current?.click();
+                }
+            },
+        },
+    };
+
     useEffect(() => {
         const setFocusOnUserInputAndSelectText = () => {
             userInput.focus();
@@ -133,10 +165,33 @@ export const Search = ({
 
         searchHistory.closeMenu();
 
-        contextBridge.ipcRenderer.on("windowFocused", () => {
+        const windowFocusedEventHandler = () => {
             setFocusOnUserInputAndSelectText();
             searchHistory.closeMenu();
-        });
+        };
+
+        contextBridge.ipcRenderer.on("windowFocused", windowFocusedEventHandler);
+
+        const registerAllEventListeners = () => {
+            for (const k of Object.keys(keyboardShortcuts)) {
+                const keyboardShortcut = keyboardShortcuts[k] as KeyboardShortcut;
+                window.addEventListener("keydown", keyboardShortcut.listener);
+            }
+        };
+
+        const unregisterAllEventListeners = () => {
+            for (const k of Object.keys(keyboardShortcuts)) {
+                const keyboardShortcut = keyboardShortcuts[k] as KeyboardShortcut;
+                window.removeEventListener("keydown", keyboardShortcut.listener);
+            }
+        };
+
+        registerAllEventListeners();
+
+        return () => {
+            contextBridge.ipcRenderer.off("windowFocused", windowFocusedEventHandler);
+            unregisterAllEventListeners();
+        };
     }, []);
 
     useEffect(() => {
@@ -243,14 +298,33 @@ export const Search = ({
                         icon={<SettingsRegular fontSize={14} />}
                     >
                         {t("settings", { ns: "general" })}
+                        <div style={{ paddingLeft: 5 }}>
+                            <KeyboardShortcut shortcut={keyboardShortcuts["openSettings"].shortcut} />
+                        </div>
                     </Button>
-                    <ActionsMenu
-                        searchResultItem={searchResult.current()}
-                        favorites={favoriteSearchResultItemIds}
-                        invokeAction={invokeAction}
-                        additionalActionsButtonRef={additionalActionsButtonRef}
-                        onMenuClosed={() => userInput.focus()}
-                    />
+                    <div>
+                        {searchResult.current() ? (
+                            <Button
+                                className="non-draggable-area"
+                                size="small"
+                                appearance="subtle"
+                                onClick={invokeSelectedSearchResultItem}
+                            >
+                                {searchResult.current()?.defaultAction.description}
+                                <div style={{ paddingLeft: 5 }}>
+                                    <KeyboardShortcut shortcut="↵" />
+                                </div>
+                            </Button>
+                        ) : null}
+                        <ActionsMenu
+                            searchResultItem={searchResult.current()}
+                            favorites={favoriteSearchResultItemIds}
+                            invokeAction={invokeAction}
+                            additionalActionsButtonRef={additionalActionsButtonRef}
+                            onMenuClosed={() => userInput.focus()}
+                            keyboardShortcut={keyboardShortcuts["openAdditionalActionsMenu"].shortcut}
+                        />
+                    </div>
                 </Footer>
             }
         />

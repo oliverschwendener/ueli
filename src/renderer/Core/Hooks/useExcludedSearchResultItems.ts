@@ -9,9 +9,17 @@ export const useExcludedSearchResultItems = () => {
     );
 
     useEffect(() => {
-        contextBridge.ipcRenderer.on("excludedSearchResultItemsUpdated", () => {
+        const excludedSearchResultItemsUpdatedEventHandler = () =>
             setExcludedSearchResultItemIds(contextBridge.getExcludedSearchResultItemIds());
-        });
+
+        contextBridge.ipcRenderer.on("excludedSearchResultItemsUpdated", excludedSearchResultItemsUpdatedEventHandler);
+
+        return () => {
+            contextBridge.ipcRenderer.off(
+                "excludedSearchResultItemsUpdated",
+                excludedSearchResultItemsUpdatedEventHandler,
+            );
+        };
     }, []);
 
     return { excludedSearchResultItemIds };
