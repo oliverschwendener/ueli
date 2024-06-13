@@ -105,6 +105,7 @@ export class BrowserBookmarks implements Extension {
 
     public getSettingKeysTriggeringRescan(): string[] {
         return [
+            "general.language",
             "imageGenerator.faviconApiProvider",
             getExtensionSettingKey(this.id, "browsers"),
             getExtensionSettingKey(this.id, "searchResultStyle"),
