@@ -3,7 +3,7 @@ import { ThemeContext } from "@Core/ThemeContext";
 import type { SearchResultItem } from "@common/Core";
 import { Button, Text } from "@fluentui/react-components";
 import { SettingsRegular } from "@fluentui/react-icons";
-import { useContext, useEffect, useRef, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import { useContext, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { BaseLayout } from "../BaseLayout";
@@ -41,6 +41,8 @@ export const Search = ({
     const { contextBridge } = useContextBridge();
     const { theme } = useContext(ThemeContext);
 
+    const [additionalActionsMenuIsOpen, setAdditionalActionsMenuIsOpen] = useState(false);
+
     const {
         searchResult,
         searchTerm,
@@ -58,7 +60,6 @@ export const Search = ({
     });
 
     const searchHistory = useSearchHistoryController({ contextBridge });
-
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -127,6 +128,15 @@ export const Search = ({
         userInput.focus();
     };
 
+    const toggleAdditionalActionsMenu = (open: boolean) => {
+        setAdditionalActionsMenuIsOpen(open);
+
+        if (!open) {
+            userInput.focus();
+            userInput.select();
+        }
+    };
+
     const keyboardShortcuts: Record<string, KeyboardShortcut> = {
         openSettings: {
             shortcut: contextBridge.getOperatingSystem() === "macOS" ? "⌘+," : "⌃+,",
@@ -171,6 +181,7 @@ export const Search = ({
         const windowFocusedEventHandler = () => {
             setFocusOnUserInputAndSelectText();
             searchHistory.closeMenu();
+            setAdditionalActionsMenuIsOpen(false);
         };
 
         contextBridge.ipcRenderer.on("windowFocused", windowFocusedEventHandler);
@@ -332,7 +343,8 @@ export const Search = ({
                             favorites={favoriteSearchResultItemIds}
                             invokeAction={invokeAction}
                             additionalActionsButtonRef={additionalActionsButtonRef}
-                            onMenuClosed={() => userInput.focus()}
+                            open={additionalActionsMenuIsOpen}
+                            onOpenChange={toggleAdditionalActionsMenu}
                             keyboardShortcut={keyboardShortcuts["openAdditionalActionsMenu"].shortcut}
                         />
                     </div>

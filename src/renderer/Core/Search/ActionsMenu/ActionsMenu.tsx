@@ -24,7 +24,8 @@ type AdditionalActionsProps = {
     favorites: string[];
     invokeAction: (action: SearchResultItemAction) => void;
     additionalActionsButtonRef: Ref<HTMLButtonElement>;
-    onMenuClosed: () => void;
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
     keyboardShortcut: string;
 };
 
@@ -33,7 +34,8 @@ export const ActionsMenu = ({
     favorites,
     invokeAction,
     additionalActionsButtonRef,
-    onMenuClosed,
+    open,
+    onOpenChange,
     keyboardShortcut,
 }: AdditionalActionsProps) => {
     const { contextBridge } = useContextBridge();
@@ -63,7 +65,7 @@ export const ActionsMenu = ({
     return (
         <>
             <Toaster toasterId={toasterId} />
-            <Menu onOpenChange={(_, { open }) => !open && onMenuClosed()}>
+            <Menu open={open} onOpenChange={(_, { open }) => onOpenChange(open)}>
                 <MenuTrigger>
                     <Button
                         disabled={!actions.length}
