@@ -182,7 +182,7 @@ export class WindowsSystemSettingsRepository implements SystemSettingRepository 
             new WindowsSystemSetting(
                 "Choose which folders appear on Start",
                 "ms-settings:personalization-start-places",
-                null,
+                this.getGenericImageFilePath(),
             ),
             new WindowsSystemSetting("Colors", "ms-settings:colors", this.getGenericImageFilePath()),
             new WindowsSystemSetting("Lock screen", "ms-settings:lockscreen", this.getGenericImageFilePath()),
@@ -211,7 +211,7 @@ export class WindowsSystemSettingsRepository implements SystemSettingRepository 
             new WindowsSystemSetting(
                 "App volume and device preferences",
                 "ms-settings:apps-volume (Added in Windows 10, version 1903)",
-                null,
+                this.getGenericImageFilePath(),
             ),
             new WindowsSystemSetting("Battery Saver", "ms-settings:batterysaver", this.getGenericImageFilePath()),
             new WindowsSystemSetting(
@@ -312,7 +312,7 @@ export class WindowsSystemSettingsRepository implements SystemSettingRepository 
             new WindowsSystemSetting(
                 "Launch Security Key Enrollment",
                 "ms-settings:signinoptions-launchsecuritykeyenrollment",
-                null,
+                this.getGenericImageFilePath(),
             ),
             new WindowsSystemSetting("Troubleshoot", "ms-settings:troubleshoot", this.getGenericImageFilePath()),
             new WindowsSystemSetting("Windows Security", "ms-settings:windowsdefender", this.getGenericImageFilePath()),
