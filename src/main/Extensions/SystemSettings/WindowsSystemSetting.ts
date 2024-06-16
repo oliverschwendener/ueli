@@ -15,6 +15,7 @@ export class WindowsSystemSetting implements SystemSetting {
                 description: "Open System Settings",
                 handlerId: "WindowsSystemSetting",
                 hideWindowAfterInvocation: true,
+                fluentIcon: "OpenRegular",
             },
             description: "System Setting",
             id: this.getId(),
