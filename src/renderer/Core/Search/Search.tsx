@@ -132,6 +132,32 @@ export const Search = ({
         }
     };
 
+    const windowKeyDownEventHandlers: {
+        validate: (e: KeyboardEvent) => boolean;
+        action: (e: KeyboardEvent) => void;
+    }[] = [
+        {
+            validate: (event) =>
+                contextBridge.getOperatingSystem() === "macOS"
+                    ? event.key === "," && event.metaKey
+                    : event.key === "," && event.ctrlKey,
+            action: (event) => {
+                event.preventDefault();
+                openSettings();
+            },
+        },
+        {
+            validate: (event) =>
+                contextBridge.getOperatingSystem() === "macOS"
+                    ? event.key === "k" && event.metaKey
+                    : event.key === "k" && event.ctrlKey,
+            action: (event) => {
+                event.preventDefault();
+                additionalActionsButtonRef.current?.click();
+            },
+        },
+    ];
+
     useEffect(() => {
         const setFocusOnUserInputAndSelectText = () => {
             userInput.focus();
@@ -149,32 +175,9 @@ export const Search = ({
         };
 
         const keyDownEventHandler = (event: KeyboardEvent) => {
-            const handlers = [
-                {
-                    validator: () =>
-                        contextBridge.getOperatingSystem() === "macOS"
-                            ? event.key === "," && event.metaKey
-                            : event.key === "," && event.ctrlKey,
-                    action: () => {
-                        event.preventDefault();
-                        openSettings();
-                    },
-                },
-                {
-                    validator: () =>
-                        contextBridge.getOperatingSystem() === "macOS"
-                            ? event.key === "k" && event.metaKey
-                            : event.key === "k" && event.ctrlKey,
-                    action: () => {
-                        event.preventDefault();
-                        additionalActionsButtonRef.current?.click();
-                    },
-                },
-            ];
-
-            for (const handler of handlers) {
-                if (handler.validator()) {
-                    handler.action();
+            for (const { action, validate } of windowKeyDownEventHandlers) {
+                if (validate(event)) {
+                    action(event);
                 }
             }
         };
