@@ -32,6 +32,7 @@ export const SearchResultList = ({
             style={{
                 display: "flex",
                 flexDirection: "column",
+                gap: 5,
             }}
         >
             {searchTerm?.length && !searchResultItems.length ? (

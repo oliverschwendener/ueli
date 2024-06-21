@@ -62,7 +62,7 @@ export const SearchResultListItem = ({
                 alignItems: "center",
                 justifyContent: "flex-start",
                 gap: 10,
-                height: 42,
+                height: 36,
                 width: "100%",
                 padding: 10,
                 userSelect: "none",
@@ -76,7 +76,7 @@ export const SearchResultListItem = ({
                     left: 0,
                     top: "50%",
                     backgroundColor: isSelected ? theme.colorBrandForeground1 : "transparent",
-                    height: 16,
+                    height: "45%",
                     width: 3,
                     transform: "translateY(-50%)",
                     borderRadius: theme.borderRadiusLarge,
@@ -89,8 +89,8 @@ export const SearchResultListItem = ({
                     flexDirection: "row",
                     flexShrink: 0,
                     justifyContent: "center",
-                    width: 24,
-                    height: 24,
+                    width: 20,
+                    height: 20,
                 }}
             >
                 <img
@@ -106,7 +106,6 @@ export const SearchResultListItem = ({
             </div>
             <Text
                 size={300}
-                weight={isSelected ? "medium" : "regular"}
                 style={{
                     width: "100%",
                     overflow: "hidden",
