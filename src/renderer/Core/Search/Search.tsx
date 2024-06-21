@@ -123,6 +123,8 @@ export const Search = ({
         userInput.focus();
     };
 
+    const showKeyboardShortcuts = contextBridge.getSettingValue<boolean>("appearance.showKeyboardShortcuts", true);
+
     const toggleAdditionalActionsMenu = (open: boolean) => {
         setAdditionalActionsMenuIsOpen(open);
 
@@ -303,11 +305,13 @@ export const Search = ({
                         icon={<SettingsRegular fontSize={14} />}
                     >
                         {t("settings", { ns: "general" })}
-                        <div style={{ paddingLeft: 5 }}>
-                            <KeyboardShortcut
-                                shortcut={contextBridge.getOperatingSystem() === "macOS" ? "⌘+," : "^+,"}
-                            />
-                        </div>
+                        {showKeyboardShortcuts && (
+                            <div style={{ paddingLeft: 5 }}>
+                                <KeyboardShortcut
+                                    shortcut={contextBridge.getOperatingSystem() === "macOS" ? "⌘+," : "^+,"}
+                                />
+                            </div>
+                        )}
                     </Button>
                     <div>
                         {searchResult.current() ? (
@@ -318,9 +322,11 @@ export const Search = ({
                                 onClick={invokeSelectedSearchResultItem}
                             >
                                 {searchResult.current()?.defaultAction.description}
-                                <div style={{ paddingLeft: 5 }}>
-                                    <KeyboardShortcut shortcut="↵" />
-                                </div>
+                                {showKeyboardShortcuts && (
+                                    <div style={{ paddingLeft: 5 }}>
+                                        <KeyboardShortcut shortcut="↵" />
+                                    </div>
+                                )}
                             </Button>
                         ) : null}
                         <ActionsMenu

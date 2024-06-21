@@ -46,6 +46,8 @@ export const ActionsMenu = ({
 
     const actions = searchResultItem ? getActions(searchResultItem, favorites) : [];
 
+    const showKeyboardShortcuts = contextBridge.getSettingValue<boolean>("appearance.showKeyboardShortcuts", true);
+
     useEffect(() => {
         const copiedToClipboardHandler = () =>
             dispatchToast(
@@ -75,9 +77,11 @@ export const ActionsMenu = ({
                         ref={additionalActionsButtonRef}
                     >
                         {t("actions", { ns: "general" })}
-                        <div style={{ paddingLeft: 5 }}>
-                            <KeyboardShortcut shortcut={keyboardShortcut} />
-                        </div>
+                        {showKeyboardShortcuts && (
+                            <div style={{ paddingLeft: 5 }}>
+                                <KeyboardShortcut shortcut={keyboardShortcut} />
+                            </div>
+                        )}
                     </Button>
                 </MenuTrigger>
                 <MenuPopover>
