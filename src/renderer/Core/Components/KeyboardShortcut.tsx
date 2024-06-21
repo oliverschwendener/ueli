@@ -14,9 +14,7 @@ export const KeyboardShortcut = ({ shortcut }: KeyboardShortcutProps) => {
                 <kbd
                     key={`keyboard-shortcut-part-${part}`}
                     style={{
-                        borderWidth: 1,
-                        borderStyle: "solid",
-                        borderColor: theme.colorNeutralStroke1,
+                        backgroundColor: theme.colorNeutralBackground5,
                         borderRadius: theme.borderRadiusMedium,
                         padding: "0px 5px",
                     }}

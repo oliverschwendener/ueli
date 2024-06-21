@@ -21,11 +21,6 @@ import { useSearchHistoryController } from "./SearchHistoryController";
 import { SearchResultList } from "./SearchResultList";
 import { useSearchViewController } from "./SearchViewController";
 
-type KeyboardShortcut = {
-    shortcut: string;
-    listener: (event: KeyboardEvent) => void;
-};
-
 type SearchProps = {
     searchResultItems: SearchResultItem[];
     excludedSearchResultItemIds: string[];
@@ -137,37 +132,6 @@ export const Search = ({
         }
     };
 
-    const keyboardShortcuts: Record<string, KeyboardShortcut> = {
-        openSettings: {
-            shortcut: contextBridge.getOperatingSystem() === "macOS" ? "⌘+," : "⌃+,",
-            listener: (event: KeyboardEvent) => {
-                const shouldInvoke =
-                    contextBridge.getOperatingSystem() === "macOS"
-                        ? event.key === "," && event.metaKey
-                        : event.key === "," && event.ctrlKey;
-
-                if (shouldInvoke) {
-                    event.preventDefault();
-                    openSettings();
-                }
-            },
-        },
-        openAdditionalActionsMenu: {
-            shortcut: contextBridge.getOperatingSystem() === "macOS" ? "⌘+K" : "⌃+K",
-            listener: (event: KeyboardEvent) => {
-                const shouldInvoke =
-                    contextBridge.getOperatingSystem() === "macOS"
-                        ? event.key === "k" && event.metaKey
-                        : event.key === "k" && event.ctrlKey;
-
-                if (shouldInvoke) {
-                    event.preventDefault();
-                    additionalActionsButtonRef.current?.click();
-                }
-            },
-        },
-    };
-
     useEffect(() => {
         const setFocusOnUserInputAndSelectText = () => {
             userInput.focus();
@@ -184,27 +148,43 @@ export const Search = ({
             setAdditionalActionsMenuIsOpen(false);
         };
 
+        const keyDownEventHandler = (event: KeyboardEvent) => {
+            const handlers = [
+                {
+                    validator: () =>
+                        contextBridge.getOperatingSystem() === "macOS"
+                            ? event.key === "," && event.metaKey
+                            : event.key === "," && event.ctrlKey,
+                    action: () => {
+                        event.preventDefault();
+                        openSettings();
+                    },
+                },
+                {
+                    validator: () =>
+                        contextBridge.getOperatingSystem() === "macOS"
+                            ? event.key === "k" && event.metaKey
+                            : event.key === "k" && event.ctrlKey,
+                    action: () => {
+                        event.preventDefault();
+                        additionalActionsButtonRef.current?.click();
+                    },
+                },
+            ];
+
+            for (const handler of handlers) {
+                if (handler.validator()) {
+                    handler.action();
+                }
+            }
+        };
+
         contextBridge.ipcRenderer.on("windowFocused", windowFocusedEventHandler);
-
-        const registerAllEventListeners = () => {
-            for (const k of Object.keys(keyboardShortcuts)) {
-                const keyboardShortcut = keyboardShortcuts[k] as KeyboardShortcut;
-                window.addEventListener("keydown", keyboardShortcut.listener);
-            }
-        };
-
-        const unregisterAllEventListeners = () => {
-            for (const k of Object.keys(keyboardShortcuts)) {
-                const keyboardShortcut = keyboardShortcuts[k] as KeyboardShortcut;
-                window.removeEventListener("keydown", keyboardShortcut.listener);
-            }
-        };
-
-        registerAllEventListeners();
+        window.addEventListener("keydown", keyDownEventHandler);
 
         return () => {
             contextBridge.ipcRenderer.off("windowFocused", windowFocusedEventHandler);
-            unregisterAllEventListeners();
+            window.removeEventListener("keydown", keyDownEventHandler);
         };
     }, []);
 
@@ -321,7 +301,9 @@ export const Search = ({
                     >
                         {t("settings", { ns: "general" })}
                         <div style={{ paddingLeft: 5 }}>
-                            <KeyboardShortcut shortcut={keyboardShortcuts["openSettings"].shortcut} />
+                            <KeyboardShortcut
+                                shortcut={contextBridge.getOperatingSystem() === "macOS" ? "⌘+," : "^+,"}
+                            />
                         </div>
                     </Button>
                     <div>
@@ -345,7 +327,7 @@ export const Search = ({
                             additionalActionsButtonRef={additionalActionsButtonRef}
                             open={additionalActionsMenuIsOpen}
                             onOpenChange={toggleAdditionalActionsMenu}
-                            keyboardShortcut={keyboardShortcuts["openAdditionalActionsMenu"].shortcut}
+                            keyboardShortcut={contextBridge.getOperatingSystem() === "macOS" ? "⌘+K" : "^+K"}
                         />
                     </div>
                 </Footer>
