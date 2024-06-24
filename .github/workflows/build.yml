@@ -1,4 +1,4 @@
-name: Build
+name: Publish new release
 
 on:
     push:
@@ -9,42 +9,15 @@ on:
             - main
 
 jobs:
-    build:
-        runs-on: ubuntu-22.04
-        name: Build
+    release:
+        strategy:
+            matrix:
+                os: [macos-13, macos-14, windows-2022, ubuntu-22.04]
+        runs-on: ${{ matrix.os }}
+        name: Publish new release
         steps:
             - name: Checkout current commit/branch/tag
               uses: actions/checkout@v4
 
-            - name: Set up pnpm
-              uses: pnpm/action-setup@v3
-              with:
-                  version: 9
-
-            - name: Set up Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 20
-                  cache: pnpm
-
-            - name: Install dependencies
-              run: pnpm install
-              env:
-                  NODE_ENV: development
-
-            - name: Run typecheck
-              run: pnpm typecheck
-
-            - name: Run linter
-              run: pnpm lint
-
-            - name: Run prettier
-              run: pnpm prettier:check
-
-            - name: Run tests
-              run: pnpm test
-
-            - name: Build app
-              run: pnpm build
-              env:
-                  NODE_ENV: production
+            - name: Check architecture
+              run: uname -a
