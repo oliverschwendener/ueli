@@ -4,10 +4,7 @@
  */
 module.exports = {
     asar: true,
-    asarUnpack: [
-        "**/node_modules/sharp/**/*",
-        "**/node_modules/@img/**/*"
-    ],
+    asarUnpack: ["**/node_modules/sharp/**/*", "**/node_modules/@img/**/*"],
     productName: "Ueli",
     directories: {
         output: "release",
@@ -21,10 +18,7 @@ module.exports = {
         hardenedRuntime: true,
         gatekeeperAssess: false,
         icon: "assets/Build/app-icon-dark.png",
-        target: [
-            { target: "dmg", arch: "universal" },
-            { target: "zip", arch: "universal" },
-        ],
+        target: [{ target: "dmg" }, { target: "zip" }],
     },
     win: {
         icon: "assets/Build/app-icon-dark-transparent.png",
