@@ -1,3 +1,2 @@
-export * from "./";
-export * from "./SearchFilter";
 export * from "./elementIsVisible";
+export * from "./SearchFilter";
