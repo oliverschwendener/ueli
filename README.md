@@ -1,6 +1,6 @@
 # Ueli
 
-Ueli is a keystroke launcher for Windows, macOS and Linux.
+Ueli is a cross-platform keystroke launcher.
 
 ![Screenshot Dark Windows](docs/screenshot-windows-dark.png)
 

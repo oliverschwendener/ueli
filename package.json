@@ -1,6 +1,6 @@
 {
     "name": "ueli",
-    "description": "Keystroke launcher for Windows, macOS and Linux",
+    "description": "Cross-Platform Keystroke Launcher",
     "version": "9.0.1",
     "license": "MIT",
     "author": {
