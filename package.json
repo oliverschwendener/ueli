@@ -28,7 +28,7 @@
         "typecheck": "pnpm typecheck:main && pnpm typecheck:preload && pnpm typecheck:renderer"
     },
     "devDependencies": {
-        "@types/better-sqlite3": "^7.6.10",
+        "@types/better-sqlite3": "^7.6.11",
         "@types/node": "^20.8.6",
         "@types/react": "^18.2.48",
         "@types/react-dom": "^18.2.18",
@@ -37,9 +37,10 @@
         "@typescript-eslint/parser": "^7.15.0",
         "@vitejs/plugin-react": "^4.2.1",
         "@vitest/coverage-v8": "^1.6.0",
-        "electron": "^30.0.1",
+        "electron": "^31.1.0",
         "electron-builder": "^24.13.3",
         "eslint": "^8.57.0",
+        "node-abi": "^3.65.0",
         "prettier": "^3.3.2",
         "prettier-plugin-organize-imports": "^3.2.4",
         "tree-kill": "^1.2.2",
@@ -53,7 +54,7 @@
     "dependencies": {
         "@fluentui/react-components": "^9.51.0",
         "@fluentui/react-icons": "^2.0.239",
-        "better-sqlite3": "^9.6.0",
+        "better-sqlite3": "^11.1.2",
         "fuse.js": "^7.0.0",
         "fuzzysort": "^3.0.1",
         "i18next": "^23.8.1",
