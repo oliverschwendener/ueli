@@ -1,11 +1,11 @@
+import { useContextBridge, useSetting } from "@Core/Hooks";
+import { getAvailableThemes, getTheme } from "@Core/Theme";
 import { darkTheme, lightTheme } from "@Core/Theme/defaultValues";
+import { ThemeContext } from "@Core/ThemeContext";
 import { Body1, Button, Dropdown, Input, Option, Tooltip, type BrandVariants } from "@fluentui/react-components";
 import { ArrowCounterclockwiseRegular } from "@fluentui/react-icons";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { useContextBridge, useSetting } from "../../../Hooks";
-import { getAvailableThemes, getTheme } from "../../../Theme";
-import { ThemeContext } from "../../../ThemeContext";
 import { Setting } from "../../Setting";
 import { SettingGroup } from "../../SettingGroup";
 import { SettingGroupList } from "../../SettingGroupList";
