@@ -33,7 +33,7 @@ export class WindowsApplication implements Application {
                     argument: this.filePath,
                     description: "Open application as administrator",
                     descriptionTranslation: {
-                        key: "openApplicatioAsAdministrator",
+                        key: "openApplicationAsAdministrator",
                         namespace: "extension[ApplicationSearch]",
                     },
                     fluentIcon: "ShieldPersonRegular",
