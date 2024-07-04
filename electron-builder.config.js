@@ -15,8 +15,6 @@ module.exports = {
         version: process.env.VITE_APP_VERSION,
     },
     mac: {
-        hardenedRuntime: true,
-        gatekeeperAssess: false,
         icon: "assets/Build/app-icon-dark.png",
         target: [{ target: "dmg" }, { target: "zip" }],
     },
