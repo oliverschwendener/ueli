@@ -15,6 +15,7 @@ module.exports = {
         version: process.env.VITE_APP_VERSION,
     },
     mac: {
+        category: "public.app-category.utilities",
         icon: "assets/Build/app-icon-dark.png",
         target: [{ target: "dmg" }, { target: "zip" }],
     },
