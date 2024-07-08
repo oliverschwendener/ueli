@@ -16,34 +16,29 @@ jobs:
             - name: Checkout current commit/branch/tag
               uses: actions/checkout@v4
 
-            - name: Set up pnpm
-              uses: pnpm/action-setup@v4
-              with:
-                  version: 9
-
             - name: Set up Node.js
               uses: actions/setup-node@v4
               with:
                   node-version: 20
 
             - name: Install dependencies
-              run: pnpm install
+              run: npm install
               env:
                   NODE_ENV: development
 
             - name: Run typecheck
-              run: pnpm typecheck
+              run: npm run typecheck
 
             - name: Run linter
-              run: pnpm lint
+              run: npm run lint
 
             - name: Run prettier
-              run: pnpm prettier:check
+              run: npm run prettier:check
 
             - name: Run tests
-              run: pnpm test
+              run: npm run test
 
             - name: Build app
-              run: pnpm build
+              run: npm run build
               env:
                   NODE_ENV: production

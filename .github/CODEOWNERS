@@ -13,7 +13,7 @@ docs @oliverschwendener
 electron-builder.config.js @oliverschwendener
 LICENSE @oliverschwendener
 package.json @oliverschwendener
-pnpm-lock.yaml @oliverschwendener
+package-lock.json @oliverschwendener
 README.md @oliverschwendener
 tsconfig.node.json @oliverschwendener
 tsconfig.renderer.json @oliverschwendener
