@@ -25,7 +25,7 @@
         "typecheck:main": "tsc -p src/main/tsconfig.json --noEmit",
         "typecheck:preload": "tsc -p src/preload/tsconfig.json --noEmit",
         "typecheck:renderer": "tsc -p src/renderer/tsconfig.json --noEmit",
-        "typecheck": "npm typecheck:main && npm typecheck:preload && npm typecheck:renderer"
+        "typecheck": "npm run typecheck:main && npm run typecheck:preload && npm run typecheck:renderer"
     },
     "devDependencies": {
         "@types/better-sqlite3": "^7.6.11",
