@@ -2,7 +2,7 @@
  * @type {import('electron-builder').Configuration}
  * @see https://www.electron.build/configuration/configuration
  */
-module.exports = {
+const baseConfig = {
     asar: true,
     asarUnpack: ["**/node_modules/sharp/**/*", "**/node_modules/@img/**/*"],
     productName: "Ueli",
@@ -14,27 +14,45 @@ module.exports = {
     extraMetadata: {
         version: process.env.VITE_APP_VERSION,
     },
-    mac: {
-        category: "public.app-category.utilities",
-        icon: "assets/Build/app-icon-dark.png",
-        target: [{ target: "dmg" }, { target: "zip" }],
+};
+
+/**
+ * @type {Record<NodeJS.Platform, import('electron-builder').Configuration>}
+ */
+const platformSpecificConfig = {
+    darwin: {
+        ...baseConfig,
+        afterPack: "./build/macos/codeSign.js",
+        mac: {
+            category: "public.app-category.utilities",
+            icon: "assets/Build/app-icon-dark.png",
+            target: [{ target: "dmg" }, { target: "zip" }],
+        },
     },
-    win: {
-        icon: "assets/Build/app-icon-dark-transparent.png",
-        target: [{ target: "msi" }, { target: "nsis" }, { target: "zip" }, { target: "appx" }],
-    },
-    appx: {
-        applicationId: "OliverSchwendener.Ueli",
-        backgroundColor: "#1F1F1F",
-        displayName: "Ueli",
-        identityName: "1915OliverSchwendener.Ueli",
-        publisher: "CN=AD6BF16D-50E3-4FD4-B769-78A606AFF75E",
-        publisherDisplayName: "Oliver Schwendener",
-        languages: ["en-US", "de-CH"],
+    win32: {
+        ...baseConfig,
+        appx: {
+            applicationId: "OliverSchwendener.Ueli",
+            backgroundColor: "#1F1F1F",
+            displayName: "Ueli",
+            identityName: "1915OliverSchwendener.Ueli",
+            publisher: "CN=AD6BF16D-50E3-4FD4-B769-78A606AFF75E",
+            publisherDisplayName: "Oliver Schwendener",
+            languages: ["en-US", "de-CH"],
+        },
+        win: {
+            icon: "assets/Build/app-icon-dark-transparent.png",
+            target: [{ target: "msi" }, { target: "nsis" }, { target: "zip" }, { target: "appx" }],
+        },
     },
     linux: {
-        icon: "assets/Build/app-icon-dark.png",
-        category: "Utility",
-        target: [{ target: "AppImage" }, { target: "deb" }, { target: "zip" }],
+        ...baseConfig,
+        linux: {
+            icon: "assets/Build/app-icon-dark.png",
+            category: "Utility",
+            target: [{ target: "AppImage" }, { target: "deb" }, { target: "zip" }],
+        },
     },
 };
+
+module.exports = platformSpecificConfig[process.platform];
