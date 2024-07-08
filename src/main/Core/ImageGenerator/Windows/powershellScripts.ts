@@ -24,6 +24,7 @@ function Get-Associated-Icon {
         [string]$OutFilePath
     )
 
+    $ErrorActionPreference = "SilentlyContinue"
     Add-Type -AssemblyName System.Drawing
 
     if ($InFilePath.EndsWith(".lnk")) {
