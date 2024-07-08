@@ -21,7 +21,9 @@ describe(PowershellUtility, () => {
         );
 
         expect(await powershellUtility.executeCommand("test command")).toBe("test output");
-        expect(executeCommandMock).toHaveBeenCalledWith(`powershell -Command "& {test command}"`);
+        expect(executeCommandMock).toHaveBeenCalledWith(
+            `${PowershellUtility.PowershellPath} -Command "& {test command}"`,
+        );
     });
 
     it("should write a temporary file, execute it and remove the file again", async () => {
@@ -51,7 +53,7 @@ describe(PowershellUtility, () => {
             join("temp", "directory", "randomHexString.ps1"),
         );
         expect(executeCommandMock).toHaveBeenCalledWith(
-            `powershell -NoProfile -NonInteractive -ExecutionPolicy bypass -File "${join("temp", "directory", "randomHexString.ps1")}"`,
+            `${PowershellUtility.PowershellPath} -NoProfile -NonInteractive -ExecutionPolicy bypass -File "${join("temp", "directory", "randomHexString.ps1")}"`,
         );
         expect(getRandomHexStringMock).toHaveBeenCalledOnce();
     });
