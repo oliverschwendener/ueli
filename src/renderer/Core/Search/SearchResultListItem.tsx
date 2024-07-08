@@ -94,6 +94,7 @@ export const SearchResultListItem = ({
                 }}
             >
                 <img
+                    loading="lazy"
                     style={{
                         maxHeight: "100%",
                         maxWidth: "100%",
