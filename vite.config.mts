@@ -92,6 +92,7 @@ export default defineConfig(({ command }) => {
         clearScreen: false,
         test: {
             root: "src",
+            isolate: false, // This makes the tests run faster
             coverage: {
                 include: ["**/*.ts"],
                 exclude: ["**/index.ts", "**/*.test.ts"],
