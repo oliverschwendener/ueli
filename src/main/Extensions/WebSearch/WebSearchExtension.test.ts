@@ -108,24 +108,17 @@ describe(WebSearchExtension, () => {
 
     it("should return the correct image url", () => {
         const getExtensionAssetPathMock = vi.fn().mockReturnValue("assets/asset.png");
-        const getValueMock = vi.fn().mockReturnValue("Google");
 
         const assetPathResolver = <AssetPathResolver>{
             getExtensionAssetPath: (e, a) => getExtensionAssetPathMock(e, a),
         };
 
-        const settingsManager = <SettingsManager>{ getValue: (key, defaultValue) => getValueMock(key, defaultValue) };
+        const settingsManager = <SettingsManager>{};
 
-        const googleWebSearchEngine = <WebSearchEngine>{
-            getName: () => "Google",
-            getImageFileName: () => "google.png",
-        };
-
-        const webSearchExtension = new WebSearchExtension(assetPathResolver, settingsManager, [googleWebSearchEngine]);
+        const webSearchExtension = new WebSearchExtension(assetPathResolver, settingsManager, []);
 
         expect(webSearchExtension.getImage()).toEqual(<Image>{ url: "file://assets/asset.png" });
-        expect(getExtensionAssetPathMock).toHaveBeenCalledWith("WebSearch", "google.png");
-        expect(getValueMock).toHaveBeenCalledWith(getExtensionSettingKey("WebSearch", "searchEngine"), "Google");
+        expect(getExtensionAssetPathMock).toHaveBeenCalledWith("WebSearch", "websearch.png");
     });
 
     it("should return the correct asset file path", () => {
