@@ -121,7 +121,7 @@ export class WebSearchExtension implements Extension {
 
     public getImage(): Image {
         return {
-            url: this.getSearchResultImageUrl(this.getCurrentWebSearchEngine()),
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "websearch.png")}`,
         };
     }
 
