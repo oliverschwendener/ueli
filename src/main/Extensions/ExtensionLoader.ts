@@ -15,6 +15,7 @@ import { UeliCommandModule } from "./UeliCommand";
 import { WebSearchExtensionModule } from "./WebSearch";
 import { WindowsControlPanelModule } from "./WindowsControlPanel";
 import { WorkflowExtensionModule } from "./Workflow";
+import { EnglishDictionaryModule } from "./EnglishDictionary/EnglishDictionaryModule";
 
 export class ExtensionLoader {
     private static getAllExtensionModules(): ExtensionModule[] {
@@ -33,6 +34,7 @@ export class ExtensionLoader {
             new WebSearchExtensionModule(),
             new WindowsControlPanelModule(),
             new WorkflowExtensionModule(),
+            new EnglishDictionaryModule(),
         ];
     }
 
