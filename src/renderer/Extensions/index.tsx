@@ -10,6 +10,7 @@ import { TerminalLauncherSettings } from "./TerminalLauncher";
 import { WebSearchExtension } from "./WebSearch";
 import { WebSearchSettings } from "./WebSearch/WebSearchSettings";
 import { WorkflowSettings } from "./Workflow";
+import { EnglishDictionary} from "./EnglishDictionary";
 
 type ExtensionReactElements = {
     extension?: ReactElement;
@@ -50,6 +51,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         Workflow: {
             settings: <WorkflowSettings />,
         },
+        EnglishDictionary: {
+            extension: <EnglishDictionary {...props} />,
+        }
     };
 
     return extensions[extensionId];
