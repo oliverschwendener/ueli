@@ -77,8 +77,8 @@ export class WindowsApplicationRepository implements ApplicationRepository {
     }
 
     private getPowershellScript(folderPaths: string[], fileExtensions: string[]): string {
-        const concatenatedFolderPaths = folderPaths.map((folderPath) => `'${folderPath}'`).join(",");
-        const concatenatedFileExtensions = fileExtensions.map((fileExtension) => `'*.${fileExtension}'`).join(",");
+        const concatenatedFolderPaths = folderPaths.map((folderPath) => `"${folderPath}"`).join(",");
+        const concatenatedFileExtensions = fileExtensions.map((fileExtension) => `"*.${fileExtension}"`).join(",");
 
         const { getWindowsAppsPowershellScript } = usePowershellScripts();
 
