@@ -52,8 +52,8 @@
         "vitest": "^2.0.1"
     },
     "dependencies": {
-        "@fluentui/react-components": "^9.51.0",
-        "@fluentui/react-icons": "^2.0.239",
+        "@fluentui/react-components": "^9.54.4",
+        "@fluentui/react-icons": "^2.0.249",
         "better-sqlite3": "^11.1.2",
         "fuse.js": "^7.0.0",
         "fuzzysort": "^3.0.1",
