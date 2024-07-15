@@ -100,6 +100,7 @@ export const Extensions = () => {
                                         >
                                             <div style={{ width: 20, height: 20 }}>
                                                 <img
+                                                    alt={name}
                                                     style={{ maxWidth: "100%", maxHeight: "100%" }}
                                                     src={getImageUrl({
                                                         image,

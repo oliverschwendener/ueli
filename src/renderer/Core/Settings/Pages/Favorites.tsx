@@ -33,6 +33,7 @@ export const Favorites = () => {
                             contentBefore={
                                 <div style={{ width: 16, height: 16, display: "flex", alignItems: "center" }}>
                                     <img
+                                        alt={s.name}
                                         style={{ maxWidth: "100%", maxHeight: "100%" }}
                                         src={getImageUrl({
                                             image: s.image,
