@@ -1,6 +1,5 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
-import type { Logger } from "@Core/Logger";
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
 import { Image } from "@common/Core/Image";
 import { Buffer } from "buffer";
@@ -20,7 +19,6 @@ export class Base64Conversion implements Extension {
 
     public constructor(
         private readonly assetPathResolver: AssetPathResolver,
-        private readonly logger: Logger,
     ) {}
 
     public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {

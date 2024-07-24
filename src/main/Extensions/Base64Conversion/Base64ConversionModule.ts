@@ -9,7 +9,6 @@ export class Base64ConversionModule implements ExtensionModule {
         return {
             extension: new Base64Conversion(
                 dependencyRegistry.get("AssetPathResolver"),
-                dependencyRegistry.get("Logger"),
             ),
         };
     }
