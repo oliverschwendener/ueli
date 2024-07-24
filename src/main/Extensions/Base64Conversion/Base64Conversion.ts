@@ -17,9 +17,7 @@ export class Base64Conversion implements Extension {
 
     private readonly defaultSettings = {};
 
-    public constructor(
-        private readonly assetPathResolver: AssetPathResolver,
-    ) {}
+    public constructor(private readonly assetPathResolver: AssetPathResolver) {}
 
     public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
         const parts = searchTerm.trim().split(" ");
