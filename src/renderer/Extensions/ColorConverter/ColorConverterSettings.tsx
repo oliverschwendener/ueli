@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 export const ColorConverterSettings = () => {
     const { t } = useTranslation("extension[ColorConverter]");
 
-    const allOptions = ["CMYK", "HEX", "HLS", "RGB"];
+    const allOptions = ["HEX", "HLS", "RGB"];
 
     const { value: enabledColorSystems, updateValue: setEnabledColorSystems } = useExtensionSetting<string[]>({
         extensionId: "ColorConverter",

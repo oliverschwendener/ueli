@@ -22,7 +22,7 @@ export class ColorConverterExtension implements Extension {
     };
 
     private readonly defaultSettings = {
-        colorSystems: ["CMYK", "HEX", "HLS", "RGB"],
+        colorSystems: ["HEX", "HLS", "RGB"],
     };
 
     public constructor(
@@ -73,7 +73,6 @@ export class ColorConverterExtension implements Extension {
         }
 
         const convertedColors: { system: string; value: string }[] = [
-            { system: "CMYK", value: color.cmyk().string() },
             { system: "HEX", value: color.hex() },
             { system: "HLS", value: color.hsl().string() },
             { system: "RGB", value: color.rgb().string() },
