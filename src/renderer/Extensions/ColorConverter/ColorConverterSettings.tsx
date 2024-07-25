@@ -6,12 +6,13 @@ import { Combobox, Option } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const ColorConverterSettings = () => {
-    const { t } = useTranslation("extension[ColorConverter]");
+    const extensionId = "ColorConverter";
+    const { t } = useTranslation(`extension[${extensionId}]`);
 
     const allOptions = ["HEX", "HLS", "RGB"];
 
     const { value: enabledColorSystems, updateValue: setEnabledColorSystems } = useExtensionSetting<string[]>({
-        extensionId: "ColorConverter",
+        extensionId,
         key: "colorSystems",
     });
 
