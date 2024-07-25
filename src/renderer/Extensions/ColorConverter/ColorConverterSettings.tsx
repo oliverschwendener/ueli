@@ -9,11 +9,11 @@ export const ColorConverterSettings = () => {
     const extensionId = "ColorConverter";
     const { t } = useTranslation(`extension[${extensionId}]`);
 
-    const allOptions = ["HEX", "HLS", "RGB"];
+    const allFormats = ["HEX", "HLS", "RGB"];
 
-    const { value: enabledColorSystems, updateValue: setEnabledColorSystems } = useExtensionSetting<string[]>({
+    const { value: enabledFormats, updateValue: setEnabledFormats } = useExtensionSetting<string[]>({
         extensionId,
-        key: "colorSystems",
+        key: "formats",
     });
 
     return (
@@ -22,18 +22,18 @@ export const ColorConverterSettings = () => {
                 <Setting
                     control={
                         <Combobox
-                            placeholder={t("selectAColorSystem")}
-                            value={enabledColorSystems.join(", ")}
+                            placeholder={t("selectAColorFormat")}
+                            value={enabledFormats.join(", ")}
                             multiselect
-                            selectedOptions={enabledColorSystems}
-                            onOptionSelect={(_, { selectedOptions }) => setEnabledColorSystems(selectedOptions)}
+                            selectedOptions={enabledFormats}
+                            onOptionSelect={(_, { selectedOptions }) => setEnabledFormats(selectedOptions)}
                         >
-                            {allOptions.map((option) => (
+                            {allFormats.map((option) => (
                                 <Option key={option}>{option}</Option>
                             ))}
                         </Combobox>
                     }
-                    label={t("colorSystems")}
+                    label={t("formats")}
                 />
             </SettingGroup>
         </SettingGroupList>
