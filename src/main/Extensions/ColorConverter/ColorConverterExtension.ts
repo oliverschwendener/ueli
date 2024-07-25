@@ -23,7 +23,7 @@ export class ColorConverterExtension implements Extension {
     };
 
     private readonly defaultSettings = {
-        colorSystems: ["HEX", "HLS", "RGB"],
+        formats: ["HEX", "HLS", "RGB"],
     };
 
     public constructor(
@@ -54,16 +54,16 @@ export class ColorConverterExtension implements Extension {
     public getI18nResources(): Resources<Translations> {
         return {
             "en-US": {
-                colorSystems: "Color Systems",
-                selectAColorSystem: "Select a color system",
-                color: "{{ colorSystem }} Color",
+                formats: "Color Formats",
+                selectAColorFormat: "Select a color format",
+                color: "{{ format }} Color",
                 copyColorToClipboard: "Copy color to clipboard",
                 extensionName: "Color Converter",
             },
             "de-CH": {
-                colorSystems: "Farbsysteme",
-                selectAColorSystem: "Wähle ein Farbsystem",
-                color: "{{ colorSystem }} Farbe",
+                formats: "Farbformate",
+                selectAColorFormat: "Wähle ein Farbformat",
+                color: "{{ format }} Farbe",
                 copyColorToClipboard: "Farbe in die Zwischenablage kopieren",
                 extensionName: "Farbkonverter",
             },
@@ -75,8 +75,8 @@ export class ColorConverterExtension implements Extension {
 
         return this.colorConverter
             .convertFromString(searchTerm)
-            .filter(({ colorSystem }) => this.getEnabledColorSystems().includes(colorSystem))
-            .map(({ colorSystem, value }) => ({
+            .filter(({ format }) => this.getEnabledColorFormats().includes(format))
+            .map(({ format, value }) => ({
                 defaultAction: SearchResultItemActionUtility.createCopyToClipboardAction({
                     textToCopy: value,
                     description: "Copy color to clipboard",
@@ -85,14 +85,14 @@ export class ColorConverterExtension implements Extension {
                         namespace: "extension[ColorConverter]",
                     },
                 }),
-                description: t("color", { colorSystem }),
-                id: `color-${value}-${colorSystem}`,
+                description: t("color", { format }),
+                id: `color-${value}-${format}`,
                 image: this.getImage(),
                 name: value,
             }));
     }
 
-    private getEnabledColorSystems(): string[] {
-        return this.settingsManager.getValue(`extension[${this.id}].colorSystems`, this.defaultSettings.colorSystems);
+    private getEnabledColorFormats(): string[] {
+        return this.settingsManager.getValue(`extension[${this.id}].formats`, this.defaultSettings.formats);
     }
 }

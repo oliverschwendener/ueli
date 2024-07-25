@@ -11,9 +11,9 @@ export class QixColorConverter implements ColorConverter {
         }
 
         return [
-            { colorSystem: "HEX", value: color.hex() },
-            { colorSystem: "HLS", value: color.hsl().string() },
-            { colorSystem: "RGB", value: color.rgb().string() },
+            { format: "HEX", value: color.hex() },
+            { format: "HLS", value: color.hsl().string() },
+            { format: "RGB", value: color.rgb().string() },
         ];
     }
 

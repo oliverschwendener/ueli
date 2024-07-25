@@ -2,6 +2,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import { describe, expect, it, vi } from "vitest";
+import { ColorConversionResult } from "./ColorConversionResult";
 import { ColorConverter } from "./ColorConverter";
 import { ColorConverterExtension } from "./ColorConverterExtension";
 
@@ -37,8 +38,8 @@ describe(ColorConverterExtension, () => {
         it("should return undefined when passing a key that does not exist", () =>
             expect(colorConverterExtension.getSettingDefaultValue("key")).toEqual(undefined));
 
-        it("should return the default color systems when passing 'colorSystems' as key", () =>
-            expect(colorConverterExtension.getSettingDefaultValue("colorSystems")).toEqual(["HEX", "HLS", "RGB"]));
+        it("should return the default formats when passing 'formats' as key", () =>
+            expect(colorConverterExtension.getSettingDefaultValue("formats")).toEqual(["HEX", "HLS", "RGB"]));
     });
 
     describe(ColorConverterExtension.prototype.isSupported, () =>
@@ -47,7 +48,7 @@ describe(ColorConverterExtension, () => {
     );
 
     describe(ColorConverterExtension.prototype.getInstantSearchResultItems, () => {
-        it("should return search result items for the enabled color systems", () => {
+        it("should return search result items for the enabled formats", () => {
             const t = vi.fn().mockReturnValue("translated string");
 
             const assetPathResolver = <AssetPathResolver>{
@@ -65,10 +66,10 @@ describe(ColorConverterExtension, () => {
             };
 
             const colorConverter = <ColorConverter>{
-                convertFromString: vi.fn().mockReturnValue([
-                    { colorSystem: "HEX", value: "#FFFFFF" },
-                    { colorSystem: "HLS", value: "hsl(0, 0%, 100%)" },
-                    { colorSystem: "RGB", value: "rgb(255, 255, 255)" },
+                convertFromString: vi.fn().mockReturnValue(<ColorConversionResult[]>[
+                    { format: "HEX", value: "#FFFFFF" },
+                    { format: "HLS", value: "hsl(0, 0%, 100%)" },
+                    { format: "RGB", value: "rgb(255, 255, 255)" },
                 ]),
             };
 

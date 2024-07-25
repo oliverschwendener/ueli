@@ -1,4 +1,4 @@
 export type ColorConversionResult = {
-    colorSystem: string;
+    format: string;
     value: string;
 };

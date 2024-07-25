@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { ColorConversionResult } from "./ColorConversionResult";
 import { QixColorConverter } from "./QixColorConverter";
 
 describe(QixColorConverter, () => {
@@ -19,30 +20,30 @@ describe(QixColorConverter, () => {
         });
 
         it("should be able to parse hex colors", () => {
-            expect(new QixColorConverter().convertFromString("#fff")).toEqual([
-                { colorSystem: "HEX", value: "#FFFFFF" },
-                { colorSystem: "HLS", value: "hsl(0, 0%, 100%)" },
-                { colorSystem: "RGB", value: "rgb(255, 255, 255)" },
+            expect(new QixColorConverter().convertFromString("#fff")).toEqual(<ColorConversionResult[]>[
+                { format: "HEX", value: "#FFFFFF" },
+                { format: "HLS", value: "hsl(0, 0%, 100%)" },
+                { format: "RGB", value: "rgb(255, 255, 255)" },
             ]);
 
-            expect(new QixColorConverter().convertFromString("#ffffff")).toEqual([
-                { colorSystem: "HEX", value: "#FFFFFF" },
-                { colorSystem: "HLS", value: "hsl(0, 0%, 100%)" },
-                { colorSystem: "RGB", value: "rgb(255, 255, 255)" },
+            expect(new QixColorConverter().convertFromString("#ffffff")).toEqual(<ColorConversionResult[]>[
+                { format: "HEX", value: "#FFFFFF" },
+                { format: "HLS", value: "hsl(0, 0%, 100%)" },
+                { format: "RGB", value: "rgb(255, 255, 255)" },
             ]);
         });
 
         it("should be able to parse rgb colors", () => {
-            expect(new QixColorConverter().convertFromString("rgb(255,255,255)")).toEqual([
-                { colorSystem: "HEX", value: "#FFFFFF" },
-                { colorSystem: "HLS", value: "hsl(0, 0%, 100%)" },
-                { colorSystem: "RGB", value: "rgb(255, 255, 255)" },
+            expect(new QixColorConverter().convertFromString("rgb(255,255,255)")).toEqual(<ColorConversionResult[]>[
+                { format: "HEX", value: "#FFFFFF" },
+                { format: "HLS", value: "hsl(0, 0%, 100%)" },
+                { format: "RGB", value: "rgb(255, 255, 255)" },
             ]);
 
-            expect(new QixColorConverter().convertFromString("rgba(255,255,255,1)")).toEqual([
-                { colorSystem: "HEX", value: "#FFFFFF" },
-                { colorSystem: "HLS", value: "hsl(0, 0%, 100%)" },
-                { colorSystem: "RGB", value: "rgb(255, 255, 255)" },
+            expect(new QixColorConverter().convertFromString("rgba(255,255,255,1)")).toEqual(<ColorConversionResult[]>[
+                { format: "HEX", value: "#FFFFFF" },
+                { format: "HLS", value: "hsl(0, 0%, 100%)" },
+                { format: "RGB", value: "rgb(255, 255, 255)" },
             ]);
         });
     });
