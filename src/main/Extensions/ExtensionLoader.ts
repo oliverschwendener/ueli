@@ -4,6 +4,7 @@ import { AppearanceSwitcherModule } from "./AppearanceSwitcher";
 import { ApplicationSearchModule } from "./ApplicationSearch";
 import { BrowserBookmarksModule } from "./BrowserBookmarks";
 import { CalculatorModule } from "./Calculator";
+import { ColorConverterExtensionModule } from "./ColorConverter";
 import { CurrencyConversionModule } from "./CurrencyConversion/CurrencyConversionModule";
 import { DeeplTranslatorModule } from "./DeeplTranslator";
 import { ExtensionModule } from "./ExtensionModule";
@@ -23,6 +24,7 @@ export class ExtensionLoader {
             new ApplicationSearchModule(),
             new BrowserBookmarksModule(),
             new CalculatorModule(),
+            new ColorConverterExtensionModule(),
             new CurrencyConversionModule(),
             new DeeplTranslatorModule(),
             new FileSearchModule(),

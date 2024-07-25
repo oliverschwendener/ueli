@@ -29,6 +29,7 @@
     },
     "devDependencies": {
         "@types/better-sqlite3": "^7.6.11",
+        "@types/color": "^3.0.6",
         "@types/node": "^20.8.6",
         "@types/react": "^18.2.48",
         "@types/react-dom": "^18.2.18",
@@ -55,6 +56,7 @@
         "@fluentui/react-components": "^9.54.4",
         "@fluentui/react-icons": "^2.0.249",
         "better-sqlite3": "^11.1.2",
+        "color": "^4.2.3",
         "fuse.js": "^7.0.0",
         "fuzzysort": "^3.0.1",
         "i18next": "^23.8.1",
