@@ -33,7 +33,7 @@ export const ColorConverterSettings = () => {
                             ))}
                         </Combobox>
                     }
-                    label={t("colorSystem")}
+                    label={t("colorSystems")}
                 />
             </SettingGroup>
         </SettingGroupList>

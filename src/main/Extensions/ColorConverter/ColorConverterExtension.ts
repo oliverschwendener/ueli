@@ -4,7 +4,8 @@ import type { Resources, Translations } from "@common/Core/Translator";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
-import Color from "color";
+import type { Translator } from "@Core/Translator";
+import type { ColorConverter } from "./ColorConverter";
 
 export class ColorConverterExtension implements Extension {
     public readonly id = "ColorConverter";
@@ -28,6 +29,8 @@ export class ColorConverterExtension implements Extension {
     public constructor(
         private readonly assetPathResolver: AssetPathResolver,
         private readonly settingsManager: SettingsManager,
+        private readonly translator: Translator,
+        private readonly colorConverter: ColorConverter,
     ) {}
 
     async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -51,14 +54,16 @@ export class ColorConverterExtension implements Extension {
     public getI18nResources(): Resources<Translations> {
         return {
             "en-US": {
-                colorSystem: "Color System",
+                colorSystems: "Color Systems",
                 selectAColorSystem: "Select a color system",
+                color: "{{ colorSystem }} Color",
                 copyColorToClipboard: "Copy color to clipboard",
                 extensionName: "Color Converter",
             },
             "de-CH": {
-                colorSystem: "Farbsystem",
+                colorSystems: "Farbsysteme",
                 selectAColorSystem: "Wähle ein Farbsystem",
+                color: "{{ colorSystem }} Farbe",
                 copyColorToClipboard: "Farbe in die Zwischenablage kopieren",
                 extensionName: "Farbkonverter",
             },
@@ -66,21 +71,12 @@ export class ColorConverterExtension implements Extension {
     }
 
     public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
-        const color = this.extractColorFromSearchTerm(searchTerm);
+        const { t } = this.translator.createT(this.getI18nResources());
 
-        if (!color) {
-            return [];
-        }
-
-        const convertedColors: { system: string; value: string }[] = [
-            { system: "HEX", value: color.hex() },
-            { system: "HLS", value: color.hsl().string() },
-            { system: "RGB", value: color.rgb().string() },
-        ];
-
-        return convertedColors
-            .filter(({ system }) => this.getEnabledColorSystems().includes(system))
-            .map(({ system, value }) => ({
+        return this.colorConverter
+            .convertFromString(searchTerm)
+            .filter(({ colorSystem }) => this.getEnabledColorSystems().includes(colorSystem))
+            .map(({ colorSystem, value }) => ({
                 defaultAction: SearchResultItemActionUtility.createCopyToClipboardAction({
                     textToCopy: value,
                     description: "Copy color to clipboard",
@@ -89,8 +85,8 @@ export class ColorConverterExtension implements Extension {
                         namespace: "extension[ColorConverter]",
                     },
                 }),
-                description: system,
-                id: `color-${value}-${system}`,
+                description: t("color", { colorSystem }),
+                id: `color-${value}-${colorSystem}`,
                 image: this.getImage(),
                 name: value,
             }));
@@ -98,13 +94,5 @@ export class ColorConverterExtension implements Extension {
 
     private getEnabledColorSystems(): string[] {
         return this.settingsManager.getValue(`extension[${this.id}].colorSystems`, this.defaultSettings.colorSystems);
-    }
-
-    private extractColorFromSearchTerm(searchTerm: string): Color | undefined {
-        try {
-            return Color(searchTerm);
-        } catch (error) {
-            return undefined;
-        }
     }
 }
