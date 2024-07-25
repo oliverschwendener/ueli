@@ -1,12 +1,12 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
+import type { Translator } from "@Core/Translator";
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
 import { Image } from "@common/Core/Image";
 import { Buffer } from "buffer";
+import { EncodingType, type InvocationArgument } from "./Types";
 
 export class Base64Conversion implements Extension {
-    private static readonly translationNamespace = "extension[Base64Conversion]";
-
     public readonly id = "Base64Conversion";
     public readonly name = "Base64 Conversion";
 
@@ -17,60 +17,35 @@ export class Base64Conversion implements Extension {
 
     private readonly defaultSettings = {};
 
-    public constructor(private readonly assetPathResolver: AssetPathResolver) {}
+    public constructor(
+        private readonly assetPathResolver: AssetPathResolver,
+        private readonly translator: Translator,
+    ) {}
 
-    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
-        const parts = searchTerm.trim().split(" ");
-
-        const validators = [
-            () => parts.length === 3,
-            () => ["base64", "b64", "b"].includes(parts[1].toLowerCase()),
-            () => ["encode", "decode"].includes(parts[2].toLowerCase()),
-        ];
-
-        for (const validator of validators) {
-            if (!validator()) {
-                return [];
-            }
-        }
-
-        let converted: string;
-        let descriptionTranslationKey: string;
-
-        if (parts[2].toLowerCase() === "encode") {
-            converted = Buffer.from(parts[0], "binary").toString("base64");
-            descriptionTranslationKey = "base64Encoded";
-        } else if (parts[2].toLowerCase() === "decode") {
-            converted = Buffer.from(parts[0], "base64").toString("binary");
-            descriptionTranslationKey = "base64Decoded";
-        } else {
-            return [];
-        }
+    public async getSearchResultItems(): Promise<SearchResultItem[]> {
+        const { t } = this.translator.createT(this.getI18nResources());
 
         return [
             {
-                defaultAction: SearchResultItemActionUtility.createCopyToClipboardAction({
-                    textToCopy: converted,
-                    description: "Base64 Conversion",
-                    descriptionTranslation: {
-                        key: "copyToClipboard",
-                        namespace: Base64Conversion.translationNamespace,
-                    },
-                }),
-                description: "Base64 Conversion",
-                descriptionTranslation: {
-                    key: descriptionTranslationKey,
-                    namespace: Base64Conversion.translationNamespace,
-                },
-                id: `base64-conversion:instant-result`,
+                id: "Base64Converison:invoke",
+                description: t("searchResultItemDescription"),
+                name: t("searchResultItemName"),
                 image: this.getImage(),
-                name: converted,
+                defaultAction: SearchResultItemActionUtility.createInvokeExtensionAction({
+                    extensionId: this.id,
+                    description: t("searchResultItemActionDescription"),
+                    fluentIcon: "OpenRegular",
+                }),
             },
         ];
     }
 
-    public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        return [];
+    public async invoke(argument: InvocationArgument): Promise<string> {
+        if (argument.encodingType === EncodingType.Encode) {
+            return Buffer.from(argument.invocationString, "binary").toString("base64");
+        } else {
+            return Buffer.from(argument.invocationString, "base64").toString("binary");
+        }
     }
 
     public isSupported(): boolean {
@@ -91,15 +66,21 @@ export class Base64Conversion implements Extension {
         return {
             "en-US": {
                 extensionName: "Base64 Conversion",
-                copyToClipboard: "Copy to clipboard",
-                base64Encoded: "Base64 Encoded",
-                base64Decoded: "Base64 Decoded",
+                searchResultItemDescription: "Encode or decode Base64",
+                searchResultItemName: "Base64 Conversion",
+                searchResultItemActionDescription: "Open Base64 Conversion",
+                copyToClipboard: "Copy result to clipboard",
+                encodePlaceHolder: "Enter your string to encode here",
+                decodePlaceHolder: "Enter your string to decode here",
             },
             "de-CH": {
                 extensionName: "Base64 Konvertierung",
-                copyToClipboard: "In Zwischenablage kopieren",
-                base64Encoded: "Base64 Kodiert",
-                base64Decoded: "Base64 Dekodiert",
+                searchResultItemDescription: "Base64 kodieren oder dekodieren",
+                searchResultItemName: "Base64 Konvertierung",
+                searchResultItemActionDescription: "Base64 Konvertierung öffnen",
+                copyToClipboard: "Resultat in Zwischenablage kopieren",
+                encodePlaceHolder: "Geben Sie Ihren zu kodierenden Text hier ein",
+                decodePlaceHolder: "Geben Sie Ihren zu dekodierenden Text hier ein",
             },
         };
     }
