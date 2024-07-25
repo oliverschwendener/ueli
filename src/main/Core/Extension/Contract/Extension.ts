@@ -70,8 +70,8 @@ export interface Extension {
 
     /**
      * Gets the instant search result items for this Extension. The results of this method are displayed immediately in
-     * the search result list. As this method is executed on every keyboard input be as lightweight as possible. For
-     * heavier operations use `getSearchResultItems`.
+     * the search result list. As this method is executed on every user input change, it should be as lightweight as
+     * possible. For heavier operations use `getSearchResultItems`.
      * @param searchTerm The current search term.
      */
     getInstantSearchResultItems?(searchTerm: string): SearchResultItem[];
