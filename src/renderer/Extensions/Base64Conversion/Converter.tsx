@@ -1,5 +1,5 @@
 import { useContextBridge } from "@Core/Hooks";
-import { InputState, Textarea } from "@fluentui/react-components";
+import { Textarea } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 import { InvocationArgument } from "../../../main/Extensions/Base64Conversion/InvocationArgument";
 

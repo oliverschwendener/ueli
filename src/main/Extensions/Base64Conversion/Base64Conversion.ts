@@ -1,7 +1,7 @@
 import { AssetPathResolver } from "@Core/AssetPathResolver";
 import { Extension } from "@Core/Extension";
 import { Translator } from "@Core/Translator";
-import { SearchResultItemActionUtility, SearchResultItem } from "@common/Core";
+import { SearchResultItem, SearchResultItemActionUtility } from "@common/Core";
 import { Image } from "@common/Core/Image";
 import { Buffer } from "buffer";
 import { InvocationArgument } from "./InvocationArgument";
