@@ -1,2 +1,2 @@
 export * from "./Base64Conversion";
-export * from "./Types";
+export * from "./InvocationArgument";

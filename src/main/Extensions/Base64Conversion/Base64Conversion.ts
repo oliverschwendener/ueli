@@ -1,10 +1,10 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Extension } from "@Core/Extension";
-import type { Translator } from "@Core/Translator";
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import { AssetPathResolver } from "@Core/AssetPathResolver";
+import { Extension } from "@Core/Extension";
+import { Translator } from "@Core/Translator";
+import { SearchResultItemActionUtility, SearchResultItem } from "@common/Core";
 import { Image } from "@common/Core/Image";
 import { Buffer } from "buffer";
-import { EncodingType, type InvocationArgument } from "./Types";
+import { InvocationArgument } from "./InvocationArgument";
 
 export class Base64Conversion implements Extension {
     public readonly id = "Base64Conversion";
@@ -41,10 +41,10 @@ export class Base64Conversion implements Extension {
     }
 
     public async invoke(argument: InvocationArgument): Promise<string> {
-        if (argument.encodingType === EncodingType.Encode) {
-            return Buffer.from(argument.invocationString, "binary").toString("base64");
+        if (argument.action === "encode") {
+            return Buffer.from(argument.payload, "binary").toString("base64");
         } else {
-            return Buffer.from(argument.invocationString, "base64").toString("binary");
+            return Buffer.from(argument.payload, "base64").toString("binary");
         }
     }
 

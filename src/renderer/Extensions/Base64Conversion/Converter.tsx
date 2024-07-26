@@ -1,7 +1,7 @@
 import { useContextBridge } from "@Core/Hooks";
-import { Textarea } from "@fluentui/react-components";
+import { InputState, Textarea } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
-import { EncodingType, InvocationArgument } from "../../../main/Extensions/Base64Conversion/Types";
+import { InvocationArgument } from "../../../main/Extensions/Base64Conversion/InvocationArgument";
 
 type ConverterProps = {
     setConvertedText: (text: string) => void;
@@ -12,14 +12,14 @@ type ConverterProps = {
 export const Converter = ({ setConvertedText, encodePlaceholder, decodePlaceholder }: ConverterProps) => {
     const extensionId = "Base64Conversion";
     const { contextBridge } = useContextBridge();
-    const [input, setInput] = useState({ value: "", type: EncodingType.Encode });
+    const [input, setInput] = useState<InvocationArgument>({ payload: "", action: "encode" });
     const [conversionResult, setConversionResult] = useState("");
 
-    const convertText = async (invocationString: string, encodingType: EncodingType) => {
+    const convertText = async (payload: string, action: "encode" | "decode") => {
         try {
             return await contextBridge.invokeExtension<InvocationArgument, string>(extensionId, {
-                invocationString,
-                encodingType,
+                payload,
+                action,
             });
         } catch (error) {
             return "";
@@ -28,13 +28,13 @@ export const Converter = ({ setConvertedText, encodePlaceholder, decodePlacehold
 
     useEffect(() => {
         const performConversion = async () => {
-            const result = await convertText(input.value, input.type);
+            const result = await convertText(input.payload, input.action);
             setConversionResult(result);
             setConvertedText(result);
         };
 
         setTimeout(async () => {
-            if (input.value) {
+            if (input.payload) {
                 performConversion();
             }
         }, 250);
@@ -57,8 +57,8 @@ export const Converter = ({ setConvertedText, encodePlaceholder, decodePlacehold
                         autoFocus
                         style={{ flexGrow: 1, width: "100%", height: "100%" }}
                         placeholder={encodePlaceholder}
-                        value={input.type === EncodingType.Decode ? conversionResult : input.value}
-                        onChange={(_, { value }) => setInput({ value, type: EncodingType.Encode })}
+                        value={input.action === "decode" ? conversionResult : input.payload}
+                        onChange={(_, { value }) => setInput({ payload: value, action: "encode" })}
                     />
                 </div>
 
@@ -66,8 +66,8 @@ export const Converter = ({ setConvertedText, encodePlaceholder, decodePlacehold
                     <Textarea
                         style={{ flexGrow: 1, width: "100%", height: "100%" }}
                         placeholder={decodePlaceholder}
-                        value={input.type === EncodingType.Encode ? conversionResult : input.value}
-                        onChange={(_, { value }) => setInput({ value, type: EncodingType.Decode })}
+                        value={input.action === "encode" ? conversionResult : input.payload}
+                        onChange={(_, { value }) => setInput({ payload: value, action: "decode" })}
                     />
                 </div>
             </div>
