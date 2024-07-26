@@ -9,7 +9,7 @@ export const ColorConverterSettings = () => {
     const extensionId = "ColorConverter";
     const { t } = useTranslation(`extension[${extensionId}]`);
 
-    const allFormats = ["HEX", "HLS", "RGB"];
+    const allFormats = ["HEX", "HSL", "RGB"];
 
     const { value: enabledFormats, updateValue: setEnabledFormats } = useExtensionSetting<string[]>({
         extensionId,

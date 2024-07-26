@@ -23,7 +23,7 @@ export class ColorConverterExtension implements Extension {
     };
 
     private readonly defaultSettings = {
-        formats: ["HEX", "HLS", "RGB"],
+        formats: ["HEX", "HSL", "RGB"],
     };
 
     public constructor(

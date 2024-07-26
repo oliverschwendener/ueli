@@ -39,7 +39,7 @@ describe(ColorConverterExtension, () => {
             expect(colorConverterExtension.getSettingDefaultValue("key")).toEqual(undefined));
 
         it("should return the default formats when passing 'formats' as key", () =>
-            expect(colorConverterExtension.getSettingDefaultValue("formats")).toEqual(["HEX", "HLS", "RGB"]));
+            expect(colorConverterExtension.getSettingDefaultValue("formats")).toEqual(["HEX", "HSL", "RGB"]));
     });
 
     describe(ColorConverterExtension.prototype.isSupported, () =>
@@ -68,7 +68,7 @@ describe(ColorConverterExtension, () => {
             const colorConverter = <ColorConverter>{
                 convertFromString: vi.fn().mockReturnValue(<ColorConversionResult[]>[
                     { format: "HEX", value: "#FFFFFF" },
-                    { format: "HLS", value: "hsl(0, 0%, 100%)" },
+                    { format: "HSL", value: "hsl(0, 0%, 100%)" },
                     { format: "RGB", value: "rgb(255, 255, 255)" },
                 ]),
             };
