@@ -6,7 +6,9 @@ import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Co
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Net } from "electron";
-import type { ApiResponse, InvocationArgument, PostBody, Settings } from "./Types";
+import type { ApiResponse, PostBody } from "./Api";
+import type { InvocationArgument } from "./InvocationArgument";
+import type { Settings } from "./Settings";
 
 export class DeeplTranslatorExtension implements Extension {
     public readonly id = "DeeplTranslator";
