@@ -1,10 +1,10 @@
-import { AssetPathResolver } from "@Core/AssetPathResolver";
-import { Extension } from "@Core/Extension";
-import { Translator } from "@Core/Translator";
-import { SearchResultItem, SearchResultItemActionUtility } from "@common/Core";
-import { Image } from "@common/Core/Image";
-import { Buffer } from "buffer";
-import { InvocationArgument } from "./InvocationArgument";
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { Extension } from "@Core/Extension";
+import type { Translator } from "@Core/Translator";
+import { type SearchResultItem, SearchResultItemActionUtility } from "@common/Core";
+import type { Image } from "@common/Core/Image";
+import type { InvocationArgument } from "@common/Extensions/Base64Conversion/InvocationArgument";
+import { Base64Converter } from "./Base64Converter";
 
 export class Base64Conversion implements Extension {
     public readonly id = "Base64Conversion";
@@ -14,8 +14,6 @@ export class Base64Conversion implements Extension {
         name: "Christopher Steiner",
         githubUserName: "ChristopherSteiner",
     };
-
-    private readonly defaultSettings = {};
 
     public constructor(
         private readonly assetPathResolver: AssetPathResolver,
@@ -40,20 +38,16 @@ export class Base64Conversion implements Extension {
         ];
     }
 
-    public async invoke(argument: InvocationArgument): Promise<string> {
-        if (argument.action === "encode") {
-            return Buffer.from(argument.payload, "binary").toString("base64");
-        } else {
-            return Buffer.from(argument.payload, "base64").toString("binary");
-        }
+    public async invoke({ action, payload }: InvocationArgument): Promise<string> {
+        return action === "encode" ? Base64Converter.encode(payload) : Base64Converter.decode(payload);
     }
 
     public isSupported(): boolean {
         return true;
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
-        return this.defaultSettings[key];
+    public getSettingDefaultValue() {
+        return undefined;
     }
 
     public getImage(): Image {

@@ -1,7 +1,7 @@
+import type { InvocationArgument } from "@common/Extensions/Base64Conversion/InvocationArgument";
 import { useContextBridge } from "@Core/Hooks";
 import { Textarea } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
-import { InvocationArgument } from "../../../main/Extensions/Base64Conversion/InvocationArgument";
 
 type ConverterProps = {
     setConvertedText: (text: string) => void;
