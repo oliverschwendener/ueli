@@ -25,7 +25,7 @@ export class DuckDuckGoWebSearchEngine implements WebSearchEngine {
     }
 
     public getSearchUrl(searchTerm: string, locale: string): string {
-        return `https://duckduckgo.com/?q=${encodeURIComponent(searchTerm)}&lk=${this.getLocaleString(locale)}`;
+        return `https://duckduckgo.com/?q=${encodeURIComponent(searchTerm)}&kl=${this.getLocaleString(locale)}`;
     }
 
     public getImageFileName(): string {
