@@ -2,6 +2,7 @@ import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { AppearanceSwitcherModule } from "./AppearanceSwitcher";
 import { ApplicationSearchModule } from "./ApplicationSearch";
+import { Base64ConversionModule } from "./Base64Conversion";
 import { BrowserBookmarksModule } from "./BrowserBookmarks";
 import { CalculatorModule } from "./Calculator";
 import { ColorConverterExtensionModule } from "./ColorConverter";
@@ -22,6 +23,7 @@ export class ExtensionLoader {
         return [
             new AppearanceSwitcherModule(),
             new ApplicationSearchModule(),
+            new Base64ConversionModule(),
             new BrowserBookmarksModule(),
             new CalculatorModule(),
             new ColorConverterExtensionModule(),

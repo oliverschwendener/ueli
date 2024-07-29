@@ -1,6 +1,7 @@
 import { useExtensionProps } from "@Core/Hooks";
 import type { ReactElement } from "react";
 import { ApplicationSearchSettings } from "./ApplicationSearch";
+import { Base64Conversion } from "./Base64Conversion";
 import { BrowserBookmarksSettings } from "./BrowserBookmarks";
 import { CalculatorSettings } from "./Calculator";
 import { ColorConverterSettings } from "./ColorConverter";
@@ -23,6 +24,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
     const extensions: Record<string, ExtensionReactElements> = {
         ApplicationSearch: {
             settings: <ApplicationSearchSettings />,
+        },
+        Base64Conversion: {
+            extension: <Base64Conversion {...props} />,
         },
         BrowserBookmarks: {
             settings: <BrowserBookmarksSettings />,
