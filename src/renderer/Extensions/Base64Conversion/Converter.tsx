@@ -1,4 +1,4 @@
-import type { InvocationArgument } from "@common/Extensions/Base64Conversion/InvocationArgument";
+import type { InvocationArgument } from "@common/Extensions/Base64Conversion";
 import { useContextBridge } from "@Core/Hooks";
 import { Textarea } from "@fluentui/react-components";
 import { useEffect, useState } from "react";

@@ -3,7 +3,7 @@ import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
 import { type SearchResultItem, SearchResultItemActionUtility } from "@common/Core";
 import type { Image } from "@common/Core/Image";
-import type { InvocationArgument } from "@common/Extensions/Base64Conversion/InvocationArgument";
+import type { InvocationArgument } from "@common/Extensions/Base64Conversion";
 import { Base64Converter } from "./Base64Converter";
 
 export class Base64Conversion implements Extension {

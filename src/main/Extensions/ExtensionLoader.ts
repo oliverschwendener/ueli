@@ -2,7 +2,7 @@ import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { AppearanceSwitcherModule } from "./AppearanceSwitcher";
 import { ApplicationSearchModule } from "./ApplicationSearch";
-import { Base64ConversionModule } from "./Base64Conversion/Base64ConversionModule";
+import { Base64ConversionModule } from "./Base64Conversion";
 import { BrowserBookmarksModule } from "./BrowserBookmarks";
 import { CalculatorModule } from "./Calculator";
 import { CurrencyConversionModule } from "./CurrencyConversion/CurrencyConversionModule";
