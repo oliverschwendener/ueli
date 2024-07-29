@@ -28,3 +28,9 @@ src/main/Core/IniFileParser @ke1v
 # ApplicationSearch
 src/main/Extensions/ApplicationSearch/Linux @ke1v
 src/renderer/Extensions/ApplicationSearch/Linux @ke1v
+
+# Base64Conversion
+assets/Extensions/Base64Conversion @ChristopherSteiner
+src/common/Extensions/Base64Conversion @ChristopherSteiner
+src/main/Extensions/Base64Conversion @ChristopherSteiner
+src/renderer/Extensions/Base64Conversion @ChristopherSteiner
