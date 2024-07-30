@@ -34,3 +34,9 @@ assets/Extensions/Base64Conversion @ChristopherSteiner
 src/common/Extensions/Base64Conversion @ChristopherSteiner
 src/main/Extensions/Base64Conversion @ChristopherSteiner
 src/renderer/Extensions/Base64Conversion @ChristopherSteiner
+
+# WindowsControlPanel
+assets/Extensions/WindowsControlPanel @tkohlmeier
+src/common/Extensions/WindowsControlPanel @tkohlmeier
+src/main/Extensions/WindowsControlPanel @tkohlmeier
+src/renderer/Extensions/WindowsControlPanel @tkohlmeier
