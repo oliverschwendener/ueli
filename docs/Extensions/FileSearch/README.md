@@ -1,6 +1,8 @@
 # File Search
 
-This extension allows you to search for files and folders on your computer. Search for "Search files" and press enter to open the file search view. The File Search extension uses `mdfind` (on macOS) and Everything (on Windows) under the hood to do the file search.
+This extension allows you to search for files and folders on your computer. Search for "Search files" and press enter to open the file search view. Enter a search term to find files and folders. Press enter to open the selected file.
+
+The File Search extension uses `mdfind` (on macOS) and Everything (on Windows) under the hood to do the file search.
 
 ![example](example.png)
 
