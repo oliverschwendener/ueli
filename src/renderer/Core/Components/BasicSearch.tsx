@@ -110,6 +110,7 @@ export const BasicSearch = ({
                 const s = await getSearchResultItems(searchTerm);
                 setClearTimeoutValue(undefined);
                 setSearchResultItems(s);
+                setSelectedItemId(s[0]?.id ?? "");
                 setIsLoading(false);
             }, debounceDurationInMs ?? 250),
         );
@@ -151,14 +152,23 @@ export const BasicSearch = ({
                 isLoading ? (
                     <ProgressBar />
                 ) : (
-                    <SearchResultList
-                        containerRef={contentRef}
-                        onSearchResultItemClick={(s) => handleSearchResultItemClickEvent(s)}
-                        onSearchResultItemDoubleClick={(s) => handleSearchResultItemDoubleClickEvent(s)}
-                        searchResultItems={searchResultItems}
-                        selectedItemId={selectedItemId}
-                        searchTerm={searchTerm}
-                    />
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            padding: 10,
+                            boxSizing: "border-box",
+                        }}
+                    >
+                        <SearchResultList
+                            containerRef={contentRef}
+                            onSearchResultItemClick={(s) => handleSearchResultItemClickEvent(s)}
+                            onSearchResultItemDoubleClick={(s) => handleSearchResultItemDoubleClickEvent(s)}
+                            searchResultItems={searchResultItems}
+                            selectedItemId={selectedItemId}
+                            searchTerm={searchTerm}
+                        />
+                    </div>
                 )
             }
         />
