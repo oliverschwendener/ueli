@@ -2,14 +2,6 @@
 
 This extension allows you to search for applications installed on your computer. After you enabled this extension you can start searching for apps by their name and press enter to launch them.
 
-Author: [Oliver Schwendener](https://github.com/oliverschwendener)
-
-Supported operating systems:
-
--   Windows
--   macOS
--   Linux (with Cinnamon or Gnome Desktop environment)
-
 ![Example](example.png)
 
 ## Settings
@@ -27,3 +19,13 @@ Supported operating systems:
 ### Linux
 
 -   Application Folders: the list of folders where Ueli will look for applications.
+
+## About this extension
+
+Author: [Oliver Schwendener](https://github.com/oliverschwendener)
+
+Supported operating systems:
+
+-   Windows
+-   macOS
+-   Linux (with Cinnamon or Gnome Desktop environment)
