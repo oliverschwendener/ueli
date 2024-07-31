@@ -1,6 +1,6 @@
 # Application Search
 
-This extension allows you to search for applications installed on your computer.
+This extension allows you to search for applications installed on your computer. After you enabled this extension you can start searching for apps by their name and press enter to launch them.
 
 Author: [Oliver Schwendener](https://github.com/oliverschwendener)
 
