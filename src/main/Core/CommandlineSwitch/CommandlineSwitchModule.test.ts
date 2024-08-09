@@ -29,9 +29,11 @@ describe(CommandlineSwitchModule, () => {
 
         CommandlineSwitchModule.bootstrap(dependencyRegistry);
 
-        expectAppendingSwitch
-            ? expect(appendSwitchMock).toHaveBeenCalledWith("wm-window-animations-disabled")
-            : expect(appendSwitchMock).not.toHaveBeenCalledWith("wm-window-animations-disabled");
+        if (expectAppendingSwitch) {
+            expect(appendSwitchMock).toHaveBeenCalledWith("wm-window-animations-disabled");
+        } else {
+            expect(appendSwitchMock).not.toHaveBeenCalledWith("wm-window-animations-disabled");
+        }
     };
 
     it("should append the commandline switch to disable animations only on Windows", () => {

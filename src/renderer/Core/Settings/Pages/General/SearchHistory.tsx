@@ -30,7 +30,9 @@ export const SearchHistory = () => {
                             setEnabled(checked);
 
                             // When search history is disabled we clear the history
-                            !checked && setSearchHistory([]);
+                            if (!checked) {
+                                setSearchHistory([]);
+                            }
                         }}
                     />
                 }

@@ -265,9 +265,11 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
     }
 
     private async saveIcon(source: string, output: string, iconSize: number): Promise<void> {
-        extname(source) !== "png"
-            ? await sharp(source).resize(iconSize).toFile(output)
-            : await this.fileSystemUtility.copyFile(source, output);
+        if (extname(source) !== "png") {
+            await sharp(source).resize(iconSize).toFile(output);
+        } else {
+            await this.fileSystemUtility.copyFile(source, output);
+        }
     }
 
     private async getIconThemeName(): Promise<string> {

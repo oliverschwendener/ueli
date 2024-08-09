@@ -16,15 +16,23 @@ export class RescanOrchestratorModule {
             return settingsManager.getValue("searchEngine.automaticRescan", true);
         };
 
-        automaticRescanIsEnabled() ? rescanOrchestrator.scanUntilCancelled() : rescanOrchestrator.scanOnce();
+        if (automaticRescanIsEnabled()) {
+            rescanOrchestrator.scanUntilCancelled();
+        } else {
+            rescanOrchestrator.scanOnce();
+        }
 
         eventSubscriber.subscribe("settingUpdated[searchEngine.rescanIntervalInSeconds]", () => {
             rescanOrchestrator.cancel();
             rescanOrchestrator.scanUntilCancelled();
         });
 
-        eventSubscriber.subscribe("settingUpdated[searchEngine.automaticRescan]", () =>
-            automaticRescanIsEnabled() ? rescanOrchestrator.scanUntilCancelled() : rescanOrchestrator.cancel(),
-        );
+        eventSubscriber.subscribe("settingUpdated[searchEngine.automaticRescan]", () => {
+            if (automaticRescanIsEnabled()) {
+                rescanOrchestrator.scanUntilCancelled();
+            } else {
+                rescanOrchestrator.cancel();
+            }
+        });
     }
 }

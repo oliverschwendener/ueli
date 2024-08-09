@@ -24,7 +24,10 @@ export const SearchHistory = ({
             open={menuIsOpen}
             onOpenChange={(_, { open }) => {
                 setMenuIsOpen(open);
-                !open && onMenuClosed();
+
+                if (!open) {
+                    onMenuClosed();
+                }
             }}
         >
             <MenuTrigger>
