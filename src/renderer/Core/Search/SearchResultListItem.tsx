@@ -1,4 +1,3 @@
-import { useContextBridge } from "@Core/Hooks";
 import { ThemeContext } from "@Core/ThemeContext";
 import { getImageUrl } from "@Core/getImageUrl";
 import type { SearchResultItem } from "@common/Core";
@@ -22,9 +21,8 @@ export const SearchResultListItem = ({
     onDoubleClick,
     searchResultItem,
 }: SearchResultListItemProps) => {
-    const { contextBridge } = useContextBridge();
     const { t } = useTranslation();
-    const { theme } = useContext(ThemeContext);
+    const { theme, isDarkMode } = useContext(ThemeContext);
     const ref = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState<boolean>(false);
 
@@ -34,13 +32,8 @@ export const SearchResultListItem = ({
         }
     };
 
-    const selectedBackgroundColor = contextBridge.themeShouldUseDarkColors()
-        ? theme.colorNeutralBackground1Selected
-        : theme.colorNeutralBackground1Selected;
-
-    const hoveredBackgroundColor = contextBridge.themeShouldUseDarkColors()
-        ? theme.colorNeutralBackground1Hover
-        : theme.colorNeutralBackground1Hover;
+    const selectedBackgroundColor = theme.colorNeutralBackground1Selected;
+    const hoveredBackgroundColor = theme.colorNeutralBackground1Hover;
 
     useEffect(scrollIntoViewIfSelectedAndNotVisible, [isSelected]);
 
@@ -102,7 +95,7 @@ export const SearchResultListItem = ({
                     }}
                     src={getImageUrl({
                         image: searchResultItem.image,
-                        shouldPreferDarkColors: contextBridge.themeShouldUseDarkColors(),
+                        shouldPreferDarkColors: isDarkMode,
                     })}
                 />
             </div>

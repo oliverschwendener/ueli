@@ -20,6 +20,7 @@ import { useAppCssProperties } from "./useAppCssProperties";
 export const App = () => {
     const { contextBridge } = useContextBridge();
     const [theme, setTheme] = useState<Theme>(getTheme(contextBridge));
+    const [isDarkMode, setIsDarkMode] = useState<boolean>(window.matchMedia("(prefers-color-scheme: dark)").matches);
     const { searchResultItems } = useSearchResultItems();
     const { excludedSearchResultItemIds } = useExcludedSearchResultItems();
     const { favorites } = useFavorites();
@@ -34,7 +35,10 @@ export const App = () => {
         const navigateToEventHandler = (_: IpcRendererEvent, { pathname }: { pathname: string }) =>
             navigate({ pathname });
 
-        const nativeThemeChangedEventHandler = () => setTheme(getTheme(contextBridge));
+        const nativeThemeChangedEventHandler = () => {
+            setTheme(getTheme(contextBridge));
+            setIsDarkMode(window.matchMedia("(prefers-color-scheme: dark)").matches);
+        };
 
         contextBridge.ipcRenderer.on("navigateTo", navigateToEventHandler);
         contextBridge.ipcRenderer.on("nativeThemeChanged", nativeThemeChangedEventHandler);
@@ -46,7 +50,7 @@ export const App = () => {
     }, []);
 
     return (
-        <ThemeContext.Provider value={{ theme, setTheme }}>
+        <ThemeContext.Provider value={{ theme, setTheme, isDarkMode }}>
             <FluentProvider theme={theme} style={appCssProperties}>
                 <Routes>
                     <Route
