@@ -11,7 +11,26 @@ describe(isValidHotkey, () => {
     it("should return true for all valid hotkeys", () =>
         testIsValidHotkey({
             expected: true,
-            hotkeys: ["Alt+Space", "Ctrl+Space", "Space", "A", "Shift+A", "Shift+a", "Super+0", "Meta+F12"],
+            hotkeys: [
+                "Alt+Space",
+                "Ctrl+Space",
+                "Space",
+                "A",
+                "Shift+A",
+                "Shift+a",
+                "Super+0",
+                "Meta+F12",
+                "Alt+,",
+                "Alt+.",
+                "Alt+/",
+                "Alt+\\",
+                'Alt+"',
+                "Alt+`",
+                "Alt+[",
+                "Alt+]",
+                "Alt+(",
+                "Alt+)",
+            ],
         }));
 
     it("should return false for all invalid hotkeys", () =>
