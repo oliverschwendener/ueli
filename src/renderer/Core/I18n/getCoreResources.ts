@@ -272,6 +272,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     alwaysOnTop: "Always on top",
                     showOnStartup: "Show on startup",
                     alwaysCenter: "Always center window",
+                    visibleOnAllWorkspaces: "Visible on all workspaces",
                 },
                 "de-CH": {
                     title: "Fenster",
@@ -283,6 +284,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     alwaysOnTop: "Immer im Vordergrund",
                     showOnStartup: "Beim Start anzeigen",
                     alwaysCenter: "Fenster immer zentrieren",
+                    visibleOnAllWorkspaces: "Auf allen Workspaces sichtbar",
                 },
             },
         },

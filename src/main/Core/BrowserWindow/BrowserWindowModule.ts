@@ -62,6 +62,8 @@ export class BrowserWindowModule {
             browserWindowConstructorOptionsProviders[operatingSystem],
         ).create();
 
+        browserWindow.setVisibleOnAllWorkspaces(settingsManager.getValue("window.visibleOnAllWorkspaces", false));
+
         const browserWindowToggler = new BrowserWindowToggler(
             operatingSystem,
             app,
@@ -149,6 +151,10 @@ export class BrowserWindowModule {
 
         eventSubscriber.subscribe("settingUpdated[window.vibrancy]", () => {
             browserWindow.setVibrancy(vibrancyProvider.get());
+        });
+
+        eventSubscriber.subscribe("settingUpdated[window.visibleOnAllWorkspaces]", ({ value }: { value: boolean }) => {
+            browserWindow.setVisibleOnAllWorkspaces(value);
         });
 
         eventSubscriber.subscribe("navigateTo", ({ pathname }: { pathname: string }) => {
