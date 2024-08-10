@@ -9,6 +9,7 @@ import { Opacity } from "./Opacity";
 import { ScrollBehavior } from "./ScrollBehaviour";
 import { ShowOnStartup } from "./ShowOnStartup";
 import { Vibrancy } from "./Vibrancy";
+import { WorkspaceVisibility } from "./WorkspaceVisibility";
 
 export const Window = () => {
     const { contextBridge } = useContextBridge();
@@ -28,6 +29,7 @@ export const Window = () => {
                 <AlwaysCenter />
                 <HideWindowOn />
                 <ScrollBehavior />
+                {["macOS", "Linux"].includes(operatingSystem) && <WorkspaceVisibility />}
             </SettingGroup>
 
             <SettingGroup title="Appearance">
