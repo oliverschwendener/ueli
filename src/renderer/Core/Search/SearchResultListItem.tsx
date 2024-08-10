@@ -12,6 +12,7 @@ type SearchResultListItemProps = {
     onClick: () => void;
     onDoubleClick: () => void;
     searchResultItem: SearchResultItem;
+    scrollBehaviour: ScrollBehavior;
 };
 
 export const SearchResultListItem = ({
@@ -20,15 +21,17 @@ export const SearchResultListItem = ({
     onClick,
     onDoubleClick,
     searchResultItem,
+    scrollBehaviour,
 }: SearchResultListItemProps) => {
     const { t } = useTranslation();
+
     const { theme, isDarkMode } = useContext(ThemeContext);
     const ref = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState<boolean>(false);
 
     const scrollIntoViewIfSelectedAndNotVisible = () => {
         if (containerRef.current && ref.current && isSelected && !elementIsVisible(ref.current, containerRef.current)) {
-            setTimeout(() => ref.current?.scrollIntoView({ behavior: "smooth" }), 50);
+            ref.current?.scrollIntoView({ behavior: scrollBehaviour, block: "nearest" });
         }
     };
 

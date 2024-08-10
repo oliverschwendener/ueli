@@ -6,6 +6,7 @@ import { AlwaysOnTop } from "./AlwaysOnTop";
 import { BackgroundMaterial } from "./BackgroundMaterial";
 import { HideWindowOn } from "./HideWindowOn";
 import { Opacity } from "./Opacity";
+import { ScrollBehavior } from "./ScrollBehaviour";
 import { ShowOnStartup } from "./ShowOnStartup";
 import { Vibrancy } from "./Vibrancy";
 
@@ -26,6 +27,7 @@ export const Window = () => {
                 <ShowOnStartup />
                 <AlwaysCenter />
                 <HideWindowOn />
+                <ScrollBehavior />
             </SettingGroup>
 
             <SettingGroup title="Appearance">
