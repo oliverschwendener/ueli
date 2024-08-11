@@ -272,6 +272,10 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     alwaysOnTop: "Always on top",
                     showOnStartup: "Show on startup",
                     alwaysCenter: "Always center window",
+                    scrollBehavior: "Scroll behavior",
+                    "scrollBehavior.auto": "Auto",
+                    "scrollBehavior.smooth": "Smooth",
+                    "scrollBehavior.instant": "Instant",
                     visibleOnAllWorkspaces: "Visible on all workspaces",
                 },
                 "de-CH": {

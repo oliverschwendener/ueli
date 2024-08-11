@@ -1,12 +1,15 @@
 import { useSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { Dropdown, Option } from "@fluentui/react-components";
+import { useTranslation } from "react-i18next";
 
 export const ScrollBehavior = () => {
+    const { t } = useTranslation("settingsWindow");
+
     const scrollBehaviors = {
-        auto: "Auto",
-        smooth: "Smooth",
-        instant: "Instant",
+        auto: t("scrollBehavior.auto"),
+        smooth: t("scrollBehavior.smooth"),
+        instant: t("scrollBehavior.instant"),
     };
 
     const { value: scrollBehavior, updateValue: setScrollBehavior } = useSetting<ScrollBehavior>({
@@ -16,7 +19,7 @@ export const ScrollBehavior = () => {
 
     return (
         <Setting
-            label={"Scroll Behavior"}
+            label={t("scrollBehavior")}
             control={
                 <Dropdown
                     value={scrollBehaviors[scrollBehavior]}
