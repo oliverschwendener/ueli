@@ -24,7 +24,7 @@ export const SearchResultList = ({
 }: SearchResultListProps) => {
     const { t } = useTranslation();
 
-    const { value: scrollBehaviour } = useSetting<ScrollBehavior>({
+    const { value: scrollBehavior } = useSetting<ScrollBehavior>({
         key: "window.scrollBehavior",
         defaultValue: "smooth",
     });
@@ -54,7 +54,7 @@ export const SearchResultList = ({
                     searchResultItem={searchResultItem}
                     onClick={() => onSearchResultItemClick(searchResultItem)}
                     onDoubleClick={() => onSearchResultItemDoubleClick(searchResultItem)}
-                    scrollBehaviour={scrollBehaviour}
+                    scrollBehavior={scrollBehavior}
                 />
             ))}
         </div>

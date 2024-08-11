@@ -20,7 +20,9 @@ import { useAppCssProperties } from "./useAppCssProperties";
 export const App = () => {
     const { contextBridge } = useContextBridge();
     const [theme, setTheme] = useState<Theme>(getTheme(contextBridge));
-    const [isDarkMode, setIsDarkMode] = useState<boolean>(window.matchMedia("(prefers-color-scheme: dark)").matches);
+    const [shouldPreferDarkColors, setShouldPreferDarkColors] = useState<boolean>(
+        window.matchMedia("(prefers-color-scheme: dark)").matches,
+    );
     const { searchResultItems } = useSearchResultItems();
     const { excludedSearchResultItemIds } = useExcludedSearchResultItems();
     const { favorites } = useFavorites();
@@ -37,7 +39,7 @@ export const App = () => {
 
         const nativeThemeChangedEventHandler = () => {
             setTheme(getTheme(contextBridge));
-            setIsDarkMode(window.matchMedia("(prefers-color-scheme: dark)").matches);
+            setShouldPreferDarkColors(window.matchMedia("(prefers-color-scheme: dark)").matches);
         };
 
         contextBridge.ipcRenderer.on("navigateTo", navigateToEventHandler);
@@ -50,7 +52,7 @@ export const App = () => {
     }, []);
 
     return (
-        <ThemeContext.Provider value={{ theme, setTheme, isDarkMode }}>
+        <ThemeContext.Provider value={{ theme, setTheme, shouldPreferDarkColors }}>
             <FluentProvider theme={theme} style={appCssProperties}>
                 <Routes>
                     <Route

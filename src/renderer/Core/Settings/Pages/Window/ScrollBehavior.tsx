@@ -16,7 +16,7 @@ export const ScrollBehavior = () => {
 
     return (
         <Setting
-            label={"Scroll Behaviour"}
+            label={"Scroll Behavior"}
             control={
                 <Dropdown
                     value={scrollBehaviors[scrollBehavior]}
@@ -25,8 +25,8 @@ export const ScrollBehavior = () => {
                         optionValue && setScrollBehavior(optionValue as ScrollBehavior)
                     }
                 >
-                    {Object.entries(scrollBehaviors).map(([behaviour, name]) => (
-                        <Option key={behaviour} value={behaviour} text={name}>
+                    {Object.entries(scrollBehaviors).map(([Behavior, name]) => (
+                        <Option key={Behavior} value={Behavior} text={name}>
                             {name}
                         </Option>
                     ))}

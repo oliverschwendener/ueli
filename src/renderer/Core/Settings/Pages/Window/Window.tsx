@@ -6,7 +6,7 @@ import { AlwaysOnTop } from "./AlwaysOnTop";
 import { BackgroundMaterial } from "./BackgroundMaterial";
 import { HideWindowOn } from "./HideWindowOn";
 import { Opacity } from "./Opacity";
-import { ScrollBehavior } from "./ScrollBehaviour";
+import { ScrollBehavior } from "./ScrollBehavior";
 import { ShowOnStartup } from "./ShowOnStartup";
 import { Vibrancy } from "./Vibrancy";
 import { WorkspaceVisibility } from "./WorkspaceVisibility";

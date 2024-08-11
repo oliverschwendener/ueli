@@ -12,7 +12,7 @@ type SearchResultListItemProps = {
     onClick: () => void;
     onDoubleClick: () => void;
     searchResultItem: SearchResultItem;
-    scrollBehaviour: ScrollBehavior;
+    scrollBehavior: ScrollBehavior;
 };
 
 export const SearchResultListItem = ({
@@ -21,17 +21,17 @@ export const SearchResultListItem = ({
     onClick,
     onDoubleClick,
     searchResultItem,
-    scrollBehaviour,
+    scrollBehavior,
 }: SearchResultListItemProps) => {
     const { t } = useTranslation();
 
-    const { theme, isDarkMode } = useContext(ThemeContext);
+    const { theme, shouldPreferDarkColors } = useContext(ThemeContext);
     const ref = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState<boolean>(false);
 
     const scrollIntoViewIfSelectedAndNotVisible = () => {
         if (containerRef.current && ref.current && isSelected && !elementIsVisible(ref.current, containerRef.current)) {
-            ref.current?.scrollIntoView({ behavior: scrollBehaviour, block: "nearest" });
+            ref.current?.scrollIntoView({ behavior: scrollBehavior, block: "nearest" });
         }
     };
 
@@ -98,7 +98,7 @@ export const SearchResultListItem = ({
                     }}
                     src={getImageUrl({
                         image: searchResultItem.image,
-                        shouldPreferDarkColors: isDarkMode,
+                        shouldPreferDarkColors: shouldPreferDarkColors,
                     })}
                 />
             </div>
