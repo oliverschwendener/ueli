@@ -18,7 +18,7 @@ This extension allows you to search for applications installed on your computer.
 
 ### Linux
 
--   Application Folders: the list of folders where Ueli will look for applications.
+-   Application Folders: the list of folders where Ueli will look for `.desktop` files.
 
 ## About this extension
 
@@ -28,4 +28,10 @@ Supported operating systems:
 
 -   Windows
 -   macOS
--   Linux (with Cinnamon or Gnome Desktop environment)
+-   Linux (with the following desktop environments)
+    -   GNOME
+    -   KDE
+    -   MATE
+    -   XFCE
+    -   Cinnamon
+    -   Pantheon
