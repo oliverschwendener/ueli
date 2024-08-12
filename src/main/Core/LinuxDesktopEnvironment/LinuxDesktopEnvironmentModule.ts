@@ -14,7 +14,7 @@ export class LinuxDesktopEnvironmentModule {
         const environmentVariableProvider = dependencyRegistry.get("EnvironmentVariableProvider");
 
         const currentDesktopEnvironment: LinuxDesktopEnvironment = environmentVariableProvider
-            .get("XDG_CURRENT_DESKTOP")
+            .get("ORIGINAL_XDG_CURRENT_DESKTOP")
             ?.split(":")
             .find((desktop: string): desktop is LinuxDesktopEnvironment =>
                 SupportedLinuxDesktopEnvironments.includes(desktop as LinuxDesktopEnvironment),

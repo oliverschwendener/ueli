@@ -1,1 +1,1 @@
-export * from "./LinuxDesktopEnvironment";
+export * from "./LinuxDesktopEnvironmentModule";
