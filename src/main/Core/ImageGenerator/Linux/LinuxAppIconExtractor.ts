@@ -288,20 +288,6 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
                     "kreadconfig5 --file kdeglobals --group Icons --key Theme",
                 );
             },
-            LXDE: async (): Promise<string> => {
-                const desktopConfig = this.iniFileParser.parseIniFileContent(
-                    (
-                        await this.fileSystemUtility.readFile(
-                            join(this.homePath, ".config", "lxsession", "LXDE", "desktop.conf"),
-                        )
-                    ).toString(),
-                );
-
-                return desktopConfig["GTK"]["sNet/IconThemeName"];
-            },
-            LXQt: function (): Promise<string> {
-                throw new Error("Function not implemented.");
-            },
             MATE: (): Promise<string> => {
                 return this.commandlineUtility.executeCommand("gsettings get org.mate.interface icon-theme");
             },

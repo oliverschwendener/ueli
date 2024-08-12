@@ -6,8 +6,6 @@ export const SupportedLinuxDesktopEnvironments = [
     "GNOME-Classic",
     "GNOME-Flashback",
     "KDE",
-    "LXDE",
-    "LXQt",
     "MATE",
     "XFCE",
     "Cinnamon",
