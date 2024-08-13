@@ -11,6 +11,7 @@ export const getSearchResult = ({
     searchTerm,
     fuzziness,
     maxSearchResultItems,
+    maxSearchResultItemsEmptySearchTerm,
 }: {
     searchFilter: SearchFilter;
     favoriteSearchResultItemIds: string[];
@@ -20,6 +21,7 @@ export const getSearchResult = ({
     searchTerm: string;
     fuzziness: number;
     maxSearchResultItems: number;
+    maxSearchResultItemsEmptySearchTerm: number;
 }): Record<string, SearchResultItem[]> => {
     searchResultItems = SearchResultItemFilter.createFrom(searchResultItems).exclude(excludedSearchResultItemIds).get();
 
@@ -47,7 +49,7 @@ export const getSearchResult = ({
             searchResults: SearchResultItemFilter.createFrom(searchResultItems)
                 .exclude(favoriteSearchResultItemIds)
                 .sortAlphabetically()
-                .limit(maxSearchResultItems)
+                .limit(maxSearchResultItemsEmptySearchTerm)
                 .get(),
         };
     }

@@ -67,6 +67,10 @@ export const useSearchViewController = ({
 
     const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
     const { value: maxSearchResultItems } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
+    const { value: maxSearchResultItemsEmptySearchTerm } = useSetting({
+        key: "searchEngine.maxResultLengthEmptySearchTerm",
+        defaultValue: 50,
+    });
     const { value: searchEngineId } = useSetting({ key: "searchEngine.id", defaultValue: "Fuse.js" });
 
     const searchFilters: Record<string, SearchFilter> = {
@@ -82,6 +86,7 @@ export const useSearchViewController = ({
             fuzziness,
             instantSearchResultItems: contextBridge.getInstantSearchResultItems(searchTerm),
             maxSearchResultItems,
+            maxSearchResultItemsEmptySearchTerm,
             searchResultItems,
             searchTerm,
         });

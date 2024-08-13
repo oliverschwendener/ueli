@@ -6,6 +6,7 @@ import { AutomaticRescan } from "./AutomaticRescan";
 import { ExcludedItems } from "./ExcludedItems";
 import { Fuzziness } from "./Fuzziness";
 import { MaxResultLength } from "./MaxResultLength";
+import { MaxResultLengthEmptySearchTerm } from "./MaxResultLengthEmptySearchTerm";
 import { RescanInterval } from "./RescanInterval";
 import { SearchEngineId } from "./SearchEngineId";
 
@@ -28,6 +29,7 @@ export const SearchEngine = () => {
                 <RescanInterval automaticRescanEnabled={automaticRescanEnabled} />
                 <Fuzziness />
                 <MaxResultLength />
+                <MaxResultLengthEmptySearchTerm />
             </SettingGroup>
             <SettingGroup title={t("excludedItems")}>
                 <ExcludedItems />
