@@ -28,8 +28,8 @@ export const ScrollBehavior = () => {
                         optionValue && setScrollBehavior(optionValue as ScrollBehavior)
                     }
                 >
-                    {Object.entries(scrollBehaviors).map(([Behavior, name]) => (
-                        <Option key={Behavior} value={Behavior} text={name}>
+                    {Object.entries(scrollBehaviors).map(([behavior, name]) => (
+                        <Option key={behavior} value={behavior} text={name}>
                             {name}
                         </Option>
                     ))}
