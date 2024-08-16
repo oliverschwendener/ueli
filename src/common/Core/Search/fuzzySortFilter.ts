@@ -1,7 +1,7 @@
 import type { SearchResultItem } from "@common/Core";
+import type { SearchFilter } from "@common/Core/Search/SearchFilter";
+import type { SearchOptions } from "@common/Core/Search/SearchOptions";
 import fuzzysort from "fuzzysort";
-import type { SearchFilter } from "../../../../common/Core/Search/SearchFilter";
-import type { SearchOptions } from "../../../../common/Core/Search/SearchOptions";
 
 export const fuzzySortFilter: SearchFilter = ({
     fuzziness,

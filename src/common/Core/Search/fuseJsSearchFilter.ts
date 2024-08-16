@@ -1,7 +1,7 @@
 import type { SearchResultItem } from "@common/Core";
+import type { SearchFilter } from "@common/Core/Search/SearchFilter";
+import type { SearchOptions } from "@common/Core/Search/SearchOptions";
 import Fuse from "fuse.js";
-import type { SearchFilter } from "../../../../common/Core/Search/SearchFilter";
-import type { SearchOptions } from "../../../../common/Core/Search/SearchOptions";
 import { SearchResultItemFilter } from "./SearchResultItemFilter";
 
 export const fuseJsSearchFilter: SearchFilter = ({
