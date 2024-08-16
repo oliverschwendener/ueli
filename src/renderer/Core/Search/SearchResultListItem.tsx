@@ -1,4 +1,3 @@
-import { useContextBridge } from "@Core/Hooks";
 import { ThemeContext } from "@Core/ThemeContext";
 import { getImageUrl } from "@Core/getImageUrl";
 import type { SearchResultItem } from "@common/Core";
@@ -13,6 +12,7 @@ type SearchResultListItemProps = {
     onClick: () => void;
     onDoubleClick: () => void;
     searchResultItem: SearchResultItem;
+    scrollBehavior: ScrollBehavior;
 };
 
 export const SearchResultListItem = ({
@@ -21,26 +21,22 @@ export const SearchResultListItem = ({
     onClick,
     onDoubleClick,
     searchResultItem,
+    scrollBehavior,
 }: SearchResultListItemProps) => {
-    const { contextBridge } = useContextBridge();
     const { t } = useTranslation();
-    const { theme } = useContext(ThemeContext);
+
+    const { theme, shouldPreferDarkColors } = useContext(ThemeContext);
     const ref = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState<boolean>(false);
 
     const scrollIntoViewIfSelectedAndNotVisible = () => {
         if (containerRef.current && ref.current && isSelected && !elementIsVisible(ref.current, containerRef.current)) {
-            setTimeout(() => ref.current?.scrollIntoView({ behavior: "smooth" }), 50);
+            ref.current?.scrollIntoView({ behavior: scrollBehavior, block: "nearest" });
         }
     };
 
-    const selectedBackgroundColor = contextBridge.themeShouldUseDarkColors()
-        ? theme.colorNeutralBackground1Selected
-        : theme.colorNeutralBackground1Selected;
-
-    const hoveredBackgroundColor = contextBridge.themeShouldUseDarkColors()
-        ? theme.colorNeutralBackground1Hover
-        : theme.colorNeutralBackground1Hover;
+    const selectedBackgroundColor = theme.colorNeutralBackground1Selected;
+    const hoveredBackgroundColor = theme.colorNeutralBackground1Hover;
 
     useEffect(scrollIntoViewIfSelectedAndNotVisible, [isSelected]);
 
@@ -102,7 +98,7 @@ export const SearchResultListItem = ({
                     }}
                     src={getImageUrl({
                         image: searchResultItem.image,
-                        shouldPreferDarkColors: contextBridge.themeShouldUseDarkColors(),
+                        shouldPreferDarkColors,
                     })}
                 />
             </div>

@@ -16,9 +16,11 @@ We accept issues only in English. When an issue is posted in a language besides 
 
 ## Pull Requests
 
-Pull requests are created [here](https://github.com/oliverschwendener/ueli/pulls)
+Pull requests are created [here](https://github.com/oliverschwendener/ueli/pulls).
 
 Pull Requests are the way concrete changes are made to the code, documentation, dependencies, and tools contained in the repository.
+
+Please create one PR per purpose. If you want to fix multiple things, create separate PRs.
 
 ### Languages
 
