@@ -69,7 +69,7 @@ export const useSearchViewController = ({
 
     const search = (searchTerm: string, selectedItemId?: string) => {
         const searchResult = getSearchResult({
-            searchEngineId: searchEngineId,
+            searchEngineId,
             excludedSearchResultItemIds,
             favoriteSearchResultItemIds,
             fuzziness,
