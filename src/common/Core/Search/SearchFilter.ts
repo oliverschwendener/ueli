@@ -1,4 +1,15 @@
-import type { SearchResultItem } from "@common/Core";
-import type { SearchOptions } from "./SearchOptions";
+import { SearchResultItem } from "../SearchResultItem";
+import { fuseJsSearchFilter } from "./fuseJsSearchFilter";
+import { fuzzySortFilter } from "./fuzzySortFilter";
+import { SearchOptions } from "./SearchOptions";
 
-export type SearchFilter = (options: SearchOptions) => SearchResultItem[];
+const searchFilters = {
+    "Fuse.js": (options: SearchOptions) => fuseJsSearchFilter(options),
+    "fuzzysort": (options: SearchOptions) => fuzzySortFilter(options),
+};
+
+export type SearchEngineId = keyof typeof searchFilters;
+
+export function searchFilter(options: SearchOptions & { searchEngineId: SearchEngineId }): SearchResultItem[] {
+    return searchFilters[options.searchEngineId](options);
+}

@@ -1,9 +1,9 @@
 import type { SearchResultItem } from "@common/Core";
-import type { SearchFilter } from "@common/Core/Search/SearchFilter";
+import { SearchEngineId, searchFilter } from "@common/Core/Search/SearchFilter";
 import { SearchResultItemFilter } from "@common/Core/Search/SearchResultItemFilter";
 
 export const getSearchResult = ({
-    searchFilter,
+    searchEngineId,
     favoriteSearchResultItemIds,
     excludedSearchResultItemIds,
     instantSearchResultItems,
@@ -12,7 +12,7 @@ export const getSearchResult = ({
     fuzziness,
     maxSearchResultItems,
 }: {
-    searchFilter: SearchFilter;
+    searchEngineId: SearchEngineId;
     favoriteSearchResultItemIds: string[];
     excludedSearchResultItemIds: string[];
     instantSearchResultItems: SearchResultItem[];
@@ -25,6 +25,7 @@ export const getSearchResult = ({
 
     if (searchTerm.length > 0) {
         const searchFilterItems = searchFilter({
+            searchEngineId,
             searchResultItems,
             searchTerm: searchTerm.trim(),
             fuzziness,

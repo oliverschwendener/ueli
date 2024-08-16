@@ -1,9 +1,7 @@
 import { useSetting } from "@Core/Hooks";
 import type { ContextBridge, SearchResultItem, SearchResultItemAction } from "@common/Core";
+import { SearchEngineId } from "@common/Core/Search/SearchFilter";
 import { useRef, useState } from "react";
-import type { SearchFilter } from "./Helpers";
-import { fuseJsSearchFilter } from "./Helpers/fuseJsSearchFilter";
-import { fuzzySortFilter } from "./Helpers/fuzzySortFilter";
 import { getNextSearchResultItemId } from "./Helpers/getNextSearchResultItemId";
 import { getPreviousSearchResultItemId } from "./Helpers/getPreviousSearchResultItemId";
 import { getSearchResult } from "./Helpers/getSearchResult";
@@ -67,16 +65,11 @@ export const useSearchViewController = ({
 
     const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
     const { value: maxSearchResultItems } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
-    const { value: searchEngineId } = useSetting({ key: "searchEngine.id", defaultValue: "Fuse.js" });
-
-    const searchFilters: Record<string, SearchFilter> = {
-        "Fuse.js": (options) => fuseJsSearchFilter(options),
-        fuzzysort: (options) => fuzzySortFilter(options),
-    };
+    const { value: searchEngineId } = useSetting<SearchEngineId>({ key: "searchEngine.id", defaultValue: "Fuse.js" });
 
     const search = (searchTerm: string, selectedItemId?: string) => {
         const searchResult = getSearchResult({
-            searchFilter: searchFilters[searchEngineId],
+            searchEngineId: searchEngineId,
             excludedSearchResultItemIds,
             favoriteSearchResultItemIds,
             fuzziness,
