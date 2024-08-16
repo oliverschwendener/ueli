@@ -1,5 +1,5 @@
 import type { SearchResultItem } from "@common/Core";
-import type { SearchFilter } from "./SearchFilter";
+import type { SearchFilter } from "../../../../common/Core/Search/SearchFilter";
 import { SearchResultItemFilter } from "./SearchResultItemFilter";
 
 export const getSearchResult = ({
