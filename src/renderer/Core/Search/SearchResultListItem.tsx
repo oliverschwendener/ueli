@@ -98,7 +98,7 @@ export const SearchResultListItem = ({
                     }}
                     src={getImageUrl({
                         image: searchResultItem.image,
-                        shouldPreferDarkColors: shouldPreferDarkColors,
+                        shouldPreferDarkColors,
                     })}
                 />
             </div>
