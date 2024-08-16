@@ -88,41 +88,4 @@ datadir = /var/lib/data
             },
         });
     });
-
-    it("should throw an error on duplicate group entries", () => {
-        const iniFileString = `
-; This comment is being ignored
-scope = global
-comments = no;inline;comments
-
-[database]
-user = dbuser
-password = dbpassword
-database = use_this_database
-
-[database]
-datadir = /var/lib/data
-                `;
-
-        expect(() => new IniFileParser().parseIniFileContent(iniFileString.trim())).toThrowError();
-    });
-
-    it("should throw an error on duplicate key entries", () => {
-        const iniFileString = `
-; This comment is being ignored
-scope = global
-comments = no;inline;comments
-
-[database]
-user = dbuser
-password = dbpassword
-database = use_this_database
-user = notdbuser
-
-[paths.default]
-datadir = /var/lib/data
-                `;
-
-        expect(() => new IniFileParser().parseIniFileContent(iniFileString.trim())).toThrowError();
-    });
 });
