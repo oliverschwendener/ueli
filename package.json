@@ -1,7 +1,7 @@
 {
     "name": "ueli",
     "description": "Cross-Platform Keystroke Launcher",
-    "version": "9.3.1",
+    "version": "9.3.2",
     "license": "MIT",
     "author": {
         "email": "oliver.schwendener@proton.me",
