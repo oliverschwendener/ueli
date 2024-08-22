@@ -18,12 +18,19 @@ export class FileImageGenerator implements FileImageGeneratorInterface {
     }
 
     public async getImages(filePaths: string[]): Promise<Record<string, Image>> {
+        let result: Record<string, Image> = {};
+
         for (const fileIconExtractor of this.fileIconExtractors) {
-            if (filePaths.every((filePath) => fileIconExtractor.matchesFilePath(filePath))) {
-                return await fileIconExtractor.extractFileIcons(filePaths);
-            }
+            const matchingFilePaths = filePaths.filter(
+                (filePath) => !Object.keys(result).includes(filePath) && fileIconExtractor.matchesFilePath(filePath),
+            );
+
+            result = {
+                ...result,
+                ...(await fileIconExtractor.extractFileIcons(matchingFilePaths)),
+            };
         }
 
-        throw new Error(`Failed to extract file icons. Reason: file paths did not match any file icon extractor`);
+        return result;
     }
 }

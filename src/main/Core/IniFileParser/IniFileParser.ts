@@ -26,11 +26,12 @@ export class IniFileParser implements IniFileParserInterface {
         for (const line of fileLines) {
             // New group
             if (line.startsWith("[") && line.endsWith("]") && !line.slice(1, -1).match(/\[\]/m)) {
-                if (result[line]) {
-                    throw `Ini Format Error! Duplicate groups found in ${fileString}`;
+                group = line.slice(1, -1);
+
+                if (result[group]) {
+                    throw new Error(`Ini Format Error. Duplicate group ${group} found`);
                 }
 
-                group = line.slice(1, -1);
                 result[group] = {};
             } else {
                 // Entry
@@ -38,7 +39,7 @@ export class IniFileParser implements IniFileParserInterface {
                 const entry = entrySplit.join("=");
 
                 if (result[group][key]) {
-                    throw `Ini Format Error! Duplicate key in ${group} in file ${fileString}`;
+                    throw Error(`Ini Format Error. Duplicate key ${key} in ${group}`);
                 }
 
                 result[group][key] = entry;

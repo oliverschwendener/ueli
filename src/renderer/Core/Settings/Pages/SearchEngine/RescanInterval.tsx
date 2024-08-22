@@ -36,9 +36,11 @@ export const RescanInterval = ({ automaticRescanEnabled }: RescanIntervalProps) 
                     value={`${tempRescanIntervalInSeconds}`}
                     onChange={(_, { value }) => setTempRescanIntervalInSeconds(Number(value))}
                     onBlur={() => {
-                        tempRescanIntervalInSeconds < 10
-                            ? setTempRescanIntervalInSeconds(rescanIntervalInSeconds)
-                            : setRescanIntervalInSeconds(tempRescanIntervalInSeconds);
+                        if (tempRescanIntervalInSeconds < 10) {
+                            setTempRescanIntervalInSeconds(rescanIntervalInSeconds);
+                        } else {
+                            setRescanIntervalInSeconds(tempRescanIntervalInSeconds);
+                        }
                     }}
                     type="number"
                     disabled={!automaticRescanEnabled}

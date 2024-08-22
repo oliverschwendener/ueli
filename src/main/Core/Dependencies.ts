@@ -25,6 +25,7 @@ export type Dependencies = {
     GlobalShortcut?: Electron.GlobalShortcut;
     IniFileParser?: Core.IniFileParser;
     IpcMain?: Electron.IpcMain;
+    LinuxDesktopEnvironmentResolver?: Core.LinuxDesktopEnvironmentResolver;
     Logger?: Core.Logger;
     NativeTheme?: Electron.NativeTheme;
     Net?: Electron.Net;

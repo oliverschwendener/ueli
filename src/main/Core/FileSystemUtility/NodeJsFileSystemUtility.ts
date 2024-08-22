@@ -36,7 +36,11 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
     public createFolder(folderPath: string): Promise<void> {
         return new Promise((resolve, reject) => {
             mkdir(folderPath, (error) => {
-                error ? reject(error) : resolve();
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve();
+                }
             });
         });
     }
@@ -53,7 +57,11 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
     public removeFile(filePath: string): Promise<void> {
         return new Promise((resolve, reject) => {
             unlink(filePath, (error) => {
-                error ? reject(error) : resolve();
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve();
+                }
             });
         });
     }
@@ -61,7 +69,11 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
     public writeTextFile(data: string, filePath: string): Promise<void> {
         return new Promise((resolve, reject) => {
             writeFile(filePath, data, "utf-8", (error) => {
-                error ? reject(error) : resolve();
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve();
+                }
             });
         });
     }
@@ -69,7 +81,11 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
     public writeJsonFile<T>(data: T, filePath: string): Promise<void> {
         return new Promise((resolve, reject) => {
             writeFile(filePath, JSON.stringify(data), (error) => {
-                error ? reject(error) : resolve();
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve();
+                }
             });
         });
     }
@@ -81,7 +97,11 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
     public writePng(buffer: Buffer, filePath: string): Promise<void> {
         return new Promise((resolve, reject) => {
             writeFile(filePath, buffer, (error) => {
-                error ? reject(error) : resolve();
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve();
+                }
             });
         });
     }
@@ -110,7 +130,11 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
     public copyFile(filePath: string, destinationFilePath: string): Promise<void> {
         return new Promise((resolve, reject) => {
             copyFile(filePath, destinationFilePath, (error) => {
-                error ? reject(error) : resolve();
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve();
+                }
             });
         });
     }
@@ -118,7 +142,11 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
     public readFile(filePath: string): Promise<Buffer> {
         return new Promise((resolve, reject) => {
             readFile(filePath, (error, data) => {
-                error ? reject(error) : resolve(data);
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(data);
+                }
             });
         });
     }

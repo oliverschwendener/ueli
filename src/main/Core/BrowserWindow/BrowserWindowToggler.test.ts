@@ -80,9 +80,11 @@ describe(BrowserWindowToggler, () => {
                 expect(isFocusedMock).toHaveBeenCalledOnce();
                 expect(appShowMock).toHaveBeenCalledOnce();
 
-                operatingSystem === "Windows"
-                    ? expect(restoreMock).toHaveBeenCalledOnce()
-                    : expect(restoreMock).not.toHaveBeenCalled();
+                if (operatingSystem === "Windows") {
+                    expect(restoreMock).toHaveBeenCalledOnce();
+                } else {
+                    expect(restoreMock).not.toHaveBeenCalled();
+                }
 
                 expect(showMock).toHaveBeenCalledOnce();
                 expect(focusMock).toHaveBeenCalledOnce();
@@ -207,9 +209,11 @@ describe(BrowserWindowToggler, () => {
                 expect(isFocusedMock).toHaveBeenCalledOnce();
                 expect(appHideMock).toHaveBeenCalledOnce();
 
-                operatingSystem === "Windows"
-                    ? expect(minimizeMock).toHaveBeenCalledOnce()
-                    : expect(minimizeMock).not.toHaveBeenCalled();
+                if (operatingSystem === "Windows") {
+                    expect(minimizeMock).toHaveBeenCalledOnce();
+                } else {
+                    expect(minimizeMock).not.toHaveBeenCalled();
+                }
 
                 expect(hideMock).toHaveBeenCalledOnce();
             };

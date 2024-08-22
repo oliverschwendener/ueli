@@ -2,6 +2,7 @@ import type { SearchResultItem } from "@common/Core";
 import { Text } from "@fluentui/react-components";
 import type { RefObject } from "react";
 import { useTranslation } from "react-i18next";
+import { useSetting } from "../Hooks";
 import { SearchResultListItem } from "./SearchResultListItem";
 
 type SearchResultListProps = {
@@ -22,6 +23,11 @@ export const SearchResultList = ({
     onSearchResultItemDoubleClick,
 }: SearchResultListProps) => {
     const { t } = useTranslation();
+
+    const { value: scrollBehavior } = useSetting<ScrollBehavior>({
+        key: "window.scrollBehavior",
+        defaultValue: "smooth",
+    });
 
     const noResultsFoundMessage = searchTerm
         ? `${t("noResultsFoundFor", { ns: "search" })} "${searchTerm}"`
@@ -48,6 +54,7 @@ export const SearchResultList = ({
                     searchResultItem={searchResultItem}
                     onClick={() => onSearchResultItemClick(searchResultItem)}
                     onDoubleClick={() => onSearchResultItemDoubleClick(searchResultItem)}
+                    scrollBehavior={scrollBehavior}
                 />
             ))}
         </div>
