@@ -8,11 +8,11 @@ export class LinuxDesktopEnvironmentResolver implements LinuxDesktopEnvironmentR
     public constructor(private readonly environmentVariableProvider: EnvironmentVariableProvider) {}
 
     public resolve(): LinuxDesktopEnvironment | undefined {
-        const map: Record<string, string> = {
+        const map: Record<string, LinuxDesktopEnvironment> = {
             "ubuntu:GNOME": "GNOME",
             KDE: "KDE",
         };
 
-        return map[this.environmentVariableProvider.get("XDG_CURRENT_DESKTOP")] as LinuxDesktopEnvironment | undefined;
+        return map[this.environmentVariableProvider.get("XDG_CURRENT_DESKTOP")];
     }
 }
