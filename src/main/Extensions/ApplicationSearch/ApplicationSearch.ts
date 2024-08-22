@@ -1,7 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { LinuxDesktopEnvironment, LinuxDesktopEnvironmentResolver } from "@Core/LinuxDesktopEnvironment";
-import { type OperatingSystem, type SearchResultItem } from "@common/Core";
+import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { ApplicationRepository } from "./ApplicationRepository";
