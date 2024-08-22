@@ -1,10 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import {
-    SupportedLinuxDesktopEnvironments,
-    type LinuxDesktopEnvironment,
-    type OperatingSystem,
-    type SearchResultItem,
-} from "@common/Core";
+import type { LinuxDesktopEnvironment, LinuxDesktopEnvironmentResolver } from "@Core/LinuxDesktopEnvironment";
+import { type OperatingSystem, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import { describe, expect, it, vi } from "vitest";
 import { Application } from "./Application";
@@ -38,6 +34,7 @@ describe(ApplicationSearch, () => {
             applicationRepository,
             <Settings>{},
             <AssetPathResolver>{},
+            <LinuxDesktopEnvironmentResolver>{},
         ).getSearchResultItems();
 
         expect(searchResultItems).toEqual(applications.map((application) => application.toSearchResultItem()));
@@ -59,6 +56,7 @@ describe(ApplicationSearch, () => {
             <ApplicationRepository>{},
             settings,
             <AssetPathResolver>{},
+            <LinuxDesktopEnvironmentResolver>{},
         );
 
         expect(applicationSearch.getSettingDefaultValue("key1")).toBe("value1");
@@ -76,28 +74,41 @@ describe(ApplicationSearch, () => {
             operatingSystem: OperatingSystem;
             linuxDesktopEnvironment?: LinuxDesktopEnvironment;
         }) => {
+            const linuxDesktopEnvironmentResolver = <LinuxDesktopEnvironmentResolver>{
+                resolve: vi.fn().mockReturnValue(linuxDesktopEnvironment),
+            };
+
             expect(
                 new ApplicationSearch(
                     operatingSystem,
                     <ApplicationRepository>{},
                     <Settings>{},
                     <AssetPathResolver>{},
-                    linuxDesktopEnvironment,
+                    linuxDesktopEnvironmentResolver,
                 ).isSupported(),
             ).toBe(expected);
+
+            if (operatingSystem === "Linux") {
+                expect(linuxDesktopEnvironmentResolver.resolve).toHaveBeenCalledOnce();
+            }
         };
 
         it("should return true on Windows", () => testIsSupported({ expected: true, operatingSystem: "Windows" }));
         it("should return true on macOS", () => testIsSupported({ expected: true, operatingSystem: "macOS" }));
 
-        for (const linuxDesktopEnvironment of SupportedLinuxDesktopEnvironments) {
-            it(`should return true on Linux with ${linuxDesktopEnvironment} desktop environment`, () =>
-                testIsSupported({
-                    expected: true,
-                    operatingSystem: "Linux",
-                    linuxDesktopEnvironment: linuxDesktopEnvironment,
-                }));
-        }
+        it(`should return true on Linux with GNOME desktop environment`, () =>
+            testIsSupported({
+                expected: true,
+                operatingSystem: "Linux",
+                linuxDesktopEnvironment: "GNOME",
+            }));
+
+        it(`should return true on Linux with KDE desktop environment`, () =>
+            testIsSupported({
+                expected: true,
+                operatingSystem: "Linux",
+                linuxDesktopEnvironment: "KDE",
+            }));
 
         it("should return false on Linux with other desktop environment", () =>
             testIsSupported({
@@ -113,6 +124,7 @@ describe(ApplicationSearch, () => {
             <ApplicationRepository>{},
             <Settings>{},
             <AssetPathResolver>{},
+            <LinuxDesktopEnvironmentResolver>{},
         ).getI18nResources();
 
         expect(Object.keys(translations)).to.include("en-US");
@@ -127,11 +139,23 @@ describe(ApplicationSearch, () => {
         };
 
         expect(
-            new ApplicationSearch("Windows", <ApplicationRepository>{}, <Settings>{}, assetPathResolver).getImage(),
+            new ApplicationSearch(
+                "Windows",
+                <ApplicationRepository>{},
+                <Settings>{},
+                assetPathResolver,
+                <LinuxDesktopEnvironmentResolver>{},
+            ).getImage(),
         ).toEqual({ url: "file://someFilePath" });
 
         expect(
-            new ApplicationSearch("macOS", <ApplicationRepository>{}, <Settings>{}, assetPathResolver).getImage(),
+            new ApplicationSearch(
+                "macOS",
+                <ApplicationRepository>{},
+                <Settings>{},
+                assetPathResolver,
+                <LinuxDesktopEnvironmentResolver>{},
+            ).getImage(),
         ).toEqual({ url: "file://someFilePath" });
 
         expect(getExtensionAssetPathMock).toHaveBeenCalledWith("ApplicationSearch", "windows-generic-app-icon.png");
@@ -145,6 +169,7 @@ describe(ApplicationSearch, () => {
             <ApplicationRepository>{},
             <Settings>{},
             <AssetPathResolver>{},
+            <LinuxDesktopEnvironmentResolver>{},
         ).getSettingKeysTriggeringRescan();
 
         expect(settingKeys).toEqual([

@@ -61,7 +61,7 @@ export class ApplicationSearchModule implements ExtensionModule {
                 applicationRepositories[dependencyRegistry.get("OperatingSystem")](),
                 settings,
                 dependencyRegistry.get("AssetPathResolver"),
-                dependencyRegistry.get("LinuxDesktopEnvironment"),
+                dependencyRegistry.get("LinuxDesktopEnvironmentResolver"),
             ),
             actionHandlers: actionHandlers[dependencyRegistry.get("OperatingSystem")](),
         };

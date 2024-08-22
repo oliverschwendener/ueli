@@ -2,8 +2,8 @@ import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { IniFileParser } from "@Core/IniFileParser";
+import type { LinuxDesktopEnvironment, LinuxDesktopEnvironmentResolver } from "@Core/LinuxDesktopEnvironment";
 import type { Logger } from "@Core/Logger";
-import type { LinuxDesktopEnvironment } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import { basename, dirname, extname, join } from "path";
 import sharp from "sharp";
@@ -49,7 +49,7 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
         private readonly cacheFolder: string,
         private readonly homePath: string,
         private readonly environmentVariableProvider: EnvironmentVariableProvider,
-        private readonly linuxDesktopEnvironment: LinuxDesktopEnvironment,
+        private readonly linuxDesktopEnvironmentResolver: LinuxDesktopEnvironmentResolver,
     ) {
         this.baseDirectories = [
             join(this.homePath, ".icons"),
@@ -311,13 +311,13 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
             },
         };
 
-        if (!iconThemeNameMap[this.linuxDesktopEnvironment]) {
+        if (!iconThemeNameMap[this.linuxDesktopEnvironmentResolver.resolve()]) {
             throw new Error(
-                `No available function to read icon theme for this desktop environment. Desktop: ${this.linuxDesktopEnvironment}`,
+                `No available function to read icon theme for this desktop environment. Desktop: ${this.linuxDesktopEnvironmentResolver.resolve()}`,
             );
         }
 
-        const iconThemeName = (await iconThemeNameMap[this.linuxDesktopEnvironment]()).trim();
+        const iconThemeName = (await iconThemeNameMap[this.linuxDesktopEnvironmentResolver.resolve()]()).trim();
         return iconThemeName.startsWith("'") && iconThemeName.endsWith("'")
             ? iconThemeName.slice(1, -1)
             : iconThemeName;

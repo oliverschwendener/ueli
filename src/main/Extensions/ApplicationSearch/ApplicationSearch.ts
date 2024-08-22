@@ -1,11 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
-import {
-    SupportedLinuxDesktopEnvironments,
-    type LinuxDesktopEnvironment,
-    type OperatingSystem,
-    type SearchResultItem,
-} from "@common/Core";
+import type { LinuxDesktopEnvironment, LinuxDesktopEnvironmentResolver } from "@Core/LinuxDesktopEnvironment";
+import { type OperatingSystem, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { ApplicationRepository } from "./ApplicationRepository";
@@ -30,7 +26,7 @@ export class ApplicationSearch implements Extension {
         private readonly applicationRepository: ApplicationRepository,
         private readonly settings: Settings,
         private readonly assetPathResolver: AssetPathResolver,
-        private readonly linuxDesktopEnvironment?: LinuxDesktopEnvironment,
+        private readonly linuxDesktopEnvironmentResolver: LinuxDesktopEnvironmentResolver,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -40,7 +36,10 @@ export class ApplicationSearch implements Extension {
 
     public isSupported(): boolean {
         const checks: Record<OperatingSystem, () => boolean> = {
-            Linux: () => SupportedLinuxDesktopEnvironments.includes(this.linuxDesktopEnvironment),
+            Linux: () => {
+                const supportedLinuxDesktopEnvironments: LinuxDesktopEnvironment[] = ["GNOME", "KDE"];
+                return supportedLinuxDesktopEnvironments.includes(this.linuxDesktopEnvironmentResolver.resolve());
+            },
             macOS: () => true,
             Windows: () => true,
         };
