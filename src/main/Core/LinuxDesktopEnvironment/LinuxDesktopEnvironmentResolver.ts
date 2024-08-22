@@ -12,6 +12,6 @@ export class LinuxDesktopEnvironmentResolver implements LinuxDesktopEnvironmentR
             KDE: "KDE",
         };
 
-        return map[desktopSession] ?? undefined;
+        return map[desktopSession];
     }
 }
