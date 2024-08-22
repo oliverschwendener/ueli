@@ -1,6 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { LinuxDesktopEnvironment, LinuxDesktopEnvironmentResolver } from "@Core/LinuxDesktopEnvironment";
-import { type OperatingSystem, type SearchResultItem } from "@common/Core";
+import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import { describe, expect, it, vi } from "vitest";
 import { Application } from "./Application";
