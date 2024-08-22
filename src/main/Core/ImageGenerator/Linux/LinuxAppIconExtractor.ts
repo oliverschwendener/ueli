@@ -276,39 +276,21 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
 
     private async getIconThemeName(): Promise<string> {
         const iconThemeNameMap: Record<LinuxDesktopEnvironment, () => Promise<string>> = {
-            GNOME: (): Promise<string> => {
-                return this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme");
-            },
-            "GNOME-Classic": (): Promise<string> => {
-                return this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme");
-            },
-            "GNOME-Flashback": (): Promise<string> => {
-                return this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme");
-            },
-            KDE: (): Promise<string> => {
-                return this.commandlineUtility.executeCommand(
-                    "kreadconfig5 --file kdeglobals --group Icons --key Theme",
-                );
-            },
-            MATE: (): Promise<string> => {
-                return this.commandlineUtility.executeCommand("gsettings get org.mate.interface icon-theme");
-            },
-            XFCE: (): Promise<string> => {
-                return this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme");
-            },
-            Cinnamon: (): Promise<string> => {
-                return this.commandlineUtility.executeCommand(
-                    "gsettings get org.cinnamon.desktop.interface icon-theme",
-                );
-            },
-            "X-Cinnamon": (): Promise<string> => {
-                return this.commandlineUtility.executeCommand(
-                    "gsettings get org.cinnamon.desktop.interface icon-theme",
-                );
-            },
-            Pantheon: (): Promise<string> => {
-                return this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme");
-            },
+            GNOME: () => this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme"),
+            "GNOME-Classic": () =>
+                this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme"),
+            "GNOME-Flashback": () =>
+                this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme"),
+            KDE: () =>
+                this.commandlineUtility.executeCommand("kreadconfig5 --file kdeglobals --group Icons --key Theme"),
+            MATE: () => this.commandlineUtility.executeCommand("gsettings get org.mate.interface icon-theme"),
+            XFCE: () => this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme"),
+            Cinnamon: () =>
+                this.commandlineUtility.executeCommand("gsettings get org.cinnamon.desktop.interface icon-theme"),
+            "X-Cinnamon": () =>
+                this.commandlineUtility.executeCommand("gsettings get org.cinnamon.desktop.interface icon-theme"),
+            Pantheon: () =>
+                this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme"),
         };
 
         if (!iconThemeNameMap[this.linuxDesktopEnvironmentResolver.resolve()]) {
@@ -318,6 +300,7 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
         }
 
         const iconThemeName = (await iconThemeNameMap[this.linuxDesktopEnvironmentResolver.resolve()]()).trim();
+
         return iconThemeName.startsWith("'") && iconThemeName.endsWith("'")
             ? iconThemeName.slice(1, -1)
             : iconThemeName;
