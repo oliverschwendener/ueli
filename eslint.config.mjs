@@ -11,6 +11,7 @@ export default [
         rules: {
             curly: ["error"],
             "@typescript-eslint/no-unused-vars": ["error", { caughtErrors: "none" }],
+            "@typescript-eslint/consistent-type-imports": "error",
         },
         languageOptions: {
             globals: {

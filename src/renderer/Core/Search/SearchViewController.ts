@@ -1,6 +1,6 @@
 import { useSetting } from "@Core/Hooks";
 import type { ContextBridge, SearchResultItem, SearchResultItemAction } from "@common/Core";
-import { SearchEngineId } from "@common/Core/Search/SearchFilter";
+import type { SearchEngineId } from "@common/Core/Search/SearchFilter";
 import { useRef, useState } from "react";
 import { getNextSearchResultItemId } from "./Helpers/getNextSearchResultItemId";
 import { getPreviousSearchResultItemId } from "./Helpers/getPreviousSearchResultItemId";
