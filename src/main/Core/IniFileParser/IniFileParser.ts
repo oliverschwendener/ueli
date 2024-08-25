@@ -1,4 +1,4 @@
-import { IniFileParser as IniFileParserInterface } from "./Contract";
+import type { IniFileParser as IniFileParserInterface } from "./Contract";
 
 export class IniFileParser implements IniFileParserInterface {
     // Defaults to ';' as comment

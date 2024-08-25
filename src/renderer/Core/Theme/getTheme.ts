@@ -1,5 +1,5 @@
 import type { ContextBridge } from "@common/Core";
-import { BrandVariants, createDarkTheme, createLightTheme, type Theme } from "@fluentui/react-components";
+import { type BrandVariants, createDarkTheme, createLightTheme, type Theme } from "@fluentui/react-components";
 import { darkTheme, lightTheme } from "./defaultValues";
 import { defaultTheme, themeMap } from "./themes";
 

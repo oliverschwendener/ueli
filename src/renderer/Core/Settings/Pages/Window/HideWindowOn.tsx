@@ -9,7 +9,7 @@ export const HideWindowOn = () => {
 
     const { value: hideWindowOn, updateValue: setHideWindowOn } = useSetting({
         key: "window.hideWindowOn",
-        defaultValue: ["blur"],
+        defaultValue: ["blur", "afterInvocation", "escapePressed"],
     });
 
     const options = ["blur", "afterInvocation", "escapePressed"];

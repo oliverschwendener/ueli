@@ -1,4 +1,4 @@
-import { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
+import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { SearchResultItem } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
 import { InMemorySearchIndex } from "./InMemorySearchIndex";

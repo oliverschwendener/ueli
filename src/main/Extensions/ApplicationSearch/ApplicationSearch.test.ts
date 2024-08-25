@@ -3,7 +3,7 @@ import type { LinuxDesktopEnvironment, LinuxDesktopEnvironmentResolver } from "@
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import { describe, expect, it, vi } from "vitest";
-import { Application } from "./Application";
+import type { Application } from "./Application";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";
 import type { Settings } from "./Settings";

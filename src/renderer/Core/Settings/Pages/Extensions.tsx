@@ -19,7 +19,7 @@ import {
     useToastController,
 } from "@fluentui/react-components";
 import { ArrowClockwiseRegular } from "@fluentui/react-icons";
-import { MouseEvent } from "react";
+import type { MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 export const Extensions = () => {

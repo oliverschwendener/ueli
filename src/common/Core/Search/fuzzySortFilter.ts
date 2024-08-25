@@ -1,14 +1,15 @@
-import type { SearchResultItem } from "@common/Core";
 import fuzzysort from "fuzzysort";
-import type { SearchFilter } from "./SearchFilter";
-import type { SearchOptions } from "./SearchOptions";
+import type { InternalSearchFilter } from "./InternalSearchFilter";
 
-export const fuzzySortFilter: SearchFilter = ({
+/**
+ * Internal search filter using the fuzzysort library.
+ */
+export const fuzzySortFilter: InternalSearchFilter = ({
     fuzziness,
     maxSearchResultItems,
     searchResultItems,
     searchTerm,
-}: SearchOptions): SearchResultItem[] => {
+}) => {
     // We need to invert the fuzziness value when using fuzzysort, as here a lower fuzziness value means a more
     // strict search
     const threshold = Math.round((1 - fuzziness) * 10) / 10;

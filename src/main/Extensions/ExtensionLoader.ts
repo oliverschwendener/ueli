@@ -8,7 +8,7 @@ import { CalculatorModule } from "./Calculator";
 import { ColorConverterExtensionModule } from "./ColorConverter";
 import { CurrencyConversionModule } from "./CurrencyConversion/CurrencyConversionModule";
 import { DeeplTranslatorModule } from "./DeeplTranslator";
-import { ExtensionModule } from "./ExtensionModule";
+import type { ExtensionModule } from "./ExtensionModule";
 import { FileSearchModule } from "./FileSearch/FileSearchModule";
 import { SystemCommandsModule } from "./SystemCommands";
 import { SystemSettingsModule } from "./SystemSettings";
