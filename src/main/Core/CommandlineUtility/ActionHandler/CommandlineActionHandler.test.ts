@@ -1,6 +1,6 @@
 import type { SearchResultItemAction } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
-import type { CommandlineUtility } from "../../CommandlineUtility";
+import type { CommandlineUtility } from "../Contract";
 import { CommandlineActionHandler } from "./CommandlineActionHandler";
 
 describe(CommandlineActionHandler, () => {

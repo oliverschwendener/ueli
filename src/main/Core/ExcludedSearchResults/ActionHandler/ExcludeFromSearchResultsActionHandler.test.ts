@@ -1,6 +1,6 @@
-import type { ExcludedSearchResults } from "@Core/ExcludedSearchResults";
 import type { SearchResultItemAction } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
+import type { ExcludedSearchResults } from "../ExcludedSearchResults";
 import { ExcludeFromSearchResultsActionHandler } from "./ExcludeFromSearchResultsActionHandler";
 
 describe(ExcludeFromSearchResultsActionHandler, () => {

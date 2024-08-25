@@ -7,6 +7,7 @@ import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
 import type { BrowserWindow, IpcMain } from "electron";
 import { join } from "path";
+import { NavigateToActionHandler } from "./ActionHandler";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 import type { BrowserWindowConstructorOptionsProvider } from "./BrowserWindowConstructorOptionsProvider";
 import {
@@ -95,6 +96,10 @@ export class BrowserWindowModule {
             settingsManager,
             ipcMain,
         );
+
+        dependencyRegistry
+            .get("ActionHandlerRegistry")
+            .register(new NavigateToActionHandler(dependencyRegistry.get("EventEmitter")));
 
         await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyRegistry.get("EnvironmentVariableProvider"));
     }

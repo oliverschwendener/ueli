@@ -1,5 +1,6 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import { ExcludeFromSearchResultsActionHandler } from "./ActionHandler";
 import { ExcludedSearchResults } from "./ExcludedSearchResults";
 
 export class ExcludedSearchResultsModule {
@@ -11,7 +12,9 @@ export class ExcludedSearchResultsModule {
             dependencyRegistry.get("SettingsManager"),
         );
 
-        dependencyRegistry.register("ExcludedSearchResults", excludedSearchResults);
+        dependencyRegistry
+            .get("ActionHandlerRegistry")
+            .register(new ExcludeFromSearchResultsActionHandler(excludedSearchResults));
 
         ipcMain.on(
             "getExcludedSearchResultItemIds",

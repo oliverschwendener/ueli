@@ -1,8 +1,7 @@
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { ExcludedSearchResults as ExcludedSearchResultsInterface } from "./Contract";
 
-export class ExcludedSearchResults implements ExcludedSearchResultsInterface {
+export class ExcludedSearchResults {
     private static readonly settingKey = "searchEngine.excludedItems";
 
     private readonly items: string[] = [];
