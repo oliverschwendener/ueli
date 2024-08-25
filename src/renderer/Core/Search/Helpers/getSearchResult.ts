@@ -1,7 +1,5 @@
 import type { SearchResultItem } from "@common/Core";
-import type { SearchEngineId } from "@common/Core/Search/SearchFilter";
-import { searchFilter } from "@common/Core/Search/SearchFilter";
-import { SearchResultItemFilter } from "@common/Core/Search/SearchResultItemFilter";
+import { searchFilter, SearchResultItemFilter, type SearchEngineId } from "@common/Core/Search";
 
 export const getSearchResult = ({
     searchEngineId,
@@ -25,12 +23,15 @@ export const getSearchResult = ({
     searchResultItems = SearchResultItemFilter.createFrom(searchResultItems).exclude(excludedSearchResultItemIds).get();
 
     if (searchTerm.length > 0) {
-        const searchFilterItems = searchFilter({
-            searchResultItems,
-            searchTerm: searchTerm.trim(),
-            fuzziness,
-            maxSearchResultItems,
-        }, searchEngineId);
+        const searchFilterItems = searchFilter(
+            {
+                searchResultItems,
+                searchTerm: searchTerm.trim(),
+                fuzziness,
+                maxSearchResultItems,
+            },
+            searchEngineId,
+        );
 
         return {
             favorites: SearchResultItemFilter.createFrom(searchFilterItems).pick(favoriteSearchResultItemIds).get(),
