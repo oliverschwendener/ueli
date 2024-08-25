@@ -10,6 +10,5 @@ const searchFilters = {
 
 export type SearchEngineId = keyof typeof searchFilters;
 
-export const searchFilter = (options: SearchOptions, searchEngineId: SearchEngineId): SearchResultItem[] => {
-    return searchFilters[searchEngineId](options);
-};
+export const searchFilter = (options: SearchOptions, searchEngineId: SearchEngineId): SearchResultItem[] =>
+    searchFilters[searchEngineId](options);
