@@ -32,6 +32,7 @@ import * as Extensions from "./Extensions";
     Core.CommandlineSwitchModule.bootstrap(dependencyRegistry);
     Core.TaskSchedulerModule.bootstrap(dependencyRegistry);
     Core.EnvironmentVariableProviderModule.bootstrap(dependencyRegistry);
+    Core.LinuxDesktopEnvironmentModule.bootstrap(dependencyRegistry);
     Core.IniFileParserModule.bootstrap(dependencyRegistry);
     Core.EventEmitterModule.bootstrap(dependencyRegistry);
     Core.EventSubscriberModule.bootstrap(dependencyRegistry);

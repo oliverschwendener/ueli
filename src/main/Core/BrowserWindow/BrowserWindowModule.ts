@@ -8,9 +8,10 @@ import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
 import type { BrowserWindow, IpcMain } from "electron";
 import { join } from "path";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
+import type {
+    BrowserWindowConstructorOptionsProvider} from "./BrowserWindowConstructorOptionsProvider";
 import {
     BackgroundMaterialProvider,
-    BrowserWindowConstructorOptionsProvider,
     DefaultBrowserWindowConstructorOptionsProvider,
     LinuxBrowserWindowConstructorOptionsProvider,
     MacOsBrowserWindowConstructorOptionsProvider,
@@ -24,6 +25,8 @@ import { WindowBoundsMemory } from "./WindowBoundsMemory";
 import { sendToBrowserWindow } from "./sendToBrowserWindow";
 
 export class BrowserWindowModule {
+    private static readonly DefaultHideWindowOnOptions = ["blur", "afterInvocation", "escapePressed"];
+
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const app = dependencyRegistry.get("App");
         const operatingSystem = dependencyRegistry.get("OperatingSystem");
@@ -103,7 +106,10 @@ export class BrowserWindowModule {
         settingsManager: SettingsManager,
         windowBoundsMemory: WindowBoundsMemory,
     ) {
-        const shouldHideWindowOnBlur = () => settingsManager.getValue("window.hideWindowOn", ["blur"]).includes("blur");
+        const shouldHideWindowOnBlur = () =>
+            settingsManager
+                .getValue("window.hideWindowOn", BrowserWindowModule.DefaultHideWindowOnOptions)
+                .includes("blur");
 
         browserWindow.on("blur", () => shouldHideWindowOnBlur() && browserWindowToggler.hide());
         browserWindow.on("moved", () => windowBoundsMemory.saveWindowBounds(browserWindow));
@@ -122,10 +128,14 @@ export class BrowserWindowModule {
     ) {
         const shouldHideWindowAfterInvocation = (action: SearchResultItemAction) =>
             action.hideWindowAfterInvocation &&
-            settingsManager.getValue("window.hideWindowOn", ["blur"]).includes("afterInvocation");
+            settingsManager
+                .getValue("window.hideWindowOn", BrowserWindowModule.DefaultHideWindowOnOptions)
+                .includes("afterInvocation");
 
         const shouldHideWindowOnEscapePressed = () =>
-            settingsManager.getValue("window.hideWindowOn", ["blur"]).includes("escapePressed");
+            settingsManager
+                .getValue("window.hideWindowOn", BrowserWindowModule.DefaultHideWindowOnOptions)
+                .includes("escapePressed");
 
         eventSubscriber.subscribe(
             "actionInvoked",

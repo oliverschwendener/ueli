@@ -1,7 +1,8 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { describe, expect, it, vi } from "vitest";
-import { BrowserWindowModule, BrowserWindowNotifierModule, EventSubscriber } from "..";
+import type { EventSubscriber } from "..";
+import { BrowserWindowModule, BrowserWindowNotifierModule } from "..";
 import { BrowserWindowNotifier } from "./BrowserWindowNotifier";
 
 describe(BrowserWindowModule, () => {
