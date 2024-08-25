@@ -17,9 +17,7 @@ export type Dependencies = {
     EnvironmentVariableProvider?: Core.EnvironmentVariableProvider;
     EventEmitter?: Core.EventEmitter;
     EventSubscriber?: Core.EventSubscriber;
-    ExcludedSearchResults?: Core.ExcludedSearchResults;
     ExtensionRegistry?: Core.ExtensionRegistry;
-    FavoriteManager?: Core.FavoriteManager;
     FileImageGenerator?: Core.FileImageGenerator;
     FileSystemUtility?: Core.FileSystemUtility;
     GlobalShortcut?: Electron.GlobalShortcut;

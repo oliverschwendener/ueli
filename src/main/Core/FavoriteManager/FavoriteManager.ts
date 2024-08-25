@@ -1,8 +1,7 @@
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { FavoriteManager as FavoriteManagerInterface } from "./Contract";
 
-export class FavoriteManager implements FavoriteManagerInterface {
+export class FavoriteManager {
     private readonly settingKey = "favorites";
 
     public readonly favorites: string[];

@@ -1,6 +1,6 @@
-import type { FavoriteManager } from "@Core/FavoriteManager";
+import type { ActionHandler } from "@Core/ActionHandler";
 import type { SearchResultItemAction } from "@common/Core";
-import type { ActionHandler } from "../Contract";
+import type { FavoriteManager } from "../FavoriteManager";
 
 /**
  * Action handler for adding and removing favorites.
