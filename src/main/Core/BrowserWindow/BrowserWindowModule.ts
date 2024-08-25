@@ -8,9 +8,10 @@ import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
 import type { BrowserWindow, IpcMain } from "electron";
 import { join } from "path";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
+import type {
+    BrowserWindowConstructorOptionsProvider} from "./BrowserWindowConstructorOptionsProvider";
 import {
     BackgroundMaterialProvider,
-    BrowserWindowConstructorOptionsProvider,
     DefaultBrowserWindowConstructorOptionsProvider,
     LinuxBrowserWindowConstructorOptionsProvider,
     MacOsBrowserWindowConstructorOptionsProvider,

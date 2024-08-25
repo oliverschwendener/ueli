@@ -1,5 +1,6 @@
-import { FluentProvider, Theme } from "@fluentui/react-components";
-import { IpcRendererEvent } from "electron";
+import type { Theme } from "@fluentui/react-components";
+import { FluentProvider } from "@fluentui/react-components";
+import type { IpcRendererEvent } from "electron";
 import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router";
 import { Extension } from "./Extension";

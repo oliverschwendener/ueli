@@ -1,9 +1,9 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import { SettingsManager } from "@Core/SettingsManager";
+import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import { describe, expect, it, vi } from "vitest";
-import { ColorConversionResult } from "./ColorConversionResult";
-import { ColorConverter } from "./ColorConverter";
+import type { ColorConversionResult } from "./ColorConversionResult";
+import type { ColorConverter } from "./ColorConverter";
 import { ColorConverterExtension } from "./ColorConverterExtension";
 
 describe(ColorConverterExtension, () => {

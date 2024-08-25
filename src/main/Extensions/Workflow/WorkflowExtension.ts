@@ -7,7 +7,7 @@ import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
 import type { Workflow } from "@common/Extensions/Workflow";
 import { WorkflowActionArgumentEncoder } from "./Utility";
-import { WorkflowRepository } from "./WorkflowRepository";
+import type { WorkflowRepository } from "./WorkflowRepository";
 
 export class WorkflowExtension implements Extension {
     public readonly id = "Workflow";

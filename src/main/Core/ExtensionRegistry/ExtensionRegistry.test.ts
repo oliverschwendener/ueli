@@ -1,4 +1,4 @@
-import { Extension } from "@Core/Extension";
+import type { Extension } from "@Core/Extension";
 import { describe, expect, it } from "vitest";
 import { ExtensionRegistry } from "./ExtensionRegistry";
 

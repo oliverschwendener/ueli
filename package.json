@@ -13,6 +13,7 @@
         "build": "vite build",
         "dev": "vite",
         "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
         "package:publish": "electron-builder --config electron-builder.config.js --publish always",
         "package": "electron-builder --config electron-builder.config.js",
         "postinstall": "npm run rebuild",
