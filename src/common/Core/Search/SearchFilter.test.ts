@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { searchFilter, type SearchEngineId } from "./SearchFilter";
+import type { SearchEngineId } from "./SearchEngineId";
+import { searchFilter } from "./SearchFilter";
 
 describe(searchFilter, () => {
     test.for<SearchEngineId>(["Fuse.js", "fuzzysort"])(
