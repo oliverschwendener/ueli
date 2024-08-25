@@ -1,7 +1,7 @@
 import type { SearchResultItem } from "../SearchResultItem";
 
 export class SearchResultItemFilter {
-    private constructor(private searchResultItems: SearchResultItem[]) { }
+    private constructor(private searchResultItems: SearchResultItem[]) {}
 
     public static createFrom(searchResultItems: SearchResultItem[]): SearchResultItemFilter {
         return new SearchResultItemFilter(searchResultItems);
