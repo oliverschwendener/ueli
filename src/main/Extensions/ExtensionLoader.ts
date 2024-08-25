@@ -14,6 +14,7 @@ import { SystemCommandsModule } from "./SystemCommands";
 import { SystemSettingsModule } from "./SystemSettings";
 import { TerminalLauncherModule } from "./TerminalLauncher";
 import { UeliCommandModule } from "./UeliCommand";
+import { VSCodeModule } from "./VSCode";
 import { WebSearchExtensionModule } from "./WebSearch";
 import { WindowsControlPanelModule } from "./WindowsControlPanel";
 import { WorkflowExtensionModule } from "./Workflow";
@@ -29,6 +30,7 @@ export class ExtensionLoader {
             new ColorConverterExtensionModule(),
             new CurrencyConversionModule(),
             new DeeplTranslatorModule(),
+            new VSCodeModule(),
             new FileSearchModule(),
             new SystemCommandsModule(),
             new SystemSettingsModule(),

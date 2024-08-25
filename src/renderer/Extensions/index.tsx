@@ -9,6 +9,7 @@ import { CurrencyConversionSettings } from "./CurrencyConversion";
 import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
 import { FileSearch, FileSearchSettings } from "./FileSearch";
 import { TerminalLauncherSettings } from "./TerminalLauncher";
+import { VSCodeSettings } from "./VSCode";
 import { WebSearchExtension } from "./WebSearch";
 import { WebSearchSettings } from "./WebSearch/WebSearchSettings";
 import { WorkflowSettings } from "./Workflow";
@@ -25,6 +26,7 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         ApplicationSearch: {
             settings: <ApplicationSearchSettings />,
         },
+
         Base64Conversion: {
             extension: <Base64Conversion {...props} />,
         },
@@ -43,6 +45,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         DeeplTranslator: {
             extension: <DeeplTranslator {...props} />,
             settings: <DeeplTranslatorSettings />,
+        },
+        VSCode: {
+            settings: <VSCodeSettings />,
         },
         FileSearch: {
             extension: <FileSearch {...props} />,

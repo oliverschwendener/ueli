@@ -1,0 +1,159 @@
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { Extension } from "@Core/Extension";
+import type { FileImageGenerator } from "@Core/ImageGenerator";
+import type { SettingsManager } from "@Core/SettingsManager";
+import type { OperatingSystem, SearchResultItem } from "@common/Core";
+import type { Image } from "@common/Core/Image";
+import Database from "better-sqlite3";
+import * as Path from "path";
+import * as URL from "url";
+import type { SearchEngineId } from "../../../common/Core/Search/SearchFilter";
+import { searchFilter } from "../../../common/Core/Search/SearchFilter";
+
+type document = {
+    fileUri?: string;
+    folderUri?: string;
+};
+
+export class VSCodeExtension implements Extension {
+    public readonly id = "VSCode";
+
+    public readonly name = "Visual Studio Code";
+
+    public readonly nameTranslation = {
+        key: "extensionName",
+        namespace: "extension[VSCode]",
+    };
+
+    public readonly author = {
+        name: "Ethan Conneely",
+        githubUserName: "IrishBruse",
+    };
+
+    readonly stateDatabasePaths = {
+        "Windows": process.env.APPDATA + "/Code/User/globalStorage/state.vscdb",
+        "macOS": process.env.HOME + "/Library/Application Support/Code/User/globalStorage/state.vscdb",
+        "Linux": process.env.HOME + "/.config/Code/User/globalStorage/state.vscdb"
+    }
+
+    recents: SearchResultItem[] = [];
+
+    public constructor(
+        private readonly operatingSystem: OperatingSystem,
+        private readonly assetPathResolver: AssetPathResolver,
+        private readonly settingsManager: SettingsManager,
+        private readonly fileImageGenerator: FileImageGenerator,
+    ) { }
+
+    async getSearchResultItems(): Promise<SearchResultItem[]> {
+        const recents = this.getRecents();
+
+        const paths = recents.flatMap((v) => v.fileUri ?? v.folderUri);
+
+        this.recents = [];
+        paths.forEach(async (filePath) => {
+            const searchItem = this.getSearchItem(filePath);
+            this.recents.push(await searchItem);
+        });
+
+        return [];
+    }
+
+    private getRecents() {
+        const databasePath = this.stateDatabasePaths[this.operatingSystem];
+
+        return JSON.parse(
+            new Database(databasePath, {})
+                .prepare(
+                    "SELECT json_extract(value, '$.entries') as entries FROM ItemTable WHERE key = 'history.recentlyOpenedPathsList'"
+                )
+                .pluck()
+                .get() as string
+        ) as document[];
+    }
+
+    async getSearchItem(uri: string): Promise<SearchResultItem> {
+        let img: Image;
+        try {
+            img = await this.fileImageGenerator.getImage(uri);
+        } catch (e) {
+            img = this.getImage();
+        }
+
+        const path = URL.fileURLToPath(uri);
+        const relativePath = path.replace(process.env.HOME, "~");
+
+        return {
+            id: "vscode-" + path,
+            name: Path.basename(relativePath),
+            description: relativePath,
+            image: img,
+            defaultAction: {
+                handlerId: "VSCodeHandler",
+                description: "Open in VSCode",
+                argument: path,
+            },
+        };
+    }
+
+    public isSupported(): boolean {
+        return ["macOS", "Linux", "Windows"].includes(this.operatingSystem);
+    }
+
+    public getSettingDefaultValue<T>(key: string) {
+        const defaultSettings = {
+            prefix: "vscode",
+        };
+
+        return defaultSettings[key] as T;
+    }
+
+    public getImage(): Image {
+        const path = this.assetPathResolver.getExtensionAssetPath("VSCode", "vscode.png");
+
+        return {
+            url: `file://${path}`,
+        };
+    }
+
+    public getI18nResources() {
+        return {
+            "en-US": {
+                extensionName: "Visual Studio Code",
+                prefix: "Prefix",
+                prefixDescription:
+                    "The prefix to trigger visual studio code. Open recently opened files and projects: <prefix> <command>",
+            },
+        };
+    }
+
+    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
+        if (!searchTerm.startsWith(this.getPrefix() + " ")) {
+            return [];
+        }
+
+        searchTerm = searchTerm.replace(this.getPrefix() + " ", "").trim();
+
+        if (searchTerm && searchTerm === "") {
+            return this.recents;
+        }
+
+        const fuzziness = this.settingsManager.getValue<number>("searchEngine.fuzziness", 0.5);
+        const maxSearchResultItems = this.settingsManager.getValue<number>("searchEngine.maxResultLength", 50);
+        const searchEngineId = this.settingsManager.getValue<SearchEngineId>("searchEngine.id", "Fuse.js");
+
+        return searchFilter({
+            searchResultItems: this.recents,
+            searchTerm: searchTerm,
+            fuzziness: fuzziness,
+            maxSearchResultItems: maxSearchResultItems,
+        }, searchEngineId);
+    }
+
+    private getPrefix(): string {
+        return this.settingsManager.getValue<string>(
+            `extension[${this.id}].prefix`,
+            this.getSettingDefaultValue("prefix"),
+        );
+    }
+}
