@@ -8,6 +8,7 @@ let stdout: string = "output";
 let stderr: string | undefined = undefined;
 
 vi.mock("child_process", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
     const original = await importOriginal<typeof import("child_process")>();
 
     return {

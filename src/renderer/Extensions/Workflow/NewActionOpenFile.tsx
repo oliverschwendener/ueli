@@ -1,5 +1,5 @@
 import { useContextBridge } from "@Core/Hooks";
-import { OpenFileActionArgs } from "@common/Extensions/Workflow";
+import type { OpenFileActionArgs } from "@common/Extensions/Workflow";
 import { Button, Field, Input } from "@fluentui/react-components";
 import { FolderRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";

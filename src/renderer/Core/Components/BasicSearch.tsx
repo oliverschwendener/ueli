@@ -7,7 +7,8 @@ import { SearchResultList } from "@Core/Search/SearchResultList";
 import type { SearchResultItem } from "@common/Core";
 import { Button, Input, ProgressBar } from "@fluentui/react-components";
 import { ArrowLeftFilled, SearchRegular } from "@fluentui/react-icons";
-import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import type { KeyboardEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 
 type BasicSearchProps = {

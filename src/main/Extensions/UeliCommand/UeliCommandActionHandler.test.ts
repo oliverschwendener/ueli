@@ -1,5 +1,5 @@
 import type { UeliCommand, UeliCommandInvoker } from "@Core/UeliCommand";
-import { SearchResultItemAction } from "@common/Core";
+import type { SearchResultItemAction } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
 import { UeliCommandActionHandler } from "./UeliCommandActionHandler";
 

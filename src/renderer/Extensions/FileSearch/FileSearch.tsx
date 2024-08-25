@@ -1,7 +1,7 @@
 import { BasicSearch } from "@Core/Components";
 import type { ExtensionProps } from "@Core/ExtensionProps";
 import { useExtensionSetting } from "@Core/Hooks";
-import { SearchResultItem } from "@common/Core";
+import type { SearchResultItem } from "@common/Core";
 import { MissingEverythingCliFilePath } from "./MissingEverythingCliFilePath";
 
 export const FileSearch = ({ contextBridge, goBack }: ExtensionProps) => {
