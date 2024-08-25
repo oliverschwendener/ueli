@@ -1,15 +1,16 @@
-import type { SearchResultItem } from "@common/Core";
 import Fuse from "fuse.js";
-import type { SearchFilter } from "./SearchFilter";
-import type { SearchOptions } from "./SearchOptions";
+import type { InternalSearchFilter } from "./InternalSearchFilter";
 import { SearchResultItemFilter } from "./SearchResultItemFilter";
 
-export const fuseJsSearchFilter: SearchFilter = ({
+/**
+ * Internal search filter using the fuse.js library.
+ */
+export const fuseJsSearchFilter: InternalSearchFilter = ({
     searchResultItems,
     fuzziness,
     maxSearchResultItems,
     searchTerm,
-}: SearchOptions): SearchResultItem[] => {
+}) => {
     const result = new Fuse(searchResultItems, {
         keys: ["name"],
         threshold: fuzziness,
