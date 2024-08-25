@@ -1,17 +1,21 @@
-
 import { describe, expect, test } from "vitest";
-import type { SearchEngineId } from "./SearchFilter";
-import { searchFilter } from "./SearchFilter";
+import { searchFilter, type SearchEngineId } from "./SearchFilter";
 
 describe(searchFilter, () => {
-    test.for<SearchEngineId>(["Fuse.js", "fuzzysort"])("should return an empty list if search result items are empty with %s", (searchEngineId) => {
-        const actual = searchFilter({
-            searchResultItems: [],
-            searchTerm: "search term",
-            fuzziness: 0.5,
-            maxSearchResultItems: 10,
-        }, searchEngineId);
+    test.for<SearchEngineId>(["Fuse.js", "fuzzysort"])(
+        "should return an empty list if search result items are empty with %s",
+        (searchEngineId) => {
+            const actual = searchFilter(
+                {
+                    searchResultItems: [],
+                    searchTerm: "search term",
+                    fuzziness: 0.5,
+                    maxSearchResultItems: 10,
+                },
+                searchEngineId,
+            );
 
-        expect(actual).toEqual([]);
-    });
+            expect(actual).toEqual([]);
+        },
+    );
 });
