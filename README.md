@@ -21,4 +21,4 @@ Ueli is a cross-platform keystroke launcher.
 
 # Development
 
-Check out the [wiki](https://github.com/oliverschwendener/ueli/wiki).
+Check out the [wiki](https://github.com/oliverschwendener/ueli/wiki/Development).
