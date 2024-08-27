@@ -110,11 +110,11 @@ describe(ApplicationSearch, () => {
                 linuxDesktopEnvironment: "KDE",
             }));
 
-        it("should return false on Linux with other desktop environment", () =>
+        it("should return false on Linux with an unsupported desktop environment", () =>
             testIsSupported({
                 expected: false,
                 operatingSystem: "Linux",
-                linuxDesktopEnvironment: null,
+                linuxDesktopEnvironment: "LXDE",
             }));
     });
 

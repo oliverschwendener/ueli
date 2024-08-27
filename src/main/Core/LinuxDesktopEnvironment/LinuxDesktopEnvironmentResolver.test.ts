@@ -16,7 +16,7 @@ describe(LinuxDesktopEnvironmentResolver, () => {
 
         expect(new LinuxDesktopEnvironmentResolver(environmentVariableProvider).resolve()).toBe(expected);
         expect(getMock).toHaveBeenCalledOnce();
-        expect(getMock).toHaveBeenCalledWith("XDG_CURRENT_DESKTOP");
+        expect(getMock).toHaveBeenCalledWith("ORIGINAL_XDG_CURRENT_DESKTOP");
     };
 
     it("should return undefined when XDG_CURRENT_DESKTOP environment variable is not set", () =>
@@ -27,4 +27,10 @@ describe(LinuxDesktopEnvironmentResolver, () => {
 
     it("should return KDE when XDG_CURRENT_DESKTOP is KDE", () =>
         testResolve({ expected: "KDE", xdgCurrentDesktop: "KDE" }));
+
+    it("should return Cinnamon when XDG_CURRENT_DESKTOP is X-Cinnamon", () =>
+        testResolve({ expected: "Cinnamon", xdgCurrentDesktop: "X-Cinnamon" }));
+
+    it("should return GNOME when XDG_CURRENT_DESKTOP is GNOME-Flashback", () =>
+        testResolve({ expected: "GNOME", xdgCurrentDesktop: "GNOME-Flashback" }));
 });

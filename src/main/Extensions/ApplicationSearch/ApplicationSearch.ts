@@ -37,7 +37,14 @@ export class ApplicationSearch implements Extension {
     public isSupported(): boolean {
         const checks: Record<OperatingSystem, () => boolean> = {
             Linux: () => {
-                const supportedLinuxDesktopEnvironments: LinuxDesktopEnvironment[] = ["GNOME", "KDE"];
+                const supportedLinuxDesktopEnvironments: LinuxDesktopEnvironment[] = [
+                    "GNOME",
+                    "KDE",
+                    "Cinnamon",
+                    "MATE",
+                    "XFCE",
+                    "Pantheon",
+                ];
                 return supportedLinuxDesktopEnvironments.includes(this.linuxDesktopEnvironmentResolver.resolve());
             },
             macOS: () => true,
