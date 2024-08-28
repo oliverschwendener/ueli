@@ -8,7 +8,7 @@ Ueli is a cross-platform keystroke launcher.
 
 ## Windows
 
--   Recommended: Get the app from the [Microsoft Store](https://www.microsoft.com/store/productId/9PK44N42B2G7?ocid=pdpshare).
+-   Recommended: Get the app from the [Microsoft Store](https://www.microsoft.com/store/productId/9PK44N42B2G7?ocid=pdpshare) or install it with winget: `winget install Ueli -s msstore`.
 -   Optionally, you can also manually download and install the app from [here](https://github.com/oliverschwendener/ueli/releases/latest), but note that, due to cost reasons, these binaries are not signed.
 
 ## macOS
