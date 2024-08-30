@@ -1,0 +1,16 @@
+name: Test
+
+on:
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-22.04
+        environment: release
+        name: test
+        steps:
+            - name: test secret
+              run: echo ${{secrets.SUPER_SECRET}}
+
