@@ -18,6 +18,8 @@ const isValidKeyCode = (keyCode: string): boolean => {
 const isValidModifier = (modifier: string): boolean =>
     /^(Command|Cmd|Control|Ctrl|CommandOrControl|CmdOrCtrl|Alt|Option|AltGr|Shift|Super|Meta)$/.test(modifier);
 
+const hasDuplicates = (modifiers: string[]): boolean => modifiers.length !== new Set(modifiers).size;
+
 /**
  * Checks if the given string is a valid hotkey.
  * A valid hotkey is a combination of a modifier and a key code, e.g. `CmdOrCtrl+Space`. For more information, see
@@ -27,9 +29,12 @@ const isValidModifier = (modifier: string): boolean =>
  */
 export const isValidHotkey = (hotkey: string) => {
     const parts = hotkey.split("+");
-    const hasModifier = parts.length > 1;
-    const keyCode = hasModifier ? parts[1] : parts[0];
-    const modifier = hasModifier ? parts[0] : undefined;
+    const hasModifiers = parts.length > 1;
+    const keyCode = hasModifiers ? parts[parts.length - 1] : parts[0];
+    const modifiers = hasModifiers ? parts.slice(0, parts.length - 1) : undefined;
 
-    return isValidKeyCode(keyCode) && (modifier ? isValidModifier(modifier) : true);
+    return (
+        isValidKeyCode(keyCode) &&
+        (modifiers ? modifiers.every((modifier) => isValidModifier(modifier)) && !hasDuplicates(modifiers) : true)
+    );
 };

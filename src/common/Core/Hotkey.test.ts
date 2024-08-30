@@ -30,12 +30,27 @@ describe(isValidHotkey, () => {
                 "Alt+]",
                 "Alt+(",
                 "Alt+)",
+                "Ctrl+Shift+Space",
+                "Alt+Shift+F2",
+                "Ctrl+Alt+Shift+Super+F8",
             ],
         }));
 
     it("should return false for all invalid hotkeys", () =>
         testIsValidHotkey({
             expected: false,
-            hotkeys: ["Space+Alt", "", " ", "abc", "F25", "Windows+Space", "Alt Space"],
+            hotkeys: [
+                "Space+Alt",
+                "",
+                " ",
+                "abc",
+                "F25",
+                "Windows+Space",
+                "Alt Space",
+                "Shift+Shift+Space",
+                "Ctrl+Space+F",
+                "Shift+Space+Ctrl",
+                "F+Shift",
+            ],
         }));
 });
