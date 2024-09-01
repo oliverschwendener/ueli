@@ -10,7 +10,7 @@ import Database from "better-sqlite3";
 import * as Path from "path";
 import * as URL from "url";
 
-type document = {
+type VscodeRecent = {
     fileUri?: string;
     folderUri?: string;
 };
@@ -46,11 +46,10 @@ export class VSCodeExtension implements Extension {
 
     async getSearchResultItems(): Promise<SearchResultItem[]> {
         const recentPaths = this.getRecents();
-        const paths = recentPaths.flatMap((v) => v.fileUri ?? v.folderUri);
 
         const searchItems = await Promise.all(
-            paths.map((filePath) => {
-                return this.getSearchItem(filePath);
+            recentPaths.map((recent) => {
+                return this.getSearchItem(recent);
             }),
         );
 
@@ -58,7 +57,7 @@ export class VSCodeExtension implements Extension {
         return [];
     }
 
-    private getRecents() {
+    private getRecents(): VscodeRecent[] {
         const databasePath = this.stateDatabasePaths[this.operatingSystem];
 
         return JSON.parse(
@@ -68,10 +67,14 @@ export class VSCodeExtension implements Extension {
                 )
                 .pluck()
                 .get() as string,
-        ) as document[];
+        );
     }
 
-    async getSearchItem(uri: string): Promise<SearchResultItem> {
+    async getSearchItem(recent: VscodeRecent): Promise<SearchResultItem> {
+        const uri = recent.fileUri ?? recent.folderUri;
+        const isFile = !!recent.fileUri;
+        const description = isFile ? "File" : "Folder";
+
         let img: Image;
         try {
             img = await this.fileImageGenerator.getImage(uri);
@@ -80,16 +83,15 @@ export class VSCodeExtension implements Extension {
         }
 
         const path = URL.fileURLToPath(uri);
-        const relativePath = path.replace(process.env.HOME, "~");
 
         return {
             id: "vscode-" + path,
-            name: Path.basename(relativePath),
-            description: relativePath,
+            name: Path.basename(path),
+            description,
             image: img,
             defaultAction: {
                 handlerId: "VSCodeHandler",
-                description: "Open in VSCode",
+                description: `Open ${description} in VSCode`,
                 argument: path,
             },
         };
