@@ -2,13 +2,14 @@ import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { IniFileParser } from "@Core/IniFileParser";
-import type { LinuxDesktopEnvironment, LinuxDesktopEnvironmentResolver } from "@Core/LinuxDesktopEnvironment";
+import type { LinuxDesktopEnvironmentResolver } from "@Core/LinuxDesktopEnvironment";
 import type { Logger } from "@Core/Logger";
 import type { Image } from "@common/Core/Image";
 import { basename, dirname, extname, join } from "path";
 import sharp from "sharp";
 import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";
 import type { FileIconExtractor } from "../FileIconExtractor";
+import type { SupportedLinuxDesktopEnvironment } from "./SupportedDesktopEnvironments";
 
 // Specs from https://specifications.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html
 type IconThemeSubdir = {
@@ -275,7 +276,7 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
     }
 
     private async getIconThemeName(): Promise<string> {
-        const iconThemeNameMap: Partial<Record<LinuxDesktopEnvironment, () => Promise<string>>> = {
+        const iconThemeNameMap: Record<(typeof SupportedLinuxDesktopEnvironment)[number], () => Promise<string>> = {
             GNOME: () => this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme"),
             KDE: () =>
                 this.commandlineUtility.executeCommand("kreadconfig5 --file kdeglobals --group Icons --key Theme"),
@@ -286,12 +287,6 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
             Pantheon: () =>
                 this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme"),
         };
-
-        if (!iconThemeNameMap[this.linuxDesktopEnvironmentResolver.resolve()]) {
-            throw new Error(
-                `No available function to read icon theme for this desktop environment. Desktop: ${this.linuxDesktopEnvironmentResolver.resolve()}`,
-            );
-        }
 
         const iconThemeName = (await iconThemeNameMap[this.linuxDesktopEnvironmentResolver.resolve()]()).trim();
 

@@ -1,6 +1,5 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
-import type { LinuxDesktopEnvironment, LinuxDesktopEnvironmentResolver } from "@Core/LinuxDesktopEnvironment";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
@@ -26,7 +25,6 @@ export class ApplicationSearch implements Extension {
         private readonly applicationRepository: ApplicationRepository,
         private readonly settings: Settings,
         private readonly assetPathResolver: AssetPathResolver,
-        private readonly linuxDesktopEnvironmentResolver: LinuxDesktopEnvironmentResolver,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -35,23 +33,7 @@ export class ApplicationSearch implements Extension {
     }
 
     public isSupported(): boolean {
-        const checks: Record<OperatingSystem, () => boolean> = {
-            Linux: () => {
-                const supportedLinuxDesktopEnvironments: LinuxDesktopEnvironment[] = [
-                    "GNOME",
-                    "KDE",
-                    "Cinnamon",
-                    "MATE",
-                    "XFCE",
-                    "Pantheon",
-                ];
-                return supportedLinuxDesktopEnvironments.includes(this.linuxDesktopEnvironmentResolver.resolve());
-            },
-            macOS: () => true,
-            Windows: () => true,
-        };
-
-        return checks[this.operatingSystem]();
+        return true;
     }
 
     public getSettingDefaultValue<T>(key: string): T {
