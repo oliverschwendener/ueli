@@ -7,7 +7,6 @@ import type { FileIconExtractor } from "./FileIconExtractor";
 import { FileImageGenerator } from "./FileImageGenerator";
 import { GenericFileIconExtractor } from "./GenericFileIconExtractor";
 import { LinuxAppIconExtractor } from "./Linux";
-import { SupportedLinuxDesktopEnvironment as supportedLinuxDesktopEnvironment } from "./Linux/SupportedDesktopEnvironments";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 import { WindowsApplicationIconExtractor, WindowsFolderIconExtractor } from "./Windows";
 import { MacOsApplicationIconExtractor, MacOsFolderIconExtractor } from "./macOS";
@@ -50,7 +49,7 @@ export class ImageGeneratorModule {
         // for the current operating system.
         const operatingSystemSpecificIconExtractors: Record<OperatingSystem, () => FileIconExtractor[]> = {
             Linux: () =>
-                supportedLinuxDesktopEnvironment.includes(
+                ["Cinnamon", "GNOME", "KDE", "MATE", "XFCE", "Pantheon"].includes(
                     dependencyRegistry.get("LinuxDesktopEnvironmentResolver").resolve(),
                 )
                     ? [
