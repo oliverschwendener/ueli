@@ -2,7 +2,6 @@ import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
-import { VSCodeActionHandler } from "./VSCodeActionHandler";
 import { VSCodeExtension } from "./VSCodeExtension";
 
 export class VSCodeModule implements ExtensionModule {
@@ -14,7 +13,6 @@ export class VSCodeModule implements ExtensionModule {
                 dependencyRegistry.get("SettingsManager"),
                 dependencyRegistry.get("FileImageGenerator"),
             ),
-            actionHandlers: [new VSCodeActionHandler()],
         };
     }
 }
