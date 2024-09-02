@@ -3,11 +3,13 @@
  */
 export type LinuxDesktopEnvironment =
     | "Cinnamon"
-    | "GNOME-Classic"
-    | "GNOME-Flashback"
     | "GNOME"
     | "KDE"
     | "MATE"
+    | "XFCE"
     | "Pantheon"
-    | "X-Cinnamon"
-    | "XFCE";
+    | "COSMIC"
+    | "LXDE"
+    | "LXQt"
+    | "DDE"
+    | "Unity";

@@ -48,18 +48,24 @@ export class ImageGeneratorModule {
         // To prevent the execution of all icon extractor constructors, we use a function here that is only invoked
         // for the current operating system.
         const operatingSystemSpecificIconExtractors: Record<OperatingSystem, () => FileIconExtractor[]> = {
-            Linux: () => [
-                new LinuxAppIconExtractor(
-                    dependencyRegistry.get("FileSystemUtility"),
-                    dependencyRegistry.get("CommandlineUtility"),
-                    dependencyRegistry.get("IniFileParser"),
-                    dependencyRegistry.get("Logger"),
-                    cacheFileNameGenerator,
-                    cacheFolderPath,
-                    dependencyRegistry.get("App").getPath("home"),
-                    dependencyRegistry.get("EnvironmentVariableProvider"),
-                ),
-            ],
+            Linux: () =>
+                ["Cinnamon", "GNOME", "KDE", "MATE", "XFCE", "Pantheon"].includes(
+                    dependencyRegistry.get("LinuxDesktopEnvironmentResolver").resolve(),
+                )
+                    ? [
+                          new LinuxAppIconExtractor(
+                              dependencyRegistry.get("FileSystemUtility"),
+                              dependencyRegistry.get("CommandlineUtility"),
+                              dependencyRegistry.get("IniFileParser"),
+                              dependencyRegistry.get("Logger"),
+                              cacheFileNameGenerator,
+                              cacheFolderPath,
+                              dependencyRegistry.get("App").getPath("home"),
+                              dependencyRegistry.get("EnvironmentVariableProvider"),
+                              dependencyRegistry.get("LinuxDesktopEnvironmentResolver"),
+                          ),
+                      ]
+                    : [],
             macOS: () => [
                 new MacOsFolderIconExtractor(
                     dependencyRegistry.get("AssetPathResolver"),
