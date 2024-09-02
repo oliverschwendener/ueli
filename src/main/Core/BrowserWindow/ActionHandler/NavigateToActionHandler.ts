@@ -1,6 +1,6 @@
+import type { ActionHandler } from "@Core/ActionHandler";
 import type { EventEmitter } from "@Core/EventEmitter";
 import type { SearchResultItemAction } from "@common/Core";
-import type { ActionHandler } from "../Contract";
 
 /**
  * Action handler for navigating to a specific path in the renderer process.

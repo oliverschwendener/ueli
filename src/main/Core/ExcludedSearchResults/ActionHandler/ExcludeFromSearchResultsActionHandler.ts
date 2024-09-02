@@ -1,6 +1,6 @@
-import type { ExcludedSearchResults } from "@Core/ExcludedSearchResults";
+import type { ActionHandler } from "@Core/ActionHandler";
 import type { SearchResultItemAction } from "@common/Core";
-import type { ActionHandler } from "../Contract";
+import type { ExcludedSearchResults } from "../ExcludedSearchResults";
 
 /**
  * Action handler for excluding a search result from the search results.

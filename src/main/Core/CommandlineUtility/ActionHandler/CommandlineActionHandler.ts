@@ -1,6 +1,6 @@
 import type { SearchResultItemAction } from "@common/Core";
-import type { CommandlineUtility } from "../../CommandlineUtility";
-import type { ActionHandler } from "../Contract";
+import type { ActionHandler } from "@Core/ActionHandler";
+import type { CommandlineUtility } from "../Contract";
 
 /**
  * Action handler for executing a CLI command.

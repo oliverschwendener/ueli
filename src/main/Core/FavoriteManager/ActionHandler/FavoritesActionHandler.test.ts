@@ -1,6 +1,6 @@
-import type { FavoriteManager } from "@Core/FavoriteManager";
 import type { SearchResultItemAction } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
+import type { FavoriteManager } from "../FavoriteManager";
 import { FavoritesActionHandler } from "./FavoritesActionHandler";
 
 describe(FavoritesActionHandler, () => {

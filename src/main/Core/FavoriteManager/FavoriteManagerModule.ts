@@ -1,5 +1,6 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import { FavoritesActionHandler } from "./ActionHandler";
 import { FavoriteManager } from "./FavoriteManager";
 
 export class FavoriteManagerModule {
@@ -11,7 +12,7 @@ export class FavoriteManagerModule {
             dependencyRegistry.get("BrowserWindowNotifier"),
         );
 
-        dependencyRegistry.register("FavoriteManager", favoriteManager);
+        dependencyRegistry.get("ActionHandlerRegistry").register(new FavoritesActionHandler(favoriteManager));
 
         ipcMain.on("getFavorites", (event) => (event.returnValue = favoriteManager.getAll()));
 
