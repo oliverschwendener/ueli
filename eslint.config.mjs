@@ -13,7 +13,6 @@ export default [
             "@typescript-eslint/no-unused-vars": ["error", { caughtErrors: "none" }],
             "@typescript-eslint/consistent-type-imports": "error",
             "func-style": ["error", "expression"],
-            "object-shorthand": ["error", "always"],
             /**
              * Prevents empty constructors, e.g.: `constructor() {}`.
              */
