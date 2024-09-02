@@ -25,11 +25,11 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
     /**
      * Add your extension to this list. Make sure that the items in this list are alphabetically ordered.
      */
+    /*eslint sort-keys: "error"*/
     const extensions: Record<string, ExtensionReactElements> = {
         ApplicationSearch: {
             settings: <ApplicationSearchSettings />,
         },
-
         Base64Conversion: {
             extension: <Base64Conversion {...props} />,
         },
@@ -49,15 +49,15 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
             extension: <DeeplTranslator {...props} />,
             settings: <DeeplTranslatorSettings />,
         },
-        VSCode: {
-            settings: <VSCodeSettings />,
-        },
         FileSearch: {
             extension: <FileSearch {...props} />,
             settings: <FileSearchSettings />,
         },
         TerminalLauncher: {
             settings: <TerminalLauncherSettings />,
+        },
+        VSCode: {
+            settings: <VSCodeSettings />,
         },
         WebSearch: {
             extension: <WebSearchExtension {...props} />,
