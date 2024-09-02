@@ -90,9 +90,9 @@ export class VSCodeExtension implements Extension {
             description,
             image: img,
             defaultAction: {
-                handlerId: "VSCodeHandler",
+                handlerId: "Commandline",
                 description: `Open ${description} in VSCode`,
-                argument: path,
+                argument: `code ${path}`,
             },
         };
     }
@@ -146,9 +146,9 @@ export class VSCodeExtension implements Extension {
         return searchFilter(
             {
                 searchResultItems: this.recents,
-                searchTerm: searchTerm,
-                fuzziness: fuzziness,
-                maxSearchResultItems: maxSearchResultItems,
+                searchTerm,
+                fuzziness,
+                maxSearchResultItems,
             },
             searchEngineId,
         );
