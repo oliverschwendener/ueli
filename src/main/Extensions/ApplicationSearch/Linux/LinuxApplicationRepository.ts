@@ -60,7 +60,7 @@ export class LinuxApplicationRepository implements ApplicationRepository {
             (await this.fileSystemUtility.readFile(filePath)).toString(),
         )["Desktop Entry"];
         // https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#recognized-keys
-        const desktopEnv = this.environmentVariableProvider.get("XDG_CURRENT_DESKTOP")?.split(":");
+        const desktopEnv = this.environmentVariableProvider.get("ORIGINAL_XDG_CURRENT_DESKTOP")?.split(":");
         if (
             !config ||
             !config["Icon"] ||

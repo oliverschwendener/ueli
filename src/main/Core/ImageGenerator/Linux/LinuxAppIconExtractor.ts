@@ -2,6 +2,7 @@ import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { IniFileParser } from "@Core/IniFileParser";
+import type { LinuxDesktopEnvironment, LinuxDesktopEnvironmentResolver } from "@Core/LinuxDesktopEnvironment";
 import type { Logger } from "@Core/Logger";
 import type { Image } from "@common/Core/Image";
 import { basename, dirname, extname, join } from "path";
@@ -47,16 +48,17 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
         private readonly cacheFileNameGenerator: CacheFileNameGenerator,
         private readonly cacheFolder: string,
         private readonly homePath: string,
-        private readonly environmentVariablePRovider: EnvironmentVariableProvider,
+        private readonly environmentVariableProvider: EnvironmentVariableProvider,
+        private readonly linuxDesktopEnvironmentResolver: LinuxDesktopEnvironmentResolver,
     ) {
         this.baseDirectories = [
             join(this.homePath, ".icons"),
             join(
-                this.environmentVariablePRovider.get("XDG_DATA_HOME") || join(this.homePath, ".local", "share"),
+                this.environmentVariableProvider.get("XDG_DATA_HOME") || join(this.homePath, ".local", "share"),
                 "icons",
             ),
             ...(
-                this.environmentVariablePRovider.get("XDG_DATA_DIRS") ||
+                this.environmentVariableProvider.get("XDG_DATA_DIRS") ||
                 `${join("/", "usr", "local", "share")}:${join("/", "usr", "share")}`
             )
                 .split(":")
@@ -273,15 +275,23 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
     }
 
     private async getIconThemeName(): Promise<string> {
-        const currentDesktopEnvironment = this.environmentVariablePRovider.get("XDG_SESSION_DESKTOP");
-
-        const iconThemeNameMap: Record<"cinnamon" | "gnome", () => Promise<string>> = {
-            cinnamon: () =>
+        const iconThemeNameMap: Partial<Record<LinuxDesktopEnvironment, () => Promise<string>>> = {
+            GNOME: () => this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme"),
+            KDE: () =>
+                this.commandlineUtility.executeCommand("kreadconfig5 --file kdeglobals --group Icons --key Theme"),
+            MATE: () => this.commandlineUtility.executeCommand("gsettings get org.mate.interface icon-theme"),
+            XFCE: () => this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme"),
+            Cinnamon: () =>
                 this.commandlineUtility.executeCommand("gsettings get org.cinnamon.desktop.interface icon-theme"),
-            gnome: () => this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme"),
+            Pantheon: () =>
+                this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme"),
         };
 
-        return (await iconThemeNameMap[currentDesktopEnvironment]()).trim().slice(1, -1);
+        const iconThemeName = (await iconThemeNameMap[this.linuxDesktopEnvironmentResolver.resolve()]()).trim();
+
+        return iconThemeName.startsWith("'") && iconThemeName.endsWith("'")
+            ? iconThemeName.slice(1, -1)
+            : iconThemeName;
     }
 
     // https://specifications.freedesktop.org/icon-theme-spec/latest/ar01s05.html
