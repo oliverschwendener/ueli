@@ -28,10 +28,10 @@ export class ExtensionLoader {
         return [
             new AppearanceSwitcherModule(),
             new ApplicationSearchModule(),
+            new Base64ConversionModule(),
             new BrowserBookmarksModule(),
             new CalculatorModule(),
             new ColorConverterExtensionModule(),
-            new Base64ConversionModule(),
             new CurrencyConversionModule(),
             new DeeplTranslatorModule(),
             new FileSearchModule(),
