@@ -21,6 +21,10 @@ import { WorkflowExtensionModule } from "./Workflow";
 
 export class ExtensionLoader {
     private static getAllExtensionModules(): ExtensionModule[] {
+        /**
+         * Here is where all extensions are loaded. Add your extension to this list. Make sure that the items in this
+         * list are alphabetically ordered.
+         */
         return [
             new AppearanceSwitcherModule(),
             new ApplicationSearchModule(),

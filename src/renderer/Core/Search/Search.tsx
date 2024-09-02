@@ -82,8 +82,16 @@ export const Search = ({
                 needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowUp",
             },
             {
+                listener: () => selectedItemId.previous(),
+                needsToInvokeListener: (keyboardEvent) => keyboardEvent.ctrlKey && keyboardEvent.key === "p",
+            },
+            {
                 listener: () => selectedItemId.next(),
                 needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowDown",
+            },
+            {
+                listener: () => selectedItemId.next(),
+                needsToInvokeListener: (keyboardEvent) => keyboardEvent.ctrlKey && keyboardEvent.key === "n",
             },
             {
                 listener: async () => {

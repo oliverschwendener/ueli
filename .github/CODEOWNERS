@@ -22,6 +22,7 @@ vite.config.mts @oliverschwendener
 # Core Modules
 
 src/main/Core/IniFileParser @ke1v
+src/main/Core/LinuxDesktopEnvironment @ke1v
 
 # Extensions
 

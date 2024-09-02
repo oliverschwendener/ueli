@@ -22,6 +22,9 @@ type ExtensionReactElements = {
 export const getExtension = (extensionId: string): ExtensionReactElements | undefined => {
     const props = useExtensionProps();
 
+    /**
+     * Add your extension to this list. Make sure that the items in this list are alphabetically ordered.
+     */
     const extensions: Record<string, ExtensionReactElements> = {
         ApplicationSearch: {
             settings: <ApplicationSearchSettings />,
