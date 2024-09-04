@@ -13,6 +13,10 @@ import * as URL from "url";
 type VscodeRecent = {
     fileUri?: string;
     folderUri?: string;
+    workspace?: {
+        id: string;
+        configPath: string;
+    };
 };
 
 export class VSCodeExtension implements Extension {
@@ -71,14 +75,31 @@ export class VSCodeExtension implements Extension {
     }
 
     async getSearchItem(recent: VscodeRecent): Promise<SearchResultItem> {
-        const uri = recent.fileUri ?? recent.folderUri;
-        const isFile = !!recent.fileUri;
-        const description = isFile ? "File" : "Folder";
+        const uri = recent.fileUri ?? recent.folderUri ?? recent.workspace.configPath;
 
-        let img: Image;
-        try {
-            img = await this.fileImageGenerator.getImage(uri);
-        } catch (e) {
+        let description: string;
+
+        if (recent.fileUri) {
+            description = "File";
+        } else if (recent.folderUri) {
+            description = "Folder";
+        } else if (recent.workspace) {
+            description = "Workspace";
+        }
+
+        let img: Image | undefined;
+        if (recent.workspace) {
+            img = this.getImage();
+        } else {
+            try {
+                img = await this.fileImageGenerator.getImage(uri);
+            } catch (e) {
+                img = this.getImage();
+            }
+        }
+
+        // Use icon for workspaces
+        if (img === undefined || recent.workspace) {
             img = this.getImage();
         }
 
