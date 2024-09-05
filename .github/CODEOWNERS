@@ -37,6 +37,13 @@ src/common/Extensions/Base64Conversion @ChristopherSteiner
 src/main/Extensions/Base64Conversion @ChristopherSteiner
 src/renderer/Extensions/Base64Conversion @ChristopherSteiner
 
+# VSCode
+assets/Extensions/VSCode @IrishBruse
+docs/Extensions/VSCode @IrishBruse
+src/common/Extensions/VSCode @IrishBruse
+src/main/Extensions/VSCode @IrishBruse
+src/renderer/Extensions/VSCode @IrishBruse
+
 # WindowsControlPanel
 assets/Extensions/WindowsControlPanel @tkohlmeier
 docs/Extensions/WindowsControlPanel @tkohlmeier
