@@ -7,7 +7,6 @@ import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { SearchEngineId } from "@common/Core/Search";
 import { searchFilter } from "@common/Core/Search/SearchFilter";
-import { readFile } from "node:fs/promises";
 import { join } from "path";
 
 interface NativeJetBrainsToolboxRecent {
@@ -78,19 +77,19 @@ export class JetBrainsToolboxExtension implements Extension {
             return [];
         }
 
-        const data = await readFile(projectsPath, "utf8");
-        return JSON.parse(data)
+        const recents = await this.fileSystemUtility.readJsonFile<NativeJetBrainsToolboxRecent[]>(projectsPath);
+
+        return recents
             .map(
-                (recent: NativeJetBrainsToolboxRecent) =>
-                    ({
-                        name: recent.name,
-                        path: recent.path,
-                        toolId: recent.newOpenItems[0].toolId,
-                        toolName: recent.newOpenItems[0].displayName,
-                        hasIcon: !!recent.lightIcon,
-                    }) satisfies JetBrainsToolboxRecent,
+                (recent): JetBrainsToolboxRecent => ({
+                    name: recent.name,
+                    path: recent.path,
+                    toolId: recent.newOpenItems[0].toolId,
+                    toolName: recent.newOpenItems[0].displayName,
+                    hasIcon: !!recent.lightIcon,
+                }),
             )
-            .filter((recent: JetBrainsToolboxRecent) => recent.toolId);
+            .filter((recent) => recent.toolId);
     }
 
     async getSearchItem(recent: JetBrainsToolboxRecent): Promise<SearchResultItem> {
