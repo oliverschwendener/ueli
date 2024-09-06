@@ -44,8 +44,8 @@ export class JetBrainsToolboxExtension implements Extension {
 
     readonly cachePaths = {
         Windows: process.env.LOCALAPPDATA + "/JetBrains/Toolbox/cache/",
-        macOS: process.env.HOME + "/Library/Caches/JetBrains/Toolbox/cache/",
-        Linux: process.env.HOME + "/.cache/JetBrains/Toolbox/cache/",
+        macOS: process.env.HOME + "/Library/Caches/JetBrains/Toolbox/",
+        Linux: process.env.HOME + "/.cache/JetBrains/Toolbox/",
     };
 
     recents: SearchResultItem[] = [];
