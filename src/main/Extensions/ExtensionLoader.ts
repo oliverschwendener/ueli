@@ -10,6 +10,7 @@ import { CurrencyConversionModule } from "./CurrencyConversion/CurrencyConversio
 import { DeeplTranslatorModule } from "./DeeplTranslator";
 import type { ExtensionModule } from "./ExtensionModule";
 import { FileSearchModule } from "./FileSearch/FileSearchModule";
+import { JetBrainsToolboxModule } from "./JetBrainsToolbox";
 import { SystemCommandsModule } from "./SystemCommands";
 import { SystemSettingsModule } from "./SystemSettings";
 import { TerminalLauncherModule } from "./TerminalLauncher";
@@ -35,6 +36,7 @@ export class ExtensionLoader {
             new CurrencyConversionModule(),
             new DeeplTranslatorModule(),
             new FileSearchModule(),
+            new JetBrainsToolboxModule(),
             new SystemCommandsModule(),
             new SystemSettingsModule(),
             new TerminalLauncherModule(),
