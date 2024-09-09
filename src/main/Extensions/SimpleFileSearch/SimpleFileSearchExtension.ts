@@ -42,12 +42,8 @@ export class SimpleFileSearchExtension implements Extension {
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
         const filePaths = await this.getFilePaths();
-        // TODO: exclude files & folders based on configuration
-
         const types = await this.getTypes(filePaths);
         const images = await this.fileImageGenerator.getImages(filePaths);
-
-        // TODO: make it configurable if we want to show files & folder
 
         const { t } = this.translator.createT(this.getI18nResources());
 
