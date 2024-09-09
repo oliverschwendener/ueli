@@ -3,6 +3,7 @@ import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Co
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
+import type { Settings } from "@common/Extensions/SimpleFileSearch";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
@@ -12,7 +13,6 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { App } from "electron";
 import { basename } from "path";
-import type { Settings } from "./Settings";
 
 export class SimpleFileSearchExtension implements Extension {
     public readonly id = "SimpleFileSearch";
@@ -57,6 +57,7 @@ export class SimpleFileSearchExtension implements Extension {
                     filePath,
                     description: types[filePath] === "folder" ? t("openFolder") : t("openFile"),
                 }),
+                additionalActions: [SearchResultItemActionUtility.createShowItemInFileExplorerAction({ filePath })],
             }),
         );
     }
@@ -84,8 +85,8 @@ export class SimpleFileSearchExtension implements Extension {
 
     private async getFilePaths(): Promise<string[]> {
         const folderPathSettings = this.settingsManager.getValue(
-            getExtensionSettingKey(this.id, "folderPaths"),
-            this.getDefaultSettings().folderPaths,
+            getExtensionSettingKey(this.id, "folders"),
+            this.getDefaultSettings().folders,
         );
 
         const promiseResults = await Promise.allSettled(
@@ -149,7 +150,7 @@ export class SimpleFileSearchExtension implements Extension {
 
     private getDefaultSettings(): Settings {
         return {
-            folderPaths: [
+            folders: [
                 {
                     folderPath: this.app.getPath("home"),
                     recursive: false,

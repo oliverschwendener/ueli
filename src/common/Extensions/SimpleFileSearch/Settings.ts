@@ -1,5 +1,5 @@
 export type Settings = {
-    folderPaths: {
+    folders: {
         folderPath: string;
         recursive: boolean;
     }[];
