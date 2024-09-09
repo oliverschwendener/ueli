@@ -9,6 +9,7 @@ import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
+import type { Translator } from "@Core/Translator";
 import type { App } from "electron";
 import { basename } from "path";
 import type { Settings } from "./Settings";
@@ -18,7 +19,10 @@ export class SimpleFileSearchExtension implements Extension {
 
     public readonly name = "Simple File Search";
 
-    // public readonly nameTranslation?: { key: string; namespace: string };
+    public readonly nameTranslation = {
+        key: "extensionName",
+        namespace: "extension[SimpleFileSearch]",
+    };
 
     public readonly author = {
         name: "Oliver Schwendener",
@@ -33,6 +37,7 @@ export class SimpleFileSearchExtension implements Extension {
         private readonly operatingSystem: OperatingSystem,
         private readonly settingsManager: SettingsManager,
         private readonly app: App,
+        private readonly translator: Translator,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -46,15 +51,16 @@ export class SimpleFileSearchExtension implements Extension {
 
         return filePaths.map((filePath): SearchResultItem => {
             const id = `simple-file-search-${filePath}`;
+            const { t } = this.translator.createT(this.getI18nResources());
 
             return {
                 id,
                 name: basename(filePath),
-                description: types[filePath] === "folder" ? "Folder" : "File",
+                description: types[filePath] === "folder" ? t("folder") : t("file"),
                 image: images[filePath] ?? this.getImage(),
                 defaultAction: SearchResultItemActionUtility.createOpenFileAction({
                     filePath,
-                    description: types[filePath] === "folder" ? "Open folder" : "Open file",
+                    description: types[filePath] === "folder" ? t("openFolder") : t("openFile"),
                 }),
                 additionalActions: [
                     SearchResultItemActionUtility.createAddToFavoritesAction({ id }),
@@ -132,7 +138,22 @@ export class SimpleFileSearchExtension implements Extension {
     }
 
     public getI18nResources(): Resources<Translations> {
-        return {};
+        return {
+            "en-US": {
+                extensionName: "Simple File Search",
+                file: "File",
+                folder: "Folder",
+                openFile: "Open file",
+                openFolder: "Open folder",
+            },
+            "de-CH": {
+                extensionName: "Einfache Dateisuche",
+                file: "Datei",
+                folder: "Ordner",
+                openFile: "Datei öffnen",
+                openFolder: "Ordner öffnen",
+            },
+        };
     }
 
     private getDefaultSettings(): Settings {
@@ -144,5 +165,9 @@ export class SimpleFileSearchExtension implements Extension {
                 },
             ],
         };
+    }
+
+    public getSettingKeysTriggeringRescan() {
+        return ["general.language"];
     }
 }
