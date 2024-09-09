@@ -102,7 +102,6 @@ export class SimpleFileSearchExtension implements Extension {
                 filePaths.push(...promiseResult.value);
             } else {
                 this.logger.error(`Failed to read directory. Reason: ${promiseResult.reason}`);
-                continue;
             }
         }
 
