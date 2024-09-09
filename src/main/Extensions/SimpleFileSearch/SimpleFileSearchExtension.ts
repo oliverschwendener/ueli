@@ -90,9 +90,7 @@ export class SimpleFileSearchExtension implements Extension {
         );
 
         const promiseResults = await Promise.allSettled(
-            folderPathSettings.map(({ folderPath, recursive }) =>
-                this.fileSystemUtility.readDirectory(folderPath, recursive),
-            ),
+            folderPathSettings.map(({ path, recursive }) => this.fileSystemUtility.readDirectory(path, recursive)),
         );
 
         const filePaths: string[] = [];
@@ -165,7 +163,7 @@ export class SimpleFileSearchExtension implements Extension {
         return {
             folders: [
                 {
-                    folderPath: this.app.getPath("home"),
+                    path: this.app.getPath("home"),
                     recursive: false,
                 },
             ],
@@ -173,6 +171,6 @@ export class SimpleFileSearchExtension implements Extension {
     }
 
     public getSettingKeysTriggeringRescan() {
-        return ["general.language"];
+        return ["general.language", getExtensionSettingKey(this.id, "folders")];
     }
 }

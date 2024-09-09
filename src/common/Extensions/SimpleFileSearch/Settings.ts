@@ -1,6 +1,8 @@
+export type FolderSetting = {
+    path: string;
+    recursive: boolean;
+};
+
 export type Settings = {
-    folders: {
-        folderPath: string;
-        recursive: boolean;
-    }[];
+    folders: FolderSetting[];
 };
