@@ -62,10 +62,6 @@ export class SimpleFileSearchExtension implements Extension {
                     filePath,
                     description: types[filePath] === "folder" ? t("openFolder") : t("openFile"),
                 }),
-                additionalActions: [
-                    SearchResultItemActionUtility.createAddToFavoritesAction({ id }),
-                    SearchResultItemActionUtility.createRemoveFromFavoritesAction({ id }),
-                ],
             };
         });
     }
