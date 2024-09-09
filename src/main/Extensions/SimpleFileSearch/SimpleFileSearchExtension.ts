@@ -116,7 +116,7 @@ export class SimpleFileSearchExtension implements Extension {
 
     public getImage(): Image {
         const filenames: Record<OperatingSystem, string> = {
-            Linux: "macos.png",
+            Linux: "linux.png",
             macOS: "macos.png",
             Windows: "windows.ico",
         };
