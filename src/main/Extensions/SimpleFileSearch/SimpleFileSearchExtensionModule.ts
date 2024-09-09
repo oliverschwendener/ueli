@@ -10,6 +10,11 @@ export class SimpleFileSearchExtensionModule implements ExtensionModule {
             extension: new SimpleFileSearchExtension(
                 dependencyRegistry.get("FileSystemUtility"),
                 dependencyRegistry.get("FileImageGenerator"),
+                dependencyRegistry.get("Logger"),
+                dependencyRegistry.get("AssetPathResolver"),
+                dependencyRegistry.get("OperatingSystem"),
+                dependencyRegistry.get("SettingsManager"),
+                dependencyRegistry.get("App"),
             ),
         };
     }
