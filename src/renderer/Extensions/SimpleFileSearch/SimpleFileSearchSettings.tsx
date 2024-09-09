@@ -38,8 +38,8 @@ export const SimpleFileSearchSettings = () => {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHeaderCell>Path</TableHeaderCell>
-                            <TableHeaderCell style={{ width: 80 }}>Recursive</TableHeaderCell>
+                            <TableHeaderCell>{t("path")}</TableHeaderCell>
+                            <TableHeaderCell style={{ width: 80 }}>{t("recursive")}</TableHeaderCell>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -49,10 +49,10 @@ export const SimpleFileSearchSettings = () => {
                                 <TableCell>
                                     <TableCellLayout>{recursive ? "Yes" : ""}</TableCellLayout>
                                     <TableCellActions>
-                                        <Tooltip relationship="label" content="Edit">
+                                        <Tooltip relationship="label" content={t("edit")}>
                                             <Button size="small" icon={<PenRegular />} />
                                         </Tooltip>
-                                        <Tooltip relationship="label" content="Remove">
+                                        <Tooltip relationship="label" content={t("remove")}>
                                             <Button
                                                 size="small"
                                                 icon={<DismissRegular />}

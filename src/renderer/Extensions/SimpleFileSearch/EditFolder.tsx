@@ -16,6 +16,7 @@ import {
 } from "@fluentui/react-components";
 import { AddRegular, FolderRegular } from "@fluentui/react-icons";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type TemporaryFolderSetting = FolderSetting & { isValidPath: boolean };
 
@@ -25,6 +26,8 @@ type EditFolderProps = {
 };
 
 export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) => {
+    const { t } = useTranslation("extension[SimpleFileSearch]");
+
     const { contextBridge } = useContextBridge();
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -55,20 +58,18 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
         <Dialog open={isDialogOpen} onOpenChange={(_, { open }) => (open ? openDialog() : closeDialog())}>
             <DialogTrigger disableButtonEnhancement>
                 <Button onClick={openDialog} icon={<AddRegular />}>
-                    Add folder
+                    {t("addFolder")}
                 </Button>
             </DialogTrigger>
             <DialogSurface>
                 <DialogBody>
-                    <DialogTitle>Add folder</DialogTitle>
+                    <DialogTitle>{t("addFolder")}</DialogTitle>
                     <DialogContent>
                         <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: 5 }}>
                             <Field
-                                label="Path"
+                                label={t("path")}
                                 validationMessage={
-                                    temporaryFolderSetting.isValidPath
-                                        ? "Valid folder path"
-                                        : "This folder doesn't seem to exist"
+                                    temporaryFolderSetting.isValidPath ? t("validFolderPath") : t("invalidFolderPath")
                                 }
                                 validationState={temporaryFolderSetting.isValidPath ? "success" : "error"}
                             >
@@ -76,7 +77,7 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
                                     value={temporaryFolderSetting.path}
                                     onChange={(_, { value }) => setPath(value)}
                                     contentAfter={
-                                        <Tooltip relationship="label" content="Choose">
+                                        <Tooltip relationship="label" content={t("chooseFolder")}>
                                             <Button
                                                 size="small"
                                                 appearance="subtle"
@@ -90,14 +91,14 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
                             <Checkbox
                                 checked={temporaryFolderSetting.recursive}
                                 onChange={(_, { checked }) => setRecursive(checked === true)}
-                                label="Recursive"
+                                label={t("recursive")}
                             />
                         </div>
                     </DialogContent>
                     <DialogActions>
                         <DialogTrigger disableButtonEnhancement>
                             <Button appearance="secondary" onClick={closeDialog}>
-                                Cancel
+                                {t("cancel")}
                             </Button>
                         </DialogTrigger>
                         <Button
@@ -108,7 +109,7 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
                             }}
                             appearance="primary"
                         >
-                            Add
+                            {t("add")}
                         </Button>
                     </DialogActions>
                 </DialogBody>
