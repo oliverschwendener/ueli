@@ -137,6 +137,13 @@ export class SimpleFileSearchExtension implements Extension {
                 folder: "Folder",
                 openFile: "Open file",
                 openFolder: "Open folder",
+                folders: "Folders",
+                recursive: "Recursive",
+                remove: "Remove",
+                chooseFolder: "Choose folder",
+                add: "Add",
+                newFolderPathInvalid: "This folder path doesn't seem to exist",
+                newFolderPathPlaceholder: "Add a new folder path",
             },
             "de-CH": {
                 extensionName: "Einfache Dateisuche",
@@ -144,6 +151,13 @@ export class SimpleFileSearchExtension implements Extension {
                 folder: "Ordner",
                 openFile: "Datei öffnen",
                 openFolder: "Ordner öffnen",
+                folders: "Ordner",
+                recursive: "Rekursiv",
+                remove: "Entfernen",
+                chooseFolder: "Ordner auswählen",
+                add: "Hinzufügen",
+                newFolderPathInvalid: "Dieser Ordnerpfad scheint nicht zu existieren",
+                newFolderPathPlaceholder: "Neuen Ordnerpfad hinzufügen",
             },
         };
     }

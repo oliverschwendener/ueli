@@ -2,9 +2,10 @@ import type { Settings } from "@common/Extensions/SimpleFileSearch";
 import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
-import { Badge, Button, Input, Switch, Tooltip } from "@fluentui/react-components";
+import { Badge, Button, Field, Input, Switch, Tooltip } from "@fluentui/react-components";
 import { AddRegular, DismissRegular, FolderRegular } from "@fluentui/react-icons";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type NewFolderPathSetting = {
     isValid: boolean;
@@ -24,6 +25,8 @@ export const SimpleFileSearchSettings = () => {
     const { contextBridge } = useContextBridge();
 
     const [newFolderPathSetting, setNewFolderPathSetting] = useState<NewFolderPathSetting>(initialNewFolderPathSetting);
+
+    const { t } = useTranslation("extension[SimpleFileSearch]");
 
     const { value: folderSettings, updateValue: setFolderSettings } = useExtensionSetting<Settings["folders"]>({
         extensionId,
@@ -60,7 +63,7 @@ export const SimpleFileSearchSettings = () => {
 
     return (
         <SettingGroupList>
-            <SettingGroup title="Folders">
+            <SettingGroup title={t("folders")}>
                 <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                     {folderSettings.map(({ folderPath, recursive }) => (
                         <div style={{ width: "100%", display: "flex", flexDirection: "column" }} key={folderPath}>
@@ -70,10 +73,10 @@ export const SimpleFileSearchSettings = () => {
                                     <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                                         {recursive ? (
                                             <Badge size="small" color="warning">
-                                                Recursive
+                                                {t("recursive")}
                                             </Badge>
                                         ) : null}
-                                        <Tooltip relationship="label" content="Remove">
+                                        <Tooltip relationship="label" content={t("remove")}>
                                             <Button
                                                 size="small"
                                                 appearance="subtle"
@@ -87,45 +90,63 @@ export const SimpleFileSearchSettings = () => {
                         </div>
                     ))}
                     <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
-                        <Input
-                            value={newFolderPathSetting.path}
-                            onChange={(_, { value }) =>
-                                setNewFolderPathSetting({
-                                    ...newFolderPathSetting,
-                                    path: value,
-                                    isValid: contextBridge.fileExists(value),
-                                })
+                        <Field
+                            validationState={
+                                newFolderPathSetting.isValid || newFolderPathSetting.path.length === 0
+                                    ? undefined
+                                    : "error"
                             }
-                            contentAfter={
-                                <>
-                                    <Tooltip relationship="label" content="Choose folder">
-                                        <Button
-                                            size="small"
-                                            appearance="subtle"
-                                            icon={<FolderRegular />}
-                                            onClick={chooseFolder}
-                                        />
-                                    </Tooltip>
-                                    <Tooltip relationship="label" content="Recursive">
-                                        <Switch
-                                            checked={newFolderPathSetting.recursive}
-                                            onChange={(_, { checked }) =>
-                                                setNewFolderPathSetting({ ...newFolderPathSetting, recursive: checked })
-                                            }
-                                        />
-                                    </Tooltip>
-                                    <Tooltip relationship="label" content="Add">
-                                        <Button
-                                            size="small"
-                                            appearance="subtle"
-                                            disabled={!newFolderPathSetting.isValid}
-                                            icon={<AddRegular />}
-                                            onClick={addNewFolderPathSetting}
-                                        />
-                                    </Tooltip>
-                                </>
+                            validationMessage={
+                                newFolderPathSetting.isValid || newFolderPathSetting.path.length === 0
+                                    ? undefined
+                                    : t("newFolderPathInvalid")
                             }
-                        />
+                        >
+                            <Input
+                                autoFocus
+                                placeholder={t("newFolderPathPlaceholder")}
+                                value={newFolderPathSetting.path}
+                                onChange={(_, { value }) =>
+                                    setNewFolderPathSetting({
+                                        ...newFolderPathSetting,
+                                        path: value,
+                                        isValid: contextBridge.fileExists(value),
+                                    })
+                                }
+                                contentAfter={
+                                    <>
+                                        <Tooltip relationship="label" content={t("chooseFolder")}>
+                                            <Button
+                                                size="small"
+                                                appearance="subtle"
+                                                icon={<FolderRegular />}
+                                                onClick={chooseFolder}
+                                            />
+                                        </Tooltip>
+                                        <Tooltip relationship="label" content={t("recursive")}>
+                                            <Switch
+                                                checked={newFolderPathSetting.recursive}
+                                                onChange={(_, { checked }) =>
+                                                    setNewFolderPathSetting({
+                                                        ...newFolderPathSetting,
+                                                        recursive: checked,
+                                                    })
+                                                }
+                                            />
+                                        </Tooltip>
+                                        <Tooltip relationship="label" content={t("add")}>
+                                            <Button
+                                                size="small"
+                                                appearance="subtle"
+                                                disabled={!newFolderPathSetting.isValid}
+                                                icon={<AddRegular />}
+                                                onClick={addNewFolderPathSetting}
+                                            />
+                                        </Tooltip>
+                                    </>
+                                }
+                            />
+                        </Field>
                     </div>
                 </div>
             </SettingGroup>
