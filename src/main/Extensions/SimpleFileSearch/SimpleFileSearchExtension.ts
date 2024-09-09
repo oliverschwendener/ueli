@@ -51,11 +51,9 @@ export class SimpleFileSearchExtension implements Extension {
 
         const { t } = this.translator.createT(this.getI18nResources());
 
-        return filePaths.map((filePath): SearchResultItem => {
-            const id = `simple-file-search-${filePath}`;
-
-            return {
-                id,
+        return filePaths.map(
+            (filePath): SearchResultItem => ({
+                id: `simple-file-search-${filePath}`,
                 name: basename(filePath),
                 description: types[filePath] === "folder" ? t("folder") : t("file"),
                 image: images[filePath] ?? this.getImage(),
@@ -63,8 +61,8 @@ export class SimpleFileSearchExtension implements Extension {
                     filePath,
                     description: types[filePath] === "folder" ? t("openFolder") : t("openFile"),
                 }),
-            };
-        });
+            }),
+        );
     }
 
     private async getTypes(filePaths: string[]): Promise<Record<string, "folder" | "file">> {
