@@ -49,9 +49,10 @@ export class SimpleFileSearchExtension implements Extension {
 
         // TODO: make it configurable if we want to show files & folder
 
+        const { t } = this.translator.createT(this.getI18nResources());
+
         return filePaths.map((filePath): SearchResultItem => {
             const id = `simple-file-search-${filePath}`;
-            const { t } = this.translator.createT(this.getI18nResources());
 
             return {
                 id,
