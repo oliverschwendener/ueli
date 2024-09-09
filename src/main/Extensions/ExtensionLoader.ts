@@ -10,17 +10,23 @@ import { CurrencyConversionModule } from "./CurrencyConversion/CurrencyConversio
 import { DeeplTranslatorModule } from "./DeeplTranslator";
 import type { ExtensionModule } from "./ExtensionModule";
 import { FileSearchModule } from "./FileSearch/FileSearchModule";
+import { JetBrainsToolboxModule } from "./JetBrainsToolbox";
 import { SimpleFileSearchExtensionModule } from "./SimpleFileSearch/SimpleFileSearchExtensionModule";
 import { SystemCommandsModule } from "./SystemCommands";
 import { SystemSettingsModule } from "./SystemSettings";
 import { TerminalLauncherModule } from "./TerminalLauncher";
 import { UeliCommandModule } from "./UeliCommand";
+import { VSCodeModule } from "./VSCode";
 import { WebSearchExtensionModule } from "./WebSearch";
 import { WindowsControlPanelModule } from "./WindowsControlPanel";
 import { WorkflowExtensionModule } from "./Workflow";
 
 export class ExtensionLoader {
     private static getAllExtensionModules(): ExtensionModule[] {
+        /**
+         * Here is where all extensions are loaded. Add your extension to this list. Make sure that the items in this
+         * list are alphabetically ordered.
+         */
         return [
             new AppearanceSwitcherModule(),
             new ApplicationSearchModule(),
@@ -31,11 +37,13 @@ export class ExtensionLoader {
             new CurrencyConversionModule(),
             new DeeplTranslatorModule(),
             new FileSearchModule(),
+            new JetBrainsToolboxModule(),
             new SimpleFileSearchExtensionModule(),
             new SystemCommandsModule(),
             new SystemSettingsModule(),
             new TerminalLauncherModule(),
             new UeliCommandModule(),
+            new VSCodeModule(),
             new WebSearchExtensionModule(),
             new WindowsControlPanelModule(),
             new WorkflowExtensionModule(),

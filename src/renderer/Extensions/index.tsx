@@ -9,6 +9,7 @@ import { CurrencyConversionSettings } from "./CurrencyConversion";
 import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
 import { FileSearch, FileSearchSettings } from "./FileSearch";
 import { TerminalLauncherSettings } from "./TerminalLauncher";
+import { VSCodeSettings } from "./VSCode";
 import { WebSearchExtension } from "./WebSearch";
 import { WebSearchSettings } from "./WebSearch/WebSearchSettings";
 import { WorkflowSettings } from "./Workflow";
@@ -21,6 +22,10 @@ type ExtensionReactElements = {
 export const getExtension = (extensionId: string): ExtensionReactElements | undefined => {
     const props = useExtensionProps();
 
+    /**
+     * Add your extension to this list. Make sure that the items in this list are alphabetically ordered.
+     */
+    /*eslint sort-keys: "error"*/
     const extensions: Record<string, ExtensionReactElements> = {
         ApplicationSearch: {
             settings: <ApplicationSearchSettings />,
@@ -50,6 +55,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         },
         TerminalLauncher: {
             settings: <TerminalLauncherSettings />,
+        },
+        VSCode: {
+            settings: <VSCodeSettings />,
         },
         WebSearch: {
             extension: <WebSearchExtension {...props} />,

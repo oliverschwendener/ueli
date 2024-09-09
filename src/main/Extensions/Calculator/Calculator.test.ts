@@ -215,5 +215,38 @@ describe(Calculator, () => {
                 }),
             ).toEqual("100 cm");
         });
+
+        it("should return 0.333 when evaluating the expression '1/3' and a precision of 3", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "1/3",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 3,
+                }),
+            ).toEqual("0.333");
+        });
+
+        it("should return 0.33333333 when evaluating the expression '1/3' and a precision of 8", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "1/3",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 8,
+                }),
+            ).toEqual("0.33333333");
+        });
+
+        it("should return 5035 when evaluating the expression '5050-15' and a precision of 4", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "5050-15",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 4,
+                }),
+            ).toEqual("5035");
+        });
     });
 });

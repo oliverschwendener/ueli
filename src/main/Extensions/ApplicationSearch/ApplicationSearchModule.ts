@@ -61,7 +61,6 @@ export class ApplicationSearchModule implements ExtensionModule {
                 applicationRepositories[dependencyRegistry.get("OperatingSystem")](),
                 settings,
                 dependencyRegistry.get("AssetPathResolver"),
-                dependencyRegistry.get("EnvironmentVariableProvider"),
             ),
             actionHandlers: actionHandlers[dependencyRegistry.get("OperatingSystem")](),
         };
