@@ -1,7 +1,4 @@
-export type FolderSetting = {
-    path: string;
-    recursive: boolean;
-};
+import type { FolderSetting } from "./FolderSetting";
 
 export type Settings = {
     folders: FolderSetting[];
