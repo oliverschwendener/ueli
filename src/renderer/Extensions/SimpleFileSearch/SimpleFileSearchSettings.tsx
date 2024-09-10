@@ -14,7 +14,7 @@ import {
     TableRow,
     Tooltip,
 } from "@fluentui/react-components";
-import { CheckmarkRegular, DismissRegular, EditRegular } from "@fluentui/react-icons";
+import { CheckmarkRegular, DismissRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 import { EditFolder } from "./EditFolder";
 
@@ -49,9 +49,6 @@ export const SimpleFileSearchSettings = () => {
                                 <TableCell>
                                     <TableCellLayout>{recursive ? <CheckmarkRegular /> : ""}</TableCellLayout>
                                     <TableCellActions>
-                                        <Tooltip relationship="label" content={t("edit")}>
-                                            <Button size="small" icon={<EditRegular />} />
-                                        </Tooltip>
                                         <Tooltip relationship="label" content={t("remove")}>
                                             <Button
                                                 size="small"
