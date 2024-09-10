@@ -73,11 +73,12 @@ export class SimpleFileSearchExtension implements Extension {
             const promiseResult = promiseResults[i];
             const filePath = filePaths[i];
 
-            if (promiseResult.status === "fulfilled") {
-                result[filePath] = promiseResult.value ? "folder" : "file";
-            } else {
+            if (promiseResult.status === "rejected") {
                 this.logger.error(`Unable to determine if file path is directory. Reason: ${promiseResult.reason}`);
+                continue;
             }
+
+            result[filePath] = promiseResult.value ? "folder" : "file";
         }
 
         return result;
@@ -93,17 +94,18 @@ export class SimpleFileSearchExtension implements Extension {
             folderPathSettings.map(({ path, recursive }) => this.fileSystemUtility.readDirectory(path, recursive)),
         );
 
-        const filePaths: string[] = [];
+        const result: string[] = [];
 
         for (const promiseResult of promiseResults) {
-            if (promiseResult.status === "fulfilled") {
-                filePaths.push(...promiseResult.value);
-            } else {
+            if (promiseResult.status === "rejected") {
                 this.logger.error(`Failed to read directory. Reason: ${promiseResult.reason}`);
+                continue;
             }
+
+            result.push(...promiseResult.value);
         }
 
-        return filePaths;
+        return result;
     }
 
     public isSupported(): boolean {
@@ -144,6 +146,9 @@ export class SimpleFileSearchExtension implements Extension {
                 validFolderPath: "Valid folder path",
                 invalidFolderPath: "This folder doesn't seem to exist",
                 cancel: "Cancel",
+                "searchFor.files": "Files",
+                "searchFor.folders": "Folders",
+                "searchFor.filesAndFolders": "Files and Folders",
             },
             "de-CH": {
                 extensionName: "Einfache Dateisuche",
@@ -161,6 +166,9 @@ export class SimpleFileSearchExtension implements Extension {
                 validFolderPath: "Valider Dateipfad",
                 invalidFolderPath: "Dieser Ordner scheint nicht zu existieren",
                 cancel: "Abbrechen",
+                "searchFor.files": "Dateien",
+                "searchFor.folders": "Ordner",
+                "searchFor.filesAndFolders": "Dateien und Ordner",
             },
         };
     }
@@ -171,10 +179,12 @@ export class SimpleFileSearchExtension implements Extension {
                 {
                     path: this.app.getPath("home"),
                     recursive: false,
+                    searchFor: "folders",
                 },
                 {
                     path: this.app.getPath("desktop"),
                     recursive: false,
+                    searchFor: "filesAndFolders",
                 },
             ],
         };

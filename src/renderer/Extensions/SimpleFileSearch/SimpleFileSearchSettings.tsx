@@ -69,6 +69,7 @@ export const SimpleFileSearchSettings = () => {
                             isValidPath: false,
                             path: "",
                             recursive: false,
+                            searchFor: "filesAndFolders",
                         }}
                     />
                 </div>

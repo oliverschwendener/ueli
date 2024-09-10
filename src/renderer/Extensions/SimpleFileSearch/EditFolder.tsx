@@ -10,8 +10,10 @@ import {
     DialogSurface,
     DialogTitle,
     DialogTrigger,
+    Dropdown,
     Field,
     Input,
+    Option,
     Tooltip,
 } from "@fluentui/react-components";
 import { AddRegular, FolderRegular } from "@fluentui/react-icons";
@@ -25,9 +27,14 @@ type EditFolderProps = {
     initialFolderSetting: TemporaryFolderSetting;
 };
 
-const mapTemporaryFolderSettingToFolderSetting = ({ path, recursive }: TemporaryFolderSetting): FolderSetting => ({
+const mapTemporaryFolderSettingToFolderSetting = ({
     path,
     recursive,
+    searchFor,
+}: TemporaryFolderSetting): FolderSetting => ({
+    path,
+    recursive,
+    searchFor,
 });
 
 export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) => {
@@ -59,6 +66,9 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
 
     const setRecursive = (recursive: boolean) => setTemporaryFolderSetting({ ...temporaryFolderSetting, recursive });
 
+    const setSearchFor = (searchFor: FolderSetting["searchFor"]) =>
+        setTemporaryFolderSetting({ ...temporaryFolderSetting, searchFor });
+
     return (
         <Dialog open={isDialogOpen} onOpenChange={(_, { open }) => (open ? openDialog() : closeDialog())}>
             <DialogTrigger disableButtonEnhancement>
@@ -70,7 +80,7 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
                 <DialogBody>
                     <DialogTitle>{t("addFolder")}</DialogTitle>
                     <DialogContent>
-                        <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: 5 }}>
+                        <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: 10 }}>
                             <Field
                                 label={t("path")}
                                 validationMessage={
@@ -93,6 +103,23 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
                                     }
                                 />
                             </Field>
+
+                            <div style={{ display: "flex", flexDirection: "column" }}>
+                                <label id="searchFor">Search for</label>
+                                <Dropdown
+                                    id="searchFor"
+                                    value={t(`searchFor.${temporaryFolderSetting.searchFor}`)}
+                                    selectedOptions={[temporaryFolderSetting.searchFor]}
+                                    onOptionSelect={(_, { optionValue }) =>
+                                        setSearchFor(optionValue as FolderSetting["searchFor"])
+                                    }
+                                >
+                                    <Option value="files">Files</Option>
+                                    <Option value="folders">Folders</Option>
+                                    <Option value="filesAndFolders">Files and Folders</Option>
+                                </Dropdown>
+                            </div>
+
                             <Checkbox
                                 checked={temporaryFolderSetting.recursive}
                                 onChange={(_, { checked }) => setRecursive(checked === true)}
