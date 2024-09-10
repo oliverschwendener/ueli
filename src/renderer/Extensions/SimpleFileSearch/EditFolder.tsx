@@ -25,6 +25,11 @@ type EditFolderProps = {
     initialFolderSetting: TemporaryFolderSetting;
 };
 
+const mapTemporaryFolderSettingToFolderSetting = ({ path, recursive }: TemporaryFolderSetting): FolderSetting => ({
+    path,
+    recursive,
+});
+
 export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) => {
     const { t } = useTranslation("extension[SimpleFileSearch]");
 
@@ -105,7 +110,7 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
                             disabled={!temporaryFolderSetting.isValidPath}
                             onClick={() => {
                                 closeDialog();
-                                onSave(temporaryFolderSetting);
+                                onSave(mapTemporaryFolderSettingToFolderSetting(temporaryFolderSetting));
                             }}
                             appearance="primary"
                         >

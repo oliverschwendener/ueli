@@ -174,6 +174,10 @@ export class SimpleFileSearchExtension implements Extension {
                     path: this.app.getPath("home"),
                     recursive: false,
                 },
+                {
+                    path: this.app.getPath("desktop"),
+                    recursive: false,
+                },
             ],
         };
     }
