@@ -47,15 +47,21 @@ export const SimpleFileSearchSettings = () => {
                     <TableHeader>
                         <TableRow>
                             <TableHeaderCell>{t("path")}</TableHeaderCell>
+                            <TableHeaderCell style={{ width: 100 }}>{t("searchFor")}</TableHeaderCell>
                             <TableHeaderCell style={{ width: 80 }}>{t("recursive")}</TableHeaderCell>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {folderSettings.map(({ path, recursive, id }) => (
+                        {folderSettings.map(({ path, recursive, id, searchFor }) => (
                             <TableRow key={path}>
                                 <TableCell>{path}</TableCell>
+                                <TableCell>{t(`searchFor.${searchFor}`)}</TableCell>
                                 <TableCell>
-                                    <TableCellLayout>{recursive ? <CheckmarkRegular /> : ""}</TableCellLayout>
+                                    <TableCellLayout
+                                        style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
+                                    >
+                                        {recursive ? <CheckmarkRegular /> : ""}
+                                    </TableCellLayout>
                                     <TableCellActions>
                                         <Tooltip relationship="label" content={t("remove")}>
                                             <Button
