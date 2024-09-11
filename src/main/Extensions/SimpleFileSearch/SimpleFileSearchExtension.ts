@@ -65,7 +65,7 @@ export class SimpleFileSearchExtension implements Extension {
                     id: `simple-file-search-${filePath}`,
                     name: basename(filePath),
                     description: types[filePath] === "folder" ? t("folder") : t("file"),
-                    image: images[filePath] ?? this.getImage(),
+                    image: images[filePath] ?? this.getDefaultIcon(),
                     defaultAction: SearchResultItemActionUtility.createOpenFileAction({
                         filePath,
                         description: types[filePath] === "folder" ? t("openFolder") : t("openFile"),
@@ -142,6 +142,12 @@ export class SimpleFileSearchExtension implements Extension {
     }
 
     public getImage(): Image {
+        return {
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "simple-file-search.png")}`,
+        };
+    }
+
+    private getDefaultIcon(): Image {
         const filenames: Record<OperatingSystem, string> = {
             Linux: "linux.png",
             macOS: "macos.png",
