@@ -1,20 +1,20 @@
 # General stuff
-src @oliverschwendener
-assets @oliverschwendener
-.github @oliverschwendener
-.vscode @oliverschwendener
-docs @oliverschwendener
 .eslintignore @oliverschwendener
 .eslintrc.json @oliverschwendener
 .gitattributes @oliverschwendener
+.github @oliverschwendener
 .gitignore @oliverschwendener
-.prettierrc @oliverschwendener
 .npmrc @oliverschwendener
+.prettierrc @oliverschwendener
+.vscode @oliverschwendener
+assets @oliverschwendener
+docs @oliverschwendener
 electron-builder.config.js @oliverschwendener
 LICENSE @oliverschwendener
-package.json @oliverschwendener
 package-lock.json @oliverschwendener
+package.json @oliverschwendener
 README.md @oliverschwendener
+src @oliverschwendener
 tsconfig.node.json @oliverschwendener
 tsconfig.renderer.json @oliverschwendener
 vite.config.mts @oliverschwendener
