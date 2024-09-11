@@ -88,18 +88,13 @@ export class VSCodeExtension implements Extension {
         }
 
         let img: Image | undefined;
-        if (recent.workspace) {
-            img = this.getImage();
-        } else {
+        if (recent.fileUri) {
             try {
                 img = await this.fileImageGenerator.getImage(uri);
             } catch (e) {
-                img = this.getImage();
+                img = this.getDefaultFileImage();
             }
-        }
-
-        // Use icon for workspaces
-        if (img === undefined || recent.workspace) {
+        } else {
             img = this.getImage();
         }
 
@@ -132,6 +127,14 @@ export class VSCodeExtension implements Extension {
 
     public getImage(): Image {
         const path = this.assetPathResolver.getExtensionAssetPath("VSCode", "vscode.png");
+
+        return {
+            url: `file://${path}`,
+        };
+    }
+
+    public getDefaultFileImage(): Image {
+        const path = this.assetPathResolver.getExtensionAssetPath("VSCode", "default-file-icon.png");
 
         return {
             url: `file://${path}`,
