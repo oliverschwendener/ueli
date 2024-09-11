@@ -18,6 +18,13 @@ import { CheckmarkRegular, DismissRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 import { EditFolder } from "./EditFolder";
 
+const createFolderSetting = (): FolderSetting => ({
+    id: crypto.randomUUID(),
+    path: "",
+    recursive: false,
+    searchFor: "filesAndFolders",
+});
+
 export const SimpleFileSearchSettings = () => {
     const extensionId = "SimpleFileSearch";
 
@@ -30,7 +37,8 @@ export const SimpleFileSearchSettings = () => {
 
     const addFolderSetting = (folderSetting: FolderSetting) => setFolderSettings([...folderSettings, folderSetting]);
 
-    const removeFolderSetting = (path: string) => setFolderSettings(folderSettings.filter(({ path: p }) => p !== path));
+    const removeFolderSetting = (id: string) =>
+        setFolderSettings(folderSettings.filter((folderSetting) => folderSetting.id !== id));
 
     return (
         <SettingGroupList>
@@ -43,7 +51,7 @@ export const SimpleFileSearchSettings = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {folderSettings.map(({ path, recursive }) => (
+                        {folderSettings.map(({ path, recursive, id }) => (
                             <TableRow key={path}>
                                 <TableCell>{path}</TableCell>
                                 <TableCell>
@@ -53,7 +61,7 @@ export const SimpleFileSearchSettings = () => {
                                             <Button
                                                 size="small"
                                                 icon={<DismissRegular />}
-                                                onClick={() => removeFolderSetting(path)}
+                                                onClick={() => removeFolderSetting(id)}
                                             />
                                         </Tooltip>
                                     </TableCellActions>
@@ -66,10 +74,8 @@ export const SimpleFileSearchSettings = () => {
                     <EditFolder
                         onSave={addFolderSetting}
                         initialFolderSetting={{
+                            ...createFolderSetting(),
                             isValidPath: false,
-                            path: "",
-                            recursive: false,
-                            searchFor: "filesAndFolders",
                         }}
                     />
                 </div>

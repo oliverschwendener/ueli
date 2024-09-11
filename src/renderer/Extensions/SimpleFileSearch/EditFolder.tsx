@@ -28,10 +28,12 @@ type EditFolderProps = {
 };
 
 const mapTemporaryFolderSettingToFolderSetting = ({
+    id,
     path,
     recursive,
     searchFor,
 }: TemporaryFolderSetting): FolderSetting => ({
+    id,
     path,
     recursive,
     searchFor,

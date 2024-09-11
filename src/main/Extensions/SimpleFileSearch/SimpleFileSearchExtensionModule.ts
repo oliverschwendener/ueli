@@ -14,7 +14,6 @@ export class SimpleFileSearchExtensionModule implements ExtensionModule {
                 dependencyRegistry.get("AssetPathResolver"),
                 dependencyRegistry.get("OperatingSystem"),
                 dependencyRegistry.get("SettingsManager"),
-                dependencyRegistry.get("App"),
                 dependencyRegistry.get("Translator"),
             ),
         };

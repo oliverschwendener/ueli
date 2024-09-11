@@ -3,7 +3,7 @@ import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Co
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
-import type { Settings } from "@common/Extensions/SimpleFileSearch";
+import type { FolderSetting, Settings } from "@common/Extensions/SimpleFileSearch";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
@@ -11,7 +11,6 @@ import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
-import type { App } from "electron";
 import { basename } from "path";
 
 export class SimpleFileSearchExtension implements Extension {
@@ -36,29 +35,57 @@ export class SimpleFileSearchExtension implements Extension {
         private readonly assetPathResolver: AssetPathResolver,
         private readonly operatingSystem: OperatingSystem,
         private readonly settingsManager: SettingsManager,
-        private readonly app: App,
         private readonly translator: Translator,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const filePaths = await this.getFilePaths();
+        const folderSettings = this.settingsManager.getValue(
+            getExtensionSettingKey(this.id, "folders"),
+            this.getDefaultSettings().folders,
+        );
+
+        const filePathsGroupedByFolderSettingId = await this.getFilePaths(folderSettings);
+        const filePaths = Object.values(filePathsGroupedByFolderSettingId).flat();
         const types = await this.getTypes(filePaths);
         const images = await this.fileImageGenerator.getImages(filePaths);
 
         const { t } = this.translator.createT(this.getI18nResources());
 
-        return filePaths.map(
-            (filePath): SearchResultItem => ({
-                id: `simple-file-search-${filePath}`,
-                name: basename(filePath),
-                description: types[filePath] === "folder" ? t("folder") : t("file"),
-                image: images[filePath] ?? this.getImage(),
-                defaultAction: SearchResultItemActionUtility.createOpenFileAction({
-                    filePath,
-                    description: types[filePath] === "folder" ? t("openFolder") : t("openFile"),
-                }),
-                additionalActions: [SearchResultItemActionUtility.createShowItemInFileExplorerAction({ filePath })],
-            }),
+        const searchResultItems: SearchResultItem[] = [];
+
+        for (const folderSettingId of Object.keys(filePathsGroupedByFolderSettingId)) {
+            const folderSetting = folderSettings.find(({ id }) => id === folderSettingId);
+
+            for (const filePath of filePathsGroupedByFolderSettingId[folderSettingId]) {
+                if (!this.shouldIncludeFilePath(types[filePath], folderSetting.searchFor)) {
+                    continue;
+                }
+
+                searchResultItems.push({
+                    id: `simple-file-search-${filePath}`,
+                    name: basename(filePath),
+                    description: types[filePath] === "folder" ? t("folder") : t("file"),
+                    image: images[filePath] ?? this.getImage(),
+                    defaultAction: SearchResultItemActionUtility.createOpenFileAction({
+                        filePath,
+                        description: types[filePath] === "folder" ? t("openFolder") : t("openFile"),
+                    }),
+                    additionalActions: [SearchResultItemActionUtility.createShowItemInFileExplorerAction({ filePath })],
+                });
+            }
+        }
+
+        return searchResultItems;
+    }
+
+    private shouldIncludeFilePath(
+        type: "file" | "folder",
+        searchFor: "files" | "folders" | "filesAndFolders",
+    ): boolean {
+        return (
+            searchFor === "filesAndFolders" ||
+            (type === "file" && searchFor === "files") ||
+            (type === "folder" && searchFor === "folders")
         );
     }
 
@@ -84,25 +111,23 @@ export class SimpleFileSearchExtension implements Extension {
         return result;
     }
 
-    private async getFilePaths(): Promise<string[]> {
-        const folderPathSettings = this.settingsManager.getValue(
-            getExtensionSettingKey(this.id, "folders"),
-            this.getDefaultSettings().folders,
-        );
-
+    private async getFilePaths(folderSettings: FolderSetting[]): Promise<Record<string, string[]>> {
         const promiseResults = await Promise.allSettled(
-            folderPathSettings.map(({ path, recursive }) => this.fileSystemUtility.readDirectory(path, recursive)),
+            folderSettings.map(({ path, recursive }) => this.fileSystemUtility.readDirectory(path, recursive)),
         );
 
-        const result: string[] = [];
+        const result: Record<string, string[]> = {};
 
-        for (const promiseResult of promiseResults) {
+        for (let i = 0; i < folderSettings.length; i++) {
+            const promiseResult = promiseResults[i];
+            const folderSetting = folderSettings[i];
+
             if (promiseResult.status === "rejected") {
                 this.logger.error(`Failed to read directory. Reason: ${promiseResult.reason}`);
                 continue;
             }
 
-            result.push(...promiseResult.value);
+            result[folderSetting.id] = promiseResult.value;
         }
 
         return result;
@@ -175,18 +200,7 @@ export class SimpleFileSearchExtension implements Extension {
 
     private getDefaultSettings(): Settings {
         return {
-            folders: [
-                {
-                    path: this.app.getPath("home"),
-                    recursive: false,
-                    searchFor: "folders",
-                },
-                {
-                    path: this.app.getPath("desktop"),
-                    recursive: false,
-                    searchFor: "filesAndFolders",
-                },
-            ],
+            folders: [],
         };
     }
 
