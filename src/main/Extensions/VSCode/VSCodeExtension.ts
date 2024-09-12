@@ -8,7 +8,7 @@ import type { SearchEngineId } from "@common/Core/Search";
 import { searchFilter } from "@common/Core/Search/SearchFilter";
 import Database from "better-sqlite3";
 import * as Path from "path";
-import * as URL from "url";
+import * as Url from "url";
 
 type VscodeRecent = {
     fileUri?: string;
@@ -98,7 +98,8 @@ export class VSCodeExtension implements Extension {
             img = this.getImage();
         }
 
-        const path = URL.fileURLToPath(uri);
+        const url = new URL(decodeURIComponent(uri));
+        const path = Url.fileURLToPath(url, { windows: this.operatingSystem === "Windows" });
 
         return {
             id: "vscode-" + path,
