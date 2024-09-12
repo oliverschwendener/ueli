@@ -8,7 +8,7 @@ import type { SearchEngineId } from "@common/Core/Search";
 import { searchFilter } from "@common/Core/Search/SearchFilter";
 import Database from "better-sqlite3";
 import * as Path from "path";
-import * as URL from "url";
+import * as Url from "url";
 
 type VscodeRecent = {
     fileUri?: string;
@@ -88,22 +88,18 @@ export class VSCodeExtension implements Extension {
         }
 
         let img: Image | undefined;
-        if (recent.workspace) {
-            img = this.getImage();
-        } else {
+        if (recent.fileUri) {
             try {
                 img = await this.fileImageGenerator.getImage(uri);
             } catch (e) {
-                img = this.getImage();
+                img = this.getDefaultFileImage();
             }
-        }
-
-        // Use icon for workspaces
-        if (img === undefined || recent.workspace) {
+        } else {
             img = this.getImage();
         }
 
-        const path = URL.fileURLToPath(uri);
+        const url = new URL(decodeURIComponent(uri));
+        const path = Url.fileURLToPath(url, { windows: this.operatingSystem === "Windows" });
 
         const template = this.settingsManager.getValue<string>(
             `extension[${this.id}].command`,
@@ -140,6 +136,14 @@ export class VSCodeExtension implements Extension {
 
     public getImage(): Image {
         const path = this.assetPathResolver.getExtensionAssetPath("VSCode", "vscode.png");
+
+        return {
+            url: `file://${path}`,
+        };
+    }
+
+    public getDefaultFileImage(): Image {
+        const path = this.assetPathResolver.getExtensionAssetPath("VSCode", "default-file-icon.png");
 
         return {
             url: `file://${path}`,
