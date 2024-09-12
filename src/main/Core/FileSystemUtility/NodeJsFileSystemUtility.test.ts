@@ -1,35 +1,13 @@
-import { mkdir, rm } from "fs";
+import { mkdir, rm } from "fs/promises";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { NodeJsFileSystemUtility } from "./NodeJsFileSystemUtility";
 
-const createFolder = (path: string) =>
-    new Promise<void>((resolve, reject) => {
-        mkdir(path, (error) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve();
-            }
-        });
-    });
-
-const deleteFolder = (path: string) =>
-    new Promise<void>((resolve, reject) => {
-        rm(path, { recursive: true }, (error) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve();
-            }
-        });
-    });
-
 describe(NodeJsFileSystemUtility, () => {
     const tempFolderPath = join(__dirname, "NodeJsFileSystemUtilityTest");
 
-    beforeEach(() => createFolder(tempFolderPath));
-    afterEach(() => deleteFolder(tempFolderPath));
+    beforeEach(() => mkdir(tempFolderPath));
+    afterEach(() => rm(tempFolderPath, { recursive: true }));
 
     describe(NodeJsFileSystemUtility.prototype.pathExists, () => {
         it("should return true when passing in a folder path that exists", async () => {
