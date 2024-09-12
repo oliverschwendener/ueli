@@ -101,6 +101,13 @@ export class VSCodeExtension implements Extension {
         const url = new URL(decodeURIComponent(uri));
         const path = Url.fileURLToPath(url, { windows: this.operatingSystem === "Windows" });
 
+        const template = this.settingsManager.getValue<string>(
+            `extension[${this.id}].command`,
+            this.getSettingDefaultValue("command"),
+        );
+
+        const command = template.replace("%s", path);
+
         return {
             id: "vscode-" + path,
             name: Path.basename(path),
@@ -109,7 +116,7 @@ export class VSCodeExtension implements Extension {
             defaultAction: {
                 handlerId: "Commandline",
                 description: `Open ${description} in VSCode`,
-                argument: `code ${path}`,
+                argument: command,
             },
         };
     }
@@ -121,6 +128,7 @@ export class VSCodeExtension implements Extension {
     public getSettingDefaultValue<T>(key: string) {
         const defaultSettings = {
             prefix: "vscode",
+            command: 'code "%s"',
         };
 
         return defaultSettings[key] as T;
@@ -149,6 +157,8 @@ export class VSCodeExtension implements Extension {
                 prefix: "Prefix",
                 prefixDescription:
                     "The prefix to trigger visual studio code. Open recently opened files and projects: <prefix> <command>",
+                command: "Command",
+                commandTooltip: "Use %s where the selected file/project should go in the command be sure to quote it",
             },
         };
     }
