@@ -8,13 +8,13 @@ import { NodeJsCommandlineUtility } from "./NodeJsCommandlineUtility";
 
 describe(CommandlineUtilityModule, () => {
     it("should register the NodeJsCommandlineUtility", () => {
-        const actionHandlerRegistryMock = <ActionHandlerRegistry>{
+        const actionHandlerRegistryMock: ActionHandlerRegistry = {
             register: vi.fn(),
             getAll: vi.fn(),
             getById: vi.fn(),
         };
 
-        const dependencyRegistry = <DependencyRegistry<Dependencies>>{
+        const dependencyRegistry: DependencyRegistry<Dependencies> = {
             get: vi.fn().mockReturnValue(actionHandlerRegistryMock),
             register: vi.fn(),
         };
@@ -24,8 +24,10 @@ describe(CommandlineUtilityModule, () => {
         expect(dependencyRegistry.register).toHaveBeenCalledWith("CommandlineUtility", new NodeJsCommandlineUtility());
 
         expect(dependencyRegistry.get).toBeCalledWith("ActionHandlerRegistry");
+
+        const logger = dependencyRegistry.get("Logger");
         expect(actionHandlerRegistryMock.register).toHaveBeenCalledWith(
-            new CommandlineActionHandler(new NodeJsCommandlineUtility()),
+            new CommandlineActionHandler(new NodeJsCommandlineUtility(), logger),
         );
     });
 });

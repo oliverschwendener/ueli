@@ -8,6 +8,8 @@ export class CommandlineUtilityModule {
         const commandlineUtility = new NodeJsCommandlineUtility();
 
         dependencyRegistry.register("CommandlineUtility", commandlineUtility);
-        dependencyRegistry.get("ActionHandlerRegistry").register(new CommandlineActionHandler(commandlineUtility));
+        dependencyRegistry
+            .get("ActionHandlerRegistry")
+            .register(new CommandlineActionHandler(commandlineUtility, dependencyRegistry.get("Logger")));
     }
 }
