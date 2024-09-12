@@ -247,6 +247,48 @@ describe(NodeJsFileSystemUtility, () => {
         });
     });
 
+    describe(NodeJsFileSystemUtility.prototype.readXmlFile, () => {
+        it("should read and parse XML file content", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+            const filePath = join(tempFolderPath, "file.xml");
+            const content = "<root><test>test</test></root>";
+
+            await fileSystemUtility.writeTextFile(content, filePath);
+
+            const actual = await fileSystemUtility.readXmlFile(filePath);
+
+            expect(actual).toEqual([{ root: [{ test: [{ "#text": "test" }] }] }]);
+        });
+
+        it("should throw an error if the XML file does not exist", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+            const filePath = join(tempFolderPath, "nonexistent.xml");
+
+            await expect(fileSystemUtility.readXmlFile(filePath)).rejects.toThrow();
+        });
+    });
+
+    describe(NodeJsFileSystemUtility.prototype.readXmlFileSync, () => {
+        it("should read and parse XML file content synchronously", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+            const filePath = join(tempFolderPath, "file.xml");
+            const content = "<root><test>test</test></root>";
+
+            await fileSystemUtility.writeTextFile(content, filePath);
+
+            const actual = fileSystemUtility.readXmlFileSync(filePath);
+
+            expect(actual).toEqual([{ root: [{ test: [{ "#text": "test" }] }] }]);
+        });
+
+        it("should throw an error if the XML file does not exist", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+            const filePath = join(tempFolderPath, "nonexistent.xml");
+
+            expect(() => fileSystemUtility.readXmlFileSync(filePath)).toThrow();
+        });
+    });
+
     describe(NodeJsFileSystemUtility.prototype.removeFile, () => {
         it("should remove a file at the given path", async () => {
             const fileSystemUtility = new NodeJsFileSystemUtility();
