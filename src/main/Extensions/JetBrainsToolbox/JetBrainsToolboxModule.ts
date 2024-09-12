@@ -12,6 +12,7 @@ export class JetBrainsToolboxModule implements ExtensionModule {
                 dependencyRegistry.get("AssetPathResolver"),
                 dependencyRegistry.get("SettingsManager"),
                 dependencyRegistry.get("FileSystemUtility"),
+                dependencyRegistry.get("XmlParser"),
                 dependencyRegistry.get("Translator"),
             ),
         };

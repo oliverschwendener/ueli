@@ -13,6 +13,3 @@ Supported operating systems:
 -   Windows
 -   macOS
 -   Linux
-
-> [!IMPORTANT]
-> Requires "Generate shell scripts" to be enable in JetBrains Toolbox

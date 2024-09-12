@@ -3,28 +3,38 @@ import type { Extension } from "@Core/Extension";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
+import type { XmlParser } from "@Core/XmlParser";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { SearchEngineId } from "@common/Core/Search";
 import { searchFilter } from "@common/Core/Search/SearchFilter";
-import { join } from "path";
-
-interface NativeJetBrainsToolboxRecent {
-    name: string;
-    path: string;
-    lightIcon: boolean;
-    newOpenItems: {
-        toolId: string;
-        displayName: string;
-    }[];
-}
+import { homedir } from "os";
+import { basename, dirname, join, resolve } from "path";
 
 interface JetBrainsToolboxRecent {
     name: string;
     path: string;
-    toolId: string;
     toolName: string;
-    hasIcon: boolean;
+    toolCommand: string;
+    toolIconPath: string;
+    projectIconPath?: string;
+}
+
+interface JetBrainsRecentProject {
+    application: [{ component: [{ option: [{ map: { ":@": { "@_key": string } }[] }] }] }];
+}
+
+interface JetBrainsToolboxTool {
+    channelId: string;
+    displayName: string;
+    displayVersion: string;
+    installLocation: string;
+    launchCommand: string;
+}
+
+interface JetBrainsToolboxToolProductInfo {
+    dataDirectoryName: string;
+    svgIconPath: string;
 }
 
 export class JetBrainsToolboxExtension implements Extension {
@@ -41,10 +51,16 @@ export class JetBrainsToolboxExtension implements Extension {
         githubUserName: "scomans",
     };
 
-    readonly cachePaths = {
-        Windows: process.env.LOCALAPPDATA + "/JetBrains/Toolbox/cache/",
-        macOS: process.env.HOME + "/Library/Caches/JetBrains/Toolbox/",
-        Linux: process.env.HOME + "/.cache/JetBrains/Toolbox/",
+    readonly toolboxPaths = {
+        Windows: process.env.LOCALAPPDATA + "/JetBrains/Toolbox/",
+        macOS: process.env.HOME + "/Library/Application Support/JetBrains/Toolbox/",
+        Linux: process.env.HOME + "/.local/share/JetBrains/Toolbox/",
+    };
+
+    readonly configPaths = {
+        Windows: process.env.APPDATA + "/JetBrains/",
+        macOS: process.env.HOME + "/Library/Application Support/JetBrains/",
+        Linux: process.env.HOME + "/.config/JetBrains/",
     };
 
     recents: SearchResultItem[] = [];
@@ -54,6 +70,7 @@ export class JetBrainsToolboxExtension implements Extension {
         private readonly assetPathResolver: AssetPathResolver,
         private readonly settingsManager: SettingsManager,
         private readonly fileSystemUtility: FileSystemUtility,
+        private readonly xmlParser: XmlParser,
         private readonly translator: Translator,
     ) {}
 
@@ -68,28 +85,85 @@ export class JetBrainsToolboxExtension implements Extension {
         return [];
     }
 
-    private async getRecents(): Promise<JetBrainsToolboxRecent[]> {
-        const cachePath = this.cachePaths[this.operatingSystem];
-        const projectsPath = join(cachePath, "intellij_projects.json");
+    private replaceJetbrainsVars(path: string): string {
+        return path.replace(/\$USER_HOME\$/g, homedir());
+    }
 
-        const exists = await this.fileSystemUtility.pathExists(projectsPath);
-        if (!exists) {
+    private async getToolRecentProjects(tool: JetBrainsToolboxTool): Promise<JetBrainsToolboxRecent[]> {
+        // get info about the tool
+        const productInfoPath = join(
+            tool.installLocation,
+            this.operatingSystem === "macOS" ? "Contents/Resources" : ".",
+            "product-info.json",
+        );
+        if (!(await this.fileSystemUtility.pathExists(productInfoPath))) {
             return [];
         }
+        const productInfo = await this.fileSystemUtility.readJsonFile<JetBrainsToolboxToolProductInfo>(productInfoPath);
 
-        const recents = await this.fileSystemUtility.readJsonFile<NativeJetBrainsToolboxRecent[]>(projectsPath);
+        // get recent projects
+        const recentProjectsPath = join(
+            this.configPaths[this.operatingSystem],
+            productInfo.dataDirectoryName,
+            "options/recentProjects.xml",
+        );
+        const recentProjectsExists = await this.fileSystemUtility.pathExists(recentProjectsPath);
+        if (!recentProjectsExists) {
+            return [];
+        }
+        const recentProjectFileContent = await this.fileSystemUtility.readTextFile(recentProjectsPath);
+        const recentProjects = this.xmlParser.parse<[JetBrainsRecentProject]>(recentProjectFileContent, {
+            preserveOrder: true,
+            ignoreAttributes: false,
+        });
 
-        return recents
-            .map(
-                (recent): JetBrainsToolboxRecent => ({
-                    name: recent.name,
-                    path: recent.path,
-                    toolId: recent.newOpenItems[0].toolId,
-                    toolName: recent.newOpenItems[0].displayName,
-                    hasIcon: !!recent.lightIcon,
-                }),
-            )
-            .filter((recent) => recent.toolId);
+        // get project paths
+        const projectPaths = recentProjects[0].application[0].component[0].option[0].map.map((entry) =>
+            resolve(this.replaceJetbrainsVars(entry[":@"]["@_key"])),
+        );
+
+        const projects: JetBrainsToolboxRecent[] = [];
+        for (const projectPath of projectPaths) {
+            const ideaPath = join(projectPath, ".idea");
+            if (!(await this.fileSystemUtility.pathExists(ideaPath))) {
+                continue;
+            }
+            let name: string;
+            const nameFileExists = await this.fileSystemUtility.pathExists(join(ideaPath, ".name"));
+            if (nameFileExists) {
+                name = await this.fileSystemUtility.readTextFile(join(ideaPath, ".name"));
+            } else {
+                let ideaFiles = await this.fileSystemUtility.readDirectory(ideaPath);
+                ideaFiles = ideaFiles.map((f) => basename(f));
+                name = ideaFiles.find((f) => f.endsWith(".iml"))?.replace(".iml", "");
+            }
+            const project = {
+                name,
+                path: projectPath,
+                toolName: tool.displayName,
+                toolCommand: join(tool.installLocation, tool.launchCommand),
+                toolIconPath: join(dirname(productInfoPath), productInfo.svgIconPath),
+                projectIconPath: join(ideaPath, "icon.svg"),
+            };
+            if (project.name) {
+                projects.push(project);
+            }
+        }
+        return projects;
+    }
+
+    private async getRecents(): Promise<JetBrainsToolboxRecent[]> {
+        const toolboxPaths = this.toolboxPaths[this.operatingSystem];
+        const state = await this.fileSystemUtility.readJsonFile<{
+            tools: JetBrainsToolboxTool[];
+        }>(join(toolboxPaths, "state.json"));
+
+        const recents: JetBrainsToolboxRecent[] = [];
+        for (const tool of state.tools) {
+            const recentProjects = await this.getToolRecentProjects(tool);
+            recents.push(...recentProjects);
+        }
+        return recents;
     }
 
     async getSearchItem(recent: JetBrainsToolboxRecent): Promise<SearchResultItem> {
@@ -106,7 +180,8 @@ export class JetBrainsToolboxExtension implements Extension {
             defaultAction: {
                 handlerId: "Commandline",
                 description: t("openWith", { project: recent.name, toolName: recent.toolName }),
-                argument: `${recent.toolId.toLowerCase()} ${path}`,
+                argument: `${recent.toolCommand} "${path}"`,
+                hideWindowAfterInvocation: true,
             },
         };
     }
@@ -126,12 +201,19 @@ export class JetBrainsToolboxExtension implements Extension {
     }
 
     public async getProjectImage(recent: JetBrainsToolboxRecent): Promise<Image> {
-        if (recent.hasIcon) {
-            const uri = join(recent.path, ".idea/icon.svg");
-            const exists = await this.fileSystemUtility.pathExists(uri);
-            if (!exists) {
+        if (recent.projectIconPath) {
+            const exists = await this.fileSystemUtility.pathExists(recent.projectIconPath);
+            if (exists) {
                 return {
-                    url: `file://${uri}`,
+                    url: `file://${recent.projectIconPath}`,
+                };
+            }
+        }
+        if (recent.toolIconPath) {
+            const exists = await this.fileSystemUtility.pathExists(recent.toolIconPath);
+            if (exists) {
+                return {
+                    url: `file://${recent.toolIconPath}`,
                 };
             }
         }
