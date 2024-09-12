@@ -59,6 +59,7 @@
         "@fluentui/react-icons": "^2.0.249",
         "better-sqlite3": "^11.2.1",
         "color": "^4.2.3",
+        "fast-xml-parser": "^4.5.0",
         "fuse.js": "^7.0.0",
         "fuzzysort": "^3.0.1",
         "i18next": "^23.8.1",

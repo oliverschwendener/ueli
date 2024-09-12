@@ -1,3 +1,4 @@
+import { XMLParser } from "fast-xml-parser";
 import { access, accessSync, existsSync, readFileSync, statSync, writeFileSync } from "fs";
 import { copyFile, mkdir, readdir, readFile, rm, writeFile } from "fs/promises";
 import { join } from "path";
@@ -33,6 +34,18 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
     public readJsonFileSync<T>(filePath: string): T {
         const fileContent = this.readTextFileSync(filePath);
         return JSON.parse(fileContent);
+    }
+
+    public async readXmlFile<T>(filePath: string): Promise<T> {
+        const fileContent = await this.readTextFile(filePath);
+        const parser = new XMLParser({ preserveOrder: true, ignoreAttributes: false });
+        return parser.parse(fileContent);
+    }
+
+    public readXmlFileSync<T>(filePath: string): T {
+        const fileContent = this.readTextFileSync(filePath);
+        const parser = new XMLParser({ preserveOrder: true, ignoreAttributes: false });
+        return parser.parse(fileContent);
     }
 
     public async removeFile(filePath: string): Promise<void> {
