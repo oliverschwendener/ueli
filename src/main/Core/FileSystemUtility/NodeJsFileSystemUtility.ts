@@ -1,17 +1,5 @@
-import {
-    access,
-    accessSync,
-    copyFile,
-    existsSync,
-    mkdir,
-    readFile,
-    readFileSync,
-    readdir,
-    rm,
-    statSync,
-    writeFile,
-    writeFileSync,
-} from "fs";
+import { access, accessSync, existsSync, readFileSync, statSync, writeFileSync } from "fs";
+import { copyFile, mkdir, readdir, readFile, rm, writeFile } from "fs/promises";
 import { join } from "path";
 import type { FileSystemUtility } from "./Contract";
 
@@ -33,16 +21,8 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         return new Promise((resolve) => access(fileOrFolderPath, (error) => resolve(!error)));
     }
 
-    public createFolder(folderPath: string): Promise<void> {
-        return new Promise((resolve, reject) => {
-            mkdir(folderPath, (error) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            });
-        });
+    public async createFolder(folderPath: string): Promise<void> {
+        await mkdir(folderPath, { recursive: true });
     }
 
     public async readJsonFile<T>(filePath: string): Promise<T> {
@@ -51,43 +31,20 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
     }
 
     public readJsonFileSync<T>(filePath: string): T {
-        return JSON.parse(this.readTextFileSync(filePath));
+        const fileContent = this.readTextFileSync(filePath);
+        return JSON.parse(fileContent);
     }
 
-    public removeFile(filePath: string): Promise<void> {
-        return new Promise((resolve, reject) => {
-            rm(filePath, { recursive: true }, (error) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            });
-        });
+    public async removeFile(filePath: string): Promise<void> {
+        await rm(filePath, { recursive: true });
     }
 
-    public writeTextFile(data: string, filePath: string): Promise<void> {
-        return new Promise((resolve, reject) => {
-            writeFile(filePath, data, "utf-8", (error) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            });
-        });
+    public async writeTextFile(data: string, filePath: string): Promise<void> {
+        await writeFile(filePath, data, "utf-8");
     }
 
-    public writeJsonFile<T>(data: T, filePath: string): Promise<void> {
-        return new Promise((resolve, reject) => {
-            writeFile(filePath, JSON.stringify(data), (error) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            });
-        });
+    public async writeJsonFile<T>(data: T, filePath: string): Promise<void> {
+        await this.writeTextFile(JSON.stringify(data), filePath);
     }
 
     public writeJsonFileSync<T>(data: T, filePath: string): void {
@@ -115,28 +72,12 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         }
     }
 
-    public copyFile(filePath: string, destinationFilePath: string): Promise<void> {
-        return new Promise((resolve, reject) => {
-            copyFile(filePath, destinationFilePath, (error) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            });
-        });
+    public async copyFile(filePath: string, destinationFilePath: string): Promise<void> {
+        await copyFile(filePath, destinationFilePath);
     }
 
-    public readFile(filePath: string): Promise<Buffer> {
-        return new Promise((resolve, reject) => {
-            readFile(filePath, (error, data) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(data);
-                }
-            });
-        });
+    public async readFile(filePath: string): Promise<Buffer> {
+        return await readFile(filePath);
     }
 
     public readFileSync(filePath: string): Buffer {
@@ -152,14 +93,7 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
     }
 
     public async readDirectory(folderPath: string, recursive?: boolean): Promise<string[]> {
-        return new Promise((resolve, reject) => {
-            readdir(folderPath, { recursive }, (error, fileNames: string[]) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(fileNames.map((fileName) => join(folderPath, fileName)));
-                }
-            });
-        });
+        const fileNames = await readdir(folderPath, { recursive });
+        return fileNames.map((fileName) => join(folderPath, fileName));
     }
 }
