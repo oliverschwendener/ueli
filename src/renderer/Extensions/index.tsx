@@ -8,6 +8,7 @@ import { ColorConverterSettings } from "./ColorConverter";
 import { CurrencyConversionSettings } from "./CurrencyConversion";
 import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
 import { FileSearch, FileSearchSettings } from "./FileSearch";
+import { SimpleFileSearchSettings } from "./SimpleFileSearch";
 import { TerminalLauncherSettings } from "./TerminalLauncher";
 import { VSCodeSettings } from "./VSCode";
 import { WebSearchExtension } from "./WebSearch";
@@ -52,6 +53,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         FileSearch: {
             extension: <FileSearch {...props} />,
             settings: <FileSearchSettings />,
+        },
+        SimpleFileSearch: {
+            settings: <SimpleFileSearchSettings />,
         },
         TerminalLauncher: {
             settings: <TerminalLauncherSettings />,
