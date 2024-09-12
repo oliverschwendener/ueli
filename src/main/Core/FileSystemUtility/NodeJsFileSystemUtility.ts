@@ -7,8 +7,8 @@ import {
     readFile,
     readFileSync,
     readdir,
+    rm,
     statSync,
-    unlink,
     writeFile,
     writeFileSync,
 } from "fs";
@@ -56,7 +56,7 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
 
     public removeFile(filePath: string): Promise<void> {
         return new Promise((resolve, reject) => {
-            unlink(filePath, (error) => {
+            rm(filePath, { recursive: true }, (error) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -92,18 +92,6 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
 
     public writeJsonFileSync<T>(data: T, filePath: string): void {
         return writeFileSync(filePath, JSON.stringify(data));
-    }
-
-    public writePng(buffer: Buffer, filePath: string): Promise<void> {
-        return new Promise((resolve, reject) => {
-            writeFile(filePath, buffer, (error) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            });
-        });
     }
 
     public existsSync(filePath: string): boolean {

@@ -13,7 +13,6 @@ export interface FileSystemUtility {
     writeTextFile(data: string, filePath: string): Promise<void>;
     writeJsonFile<T>(data: T, filePath: string): Promise<void>;
     writeJsonFileSync<T>(data: T, filePath: string): void;
-    writePng(buffer: Buffer, filePath: string): Promise<void>;
     existsSync(filePath: string): boolean;
     isAccessibleSync(filePath: string): boolean;
     isDirectory(filePath: string): boolean;
