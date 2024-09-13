@@ -46,4 +46,5 @@ export type Dependencies = {
     Translator?: Core.Translator;
     UeliCommandInvoker?: Core.UeliCommandInvoker;
     UrlImageGenerator?: Core.UrlImageGenerator;
+    XmlParser?: Core.XmlParser;
 };

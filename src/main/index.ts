@@ -34,6 +34,7 @@ import * as Extensions from "./Extensions";
     Core.EnvironmentVariableProviderModule.bootstrap(dependencyRegistry);
     Core.LinuxDesktopEnvironmentModule.bootstrap(dependencyRegistry);
     Core.IniFileParserModule.bootstrap(dependencyRegistry);
+    Core.XmlParserModule.bootstrap(dependencyRegistry);
     Core.EventEmitterModule.bootstrap(dependencyRegistry);
     Core.EventSubscriberModule.bootstrap(dependencyRegistry);
     Core.BrowserWindowNotifierModule.bootstrap(dependencyRegistry);
