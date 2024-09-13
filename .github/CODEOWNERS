@@ -23,6 +23,7 @@ vite.config.mts @oliverschwendener
 
 src/main/Core/IniFileParser @ke1v
 src/main/Core/LinuxDesktopEnvironment @ke1v
+src/main/Core/XmlParser @scomans
 
 # Extensions
 
