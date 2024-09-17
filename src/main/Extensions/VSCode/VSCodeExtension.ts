@@ -59,7 +59,7 @@ export class VSCodeExtension implements Extension {
                 searchResults.push(await this.getSearchItem(recent));
             } catch (error) {
                 const uri = this.getUri(recent);
-                this.logger.error("VSCODE: " + uri + " " + error);
+                this.logger.error(this.id + ": " + uri + " " + error);
             }
         }
 
