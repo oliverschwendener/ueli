@@ -3,7 +3,6 @@ import type { App } from "electron";
 import { join } from "path";
 import type { AppIconFilePathResolver } from "../AppIconFilePathResolver";
 import type { BrowserWindowConstructorOptionsProvider } from "./BrowserWindowConstructorOptionsProvider";
-import { defaultWindowSize } from "./defaultWindowSize";
 
 export class DefaultBrowserWindowConstructorOptionsProvider implements BrowserWindowConstructorOptionsProvider {
     public constructor(
@@ -13,6 +12,12 @@ export class DefaultBrowserWindowConstructorOptionsProvider implements BrowserWi
     ) {}
 
     public get(): Electron.BrowserWindowConstructorOptions {
+        const defaultWindowSize = this.settingsManager.getValue(
+            "window.defaultWindowSize",
+            { width: 600, height: 400 },
+            false,
+        );
+
         return {
             ...defaultWindowSize,
             frame: false,

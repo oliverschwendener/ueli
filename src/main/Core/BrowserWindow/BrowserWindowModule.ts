@@ -17,7 +17,6 @@ import {
     MacOsBrowserWindowConstructorOptionsProvider,
     VibrancyProvider,
     WindowsBrowserWindowConstructorOptionsProvider,
-    defaultWindowSize,
 } from "./BrowserWindowConstructorOptionsProvider";
 import { BrowserWindowCreator } from "./BrowserWindowCreator";
 import { BrowserWindowToggler } from "./BrowserWindowToggler";
@@ -66,6 +65,10 @@ export class BrowserWindowModule {
         ).create();
 
         browserWindow.setVisibleOnAllWorkspaces(settingsManager.getValue("window.visibleOnAllWorkspaces", false));
+        const defaultWindowSize = settingsManager.getValue("window.defaultWindowSize", {
+            width: 600,
+            height: 400,
+        });
 
         const browserWindowToggler = new BrowserWindowToggler(
             operatingSystem,
@@ -174,6 +177,13 @@ export class BrowserWindowModule {
         eventSubscriber.subscribe("navigateTo", ({ pathname }: { pathname: string }) => {
             browserWindowToggler.showAndFocus();
             sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
+        });
+
+        ipcMain.on("resizeWindow", (e, data) => {
+            browserWindow.setSize(data.width, data.height);
+            if (data.center) {
+                browserWindow.center();
+            }
         });
 
         ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());

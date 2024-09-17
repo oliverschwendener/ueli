@@ -9,6 +9,7 @@ import { Opacity } from "./Opacity";
 import { ScrollBehavior } from "./ScrollBehavior";
 import { ShowOnStartup } from "./ShowOnStartup";
 import { Vibrancy } from "./Vibrancy";
+import { WindowSize } from "./WindowSize";
 import { WorkspaceVisibility } from "./WorkspaceVisibility";
 
 export const Window = () => {
@@ -33,6 +34,16 @@ export const Window = () => {
             </SettingGroup>
 
             <SettingGroup title="Appearance">
+                <WindowSize
+                    lable="defaultWindowSize"
+                    setting="window.defaultWindowSize"
+                    defaultValue={{ width: 600, height: 400 }}
+                />
+                <WindowSize
+                    lable="defaultSettingsWindowSize"
+                    setting="window.defaultSettingsWindowSize"
+                    defaultValue={{ width: 800, height: 600 }}
+                />
                 {operatingSystem === "Windows" && (
                     <BackgroundMaterial
                         backgroundMaterial={backgroundMaterial}

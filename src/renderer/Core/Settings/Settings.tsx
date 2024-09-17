@@ -1,4 +1,5 @@
 import { useContextBridge } from "@Core/Hooks";
+import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router";
 import { ExtensionSettings } from "./ExtensionSettings";
 import { Navigation } from "./Navigation";
@@ -8,7 +9,26 @@ import { SettingsHeader } from "./SettingsHeader";
 export const Settings = () => {
     const { contextBridge } = useContextBridge();
     const navigate = useNavigate();
-    const closeSettings = () => navigate({ pathname: "/" });
+    const closeSettings = () => {
+        navigate({ pathname: "/" });
+        const size = contextBridge.getSettingValue("window.defaultWindowSize", { width: 600, height: 400 });
+
+        contextBridge.ipcRenderer.send("resizeWindow", {
+            center: true,
+            width: size.width,
+            height: size.height,
+        });
+    };
+
+    useEffect(() => {
+        const size = contextBridge.getSettingValue("window.defaultSettingsWindowSize", { width: 800, height: 600 });
+
+        contextBridge.ipcRenderer.send("resizeWindow", {
+            center: true,
+            width: size.width,
+            height: size.height,
+        });
+    }, []);
 
     return (
         <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>

@@ -34,12 +34,24 @@ export const App = () => {
     useI18n({ contextBridge });
     useScrollBar({ document, theme });
 
+    const setThemeBackgroundColor = (theme: Theme) => {
+        const rootNode = document.querySelector("html");
+        if (rootNode) {
+            rootNode.style.backgroundColor = theme.colorNeutralBackground1;
+        }
+    };
+
     useEffect(() => {
-        const navigateToEventHandler = (_: IpcRendererEvent, { pathname }: { pathname: string }) =>
+        setThemeBackgroundColor(theme);
+        const navigateToEventHandler = (_: IpcRendererEvent, { pathname }: { pathname: string }) => {
+            console.log(pathname);
+
             navigate({ pathname });
+        };
 
         const nativeThemeChangedEventHandler = () => {
-            setTheme(getTheme(contextBridge));
+            const theme = getTheme(contextBridge);
+            setThemeBackgroundColor(theme);
             setShouldPreferDarkColors(window.matchMedia("(prefers-color-scheme: dark)").matches);
         };
 

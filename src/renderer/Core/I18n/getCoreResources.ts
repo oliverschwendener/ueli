@@ -271,6 +271,8 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     "hideWindowOn.escapePressed": "Pressing escape key",
                     alwaysOnTop: "Always on top",
                     showOnStartup: "Show on startup",
+                    defaultWindowSize: "Default Window Size",
+                    defaultSettingsWindowSize: "Default Settings Window Size",
                     alwaysCenter: "Always center window",
                     scrollBehavior: "Scroll behavior",
                     "scrollBehavior.auto": "Auto",
