@@ -4,7 +4,6 @@ import { join } from "path";
 import { describe, expect, it, vi } from "vitest";
 import type { AppIconFilePathResolver } from "../AppIconFilePathResolver";
 import { DefaultBrowserWindowConstructorOptionsProvider } from "./DefaultBrowserWindowConstructorOptionsProvider";
-import { defaultWindowSize } from "./defaultWindowSize";
 
 describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
     describe(DefaultBrowserWindowConstructorOptionsProvider.prototype.get, () => {
@@ -18,8 +17,8 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
             expect(
                 new DefaultBrowserWindowConstructorOptionsProvider(app, settingsManager, appIconFilePathResolver).get(),
             ).toEqual(<BrowserWindowConstructorOptions>{
-                width: defaultWindowSize.width,
-                height: defaultWindowSize.height,
+                width: undefined,
+                height: undefined,
                 alwaysOnTop: undefined,
                 show: undefined,
                 frame: false,
@@ -35,6 +34,7 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
 
             expect(getValueMock).toHaveBeenCalledWith("window.showOnStartup", true);
             expect(getValueMock).toHaveBeenCalledWith("window.alwaysOnTop", false);
+            expect(getValueMock).toHaveBeenCalledWith("window.defaultWindowSize", { width: 600, height: 400 });
         });
 
         it("should allow insecure content and disable web security if app is not packaged", () => {
