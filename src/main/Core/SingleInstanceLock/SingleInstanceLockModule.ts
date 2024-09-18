@@ -1,10 +1,13 @@
-import type { App } from "electron";
+import { Dependencies } from "@Core/Dependencies";
+import { DependencyRegistry } from "@Core/DependencyRegistry";
 
 export class SingleInstanceLockModule {
-    public static bootstrap(app: App) {
-        if (!app.requestSingleInstanceLock()) {
-            console.log("Quitting application. Reason: another instance is already running");
-            app.quit();
-        }
+    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
+        const eventEmitter = dependencyRegistry.get("EventEmitter");
+        const app = dependencyRegistry.get("App");
+
+        app.on("second-instance", () => {
+            eventEmitter.emitEvent("hotkeyPressed");
+        });
     }
 }

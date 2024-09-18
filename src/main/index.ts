@@ -1,13 +1,13 @@
 import * as Electron from "electron";
-import mitt from "mitt";
-import { platform } from "os";
-import * as Core from "./Core";
-import * as Extensions from "./Extensions";
 
-(async () => {
+const main = async () => {
     await Electron.app.whenReady();
 
-    Core.SingleInstanceLockModule.bootstrap(Electron.app);
+    const mitt = (await import("mitt")).default;
+    const platform = (await import("os")).platform;
+    const Core = await import("./Core");
+    const Extensions = await import("./Extensions");
+
     Core.DockModule.bootstrap(Electron.app);
 
     const dependencyRegistry = Core.DependencyRegistryModule.bootstrap();
@@ -34,19 +34,19 @@ import * as Extensions from "./Extensions";
     Core.EnvironmentVariableProviderModule.bootstrap(dependencyRegistry);
     Core.LinuxDesktopEnvironmentModule.bootstrap(dependencyRegistry);
     Core.IniFileParserModule.bootstrap(dependencyRegistry);
-    Core.XmlParserModule.bootstrap(dependencyRegistry);
     Core.EventEmitterModule.bootstrap(dependencyRegistry);
     Core.EventSubscriberModule.bootstrap(dependencyRegistry);
+    Core.SingleInstanceLockModule.bootstrap(dependencyRegistry);
     Core.BrowserWindowNotifierModule.bootstrap(dependencyRegistry);
-    Core.DateProviderModule.bootstrap(dependencyRegistry);
-    Core.LoggerModule.bootstrap(dependencyRegistry);
     Core.ActionHandlerModule.bootstrap(dependencyRegistry);
     Core.RandomStringProviderModule.bootstrap(dependencyRegistry);
     Core.SafeStorageEncryptionModule.bootstrap(dependencyRegistry);
     Core.AssetPathResolverModule.bootstrap(dependencyRegistry);
     Core.ShellModule.bootstrap(dependencyRegistry);
     Core.ClipboardModule.bootstrap(dependencyRegistry);
+    Core.DateProviderModule.bootstrap(dependencyRegistry);
     Core.AboutUeliModule.bootstrap(dependencyRegistry);
+    Core.LoggerModule.bootstrap(dependencyRegistry);
     Core.CommandlineUtilityModule.bootstrap(dependencyRegistry);
     Core.AppleScriptUtilityModule.bootstrap(dependencyRegistry);
     Core.FileSystemUtilityModule.bootstrap(dependencyRegistry);
@@ -77,4 +77,10 @@ import * as Extensions from "./Extensions";
     await Core.BrowserWindowModule.bootstrap(dependencyRegistry);
 
     Core.RescanOrchestratorModule.bootstrap(dependencyRegistry);
-})();
+};
+
+if (Electron.app.requestSingleInstanceLock()) {
+    main();
+} else {
+    Electron.app.exit();
+}
