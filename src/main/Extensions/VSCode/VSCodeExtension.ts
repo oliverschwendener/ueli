@@ -1,6 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
+import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
@@ -9,7 +10,6 @@ import { searchFilter } from "@common/Core/Search/SearchFilter";
 import Database from "better-sqlite3";
 import * as Path from "path";
 import * as Url from "url";
-import type { Logger } from "../../Core/Logger";
 
 type VscodeRecent = {
     fileUri?: string;
