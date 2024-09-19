@@ -1,32 +1,34 @@
+import { Dependencies } from "@Core/Dependencies";
+import { DependencyRegistry } from "@Core/DependencyRegistry";
+import { EventEmitter } from "@Core/EventEmitter";
 import type { App } from "electron";
 import { describe, expect, it, vi } from "vitest";
 import { SingleInstanceLockModule } from "./SingleInstanceLockModule";
 
 describe(SingleInstanceLockModule, () => {
-    it("should request single instance lock", () => {
-        const requestSingleInstanceLockMock = vi.fn().mockReturnValue(true);
-        const quickMock = vi.fn();
+    it("should register the event listener and event emitter", () => {
+        const on = vi.fn();
+        const app = <App>{
+            on: (event: string, callback: () => void) => on(event, callback),
+        };
 
-        SingleInstanceLockModule.bootstrap(<App>{
-            requestSingleInstanceLock: () => requestSingleInstanceLockMock(),
-            quit: () => quickMock(),
-        });
+        const emitEvent = vi.fn();
+        const eventEmitter = <EventEmitter>{
+            emitEvent: (event: string) => emitEvent(event),
+        };
 
-        expect(requestSingleInstanceLockMock).toHaveBeenCalledOnce();
-        expect(quickMock).not.toHaveBeenCalled();
-    });
+        const dependencyRegistry = <DependencyRegistry<Dependencies>>{
+            get: (key: keyof Dependencies) => {
+                const result = <Dependencies>{
+                    App: app,
+                    EventEmitter: eventEmitter,
+                };
 
-    it("should quit the application if another instance is already running", () => {
-        const requestSingleInstanceLockMock = vi.fn().mockReturnValue(false);
+                return result[key];
+            },
+        };
 
-        const quickMock = vi.fn();
-
-        SingleInstanceLockModule.bootstrap(<App>{
-            requestSingleInstanceLock: () => requestSingleInstanceLockMock(),
-            quit: () => quickMock(),
-        });
-
-        expect(requestSingleInstanceLockMock).toHaveBeenCalledOnce();
-        expect(quickMock).toHaveBeenCalledOnce();
+        SingleInstanceLockModule.bootstrap(dependencyRegistry);
+        expect(on).toHaveBeenCalled();
     });
 });
