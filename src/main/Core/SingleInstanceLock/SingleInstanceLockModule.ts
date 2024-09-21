@@ -1,5 +1,5 @@
-import { Dependencies } from "@Core/Dependencies";
-import { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
 
 export class SingleInstanceLockModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {

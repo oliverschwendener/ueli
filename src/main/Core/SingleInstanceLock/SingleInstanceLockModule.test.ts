@@ -1,6 +1,6 @@
-import { Dependencies } from "@Core/Dependencies";
-import { DependencyRegistry } from "@Core/DependencyRegistry";
-import { EventEmitter } from "@Core/EventEmitter";
+import type { Dependencies } from "@Core/Dependencies";
+import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { EventEmitter } from "@Core/EventEmitter";
 import type { App } from "electron";
 import { describe, expect, it, vi } from "vitest";
 import { SingleInstanceLockModule } from "./SingleInstanceLockModule";
