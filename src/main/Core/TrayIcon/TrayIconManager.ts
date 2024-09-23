@@ -19,6 +19,7 @@ export class TrayIconManager {
 
     public async createTrayIcon() {
         this.tray = this.trayCreator.createTray(this.trayIconFilePathResolver.resolve());
+        this.tray?.setToolTip("Ueli");
         await this.updateContextMenu();
     }
 
