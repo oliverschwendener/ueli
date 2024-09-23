@@ -33,12 +33,12 @@ export class TrayIconModule {
             trayIconFilePathResolvers[operatingSystem](),
             new ContextMenuTemplateProvider(translator, ueliCommandInvoker, resources),
             new ContextMenuBuilder(),
-            nativeTheme,
-            eventSubscriber,
         );
 
         await trayIconManager.createTrayIcon();
 
-        trayIconManager.registerEventListeners();
+        nativeTheme.on("updated", () => trayIconManager.updateImage());
+
+        eventSubscriber.subscribe("settingUpdated[general.language]", () => trayIconManager.updateContextMenu());
     }
 }

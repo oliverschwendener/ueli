@@ -1,5 +1,4 @@
-import type { EventSubscriber } from "@Core/EventSubscriber";
-import type { Menu, MenuItemConstructorOptions, NativeTheme, Tray } from "electron";
+import type { Menu, MenuItemConstructorOptions, Tray } from "electron";
 import { describe, expect, it, vi } from "vitest";
 import type { ContextMenuBuilder } from "./ContextMenuBuilder";
 import type { ContextMenuTemplateProvider } from "./ContextMenuTemplateProvider";
@@ -39,8 +38,6 @@ describe(TrayIconManager, () => {
                 trayIconFilePathResolver,
                 contextMenuTemplateProvider,
                 contextMenuBuilder,
-                <NativeTheme>{},
-                <EventSubscriber>{},
             );
 
             await trayIconManager.createTrayIcon();
@@ -65,8 +62,6 @@ describe(TrayIconManager, () => {
                 <TrayIconFilePathResolver>{ resolve: () => resolveTrayIconFilePath() },
                 <ContextMenuTemplateProvider>{},
                 <ContextMenuBuilder>{},
-                <NativeTheme>{},
-                <EventSubscriber>{},
             );
 
             trayIconManager.updateImage();
@@ -83,8 +78,6 @@ describe(TrayIconManager, () => {
                 <TrayIconFilePathResolver>{ resolve: () => resolveTrayIconFilePath() },
                 <ContextMenuTemplateProvider>{},
                 <ContextMenuBuilder>{},
-                <NativeTheme>{},
-                <EventSubscriber>{},
             );
 
             trayIconManager["tray"] = <Tray>{ setImage: (i) => setImageMock(i) };
@@ -94,34 +87,6 @@ describe(TrayIconManager, () => {
             expect(resolveTrayIconFilePath).toHaveBeenCalledOnce();
             expect(setImageMock).toHaveBeenCalledOnce();
             expect(setImageMock).toHaveBeenCalledWith("test-tray-icon-file-path");
-        });
-    });
-
-    describe(TrayIconManager.prototype.registerEventListeners, () => {
-        it("should register the native theme updated event listener and the setting updated event listener", () => {
-            const onUpdatedMock = vi.fn();
-            const onMock = vi.fn().mockReturnValue({ on: onUpdatedMock });
-            const nativeTheme = <NativeTheme>{ on: (e, c) => onMock(e, c) };
-
-            const subscribeMock = vi.fn();
-            const eventSubscriber = <EventSubscriber>{ subscribe: (e, c) => subscribeMock(e, c) };
-
-            const trayIconManager = new TrayIconManager(
-                <TrayCreator>{},
-                <TrayIconFilePathResolver>{},
-                <ContextMenuTemplateProvider>{},
-                <ContextMenuBuilder>{},
-                nativeTheme,
-                eventSubscriber,
-            );
-
-            trayIconManager.registerEventListeners();
-
-            expect(onMock).toHaveBeenCalledOnce();
-            expect(onMock).toHaveBeenCalledWith("updated", expect.any(Function));
-
-            expect(subscribeMock).toHaveBeenCalledOnce();
-            expect(subscribeMock).toHaveBeenCalledWith("settingUpdated[general.language]", expect.any(Function));
         });
     });
 });
