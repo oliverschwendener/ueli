@@ -9,9 +9,15 @@ import { TrayIconManager } from "./TrayIconManager";
 
 describe(TrayIconManager, () => {
     describe(TrayIconManager.prototype.createTrayIcon, () => {
-        it("should create a tray and update the context menu", async () => {
+        it("should create a tray, set tooltip, and update the context menu", async () => {
             const setContextMenuMock = vi.fn();
-            const createTrayMock = vi.fn().mockReturnValue(<Tray>{ setContextMenu: (m) => setContextMenuMock(m) });
+            const setToolTipMock = vi.fn();
+
+            const createTrayMock = vi.fn().mockReturnValue(<Tray>{
+                setContextMenu: (m) => setContextMenuMock(m),
+                setToolTip: (t) => setToolTipMock(t),
+            });
+
             const trayCreator = <TrayCreator>{ createTray: (i) => createTrayMock(i) };
 
             const dummyTrayIconFilePath = "test-tray-icon-file-path";
@@ -44,6 +50,7 @@ describe(TrayIconManager, () => {
             expect(getContextMenuTemplateMock).toHaveBeenCalledOnce();
             expect(buildFromTemplateMock).toHaveBeenCalledOnce();
             expect(buildFromTemplateMock).toHaveBeenCalledWith(dummyContextMenuTemplate);
+            expect(setToolTipMock).toHaveBeenCalledWith("Ueli");
             expect(setContextMenuMock).toHaveBeenCalledOnce();
             expect(setContextMenuMock).toHaveBeenCalledWith(dummyMenu);
         });
