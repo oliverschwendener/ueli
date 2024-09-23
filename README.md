@@ -24,6 +24,6 @@ Download and install the app from [here](https://github.com/oliverschwendener/ue
 
 Download and install the app from [here](https://github.com/oliverschwendener/ueli/releases/latest).
 
-# Development
+# Wiki
 
-Check out the [wiki](https://github.com/oliverschwendener/ueli/wiki/Development).
+For more documentation check out the [wiki](https://github.com/oliverschwendener/ueli/wiki).
