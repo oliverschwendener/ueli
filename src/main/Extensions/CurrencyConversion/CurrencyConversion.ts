@@ -1,10 +1,12 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Extension } from "@Core/Extension";
-import type { SettingsManager } from "@Core/SettingsManager";
 import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { Extension } from "@Core/Extension";
+import type { SettingsManager } from "@Core/SettingsManager";
 import type { Net } from "electron";
+import { convert } from "./convert";
+import type { Rates } from "./Rates";
 
 export class CurrencyConversion implements Extension {
     private static readonly translationNamespace = "extension[CurrencyConversion]";
@@ -26,7 +28,7 @@ export class CurrencyConversion implements Extension {
         currencies: ["usd", "chf", "eur"],
     };
 
-    private readonly rates: Record<string, Record<string, number>>;
+    private rates: Rates;
 
     public constructor(
         private readonly settingsManager: SettingsManager,
@@ -53,16 +55,16 @@ export class CurrencyConversion implements Extension {
             }
         }
 
-        const conversionResult = this.convert({
-            value: Number(parts[0]),
-            base: parts[1],
-            target: parts[3],
-        });
+        const value = Number(parts[0]);
+        const base = parts[1];
+        const target = parts[3];
+
+        const conversionResult = convert({ value, base, target, rates: this.rates });
 
         return [
             {
                 defaultAction: SearchResultItemActionUtility.createCopyToClipboardAction({
-                    textToCopy: conversionResult.toFixed(2),
+                    textToCopy: conversionResult.result.toFixed(2),
                     description: "Currency Conversion",
                     descriptionTranslation: {
                         key: "copyToClipboard",
@@ -76,7 +78,7 @@ export class CurrencyConversion implements Extension {
                 },
                 id: `currency-conversion:instant-result`,
                 image: this.getImage(),
-                name: `${conversionResult.toFixed(2)} ${parts[3].toUpperCase()}`,
+                name: `${conversionResult.result.toFixed(2)} ${parts[3].toUpperCase()}`,
             },
         ];
     }
@@ -121,10 +123,6 @@ export class CurrencyConversion implements Extension {
 
     public getSettingKeysTriggeringRescan(): string[] {
         return [getExtensionSettingKey(this.id, "currencies")];
-    }
-
-    private convert({ value, base, target }: { value: number; base: string; target: string }): number {
-        return value * this.rates[base.toLowerCase()][target.toLowerCase()];
     }
 
     private async setRates(): Promise<void> {
