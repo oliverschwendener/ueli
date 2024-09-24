@@ -1,7 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import { createInvokeExtensionAction, createOpenUrlSearchResultAction, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { WebSearchEngine } from "./WebSearchEngine";
@@ -64,7 +64,7 @@ export class WebSearchExtension implements Extension {
         return [
             {
                 id: "webSearch:invoke",
-                defaultAction: SearchResultItemActionUtility.createInvokeExtensionAction({
+                defaultAction: createInvokeExtensionAction({
                     description: `Search ${webSearchEngine.getName()}`,
                     extensionId: this.id,
                 }),
@@ -98,7 +98,7 @@ export class WebSearchExtension implements Extension {
             ...suggestions.map(
                 (s, i) =>
                     <SearchResultItem>{
-                        defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({ url: s.url }),
+                        defaultAction: createOpenUrlSearchResultAction({ url: s.url }),
                         description: "Suggestion",
                         id: `suggestion-${i}`,
                         name: s.text,
@@ -148,7 +148,7 @@ export class WebSearchExtension implements Extension {
         webSearchEngine: WebSearchEngine,
     ): SearchResultItem {
         return {
-            defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({
+            defaultAction: createOpenUrlSearchResultAction({
                 url: webSearchEngine.getSearchUrl(searchTerm, locale),
             }),
             description: webSearchEngine.getName(),

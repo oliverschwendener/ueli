@@ -1,7 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import { createCopyToClipboardAction, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import { Calculator } from "./Calculator";
@@ -54,7 +54,7 @@ export class CalculatorExtension implements Extension {
                 },
                 id: "calculator:instantResult",
                 image: this.getImage(),
-                defaultAction: SearchResultItemActionUtility.createCopyToClipboardAction({
+                defaultAction: createCopyToClipboardAction({
                     textToCopy: result,
                     description: "Copy result to clipboard",
                     descriptionTranslation: {

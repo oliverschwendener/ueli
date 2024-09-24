@@ -1,4 +1,4 @@
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import { createOpenFileAction, type SearchResultItem } from "@common/Core";
 import type { SystemSetting } from "./SystemSetting";
 
 export class MacOsSystemSetting implements SystemSetting {
@@ -13,7 +13,7 @@ export class MacOsSystemSetting implements SystemSetting {
             id: this.getId(),
             name: this.name,
             description: "System Setting",
-            defaultAction: SearchResultItemActionUtility.createOpenFileAction({
+            defaultAction: createOpenFileAction({
                 filePath: this.filePath,
                 description: "Open System Setting",
             }),

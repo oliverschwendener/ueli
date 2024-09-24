@@ -1,4 +1,4 @@
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import { createCopyToClipboardAction, type SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
@@ -77,7 +77,7 @@ export class ColorConverterExtension implements Extension {
             .convertFromString(searchTerm)
             .filter(({ format }) => this.getEnabledColorFormats().includes(format))
             .map(({ format, value }) => ({
-                defaultAction: SearchResultItemActionUtility.createCopyToClipboardAction({
+                defaultAction: createCopyToClipboardAction({
                     textToCopy: value,
                     description: "Copy color to clipboard",
                     descriptionTranslation: {

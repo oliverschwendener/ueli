@@ -1,4 +1,4 @@
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import { createCopyToClipboardAction, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
@@ -67,7 +67,7 @@ export class CurrencyConversion implements Extension {
 
         return [
             {
-                defaultAction: SearchResultItemActionUtility.createCopyToClipboardAction({
+                defaultAction: createCopyToClipboardAction({
                     textToCopy: conversionResult.result.toFixed(2),
                     description: "Currency Conversion",
                     descriptionTranslation: {

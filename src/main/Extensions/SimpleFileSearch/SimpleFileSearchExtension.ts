@@ -1,5 +1,5 @@
 import type { OperatingSystem } from "@common/Core";
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import { createOpenFileAction, createShowItemInFileExplorerAction, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
@@ -66,11 +66,11 @@ export class SimpleFileSearchExtension implements Extension {
                     name: basename(filePath),
                     description: types[filePath] === "folder" ? t("folder") : t("file"),
                     image: images[filePath] ?? this.getDefaultIcon(),
-                    defaultAction: SearchResultItemActionUtility.createOpenFileAction({
+                    defaultAction: createOpenFileAction({
                         filePath,
                         description: types[filePath] === "folder" ? t("openFolder") : t("openFile"),
                     }),
-                    additionalActions: [SearchResultItemActionUtility.createShowItemInFileExplorerAction({ filePath })],
+                    additionalActions: [createShowItemInFileExplorerAction({ filePath })],
                 });
             }
         }

@@ -1,6 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import { createInvokeExtensionAction, createOpenUrlSearchResultAction, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import { describe, expect, it, vi } from "vitest";
@@ -78,7 +78,7 @@ describe(WebSearchExtension, () => {
 
         expect(webSearchExtension.getInstantSearchResultItems("my search term")).toEqual([
             <SearchResultItem>{
-                defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({ url: "mySearchUrl" }),
+                defaultAction: createOpenUrlSearchResultAction({ url: "mySearchUrl" }),
                 description: "searchEngine1",
                 id: "search-searchEngine1",
                 image: { url: "file://myAssetFilePath" },
@@ -174,7 +174,7 @@ describe(WebSearchExtension, () => {
 
         expect(await webSearchExtension.getSearchResultItems()).toEqual([
             <SearchResultItem>{
-                defaultAction: SearchResultItemActionUtility.createInvokeExtensionAction({
+                defaultAction: createInvokeExtensionAction({
                     description: "Search MyEngine",
                     extensionId: "WebSearch",
                 }),
@@ -216,7 +216,7 @@ describe(WebSearchExtension, () => {
 
         expect(await webSearchExtension.invoke({ searchTerm: "mySearchTerm" })).toEqual(<SearchResultItem[]>[
             {
-                defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({
+                defaultAction: createOpenUrlSearchResultAction({
                     url: "search-url-mySearchTerm-de-CH",
                 }),
                 description: "MyEngine",
@@ -225,7 +225,7 @@ describe(WebSearchExtension, () => {
                 image: { url: "file://assets/asset.png" },
             },
             {
-                defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({ url: "suggestion-url" }),
+                defaultAction: createOpenUrlSearchResultAction({ url: "suggestion-url" }),
                 description: "Suggestion",
                 id: "suggestion-0",
                 name: "suggestion-mySearchTerm-de-CH",
