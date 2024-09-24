@@ -46,14 +46,11 @@ export class CurrencyConversion implements Extension {
             () => parts.length === 2 || parts.length === 4,
             () => !isNaN(Number(parts[0])),
             () => Object.keys(this.rates).includes(parts[1].toLowerCase()),
-            () => (parts.length === 4 ? ["in", "to"].includes(parts[2].toLowerCase()) : true),
-            () => {
-                const possibleTargetCurrencies = Object.keys(this.rates[parts[1].toLowerCase()]);
-                if (parts.length === 4) {
-                    return possibleTargetCurrencies.includes(parts[3].toLowerCase());
-                }
-                return possibleTargetCurrencies.includes(this.getDefaultTargetCurrency());
-            },
+            () => parts.length === 2 || (parts.length === 4 && ["in", "to"].includes(parts[2].toLowerCase())),
+            () =>
+                Object.keys(this.rates[parts[1].toLowerCase()]).includes(
+                    parts.length === 4 ? parts[3].toLowerCase() : this.getDefaultTargetCurrency(),
+                ),
         ];
 
         for (const validator of validators) {
