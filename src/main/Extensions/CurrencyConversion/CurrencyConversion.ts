@@ -26,6 +26,7 @@ export class CurrencyConversion implements Extension {
 
     private readonly defaultSettings = {
         currencies: ["usd", "chf", "eur"],
+        defaultTargetCurrency: "eur",
     };
 
     private rates: Rates;
@@ -42,11 +43,14 @@ export class CurrencyConversion implements Extension {
         const parts = searchTerm.trim().split(" ");
 
         const validators = [
-            () => parts.length === 4,
+            () => parts.length === 2 || parts.length === 4,
             () => !isNaN(Number(parts[0])),
             () => Object.keys(this.rates).includes(parts[1].toLowerCase()),
-            () => ["in", "to"].includes(parts[2].toLowerCase()),
-            () => Object.keys(this.rates[parts[1].toLowerCase()]).includes(parts[3].toLowerCase()),
+            () => parts.length === 2 || (parts.length === 4 && ["in", "to"].includes(parts[2].toLowerCase())),
+            () =>
+                Object.keys(this.rates[parts[1].toLowerCase()]).includes(
+                    parts.length === 4 ? parts[3].toLowerCase() : this.getDefaultTargetCurrency(),
+                ),
         ];
 
         for (const validator of validators) {
@@ -57,7 +61,7 @@ export class CurrencyConversion implements Extension {
 
         const value = Number(parts[0]);
         const base = parts[1];
-        const target = parts[3];
+        const target = parts.length === 4 ? parts[3].toLowerCase() : this.getDefaultTargetCurrency();
 
         const conversionResult = convert({ value, base, target, rates: this.rates });
 
@@ -78,7 +82,7 @@ export class CurrencyConversion implements Extension {
                 },
                 id: `currency-conversion:instant-result`,
                 image: this.getImage(),
-                name: `${conversionResult.result.toFixed(2)} ${parts[3].toUpperCase()}`,
+                name: `${conversionResult.result.toFixed(2)} ${target.toUpperCase()}`,
             },
         ];
     }
@@ -107,6 +111,7 @@ export class CurrencyConversion implements Extension {
             "en-US": {
                 extensionName: "Currency Conversion",
                 currencies: "Currencies",
+                defaultTargetCurrency: "Default Target Currency",
                 selectCurrencies: "Select currencies",
                 copyToClipboard: "Copy to clipboard",
                 currencyConversion: "Currency Conversion",
@@ -114,6 +119,7 @@ export class CurrencyConversion implements Extension {
             "de-CH": {
                 extensionName: "Währungsumrechnung",
                 currencies: "Währungen",
+                defaultTargetCurrency: "Standard-Zielwährung",
                 selectCurrencies: "Währungen wählen",
                 copyToClipboard: "In Zwischenablage kopieren",
                 currencyConversion: "Währungsumrechnung",
@@ -122,7 +128,10 @@ export class CurrencyConversion implements Extension {
     }
 
     public getSettingKeysTriggeringRescan(): string[] {
-        return [getExtensionSettingKey(this.id, "currencies")];
+        return [
+            getExtensionSettingKey(this.id, "currencies"),
+            getExtensionSettingKey(this.id, "defaultTargetCurrency"),
+        ];
     }
 
     private async setRates(): Promise<void> {
@@ -142,5 +151,12 @@ export class CurrencyConversion implements Extension {
         const responseJson = await response.json();
 
         this.rates[currency] = responseJson[currency];
+    }
+
+    private getDefaultTargetCurrency(): string {
+        return this.settingsManager.getValue<string>(
+            getExtensionSettingKey(this.id, "defaultTargetCurrency"),
+            this.getSettingDefaultValue<string>("defaultTargetCurrency"),
+        );
     }
 }
