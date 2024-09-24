@@ -4,7 +4,12 @@ import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
-import { SearchResultItemActionUtility, type OperatingSystem, type SearchResultItem } from "@common/Core";
+import {
+    createInvokeExtensionAction,
+    createOpenFileAction,
+    type OperatingSystem,
+    type SearchResultItem,
+} from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { App } from "electron";
@@ -46,7 +51,7 @@ export class FileSearch implements Extension {
 
         return [
             {
-                defaultAction: SearchResultItemActionUtility.createInvokeExtensionAction({
+                defaultAction: createInvokeExtensionAction({
                     extensionId: this.id,
                     description: "Search files",
                 }),
@@ -110,7 +115,7 @@ export class FileSearch implements Extension {
                 this.fileSystemUtility.isAccessibleSync(filePath) && this.fileSystemUtility.isDirectory(filePath);
 
             return {
-                defaultAction: SearchResultItemActionUtility.createOpenFileAction({
+                defaultAction: createOpenFileAction({
                     filePath,
                     description: `Open ${isDirectory ? "Folder" : "File"}`,
                 }),
