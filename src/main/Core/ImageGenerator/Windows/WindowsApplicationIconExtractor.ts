@@ -15,11 +15,8 @@ export class WindowsApplicationIconExtractor implements FileIconExtractor {
     ) {}
 
     public matchesFilePath(filePath: string) {
-        return (
-            filePath.endsWith(".lnk") ||
-            filePath.endsWith(".url") ||
-            filePath.endsWith(".appref-ms") ||
-            filePath.endsWith(".exe")
+        return [".lnk", ".url", ".appref-ms", ".exe"].some((fileExtension) =>
+            filePath.toLowerCase().endsWith(fileExtension),
         );
     }
 
