@@ -10,7 +10,6 @@ import { Setting } from "../../Setting";
 import { SettingGroup } from "../../SettingGroup";
 import { SettingGroupList } from "../../SettingGroupList";
 import { ThemeOption } from "../ThemeOption";
-import { DockSettings } from "./DockSettings";
 import { KeyboardShortcuts } from "./KeyboardShortcuts";
 import { SearchBarSettings } from "./SearchBarSettings";
 
@@ -71,7 +70,6 @@ export const Appearance = () => {
         <SettingGroupList>
             <SearchBarSettings />
             <KeyboardShortcuts />
-            {contextBridge.getOperatingSystem() === "macOS" && <DockSettings />}
             <SettingGroup title="Colors">
                 <Setting
                     label={t("themeName")}
