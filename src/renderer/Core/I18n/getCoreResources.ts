@@ -55,6 +55,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     searchHistoryEnabledDescription: "The search history lets you see your previous searches",
                     searchHistoryLimit: "Search History Limit",
                     searchHistoryLimitHint: "Limits the maximum number of search history items",
+                    showAppIconInDock: "Show app icon in dock",
                 },
                 "de-CH": {
                     title: "Allgemein",
@@ -70,6 +71,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     searchHistoryEnabledDescription: "Der Suchverlauf zeigt dir deine vorherigen Suchen",
                     searchHistoryLimit: "Suchverlauf Limit",
                     searchHistoryLimitHint: "Begrenzt die maximale Anzahl an Suchverlaufseinträgen",
+                    showAppIconInDock: "App-Symbol im Dock anzeigen",
                 },
             },
         },
