@@ -15,9 +15,6 @@ export class DockModule {
     }
 
     private static toggleAppIconInDock(app: Electron.App, value: boolean) {
-        console.log("toggleAppIconInDock", value);
-        console.log("toggleAppIconInDock", value);
-        console.log("toggleAppIconInDock", value);
         if (value) {
             app.dock?.show();
         } else {
