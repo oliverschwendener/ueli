@@ -5,8 +5,7 @@ import { Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const DockSettings = () => {
-    const ns = "settingsAppearance";
-    const { t } = useTranslation();
+    const { t } = useTranslation("settingsAppearance");
 
     const { contextBridge } = useContextBridge();
 
@@ -21,9 +20,9 @@ export const DockSettings = () => {
     };
 
     return (
-        <SettingGroup title={t("dock", { ns })}>
+        <SettingGroup title={t("dock")}>
             <Setting
-                label={t("showAppIconInDock", { ns })}
+                label={t("showAppIconInDock")}
                 control={
                     <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
                         <Switch
