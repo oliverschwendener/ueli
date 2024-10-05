@@ -54,6 +54,7 @@ import * as Extensions from "./Extensions";
     Core.SettingsReaderModule.bootstrap(dependencyRegistry);
     Core.SettingsWriterModule.bootstrap(dependencyRegistry);
     Core.SettingsManagerModule.bootstrap(dependencyRegistry);
+    Core.DockModule.bootstrap(dependencyRegistry);
     await Core.ImageGeneratorModule.bootstrap(dependencyRegistry);
     Core.TranslatorModule.bootstrap(dependencyRegistry);
     Core.SearchIndexModule.bootstrap(dependencyRegistry);
@@ -67,7 +68,6 @@ import * as Extensions from "./Extensions";
     Core.DialogModule.bootstrap(dependencyRegistry);
     Core.TerminalModule.bootstrap(dependencyRegistry);
     Core.ExtensionRegistryModule.bootstrap(dependencyRegistry);
-    Core.DockModule.bootstrap(dependencyRegistry);
 
     // Extensions
     Extensions.ExtensionLoader.bootstrap(dependencyRegistry);
