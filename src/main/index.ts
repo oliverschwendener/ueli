@@ -1,13 +1,13 @@
 import * as Electron from "electron";
-import mitt from "mitt";
-import { platform } from "os";
-import * as Core from "./Core";
-import * as Extensions from "./Extensions";
 
-(async () => {
+const main = async () => {
     await Electron.app.whenReady();
 
-    Core.SingleInstanceLockModule.bootstrap(Electron.app);
+    const mitt = (await import("mitt")).default;
+    const platform = (await import("os")).platform;
+    const Core = await import("./Core");
+    const Extensions = await import("./Extensions");
+
     Core.DockModule.bootstrap(Electron.app);
 
     const dependencyRegistry = Core.DependencyRegistryModule.bootstrap();
@@ -37,6 +37,7 @@ import * as Extensions from "./Extensions";
     Core.XmlParserModule.bootstrap(dependencyRegistry);
     Core.EventEmitterModule.bootstrap(dependencyRegistry);
     Core.EventSubscriberModule.bootstrap(dependencyRegistry);
+    Core.SingleInstanceLockModule.bootstrap(dependencyRegistry);
     Core.BrowserWindowNotifierModule.bootstrap(dependencyRegistry);
     Core.DateProviderModule.bootstrap(dependencyRegistry);
     Core.LoggerModule.bootstrap(dependencyRegistry);
@@ -77,4 +78,10 @@ import * as Extensions from "./Extensions";
     await Core.BrowserWindowModule.bootstrap(dependencyRegistry);
 
     Core.RescanOrchestratorModule.bootstrap(dependencyRegistry);
-})();
+};
+
+if (Electron.app.requestSingleInstanceLock()) {
+    main();
+} else {
+    Electron.app.exit();
+}
