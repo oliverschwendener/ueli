@@ -14,8 +14,8 @@ export class DockModule {
         });
     }
 
-    private static toggleAppIconInDock(app: Electron.App, value: boolean) {
-        if (value) {
+    private static toggleAppIconInDock(app: Electron.App, showAppIconInDock: boolean) {
+        if (showAppIconInDock) {
             app.dock?.show();
         } else {
             app.dock?.hide();
