@@ -1,4 +1,3 @@
-import type { ContextBridge } from "@common/Core";
 import { useContextBridge, useSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { Switch } from "@fluentui/react-components";
@@ -6,20 +5,22 @@ import { useTranslation } from "react-i18next";
 
 /**
  * This is a wrapper component around the DockSettingsContent component
- * to avoid using the contextBridge for the OS check in the GeneralSettings component.
+ * to avoid using the contextBridge hook for the OS check in the GeneralSettings component.
  */
 export const DockSettings = () => {
-    const { contextBridge } = useContextBridge();
-    if (contextBridge.getOperatingSystem() !== "macOS") {
+    const {
+        contextBridge: { getOperatingSystem },
+    } = useContextBridge();
+    if (getOperatingSystem() !== "macOS") {
         return null;
     }
 
-    // TODO(benjamin-kraatz): is that a good idea?
-    return <DockSettingsContent contextBridge={contextBridge} />;
+    return <DockSettingsContent />;
 };
 
-const DockSettingsContent = ({ contextBridge }: { contextBridge: ContextBridge }) => {
+const DockSettingsContent = () => {
     const { t } = useTranslation("settingsGeneral");
+    const { contextBridge } = useContextBridge();
 
     const { value: showAppIconInDock, updateValue: setShowAppIconInDock } = useSetting<boolean>({
         key: "appearance.showAppIconInDock",
