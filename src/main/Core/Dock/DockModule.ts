@@ -8,13 +8,13 @@ export class DockModule {
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
 
         const setAppIconVisibility = () => {
-            const showAppIconInDock = settingsManager.getValue("appearance.showAppIconInDock", false);
-            if (showAppIconInDock) {
+            if (settingsManager.getValue("appearance.showAppIconInDock", false)) {
                 app.dock?.show();
             } else {
                 app.dock?.hide();
             }
         };
+
         setAppIconVisibility();
 
         eventSubscriber.subscribe("settingUpdated[appearance.showAppIconInDock]", setAppIconVisibility);
