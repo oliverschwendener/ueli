@@ -8,7 +8,6 @@ import * as Extensions from "./Extensions";
     await Electron.app.whenReady();
 
     Core.SingleInstanceLockModule.bootstrap(Electron.app);
-    Core.DockModule.bootstrap(Electron.app);
 
     const dependencyRegistry = Core.DependencyRegistryModule.bootstrap();
 
@@ -68,6 +67,7 @@ import * as Extensions from "./Extensions";
     Core.DialogModule.bootstrap(dependencyRegistry);
     Core.TerminalModule.bootstrap(dependencyRegistry);
     Core.ExtensionRegistryModule.bootstrap(dependencyRegistry);
+    Core.DockModule.bootstrap(dependencyRegistry);
 
     // Extensions
     Extensions.ExtensionLoader.bootstrap(dependencyRegistry);

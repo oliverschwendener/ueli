@@ -102,6 +102,8 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     customThemeLightShades: "Light shades",
                     customThemeLightShadesHint: "Colors used in the dark theme",
                     customThemeReset: "Reset",
+                    dock: "Dock",
+                    showAppIconInDock: "Show app icon in dock",
                 },
                 "de-CH": {
                     title: "Erscheinungsbild",
@@ -129,6 +131,8 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     customThemeLightShades: "Helle Farben",
                     customThemeLightShadesHint: "Farben, die im dunklen Farbschema verwendet werden",
                     customThemeReset: "Zurücksetzen",
+                    dock: "Dock",
+                    showAppIconInDock: "App-Symbol im Dock anzeigen",
                 },
             },
         },
