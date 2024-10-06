@@ -19,7 +19,11 @@ export const Settings = () => {
     };
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", height: "100%" }} onKeyDown={handleKeyDownEvent} tabIndex={-1}>
+        <div
+            style={{ display: "flex", flexDirection: "column", height: "100%" }}
+            onKeyDown={handleKeyDownEvent}
+            tabIndex={-1}
+        >
             <div style={{ flexShrink: 0 }}>
                 <SettingsHeader onCloseSettingsClicked={closeSettings} />
             </div>
