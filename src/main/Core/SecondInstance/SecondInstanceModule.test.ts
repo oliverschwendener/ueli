@@ -3,13 +3,17 @@ import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { EventEmitter } from "@Core/EventEmitter";
 import type { App } from "electron";
 import { describe, expect, it, vi } from "vitest";
-import { SingleInstanceLockModule } from "./SingleInstanceLockModule";
+import { SecondInstanceModule } from "./SecondInstanceModule";
 
-describe(SingleInstanceLockModule, () => {
+describe(SecondInstanceModule, () => {
     it("should register the event listener and event emitter", () => {
-        const on = vi.fn();
+        const createEvent = vi.fn();
+        let eventCallback: () => void;
         const app = <App>{
-            on: (event: string, callback: () => void) => on(event, callback),
+            on: (event: string, callback: () => void) => {
+                createEvent(event);
+                eventCallback = callback;
+            },
         };
 
         const emitEvent = vi.fn();
@@ -28,7 +32,12 @@ describe(SingleInstanceLockModule, () => {
             },
         };
 
-        SingleInstanceLockModule.bootstrap(dependencyRegistry);
-        expect(on).toHaveBeenCalled();
+        SecondInstanceModule.bootstrap(dependencyRegistry);
+        expect(createEvent).toBeCalledWith("second-instance");
+        // The event shouldn't be emitted on bootstrap
+        expect(emitEvent).toHaveBeenCalledTimes(0);
+        // Simulate a 'second-instance' event
+        eventCallback();
+        expect(emitEvent).toHaveBeenCalledOnce();
     });
 });

@@ -8,6 +8,7 @@ import { HideWindowOn } from "./HideWindowOn";
 import { Opacity } from "./Opacity";
 import { ScrollBehavior } from "./ScrollBehavior";
 import { ShowOnStartup } from "./ShowOnStartup";
+import { ToggleOnSecondInstance } from "./ToggleOnSecondInstance";
 import { Vibrancy } from "./Vibrancy";
 import { WorkspaceVisibility } from "./WorkspaceVisibility";
 
@@ -30,6 +31,7 @@ export const Window = () => {
                 <HideWindowOn />
                 <ScrollBehavior />
                 {["macOS", "Linux"].includes(operatingSystem) && <WorkspaceVisibility />}
+                <ToggleOnSecondInstance />
             </SettingGroup>
 
             <SettingGroup title="Appearance">

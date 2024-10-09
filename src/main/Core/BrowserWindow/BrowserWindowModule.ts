@@ -141,6 +141,9 @@ export class BrowserWindowModule {
                 .getValue("window.hideWindowOn", BrowserWindowModule.DefaultHideWindowOnOptions)
                 .includes("escapePressed");
 
+        const shouldToggleWindowOnSecondInstance = () =>
+            settingsManager.getValue("window.toggleOnSecondInstance", true);
+
         eventSubscriber.subscribe(
             "actionInvoked",
             ({ action }: { action: SearchResultItemAction }) =>
@@ -149,6 +152,13 @@ export class BrowserWindowModule {
 
         eventSubscriber.subscribe("hotkeyPressed", () =>
             browserWindowToggler.toggle(windowBoundsMemory.getBoundsNearestToCursor()),
+        );
+
+        eventSubscriber.subscribe(
+            "secondInstanceLaunched",
+            () =>
+                shouldToggleWindowOnSecondInstance() &&
+                browserWindowToggler.toggle(windowBoundsMemory.getBoundsNearestToCursor()),
         );
 
         eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {

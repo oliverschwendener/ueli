@@ -1,6 +1,10 @@
 import * as Electron from "electron";
 
-const main = async () => {
+if (!Electron.app.requestSingleInstanceLock()) {
+    Electron.app.exit();
+}
+
+(async () => {
     await Electron.app.whenReady();
 
     const mitt = (await import("mitt")).default;
@@ -37,7 +41,7 @@ const main = async () => {
     Core.XmlParserModule.bootstrap(dependencyRegistry);
     Core.EventEmitterModule.bootstrap(dependencyRegistry);
     Core.EventSubscriberModule.bootstrap(dependencyRegistry);
-    Core.SingleInstanceLockModule.bootstrap(dependencyRegistry);
+    Core.SecondInstanceModule.bootstrap(dependencyRegistry);
     Core.BrowserWindowNotifierModule.bootstrap(dependencyRegistry);
     Core.DateProviderModule.bootstrap(dependencyRegistry);
     Core.LoggerModule.bootstrap(dependencyRegistry);
@@ -78,10 +82,4 @@ const main = async () => {
     await Core.BrowserWindowModule.bootstrap(dependencyRegistry);
 
     Core.RescanOrchestratorModule.bootstrap(dependencyRegistry);
-};
-
-if (Electron.app.requestSingleInstanceLock()) {
-    main();
-} else {
-    Electron.app.exit();
-}
+})();
