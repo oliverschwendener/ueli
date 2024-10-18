@@ -1,4 +1,5 @@
 import { useContextBridge } from "@Core/Hooks";
+import type { KeyboardEvent } from "react";
 import { Route, Routes, useNavigate } from "react-router";
 import { ExtensionSettings } from "./ExtensionSettings";
 import { Navigation } from "./Navigation";
@@ -10,8 +11,19 @@ export const Settings = () => {
     const navigate = useNavigate();
     const closeSettings = () => navigate({ pathname: "/" });
 
+    const handleKeyDownEvent = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            closeSettings();
+        }
+    };
+
     return (
-        <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+        <div
+            style={{ display: "flex", flexDirection: "column", height: "100%" }}
+            onKeyDown={handleKeyDownEvent}
+            tabIndex={-1}
+        >
             <div style={{ flexShrink: 0 }}>
                 <SettingsHeader onCloseSettingsClicked={closeSettings} />
             </div>

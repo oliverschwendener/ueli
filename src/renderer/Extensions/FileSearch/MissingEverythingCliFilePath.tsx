@@ -3,6 +3,7 @@ import type { ExtensionProps } from "@Core/ExtensionProps";
 import { Header } from "@Core/Header";
 import { Button, Field, Input, Text } from "@fluentui/react-components";
 import { ArrowLeftRegular } from "@fluentui/react-icons";
+import type { KeyboardEvent } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -17,6 +18,13 @@ export const MissingEverythingCliFilePath = ({
     const [temporaryEsFilePath, setTemporaryEsCliFilePath] = useState<string>("");
 
     const temporaryEsFilePathExists = contextBridge.fileExists(temporaryEsFilePath);
+
+    const handleKeyDownEvent = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            goBack();
+        }
+    };
 
     return (
         <BaseLayout
@@ -55,6 +63,7 @@ export const MissingEverythingCliFilePath = ({
                     </Button>
                 </div>
             }
+            keyDownEvent={handleKeyDownEvent}
         />
     );
 };
