@@ -38,7 +38,7 @@ export class SystemSettingsExtension implements Extension {
 
     public getImage(): Image {
         const filenames: Record<OperatingSystem, string> = {
-            Linux: null, // not supported,
+            Linux: "", // not supported,
             macOS: "macos-system-settings.png",
             Windows: "windows-11-settings.png",
         };

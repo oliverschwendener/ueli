@@ -6,6 +6,7 @@ import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { ColorConverter } from "./ColorConverter";
+import type { Settings } from "./Settings";
 
 export class ColorConverterExtension implements Extension {
     public readonly id = "ColorConverter";
@@ -22,7 +23,7 @@ export class ColorConverterExtension implements Extension {
         githubUserName: "oliverschwendener",
     };
 
-    private readonly defaultSettings = {
+    private readonly defaultSettings: Settings = {
         formats: ["HEX", "HSL", "RGB"],
     };
 
@@ -41,7 +42,7 @@ export class ColorConverterExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue(key: string) {
+    public getSettingDefaultValue(key: keyof Settings) {
         return this.defaultSettings[key];
     }
 

@@ -12,7 +12,7 @@ export class MacOsBrowserWindowConstructorOptionsProvider implements BrowserWind
         return {
             ...this.defaultOptions,
             ...{
-                vibrancy: this.vibrancyProvider.get(),
+                vibrancy: this.vibrancyProvider.get() ?? undefined,
                 backgroundColor: "rgba(0,0,0,0)",
             },
         };

@@ -64,7 +64,7 @@ export class DeeplTranslatorExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue(key: string) {
+    public getSettingDefaultValue(key: keyof Settings) {
         return this.defaultSettings[key];
     }
 

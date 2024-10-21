@@ -6,6 +6,7 @@ import type { Translator } from "@Core/Translator";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { ActionArgument } from "./ActionArgument";
+import type { Settings } from "./Settings";
 
 export class TerminalLauncherExtension implements Extension {
     public readonly id = "TerminalLauncher";
@@ -38,8 +39,8 @@ export class TerminalLauncherExtension implements Extension {
         return ["macOS", "Windows"].includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue(key: string) {
-        const defaultSettings = {
+    public getSettingDefaultValue(key: keyof Settings) {
+        const defaultSettings: Settings = {
             prefix: ">",
             terminalIds: this.terminalRegistry
                 .getAll()
@@ -108,7 +109,7 @@ export class TerminalLauncherExtension implements Extension {
     private getPrefix(): string {
         return this.settingsManager.getValue<string>(
             `extension[${this.id}].prefix`,
-            this.getSettingDefaultValue("prefix"),
+            <string>this.getSettingDefaultValue("prefix"),
         );
     }
 
@@ -125,7 +126,9 @@ export class TerminalLauncherExtension implements Extension {
 
     private getEnabledTerminalIds(): string[] {
         return this.settingsManager
-            .getValue<string[]>(`extension[${this.id}].terminalIds`, this.getSettingDefaultValue("terminalIds"))
+            .getValue<
+                string[]
+            >(`extension[${this.id}].terminalIds`, <string[]>this.getSettingDefaultValue("terminalIds"))
             .filter((terminalId) =>
                 this.terminalRegistry
                     .getAll()

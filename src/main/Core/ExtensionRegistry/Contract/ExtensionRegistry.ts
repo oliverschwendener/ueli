@@ -9,7 +9,7 @@ export interface ExtensionRegistry {
      * @param extension The extension to register.
      * @throws If an extension with the same ID is already registered.
      */
-    register(extension: Extension);
+    register(extension: Extension): void;
 
     /**
      * Gets an extension by its ID.

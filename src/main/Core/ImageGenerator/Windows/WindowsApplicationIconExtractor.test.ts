@@ -1,10 +1,20 @@
+import type { FileSystemUtility } from "@Core/FileSystemUtility";
+import type { PowershellUtility } from "@Core/PowershellUtility";
 import { describe, expect, it } from "vitest";
+import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";
 import { WindowsApplicationIconExtractor } from "./WindowsApplicationIconExtractor";
 
 describe(WindowsApplicationIconExtractor, () => {
     describe(WindowsApplicationIconExtractor.prototype.matchesFilePath, () => {
         const testMatchesFilePath = ({ filePath, expected }: { filePath: string; expected: boolean }) =>
-            expect(new WindowsApplicationIconExtractor(null, null, null, "").matchesFilePath(filePath)).toBe(expected);
+            expect(
+                new WindowsApplicationIconExtractor(
+                    <FileSystemUtility>{},
+                    <PowershellUtility>{},
+                    <CacheFileNameGenerator>{},
+                    "",
+                ).matchesFilePath(filePath),
+            ).toBe(expected);
 
         it("should return true when file path ends with .lnk, .url, .appref-ms, .exe", () => {
             const filePaths = [

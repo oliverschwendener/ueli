@@ -10,6 +10,7 @@ import { searchFilter } from "@common/Core/Search/SearchFilter";
 import Database from "better-sqlite3";
 import * as Path from "path";
 import * as Url from "url";
+import type { Settings } from "./Settings";
 
 type VscodeRecent = {
     fileUri?: string;
@@ -150,8 +151,8 @@ export class VSCodeExtension implements Extension {
         return ["macOS", "Linux", "Windows"].includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue(key: string) {
-        const defaultSettings = {
+    public getSettingDefaultValue(key: keyof Settings) {
+        const defaultSettings: Settings = {
             prefix: "vscode",
             command: 'code "%s"',
         };

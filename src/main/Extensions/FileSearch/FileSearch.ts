@@ -15,6 +15,7 @@ import type { Image } from "@common/Core/Image";
 import type { App } from "electron";
 import { basename } from "path";
 import type { FileSearcher } from "./FileSearcher";
+import type { Settings } from "./Settings";
 
 export class FileSearch implements Extension {
     public readonly id = "FileSearch";
@@ -30,7 +31,7 @@ export class FileSearch implements Extension {
         githubUserName: "oliverschwendener",
     };
 
-    private readonly defaultSettings = {
+    private readonly defaultSettings: Settings = {
         maxSearchResultCount: 20,
         everythingCliFilePath: "",
     };
@@ -67,15 +68,15 @@ export class FileSearch implements Extension {
         return this.operatingSystem == "macOS" || this.operatingSystem === "Windows";
     }
 
-    public getSettingDefaultValue(key: string) {
+    public getSettingDefaultValue(key: keyof Settings) {
         return this.defaultSettings[key];
     }
 
     public getImage(): Image {
         const fileNames: Record<OperatingSystem, string> = {
-            Linux: null, // Currently not supported,
+            Linux: "", // Currently not supported,
             macOS: "macos-folder-icon.png",
-            Windows: "macos-folder-icon.png", // Currently not supported,
+            Windows: "macos-folder-icon.png",
         };
 
         return {

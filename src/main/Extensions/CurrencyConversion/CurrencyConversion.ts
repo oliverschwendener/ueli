@@ -7,6 +7,7 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { Net } from "electron";
 import { convert } from "./convert";
 import type { Rates } from "./Rates";
+import type { Settings } from "./Settings";
 
 export class CurrencyConversion implements Extension {
     private static readonly translationNamespace = "extension[CurrencyConversion]";
@@ -24,7 +25,7 @@ export class CurrencyConversion implements Extension {
         githubUserName: "oliverschwendener",
     };
 
-    private readonly defaultSettings = {
+    private readonly defaultSettings: Settings = {
         currencies: ["usd", "chf", "eur"],
         defaultTargetCurrency: "eur",
     };
@@ -96,7 +97,7 @@ export class CurrencyConversion implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue(key: string) {
+    public getSettingDefaultValue(key: keyof Settings) {
         return this.defaultSettings[key];
     }
 

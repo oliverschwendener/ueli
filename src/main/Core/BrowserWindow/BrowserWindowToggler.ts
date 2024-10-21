@@ -55,7 +55,7 @@ export class BrowserWindowToggler {
         this.browserWindow.webContents.send("windowFocused");
     }
 
-    private repositionWindow(bounds: Rectangle): void {
+    private repositionWindow(bounds?: Rectangle): void {
         this.browserWindow.setBounds(bounds ?? this.defaultSize);
 
         if (!bounds || this.alwaysCenter()) {

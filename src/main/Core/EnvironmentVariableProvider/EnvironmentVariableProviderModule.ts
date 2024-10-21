@@ -4,6 +4,9 @@ import { EnvironmentVariableProvider } from "./EnvironmentVariableProvider";
 
 export class EnvironmentVariableProviderModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): void {
-        dependencyRegistry.register("EnvironmentVariableProvider", new EnvironmentVariableProvider(process.env));
+        dependencyRegistry.register(
+            "EnvironmentVariableProvider",
+            new EnvironmentVariableProvider(<Record<string, string>>process.env),
+        );
     }
 }

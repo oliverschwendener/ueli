@@ -57,7 +57,7 @@ export class SimpleFileSearchExtension implements Extension {
             const folderSetting = folderSettings.find(({ id }) => id === folderSettingId);
 
             for (const filePath of filePathsGroupedByFolderSettingId[folderSettingId]) {
-                if (!this.shouldIncludeFilePath(types[filePath], folderSetting.searchFor)) {
+                if (!folderSetting || !this.shouldIncludeFilePath(types[filePath], folderSetting.searchFor)) {
                     continue;
                 }
 
@@ -137,7 +137,7 @@ export class SimpleFileSearchExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue(key: string) {
+    public getSettingDefaultValue(key: keyof Settings) {
         return this.getDefaultSettings()[key];
     }
 

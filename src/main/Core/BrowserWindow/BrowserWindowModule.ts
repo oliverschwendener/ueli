@@ -141,11 +141,11 @@ export class BrowserWindowModule {
                 .getValue("window.hideWindowOn", BrowserWindowModule.DefaultHideWindowOnOptions)
                 .includes("escapePressed");
 
-        eventSubscriber.subscribe(
-            "actionInvoked",
-            ({ action }: { action: SearchResultItemAction }) =>
-                shouldHideWindowAfterInvocation(action) && browserWindowToggler.hide(),
-        );
+        eventSubscriber.subscribe("actionInvoked", ({ action }: { action: SearchResultItemAction }) => {
+            if (shouldHideWindowAfterInvocation(action)) {
+                browserWindowToggler.hide();
+            }
+        });
 
         eventSubscriber.subscribe("hotkeyPressed", () =>
             browserWindowToggler.toggle(windowBoundsMemory.getBoundsNearestToCursor()),
@@ -160,7 +160,11 @@ export class BrowserWindowModule {
         });
 
         eventSubscriber.subscribe("settingUpdated[window.backgroundMaterial]", () => {
-            browserWindow.setBackgroundMaterial(backgroundMaterialProvider.get());
+            const backgroundMaterial = backgroundMaterialProvider.get();
+
+            if (backgroundMaterial) {
+                browserWindow.setBackgroundMaterial(backgroundMaterial);
+            }
         });
 
         eventSubscriber.subscribe("settingUpdated[window.vibrancy]", () => {

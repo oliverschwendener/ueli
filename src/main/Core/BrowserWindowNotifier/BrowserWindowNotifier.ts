@@ -2,7 +2,7 @@ import type { BrowserWindow } from "electron";
 import type { BrowserWindowNotifier as BrowserWindowNotifierInterface } from "./Contract";
 
 export class BrowserWindowNotifier implements BrowserWindowNotifierInterface {
-    private browserWindow: BrowserWindow;
+    private browserWindow?: BrowserWindow;
 
     public setBrowserWindow(browserWindow: BrowserWindow) {
         this.browserWindow = browserWindow;

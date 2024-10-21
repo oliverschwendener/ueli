@@ -31,10 +31,10 @@ export class ChromiumBrowserBookmarkRepository implements BrowserBookmarkReposit
         let result: ChromiumBrowserBookmark[] = [];
 
         for (const key of Object.keys(item)) {
-            const value = item[key];
+            const value = item[key as keyof BookmarkItem];
 
             if (typeof value === "object" && value.length) {
-                const folders = value.filter((entry) => {
+                const folders = value.filter((entry: { type?: string }) => {
                     return entry.type && entry.type === "folder";
                 });
 

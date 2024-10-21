@@ -74,7 +74,7 @@ export class CalculatorExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue(key: string) {
+    public getSettingDefaultValue(key: keyof Settings) {
         return this.defaultSettings[key];
     }
 
@@ -119,7 +119,7 @@ export class CalculatorExtension implements Extension {
             : undefined;
     }
 
-    private getSettingValue<T>(key: string): T {
+    private getSettingValue<T>(key: keyof Settings): T {
         return this.settingsManager.getValue<T>(
             getExtensionSettingKey(this.id, key),
             <T>this.getSettingDefaultValue(key),

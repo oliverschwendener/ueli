@@ -1,5 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { SettingsManager } from "@Core/SettingsManager";
+import type { Net } from "electron";
 import { describe, expect, it, vi } from "vitest";
 import { CurrencyConversion } from "./CurrencyConversion";
 import type { Rates } from "./Rates";
@@ -22,7 +23,6 @@ describe(CurrencyConversion, () => {
 
             const assetPathResolver = <AssetPathResolver>{
                 getExtensionAssetPath: (i, f) => getExtensionAssetPathMock(i, f),
-                getModuleAssetPath: () => null,
             };
 
             const getValueMock = vi.fn().mockReturnValue(defaultTarget);
@@ -31,7 +31,7 @@ describe(CurrencyConversion, () => {
                 getValue: (k, d, s) => getValueMock(k, d, s),
             };
 
-            const currencyConversion = new CurrencyConversion(settingsManager, null, assetPathResolver);
+            const currencyConversion = new CurrencyConversion(settingsManager, <Net>{}, assetPathResolver);
 
             currencyConversion["rates"] = rates;
 
@@ -44,7 +44,7 @@ describe(CurrencyConversion, () => {
         };
 
         it("should return empty array when user input does not contain 4 parts", () => {
-            const currencyConversion = new CurrencyConversion(null, null, null);
+            const currencyConversion = new CurrencyConversion(<SettingsManager>{}, <Net>{}, <AssetPathResolver>{});
 
             currencyConversion["rates"] = { chf: { usd: 2 } };
 
@@ -54,7 +54,7 @@ describe(CurrencyConversion, () => {
         });
 
         it("should return empty array when first part in user input is not numerical", () => {
-            const currencyConversion = new CurrencyConversion(null, null, null);
+            const currencyConversion = new CurrencyConversion(<SettingsManager>{}, <Net>{}, <AssetPathResolver>{});
 
             currencyConversion["rates"] = { chf: { usd: 2 } };
 
@@ -62,7 +62,7 @@ describe(CurrencyConversion, () => {
         });
 
         it("should return empty array when base currency does not exist", () => {
-            const currencyConversion = new CurrencyConversion(null, null, null);
+            const currencyConversion = new CurrencyConversion(<SettingsManager>{}, <Net>{}, <AssetPathResolver>{});
 
             currencyConversion["rates"] = { chf: { usd: 2 } };
 
@@ -70,7 +70,7 @@ describe(CurrencyConversion, () => {
         });
 
         it("should return empty array when second part of user input is not 'in' or 'to'", () => {
-            const currencyConversion = new CurrencyConversion(null, null, null);
+            const currencyConversion = new CurrencyConversion(<SettingsManager>{}, <Net>{}, <AssetPathResolver>{});
 
             currencyConversion["rates"] = { chf: { usd: 2 } };
 
@@ -79,7 +79,7 @@ describe(CurrencyConversion, () => {
         });
 
         it("should return empty array when target currency is not found", () => {
-            const currencyConversion = new CurrencyConversion(null, null, null);
+            const currencyConversion = new CurrencyConversion(<SettingsManager>{}, <Net>{}, <AssetPathResolver>{});
 
             currencyConversion["rates"] = { chf: { usd: 2 } };
 

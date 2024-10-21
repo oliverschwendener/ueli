@@ -4,13 +4,8 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import { createInvokeExtensionAction, createOpenUrlSearchResultAction, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
+import type { Settings } from "./Settings";
 import type { WebSearchEngine } from "./WebSearchEngine";
-
-type Settings = {
-    searchEngine: string;
-    locale: string;
-    showInstantSearchResult: boolean;
-};
 
 export class WebSearchExtension implements Extension {
     public readonly id = "WebSearch";
@@ -47,7 +42,7 @@ export class WebSearchExtension implements Extension {
         if (searchTerm.trim().length && showInstantSearchResult) {
             const locale = this.settingsManager.getValue<string>(
                 getExtensionSettingKey(this.id, "locale"),
-                this.getSettingDefaultValue("locale"),
+                <string>this.getSettingDefaultValue("locale"),
             );
 
             const webSearchEngine = this.getCurrentWebSearchEngine();
@@ -79,14 +74,14 @@ export class WebSearchExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue(key: string) {
+    public getSettingDefaultValue(key: keyof Settings) {
         return this.defaultSettings[key];
     }
 
     public async invoke({ searchTerm }: { searchTerm: string }): Promise<SearchResultItem[]> {
         const locale = this.settingsManager.getValue<string>(
             getExtensionSettingKey(this.id, "locale"),
-            this.getSettingDefaultValue("locale"),
+            <string>this.getSettingDefaultValue("locale"),
         );
 
         const webSearchEngine = this.getCurrentWebSearchEngine();
@@ -161,7 +156,7 @@ export class WebSearchExtension implements Extension {
     private getCurrentWebSearchEngine(): WebSearchEngine {
         const searchEngine = this.settingsManager.getValue<string>(
             getExtensionSettingKey(this.id, "searchEngine"),
-            this.getSettingDefaultValue("searchEngine"),
+            <string>this.getSettingDefaultValue("searchEngine"),
         );
 
         return this.getWebSearchEngineByName(searchEngine);
