@@ -137,8 +137,8 @@ export class SimpleFileSearchExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
-        return this.getDefaultSettings()[key] as T;
+    public getSettingDefaultValue(key: string) {
+        return this.getDefaultSettings()[key];
     }
 
     public getImage(): Image {

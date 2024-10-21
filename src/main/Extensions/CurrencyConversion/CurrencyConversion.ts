@@ -96,7 +96,7 @@ export class CurrencyConversion implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
+    public getSettingDefaultValue(key: string) {
         return this.defaultSettings[key];
     }
 
@@ -156,7 +156,7 @@ export class CurrencyConversion implements Extension {
     private getDefaultTargetCurrency(): string {
         return this.settingsManager.getValue<string>(
             getExtensionSettingKey(this.id, "defaultTargetCurrency"),
-            this.getSettingDefaultValue<string>("defaultTargetCurrency"),
+            <string>this.getSettingDefaultValue("defaultTargetCurrency"),
         );
     }
 }

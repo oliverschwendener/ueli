@@ -150,13 +150,13 @@ export class VSCodeExtension implements Extension {
         return ["macOS", "Linux", "Windows"].includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue<T>(key: string) {
+    public getSettingDefaultValue(key: string) {
         const defaultSettings = {
             prefix: "vscode",
             command: 'code "%s"',
         };
 
-        return defaultSettings[key] as T;
+        return defaultSettings[key];
     }
 
     public getImage(): Image {

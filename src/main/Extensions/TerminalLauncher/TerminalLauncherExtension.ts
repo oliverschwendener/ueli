@@ -38,7 +38,7 @@ export class TerminalLauncherExtension implements Extension {
         return ["macOS", "Windows"].includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue<T>(key: string) {
+    public getSettingDefaultValue(key: string) {
         const defaultSettings = {
             prefix: ">",
             terminalIds: this.terminalRegistry
@@ -47,7 +47,7 @@ export class TerminalLauncherExtension implements Extension {
                 .map((terminal) => terminal.terminalId),
         };
 
-        return defaultSettings[key] as T;
+        return defaultSettings[key];
     }
 
     public getImage(): Image {

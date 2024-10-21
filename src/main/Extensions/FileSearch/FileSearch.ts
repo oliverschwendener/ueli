@@ -67,8 +67,8 @@ export class FileSearch implements Extension {
         return this.operatingSystem == "macOS" || this.operatingSystem === "Windows";
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
-        return this.defaultSettings[key] as T;
+    public getSettingDefaultValue(key: string) {
+        return this.defaultSettings[key];
     }
 
     public getImage(): Image {

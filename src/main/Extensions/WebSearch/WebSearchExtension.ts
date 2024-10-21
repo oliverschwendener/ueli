@@ -79,7 +79,7 @@ export class WebSearchExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
+    public getSettingDefaultValue(key: string) {
         return this.defaultSettings[key];
     }
 

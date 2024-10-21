@@ -74,7 +74,7 @@ export class CalculatorExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
+    public getSettingDefaultValue(key: string) {
         return this.defaultSettings[key];
     }
 
@@ -122,15 +122,7 @@ export class CalculatorExtension implements Extension {
     private getSettingValue<T>(key: string): T {
         return this.settingsManager.getValue<T>(
             getExtensionSettingKey(this.id, key),
-            this.getSettingDefaultValue<T>(key),
+            <T>this.getSettingDefaultValue(key),
         );
     }
-
-    // public invoke?(argument: unknown): Promise<unknown> {
-    //     throw new Error("Method not implemented.");
-    // }
-
-    // public getAssetFilePath?(key: string): string {
-    //     throw new Error("Method not implemented.");
-    // }
 }

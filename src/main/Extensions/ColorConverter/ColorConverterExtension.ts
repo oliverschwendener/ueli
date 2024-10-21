@@ -41,8 +41,8 @@ export class ColorConverterExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
-        return this.defaultSettings[key] as T;
+    public getSettingDefaultValue(key: string) {
+        return this.defaultSettings[key];
     }
 
     public getImage(): Image {

@@ -36,8 +36,8 @@ export class ApplicationSearch implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
-        return this.settings.getDefaultValue<T>(key);
+    public getSettingDefaultValue(key: string) {
+        return this.settings.getDefaultValue(key);
     }
 
     public getSettingKeysTriggeringRescan() {

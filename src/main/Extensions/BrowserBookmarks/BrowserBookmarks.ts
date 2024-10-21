@@ -104,8 +104,8 @@ export class BrowserBookmarks implements Extension {
         return (<OperatingSystem[]>["Windows", "macOS"]).includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
-        return this.defaultSettings[key] as T;
+    public getSettingDefaultValue(key: string) {
+        return this.defaultSettings[key];
     }
 
     public getSettingKeysTriggeringRescan(): string[] {

@@ -37,7 +37,7 @@ export class SystemCommands implements Extension {
         return (<OperatingSystem[]>["macOS", "Windows"]).includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
+    public getSettingDefaultValue(key: string) {
         return SystemCommands.DefaultSettings[key];
     }
 

@@ -51,7 +51,7 @@ describe(TerminalLauncherExtension, () => {
 
             const extension = new TerminalLauncherExtension(null, null, null, null, terminalRegistry);
 
-            expect(extension.getSettingDefaultValue<string[]>("terminalIds")).toEqual(["1", "3"]);
+            expect(extension.getSettingDefaultValue("terminalIds")).toEqual(["1", "3"]);
         });
 
         it("should return undefined when the key is not found", () => {
@@ -61,7 +61,7 @@ describe(TerminalLauncherExtension, () => {
             };
 
             const extension = new TerminalLauncherExtension(null, null, null, null, terminalRegistry);
-            expect(extension.getSettingDefaultValue<string[]>("something")).toBeUndefined();
+            expect(extension.getSettingDefaultValue("something")).toBeUndefined();
         });
     });
 

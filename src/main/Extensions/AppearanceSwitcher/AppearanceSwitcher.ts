@@ -43,8 +43,8 @@ export class AppearanceSwitcher implements Extension {
         ];
     }
 
-    public getSettingDefaultValue<T>(): T {
-        return undefined as T;
+    public getSettingDefaultValue() {
+        return undefined;
     }
 
     public isSupported(): boolean {

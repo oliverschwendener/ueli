@@ -32,7 +32,7 @@ export class SystemSettingsExtension implements Extension {
         return (<OperatingSystem[]>["Windows", "macOS"]).includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue<T>(): T {
+    public getSettingDefaultValue() {
         return undefined;
     }
 

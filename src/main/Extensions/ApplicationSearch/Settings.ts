@@ -13,13 +13,13 @@ export class Settings {
     ) {}
 
     public getValue<T>(key: string): T {
-        return this.settingsManager.getValue<T>(
+        return this.settingsManager.getValue(
             getExtensionSettingKey(this.extensionId, key),
-            this.getDefaultValue<T>(key),
+            <T>this.getDefaultValue(key),
         );
     }
 
-    public getDefaultValue<T>(key: string): T {
+    public getDefaultValue(key: string) {
         const defaultValues: Record<string, unknown> = {
             macOsFolders: [
                 "/System/Applications",
@@ -41,6 +41,6 @@ export class Settings {
                 .map((dir) => join(dir, "applications")),
         };
 
-        return defaultValues[key] as T;
+        return defaultValues[key];
     }
 }
