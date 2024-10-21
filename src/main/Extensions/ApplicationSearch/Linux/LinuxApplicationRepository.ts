@@ -87,7 +87,7 @@ export class LinuxApplicationRepository implements ApplicationRepository {
         const desktopEnv = this.environmentVariableProvider.get("ORIGINAL_XDG_CURRENT_DESKTOP")?.split(":");
 
         if (!desktopEnv) {
-            return Promise.reject("Unable to resolve desktop environment");
+            throw new Error("Unable to resolve desktop environment");
         }
 
         if (
@@ -97,7 +97,7 @@ export class LinuxApplicationRepository implements ApplicationRepository {
             (config.OnlyShowIn !== undefined && !config.OnlyShowIn.split(";").some((i) => desktopEnv.includes(i))) ||
             (config.NotShowIn !== undefined && config.NotShowIn.split(";").some((i) => desktopEnv.includes(i)))
         ) {
-            return Promise.reject("Unexpected .desktop file");
+            throw new Error("Unexpected .desktop file");
         }
 
         return new LinuxApplication(config["Name"], filePath, appIcon);
