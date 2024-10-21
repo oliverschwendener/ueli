@@ -20,38 +20,34 @@ export class ChromiumBrowserBookmarkRepository implements BrowserBookmarkReposit
     ) {}
 
     public async getAll(): Promise<BrowserBookmark[]> {
-        const fileContent = await this.fileSystemUtility.readJsonFile<BookmarksFileContent>(
-            this.bookmarksFilePathResolver(),
-        );
-
+        const jsonFilePath = this.bookmarksFilePathResolver();
+        const fileContent = await this.fileSystemUtility.readJsonFile<BookmarksFileContent>(jsonFilePath);
         return this.getBookmarksFromItem(fileContent.roots.bookmark_bar);
     }
 
     private getBookmarksFromItem(item: BookmarkItem): ChromiumBrowserBookmark[] {
-        let result: ChromiumBrowserBookmark[] = [];
+        const bookmarks: ChromiumBrowserBookmark[] = [];
 
         for (const key of Object.keys(item)) {
             const value = item[key as keyof BookmarkItem];
 
             if (typeof value === "object" && value.length) {
-                const folders = value.filter((entry: { type?: string }) => {
-                    return entry.type && entry.type === "folder";
-                });
+                const folders = value.filter((entry: { type?: string }) => entry.type && entry.type === "folder");
 
-                const bookmarks = value.filter(
-                    (entry: BookmarkItem) => entry.type && entry.type === "url" && entry.url && entry.url.length,
-                );
-
-                result = result.concat(
-                    bookmarks.map((item: BookmarkItem) => new ChromiumBrowserBookmark(item.name, item.url, item.guid)),
-                );
+                for (const entry of value) {
+                    if (entry.type && entry.type === "url" && entry.url && entry.url.length) {
+                        bookmarks.push(new ChromiumBrowserBookmark(entry.name, entry.url, entry.guid));
+                    }
+                }
 
                 for (const folder of folders) {
-                    result = result.concat(this.getBookmarksFromItem(folder));
+                    for (const bookmark of this.getBookmarksFromItem(folder)) {
+                        bookmarks.push(bookmark);
+                    }
                 }
             }
         }
 
-        return result;
+        return bookmarks;
     }
 }

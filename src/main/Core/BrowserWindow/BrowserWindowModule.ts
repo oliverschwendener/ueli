@@ -193,9 +193,9 @@ export class BrowserWindowModule {
         const eventHandlers: { ueliCommands: UeliCommand[]; handler: (argument: unknown) => void }[] = [
             {
                 ueliCommands: ["openAbout", "openExtensions", "openSettings", "show"],
-                handler: ({ pathname }: { pathname: string }) => {
+                handler: (argument) => {
                     browserWindowToggler.showAndFocus();
-                    sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
+                    sendToBrowserWindow(browserWindow, "navigateTo", argument);
                 },
             },
             {
@@ -217,8 +217,14 @@ export class BrowserWindowModule {
         browserWindow: BrowserWindow,
         environmentVariableProvider: EnvironmentVariableProvider,
     ) {
+        const viteDevServerUrl = environmentVariableProvider.get("VITE_DEV_SERVER_URL");
+
+        if (!viteDevServerUrl) {
+            throw new Error("VITE_DEV_SERVER_URL environment variable is not set");
+        }
+
         await (environmentVariableProvider.get("VITE_DEV_SERVER_URL")
-            ? browserWindow.loadURL(environmentVariableProvider.get("VITE_DEV_SERVER_URL"))
+            ? browserWindow.loadURL(viteDevServerUrl)
             : browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html")));
     }
 }
