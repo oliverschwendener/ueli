@@ -219,12 +219,10 @@ export class BrowserWindowModule {
     ) {
         const viteDevServerUrl = environmentVariableProvider.get("VITE_DEV_SERVER_URL");
 
-        if (!viteDevServerUrl) {
-            throw new Error("VITE_DEV_SERVER_URL environment variable is not set");
+        if (viteDevServerUrl) {
+            await browserWindow.loadURL(viteDevServerUrl);
+        } else {
+            await browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html"));
         }
-
-        await (environmentVariableProvider.get("VITE_DEV_SERVER_URL")
-            ? browserWindow.loadURL(viteDevServerUrl)
-            : browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html")));
     }
 }
