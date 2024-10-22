@@ -142,7 +142,7 @@ describe(WindowsStoreAutostartManager, () => {
                 "Ueli.lnk",
             );
 
-            new WindowsStoreAutostartManager(app, shell, process, fileSystemUtility, null).setAutostartOptions(
+            new WindowsStoreAutostartManager(app, shell, process, fileSystemUtility, <Logger>{}).setAutostartOptions(
                 openAtLogin,
             );
 

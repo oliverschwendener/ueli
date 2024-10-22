@@ -8,7 +8,7 @@ import { WorkflowHandler } from "./WorkflowHandler";
 
 describe(WorkflowHandler, () => {
     describe(WorkflowHandler.prototype.id, () =>
-        it("should be 'Workflow'", () => expect(new WorkflowHandler(null, {}).id).toBe("Workflow")),
+        it("should be 'Workflow'", () => expect(new WorkflowHandler(<Logger>{}, {}).id).toBe("Workflow")),
     );
 
     describe(WorkflowHandler.prototype.invokeAction, () => {

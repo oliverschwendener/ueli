@@ -25,7 +25,13 @@ export class LinuxDesktopEnvironmentResolver implements LinuxDesktopEnvironmentR
             DDE: "DDE",
         };
 
-        for (const environment of this.environmentVariableProvider.get("ORIGINAL_XDG_CURRENT_DESKTOP").split(":")) {
+        const originalXdgCurrentDesktop = this.environmentVariableProvider.get("ORIGINAL_XDG_CURRENT_DESKTOP");
+
+        if (!originalXdgCurrentDesktop) {
+            return undefined;
+        }
+
+        for (const environment of originalXdgCurrentDesktop.split(":")) {
             if (map[environment]) {
                 return map[environment];
             }

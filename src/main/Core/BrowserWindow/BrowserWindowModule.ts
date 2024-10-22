@@ -141,11 +141,11 @@ export class BrowserWindowModule {
                 .getValue("window.hideWindowOn", BrowserWindowModule.DefaultHideWindowOnOptions)
                 .includes("escapePressed");
 
-        eventSubscriber.subscribe(
-            "actionInvoked",
-            ({ action }: { action: SearchResultItemAction }) =>
-                shouldHideWindowAfterInvocation(action) && browserWindowToggler.hide(),
-        );
+        eventSubscriber.subscribe("actionInvoked", ({ action }: { action: SearchResultItemAction }) => {
+            if (shouldHideWindowAfterInvocation(action)) {
+                browserWindowToggler.hide();
+            }
+        });
 
         eventSubscriber.subscribe("hotkeyPressed", () =>
             browserWindowToggler.toggle(windowBoundsMemory.getBoundsNearestToCursor()),
@@ -160,7 +160,11 @@ export class BrowserWindowModule {
         });
 
         eventSubscriber.subscribe("settingUpdated[window.backgroundMaterial]", () => {
-            browserWindow.setBackgroundMaterial(backgroundMaterialProvider.get());
+            const backgroundMaterial = backgroundMaterialProvider.get();
+
+            if (backgroundMaterial) {
+                browserWindow.setBackgroundMaterial(backgroundMaterial);
+            }
         });
 
         eventSubscriber.subscribe("settingUpdated[window.vibrancy]", () => {
@@ -189,9 +193,9 @@ export class BrowserWindowModule {
         const eventHandlers: { ueliCommands: UeliCommand[]; handler: (argument: unknown) => void }[] = [
             {
                 ueliCommands: ["openAbout", "openExtensions", "openSettings", "show"],
-                handler: ({ pathname }: { pathname: string }) => {
+                handler: (argument) => {
                     browserWindowToggler.showAndFocus();
-                    sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
+                    sendToBrowserWindow(browserWindow, "navigateTo", argument);
                 },
             },
             {
@@ -213,8 +217,12 @@ export class BrowserWindowModule {
         browserWindow: BrowserWindow,
         environmentVariableProvider: EnvironmentVariableProvider,
     ) {
-        await (environmentVariableProvider.get("VITE_DEV_SERVER_URL")
-            ? browserWindow.loadURL(environmentVariableProvider.get("VITE_DEV_SERVER_URL"))
-            : browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html")));
+        const viteDevServerUrl = environmentVariableProvider.get("VITE_DEV_SERVER_URL");
+
+        if (viteDevServerUrl) {
+            await browserWindow.loadURL(viteDevServerUrl);
+        } else {
+            await browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html"));
+        }
     }
 }

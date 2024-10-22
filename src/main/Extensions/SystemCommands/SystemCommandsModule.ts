@@ -5,6 +5,7 @@ import type { OperatingSystem } from "@common/Core";
 import type { Resources, Translations } from "@common/Core/Translator";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
+import { LinuxSystemCommandRepository } from "./Linux/LinuxSystemCommandRepository";
 import type { SystemCommandRepository } from "./SystemCommandRepository";
 import { SystemCommands } from "./SystemCommands";
 import { WindowsSystemCommandRepository, windowsResources } from "./Windows";
@@ -20,7 +21,7 @@ export class SystemCommandsModule implements ExtensionModule {
         };
 
         const repositories: Record<OperatingSystem, SystemCommandRepository> = {
-            Linux: null, // not supported,
+            Linux: new LinuxSystemCommandRepository(), // not supported
             macOS: new MacOsSystemCommandRepository(
                 dependencyRegistry.get("Translator"),
                 dependencyRegistry.get("AssetPathResolver"),

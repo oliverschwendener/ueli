@@ -18,7 +18,7 @@ export class FirefoxBookmarkFileResolver {
 
     private getAppDataFilePath(): string {
         const map: Record<OperatingSystem, string> = {
-            Linux: null, // not supported ATM
+            Linux: "", // not supported
             macOS: join(this.app.getPath("appData"), "Firefox"),
             Windows: join(this.app.getPath("home"), "AppData", "Roaming", "Mozilla", "Firefox"),
         };

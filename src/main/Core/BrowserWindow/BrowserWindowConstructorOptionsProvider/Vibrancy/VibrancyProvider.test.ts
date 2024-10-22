@@ -9,7 +9,7 @@ describe(VibrancyProvider, () => {
             expected,
             vibrancy,
         }: {
-            expected: BrowserWindowConstructorOptions["vibrancy"];
+            expected: BrowserWindowConstructorOptions["vibrancy"] | null;
             vibrancy: string;
         }) => {
             const settingsManager = <SettingsManager>{

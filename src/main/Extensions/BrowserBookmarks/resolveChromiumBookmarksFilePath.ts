@@ -14,12 +14,12 @@ export const resolveChromiumBookmarksFilePath = ({
 }): string => {
     const map: Record<ChromiumBrowser, Record<OperatingSystem, () => string>> = {
         Arc: {
-            Linux: null, // not supported,
+            Linux: () => "", // not supported,
             Windows: () => join(app.getPath("home"), "AppData", "Local", "Arc", "User Data", "Default", "Bookmarks"),
             macOS: () => join(app.getPath("appData"), "Arc", "User Data", "Default", "Bookmarks"),
         },
         "Brave Browser": {
-            Linux: null, // not supported,
+            Linux: () => "", // not supported,
             macOS: () => join(app.getPath("appData"), "BraveSoftware", "Brave-Browser", "Default", "Bookmarks"),
             Windows: () =>
                 join(
@@ -34,19 +34,19 @@ export const resolveChromiumBookmarksFilePath = ({
                 ),
         },
         "Google Chrome": {
-            Linux: null, // not supported,,
+            Linux: () => "", // not supported,,
             macOS: () => join(app.getPath("appData"), "Google", "Chrome", "Default", "Bookmarks"),
             Windows: () =>
                 join(app.getPath("home"), "AppData", "Local", "Google", "Chrome", "User Data", "Default", "Bookmarks"),
         },
         "Microsoft Edge": {
-            Linux: null, // not supported,
+            Linux: () => "", // not supported,
             macOS: () => join(app.getPath("appData"), "Microsoft Edge", "Default", "Bookmarks"),
             Windows: () =>
                 join(app.getPath("home"), "AppData", "Local", "Microsoft", "Edge", "User Data", "Default", "Bookmarks"),
         },
         "Yandex Browser": {
-            Linux: null, // not supported,
+            Linux: () => "", // not supported,
             macOS: () => join(app.getPath("appData"), "Yandex", "YandexBrowser", "Default", "Bookmarks"),
             Windows: () =>
                 join(

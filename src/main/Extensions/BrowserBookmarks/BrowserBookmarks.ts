@@ -104,7 +104,7 @@ export class BrowserBookmarks implements Extension {
         return (<OperatingSystem[]>["Windows", "macOS"]).includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue(key: string) {
+    public getSettingDefaultValue(key: keyof Settings) {
         return this.defaultSettings[key];
     }
 
@@ -166,7 +166,7 @@ export class BrowserBookmarks implements Extension {
     private getName(browserBookmark: BrowserBookmark): string {
         const searchResultStyle = this.settingsManager.getValue<string>(
             getExtensionSettingKey(this.id, "searchResultStyle"),
-            this.getSettingDefaultValue("searchResultStyle"),
+            <string>this.getSettingDefaultValue("searchResultStyle"),
         );
 
         const names: Record<string, () => string> = {
@@ -181,7 +181,7 @@ export class BrowserBookmarks implements Extension {
     private getCurrentlyConfiguredBrowsers(): Browser[] {
         return this.settingsManager.getValue<Browser[]>(
             getExtensionSettingKey("BrowserBookmarks", "browsers"),
-            this.getSettingDefaultValue("browsers"),
+            <Browser[]>this.getSettingDefaultValue("browsers"),
         );
     }
 

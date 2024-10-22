@@ -9,6 +9,7 @@
             "@common/*": ["./src/common/*"],
             "@Core/*": ["./src/main/Core/*"]
         },
+        "strict": true,
         "resolveJsonModule": true,
         "rootDir": "./src",
         "skipLibCheck": true

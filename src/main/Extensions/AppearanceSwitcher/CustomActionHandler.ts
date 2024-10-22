@@ -9,7 +9,7 @@ export class CustomActionHandler implements ActionHandler {
     public readonly id = "AppearanceSwitcher";
 
     private readonly togglers: Record<OperatingSystem, (switchTo: SwitchTo) => Promise<void>> = {
-        Linux: () => null, // not supported
+        Linux: async () => {}, // not supported
         macOS: async (s) => await this.toggleMacOsSystemAppearance(s),
         Windows: async (s) => await this.toggleWindowsSystemAppearance(s),
     };

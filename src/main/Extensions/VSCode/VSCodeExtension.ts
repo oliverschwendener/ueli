@@ -10,6 +10,7 @@ import { searchFilter } from "@common/Core/Search/SearchFilter";
 import Database from "better-sqlite3";
 import * as Path from "path";
 import * as Url from "url";
+import type { Settings } from "./Settings";
 
 type VscodeRecent = {
     fileUri?: string;
@@ -81,7 +82,21 @@ export class VSCodeExtension implements Extension {
         );
     }
 
-    getUri = (recent: VscodeRecent) => recent.fileUri ?? recent.folderUri ?? recent.workspace.configPath;
+    getUri = (recent: VscodeRecent) => {
+        if (recent.fileUri) {
+            return recent.fileUri;
+        }
+
+        if (recent.folderUri) {
+            return recent.folderUri;
+        }
+
+        if (recent.workspace) {
+            return recent.workspace.configPath;
+        }
+
+        throw new Error("Unknown file type");
+    };
     getPath = (uri: string) => {
         const decodedUri = decodeURIComponent(uri);
         if (uri.startsWith("file://")) {
@@ -91,47 +106,57 @@ export class VSCodeExtension implements Extension {
         return decodedUri;
     };
 
-    async getSearchItem(recent: VscodeRecent): Promise<SearchResultItem> {
-        const uri = this.getUri(recent);
-
-        let fileType: string;
-        let commandArg: string;
+    private getFileType(recent: VscodeRecent, uri: string): string {
+        let result;
 
         if (recent.fileUri) {
-            fileType = "File";
-            commandArg = "--file-uri";
+            result = "File";
         } else if (recent.folderUri) {
-            fileType = "Folder";
-            commandArg = "--folder-uri";
+            result = "Folder";
         } else if (recent.workspace) {
-            fileType = "Workspace";
-            commandArg = "--file-uri";
+            result = "Workspace";
+        } else {
+            throw new Error("Unknown file type");
         }
 
-        // Overide description for remote
-        if (!uri.startsWith("file://")) {
-            fileType = "Remote " + fileType;
+        return uri.startsWith("file://") ? result : `Remote ${result}`;
+    }
+
+    private getCommandArg(recent: VscodeRecent): string {
+        if (recent.fileUri) {
+            return "--file-uri";
+        } else if (recent.folderUri) {
+            return "--folder-uri";
+        } else if (recent.workspace) {
+            return "--file-uri";
         }
 
-        let img: Image | undefined;
+        throw new Error("Unknown file type");
+    }
+
+    private async getImg(recent: VscodeRecent, uri: string): Promise<Image> {
         if (recent.fileUri) {
             try {
-                img = await this.fileImageGenerator.getImage(uri);
+                return await this.fileImageGenerator.getImage(uri);
             } catch (e) {
-                img = this.getDefaultFileImage();
+                return this.getDefaultFileImage();
             }
-        } else {
-            img = this.getImage();
         }
 
+        return this.getImage();
+    }
+
+    async getSearchItem(recent: VscodeRecent): Promise<SearchResultItem> {
+        const uri = this.getUri(recent);
+        const fileType = this.getFileType(recent, uri);
+        const commandArg = this.getCommandArg(recent);
+        const img = await this.getImg(recent, uri);
         const path = this.getPath(uri);
 
         const template = this.settingsManager.getValue<string>(
             `extension[${this.id}].command`,
             this.getSettingDefaultValue("command"),
         );
-
-        const command = template.replace("%s", `${commandArg} ${uri}`);
 
         return {
             id: "vscode-" + uri,
@@ -141,7 +166,7 @@ export class VSCodeExtension implements Extension {
             defaultAction: {
                 handlerId: "Commandline",
                 description: `Open ${fileType} in VSCode`,
-                argument: command,
+                argument: template.replace("%s", `${commandArg} ${uri}`),
             },
         };
     }
@@ -150,8 +175,8 @@ export class VSCodeExtension implements Extension {
         return ["macOS", "Linux", "Windows"].includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue(key: string) {
-        const defaultSettings = {
+    public getSettingDefaultValue(key: keyof Settings) {
+        const defaultSettings: Settings = {
             prefix: "vscode",
             command: 'code "%s"',
         };

@@ -7,7 +7,7 @@ import { LaunchTerminalActionHandler } from "./LaunchTerminalActionHandler";
 describe(LaunchTerminalActionHandler, () => {
     describe(LaunchTerminalActionHandler.prototype.id, () =>
         it(`should be "LaunchTerminalActionHandler"`, () =>
-            expect(new LaunchTerminalActionHandler(null).id).toBe("LaunchTerminalActionHandler")),
+            expect(new LaunchTerminalActionHandler(<TerminalRegistry>{}).id).toBe("LaunchTerminalActionHandler")),
     );
 
     describe(LaunchTerminalActionHandler.prototype.invokeAction, () => {

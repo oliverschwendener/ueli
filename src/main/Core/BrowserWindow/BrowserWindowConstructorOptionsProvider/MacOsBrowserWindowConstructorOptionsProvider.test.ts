@@ -8,7 +8,7 @@ describe(MacOsBrowserWindowConstructorOptionsProvider, () => {
         it("should return the macOS window options", () => {
             const defaultOptions = <BrowserWindowConstructorOptions>{
                 alwaysOnTop: true,
-                vibrancy: null,
+                vibrancy: undefined,
             };
 
             const getVibrancyMock = vi.fn().mockReturnValue("content");

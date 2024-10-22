@@ -9,7 +9,12 @@ import { ColorConverterExtension } from "./ColorConverterExtension";
 describe(ColorConverterExtension, () => {
     describe(ColorConverterExtension.prototype.getSearchResultItems, () => {
         it("should return an empty array", async () => {
-            const actual = await new ColorConverterExtension(null, null, null, null).getSearchResultItems();
+            const actual = await new ColorConverterExtension(
+                <AssetPathResolver>{},
+                <SettingsManager>{},
+                <Translator>{},
+                <ColorConverter>{},
+            ).getSearchResultItems();
             expect(actual).toEqual([]);
         });
     });
@@ -18,10 +23,15 @@ describe(ColorConverterExtension, () => {
         it("should return the correct image", async () => {
             const assetPathResolver = <AssetPathResolver>{
                 getExtensionAssetPath: vi.fn().mockReturnValue("color-converter.png"),
-                getModuleAssetPath: () => null,
+                getModuleAssetPath: () => "null",
             };
 
-            const colorConverterExtension = new ColorConverterExtension(assetPathResolver, null, null, null);
+            const colorConverterExtension = new ColorConverterExtension(
+                assetPathResolver,
+                <SettingsManager>{},
+                <Translator>{},
+                <ColorConverter>{},
+            );
 
             expect(colorConverterExtension.getImage()).toEqual({ url: "file://color-converter.png" });
 
@@ -33,10 +43,12 @@ describe(ColorConverterExtension, () => {
     });
 
     describe(ColorConverterExtension.prototype.getSettingDefaultValue, () => {
-        const colorConverterExtension = new ColorConverterExtension(null, null, null, null);
-
-        it("should return undefined when passing a key that does not exist", () =>
-            expect(colorConverterExtension.getSettingDefaultValue("key")).toEqual(undefined));
+        const colorConverterExtension = new ColorConverterExtension(
+            <AssetPathResolver>{},
+            <SettingsManager>{},
+            <Translator>{},
+            <ColorConverter>{},
+        );
 
         it("should return the default formats when passing 'formats' as key", () =>
             expect(colorConverterExtension.getSettingDefaultValue("formats")).toEqual(["HEX", "HSL", "RGB"]));
@@ -44,7 +56,14 @@ describe(ColorConverterExtension, () => {
 
     describe(ColorConverterExtension.prototype.isSupported, () =>
         it("should return true", () =>
-            expect(new ColorConverterExtension(null, null, null, null).isSupported()).toBe(true)),
+            expect(
+                new ColorConverterExtension(
+                    <AssetPathResolver>{},
+                    <SettingsManager>{},
+                    <Translator>{},
+                    <ColorConverter>{},
+                ).isSupported(),
+            ).toBe(true)),
     );
 
     describe(ColorConverterExtension.prototype.getInstantSearchResultItems, () => {
@@ -53,7 +72,7 @@ describe(ColorConverterExtension, () => {
 
             const assetPathResolver = <AssetPathResolver>{
                 getExtensionAssetPath: vi.fn().mockReturnValue("color-converter.png"),
-                getModuleAssetPath: () => null,
+                getModuleAssetPath: () => "null",
             };
 
             const translator = <Translator>{
@@ -62,7 +81,7 @@ describe(ColorConverterExtension, () => {
 
             const settingsManager = <SettingsManager>{
                 getValue: vi.fn().mockReturnValue(["HEX", "RGB"]),
-                updateValue: null,
+                updateValue: async () => {},
             };
 
             const colorConverter = <ColorConverter>{
@@ -97,9 +116,15 @@ describe(ColorConverterExtension, () => {
 
     describe(ColorConverterExtension.prototype.getI18nResources, () =>
         it("should support en-US and de-CH", () =>
-            expect(Object.keys(new ColorConverterExtension(null, null, null, null).getI18nResources())).toEqual([
-                "en-US",
-                "de-CH",
-            ])),
+            expect(
+                Object.keys(
+                    new ColorConverterExtension(
+                        <AssetPathResolver>{},
+                        <SettingsManager>{},
+                        <Translator>{},
+                        <ColorConverter>{},
+                    ).getI18nResources(),
+                ),
+            ).toEqual(["en-US", "de-CH"])),
     );
 });

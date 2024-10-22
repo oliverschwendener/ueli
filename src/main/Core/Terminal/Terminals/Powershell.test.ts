@@ -4,7 +4,8 @@ import { Powershell } from "./Powershell";
 
 describe(Powershell, () => {
     describe(Powershell.prototype.terminalId, () =>
-        it(`should be "Powershell"`, () => expect(new Powershell(null).terminalId).toBe("Powershell")),
+        it(`should be "Powershell"`, () =>
+            expect(new Powershell(<CommandlineUtility>{}).terminalId).toBe("Powershell")),
     );
 
     describe(Powershell.prototype.launchWithCommand, () => {
