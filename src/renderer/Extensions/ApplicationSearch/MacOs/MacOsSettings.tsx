@@ -1,9 +1,11 @@
 import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
+import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
-import { Button, Input, Tooltip } from "@fluentui/react-components";
+import { Button, Dropdown, Input, Option, Tooltip } from "@fluentui/react-components";
 import { AddRegular, DismissRegular, FolderRegular } from "@fluentui/react-icons";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const MacOsSettings = () => {
     const { contextBridge } = useContextBridge();
@@ -12,9 +14,16 @@ export const MacOsSettings = () => {
 
     const [newFolder, setNewFolder] = useState<string>("");
 
+    const { t } = useTranslation(`extension[${extensionId}]`);
+
     const { value: folders, updateValue: setFolders } = useExtensionSetting<string[]>({
         extensionId,
         key: "macOsFolders",
+    });
+
+    const { value: mdfindFilterOption, updateValue: updateMdfindFilterOption } = useExtensionSetting<string>({
+        extensionId,
+        key: "mdfindFilterOption",
     });
 
     const removeFolder = async (indexToRemove: number) => {
@@ -81,6 +90,29 @@ export const MacOsSettings = () => {
                         }
                     />
                 </div>
+            </SettingGroup>
+            <SettingGroup title={t("advanced")}>
+                <Setting
+                    label="mdfind filter"
+                    control={
+                        <Dropdown
+                            style={{ width: "100%" }}
+                            selectedOptions={[mdfindFilterOption]}
+                            value={mdfindFilterOption}
+                            onOptionSelect={(_, { optionValue }) => {
+                                if (optionValue) {
+                                    updateMdfindFilterOption(optionValue);
+                                }
+                            }}
+                        >
+                            <Option value="kind:application">kind:application</Option>
+                            <Option value="kMDItemKind=='Application'">kMDItemKind=='Application'</Option>
+                            <Option value="kMDItemContentType=='com.apple.application-bundle'">
+                                kMDItemContentType=='com.apple.application-bundle'
+                            </Option>
+                        </Dropdown>
+                    }
+                />
             </SettingGroup>
         </SettingGroupList>
     );

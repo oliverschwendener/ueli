@@ -134,6 +134,7 @@ describe(ApplicationSearch, () => {
             getExtensionSettingKey("ApplicationSearch", "windowsFileExtensions"),
             getExtensionSettingKey("ApplicationSearch", "includeWindowsStoreApps"),
             getExtensionSettingKey("ApplicationSearch", "macOsFolders"),
+            getExtensionSettingKey("ApplicationSearch", "mdfindFilterOption"),
         ]);
     });
 });

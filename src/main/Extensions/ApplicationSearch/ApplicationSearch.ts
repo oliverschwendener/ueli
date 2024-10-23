@@ -46,6 +46,7 @@ export class ApplicationSearch implements Extension {
             getExtensionSettingKey("ApplicationSearch", "windowsFileExtensions"),
             getExtensionSettingKey("ApplicationSearch", "includeWindowsStoreApps"),
             getExtensionSettingKey("ApplicationSearch", "macOsFolders"),
+            getExtensionSettingKey("ApplicationSearch", "mdfindFilterOption"),
         ];
     }
 
@@ -69,6 +70,7 @@ export class ApplicationSearch implements Extension {
                 openApplication: "Open application",
                 openApplicationAsAdministrator: "Open application as administrator",
                 copyFilePathToClipboard: "Copy file path to clipboard",
+                advanced: "Advanced",
             },
             "de-CH": {
                 extensionName: "Anwendungssuche",
@@ -76,6 +78,7 @@ export class ApplicationSearch implements Extension {
                 openApplication: "Anwendung starten",
                 openApplicationAsAdministrator: "Anwendung als Administrator starten",
                 copyFilePathToClipboard: "Dateipfad in Zwischenablage kopieren",
+                advanced: "Erweitert",
             },
         };
     }
