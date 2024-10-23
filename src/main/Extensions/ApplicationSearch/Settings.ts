@@ -27,6 +27,7 @@ export class Settings {
                 "/Applications",
                 join(this.app.getPath("home"), "Applications"),
             ],
+            mdfindFilterOption: "kMDItemKind=='Application'",
             includeWindowsStoreApps: true,
             windowsFileExtensions: ["lnk"],
             windowsFolders: [
