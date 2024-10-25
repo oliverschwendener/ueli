@@ -28,9 +28,8 @@ export class LinuxApplicationRepository implements ApplicationRepository {
             .filter((folderPath) => this.fileSystemUtility.isDirectory(folderPath));
 
         const filePaths = await this.getApplicationFilePaths(folderPaths);
-        const appIcons = await this.fileImageGenerator.getImages(filePaths);
 
-        return await this.generateLinuxApplications(filePaths, appIcons);
+        return await this.generateLinuxApplications(filePaths);
     }
 
     private async getApplicationFilePaths(folderPaths: string[]): Promise<string[]> {
@@ -52,14 +51,9 @@ export class LinuxApplicationRepository implements ApplicationRepository {
         return result;
     }
 
-    private async generateLinuxApplications(
-        filePaths: string[],
-        appIcons: Record<string, Image>,
-    ): Promise<LinuxApplication[]> {
+    private async generateLinuxApplications(filePaths: string[]): Promise<LinuxApplication[]> {
         const applicationPromiseResults = await Promise.allSettled(
-            filePaths.map((filePath) =>
-                this.generateLinuxApplication(filePath, appIcons[filePath] ?? this.getDefaultAppIcon()),
-            ),
+            filePaths.map((filePath) => this.generateLinuxApplication(filePath)),
         );
 
         const applications: LinuxApplication[] = [];
@@ -69,7 +63,9 @@ export class LinuxApplicationRepository implements ApplicationRepository {
             const promiseReuslt = applicationPromiseResults[i];
 
             if (promiseReuslt.status === "fulfilled") {
-                applications.push(promiseReuslt.value);
+                if (promiseReuslt.value) {
+                    applications.push(promiseReuslt.value);
+                }
             } else {
                 this.logger.warn(`Unable to generate Application for ${filePath}. Reason: ${promiseReuslt.reason}`);
                 continue;
@@ -79,28 +75,37 @@ export class LinuxApplicationRepository implements ApplicationRepository {
         return applications;
     }
 
-    private async generateLinuxApplication(filePath: string, appIcon: Image): Promise<LinuxApplication> {
+    private async generateLinuxApplication(filePath: string): Promise<LinuxApplication | undefined> {
         const config: Record<string, string> = this.iniParser.parseIniFileContent(
             (await this.fileSystemUtility.readFile(filePath)).toString(),
         )["Desktop Entry"];
-        // https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#recognized-keys
-        const desktopEnv = this.environmentVariableProvider.get("ORIGINAL_XDG_CURRENT_DESKTOP")?.split(":");
 
-        if (!desktopEnv) {
-            throw new Error("Unable to resolve desktop environment");
+        if (!config) {
+            throw new Error(`Unable to parse .desktop at ${filePath}`);
         }
+
+        const appName = config["Name"] ?? filePath;
+
+        // https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#recognized-keys
+        const desktopEnv = this.environmentVariableProvider.get("ORIGINAL_XDG_CURRENT_DESKTOP")?.split(":") ?? [];
 
         if (
-            !config ||
-            !config["Icon"] ||
             config.NoDisplay ||
-            (config.OnlyShowIn !== undefined && !config.OnlyShowIn.split(";").some((i) => desktopEnv.includes(i))) ||
-            (config.NotShowIn !== undefined && config.NotShowIn.split(";").some((i) => desktopEnv.includes(i)))
+            (config.OnlyShowIn && !config.OnlyShowIn.split(";").some((i) => desktopEnv.includes(i))) ||
+            (config.NotShowIn && config.NotShowIn.split(";").some((i) => desktopEnv.includes(i)))
         ) {
-            throw new Error("Unexpected .desktop file");
+            return undefined;
         }
 
-        return new LinuxApplication(config["Name"], filePath, appIcon);
+        let appIcon = this.getDefaultAppIcon();
+
+        try {
+            appIcon = await this.fileImageGenerator.getImage(filePath);
+        } catch (error) {
+            this.logger.error(`Using fallback icon for ${appName}. Reason: ${error}`);
+        }
+
+        return new LinuxApplication(appName, filePath, appIcon);
     }
 
     private getDefaultAppIcon(): Image {
