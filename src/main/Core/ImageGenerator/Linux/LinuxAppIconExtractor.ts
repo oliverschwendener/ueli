@@ -170,6 +170,11 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
         try {
             this.searchCache = new Map();
             this.userTheme = await this.getIconThemeName();
+
+            if (!this.userTheme) {
+                throw new Error("Could not determine user's icon theme.");
+            }
+
             let validThemeDirectories = await this.getExistingThemeDirectories(this.userTheme, this.baseDirectories);
 
             for (let i = 0; i < validThemeDirectories.length; i++) {
@@ -368,11 +373,7 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
             for (const subdir of themeIndex.subdirectories) {
                 for (const extension of ["png", "svg", "xpm"]) {
                     const iconThemeSubDir = themeIndex.subdirData.get(subdir);
-                    if (
-                        themeIndex.subdirData.has(subdir) &&
-                        iconThemeSubDir &&
-                        this.directoryMatchesSize(iconThemeSubDir, size, scale)
-                    ) {
+                    if (iconThemeSubDir && this.directoryMatchesSize(iconThemeSubDir, size, scale)) {
                         const filename = `${join(themeIndex.path, subdir, iconName)}.${extension}`;
 
                         if (this.fileSystemUtility.existsSync(filename)) {
@@ -388,17 +389,13 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
         for (const themeIndex of this.searchCache.get(theme) ?? []) {
             for (const subdir of themeIndex.subdirectories) {
                 for (const extension of ["png", "svg", "xpm"]) {
-                    if (!themeIndex.subdirData.has(subdir)) {
-                        continue;
-                    }
-
-                    const filename = `${join(themeIndex.path, subdir, iconName)}.${extension}`;
                     const iconThemeSubDir = themeIndex.subdirData.get(subdir);
 
                     if (!iconThemeSubDir) {
                         continue;
                     }
 
+                    const filename = `${join(themeIndex.path, subdir, iconName)}.${extension}`;
                     const dist = this.directorySizeDistance(iconThemeSubDir, size, scale);
 
                     if (this.fileSystemUtility.existsSync(filename) && dist < minimalSize) {
