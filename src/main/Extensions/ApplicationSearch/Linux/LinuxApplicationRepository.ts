@@ -95,7 +95,7 @@ export class LinuxApplicationRepository implements ApplicationRepository {
         const desktopEnv = this.environmentVariableProvider.get("ORIGINAL_XDG_CURRENT_DESKTOP")?.split(":") ?? [];
 
         if (
-            config.NoDisplay.toLowerCase() === "true" ||
+            (config.NoDisplay && config.NoDisplay.toLowerCase() === "true") ||
             (config.OnlyShowIn && !config.OnlyShowIn.split(";").some((i) => desktopEnv.includes(i))) ||
             (config.NotShowIn && config.NotShowIn.split(";").some((i) => desktopEnv.includes(i)))
         ) {
