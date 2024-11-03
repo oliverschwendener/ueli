@@ -76,7 +76,11 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
             open={isDialogOpen}
             onOpenChange={(event, { open }) => {
                 event.stopPropagation();
-                open ? openDialog() : closeDialog();
+                if (open) {
+                    openDialog();
+                } else {
+                    closeDialog();
+                }
             }}
         >
             <DialogTrigger disableButtonEnhancement>
