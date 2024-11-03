@@ -29,7 +29,8 @@ export const ConfirmationDialog = ({ action, closeDialog }: ConfirmationDialogPr
     return (
         <Dialog
             open={action !== undefined}
-            onOpenChange={(_, { open }) => {
+            onOpenChange={(event, { open }) => {
+                event.stopPropagation();
                 if (open === false) {
                     closeDialog();
                 }
