@@ -12,7 +12,7 @@ import { LinuxApplicationRepository } from "./LinuxApplicationRepository";
 
 describe(LinuxApplicationRepository, () => {
     describe(LinuxApplicationRepository.prototype.getApplications, () => {
-        const mockFilepaths: Record<string, string[]> = {
+        const mockFilePaths: Record<string, string[]> = {
             "/usr/share/applications": [
                 "/usr/share/applications/org.app1.desktop",
                 "/usr/share/applications/app2.desktop",
@@ -77,9 +77,9 @@ describe(LinuxApplicationRepository, () => {
             getDefaultValue: (v) => getSettingsMock(v),
         };
 
-        const isDirectoryMock = vi.fn().mockImplementation((path) => Object.keys(mockFilepaths).includes(path));
+        const isDirectoryMock = vi.fn().mockImplementation((path) => Object.keys(mockFilePaths).includes(path));
         const readDirectoryMock = vi.fn().mockImplementation((path) => {
-            const files = mockFilepaths[path];
+            const files = mockFilePaths[path];
             if (files) {
                 return files;
             }
@@ -154,7 +154,8 @@ describe(LinuxApplicationRepository, () => {
         };
 
         const warnMock = vi.fn();
-        const mockLogger = <Logger>{ warn: (m) => warnMock(m), error: (m) => warnMock(m) };
+        const errorMock = vi.fn();
+        const mockLogger = <Logger>{ warn: (m) => warnMock(m), error: (m) => errorMock(m) };
 
         // return a list of all applications given in list
         it("should return all applications for the current desktop", async () => {
