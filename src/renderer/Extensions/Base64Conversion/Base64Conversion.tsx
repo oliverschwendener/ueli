@@ -83,7 +83,7 @@ export const Base64Conversion = ({ contextBridge, goBack }: ExtensionProps) => {
                     </Button>
                 </div>
             }
-            keyDownEvent={handleKeyDownEvent}
+            onKeyDown={handleKeyDownEvent}
         />
     );
 };

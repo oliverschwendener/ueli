@@ -63,7 +63,7 @@ export const MissingEverythingCliFilePath = ({
                     </Button>
                 </div>
             }
-            keyDownEvent={handleKeyDownEvent}
+            onKeyDown={handleKeyDownEvent}
         />
     );
 };

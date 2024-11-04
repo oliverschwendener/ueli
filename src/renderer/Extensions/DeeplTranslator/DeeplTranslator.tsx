@@ -110,7 +110,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                     </div>
                 ) : null
             }
-            keyDownEvent={handleKeyDownEvent}
+            onKeyDown={handleKeyDownEvent}
         />
     );
 };
