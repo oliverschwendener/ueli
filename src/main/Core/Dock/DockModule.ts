@@ -15,7 +15,11 @@ export class DockModule {
             }
         };
 
-        setAppIconVisibility();
+        /**
+         * For some reason the dock icon won't be hidden if we do this immediately.
+         * This is a workaround to hide the dock icon after a short delay.
+         */
+        setTimeout(() => setAppIconVisibility(), 2500);
 
         eventSubscriber.subscribe("settingUpdated[appearance.showAppIconInDock]", setAppIconVisibility);
     }
