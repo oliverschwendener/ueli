@@ -10,7 +10,7 @@ describe(MacOsApplication, () => {
             expect(defaultAction.handlerId).toBe("OpenFilePath");
         });
 
-        it("should OpenFileLocation and CopyToclipboard as additional actions", () => {
+        it("should OpenFileLocation and CopyToClipboard as additional actions", () => {
             const application = new MacOsApplication("MyApp", "/Path/To/MyApp.app", <Image>{});
             const additionalActions = application.toSearchResultItem().additionalActions;
             expect(additionalActions?.map((a) => a.handlerId)).toEqual(["ShowItemInFileExplorer", "copyToClipboard"]);

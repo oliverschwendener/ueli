@@ -65,14 +65,14 @@ export class LinuxApplicationRepository implements ApplicationRepository {
 
         for (let i = 0; i < applicationPromiseResults.length; i++) {
             const filePath = filePaths[i];
-            const promiseReuslt = applicationPromiseResults[i];
+            const promiseResult = applicationPromiseResults[i];
 
-            if (promiseReuslt.status === "fulfilled") {
-                if (promiseReuslt.value) {
-                    applications.push(promiseReuslt.value);
+            if (promiseResult.status === "fulfilled") {
+                if (promiseResult.value) {
+                    applications.push(promiseResult.value);
                 }
             } else {
-                this.logger.error(`Unable to generate Application for ${filePath}. Reason: ${promiseReuslt.reason}`);
+                this.logger.error(`Unable to generate Application for ${filePath}. Reason: ${promiseResult.reason}`);
                 continue;
             }
         }
