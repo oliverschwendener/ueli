@@ -72,7 +72,17 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
         setTemporaryFolderSetting({ ...temporaryFolderSetting, searchFor });
 
     return (
-        <Dialog open={isDialogOpen} onOpenChange={(_, { open }) => (open ? openDialog() : closeDialog())}>
+        <Dialog
+            open={isDialogOpen}
+            onOpenChange={(event, { open }) => {
+                event.stopPropagation();
+                if (open) {
+                    openDialog();
+                } else {
+                    closeDialog();
+                }
+            }}
+        >
             <DialogTrigger disableButtonEnhancement>
                 <Button onClick={openDialog} icon={<AddRegular />}>
                     {t("addFolder")}

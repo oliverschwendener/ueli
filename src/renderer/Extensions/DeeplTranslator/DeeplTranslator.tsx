@@ -5,6 +5,7 @@ import { useExtensionSetting } from "@Core/Hooks";
 import { getImageUrl } from "@Core/getImageUrl";
 import { Button, Text, Tooltip } from "@fluentui/react-components";
 import { ArrowLeftFilled, CopyRegular, PersonRegular } from "@fluentui/react-icons";
+import type { KeyboardEvent } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MissingApiKey } from "./MissingApiKey";
@@ -26,6 +27,13 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
 
     const openDeeplWebsite = () => contextBridge.openExternal("https://www.deepl.com/signup?cta=free-login-signup");
     const openDeeplAccount = () => contextBridge.openExternal("https://www.deepl.com/account");
+
+    const handleKeyDownEvent = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            goBack();
+        }
+    };
 
     return (
         <BaseLayout
@@ -102,6 +110,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                     </div>
                 ) : null
             }
+            onKeyDown={handleKeyDownEvent}
         />
     );
 };
