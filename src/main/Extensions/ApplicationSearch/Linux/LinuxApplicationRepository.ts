@@ -23,9 +23,14 @@ export class LinuxApplicationRepository implements ApplicationRepository {
     ) {}
 
     public async getApplications(): Promise<Application[]> {
-        const folderPaths = this.settings
-            .getValue<string[]>("linuxFolders")
-            .filter((folderPath) => this.fileSystemUtility.isDirectory(folderPath));
+        const folderPaths: string[] = [];
+        this.settings.getValue<string[]>("linuxFolders").forEach((folderPath) => {
+            if (this.fileSystemUtility.isDirectory(folderPath)) {
+                folderPaths.push(folderPath);
+            } else {
+                this.logger.warn(`${folderPath} is does not exist or is not a folder.`);
+            }
+        });
 
         const filePaths = await this.getApplicationFilePaths(folderPaths);
 
@@ -43,7 +48,7 @@ export class LinuxApplicationRepository implements ApplicationRepository {
             if (readDirectoryPromiseResult.status === "fulfilled") {
                 result.push(...readDirectoryPromiseResult.value.filter((filePath) => extname(filePath) === ".desktop"));
             } else {
-                this.logger.warn(readDirectoryPromiseResult.reason);
+                this.logger.error(readDirectoryPromiseResult.reason);
                 continue;
             }
         }
@@ -67,7 +72,7 @@ export class LinuxApplicationRepository implements ApplicationRepository {
                     applications.push(promiseReuslt.value);
                 }
             } else {
-                this.logger.warn(`Unable to generate Application for ${filePath}. Reason: ${promiseReuslt.reason}`);
+                this.logger.error(`Unable to generate Application for ${filePath}. Reason: ${promiseReuslt.reason}`);
                 continue;
             }
         }
@@ -90,7 +95,7 @@ export class LinuxApplicationRepository implements ApplicationRepository {
         const desktopEnv = this.environmentVariableProvider.get("ORIGINAL_XDG_CURRENT_DESKTOP")?.split(":") ?? [];
 
         if (
-            config.NoDisplay ||
+            (config.NoDisplay && config.NoDisplay.toLowerCase() === "true") ||
             (config.OnlyShowIn && !config.OnlyShowIn.split(";").some((i) => desktopEnv.includes(i))) ||
             (config.NotShowIn && config.NotShowIn.split(";").some((i) => desktopEnv.includes(i)))
         ) {
@@ -102,7 +107,7 @@ export class LinuxApplicationRepository implements ApplicationRepository {
         try {
             appIcon = await this.fileImageGenerator.getImage(filePath);
         } catch (error) {
-            this.logger.error(`Using fallback icon for ${appName}. Reason: ${error}`);
+            this.logger.warn(`Using fallback icon for ${appName}. Reason: ${error}`);
         }
 
         return new LinuxApplication(appName, filePath, appIcon);
