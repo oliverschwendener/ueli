@@ -14,6 +14,11 @@ export const CurrencyConversionSettings = () => {
         key: "currencies",
     });
 
+    const { value: defaultTargetCurrency, updateValue: setDefaultTargetCurrency } = useExtensionSetting<string>({
+        extensionId: "CurrencyConversion",
+        key: "defaultTargetCurrency",
+    });
+
     return (
         <SettingGroupList>
             <SettingGroup title={t("extensionName")}>
@@ -30,6 +35,25 @@ export const CurrencyConversionSettings = () => {
                             {Object.keys(availableCurrencies).map((availableCurrency) => (
                                 <Option key={availableCurrency} value={availableCurrency}>
                                     {`${availableCurrency.toUpperCase()} (${availableCurrencies[availableCurrency]})`}
+                                </Option>
+                            ))}
+                        </Dropdown>
+                    }
+                />
+                <Setting
+                    label={t("defaultTargetCurrency")}
+                    control={
+                        <Dropdown
+                            selectedOptions={[defaultTargetCurrency]}
+                            value={defaultTargetCurrency.toUpperCase()}
+                            placeholder={t("selectDefaultTargetCurrency")}
+                            onOptionSelect={(_, { optionValue }) =>
+                                optionValue && setDefaultTargetCurrency(optionValue)
+                            }
+                        >
+                            {currencies.map((currency) => (
+                                <Option key={currency} value={currency}>
+                                    {`${currency.toUpperCase()}`}
                                 </Option>
                             ))}
                         </Dropdown>

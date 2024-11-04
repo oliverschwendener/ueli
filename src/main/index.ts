@@ -8,7 +8,6 @@ import * as Extensions from "./Extensions";
     await Electron.app.whenReady();
 
     Core.SingleInstanceLockModule.bootstrap(Electron.app);
-    Core.DockModule.bootstrap(Electron.app);
 
     const dependencyRegistry = Core.DependencyRegistryModule.bootstrap();
 
@@ -55,6 +54,7 @@ import * as Extensions from "./Extensions";
     Core.SettingsReaderModule.bootstrap(dependencyRegistry);
     Core.SettingsWriterModule.bootstrap(dependencyRegistry);
     Core.SettingsManagerModule.bootstrap(dependencyRegistry);
+    Core.DockModule.bootstrap(dependencyRegistry);
     await Core.ImageGeneratorModule.bootstrap(dependencyRegistry);
     Core.TranslatorModule.bootstrap(dependencyRegistry);
     Core.SearchIndexModule.bootstrap(dependencyRegistry);

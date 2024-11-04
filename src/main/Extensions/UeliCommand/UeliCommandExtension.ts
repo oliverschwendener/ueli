@@ -94,8 +94,8 @@ export class UeliCommandExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(): T {
-        return undefined as T;
+    public getSettingDefaultValue() {
+        return undefined;
     }
 
     public getSettingKeysTriggeringRescan() {

@@ -45,13 +45,14 @@ export class ImageGeneratorModule {
     ): FileIconExtractor[] {
         const cacheFileNameGenerator = new CacheFileNameGenerator();
 
+        const currentDesktopEnvironment = dependencyRegistry.get("LinuxDesktopEnvironmentResolver").resolve();
+
         // To prevent the execution of all icon extractor constructors, we use a function here that is only invoked
         // for the current operating system.
         const operatingSystemSpecificIconExtractors: Record<OperatingSystem, () => FileIconExtractor[]> = {
             Linux: () =>
-                ["Cinnamon", "GNOME", "KDE", "MATE", "XFCE", "Pantheon"].includes(
-                    dependencyRegistry.get("LinuxDesktopEnvironmentResolver").resolve(),
-                )
+                currentDesktopEnvironment &&
+                ["Cinnamon", "GNOME", "KDE", "MATE", "XFCE", "Pantheon"].includes(currentDesktopEnvironment)
                     ? [
                           new LinuxAppIconExtractor(
                               dependencyRegistry.get("FileSystemUtility"),

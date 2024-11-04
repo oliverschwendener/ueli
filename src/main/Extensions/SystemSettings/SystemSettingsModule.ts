@@ -3,6 +3,7 @@ import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { OperatingSystem } from "@common/Core";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
+import { LinuxSystemSettingRepository } from "./LinuxSystemSettingRepository";
 import { MacOsSystemSettingRepository } from "./MacOsSystemSettingRepository";
 import type { SystemSettingRepository } from "./SystemSettingRepository";
 import { SystemSettingsExtension } from "./SystemSettingsExtension";
@@ -12,7 +13,7 @@ import { WindowsSystemSettingsRepository } from "./WindowsSystemSettingRepositor
 export class SystemSettingsModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
         const systemSettingRepositories: Record<OperatingSystem, SystemSettingRepository> = {
-            Linux: null, // not supported
+            Linux: new LinuxSystemSettingRepository(),
             macOS: new MacOsSystemSettingRepository(dependencyRegistry.get("AssetPathResolver")),
             Windows: new WindowsSystemSettingsRepository(dependencyRegistry.get("AssetPathResolver")),
         };

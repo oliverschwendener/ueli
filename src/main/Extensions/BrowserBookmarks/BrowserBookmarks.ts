@@ -3,7 +3,12 @@ import type { Extension } from "@Core/Extension";
 import type { UrlImageGenerator } from "@Core/ImageGenerator";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
-import { SearchResultItemActionUtility, type OperatingSystem, type SearchResultItem } from "@common/Core";
+import {
+    createCopyToClipboardAction,
+    createOpenUrlSearchResultAction,
+    type OperatingSystem,
+    type SearchResultItem,
+} from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Browser } from "@common/Extensions/BrowserBookmarks";
@@ -52,14 +57,14 @@ export class BrowserBookmarks implements Extension {
         const toSearchResultItem = (browserBookmark: BrowserBookmark, browserName: Browser) => {
             return {
                 description: t("searchResultItemDescription", { browserName }),
-                defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({
+                defaultAction: createOpenUrlSearchResultAction({
                     url: browserBookmark.getUrl(),
                 }),
                 id: browserBookmark.getId(),
                 name: this.getName(browserBookmark),
                 image: this.getBrowserBookmarkImage(browserBookmark, browserName),
                 additionalActions: [
-                    SearchResultItemActionUtility.createCopyToClipboardAction({
+                    createCopyToClipboardAction({
                         textToCopy: browserBookmark.getUrl(),
                         description: "Copy URL to clipboard",
                         descriptionTranslation: {
@@ -99,8 +104,8 @@ export class BrowserBookmarks implements Extension {
         return (<OperatingSystem[]>["Windows", "macOS"]).includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
-        return this.defaultSettings[key] as T;
+    public getSettingDefaultValue(key: keyof Settings) {
+        return this.defaultSettings[key];
     }
 
     public getSettingKeysTriggeringRescan(): string[] {
@@ -161,7 +166,7 @@ export class BrowserBookmarks implements Extension {
     private getName(browserBookmark: BrowserBookmark): string {
         const searchResultStyle = this.settingsManager.getValue<string>(
             getExtensionSettingKey(this.id, "searchResultStyle"),
-            this.getSettingDefaultValue("searchResultStyle"),
+            <string>this.getSettingDefaultValue("searchResultStyle"),
         );
 
         const names: Record<string, () => string> = {
@@ -176,7 +181,7 @@ export class BrowserBookmarks implements Extension {
     private getCurrentlyConfiguredBrowsers(): Browser[] {
         return this.settingsManager.getValue<Browser[]>(
             getExtensionSettingKey("BrowserBookmarks", "browsers"),
-            this.getSettingDefaultValue("browsers"),
+            <Browser[]>this.getSettingDefaultValue("browsers"),
         );
     }
 

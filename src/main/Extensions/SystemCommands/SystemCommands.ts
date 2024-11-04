@@ -6,8 +6,6 @@ import type { Resources, Translations } from "@common/Core/Translator";
 import type { SystemCommandRepository } from "./SystemCommandRepository";
 
 export class SystemCommands implements Extension {
-    private static readonly DefaultSettings = {};
-
     public readonly id = "SystemCommands";
 
     public readonly name = "System Commands";
@@ -37,13 +35,13 @@ export class SystemCommands implements Extension {
         return (<OperatingSystem[]>["macOS", "Windows"]).includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
-        return SystemCommands.DefaultSettings[key];
+    public getSettingDefaultValue() {
+        return undefined;
     }
 
     public getImage(): Image {
         const filenames: Record<OperatingSystem, string> = {
-            Linux: null, // not supported
+            Linux: "", // not supported
             macOS: "macos-system-command.png",
             Windows: "windows-11-system-command.png",
         };

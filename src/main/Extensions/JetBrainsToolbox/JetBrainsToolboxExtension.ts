@@ -123,33 +123,44 @@ export class JetBrainsToolboxExtension implements Extension {
         );
 
         const projects: JetBrainsToolboxRecent[] = [];
+
         for (const projectPath of projectPaths) {
             const ideaPath = join(projectPath, ".idea");
+
             if (!(await this.fileSystemUtility.pathExists(ideaPath))) {
                 continue;
             }
-            let name: string;
-            const nameFileExists = await this.fileSystemUtility.pathExists(join(ideaPath, ".name"));
-            if (nameFileExists) {
-                name = await this.fileSystemUtility.readTextFile(join(ideaPath, ".name"));
-            } else {
-                let ideaFiles = await this.fileSystemUtility.readDirectory(ideaPath);
-                ideaFiles = ideaFiles.map((f) => basename(f));
-                name = ideaFiles.find((f) => f.endsWith(".iml"))?.replace(".iml", "");
+
+            const name = await this.getName(ideaPath);
+
+            if (!name) {
+                continue;
             }
-            const project = {
+
+            projects.push({
                 name,
                 path: projectPath,
                 toolName: tool.displayName,
                 toolCommand: join(tool.installLocation, tool.launchCommand),
                 toolIconPath: join(dirname(productInfoPath), productInfo.svgIconPath),
                 projectIconPath: join(ideaPath, "icon.svg"),
-            };
-            if (project.name) {
-                projects.push(project);
-            }
+            });
         }
+
         return projects;
+    }
+
+    private async getName(ideaPath: string): Promise<string | undefined> {
+        const nameFileExists = await this.fileSystemUtility.pathExists(join(ideaPath, ".name"));
+
+        if (nameFileExists) {
+            return await this.fileSystemUtility.readTextFile(join(ideaPath, ".name"));
+        }
+
+        return (await this.fileSystemUtility.readDirectory(ideaPath))
+            .map((f) => basename(f))
+            .find((f) => f.endsWith(".iml"))
+            ?.replace(".iml", "");
     }
 
     private async getRecents(): Promise<JetBrainsToolboxRecent[]> {
@@ -190,8 +201,8 @@ export class JetBrainsToolboxExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(): T {
-        return undefined as T;
+    public getSettingDefaultValue() {
+        return undefined;
     }
 
     public getImage(): Image {

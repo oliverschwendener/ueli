@@ -32,13 +32,13 @@ export class SystemSettingsExtension implements Extension {
         return (<OperatingSystem[]>["Windows", "macOS"]).includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue<T>(): T {
+    public getSettingDefaultValue() {
         return undefined;
     }
 
     public getImage(): Image {
         const filenames: Record<OperatingSystem, string> = {
-            Linux: null, // not supported,
+            Linux: "", // not supported,
             macOS: "macos-system-settings.png",
             Windows: "windows-11-settings.png",
         };

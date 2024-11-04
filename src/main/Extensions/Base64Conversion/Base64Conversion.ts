@@ -1,7 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
-import { type SearchResultItem, SearchResultItemActionUtility } from "@common/Core";
+import { createInvokeExtensionAction, type SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { InvocationArgument } from "@common/Extensions/Base64Conversion";
 import { Base64Converter } from "./Base64Converter";
@@ -29,7 +29,7 @@ export class Base64Conversion implements Extension {
                 description: t("searchResultItemDescription"),
                 name: t("searchResultItemName"),
                 image: this.getImage(),
-                defaultAction: SearchResultItemActionUtility.createInvokeExtensionAction({
+                defaultAction: createInvokeExtensionAction({
                     extensionId: this.id,
                     description: t("searchResultItemActionDescription"),
                     fluentIcon: "OpenRegular",

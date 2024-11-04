@@ -1,4 +1,4 @@
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import { createCopyToClipboardAction, type SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
@@ -6,6 +6,7 @@ import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { ColorConverter } from "./ColorConverter";
+import type { Settings } from "./Settings";
 
 export class ColorConverterExtension implements Extension {
     public readonly id = "ColorConverter";
@@ -22,7 +23,7 @@ export class ColorConverterExtension implements Extension {
         githubUserName: "oliverschwendener",
     };
 
-    private readonly defaultSettings = {
+    private readonly defaultSettings: Settings = {
         formats: ["HEX", "HSL", "RGB"],
     };
 
@@ -41,8 +42,8 @@ export class ColorConverterExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
-        return this.defaultSettings[key] as T;
+    public getSettingDefaultValue(key: keyof Settings) {
+        return this.defaultSettings[key];
     }
 
     public getImage(): Image {
@@ -77,7 +78,7 @@ export class ColorConverterExtension implements Extension {
             .convertFromString(searchTerm)
             .filter(({ format }) => this.getEnabledColorFormats().includes(format))
             .map(({ format, value }) => ({
-                defaultAction: SearchResultItemActionUtility.createCopyToClipboardAction({
+                defaultAction: createCopyToClipboardAction({
                     textToCopy: value,
                     description: "Copy color to clipboard",
                     descriptionTranslation: {

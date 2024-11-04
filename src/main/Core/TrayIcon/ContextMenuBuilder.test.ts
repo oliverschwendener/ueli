@@ -2,7 +2,7 @@ import type { Menu, MenuItemConstructorOptions } from "electron";
 import { describe, expect, it, vi } from "vitest";
 import { ContextMenuBuilder } from "./ContextMenuBuilder";
 
-const menuDummy = <Menu>{ items: [] };
+const menuDummy = <Menu>{};
 const buildFromTemplateMock = vi.fn().mockReturnValue(menuDummy);
 
 vi.mock("electron", () => {

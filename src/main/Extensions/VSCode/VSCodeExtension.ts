@@ -1,6 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
+import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
@@ -9,6 +10,7 @@ import { searchFilter } from "@common/Core/Search/SearchFilter";
 import Database from "better-sqlite3";
 import * as Path from "path";
 import * as Url from "url";
+import type { Settings } from "./Settings";
 
 type VscodeRecent = {
     fileUri?: string;
@@ -17,6 +19,7 @@ type VscodeRecent = {
         id: string;
         configPath: string;
     };
+    label?: string;
 };
 
 export class VSCodeExtension implements Extension {
@@ -44,20 +47,25 @@ export class VSCodeExtension implements Extension {
     public constructor(
         private readonly operatingSystem: OperatingSystem,
         private readonly assetPathResolver: AssetPathResolver,
+        private readonly logger: Logger,
         private readonly settingsManager: SettingsManager,
         private readonly fileImageGenerator: FileImageGenerator,
     ) {}
 
     async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const recentPaths = this.getRecents();
+        const searchResults: SearchResultItem[] = [];
 
-        const searchItems = await Promise.all(
-            recentPaths.map((recent) => {
-                return this.getSearchItem(recent);
-            }),
-        );
+        for (const recent of this.getRecents()) {
+            try {
+                searchResults.push(await this.getSearchItem(recent));
+            } catch (error) {
+                const uri = this.getUri(recent);
+                this.logger.error(this.id + ": " + uri + " " + error);
+            }
+        }
 
-        this.recents = searchItems;
+        this.recents = searchResults;
+
         return [];
     }
 
@@ -74,49 +82,91 @@ export class VSCodeExtension implements Extension {
         );
     }
 
-    async getSearchItem(recent: VscodeRecent): Promise<SearchResultItem> {
-        const uri = recent.fileUri ?? recent.folderUri ?? recent.workspace.configPath;
-
-        let description: string;
-
+    getUri = (recent: VscodeRecent) => {
         if (recent.fileUri) {
-            description = "File";
-        } else if (recent.folderUri) {
-            description = "Folder";
-        } else if (recent.workspace) {
-            description = "Workspace";
+            return recent.fileUri;
         }
 
-        let img: Image | undefined;
+        if (recent.folderUri) {
+            return recent.folderUri;
+        }
+
+        if (recent.workspace) {
+            return recent.workspace.configPath;
+        }
+
+        throw new Error("Unknown file type");
+    };
+    getPath = (uri: string) => {
+        const decodedUri = decodeURIComponent(uri);
+        if (uri.startsWith("file://")) {
+            const url = new URL(decodedUri);
+            return Url.fileURLToPath(url, { windows: this.operatingSystem === "Windows" });
+        }
+        return decodedUri;
+    };
+
+    private getFileType(recent: VscodeRecent, uri: string): string {
+        let result;
+
+        if (recent.fileUri) {
+            result = "File";
+        } else if (recent.folderUri) {
+            result = "Folder";
+        } else if (recent.workspace) {
+            result = "Workspace";
+        } else {
+            throw new Error("Unknown file type");
+        }
+
+        return uri.startsWith("file://") ? result : `Remote ${result}`;
+    }
+
+    private getCommandArg(recent: VscodeRecent): string {
+        if (recent.fileUri) {
+            return "--file-uri";
+        } else if (recent.folderUri) {
+            return "--folder-uri";
+        } else if (recent.workspace) {
+            return "--file-uri";
+        }
+
+        throw new Error("Unknown file type");
+    }
+
+    private async getImg(recent: VscodeRecent, uri: string): Promise<Image> {
         if (recent.fileUri) {
             try {
-                img = await this.fileImageGenerator.getImage(uri);
+                return await this.fileImageGenerator.getImage(uri);
             } catch (e) {
-                img = this.getDefaultFileImage();
+                return this.getDefaultFileImage();
             }
-        } else {
-            img = this.getImage();
         }
 
-        const url = new URL(decodeURIComponent(uri));
-        const path = Url.fileURLToPath(url, { windows: this.operatingSystem === "Windows" });
+        return this.getImage();
+    }
+
+    async getSearchItem(recent: VscodeRecent): Promise<SearchResultItem> {
+        const uri = this.getUri(recent);
+        const fileType = this.getFileType(recent, uri);
+        const commandArg = this.getCommandArg(recent);
+        const img = await this.getImg(recent, uri);
+        const path = this.getPath(uri);
 
         const template = this.settingsManager.getValue<string>(
             `extension[${this.id}].command`,
             this.getSettingDefaultValue("command"),
         );
 
-        const command = template.replace("%s", path);
-
         return {
-            id: "vscode-" + path,
-            name: Path.basename(path),
-            description,
+            id: "vscode-" + uri,
+            name: recent.label ?? Path.basename(path),
+            description: fileType,
             image: img,
             defaultAction: {
                 handlerId: "Commandline",
-                description: `Open ${description} in VSCode`,
-                argument: command,
+                description: `Open ${fileType} in VSCode`,
+                argument: template.replace("%s", `${commandArg} ${uri}`),
             },
         };
     }
@@ -125,13 +175,13 @@ export class VSCodeExtension implements Extension {
         return ["macOS", "Linux", "Windows"].includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue<T>(key: string) {
-        const defaultSettings = {
+    public getSettingDefaultValue(key: keyof Settings) {
+        const defaultSettings: Settings = {
             prefix: "vscode",
             command: 'code "%s"',
         };
 
-        return defaultSettings[key] as T;
+        return defaultSettings[key];
     }
 
     public getImage(): Image {
@@ -158,7 +208,7 @@ export class VSCodeExtension implements Extension {
                 prefixDescription:
                     "The prefix to trigger visual studio code. Open recently opened files and projects: <prefix> <command>",
                 command: "Command",
-                commandTooltip: "Use %s where the selected file/project should go in the command be sure to quote it",
+                commandTooltip: "Use %s where the selected file/project should go it uses the --file/folder-uri switch",
             },
         };
     }

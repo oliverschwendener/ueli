@@ -6,6 +6,7 @@ import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
 import type { Workflow } from "@common/Extensions/Workflow";
+import type { Settings } from "./Settings";
 import { WorkflowActionArgumentEncoder } from "./Utility";
 import type { WorkflowRepository } from "./WorkflowRepository";
 
@@ -24,7 +25,7 @@ export class WorkflowExtension implements Extension {
         githubUserName: "oliverschwendener",
     };
 
-    private readonly defaultSettings = {
+    private readonly defaultSettings: Settings = {
         workflows: <Workflow[]>[],
     };
 
@@ -61,8 +62,8 @@ export class WorkflowExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(key): T {
-        return this.defaultSettings[key] as T;
+    public getSettingDefaultValue(key: keyof Settings) {
+        return this.defaultSettings[key];
     }
 
     public getImage(): Image {

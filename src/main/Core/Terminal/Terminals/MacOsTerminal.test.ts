@@ -4,7 +4,7 @@ import { MacOsTerminal } from "./MacOsTerminal";
 
 describe(MacOsTerminal, () => {
     describe(MacOsTerminal.prototype.terminalId, () =>
-        it(`should be "Terminal"`, () => expect(new MacOsTerminal(null).terminalId).toBe("Terminal")),
+        it(`should be "Terminal"`, () => expect(new MacOsTerminal(<AppleScriptUtility>{}).terminalId).toBe("Terminal")),
     );
 
     describe(MacOsTerminal.prototype.launchWithCommand, () => {

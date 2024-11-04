@@ -54,7 +54,7 @@ export interface Extension {
      * @param key The key of the setting, e.g. `"mySetting"`.
      * @returns The default value for the setting.
      */
-    getSettingDefaultValue<T>(key: string): T;
+    getSettingDefaultValue(key: string): unknown;
 
     /**
      * Gets the image for this Extension. This image is displayed in the settings.

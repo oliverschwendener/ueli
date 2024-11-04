@@ -4,7 +4,8 @@ import { CommandPrompt } from "./CommandPrompt";
 
 describe(CommandPrompt, () => {
     describe(CommandPrompt.prototype.terminalId, () =>
-        it(`should return "Command Prompt"`, () => expect(new CommandPrompt(null).terminalId).toBe("Command Prompt")),
+        it(`should return "Command Prompt"`, () =>
+            expect(new CommandPrompt(<CommandlineUtility>{}).terminalId).toBe("Command Prompt")),
     );
 
     describe(CommandPrompt.prototype.launchWithCommand, () => {

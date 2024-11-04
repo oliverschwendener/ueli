@@ -1,7 +1,7 @@
 import type { OperatingSystem } from "@common/Core";
 
 export const getOperatingSystemFromPlatform = (platform: string): OperatingSystem => {
-    const operatingSystemMap: Record<"darwin" | "win32" | "linux", OperatingSystem> = {
+    const operatingSystemMap: Record<string, OperatingSystem> = {
         darwin: "macOS",
         win32: "Windows",
         linux: "Linux",

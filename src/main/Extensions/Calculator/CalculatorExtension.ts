@@ -1,7 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import { createCopyToClipboardAction, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import { Calculator } from "./Calculator";
@@ -54,7 +54,7 @@ export class CalculatorExtension implements Extension {
                 },
                 id: "calculator:instantResult",
                 image: this.getImage(),
-                defaultAction: SearchResultItemActionUtility.createCopyToClipboardAction({
+                defaultAction: createCopyToClipboardAction({
                     textToCopy: result,
                     description: "Copy result to clipboard",
                     descriptionTranslation: {
@@ -74,7 +74,7 @@ export class CalculatorExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
+    public getSettingDefaultValue(key: keyof Settings) {
         return this.defaultSettings[key];
     }
 
@@ -119,18 +119,10 @@ export class CalculatorExtension implements Extension {
             : undefined;
     }
 
-    private getSettingValue<T>(key: string): T {
+    private getSettingValue<T>(key: keyof Settings): T {
         return this.settingsManager.getValue<T>(
             getExtensionSettingKey(this.id, key),
-            this.getSettingDefaultValue<T>(key),
+            <T>this.getSettingDefaultValue(key),
         );
     }
-
-    // public invoke?(argument: unknown): Promise<unknown> {
-    //     throw new Error("Method not implemented.");
-    // }
-
-    // public getAssetFilePath?(key: string): string {
-    //     throw new Error("Method not implemented.");
-    // }
 }

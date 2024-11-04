@@ -37,7 +37,7 @@ export class DuckDuckGoWebSearchEngine implements WebSearchEngine {
     }
 
     private getLocaleString(locale: string): string {
-        const map = {
+        const map: Record<string, string> = {
             "en-US": "us-en",
             "de-CH": "ch-de",
         };

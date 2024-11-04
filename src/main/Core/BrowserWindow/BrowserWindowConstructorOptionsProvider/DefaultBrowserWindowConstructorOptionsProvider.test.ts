@@ -50,9 +50,9 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
                 appIconFilePathResolver,
             ).get();
 
-            expect(webPreferences.webSecurity).toBe(false);
-            expect(webPreferences.allowRunningInsecureContent).toBe(true);
-            expect(webPreferences.devTools).toBe(true);
+            expect(webPreferences?.webSecurity).toBe(false);
+            expect(webPreferences?.allowRunningInsecureContent).toBe(true);
+            expect(webPreferences?.devTools).toBe(true);
         });
     });
 });

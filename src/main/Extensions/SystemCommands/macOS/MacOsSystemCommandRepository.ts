@@ -84,13 +84,12 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
         fileNameOnDarkBackground?: string;
         fileNameOnLightBackground?: string;
     }): Image {
-        const getFileUrl = (f?: string) =>
-            f ? `file://${this.assetPathResolver.getExtensionAssetPath("SystemCommands", f)}` : undefined;
+        const getFileUrl = (f: string) => `file://${this.assetPathResolver.getExtensionAssetPath("SystemCommands", f)}`;
 
         return {
             url: getFileUrl(fileName),
-            urlOnDarkBackground: getFileUrl(fileNameOnDarkBackground),
-            urlOnLightBackground: getFileUrl(fileNameOnLightBackground),
+            urlOnDarkBackground: fileNameOnDarkBackground ? getFileUrl(fileNameOnDarkBackground) : undefined,
+            urlOnLightBackground: fileNameOnLightBackground ? getFileUrl(fileNameOnLightBackground) : undefined,
         };
     }
 }

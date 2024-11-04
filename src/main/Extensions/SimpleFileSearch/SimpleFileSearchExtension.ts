@@ -1,5 +1,5 @@
 import type { OperatingSystem } from "@common/Core";
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import { createOpenFileAction, createShowItemInFileExplorerAction, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
@@ -57,7 +57,7 @@ export class SimpleFileSearchExtension implements Extension {
             const folderSetting = folderSettings.find(({ id }) => id === folderSettingId);
 
             for (const filePath of filePathsGroupedByFolderSettingId[folderSettingId]) {
-                if (!this.shouldIncludeFilePath(types[filePath], folderSetting.searchFor)) {
+                if (!folderSetting || !this.shouldIncludeFilePath(types[filePath], folderSetting.searchFor)) {
                     continue;
                 }
 
@@ -66,11 +66,11 @@ export class SimpleFileSearchExtension implements Extension {
                     name: basename(filePath),
                     description: types[filePath] === "folder" ? t("folder") : t("file"),
                     image: images[filePath] ?? this.getDefaultIcon(),
-                    defaultAction: SearchResultItemActionUtility.createOpenFileAction({
+                    defaultAction: createOpenFileAction({
                         filePath,
                         description: types[filePath] === "folder" ? t("openFolder") : t("openFile"),
                     }),
-                    additionalActions: [SearchResultItemActionUtility.createShowItemInFileExplorerAction({ filePath })],
+                    additionalActions: [createShowItemInFileExplorerAction({ filePath })],
                 });
             }
         }
@@ -137,8 +137,8 @@ export class SimpleFileSearchExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
-        return this.getDefaultSettings()[key] as T;
+    public getSettingDefaultValue(key: keyof Settings) {
+        return this.getDefaultSettings()[key];
     }
 
     public getImage(): Image {
