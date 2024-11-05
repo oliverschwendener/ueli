@@ -10,7 +10,7 @@ const baseConfig = {
         output: "release",
         buildResources: "build",
     },
-    files: ["dist-main/index.js", "dist-preload/index.js", "dist-renderer/**/*", "assets/**/*"],
+    files: ["dist-main/*.js", "dist-preload/index.js", "dist-renderer/**/*", "assets/**/*"],
     extraMetadata: {
         version: process.env.VITE_APP_VERSION,
     },
@@ -50,7 +50,7 @@ const platformSpecificConfig = {
         linux: {
             icon: "assets/Build/app-icon-dark.png",
             category: "Utility",
-            target: [{ target: "AppImage" }, { target: "deb" }, { target: "zip" }],
+            target: [{ target: "zip" }],
         },
     },
 };
