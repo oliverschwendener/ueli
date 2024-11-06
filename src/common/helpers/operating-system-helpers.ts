@@ -38,29 +38,43 @@ function getWindowsVersion(operatingSystemRelease: string): OperatingSystemVersi
 }
 
 function getMacOsVersion(operatingSystemRelease: string): OperatingSystemVersion {
-    const darwinKernelVersion = operatingSystemRelease.substr(0, 2);
-    switch (darwinKernelVersion) {
-        case "14":
-            return OperatingSystemVersion.MacOsYosemite;
-        case "15":
-            return OperatingSystemVersion.MacOsElCapitan;
-        case "16":
-            return OperatingSystemVersion.MacOsSierra;
-        case "17":
-            return OperatingSystemVersion.MacOsHighSierra;
-        case "18":
-            return OperatingSystemVersion.MacOsMojave;
-        case "19":
-            return OperatingSystemVersion.MacOsCatalina;
-        case "20":
-            return OperatingSystemVersion.MacOsBigSur;
-        case "21":
-            return OperatingSystemVersion.MacOsMonterey;
-        case "22":
-            return OperatingSystemVersion.MacOsVentura;
-        case "23":
-            return OperatingSystemVersion.MacOsSonoma;
-        default:
-            throw new Error(`Unsupported macOS version: ${operatingSystemRelease}`);
+    const darwinKernelVersion = Number(operatingSystemRelease.substr(0, 2));
+
+    if (darwinKernelVersion < 14) {
+        throw new Error(`Unsupported macOS version: ${operatingSystemRelease}`);
     }
+
+    if (darwinKernelVersion === 14) {
+        return OperatingSystemVersion.MacOsYosemite;
+    }
+    if (darwinKernelVersion === 15) {
+        return OperatingSystemVersion.MacOsElCapitan;
+    }
+    if (darwinKernelVersion === 16) {
+        return OperatingSystemVersion.MacOsSierra;
+    }
+    if (darwinKernelVersion === 17) {
+        return OperatingSystemVersion.MacOsHighSierra;
+    }
+    if (darwinKernelVersion === 18) {
+        return OperatingSystemVersion.MacOsMojave;
+    }
+    if (darwinKernelVersion === 19) {
+        return OperatingSystemVersion.MacOsCatalina;
+    }
+    if (darwinKernelVersion === 20) {
+        return OperatingSystemVersion.MacOsBigSur;
+    }
+    if (darwinKernelVersion === 21) {
+        return OperatingSystemVersion.MacOsMonterey;
+    }
+    if (darwinKernelVersion === 22) {
+        return OperatingSystemVersion.MacOsVentura;
+    }
+
+    if (darwinKernelVersion >= 23) {
+        return OperatingSystemVersion.MacOsSonoma;
+    }
+
+    throw new Error(`Unsupported macOS version: ${operatingSystemRelease}`);
 }
