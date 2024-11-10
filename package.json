@@ -40,7 +40,7 @@
         "@vitejs/plugin-react": "^4.3.1",
         "@vitest/coverage-v8": "^2.1.1",
         "electron": "^33.0.1",
-        "electron-builder": "^24.13.3",
+        "electron-builder": "^25.1.8",
         "eslint": "^9.9.1",
         "globals": "^15.9.0",
         "node-abi": "^3.71.0",
