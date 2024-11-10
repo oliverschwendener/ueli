@@ -42,7 +42,7 @@ describe(MacOsApplicationRepository, () => {
             `);
 
             const commandlineUtility = <CommandlineUtility>{
-                executeCommand: (c, istd, ierr) => executeCommandMock(c, istd, ierr),
+                executeCommand: (c, options) => executeCommandMock(c, options),
             };
 
             const getImagesMock = vi.fn().mockResolvedValue({
@@ -78,11 +78,7 @@ describe(MacOsApplicationRepository, () => {
                 new MacOsApplication("Finder", "/Applications/Finder.app", { url: "file://genericIcon.png" }),
             ]);
 
-            expect(executeCommandMock).toHaveBeenCalledWith(
-                `mdfind "kMDItemKind == 'Application'"`,
-                undefined,
-                undefined,
-            );
+            expect(executeCommandMock).toHaveBeenCalledWith(`mdfind "kMDItemKind == 'Application'"`, undefined);
 
             expect(getImagesMock).toHaveBeenCalledWith([
                 "/Applications/iTerm.app",

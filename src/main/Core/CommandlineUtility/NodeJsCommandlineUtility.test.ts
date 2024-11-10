@@ -32,7 +32,10 @@ describe(NodeJsCommandlineUtility, () => {
             stdout = "output";
             stderr = undefined;
 
-            const output = await new NodeJsCommandlineUtility().executeCommand("test", false, false);
+            const output = await new NodeJsCommandlineUtility().executeCommand("test", {
+                ignoreStdErr: false,
+                ignoreErr: false,
+            });
 
             expect(output).toBe("output");
             expect(execMock).toHaveBeenCalledWith("test");
@@ -43,7 +46,10 @@ describe(NodeJsCommandlineUtility, () => {
             stdout = "output";
             stderr = undefined;
 
-            const output = await new NodeJsCommandlineUtility().executeCommand("test", false, true);
+            const output = await new NodeJsCommandlineUtility().executeCommand("test", {
+                ignoreStdErr: false,
+                ignoreErr: true,
+            });
 
             expect(output).toBe("output");
             expect(execMock).toHaveBeenCalledWith("test");
@@ -54,7 +60,10 @@ describe(NodeJsCommandlineUtility, () => {
             stdout = "output";
             stderr = undefined;
 
-            const output = await new NodeJsCommandlineUtility().executeCommand("test", true, false);
+            const output = await new NodeJsCommandlineUtility().executeCommand("test", {
+                ignoreStdErr: true,
+                ignoreErr: false,
+            });
 
             expect(output).toBe("output");
             expect(execMock).toHaveBeenCalledWith("test");
@@ -66,7 +75,11 @@ describe(NodeJsCommandlineUtility, () => {
             stderr = undefined;
 
             expect(
-                async () => await new NodeJsCommandlineUtility().executeCommand("test", false, false),
+                async () =>
+                    await new NodeJsCommandlineUtility().executeCommand("test", {
+                        ignoreStdErr: false,
+                        ignoreErr: false,
+                    }),
             ).rejects.toThrow(error.message);
 
             expect(execMock).toHaveBeenCalledWith("test");
@@ -78,7 +91,11 @@ describe(NodeJsCommandlineUtility, () => {
             stderr = "This is a std err";
 
             expect(
-                async () => await new NodeJsCommandlineUtility().executeCommand("test", false, false),
+                async () =>
+                    await new NodeJsCommandlineUtility().executeCommand("test", {
+                        ignoreStdErr: false,
+                        ignoreErr: false,
+                    }),
             ).rejects.toThrow("This is a std err");
 
             expect(execMock).toHaveBeenCalledWith("test");
