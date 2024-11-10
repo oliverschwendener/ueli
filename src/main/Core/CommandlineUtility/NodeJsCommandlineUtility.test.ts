@@ -13,9 +13,16 @@ vi.mock("child_process", async (importOriginal) => {
 
     return {
         ...original,
-        exec: (command: string, callback: (_: Error | null, __: string, ___?: string) => void) => {
-            execMock(command);
-            callback(error, stdout, stderr);
+        exec: (
+            command: string,
+            options?: { maxBuffer: number },
+            callback?: (_: Error | null, __: string, ___?: string) => void,
+        ) => {
+            execMock(command, options);
+
+            if (callback) {
+                callback(error, stdout, stderr);
+            }
         },
     };
 });
@@ -38,7 +45,7 @@ describe(NodeJsCommandlineUtility, () => {
             });
 
             expect(output).toBe("output");
-            expect(execMock).toHaveBeenCalledWith("test");
+            expect(execMock).toHaveBeenCalledWith("test", { maxBuffer: undefined });
         });
 
         it("should execute the command and return the stdout if error occurs but ignore error is set to true", async () => {
@@ -52,7 +59,7 @@ describe(NodeJsCommandlineUtility, () => {
             });
 
             expect(output).toBe("output");
-            expect(execMock).toHaveBeenCalledWith("test");
+            expect(execMock).toHaveBeenCalledWith("test", { maxBuffer: undefined });
         });
 
         it("should execute the command and return the stdout if stderr occurs but ignore stderr is set to true", async () => {
@@ -66,7 +73,7 @@ describe(NodeJsCommandlineUtility, () => {
             });
 
             expect(output).toBe("output");
-            expect(execMock).toHaveBeenCalledWith("test");
+            expect(execMock).toHaveBeenCalledWith("test", { maxBuffer: undefined });
         });
 
         it("should reject the promise if an error occurs and ignore error is set to false", async () => {
@@ -82,7 +89,7 @@ describe(NodeJsCommandlineUtility, () => {
                     }),
             ).rejects.toThrow(error.message);
 
-            expect(execMock).toHaveBeenCalledWith("test");
+            expect(execMock).toHaveBeenCalledWith("test", { maxBuffer: undefined });
         });
 
         it("should reject the promise if a std error occurs and ignore std error is set to false", async () => {
@@ -98,7 +105,16 @@ describe(NodeJsCommandlineUtility, () => {
                     }),
             ).rejects.toThrow("This is a std err");
 
-            expect(execMock).toHaveBeenCalledWith("test");
+            expect(execMock).toHaveBeenCalledWith("test", { maxBuffer: undefined });
+        });
+
+        it("should respect the max buffer size", async () => {
+            error = null;
+            stdout = "output";
+            stderr = "";
+
+            await new NodeJsCommandlineUtility().executeCommand("test", { maxBuffer: 100 });
+            expect(execMock).toHaveBeenCalledWith("test", { maxBuffer: 100 });
         });
     });
 });

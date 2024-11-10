@@ -12,6 +12,8 @@ import type { WindowsStoreApplication } from "./WindowsStoreApplication";
 import { usePowershellScripts } from "./usePowershellScripts";
 
 export class WindowsApplicationRepository implements ApplicationRepository {
+    private static readonly POWERSHELL_MAX_BUFFER_SIZE = 4096 * 4096;
+
     public constructor(
         private readonly powershellUtility: PowershellUtility,
         private readonly settings: Settings,
@@ -37,6 +39,7 @@ export class WindowsApplicationRepository implements ApplicationRepository {
 
         const stdout = await this.powershellUtility.executeScript(
             this.getPowershellScript(folderPaths, fileExtensions),
+            { maxBuffer: WindowsApplicationRepository.POWERSHELL_MAX_BUFFER_SIZE },
         );
 
         const windowsApplicationRetrieverResults = <WindowsApplicationRetrieverResult[]>JSON.parse(stdout);
@@ -64,7 +67,9 @@ export class WindowsApplicationRepository implements ApplicationRepository {
 
         const { getWindowsStoreApps } = usePowershellScripts();
 
-        const stdout = await this.powershellUtility.executeScript(getWindowsStoreApps);
+        const stdout = await this.powershellUtility.executeScript(getWindowsStoreApps, {
+            maxBuffer: WindowsApplicationRepository.POWERSHELL_MAX_BUFFER_SIZE,
+        });
 
         const windowStoreApplications = <WindowsStoreApplication[]>JSON.parse(stdout);
 

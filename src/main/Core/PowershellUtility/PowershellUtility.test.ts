@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 import { PowershellUtility } from "./PowershellUtility";
 
 describe(PowershellUtility, () => {
-    it("should call commandline utility to execute powershell command", async () => {
+    const testExecuteCommand = async ({ command, options }: { command: string; options?: { maxBuffer: number } }) => {
         const executeCommandMock = vi.fn().mockReturnValue("test output");
 
         const commandlineUtility = <CommandlineUtility>{
@@ -20,13 +20,21 @@ describe(PowershellUtility, () => {
             <RandomStringProvider>{},
         );
 
-        expect(await powershellUtility.executeCommand("test command")).toBe("test output");
+        expect(await powershellUtility.executeCommand(command, options)).toBe("test output");
         expect(executeCommandMock).toHaveBeenCalledWith(
-            `${PowershellUtility.PowershellPath} -Command "& {test command}"`,
+            `${PowershellUtility.PowershellPath} -Command "& {${command}}"`,
         );
+    };
+
+    it("should call commandline utility to execute powershell command", async () => {
+        await testExecuteCommand({ command: "test command" });
     });
 
-    it("should write a temporary file, execute it and remove the file again", async () => {
+    it("should call commandline utility to execute powershell command with maxBuffer", async () => {
+        await testExecuteCommand({ command: "test command", options: { maxBuffer: 100 } });
+    });
+
+    const testExecuteScript = async ({ script, options }: { script: string; options?: { maxBuffer: number } }) => {
         const writeTextFileMock = vi.fn().mockReturnValue(Promise.resolve());
         const removeFileMock = vi.fn().mockReturnValue(Promise.resolve());
         const executeCommandMock = vi.fn().mockReturnValue("test output");
@@ -37,7 +45,7 @@ describe(PowershellUtility, () => {
             removeFile: (filePath) => removeFileMock(filePath),
         };
 
-        const commandlineUtility = <CommandlineUtility>{ executeCommand: (command) => executeCommandMock(command) };
+        const commandlineUtility = <CommandlineUtility>{ executeCommand: (c, o) => executeCommandMock(c, o) };
         const randomStringProvider = <RandomStringProvider>{ getRandomUUid: () => getRandomHexStringMock() };
 
         const powershellUtility = new PowershellUtility(
@@ -47,14 +55,26 @@ describe(PowershellUtility, () => {
             randomStringProvider,
         );
 
-        expect(await powershellUtility.executeScript("my script")).toBe("test output");
+        expect(await powershellUtility.executeScript(script, options)).toBe("test output");
+
         expect(writeTextFileMock).toHaveBeenCalledWith(
             "\ufeffmy script",
             join("temp", "directory", "randomHexString.ps1"),
         );
+
         expect(executeCommandMock).toHaveBeenCalledWith(
             `${PowershellUtility.PowershellPath} -NoProfile -NonInteractive -ExecutionPolicy bypass -File "${join("temp", "directory", "randomHexString.ps1")}"`,
+            options,
         );
+
         expect(getRandomHexStringMock).toHaveBeenCalledOnce();
+    };
+
+    it("should write a temporary file, execute it and remove the file again", async () => {
+        await testExecuteScript({ script: "my script" });
+    });
+
+    it("should write a temporary file, execute it and remove the file again, with maxBuffer", async () => {
+        await testExecuteScript({ script: "my script", options: { maxBuffer: 100 } });
     });
 });
