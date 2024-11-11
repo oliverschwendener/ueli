@@ -5,9 +5,10 @@ export interface PowershellUtility {
     /**
      * Executes a PowerShell command.
      * @param command The command to execute, e.g. `Get-Process`.
+     * @param options.maxBuffer The maximum buffer size in bytes allowed for the standard output and standard error streams.
      * @returns The output of the powershell command.
      */
-    executeCommand(command: string): Promise<string>;
+    executeCommand(command: string, options?: { maxBuffer?: number }): Promise<string>;
 
     /**
      * Executes a PowerShell script. The script can also be multi-line and include functions.
@@ -17,7 +18,8 @@ export interface PowershellUtility {
      * Write-Host "This is a PowerShell script."
      * Write-Host "It is executed by the PowerShellUtility."
      * ```
+     * @param options.maxBuffer The maximum buffer size in bytes allowed for the standard output and standard error streams.
      * @returns The output of the powershell script.
      */
-    executeScript(script: string): Promise<string>;
+    executeScript(script: string, options?: { maxBuffer?: number }): Promise<string>;
 }

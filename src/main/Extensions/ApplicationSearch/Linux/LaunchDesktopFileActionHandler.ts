@@ -16,6 +16,6 @@ export class LaunchDesktopFileActionHandler implements ActionHandler {
      * Throws an error if the file could not be launched or desktop environment isn't supported.
      */
     public async invokeAction(action: SearchResultItemAction): Promise<void> {
-        await this.commandlineUtility.executeCommand(`gio launch ${action.argument}`, true);
+        await this.commandlineUtility.executeCommand(`gio launch ${action.argument}`, { ignoreStdErr: true });
     }
 }
