@@ -17,11 +17,9 @@ import {
     MacOsBrowserWindowConstructorOptionsProvider,
     VibrancyProvider,
     WindowsBrowserWindowConstructorOptionsProvider,
-    defaultWindowSize,
 } from "./BrowserWindowConstructorOptionsProvider";
 import { BrowserWindowCreator } from "./BrowserWindowCreator";
 import { BrowserWindowToggler } from "./BrowserWindowToggler";
-import { WindowBoundsMemory } from "./WindowBoundsMemory";
 import { sendToBrowserWindow } from "./sendToBrowserWindow";
 
 export class BrowserWindowModule {
@@ -35,8 +33,6 @@ export class BrowserWindowModule {
         const nativeTheme = dependencyRegistry.get("NativeTheme");
         const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
         const ipcMain = dependencyRegistry.get("IpcMain");
-
-        const windowBoundsMemory = new WindowBoundsMemory(dependencyRegistry.get("Screen"), {});
 
         const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, operatingSystem);
 
@@ -67,13 +63,7 @@ export class BrowserWindowModule {
 
         browserWindow.setVisibleOnAllWorkspaces(settingsManager.getValue("window.visibleOnAllWorkspaces", false));
 
-        const browserWindowToggler = new BrowserWindowToggler(
-            operatingSystem,
-            app,
-            browserWindow,
-            defaultWindowSize,
-            settingsManager,
-        );
+        const browserWindowToggler = new BrowserWindowToggler(operatingSystem, app, browserWindow);
 
         eventEmitter.emitEvent("browserWindowCreated", { browserWindow });
 
@@ -83,13 +73,11 @@ export class BrowserWindowModule {
             browserWindowToggler,
             browserWindow,
             dependencyRegistry.get("SettingsManager"),
-            windowBoundsMemory,
         );
 
         BrowserWindowModule.registerEvents(
             browserWindow,
             dependencyRegistry.get("EventSubscriber"),
-            windowBoundsMemory,
             vibrancyProvider,
             backgroundMaterialProvider,
             browserWindowToggler,
@@ -108,7 +96,6 @@ export class BrowserWindowModule {
         browserWindowToggler: BrowserWindowToggler,
         browserWindow: BrowserWindow,
         settingsManager: SettingsManager,
-        windowBoundsMemory: WindowBoundsMemory,
     ) {
         const shouldHideWindowOnBlur = () =>
             settingsManager
@@ -116,14 +103,11 @@ export class BrowserWindowModule {
                 .includes("blur");
 
         browserWindow.on("blur", () => shouldHideWindowOnBlur() && browserWindowToggler.hide());
-        browserWindow.on("moved", () => windowBoundsMemory.saveWindowBounds(browserWindow));
-        browserWindow.on("resized", () => windowBoundsMemory.saveWindowBounds(browserWindow));
     }
 
     private static registerEvents(
         browserWindow: BrowserWindow,
         eventSubscriber: EventSubscriber,
-        windowBoundsMemory: WindowBoundsMemory,
         vibrancyProvider: VibrancyProvider,
         backgroundMaterialProvider: BackgroundMaterialProvider,
         browserWindowToggler: BrowserWindowToggler,
@@ -147,9 +131,7 @@ export class BrowserWindowModule {
             }
         });
 
-        eventSubscriber.subscribe("hotkeyPressed", () =>
-            browserWindowToggler.toggle(windowBoundsMemory.getBoundsNearestToCursor()),
-        );
+        eventSubscriber.subscribe("hotkeyPressed", () => browserWindowToggler.toggle());
 
         eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
             sendToBrowserWindow(browserWindow, `settingUpdated[${key}]`, { value });
