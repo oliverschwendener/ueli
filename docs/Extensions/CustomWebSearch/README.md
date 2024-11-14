@@ -16,6 +16,7 @@ This extension allows define custom search engines, to directly search on the pr
 ## About this extension
 
 Author: [NiewView](https://github.com/NiewView)
+Extension Icon: Designed by [OpenMoji](https://openmoji.org/) – the open-source emoji and icon project. License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/#)
 
 Supported operating systems:
 
