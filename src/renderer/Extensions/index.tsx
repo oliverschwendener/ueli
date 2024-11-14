@@ -38,9 +38,6 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         BrowserBookmarks: {
             settings: <BrowserBookmarksSettings />,
         },
-        CustomWebSearch: {
-            settings: <CustomWebSearchSettings />,
-        },
         Calculator: {
             settings: <CalculatorSettings />,
         },
@@ -49,6 +46,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         },
         CurrencyConversion: {
             settings: <CurrencyConversionSettings />,
+        },
+        CustomWebSearch: {
+            settings: <CustomWebSearchSettings />,
         },
         DeeplTranslator: {
             extension: <DeeplTranslator {...props} />,
