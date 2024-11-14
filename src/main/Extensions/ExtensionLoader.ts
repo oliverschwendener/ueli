@@ -7,6 +7,7 @@ import { BrowserBookmarksModule } from "./BrowserBookmarks";
 import { CalculatorModule } from "./Calculator";
 import { ColorConverterExtensionModule } from "./ColorConverter";
 import { CurrencyConversionModule } from "./CurrencyConversion/CurrencyConversionModule";
+import { CustomWebSearchModule } from "./CustomWebSearch";
 import { DeeplTranslatorModule } from "./DeeplTranslator";
 import type { ExtensionModule } from "./ExtensionModule";
 import { FileSearchModule } from "./FileSearch/FileSearchModule";
@@ -44,6 +45,7 @@ export class ExtensionLoader {
             new TerminalLauncherModule(),
             new UeliCommandModule(),
             new VSCodeModule(),
+            new CustomWebSearchModule(),
             new WebSearchExtensionModule(),
             new WindowsControlPanelModule(),
             new WorkflowExtensionModule(),
