@@ -10,10 +10,11 @@ import {
     DialogTitle,
     DialogTrigger,
     Field,
+    InfoLabel,
     Input,
 } from "@fluentui/react-components";
 import { AddRegular } from "@fluentui/react-icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 type EditCustomSearchEngineProps = {
@@ -54,10 +55,6 @@ export const EditCustomSearchEngine = ({ initialEngineSetting, onSave }: EditCus
         setTemporaryCustomSearchEngineSetting(initialEngineSetting);
         setIsDialogOpen(false);
     };
-
-    useEffect(() => {
-        setValidation(validateCustomSearchEngineSetting(temporaryCustomSearchEngineSetting));
-    });
 
     const setUrl = (url: string) => {
         const newEngineSetting = { ...temporaryCustomSearchEngineSetting, url };
@@ -100,9 +97,11 @@ export const EditCustomSearchEngine = ({ initialEngineSetting, onSave }: EditCus
                     <DialogContent>
                         <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: 10 }}>
                             <Field
+                                orientation="horizontal"
+                                required={true}
                                 label={t("name")}
                                 validationMessage={validation.name ? t(validation.name) : ""}
-                                validationState={"name" in validation ? "error" : "success"}
+                                validationState={"name" in validation ? "error" : undefined}
                             >
                                 <Input
                                     value={temporaryCustomSearchEngineSetting.name}
@@ -110,9 +109,11 @@ export const EditCustomSearchEngine = ({ initialEngineSetting, onSave }: EditCus
                                 />
                             </Field>
                             <Field
-                                label={t("prefix")}
+                                orientation="horizontal"
+                                required={true}
                                 validationMessage={validation.prefix ? t(validation.prefix) : ""}
-                                validationState={"prefix" in validation ? "error" : "success"}
+                                validationState={"prefix" in validation ? "error" : undefined}
+                                label={<InfoLabel info={t("prefixTooltip")}>{t("prefix")}</InfoLabel>}
                             >
                                 <Input
                                     value={temporaryCustomSearchEngineSetting.prefix}
@@ -120,9 +121,11 @@ export const EditCustomSearchEngine = ({ initialEngineSetting, onSave }: EditCus
                                 />
                             </Field>
                             <Field
-                                label={t("searchEngineUrl")}
+                                orientation="horizontal"
+                                required={true}
                                 validationMessage={validation.url ? t(validation.url) : ""}
-                                validationState={"url" in validation ? "error" : "success"}
+                                validationState={"url" in validation ? "error" : undefined}
+                                label={<InfoLabel info={t("searchEngineUrlTooltip")}>{t("searchEngineUrl")}</InfoLabel>}
                             >
                                 <Input
                                     value={temporaryCustomSearchEngineSetting.url}
@@ -130,11 +133,18 @@ export const EditCustomSearchEngine = ({ initialEngineSetting, onSave }: EditCus
                                 />
                             </Field>
 
-                            <Checkbox
-                                checked={temporaryCustomSearchEngineSetting.encodeSearchTerm}
-                                onChange={(_, { checked }) => setEncodeSearchTerm(checked === true)}
-                                label={t("encodeSearchTerm")}
-                            />
+                            <Field
+                                orientation="horizontal"
+                                required={true}
+                                label={
+                                    <InfoLabel info={t("encodeSearchTermTooltip")}>{t("encodeSearchTerm")}</InfoLabel>
+                                }
+                            >
+                                <Checkbox
+                                    checked={temporaryCustomSearchEngineSetting.encodeSearchTerm}
+                                    onChange={(_, { checked }) => setEncodeSearchTerm(checked === true)}
+                                />
+                            </Field>
                         </div>
                     </DialogContent>
                     <DialogActions>
@@ -146,6 +156,13 @@ export const EditCustomSearchEngine = ({ initialEngineSetting, onSave }: EditCus
                         <Button
                             disabled={Object.keys(validation).length > 0}
                             onClick={() => {
+                                const validationResult = validateCustomSearchEngineSetting(
+                                    temporaryCustomSearchEngineSetting,
+                                );
+                                setValidation(validationResult);
+                                if (Object.keys(validationResult).length > 0) {
+                                    return;
+                                }
                                 closeDialog();
                                 onSave(temporaryCustomSearchEngineSetting);
                             }}

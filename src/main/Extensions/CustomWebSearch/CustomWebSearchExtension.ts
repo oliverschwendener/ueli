@@ -62,14 +62,6 @@ export class CustomWebSearchExtension implements Extension {
         ];
     }
 
-    private async getImg(uri: string): Promise<Image> {
-        try {
-            return await this.fileImageGenerator.getImage(uri);
-        } catch (e) {
-            return this.getDefaultFileImage();
-        }
-    }
-
     public isSupported(): boolean {
         return ["macOS", "Linux", "Windows"].includes(this.operatingSystem);
     }
@@ -112,7 +104,7 @@ export class CustomWebSearchExtension implements Extension {
                 extensionName: "Custom Seb Search",
                 addSearchEngine: "Add web search",
                 prefix: "Prefix",
-                prefixDescription: "The prefix to trigger this custom search engine.",
+                prefixTooltip: "The prefix to trigger this custom search engine.",
                 prefixError: "Prefix is required",
                 name: "Name",
                 nameError: "Name is required",
@@ -121,6 +113,8 @@ export class CustomWebSearchExtension implements Extension {
                 searchEngineUrlError: "The URL template does not contain `{{query}}` placeholder.",
                 encodeSearchTerm: "Encode search term",
                 encodeSearchTermTooltip: "Encode the search term before passing it to the search engine.",
+                add: "Add",
+                cancel: "Cancel",
             },
             "de-CH": {
                 extensionName: "Personalisierte Websuche",
@@ -135,6 +129,8 @@ export class CustomWebSearchExtension implements Extension {
                 encodeSearchTerm: "Suchbegriff URL-kodieren",
                 encodeSearchTermTooltip:
                     "Gibt an, ob der Suchbegriff vor der Übergabe an die Suchmaschine kodiert werden soll.",
+                add: "Hinzufügen",
+                cancel: "Abbrechen",
             },
         };
     }
