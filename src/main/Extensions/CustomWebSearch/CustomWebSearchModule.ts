@@ -11,7 +11,6 @@ export class CustomWebSearchModule implements ExtensionModule {
                 dependencyRegistry.get("OperatingSystem"),
                 dependencyRegistry.get("AssetPathResolver"),
                 dependencyRegistry.get("SettingsManager"),
-                dependencyRegistry.get("FileImageGenerator"),
             ),
         };
     }

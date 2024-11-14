@@ -1,6 +1,5 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
-import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
@@ -24,7 +23,6 @@ export class CustomWebSearchExtension implements Extension {
         private readonly operatingSystem: OperatingSystem,
         private readonly assetPathResolver: AssetPathResolver,
         private readonly settingsManager: SettingsManager,
-        private readonly fileImageGenerator: FileImageGenerator,
     ) {}
 
     async getSearchResultItems(): Promise<SearchResultItem[]> {
