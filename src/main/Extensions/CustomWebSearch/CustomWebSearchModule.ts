@@ -10,6 +10,7 @@ export class CustomWebSearchModule implements ExtensionModule {
             extension: new CustomWebSearchExtension(
                 dependencyRegistry.get("AssetPathResolver"),
                 dependencyRegistry.get("SettingsManager"),
+                dependencyRegistry.get("UrlImageGenerator"),
             ),
         };
     }
