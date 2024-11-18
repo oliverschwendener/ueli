@@ -1,13 +1,15 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
+import type { UrlImageGenerator } from "@Core/ImageGenerator";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { OperatingSystem, SearchResultItem } from "@common/Core";
+import type { SearchResultItem } from "@common/Core";
+import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { CustomSearchEngineSetting, Settings } from "@common/Extensions/CustomWebSearch";
 
 export class CustomWebSearchExtension implements Extension {
     public readonly id = "CustomWebSearch";
-    public readonly name = "Browser Search";
+    public readonly name = "Custom Web Search";
 
     public readonly nameTranslation = {
         key: "extensionName",
@@ -20,9 +22,9 @@ export class CustomWebSearchExtension implements Extension {
     };
 
     public constructor(
-        private readonly operatingSystem: OperatingSystem,
         private readonly assetPathResolver: AssetPathResolver,
         private readonly settingsManager: SettingsManager,
+        private readonly urlImageGenerator: UrlImageGenerator,
     ) {}
 
     async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -32,7 +34,7 @@ export class CustomWebSearchExtension implements Extension {
 
     public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
         const customSearchEngines = this.settingsManager.getValue<CustomSearchEngineSetting[]>(
-            `extension[${this.id}].customSearchEngines`,
+            getExtensionSettingKey(this.id, "customSearchEngines"),
             this.getSettingDefaultValue("customSearchEngines"),
         );
 
@@ -44,24 +46,25 @@ export class CustomWebSearchExtension implements Extension {
 
         const searchInput = searchTerm.replace(selectedSearchEngine.prefix, "").trim();
         const encodeSearchInput = selectedSearchEngine.encodeSearchTerm ? encodeURIComponent(searchInput) : searchInput;
+        const searchUrl = selectedSearchEngine.url.replace("{{query}}", encodeSearchInput);
 
         return [
             {
                 name: selectedSearchEngine.name,
                 description: `Search in ${selectedSearchEngine.name}`,
                 id: `${selectedSearchEngine.name}:instantResult`,
-                image: this.getImage(),
+                image: this.urlImageGenerator.getImage(new URL(searchUrl).origin),
                 defaultAction: {
                     handlerId: "Url",
                     description: `Search in default Browser`,
-                    argument: selectedSearchEngine.url.replace("{{query}}", encodeSearchInput),
+                    argument: searchUrl,
                 },
             },
         ];
     }
 
     public isSupported(): boolean {
-        return ["macOS", "Linux", "Windows"].includes(this.operatingSystem);
+        return true;
     }
 
     public getSettingDefaultValue(key: keyof Settings) {

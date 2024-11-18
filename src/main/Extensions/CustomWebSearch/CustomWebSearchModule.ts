@@ -8,7 +8,6 @@ export class CustomWebSearchModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
         return {
             extension: new CustomWebSearchExtension(
-                dependencyRegistry.get("OperatingSystem"),
                 dependencyRegistry.get("AssetPathResolver"),
                 dependencyRegistry.get("SettingsManager"),
             ),
