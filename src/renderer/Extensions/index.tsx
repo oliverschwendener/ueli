@@ -6,6 +6,7 @@ import { BrowserBookmarksSettings } from "./BrowserBookmarks";
 import { CalculatorSettings } from "./Calculator";
 import { ColorConverterSettings } from "./ColorConverter";
 import { CurrencyConversionSettings } from "./CurrencyConversion";
+import { CustomWebSearchSettings } from "./CustomWebSearch";
 import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
 import { FileSearch, FileSearchSettings } from "./FileSearch";
 import { SimpleFileSearchSettings } from "./SimpleFileSearch";
@@ -45,6 +46,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         },
         CurrencyConversion: {
             settings: <CurrencyConversionSettings />,
+        },
+        CustomWebSearch: {
+            settings: <CustomWebSearchSettings />,
         },
         DeeplTranslator: {
             extension: <DeeplTranslator {...props} />,
