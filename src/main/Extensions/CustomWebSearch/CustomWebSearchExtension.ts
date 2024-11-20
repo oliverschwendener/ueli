@@ -102,7 +102,7 @@ export class CustomWebSearchExtension implements Extension {
     public getI18nResources() {
         return {
             "en-US": {
-                extensionName: "Custom Seb Search",
+                extensionName: "Custom Web Search",
                 addSearchEngine: "Add web search",
                 prefix: "Prefix",
                 prefixTooltip: "The prefix to trigger this custom search engine.",
@@ -118,7 +118,7 @@ export class CustomWebSearchExtension implements Extension {
                 cancel: "Cancel",
             },
             "de-CH": {
-                extensionName: "Personalisierte Websuche",
+                extensionName: "Benutzerdefinierte Websuche",
                 addSearchEngine: "Websuche hinzufügen",
                 prefix: "Prefix",
                 prefixDescription: "Der Präfix, um diese benutzerdefinierte Websuche auszulösen.",
