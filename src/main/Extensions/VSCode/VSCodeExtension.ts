@@ -226,7 +226,7 @@ export class VSCodeExtension implements Extension {
 
         const fuzziness = this.settingsManager.getValue<number>("searchEngine.fuzziness", 0.5);
         const maxSearchResultItems = this.settingsManager.getValue<number>("searchEngine.maxResultLength", 50);
-        const searchEngineId = this.settingsManager.getValue<SearchEngineId>("searchEngine.id", "Fuse.js");
+        const searchEngineId = this.settingsManager.getValue<SearchEngineId>("searchEngine.id", "fuzzysort");
 
         return searchFilter(
             {

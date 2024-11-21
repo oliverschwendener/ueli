@@ -38,6 +38,13 @@ src/common/Extensions/Base64Conversion @ChristopherSteiner
 src/main/Extensions/Base64Conversion @ChristopherSteiner
 src/renderer/Extensions/Base64Conversion @ChristopherSteiner
 
+# CustomWebSearch
+assets/Extensions/CustomWebSearch @NiewView
+docs/Extensions/CustomWebSearch @NiewView
+src/common/Extensions/CustomWebSearch @NiewView
+src/main/Extensions/CustomWebSearch @NiewView
+src/renderer/Extensions/CustomWebSearch @NiewView
+
 # JetBrainsToolbox
 assets/Extensions/JetBrainsToolbox @scomans
 docs/Extensions/JetBrainsToolbox @scomans
