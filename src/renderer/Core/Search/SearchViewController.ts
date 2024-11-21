@@ -65,7 +65,7 @@ export const useSearchViewController = ({
 
     const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
     const { value: maxSearchResultItems } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
-    const { value: searchEngineId } = useSetting<SearchEngineId>({ key: "searchEngine.id", defaultValue: "Fuse.js" });
+    const { value: searchEngineId } = useSetting<SearchEngineId>({ key: "searchEngine.id", defaultValue: "fuzzysort" });
 
     const search = (searchTerm: string, selectedItemId?: string) => {
         const searchResult = getSearchResult({

@@ -9,7 +9,7 @@ export const SearchEngineId = () => {
 
     const { value: searchEngineId, updateValue: setSearchEngineId } = useSetting({
         key: "searchEngine.id",
-        defaultValue: "Fuse.js",
+        defaultValue: "fuzzysort",
     });
 
     return (
