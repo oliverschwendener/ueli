@@ -28,6 +28,20 @@ const getSearchEngineSettings = (searchEngineNames: string[]): CustomSearchEngin
             prefix: "domain",
             url: "https://{{query}}.ueli.app/test",
         },
+        {
+            encodeSearchTerm: true,
+            id: "00000000-0000-0000-0000-000000000003",
+            name: "g",
+            prefix: "g",
+            url: "https://ueli.app/g/{{query}}",
+        },
+        {
+            encodeSearchTerm: true,
+            id: "00000000-0000-0000-0000-000000000004",
+            name: "genius",
+            prefix: "genius",
+            url: "https://ueli.app/genius/{{query}}",
+        },
     ];
     return customSearchEngines.filter((s) => searchEngineNames.includes(s.name));
 };
@@ -124,6 +138,21 @@ describe(CustomWebSearchExtension, () => {
             expect(results).toHaveLength(1);
             expect(results[0].defaultAction.handlerId).toEqual("Url");
             expect(results[0].defaultAction.argument).toEqual("https://testinput.ueli.app/test");
+        });
+
+        it("should allow multiple search results, when multiple search engines match", () => {
+            const getValueMock = vi.fn().mockReturnValue(getSearchEngineSettings(["g", "genius"]));
+            const settingsManager = <SettingsManager>{
+                getValue: (k, d, s) => getValueMock(k, d, s),
+            };
+            const customWebSearch = new CustomWebSearchExtension(assetPathResolver, settingsManager, urlImageGenerator);
+
+            const results = customWebSearch.getInstantSearchResultItems("genius testinput");
+            expect(results).toHaveLength(2);
+            expect(results[0].defaultAction.handlerId).toEqual("Url");
+            expect(results[0].defaultAction.argument).toEqual("https://ueli.app/g/enius%20testinput");
+            expect(results[1].defaultAction.handlerId).toEqual("Url");
+            expect(results[1].defaultAction.argument).toEqual("https://ueli.app/genius/testinput");
         });
     });
 });

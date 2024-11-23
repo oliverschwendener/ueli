@@ -32,35 +32,37 @@ export class CustomWebSearchExtension implements Extension {
         return [];
     }
 
+    private createInstantSearchResultItem(engine: CustomSearchEngineSetting, searchTerm: string): SearchResultItem {
+        const searchInput = searchTerm.replace(engine.prefix, "").trim();
+        const encodeSearchInput = engine.encodeSearchTerm ? encodeURIComponent(searchInput) : searchInput;
+        const searchUrl = engine.url.replace("{{query}}", encodeSearchInput);
+        console.log(searchUrl);
+        return {
+            name: engine.name,
+            description: `Search in ${engine.name}`,
+            id: `${engine.name}:instantResult`,
+            image: this.urlImageGenerator.getImage(new URL(searchUrl).origin),
+            defaultAction: {
+                handlerId: "Url",
+                description: `Search in default Browser`,
+                argument: searchUrl,
+            },
+        };
+    }
+
     public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
         const customSearchEngines = this.settingsManager.getValue<CustomSearchEngineSetting[]>(
             getExtensionSettingKey(this.id, "customSearchEngines"),
             this.getSettingDefaultValue("customSearchEngines"),
         );
 
-        const selectedSearchEngine = customSearchEngines.find((engine) => searchTerm.startsWith(engine.prefix));
+        const selectedSearchEngines = customSearchEngines.filter((engine) => searchTerm.startsWith(engine.prefix));
 
-        if (!selectedSearchEngine) {
+        if (selectedSearchEngines.length === 0) {
             return [];
         }
 
-        const searchInput = searchTerm.replace(selectedSearchEngine.prefix, "").trim();
-        const encodeSearchInput = selectedSearchEngine.encodeSearchTerm ? encodeURIComponent(searchInput) : searchInput;
-        const searchUrl = selectedSearchEngine.url.replace("{{query}}", encodeSearchInput);
-
-        return [
-            {
-                name: selectedSearchEngine.name,
-                description: `Search in ${selectedSearchEngine.name}`,
-                id: `${selectedSearchEngine.name}:instantResult`,
-                image: this.urlImageGenerator.getImage(new URL(searchUrl).origin),
-                defaultAction: {
-                    handlerId: "Url",
-                    description: `Search in default Browser`,
-                    argument: searchUrl,
-                },
-            },
-        ];
+        return selectedSearchEngines.map((engine) => this.createInstantSearchResultItem(engine, searchTerm));
     }
 
     public isSupported(): boolean {
