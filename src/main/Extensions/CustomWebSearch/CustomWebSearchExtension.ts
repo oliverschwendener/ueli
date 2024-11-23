@@ -36,7 +36,6 @@ export class CustomWebSearchExtension implements Extension {
         const searchInput = searchTerm.replace(engine.prefix, "").trim();
         const encodeSearchInput = engine.encodeSearchTerm ? encodeURIComponent(searchInput) : searchInput;
         const searchUrl = engine.url.replace("{{query}}", encodeSearchInput);
-        console.log(searchUrl);
         return {
             name: engine.name,
             description: `Search in ${engine.name}`,
