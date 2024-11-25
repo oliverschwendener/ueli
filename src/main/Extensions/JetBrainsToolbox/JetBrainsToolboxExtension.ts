@@ -51,19 +51,19 @@ export class JetBrainsToolboxExtension implements Extension {
         githubUserName: "scomans",
     };
 
-    readonly toolboxPaths = {
+    private readonly toolboxPaths = {
         Windows: process.env.LOCALAPPDATA + "/JetBrains/Toolbox/",
         macOS: process.env.HOME + "/Library/Application Support/JetBrains/Toolbox/",
         Linux: process.env.HOME + "/.local/share/JetBrains/Toolbox/",
     };
 
-    readonly configPaths = {
+    private readonly configPaths = {
         Windows: process.env.APPDATA + "/JetBrains/",
         macOS: process.env.HOME + "/Library/Application Support/JetBrains/",
         Linux: process.env.HOME + "/.config/JetBrains/",
     };
 
-    recents: SearchResultItem[] = [];
+    private recents: SearchResultItem[] = [];
 
     public constructor(
         private readonly operatingSystem: OperatingSystem,
@@ -74,7 +74,7 @@ export class JetBrainsToolboxExtension implements Extension {
         private readonly translator: Translator,
     ) {}
 
-    async getSearchResultItems(): Promise<SearchResultItem[]> {
+    public async getSearchResultItems(): Promise<SearchResultItem[]> {
         const recentPaths = await this.getRecents();
 
         this.recents = await Promise.all(
@@ -177,7 +177,7 @@ export class JetBrainsToolboxExtension implements Extension {
         return recents;
     }
 
-    async getSearchItem(recent: JetBrainsToolboxRecent): Promise<SearchResultItem> {
+    private async getSearchItem(recent: JetBrainsToolboxRecent): Promise<SearchResultItem> {
         const { t } = this.translator.createT(this.getI18nResources());
         const img = await this.getProjectImage(recent);
         const path = recent.path;
