@@ -34,7 +34,7 @@ export class ColorConverterExtension implements Extension {
         private readonly colorConverter: ColorConverter,
     ) {}
 
-    async getSearchResultItems(): Promise<SearchResultItem[]> {
+    public async getSearchResultItems(): Promise<SearchResultItem[]> {
         return [];
     }
 

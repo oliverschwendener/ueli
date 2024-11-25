@@ -27,7 +27,7 @@ export class CustomWebSearchExtension implements Extension {
         private readonly urlImageGenerator: UrlImageGenerator,
     ) {}
 
-    async getSearchResultItems(): Promise<SearchResultItem[]> {
+    public async getSearchResultItems(): Promise<SearchResultItem[]> {
         // Custom search engines do not have static search results
         return [];
     }
