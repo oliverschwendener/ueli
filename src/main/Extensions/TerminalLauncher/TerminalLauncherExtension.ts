@@ -31,7 +31,7 @@ export class TerminalLauncherExtension implements Extension {
         private readonly terminalRegistry: TerminalRegistry,
     ) {}
 
-    async getSearchResultItems(): Promise<SearchResultItem[]> {
+    public async getSearchResultItems(): Promise<SearchResultItem[]> {
         return [];
     }
 

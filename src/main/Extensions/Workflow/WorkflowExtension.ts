@@ -109,6 +109,10 @@ export class WorkflowExtension implements Extension {
                 "argType.OpenUrl.placeholder": "Add a URL",
                 "argType.ExecuteCommand.placeholder": "Add a command",
                 removeAction: "Remove Action",
+                removeWorkflowConfirmationTitle: `You are about to delete "{{workflowName}}"`,
+                removeWorkflowConfirmationContent: "Are you sure?",
+                yes: "Yes",
+                no: "No",
             },
             "de-CH": {
                 extensionName: "Arbeitsabläufe",
@@ -145,6 +149,10 @@ export class WorkflowExtension implements Extension {
                 "argType.OpenUrl.placeholder": "Füge eine URL hinzu",
                 "argType.ExecuteCommand.placeholder": "Füge einen Befehl hinzu",
                 removeAction: "Aktion entfernen",
+                removeWorkflowConfirmationTitle: `Du bist gerade dabei den Arbeitsablauf "{{workflowName}}" zu löschen.`,
+                removeWorkflowConfirmationContent: "Bist du dir sicher?",
+                yes: "Ja",
+                no: "Nein",
             },
         };
     }

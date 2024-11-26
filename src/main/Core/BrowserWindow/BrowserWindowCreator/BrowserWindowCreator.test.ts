@@ -8,7 +8,7 @@ const constructorMock = vi.fn().mockReturnValue(browserWindowMock);
 vi.mock("electron", () => {
     return {
         BrowserWindow: class {
-            constructor(options: BrowserWindowConstructorOptions) {
+            public constructor(options: BrowserWindowConstructorOptions) {
                 constructorMock(options);
                 return browserWindowMock;
             }

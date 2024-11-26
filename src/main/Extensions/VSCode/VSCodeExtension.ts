@@ -36,13 +36,13 @@ export class VSCodeExtension implements Extension {
         githubUserName: "IrishBruse",
     };
 
-    readonly stateDatabasePaths = {
+    private readonly stateDatabasePaths = {
         Windows: process.env.APPDATA + "/Code/User/globalStorage/state.vscdb",
         macOS: process.env.HOME + "/Library/Application Support/Code/User/globalStorage/state.vscdb",
         Linux: process.env.HOME + "/.config/Code/User/globalStorage/state.vscdb",
     };
 
-    recents: SearchResultItem[] = [];
+    private recents: SearchResultItem[] = [];
 
     public constructor(
         private readonly operatingSystem: OperatingSystem,
@@ -52,7 +52,7 @@ export class VSCodeExtension implements Extension {
         private readonly fileImageGenerator: FileImageGenerator,
     ) {}
 
-    async getSearchResultItems(): Promise<SearchResultItem[]> {
+    public async getSearchResultItems(): Promise<SearchResultItem[]> {
         const searchResults: SearchResultItem[] = [];
 
         for (const recent of this.getRecents()) {
@@ -82,7 +82,7 @@ export class VSCodeExtension implements Extension {
         );
     }
 
-    getUri = (recent: VscodeRecent) => {
+    private getUri = (recent: VscodeRecent) => {
         if (recent.fileUri) {
             return recent.fileUri;
         }
@@ -97,7 +97,8 @@ export class VSCodeExtension implements Extension {
 
         throw new Error("Unknown file type");
     };
-    getPath = (uri: string) => {
+
+    private getPath = (uri: string) => {
         const decodedUri = decodeURIComponent(uri);
         if (uri.startsWith("file://")) {
             const url = new URL(decodedUri);
@@ -146,7 +147,7 @@ export class VSCodeExtension implements Extension {
         return this.getImage();
     }
 
-    async getSearchItem(recent: VscodeRecent): Promise<SearchResultItem> {
+    private async getSearchItem(recent: VscodeRecent): Promise<SearchResultItem> {
         const uri = this.getUri(recent);
         const fileType = this.getFileType(recent, uri);
         const commandArg = this.getCommandArg(recent);

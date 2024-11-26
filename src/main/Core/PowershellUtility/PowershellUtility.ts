@@ -5,7 +5,7 @@ import { join } from "path";
 import type { PowershellUtility as PowershellUtilityInterface } from "./Contract";
 
 export class PowershellUtility implements PowershellUtilityInterface {
-    static PowershellPath = `C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
+    public static PowershellPath = `C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
 
     private readonly byteOrderMark: string = "\ufeff";
 
