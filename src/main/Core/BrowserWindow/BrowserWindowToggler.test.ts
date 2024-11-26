@@ -122,7 +122,7 @@ describe(BrowserWindowToggler, () => {
             expect(webContentsSendMock).toHaveBeenCalledWith("windowFocused");
         });
 
-        it("should show and focus the window if its hidden, repositioning it with the given bounds and re-centering it if alwaysCenter is set to true", () => {
+        it("should show and focus the window if its hidden", () => {
             const { app, showMock: appShowMock } = createApp();
 
             const { browserWindow, focusMock, isVisibleMock, restoreMock, showMock, webContentsSendMock } =

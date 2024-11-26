@@ -1,7 +1,6 @@
 import { useContextBridge, useSetting } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "../../SettingGroupList";
-import { AlwaysCenter } from "./AlwaysCenter";
 import { AlwaysOnTop } from "./AlwaysOnTop";
 import { BackgroundMaterial } from "./BackgroundMaterial";
 import { HideWindowOn } from "./HideWindowOn";
@@ -26,7 +25,6 @@ export const Window = () => {
             <SettingGroup title="Behavior">
                 <AlwaysOnTop />
                 <ShowOnStartup />
-                <AlwaysCenter />
                 <HideWindowOn />
                 <ScrollBehavior />
                 {["macOS", "Linux"].includes(operatingSystem) && <WorkspaceVisibility />}
