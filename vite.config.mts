@@ -30,7 +30,7 @@ export default defineConfig(({ command }) => {
         build: {
             outDir: rendererOutDir,
             emptyOutDir: true,
-            chunkSizeWarningLimit: 1000,
+            chunkSizeWarningLimit: 1200,
         },
         plugins: [
             react(),
