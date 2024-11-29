@@ -49,7 +49,6 @@ export class LinuxApplicationRepository implements ApplicationRepository {
                 result.push(...readDirectoryPromiseResult.value.filter((filePath) => extname(filePath) === ".desktop"));
             } else {
                 this.logger.error(readDirectoryPromiseResult.reason);
-                continue;
             }
         }
 
@@ -73,7 +72,6 @@ export class LinuxApplicationRepository implements ApplicationRepository {
                 }
             } else {
                 this.logger.error(`Unable to generate Application for ${filePath}. Reason: ${promiseResult.reason}`);
-                continue;
             }
         }
 
