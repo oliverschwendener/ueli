@@ -1,5 +1,4 @@
-import type { FluentIcon } from "../FluentIcon";
-import type { SearchResultItemAction } from "../SearchResultItemAction";
+import type { FluentIcon, SearchResultItemAction } from "@common/Core";
 
 /**
  * Creates an action to navigate to the given extension by its ID.

@@ -1,6 +1,5 @@
+import { type SearchResultItemAction, createRemoveFromFavoritesAction } from "@common/Core";
 import { describe, expect, it } from "vitest";
-import type { SearchResultItemAction } from "../SearchResultItemAction";
-import { createRemoveFromFavoritesAction } from "./createRemoveFromFavoritesAction";
 
 describe(createRemoveFromFavoritesAction, () => {
     it("should create a 'remove from favorites' action", () => {
