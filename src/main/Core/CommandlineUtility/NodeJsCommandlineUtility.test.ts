@@ -81,12 +81,11 @@ describe(NodeJsCommandlineUtility, () => {
             stdout = "output";
             stderr = undefined;
 
-            expect(
-                async () =>
-                    await new NodeJsCommandlineUtility().executeCommand("test", {
-                        ignoreStdErr: false,
-                        ignoreErr: false,
-                    }),
+            await expect(() =>
+                new NodeJsCommandlineUtility().executeCommand("test", {
+                    ignoreStdErr: false,
+                    ignoreErr: false,
+                }),
             ).rejects.toThrow(error.message);
 
             expect(execMock).toHaveBeenCalledWith("test", { maxBuffer: undefined });
@@ -97,12 +96,11 @@ describe(NodeJsCommandlineUtility, () => {
             stdout = "output";
             stderr = "This is a std err";
 
-            expect(
-                async () =>
-                    await new NodeJsCommandlineUtility().executeCommand("test", {
-                        ignoreStdErr: false,
-                        ignoreErr: false,
-                    }),
+            await expect(() =>
+                new NodeJsCommandlineUtility().executeCommand("test", {
+                    ignoreStdErr: false,
+                    ignoreErr: false,
+                }),
             ).rejects.toThrow("This is a std err");
 
             expect(execMock).toHaveBeenCalledWith("test", { maxBuffer: undefined });
