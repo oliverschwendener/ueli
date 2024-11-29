@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "../SearchResultItem";
+import type { SearchResultItem } from "@common/Core";
 import { fuseJsSearchFilter } from "./fuseJsSearchFilter";
 import { fuzzySortFilter } from "./fuzzySortFilter";
 import type { InternalSearchFilter } from "./InternalSearchFilter";
