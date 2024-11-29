@@ -30,7 +30,8 @@ export class CurrencyConversion implements Extension {
         defaultTargetCurrency: "eur",
     };
 
-    private readonly rates: Rates = {};
+    // This property is not read-only by intention, so it can be easily set for tests
+    private rates: Rates = {};
 
     public constructor(
         private readonly settingsManager: SettingsManager,
