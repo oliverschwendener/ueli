@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "../SearchResultItem";
+import type { SearchResultItem } from "@common/Core";
 
 export class SearchResultItemFilter {
     private constructor(private searchResultItems: SearchResultItem[]) {}

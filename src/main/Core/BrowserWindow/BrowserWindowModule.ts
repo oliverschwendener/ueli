@@ -77,7 +77,7 @@ export class BrowserWindowModule {
 
         eventEmitter.emitEvent("browserWindowCreated", { browserWindow });
 
-        nativeTheme.addListener("updated", () => browserWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
+        nativeTheme.on("updated", () => browserWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
 
         BrowserWindowModule.registerBrowserWindowEventListeners(
             browserWindowToggler,

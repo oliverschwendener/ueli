@@ -1,4 +1,4 @@
-import type { SearchResultItemAction } from "../SearchResultItemAction";
+import type { SearchResultItemAction } from "@common/Core";
 
 /**
  * Creates an action to show the given file in the default file browser.
