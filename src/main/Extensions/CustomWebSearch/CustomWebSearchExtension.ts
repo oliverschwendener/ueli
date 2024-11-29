@@ -92,14 +92,6 @@ export class CustomWebSearchExtension implements Extension {
         };
     }
 
-    public getDefaultFileImage(): Image {
-        const path = this.assetPathResolver.getExtensionAssetPath("CustomWebSearch", "customwebsearch.svg");
-
-        return {
-            url: `file://${path}`,
-        };
-    }
-
     public getI18nResources() {
         return {
             "en-US": {
