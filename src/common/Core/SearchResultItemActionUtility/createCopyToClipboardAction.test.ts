@@ -1,6 +1,5 @@
+import { type SearchResultItemAction, createCopyToClipboardAction } from "@common/Core";
 import { describe, expect, it } from "vitest";
-import type { SearchResultItemAction } from "../SearchResultItemAction";
-import { createCopyToClipboardAction } from "./createCopyToClipboardAction";
 
 describe(createCopyToClipboardAction, () => {
     it("should create an 'copy to clipboard' action", () => {

@@ -1,6 +1,5 @@
+import { type SearchResultItemAction, createExcludeFromSearchResultsAction } from "@common/Core";
 import { describe, expect, it } from "vitest";
-import type { SearchResultItemAction } from "../SearchResultItemAction";
-import { createExcludeFromSearchResultsAction } from "./createExcludeFromSearchResultsAction";
 
 describe(createExcludeFromSearchResultsAction, () => {
     it("should create an 'exclude from search results' action", () => {
