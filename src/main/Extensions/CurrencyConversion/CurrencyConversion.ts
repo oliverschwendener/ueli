@@ -30,15 +30,13 @@ export class CurrencyConversion implements Extension {
         defaultTargetCurrency: "eur",
     };
 
-    private rates: Rates;
+    private readonly rates: Rates = {};
 
     public constructor(
         private readonly settingsManager: SettingsManager,
         private readonly net: Net,
         private readonly assetPathResolver: AssetPathResolver,
-    ) {
-        this.rates = {};
-    }
+    ) {}
 
     public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
         const parts = searchTerm.trim().split(" ");
