@@ -9,6 +9,7 @@ import { ColorConverterExtensionModule } from "./ColorConverter";
 import { CurrencyConversionModule } from "./CurrencyConversion/CurrencyConversionModule";
 import { CustomWebSearchModule } from "./CustomWebSearch";
 import { DeeplTranslatorModule } from "./DeeplTranslator";
+import { EmptyTrashModule } from "./EmptyTrash";
 import type { ExtensionModule } from "./ExtensionModule";
 import { FileSearchModule } from "./FileSearch/FileSearchModule";
 import { JetBrainsToolboxModule } from "./JetBrainsToolbox";
@@ -38,6 +39,7 @@ export class ExtensionLoader {
             new CurrencyConversionModule(),
             new CustomWebSearchModule(),
             new DeeplTranslatorModule(),
+            new EmptyTrashModule(),
             new FileSearchModule(),
             new JetBrainsToolboxModule(),
             new SimpleFileSearchExtensionModule(),
