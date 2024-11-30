@@ -5,6 +5,7 @@ export interface PowershellUtility {
     /**
      * Executes a PowerShell command.
      * @param command The command to execute, e.g. `Get-Process`.
+     * @param options The options for the command execution
      * @param options.maxBuffer The maximum buffer size in bytes allowed for the standard output and standard error streams.
      * @returns The output of the powershell command.
      */
@@ -18,6 +19,7 @@ export interface PowershellUtility {
      * Write-Host "This is a PowerShell script."
      * Write-Host "It is executed by the PowerShellUtility."
      * ```
+     * @param options The options for the script execution
      * @param options.maxBuffer The maximum buffer size in bytes allowed for the standard output and standard error streams.
      * @returns The output of the powershell script.
      */
