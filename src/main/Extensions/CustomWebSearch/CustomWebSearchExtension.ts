@@ -107,7 +107,8 @@ export class CustomWebSearchExtension implements Extension {
                 searchEngineUrlError: "The URL template does not contain `{{query}}` placeholder.",
                 encodeSearchTerm: "Encode search term",
                 encodeSearchTermTooltip: "Encode the search term before passing it to the search engine.",
-                add: "Add",
+                edit: "Edit",
+                save: "Save",
                 cancel: "Cancel",
             },
             "de-CH": {
@@ -123,7 +124,8 @@ export class CustomWebSearchExtension implements Extension {
                 encodeSearchTerm: "Suchbegriff URL-kodieren",
                 encodeSearchTermTooltip:
                     "Gibt an, ob der Suchbegriff vor der Übergabe an die Suchmaschine kodiert werden soll.",
-                add: "Hinzufügen",
+                edit: "Bearbeiten",
+                save: "Speichern",
                 cancel: "Abbrechen",
             },
         };
