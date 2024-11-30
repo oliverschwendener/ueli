@@ -16,8 +16,8 @@ import {
     Tooltip,
 } from "@fluentui/react-components";
 import { AddRegular, CheckmarkRegular, DismissRegular, EditRegular } from "@fluentui/react-icons";
-import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { CustomWebSearchDialog } from "./CustomWebSearchDialog";
 
 const createCustomSearchEngineSetting = (): CustomSearchEngineSetting => ({
@@ -46,11 +46,13 @@ export const CustomWebSearchSettings = () => {
         if (!customSearchEngineSettings.some((setting) => setting.id === engineSetting.id)) {
             setCustomSearchEngineSettings([...customSearchEngineSettings, engineSetting]);
         } else {
-            setCustomSearchEngineSettings([...customSearchEngineSettings.map(
-                (setting) => setting.id === engineSetting.id ? engineSetting : setting
-            )]);
+            setCustomSearchEngineSettings([
+                ...customSearchEngineSettings.map((setting) =>
+                    setting.id === engineSetting.id ? engineSetting : setting,
+                ),
+            ]);
         }
-    }
+    };
 
     const removeCustomSearchEngineSetting = (id: string) =>
         setCustomSearchEngineSettings(customSearchEngineSettings.filter((setting) => setting.id !== id));
@@ -65,11 +67,11 @@ export const CustomWebSearchSettings = () => {
             }
         }
         setIsDialogOpen(true);
-    }
+    };
 
     return (
         <SettingGroupList>
-            <SettingGroup title={t("folders")}>
+            <SettingGroup title={t("searchEngines")}>
                 <Table>
                     <TableHeader>
                         <TableRow>
@@ -101,6 +103,7 @@ export const CustomWebSearchSettings = () => {
                                         </Tooltip>
                                         <Tooltip relationship="label" content={t("remove")}>
                                             <Button
+                                                style={{ marginLeft: 4 }}
                                                 size="small"
                                                 icon={<DismissRegular />}
                                                 onClick={() => removeCustomSearchEngineSetting(id)}
@@ -113,7 +116,6 @@ export const CustomWebSearchSettings = () => {
                     </TableBody>
                 </Table>
                 <div>
-
                     <DialogTrigger disableButtonEnhancement>
                         <Button onClick={() => openEditDialog()} icon={<AddRegular />}>
                             {t("addSearchEngine")}

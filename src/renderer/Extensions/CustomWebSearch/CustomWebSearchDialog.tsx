@@ -43,7 +43,12 @@ const validateCustomSearchEngineSetting = (
     return validation;
 };
 
-export const CustomWebSearchDialog = ({ initialEngineSetting, onSave, isDialogOpen, closeDialog }: CustomWebSearchDialogProps) => {
+export const CustomWebSearchDialog = ({
+    initialEngineSetting,
+    onSave,
+    isDialogOpen,
+    closeDialog,
+}: CustomWebSearchDialogProps) => {
     const { t } = useTranslation("extension[CustomWebSearch]");
 
     const [temporaryCustomSearchEngineSetting, setTemporaryCustomSearchEngineSetting] =
@@ -74,7 +79,7 @@ export const CustomWebSearchDialog = ({ initialEngineSetting, onSave, isDialogOp
         setTemporaryCustomSearchEngineSetting({ ...temporaryCustomSearchEngineSetting, encodeSearchTerm });
 
     return (
-        <Dialog open={isDialogOpen}        >
+        <Dialog open={isDialogOpen}>
             <DialogSurface>
                 <DialogBody>
                     <DialogTitle>{t("addSearchEngine")}</DialogTitle>

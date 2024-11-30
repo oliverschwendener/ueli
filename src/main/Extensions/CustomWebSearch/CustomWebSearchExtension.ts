@@ -96,7 +96,9 @@ export class CustomWebSearchExtension implements Extension {
         return {
             "en-US": {
                 extensionName: "Custom Web Search",
-                addSearchEngine: "Add web search",
+                addSearchEngine: "Add search engine",
+                searchEngines: "Search engines",
+                url: "URL",
                 prefix: "Prefix",
                 prefixTooltip: "The prefix to trigger this custom search engine.",
                 prefixError: "Prefix is required",
@@ -109,11 +111,14 @@ export class CustomWebSearchExtension implements Extension {
                 encodeSearchTermTooltip: "Encode the search term before passing it to the search engine.",
                 edit: "Edit",
                 save: "Save",
+                remove: "Remove",
                 cancel: "Cancel",
             },
             "de-CH": {
                 extensionName: "Benutzerdefinierte Websuche",
-                addSearchEngine: "Websuche hinzufügen",
+                addSearchEngine: "Suchmachine hinzufügen",
+                searchEngines: "Suchmachinen",
+                url: "URL",
                 prefix: "Prefix",
                 prefixDescription: "Der Präfix, um diese benutzerdefinierte Websuche auszulösen.",
                 name: "Name",
@@ -126,6 +131,7 @@ export class CustomWebSearchExtension implements Extension {
                     "Gibt an, ob der Suchbegriff vor der Übergabe an die Suchmaschine kodiert werden soll.",
                 edit: "Bearbeiten",
                 save: "Speichern",
+                remove: "Löschen",
                 cancel: "Abbrechen",
             },
         };
