@@ -1,6 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
-import { type FluentIcon, type SearchResultItem } from "@common/Core";
+import type { FluentIcon, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 
 type Settings = {
