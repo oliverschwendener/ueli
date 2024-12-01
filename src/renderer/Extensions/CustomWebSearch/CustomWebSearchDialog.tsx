@@ -79,7 +79,15 @@ export const CustomWebSearchDialog = ({
         setTemporaryCustomSearchEngineSetting({ ...temporaryCustomSearchEngineSetting, encodeSearchTerm });
 
     return (
-        <Dialog open={isDialogOpen}>
+        <Dialog
+            open={isDialogOpen}
+            onOpenChange={(event, { open }) => {
+                event.stopPropagation();
+                if (!open) {
+                    closeDialog();
+                }
+            }}
+        >
             <DialogSurface>
                 <DialogBody>
                     <DialogTitle>{t("addSearchEngine")}</DialogTitle>
