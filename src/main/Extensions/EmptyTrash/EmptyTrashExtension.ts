@@ -89,8 +89,8 @@ export class EmptyTrashExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue(key: keyof Settings): boolean {
-        return this.defaultSettings[key];
+    public getSettingDefaultValue(): undefined {
+        return undefined;
     }
 
     public getImage(): Image {
