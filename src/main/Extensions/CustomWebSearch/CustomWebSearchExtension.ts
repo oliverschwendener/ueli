@@ -116,8 +116,8 @@ export class CustomWebSearchExtension implements Extension {
             },
             "de-CH": {
                 extensionName: "Benutzerdefinierte Websuche",
-                addSearchEngine: "Suchmachine hinzufügen",
-                searchEngines: "Suchmachinen",
+                addSearchEngine: "Suchmaschine hinzufügen",
+                searchEngines: "Suchmaschinen",
                 url: "URL",
                 prefix: "Prefix",
                 prefixDescription: "Der Präfix, um diese benutzerdefinierte Websuche auszulösen.",
