@@ -77,7 +77,7 @@ export class EmptyTrashExtension implements Extension {
                     },
                     handlerId: "EmptyTrash",
                     argument: "empty",
-                    fluentIcon: "DeleteDismissRegular" as FluentIcon,
+                    fluentIcon: "DeleteDismissRegular",
                     hideWindowAfterInvocation: true,
                     requiresConfirmation: true,
                 },
