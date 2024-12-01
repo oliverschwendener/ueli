@@ -13,13 +13,14 @@ import {
     InfoLabel,
     Input,
 } from "@fluentui/react-components";
-import { AddRegular } from "@fluentui/react-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-type EditCustomSearchEngineProps = {
+type CustomWebSearchDialogProps = {
     onSave: (engineSettings: CustomSearchEngineSetting) => void;
     initialEngineSetting: CustomSearchEngineSetting;
+    isDialogOpen: boolean;
+    closeDialog: () => void;
 };
 
 const validateCustomSearchEngineSetting = (
@@ -42,19 +43,22 @@ const validateCustomSearchEngineSetting = (
     return validation;
 };
 
-export const EditCustomSearchEngine = ({ initialEngineSetting, onSave }: EditCustomSearchEngineProps) => {
+export const CustomWebSearchDialog = ({
+    initialEngineSetting,
+    onSave,
+    isDialogOpen,
+    closeDialog,
+}: CustomWebSearchDialogProps) => {
     const { t } = useTranslation("extension[CustomWebSearch]");
 
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [temporaryCustomSearchEngineSetting, setTemporaryCustomSearchEngineSetting] =
         useState<CustomSearchEngineSetting>(initialEngineSetting);
     const [validation, setValidation] = useState<Partial<Record<keyof CustomSearchEngineSetting, string>>>({});
 
-    const openDialog = () => setIsDialogOpen(true);
-    const closeDialog = () => {
+    useEffect(() => {
         setTemporaryCustomSearchEngineSetting(initialEngineSetting);
-        setIsDialogOpen(false);
-    };
+        setValidation(validateCustomSearchEngineSetting(initialEngineSetting));
+    }, [initialEngineSetting]);
 
     const setUrl = (url: string) => {
         const newEngineSetting = { ...temporaryCustomSearchEngineSetting, url };
@@ -79,18 +83,11 @@ export const EditCustomSearchEngine = ({ initialEngineSetting, onSave }: EditCus
             open={isDialogOpen}
             onOpenChange={(event, { open }) => {
                 event.stopPropagation();
-                if (open) {
-                    openDialog();
-                } else {
+                if (!open) {
                     closeDialog();
                 }
             }}
         >
-            <DialogTrigger disableButtonEnhancement>
-                <Button onClick={openDialog} icon={<AddRegular />}>
-                    {t("addSearchEngine")}
-                </Button>
-            </DialogTrigger>
             <DialogSurface>
                 <DialogBody>
                     <DialogTitle>{t("addSearchEngine")}</DialogTitle>
@@ -168,7 +165,7 @@ export const EditCustomSearchEngine = ({ initialEngineSetting, onSave }: EditCus
                             }}
                             appearance="primary"
                         >
-                            {t("add")}
+                            {t("save")}
                         </Button>
                     </DialogActions>
                 </DialogBody>

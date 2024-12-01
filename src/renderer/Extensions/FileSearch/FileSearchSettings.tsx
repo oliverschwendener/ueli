@@ -7,8 +7,7 @@ import { FolderRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 
 export const FileSearchSettings = () => {
-    const { t } = useTranslation();
-    const ns = "extension[FileSearch]";
+    const { t } = useTranslation("extension[FileSearch]");
     const { contextBridge } = useContextBridge();
 
     const { value: maxSearchResultCount, updateValue: setMaxSearchResultCount } = useExtensionSetting<number>({
@@ -30,9 +29,9 @@ export const FileSearchSettings = () => {
 
     return (
         <SettingGroupList>
-            <SettingGroup title={t("extensionName", { ns })}>
+            <SettingGroup title={t("extensionName")}>
                 <Setting
-                    label={t("maxSearchResults", { ns })}
+                    label={t("maxSearchResults")}
                     control={
                         <SpinButton
                             value={maxSearchResultCount}
@@ -43,8 +42,8 @@ export const FileSearchSettings = () => {
                 />
                 {contextBridge.getOperatingSystem() === "Windows" && (
                     <Setting
-                        label={t("esFilePath", { ns })}
-                        description={contextBridge.fileExists(esFilePath) ? undefined : t("fileDoesNotExist", { ns })}
+                        label={t("esFilePath")}
+                        description={contextBridge.fileExists(esFilePath) ? undefined : t("fileDoesNotExist")}
                         control={
                             <div style={{ display: "flex", flexDirection: "column", width: "80%" }}>
                                 <Input

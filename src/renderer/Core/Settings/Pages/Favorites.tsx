@@ -8,8 +8,7 @@ import { SettingGroup } from "../SettingGroup";
 
 export const Favorites = () => {
     const { contextBridge } = useContextBridge();
-    const { t } = useTranslation();
-    const ns = "settingsFavorites";
+    const { t } = useTranslation("settingsFavorites");
     const { searchResultItems } = useSearchResultItems();
     const { favorites } = useFavorites();
 
@@ -21,7 +20,7 @@ export const Favorites = () => {
 
     return (
         <SettingGroupList>
-            <SettingGroup title={t("title", { ns })}>
+            <SettingGroup title={t("title")}>
                 {!favoriteSearchResultItems.length ? <Text italic>You don't have any favorites</Text> : null}
                 <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                     {favoriteSearchResultItems.map((s) => (
@@ -47,7 +46,7 @@ export const Favorites = () => {
                                     <Badge size="small" appearance="ghost">
                                         {s.description}
                                     </Badge>
-                                    <Tooltip content={t("remove", { ns })} relationship="label" withArrow>
+                                    <Tooltip content={t("remove")} relationship="label" withArrow>
                                         <Button
                                             size="small"
                                             appearance="subtle"

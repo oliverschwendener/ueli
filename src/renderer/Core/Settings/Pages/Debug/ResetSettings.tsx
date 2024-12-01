@@ -13,12 +13,11 @@ import {
 import { useTranslation } from "react-i18next";
 
 export const ResetSettings = () => {
-    const { t } = useTranslation();
-    const ns = "settingsDebug";
+    const { t } = useTranslation("settingsDebug");
     const { contextBridge } = useContextBridge();
 
     return (
-        <Field label={t("resetAllSettings", { ns })} hint={t("resetAllSettingsHint", { ns })}>
+        <Field label={t("resetAllSettings")} hint={t("resetAllSettingsHint")}>
             <Dialog
                 onOpenChange={(event) => {
                     event.stopPropagation();
@@ -26,19 +25,19 @@ export const ResetSettings = () => {
             >
                 <DialogTrigger disableButtonEnhancement>
                     <div>
-                        <Button>{t("resetAllSettingsButton", { ns })}</Button>
+                        <Button>{t("resetAllSettingsButton")}</Button>
                     </div>
                 </DialogTrigger>
                 <DialogSurface>
                     <DialogBody>
-                        <DialogTitle>{t("resetAllSettingsDialogTitle", { ns })}</DialogTitle>
-                        <DialogContent>{t("resetAllSettingsDialogContent", { ns })}</DialogContent>
+                        <DialogTitle>{t("resetAllSettingsDialogTitle")}</DialogTitle>
+                        <DialogContent>{t("resetAllSettingsDialogContent")}</DialogContent>
                         <DialogActions>
                             <DialogTrigger disableButtonEnhancement>
-                                <Button appearance="secondary">{t("resetAllSettingsCancel", { ns })}</Button>
+                                <Button appearance="secondary">{t("resetAllSettingsCancel")}</Button>
                             </DialogTrigger>
                             <Button onClick={() => contextBridge.resetAllSettings()} appearance="primary">
-                                {t("resetAllSettingsConfirm", { ns })}
+                                {t("resetAllSettingsConfirm")}
                             </Button>
                         </DialogActions>
                     </DialogBody>

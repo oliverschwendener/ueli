@@ -6,8 +6,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const ExcludedItems = () => {
-    const ns = "settingsSearchEngine";
-    const { t } = useTranslation();
+    const { t } = useTranslation("settingsSearchEngine");
     const { contextBridge } = useContextBridge();
     const { searchResultItems } = useSearchResultItems();
 
@@ -22,7 +21,7 @@ export const ExcludedItems = () => {
 
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            {excludedSearchResultItems.length ? null : <Text italic>{t("noExcludedItems", { ns })}</Text>}
+            {excludedSearchResultItems.length ? null : <Text italic>{t("noExcludedItems")}</Text>}
             {excludedSearchResultItems.map(({ id, name, image, description }) => (
                 <Input
                     key={`excludedItem-${id}`}
@@ -48,7 +47,7 @@ export const ExcludedItems = () => {
                                 appearance="subtle"
                                 onClick={() => removeExcludedSearchResultItem(id)}
                                 icon={
-                                    <Tooltip content={t("removeExcludedItem", { ns })} relationship="label" withArrow>
+                                    <Tooltip content={t("removeExcludedItem")} relationship="label" withArrow>
                                         <DismissRegular fontSize={14} />
                                     </Tooltip>
                                 }
