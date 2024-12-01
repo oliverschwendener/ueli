@@ -4,6 +4,7 @@ import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import {
     Button,
+    DialogTrigger,
     Table,
     TableBody,
     TableCell,
@@ -14,9 +15,10 @@ import {
     TableRow,
     Tooltip,
 } from "@fluentui/react-components";
-import { CheckmarkRegular, DismissRegular } from "@fluentui/react-icons";
+import { AddRegular, CheckmarkRegular, DismissRegular, EditRegular } from "@fluentui/react-icons";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { EditCustomSearchEngine } from "./EditCustomSearchEngine";
+import { CustomWebSearchDialog } from "./CustomWebSearchDialog";
 
 const createCustomSearchEngineSetting = (): CustomSearchEngineSetting => ({
     id: crypto.randomUUID(),
@@ -30,6 +32,8 @@ export const CustomWebSearchSettings = () => {
     const extensionId = "CustomWebSearch";
 
     const { t } = useTranslation("extension[CustomWebSearch]");
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [currentEngineSettings, setCurrentEngineSettings] = useState(createCustomSearchEngineSetting());
 
     const { value: customSearchEngineSettings, updateValue: setCustomSearchEngineSettings } = useExtensionSetting<
         Settings["customSearchEngines"]
@@ -38,15 +42,36 @@ export const CustomWebSearchSettings = () => {
         key: "customSearchEngines",
     });
 
-    const addCustomSearchEngineSetting = (engineSetting: CustomSearchEngineSetting) =>
-        setCustomSearchEngineSettings([...customSearchEngineSettings, engineSetting]);
+    const editCustomSearchEngineSetting = (engineSetting: CustomSearchEngineSetting) => {
+        if (!customSearchEngineSettings.some((setting) => setting.id === engineSetting.id)) {
+            setCustomSearchEngineSettings([...customSearchEngineSettings, engineSetting]);
+        } else {
+            setCustomSearchEngineSettings([
+                ...customSearchEngineSettings.map((setting) =>
+                    setting.id === engineSetting.id ? engineSetting : setting,
+                ),
+            ]);
+        }
+    };
 
     const removeCustomSearchEngineSetting = (id: string) =>
         setCustomSearchEngineSettings(customSearchEngineSettings.filter((setting) => setting.id !== id));
 
+    const openEditDialog = (id?: string) => {
+        if (id === undefined) {
+            setCurrentEngineSettings(createCustomSearchEngineSetting());
+        } else {
+            const setting = customSearchEngineSettings.find((setting) => setting.id === id);
+            if (setting) {
+                setCurrentEngineSettings(setting);
+            }
+        }
+        setIsDialogOpen(true);
+    };
+
     return (
         <SettingGroupList>
-            <SettingGroup title={t("folders")}>
+            <SettingGroup title={t("searchEngines")}>
                 <Table>
                     <TableHeader>
                         <TableRow>
@@ -69,8 +94,16 @@ export const CustomWebSearchSettings = () => {
                                         {encodeSearchTerm ? <CheckmarkRegular /> : ""}
                                     </TableCellLayout>
                                     <TableCellActions>
+                                        <Tooltip relationship="label" content={t("edit")}>
+                                            <Button
+                                                size="small"
+                                                icon={<EditRegular />}
+                                                onClick={() => openEditDialog(id)}
+                                            />
+                                        </Tooltip>
                                         <Tooltip relationship="label" content={t("remove")}>
                                             <Button
+                                                style={{ marginLeft: 4 }}
                                                 size="small"
                                                 icon={<DismissRegular />}
                                                 onClick={() => removeCustomSearchEngineSetting(id)}
@@ -83,11 +116,16 @@ export const CustomWebSearchSettings = () => {
                     </TableBody>
                 </Table>
                 <div>
-                    <EditCustomSearchEngine
-                        onSave={addCustomSearchEngineSetting}
-                        initialEngineSetting={{
-                            ...createCustomSearchEngineSetting(),
-                        }}
+                    <DialogTrigger disableButtonEnhancement>
+                        <Button onClick={() => openEditDialog()} icon={<AddRegular />}>
+                            {t("addSearchEngine")}
+                        </Button>
+                    </DialogTrigger>
+                    <CustomWebSearchDialog
+                        isDialogOpen={isDialogOpen}
+                        closeDialog={() => setIsDialogOpen(false)}
+                        onSave={editCustomSearchEngineSetting}
+                        initialEngineSetting={{ ...currentEngineSettings }}
                     />
                 </div>
             </SettingGroup>

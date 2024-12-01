@@ -96,7 +96,9 @@ export class CustomWebSearchExtension implements Extension {
         return {
             "en-US": {
                 extensionName: "Custom Web Search",
-                addSearchEngine: "Add web search",
+                addSearchEngine: "Add search engine",
+                searchEngines: "Search engines",
+                url: "URL",
                 prefix: "Prefix",
                 prefixTooltip: "The prefix to trigger this custom search engine.",
                 prefixError: "Prefix is required",
@@ -107,12 +109,16 @@ export class CustomWebSearchExtension implements Extension {
                 searchEngineUrlError: "The URL template does not contain `{{query}}` placeholder.",
                 encodeSearchTerm: "Encode search term",
                 encodeSearchTermTooltip: "Encode the search term before passing it to the search engine.",
-                add: "Add",
+                edit: "Edit",
+                save: "Save",
+                remove: "Remove",
                 cancel: "Cancel",
             },
             "de-CH": {
                 extensionName: "Benutzerdefinierte Websuche",
-                addSearchEngine: "Websuche hinzufügen",
+                addSearchEngine: "Suchmaschine hinzufügen",
+                searchEngines: "Suchmaschinen",
+                url: "URL",
                 prefix: "Prefix",
                 prefixDescription: "Der Präfix, um diese benutzerdefinierte Websuche auszulösen.",
                 name: "Name",
@@ -123,7 +129,9 @@ export class CustomWebSearchExtension implements Extension {
                 encodeSearchTerm: "Suchbegriff URL-kodieren",
                 encodeSearchTermTooltip:
                     "Gibt an, ob der Suchbegriff vor der Übergabe an die Suchmaschine kodiert werden soll.",
-                add: "Hinzufügen",
+                edit: "Bearbeiten",
+                save: "Speichern",
+                remove: "Löschen",
                 cancel: "Abbrechen",
             },
         };
