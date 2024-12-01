@@ -7,8 +7,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const HotKey = () => {
-    const { t } = useTranslation();
-    const ns = "settingsGeneral";
+    const { t } = useTranslation("settingsGeneral");
 
     const { contextBridge } = useContextBridge();
 
@@ -18,12 +17,10 @@ export const HotKey = () => {
 
     return (
         <Setting
-            label={t("hotkey", { ns })}
+            label={t("hotkey")}
             control={
                 <Field
-                    validationMessage={
-                        isValidHotkey(temporaryHotkey) ? t("validHotkey", { ns }) : t("invalidHotkey", { ns })
-                    }
+                    validationMessage={isValidHotkey(temporaryHotkey) ? t("validHotkey") : t("invalidHotkey")}
                     validationState={isValidHotkey(temporaryHotkey) ? "success" : "error"}
                 >
                     <Input
@@ -33,7 +30,7 @@ export const HotKey = () => {
                             isValidHotkey(temporaryHotkey) ? setHotkey(temporaryHotkey) : setTemporaryHotkey(hotkey)
                         }
                         contentAfter={
-                            <Tooltip content={t("hotkeyMoreInfo", { ns })} relationship="label" withArrow>
+                            <Tooltip content={t("hotkeyMoreInfo")} relationship="label" withArrow>
                                 <Button
                                     appearance="subtle"
                                     size="small"

@@ -10,9 +10,7 @@ type RescanIntervalProps = {
 };
 
 export const RescanInterval = ({ automaticRescanEnabled }: RescanIntervalProps) => {
-    const ns = "settingsSearchEngine";
-
-    const { t } = useTranslation();
+    const { t } = useTranslation("settingsSearchEngine");
     const { contextBridge } = useContextBridge();
 
     const defaultRescanIntervalInSeconds = 300;
@@ -29,8 +27,8 @@ export const RescanInterval = ({ automaticRescanEnabled }: RescanIntervalProps) 
 
     return (
         <Setting
-            label={t("rescanIntervalInSeconds", { ns })}
-            description={tempRescanIntervalInSeconds < 10 ? t("rescanIntervalTooShort", { ns }) : undefined}
+            label={t("rescanIntervalInSeconds")}
+            description={tempRescanIntervalInSeconds < 10 ? t("rescanIntervalTooShort") : undefined}
             control={
                 <Input
                     value={`${tempRescanIntervalInSeconds}`}
@@ -45,7 +43,7 @@ export const RescanInterval = ({ automaticRescanEnabled }: RescanIntervalProps) 
                     type="number"
                     disabled={!automaticRescanEnabled}
                     contentAfter={
-                        <Tooltip content={t("rescanIntervalResetToDefault", { ns })} relationship="label" withArrow>
+                        <Tooltip content={t("rescanIntervalResetToDefault")} relationship="label" withArrow>
                             <Button
                                 size="small"
                                 appearance="subtle"

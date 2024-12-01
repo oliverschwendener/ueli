@@ -12,8 +12,7 @@ export const MissingEverythingCliFilePath = ({
     goBack,
     setEsFilePath,
 }: ExtensionProps & { setEsFilePath: (esFilePath: string) => void }) => {
-    const { t } = useTranslation();
-    const ns = "extension[FileSearch]";
+    const { t } = useTranslation("extension[FileSearch]");
 
     const [temporaryEsFilePath, setTemporaryEsCliFilePath] = useState<string>("");
 
@@ -30,7 +29,7 @@ export const MissingEverythingCliFilePath = ({
         <BaseLayout
             header={
                 <Header
-                    children={<Text>{t("extensionName", { ns })}</Text>}
+                    children={<Text>{t("extensionName")}</Text>}
                     contentBefore={
                         <Button size="small" appearance="subtle" onClick={() => goBack()} icon={<ArrowLeftRegular />} />
                     }
@@ -48,8 +47,8 @@ export const MissingEverythingCliFilePath = ({
                     }}
                 >
                     <Field
-                        label={t("esFilePath", { ns })}
-                        validationMessage={temporaryEsFilePathExists ? undefined : t("fileDoesNotExist", { ns })}
+                        label={t("esFilePath")}
+                        validationMessage={temporaryEsFilePathExists ? undefined : t("fileDoesNotExist")}
                         validationState={temporaryEsFilePathExists ? "success" : "error"}
                     >
                         <Input
