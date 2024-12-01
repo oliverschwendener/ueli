@@ -7,9 +7,9 @@ export class DockModule {
         const settingsManager = dependencyRegistry.get("SettingsManager");
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
 
-        const setAppIconVisibility = () => {
+        const setAppIconVisibility = async () => {
             if (settingsManager.getValue("appearance.showAppIconInDock", false)) {
-                app.dock?.show();
+                await app.dock?.show();
             } else {
                 app.dock?.hide();
             }

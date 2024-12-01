@@ -6,8 +6,7 @@ import { SettingGroup } from "../SettingGroup";
 import { SettingGroupList } from "../SettingGroupList";
 
 export const KeyboardAndMouse = () => {
-    const { t } = useTranslation();
-    const ns = "settingsKeyboardAndMouse";
+    const { t } = useTranslation("settingsKeyboardAndMouse");
 
     const { value: singleClickBehavior, updateValue: setSingleClickBehavior } = useSetting({
         key: "keyboardAndMouse.singleClickBehavior",
@@ -20,15 +19,15 @@ export const KeyboardAndMouse = () => {
     });
 
     const clickBehaviorOptions: Record<string, string> = {
-        selectSearchResultItem: t("selectSearchResultItem", { ns }),
-        invokeSearchResultItem: t("invokeSearchResultItem", { ns }),
+        selectSearchResultItem: t("selectSearchResultItem"),
+        invokeSearchResultItem: t("invokeSearchResultItem"),
     };
 
     return (
         <SettingGroupList>
             <SettingGroup title="Mouse">
                 <Setting
-                    label={t("singleClickBehavior", { ns })}
+                    label={t("singleClickBehavior")}
                     control={
                         <Dropdown
                             selectedOptions={[singleClickBehavior]}
@@ -44,7 +43,7 @@ export const KeyboardAndMouse = () => {
                     }
                 />
                 <Setting
-                    label={t("doubleClickBehavior", { ns })}
+                    label={t("doubleClickBehavior")}
                     control={
                         <Dropdown
                             selectedOptions={[doubleClickBehavior]}

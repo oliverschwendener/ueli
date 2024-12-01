@@ -1,6 +1,5 @@
+import { type SearchResultItemAction, createOpenUrlSearchResultAction } from "@common/Core";
 import { describe, expect, it } from "vitest";
-import type { SearchResultItemAction } from "../SearchResultItemAction";
-import { createOpenUrlSearchResultAction } from "./createOpenUrlSearchResultAction";
 
 describe(createOpenUrlSearchResultAction, () => {
     it("should create an 'open url' action", () => {

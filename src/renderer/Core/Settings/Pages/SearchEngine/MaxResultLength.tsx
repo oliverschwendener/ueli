@@ -4,8 +4,7 @@ import { Input } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const MaxResultLength = () => {
-    const ns = "settingsSearchEngine";
-    const { t } = useTranslation();
+    const { t } = useTranslation("settingsSearchEngine");
 
     const { value: maxResultLength, updateValue: setMaxResultLength } = useSetting({
         key: "searchEngine.maxResultLength",
@@ -14,7 +13,7 @@ export const MaxResultLength = () => {
 
     return (
         <Setting
-            label={t("maxResultLength", { ns })}
+            label={t("maxResultLength")}
             control={
                 <Input
                     value={`${maxResultLength}`}

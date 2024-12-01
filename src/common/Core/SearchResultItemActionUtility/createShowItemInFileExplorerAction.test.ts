@@ -1,6 +1,5 @@
+import { type SearchResultItemAction, createShowItemInFileExplorerAction } from "@common/Core";
 import { describe, expect, it } from "vitest";
-import type { SearchResultItemAction } from "../SearchResultItemAction";
-import { createShowItemInFileExplorerAction } from "./createShowItemInFileExplorerAction";
 
 describe(createShowItemInFileExplorerAction, () => {
     it("should create an 'show item in file explorer' action", () => {

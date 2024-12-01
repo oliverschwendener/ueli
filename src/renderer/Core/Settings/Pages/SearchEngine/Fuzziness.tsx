@@ -4,8 +4,7 @@ import { Slider } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const Fuzziness = () => {
-    const ns = "settingsSearchEngine";
-    const { t } = useTranslation();
+    const { t } = useTranslation("settingsSearchEngine");
 
     const { value: fuzziness, updateValue: setFuzziness } = useSetting({
         key: "searchEngine.fuzziness",
@@ -14,7 +13,7 @@ export const Fuzziness = () => {
 
     return (
         <Setting
-            label={`${t("fuzziness", { ns })}: ${fuzziness}`}
+            label={`${t("fuzziness")}: ${fuzziness}`}
             description="0 = strict search, 1 = loose search"
             control={
                 <Slider

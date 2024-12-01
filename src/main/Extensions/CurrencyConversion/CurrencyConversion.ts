@@ -30,15 +30,14 @@ export class CurrencyConversion implements Extension {
         defaultTargetCurrency: "eur",
     };
 
-    private rates: Rates;
+    // This property is not read-only by intention, so it can be easily set for tests
+    private rates: Rates = {};
 
     public constructor(
         private readonly settingsManager: SettingsManager,
         private readonly net: Net,
         private readonly assetPathResolver: AssetPathResolver,
-    ) {
-        this.rates = {};
-    }
+    ) {}
 
     public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
         const parts = searchTerm.trim().split(" ");

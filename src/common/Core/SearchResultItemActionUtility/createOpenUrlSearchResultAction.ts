@@ -1,4 +1,4 @@
-import type { SearchResultItemAction } from "../SearchResultItemAction";
+import type { SearchResultItemAction } from "@common/Core";
 
 /**
  * Creates an action to open the given URL in the default browser.

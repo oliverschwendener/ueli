@@ -1,6 +1,5 @@
+import { type SearchResultItemAction, createOpenFileAction } from "@common/Core";
 import { describe, expect, it } from "vitest";
-import type { SearchResultItemAction } from "../SearchResultItemAction";
-import { createOpenFileAction } from "./createOpenFileAction";
 
 describe(createOpenFileAction, () => {
     it("should create an 'open file' action", () => {

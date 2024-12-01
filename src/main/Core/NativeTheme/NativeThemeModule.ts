@@ -9,6 +9,6 @@ export class NativeThemeModule {
 
         ipcMain.on("themeShouldUseDarkColors", (event) => (event.returnValue = nativeTheme.shouldUseDarkColors));
 
-        nativeTheme.addListener("updated", () => browserWindowNotifier.notify("nativeThemeChanged"));
+        nativeTheme.on("updated", () => browserWindowNotifier.notify("nativeThemeChanged"));
     }
 }
