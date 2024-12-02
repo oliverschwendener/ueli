@@ -13,6 +13,7 @@ export class UeliCommandActionHandler implements ActionHandler {
             settings: () => this.ueliCommandInvoker.invokeUeliCommand("openSettings"),
             extensions: () => this.ueliCommandInvoker.invokeUeliCommand("openExtensions"),
             centerWindow: () => this.ueliCommandInvoker.invokeUeliCommand("centerWindow"),
+            rescanExtensions: () => this.ueliCommandInvoker.invokeUeliCommand("rescanExtensions"),
         };
 
         if (!Object.keys(map).includes(action.argument)) {

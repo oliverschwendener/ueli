@@ -34,5 +34,10 @@ export class RescanOrchestratorModule {
                 rescanOrchestrator.cancel();
             }
         });
+
+        eventSubscriber.subscribe("ueliCommandInvoked", async () => {
+            rescanOrchestrator.cancel();
+            rescanOrchestrator.scanUntilCancelled();
+        });
     }
 }

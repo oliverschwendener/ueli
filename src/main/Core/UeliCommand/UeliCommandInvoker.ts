@@ -40,6 +40,11 @@ export class UeliCommandInvoker implements UeliCommandInvokerInterface {
                     ueliCommand: "centerWindow",
                     argument: {},
                 }),
+            rescanExtensions: () =>
+                this.emitUeliCommandInvokedEvent({
+                    ueliCommand: "rescanExtensions",
+                    argument: null,
+                }),
         };
 
         return map[ueliCommand]();
