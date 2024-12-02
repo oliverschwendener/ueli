@@ -6,38 +6,42 @@ export class WindowsSystemCommand implements SystemCommand {
     public static create({
         name,
         description,
-        command,
         image,
+        invoke,
         requiresConfirmation,
     }: {
         name: string;
         description: string;
-        command: string;
         image: Image;
+        invoke: () => Promise<void>;
         requiresConfirmation?: boolean;
     }): WindowsSystemCommand {
-        return new WindowsSystemCommand(name, description, command, image, requiresConfirmation);
+        return new WindowsSystemCommand(name, description, image, invoke, requiresConfirmation);
     }
 
     private constructor(
         private readonly name: string,
         private readonly description: string,
-        private readonly command: string,
         private readonly image: Image,
+        public readonly invoke: () => Promise<void>,
         private readonly requiresConfirmation?: boolean,
     ) {}
+
+    public getId(): string {
+        return `SystemCommand[${Buffer.from(`${this.name}`).toString("hex")}]`;
+    }
 
     public toSearchResultItem(): SearchResultItem {
         return {
             defaultAction: {
-                argument: this.command,
+                argument: this.getId(),
                 description: this.description,
-                handlerId: "WindowsSystemCommandActionHandler",
+                handlerId: "SystemCommandActionHandler",
                 requiresConfirmation: this.requiresConfirmation,
                 hideWindowAfterInvocation: true,
             },
             description: this.description,
-            id: `SystemCommand[${Buffer.from(`${this.name}${this.command}`).toString("hex")}]`,
+            id: this.getId(),
             image: this.image,
             name: this.name,
         };

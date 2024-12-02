@@ -2,21 +2,19 @@ import type { SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { SystemCommand } from "../SystemCommand";
 
-export class MacOsSystemCommand implements SystemCommand {
+export class LinuxSystemCommand implements SystemCommand {
     public static create({
         name,
         description,
         image,
         invoke,
-        requiresConfirmation,
     }: {
         name: string;
         description: string;
         image: Image;
         invoke: () => Promise<void>;
-        requiresConfirmation?: boolean;
-    }): MacOsSystemCommand {
-        return new MacOsSystemCommand(name, description, image, invoke, requiresConfirmation);
+    }): LinuxSystemCommand {
+        return new LinuxSystemCommand(name, description, image, invoke);
     }
 
     private constructor(
@@ -24,7 +22,6 @@ export class MacOsSystemCommand implements SystemCommand {
         private readonly description: string,
         private readonly image: Image,
         public readonly invoke: () => Promise<void>,
-        private readonly requiresConfirmation?: boolean,
     ) {}
 
     public getId(): string {
@@ -37,7 +34,7 @@ export class MacOsSystemCommand implements SystemCommand {
                 argument: this.getId(),
                 description: this.description,
                 handlerId: "SystemCommandActionHandler",
-                requiresConfirmation: this.requiresConfirmation,
+                requiresConfirmation: true,
                 hideWindowAfterInvocation: true,
             },
             description: this.description,
