@@ -1,41 +1,44 @@
-import type { ActionHandler } from "@Core/ActionHandler";
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { OperatingSystem } from "@common/Core";
 import type { Resources, Translations } from "@common/Core/Translator";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
-import { LinuxSystemCommandRepository } from "./Linux/LinuxSystemCommandRepository";
+import { LinuxSystemCommandRepository, linuxResources } from "./Linux";
+import { SystemCommandActionHandler } from "./SystemCommandActionHandler";
 import type { SystemCommandRepository } from "./SystemCommandRepository";
 import { SystemCommands } from "./SystemCommands";
 import { WindowsSystemCommandRepository, windowsResources } from "./Windows";
-import { WindowsSystemCommandActionHandler } from "./Windows/WindowsSystemCommandActionHandler";
-import { MacOsSystemCommandActionHandler, MacOsSystemCommandRepository, macOsResources } from "./macOS";
+import { MacOsSystemCommandRepository, macOsResources } from "./macOS";
 
 export class SystemCommandsModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
         const resources: Record<OperatingSystem, Resources<Translations>> = {
-            Linux: {}, // not supported,
+            Linux: linuxResources,
             macOS: macOsResources,
             Windows: windowsResources,
         };
 
         const repositories: Record<OperatingSystem, SystemCommandRepository> = {
-            Linux: new LinuxSystemCommandRepository(), // not supported
+            Linux: new LinuxSystemCommandRepository(
+                dependencyRegistry.get("Translator"),
+                dependencyRegistry.get("AssetPathResolver"),
+                dependencyRegistry.get("CommandlineUtility"),
+                linuxResources,
+            ),
             macOS: new MacOsSystemCommandRepository(
                 dependencyRegistry.get("Translator"),
                 dependencyRegistry.get("AssetPathResolver"),
+                dependencyRegistry.get("AppleScriptUtility"),
+                macOsResources,
             ),
             Windows: new WindowsSystemCommandRepository(
                 dependencyRegistry.get("Translator"),
                 dependencyRegistry.get("AssetPathResolver"),
+                dependencyRegistry.get("CommandlineUtility"),
+                dependencyRegistry.get("PowershellUtility"),
+                windowsResources,
             ),
-        };
-
-        const actionHandlers: Record<OperatingSystem, ActionHandler[]> = {
-            Linux: [], // not supported,
-            macOS: [new MacOsSystemCommandActionHandler(dependencyRegistry.get("AppleScriptUtility"))],
-            Windows: [new WindowsSystemCommandActionHandler(dependencyRegistry.get("CommandlineUtility"))],
         };
 
         return {
@@ -45,7 +48,7 @@ export class SystemCommandsModule implements ExtensionModule {
                 resources[dependencyRegistry.get("OperatingSystem")],
                 dependencyRegistry.get("AssetPathResolver"),
             ),
-            actionHandlers: actionHandlers[dependencyRegistry.get("OperatingSystem")],
+            actionHandlers: [new SystemCommandActionHandler(repositories[dependencyRegistry.get("OperatingSystem")])],
         };
     }
 }

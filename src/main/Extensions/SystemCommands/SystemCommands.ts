@@ -28,7 +28,7 @@ export class SystemCommands implements Extension {
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        return (await this.systemCommandRepository.getAll(this.resources)).map((s) => s.toSearchResultItem());
+        return (await this.systemCommandRepository.getAll()).map((s) => s.toSearchResultItem());
     }
 
     public isSupported(): boolean {
