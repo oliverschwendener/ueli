@@ -21,7 +21,7 @@ export class LinuxSystemCommandRepository implements SystemCommandRepository {
         return [
             LinuxSystemCommand.create({
                 description: t("searchResultItemDescription"),
-                image: this.getImage({ fileName: "empty-trash.png" }),
+                image: this.getImage({ fileName: "trash.png" }),
                 invoke: async () => {
                     await this.commandlineUtility.executeCommand("rm -rf ~/.local/share/Trash/*");
                 },

@@ -41,7 +41,7 @@ export class SystemCommands implements Extension {
 
     public getImage(): Image {
         const filenames: Record<OperatingSystem, string> = {
-            Linux: "", // not supported
+            Linux: "linux.png",
             macOS: "macos-system-command.png",
             Windows: "windows-11-system-command.png",
         };
