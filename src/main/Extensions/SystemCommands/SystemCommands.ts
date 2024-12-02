@@ -32,7 +32,7 @@ export class SystemCommands implements Extension {
     }
 
     public isSupported(): boolean {
-        return (<OperatingSystem[]>["macOS", "Windows"]).includes(this.operatingSystem);
+        return true;
     }
 
     public getSettingDefaultValue() {
