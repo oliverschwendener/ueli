@@ -77,6 +77,18 @@ export class UeliCommandExtension implements Extension {
                     fluentIcon: "AppsAddInRegular",
                 },
             },
+            rescanExtensions: {
+                id: "ueliCommand:rescanExtensions",
+                description: t("description"),
+                name: t("rescanExtensions"),
+                image: this.getImage(),
+                defaultAction: {
+                    handlerId: "UeliCommand",
+                    argument: "rescanExtensions",
+                    description: t("rescanExtensions"),
+                    fluentIcon: "ArrowClockwiseRegular",
+                },
+            },
         };
 
         return Object.values(map);
@@ -111,6 +123,7 @@ export class UeliCommandExtension implements Extension {
                 openExtensions: "Browse Ueli extensions",
                 centerWindow: "Center Ueli window",
                 quitUeli: "Quit Ueli",
+                rescanExtensions: "Rescan extensions",
             },
             "de-CH": {
                 extensionName: "Ueli Befehle",
@@ -119,6 +132,7 @@ export class UeliCommandExtension implements Extension {
                 openExtensions: "Ueli-Erweiterungen durchsuchen",
                 centerWindow: "Ueli-Fenster zentrieren",
                 quitUeli: "Ueli Beenden",
+                rescanExtensions: "Erweiterungen neu scannen",
             },
         };
     }

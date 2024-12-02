@@ -1,6 +1,7 @@
 import type { FluentIcon as FluentIconString } from "@common/Core";
 import {
     AppsAddInRegular,
+    ArrowClockwiseRegular,
     ArrowSquareUpRightRegular,
     CopyRegular,
     DeleteDismissRegular,
@@ -20,6 +21,7 @@ import type { ReactElement } from "react";
 export const FluentIcon = ({ icon }: { icon: FluentIconString }) => {
     const icons: Record<FluentIconString, ReactElement> = {
         AppsAddInRegular: <AppsAddInRegular />,
+        ArrowClockwiseRegular: <ArrowClockwiseRegular />,
         ArrowSquareUpRightRegular: <ArrowSquareUpRightRegular />,
         CopyRegular: <CopyRegular />,
         DeleteDismissRegular: <DeleteDismissRegular />,
