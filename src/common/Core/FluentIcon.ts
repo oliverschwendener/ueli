@@ -5,8 +5,10 @@
  */
 export type FluentIcon =
     | "AppsAddInRegular"
+    | "ArrowClockwiseRegular"
     | "ArrowSquareUpRightRegular"
     | "CopyRegular"
+    | "DeleteDismissRegular"
     | "DismissCircleRegular"
     | "DocumentFolderRegular"
     | "EyeOffRegular"

@@ -10,8 +10,7 @@ type ActionCardProps = {
 };
 
 export const ActionCard = ({ action, index, removeAction }: ActionCardProps) => {
-    const ns = "extension[Workflow]";
-    const { t } = useTranslation();
+    const { t } = useTranslation("extension[Workflow]");
 
     return (
         <Card appearance="outline" orientation="horizontal">
@@ -22,7 +21,7 @@ export const ActionCard = ({ action, index, removeAction }: ActionCardProps) => 
                     </Body1Strong>
                 }
                 action={
-                    <Tooltip relationship="label" content={t("removeAction", { ns })} withArrow>
+                    <Tooltip relationship="label" content={t("removeAction")} withArrow>
                         <Button
                             size="small"
                             appearance="subtle"

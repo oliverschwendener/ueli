@@ -24,7 +24,6 @@ import { useTranslation } from "react-i18next";
 
 export const Extensions = () => {
     const { t } = useTranslation();
-    const ns = "settingsExtensions";
     const { contextBridge } = useContextBridge();
     const toasterId = useId("rescanToasterId");
     const { dispatchToast } = useToastController(toasterId);
@@ -61,7 +60,7 @@ export const Extensions = () => {
             <Toast>
                 <ToastTitle>
                     {nameTranslation ? t(nameTranslation.key, { ns: nameTranslation.namespace }) : name}:{" "}
-                    {t("successfulRescan", { ns })}
+                    {t("successfulRescan", { ns: "settingsExtensions" })}
                 </ToastTitle>
             </Toast>,
             { intent: "success", position: "bottom" },
@@ -74,13 +73,13 @@ export const Extensions = () => {
             <Table arial-label="Default table">
                 <TableHeader>
                     <TableRow>
-                        <TableHeaderCell key="name">{t("name", { ns })}</TableHeaderCell>
-                        <TableHeaderCell key="author">{t("author", { ns })}</TableHeaderCell>
+                        <TableHeaderCell key="name">{t("name", { ns: "settingsExtensions" })}</TableHeaderCell>
+                        <TableHeaderCell key="author">{t("author", { ns: "settingsExtensions" })}</TableHeaderCell>
                         <TableHeaderCell style={{ width: 50 }} key="enabled">
-                            {t("enabled", { ns })}
+                            {t("enabled", { ns: "settingsExtensions" })}
                         </TableHeaderCell>
                         <TableHeaderCell style={{ width: 50 }} key="rescan">
-                            {t("rescan", { ns })}
+                            {t("rescan", { ns: "settingsExtensions" })}
                         </TableHeaderCell>
                     </TableRow>
                 </TableHeader>

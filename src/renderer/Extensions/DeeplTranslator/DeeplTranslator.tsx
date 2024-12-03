@@ -14,8 +14,7 @@ import { Translator } from "./Translator";
 export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
     const extensionId = "DeeplTranslator";
 
-    const { t } = useTranslation();
-    const ns = "extension[DeeplTranslator]";
+    const { t } = useTranslation("extension[DeeplTranslator]");
 
     const { value: apiKey, updateValue: setApiKey } = useExtensionSetting({
         extensionId,
@@ -62,9 +61,9 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                             style={{ width: 24 }}
                         />
                         <div style={{ flexGrow: 1 }}>
-                            <Text weight="semibold">{t("extensionName", { ns })}</Text>
+                            <Text weight="semibold">{t("extensionName")}</Text>
                         </div>
-                        <Tooltip content={t("openAccount", { ns })} relationship="label" withArrow>
+                        <Tooltip content={t("openAccount")} relationship="label" withArrow>
                             <Button
                                 onClick={() => openDeeplAccount()}
                                 className="non-draggable-area"

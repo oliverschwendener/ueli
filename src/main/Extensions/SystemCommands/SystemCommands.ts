@@ -28,11 +28,11 @@ export class SystemCommands implements Extension {
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        return (await this.systemCommandRepository.getAll(this.resources)).map((s) => s.toSearchResultItem());
+        return (await this.systemCommandRepository.getAll()).map((s) => s.toSearchResultItem());
     }
 
     public isSupported(): boolean {
-        return (<OperatingSystem[]>["macOS", "Windows"]).includes(this.operatingSystem);
+        return true;
     }
 
     public getSettingDefaultValue() {
@@ -41,7 +41,7 @@ export class SystemCommands implements Extension {
 
     public getImage(): Image {
         const filenames: Record<OperatingSystem, string> = {
-            Linux: "", // not supported
+            Linux: "linux.png",
             macOS: "macos-system-command.png",
             Windows: "windows-11-system-command.png",
         };

@@ -1,5 +1,5 @@
+import type { SearchResultItem } from "@common/Core";
 import { describe, expect, it } from "vitest";
-import type { SearchResultItem } from "../SearchResultItem";
 import { fuzzySortFilter } from "./fuzzySortFilter";
 
 describe(fuzzySortFilter, () => {

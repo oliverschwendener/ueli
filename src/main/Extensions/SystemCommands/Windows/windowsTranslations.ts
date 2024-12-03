@@ -9,6 +9,7 @@ export type WindowsTranslations = {
     sleep: string;
     hibernate: string;
     searchResultItemDescription: string;
+    emptyTrash: string;
 };
 
 export const windowsResources: Resources<WindowsTranslations> = {
@@ -21,6 +22,7 @@ export const windowsResources: Resources<WindowsTranslations> = {
         sleep: "Sleep",
         hibernate: "Hibernate",
         searchResultItemDescription: "System Command",
+        emptyTrash: "Empty recycle bin",
     },
     "de-CH": {
         extensionName: "Systembefehle",
@@ -31,5 +33,6 @@ export const windowsResources: Resources<WindowsTranslations> = {
         sleep: "Energie sparen",
         hibernate: "Schlafen",
         searchResultItemDescription: "Systembefehl",
+        emptyTrash: "Paperkorb leeren",
     },
 };

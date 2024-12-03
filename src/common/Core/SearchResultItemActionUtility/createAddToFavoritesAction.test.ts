@@ -1,6 +1,5 @@
+import { type SearchResultItemAction, createAddToFavoritesAction } from "@common/Core";
 import { describe, expect, it } from "vitest";
-import type { SearchResultItemAction } from "../SearchResultItemAction";
-import { createAddToFavoritesAction } from "./createAddToFavoritesAction";
 
 describe(createAddToFavoritesAction, () => {
     it("should create an 'add to favorites' action", () => {
