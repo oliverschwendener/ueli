@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+        <title>Ueli</title>
+        <style>
+            ::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background-color: var(--scrollbar-background-color);
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background-color: var(--scrollbar-foreground-color);
+                border-radius: 4px;
+            }
+
+            .draggable-area {
+                user-select: none;
+                -webkit-app-region: drag;
+            }
+
+            .non-draggable-area {
+                user-select: auto;
+                -webkit-app-region: none;
+            }
+        </style>
+    </head>
+    <body style="margin: 0; padding: 0">
+        <div id="react-app"></div>
+        <script type="module" src="/main.tsx"></script>
+    </body>
+</html>

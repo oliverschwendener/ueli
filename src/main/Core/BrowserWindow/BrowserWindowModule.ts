@@ -5,7 +5,7 @@ import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
-import type { BrowserWindow, IpcMain } from "electron";
+import { BrowserWindow, IpcMain } from "electron";
 import { join } from "path";
 import { NavigateToActionHandler } from "./ActionHandler";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
@@ -89,7 +89,21 @@ export class BrowserWindowModule {
             .get("ActionHandlerRegistry")
             .register(new NavigateToActionHandler(dependencyRegistry.get("EventEmitter")));
 
-        await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyRegistry.get("EnvironmentVariableProvider"));
+        await BrowserWindowModule.loadFileOrUrl(
+            browserWindow,
+            dependencyRegistry.get("EnvironmentVariableProvider"),
+            "main.html",
+        );
+
+        const settingsWindow = new BrowserWindow({
+            show: false,
+        });
+
+        await BrowserWindowModule.loadFileOrUrl(
+            settingsWindow,
+            dependencyRegistry.get("EnvironmentVariableProvider"),
+            "settings.html",
+        );
     }
 
     private static registerBrowserWindowEventListeners(
@@ -198,13 +212,14 @@ export class BrowserWindowModule {
     private static async loadFileOrUrl(
         browserWindow: BrowserWindow,
         environmentVariableProvider: EnvironmentVariableProvider,
+        fileName: string,
     ) {
         const viteDevServerUrl = environmentVariableProvider.get("VITE_DEV_SERVER_URL");
 
         if (viteDevServerUrl) {
-            await browserWindow.loadURL(viteDevServerUrl);
+            await browserWindow.loadURL(`${viteDevServerUrl}/${fileName}`);
         } else {
-            await browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html"));
+            await browserWindow.loadFile(join(__dirname, "..", "dist-renderer", fileName));
         }
     }
 }
