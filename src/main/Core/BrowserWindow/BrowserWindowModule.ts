@@ -5,7 +5,7 @@ import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
-import { BrowserWindow, IpcMain } from "electron";
+import type { BrowserWindow, IpcMain } from "electron";
 import { join } from "path";
 import { NavigateToActionHandler } from "./ActionHandler";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
