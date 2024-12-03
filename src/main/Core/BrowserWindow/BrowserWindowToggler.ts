@@ -1,21 +1,18 @@
-import type { SettingsManager } from "@Core/SettingsManager";
 import type { OperatingSystem } from "@common/Core";
-import type { App, BrowserWindow, Rectangle, Size } from "electron";
+import type { App, BrowserWindow } from "electron";
 
 export class BrowserWindowToggler {
     public constructor(
         private readonly operatingSystem: OperatingSystem,
         private readonly app: App,
         private readonly browserWindow: BrowserWindow,
-        private readonly defaultSize: Size,
-        private readonly settingsManager: SettingsManager,
     ) {}
 
-    public toggle(bounds?: Rectangle): void {
+    public toggle(): void {
         if (this.isVisibleAndFocused()) {
             this.hide();
         } else {
-            this.showAndFocus(bounds);
+            this.showAndFocus();
         }
     }
 
@@ -37,7 +34,7 @@ export class BrowserWindowToggler {
         this.browserWindow.hide();
     }
 
-    public showAndFocus(bounds?: Rectangle): void {
+    public showAndFocus(): void {
         if (typeof this.app.show === "function") {
             this.app.show();
         }
@@ -49,21 +46,7 @@ export class BrowserWindowToggler {
             this.browserWindow.restore();
         }
 
-        this.repositionWindow(bounds);
-
         this.browserWindow.focus();
         this.browserWindow.webContents.send("windowFocused");
-    }
-
-    private repositionWindow(bounds?: Rectangle): void {
-        this.browserWindow.setBounds(bounds ?? this.defaultSize);
-
-        if (!bounds || this.alwaysCenter()) {
-            this.browserWindow.center();
-        }
-    }
-
-    private alwaysCenter(): boolean {
-        return this.settingsManager.getValue("window.alwaysCenter", false);
     }
 }

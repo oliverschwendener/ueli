@@ -1,6 +1,5 @@
-import type { SettingsManager } from "@Core/SettingsManager";
 import type { OperatingSystem } from "@common/Core";
-import type { App, BrowserWindow, Rectangle, Size } from "electron";
+import type { App, BrowserWindow } from "electron";
 import { describe, expect, it, vi } from "vitest";
 import { BrowserWindowToggler } from "./BrowserWindowToggler";
 
@@ -61,20 +60,15 @@ describe(BrowserWindowToggler, () => {
 
                 const {
                     browserWindow,
-                    centerMock,
                     focusMock,
                     isFocusedMock,
                     isVisibleMock,
                     restoreMock,
-                    setBoundsMock,
                     showMock,
                     webContentsSendMock,
                 } = createBrowserWindow({ isFocused: false, isVisible: true });
 
-                const defaultSize = <Size>{ width: 100, height: 200 };
-                const settingsManager = <SettingsManager>{};
-
-                new BrowserWindowToggler(operatingSystem, app, browserWindow, defaultSize, settingsManager).toggle();
+                new BrowserWindowToggler(operatingSystem, app, browserWindow).toggle();
 
                 expect(isVisibleMock).toHaveBeenCalledOnce();
                 expect(isFocusedMock).toHaveBeenCalledOnce();
@@ -89,8 +83,6 @@ describe(BrowserWindowToggler, () => {
                 expect(showMock).toHaveBeenCalledOnce();
                 expect(focusMock).toHaveBeenCalledOnce();
                 expect(webContentsSendMock).toHaveBeenCalledWith("windowFocused");
-                expect(setBoundsMock).toHaveBeenCalledWith(defaultSize);
-                expect(centerMock).toHaveBeenCalledOnce();
             };
 
             testShowAndFocus({ operatingSystem: "Windows" });
@@ -101,21 +93,10 @@ describe(BrowserWindowToggler, () => {
         it("should show and focus the window if its hidden, re-centering it and resizing it to the default size", () => {
             const { app, showMock: appShowMock } = createApp();
 
-            const {
-                browserWindow,
-                centerMock,
-                focusMock,
-                isVisibleMock,
-                restoreMock,
-                setBoundsMock,
-                showMock,
-                webContentsSendMock,
-            } = createBrowserWindow({ isFocused: false, isVisible: false });
+            const { browserWindow, focusMock, isVisibleMock, restoreMock, showMock, webContentsSendMock } =
+                createBrowserWindow({ isFocused: false, isVisible: false });
 
-            const defaultSize = <Size>{ width: 100, height: 200 };
-            const settingsManager = <SettingsManager>{};
-
-            new BrowserWindowToggler("Windows", app, browserWindow, defaultSize, settingsManager).toggle();
+            new BrowserWindowToggler("Windows", app, browserWindow).toggle();
 
             expect(isVisibleMock).toHaveBeenCalledOnce();
             expect(appShowMock).toHaveBeenCalledOnce();
@@ -123,31 +104,15 @@ describe(BrowserWindowToggler, () => {
             expect(showMock).toHaveBeenCalledOnce();
             expect(focusMock).toHaveBeenCalledOnce();
             expect(webContentsSendMock).toHaveBeenCalledWith("windowFocused");
-            expect(setBoundsMock).toHaveBeenCalledWith(defaultSize);
-            expect(centerMock).toHaveBeenCalledOnce();
         });
 
         it("should show and focus the window if its hidden, repositioning it with the given bounds", () => {
             const { app, showMock: appShowMock } = createApp();
 
-            const {
-                browserWindow,
-                focusMock,
-                isVisibleMock,
-                restoreMock,
-                setBoundsMock,
-                showMock,
-                webContentsSendMock,
-                centerMock,
-            } = createBrowserWindow({ isFocused: false, isVisible: false });
+            const { browserWindow, focusMock, isVisibleMock, restoreMock, showMock, webContentsSendMock } =
+                createBrowserWindow({ isFocused: false, isVisible: false });
 
-            const defaultSize = <Size>{ width: 100, height: 200 };
-            const bounds = <Rectangle>{ x: 10, y: 20, width: 30, height: 40 };
-
-            const getValueMock = vi.fn().mockReturnValue(false);
-            const settingsManager = <SettingsManager>{ getValue: (k, d) => getValueMock(k, d) };
-
-            new BrowserWindowToggler("Windows", app, browserWindow, defaultSize, settingsManager).toggle(bounds);
+            new BrowserWindowToggler("Windows", app, browserWindow).toggle();
 
             expect(isVisibleMock).toHaveBeenCalledOnce();
             expect(appShowMock).toHaveBeenCalledOnce();
@@ -155,31 +120,15 @@ describe(BrowserWindowToggler, () => {
             expect(showMock).toHaveBeenCalledOnce();
             expect(focusMock).toHaveBeenCalledOnce();
             expect(webContentsSendMock).toHaveBeenCalledWith("windowFocused");
-            expect(setBoundsMock).toHaveBeenCalledWith(bounds);
-            expect(centerMock).not.toHaveBeenCalled();
         });
 
-        it("should show and focus the window if its hidden, repositioning it with the given bounds and re-centering it if alwaysCenter is set to true", () => {
+        it("should show and focus the window if its hidden", () => {
             const { app, showMock: appShowMock } = createApp();
 
-            const {
-                browserWindow,
-                centerMock,
-                focusMock,
-                isVisibleMock,
-                restoreMock,
-                setBoundsMock,
-                showMock,
-                webContentsSendMock,
-            } = createBrowserWindow({ isFocused: false, isVisible: false });
+            const { browserWindow, focusMock, isVisibleMock, restoreMock, showMock, webContentsSendMock } =
+                createBrowserWindow({ isFocused: false, isVisible: false });
 
-            const defaultSize = <Size>{ width: 100, height: 200 };
-            const bounds = <Rectangle>{ x: 10, y: 20, width: 30, height: 40 };
-
-            const getValueMock = vi.fn().mockReturnValue(true);
-            const settingsManager = <SettingsManager>{ getValue: (k, d) => getValueMock(k, d) };
-
-            new BrowserWindowToggler("Windows", app, browserWindow, defaultSize, settingsManager).toggle(bounds);
+            new BrowserWindowToggler("Windows", app, browserWindow).toggle();
 
             expect(isVisibleMock).toHaveBeenCalledOnce();
             expect(appShowMock).toHaveBeenCalledOnce();
@@ -187,8 +136,6 @@ describe(BrowserWindowToggler, () => {
             expect(showMock).toHaveBeenCalledOnce();
             expect(focusMock).toHaveBeenCalledOnce();
             expect(webContentsSendMock).toHaveBeenCalledWith("windowFocused");
-            expect(setBoundsMock).toHaveBeenCalledWith(bounds);
-            expect(centerMock).toHaveBeenCalledOnce();
         });
 
         it("should hide the window if it is visible and focussed", () => {
@@ -200,10 +147,7 @@ describe(BrowserWindowToggler, () => {
                     isVisible: true,
                 });
 
-                const defaultSize = <Size>{ width: 100, height: 200 };
-                const settingsManager = <SettingsManager>{};
-
-                new BrowserWindowToggler(operatingSystem, app, browserWindow, defaultSize, settingsManager).toggle();
+                new BrowserWindowToggler(operatingSystem, app, browserWindow).toggle();
 
                 expect(isVisibleMock).toHaveBeenCalledOnce();
                 expect(isFocusedMock).toHaveBeenCalledOnce();
