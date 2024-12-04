@@ -94,7 +94,7 @@ export const Generator = ({
                 await generate();
             }, 250),
         );
-    }, [uuidVersion, uppercase, hyphens, braces, quotes]);
+    }, [uuidVersion, numberOfUuids, uppercase, hyphens, braces, quotes]);
 
     return (
         <div
