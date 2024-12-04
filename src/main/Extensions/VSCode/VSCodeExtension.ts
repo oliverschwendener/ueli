@@ -3,7 +3,12 @@ import type { Extension } from "@Core/Extension";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { createEmptyInstantSearchResult, type InstantSearchResultItems, type OperatingSystem, type SearchResultItem } from "@common/Core";
+import {
+    createEmptyInstantSearchResult,
+    type InstantSearchResultItems,
+    type OperatingSystem,
+    type SearchResultItem,
+} from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { SearchEngineId } from "@common/Core/Search";
 import { searchFilter } from "@common/Core/Search/SearchFilter";
