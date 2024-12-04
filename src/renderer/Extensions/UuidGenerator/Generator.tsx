@@ -113,20 +113,18 @@ export const Generator = ({
         >
             <div style={{ display: "flex", flexDirection: "row", gap: 10, flexGrow: 1 }}>
                 <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                        <Label style={{ padding: 5 }}>{uuidVersionLabel}</Label>
-                        <Dropdown
-                            value={uuidVersion}
-                            selectedOptions={[uuidVersion]}
-                            onOptionSelect={(_, { optionValue }) => setUuidVersion(optionValue as UuidVersion)}
-                        >
-                            {versionOptions.map((versionName) => (
-                                <Option key={versionName} value={versionName} text={versionName}>
-                                    {versionName}
-                                </Option>
-                            ))}
-                        </Dropdown>
-                    </div>
+                    <Label style={{ padding: 5 }}>{uuidVersionLabel}</Label>
+                    <Dropdown
+                        value={uuidVersion}
+                        selectedOptions={[uuidVersion]}
+                        onOptionSelect={(_, { optionValue }) => setUuidVersion(optionValue as UuidVersion)}
+                    >
+                        {versionOptions.map((versionName) => (
+                            <Option key={versionName} value={versionName} text={versionName}>
+                                {versionName}
+                            </Option>
+                        ))}
+                    </Dropdown>
                     <Checkbox
                         label={uppercaseLabel}
                         checked={uppercase}
@@ -139,14 +137,12 @@ export const Generator = ({
                     />
                 </div>
                 <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                        <Label style={{ padding: 5 }}>{numberOfUuidsLabel}</Label>
-                        <Input
-                            type="number"
-                            value={`${numberOfUuids}`}
-                            onChange={(_, { value }) => value && setNumberOfUuids(Math.abs(Number(value)))}
-                        />
-                    </div>
+                    <Label style={{ padding: 5 }}>{numberOfUuidsLabel}</Label>
+                    <Input
+                        type="number"
+                        value={`${numberOfUuids}`}
+                        onChange={(_, { value }) => value && setNumberOfUuids(Math.abs(Number(value)))}
+                    />
                     <Checkbox
                         label={bracesLabel}
                         checked={braces}
