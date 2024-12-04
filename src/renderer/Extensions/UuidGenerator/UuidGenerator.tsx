@@ -58,6 +58,8 @@ export const UuidGenerator = ({ contextBridge, goBack }: ExtensionProps) => {
                 <Generator
                     generatedUuids={generatedUuids}
                     setGeneratedUuids={setGeneratedUuids}
+                    uuidVersionLabel={t("uuidVersion")}
+                    numberOfUuidsLabel={t("numberOfUuids")}
                     uppercaseLabel={t("uppercase")}
                     bracesLabel={t("braces")}
                     quotesLabel={t("quotes")}

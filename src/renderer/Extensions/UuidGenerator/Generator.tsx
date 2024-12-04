@@ -1,12 +1,14 @@
 import { useExtensionSetting } from "@Core/Hooks";
 import type { ContextBridge } from "@common/Core";
 import type { UuidGeneratorSetting, UuidVersion } from "@common/Extensions/UuidGenerator";
-import { Checkbox, Dropdown, Option, ProgressBar, SpinButton, Textarea } from "@fluentui/react-components";
+import { Checkbox, Dropdown, Label, Option, ProgressBar, SpinButton, Textarea } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 
 type GeneratorProps = {
     generatedUuids: string;
     setGeneratedUuids: (text: string) => void;
+    uuidVersionLabel: string;
+    numberOfUuidsLabel: string;
     uppercaseLabel: string;
     hyphensLabel: string;
     bracesLabel: string;
@@ -19,6 +21,8 @@ type InvocationResult = string[];
 export const Generator = ({
     generatedUuids,
     setGeneratedUuids,
+    uuidVersionLabel,
+    numberOfUuidsLabel,
     uppercaseLabel,
     hyphensLabel,
     bracesLabel,
@@ -109,44 +113,50 @@ export const Generator = ({
         >
             <div style={{ display: "flex", flexDirection: "row", gap: 10, flexGrow: 1 }}>
                 <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
-                    <Dropdown
-                        value={uuidVersion}
-                        selectedOptions={[uuidVersion]}
-                        onOptionSelect={(_, { optionValue }) => setUuidVersion(optionValue as UuidVersion)}
-                    >
-                        {versionOptions.map((versionName) => (
-                            <Option key={versionName} value={versionName} text={versionName}>
-                                {versionName}
-                            </Option>
-                        ))}
-                    </Dropdown>
-                    <Checkbox
-                        label={hyphensLabel}
-                        checked={hyphens}
-                        onChange={(_, { checked }) => setHyphens(checked === true)}
-                    />
-                    <Checkbox
-                        label={quotesLabel}
-                        checked={quotes}
-                        onChange={(_, { checked }) => setQuotes(checked === true)}
-                    />
-                </div>
-                <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
-                    <SpinButton
-                        value={numberOfUuids}
-                        onChange={(_, { value }) => value && setNumberOfUuids(value)}
-                        min={1}
-                        max={1000}
-                    />
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                        <Label style={{ padding: 5  }}>{uuidVersionLabel}</Label>
+                        <Dropdown
+                            value={uuidVersion}
+                            selectedOptions={[uuidVersion]}
+                            onOptionSelect={(_, { optionValue }) => setUuidVersion(optionValue as UuidVersion)}
+                        >
+                            {versionOptions.map((versionName) => (
+                                <Option key={versionName} value={versionName} text={versionName}>
+                                    {versionName}
+                                </Option>
+                            ))}
+                        </Dropdown>
+                    </div>
                     <Checkbox
                         label={uppercaseLabel}
                         checked={uppercase}
                         onChange={(_, { checked }) => setUppercase(checked === true)}
                     />
                     <Checkbox
+                        label={hyphensLabel}
+                        checked={hyphens}
+                        onChange={(_, { checked }) => setHyphens(checked === true)}
+                    />
+                </div>
+                <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                        <Label style={{ padding: 5 }}>{numberOfUuidsLabel}</Label>
+                        <SpinButton
+                            value={numberOfUuids}
+                            onChange={(_, { value }) => value && setNumberOfUuids(value)}
+                            min={1}
+                            max={1000}
+                        />
+                    </div>
+                    <Checkbox
                         label={bracesLabel}
                         checked={braces}
                         onChange={(_, { checked }) => setBraces(checked === true)}
+                    />
+                    <Checkbox
+                        label={quotesLabel}
+                        checked={quotes}
+                        onChange={(_, { checked }) => setQuotes(checked === true)}
                     />
                 </div>
             </div>
