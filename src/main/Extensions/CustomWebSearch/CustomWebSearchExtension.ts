@@ -2,7 +2,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { UrlImageGenerator } from "@Core/ImageGenerator";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { SearchResultItem } from "@common/Core";
+import { createEmptyInstantSearchResult, type InstantSearchResultItems, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { CustomSearchEngineSetting, Settings } from "@common/Extensions/CustomWebSearch";
@@ -49,7 +49,7 @@ export class CustomWebSearchExtension implements Extension {
         };
     }
 
-    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
+    public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
         const customSearchEngines = this.settingsManager.getValue<CustomSearchEngineSetting[]>(
             getExtensionSettingKey(this.id, "customSearchEngines"),
             this.getSettingDefaultValue("customSearchEngines"),
@@ -58,10 +58,13 @@ export class CustomWebSearchExtension implements Extension {
         const selectedSearchEngines = customSearchEngines.filter((engine) => searchTerm.startsWith(engine.prefix));
 
         if (selectedSearchEngines.length === 0) {
-            return [];
+            return createEmptyInstantSearchResult();
         }
 
-        return selectedSearchEngines.map((engine) => this.createInstantSearchResultItem(engine, searchTerm));
+        return {
+            after: selectedSearchEngines.map((engine) => this.createInstantSearchResultItem(engine, searchTerm)),
+            before: [],
+        };
     }
 
     public isSupported(): boolean {

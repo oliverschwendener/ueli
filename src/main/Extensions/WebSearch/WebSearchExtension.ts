@@ -1,7 +1,13 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { createInvokeExtensionAction, createOpenUrlSearchResultAction, type SearchResultItem } from "@common/Core";
+import {
+    createEmptyInstantSearchResult,
+    createInvokeExtensionAction,
+    createOpenUrlSearchResultAction,
+    type InstantSearchResultItems,
+    type SearchResultItem,
+} from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Settings } from "./Settings";
@@ -33,7 +39,7 @@ export class WebSearchExtension implements Extension {
         private readonly webSearchEngines: WebSearchEngine[],
     ) {}
 
-    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
+    public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
         const showInstantSearchResult = this.settingsManager.getValue(
             getExtensionSettingKey(this.id, "showInstantSearchResult"),
             this.getSettingDefaultValue("showInstantSearchResult"),
@@ -47,10 +53,13 @@ export class WebSearchExtension implements Extension {
 
             const webSearchEngine = this.getCurrentWebSearchEngine();
 
-            return [this.getInstantSearchResultItem(searchTerm, locale, webSearchEngine)];
+            return {
+                after: [this.getInstantSearchResultItem(searchTerm, locale, webSearchEngine)],
+                before: [],
+            };
         }
 
-        return [];
+        return createEmptyInstantSearchResult();
     }
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {

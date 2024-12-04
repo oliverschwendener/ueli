@@ -1,14 +1,21 @@
-import type { SearchResultItem } from "@common/Core";
+import type { InstantSearchResultItems, SearchResultItem } from "@common/Core";
 import { describe, expect, it } from "vitest";
 import { getSearchResult } from "./getSearchResult";
 
 describe(getSearchResult, () => {
     it("should return an array of instant search result items, favorites and other matches if a search term is given", () => {
-        const instantSearchResultItems = <SearchResultItem[]>[
-            { id: "instant1", name: "Instant Item 1" },
-            { id: "instant2", name: "Instant Item 2" },
-            { id: "instant3", name: "Instant Item 3" },
-        ];
+        const instantSearchResultItems: InstantSearchResultItems = {
+            before: <SearchResultItem[]>[
+                { id: "instant1-before", name: "Instant Item 1 before" },
+                { id: "instant2-before", name: "Instant Item 2 before" },
+                { id: "instant3-before", name: "Instant Item 3 before" },
+            ],
+            after: <SearchResultItem[]>[
+                { id: "instant1-after", name: "Instant Item 1 after" },
+                { id: "instant2-after", name: "Instant Item 2 after" },
+                { id: "instant3-after", name: "Instant Item 3 after" },
+            ],
+        };
 
         const searchResultItems = <SearchResultItem[]>[
             { id: "item1", name: "Item 1" },
@@ -33,7 +40,11 @@ describe(getSearchResult, () => {
 
         expect(actual).toEqual({
             favorites: [{ id: "item3", name: "Item 3" }],
-            searchResults: [{ id: "item2", name: "Item 2" }, ...instantSearchResultItems],
+            searchResults: [
+                ...instantSearchResultItems.before,
+                { id: "item2", name: "Item 2" },
+                ...instantSearchResultItems.after,
+            ],
         });
     });
 
@@ -48,11 +59,18 @@ describe(getSearchResult, () => {
             searchEngineId: "fuzzysort",
             favoriteSearchResultItemIds: ["item2", "item3"],
             excludedSearchResultItemIds: ["item1"],
-            instantSearchResultItems: <SearchResultItem[]>[
-                { id: "instant1", name: "Instant Item 1" },
-                { id: "instant2", name: "Instant Item 2" },
-                { id: "instant3", name: "Instant Item 3" },
-            ],
+            instantSearchResultItems: {
+                before: <SearchResultItem[]>[
+                    { id: "instant1-before", name: "Instant Item 1 before" },
+                    { id: "instant2-before", name: "Instant Item 2 before" },
+                    { id: "instant3-before", name: "Instant Item 3 before" },
+                ],
+                after: <SearchResultItem[]>[
+                    { id: "instant1-after", name: "Instant Item 1 after" },
+                    { id: "instant2-after", name: "Instant Item 2 after" },
+                    { id: "instant3-after", name: "Instant Item 3 after" },
+                ],
+            },
             searchResultItems: [item5, item1, item3, item2, item4],
             searchTerm: "",
             fuzziness: 0, // will be ignored

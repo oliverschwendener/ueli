@@ -1,6 +1,7 @@
 import type { IpcRenderer, OpenDialogOptions, OpenDialogReturnValue, OpenExternalOptions } from "electron";
 import type { AboutUeli } from "./AboutUeli";
 import type { ExtensionInfo } from "./ExtensionInfo";
+import type { InstantSearchResultItems } from "./InstantSearchResultItems";
 import type { OperatingSystem } from "./OperatingSystem";
 import type { SearchResultItem } from "./SearchResultItem";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
@@ -34,7 +35,7 @@ export type ContextBridge = {
     getExtensionSettingDefaultValue: <Value>(extensionId: string, settingKey: string) => Value;
     getFavorites: () => string[];
     getLogs: () => string[];
-    getInstantSearchResultItems: (searchTerm: string) => SearchResultItem[];
+    getInstantSearchResultItems: (searchTerm: string) => InstantSearchResultItems;
     getOperatingSystem: () => OperatingSystem;
     getSearchResultItems: () => SearchResultItem[];
     getSettingValue: <Value>(key: string, defaultValue: Value, isSensitive?: boolean) => Value;

@@ -3,7 +3,12 @@ import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { TerminalRegistry } from "@Core/Terminal";
 import type { Translator } from "@Core/Translator";
-import type { OperatingSystem, SearchResultItem } from "@common/Core";
+import {
+    createEmptyInstantSearchResult,
+    type InstantSearchResultItems,
+    type OperatingSystem,
+    type SearchResultItem,
+} from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { ActionArgument } from "./ActionArgument";
 import type { Settings } from "./Settings";
@@ -82,28 +87,31 @@ export class TerminalLauncherExtension implements Extension {
         };
     }
 
-    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
+    public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
         if (!searchTerm.startsWith(this.getPrefix()) || searchTerm.replace(this.getPrefix(), "").trim().length === 0) {
-            return [];
+            return createEmptyInstantSearchResult();
         }
 
         const { t } = this.translator.createT(this.getI18nResources());
 
         const command = this.extractCommandFromSearchTerm(searchTerm);
 
-        return this.getEnabledTerminalIds().map((terminalId) => ({
-            defaultAction: {
-                argument: JSON.stringify(<ActionArgument>{ command, terminalId }),
-                description: t("defaultActionDescription", { terminalId }),
-                handlerId: "LaunchTerminalActionHandler",
-                fluentIcon: "WindowConsoleRegular",
-                hideWindowAfterInvocation: true,
-            },
-            description: t("searchResultItemDescription", { terminalId }),
-            id: `[${this.id}][instantSearchResultItem][${terminalId}]`,
-            image: this.getTerminalImage(terminalId),
-            name: command,
-        }));
+        return {
+            after: this.getEnabledTerminalIds().map((terminalId) => ({
+                defaultAction: {
+                    argument: JSON.stringify(<ActionArgument>{ command, terminalId }),
+                    description: t("defaultActionDescription", { terminalId }),
+                    handlerId: "LaunchTerminalActionHandler",
+                    fluentIcon: "WindowConsoleRegular",
+                    hideWindowAfterInvocation: true,
+                },
+                description: t("searchResultItemDescription", { terminalId }),
+                id: `[${this.id}][instantSearchResultItem][${terminalId}]`,
+                image: this.getTerminalImage(terminalId),
+                name: command,
+            })),
+            before: [],
+        };
     }
 
     private getPrefix(): string {

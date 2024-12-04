@@ -1,4 +1,4 @@
-import { createCopyToClipboardAction, type SearchResultItem } from "@common/Core";
+import { createCopyToClipboardAction, type InstantSearchResultItems, type SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
@@ -71,26 +71,29 @@ export class ColorConverterExtension implements Extension {
         };
     }
 
-    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
+    public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
         const { t } = this.translator.createT(this.getI18nResources());
 
-        return this.colorConverter
-            .convertFromString(searchTerm)
-            .filter(({ format }) => this.getEnabledColorFormats().includes(format))
-            .map(({ format, value }) => ({
-                defaultAction: createCopyToClipboardAction({
-                    textToCopy: value,
-                    description: "Copy color to clipboard",
-                    descriptionTranslation: {
-                        key: "copyColorToClipboard",
-                        namespace: "extension[ColorConverter]",
-                    },
-                }),
-                description: t("color", { format }),
-                id: `color-${value}-${format}`,
-                image: this.getImage(),
-                name: value,
-            }));
+        return {
+            after: this.colorConverter
+                .convertFromString(searchTerm)
+                .filter(({ format }) => this.getEnabledColorFormats().includes(format))
+                .map(({ format, value }) => ({
+                    defaultAction: createCopyToClipboardAction({
+                        textToCopy: value,
+                        description: "Copy color to clipboard",
+                        descriptionTranslation: {
+                            key: "copyColorToClipboard",
+                            namespace: "extension[ColorConverter]",
+                        },
+                    }),
+                    description: t("color", { format }),
+                    id: `color-${value}-${format}`,
+                    image: this.getImage(),
+                    name: value,
+                })),
+            before: [],
+        };
     }
 
     private getEnabledColorFormats(): string[] {

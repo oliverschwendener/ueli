@@ -3,7 +3,7 @@ import type { ExtensionRegistry } from "@Core/ExtensionRegistry";
 import type { Logger } from "@Core/Logger";
 import type { SearchIndex } from "@Core/SearchIndex";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { SearchResultItem } from "@common/Core";
+import type { InstantSearchResultItems, SearchResultItem } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
 import { ExtensionManager } from "./ExtensionManager";
 import type { ScanCounter } from "./ScanCounter";
@@ -96,18 +96,18 @@ describe(ExtensionManager, () => {
         const extension1 = <Extension>{
             id: "extension1",
             isSupported: () => true,
-            getInstantSearchResultItems: (s) => {
+            getInstantSearchResultItems: (s): InstantSearchResultItems => {
                 getInstantSearchResultItemsMock(s);
-                return [getInstantSearchResultItem("extension1")];
+                return { after: [getInstantSearchResultItem("extension1")], before: [] };
             },
         };
 
         const extension2 = <Extension>{
             id: "extension2",
             isSupported: () => true,
-            getInstantSearchResultItems: (s) => {
+            getInstantSearchResultItems: (s): InstantSearchResultItems => {
                 getInstantSearchResultItemsMock(s);
-                return [getInstantSearchResultItem("extension2")];
+                return { before: [getInstantSearchResultItem("extension2")], after: [] };
             },
         };
 
@@ -123,9 +123,10 @@ describe(ExtensionManager, () => {
             <ScanCounter>{},
         );
 
-        const actual = extensionManager.getInstantSearchResultItems("search term");
+        const { before, after } = extensionManager.getInstantSearchResultItems("search term");
 
-        expect(actual).toEqual([getInstantSearchResultItem("extension1"), getInstantSearchResultItem("extension2")]);
+        expect(after).toEqual([getInstantSearchResultItem("extension1")]);
+        expect(before).toEqual([getInstantSearchResultItem("extension2")]);
         expect(getInstantSearchResultItemsMock).toHaveBeenCalledTimes(2);
         expect(getInstantSearchResultItemsMock).toHaveBeenCalledWith("search term");
     });
