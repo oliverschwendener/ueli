@@ -3,7 +3,7 @@ import { useExtensionSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
-import { Checkbox, Dropdown, Option, SpinButton } from "@fluentui/react-components";
+import { Checkbox, Dropdown, Input, Option } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const UuidGeneratorSettings = () => {
@@ -64,11 +64,10 @@ export const UuidGeneratorSettings = () => {
                 <Setting
                     label={t("numberOfUuids")}
                     control={
-                        <SpinButton
-                            value={numberOfUuids}
-                            onChange={(_, { value }) => value && setNumberOfUuids(value)}
-                            min={1}
-                            max={1000}
+                        <Input
+                            value={`${numberOfUuids}`}
+                            type="number"
+                            onChange={(_, { value }) => value && setNumberOfUuids(Math.abs(Number(value)))}
                         />
                     }
                 />

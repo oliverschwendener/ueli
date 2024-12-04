@@ -1,7 +1,7 @@
 import { useExtensionSetting } from "@Core/Hooks";
 import type { ContextBridge } from "@common/Core";
 import type { UuidGeneratorSetting, UuidVersion } from "@common/Extensions/UuidGenerator";
-import { Checkbox, Dropdown, Label, Option, ProgressBar, SpinButton, Textarea } from "@fluentui/react-components";
+import { Checkbox, Dropdown, Input, Label, Option, ProgressBar, Textarea } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 
 type GeneratorProps = {
@@ -114,7 +114,7 @@ export const Generator = ({
             <div style={{ display: "flex", flexDirection: "row", gap: 10, flexGrow: 1 }}>
                 <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
                     <div style={{ display: "flex", flexDirection: "row" }}>
-                        <Label style={{ padding: 5  }}>{uuidVersionLabel}</Label>
+                        <Label style={{ padding: 5 }}>{uuidVersionLabel}</Label>
                         <Dropdown
                             value={uuidVersion}
                             selectedOptions={[uuidVersion]}
@@ -141,11 +141,10 @@ export const Generator = ({
                 <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
                     <div style={{ display: "flex", flexDirection: "row" }}>
                         <Label style={{ padding: 5 }}>{numberOfUuidsLabel}</Label>
-                        <SpinButton
-                            value={numberOfUuids}
-                            onChange={(_, { value }) => value && setNumberOfUuids(value)}
-                            min={1}
-                            max={1000}
+                        <Input
+                            type="number"
+                            value={`${numberOfUuids}`}
+                            onChange={(_, { value }) => value && setNumberOfUuids(Math.abs(Number(value)))}
                         />
                     </div>
                     <Checkbox
