@@ -30,7 +30,7 @@ export const HotKey = () => {
                                         appearance="subtle"
                                         size="small"
                                         icon={<WarningRegular />}
-                                        onClick={() => contextBridge.openExternal("https://www.example.com")}
+                                        onClick={() => contextBridge.openExternal("https://github.com/oliverschwendener/ueli/wiki#linux")}
                                     />
                                 </Tooltip>
                             </>
