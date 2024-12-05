@@ -165,7 +165,7 @@ export class VSCodeExtension implements Extension {
         );
 
         return {
-            id: "vscode-" + uri,
+            id: `vscode-${fileType}-${uri}`,
             name: recent.label ?? Path.basename(path),
             description: fileType,
             image: img,
