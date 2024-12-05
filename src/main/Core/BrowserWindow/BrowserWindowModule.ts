@@ -143,9 +143,6 @@ export class BrowserWindowModule {
                 .getValue("window.hideWindowOn", BrowserWindowModule.DefaultHideWindowOnOptions)
                 .includes("escapePressed");
 
-        const shouldToggleWindowOnSecondInstance = () =>
-            settingsManager.getValue("window.toggleOnSecondInstance", true);
-
         eventSubscriber.subscribe(
             "actionInvoked",
             ({ action }: { action: SearchResultItemAction }) =>
@@ -183,12 +180,7 @@ export class BrowserWindowModule {
 
         ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
 
-        app.on(
-            "second-instance",
-            () =>
-                shouldToggleWindowOnSecondInstance() &&
-                browserWindowToggler.toggle(windowBoundsMemory.getBoundsNearestToCursor()),
-        );
+        app.on("second-instance", () => browserWindowToggler.toggle(windowBoundsMemory.getBoundsNearestToCursor()));
 
         BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber, browserWindowToggler);
     }

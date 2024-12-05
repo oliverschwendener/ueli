@@ -279,8 +279,6 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     "scrollBehavior.smooth": "Smooth",
                     "scrollBehavior.instant": "Instant",
                     visibleOnAllWorkspaces: "Visible on all workspaces",
-                    toggleOnSecondInstance: "Show on another instance",
-                    toggleOnSecondInstanceDescription: "Toggles window when a second instance of ueli is started",
                 },
                 "de-CH": {
                     title: "Fenster",
