@@ -1,13 +1,17 @@
 import * as Electron from "electron";
-import mitt from "mitt";
-import { platform } from "os";
-import * as Core from "./Core";
-import * as Extensions from "./Extensions";
+
+if (!Electron.app.requestSingleInstanceLock()) {
+    console.log("Quitting application. Reason: another instance is already running");
+    Electron.app.exit();
+}
 
 (async () => {
     await Electron.app.whenReady();
 
-    Core.SingleInstanceLockModule.bootstrap(Electron.app);
+    const mitt = (await import("mitt")).default;
+    const platform = (await import("os")).platform;
+    const Core = await import("./Core");
+    const Extensions = await import("./Extensions");
 
     const dependencyRegistry = Core.DependencyRegistryModule.bootstrap();
 
