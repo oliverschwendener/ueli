@@ -21,7 +21,6 @@ export class ExtensionManagerModule {
         const logger = dependencyRegistry.get("Logger");
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const extensionRegistry = dependencyRegistry.get("ExtensionRegistry");
-        const environmentVariableProvider = dependencyRegistry.get("EnvironmentVariableProvider");
 
         const scanCounter = new ScanCounter();
 
@@ -73,10 +72,6 @@ export class ExtensionManagerModule {
                 event.returnValue = extensionRegistry.getById(extensionId).getSettingDefaultValue(settingKey);
             },
         );
-
-        ipcMain.on("getEnvironmentVariable", (event, { environmentVariable }) => {
-            event.returnValue = environmentVariableProvider.get(environmentVariable);
-        });
 
         ipcMain.handle(
             "invokeExtension",
