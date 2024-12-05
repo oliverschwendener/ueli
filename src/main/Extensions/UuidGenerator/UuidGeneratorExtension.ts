@@ -2,7 +2,13 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
-import { createCopyToClipboardAction, createInvokeExtensionAction, type SearchResultItem } from "@common/Core";
+import {
+    createCopyToClipboardAction,
+    createEmptyInstantSearchResult,
+    createInvokeExtensionAction,
+    type InstantSearchResultItems,
+    type SearchResultItem,
+} from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
@@ -33,9 +39,9 @@ export class UuidGeneratorExtension implements Extension {
         private readonly settingsManager: SettingsManager,
     ) {}
 
-    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
+    public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
         if (!["uuid", "guid"].includes(searchTerm.toLowerCase())) {
-            return [];
+            return createEmptyInstantSearchResult();
         }
 
         const uuid = this.generateUuid(
@@ -46,26 +52,29 @@ export class UuidGeneratorExtension implements Extension {
             this.getSettingValue("quotes"),
         );
 
-        return [
-            {
-                name: uuid,
-                description: "UUID Generator",
-                descriptionTranslation: {
-                    key: "generatorResult",
-                    namespace: "extension[UuidGenerator]",
-                },
-                id: "uuidGenerator:instantResult",
-                image: this.getImage(),
-                defaultAction: createCopyToClipboardAction({
-                    textToCopy: uuid,
-                    description: "Copy UUID to clipboard",
+        return {
+            after: [],
+            before: [
+                {
+                    name: uuid,
+                    description: "UUID Generator",
                     descriptionTranslation: {
-                        key: "copyUuidToClipboard",
+                        key: "generatorResult",
                         namespace: "extension[UuidGenerator]",
                     },
-                }),
-            },
-        ];
+                    id: "uuidGenerator:instantResult",
+                    image: this.getImage(),
+                    defaultAction: createCopyToClipboardAction({
+                        textToCopy: uuid,
+                        description: "Copy UUID to clipboard",
+                        descriptionTranslation: {
+                            key: "copyUuidToClipboard",
+                            namespace: "extension[UuidGenerator]",
+                        },
+                    }),
+                },
+            ],
+        };
     }
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
