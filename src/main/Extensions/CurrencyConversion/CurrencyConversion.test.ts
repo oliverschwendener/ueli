@@ -1,3 +1,4 @@
+import { createEmptyInstantSearchResult } from "@common/Core";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Net } from "electron";
@@ -35,11 +36,12 @@ describe(CurrencyConversion, () => {
 
             currencyConversion["rates"] = rates;
 
-            const actual = currencyConversion.getInstantSearchResultItems(userInput);
+            const { before, after } = currencyConversion.getInstantSearchResultItems(userInput);
 
-            expect(actual.length).toEqual(1);
-            expect(actual[0].name).toEqual(expectedResult);
-            expect(actual[0].image).toEqual({ url: `file://${imageFilePath}` });
+            expect(after).toEqual([]);
+            expect(before.length).toEqual(1);
+            expect(before[0].name).toEqual(expectedResult);
+            expect(before[0].image).toEqual({ url: `file://${imageFilePath}` });
             expect(getExtensionAssetPathMock).toHaveBeenCalledWith(currencyConversion.id, "currency-conversion.png");
         };
 
@@ -48,9 +50,13 @@ describe(CurrencyConversion, () => {
 
             currencyConversion["rates"] = { chf: { usd: 2 } };
 
-            expect(currencyConversion.getInstantSearchResultItems("1")).toEqual([]);
-            expect(currencyConversion.getInstantSearchResultItems("1 CHF to")).toEqual([]);
-            expect(currencyConversion.getInstantSearchResultItems("1 CHF to USD else")).toEqual([]);
+            expect(currencyConversion.getInstantSearchResultItems("1")).toEqual(createEmptyInstantSearchResult());
+            expect(currencyConversion.getInstantSearchResultItems("1 CHF to")).toEqual(
+                createEmptyInstantSearchResult(),
+            );
+            expect(currencyConversion.getInstantSearchResultItems("1 CHF to USD else")).toEqual(
+                createEmptyInstantSearchResult(),
+            );
         });
 
         it("should return empty array when first part in user input is not numerical", () => {
@@ -58,7 +64,9 @@ describe(CurrencyConversion, () => {
 
             currencyConversion["rates"] = { chf: { usd: 2 } };
 
-            expect(currencyConversion.getInstantSearchResultItems("abc CHF to USD")).toEqual([]);
+            expect(currencyConversion.getInstantSearchResultItems("abc CHF to USD")).toEqual(
+                createEmptyInstantSearchResult(),
+            );
         });
 
         it("should return empty array when base currency does not exist", () => {
@@ -66,7 +74,9 @@ describe(CurrencyConversion, () => {
 
             currencyConversion["rates"] = { chf: { usd: 2 } };
 
-            expect(currencyConversion.getInstantSearchResultItems("1 EUR to USD")).toEqual([]);
+            expect(currencyConversion.getInstantSearchResultItems("1 EUR to USD")).toEqual(
+                createEmptyInstantSearchResult(),
+            );
         });
 
         it("should return empty array when second part of user input is not 'in' or 'to'", () => {
@@ -74,8 +84,12 @@ describe(CurrencyConversion, () => {
 
             currencyConversion["rates"] = { chf: { usd: 2 } };
 
-            expect(currencyConversion.getInstantSearchResultItems("1 CHF inn USD")).toEqual([]);
-            expect(currencyConversion.getInstantSearchResultItems("1 CHF t USD")).toEqual([]);
+            expect(currencyConversion.getInstantSearchResultItems("1 CHF inn USD")).toEqual(
+                createEmptyInstantSearchResult(),
+            );
+            expect(currencyConversion.getInstantSearchResultItems("1 CHF t USD")).toEqual(
+                createEmptyInstantSearchResult(),
+            );
         });
 
         it("should return empty array when target currency is not found", () => {
@@ -83,7 +97,9 @@ describe(CurrencyConversion, () => {
 
             currencyConversion["rates"] = { chf: { usd: 2 } };
 
-            expect(currencyConversion.getInstantSearchResultItems("1 CHF to EUR")).toEqual([]);
+            expect(currencyConversion.getInstantSearchResultItems("1 CHF to EUR")).toEqual(
+                createEmptyInstantSearchResult(),
+            );
         });
 
         it("should convert currencies based on the rates when user input matches expected pattern", () => {

@@ -2,7 +2,7 @@ import type { ExtensionRegistry } from "@Core/ExtensionRegistry";
 import type { Logger } from "@Core/Logger";
 import type { SearchIndex } from "@Core/SearchIndex";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { SearchResultItem } from "@common/Core";
+import { createEmptyInstantSearchResult, type InstantSearchResultItems } from "@common/Core";
 import type { ScanCounter } from "./ScanCounter";
 
 export class ExtensionManager {
@@ -58,16 +58,20 @@ export class ExtensionManager {
         );
     }
 
-    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
-        const result: SearchResultItem[] = [];
+    public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
+        const result: InstantSearchResultItems = createEmptyInstantSearchResult();
 
         for (const extension of this.getEnabledExtensions()) {
-            const searchResultItems = extension.getInstantSearchResultItems
+            const instantSearchResultItems: InstantSearchResultItems = extension.getInstantSearchResultItems
                 ? extension.getInstantSearchResultItems(searchTerm)
-                : [];
+                : createEmptyInstantSearchResult();
 
-            for (const searchResultItem of searchResultItems) {
-                result.push(searchResultItem);
+            for (const searchResultItem of instantSearchResultItems.after) {
+                result.after.push(searchResultItem);
+            }
+
+            for (const searchResultItem of instantSearchResultItems.before) {
+                result.before.push(searchResultItem);
             }
         }
 

@@ -3,7 +3,12 @@ import type { Extension } from "@Core/Extension";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { OperatingSystem, SearchResultItem } from "@common/Core";
+import {
+    createEmptyInstantSearchResult,
+    type InstantSearchResultItems,
+    type OperatingSystem,
+    type SearchResultItem,
+} from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { SearchEngineId } from "@common/Core/Search";
 import { searchFilter } from "@common/Core/Search/SearchFilter";
@@ -160,7 +165,7 @@ export class VSCodeExtension implements Extension {
         );
 
         return {
-            id: "vscode-" + uri,
+            id: `vscode-${fileType}-${uri}`,
             name: recent.label ?? Path.basename(path),
             description: fileType,
             image: img,
@@ -214,30 +219,36 @@ export class VSCodeExtension implements Extension {
         };
     }
 
-    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
+    public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
         if (this.getPrefix().trim() !== "" && !searchTerm.startsWith(this.getPrefix() + " ")) {
-            return [];
+            return createEmptyInstantSearchResult();
         }
 
         searchTerm = searchTerm.replace(this.getPrefix() + " ", "").trim();
 
         if (searchTerm && searchTerm === "") {
-            return this.recents;
+            return {
+                after: this.recents,
+                before: [],
+            };
         }
 
         const fuzziness = this.settingsManager.getValue<number>("searchEngine.fuzziness", 0.5);
         const maxSearchResultItems = this.settingsManager.getValue<number>("searchEngine.maxResultLength", 50);
         const searchEngineId = this.settingsManager.getValue<SearchEngineId>("searchEngine.id", "fuzzysort");
 
-        return searchFilter(
-            {
-                searchResultItems: this.recents,
-                searchTerm,
-                fuzziness,
-                maxSearchResultItems,
-            },
-            searchEngineId,
-        );
+        return {
+            after: searchFilter(
+                {
+                    searchResultItems: this.recents,
+                    searchTerm,
+                    fuzziness,
+                    maxSearchResultItems,
+                },
+                searchEngineId,
+            ),
+            before: [],
+        };
     }
 
     private getPrefix(): string {
