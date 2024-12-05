@@ -99,15 +99,17 @@ describe(ColorConverterExtension, () => {
                 colorConverter,
             );
 
-            const actual = colorConverterExtension.getInstantSearchResultItems("#fff");
+            const { before, after } = colorConverterExtension.getInstantSearchResultItems("#fff");
+
+            expect(before).toEqual([]);
 
             expect(colorConverter.convertFromString).toHaveBeenCalledOnce();
             expect(colorConverter.convertFromString).toHaveBeenCalledWith("#fff");
 
-            expect(actual.length).toBe(2);
-            expect(actual.map((a) => a.name)).toEqual(["#FFFFFF", "rgb(255, 255, 255)"]);
+            expect(after.length).toBe(2);
+            expect(after.map((a) => a.name)).toEqual(["#FFFFFF", "rgb(255, 255, 255)"]);
 
-            expect(actual.map(({ image }) => image)).toEqual([
+            expect(after.map(({ image }) => image)).toEqual([
                 { url: "file://color-converter.png" },
                 { url: "file://color-converter.png" },
             ]);

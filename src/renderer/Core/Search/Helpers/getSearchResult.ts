@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "@common/Core";
+import type { InstantSearchResultItems, SearchResultItem } from "@common/Core";
 import { searchFilter, SearchResultItemFilter, type SearchEngineId } from "@common/Core/Search";
 
 export const getSearchResult = ({
@@ -14,7 +14,7 @@ export const getSearchResult = ({
     searchEngineId: SearchEngineId;
     favoriteSearchResultItemIds: string[];
     excludedSearchResultItemIds: string[];
-    instantSearchResultItems: SearchResultItem[];
+    instantSearchResultItems: InstantSearchResultItems;
     searchResultItems: SearchResultItem[];
     searchTerm: string;
     fuzziness: number;
@@ -36,8 +36,9 @@ export const getSearchResult = ({
         return {
             favorites: SearchResultItemFilter.createFrom(searchFilterItems).pick(favoriteSearchResultItemIds).get(),
             searchResults: [
+                ...instantSearchResultItems.before,
                 ...SearchResultItemFilter.createFrom(searchFilterItems).exclude(favoriteSearchResultItemIds).get(),
-                ...instantSearchResultItems,
+                ...instantSearchResultItems.after,
             ],
         };
     } else {

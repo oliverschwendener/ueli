@@ -1,4 +1,9 @@
-import { createCopyToClipboardAction, type SearchResultItem } from "@common/Core";
+import {
+    createCopyToClipboardAction,
+    createEmptyInstantSearchResult,
+    type InstantSearchResultItems,
+    type SearchResultItem,
+} from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
@@ -39,7 +44,7 @@ export class CurrencyConversion implements Extension {
         private readonly assetPathResolver: AssetPathResolver,
     ) {}
 
-    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
+    public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
         const parts = searchTerm.trim().split(" ");
 
         const validators = [
@@ -55,7 +60,7 @@ export class CurrencyConversion implements Extension {
 
         for (const validator of validators) {
             if (!validator()) {
-                return [];
+                return createEmptyInstantSearchResult();
             }
         }
 
@@ -65,26 +70,29 @@ export class CurrencyConversion implements Extension {
 
         const conversionResult = convert({ value, base, target, rates: this.rates });
 
-        return [
-            {
-                defaultAction: createCopyToClipboardAction({
-                    textToCopy: conversionResult.result.toFixed(2),
+        return {
+            after: [],
+            before: [
+                {
+                    defaultAction: createCopyToClipboardAction({
+                        textToCopy: conversionResult.result.toFixed(2),
+                        description: "Currency Conversion",
+                        descriptionTranslation: {
+                            key: "copyToClipboard",
+                            namespace: CurrencyConversion.translationNamespace,
+                        },
+                    }),
                     description: "Currency Conversion",
                     descriptionTranslation: {
-                        key: "copyToClipboard",
+                        key: "currencyConversion",
                         namespace: CurrencyConversion.translationNamespace,
                     },
-                }),
-                description: "Currency Conversion",
-                descriptionTranslation: {
-                    key: "currencyConversion",
-                    namespace: CurrencyConversion.translationNamespace,
+                    id: `currency-conversion:instant-result`,
+                    image: this.getImage(),
+                    name: `${conversionResult.result.toFixed(2)} ${target.toUpperCase()}`,
                 },
-                id: `currency-conversion:instant-result`,
-                image: this.getImage(),
-                name: `${conversionResult.result.toFixed(2)} ${target.toUpperCase()}`,
-            },
-        ];
+            ],
+        };
     }
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
