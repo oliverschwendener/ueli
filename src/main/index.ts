@@ -1,17 +1,13 @@
 import * as Electron from "electron";
-
-if (!Electron.app.requestSingleInstanceLock()) {
-    Electron.app.exit();
-}
+import mitt from "mitt";
+import { platform } from "os";
+import * as Core from "./Core";
+import * as Extensions from "./Extensions";
 
 (async () => {
     await Electron.app.whenReady();
 
-    const mitt = (await import("mitt")).default;
-    const platform = (await import("os")).platform;
-    const Core = await import("./Core");
-    const Extensions = await import("./Extensions");
-
+    Core.SingleInstanceLockModule.bootstrap(Electron.app);
     Core.DockModule.bootstrap(Electron.app);
 
     const dependencyRegistry = Core.DependencyRegistryModule.bootstrap();
