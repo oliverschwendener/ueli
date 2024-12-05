@@ -11,6 +11,7 @@ import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
 import { FileSearch, FileSearchSettings } from "./FileSearch";
 import { SimpleFileSearchSettings } from "./SimpleFileSearch";
 import { TerminalLauncherSettings } from "./TerminalLauncher";
+import { UuidGenerator, UuidGeneratorSettings } from "./UuidGenerator";
 import { VSCodeSettings } from "./VSCode";
 import { WebSearchExtension } from "./WebSearch";
 import { WebSearchSettings } from "./WebSearch/WebSearchSettings";
@@ -63,6 +64,10 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         },
         TerminalLauncher: {
             settings: <TerminalLauncherSettings />,
+        },
+        UuidGenerator: {
+            extension: <UuidGenerator {...props} />,
+            settings: <UuidGeneratorSettings />,
         },
         VSCode: {
             settings: <VSCodeSettings />,
