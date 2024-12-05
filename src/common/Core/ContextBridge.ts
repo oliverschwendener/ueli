@@ -27,6 +27,7 @@ export type ContextBridge = {
     getAvailableExtensions: () => ExtensionInfo[];
     getAvailableTerminals: () => Terminal[];
     getEnabledExtensions: () => ExtensionInfo[];
+    getEnvironmentVariable: (environmentVariable: string) => string;
     getExtension: (extensionId: string) => ExtensionInfo;
     getExtensionResources: <T extends Translations>() => { extensionId: string; resources: Resources<T> }[];
     getExcludedSearchResultItemIds: () => string[];
