@@ -55,6 +55,8 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     searchHistoryEnabledDescription: "The search history lets you see your previous searches",
                     searchHistoryLimit: "Search History Limit",
                     searchHistoryLimitHint: "Limits the maximum number of search history items",
+                    waylandWarning: "Wayland detected. Hotkeys may not work.",
+                    waylandWarningMoreInfo: "More info",
                 },
                 "de-CH": {
                     title: "Allgemein",
