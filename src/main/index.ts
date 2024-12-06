@@ -28,7 +28,7 @@ if (!app.requestSingleInstanceLock()) {
 
     const dependencyRegistry = Core.DependencyRegistryModule.bootstrap();
 
-    // Electron and NPM Modules
+    // Electron and Node Modules
     dependencyRegistry.register("App", app);
     dependencyRegistry.register("Clipboard", clipboard);
     dependencyRegistry.register("Dialog", dialog);
