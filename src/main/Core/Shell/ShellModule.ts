@@ -12,7 +12,14 @@ export class ShellModule {
 
         actionHandlerRegistry.register(new OpenFilePathActionHandler(shell));
         actionHandlerRegistry.register(new ShowItemInFileExplorerActionHandler(shell));
-        actionHandlerRegistry.register(new UrlActionHandler(shell));
+
+        actionHandlerRegistry.register(
+            new UrlActionHandler(
+                dependencyRegistry.get("SettingsManager"),
+                shell,
+                dependencyRegistry.get("CommandlineUtility"),
+            ),
+        );
 
         ipcMain.handle("openExternal", (_, { url, options }: { url: string; options?: OpenExternalOptions }) =>
             shell.openExternal(url, options),
