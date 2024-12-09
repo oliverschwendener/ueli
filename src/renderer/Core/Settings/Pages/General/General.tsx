@@ -1,4 +1,3 @@
-import { useContextBridge } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "../../SettingGroupList";
 import { Autostart } from "./Autostart";
@@ -10,7 +9,7 @@ import { SearchHistory } from "./SearchHistory";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 
 export const General = () => {
-    const { contextBridge } = useContextBridge();
+    const operatingSystem = window.ContextBridge.getOperatingSystem();
 
     return (
         <SettingGroupList>
@@ -18,7 +17,7 @@ export const General = () => {
                 <Language />
                 <HotKey />
                 <Autostart />
-                {contextBridge.getOperatingSystem() === "macOS" && <DockSettings />}
+                {operatingSystem === "macOS" && <DockSettings />}
             </SettingGroup>
             <SettingGroup title="Search History">
                 <SearchHistory />
@@ -26,7 +25,7 @@ export const General = () => {
             <SettingGroup title="Icons">
                 <UrlImageGenerator />
             </SettingGroup>
-            <CustomWebBrowser />
+            {operatingSystem !== "Linux" && <CustomWebBrowser />}
         </SettingGroupList>
     );
 };
