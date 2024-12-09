@@ -2,12 +2,15 @@ import { useSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { Button, Input, Tooltip } from "@fluentui/react-components";
 import { FolderRegular } from "@fluentui/react-icons";
+import { useTranslation } from "react-i18next";
 
 type CustomWebBrowserProps = {
     useDefaultWebBrowser: boolean;
 };
 
 export const CustomWebBrowserExecutable = ({ useDefaultWebBrowser }: CustomWebBrowserProps) => {
+    const { t } = useTranslation("settingsGeneral");
+
     const { value, updateValue } = useSetting({
         defaultValue: "",
         key: "general.browser.customWebBrowser.executableFilePath",
@@ -15,6 +18,7 @@ export const CustomWebBrowserExecutable = ({ useDefaultWebBrowser }: CustomWebBr
 
     const chooseFile = async () => {
         const { canceled, filePaths } = await window.ContextBridge.showOpenDialog({ properties: ["openFile"] });
+
         if (!canceled && filePaths.length) {
             updateValue(filePaths[0]);
         }
@@ -22,7 +26,7 @@ export const CustomWebBrowserExecutable = ({ useDefaultWebBrowser }: CustomWebBr
 
     return (
         <Setting
-            label="Custom web browser executable file path"
+            label={t("customWebBrowserExecutableFilePath")}
             control={
                 <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
                     <Input
@@ -31,7 +35,7 @@ export const CustomWebBrowserExecutable = ({ useDefaultWebBrowser }: CustomWebBr
                         onChange={(_, { value }) => updateValue(value)}
                         placeholder="C:\Program Files\Mozilla Firefox\firefox.exe"
                         contentAfter={
-                            <Tooltip content="Select file" relationship="label">
+                            <Tooltip content={t("customWebBrowserExecutableFilePathSelectFile")} relationship="label">
                                 <Button
                                     disabled={useDefaultWebBrowser}
                                     size="small"

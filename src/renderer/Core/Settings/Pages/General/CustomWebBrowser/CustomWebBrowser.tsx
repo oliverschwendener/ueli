@@ -1,12 +1,15 @@
 import { useSetting } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
-import { UseDefaultBrowser } from "../UseDefaultBrowser";
-import { CustomWebBrowserArgumentList } from "./CustomWebBrowserArgumentList";
+import { useTranslation } from "react-i18next";
+import { CustomWebBrowserCommandlineArguments } from "./CustomWebBrowserCommandlineArguments";
 import { CustomWebBrowserExecutable } from "./CustomWebBrowserExecutable";
 import { CustomWebBrowserName } from "./CustomWebBrowserName";
+import { UseDefaultBrowser } from "./UseDefaultBrowser";
 
 export const CustomWebBrowser = () => {
     const operatingSystem = window.ContextBridge.getOperatingSystem();
+
+    const { t } = useTranslation("settingsGeneral");
 
     const { value: useDefaultWebBrowser, updateValue: setUseDefaultWebBrowser } = useSetting({
         defaultValue: true,
@@ -14,7 +17,7 @@ export const CustomWebBrowser = () => {
     });
 
     return (
-        <SettingGroup title="Browser">
+        <SettingGroup title={t("webBrowser")}>
             <UseDefaultBrowser
                 useDefaultWebBrowser={useDefaultWebBrowser}
                 setUseDefaultBrowser={setUseDefaultWebBrowser}
@@ -23,7 +26,7 @@ export const CustomWebBrowser = () => {
                 <CustomWebBrowserExecutable useDefaultWebBrowser={useDefaultWebBrowser} />
             )}
             {operatingSystem === "Windows" && (
-                <CustomWebBrowserArgumentList useDefaultWebBrowser={useDefaultWebBrowser} />
+                <CustomWebBrowserCommandlineArguments useDefaultWebBrowser={useDefaultWebBrowser} />
             )}
             {operatingSystem === "macOS" && <CustomWebBrowserName useDefaultWebBrowser={useDefaultWebBrowser} />}
         </SettingGroup>

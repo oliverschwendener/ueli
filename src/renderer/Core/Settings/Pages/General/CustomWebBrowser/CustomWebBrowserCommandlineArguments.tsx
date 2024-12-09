@@ -1,12 +1,15 @@
 import { useSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { Input } from "@fluentui/react-components";
+import { useTranslation } from "react-i18next";
 
 type CustomWebBrowserArgumentListProps = {
     useDefaultWebBrowser: boolean;
 };
 
-export const CustomWebBrowserArgumentList = ({ useDefaultWebBrowser }: CustomWebBrowserArgumentListProps) => {
+export const CustomWebBrowserCommandlineArguments = ({ useDefaultWebBrowser }: CustomWebBrowserArgumentListProps) => {
+    const { t } = useTranslation("settingsGeneral");
+
     const { value: argumentList, updateValue: setArgumentList } = useSetting<string>({
         key: "general.browser.customWebBrowser.commandlineArguments",
         defaultValue: "{{url}}",
@@ -14,7 +17,7 @@ export const CustomWebBrowserArgumentList = ({ useDefaultWebBrowser }: CustomWeb
 
     return (
         <Setting
-            label="Commandline list"
+            label={t("customWebBrowserCommandlineArguments")}
             control={
                 <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
                     <Input

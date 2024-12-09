@@ -1,5 +1,6 @@
 import { Setting } from "@Core/Settings/Setting";
 import { Switch } from "@fluentui/react-components";
+import { useTranslation } from "react-i18next";
 
 type UseDefaultBrowserProps = {
     useDefaultWebBrowser: boolean;
@@ -7,11 +8,12 @@ type UseDefaultBrowserProps = {
 };
 
 export const UseDefaultBrowser = ({ useDefaultWebBrowser, setUseDefaultBrowser }: UseDefaultBrowserProps) => {
+    const { t } = useTranslation("settingsGeneral");
     const operatingSystem = window.ContextBridge.getOperatingSystem();
 
     return (
         <Setting
-            label="Open URLs with default browser"
+            label={t("useDefaultWebBrowser")}
             control={
                 <Switch
                     disabled={operatingSystem === "Linux"}
