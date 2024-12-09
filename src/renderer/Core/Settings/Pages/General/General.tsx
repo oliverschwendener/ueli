@@ -1,22 +1,16 @@
-import { useContextBridge, useSetting } from "@Core/Hooks";
+import { useContextBridge } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "../../SettingGroupList";
 import { Autostart } from "./Autostart";
-import { CustomWebBrowserExecutable } from "./CustomWebBrowserExecutable";
+import { CustomWebBrowser } from "./CustomWebBrowser";
 import { DockSettings } from "./DockSettings";
 import { HotKey } from "./HotKey";
 import { Language } from "./Language";
 import { SearchHistory } from "./SearchHistory";
 import { UrlImageGenerator } from "./UrlImageGenerator";
-import { UseDefaultBrowser } from "./UseDefaultBrowser";
 
 export const General = () => {
     const { contextBridge } = useContextBridge();
-
-    const { value: useDefaultWebBrowser, updateValue: setUseDefaultWebBrowser } = useSetting({
-        defaultValue: true,
-        key: "general.browser.useDefaultWebBrowser",
-    });
 
     return (
         <SettingGroupList>
@@ -32,13 +26,7 @@ export const General = () => {
             <SettingGroup title="Icons">
                 <UrlImageGenerator />
             </SettingGroup>
-            <SettingGroup title="Browser">
-                <UseDefaultBrowser
-                    useDefaultWebBrowser={useDefaultWebBrowser}
-                    setUseDefaultBrowser={setUseDefaultWebBrowser}
-                />
-                <CustomWebBrowserExecutable useDefaultWebBrowser={useDefaultWebBrowser} />
-            </SettingGroup>
+            <CustomWebBrowser />
         </SettingGroupList>
     );
 };
