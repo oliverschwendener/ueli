@@ -5,7 +5,7 @@ export class WindowsCustomWebBrowserActionHandler implements CustomWebBrowserAct
         return false;
     }
 
-    public async openUrl(url: string): Promise<void> {
+    public async openUrl(): Promise<void> {
         throw new Error("Not implemented");
     }
 }

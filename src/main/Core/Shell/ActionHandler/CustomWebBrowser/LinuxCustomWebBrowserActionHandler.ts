@@ -5,7 +5,7 @@ export class LinuxCustomWebBrowserActionHandler implements CustomWebBrowserActio
         return false;
     }
 
-    public async openUrl(url: string): Promise<void> {
+    public async openUrl(): Promise<void> {
         throw new Error("Not implemented");
     }
 }
