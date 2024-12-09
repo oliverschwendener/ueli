@@ -1,6 +1,7 @@
 import { useSetting } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { UseDefaultBrowser } from "../UseDefaultBrowser";
+import { CustomWebBrowserArgumentList } from "./CustomWebBrowserArgumentList";
 import { CustomWebBrowserExecutable } from "./CustomWebBrowserExecutable";
 import { CustomWebBrowserName } from "./CustomWebBrowserName";
 
@@ -20,6 +21,9 @@ export const CustomWebBrowser = () => {
             />
             {operatingSystem === "Windows" && (
                 <CustomWebBrowserExecutable useDefaultWebBrowser={useDefaultWebBrowser} />
+            )}
+            {operatingSystem === "Windows" && (
+                <CustomWebBrowserArgumentList useDefaultWebBrowser={useDefaultWebBrowser} />
             )}
             {operatingSystem === "macOS" && <CustomWebBrowserName useDefaultWebBrowser={useDefaultWebBrowser} />}
         </SettingGroup>

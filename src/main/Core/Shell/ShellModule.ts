@@ -26,7 +26,11 @@ export class ShellModule {
                     dependencyRegistry.get("CommandlineUtility"),
                 ),
             Linux: () => new LinuxCustomWebBrowserActionHandler(),
-            Windows: () => new WindowsCustomWebBrowserActionHandler(),
+            Windows: () =>
+                new WindowsCustomWebBrowserActionHandler(
+                    dependencyRegistry.get("PowershellUtility"),
+                    dependencyRegistry.get("SettingsManager"),
+                ),
         };
 
         actionHandlerRegistry.register(
