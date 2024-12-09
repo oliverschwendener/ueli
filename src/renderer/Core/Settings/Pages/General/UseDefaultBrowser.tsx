@@ -7,11 +7,17 @@ type UseDefaultBrowserProps = {
 };
 
 export const UseDefaultBrowser = ({ useDefaultWebBrowser, setUseDefaultBrowser }: UseDefaultBrowserProps) => {
+    const operatingSystem = window.ContextBridge.getOperatingSystem();
+
     return (
         <Setting
             label="Open URLs with default browser"
             control={
-                <Switch checked={useDefaultWebBrowser} onChange={(_, { checked }) => setUseDefaultBrowser(checked)} />
+                <Switch
+                    disabled={operatingSystem === "Linux"}
+                    checked={useDefaultWebBrowser}
+                    onChange={(_, { checked }) => setUseDefaultBrowser(checked)}
+                />
             }
         />
     );
