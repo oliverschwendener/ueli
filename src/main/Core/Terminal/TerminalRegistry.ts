@@ -1,18 +1,14 @@
-import type { OperatingSystem } from "@common/Core";
 import type { Terminal, TerminalRegistry as TerminalRegistryInterface } from "./Contract";
 
 export class TerminalRegistry implements TerminalRegistryInterface {
-    public constructor(
-        private readonly operatingSystem: OperatingSystem,
-        private readonly terminals: Record<OperatingSystem, () => Terminal[]>,
-    ) {}
+    public constructor(private readonly terminals: Terminal[]) {}
 
     public getAll(): Terminal[] {
-        return this.terminals[this.operatingSystem]();
+        return this.terminals;
     }
 
     public getById(terminalId: string): Terminal {
-        const terminal: Terminal | undefined = this.getAll().find((t) => t.terminalId === terminalId);
+        const terminal = this.getAll().find((t) => t.terminalId === terminalId);
 
         if (terminal) {
             return terminal;

@@ -280,7 +280,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     title: "Window",
                     hideWindowOn: "Hide window on",
                     "hideWindow.placeholder": "Select events",
-                    "hideWindowOn.blur": "Blur",
+                    "hideWindowOn.blur": "Focus loss",
                     "hideWindowOn.afterInvocation": "After invocation",
                     "hideWindowOn.escapePressed": "Pressing escape key",
                     alwaysOnTop: "Always on top",
