@@ -115,7 +115,7 @@ export class UeliCommandExtension implements Extension {
                   {
                       id: "ueliCommand:toggleHotkey",
                       description: t("description"),
-                      name: "Enable hotkey",
+                      name: t("enableHotkey"),
                       image: this.getImage(),
                       defaultAction: {
                           handlerId: "UeliCommand",
