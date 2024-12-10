@@ -1,6 +1,5 @@
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import { useState } from "react";
-import { useContextBridge } from "./useContextBridge";
 
 export const useExtensionSetting = <Value>({
     extensionId,
@@ -11,14 +10,12 @@ export const useExtensionSetting = <Value>({
     key: string;
     isSensitive?: boolean;
 }) => {
-    const { contextBridge } = useContextBridge();
-
     const settingKey = getExtensionSettingKey(extensionId, key);
 
     const [value, setValue] = useState<Value>(
-        contextBridge.getSettingValue(
+        window.ContextBridge.getSettingValue(
             settingKey,
-            contextBridge.getExtensionSettingDefaultValue(extensionId, key),
+            window.ContextBridge.getExtensionSettingDefaultValue(extensionId, key),
             isSensitive,
         ),
     );
@@ -26,7 +23,7 @@ export const useExtensionSetting = <Value>({
     const updateValue = async (updatedValue: Value) => {
         setValue(updatedValue);
 
-        await contextBridge.updateSettingValue(settingKey, updatedValue, isSensitive);
+        await window.ContextBridge.updateSettingValue(settingKey, updatedValue, isSensitive);
     };
 
     return { value, updateValue };

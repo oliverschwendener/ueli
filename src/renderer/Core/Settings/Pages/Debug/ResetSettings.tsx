@@ -1,4 +1,3 @@
-import { useContextBridge } from "@Core/Hooks";
 import {
     Button,
     Dialog,
@@ -14,7 +13,6 @@ import { useTranslation } from "react-i18next";
 
 export const ResetSettings = () => {
     const { t } = useTranslation("settingsDebug");
-    const { contextBridge } = useContextBridge();
 
     return (
         <Field label={t("resetAllSettings")} hint={t("resetAllSettingsHint")}>
@@ -36,7 +34,7 @@ export const ResetSettings = () => {
                             <DialogTrigger disableButtonEnhancement>
                                 <Button appearance="secondary">{t("resetAllSettingsCancel")}</Button>
                             </DialogTrigger>
-                            <Button onClick={() => contextBridge.resetAllSettings()} appearance="primary">
+                            <Button onClick={() => window.ContextBridge.resetAllSettings()} appearance="primary">
                                 {t("resetAllSettingsConfirm")}
                             </Button>
                         </DialogActions>

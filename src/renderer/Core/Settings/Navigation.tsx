@@ -1,4 +1,3 @@
-import { useContextBridge } from "@Core/Hooks";
 import { getImageUrl } from "@Core/getImageUrl";
 import type { ExtensionInfo } from "@common/Core";
 import { Tab, TabList } from "@fluentui/react-components";
@@ -13,7 +12,6 @@ type NavigationProps = {
 
 export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps) => {
     const { t } = useTranslation();
-    const { contextBridge } = useContextBridge();
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
@@ -61,7 +59,7 @@ export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps
                                 style={{ maxWidth: "100%", maxHeight: "100%" }}
                                 src={getImageUrl({
                                     image: e.image,
-                                    shouldPreferDarkColors: contextBridge.themeShouldUseDarkColors(),
+                                    shouldPreferDarkColors: window.ContextBridge.themeShouldUseDarkColors(),
                                 })}
                             />
                         </div>

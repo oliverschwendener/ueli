@@ -1,4 +1,4 @@
-import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
+import { useExtensionSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
@@ -8,8 +8,6 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const MacOsSettings = () => {
-    const { contextBridge } = useContextBridge();
-
     const extensionId = "ApplicationSearch";
 
     const [newFolder, setNewFolder] = useState<string>("");
@@ -38,7 +36,7 @@ export const MacOsSettings = () => {
     };
 
     const chooseFolder = async () => {
-        const result = await contextBridge.showOpenDialog({ properties: ["openDirectory"] });
+        const result = await window.ContextBridge.showOpenDialog({ properties: ["openDirectory"] });
         if (!result.canceled && result.filePaths.length) {
             setNewFolder(result.filePaths[0]);
         }

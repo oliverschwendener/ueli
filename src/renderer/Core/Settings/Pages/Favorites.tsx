@@ -1,4 +1,4 @@
-import { useContextBridge, useFavorites, useSearchResultItems } from "@Core/Hooks";
+import { useFavorites, useSearchResultItems } from "@Core/Hooks";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { getImageUrl } from "@Core/getImageUrl";
 import { Badge, Button, Input, Text, Tooltip } from "@fluentui/react-components";
@@ -7,13 +7,12 @@ import { useTranslation } from "react-i18next";
 import { SettingGroup } from "../SettingGroup";
 
 export const Favorites = () => {
-    const { contextBridge } = useContextBridge();
     const { t } = useTranslation("settingsFavorites");
     const { searchResultItems } = useSearchResultItems();
     const { favorites } = useFavorites();
 
     const removeFavorite = async (id: string) => {
-        await contextBridge.removeFavorite(id);
+        await window.ContextBridge.removeFavorite(id);
     };
 
     const favoriteSearchResultItems = searchResultItems.filter((s) => favorites.includes(s.id));
@@ -36,7 +35,7 @@ export const Favorites = () => {
                                         style={{ maxWidth: "100%", maxHeight: "100%" }}
                                         src={getImageUrl({
                                             image: s.image,
-                                            shouldPreferDarkColors: contextBridge.themeShouldUseDarkColors(),
+                                            shouldPreferDarkColors: window.ContextBridge.themeShouldUseDarkColors(),
                                         })}
                                     />
                                 </div>

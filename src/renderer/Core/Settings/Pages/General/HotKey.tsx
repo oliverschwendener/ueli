@@ -1,4 +1,4 @@
-import { useContextBridge, useSetting } from "@Core/Hooks";
+import { useSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { isValidHotkey } from "@common/Core/Hotkey";
 import { Button, Field, Input, Tooltip } from "@fluentui/react-components";
@@ -8,8 +8,6 @@ import { useTranslation } from "react-i18next";
 
 export const HotKey = () => {
     const { t } = useTranslation("settingsGeneral");
-
-    const { contextBridge } = useContextBridge();
 
     const { value: hotkey, updateValue: setHotkey } = useSetting({ key: "general.hotkey", defaultValue: "Alt+Space" });
 
@@ -36,7 +34,7 @@ export const HotKey = () => {
                                     size="small"
                                     icon={<InfoRegular />}
                                     onClick={() =>
-                                        contextBridge.openExternal(
+                                        window.ContextBridge.openExternal(
                                             "https://www.electronjs.org/docs/latest/api/accelerator",
                                         )
                                     }

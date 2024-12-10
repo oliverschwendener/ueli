@@ -1,5 +1,4 @@
 import { KeyboardShortcut } from "@Core/Components";
-import { useContextBridge } from "@Core/Hooks";
 import { type SearchResultItem, type SearchResultItemAction } from "@common/Core";
 import {
     Button,
@@ -38,7 +37,6 @@ export const ActionsMenu = ({
     onOpenChange,
     keyboardShortcut,
 }: AdditionalActionsProps) => {
-    const { contextBridge } = useContextBridge();
     const { t } = useTranslation();
 
     const toasterId = useId("copiedToClipboardToasterId");
@@ -46,7 +44,10 @@ export const ActionsMenu = ({
 
     const actions = searchResultItem ? getActions(searchResultItem, favorites) : [];
 
-    const showKeyboardShortcuts = contextBridge.getSettingValue<boolean>("appearance.showKeyboardShortcuts", true);
+    const showKeyboardShortcuts = window.ContextBridge.getSettingValue<boolean>(
+        "appearance.showKeyboardShortcuts",
+        true,
+    );
 
     useEffect(() => {
         const copiedToClipboardHandler = () =>
@@ -57,10 +58,10 @@ export const ActionsMenu = ({
                 { intent: "success", position: "bottom" },
             );
 
-        contextBridge.ipcRenderer.on("copiedToClipboard", copiedToClipboardHandler);
+        window.ContextBridge.ipcRenderer.on("copiedToClipboard", copiedToClipboardHandler);
 
         return () => {
-            contextBridge.ipcRenderer.off("copiedToClipboard", copiedToClipboardHandler);
+            window.ContextBridge.ipcRenderer.off("copiedToClipboard", copiedToClipboardHandler);
         };
     }, []);
 

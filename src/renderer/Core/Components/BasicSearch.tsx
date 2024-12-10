@@ -1,6 +1,5 @@
 import { BaseLayout } from "@Core/BaseLayout";
 import { Header } from "@Core/Header";
-import { useContextBridge } from "@Core/Hooks";
 import { getNextSearchResultItemId } from "@Core/Search/Helpers/getNextSearchResultItemId";
 import { getPreviousSearchResultItemId } from "@Core/Search/Helpers/getPreviousSearchResultItemId";
 import { SearchResultList } from "@Core/Search/SearchResultList";
@@ -24,7 +23,6 @@ export const BasicSearch = ({
     debounceDurationInMs,
     showGoBackButton,
 }: BasicSearchProps) => {
-    const { contextBridge } = useContextBridge();
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -64,17 +62,17 @@ export const BasicSearch = ({
         const selectedSearchResultItem = getSelectedSearchResultItem();
 
         if (selectedSearchResultItem) {
-            await contextBridge.invokeAction(selectedSearchResultItem.defaultAction);
+            await window.ContextBridge.invokeAction(selectedSearchResultItem.defaultAction);
         }
     };
 
     const clickHandlers: Record<string, (s: SearchResultItem) => void> = {
         selectSearchResultItem: (s) => setSelectedItemId(s.id),
-        invokeSearchResultItem: (s) => contextBridge.invokeAction(s.defaultAction),
+        invokeSearchResultItem: (s) => window.ContextBridge.invokeAction(s.defaultAction),
     };
 
     const handleSearchResultItemClickEvent = (searchResultItem: SearchResultItem) => {
-        const singleClickBehavior = contextBridge.getSettingValue(
+        const singleClickBehavior = window.ContextBridge.getSettingValue(
             "keyboardAndMouse.singleClickBehavior",
             "selectSearchResultItem",
         );
@@ -83,7 +81,7 @@ export const BasicSearch = ({
     };
 
     const handleSearchResultItemDoubleClickEvent = (searchResultItem: SearchResultItem) => {
-        const doubleClickBehavior = contextBridge.getSettingValue(
+        const doubleClickBehavior = window.ContextBridge.getSettingValue(
             "keyboardAndMouse.doubleClickBehavior",
             "invokeSearchResultItem",
         );

@@ -1,4 +1,3 @@
-import { useContextBridge } from "@Core/Hooks";
 import type { OpenFileActionArgs } from "@common/Extensions/Workflow";
 import { Button, Field, Input } from "@fluentui/react-components";
 import { FolderRegular } from "@fluentui/react-icons";
@@ -6,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import type { NewActionTypeProps } from "./NewActionTypeProps";
 
 export const NewActionOpenFile = ({ args, setArgs }: NewActionTypeProps) => {
-    const { contextBridge } = useContextBridge();
     const { t } = useTranslation("extension[Workflow]");
 
     const { filePath } = args as OpenFileActionArgs;
@@ -14,7 +12,7 @@ export const NewActionOpenFile = ({ args, setArgs }: NewActionTypeProps) => {
     const setFilePath = (filePath: string) => setArgs({ filePath });
 
     const selectFile = async () => {
-        const result = await contextBridge.showOpenDialog({ properties: ["openFile"] });
+        const result = await window.ContextBridge.showOpenDialog({ properties: ["openFile"] });
         if (!result.canceled && result.filePaths.length > 0) {
             setFilePath(result.filePaths[0]);
         }

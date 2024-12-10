@@ -1,4 +1,3 @@
-import { useContextBridge } from "@Core/Hooks";
 import type { KeyboardEvent } from "react";
 import { Route, Routes, useNavigate } from "react-router";
 import { ExtensionSettings } from "./ExtensionSettings";
@@ -7,7 +6,6 @@ import { settingsPages } from "./Pages";
 import { SettingsHeader } from "./SettingsHeader";
 
 export const Settings = () => {
-    const { contextBridge } = useContextBridge();
     const navigate = useNavigate();
     const closeSettings = () => navigate({ pathname: "/" });
 
@@ -53,7 +51,7 @@ export const Settings = () => {
                     >
                         <Navigation
                             settingsPages={settingsPages}
-                            enabledExtensions={contextBridge.getEnabledExtensions()}
+                            enabledExtensions={window.ContextBridge.getEnabledExtensions()}
                         />
                     </div>
                 </div>
