@@ -1,4 +1,4 @@
-import { useContextBridge, useSetting } from "@Core/Hooks";
+import { useSetting } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "../../SettingGroupList";
 import { AlwaysOnTop } from "./AlwaysOnTop";
@@ -11,9 +11,7 @@ import { Vibrancy } from "./Vibrancy";
 import { WorkspaceVisibility } from "./WorkspaceVisibility";
 
 export const Window = () => {
-    const { contextBridge } = useContextBridge();
-
-    const operatingSystem = contextBridge.getOperatingSystem();
+    const operatingSystem = window.ContextBridge.getOperatingSystem();
 
     const { value: backgroundMaterial, updateValue: setBackgroundMaterial } = useSetting({
         key: "window.backgroundMaterial",

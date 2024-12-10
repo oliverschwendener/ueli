@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
-import { useContextBridge } from "./useContextBridge";
 
 export const useFavorites = () => {
-    const { contextBridge } = useContextBridge();
-
-    const [favorites, setFavorites] = useState<string[]>(contextBridge.getFavorites());
+    const [favorites, setFavorites] = useState<string[]>(window.ContextBridge.getFavorites());
 
     useEffect(() => {
-        const favoritesUpdatedEventHandler = () => setFavorites(contextBridge.getFavorites());
+        const favoritesUpdatedEventHandler = () => setFavorites(window.ContextBridge.getFavorites());
 
-        contextBridge.ipcRenderer.on("favoritesUpdated", favoritesUpdatedEventHandler);
+        window.ContextBridge.ipcRenderer.on("favoritesUpdated", favoritesUpdatedEventHandler);
 
         return () => {
-            contextBridge.ipcRenderer.off("favoritesUpdated", favoritesUpdatedEventHandler);
+            window.ContextBridge.ipcRenderer.off("favoritesUpdated", favoritesUpdatedEventHandler);
         };
     }, []);
 

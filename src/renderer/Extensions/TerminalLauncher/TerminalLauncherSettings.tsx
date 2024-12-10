@@ -1,4 +1,4 @@
-import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
+import { useExtensionSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
@@ -6,7 +6,6 @@ import { Dropdown, Input, Option } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const TerminalLauncherSettings = () => {
-    const { contextBridge } = useContextBridge();
     const { t } = useTranslation("extension[TerminalLauncher]");
 
     const extensionId = "TerminalLauncher";
@@ -18,7 +17,7 @@ export const TerminalLauncherSettings = () => {
         key: "terminalIds",
     });
 
-    const availableTerminals = contextBridge.getAvailableTerminals();
+    const availableTerminals = window.ContextBridge.getAvailableTerminals();
 
     return (
         <SettingGroupList>

@@ -1,4 +1,4 @@
-import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
+import { useExtensionSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 
 export const BrowserBookmarksSettings = () => {
     const { t } = useTranslation("extension[BrowserBookmarks]");
-    const { contextBridge } = useContextBridge();
 
     const extensionId = "BrowserBookmarks";
 
@@ -56,7 +55,7 @@ export const BrowserBookmarksSettings = () => {
                                     <img
                                         style={{ width: 20, height: 20 }}
                                         alt={browserName}
-                                        src={`file://${contextBridge.getExtensionAssetFilePath(extensionId, browserName)}`}
+                                        src={`file://${window.ContextBridge.getExtensionAssetFilePath(extensionId, browserName)}`}
                                     />
                                     {browserName}
                                 </Option>

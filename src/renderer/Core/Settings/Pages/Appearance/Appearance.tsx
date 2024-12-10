@@ -1,4 +1,4 @@
-import { useContextBridge, useSetting } from "@Core/Hooks";
+import { useSetting } from "@Core/Hooks";
 import { getAvailableThemes, getTheme } from "@Core/Theme";
 import { darkTheme, lightTheme } from "@Core/Theme/defaultValues";
 import { ThemeContext } from "@Core/ThemeContext";
@@ -15,7 +15,6 @@ import { SearchBarSettings } from "./SearchBarSettings";
 
 export const Appearance = () => {
     const { t } = useTranslation("settingsAppearance");
-    const { contextBridge } = useContextBridge();
     const { setTheme } = useContext(ThemeContext);
 
     const availableThemes = getAvailableThemes();
@@ -43,27 +42,27 @@ export const Appearance = () => {
 
     const updateTheme = (themeName: string) => {
         setThemeName(themeName);
-        setTheme(getTheme(contextBridge));
+        setTheme(getTheme(window.ContextBridge));
     };
 
     const resetDarkVariants = () => {
         setDarkVariants(darkTheme);
-        setTheme(getTheme(contextBridge));
+        setTheme(getTheme(window.ContextBridge));
     };
 
     const updateDarkVariants = (shade: keyof BrandVariants, value: string) => {
         setDarkVariants({ ...darkVariants, ...{ [shade]: value } });
-        setTheme(getTheme(contextBridge));
+        setTheme(getTheme(window.ContextBridge));
     };
 
     const resetLightVariants = () => {
         setLightVariants(lightTheme);
-        setTheme(getTheme(contextBridge));
+        setTheme(getTheme(window.ContextBridge));
     };
 
     const updateLightVariants = (shade: keyof BrandVariants, value: string) => {
         setLightVariants({ ...lightVariants, ...{ [shade]: value } });
-        setTheme(getTheme(contextBridge));
+        setTheme(getTheme(window.ContextBridge));
     };
 
     return (

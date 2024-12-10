@@ -1,5 +1,4 @@
 import type { FolderSetting } from "@common/Extensions/SimpleFileSearch";
-import { useContextBridge } from "@Core/Hooks";
 import {
     Button,
     Checkbox,
@@ -42,8 +41,6 @@ const mapTemporaryFolderSettingToFolderSetting = ({
 export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) => {
     const { t } = useTranslation("extension[SimpleFileSearch]");
 
-    const { contextBridge } = useContextBridge();
-
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const [temporaryFolderSetting, setTemporaryFolderSetting] = useState<TemporaryFolderSetting>(initialFolderSetting);
@@ -56,14 +53,18 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
     };
 
     const openFileDialog = async () => {
-        const result = await contextBridge.showOpenDialog({ properties: ["openDirectory"] });
+        const result = await window.ContextBridge.showOpenDialog({ properties: ["openDirectory"] });
         if (!result.canceled && result.filePaths.length) {
             setPath(result.filePaths[0]);
         }
     };
 
     const setPath = (path: string) => {
-        setTemporaryFolderSetting({ ...temporaryFolderSetting, path, isValidPath: contextBridge.fileExists(path) });
+        setTemporaryFolderSetting({
+            ...temporaryFolderSetting,
+            path,
+            isValidPath: window.ContextBridge.fileExists(path),
+        });
     };
 
     const setRecursive = (recursive: boolean) => setTemporaryFolderSetting({ ...temporaryFolderSetting, recursive });

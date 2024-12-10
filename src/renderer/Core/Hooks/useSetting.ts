@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useContextBridge } from "./useContextBridge";
 
 export const useSetting = <Value>({
     key,
@@ -10,13 +9,11 @@ export const useSetting = <Value>({
     defaultValue: Value;
     isSensitive?: boolean;
 }) => {
-    const { contextBridge } = useContextBridge();
-
-    const [value, setValue] = useState<Value>(contextBridge.getSettingValue(key, defaultValue, isSensitive));
+    const [value, setValue] = useState<Value>(window.ContextBridge.getSettingValue(key, defaultValue, isSensitive));
 
     const updateValue = async (updatedValue: Value) => {
         setValue(updatedValue);
-        await contextBridge.updateSettingValue(key, updatedValue, isSensitive);
+        await window.ContextBridge.updateSettingValue(key, updatedValue, isSensitive);
     };
 
     return { value, updateValue };

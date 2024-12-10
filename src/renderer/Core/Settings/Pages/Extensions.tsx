@@ -1,4 +1,4 @@
-import { useContextBridge, useSetting } from "@Core/Hooks";
+import { useSetting } from "@Core/Hooks";
 import { getImageUrl } from "@Core/getImageUrl";
 import {
     Avatar,
@@ -24,7 +24,6 @@ import { useTranslation } from "react-i18next";
 
 export const Extensions = () => {
     const { t } = useTranslation();
-    const { contextBridge } = useContextBridge();
     const toasterId = useId("rescanToasterId");
     const { dispatchToast } = useToastController(toasterId);
 
@@ -32,7 +31,7 @@ export const Extensions = () => {
         getAvailableExtensions,
         extensionDisabled: disableExtension,
         extensionEnabled: enableExtension,
-    } = contextBridge;
+    } = window.ContextBridge;
 
     const { value: enabledExtensionIds, updateValue: setEnabledExtensionIds } = useSetting({
         key: "extensions.enabledExtensionIds",
@@ -53,8 +52,8 @@ export const Extensions = () => {
 
     const triggerExtensionRescan = async (event: MouseEvent, extensionId: string) => {
         event.preventDefault();
-        await contextBridge.triggerExtensionRescan(extensionId);
-        const { name, nameTranslation } = contextBridge.getExtension(extensionId);
+        await window.ContextBridge.triggerExtensionRescan(extensionId);
+        const { name, nameTranslation } = window.ContextBridge.getExtension(extensionId);
 
         dispatchToast(
             <Toast>
@@ -104,7 +103,7 @@ export const Extensions = () => {
                                                     src={getImageUrl({
                                                         image,
                                                         shouldPreferDarkColors:
-                                                            contextBridge.themeShouldUseDarkColors(),
+                                                            window.ContextBridge.themeShouldUseDarkColors(),
                                                     })}
                                                 />
                                             </div>
@@ -122,7 +121,7 @@ export const Extensions = () => {
                                             appearance="subtle"
                                             onClick={async (e) => {
                                                 e.preventDefault();
-                                                await contextBridge.openExternal(
+                                                await window.ContextBridge.openExternal(
                                                     `https://github.com/${author.githubUserName}`,
                                                 );
                                             }}

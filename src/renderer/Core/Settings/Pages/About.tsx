@@ -1,12 +1,9 @@
-import { useContextBridge } from "../../Hooks";
 import { Setting } from "../Setting";
 import { SettingGroup } from "../SettingGroup";
 import { SettingGroupList } from "../SettingGroupList";
 
 export const About = () => {
-    const { contextBridge } = useContextBridge();
-
-    const { electronVersion, nodeJsVersion, v8Version, version } = contextBridge.getAboutUeli();
+    const { electronVersion, nodeJsVersion, v8Version, version } = window.ContextBridge.getAboutUeli();
 
     return (
         <SettingGroupList>
