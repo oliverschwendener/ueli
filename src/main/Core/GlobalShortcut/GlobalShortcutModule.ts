@@ -10,6 +10,8 @@ export class GlobalShortcutModule {
         const settingsManager = dependencyRegistry.get("SettingsManager");
         const logger = dependencyRegistry.get("Logger");
 
+        const hotkeyIsEnabled = () => settingsManager.getValue("general.hotkey.enabled", true);
+
         const registerHotkey = () => {
             const hotkey = settingsManager.getValue("general.hotkey", "Alt+Space");
 
@@ -21,8 +23,18 @@ export class GlobalShortcutModule {
             globalShortcut.register(hotkey, () => eventEmitter.emitEvent("hotkeyPressed"));
         };
 
-        registerHotkey();
+        if (hotkeyIsEnabled()) {
+            registerHotkey();
+        }
 
         eventSubscriber.subscribe("settingUpdated[general.hotkey]", () => registerHotkey());
+
+        eventSubscriber.subscribe("settingUpdated[general.hotkey.enabled]", () => {
+            if (hotkeyIsEnabled()) {
+                registerHotkey();
+            } else {
+                globalShortcut.unregisterAll();
+            }
+        });
     }
 }

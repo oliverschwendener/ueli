@@ -1,6 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
+import type { UeliCommand } from "@Core/UeliCommand";
 import type { SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 
@@ -26,72 +27,94 @@ export class UeliCommandExtension implements Extension {
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
         const { t } = this.translator.createT(this.getI18nResources());
 
-        const map: Record<string, SearchResultItem> = {
-            quit: {
+        return [
+            {
                 id: "ueliCommand:quit",
                 description: t("description"),
                 name: t("quitUeli"),
                 image: this.getImage(),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: "quit",
+                    argument: <UeliCommand>"quit",
                     description: t("quitUeli"),
                     requiresConfirmation: true,
                     fluentIcon: "DismissCircleRegular",
                     hideWindowAfterInvocation: true,
                 },
             },
-            settings: {
+            {
                 id: "ueliCommand:settings",
                 description: t("description"),
                 name: t("openSettings"),
                 image: this.getImage(),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: "settings",
+                    argument: <UeliCommand>"openSettings",
                     description: t("openSettings"),
                     fluentIcon: "SettingsRegular",
                 },
             },
-            extensions: {
+            {
                 id: "ueliCommand:extensions",
                 description: t("description"),
                 name: t("openExtensions"),
                 image: this.getImage(),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: "extensions",
+                    argument: <UeliCommand>"openExtensions",
                     description: t("openExtensions"),
                     fluentIcon: "AppsAddInRegular",
                 },
             },
-            centerWindow: {
+            {
                 id: "ueliCommand:centerWindow",
                 description: t("description"),
                 name: t("centerWindow"),
                 image: this.getImage(),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: "centerWindow",
+                    argument: <UeliCommand>"centerWindow",
                     description: t("centerWindow"),
                     fluentIcon: "AppsAddInRegular",
                 },
             },
-            rescanExtensions: {
+            {
                 id: "ueliCommand:rescanExtensions",
                 description: t("description"),
                 name: t("rescanExtensions"),
                 image: this.getImage(),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: "rescanExtensions",
+                    argument: <UeliCommand>"rescanExtensions",
                     description: t("rescanExtensions"),
                     fluentIcon: "ArrowClockwiseRegular",
                 },
             },
-        };
-
-        return Object.values(map);
+            {
+                id: "ueliCommand:disableHotkey",
+                description: t("description"),
+                name: "Disable hotkey",
+                image: this.getImage(),
+                defaultAction: {
+                    handlerId: "UeliCommand",
+                    argument: <UeliCommand>"disableHotkey",
+                    description: t("rescanExtensions"),
+                    fluentIcon: "ArrowClockwiseRegular",
+                },
+            },
+            {
+                id: "ueliCommand:enableHotkey",
+                description: t("description"),
+                name: "Enable hotkey",
+                image: this.getImage(),
+                defaultAction: {
+                    handlerId: "UeliCommand",
+                    argument: <UeliCommand>"enableHotkey",
+                    description: t("rescanExtensions"),
+                    fluentIcon: "ArrowClockwiseRegular",
+                },
+            },
+        ];
     }
 
     public getImage(): Image {

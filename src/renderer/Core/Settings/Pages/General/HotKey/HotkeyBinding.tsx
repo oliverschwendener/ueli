@@ -6,7 +6,11 @@ import { InfoRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export const HotKey = () => {
+type HotkeyBindingProps = {
+    hotkeyEnabled: boolean;
+};
+
+export const HotKeyBinding = ({ hotkeyEnabled }: HotkeyBindingProps) => {
     const { t } = useTranslation("settingsGeneral");
 
     const { value: hotkey, updateValue: setHotkey } = useSetting({ key: "general.hotkey", defaultValue: "Alt+Space" });
@@ -15,21 +19,25 @@ export const HotKey = () => {
 
     return (
         <Setting
-            label={t("hotkey")}
+            label={t("hotkeyBinding")}
             control={
                 <Field
-                    validationMessage={isValidHotkey(temporaryHotkey) ? t("validHotkey") : t("invalidHotkey")}
+                    validationMessage={
+                        isValidHotkey(temporaryHotkey) ? t("validHotkeyBinding") : t("invalidHotkeyBinding")
+                    }
                     validationState={isValidHotkey(temporaryHotkey) ? "success" : "error"}
                 >
                     <Input
+                        disabled={!hotkeyEnabled}
                         value={temporaryHotkey}
                         onChange={(_, { value }) => setTemporaryHotkey(value)}
                         onBlur={() =>
                             isValidHotkey(temporaryHotkey) ? setHotkey(temporaryHotkey) : setTemporaryHotkey(hotkey)
                         }
                         contentAfter={
-                            <Tooltip content={t("hotkeyMoreInfo")} relationship="label" withArrow>
+                            <Tooltip content={t("hotkeyBindingMoreInfo")} relationship="label" withArrow>
                                 <Button
+                                    disabled={!hotkeyEnabled}
                                     appearance="subtle"
                                     size="small"
                                     icon={<InfoRegular />}
