@@ -6,11 +6,12 @@ import { UeliCommandExtension } from "./UeliCommandExtension";
 
 export class UeliCommandModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
-        const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
-        const translator = dependencyRegistry.get("Translator");
-
         return {
-            extension: new UeliCommandExtension(assetPathResolver, translator),
+            extension: new UeliCommandExtension(
+                dependencyRegistry.get("AssetPathResolver"),
+                dependencyRegistry.get("Translator"),
+                dependencyRegistry.get("SettingsManager"),
+            ),
         };
     }
 }
