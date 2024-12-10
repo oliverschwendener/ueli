@@ -1,7 +1,7 @@
-import { useContextBridge } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "../../SettingGroupList";
 import { Autostart } from "./Autostart";
+import { CustomWebBrowser } from "./CustomWebBrowser";
 import { DockSettings } from "./DockSettings";
 import { HotKey } from "./HotKey";
 import { Language } from "./Language";
@@ -9,9 +9,7 @@ import { SearchHistory } from "./SearchHistory";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 
 export const General = () => {
-    const { contextBridge } = useContextBridge();
-
-    const operatingSystem = contextBridge.getOperatingSystem();
+    const operatingSystem = window.ContextBridge.getOperatingSystem();
 
     return (
         <SettingGroupList>
@@ -27,6 +25,7 @@ export const General = () => {
             <SettingGroup title="Icons">
                 <UrlImageGenerator />
             </SettingGroup>
+            {operatingSystem !== "Linux" && <CustomWebBrowser />}
         </SettingGroupList>
     );
 };

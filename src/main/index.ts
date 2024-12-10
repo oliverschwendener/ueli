@@ -60,7 +60,6 @@ if (!app.requestSingleInstanceLock()) {
     Core.RandomStringProviderModule.bootstrap(dependencyRegistry);
     Core.SafeStorageEncryptionModule.bootstrap(dependencyRegistry);
     Core.AssetPathResolverModule.bootstrap(dependencyRegistry);
-    Core.ShellModule.bootstrap(dependencyRegistry);
     Core.ClipboardModule.bootstrap(dependencyRegistry);
     Core.AboutUeliModule.bootstrap(dependencyRegistry);
     Core.CommandlineUtilityModule.bootstrap(dependencyRegistry);
@@ -71,6 +70,7 @@ if (!app.requestSingleInstanceLock()) {
     Core.SettingsReaderModule.bootstrap(dependencyRegistry);
     Core.SettingsWriterModule.bootstrap(dependencyRegistry);
     Core.SettingsManagerModule.bootstrap(dependencyRegistry);
+    Core.ShellModule.bootstrap(dependencyRegistry);
     Core.DockModule.bootstrap(dependencyRegistry);
     await Core.ImageGeneratorModule.bootstrap(dependencyRegistry);
     Core.TranslatorModule.bootstrap(dependencyRegistry);
