@@ -1,13 +1,10 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
-import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { XmlParser } from "@Core/XmlParser";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
-import type { SearchEngineId } from "@common/Core/Search";
-import { searchFilter } from "@common/Core/Search/SearchFilter";
 import { homedir } from "os";
 import { basename, dirname, join, resolve } from "path";
 
@@ -63,12 +60,9 @@ export class JetBrainsToolboxExtension implements Extension {
         Linux: process.env.HOME + "/.config/JetBrains/",
     };
 
-    private recents: SearchResultItem[] = [];
-
     public constructor(
         private readonly operatingSystem: OperatingSystem,
         private readonly assetPathResolver: AssetPathResolver,
-        private readonly settingsManager: SettingsManager,
         private readonly fileSystemUtility: FileSystemUtility,
         private readonly xmlParser: XmlParser,
         private readonly translator: Translator,
@@ -77,12 +71,7 @@ export class JetBrainsToolboxExtension implements Extension {
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
         const recentPaths = await this.getRecents();
 
-        this.recents = await Promise.all(
-            recentPaths.map((recent) => {
-                return this.getSearchItem(recent);
-            }),
-        );
-        return [];
+        return await Promise.all(recentPaths.map((recent) => this.getSearchItem(recent)));
     }
 
     private replaceJetbrainsVars(path: string): string {
@@ -244,25 +233,5 @@ export class JetBrainsToolboxExtension implements Extension {
                 openWith: "{{project}} mit {{toolName}} öffnen",
             },
         };
-    }
-
-    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
-        if (searchTerm && searchTerm === "") {
-            return this.recents;
-        }
-
-        const fuzziness = this.settingsManager.getValue<number>("searchEngine.fuzziness", 0.5);
-        const maxSearchResultItems = this.settingsManager.getValue<number>("searchEngine.maxResultLength", 50);
-        const searchEngineId = this.settingsManager.getValue<SearchEngineId>("searchEngine.id", "fuzzysort");
-
-        return searchFilter(
-            {
-                searchResultItems: this.recents,
-                searchTerm,
-                fuzziness,
-                maxSearchResultItems,
-            },
-            searchEngineId,
-        );
     }
 }

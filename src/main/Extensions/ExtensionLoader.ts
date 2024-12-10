@@ -17,6 +17,7 @@ import { SystemCommandsModule } from "./SystemCommands";
 import { SystemSettingsModule } from "./SystemSettings";
 import { TerminalLauncherModule } from "./TerminalLauncher";
 import { UeliCommandModule } from "./UeliCommand";
+import { UuidGeneratorModule } from "./UuidGenerator";
 import { VSCodeModule } from "./VSCode";
 import { WebSearchExtensionModule } from "./WebSearch";
 import { WindowsControlPanelModule } from "./WindowsControlPanel";
@@ -45,6 +46,7 @@ export class ExtensionLoader {
             new SystemSettingsModule(),
             new TerminalLauncherModule(),
             new UeliCommandModule(),
+            new UuidGeneratorModule(),
             new VSCodeModule(),
             new WebSearchExtensionModule(),
             new WindowsControlPanelModule(),
