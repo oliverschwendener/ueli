@@ -38,6 +38,7 @@ const contextBridgeImplementation: ContextBridge = {
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
     invokeExtension: (extensionId, argument) => ipcRenderer.invoke("invokeExtension", { extensionId, argument }),
     openExternal: (url, options) => ipcRenderer.invoke("openExternal", { url, options }),
+    openSettings: () => ipcRenderer.send("openSettings"),
     removeExcludedSearchResultItem: (itemId: string) =>
         ipcRenderer.invoke("removeExcludedSearchResultItem", { itemId }),
     removeFavorite: (id) => ipcRenderer.invoke("removeFavorite", { id }),

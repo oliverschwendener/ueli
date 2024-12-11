@@ -7,7 +7,6 @@ import { Extension } from "./Extension";
 import { useExcludedSearchResultItems, useFavorites, useScrollBar, useSearchResultItems } from "./Hooks";
 import { useI18n } from "./I18n";
 import { Search } from "./Search";
-import { Settings } from "./Settings";
 import { getTheme } from "./Theme";
 import { ThemeContext } from "./ThemeContext";
 import { useAppCssProperties } from "./useAppCssProperties";
@@ -59,7 +58,7 @@ export const App = () => {
                             />
                         }
                     />
-                    <Route path="/settings/*" element={<Settings />} />
+                    {/* <Route path="/settings/*" element={<Settings />} /> */}
                     <Route path="/extension/:extensionId" element={<Extension />} />
                 </Routes>
             </FluentProvider>

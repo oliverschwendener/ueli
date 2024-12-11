@@ -5,7 +5,7 @@ import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
-import { BrowserWindow, type IpcMain } from "electron";
+import { type App, BrowserWindow, type IpcMain } from "electron";
 import { join } from "path";
 import { NavigateToActionHandler } from "./ActionHandler";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
@@ -18,7 +18,6 @@ import {
     VibrancyProvider,
     WindowsBrowserWindowConstructorOptionsProvider,
 } from "./BrowserWindowConstructorOptionsProvider";
-import { BrowserWindowCreator } from "./BrowserWindowCreator";
 import { BrowserWindowToggler } from "./BrowserWindowToggler";
 import { sendToBrowserWindow } from "./sendToBrowserWindow";
 
@@ -57,26 +56,22 @@ export class BrowserWindowModule {
             ),
         };
 
-        const browserWindow = new BrowserWindowCreator(
-            browserWindowConstructorOptionsProviders[operatingSystem],
-        ).create();
+        const searchWindow = new BrowserWindow(browserWindowConstructorOptionsProviders[operatingSystem].get());
+        searchWindow.setVisibleOnAllWorkspaces(settingsManager.getValue("window.visibleOnAllWorkspaces", false));
+        eventEmitter.emitEvent("browserWindowCreated", { id: "search", browserWindow: searchWindow });
 
-        browserWindow.setVisibleOnAllWorkspaces(settingsManager.getValue("window.visibleOnAllWorkspaces", false));
+        const browserWindowToggler = new BrowserWindowToggler(operatingSystem, app, searchWindow);
 
-        const browserWindowToggler = new BrowserWindowToggler(operatingSystem, app, browserWindow);
-
-        eventEmitter.emitEvent("browserWindowCreated", { browserWindow });
-
-        nativeTheme.on("updated", () => browserWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
+        nativeTheme.on("updated", () => searchWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
 
         BrowserWindowModule.registerBrowserWindowEventListeners(
             browserWindowToggler,
-            browserWindow,
+            searchWindow,
             dependencyRegistry.get("SettingsManager"),
         );
 
         BrowserWindowModule.registerEvents(
-            browserWindow,
+            searchWindow,
             dependencyRegistry.get("EventSubscriber"),
             vibrancyProvider,
             backgroundMaterialProvider,
@@ -90,20 +85,15 @@ export class BrowserWindowModule {
             .register(new NavigateToActionHandler(dependencyRegistry.get("EventEmitter")));
 
         await BrowserWindowModule.loadFileOrUrl(
-            browserWindow,
+            app,
+            searchWindow,
             dependencyRegistry.get("EnvironmentVariableProvider"),
             "search.html",
         );
 
-        const settingsWindow = new BrowserWindow({
-            show: true,
+        ipcMain.on("openSettings", () => {
+            console.log("open settings window", { pathname: "/settings/general" });
         });
-
-        await BrowserWindowModule.loadFileOrUrl(
-            settingsWindow,
-            dependencyRegistry.get("EnvironmentVariableProvider"),
-            "settings.html",
-        );
     }
 
     private static registerBrowserWindowEventListeners(
@@ -188,10 +178,16 @@ export class BrowserWindowModule {
     ) {
         const eventHandlers: { ueliCommands: UeliCommand[]; handler: (argument: unknown) => void }[] = [
             {
-                ueliCommands: ["openAbout", "openExtensions", "openSettings", "show"],
+                ueliCommands: ["show"],
                 handler: (argument) => {
                     browserWindowToggler.showAndFocus();
                     sendToBrowserWindow(browserWindow, "navigateTo", argument);
+                },
+            },
+            {
+                ueliCommands: ["openAbout", "openExtensions", "openSettings"],
+                handler: (argument) => {
+                    console.log("show settings window", argument);
                 },
             },
             {
@@ -210,16 +206,15 @@ export class BrowserWindowModule {
     }
 
     private static async loadFileOrUrl(
+        app: App,
         browserWindow: BrowserWindow,
         environmentVariableProvider: EnvironmentVariableProvider,
         fileName: string,
     ) {
-        const viteDevServerUrl = environmentVariableProvider.get("VITE_DEV_SERVER_URL");
-
-        if (viteDevServerUrl) {
-            await browserWindow.loadURL(`${viteDevServerUrl}/${fileName}`);
-        } else {
+        if (app.isPackaged) {
             await browserWindow.loadFile(join(__dirname, "..", "dist-renderer", fileName));
+        } else {
+            await browserWindow.loadURL(`${environmentVariableProvider.get("VITE_DEV_SERVER_URL")}/${fileName}`);
         }
     }
 }

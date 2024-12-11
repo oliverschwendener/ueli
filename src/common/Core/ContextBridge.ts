@@ -43,6 +43,7 @@ export type ContextBridge = {
     invokeAction: (action: SearchResultItemAction) => Promise<void>;
     invokeExtension: <Argument, Result>(extensionId: string, searchArguments: Argument) => Promise<Result>;
     openExternal: (url: string, options?: OpenExternalOptions) => Promise<void>;
+    openSettings: () => void;
     removeExcludedSearchResultItem: (itemId: string) => Promise<void>;
     removeFavorite: (id: string) => Promise<void>;
     resetAllSettings: () => Promise<void>;

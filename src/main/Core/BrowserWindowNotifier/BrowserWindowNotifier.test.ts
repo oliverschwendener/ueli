@@ -13,7 +13,10 @@ describe(BrowserWindowNotifier, () => {
             const sendMock = vi.fn();
 
             const browserWindowNotifier = new BrowserWindowNotifier();
-            browserWindowNotifier.setBrowserWindow(<BrowserWindow>{ webContents: { send: (c, a) => sendMock(c, a) } });
+
+            const browserWindow = <BrowserWindow>{ webContents: { send: (c, a) => sendMock(c, a) } };
+
+            browserWindowNotifier.addBrowserWindow({ id: "window1", browserWindow });
             browserWindowNotifier.notify<{ message: string }>("myChannel", { message: "myMessage" });
 
             expect(sendMock).toHaveBeenCalledWith("myChannel", { message: "myMessage" });
