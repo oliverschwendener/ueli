@@ -30,7 +30,7 @@ export default defineConfig(({ command }) => {
         build: {
             rollupOptions: {
                 input: {
-                    main: join(rendererRoot, "main.html"),
+                    search: join(rendererRoot, "search.html"),
                     settings: join(rendererRoot, "settings.html"),
                 },
             },

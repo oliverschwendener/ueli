@@ -5,7 +5,7 @@ import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
-import type { BrowserWindow, IpcMain } from "electron";
+import { BrowserWindow, type IpcMain } from "electron";
 import { join } from "path";
 import { NavigateToActionHandler } from "./ActionHandler";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
@@ -92,11 +92,11 @@ export class BrowserWindowModule {
         await BrowserWindowModule.loadFileOrUrl(
             browserWindow,
             dependencyRegistry.get("EnvironmentVariableProvider"),
-            "main.html",
+            "search.html",
         );
 
         const settingsWindow = new BrowserWindow({
-            show: false,
+            show: true,
         });
 
         await BrowserWindowModule.loadFileOrUrl(
