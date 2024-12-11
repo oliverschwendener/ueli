@@ -19,7 +19,6 @@ import {
     WindowsBrowserWindowConstructorOptionsProvider,
 } from "./BrowserWindowConstructorOptionsProvider";
 import { BrowserWindowToggler } from "./BrowserWindowToggler";
-import { sendToBrowserWindow } from "./sendToBrowserWindow";
 
 export class BrowserWindowModule {
     private static readonly DefaultHideWindowOnOptions = ["blur", "afterInvocation", "escapePressed"];
@@ -138,7 +137,7 @@ export class BrowserWindowModule {
         eventSubscriber.subscribe("hotkeyPressed", () => browserWindowToggler.toggle());
 
         eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
-            sendToBrowserWindow(browserWindow, `settingUpdated[${key}]`, { value });
+            browserWindow.webContents.send(`settingUpdated[${key}]`, { value });
         });
 
         eventSubscriber.subscribe("settingUpdated[window.alwaysOnTop]", ({ value }: { value: boolean }) => {
@@ -161,9 +160,9 @@ export class BrowserWindowModule {
             browserWindow.setVisibleOnAllWorkspaces(value);
         });
 
-        eventSubscriber.subscribe("navigateTo", ({ pathname }: { pathname: string }) => {
+        eventSubscriber.subscribe("navigateTo", (argument) => {
             browserWindowToggler.showAndFocus();
-            sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
+            browserWindow.webContents.send("navigateTo", argument);
         });
 
         ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
@@ -181,7 +180,7 @@ export class BrowserWindowModule {
                 ueliCommands: ["show"],
                 handler: (argument) => {
                     browserWindowToggler.showAndFocus();
-                    sendToBrowserWindow(browserWindow, "navigateTo", argument);
+                    browserWindow.webContents.send("navigateTo", argument);
                 },
             },
             {
