@@ -4,13 +4,7 @@ import type { IpcRendererEvent } from "electron";
 import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router";
 import { Extension } from "./Extension";
-import {
-    useContextBridge,
-    useExcludedSearchResultItems,
-    useFavorites,
-    useScrollBar,
-    useSearchResultItems,
-} from "./Hooks";
+import { useExcludedSearchResultItems, useFavorites, useScrollBar, useSearchResultItems } from "./Hooks";
 import { useI18n } from "./I18n";
 import { Search } from "./Search";
 import { Settings } from "./Settings";
@@ -19,8 +13,7 @@ import { ThemeContext } from "./ThemeContext";
 import { useAppCssProperties } from "./useAppCssProperties";
 
 export const App = () => {
-    const { contextBridge } = useContextBridge();
-    const [theme, setTheme] = useState<Theme>(getTheme(contextBridge));
+    const [theme, setTheme] = useState<Theme>(getTheme(window.ContextBridge));
     const [shouldPreferDarkColors, setShouldPreferDarkColors] = useState<boolean>(
         window.matchMedia("(prefers-color-scheme: dark)").matches,
     );
@@ -31,7 +24,7 @@ export const App = () => {
     const navigate = useNavigate();
     const { appCssProperties } = useAppCssProperties();
 
-    useI18n({ contextBridge });
+    useI18n();
     useScrollBar({ document, theme });
 
     useEffect(() => {
@@ -39,16 +32,16 @@ export const App = () => {
             navigate({ pathname });
 
         const nativeThemeChangedEventHandler = () => {
-            setTheme(getTheme(contextBridge));
+            setTheme(getTheme(window.ContextBridge));
             setShouldPreferDarkColors(window.matchMedia("(prefers-color-scheme: dark)").matches);
         };
 
-        contextBridge.ipcRenderer.on("navigateTo", navigateToEventHandler);
-        contextBridge.ipcRenderer.on("nativeThemeChanged", nativeThemeChangedEventHandler);
+        window.ContextBridge.ipcRenderer.on("navigateTo", navigateToEventHandler);
+        window.ContextBridge.ipcRenderer.on("nativeThemeChanged", nativeThemeChangedEventHandler);
 
         return () => {
-            contextBridge.ipcRenderer.off("navigateTo", navigateToEventHandler);
-            contextBridge.ipcRenderer.off("nativeThemeChanged", nativeThemeChangedEventHandler);
+            window.ContextBridge.ipcRenderer.off("navigateTo", navigateToEventHandler);
+            window.ContextBridge.ipcRenderer.off("nativeThemeChanged", nativeThemeChangedEventHandler);
         };
     }, []);
 

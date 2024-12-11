@@ -1,20 +1,18 @@
-import { useContextBridge } from "@Core/Hooks";
 import { ThemeContext } from "@Core/ThemeContext";
 import { useContext, useEffect, useState } from "react";
 
 export const Logs = () => {
-    const { contextBridge } = useContextBridge();
     const { theme } = useContext(ThemeContext);
 
-    const [logs, setLogs] = useState<string[]>(contextBridge.getLogs());
+    const [logs, setLogs] = useState<string[]>(window.ContextBridge.getLogs());
 
     useEffect(() => {
-        const logsUpdatedEventHandler = () => setLogs(contextBridge.getLogs());
+        const logsUpdatedEventHandler = () => setLogs(window.ContextBridge.getLogs());
 
-        contextBridge.ipcRenderer.on("logsUpdated", logsUpdatedEventHandler);
+        window.ContextBridge.ipcRenderer.on("logsUpdated", logsUpdatedEventHandler);
 
         return () => {
-            contextBridge.ipcRenderer.off("logsUpdated", logsUpdatedEventHandler);
+            window.ContextBridge.ipcRenderer.off("logsUpdated", logsUpdatedEventHandler);
         };
     });
 

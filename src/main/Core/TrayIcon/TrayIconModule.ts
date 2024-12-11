@@ -18,9 +18,6 @@ export class TrayIconModule {
         const nativeTheme = dependencyRegistry.get("NativeTheme");
         const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
         const operatingSystem = dependencyRegistry.get("OperatingSystem");
-        const translator = dependencyRegistry.get("Translator");
-        const ueliCommandInvoker = dependencyRegistry.get("UeliCommandInvoker");
-        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
 
         const trayIconFilePathResolvers: Record<OperatingSystem, () => TrayIconFilePathResolver> = {
             Linux: () => new LinuxTrayIconFilePathResolver(nativeTheme, assetPathResolver),
@@ -31,7 +28,12 @@ export class TrayIconModule {
         const trayIconManager = new TrayIconManager(
             new TrayCreator(),
             trayIconFilePathResolvers[operatingSystem](),
-            new ContextMenuTemplateProvider(translator, ueliCommandInvoker, resources),
+            new ContextMenuTemplateProvider(
+                dependencyRegistry.get("Translator"),
+                dependencyRegistry.get("UeliCommandInvoker"),
+                dependencyRegistry.get("SettingsManager"),
+                resources,
+            ),
             new ContextMenuBuilder(),
         );
 
@@ -39,6 +41,9 @@ export class TrayIconModule {
 
         nativeTheme.on("updated", () => trayIconManager.updateImage());
 
+        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
+
         eventSubscriber.subscribe("settingUpdated[general.language]", () => trayIconManager.updateContextMenu());
+        eventSubscriber.subscribe("settingUpdated[general.hotkey.enabled]", () => trayIconManager.updateContextMenu());
     }
 }

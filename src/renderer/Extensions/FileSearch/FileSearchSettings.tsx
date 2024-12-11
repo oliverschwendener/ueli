@@ -1,4 +1,4 @@
-import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
+import { useExtensionSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 
 export const FileSearchSettings = () => {
     const { t } = useTranslation("extension[FileSearch]");
-    const { contextBridge } = useContextBridge();
 
     const { value: maxSearchResultCount, updateValue: setMaxSearchResultCount } = useExtensionSetting<number>({
         extensionId: "FileSearch",
@@ -21,7 +20,7 @@ export const FileSearchSettings = () => {
     });
 
     const chooseFile = async () => {
-        const result = await contextBridge.showOpenDialog({ properties: ["openFile"] });
+        const result = await window.ContextBridge.showOpenDialog({ properties: ["openFile"] });
         if (!result.canceled && result.filePaths.length > 0) {
             setEsFilePath(result.filePaths[0]);
         }
@@ -40,10 +39,10 @@ export const FileSearchSettings = () => {
                         />
                     }
                 />
-                {contextBridge.getOperatingSystem() === "Windows" && (
+                {window.ContextBridge.getOperatingSystem() === "Windows" && (
                     <Setting
                         label={t("esFilePath")}
-                        description={contextBridge.fileExists(esFilePath) ? undefined : t("fileDoesNotExist")}
+                        description={window.ContextBridge.fileExists(esFilePath) ? undefined : t("fileDoesNotExist")}
                         control={
                             <div style={{ display: "flex", flexDirection: "column", width: "80%" }}>
                                 <Input

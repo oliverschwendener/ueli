@@ -1,11 +1,9 @@
-import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
+import { useExtensionSetting } from "@Core/Hooks";
 import { Button, Input, Tooltip } from "@fluentui/react-components";
 import { AddRegular, DismissRegular, FolderRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 
 export const Folders = () => {
-    const { contextBridge } = useContextBridge();
-
     const { value: folders, updateValue: setFolders } = useExtensionSetting<string[]>({
         extensionId: "ApplicationSearch",
         key: "windowsFolders",
@@ -23,7 +21,7 @@ export const Folders = () => {
     };
 
     const chooseFolder = async () => {
-        const result = await contextBridge.showOpenDialog({ properties: ["openDirectory"] });
+        const result = await window.ContextBridge.showOpenDialog({ properties: ["openDirectory"] });
         if (!result.canceled && result.filePaths.length) {
             setNewFolder(result.filePaths[0]);
         }

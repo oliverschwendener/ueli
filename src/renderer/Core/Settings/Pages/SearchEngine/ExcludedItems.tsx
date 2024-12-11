@@ -1,4 +1,4 @@
-import { useContextBridge, useSearchResultItems } from "@Core/Hooks";
+import { useSearchResultItems } from "@Core/Hooks";
 import { getImageUrl } from "@Core/getImageUrl";
 import { Badge, Button, Input, Text, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
@@ -7,14 +7,13 @@ import { useTranslation } from "react-i18next";
 
 export const ExcludedItems = () => {
     const { t } = useTranslation("settingsSearchEngine");
-    const { contextBridge } = useContextBridge();
     const { searchResultItems } = useSearchResultItems();
 
-    const [excludedIds, setExcludedIds] = useState<string[]>(contextBridge.getExcludedSearchResultItemIds());
+    const [excludedIds, setExcludedIds] = useState<string[]>(window.ContextBridge.getExcludedSearchResultItemIds());
 
     const removeExcludedSearchResultItem = async (id: string) => {
-        await contextBridge.removeExcludedSearchResultItem(id);
-        setExcludedIds(contextBridge.getExcludedSearchResultItemIds());
+        await window.ContextBridge.removeExcludedSearchResultItem(id);
+        setExcludedIds(window.ContextBridge.getExcludedSearchResultItemIds());
     };
 
     const excludedSearchResultItems = searchResultItems.filter((f) => excludedIds.includes(f.id));
@@ -33,7 +32,7 @@ export const ExcludedItems = () => {
                             style={{ width: 16, height: 16 }}
                             src={getImageUrl({
                                 image,
-                                shouldPreferDarkColors: contextBridge.themeShouldUseDarkColors(),
+                                shouldPreferDarkColors: window.ContextBridge.themeShouldUseDarkColors(),
                             })}
                         />
                     }

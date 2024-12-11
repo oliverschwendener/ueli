@@ -1,4 +1,3 @@
-import { useContextBridge } from "@Core/Hooks";
 import { Input } from "@fluentui/react-components";
 import { SearchRegular } from "@fluentui/react-icons";
 import type { ChangeEvent, KeyboardEvent, ReactElement, RefObject } from "react";
@@ -28,8 +27,6 @@ export const SearchBar = ({
     searchBarSize,
     showIcon,
 }: SearchBarProps) => {
-    const { contextBridge } = useContextBridge();
-
     const onChange = onSearchTermUpdated
         ? (_: ChangeEvent<HTMLInputElement>, { value }: { value: string }) => onSearchTermUpdated(value)
         : undefined;
@@ -40,7 +37,7 @@ export const SearchBar = ({
             ref={refObject}
             appearance={
                 searchBarAppearance === "auto"
-                    ? contextBridge.themeShouldUseDarkColors()
+                    ? window.ContextBridge.themeShouldUseDarkColors()
                         ? "filled-darker"
                         : "filled-lighter"
                     : searchBarAppearance

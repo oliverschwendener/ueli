@@ -1,4 +1,3 @@
-import { useContextBridge } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { Switch } from "@fluentui/react-components";
 import { useState } from "react";
@@ -6,12 +5,11 @@ import { useTranslation } from "react-i18next";
 
 export const Autostart = () => {
     const { t } = useTranslation("settingsGeneral");
-    const { contextBridge } = useContextBridge();
 
-    const [autostartIsEnabled, setAutostartIsEnabled] = useState<boolean>(contextBridge.autostartIsEnabled());
+    const [autostartIsEnabled, setAutostartIsEnabled] = useState<boolean>(window.ContextBridge.autostartIsEnabled());
 
     const updateAutostartSettings = (autostartIsEnabled: boolean) => {
-        contextBridge.autostartSettingsChanged(autostartIsEnabled);
+        window.ContextBridge.autostartSettingsChanged(autostartIsEnabled);
         setAutostartIsEnabled(autostartIsEnabled);
     };
 

@@ -1,4 +1,3 @@
-import { useContextBridge } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { Button, Input, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
@@ -11,11 +10,10 @@ type RescanIntervalProps = {
 
 export const RescanInterval = ({ automaticRescanEnabled }: RescanIntervalProps) => {
     const { t } = useTranslation("settingsSearchEngine");
-    const { contextBridge } = useContextBridge();
 
     const defaultRescanIntervalInSeconds = 300;
 
-    const rescanIntervalInSeconds = contextBridge.getSettingValue(
+    const rescanIntervalInSeconds = window.ContextBridge.getSettingValue(
         "searchEngine.rescanIntervalInSeconds",
         defaultRescanIntervalInSeconds,
     );
@@ -23,7 +21,7 @@ export const RescanInterval = ({ automaticRescanEnabled }: RescanIntervalProps) 
     const [tempRescanIntervalInSeconds, setTempRescanIntervalInSeconds] = useState<number>(rescanIntervalInSeconds);
 
     const setRescanIntervalInSeconds = (value: number) =>
-        contextBridge.updateSettingValue("searchEngine.rescanIntervalInSeconds", value);
+        window.ContextBridge.updateSettingValue("searchEngine.rescanIntervalInSeconds", value);
 
     return (
         <Setting

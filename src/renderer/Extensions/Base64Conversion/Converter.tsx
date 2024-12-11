@@ -1,5 +1,4 @@
 import type { InvocationArgument } from "@common/Extensions/Base64Conversion";
-import { useContextBridge } from "@Core/Hooks";
 import { Textarea } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 
@@ -11,13 +10,12 @@ type ConverterProps = {
 
 export const Converter = ({ setConvertedText, encodePlaceholder, decodePlaceholder }: ConverterProps) => {
     const extensionId = "Base64Conversion";
-    const { contextBridge } = useContextBridge();
     const [input, setInput] = useState<InvocationArgument>({ payload: "", action: "encode" });
     const [conversionResult, setConversionResult] = useState("");
 
     const convertText = async (payload: string, action: "encode" | "decode") => {
         try {
-            return await contextBridge.invokeExtension<InvocationArgument, string>(extensionId, {
+            return await window.ContextBridge.invokeExtension<InvocationArgument, string>(extensionId, {
                 payload,
                 action,
             });
