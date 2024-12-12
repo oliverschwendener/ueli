@@ -5,7 +5,7 @@ import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
-import type { BrowserWindow, IpcMain } from "electron";
+import type { App, BrowserWindow, IpcMain } from "electron";
 import { join } from "path";
 import { NavigateToActionHandler } from "./ActionHandler";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
@@ -83,6 +83,7 @@ export class BrowserWindowModule {
             browserWindowToggler,
             settingsManager,
             ipcMain,
+            app,
         );
 
         dependencyRegistry
@@ -113,6 +114,7 @@ export class BrowserWindowModule {
         browserWindowToggler: BrowserWindowToggler,
         settingsManager: SettingsManager,
         ipcMain: IpcMain,
+        app: App,
     ) {
         const shouldHideWindowAfterInvocation = (action: SearchResultItemAction) =>
             action.hideWindowAfterInvocation &&
@@ -163,6 +165,8 @@ export class BrowserWindowModule {
         });
 
         ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
+
+        app.on("second-instance", () => browserWindowToggler.showAndFocus());
 
         BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber, browserWindowToggler);
     }
