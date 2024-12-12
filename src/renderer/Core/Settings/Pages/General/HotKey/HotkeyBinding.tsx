@@ -1,8 +1,8 @@
 import { useSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { isValidHotkey } from "@common/Core/Hotkey";
-import { Button, Field, Input, Label, Tooltip } from "@fluentui/react-components";
-import { InfoRegular, WarningRegular } from "@fluentui/react-icons";
+import { Button, Field, Input, Tooltip } from "@fluentui/react-components";
+import { InfoRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -22,25 +22,6 @@ export const HotKeyBinding = ({ hotkeyEnabled }: HotkeyBindingProps) => {
             label={t("hotkeyBinding")}
             control={
                 <Field
-                    label={
-                        window.ContextBridge.getEnvironmentVariable("XDG_SESSION_TYPE") === "wayland" ? (
-                            <>
-                                <Label weight="semibold">{t("waylandWarning")}</Label>
-                                <Tooltip content={t("waylandWarningMoreInfo")} relationship="label" withArrow>
-                                    <Button
-                                        appearance="subtle"
-                                        size="small"
-                                        icon={<WarningRegular />}
-                                        onClick={() =>
-                                            window.ContextBridge.openExternal(
-                                                "https://github.com/oliverschwendener/ueli/wiki#linux",
-                                            )
-                                        }
-                                    />
-                                </Tooltip>
-                            </>
-                        ) : undefined
-                    }
                     validationMessage={
                         isValidHotkey(temporaryHotkey) ? t("validHotkeyBinding") : t("invalidHotkeyBinding")
                     }
