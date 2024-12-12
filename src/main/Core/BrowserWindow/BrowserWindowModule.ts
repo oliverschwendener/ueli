@@ -77,6 +77,7 @@ export class BrowserWindowModule {
             browserWindowToggler,
             settingsManager,
             ipcMain,
+            app,
         );
 
         dependencyRegistry
@@ -116,6 +117,7 @@ export class BrowserWindowModule {
         browserWindowToggler: BrowserWindowToggler,
         settingsManager: SettingsManager,
         ipcMain: IpcMain,
+        app: App,
     ) {
         const shouldHideWindowAfterInvocation = (action: SearchResultItemAction) =>
             action.hideWindowAfterInvocation &&
@@ -166,6 +168,8 @@ export class BrowserWindowModule {
         });
 
         ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
+
+        app.on("second-instance", () => browserWindowToggler.showAndFocus());
 
         BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber, browserWindowToggler);
     }
