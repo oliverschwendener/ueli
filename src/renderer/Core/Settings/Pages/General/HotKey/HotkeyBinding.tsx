@@ -26,11 +26,7 @@ export const HotKeyBinding = ({ hotkeyEnabled }: HotkeyBindingProps) => {
                         window.ContextBridge.getEnvironmentVariable("XDG_SESSION_TYPE") === "wayland" ? (
                             <>
                                 <Label weight="semibold">{t("waylandWarning")}</Label>
-                                <Tooltip
-                                    content={t("waylandWarningMoreInfo")}
-                                    relationship="label"
-                                    withArrow
-                                >
+                                <Tooltip content={t("waylandWarningMoreInfo")} relationship="label" withArrow>
                                     <Button
                                         appearance="subtle"
                                         size="small"
