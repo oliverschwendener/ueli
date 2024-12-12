@@ -8,7 +8,7 @@ const dummyTrayConstructor = vi.fn().mockReturnValue(dummyTray);
 vi.mock("electron", () => {
     return {
         Tray: class {
-            constructor(iconFilePath: string) {
+            public constructor(iconFilePath: string) {
                 return dummyTrayConstructor(iconFilePath);
             }
         },

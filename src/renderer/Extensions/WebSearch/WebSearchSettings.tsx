@@ -1,4 +1,4 @@
-import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
+import { useExtensionSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
@@ -6,7 +6,6 @@ import { Dropdown, Option, Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const WebSearchSettings = () => {
-    const { contextBridge } = useContextBridge();
     const extensionId = "WebSearch";
 
     const { t } = useTranslation("extension[WebSearch]");
@@ -49,7 +48,7 @@ export const WebSearchSettings = () => {
                                         <img
                                             style={{ width: 16, height: 16 }}
                                             alt={searchEngine}
-                                            src={`file://${contextBridge.getExtensionAssetFilePath("WebSearch", searchEngine)}`}
+                                            src={`file://${window.ContextBridge.getExtensionAssetFilePath("WebSearch", searchEngine)}`}
                                         />
                                         {searchEngine}
                                     </div>

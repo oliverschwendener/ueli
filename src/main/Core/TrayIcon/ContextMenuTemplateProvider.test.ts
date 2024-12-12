@@ -1,3 +1,4 @@
+import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { UeliCommandInvoker } from "@Core/UeliCommand";
 import type { MenuItemConstructorOptions } from "electron";
@@ -10,19 +11,36 @@ describe(ContextMenuTemplateProvider, () => {
         it("should return context menu template with translations", async () => {
             const t = (key: string) => `translation[${key}]`;
             const createTMock = vi.fn().mockReturnValue({ t });
+
+            const getValueMock = vi.fn().mockReturnValue(true);
+
             const translator = <Translator>{ createT: createTMock };
             const ueliCommandInvoker = <UeliCommandInvoker>{};
+            const settingsManager = <SettingsManager>{ getValue: (k, d) => getValueMock(k, d) };
 
-            const actual = await new ContextMenuTemplateProvider(translator, ueliCommandInvoker, resources).get();
+            const actual = await new ContextMenuTemplateProvider(
+                translator,
+                ueliCommandInvoker,
+                settingsManager,
+                resources,
+            ).get();
 
             const expected: MenuItemConstructorOptions[] = [
                 { label: "translation[trayIcon.contextMenu.show]", click: () => null },
                 { label: "translation[trayIcon.contextMenu.settings]", click: () => null },
                 { label: "translation[trayIcon.contextMenu.about]", click: () => null },
                 { label: "translation[trayIcon.contextMenu.quit]", click: () => null },
+                {
+                    label: "translation[trayIcon.contextMenu.hotkey]",
+                    click: () => null,
+                    checked: true,
+                    type: "checkbox",
+                    toolTip: "translation[trayIcon.contextMenu.hotkey.tooltip]",
+                },
             ];
 
             expect(createTMock).toHaveBeenCalledWith(resources);
+            expect(getValueMock).toHaveBeenCalledWith("general.hotkey.enabled", true);
             expect(JSON.stringify(actual)).toEqual(JSON.stringify(expected));
         });
     });

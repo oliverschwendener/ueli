@@ -1,6 +1,5 @@
 import type { ContextBridge, OperatingSystem } from "@common/Core";
 import { useEffect, useState, type CSSProperties } from "react";
-import { useContextBridge } from "./Hooks";
 
 const getMacOsCssProperties = (contextBridge: ContextBridge): CSSProperties => {
     return contextBridge.getSettingValue<string>("window.vibrancy", "None") === "None"
@@ -25,16 +24,14 @@ const getWindowsCssProperties = (contextBridge: ContextBridge): CSSProperties =>
 };
 
 export const useAppCssProperties = () => {
-    const { contextBridge } = useContextBridge();
-
-    const operatingSystem = contextBridge.getOperatingSystem();
+    const operatingSystem = window.ContextBridge.getOperatingSystem();
 
     const extendGlobalStyles = (cssProperties: CSSProperties) => ({ height: "100vh", ...cssProperties });
 
     const initialProperties: Record<OperatingSystem, CSSProperties> = {
         Linux: extendGlobalStyles({}),
-        macOS: extendGlobalStyles(getMacOsCssProperties(contextBridge)),
-        Windows: extendGlobalStyles(getWindowsCssProperties(contextBridge)),
+        macOS: extendGlobalStyles(getMacOsCssProperties(window.ContextBridge)),
+        Windows: extendGlobalStyles(getWindowsCssProperties(window.ContextBridge)),
     };
 
     const [appCssProperties, setAppCssProperties] = useState<CSSProperties>(initialProperties[operatingSystem]);
@@ -42,8 +39,8 @@ export const useAppCssProperties = () => {
     useEffect(() => {
         const eventHandlers: Record<OperatingSystem, () => void> = {
             Linux: () => null,
-            macOS: () => setAppCssProperties(extendGlobalStyles(getMacOsCssProperties(contextBridge))),
-            Windows: () => setAppCssProperties(extendGlobalStyles(getWindowsCssProperties(contextBridge))),
+            macOS: () => setAppCssProperties(extendGlobalStyles(getMacOsCssProperties(window.ContextBridge))),
+            Windows: () => setAppCssProperties(extendGlobalStyles(getWindowsCssProperties(window.ContextBridge))),
         };
 
         const channels: Record<OperatingSystem, string[]> = {
@@ -58,13 +55,13 @@ export const useAppCssProperties = () => {
 
         const registerEventListeners = () => {
             for (const channel of channels[operatingSystem]) {
-                contextBridge.ipcRenderer.on(channel, eventHandlers[operatingSystem]);
+                window.ContextBridge.ipcRenderer.on(channel, eventHandlers[operatingSystem]);
             }
         };
 
         const unregisterEventListeners = () => {
             for (const channel of channels[operatingSystem]) {
-                contextBridge.ipcRenderer.off(channel, eventHandlers[operatingSystem]);
+                window.ContextBridge.ipcRenderer.off(channel, eventHandlers[operatingSystem]);
             }
         };
 

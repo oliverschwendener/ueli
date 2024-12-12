@@ -4,16 +4,23 @@ import { Header } from "@Core/Header";
 import { getImageUrl } from "@Core/getImageUrl";
 import { Button, Text } from "@fluentui/react-components";
 import { ArrowLeftFilled, CopyRegular } from "@fluentui/react-icons";
+import type { KeyboardEvent } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Converter } from "./Converter";
 
 export const Base64Conversion = ({ contextBridge, goBack }: ExtensionProps) => {
-    const { t } = useTranslation();
+    const { t } = useTranslation("extension[Base64Conversion]");
     const extensionId = "Base64Conversion";
-    const ns = "extension[Base64Conversion]";
 
     const [convertedText, setConvertedText] = useState<string>("");
+
+    const handleKeyDownEvent = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            goBack();
+        }
+    };
 
     return (
         <BaseLayout
@@ -42,7 +49,7 @@ export const Base64Conversion = ({ contextBridge, goBack }: ExtensionProps) => {
                             style={{ width: 24 }}
                         />
                         <div style={{ flexGrow: 1 }}>
-                            <Text weight="semibold">{t("extensionName", { ns })}</Text>
+                            <Text weight="semibold">{t("extensionName")}</Text>
                         </div>
                     </div>
                 </Header>
@@ -50,8 +57,8 @@ export const Base64Conversion = ({ contextBridge, goBack }: ExtensionProps) => {
             content={
                 <Converter
                     setConvertedText={setConvertedText}
-                    encodePlaceholder={t("encodePlaceHolder", { ns })}
-                    decodePlaceholder={t("decodePlaceHolder", { ns })}
+                    encodePlaceholder={t("encodePlaceHolder")}
+                    decodePlaceholder={t("decodePlaceHolder")}
                 />
             }
             footer={
@@ -71,10 +78,11 @@ export const Base64Conversion = ({ contextBridge, goBack }: ExtensionProps) => {
                         iconPosition="after"
                         onClick={() => contextBridge.copyTextToClipboard(convertedText)}
                     >
-                        {t("copyToClipboard", { ns })}
+                        {t("copyToClipboard")}
                     </Button>
                 </div>
             }
+            onKeyDown={handleKeyDownEvent}
         />
     );
 };

@@ -4,7 +4,7 @@ import { Iterm } from "./Iterm";
 
 describe(Iterm, () => {
     describe(Iterm.prototype.terminalId, () =>
-        it(`should be "iTerm"`, () => expect(new Iterm(null).terminalId).toBe("iTerm")),
+        it(`should be "iTerm"`, () => expect(new Iterm(<AppleScriptUtility>{}).terminalId).toBe("iTerm")),
     );
 
     describe(Iterm.prototype.launchWithCommand, () => {

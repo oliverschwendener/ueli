@@ -1,5 +1,5 @@
 import { useSetting } from "@Core/Hooks";
-import type { ContextBridge, SearchResultItem, SearchResultItemAction } from "@common/Core";
+import type { SearchResultItem, SearchResultItemAction } from "@common/Core";
 import type { SearchEngineId } from "@common/Core/Search";
 import { useRef, useState } from "react";
 import { getNextSearchResultItemId } from "./Helpers/getNextSearchResultItemId";
@@ -13,7 +13,6 @@ type ViewModel = {
 };
 
 type SearchViewControllerProps = {
-    contextBridge: ContextBridge;
     searchResultItems: SearchResultItem[];
     excludedSearchResultItemIds: string[];
     favoriteSearchResultItemIds: string[];
@@ -30,7 +29,6 @@ const collectSearchResultItems = (searchResult: Record<string, SearchResultItem[
 };
 
 export const useSearchViewController = ({
-    contextBridge,
     searchResultItems,
     excludedSearchResultItemIds,
     favoriteSearchResultItemIds,
@@ -65,7 +63,7 @@ export const useSearchViewController = ({
 
     const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
     const { value: maxSearchResultItems } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
-    const { value: searchEngineId } = useSetting<SearchEngineId>({ key: "searchEngine.id", defaultValue: "Fuse.js" });
+    const { value: searchEngineId } = useSetting<SearchEngineId>({ key: "searchEngine.id", defaultValue: "fuzzysort" });
 
     const search = (searchTerm: string, selectedItemId?: string) => {
         const searchResult = getSearchResult({
@@ -73,7 +71,7 @@ export const useSearchViewController = ({
             excludedSearchResultItemIds,
             favoriteSearchResultItemIds,
             fuzziness,
-            instantSearchResultItems: contextBridge.getInstantSearchResultItems(searchTerm),
+            instantSearchResultItems: window.ContextBridge.getInstantSearchResultItems(searchTerm),
             maxSearchResultItems,
             searchResultItems,
             searchTerm,
@@ -105,7 +103,7 @@ export const useSearchViewController = ({
 
     const invokeAction = async (action: SearchResultItemAction) => {
         if (!action.requiresConfirmation) {
-            await contextBridge.invokeAction(action);
+            await window.ContextBridge.invokeAction(action);
             return;
         }
 

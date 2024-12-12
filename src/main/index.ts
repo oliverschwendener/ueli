@@ -1,31 +1,47 @@
-import * as Electron from "electron";
-import mitt from "mitt";
-import { platform } from "os";
-import * as Core from "./Core";
-import * as Extensions from "./Extensions";
+import { app } from "electron";
+
+if (!app.requestSingleInstanceLock()) {
+    console.log("Quitting application. Reason: another instance is already running");
+    app.exit();
+}
 
 (async () => {
-    await Electron.app.whenReady();
+    await app.whenReady();
 
-    Core.SingleInstanceLockModule.bootstrap(Electron.app);
-    Core.DockModule.bootstrap(Electron.app);
+    const {
+        clipboard,
+        dialog,
+        globalShortcut,
+        ipcMain,
+        nativeTheme,
+        net,
+        safeStorage,
+        screen,
+        shell,
+        systemPreferences,
+    } = await import("electron");
+
+    const { default: mitt } = await import("mitt");
+    const { platform } = await import("os");
+    const Core = await import("./Core");
+    const Extensions = await import("./Extensions");
 
     const dependencyRegistry = Core.DependencyRegistryModule.bootstrap();
 
-    // Electron Modules
-    dependencyRegistry.register("App", Electron.app);
-    dependencyRegistry.register("Clipboard", Electron.clipboard);
-    dependencyRegistry.register("Dialog", Electron.dialog);
+    // Electron and Node Modules
+    dependencyRegistry.register("App", app);
+    dependencyRegistry.register("Clipboard", clipboard);
+    dependencyRegistry.register("Dialog", dialog);
     dependencyRegistry.register("Emitter", mitt<Record<string, unknown>>());
-    dependencyRegistry.register("GlobalShortcut", Electron.globalShortcut);
-    dependencyRegistry.register("IpcMain", Electron.ipcMain);
-    dependencyRegistry.register("NativeTheme", Electron.nativeTheme);
-    dependencyRegistry.register("Net", Electron.net);
+    dependencyRegistry.register("GlobalShortcut", globalShortcut);
+    dependencyRegistry.register("IpcMain", ipcMain);
+    dependencyRegistry.register("NativeTheme", nativeTheme);
+    dependencyRegistry.register("Net", net);
     dependencyRegistry.register("Platform", platform());
-    dependencyRegistry.register("SafeStorage", Electron.safeStorage);
-    dependencyRegistry.register("Screen", Electron.screen);
-    dependencyRegistry.register("Shell", Electron.shell);
-    dependencyRegistry.register("SystemPreferences", Electron.systemPreferences);
+    dependencyRegistry.register("SafeStorage", safeStorage);
+    dependencyRegistry.register("Screen", screen);
+    dependencyRegistry.register("Shell", shell);
+    dependencyRegistry.register("SystemPreferences", systemPreferences);
 
     // Core Modules
     Core.OperatingSystemModule.bootstrap(dependencyRegistry);
@@ -44,7 +60,6 @@ import * as Extensions from "./Extensions";
     Core.RandomStringProviderModule.bootstrap(dependencyRegistry);
     Core.SafeStorageEncryptionModule.bootstrap(dependencyRegistry);
     Core.AssetPathResolverModule.bootstrap(dependencyRegistry);
-    Core.ShellModule.bootstrap(dependencyRegistry);
     Core.ClipboardModule.bootstrap(dependencyRegistry);
     Core.AboutUeliModule.bootstrap(dependencyRegistry);
     Core.CommandlineUtilityModule.bootstrap(dependencyRegistry);
@@ -55,6 +70,8 @@ import * as Extensions from "./Extensions";
     Core.SettingsReaderModule.bootstrap(dependencyRegistry);
     Core.SettingsWriterModule.bootstrap(dependencyRegistry);
     Core.SettingsManagerModule.bootstrap(dependencyRegistry);
+    Core.ShellModule.bootstrap(dependencyRegistry);
+    Core.DockModule.bootstrap(dependencyRegistry);
     await Core.ImageGeneratorModule.bootstrap(dependencyRegistry);
     Core.TranslatorModule.bootstrap(dependencyRegistry);
     Core.SearchIndexModule.bootstrap(dependencyRegistry);

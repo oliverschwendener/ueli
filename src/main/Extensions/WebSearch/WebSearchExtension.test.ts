@@ -1,6 +1,11 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import {
+    createEmptyInstantSearchResult,
+    createInvokeExtensionAction,
+    createOpenUrlSearchResultAction,
+    type SearchResultItem,
+} from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import { describe, expect, it, vi } from "vitest";
@@ -16,8 +21,9 @@ describe(WebSearchExtension, () => {
             <SettingsManager>{ getValue: (k, d) => getValueMock(k, d) },
             [],
         );
-        expect(webSearchExtension.getInstantSearchResultItems("")).toEqual([]);
-        expect(webSearchExtension.getInstantSearchResultItems(" ")).toEqual([]);
+
+        expect(webSearchExtension.getInstantSearchResultItems("")).toEqual(createEmptyInstantSearchResult());
+        expect(webSearchExtension.getInstantSearchResultItems(" ")).toEqual(createEmptyInstantSearchResult());
 
         expect(getValueMock).toHaveBeenCalledWith(
             getExtensionSettingKey("WebSearch", "showInstantSearchResult"),
@@ -34,7 +40,7 @@ describe(WebSearchExtension, () => {
             [],
         );
 
-        expect(webSearchExtension.getInstantSearchResultItems("blub")).toEqual([]);
+        expect(webSearchExtension.getInstantSearchResultItems("blub")).toEqual(createEmptyInstantSearchResult());
 
         expect(getValueMock).toHaveBeenCalledWith(
             getExtensionSettingKey("WebSearch", "showInstantSearchResult"),
@@ -76,15 +82,18 @@ describe(WebSearchExtension, () => {
 
         const webSearchExtension = new WebSearchExtension(assetPathResolver, settingsManager, [webSearchEngine]);
 
-        expect(webSearchExtension.getInstantSearchResultItems("my search term")).toEqual([
-            <SearchResultItem>{
-                defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({ url: "mySearchUrl" }),
-                description: "searchEngine1",
-                id: "search-searchEngine1",
-                image: { url: "file://myAssetFilePath" },
-                name: `Search "my search term"`,
-            },
-        ]);
+        expect(webSearchExtension.getInstantSearchResultItems("my search term")).toEqual({
+            after: [
+                <SearchResultItem>{
+                    defaultAction: createOpenUrlSearchResultAction({ url: "mySearchUrl" }),
+                    description: "searchEngine1",
+                    id: "search-searchEngine1",
+                    image: { url: "file://myAssetFilePath" },
+                    name: `Search "my search term"`,
+                },
+            ],
+            before: [],
+        });
 
         expect(getWebSearchEngineMock).toHaveBeenCalledWith(
             getExtensionSettingKey("WebSearch", "searchEngine"),
@@ -174,7 +183,7 @@ describe(WebSearchExtension, () => {
 
         expect(await webSearchExtension.getSearchResultItems()).toEqual([
             <SearchResultItem>{
-                defaultAction: SearchResultItemActionUtility.createInvokeExtensionAction({
+                defaultAction: createInvokeExtensionAction({
                     description: "Search MyEngine",
                     extensionId: "WebSearch",
                 }),
@@ -216,7 +225,7 @@ describe(WebSearchExtension, () => {
 
         expect(await webSearchExtension.invoke({ searchTerm: "mySearchTerm" })).toEqual(<SearchResultItem[]>[
             {
-                defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({
+                defaultAction: createOpenUrlSearchResultAction({
                     url: "search-url-mySearchTerm-de-CH",
                 }),
                 description: "MyEngine",
@@ -225,7 +234,7 @@ describe(WebSearchExtension, () => {
                 image: { url: "file://assets/asset.png" },
             },
             {
-                defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({ url: "suggestion-url" }),
+                defaultAction: createOpenUrlSearchResultAction({ url: "suggestion-url" }),
                 description: "Suggestion",
                 id: "suggestion-0",
                 name: "suggestion-mySearchTerm-de-CH",

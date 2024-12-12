@@ -1,11 +1,17 @@
-import { SearchResultItemActionUtility, type SearchResultItem, type SearchResultItemAction } from "@common/Core";
+import {
+    createAddToFavoritesAction,
+    createExcludeFromSearchResultsAction,
+    createRemoveFromFavoritesAction,
+    type SearchResultItem,
+    type SearchResultItemAction,
+} from "@common/Core";
 
 export const getActions = (searchResultItem: SearchResultItem, favorites: string[]): SearchResultItemAction[] => {
     const defaultAdditionalActions = [
         favorites.includes(searchResultItem.id)
-            ? SearchResultItemActionUtility.createRemoveFromFavoritesAction({ id: searchResultItem.id })
-            : SearchResultItemActionUtility.createAddToFavoritesAction(searchResultItem),
-        SearchResultItemActionUtility.createExcludeFromSearchResultsAction(searchResultItem),
+            ? createRemoveFromFavoritesAction({ id: searchResultItem.id })
+            : createAddToFavoritesAction(searchResultItem),
+        createExcludeFromSearchResultsAction(searchResultItem),
     ];
 
     return [searchResultItem.defaultAction, ...(searchResultItem.additionalActions ?? []), ...defaultAdditionalActions];

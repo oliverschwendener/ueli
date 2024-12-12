@@ -7,6 +7,7 @@ import { BrowserBookmarksModule } from "./BrowserBookmarks";
 import { CalculatorModule } from "./Calculator";
 import { ColorConverterExtensionModule } from "./ColorConverter";
 import { CurrencyConversionModule } from "./CurrencyConversion/CurrencyConversionModule";
+import { CustomWebSearchModule } from "./CustomWebSearch";
 import { DeeplTranslatorModule } from "./DeeplTranslator";
 import type { ExtensionModule } from "./ExtensionModule";
 import { FileSearchModule } from "./FileSearch/FileSearchModule";
@@ -16,6 +17,7 @@ import { SystemCommandsModule } from "./SystemCommands";
 import { SystemSettingsModule } from "./SystemSettings";
 import { TerminalLauncherModule } from "./TerminalLauncher";
 import { UeliCommandModule } from "./UeliCommand";
+import { UuidGeneratorModule } from "./UuidGenerator";
 import { VSCodeModule } from "./VSCode";
 import { WebSearchExtensionModule } from "./WebSearch";
 import { WindowsControlPanelModule } from "./WindowsControlPanel";
@@ -35,6 +37,7 @@ export class ExtensionLoader {
             new CalculatorModule(),
             new ColorConverterExtensionModule(),
             new CurrencyConversionModule(),
+            new CustomWebSearchModule(),
             new DeeplTranslatorModule(),
             new FileSearchModule(),
             new JetBrainsToolboxModule(),
@@ -43,6 +46,7 @@ export class ExtensionLoader {
             new SystemSettingsModule(),
             new TerminalLauncherModule(),
             new UeliCommandModule(),
+            new UuidGeneratorModule(),
             new VSCodeModule(),
             new WebSearchExtensionModule(),
             new WindowsControlPanelModule(),

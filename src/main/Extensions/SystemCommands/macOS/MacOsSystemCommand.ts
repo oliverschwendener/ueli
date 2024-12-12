@@ -6,38 +6,42 @@ export class MacOsSystemCommand implements SystemCommand {
     public static create({
         name,
         description,
-        appleScript,
         image,
+        invoke,
         requiresConfirmation,
     }: {
         name: string;
         description: string;
-        appleScript: string;
         image: Image;
+        invoke: () => Promise<void>;
         requiresConfirmation?: boolean;
     }): MacOsSystemCommand {
-        return new MacOsSystemCommand(name, description, appleScript, image, requiresConfirmation);
+        return new MacOsSystemCommand(name, description, image, invoke, requiresConfirmation);
     }
 
     private constructor(
         private readonly name: string,
         private readonly description: string,
-        private readonly appleScript: string,
         private readonly image: Image,
+        public readonly invoke: () => Promise<void>,
         private readonly requiresConfirmation?: boolean,
     ) {}
+
+    public getId(): string {
+        return `SystemCommand[${Buffer.from(`${this.name}`).toString("hex")}]`;
+    }
 
     public toSearchResultItem(): SearchResultItem {
         return {
             defaultAction: {
-                argument: this.appleScript,
+                argument: this.getId(),
                 description: this.description,
-                handlerId: "MacOsSystemCommandActionHandler",
+                handlerId: "SystemCommandActionHandler",
                 requiresConfirmation: this.requiresConfirmation,
                 hideWindowAfterInvocation: true,
             },
             description: this.description,
-            id: `SystemCommand[${Buffer.from(`${this.name}${this.appleScript}`).toString("hex")}]`,
+            id: this.getId(),
             image: this.image,
             name: this.name,
         };

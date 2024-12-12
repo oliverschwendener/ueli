@@ -1,41 +1,95 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { SettingsManager } from "@Core/SettingsManager";
 import type { TerminalRegistry } from "@Core/Terminal";
+import type { Translator } from "@Core/Translator";
 import { describe, expect, it, vi } from "vitest";
 import { TerminalLauncherExtension } from "./TerminalLauncherExtension";
 
 describe(TerminalLauncherExtension, () => {
     describe(TerminalLauncherExtension.prototype.id, () =>
         it(`should be "TerminalLauncher"`, () =>
-            expect(new TerminalLauncherExtension(null, null, null, null, null).id).toBe("TerminalLauncher")),
+            expect(
+                new TerminalLauncherExtension(
+                    "Windows",
+                    <AssetPathResolver>{},
+                    <SettingsManager>{},
+                    <Translator>{},
+                    <TerminalRegistry>{},
+                ).id,
+            ).toBe("TerminalLauncher")),
     );
 
     describe(TerminalLauncherExtension.prototype.name, () =>
         it(`should be "Terminal Launcher"`, () =>
-            expect(new TerminalLauncherExtension(null, null, null, null, null).name).toBe("Terminal Launcher")),
+            expect(
+                new TerminalLauncherExtension(
+                    "Windows",
+                    <AssetPathResolver>{},
+                    <SettingsManager>{},
+                    <Translator>{},
+                    <TerminalRegistry>{},
+                ).name,
+            ).toBe("Terminal Launcher")),
     );
 
     describe("author", () =>
         it(`should be "Oliver Schwendener"`, () =>
-            expect(new TerminalLauncherExtension(null, null, null, null, null).author.name).toBe(
-                "Oliver Schwendener",
-            )));
+            expect(
+                new TerminalLauncherExtension(
+                    "Windows",
+                    <AssetPathResolver>{},
+                    <SettingsManager>{},
+                    <Translator>{},
+                    <TerminalRegistry>{},
+                ).author.name,
+            ).toBe("Oliver Schwendener")));
 
     describe(TerminalLauncherExtension.prototype.getSearchResultItems, () =>
         it("should return an empty array", async () =>
-            expect(await new TerminalLauncherExtension(null, null, null, null, null).getSearchResultItems()).toEqual(
-                [],
-            )),
+            expect(
+                await new TerminalLauncherExtension(
+                    "Windows",
+                    <AssetPathResolver>{},
+                    <SettingsManager>{},
+                    <Translator>{},
+                    <TerminalRegistry>{},
+                ).getSearchResultItems(),
+            ).toEqual([])),
     );
 
     describe(TerminalLauncherExtension.prototype.isSupported, () => {
         it("should return true for macOS", () =>
-            expect(new TerminalLauncherExtension("macOS", null, null, null, null).isSupported()).toBe(true));
+            expect(
+                new TerminalLauncherExtension(
+                    "macOS",
+                    <AssetPathResolver>{},
+                    <SettingsManager>{},
+                    <Translator>{},
+                    <TerminalRegistry>{},
+                ).isSupported(),
+            ).toBe(true));
 
         it("should return true for Windows", () =>
-            expect(new TerminalLauncherExtension("Windows", null, null, null, null).isSupported()).toBe(true));
+            expect(
+                new TerminalLauncherExtension(
+                    "Windows",
+                    <AssetPathResolver>{},
+                    <SettingsManager>{},
+                    <Translator>{},
+                    <TerminalRegistry>{},
+                ).isSupported(),
+            ).toBe(true));
 
         it("should return false for Linux", () =>
-            expect(new TerminalLauncherExtension("Linux", null, null, null, null).isSupported()).toBe(false));
+            expect(
+                new TerminalLauncherExtension(
+                    "Linux",
+                    <AssetPathResolver>{},
+                    <SettingsManager>{},
+                    <Translator>{},
+                    <TerminalRegistry>{},
+                ).isSupported(),
+            ).toBe(false));
     });
 
     describe(TerminalLauncherExtension.prototype.getSettingDefaultValue, () => {
@@ -49,19 +103,15 @@ describe(TerminalLauncherExtension, () => {
                 getById: vi.fn(),
             };
 
-            const extension = new TerminalLauncherExtension(null, null, null, null, terminalRegistry);
+            const extension = new TerminalLauncherExtension(
+                "Windows",
+                <AssetPathResolver>{},
+                <SettingsManager>{},
+                <Translator>{},
+                terminalRegistry,
+            );
 
-            expect(extension.getSettingDefaultValue<string[]>("terminalIds")).toEqual(["1", "3"]);
-        });
-
-        it("should return undefined when the key is not found", () => {
-            const terminalRegistry = <TerminalRegistry>{
-                getAll: vi.fn().mockReturnValue([]),
-                getById: vi.fn(),
-            };
-
-            const extension = new TerminalLauncherExtension(null, null, null, null, terminalRegistry);
-            expect(extension.getSettingDefaultValue<string[]>("something")).toBeUndefined();
+            expect(extension.getSettingDefaultValue("terminalIds")).toEqual(["1", "3"]);
         });
     });
 
@@ -72,7 +122,13 @@ describe(TerminalLauncherExtension, () => {
                 getModuleAssetPath: vi.fn().mockReturnValue("path/to/image"),
             };
 
-            const actual = new TerminalLauncherExtension(null, assetPathResolver, null, null, null).getImage();
+            const actual = new TerminalLauncherExtension(
+                "Windows",
+                assetPathResolver,
+                <SettingsManager>{},
+                <Translator>{},
+                <TerminalRegistry>{},
+            ).getImage();
 
             expect(actual).toEqual({ url: "file://path/to/image" });
 
@@ -83,7 +139,13 @@ describe(TerminalLauncherExtension, () => {
 
     describe(TerminalLauncherExtension.prototype.getI18nResources, () => {
         it("should return i18n resources for en-US and de-CH", () => {
-            const extension = new TerminalLauncherExtension(null, null, null, null, null);
+            const extension = new TerminalLauncherExtension(
+                "Windows",
+                <AssetPathResolver>{},
+                <SettingsManager>{},
+                <Translator>{},
+                <TerminalRegistry>{},
+            );
             expect(Object.keys(extension.getI18nResources())).toEqual(["en-US", "de-CH"]);
         });
     });

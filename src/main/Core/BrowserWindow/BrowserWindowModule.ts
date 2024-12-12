@@ -17,11 +17,9 @@ import {
     MacOsBrowserWindowConstructorOptionsProvider,
     VibrancyProvider,
     WindowsBrowserWindowConstructorOptionsProvider,
-    defaultWindowSize,
 } from "./BrowserWindowConstructorOptionsProvider";
 import { BrowserWindowCreator } from "./BrowserWindowCreator";
 import { BrowserWindowToggler } from "./BrowserWindowToggler";
-import { WindowBoundsMemory } from "./WindowBoundsMemory";
 import { sendToBrowserWindow } from "./sendToBrowserWindow";
 
 export class BrowserWindowModule {
@@ -35,8 +33,6 @@ export class BrowserWindowModule {
         const nativeTheme = dependencyRegistry.get("NativeTheme");
         const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
         const ipcMain = dependencyRegistry.get("IpcMain");
-
-        const windowBoundsMemory = new WindowBoundsMemory(dependencyRegistry.get("Screen"), {});
 
         const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, operatingSystem);
 
@@ -67,29 +63,21 @@ export class BrowserWindowModule {
 
         browserWindow.setVisibleOnAllWorkspaces(settingsManager.getValue("window.visibleOnAllWorkspaces", false));
 
-        const browserWindowToggler = new BrowserWindowToggler(
-            operatingSystem,
-            app,
-            browserWindow,
-            defaultWindowSize,
-            settingsManager,
-        );
+        const browserWindowToggler = new BrowserWindowToggler(operatingSystem, app, browserWindow);
 
         eventEmitter.emitEvent("browserWindowCreated", { browserWindow });
 
-        nativeTheme.addListener("updated", () => browserWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
+        nativeTheme.on("updated", () => browserWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
 
         BrowserWindowModule.registerBrowserWindowEventListeners(
             browserWindowToggler,
             browserWindow,
             dependencyRegistry.get("SettingsManager"),
-            windowBoundsMemory,
         );
 
         BrowserWindowModule.registerEvents(
             browserWindow,
             dependencyRegistry.get("EventSubscriber"),
-            windowBoundsMemory,
             vibrancyProvider,
             backgroundMaterialProvider,
             browserWindowToggler,
@@ -109,7 +97,6 @@ export class BrowserWindowModule {
         browserWindowToggler: BrowserWindowToggler,
         browserWindow: BrowserWindow,
         settingsManager: SettingsManager,
-        windowBoundsMemory: WindowBoundsMemory,
     ) {
         const shouldHideWindowOnBlur = () =>
             settingsManager
@@ -117,14 +104,11 @@ export class BrowserWindowModule {
                 .includes("blur");
 
         browserWindow.on("blur", () => shouldHideWindowOnBlur() && browserWindowToggler.hide());
-        browserWindow.on("moved", () => windowBoundsMemory.saveWindowBounds(browserWindow));
-        browserWindow.on("resized", () => windowBoundsMemory.saveWindowBounds(browserWindow));
     }
 
     private static registerEvents(
         browserWindow: BrowserWindow,
         eventSubscriber: EventSubscriber,
-        windowBoundsMemory: WindowBoundsMemory,
         vibrancyProvider: VibrancyProvider,
         backgroundMaterialProvider: BackgroundMaterialProvider,
         browserWindowToggler: BrowserWindowToggler,
@@ -143,15 +127,13 @@ export class BrowserWindowModule {
                 .getValue("window.hideWindowOn", BrowserWindowModule.DefaultHideWindowOnOptions)
                 .includes("escapePressed");
 
-        eventSubscriber.subscribe(
-            "actionInvoked",
-            ({ action }: { action: SearchResultItemAction }) =>
-                shouldHideWindowAfterInvocation(action) && browserWindowToggler.hide(),
-        );
+        eventSubscriber.subscribe("actionInvoked", ({ action }: { action: SearchResultItemAction }) => {
+            if (shouldHideWindowAfterInvocation(action)) {
+                browserWindowToggler.hide();
+            }
+        });
 
-        eventSubscriber.subscribe("hotkeyPressed", () =>
-            browserWindowToggler.toggle(windowBoundsMemory.getBoundsNearestToCursor()),
-        );
+        eventSubscriber.subscribe("hotkeyPressed", () => browserWindowToggler.toggle());
 
         eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
             sendToBrowserWindow(browserWindow, `settingUpdated[${key}]`, { value });
@@ -162,7 +144,11 @@ export class BrowserWindowModule {
         });
 
         eventSubscriber.subscribe("settingUpdated[window.backgroundMaterial]", () => {
-            browserWindow.setBackgroundMaterial(backgroundMaterialProvider.get());
+            const backgroundMaterial = backgroundMaterialProvider.get();
+
+            if (backgroundMaterial) {
+                browserWindow.setBackgroundMaterial(backgroundMaterial);
+            }
         });
 
         eventSubscriber.subscribe("settingUpdated[window.vibrancy]", () => {
@@ -193,9 +179,9 @@ export class BrowserWindowModule {
         const eventHandlers: { ueliCommands: UeliCommand[]; handler: (argument: unknown) => void }[] = [
             {
                 ueliCommands: ["openAbout", "openExtensions", "openSettings", "show"],
-                handler: ({ pathname }: { pathname: string }) => {
+                handler: (argument) => {
                     browserWindowToggler.showAndFocus();
-                    sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
+                    sendToBrowserWindow(browserWindow, "navigateTo", argument);
                 },
             },
             {
@@ -217,8 +203,12 @@ export class BrowserWindowModule {
         browserWindow: BrowserWindow,
         environmentVariableProvider: EnvironmentVariableProvider,
     ) {
-        await (environmentVariableProvider.get("VITE_DEV_SERVER_URL")
-            ? browserWindow.loadURL(environmentVariableProvider.get("VITE_DEV_SERVER_URL"))
-            : browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html")));
+        const viteDevServerUrl = environmentVariableProvider.get("VITE_DEV_SERVER_URL");
+
+        if (viteDevServerUrl) {
+            await browserWindow.loadURL(viteDevServerUrl);
+        } else {
+            await browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html"));
+        }
     }
 }

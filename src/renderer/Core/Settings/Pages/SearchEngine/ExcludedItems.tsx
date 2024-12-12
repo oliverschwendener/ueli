@@ -1,4 +1,4 @@
-import { useContextBridge, useSearchResultItems } from "@Core/Hooks";
+import { useSearchResultItems } from "@Core/Hooks";
 import { getImageUrl } from "@Core/getImageUrl";
 import { Badge, Button, Input, Text, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
@@ -6,23 +6,21 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const ExcludedItems = () => {
-    const ns = "settingsSearchEngine";
-    const { t } = useTranslation();
-    const { contextBridge } = useContextBridge();
+    const { t } = useTranslation("settingsSearchEngine");
     const { searchResultItems } = useSearchResultItems();
 
-    const [excludedIds, setExcludedIds] = useState<string[]>(contextBridge.getExcludedSearchResultItemIds());
+    const [excludedIds, setExcludedIds] = useState<string[]>(window.ContextBridge.getExcludedSearchResultItemIds());
 
     const removeExcludedSearchResultItem = async (id: string) => {
-        await contextBridge.removeExcludedSearchResultItem(id);
-        setExcludedIds(contextBridge.getExcludedSearchResultItemIds());
+        await window.ContextBridge.removeExcludedSearchResultItem(id);
+        setExcludedIds(window.ContextBridge.getExcludedSearchResultItemIds());
     };
 
     const excludedSearchResultItems = searchResultItems.filter((f) => excludedIds.includes(f.id));
 
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            {excludedSearchResultItems.length ? null : <Text italic>{t("noExcludedItems", { ns })}</Text>}
+            {excludedSearchResultItems.length ? null : <Text italic>{t("noExcludedItems")}</Text>}
             {excludedSearchResultItems.map(({ id, name, image, description }) => (
                 <Input
                     key={`excludedItem-${id}`}
@@ -34,7 +32,7 @@ export const ExcludedItems = () => {
                             style={{ width: 16, height: 16 }}
                             src={getImageUrl({
                                 image,
-                                shouldPreferDarkColors: contextBridge.themeShouldUseDarkColors(),
+                                shouldPreferDarkColors: window.ContextBridge.themeShouldUseDarkColors(),
                             })}
                         />
                     }
@@ -48,7 +46,7 @@ export const ExcludedItems = () => {
                                 appearance="subtle"
                                 onClick={() => removeExcludedSearchResultItem(id)}
                                 icon={
-                                    <Tooltip content={t("removeExcludedItem", { ns })} relationship="label" withArrow>
+                                    <Tooltip content={t("removeExcludedItem")} relationship="label" withArrow>
                                         <DismissRegular fontSize={14} />
                                     </Tooltip>
                                 }

@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "@common/Core";
+import type { InstantSearchResultItems, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
 
@@ -54,7 +54,7 @@ export interface Extension {
      * @param key The key of the setting, e.g. `"mySetting"`.
      * @returns The default value for the setting.
      */
-    getSettingDefaultValue<T>(key: string): T;
+    getSettingDefaultValue(key: string): unknown;
 
     /**
      * Gets the image for this Extension. This image is displayed in the settings.
@@ -74,7 +74,7 @@ export interface Extension {
      * possible. For heavier operations use `getSearchResultItems`.
      * @param searchTerm The current search term.
      */
-    getInstantSearchResultItems?(searchTerm: string): SearchResultItem[];
+    getInstantSearchResultItems?(searchTerm: string): InstantSearchResultItems;
 
     /**
      * If you have a custom UI for your extension you can call it via `contextBridge.invokeExtension(arg)` with any

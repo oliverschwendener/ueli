@@ -1,6 +1,8 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { OperatingSystem } from "@common/Core";
 import type { Terminal } from "@common/Core/Terminal";
+import type { Terminal as TerminalContract } from "./Contract";
 import { TerminalRegistry } from "./TerminalRegistry";
 import { CommandPrompt, Iterm, MacOsTerminal, Powershell, PowershellCore, Wsl } from "./Terminals";
 
@@ -9,7 +11,7 @@ export class TerminalModule {
         const ipcMain = dependencyRegistry.get("IpcMain");
         const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
 
-        const terminalRegistry = new TerminalRegistry(dependencyRegistry.get("OperatingSystem"), {
+        const terminals: Record<OperatingSystem, () => TerminalContract[]> = {
             Linux: () => [],
             macOS: () => [
                 new MacOsTerminal(dependencyRegistry.get("AppleScriptUtility")),
@@ -21,7 +23,9 @@ export class TerminalModule {
                 new PowershellCore(dependencyRegistry.get("CommandlineUtility")),
                 new Wsl(dependencyRegistry.get("CommandlineUtility")),
             ],
-        });
+        };
+
+        const terminalRegistry = new TerminalRegistry(terminals[dependencyRegistry.get("OperatingSystem")]());
 
         dependencyRegistry.register("TerminalRegistry", terminalRegistry);
 

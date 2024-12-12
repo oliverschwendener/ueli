@@ -1,7 +1,12 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import {
+    createCopyToClipboardAction,
+    createEmptyInstantSearchResult,
+    type InstantSearchResultItems,
+    type SearchResultItem,
+} from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import { Calculator } from "./Calculator";
@@ -37,33 +42,36 @@ export class CalculatorExtension implements Extension {
         private readonly settingsManager: SettingsManager,
     ) {}
 
-    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
+    public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
         const result = this.getResultForExpression(searchTerm);
 
         if (result === undefined) {
-            return [];
+            return createEmptyInstantSearchResult();
         }
 
-        return [
-            {
-                name: result,
-                description: "Calculator",
-                descriptionTranslation: {
-                    key: "calculatorResult",
-                    namespace: "extension[Calculator]",
-                },
-                id: "calculator:instantResult",
-                image: this.getImage(),
-                defaultAction: SearchResultItemActionUtility.createCopyToClipboardAction({
-                    textToCopy: result,
-                    description: "Copy result to clipboard",
+        return {
+            after: [
+                {
+                    name: result,
+                    description: "Calculator",
                     descriptionTranslation: {
-                        key: "copyResultToClipboard",
+                        key: "calculatorResult",
                         namespace: "extension[Calculator]",
                     },
-                }),
-            },
-        ];
+                    id: "calculator:instantResult",
+                    image: this.getImage(),
+                    defaultAction: createCopyToClipboardAction({
+                        textToCopy: result,
+                        description: "Copy result to clipboard",
+                        descriptionTranslation: {
+                            key: "copyResultToClipboard",
+                            namespace: "extension[Calculator]",
+                        },
+                    }),
+                },
+            ],
+            before: [],
+        };
     }
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -74,7 +82,7 @@ export class CalculatorExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
+    public getSettingDefaultValue(key: keyof Settings) {
         return this.defaultSettings[key];
     }
 
@@ -119,18 +127,10 @@ export class CalculatorExtension implements Extension {
             : undefined;
     }
 
-    private getSettingValue<T>(key: string): T {
+    private getSettingValue<T>(key: keyof Settings): T {
         return this.settingsManager.getValue<T>(
             getExtensionSettingKey(this.id, key),
-            this.getSettingDefaultValue<T>(key),
+            <T>this.getSettingDefaultValue(key),
         );
     }
-
-    // public invoke?(argument: unknown): Promise<unknown> {
-    //     throw new Error("Method not implemented.");
-    // }
-
-    // public getAssetFilePath?(key: string): string {
-    //     throw new Error("Method not implemented.");
-    // }
 }

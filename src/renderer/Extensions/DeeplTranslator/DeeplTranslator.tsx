@@ -5,6 +5,7 @@ import { useExtensionSetting } from "@Core/Hooks";
 import { getImageUrl } from "@Core/getImageUrl";
 import { Button, Text, Tooltip } from "@fluentui/react-components";
 import { ArrowLeftFilled, CopyRegular, PersonRegular } from "@fluentui/react-icons";
+import type { KeyboardEvent } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MissingApiKey } from "./MissingApiKey";
@@ -13,8 +14,7 @@ import { Translator } from "./Translator";
 export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
     const extensionId = "DeeplTranslator";
 
-    const { t } = useTranslation();
-    const ns = "extension[DeeplTranslator]";
+    const { t } = useTranslation("extension[DeeplTranslator]");
 
     const { value: apiKey, updateValue: setApiKey } = useExtensionSetting({
         extensionId,
@@ -26,6 +26,13 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
 
     const openDeeplWebsite = () => contextBridge.openExternal("https://www.deepl.com/signup?cta=free-login-signup");
     const openDeeplAccount = () => contextBridge.openExternal("https://www.deepl.com/account");
+
+    const handleKeyDownEvent = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            goBack();
+        }
+    };
 
     return (
         <BaseLayout
@@ -54,9 +61,9 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                             style={{ width: 24 }}
                         />
                         <div style={{ flexGrow: 1 }}>
-                            <Text weight="semibold">{t("extensionName", { ns })}</Text>
+                            <Text weight="semibold">{t("extensionName")}</Text>
                         </div>
-                        <Tooltip content={t("openAccount", { ns })} relationship="label" withArrow>
+                        <Tooltip content={t("openAccount")} relationship="label" withArrow>
                             <Button
                                 onClick={() => openDeeplAccount()}
                                 className="non-draggable-area"
@@ -102,6 +109,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                     </div>
                 ) : null
             }
+            onKeyDown={handleKeyDownEvent}
         />
     );
 };

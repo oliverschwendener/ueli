@@ -23,63 +23,95 @@ export class LinuxApplicationRepository implements ApplicationRepository {
     ) {}
 
     public async getApplications(): Promise<Application[]> {
-        const linuxFolders = this.settings.getValue<string[]>("linuxFolders");
-
-        const filePromises = linuxFolders.map(async (folderPath) => {
-            if (!this.fileSystemUtility.isDirectory(folderPath)) {
-                throw `${folderPath} doesn't exist or isn't a folder.`;
+        const folderPaths: string[] = [];
+        this.settings.getValue<string[]>("linuxFolders").forEach((folderPath) => {
+            if (this.fileSystemUtility.isDirectory(folderPath)) {
+                folderPaths.push(folderPath);
+            } else {
+                this.logger.warn(`${folderPath} is does not exist or is not a folder.`);
             }
-            return (await this.fileSystemUtility.readDirectory(folderPath)).filter(
-                (file) => extname(file) === ".desktop",
-            );
         });
 
-        const files = (await Promise.allSettled(filePromises))
-            .flatMap((result) => {
-                if (result.status === "rejected") {
-                    this.logger.warn(result.reason);
-                    return null;
-                }
-                return result.value;
-            })
-            .filter((value) => value);
+        const filePaths = await this.getApplicationFilePaths(folderPaths);
 
-        return (await Promise.allSettled(files.map((file) => this.generateLinuxApplication(file))))
-            .map((result, index) => {
-                if (result.status === "rejected") {
-                    this.logger.warn(`Unable to generate Application for ${files[index]}. Reason: ${result.reason}`);
-                    return null;
-                }
-                return result.value;
-            })
-            .filter((value) => value);
+        return await this.generateLinuxApplications(filePaths);
     }
 
-    private async generateLinuxApplication(filePath: string): Promise<LinuxApplication> {
+    private async getApplicationFilePaths(folderPaths: string[]): Promise<string[]> {
+        const readDirectoryPromiseResults = await Promise.allSettled(
+            folderPaths.map((folderPath) => this.fileSystemUtility.readDirectory(folderPath)),
+        );
+
+        const result: string[] = [];
+
+        for (const readDirectoryPromiseResult of readDirectoryPromiseResults) {
+            if (readDirectoryPromiseResult.status === "fulfilled") {
+                result.push(...readDirectoryPromiseResult.value.filter((filePath) => extname(filePath) === ".desktop"));
+            } else {
+                this.logger.error(readDirectoryPromiseResult.reason);
+            }
+        }
+
+        return result;
+    }
+
+    private async generateLinuxApplications(filePaths: string[]): Promise<LinuxApplication[]> {
+        const applicationPromiseResults = await Promise.allSettled(
+            filePaths.map((filePath) => this.generateLinuxApplication(filePath)),
+        );
+
+        const applications: LinuxApplication[] = [];
+
+        for (let i = 0; i < applicationPromiseResults.length; i++) {
+            const filePath = filePaths[i];
+            const promiseResult = applicationPromiseResults[i];
+
+            if (promiseResult.status === "fulfilled") {
+                if (promiseResult.value) {
+                    applications.push(promiseResult.value);
+                }
+            } else {
+                this.logger.error(`Unable to generate Application for ${filePath}. Reason: ${promiseResult.reason}`);
+            }
+        }
+
+        return applications;
+    }
+
+    private async generateLinuxApplication(filePath: string): Promise<LinuxApplication | undefined> {
         const config: Record<string, string> = this.iniParser.parseIniFileContent(
             (await this.fileSystemUtility.readFile(filePath)).toString(),
         )["Desktop Entry"];
-        // https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#recognized-keys
-        const desktopEnv = this.environmentVariableProvider.get("ORIGINAL_XDG_CURRENT_DESKTOP")?.split(":");
-        if (
-            !config ||
-            !config["Icon"] ||
-            config.NoDisplay ||
-            (config.OnlyShowIn !== undefined && !config.OnlyShowIn.split(";").some((i) => desktopEnv.includes(i))) ||
-            (config.NotShowIn !== undefined && config.NotShowIn.split(";").some((i) => desktopEnv.includes(i)))
-        ) {
-            return null;
+
+        if (!config) {
+            throw new Error(`Unable to parse .desktop at ${filePath}`);
         }
 
-        return new LinuxApplication(config["Name"], filePath, await this.getAppIcon(filePath));
+        const appName = config["Name"] ?? filePath;
+
+        // https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#recognized-keys
+        const desktopEnv = this.environmentVariableProvider.get("ORIGINAL_XDG_CURRENT_DESKTOP")?.split(":") ?? [];
+
+        if (
+            (config.NoDisplay && config.NoDisplay.toLowerCase() === "true") ||
+            (config.OnlyShowIn && !config.OnlyShowIn.split(";").some((i) => desktopEnv.includes(i))) ||
+            (config.NotShowIn && config.NotShowIn.split(";").some((i) => desktopEnv.includes(i)))
+        ) {
+            return undefined;
+        }
+
+        let appIcon = this.getDefaultAppIcon();
+
+        try {
+            appIcon = await this.fileImageGenerator.getImage(filePath);
+        } catch (error) {
+            this.logger.warn(`Using fallback icon for ${appName}. Reason: ${error}`);
+        }
+
+        return new LinuxApplication(appName, filePath, appIcon);
     }
 
-    private async getAppIcon(filePath: string): Promise<Image> {
-        try {
-            return await this.fileImageGenerator.getImage(filePath);
-        } catch (error) {
-            this.logger.error(`Failed to find icon for ${filePath}. Reason: ${error}. Falling back to generic icon`);
-        }
+    private getDefaultAppIcon(): Image {
         return {
             url: `file://${this.assetPathResolver.getExtensionAssetPath("ApplicationSearch", "linux-generic-app-icon.png")}`,
         };

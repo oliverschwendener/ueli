@@ -8,7 +8,7 @@ export interface XmlParser {
      * @param [options] - Optional settings for parsing.
      * @param options.preserveOrder - Whether to preserve the order of elements.
      * @param options.ignoreAttributes - Whether to ignore attributes in the XML.
-     * @returns {T} - The parsed result.
+     * @returns The parsed result.
      */
     parse<T>(xml: string, options?: { preserveOrder: boolean; ignoreAttributes: boolean }): T;
 }

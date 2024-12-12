@@ -6,7 +6,7 @@ import { OpenAsAdministrator } from "./OpenAsAdministrator";
 describe(OpenAsAdministrator, () => {
     describe(OpenAsAdministrator.prototype.id, () =>
         it("should be WindowsOpenAsAdministrator", () =>
-            expect(new OpenAsAdministrator(null).id).toBe("WindowsOpenAsAdministrator")),
+            expect(new OpenAsAdministrator(<PowershellUtility>{}).id).toBe("WindowsOpenAsAdministrator")),
     );
 
     describe(OpenAsAdministrator.prototype.invokeAction, () => {

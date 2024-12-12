@@ -1,13 +1,10 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
-import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { XmlParser } from "@Core/XmlParser";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
-import type { SearchEngineId } from "@common/Core/Search";
-import { searchFilter } from "@common/Core/Search/SearchFilter";
 import { homedir } from "os";
 import { basename, dirname, join, resolve } from "path";
 
@@ -51,38 +48,30 @@ export class JetBrainsToolboxExtension implements Extension {
         githubUserName: "scomans",
     };
 
-    readonly toolboxPaths = {
+    private readonly toolboxPaths = {
         Windows: process.env.LOCALAPPDATA + "/JetBrains/Toolbox/",
         macOS: process.env.HOME + "/Library/Application Support/JetBrains/Toolbox/",
         Linux: process.env.HOME + "/.local/share/JetBrains/Toolbox/",
     };
 
-    readonly configPaths = {
+    private readonly configPaths = {
         Windows: process.env.APPDATA + "/JetBrains/",
         macOS: process.env.HOME + "/Library/Application Support/JetBrains/",
         Linux: process.env.HOME + "/.config/JetBrains/",
     };
 
-    recents: SearchResultItem[] = [];
-
     public constructor(
         private readonly operatingSystem: OperatingSystem,
         private readonly assetPathResolver: AssetPathResolver,
-        private readonly settingsManager: SettingsManager,
         private readonly fileSystemUtility: FileSystemUtility,
         private readonly xmlParser: XmlParser,
         private readonly translator: Translator,
     ) {}
 
-    async getSearchResultItems(): Promise<SearchResultItem[]> {
+    public async getSearchResultItems(): Promise<SearchResultItem[]> {
         const recentPaths = await this.getRecents();
 
-        this.recents = await Promise.all(
-            recentPaths.map((recent) => {
-                return this.getSearchItem(recent);
-            }),
-        );
-        return [];
+        return await Promise.all(recentPaths.map((recent) => this.getSearchItem(recent)));
     }
 
     private replaceJetbrainsVars(path: string): string {
@@ -123,33 +112,44 @@ export class JetBrainsToolboxExtension implements Extension {
         );
 
         const projects: JetBrainsToolboxRecent[] = [];
+
         for (const projectPath of projectPaths) {
             const ideaPath = join(projectPath, ".idea");
+
             if (!(await this.fileSystemUtility.pathExists(ideaPath))) {
                 continue;
             }
-            let name: string;
-            const nameFileExists = await this.fileSystemUtility.pathExists(join(ideaPath, ".name"));
-            if (nameFileExists) {
-                name = await this.fileSystemUtility.readTextFile(join(ideaPath, ".name"));
-            } else {
-                let ideaFiles = await this.fileSystemUtility.readDirectory(ideaPath);
-                ideaFiles = ideaFiles.map((f) => basename(f));
-                name = ideaFiles.find((f) => f.endsWith(".iml"))?.replace(".iml", "");
+
+            const name = await this.getName(ideaPath);
+
+            if (!name) {
+                continue;
             }
-            const project = {
+
+            projects.push({
                 name,
                 path: projectPath,
                 toolName: tool.displayName,
                 toolCommand: join(tool.installLocation, tool.launchCommand),
                 toolIconPath: join(dirname(productInfoPath), productInfo.svgIconPath),
                 projectIconPath: join(ideaPath, "icon.svg"),
-            };
-            if (project.name) {
-                projects.push(project);
-            }
+            });
         }
+
         return projects;
+    }
+
+    private async getName(ideaPath: string): Promise<string | undefined> {
+        const nameFileExists = await this.fileSystemUtility.pathExists(join(ideaPath, ".name"));
+
+        if (nameFileExists) {
+            return await this.fileSystemUtility.readTextFile(join(ideaPath, ".name"));
+        }
+
+        return (await this.fileSystemUtility.readDirectory(ideaPath))
+            .map((f) => basename(f))
+            .find((f) => f.endsWith(".iml"))
+            ?.replace(".iml", "");
     }
 
     private async getRecents(): Promise<JetBrainsToolboxRecent[]> {
@@ -166,7 +166,7 @@ export class JetBrainsToolboxExtension implements Extension {
         return recents;
     }
 
-    async getSearchItem(recent: JetBrainsToolboxRecent): Promise<SearchResultItem> {
+    private async getSearchItem(recent: JetBrainsToolboxRecent): Promise<SearchResultItem> {
         const { t } = this.translator.createT(this.getI18nResources());
         const img = await this.getProjectImage(recent);
         const path = recent.path;
@@ -190,8 +190,8 @@ export class JetBrainsToolboxExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(): T {
-        return undefined as T;
+    public getSettingDefaultValue() {
+        return undefined;
     }
 
     public getImage(): Image {
@@ -233,25 +233,5 @@ export class JetBrainsToolboxExtension implements Extension {
                 openWith: "{{project}} mit {{toolName}} öffnen",
             },
         };
-    }
-
-    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
-        if (searchTerm && searchTerm === "") {
-            return this.recents;
-        }
-
-        const fuzziness = this.settingsManager.getValue<number>("searchEngine.fuzziness", 0.5);
-        const maxSearchResultItems = this.settingsManager.getValue<number>("searchEngine.maxResultLength", 50);
-        const searchEngineId = this.settingsManager.getValue<SearchEngineId>("searchEngine.id", "Fuse.js");
-
-        return searchFilter(
-            {
-                searchResultItems: this.recents,
-                searchTerm,
-                fuzziness,
-                maxSearchResultItems,
-            },
-            searchEngineId,
-        );
     }
 }

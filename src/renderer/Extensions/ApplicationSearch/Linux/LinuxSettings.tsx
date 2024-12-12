@@ -1,4 +1,4 @@
-import { useContextBridge, useExtensionSetting } from "@Core/Hooks";
+import { useExtensionSetting } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { Button, Input, Tooltip } from "@fluentui/react-components";
@@ -6,8 +6,6 @@ import { AddRegular, DismissRegular, FolderRegular } from "@fluentui/react-icons
 import { useState } from "react";
 
 export const LinuxSettings = () => {
-    const { contextBridge } = useContextBridge();
-
     const extensionId = "ApplicationSearch";
 
     const [newFolder, setNewFolder] = useState<string>("");
@@ -29,7 +27,7 @@ export const LinuxSettings = () => {
     };
 
     const chooseFolder = async () => {
-        const result = await contextBridge.showOpenDialog({ properties: ["openDirectory"] });
+        const result = await window.ContextBridge.showOpenDialog({ properties: ["openDirectory"] });
         if (!result.canceled && result.filePaths.length) {
             setNewFolder(result.filePaths[0]);
         }

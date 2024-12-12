@@ -10,6 +10,7 @@ export class VSCodeModule implements ExtensionModule {
             extension: new VSCodeExtension(
                 dependencyRegistry.get("OperatingSystem"),
                 dependencyRegistry.get("AssetPathResolver"),
+                dependencyRegistry.get("Logger"),
                 dependencyRegistry.get("SettingsManager"),
                 dependencyRegistry.get("FileImageGenerator"),
             ),

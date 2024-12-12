@@ -1,16 +1,17 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { SearchResultItemActionUtility, type SearchResultItem } from "@common/Core";
+import {
+    createEmptyInstantSearchResult,
+    createInvokeExtensionAction,
+    createOpenUrlSearchResultAction,
+    type InstantSearchResultItems,
+    type SearchResultItem,
+} from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
+import type { Settings } from "./Settings";
 import type { WebSearchEngine } from "./WebSearchEngine";
-
-type Settings = {
-    searchEngine: string;
-    locale: string;
-    showInstantSearchResult: boolean;
-};
 
 export class WebSearchExtension implements Extension {
     public readonly id = "WebSearch";
@@ -38,7 +39,7 @@ export class WebSearchExtension implements Extension {
         private readonly webSearchEngines: WebSearchEngine[],
     ) {}
 
-    public getInstantSearchResultItems(searchTerm: string): SearchResultItem[] {
+    public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
         const showInstantSearchResult = this.settingsManager.getValue(
             getExtensionSettingKey(this.id, "showInstantSearchResult"),
             this.getSettingDefaultValue("showInstantSearchResult"),
@@ -47,15 +48,18 @@ export class WebSearchExtension implements Extension {
         if (searchTerm.trim().length && showInstantSearchResult) {
             const locale = this.settingsManager.getValue<string>(
                 getExtensionSettingKey(this.id, "locale"),
-                this.getSettingDefaultValue("locale"),
+                <string>this.getSettingDefaultValue("locale"),
             );
 
             const webSearchEngine = this.getCurrentWebSearchEngine();
 
-            return [this.getInstantSearchResultItem(searchTerm, locale, webSearchEngine)];
+            return {
+                after: [this.getInstantSearchResultItem(searchTerm, locale, webSearchEngine)],
+                before: [],
+            };
         }
 
-        return [];
+        return createEmptyInstantSearchResult();
     }
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -64,7 +68,7 @@ export class WebSearchExtension implements Extension {
         return [
             {
                 id: "webSearch:invoke",
-                defaultAction: SearchResultItemActionUtility.createInvokeExtensionAction({
+                defaultAction: createInvokeExtensionAction({
                     description: `Search ${webSearchEngine.getName()}`,
                     extensionId: this.id,
                 }),
@@ -79,14 +83,14 @@ export class WebSearchExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(key: string): T {
+    public getSettingDefaultValue(key: keyof Settings) {
         return this.defaultSettings[key];
     }
 
     public async invoke({ searchTerm }: { searchTerm: string }): Promise<SearchResultItem[]> {
         const locale = this.settingsManager.getValue<string>(
             getExtensionSettingKey(this.id, "locale"),
-            this.getSettingDefaultValue("locale"),
+            <string>this.getSettingDefaultValue("locale"),
         );
 
         const webSearchEngine = this.getCurrentWebSearchEngine();
@@ -98,7 +102,7 @@ export class WebSearchExtension implements Extension {
             ...suggestions.map(
                 (s, i) =>
                     <SearchResultItem>{
-                        defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({ url: s.url }),
+                        defaultAction: createOpenUrlSearchResultAction({ url: s.url }),
                         description: "Suggestion",
                         id: `suggestion-${i}`,
                         name: s.text,
@@ -148,7 +152,7 @@ export class WebSearchExtension implements Extension {
         webSearchEngine: WebSearchEngine,
     ): SearchResultItem {
         return {
-            defaultAction: SearchResultItemActionUtility.createOpenUrlSearchResultAction({
+            defaultAction: createOpenUrlSearchResultAction({
                 url: webSearchEngine.getSearchUrl(searchTerm, locale),
             }),
             description: webSearchEngine.getName(),
@@ -161,7 +165,7 @@ export class WebSearchExtension implements Extension {
     private getCurrentWebSearchEngine(): WebSearchEngine {
         const searchEngine = this.settingsManager.getValue<string>(
             getExtensionSettingKey(this.id, "searchEngine"),
-            this.getSettingDefaultValue("searchEngine"),
+            <string>this.getSettingDefaultValue("searchEngine"),
         );
 
         return this.getWebSearchEngineByName(searchEngine);

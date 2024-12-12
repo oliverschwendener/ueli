@@ -1,1 +1,10 @@
-export type UeliCommand = "show" | "openSettings" | "openExtensions" | "quit" | "openAbout" | "centerWindow";
+export type UeliCommand =
+    | "centerWindow"
+    | "disableHotkey"
+    | "enableHotkey"
+    | "openAbout"
+    | "openExtensions"
+    | "openSettings"
+    | "quit"
+    | "rescanExtensions"
+    | "show";

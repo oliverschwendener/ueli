@@ -1,3 +1,4 @@
+import type { SettingsManager } from "@Core/SettingsManager";
 import type { App } from "electron";
 import type { EventEmitter } from "../EventEmitter";
 import type {
@@ -10,10 +11,13 @@ export class UeliCommandInvoker implements UeliCommandInvokerInterface {
     public constructor(
         private readonly app: App,
         private readonly eventEmitter: EventEmitter,
+        private readonly settingsManager: SettingsManager,
     ) {}
 
     public invokeUeliCommand(ueliCommand: UeliCommand): Promise<void> {
         const map: Record<UeliCommand, () => Promise<void>> = {
+            disableHotkey: async () => await this.settingsManager.updateValue("general.hotkey.enabled", false),
+            enableHotkey: async () => await this.settingsManager.updateValue("general.hotkey.enabled", true),
             openExtensions: async () =>
                 this.emitUeliCommandInvokedEvent({
                     ueliCommand: "openExtensions",
@@ -40,7 +44,16 @@ export class UeliCommandInvoker implements UeliCommandInvokerInterface {
                     ueliCommand: "centerWindow",
                     argument: {},
                 }),
+            rescanExtensions: () =>
+                this.emitUeliCommandInvokedEvent({
+                    ueliCommand: "rescanExtensions",
+                    argument: null,
+                }),
         };
+
+        if (!Object.keys(map).includes(ueliCommand)) {
+            throw new Error(`Invalid ueli command: ${ueliCommand}`);
+        }
 
         return map[ueliCommand]();
     }

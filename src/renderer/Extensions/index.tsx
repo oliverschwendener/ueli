@@ -6,10 +6,12 @@ import { BrowserBookmarksSettings } from "./BrowserBookmarks";
 import { CalculatorSettings } from "./Calculator";
 import { ColorConverterSettings } from "./ColorConverter";
 import { CurrencyConversionSettings } from "./CurrencyConversion";
+import { CustomWebSearchSettings } from "./CustomWebSearch";
 import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
 import { FileSearch, FileSearchSettings } from "./FileSearch";
 import { SimpleFileSearchSettings } from "./SimpleFileSearch";
 import { TerminalLauncherSettings } from "./TerminalLauncher";
+import { UuidGenerator, UuidGeneratorSettings } from "./UuidGenerator";
 import { VSCodeSettings } from "./VSCode";
 import { WebSearchExtension } from "./WebSearch";
 import { WebSearchSettings } from "./WebSearch/WebSearchSettings";
@@ -46,6 +48,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         CurrencyConversion: {
             settings: <CurrencyConversionSettings />,
         },
+        CustomWebSearch: {
+            settings: <CustomWebSearchSettings />,
+        },
         DeeplTranslator: {
             extension: <DeeplTranslator {...props} />,
             settings: <DeeplTranslatorSettings />,
@@ -59,6 +64,10 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         },
         TerminalLauncher: {
             settings: <TerminalLauncherSettings />,
+        },
+        UuidGenerator: {
+            extension: <UuidGenerator {...props} />,
+            settings: <UuidGeneratorSettings />,
         },
         VSCode: {
             settings: <VSCodeSettings />,

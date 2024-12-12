@@ -1,4 +1,4 @@
-import { useContextBridge } from "@Core/Hooks";
+import type { KeyboardEvent } from "react";
 import { Route, Routes, useNavigate } from "react-router";
 import { ExtensionSettings } from "./ExtensionSettings";
 import { Navigation } from "./Navigation";
@@ -6,12 +6,22 @@ import { settingsPages } from "./Pages";
 import { SettingsHeader } from "./SettingsHeader";
 
 export const Settings = () => {
-    const { contextBridge } = useContextBridge();
     const navigate = useNavigate();
     const closeSettings = () => navigate({ pathname: "/" });
 
+    const handleKeyDownEvent = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            closeSettings();
+        }
+    };
+
     return (
-        <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+        <div
+            style={{ display: "flex", flexDirection: "column", height: "100%" }}
+            onKeyDown={handleKeyDownEvent}
+            tabIndex={-1}
+        >
             <div style={{ flexShrink: 0 }}>
                 <SettingsHeader onCloseSettingsClicked={closeSettings} />
             </div>
@@ -41,7 +51,7 @@ export const Settings = () => {
                     >
                         <Navigation
                             settingsPages={settingsPages}
-                            enabledExtensions={contextBridge.getEnabledExtensions()}
+                            enabledExtensions={window.ContextBridge.getEnabledExtensions()}
                         />
                     </div>
                 </div>

@@ -3,7 +3,7 @@ import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { Image } from "@common/Core/Image";
-import { dirname, normalize, parse } from "path";
+import { dirname, parse } from "path";
 import type { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
 import type { Settings } from "../Settings";
@@ -34,13 +34,27 @@ export class MacOsApplicationRepository implements ApplicationRepository {
     }
 
     private async getAllFilePaths(): Promise<string[]> {
-        return (await this.commandlineUtility.executeCommand(`mdfind "kMDItemKind == 'Application'"`))
+        return (await this.commandlineUtility.executeCommand(`mdfind "${this.getMdFindFilterOption()}"`))
             .split("\n")
-            .map((filePath) => normalize(filePath).trim())
+            .map((filePath) => filePath.trim())
             .filter((filePath) => filePath.endsWith(".app"))
             .filter((filePath) => this.filterFilePathByConfiguredFolders(filePath))
             .filter((filePath) => this.filterSubApps(filePath))
             .filter((filePath) => ![".", ".."].includes(filePath));
+    }
+
+    private getMdFindFilterOption() {
+        const filterOptions: Record<string, string> = {
+            "kind:application": "kind:application",
+            "kMDItemKind=='Application'": "kMDItemKind == 'Application'",
+            "kMDItemContentType=='com.apple.application-bundle'":
+                "kMDItemContentType == 'com.apple.application-bundle'",
+        };
+
+        return (
+            filterOptions[this.settings.getValue<string>("mdfindFilterOption")] ??
+            filterOptions[<string>this.settings.getDefaultValue("mdfindFilterOption")]
+        );
     }
 
     private filterFilePathByConfiguredFolders(filePath: string): boolean {

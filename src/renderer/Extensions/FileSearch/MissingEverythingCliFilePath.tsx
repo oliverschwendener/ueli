@@ -3,6 +3,7 @@ import type { ExtensionProps } from "@Core/ExtensionProps";
 import { Header } from "@Core/Header";
 import { Button, Field, Input, Text } from "@fluentui/react-components";
 import { ArrowLeftRegular } from "@fluentui/react-icons";
+import type { KeyboardEvent } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -11,18 +12,24 @@ export const MissingEverythingCliFilePath = ({
     goBack,
     setEsFilePath,
 }: ExtensionProps & { setEsFilePath: (esFilePath: string) => void }) => {
-    const { t } = useTranslation();
-    const ns = "extension[FileSearch]";
+    const { t } = useTranslation("extension[FileSearch]");
 
     const [temporaryEsFilePath, setTemporaryEsCliFilePath] = useState<string>("");
 
     const temporaryEsFilePathExists = contextBridge.fileExists(temporaryEsFilePath);
 
+    const handleKeyDownEvent = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            goBack();
+        }
+    };
+
     return (
         <BaseLayout
             header={
                 <Header
-                    children={<Text>{t("extensionName", { ns })}</Text>}
+                    children={<Text>{t("extensionName")}</Text>}
                     contentBefore={
                         <Button size="small" appearance="subtle" onClick={() => goBack()} icon={<ArrowLeftRegular />} />
                     }
@@ -40,8 +47,8 @@ export const MissingEverythingCliFilePath = ({
                     }}
                 >
                     <Field
-                        label={t("esFilePath", { ns })}
-                        validationMessage={temporaryEsFilePathExists ? undefined : t("fileDoesNotExist", { ns })}
+                        label={t("esFilePath")}
+                        validationMessage={temporaryEsFilePathExists ? undefined : t("fileDoesNotExist")}
                         validationState={temporaryEsFilePathExists ? "success" : "error"}
                     >
                         <Input
@@ -55,6 +62,7 @@ export const MissingEverythingCliFilePath = ({
                     </Button>
                 </div>
             }
+            onKeyDown={handleKeyDownEvent}
         />
     );
 };

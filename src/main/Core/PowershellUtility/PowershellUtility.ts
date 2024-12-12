@@ -5,7 +5,7 @@ import { join } from "path";
 import type { PowershellUtility as PowershellUtilityInterface } from "./Contract";
 
 export class PowershellUtility implements PowershellUtilityInterface {
-    static PowershellPath = `C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
+    public static PowershellPath = `C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
 
     private readonly byteOrderMark: string = "\ufeff";
 
@@ -16,28 +16,25 @@ export class PowershellUtility implements PowershellUtilityInterface {
         private readonly randomStringProvider: RandomStringProvider,
     ) {}
 
-    public async executeCommand(command: string): Promise<string> {
-        return this.commandlineUtility.executeCommand(`${PowershellUtility.PowershellPath} -Command "& {${command}}"`);
+    public async executeCommand(command: string, options?: { maxBuffer: number }): Promise<string> {
+        return await this.commandlineUtility.executeCommand(
+            `${PowershellUtility.PowershellPath} -Command "& {${command}}"`,
+            options,
+        );
     }
 
-    public async executeScript(script: string): Promise<string> {
-        const filePath = this.getTemporaryPowershellFilePath();
+    public async executeScript(script: string, options?: { maxBuffer: number }): Promise<string> {
+        const filePath = join(this.temporaryDirectoryFilePath, `${this.randomStringProvider.getRandomUUid()}.ps1`);
 
         await this.fileSystemUtility.writeTextFile(`${this.byteOrderMark}${script}`, filePath);
 
-        const powershellCommand = `${PowershellUtility.PowershellPath} -NoProfile -NonInteractive -ExecutionPolicy bypass -File "${filePath}"`;
-        const stdout = await this.commandlineUtility.executeCommand(powershellCommand);
+        const stdout = await this.commandlineUtility.executeCommand(
+            `${PowershellUtility.PowershellPath} -NoProfile -NonInteractive -ExecutionPolicy bypass -File "${filePath}"`,
+            options,
+        );
 
         await this.fileSystemUtility.removeFile(filePath);
 
         return stdout;
-    }
-
-    private getTemporaryPowershellFilePath(): string {
-        return join(this.temporaryDirectoryFilePath, this.getRandomFileName());
-    }
-
-    private getRandomFileName(): string {
-        return `${this.randomStringProvider.getRandomUUid()}.ps1`;
     }
 }

@@ -1,11 +1,9 @@
-import { useContextBridge } from "@Core/Hooks";
 import type { OpenTerminalActionArgs } from "@common/Extensions/Workflow";
 import { Dropdown, Field, Input, Option } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 import type { NewActionTypeProps } from "./NewActionTypeProps";
 
 export const NewActionOpenTerminal = ({ args, setArgs }: NewActionTypeProps) => {
-    const { contextBridge } = useContextBridge();
     const { t } = useTranslation("extension[Workflow]");
 
     const { terminalId, command } = args as OpenTerminalActionArgs;
@@ -14,7 +12,7 @@ export const NewActionOpenTerminal = ({ args, setArgs }: NewActionTypeProps) => 
 
     const setCommand = (newCommand: string) => setArgs({ terminalId, command: newCommand });
 
-    const defaultTerminalId = contextBridge.getAvailableTerminals()[0]?.id;
+    const defaultTerminalId = window.ContextBridge.getAvailableTerminals()[0]?.id;
 
     return (
         <>
@@ -27,7 +25,7 @@ export const NewActionOpenTerminal = ({ args, setArgs }: NewActionTypeProps) => 
                     disabled={!terminalId}
                     size="small"
                 >
-                    {contextBridge.getAvailableTerminals().map(({ id, name, assetFilePath }) => (
+                    {window.ContextBridge.getAvailableTerminals().map(({ id, name, assetFilePath }) => (
                         <Option key={id} value={id} text={name}>
                             <img src={`file://${assetFilePath}`} alt={name} width={16} />
                             <span>{name}</span>

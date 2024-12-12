@@ -31,14 +31,14 @@ type IconTheme = {
 };
 
 export class LinuxAppIconExtractor implements FileIconExtractor {
-    private searchCache: Map<string, IconTheme[]>;
-    private userTheme: string;
+    private searchCache: Map<string, IconTheme[]> = new Map();
+    private userTheme: string = "";
     private readonly baseDirectories: string[];
     private readonly folderPaths: Record<string, string>;
 
     // The icon extractor needs to be asynchronously initialized, await isReady before performing any icon searches
     private readonly isReady: Promise<boolean>;
-    private finishedInit: (value: boolean) => void;
+    private finishedInit: (value: boolean) => void = () => null;
 
     public constructor(
         private readonly fileSystemUtility: FileSystemUtility,
@@ -170,6 +170,11 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
         try {
             this.searchCache = new Map();
             this.userTheme = await this.getIconThemeName();
+
+            if (!this.userTheme) {
+                throw new Error("Could not determine user's icon theme.");
+            }
+
             let validThemeDirectories = await this.getExistingThemeDirectories(this.userTheme, this.baseDirectories);
 
             for (let i = 0; i < validThemeDirectories.length; i++) {
@@ -193,7 +198,12 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
                 if (!this.searchCache.has(themeName)) {
                     this.searchCache.set(themeName, []);
                 }
-                this.searchCache.get(themeName).push(themeData);
+
+                const cacheItem = this.searchCache.get(themeName);
+
+                if (cacheItem) {
+                    cacheItem.push(themeData);
+                }
             }
 
             this.finishedInit(true);
@@ -211,7 +221,16 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
                     : undefined,
             ),
         );
-        return promiseResults.map((v) => (v.status === "fulfilled" ? v.value : undefined)).filter((v) => v); // Filters out all undefined values
+
+        const result: string[] = [];
+
+        for (const promiseResult of promiseResults) {
+            if (promiseResult.status === "fulfilled" && promiseResult.value) {
+                result.push(promiseResult.value);
+            }
+        }
+
+        return result;
     }
 
     // https://specifications.freedesktop.org/icon-theme-spec/latest/ar01s04.html
@@ -287,7 +306,19 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
                 this.commandlineUtility.executeCommand("gsettings get org.gnome.desktop.interface icon-theme"),
         };
 
-        const iconThemeName = (await iconThemeNameMap[this.linuxDesktopEnvironmentResolver.resolve()]()).trim();
+        const desktopEnvironment = this.linuxDesktopEnvironmentResolver.resolve();
+
+        if (!desktopEnvironment) {
+            return "";
+        }
+
+        const handler = iconThemeNameMap[desktopEnvironment];
+
+        if (!handler) {
+            return "";
+        }
+
+        const iconThemeName = (await handler()).trim();
 
         return iconThemeName.startsWith("'") && iconThemeName.endsWith("'")
             ? iconThemeName.slice(1, -1)
@@ -295,7 +326,7 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
     }
 
     // https://specifications.freedesktop.org/icon-theme-spec/latest/ar01s05.html
-    private findIcon(icon: string, size: number, scale: number, theme: string): string {
+    private findIcon(icon: string, size: number, scale: number, theme: string): string | undefined {
         let fileName = this.findIconHelper(icon, size, scale, theme);
 
         if (fileName) {
@@ -311,7 +342,7 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
         return this.lookupFallbackIcon(icon);
     }
 
-    private findIconHelper(icon: string, size: number, scale: number, theme: string): string {
+    private findIconHelper(icon: string, size: number, scale: number, theme: string): string | undefined {
         if (!this.searchCache.has(theme)) {
             return undefined;
         }
@@ -322,7 +353,7 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
             return fileName;
         }
 
-        for (const themeIndex of this.searchCache.get(theme)) {
+        for (const themeIndex of this.searchCache.get(theme) ?? []) {
             if (themeIndex.parents) {
                 for (const parent of themeIndex.parents) {
                     fileName = this.findIconHelper(icon, size, scale, parent);
@@ -337,14 +368,12 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
         return undefined;
     }
 
-    private lookupIcon(iconName: string, size: number, scale: number, theme: string): string {
-        for (const themeIndex of this.searchCache.get(theme)) {
+    private lookupIcon(iconName: string, size: number, scale: number, theme: string): string | undefined {
+        for (const themeIndex of this.searchCache.get(theme) ?? []) {
             for (const subdir of themeIndex.subdirectories) {
                 for (const extension of ["png", "svg", "xpm"]) {
-                    if (
-                        themeIndex.subdirData.has(subdir) &&
-                        this.directoryMatchesSize(themeIndex.subdirData.get(subdir), size, scale)
-                    ) {
+                    const iconThemeSubDir = themeIndex.subdirData.get(subdir);
+                    if (iconThemeSubDir && this.directoryMatchesSize(iconThemeSubDir, size, scale)) {
                         const filename = `${join(themeIndex.path, subdir, iconName)}.${extension}`;
 
                         if (this.fileSystemUtility.existsSync(filename)) {
@@ -355,17 +384,19 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
             }
         }
         let minimalSize = Number.MAX_SAFE_INTEGER;
-        let closestFilename: string;
+        let closestFilename: string | undefined;
 
-        for (const themeIndex of this.searchCache.get(theme)) {
+        for (const themeIndex of this.searchCache.get(theme) ?? []) {
             for (const subdir of themeIndex.subdirectories) {
                 for (const extension of ["png", "svg", "xpm"]) {
-                    if (!themeIndex.subdirData.has(subdir)) {
+                    const iconThemeSubDir = themeIndex.subdirData.get(subdir);
+
+                    if (!iconThemeSubDir) {
                         continue;
                     }
 
                     const filename = `${join(themeIndex.path, subdir, iconName)}.${extension}`;
-                    const dist = this.directorySizeDistance(themeIndex.subdirData.get(subdir), size, scale);
+                    const dist = this.directorySizeDistance(iconThemeSubDir, size, scale);
 
                     if (this.fileSystemUtility.existsSync(filename) && dist < minimalSize) {
                         closestFilename = filename;
@@ -378,7 +409,7 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
         return closestFilename;
     }
 
-    private lookupFallbackIcon(iconName: string): string {
+    private lookupFallbackIcon(iconName: string): string | undefined {
         for (const directory of this.baseDirectories) {
             for (const extension of ["png", "svg", "xpm"]) {
                 const fileName = `${join(directory, iconName)}.${extension}`;
@@ -428,6 +459,8 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
 
             return 0;
         }
+
+        return 0;
     }
 
     private directoryMatchesSize(subdir: IconThemeSubdir, iconSize: number, iconScale: number): boolean {
@@ -446,5 +479,7 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
         if (subdir.Type === "Threshold") {
             return subdir.Size - subdir.Threshold <= iconSize && iconSize <= subdir.Size + subdir.Threshold;
         }
+
+        return false;
     }
 }

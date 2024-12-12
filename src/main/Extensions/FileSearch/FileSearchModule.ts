@@ -5,13 +5,14 @@ import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { FileSearch } from "./FileSearch";
 import type { FileSearcher } from "./FileSearcher";
+import { LinuxFileSearcher } from "./Linux/LinuxFileSearcher";
 import { EverythingFileSearcher } from "./Windows/EverythingFileSearcher";
 import { MdfindFileSearcher } from "./macOS/MdfindFileSearcher";
 
 export class FileSearchModule implements ExtensionModule {
     public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
         const fileSearchers: Record<OperatingSystem, FileSearcher> = {
-            Linux: null, // not supported
+            Linux: new LinuxFileSearcher(),
             macOS: new MdfindFileSearcher(dependencyRegistry.get("CommandlineUtility")),
             Windows: new EverythingFileSearcher(
                 dependencyRegistry.get("CommandlineUtility"),

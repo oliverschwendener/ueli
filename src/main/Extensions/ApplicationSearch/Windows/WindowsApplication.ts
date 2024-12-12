@@ -1,5 +1,9 @@
-import type { SearchResultItem } from "@common/Core";
-import { SearchResultItemActionUtility } from "@common/Core";
+import {
+    createCopyToClipboardAction,
+    createOpenFileAction,
+    createShowItemInFileExplorerAction,
+    type SearchResultItem,
+} from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { Application } from "../Application";
 
@@ -20,7 +24,7 @@ export class WindowsApplication implements Application {
             id: this.getId(),
             name: this.name,
             image: this.image,
-            defaultAction: SearchResultItemActionUtility.createOpenFileAction({
+            defaultAction: createOpenFileAction({
                 filePath: this.filePath,
                 description: "Open application",
                 descriptionTranslation: {
@@ -40,8 +44,8 @@ export class WindowsApplication implements Application {
                     hideWindowAfterInvocation: true,
                     handlerId: "WindowsOpenAsAdministrator",
                 },
-                SearchResultItemActionUtility.createShowItemInFileExplorerAction({ filePath: this.filePath }),
-                SearchResultItemActionUtility.createCopyToClipboardAction({
+                createShowItemInFileExplorerAction({ filePath: this.filePath }),
+                createCopyToClipboardAction({
                     textToCopy: this.filePath,
                     description: "Copy file path to clipboard",
                     descriptionTranslation: {

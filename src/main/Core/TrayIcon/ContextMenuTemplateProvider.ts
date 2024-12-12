@@ -1,3 +1,4 @@
+import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { UeliCommandInvoker } from "@Core/UeliCommand";
 import type { Resources } from "@common/Core/Translator";
@@ -8,11 +9,14 @@ export class ContextMenuTemplateProvider {
     public constructor(
         private readonly translator: Translator,
         private readonly ueliCommandInvoker: UeliCommandInvoker,
+        private readonly settingsManager: SettingsManager,
         private readonly resources: Resources<TrayIconTranslations>,
     ) {}
 
     public async get(): Promise<MenuItemConstructorOptions[]> {
         const { t } = this.translator.createT(this.resources);
+
+        const hotkeyEnabled = this.settingsManager.getValue("general.hotkey.enabled", true);
 
         return [
             {
@@ -30,6 +34,16 @@ export class ContextMenuTemplateProvider {
             {
                 label: t("trayIcon.contextMenu.quit"),
                 click: () => this.ueliCommandInvoker.invokeUeliCommand("quit"),
+            },
+            {
+                label: t("trayIcon.contextMenu.hotkey"),
+                checked: hotkeyEnabled,
+                type: "checkbox",
+                toolTip: t("trayIcon.contextMenu.hotkey.tooltip"),
+                click: () =>
+                    hotkeyEnabled
+                        ? this.ueliCommandInvoker.invokeUeliCommand("disableHotkey")
+                        : this.ueliCommandInvoker.invokeUeliCommand("enableHotkey"),
             },
         ];
     }

@@ -9,7 +9,6 @@ import {
     DialogTitle,
 } from "@fluentui/react-components";
 import { t } from "i18next";
-import { useContextBridge } from "../Hooks";
 
 type ConfirmationDialogProps = {
     action?: SearchResultItemAction;
@@ -17,19 +16,18 @@ type ConfirmationDialogProps = {
 };
 
 export const ConfirmationDialog = ({ action, closeDialog }: ConfirmationDialogProps) => {
-    const { contextBridge } = useContextBridge();
-
     const invokeAction = async () => {
         if (action) {
             closeDialog();
-            await contextBridge.invokeAction(action);
+            await window.ContextBridge.invokeAction(action);
         }
     };
 
     return (
         <Dialog
             open={action !== undefined}
-            onOpenChange={(_, { open }) => {
+            onOpenChange={(event, { open }) => {
+                event.stopPropagation();
                 if (open === false) {
                     closeDialog();
                 }

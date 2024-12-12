@@ -4,17 +4,16 @@ import { Dropdown, Option } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const SearchEngineId = () => {
-    const ns = "settingsSearchEngine";
-    const { t } = useTranslation();
+    const { t } = useTranslation("settingsSearchEngine");
 
     const { value: searchEngineId, updateValue: setSearchEngineId } = useSetting({
         key: "searchEngine.id",
-        defaultValue: "Fuse.js",
+        defaultValue: "fuzzysort",
     });
 
     return (
         <Setting
-            label={t("searchEngine", { ns })}
+            label={t("searchEngine")}
             control={
                 <Dropdown
                     selectedOptions={[searchEngineId]}

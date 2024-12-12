@@ -1,4 +1,10 @@
-import { SearchResultItemActionUtility, type SearchResultItem, type SearchResultItemAction } from "@common/Core";
+import {
+    createAddToFavoritesAction,
+    createExcludeFromSearchResultsAction,
+    createRemoveFromFavoritesAction,
+    type SearchResultItem,
+    type SearchResultItemAction,
+} from "@common/Core";
 import { describe, expect, it } from "vitest";
 import { getActions } from "./getActions";
 
@@ -16,8 +22,8 @@ describe(getActions, () => {
         expect(getActions(searchResultItem, [])).toEqual(<SearchResultItemAction[]>[
             { argument: "default action argument", handlerId: "default handler id" },
             { argument: "additional argument", handlerId: "additional handler id" },
-            SearchResultItemActionUtility.createAddToFavoritesAction({ id: searchResultItem.id }),
-            SearchResultItemActionUtility.createExcludeFromSearchResultsAction({ id: searchResultItem.id }),
+            createAddToFavoritesAction({ id: searchResultItem.id }),
+            createExcludeFromSearchResultsAction({ id: searchResultItem.id }),
         ]);
     });
 
@@ -32,8 +38,8 @@ describe(getActions, () => {
 
         expect(getActions(searchResultItem, ["id1"])).toEqual(<SearchResultItemAction[]>[
             { argument: "default action argument", handlerId: "default handler id" },
-            SearchResultItemActionUtility.createRemoveFromFavoritesAction({ id: searchResultItem.id }),
-            SearchResultItemActionUtility.createExcludeFromSearchResultsAction({ id: searchResultItem.id }),
+            createRemoveFromFavoritesAction({ id: searchResultItem.id }),
+            createExcludeFromSearchResultsAction({ id: searchResultItem.id }),
         ]);
     });
 });

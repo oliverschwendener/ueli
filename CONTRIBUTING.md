@@ -2,9 +2,11 @@
 
 First off, thanks for taking the time to contribute!
 
-This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to oliver.schwendener@proton.me.
+This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md). By participating, you are
+expected to uphold this code. Please report unacceptable behavior to oliver.schwendener@proton.me.
 
-The following is a set of guidelines for contributing to Ueli. These are just guidelines, not rules, use your best judgment and feel free to propose changes to this document in a pull request.
+The following is a set of guidelines for contributing to Ueli. These are just guidelines, not rules, use your best
+judgment and feel free to propose changes to this document in a pull request.
 
 ## Issues
 
@@ -24,8 +26,14 @@ Please create one PR per purpose. If you want to fix multiple things, create sep
 
 ### Languages
 
-We accept pull requests only in English. When a pull request is posted in a language besides English, it will be rejected.
+We accept pull requests only in English. When a pull request is posted in a language besides English, it will be
+rejected.
 
 ### Coding style
 
-Please use [eslint](.eslintrc.json) to verify that your contribution matches our coding style. Additionally, we use [prettier](.prettierrc) to auto-format the code. All pull requests that don't match the coding style won't be accepted.
+Please use [eslint](.eslintrc.json) to verify that your contribution matches our coding style. Additionally, we use
+[prettier](.prettierrc) to auto-format the code. All pull requests that don't match the coding style won't be accepted.
+
+### Commit signing
+
+Make sure all commits are signed. Pull requests that contain unsigned commits won't be accepted.

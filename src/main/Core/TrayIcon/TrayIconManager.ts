@@ -1,5 +1,4 @@
-import type { EventSubscriber } from "@Core/EventSubscriber";
-import type { NativeTheme, Tray } from "electron";
+import type { Tray } from "electron";
 import type { ContextMenuBuilder } from "./ContextMenuBuilder";
 import type { ContextMenuTemplateProvider } from "./ContextMenuTemplateProvider";
 import type { TrayCreator } from "./TrayCreator";
@@ -13,12 +12,11 @@ export class TrayIconManager {
         private readonly trayIconFilePathResolver: TrayIconFilePathResolver,
         private readonly contextMenuTemplateProvider: ContextMenuTemplateProvider,
         private readonly contextMenuBuilder: ContextMenuBuilder,
-        private readonly nativeTheme: NativeTheme,
-        private readonly eventSubscriber: EventSubscriber,
     ) {}
 
     public async createTrayIcon() {
         this.tray = this.trayCreator.createTray(this.trayIconFilePathResolver.resolve());
+        this.tray?.setToolTip("Ueli");
         await this.updateContextMenu();
     }
 
@@ -30,10 +28,5 @@ export class TrayIconManager {
         const template = await this.contextMenuTemplateProvider.get();
         const menu = this.contextMenuBuilder.buildFromTemplate(template);
         this.tray?.setContextMenu(menu);
-    }
-
-    public registerEventListeners() {
-        this.nativeTheme.on("updated", () => this.updateImage());
-        this.eventSubscriber.subscribe("settingUpdated[general.language]", () => this.updateContextMenu());
     }
 }

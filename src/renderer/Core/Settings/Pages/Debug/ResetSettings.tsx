@@ -1,4 +1,3 @@
-import { useContextBridge } from "@Core/Hooks";
 import {
     Button,
     Dialog,
@@ -13,28 +12,30 @@ import {
 import { useTranslation } from "react-i18next";
 
 export const ResetSettings = () => {
-    const { t } = useTranslation();
-    const ns = "settingsDebug";
-    const { contextBridge } = useContextBridge();
+    const { t } = useTranslation("settingsDebug");
 
     return (
-        <Field label={t("resetAllSettings", { ns })} hint={t("resetAllSettingsHint", { ns })}>
-            <Dialog>
+        <Field label={t("resetAllSettings")} hint={t("resetAllSettingsHint")}>
+            <Dialog
+                onOpenChange={(event) => {
+                    event.stopPropagation();
+                }}
+            >
                 <DialogTrigger disableButtonEnhancement>
                     <div>
-                        <Button>{t("resetAllSettingsButton", { ns })}</Button>
+                        <Button>{t("resetAllSettingsButton")}</Button>
                     </div>
                 </DialogTrigger>
                 <DialogSurface>
                     <DialogBody>
-                        <DialogTitle>{t("resetAllSettingsDialogTitle", { ns })}</DialogTitle>
-                        <DialogContent>{t("resetAllSettingsDialogContent", { ns })}</DialogContent>
+                        <DialogTitle>{t("resetAllSettingsDialogTitle")}</DialogTitle>
+                        <DialogContent>{t("resetAllSettingsDialogContent")}</DialogContent>
                         <DialogActions>
                             <DialogTrigger disableButtonEnhancement>
-                                <Button appearance="secondary">{t("resetAllSettingsCancel", { ns })}</Button>
+                                <Button appearance="secondary">{t("resetAllSettingsCancel")}</Button>
                             </DialogTrigger>
-                            <Button onClick={() => contextBridge.resetAllSettings()} appearance="primary">
-                                {t("resetAllSettingsConfirm", { ns })}
+                            <Button onClick={() => window.ContextBridge.resetAllSettings()} appearance="primary">
+                                {t("resetAllSettingsConfirm")}
                             </Button>
                         </DialogActions>
                     </DialogBody>

@@ -3,7 +3,9 @@ import { describe, expect, it, vi } from "vitest";
 import { Wsl } from "./Wsl";
 
 describe(Wsl, () => {
-    describe(Wsl.prototype.terminalId, () => it(`should be "WSL"`, () => expect(new Wsl(null).terminalId).toBe("WSL")));
+    describe(Wsl.prototype.terminalId, () =>
+        it(`should be "WSL"`, () => expect(new Wsl(<CommandlineUtility>{}).terminalId).toBe("WSL")),
+    );
 
     describe(Wsl.prototype.launchWithCommand, () => {
         it("should execute the command in a new WSL window", async () => {

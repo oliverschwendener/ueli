@@ -1,6 +1,8 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
+import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
+import type { UeliCommand } from "@Core/UeliCommand";
 import type { SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 
@@ -21,65 +23,110 @@ export class UeliCommandExtension implements Extension {
     public constructor(
         private readonly assetPathResolver: AssetPathResolver,
         private readonly translator: Translator,
+        private readonly settingsManager: SettingsManager,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
         const { t } = this.translator.createT(this.getI18nResources());
 
-        const map: Record<string, SearchResultItem> = {
-            quit: {
+        const commonSearchResultItems: SearchResultItem[] = [
+            {
                 id: "ueliCommand:quit",
                 description: t("description"),
                 name: t("quitUeli"),
                 image: this.getImage(),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: "quit",
+                    argument: <UeliCommand>"quit",
                     description: t("quitUeli"),
                     requiresConfirmation: true,
                     fluentIcon: "DismissCircleRegular",
                     hideWindowAfterInvocation: true,
                 },
             },
-            settings: {
+            {
                 id: "ueliCommand:settings",
                 description: t("description"),
                 name: t("openSettings"),
                 image: this.getImage(),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: "settings",
+                    argument: <UeliCommand>"openSettings",
                     description: t("openSettings"),
                     fluentIcon: "SettingsRegular",
                 },
             },
-            extensions: {
+            {
                 id: "ueliCommand:extensions",
                 description: t("description"),
                 name: t("openExtensions"),
                 image: this.getImage(),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: "extensions",
+                    argument: <UeliCommand>"openExtensions",
                     description: t("openExtensions"),
                     fluentIcon: "AppsAddInRegular",
                 },
             },
-            centerWindow: {
+            {
                 id: "ueliCommand:centerWindow",
                 description: t("description"),
                 name: t("centerWindow"),
                 image: this.getImage(),
                 defaultAction: {
                     handlerId: "UeliCommand",
-                    argument: "centerWindow",
+                    argument: <UeliCommand>"centerWindow",
                     description: t("centerWindow"),
                     fluentIcon: "AppsAddInRegular",
                 },
             },
-        };
+            {
+                id: "ueliCommand:rescanExtensions",
+                description: t("description"),
+                name: t("rescanExtensions"),
+                image: this.getImage(),
+                defaultAction: {
+                    handlerId: "UeliCommand",
+                    argument: <UeliCommand>"rescanExtensions",
+                    description: t("rescanExtensions"),
+                    fluentIcon: "ArrowClockwiseRegular",
+                },
+            },
+        ];
 
-        return Object.values(map);
+        const hotkeyIsEnabled = this.settingsManager.getValue("general.hotkey.enabled", true);
+
+        const hotkeySearchResultItems: SearchResultItem[] = hotkeyIsEnabled
+            ? [
+                  {
+                      id: "ueliCommand:toggleHotkey",
+                      description: t("description"),
+                      name: t("disableHotkey"),
+                      image: this.getImage(),
+                      defaultAction: {
+                          handlerId: "UeliCommand",
+                          argument: <UeliCommand>"disableHotkey",
+                          description: t("disableHotkey"),
+                          fluentIcon: "DismissCircleRegular",
+                      },
+                  },
+              ]
+            : [
+                  {
+                      id: "ueliCommand:toggleHotkey",
+                      description: t("description"),
+                      name: t("enableHotkey"),
+                      image: this.getImage(),
+                      defaultAction: {
+                          handlerId: "UeliCommand",
+                          argument: <UeliCommand>"enableHotkey",
+                          description: t("enableHotkey"),
+                          fluentIcon: "CheckmarkCircleRegular",
+                      },
+                  },
+              ];
+
+        return [...commonSearchResultItems, ...hotkeySearchResultItems];
     }
 
     public getImage(): Image {
@@ -94,12 +141,12 @@ export class UeliCommandExtension implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue<T>(): T {
-        return undefined as T;
+    public getSettingDefaultValue() {
+        return undefined;
     }
 
     public getSettingKeysTriggeringRescan() {
-        return ["general.language"];
+        return ["general.language", "general.hotkey.enabled"];
     }
 
     public getI18nResources() {
@@ -111,6 +158,9 @@ export class UeliCommandExtension implements Extension {
                 openExtensions: "Browse Ueli extensions",
                 centerWindow: "Center Ueli window",
                 quitUeli: "Quit Ueli",
+                rescanExtensions: "Rescan extensions",
+                disableHotkey: "Disable hotkey",
+                enableHotkey: "Enable hotkey",
             },
             "de-CH": {
                 extensionName: "Ueli Befehle",
@@ -119,6 +169,9 @@ export class UeliCommandExtension implements Extension {
                 openExtensions: "Ueli-Erweiterungen durchsuchen",
                 centerWindow: "Ueli-Fenster zentrieren",
                 quitUeli: "Ueli Beenden",
+                rescanExtensions: "Erweiterungen neu scannen",
+                disableHotkey: "Tastenkombination deaktivieren",
+                enableHotkey: "Tastenkombination aktivieren",
             },
         };
     }

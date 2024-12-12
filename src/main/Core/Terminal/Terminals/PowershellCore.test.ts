@@ -4,7 +4,8 @@ import { PowershellCore } from "./PowershellCore";
 
 describe(PowershellCore, () => {
     describe(PowershellCore.prototype.terminalId, () =>
-        it(`should be "Powershell Core"`, () => expect(new PowershellCore(null).terminalId).toBe("Powershell Core")),
+        it(`should be "Powershell Core"`, () =>
+            expect(new PowershellCore(<CommandlineUtility>{}).terminalId).toBe("Powershell Core")),
     );
 
     describe(PowershellCore.prototype.launchWithCommand, () => {

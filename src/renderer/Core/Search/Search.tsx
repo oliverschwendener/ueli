@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { BaseLayout } from "../BaseLayout";
 import { Footer } from "../Footer";
-import { useContextBridge } from "../Hooks";
 import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
@@ -33,7 +32,6 @@ export const Search = ({
     favoriteSearchResultItemIds,
 }: SearchProps) => {
     const { t } = useTranslation("search");
-    const { contextBridge } = useContextBridge();
     const { theme } = useContext(ThemeContext);
 
     const [additionalActionsMenuIsOpen, setAdditionalActionsMenuIsOpen] = useState(false);
@@ -48,25 +46,24 @@ export const Search = ({
         invokeAction,
         invokeSelectedSearchResultItem,
     } = useSearchViewController({
-        contextBridge,
         searchResultItems,
         excludedSearchResultItemIds,
         favoriteSearchResultItemIds,
     });
 
-    const searchHistory = useSearchHistoryController({ contextBridge });
+    const searchHistory = useSearchHistoryController();
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
 
     const navigate = useNavigate();
     const openSettings = () => navigate({ pathname: "/settings/general" });
 
-    const singleClickBehavior = contextBridge.getSettingValue(
+    const singleClickBehavior = window.ContextBridge.getSettingValue(
         "keyboardAndMouse.singleClickBehavior",
         "selectSearchResultItem",
     );
 
-    const doubleClickBehavior = contextBridge.getSettingValue(
+    const doubleClickBehavior = window.ContextBridge.getSettingValue(
         "keyboardAndMouse.doubleClickBehavior",
         "invokeSearchResultItem",
     );
@@ -74,7 +71,7 @@ export const Search = ({
     const handleUserInputKeyDownEvent = (keyboardEvent: ReactKeyboardEvent<HTMLElement>) => {
         const eventHandlers: KeyboardEventHandler[] = [
             {
-                listener: () => contextBridge.ipcRenderer.send("escapePressed"),
+                listener: () => window.ContextBridge.ipcRenderer.send("escapePressed"),
                 needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Escape",
             },
             {
@@ -131,7 +128,10 @@ export const Search = ({
         userInput.focus();
     };
 
-    const showKeyboardShortcuts = contextBridge.getSettingValue<boolean>("appearance.showKeyboardShortcuts", true);
+    const showKeyboardShortcuts = window.ContextBridge.getSettingValue<boolean>(
+        "appearance.showKeyboardShortcuts",
+        true,
+    );
 
     const toggleAdditionalActionsMenu = (open: boolean) => {
         setAdditionalActionsMenuIsOpen(open);
@@ -148,7 +148,7 @@ export const Search = ({
     }[] = [
         {
             validate: (event) =>
-                contextBridge.getOperatingSystem() === "macOS"
+                window.ContextBridge.getOperatingSystem() === "macOS"
                     ? event.key === "," && event.metaKey
                     : event.key === "," && event.ctrlKey,
             action: (event) => {
@@ -158,7 +158,7 @@ export const Search = ({
         },
         {
             validate: (event) =>
-                contextBridge.getOperatingSystem() === "macOS"
+                window.ContextBridge.getOperatingSystem() === "macOS"
                     ? event.key === "k" && event.metaKey
                     : event.key === "k" && event.ctrlKey,
             action: (event) => {
@@ -192,11 +192,11 @@ export const Search = ({
             }
         };
 
-        contextBridge.ipcRenderer.on("windowFocused", windowFocusedEventHandler);
+        window.ContextBridge.ipcRenderer.on("windowFocused", windowFocusedEventHandler);
         window.addEventListener("keydown", keyDownEventHandler);
 
         return () => {
-            contextBridge.ipcRenderer.off("windowFocused", windowFocusedEventHandler);
+            window.ContextBridge.ipcRenderer.off("windowFocused", windowFocusedEventHandler);
             window.removeEventListener("keydown", keyDownEventHandler);
         };
     }, []);
@@ -229,19 +229,19 @@ export const Search = ({
                         onKeyDown={handleUserInputKeyDownEvent}
                         onSearchTermUpdated={search}
                         searchTerm={searchTerm.value}
-                        searchBarSize={contextBridge.getSettingValue<SearchBarSize>(
+                        searchBarSize={window.ContextBridge.getSettingValue<SearchBarSize>(
                             "appearance.searchBarSize",
                             "large",
                         )}
-                        searchBarAppearance={contextBridge.getSettingValue<SearchBarAppearance>(
+                        searchBarAppearance={window.ContextBridge.getSettingValue<SearchBarAppearance>(
                             "appearance.searchBarAppearance",
                             "auto",
                         )}
-                        searchBarPlaceholderText={contextBridge.getSettingValue(
+                        searchBarPlaceholderText={window.ContextBridge.getSettingValue(
                             "appearance.searchBarPlaceholderText",
                             t("searchBarPlaceholderText"),
                         )}
-                        showIcon={contextBridge.getSettingValue("appearance.showSearchIcon", true)}
+                        showIcon={window.ContextBridge.getSettingValue("appearance.showSearchIcon", true)}
                         contentAfter={
                             searchHistory.isEnabled() ? (
                                 <SearchHistory
@@ -259,7 +259,7 @@ export const Search = ({
             }
             contentRef={containerRef}
             content={
-                contextBridge.getScanCount() === 0 ? (
+                window.ContextBridge.getScanCount() === 0 ? (
                     <ScanIndicator />
                 ) : (
                     <>
@@ -316,7 +316,7 @@ export const Search = ({
                         {showKeyboardShortcuts && (
                             <div style={{ paddingLeft: 5 }}>
                                 <KeyboardShortcut
-                                    shortcut={contextBridge.getOperatingSystem() === "macOS" ? "⌘+," : "^+,"}
+                                    shortcut={window.ContextBridge.getOperatingSystem() === "macOS" ? "⌘+," : "^+,"}
                                 />
                             </div>
                         )}
@@ -344,7 +344,7 @@ export const Search = ({
                             additionalActionsButtonRef={additionalActionsButtonRef}
                             open={additionalActionsMenuIsOpen}
                             onOpenChange={toggleAdditionalActionsMenu}
-                            keyboardShortcut={contextBridge.getOperatingSystem() === "macOS" ? "⌘+K" : "^+K"}
+                            keyboardShortcut={window.ContextBridge.getOperatingSystem() === "macOS" ? "⌘+K" : "^+K"}
                         />
                     </div>
                 </Footer>

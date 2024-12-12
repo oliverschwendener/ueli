@@ -40,7 +40,6 @@ export * from "./SettingsManager";
 export * from "./SettingsReader";
 export * from "./SettingsWriter";
 export * from "./Shell";
-export * from "./SingleInstanceLock";
 export * from "./TaskScheduler";
 export * from "./Terminal";
 export * from "./Translator";

@@ -8,6 +8,7 @@ export type MacOsTranslations = {
     logOut: string;
     sleep: string;
     lock: string;
+    emptyTrash: string;
 };
 
 export const macOsResources: Resources<MacOsTranslations> = {
@@ -19,6 +20,7 @@ export const macOsResources: Resources<MacOsTranslations> = {
         logOut: "Log Out",
         sleep: "Sleep",
         lock: "Lock",
+        emptyTrash: "Empty recycle bin",
     },
     "de-CH": {
         extensionName: "Systembefehle",
@@ -28,5 +30,6 @@ export const macOsResources: Resources<MacOsTranslations> = {
         logOut: "Ausloggen",
         sleep: "Energiesparmodus",
         lock: "Sperren",
+        emptyTrash: "Papierkorb leeren",
     },
 };

@@ -18,8 +18,7 @@ const generateTemporaryWorkflow = (): Workflow => ({
 });
 
 export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormProps) => {
-    const ns = "extension[Workflow]";
-    const { t } = useTranslation();
+    const { t } = useTranslation("extension[Workflow]");
 
     const [workflow, setWorkflow] = useState<Workflow>(initialWorkflow ?? generateTemporaryWorkflow());
 
@@ -33,12 +32,12 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
 
     return (
         <form style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            <Field label={t("workflowName", { ns })}>
+            <Field label={t("workflowName")}>
                 <Input
                     value={workflow.name}
                     onChange={(_, { value }) => setWorkflowName(value)}
                     autoFocus
-                    placeholder={t("workflowNamePlaceholder", { ns })}
+                    placeholder={t("workflowNamePlaceholder")}
                 />
             </Field>
 
@@ -47,9 +46,9 @@ export const WorkflowForm = ({ save, cancel, initialWorkflow }: AddWorkflowFormP
             <NewAction add={addAction} />
 
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", gap: 5 }}>
-                <Button onClick={cancel}>{t("cancel", { ns })}</Button>
+                <Button onClick={cancel}>{t("cancel")}</Button>
                 <Button onClick={() => save(workflow)} appearance="primary">
-                    {t("save", { ns })}
+                    {t("save")}
                 </Button>
             </div>
         </form>

@@ -19,6 +19,11 @@ export default [
              */
             "no-useless-constructor": "off",
             "@typescript-eslint/no-useless-constructor": "error",
+
+            /**
+             * Enforces explicit class-member accessibility.
+             */
+            "@typescript-eslint/explicit-member-accessibility": ["error", { accessibility: "explicit" }],
         },
         languageOptions: {
             globals: {

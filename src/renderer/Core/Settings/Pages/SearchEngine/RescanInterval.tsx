@@ -1,4 +1,3 @@
-import { useContextBridge } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { Button, Input, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
@@ -10,14 +9,11 @@ type RescanIntervalProps = {
 };
 
 export const RescanInterval = ({ automaticRescanEnabled }: RescanIntervalProps) => {
-    const ns = "settingsSearchEngine";
-
-    const { t } = useTranslation();
-    const { contextBridge } = useContextBridge();
+    const { t } = useTranslation("settingsSearchEngine");
 
     const defaultRescanIntervalInSeconds = 300;
 
-    const rescanIntervalInSeconds = contextBridge.getSettingValue(
+    const rescanIntervalInSeconds = window.ContextBridge.getSettingValue(
         "searchEngine.rescanIntervalInSeconds",
         defaultRescanIntervalInSeconds,
     );
@@ -25,12 +21,12 @@ export const RescanInterval = ({ automaticRescanEnabled }: RescanIntervalProps) 
     const [tempRescanIntervalInSeconds, setTempRescanIntervalInSeconds] = useState<number>(rescanIntervalInSeconds);
 
     const setRescanIntervalInSeconds = (value: number) =>
-        contextBridge.updateSettingValue("searchEngine.rescanIntervalInSeconds", value);
+        window.ContextBridge.updateSettingValue("searchEngine.rescanIntervalInSeconds", value);
 
     return (
         <Setting
-            label={t("rescanIntervalInSeconds", { ns })}
-            description={tempRescanIntervalInSeconds < 10 ? t("rescanIntervalTooShort", { ns }) : undefined}
+            label={t("rescanIntervalInSeconds")}
+            description={tempRescanIntervalInSeconds < 10 ? t("rescanIntervalTooShort") : undefined}
             control={
                 <Input
                     value={`${tempRescanIntervalInSeconds}`}
@@ -45,7 +41,7 @@ export const RescanInterval = ({ automaticRescanEnabled }: RescanIntervalProps) 
                     type="number"
                     disabled={!automaticRescanEnabled}
                     contentAfter={
-                        <Tooltip content={t("rescanIntervalResetToDefault", { ns })} relationship="label" withArrow>
+                        <Tooltip content={t("rescanIntervalResetToDefault")} relationship="label" withArrow>
                             <Button
                                 size="small"
                                 appearance="subtle"

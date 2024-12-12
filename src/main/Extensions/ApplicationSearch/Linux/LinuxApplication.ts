@@ -1,5 +1,5 @@
 import type { SearchResultItem } from "@common/Core";
-import { SearchResultItemActionUtility } from "@common/Core";
+import { createCopyToClipboardAction, createShowItemInFileExplorerAction } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { Application } from "../Application";
 import { createLaunchDesktopFileAction } from "./createLaunchDesktopFileAction";
@@ -30,8 +30,8 @@ export class LinuxApplication implements Application {
                 },
             }),
             additionalActions: [
-                SearchResultItemActionUtility.createShowItemInFileExplorerAction({ filePath: this.filePath }),
-                SearchResultItemActionUtility.createCopyToClipboardAction({
+                createShowItemInFileExplorerAction({ filePath: this.filePath }),
+                createCopyToClipboardAction({
                     textToCopy: this.filePath,
                     description: "Copy file path to clipboard",
                     descriptionTranslation: {
