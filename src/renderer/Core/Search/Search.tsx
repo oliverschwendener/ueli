@@ -5,7 +5,6 @@ import { Button, Text } from "@fluentui/react-components";
 import { SettingsRegular } from "@fluentui/react-icons";
 import { useContext, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import { BaseLayout } from "../BaseLayout";
 import { Footer } from "../Footer";
 import { ActionsMenu } from "./ActionsMenu";
@@ -55,8 +54,7 @@ export const Search = ({
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
 
-    const navigate = useNavigate();
-    const openSettings = () => navigate({ pathname: "/settings/general" });
+    const openSettings = () => window.ContextBridge.openSettings();
 
     const singleClickBehavior = window.ContextBridge.getSettingValue(
         "keyboardAndMouse.singleClickBehavior",
