@@ -23,15 +23,23 @@ export const HotKeyBinding = ({ hotkeyEnabled }: HotkeyBindingProps) => {
             control={
                 <Field
                     label={
-                        contextBridge.getEnvironmentVariable("XDG_SESSION_TYPE") === "wayland" ? (
+                        window.ContextBridge.getEnvironmentVariable("XDG_SESSION_TYPE") === "wayland" ? (
                             <>
-                                <Label weight="semibold">{t("waylandWarning", { ns })}</Label>
-                                <Tooltip content={t("waylandWarningMoreInfo", { ns })} relationship="label" withArrow>
+                                <Label weight="semibold">{t("waylandWarning")}</Label>
+                                <Tooltip
+                                    content={t("waylandWarningMoreInfo")}
+                                    relationship="label"
+                                    withArrow
+                                >
                                     <Button
                                         appearance="subtle"
                                         size="small"
                                         icon={<WarningRegular />}
-                                        onClick={() => contextBridge.openExternal("https://github.com/oliverschwendener/ueli/wiki#linux")}
+                                        onClick={() =>
+                                            window.ContextBridge.openExternal(
+                                                "https://github.com/oliverschwendener/ueli/wiki#linux",
+                                            )
+                                        }
                                     />
                                 </Tooltip>
                             </>
