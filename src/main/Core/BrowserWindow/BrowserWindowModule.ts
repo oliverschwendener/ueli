@@ -90,10 +90,6 @@ export class BrowserWindowModule {
             dependencyRegistry.get("EnvironmentVariableProvider"),
             "search.html",
         );
-
-        ipcMain.on("openSettings", () => {
-            console.log("open settings window", { pathname: "/settings/general" });
-        });
     }
 
     private static registerBrowserWindowEventListeners(
