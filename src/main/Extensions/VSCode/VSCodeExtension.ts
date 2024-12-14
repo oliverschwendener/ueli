@@ -164,11 +164,6 @@ export class VSCodeExtension implements Extension {
             this.getSettingDefaultValue("command"),
         );
 
-        let argument = template.replace("%s", `${commandArg} ${uri}`);
-        if (this.operatingSystem === "macOS") {
-            argument = template.replace("%s", `${uri.replace(/^file:\/\//, "")}`);
-        }
-
         return {
             id: `vscode-${fileType}-${uri}`,
             name: recent.label ?? Path.basename(path),
@@ -177,7 +172,7 @@ export class VSCodeExtension implements Extension {
             defaultAction: {
                 handlerId: "Commandline",
                 description: `Open ${fileType} in VSCode`,
-                argument,
+                argument: template.replace(/"?%s"?/, `${commandArg} ${uri}`),
             },
         };
     }
