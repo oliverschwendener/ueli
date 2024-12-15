@@ -90,8 +90,9 @@ if (!app.requestSingleInstanceLock()) {
     Extensions.ExtensionLoader.bootstrap(dependencyRegistry);
     await Core.ExtensionManagerModule.bootstrap(dependencyRegistry);
 
-    // BrowserWindow
+    // Windows
     await Core.BrowserWindowModule.bootstrap(dependencyRegistry);
+    await Core.SettingsWindowModule.bootstrap(dependencyRegistry);
 
     Core.RescanOrchestratorModule.bootstrap(dependencyRegistry);
 })();

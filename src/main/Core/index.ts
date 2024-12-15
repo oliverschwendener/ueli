@@ -38,6 +38,7 @@ export * from "./Settings";
 export * from "./SettingsFile";
 export * from "./SettingsManager";
 export * from "./SettingsReader";
+export * from "./SettingsWindow";
 export * from "./SettingsWriter";
 export * from "./Shell";
 export * from "./TaskScheduler";

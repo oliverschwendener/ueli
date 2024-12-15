@@ -5,7 +5,7 @@ import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
-import type { App, BrowserWindow, IpcMain } from "electron";
+import { type App, BrowserWindow, type IpcMain } from "electron";
 import { join } from "path";
 import { NavigateToActionHandler } from "./ActionHandler";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
@@ -18,9 +18,7 @@ import {
     VibrancyProvider,
     WindowsBrowserWindowConstructorOptionsProvider,
 } from "./BrowserWindowConstructorOptionsProvider";
-import { BrowserWindowCreator } from "./BrowserWindowCreator";
 import { BrowserWindowToggler } from "./BrowserWindowToggler";
-import { sendToBrowserWindow } from "./sendToBrowserWindow";
 
 export class BrowserWindowModule {
     private static readonly DefaultHideWindowOnOptions = ["blur", "afterInvocation", "escapePressed"];
@@ -57,26 +55,22 @@ export class BrowserWindowModule {
             ),
         };
 
-        const browserWindow = new BrowserWindowCreator(
-            browserWindowConstructorOptionsProviders[operatingSystem],
-        ).create();
+        const searchWindow = new BrowserWindow(browserWindowConstructorOptionsProviders[operatingSystem].get());
+        searchWindow.setVisibleOnAllWorkspaces(settingsManager.getValue("window.visibleOnAllWorkspaces", false));
+        eventEmitter.emitEvent("browserWindowCreated", { id: "search", browserWindow: searchWindow });
 
-        browserWindow.setVisibleOnAllWorkspaces(settingsManager.getValue("window.visibleOnAllWorkspaces", false));
+        const browserWindowToggler = new BrowserWindowToggler(operatingSystem, app, searchWindow);
 
-        const browserWindowToggler = new BrowserWindowToggler(operatingSystem, app, browserWindow);
-
-        eventEmitter.emitEvent("browserWindowCreated", { browserWindow });
-
-        nativeTheme.on("updated", () => browserWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
+        nativeTheme.on("updated", () => searchWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
 
         BrowserWindowModule.registerBrowserWindowEventListeners(
             browserWindowToggler,
-            browserWindow,
+            searchWindow,
             dependencyRegistry.get("SettingsManager"),
         );
 
         BrowserWindowModule.registerEvents(
-            browserWindow,
+            searchWindow,
             dependencyRegistry.get("EventSubscriber"),
             vibrancyProvider,
             backgroundMaterialProvider,
@@ -90,7 +84,12 @@ export class BrowserWindowModule {
             .get("ActionHandlerRegistry")
             .register(new NavigateToActionHandler(dependencyRegistry.get("EventEmitter")));
 
-        await BrowserWindowModule.loadFileOrUrl(browserWindow, dependencyRegistry.get("EnvironmentVariableProvider"));
+        await BrowserWindowModule.loadFileOrUrl(
+            app,
+            searchWindow,
+            dependencyRegistry.get("EnvironmentVariableProvider"),
+            "search.html",
+        );
     }
 
     private static registerBrowserWindowEventListeners(
@@ -136,7 +135,7 @@ export class BrowserWindowModule {
         eventSubscriber.subscribe("hotkeyPressed", () => browserWindowToggler.toggle());
 
         eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
-            sendToBrowserWindow(browserWindow, `settingUpdated[${key}]`, { value });
+            browserWindow.webContents.send(`settingUpdated[${key}]`, { value });
         });
 
         eventSubscriber.subscribe("settingUpdated[window.alwaysOnTop]", ({ value }: { value: boolean }) => {
@@ -159,9 +158,9 @@ export class BrowserWindowModule {
             browserWindow.setVisibleOnAllWorkspaces(value);
         });
 
-        eventSubscriber.subscribe("navigateTo", ({ pathname }: { pathname: string }) => {
+        eventSubscriber.subscribe("navigateTo", (argument) => {
             browserWindowToggler.showAndFocus();
-            sendToBrowserWindow(browserWindow, "navigateTo", { pathname });
+            browserWindow.webContents.send("navigateTo", argument);
         });
 
         ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
@@ -184,10 +183,16 @@ export class BrowserWindowModule {
     ) {
         const eventHandlers: { ueliCommands: UeliCommand[]; handler: (argument: unknown) => void }[] = [
             {
-                ueliCommands: ["openAbout", "openExtensions", "openSettings", "show"],
+                ueliCommands: ["show"],
                 handler: (argument) => {
                     browserWindowToggler.showAndFocus();
-                    sendToBrowserWindow(browserWindow, "navigateTo", argument);
+                    browserWindow.webContents.send("navigateTo", argument);
+                },
+            },
+            {
+                ueliCommands: ["openAbout", "openExtensions", "openSettings"],
+                handler: (argument) => {
+                    console.log("show settings window", argument);
                 },
             },
             {
@@ -206,15 +211,15 @@ export class BrowserWindowModule {
     }
 
     private static async loadFileOrUrl(
+        app: App,
         browserWindow: BrowserWindow,
         environmentVariableProvider: EnvironmentVariableProvider,
+        fileName: string,
     ) {
-        const viteDevServerUrl = environmentVariableProvider.get("VITE_DEV_SERVER_URL");
-
-        if (viteDevServerUrl) {
-            await browserWindow.loadURL(viteDevServerUrl);
+        if (app.isPackaged) {
+            await browserWindow.loadFile(join(__dirname, "..", "dist-renderer", fileName));
         } else {
-            await browserWindow.loadFile(join(__dirname, "..", "dist-renderer", "index.html"));
+            await browserWindow.loadURL(`${environmentVariableProvider.get("VITE_DEV_SERVER_URL")}/${fileName}`);
         }
     }
 }
