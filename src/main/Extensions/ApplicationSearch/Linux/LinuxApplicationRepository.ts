@@ -95,7 +95,8 @@ export class LinuxApplicationRepository implements ApplicationRepository {
         if (
             (config.NoDisplay && config.NoDisplay.toLowerCase() === "true") ||
             (config.OnlyShowIn && !config.OnlyShowIn.split(";").some((i) => desktopEnv.includes(i))) ||
-            (config.NotShowIn && config.NotShowIn.split(";").some((i) => desktopEnv.includes(i)))
+            (config.NotShowIn && config.NotShowIn.split(";").some((i) => desktopEnv.includes(i))) ||
+            (config.Type && config.Type.toLocaleLowerCase() !== "application")
         ) {
             return undefined;
         }
