@@ -166,7 +166,13 @@ export class BrowserWindowModule {
 
         ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
 
-        app.on("second-instance", () => browserWindowToggler.showAndFocus());
+        app.on("second-instance", (_, argv) => {
+            if (argv.includes("--toggle")) {
+                browserWindowToggler.toggle();
+            } else {
+                browserWindowToggler.showAndFocus();
+            }
+        });
 
         BrowserWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber, browserWindowToggler);
     }
