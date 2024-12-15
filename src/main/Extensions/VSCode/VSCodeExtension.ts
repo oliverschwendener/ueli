@@ -172,7 +172,7 @@ export class VSCodeExtension implements Extension {
             defaultAction: {
                 handlerId: "Commandline",
                 description: `Open ${fileType} in VSCode`,
-                argument: template.replace("%s", `${commandArg} ${uri}`),
+                argument: template.replace(/"?%s"?/, `${commandArg} ${uri}`),
             },
         };
     }
