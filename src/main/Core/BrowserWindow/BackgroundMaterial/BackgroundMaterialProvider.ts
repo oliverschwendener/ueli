@@ -1,15 +1,14 @@
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { BrowserWindowConstructorOptions } from "electron";
+import type { BrowserWindowBackgroundMaterialProvider as BackgroundMaterialProviderInterface } from "../Contract";
 
-type BackgroundMaterial = BrowserWindowConstructorOptions["backgroundMaterial"];
-
-export class BackgroundMaterialProvider {
+export class BackgroundMaterialProvider implements BackgroundMaterialProviderInterface {
     public constructor(private readonly settingsManager: SettingsManager) {}
 
-    public get(): BackgroundMaterial {
+    public get(): BrowserWindowConstructorOptions["backgroundMaterial"] {
         const backgroundMaterial = this.settingsManager.getValue<string>("window.backgroundMaterial", "Mica");
 
-        const backgroundMaterials: Record<string, BackgroundMaterial> = {
+        const backgroundMaterials: Record<string, BrowserWindowConstructorOptions["backgroundMaterial"]> = {
             Acrylic: "acrylic",
             Mica: "mica",
             None: "none",

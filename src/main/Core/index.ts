@@ -34,6 +34,7 @@ export * from "./RandomStringProvider";
 export * from "./RescanOrchestrator";
 export * from "./SafeStorageEncryption";
 export * from "./SearchIndex";
+export * from "./SearchWindow";
 export * from "./Settings";
 export * from "./SettingsFile";
 export * from "./SettingsManager";

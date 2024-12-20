@@ -1,6 +1,6 @@
+import type { BrowserWindowBackgroundMaterialProvider } from "@Core/BrowserWindow";
 import type { BrowserWindowConstructorOptions } from "electron";
 import { describe, expect, it, vi } from "vitest";
-import type { BackgroundMaterialProvider } from "./BackgroundMaterial";
 import { WindowsBrowserWindowConstructorOptionsProvider } from "./WindowsBrowserWindowConstructorOptionsProvider";
 
 describe(WindowsBrowserWindowConstructorOptionsProvider, () => {
@@ -13,7 +13,9 @@ describe(WindowsBrowserWindowConstructorOptionsProvider, () => {
 
             const getBackgroundMaterialMock = vi.fn().mockReturnValue("acrylic");
 
-            const backgroundMaterialProvider = <BackgroundMaterialProvider>{ get: () => getBackgroundMaterialMock() };
+            const backgroundMaterialProvider = <BrowserWindowBackgroundMaterialProvider>{
+                get: () => getBackgroundMaterialMock(),
+            };
 
             const actual = new WindowsBrowserWindowConstructorOptionsProvider(
                 defaultOptions,

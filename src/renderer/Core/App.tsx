@@ -58,7 +58,6 @@ export const App = () => {
                             />
                         }
                     />
-                    {/* <Route path="/settings/*" element={<Settings />} /> */}
                     <Route path="/extension/:extensionId" element={<Extension />} />
                 </Routes>
             </FluentProvider>

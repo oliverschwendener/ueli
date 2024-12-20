@@ -6,16 +6,26 @@ import { join } from "path";
 export class SettingsWindowModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const ipcMain = dependencyRegistry.get("IpcMain");
+        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
+        const eventEmitter = dependencyRegistry.get("EventEmitter");
 
-        let settingsWindow = await this.createSettingsWindow(dependencyRegistry);
+        const settingsWindow = await this.createSettingsWindow(dependencyRegistry);
+
+        settingsWindow.on("close", (event) => {
+            // Prevents the window from being destroyed
+            event.preventDefault();
+            settingsWindow.hide();
+        });
+
+        eventEmitter.emitEvent("browserWindowCreated", { id: "settings", browserWindow: settingsWindow });
 
         ipcMain.on("openSettings", async () => {
-            if (settingsWindow.isDestroyed()) {
-                settingsWindow = await this.createSettingsWindow(dependencyRegistry);
-            }
-
             settingsWindow.focus();
             settingsWindow.show();
+        });
+
+        eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
+            settingsWindow.webContents.send(`settingUpdated[${key}]`, { value });
         });
     }
 
@@ -27,7 +37,6 @@ export class SettingsWindowModule {
 
         const settingsWindow = new BrowserWindow({
             show: false,
-            backgroundMaterial: "mica",
             autoHideMenuBar: true,
             webPreferences: {
                 preload: join(__dirname, "..", "dist-preload", "index.js"),

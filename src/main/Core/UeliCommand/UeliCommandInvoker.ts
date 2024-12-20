@@ -21,17 +21,17 @@ export class UeliCommandInvoker implements UeliCommandInvokerInterface {
             openExtensions: async () =>
                 this.emitUeliCommandInvokedEvent({
                     ueliCommand: "openExtensions",
-                    argument: { pathname: "/settings/extensions" },
+                    argument: { pathname: "/extensions" },
                 }),
             openSettings: async () =>
                 this.emitUeliCommandInvokedEvent({
                     ueliCommand: "openSettings",
-                    argument: { pathname: "/settings/general" },
+                    argument: { pathname: "/general" },
                 }),
             openAbout: async () =>
                 this.emitUeliCommandInvokedEvent({
                     ueliCommand: "openAbout",
-                    argument: { pathname: "/settings/about" },
+                    argument: { pathname: "/about" },
                 }),
             quit: async () => this.app.quit(),
             show: async () =>

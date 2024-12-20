@@ -12,7 +12,7 @@ export class NavigateToActionHandler implements ActionHandler {
 
     /**
      * Navigates to the given path in the renderer process.
-     * Expects the given action's argument to be a valid path, e.g.: "/settings".
+     * Expects the given action's argument to be a valid path, e.g.: "/general".
      */
     public async invokeAction(action: SearchResultItemAction): Promise<void> {
         this.eventEmitter.emitEvent("navigateTo", { pathname: action.argument });

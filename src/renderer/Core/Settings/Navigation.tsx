@@ -36,7 +36,7 @@ export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps
                 </Tab>
             ))}
             {enabledExtensions.map((e) => (
-                <Tab key={`extension-settings-tab-${e.id}`} value={`/settings/extension/${e.id}`}>
+                <Tab key={`extension-settings-tab-${e.id}`} value={`/extension/${e.id}`}>
                     <div
                         style={{
                             display: "flex",
