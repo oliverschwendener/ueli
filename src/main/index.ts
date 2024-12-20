@@ -70,6 +70,7 @@ if (!app.requestSingleInstanceLock()) {
     Core.SettingsReaderModule.bootstrap(dependencyRegistry);
     Core.SettingsWriterModule.bootstrap(dependencyRegistry);
     Core.SettingsManagerModule.bootstrap(dependencyRegistry);
+    Core.BrowserWindowModule.bootstrap(dependencyRegistry);
     Core.ShellModule.bootstrap(dependencyRegistry);
     Core.DockModule.bootstrap(dependencyRegistry);
     await Core.ImageGeneratorModule.bootstrap(dependencyRegistry);
@@ -90,8 +91,9 @@ if (!app.requestSingleInstanceLock()) {
     Extensions.ExtensionLoader.bootstrap(dependencyRegistry);
     await Core.ExtensionManagerModule.bootstrap(dependencyRegistry);
 
-    // BrowserWindow
-    await Core.BrowserWindowModule.bootstrap(dependencyRegistry);
+    // Windows
+    await Core.SearchWindowModule.bootstrap(dependencyRegistry);
+    await Core.SettingsWindowModule.bootstrap(dependencyRegistry);
 
     Core.RescanOrchestratorModule.bootstrap(dependencyRegistry);
 })();

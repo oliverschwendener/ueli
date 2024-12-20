@@ -1,0 +1,15 @@
+export type Vibrancy =
+    | "content"
+    | "fullscreen-ui"
+    | "header"
+    | "hud"
+    | "menu"
+    | "popover"
+    | "selection"
+    | "sheet"
+    | "sidebar"
+    | "titlebar"
+    | "tooltip"
+    | "under-page"
+    | "under-window"
+    | "window";

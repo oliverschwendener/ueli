@@ -1,7 +1,7 @@
+import type { BrowserWindowVibrancyProvider } from "@Core/BrowserWindow";
 import type { BrowserWindowConstructorOptions } from "electron";
 import { describe, expect, it, vi } from "vitest";
 import { MacOsBrowserWindowConstructorOptionsProvider } from "./MacOsBrowserWindowConstructorOptionsProvider";
-import type { VibrancyProvider } from "./Vibrancy";
 
 describe(MacOsBrowserWindowConstructorOptionsProvider, () => {
     describe(MacOsBrowserWindowConstructorOptionsProvider.prototype.get, () => {
@@ -13,7 +13,7 @@ describe(MacOsBrowserWindowConstructorOptionsProvider, () => {
 
             const getVibrancyMock = vi.fn().mockReturnValue("content");
 
-            const vibrancyProvider = <VibrancyProvider>{ get: () => getVibrancyMock() };
+            const vibrancyProvider = <BrowserWindowVibrancyProvider>{ get: () => getVibrancyMock() };
 
             const actual = new MacOsBrowserWindowConstructorOptionsProvider(defaultOptions, vibrancyProvider).get();
 

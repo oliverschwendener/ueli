@@ -8,7 +8,9 @@ export type Dependencies = {
     App: Electron.App;
     AppleScriptUtility: Core.AppleScriptUtility;
     AssetPathResolver: Core.AssetPathResolver;
+    BrowserWindowBackgroundMaterialProvider: Core.BrowserWindowBackgroundMaterialProvider;
     BrowserWindowNotifier: Core.BrowserWindowNotifier;
+    BrowserWindowVibrancyProvider: Core.BrowserWindowVibrancyProvider;
     Clipboard: Electron.Clipboard;
     CommandlineUtility: Core.CommandlineUtility;
     DateProvider: Core.DateProvider;

@@ -2,11 +2,11 @@ import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { describe, expect, it, vi } from "vitest";
 import type { EventSubscriber } from "..";
-import { BrowserWindowModule, BrowserWindowNotifierModule } from "..";
+import { BrowserWindowNotifierModule, SearchWindowModule } from "..";
 import { BrowserWindowNotifier } from "./BrowserWindowNotifier";
 
-describe(BrowserWindowModule, () => {
-    describe(BrowserWindowModule.bootstrap, () => {
+describe(SearchWindowModule, () => {
+    describe(SearchWindowModule.bootstrap, () => {
         it("should bootstrap the module", () => {
             const eventSubscriber = <EventSubscriber>{
                 subscribe: vi.fn(),

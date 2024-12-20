@@ -11,8 +11,11 @@ export class BrowserWindowNotifierModule {
 
         dependencyRegistry.register("BrowserWindowNotifier", browserWindowNotifier);
 
-        eventSubscriber.subscribe("browserWindowCreated", ({ browserWindow }: { browserWindow: BrowserWindow }) => {
-            browserWindowNotifier.setBrowserWindow(browserWindow);
-        });
+        eventSubscriber.subscribe(
+            "browserWindowCreated",
+            ({ id, browserWindow }: { id: string; browserWindow: BrowserWindow }) => {
+                browserWindowNotifier.addBrowserWindow({ id, browserWindow });
+            },
+        );
     }
 }
