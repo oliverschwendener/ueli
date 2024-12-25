@@ -101,7 +101,6 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                 "en-US": {
                     title: "Appearance",
                     searchBar: "Search bar",
-                    searchBarPreview: "Preview",
                     searchBarSize: "Size",
                     "searchBarSize.large": "Large",
                     "searchBarSize.medium": "Medium",
@@ -128,7 +127,6 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                 "de-CH": {
                     title: "Erscheinungsbild",
                     searchBar: "Suchfeld",
-                    searchBarPreview: "Vorschau",
                     searchBarSize: "Grösse",
                     "searchBarSize.large": "Gross",
                     "searchBarSize.medium": "Mittel",
