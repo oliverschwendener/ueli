@@ -12,7 +12,7 @@ export class SettingsWindowModule {
         const settingsWindow = await this.createSettingsWindow(dependencyRegistry);
 
         settingsWindow.on("close", (event) => {
-            // Prevents the window from being destroyed
+            // Prevents the window from being destroyed, instead just hides it
             event.preventDefault();
             settingsWindow.hide();
         });
