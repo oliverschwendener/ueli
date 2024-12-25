@@ -75,8 +75,7 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
     return (
         <Dialog
             open={isDialogOpen}
-            onOpenChange={(event, { open }) => {
-                event.stopPropagation();
+            onOpenChange={(_, { open }) => {
                 if (open) {
                     openDialog();
                 } else {

@@ -15,13 +15,7 @@ export const EditWorkflow = ({ trigger, workflow, save }: EditWorkflowProps) => 
     const closeModal = () => setOpen(false);
 
     return (
-        <Dialog
-            open={open}
-            onOpenChange={(event, { open }) => {
-                event.stopPropagation();
-                setOpen(open);
-            }}
-        >
+        <Dialog open={open} onOpenChange={(_, { open }) => setOpen(open)}>
             <DialogTrigger disableButtonEnhancement>{trigger}</DialogTrigger>
             <DialogSurface>
                 <DialogBody>
