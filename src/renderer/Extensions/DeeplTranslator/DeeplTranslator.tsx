@@ -22,6 +22,16 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
         isSensitive: true,
     });
 
+    const { value: defaultSourceLanguage } = useExtensionSetting<string>({
+        extensionId,
+        key: "defaultSourceLanguage",
+    });
+
+    const { value: defaultTargetLanguage } = useExtensionSetting<string>({
+        extensionId,
+        key: "defaultTargetLanguage",
+    });
+
     const [translatedText, setTranslatedText] = useState<string>("");
 
     const openDeeplWebsite = () => contextBridge.openExternal("https://www.deepl.com/signup?cta=free-login-signup");
@@ -80,7 +90,8 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                     <Translator
                         translatedText={translatedText}
                         setTranslatedText={(t) => setTranslatedText(t)}
-                        contextBridge={contextBridge}
+                        defaultSourceLanguage={defaultSourceLanguage}
+                        defaultTargetLanguage={defaultTargetLanguage}
                     />
                 ) : (
                     <MissingApiKey saveApiKey={(v) => setApiKey(v)} openSignUpWebsite={openDeeplWebsite} />

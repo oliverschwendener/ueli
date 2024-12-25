@@ -1,4 +1,5 @@
 import { KeyboardShortcut } from "@Core/Components";
+import { useSetting } from "@Core/Hooks";
 import { ThemeContext } from "@Core/ThemeContext";
 import type { SearchResultItem } from "@common/Core";
 import { Button, Text } from "@fluentui/react-components";
@@ -56,16 +57,6 @@ export const Search = ({
 
     const openSettings = () => window.ContextBridge.openSettings();
 
-    const singleClickBehavior = window.ContextBridge.getSettingValue(
-        "keyboardAndMouse.singleClickBehavior",
-        "selectSearchResultItem",
-    );
-
-    const doubleClickBehavior = window.ContextBridge.getSettingValue(
-        "keyboardAndMouse.doubleClickBehavior",
-        "invokeSearchResultItem",
-    );
-
     const handleUserInputKeyDownEvent = (keyboardEvent: ReactKeyboardEvent<HTMLElement>) => {
         const eventHandlers: KeyboardEventHandler[] = [
             {
@@ -114,10 +105,20 @@ export const Search = ({
     };
 
     const handleSearchResultItemClickEvent = (searchResultItem: SearchResultItem) => {
+        const singleClickBehavior = window.ContextBridge.getSettingValue(
+            "keyboardAndMouse.singleClickBehavior",
+            "selectSearchResultItem",
+        );
+
         clickHandlers[singleClickBehavior](searchResultItem);
     };
 
     const handleSearchResultItemDoubleClickEvent = (searchResultItem: SearchResultItem) => {
+        const doubleClickBehavior = window.ContextBridge.getSettingValue(
+            "keyboardAndMouse.doubleClickBehavior",
+            "invokeSearchResultItem",
+        );
+
         clickHandlers[doubleClickBehavior](searchResultItem);
     };
 
@@ -126,10 +127,10 @@ export const Search = ({
         userInput.focus();
     };
 
-    const showKeyboardShortcuts = window.ContextBridge.getSettingValue<boolean>(
-        "appearance.showKeyboardShortcuts",
-        true,
-    );
+    const { value: showKeyboardShortcuts } = useSetting({
+        key: "appearance.showKeyboardShortcuts",
+        defaultValue: true,
+    });
 
     const toggleAdditionalActionsMenu = (open: boolean) => {
         setAdditionalActionsMenuIsOpen(open);
@@ -209,6 +210,26 @@ export const Search = ({
         search(searchTerm.value);
     }, [favoriteSearchResultItemIds, excludedSearchResultItemIds]);
 
+    const { value: searchBarAppearance } = useSetting<SearchBarAppearance>({
+        key: "appearance.searchBarAppearance",
+        defaultValue: "auto",
+    });
+
+    const { value: searchBarSize } = useSetting<SearchBarSize>({
+        key: "appearance.searchBarSize",
+        defaultValue: "large",
+    });
+
+    const { value: searchBarPlaceholderText } = useSetting({
+        key: "appearance.searchBarPlaceholderText",
+        defaultValue: t("searchBarPlaceholderText"),
+    });
+
+    const { value: searchBarShowSearchIcon } = useSetting({
+        key: "appearance.showSearchIcon",
+        defaultValue: true,
+    });
+
     return (
         <BaseLayout
             header={
@@ -227,21 +248,12 @@ export const Search = ({
                         onKeyDown={handleUserInputKeyDownEvent}
                         onSearchTermUpdated={search}
                         searchTerm={searchTerm.value}
-                        searchBarSize={window.ContextBridge.getSettingValue<SearchBarSize>(
-                            "appearance.searchBarSize",
-                            "large",
-                        )}
-                        searchBarAppearance={window.ContextBridge.getSettingValue<SearchBarAppearance>(
-                            "appearance.searchBarAppearance",
-                            "auto",
-                        )}
-                        searchBarPlaceholderText={window.ContextBridge.getSettingValue(
-                            "appearance.searchBarPlaceholderText",
-                            t("searchBarPlaceholderText"),
-                        )}
-                        showIcon={window.ContextBridge.getSettingValue("appearance.showSearchIcon", true)}
+                        searchBarSize={searchBarSize}
+                        searchBarAppearance={searchBarAppearance}
+                        searchBarPlaceholderText={searchBarPlaceholderText}
+                        showIcon={searchBarShowSearchIcon}
                         contentAfter={
-                            searchHistory.isEnabled() ? (
+                            searchHistory.isEnabled ? (
                                 <SearchHistory
                                     {...searchHistory}
                                     onItemSelected={search}
