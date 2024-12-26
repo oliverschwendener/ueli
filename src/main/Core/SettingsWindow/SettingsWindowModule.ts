@@ -7,24 +7,8 @@ export class SettingsWindowModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const ipcMain = dependencyRegistry.get("IpcMain");
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
-
-        const settingsWindow = await this.createSettingsWindow(dependencyRegistry);
-
-        ipcMain.on("openSettings", async () => {
-            settingsWindow.focus();
-            settingsWindow.show();
-        });
-
-        eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
-            settingsWindow.webContents.send(`settingUpdated[${key}]`, { value });
-        });
-    }
-
-    private static async createSettingsWindow(
-        dependencyRegistry: DependencyRegistry<Dependencies>,
-    ): Promise<BrowserWindow> {
         const app = dependencyRegistry.get("App");
-        const environmentVariableProvider = dependencyRegistry.get("EnvironmentVariableProvider");
+        const htmlLoader = dependencyRegistry.get("BrowserWindowHtmlLoader");
 
         const settingsWindow = new BrowserWindow({
             show: false,
@@ -43,14 +27,15 @@ export class SettingsWindowModule {
             },
         });
 
-        if (app.isPackaged) {
-            await settingsWindow.loadFile(join(__dirname, "..", "dist-renderer", "settings.html"));
-        } else {
-            await settingsWindow.loadURL(
-                `${environmentVariableProvider.get("VITE_DEV_SERVER_URL")}/${"settings.html"}`,
-            );
-        }
+        ipcMain.on("openSettings", async () => {
+            settingsWindow.focus();
+            settingsWindow.show();
+        });
 
-        return settingsWindow;
+        eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
+            settingsWindow.webContents.send(`settingUpdated[${key}]`, { value });
+        });
+
+        await htmlLoader.loadHtmlFile(settingsWindow, "settings.html");
     }
 }

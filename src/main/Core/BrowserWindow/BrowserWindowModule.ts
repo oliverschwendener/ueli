@@ -1,6 +1,7 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { BackgroundMaterialProvider } from "./BackgroundMaterial";
+import { HtmlLoader } from "./HtmlLoader";
 import { VibrancyProvider } from "./Vibrancy";
 
 export class BrowserWindowModule {
@@ -13,6 +14,11 @@ export class BrowserWindowModule {
         dependencyRegistry.register(
             "BrowserWindowVibrancyProvider",
             new VibrancyProvider(dependencyRegistry.get("SettingsManager")),
+        );
+
+        dependencyRegistry.register(
+            "BrowserWindowHtmlLoader",
+            new HtmlLoader(dependencyRegistry.get("App"), dependencyRegistry.get("EnvironmentVariableProvider")),
         );
     }
 }

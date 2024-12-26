@@ -11,6 +11,7 @@ export type Dependencies = {
     BrowserWindowBackgroundMaterialProvider: Core.BrowserWindowBackgroundMaterialProvider;
     BrowserWindowNotifier: Core.BrowserWindowNotifier;
     BrowserWindowVibrancyProvider: Core.BrowserWindowVibrancyProvider;
+    BrowserWindowHtmlLoader: Core.BrowserWindowHtmlLoader;
     Clipboard: Electron.Clipboard;
     CommandlineUtility: Core.CommandlineUtility;
     DateProvider: Core.DateProvider;

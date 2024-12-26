@@ -3,7 +3,6 @@ import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
 import { BrowserWindow } from "electron";
-import { join } from "path";
 import { NavigateToActionHandler } from "./ActionHandler";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 import type { BrowserWindowConstructorOptionsProvider } from "./BrowserWindowConstructorOptionsProvider";
@@ -27,10 +26,10 @@ export class SearchWindowModule {
         const nativeTheme = dependencyRegistry.get("NativeTheme");
         const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
         const ipcMain = dependencyRegistry.get("IpcMain");
-        const environmentVariableProvider = dependencyRegistry.get("EnvironmentVariableProvider");
         const actionHandlerRegistry = dependencyRegistry.get("ActionHandlerRegistry");
         const vibrancyProvider = dependencyRegistry.get("BrowserWindowVibrancyProvider");
         const backgroundMaterialProvider = dependencyRegistry.get("BrowserWindowBackgroundMaterialProvider");
+        const htmlLoader = dependencyRegistry.get("BrowserWindowHtmlLoader");
 
         const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, operatingSystem);
 
@@ -154,10 +153,6 @@ export class SearchWindowModule {
 
         actionHandlerRegistry.register(new NavigateToActionHandler(eventEmitter));
 
-        if (app.isPackaged) {
-            await searchWindow.loadFile(join(__dirname, "..", "dist-renderer", "search.html"));
-        } else {
-            await searchWindow.loadURL(`${environmentVariableProvider.get("VITE_DEV_SERVER_URL")}/${"search.html"}`);
-        }
+        await htmlLoader.loadHtmlFile(searchWindow, "search.html");
     }
 }
