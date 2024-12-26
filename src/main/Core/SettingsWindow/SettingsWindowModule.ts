@@ -11,11 +11,22 @@ export class SettingsWindowModule {
         const htmlLoader = dependencyRegistry.get("BrowserWindowHtmlLoader");
         const ipcMain = dependencyRegistry.get("IpcMain");
         const nativeTheme = dependencyRegistry.get("NativeTheme");
+        const translator = dependencyRegistry.get("Translator");
+
+        const getWindowTitle = () => {
+            const { t } = translator.createT({
+                "en-US": { settingsWindowTitle: "Settings" },
+                "de-CH": { settingsWindowTitle: "Einstellungen" },
+            });
+
+            return t("settingsWindowTitle");
+        };
 
         const settingsWindow = new BrowserWindow({
             show: false,
             autoHideMenuBar: true,
             icon: browserWindowAppIconFilePathResolver.getAppIconFilePath(),
+            title: getWindowTitle(),
             webPreferences: {
                 preload: join(__dirname, "..", "dist-preload", "index.js"),
                 spellcheck: false,
@@ -37,6 +48,10 @@ export class SettingsWindowModule {
 
         eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
             settingsWindow.webContents.send(`settingUpdated[${key}]`, { value });
+        });
+
+        eventSubscriber.subscribe("settingUpdated[general.language]", () => {
+            settingsWindow.setTitle(getWindowTitle());
         });
 
         nativeTheme.on("updated", () =>
