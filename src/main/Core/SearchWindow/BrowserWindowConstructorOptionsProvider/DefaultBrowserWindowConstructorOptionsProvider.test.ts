@@ -1,8 +1,8 @@
+import type { BrowserWindowAppIconFilePathResolver } from "@Core/BrowserWindow";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { App, BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
 import { describe, expect, it, vi } from "vitest";
-import type { AppIconFilePathResolver } from "../AppIconFilePathResolver/AppIconFilePathResolver";
 import { DefaultBrowserWindowConstructorOptionsProvider } from "./DefaultBrowserWindowConstructorOptionsProvider";
 import { defaultWindowSize } from "./defaultWindowSize";
 
@@ -13,7 +13,9 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
 
             const app = <App>{ isPackaged: true };
             const settingsManager = <SettingsManager>{ getValue: (k, d) => getValueMock(k, d) };
-            const appIconFilePathResolver = <AppIconFilePathResolver>{ getAppIconFilePath: () => "appIconFilePath" };
+            const appIconFilePathResolver = <BrowserWindowAppIconFilePathResolver>{
+                getAppIconFilePath: () => "appIconFilePath",
+            };
 
             expect(
                 new DefaultBrowserWindowConstructorOptionsProvider(app, settingsManager, appIconFilePathResolver).get(),
@@ -42,7 +44,9 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
 
             const app = <App>{ isPackaged: false };
             const settingsManager = <SettingsManager>{ getValue: (k, d) => getValueMock(k, d) };
-            const appIconFilePathResolver = <AppIconFilePathResolver>{ getAppIconFilePath: () => "appIconFilePath" };
+            const appIconFilePathResolver = <BrowserWindowAppIconFilePathResolver>{
+                getAppIconFilePath: () => "appIconFilePath",
+            };
 
             const { webPreferences } = new DefaultBrowserWindowConstructorOptionsProvider(
                 app,

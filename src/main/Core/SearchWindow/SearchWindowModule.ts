@@ -4,7 +4,6 @@ import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
 import { BrowserWindow } from "electron";
 import { NavigateToActionHandler } from "./ActionHandler";
-import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 import type { BrowserWindowConstructorOptionsProvider } from "./BrowserWindowConstructorOptionsProvider";
 import {
     DefaultBrowserWindowConstructorOptionsProvider,
@@ -18,20 +17,18 @@ export class SearchWindowModule {
     private static readonly DefaultHideWindowOnOptions = ["blur", "afterInvocation", "escapePressed"];
 
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
+        const actionHandlerRegistry = dependencyRegistry.get("ActionHandlerRegistry");
         const app = dependencyRegistry.get("App");
-        const operatingSystem = dependencyRegistry.get("OperatingSystem");
-        const settingsManager = dependencyRegistry.get("SettingsManager");
+        const appIconFilePathResolver = dependencyRegistry.get("BrowserWindowAppIconFilePathResolver");
+        const backgroundMaterialProvider = dependencyRegistry.get("BrowserWindowBackgroundMaterialProvider");
         const eventEmitter = dependencyRegistry.get("EventEmitter");
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
-        const nativeTheme = dependencyRegistry.get("NativeTheme");
-        const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
-        const ipcMain = dependencyRegistry.get("IpcMain");
-        const actionHandlerRegistry = dependencyRegistry.get("ActionHandlerRegistry");
-        const vibrancyProvider = dependencyRegistry.get("BrowserWindowVibrancyProvider");
-        const backgroundMaterialProvider = dependencyRegistry.get("BrowserWindowBackgroundMaterialProvider");
         const htmlLoader = dependencyRegistry.get("BrowserWindowHtmlLoader");
-
-        const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, operatingSystem);
+        const ipcMain = dependencyRegistry.get("IpcMain");
+        const nativeTheme = dependencyRegistry.get("NativeTheme");
+        const operatingSystem = dependencyRegistry.get("OperatingSystem");
+        const settingsManager = dependencyRegistry.get("SettingsManager");
+        const vibrancyProvider = dependencyRegistry.get("BrowserWindowVibrancyProvider");
 
         const defaultBrowserWindowOptions = new DefaultBrowserWindowConstructorOptionsProvider(
             app,

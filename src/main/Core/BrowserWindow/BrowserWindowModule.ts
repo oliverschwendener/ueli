@@ -1,5 +1,6 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 import { BackgroundMaterialProvider } from "./BackgroundMaterial";
 import { HtmlLoader } from "./HtmlLoader";
 import { VibrancyProvider } from "./Vibrancy";
@@ -19,6 +20,15 @@ export class BrowserWindowModule {
         dependencyRegistry.register(
             "BrowserWindowHtmlLoader",
             new HtmlLoader(dependencyRegistry.get("App"), dependencyRegistry.get("EnvironmentVariableProvider")),
+        );
+
+        dependencyRegistry.register(
+            "BrowserWindowAppIconFilePathResolver",
+            new AppIconFilePathResolver(
+                dependencyRegistry.get("NativeTheme"),
+                dependencyRegistry.get("AssetPathResolver"),
+                dependencyRegistry.get("OperatingSystem"),
+            ),
         );
     }
 }

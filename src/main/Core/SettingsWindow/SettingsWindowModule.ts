@@ -5,14 +5,17 @@ import { join } from "path";
 
 export class SettingsWindowModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const ipcMain = dependencyRegistry.get("IpcMain");
-        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const app = dependencyRegistry.get("App");
+        const browserWindowAppIconFilePathResolver = dependencyRegistry.get("BrowserWindowAppIconFilePathResolver");
+        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const htmlLoader = dependencyRegistry.get("BrowserWindowHtmlLoader");
+        const ipcMain = dependencyRegistry.get("IpcMain");
+        const nativeTheme = dependencyRegistry.get("NativeTheme");
 
         const settingsWindow = new BrowserWindow({
             show: false,
             autoHideMenuBar: true,
+            icon: browserWindowAppIconFilePathResolver.getAppIconFilePath(),
             webPreferences: {
                 preload: join(__dirname, "..", "dist-preload", "index.js"),
                 spellcheck: false,
@@ -35,6 +38,10 @@ export class SettingsWindowModule {
         eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
             settingsWindow.webContents.send(`settingUpdated[${key}]`, { value });
         });
+
+        nativeTheme.on("updated", () =>
+            settingsWindow.setIcon(browserWindowAppIconFilePathResolver.getAppIconFilePath()),
+        );
 
         await htmlLoader.loadHtmlFile(settingsWindow, "settings.html");
     }
