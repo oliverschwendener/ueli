@@ -27,7 +27,6 @@ export * from "./ImageGenerator";
 export * from "./IniFileParser";
 export * from "./LinuxDesktopEnvironment";
 export * from "./Logger";
-export * from "./NativeTheme";
 export * from "./OperatingSystem";
 export * from "./PowershellUtility";
 export * from "./RandomStringProvider";

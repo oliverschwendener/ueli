@@ -1,4 +1,5 @@
 import { useSetting } from "@Core/Hooks";
+import { ThemeContext } from "@Core/Theme/ThemeContext";
 import { getImageUrl } from "@Core/getImageUrl";
 import {
     Avatar,
@@ -19,10 +20,11 @@ import {
     useToastController,
 } from "@fluentui/react-components";
 import { ArrowClockwiseRegular } from "@fluentui/react-icons";
-import type { MouseEvent } from "react";
+import { useContext, type MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 export const Extensions = () => {
+    const { shouldUseDarkColors } = useContext(ThemeContext);
     const { t } = useTranslation();
     const toasterId = useId("rescanToasterId");
     const { dispatchToast } = useToastController(toasterId);
@@ -100,11 +102,7 @@ export const Extensions = () => {
                                                 <img
                                                     alt={name}
                                                     style={{ maxWidth: "100%", maxHeight: "100%" }}
-                                                    src={getImageUrl({
-                                                        image,
-                                                        shouldPreferDarkColors:
-                                                            window.ContextBridge.themeShouldUseDarkColors(),
-                                                    })}
+                                                    src={getImageUrl({ image, shouldUseDarkColors })}
                                                 />
                                             </div>
                                             {nameTranslation

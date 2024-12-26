@@ -7,17 +7,8 @@ export class SettingsWindowModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
         const ipcMain = dependencyRegistry.get("IpcMain");
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
-        const eventEmitter = dependencyRegistry.get("EventEmitter");
 
         const settingsWindow = await this.createSettingsWindow(dependencyRegistry);
-
-        settingsWindow.on("close", (event) => {
-            // Prevents the window from being destroyed, instead just hides it
-            event.preventDefault();
-            settingsWindow.hide();
-        });
-
-        eventEmitter.emitEvent("browserWindowCreated", { id: "settings", browserWindow: settingsWindow });
 
         ipcMain.on("openSettings", async () => {
             settingsWindow.focus();

@@ -1,12 +1,15 @@
 import { useFavorites, useSearchResultItems } from "@Core/Hooks";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
+import { ThemeContext } from "@Core/Theme/ThemeContext";
 import { getImageUrl } from "@Core/getImageUrl";
 import { Badge, Button, Input, Text, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { SettingGroup } from "../SettingGroup";
 
 export const Favorites = () => {
+    const { shouldUseDarkColors } = useContext(ThemeContext);
     const { t } = useTranslation("settingsFavorites");
     const { searchResultItems } = useSearchResultItems();
     const { favorites } = useFavorites();
@@ -33,10 +36,7 @@ export const Favorites = () => {
                                     <img
                                         alt={s.name}
                                         style={{ maxWidth: "100%", maxHeight: "100%" }}
-                                        src={getImageUrl({
-                                            image: s.image,
-                                            shouldPreferDarkColors: window.ContextBridge.themeShouldUseDarkColors(),
-                                        })}
+                                        src={getImageUrl({ image: s.image, shouldUseDarkColors })}
                                     />
                                 </div>
                             }

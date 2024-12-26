@@ -1,4 +1,4 @@
-import { ThemeContext } from "@Core/ThemeContext";
+import { ThemeContext } from "@Core/Theme/ThemeContext";
 import { getImageUrl } from "@Core/getImageUrl";
 import type { SearchResultItem } from "@common/Core";
 import { Text } from "@fluentui/react-components";
@@ -23,9 +23,9 @@ export const SearchResultListItem = ({
     searchResultItem,
     scrollBehavior,
 }: SearchResultListItemProps) => {
+    const { theme, shouldUseDarkColors } = useContext(ThemeContext);
     const { t } = useTranslation();
 
-    const { theme, shouldPreferDarkColors } = useContext(ThemeContext);
     const ref = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState<boolean>(false);
 
@@ -96,10 +96,7 @@ export const SearchResultListItem = ({
                         maxHeight: "100%",
                         maxWidth: "100%",
                     }}
-                    src={getImageUrl({
-                        image: searchResultItem.image,
-                        shouldPreferDarkColors,
-                    })}
+                    src={getImageUrl({ image: searchResultItem.image, shouldUseDarkColors })}
                 />
             </div>
             <Text

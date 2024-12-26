@@ -1,11 +1,6 @@
 import { teamsDarkTheme, teamsLightTheme, webDarkTheme, webLightTheme } from "@fluentui/react-components";
 import type { ThemeMap } from "./ThemeMap";
 
-export const defaultTheme = {
-    dark: webDarkTheme,
-    light: webLightTheme,
-};
-
 export const themeMap: ThemeMap = {
     "Microsoft Teams": {
         dark: { theme: teamsDarkTheme, accentColor: "#7F85F5" },

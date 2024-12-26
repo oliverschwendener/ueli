@@ -16,7 +16,5 @@ export const useExtensionSetting = <Value>({
         isSensitive,
     });
 
-    console.log("rerender", getExtensionSettingKey(extensionId, key));
-
     return { value, updateValue };
 };

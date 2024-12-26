@@ -1,11 +1,13 @@
 import { useSearchResultItems } from "@Core/Hooks";
+import { ThemeContext } from "@Core/Theme/ThemeContext";
 import { getImageUrl } from "@Core/getImageUrl";
 import { Badge, Button, Input, Text, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const ExcludedItems = () => {
+    const { shouldUseDarkColors } = useContext(ThemeContext);
     const { t } = useTranslation("settingsSearchEngine");
     const { searchResultItems } = useSearchResultItems();
 
@@ -30,10 +32,7 @@ export const ExcludedItems = () => {
                         <img
                             alt="Excluded search result item image"
                             style={{ width: 16, height: 16 }}
-                            src={getImageUrl({
-                                image,
-                                shouldPreferDarkColors: window.ContextBridge.themeShouldUseDarkColors(),
-                            })}
+                            src={getImageUrl({ image, shouldUseDarkColors })}
                         />
                     }
                     contentAfter={

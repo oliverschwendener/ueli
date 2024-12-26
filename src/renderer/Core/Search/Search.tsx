@@ -1,6 +1,6 @@
 import { KeyboardShortcut } from "@Core/Components";
 import { useSetting } from "@Core/Hooks";
-import { ThemeContext } from "@Core/ThemeContext";
+import { ThemeContext } from "@Core/Theme/ThemeContext";
 import type { SearchResultItem } from "@common/Core";
 import { Button, Text } from "@fluentui/react-components";
 import { SettingsRegular } from "@fluentui/react-icons";

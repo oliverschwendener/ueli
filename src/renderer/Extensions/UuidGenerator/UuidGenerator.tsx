@@ -1,15 +1,17 @@
 import { BaseLayout } from "@Core/BaseLayout";
 import type { ExtensionProps } from "@Core/ExtensionProps";
 import { Header } from "@Core/Header";
+import { ThemeContext } from "@Core/Theme/ThemeContext";
 import { getImageUrl } from "@Core/getImageUrl";
 import { Button, Text } from "@fluentui/react-components";
 import { ArrowLeftFilled, CopyRegular } from "@fluentui/react-icons";
 import type { KeyboardEvent } from "react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Generator } from "./Generator";
 
 export const UuidGenerator = ({ contextBridge, goBack }: ExtensionProps) => {
+    const { shouldUseDarkColors } = useContext(ThemeContext);
     const { t } = useTranslation("extension[UuidGenerator]");
     const extensionId = "UuidGenerator";
 
@@ -44,7 +46,7 @@ export const UuidGenerator = ({ contextBridge, goBack }: ExtensionProps) => {
                             alt="UUID Generator Logo"
                             src={getImageUrl({
                                 image: contextBridge.getExtension(extensionId).image,
-                                shouldPreferDarkColors: contextBridge.themeShouldUseDarkColors(),
+                                shouldUseDarkColors,
                             })}
                             style={{ width: 24 }}
                         />

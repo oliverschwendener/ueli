@@ -1,12 +1,10 @@
-import type { BrowserWindowBackgroundMaterialProvider, BrowserWindowVibrancyProvider } from "@Core/BrowserWindow";
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { EventSubscriber } from "@Core/EventSubscriber";
-import type { SettingsManager } from "@Core/SettingsManager";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
-import { type App, BrowserWindow, type IpcMain } from "electron";
+import { type App, BrowserWindow } from "electron";
 import { join } from "path";
 import { NavigateToActionHandler } from "./ActionHandler";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
@@ -26,7 +24,7 @@ export class SearchWindowModule {
         const app = dependencyRegistry.get("App");
         const operatingSystem = dependencyRegistry.get("OperatingSystem");
         const settingsManager = dependencyRegistry.get("SettingsManager");
-        const eventEmitter = dependencyRegistry.get("EventEmitter");
+        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const nativeTheme = dependencyRegistry.get("NativeTheme");
         const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
         const ipcMain = dependencyRegistry.get("IpcMain");
@@ -56,64 +54,18 @@ export class SearchWindowModule {
 
         const searchWindow = new BrowserWindow(browserWindowConstructorOptionsProviders[operatingSystem].get());
         searchWindow.setVisibleOnAllWorkspaces(settingsManager.getValue("window.visibleOnAllWorkspaces", false));
-        eventEmitter.emitEvent("browserWindowCreated", { id: "search", browserWindow: searchWindow });
 
         const browserWindowToggler = new BrowserWindowToggler(operatingSystem, app, searchWindow);
 
         nativeTheme.on("updated", () => searchWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
 
-        SearchWindowModule.registerBrowserWindowEventListeners(
-            browserWindowToggler,
-            searchWindow,
-            dependencyRegistry.get("SettingsManager"),
-        );
-
-        SearchWindowModule.registerEvents(
-            searchWindow,
-            dependencyRegistry.get("EventSubscriber"),
-            vibrancyProvider,
-            backgroundMaterialProvider,
-            browserWindowToggler,
-            settingsManager,
-            ipcMain,
-            app,
-        );
-
-        dependencyRegistry
-            .get("ActionHandlerRegistry")
-            .register(new NavigateToActionHandler(dependencyRegistry.get("EventEmitter")));
-
-        await SearchWindowModule.loadFileOrUrl(
-            app,
-            searchWindow,
-            dependencyRegistry.get("EnvironmentVariableProvider"),
-            "search.html",
-        );
-    }
-
-    private static registerBrowserWindowEventListeners(
-        browserWindowToggler: BrowserWindowToggler,
-        browserWindow: BrowserWindow,
-        settingsManager: SettingsManager,
-    ) {
         const shouldHideWindowOnBlur = () =>
             settingsManager
                 .getValue("window.hideWindowOn", SearchWindowModule.DefaultHideWindowOnOptions)
                 .includes("blur");
 
-        browserWindow.on("blur", () => shouldHideWindowOnBlur() && browserWindowToggler.hide());
-    }
+        searchWindow.on("blur", () => shouldHideWindowOnBlur() && browserWindowToggler.hide());
 
-    private static registerEvents(
-        browserWindow: BrowserWindow,
-        eventSubscriber: EventSubscriber,
-        vibrancyProvider: BrowserWindowVibrancyProvider,
-        backgroundMaterialProvider: BrowserWindowBackgroundMaterialProvider,
-        browserWindowToggler: BrowserWindowToggler,
-        settingsManager: SettingsManager,
-        ipcMain: IpcMain,
-        app: App,
-    ) {
         const shouldHideWindowAfterInvocation = (action: SearchResultItemAction) =>
             action.hideWindowAfterInvocation &&
             settingsManager
@@ -134,32 +86,32 @@ export class SearchWindowModule {
         eventSubscriber.subscribe("hotkeyPressed", () => browserWindowToggler.toggle());
 
         eventSubscriber.subscribe("settingUpdated", ({ key, value }: { key: string; value: unknown }) => {
-            browserWindow.webContents.send(`settingUpdated[${key}]`, { value });
+            searchWindow.webContents.send(`settingUpdated[${key}]`, { value });
         });
 
         eventSubscriber.subscribe("settingUpdated[window.alwaysOnTop]", ({ value }: { value: boolean }) => {
-            browserWindow.setAlwaysOnTop(value);
+            searchWindow.setAlwaysOnTop(value);
         });
 
         eventSubscriber.subscribe("settingUpdated[window.backgroundMaterial]", () => {
             const backgroundMaterial = backgroundMaterialProvider.get();
 
             if (backgroundMaterial) {
-                browserWindow.setBackgroundMaterial(backgroundMaterial);
+                searchWindow.setBackgroundMaterial(backgroundMaterial);
             }
         });
 
         eventSubscriber.subscribe("settingUpdated[window.vibrancy]", () => {
-            browserWindow.setVibrancy(vibrancyProvider.get());
+            searchWindow.setVibrancy(vibrancyProvider.get());
         });
 
         eventSubscriber.subscribe("settingUpdated[window.visibleOnAllWorkspaces]", ({ value }: { value: boolean }) => {
-            browserWindow.setVisibleOnAllWorkspaces(value);
+            searchWindow.setVisibleOnAllWorkspaces(value);
         });
 
         eventSubscriber.subscribe("navigateTo", (argument) => {
             browserWindowToggler.showAndFocus();
-            browserWindow.webContents.send("navigateTo", argument);
+            searchWindow.webContents.send("navigateTo", argument);
         });
 
         ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
@@ -172,7 +124,18 @@ export class SearchWindowModule {
             }
         });
 
-        SearchWindowModule.registerUeliCommandEvents(browserWindow, eventSubscriber, browserWindowToggler);
+        SearchWindowModule.registerUeliCommandEvents(searchWindow, eventSubscriber, browserWindowToggler);
+
+        dependencyRegistry
+            .get("ActionHandlerRegistry")
+            .register(new NavigateToActionHandler(dependencyRegistry.get("EventEmitter")));
+
+        await SearchWindowModule.loadFileOrUrl(
+            app,
+            searchWindow,
+            dependencyRegistry.get("EnvironmentVariableProvider"),
+            "search.html",
+        );
     }
 
     private static registerUeliCommandEvents(
@@ -211,14 +174,14 @@ export class SearchWindowModule {
 
     private static async loadFileOrUrl(
         app: App,
-        browserWindow: BrowserWindow,
+        searchWindow: BrowserWindow,
         environmentVariableProvider: EnvironmentVariableProvider,
         fileName: string,
     ) {
         if (app.isPackaged) {
-            await browserWindow.loadFile(join(__dirname, "..", "dist-renderer", fileName));
+            await searchWindow.loadFile(join(__dirname, "..", "dist-renderer", fileName));
         } else {
-            await browserWindow.loadURL(`${environmentVariableProvider.get("VITE_DEV_SERVER_URL")}/${fileName}`);
+            await searchWindow.loadURL(`${environmentVariableProvider.get("VITE_DEV_SERVER_URL")}/${fileName}`);
         }
     }
 }

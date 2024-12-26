@@ -76,7 +76,6 @@ if (!app.requestSingleInstanceLock()) {
     await Core.ImageGeneratorModule.bootstrap(dependencyRegistry);
     Core.TranslatorModule.bootstrap(dependencyRegistry);
     Core.SearchIndexModule.bootstrap(dependencyRegistry);
-    Core.NativeThemeModule.bootstrap(dependencyRegistry);
     Core.GlobalShortcutModule.bootstrap(dependencyRegistry);
     Core.AutostartModule.bootstrap(dependencyRegistry);
     Core.ExcludedSearchResultsModule.bootstrap(dependencyRegistry);

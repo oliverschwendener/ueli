@@ -2,16 +2,19 @@ import { BaseLayout } from "@Core/BaseLayout";
 import type { ExtensionProps } from "@Core/ExtensionProps";
 import { Header } from "@Core/Header";
 import { useExtensionSetting } from "@Core/Hooks";
+import { ThemeContext } from "@Core/Theme/ThemeContext";
 import { getImageUrl } from "@Core/getImageUrl";
 import { Button, Text, Tooltip } from "@fluentui/react-components";
 import { ArrowLeftFilled, CopyRegular, PersonRegular } from "@fluentui/react-icons";
 import type { KeyboardEvent } from "react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MissingApiKey } from "./MissingApiKey";
 import { Translator } from "./Translator";
 
 export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
+    const { shouldUseDarkColors } = useContext(ThemeContext);
+
     const extensionId = "DeeplTranslator";
 
     const { t } = useTranslation("extension[DeeplTranslator]");
@@ -66,7 +69,7 @@ export const DeeplTranslator = ({ contextBridge, goBack }: ExtensionProps) => {
                             alt="DeepL Logo"
                             src={getImageUrl({
                                 image: contextBridge.getExtension(extensionId).image,
-                                shouldPreferDarkColors: contextBridge.themeShouldUseDarkColors(),
+                                shouldUseDarkColors,
                             })}
                             style={{ width: 24 }}
                         />

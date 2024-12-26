@@ -1,4 +1,4 @@
-import { ThemeContext } from "@Core/ThemeContext";
+import { ThemeContext } from "@Core/Theme/ThemeContext";
 import { useContext } from "react";
 
 type KeyboardShortcutProps = {

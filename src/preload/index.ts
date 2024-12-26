@@ -46,7 +46,6 @@ const contextBridgeImplementation: ContextBridge = {
     removeFavorite: (id) => ipcRenderer.invoke("removeFavorite", { id }),
     resetAllSettings: () => ipcRenderer.invoke("resetAllSettings"),
     showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),
-    themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),
     triggerExtensionRescan: (extensionId) => ipcRenderer.invoke("triggerExtensionRescan", { extensionId }),
     updateSettingValue: (key, value, isSensitive) =>
         ipcRenderer.invoke("updateSettingValue", { key, value, isSensitive }),

@@ -3,12 +3,10 @@ import { createContext } from "react";
 
 type ThemeContextProps = {
     theme: Theme;
-    shouldPreferDarkColors: boolean;
-    setTheme: (theme: Theme) => void;
+    shouldUseDarkColors: boolean;
 };
 
 export const ThemeContext = createContext<ThemeContextProps>({
     theme: webDarkTheme,
-    shouldPreferDarkColors: false,
-    setTheme: () => null,
+    shouldUseDarkColors: true,
 });

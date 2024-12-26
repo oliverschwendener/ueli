@@ -1,31 +1,18 @@
 import { useScrollBar } from "@Core/Hooks";
 import { useI18n } from "@Core/I18n";
-import { getTheme } from "@Core/Theme";
-import { FluentProvider, type Theme } from "@fluentui/react-components";
-import { useEffect, useState } from "react";
+import { ThemeContext } from "@Core/Theme/ThemeContext";
+import { FluentProvider } from "@fluentui/react-components";
+import { useContext } from "react";
 import { Route, Routes } from "react-router";
 import { ExtensionSettings } from "./ExtensionSettings";
 import { Navigation } from "./Navigation";
 import { settingsPages } from "./Pages";
 
 export const Settings = () => {
-    const [theme, setTheme] = useState<Theme>(getTheme(window.ContextBridge));
+    const { theme } = useContext(ThemeContext);
 
     useI18n();
     useScrollBar({ document, theme });
-
-    useEffect(() => {
-        const nativeThemeChangedEventHandler = () => {
-            console.log("setting theme");
-            setTheme(getTheme(window.ContextBridge));
-        };
-
-        window.ContextBridge.ipcRenderer.on("nativeThemeChanged", nativeThemeChangedEventHandler);
-
-        return () => {
-            window.ContextBridge.ipcRenderer.off("nativeThemeChanged", nativeThemeChangedEventHandler);
-        };
-    }, []);
 
     return (
         <FluentProvider theme={theme} style={{ minHeight: "100vh" }}>

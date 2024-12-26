@@ -1,6 +1,8 @@
+import { ThemeContext } from "@Core/Theme/ThemeContext";
 import { getImageUrl } from "@Core/getImageUrl";
 import type { ExtensionInfo } from "@common/Core";
 import { Tab, TabList } from "@fluentui/react-components";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router";
 import type { SettingsPage } from "./Pages";
@@ -11,6 +13,7 @@ type NavigationProps = {
 };
 
 export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps) => {
+    const { shouldUseDarkColors } = useContext(ThemeContext);
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { pathname } = useLocation();
@@ -35,8 +38,8 @@ export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps
                     {t(translation.key, { ns: translation.namespace })}
                 </Tab>
             ))}
-            {enabledExtensions.map((e) => (
-                <Tab key={`extension-settings-tab-${e.id}`} value={`/extension/${e.id}`}>
+            {enabledExtensions.map(({ id, name, nameTranslation, image }) => (
+                <Tab key={`extension-settings-tab-${id}`} value={`/extension/${id}`}>
                     <div
                         style={{
                             display: "flex",
@@ -55,15 +58,12 @@ export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps
                             }}
                         >
                             <img
-                                alt={e.name}
+                                alt={name}
                                 style={{ maxWidth: "100%", maxHeight: "100%" }}
-                                src={getImageUrl({
-                                    image: e.image,
-                                    shouldPreferDarkColors: window.ContextBridge.themeShouldUseDarkColors(),
-                                })}
+                                src={getImageUrl({ image, shouldUseDarkColors })}
                             />
                         </div>
-                        {e.nameTranslation ? t(e.nameTranslation.key, { ns: e.nameTranslation.namespace }) : e.name}
+                        {nameTranslation ? t(nameTranslation.key, { ns: nameTranslation.namespace }) : name}
                     </div>
                 </Tab>
             ))}

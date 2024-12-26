@@ -49,7 +49,6 @@ export type ContextBridge = {
     removeFavorite: (id: string) => Promise<void>;
     resetAllSettings: () => Promise<void>;
     showOpenDialog: (options: OpenDialogOptions) => Promise<OpenDialogReturnValue>;
-    themeShouldUseDarkColors: () => boolean;
     triggerExtensionRescan: (extensionId: string) => Promise<void>;
     updateSettingValue: <Value>(key: string, value: Value, isSensitive?: boolean) => Promise<void>;
 };
