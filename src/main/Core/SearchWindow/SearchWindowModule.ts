@@ -1,10 +1,8 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
-import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
-import type { EventSubscriber } from "@Core/EventSubscriber";
 import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
-import { type App, BrowserWindow } from "electron";
+import { BrowserWindow } from "electron";
 import { join } from "path";
 import { NavigateToActionHandler } from "./ActionHandler";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
@@ -24,10 +22,15 @@ export class SearchWindowModule {
         const app = dependencyRegistry.get("App");
         const operatingSystem = dependencyRegistry.get("OperatingSystem");
         const settingsManager = dependencyRegistry.get("SettingsManager");
+        const eventEmitter = dependencyRegistry.get("EventEmitter");
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const nativeTheme = dependencyRegistry.get("NativeTheme");
         const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
         const ipcMain = dependencyRegistry.get("IpcMain");
+        const environmentVariableProvider = dependencyRegistry.get("EnvironmentVariableProvider");
+        const actionHandlerRegistry = dependencyRegistry.get("ActionHandlerRegistry");
+        const vibrancyProvider = dependencyRegistry.get("BrowserWindowVibrancyProvider");
+        const backgroundMaterialProvider = dependencyRegistry.get("BrowserWindowBackgroundMaterialProvider");
 
         const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, operatingSystem);
 
@@ -36,9 +39,6 @@ export class SearchWindowModule {
             settingsManager,
             appIconFilePathResolver,
         ).get();
-
-        const vibrancyProvider = dependencyRegistry.get("BrowserWindowVibrancyProvider");
-        const backgroundMaterialProvider = dependencyRegistry.get("BrowserWindowBackgroundMaterialProvider");
 
         const browserWindowConstructorOptionsProviders: Record<
             OperatingSystem,
@@ -124,31 +124,12 @@ export class SearchWindowModule {
             }
         });
 
-        SearchWindowModule.registerUeliCommandEvents(searchWindow, eventSubscriber, browserWindowToggler);
-
-        dependencyRegistry
-            .get("ActionHandlerRegistry")
-            .register(new NavigateToActionHandler(dependencyRegistry.get("EventEmitter")));
-
-        await SearchWindowModule.loadFileOrUrl(
-            app,
-            searchWindow,
-            dependencyRegistry.get("EnvironmentVariableProvider"),
-            "search.html",
-        );
-    }
-
-    private static registerUeliCommandEvents(
-        browserWindow: BrowserWindow,
-        eventSubscriber: EventSubscriber,
-        browserWindowToggler: BrowserWindowToggler,
-    ) {
         const eventHandlers: { ueliCommands: UeliCommand[]; handler: (argument: unknown) => void }[] = [
             {
                 ueliCommands: ["show"],
                 handler: (argument) => {
                     browserWindowToggler.showAndFocus();
-                    browserWindow.webContents.send("navigateTo", argument);
+                    searchWindow.webContents.send("navigateTo", argument);
                 },
             },
             {
@@ -159,7 +140,7 @@ export class SearchWindowModule {
             },
             {
                 ueliCommands: ["centerWindow"],
-                handler: () => browserWindow.center(),
+                handler: () => searchWindow.center(),
             },
         ];
 
@@ -170,18 +151,13 @@ export class SearchWindowModule {
                 }
             }
         });
-    }
 
-    private static async loadFileOrUrl(
-        app: App,
-        searchWindow: BrowserWindow,
-        environmentVariableProvider: EnvironmentVariableProvider,
-        fileName: string,
-    ) {
+        actionHandlerRegistry.register(new NavigateToActionHandler(eventEmitter));
+
         if (app.isPackaged) {
-            await searchWindow.loadFile(join(__dirname, "..", "dist-renderer", fileName));
+            await searchWindow.loadFile(join(__dirname, "..", "dist-renderer", "search.html"));
         } else {
-            await searchWindow.loadURL(`${environmentVariableProvider.get("VITE_DEV_SERVER_URL")}/${fileName}`);
+            await searchWindow.loadURL(`${environmentVariableProvider.get("VITE_DEV_SERVER_URL")}/${"search.html"}`);
         }
     }
 }
