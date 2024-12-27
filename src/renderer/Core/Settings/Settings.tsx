@@ -19,7 +19,6 @@ export const Settings = () => {
 
     useEffect(() => {
         const navigateToEventHandler = (_: IpcRendererEvent, { pathname }: { pathname: string }) => {
-            console.log("navigateToEventHandler", pathname);
             navigate({ pathname });
         };
 
