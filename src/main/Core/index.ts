@@ -5,6 +5,7 @@ export * from "./AssetPathResolver";
 export * from "./Autostart";
 export * from "./BrowserWindow";
 export * from "./BrowserWindowNotifier";
+export * from "./BrowserWindowRegistry";
 export * from "./Clipboard";
 export * from "./CommandlineSwitch";
 export * from "./CommandlineUtility";

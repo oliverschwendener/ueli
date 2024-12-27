@@ -32,8 +32,9 @@ export const App = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const navigateToEventHandler = (_: IpcRendererEvent, { pathname }: { pathname: string }) =>
+        const navigateToEventHandler = (_: IpcRendererEvent, { pathname }: { pathname: string }) => {
             navigate({ pathname });
+        };
 
         window.ContextBridge.ipcRenderer.on("navigateTo", navigateToEventHandler);
 

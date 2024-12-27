@@ -5,6 +5,7 @@ export * as Extension from "./Extension";
 export * from "./ExtensionInfo";
 export * from "./FluentIcon";
 export * from "./InstantSearchResultItems";
+export * from "./NavigateToArgument";
 export * from "./OperatingSystem";
 export * from "./SearchResultItem";
 export * from "./SearchResultItemAction";

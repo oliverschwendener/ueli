@@ -1,5 +1,6 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import { BrowserWindow } from "electron";
 import { join } from "path";
 
@@ -12,6 +13,9 @@ export class SettingsWindowModule {
         const ipcMain = dependencyRegistry.get("IpcMain");
         const nativeTheme = dependencyRegistry.get("NativeTheme");
         const translator = dependencyRegistry.get("Translator");
+        const browserWindowNotifier = dependencyRegistry.get("BrowserWindowNotifier");
+        const browserWindowRegistry = dependencyRegistry.get("BrowserWindowRegistry");
+        const eventEmitter = dependencyRegistry.get("EventEmitter");
 
         const getWindowTitle = () => {
             const { t } = translator.createT({
@@ -41,6 +45,16 @@ export class SettingsWindowModule {
             },
         });
 
+        browserWindowRegistry.register("settings", settingsWindow);
+
+        settingsWindow.on("close", (event) => {
+            // Prevents the window from being destroyed. Instead just hide.
+            event.preventDefault();
+            settingsWindow.hide();
+
+            eventEmitter.emitEvent("settingsWindowClosed");
+        });
+
         ipcMain.on("openSettings", async () => {
             settingsWindow.focus();
             settingsWindow.show();
@@ -53,6 +67,22 @@ export class SettingsWindowModule {
         eventSubscriber.subscribe("settingUpdated[general.language]", () => {
             settingsWindow.setTitle(getWindowTitle());
         });
+
+        eventSubscriber.subscribe(
+            "ueliCommandInvoked",
+            ({ ueliCommand, argument: { pathname } }: UeliCommandInvokedEvent<{ pathname: string }>) => {
+                if (["openAbout", "openExtensions", "openSettings"].includes(ueliCommand)) {
+                    settingsWindow.show();
+                    settingsWindow.focus();
+
+                    browserWindowNotifier.notify({
+                        browserWindowId: "settings",
+                        channel: "navigateTo",
+                        data: { pathname },
+                    });
+                }
+            },
+        );
 
         nativeTheme.on("updated", () =>
             settingsWindow.setIcon(browserWindowAppIconFilePathResolver.getAppIconFilePath()),

@@ -22,12 +22,12 @@ export class InMemorySearchIndex implements SearchIndex {
 
     public addSearchResultItems(extensionId: string, searchResultItems: SearchResultItem[]): void {
         this.index[extensionId] = searchResultItems;
-        this.browserWindowNotifier.notify("searchIndexUpdated");
+        this.browserWindowNotifier.notifyAll({ channel: "searchIndexUpdated" });
     }
 
     public removeSearchResultItems(extensionId: string): void {
         delete this.index[extensionId];
-        this.browserWindowNotifier.notify("searchIndexUpdated");
+        this.browserWindowNotifier.notifyAll({ channel: "searchIndexUpdated" });
     }
 
     public getIndex(): InMemoryIndex {

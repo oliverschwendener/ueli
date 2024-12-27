@@ -21,6 +21,6 @@ export class CopyToClipboardActionHandler implements ActionHandler {
      */
     public async invokeAction(action: SearchResultItemAction): Promise<void> {
         this.clipboard.writeText(action.argument);
-        this.browserWindowNotifier.notify("copiedToClipboard");
+        this.browserWindowNotifier.notifyAll({ channel: "copiedToClipboard" });
     }
 }

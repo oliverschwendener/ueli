@@ -1,5 +1,6 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import { NavigateToActionHandler } from "./ActionHandler";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 import { BackgroundMaterialProvider } from "./BackgroundMaterial";
 import { HtmlLoader } from "./HtmlLoader";
@@ -7,6 +8,8 @@ import { VibrancyProvider } from "./Vibrancy";
 
 export class BrowserWindowModule {
     public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
+        const actionHandlerRegistry = dependencyRegistry.get("ActionHandlerRegistry");
+
         dependencyRegistry.register(
             "BrowserWindowBackgroundMaterialProvider",
             new BackgroundMaterialProvider(dependencyRegistry.get("SettingsManager")),
@@ -30,5 +33,7 @@ export class BrowserWindowModule {
                 dependencyRegistry.get("OperatingSystem"),
             ),
         );
+
+        actionHandlerRegistry.register(new NavigateToActionHandler(dependencyRegistry.get("BrowserWindowNotifier")));
     }
 }

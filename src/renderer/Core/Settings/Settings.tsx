@@ -2,8 +2,9 @@ import { useScrollBar } from "@Core/Hooks";
 import { useI18n } from "@Core/I18n";
 import { ThemeContext } from "@Core/Theme/ThemeContext";
 import { FluentProvider } from "@fluentui/react-components";
-import { useContext } from "react";
-import { Route, Routes } from "react-router";
+import type { IpcRendererEvent } from "electron";
+import { useContext, useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router";
 import { ExtensionSettings } from "./ExtensionSettings";
 import { Navigation } from "./Navigation";
 import { settingsPages } from "./Pages";
@@ -13,6 +14,21 @@ export const Settings = () => {
 
     useI18n();
     useScrollBar({ document, theme });
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const navigateToEventHandler = (_: IpcRendererEvent, { pathname }: { pathname: string }) => {
+            console.log("navigateToEventHandler", pathname);
+            navigate({ pathname });
+        };
+
+        window.ContextBridge.ipcRenderer.on("navigateTo", navigateToEventHandler);
+
+        return () => {
+            window.ContextBridge.ipcRenderer.off("navigateTo", navigateToEventHandler);
+        };
+    }, []);
 
     return (
         <FluentProvider theme={theme} style={{ minHeight: "100vh" }}>

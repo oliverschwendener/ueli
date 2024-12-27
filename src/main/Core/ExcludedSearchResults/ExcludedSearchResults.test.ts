@@ -20,9 +20,9 @@ describe(ExcludedSearchResults, () => {
     it("should add an item", async () => {
         const getValueMock = vi.fn().mockReturnValue([]);
         const updateValueMock = vi.fn().mockReturnValue(Promise.resolve());
-        const notifyMock = vi.fn();
+        const notifyAllMock = vi.fn();
 
-        const eventEmitter = <BrowserWindowNotifier>{ notify: (c) => notifyMock(c) };
+        const eventEmitter = <BrowserWindowNotifier>{ notifyAll: (a) => notifyAllMock(a) };
 
         const settingsManager = <SettingsManager>{
             getValue: (key, defaultValue) => getValueMock(key, defaultValue),
@@ -35,7 +35,7 @@ describe(ExcludedSearchResults, () => {
 
         expect(excludedSearchResults.getExcludedIds()).toEqual(["item1"]);
         expect(updateValueMock).toHaveBeenCalledWith("searchEngine.excludedItems", ["item1"]);
-        expect(notifyMock).toHaveBeenCalledWith("excludedSearchResultItemsUpdated");
+        expect(notifyAllMock).toHaveBeenCalledWith({ channel: "excludedSearchResultItemsUpdated" });
     });
 
     it("should remove an item", async () => {
@@ -43,7 +43,7 @@ describe(ExcludedSearchResults, () => {
         const updateValueMock = vi.fn().mockReturnValue(Promise.resolve());
         const notifyMock = vi.fn();
 
-        const eventEmitter = <BrowserWindowNotifier>{ notify: (c) => notifyMock(c) };
+        const eventEmitter = <BrowserWindowNotifier>{ notifyAll: (a) => notifyMock(a) };
 
         const settingsManager = <SettingsManager>{
             getValue: (key, defaultValue) => getValueMock(key, defaultValue),
@@ -56,6 +56,6 @@ describe(ExcludedSearchResults, () => {
 
         expect(excludedSearchResults.getExcludedIds()).toEqual([]);
         expect(updateValueMock).toHaveBeenCalledWith("searchEngine.excludedItems", []);
-        expect(notifyMock).toHaveBeenCalledWith("excludedSearchResultItemsUpdated");
+        expect(notifyMock).toHaveBeenCalledWith({ channel: "excludedSearchResultItemsUpdated" });
     });
 });

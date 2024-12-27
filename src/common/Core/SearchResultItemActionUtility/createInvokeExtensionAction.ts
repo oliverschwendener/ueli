@@ -1,4 +1,4 @@
-import type { FluentIcon, SearchResultItemAction } from "@common/Core";
+import type { FluentIcon, NavigateToArgument, SearchResultItemAction } from "@common/Core";
 
 /**
  * Creates an action to navigate to the given extension by its ID.
@@ -13,7 +13,10 @@ export const createInvokeExtensionAction = ({
     description: string;
     fluentIcon?: FluentIcon;
 }): SearchResultItemAction => ({
-    argument: `/extension/${extensionId}`,
+    argument: JSON.stringify(<NavigateToArgument>{
+        browserWindowId: "search",
+        pathname: `/extension/${extensionId}`,
+    }),
     description,
     handlerId: "navigateTo",
     fluentIcon,

@@ -33,7 +33,7 @@ export class UeliCommandInvoker implements UeliCommandInvokerInterface {
                     ueliCommand: "openAbout",
                     argument: { pathname: "/about" },
                 }),
-            quit: async () => this.app.quit(),
+            quit: async () => this.app.exit(),
             show: async () =>
                 this.emitUeliCommandInvokedEvent({
                     ueliCommand: "show",
@@ -42,7 +42,7 @@ export class UeliCommandInvoker implements UeliCommandInvokerInterface {
             centerWindow: () =>
                 this.emitUeliCommandInvokedEvent({
                     ueliCommand: "centerWindow",
-                    argument: {},
+                    argument: null,
                 }),
             rescanExtensions: () =>
                 this.emitUeliCommandInvokedEvent({

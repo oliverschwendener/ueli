@@ -1,9 +1,8 @@
 import type { Dependencies } from "@Core/Dependencies";
 import type { DependencyRegistry } from "@Core/DependencyRegistry";
-import type { UeliCommand, UeliCommandInvokedEvent } from "@Core/UeliCommand";
+import type { UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
 import { BrowserWindow } from "electron";
-import { NavigateToActionHandler } from "./ActionHandler";
 import type { BrowserWindowConstructorOptionsProvider } from "./BrowserWindowConstructorOptionsProvider";
 import {
     DefaultBrowserWindowConstructorOptionsProvider,
@@ -17,11 +16,9 @@ export class SearchWindowModule {
     private static readonly DefaultHideWindowOnOptions = ["blur", "afterInvocation", "escapePressed"];
 
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const actionHandlerRegistry = dependencyRegistry.get("ActionHandlerRegistry");
         const app = dependencyRegistry.get("App");
         const appIconFilePathResolver = dependencyRegistry.get("BrowserWindowAppIconFilePathResolver");
         const backgroundMaterialProvider = dependencyRegistry.get("BrowserWindowBackgroundMaterialProvider");
-        const eventEmitter = dependencyRegistry.get("EventEmitter");
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const htmlLoader = dependencyRegistry.get("BrowserWindowHtmlLoader");
         const ipcMain = dependencyRegistry.get("IpcMain");
@@ -29,6 +26,7 @@ export class SearchWindowModule {
         const operatingSystem = dependencyRegistry.get("OperatingSystem");
         const settingsManager = dependencyRegistry.get("SettingsManager");
         const vibrancyProvider = dependencyRegistry.get("BrowserWindowVibrancyProvider");
+        const browserWindowRegistry = dependencyRegistry.get("BrowserWindowRegistry");
 
         const defaultBrowserWindowOptions = new DefaultBrowserWindowConstructorOptionsProvider(
             app,
@@ -49,18 +47,37 @@ export class SearchWindowModule {
         };
 
         const searchWindow = new BrowserWindow(browserWindowConstructorOptionsProviders[operatingSystem].get());
+
+        browserWindowRegistry.register("search", searchWindow);
+
         searchWindow.setVisibleOnAllWorkspaces(settingsManager.getValue("window.visibleOnAllWorkspaces", false));
 
         const browserWindowToggler = new BrowserWindowToggler(operatingSystem, app, searchWindow);
 
         nativeTheme.on("updated", () => searchWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
 
+        const settingsWindowIsVisible = () => {
+            const settingsWindow = browserWindowRegistry.getById("settings");
+
+            if (settingsWindow) {
+                return !settingsWindow.isDestroyed() && settingsWindow.isVisible();
+            }
+
+            return false;
+        };
+
         const shouldHideWindowOnBlur = () =>
             settingsManager
                 .getValue("window.hideWindowOn", SearchWindowModule.DefaultHideWindowOnOptions)
-                .includes("blur");
+                .includes("blur") && !settingsWindowIsVisible();
 
         searchWindow.on("blur", () => shouldHideWindowOnBlur() && browserWindowToggler.hide());
+
+        searchWindow.on("close", (event) => {
+            // Prevents the window from being destroyed. Instead just hide it.
+            event.preventDefault();
+            browserWindowToggler.hide();
+        });
 
         const shouldHideWindowAfterInvocation = (action: SearchResultItemAction) =>
             action.hideWindowAfterInvocation &&
@@ -72,6 +89,12 @@ export class SearchWindowModule {
             settingsManager
                 .getValue("window.hideWindowOn", SearchWindowModule.DefaultHideWindowOnOptions)
                 .includes("escapePressed");
+
+        eventSubscriber.subscribe("settingsWindowClosed", () => {
+            if (searchWindow.isVisible() && !searchWindow.isFocused()) {
+                browserWindowToggler.showAndFocus();
+            }
+        });
 
         eventSubscriber.subscribe("actionInvoked", ({ action }: { action: SearchResultItemAction }) => {
             if (shouldHideWindowAfterInvocation(action)) {
@@ -105,11 +128,6 @@ export class SearchWindowModule {
             searchWindow.setVisibleOnAllWorkspaces(value);
         });
 
-        eventSubscriber.subscribe("navigateTo", (argument) => {
-            browserWindowToggler.showAndFocus();
-            searchWindow.webContents.send("navigateTo", argument);
-        });
-
         ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
 
         app.on("second-instance", (_, argv) => {
@@ -120,35 +138,16 @@ export class SearchWindowModule {
             }
         });
 
-        const eventHandlers: { ueliCommands: UeliCommand[]; handler: (argument: unknown) => void }[] = [
-            {
-                ueliCommands: ["show"],
-                handler: (argument) => {
-                    browserWindowToggler.showAndFocus();
-                    searchWindow.webContents.send("navigateTo", argument);
-                },
-            },
-            {
-                ueliCommands: ["openAbout", "openExtensions", "openSettings"],
-                handler: (argument) => {
-                    console.log("show settings window", argument);
-                },
-            },
-            {
-                ueliCommands: ["centerWindow"],
-                handler: () => searchWindow.center(),
-            },
-        ];
+        eventSubscriber.subscribe("ueliCommandInvoked", ({ ueliCommand }: UeliCommandInvokedEvent<unknown>) => {
+            const map: Record<string, () => void> = {
+                show: () => browserWindowToggler.showAndFocus(),
+                centerWindow: () => searchWindow.center(),
+            };
 
-        eventSubscriber.subscribe("ueliCommandInvoked", (event: UeliCommandInvokedEvent<unknown>) => {
-            for (const eventHandler of eventHandlers) {
-                if (eventHandler.ueliCommands.includes(event.ueliCommand)) {
-                    eventHandler.handler(event.argument);
-                }
+            if (Object.keys(map).includes(ueliCommand)) {
+                map[ueliCommand]();
             }
         });
-
-        actionHandlerRegistry.register(new NavigateToActionHandler(eventEmitter));
 
         await htmlLoader.loadHtmlFile(searchWindow, "search.html");
     }
