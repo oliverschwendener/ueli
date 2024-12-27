@@ -1,7 +1,7 @@
 import { ThemeContext } from "@Core/Theme/ThemeContext";
 import { getImageUrl } from "@Core/getImageUrl";
 import type { SearchResultItem } from "@common/Core";
-import { Text } from "@fluentui/react-components";
+import { Text, tokens } from "@fluentui/react-components";
 import { useContext, useEffect, useRef, useState, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import { elementIsVisible } from "./Helpers";
@@ -23,7 +23,7 @@ export const SearchResultListItem = ({
     searchResultItem,
     scrollBehavior,
 }: SearchResultListItemProps) => {
-    const { theme, shouldUseDarkColors } = useContext(ThemeContext);
+    const { shouldUseDarkColors } = useContext(ThemeContext);
     const { t } = useTranslation();
 
     const ref = useRef<HTMLDivElement>(null);
@@ -35,8 +35,8 @@ export const SearchResultListItem = ({
         }
     };
 
-    const selectedBackgroundColor = theme.colorNeutralBackground1Selected;
-    const hoveredBackgroundColor = theme.colorNeutralBackground1Hover;
+    const selectedBackgroundColor = tokens.colorNeutralBackground1Selected;
+    const hoveredBackgroundColor = tokens.colorNeutralBackground1Hover;
 
     useEffect(scrollIntoViewIfSelectedAndNotVisible, [isSelected]);
 
@@ -52,7 +52,7 @@ export const SearchResultListItem = ({
                 position: "relative",
                 backgroundColor: isSelected ? selectedBackgroundColor : isHovered ? hoveredBackgroundColor : undefined,
                 boxSizing: "border-box",
-                color: isSelected ? theme.colorNeutralForeground1Selected : undefined,
+                color: isSelected ? tokens.colorNeutralForeground1Selected : undefined,
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
@@ -62,7 +62,7 @@ export const SearchResultListItem = ({
                 width: "100%",
                 padding: 10,
                 userSelect: "none",
-                borderRadius: theme.borderRadiusMedium,
+                borderRadius: tokens.borderRadiusMedium,
                 cursor: "pointer",
             }}
         >
@@ -71,11 +71,11 @@ export const SearchResultListItem = ({
                     position: "absolute",
                     left: 0,
                     top: "50%",
-                    backgroundColor: isSelected ? theme.colorBrandForeground1 : "transparent",
+                    backgroundColor: isSelected ? tokens.colorBrandForeground1 : "transparent",
                     height: "45%",
                     width: 3,
                     transform: "translateY(-50%)",
-                    borderRadius: theme.borderRadiusLarge,
+                    borderRadius: tokens.borderRadiusLarge,
                 }}
             ></div>
             <div

@@ -1,6 +1,6 @@
-import type { Theme } from "@fluentui/react-components";
+import { tokens } from "@fluentui/react-components";
 
-export const useScrollBar = ({ document, theme }: { document: Document; theme: Theme }) => {
-    document.body.style.setProperty("--scrollbar-background-color", theme.colorNeutralBackground4);
-    document.body.style.setProperty("--scrollbar-foreground-color", theme.colorNeutralForeground4);
+export const useScrollBar = ({ document }: { document: Document }) => {
+    document.body.style.setProperty("--scrollbar-background-color", tokens.colorNeutralBackground4);
+    document.body.style.setProperty("--scrollbar-foreground-color", tokens.colorNeutralForeground4);
 };

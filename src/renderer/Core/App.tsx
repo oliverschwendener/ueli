@@ -10,7 +10,7 @@ import { ThemeContext } from "./Theme/ThemeContext";
 import { getAppCssProperties } from "./getAppCssProperties";
 
 export const App = () => {
-    const { theme, shouldUseDarkColors } = useContext(ThemeContext);
+    const { fluentUiTheme, shouldUseDarkColors } = useContext(ThemeContext);
     const { searchResultItems } = useSearchResultItems();
     const { excludedSearchResultItemIds } = useExcludedSearchResultItems();
     const { favorites } = useFavorites();
@@ -27,7 +27,7 @@ export const App = () => {
     });
 
     useI18n();
-    useScrollBar({ document, theme });
+    useScrollBar({ document });
 
     const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ export const App = () => {
     }, []);
 
     return (
-        <FluentProvider theme={theme} style={appCssProperties}>
+        <FluentProvider theme={fluentUiTheme} style={appCssProperties}>
             <Routes>
                 <Route
                     path="/"

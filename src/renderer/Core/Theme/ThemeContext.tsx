@@ -1,12 +1,8 @@
-import { webDarkTheme, type Theme } from "@fluentui/react-components";
+import { webDarkTheme } from "@fluentui/react-components";
 import { createContext } from "react";
-
-type ThemeContextProps = {
-    theme: Theme;
-    shouldUseDarkColors: boolean;
-};
+import type { ThemeContextProps } from "./ThemeContextProps";
 
 export const ThemeContext = createContext<ThemeContextProps>({
-    theme: webDarkTheme,
+    fluentUiTheme: webDarkTheme,
     shouldUseDarkColors: true,
 });

@@ -10,10 +10,10 @@ import { Navigation } from "./Navigation";
 import { settingsPages } from "./Pages";
 
 export const Settings = () => {
-    const { theme } = useContext(ThemeContext);
+    const { fluentUiTheme } = useContext(ThemeContext);
 
     useI18n();
-    useScrollBar({ document, theme });
+    useScrollBar({ document });
 
     const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ export const Settings = () => {
     }, []);
 
     return (
-        <FluentProvider theme={theme} style={{ minHeight: "100vh" }}>
+        <FluentProvider theme={fluentUiTheme} style={{ minHeight: "100vh" }}>
             <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
                 <div
                     style={{

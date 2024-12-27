@@ -1,10 +1,9 @@
 import { KeyboardShortcut } from "@Core/Components";
 import { useSetting } from "@Core/Hooks";
-import { ThemeContext } from "@Core/Theme/ThemeContext";
 import type { SearchResultItem } from "@common/Core";
-import { Button, Text } from "@fluentui/react-components";
+import { Button, Text, tokens } from "@fluentui/react-components";
 import { SettingsRegular } from "@fluentui/react-icons";
-import { useContext, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { BaseLayout } from "../BaseLayout";
 import { Footer } from "../Footer";
@@ -32,7 +31,6 @@ export const Search = ({
     favoriteSearchResultItemIds,
 }: SearchProps) => {
     const { t } = useTranslation("search");
-    const { theme } = useContext(ThemeContext);
 
     const [additionalActionsMenuIsOpen, setAdditionalActionsMenuIsOpen] = useState(false);
 
@@ -294,7 +292,7 @@ export const Search = ({
                                             <Text
                                                 size={200}
                                                 weight="medium"
-                                                style={{ color: theme.colorNeutralForeground4 }}
+                                                style={{ color: tokens.colorNeutralForeground4 }}
                                             >
                                                 {t(`searchResultGroup.${group}`)}
                                             </Text>
