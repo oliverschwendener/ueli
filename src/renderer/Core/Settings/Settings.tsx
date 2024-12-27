@@ -13,7 +13,7 @@ export const Settings = () => {
     const { fluentUiTheme } = useContext(ThemeContext);
 
     useI18n();
-    useScrollBar({ document });
+    useScrollBar({ fluentUiTheme });
 
     const navigate = useNavigate();
 
@@ -51,6 +51,7 @@ export const Settings = () => {
                                 padding: 10,
                                 gap: 20,
                                 boxSizing: "border-box",
+                                height: "100vh",
                                 overflowX: "auto",
                                 overflowY: "auto",
                             }}
@@ -63,7 +64,7 @@ export const Settings = () => {
                     </div>
                     <div
                         style={{
-                            height: "100%",
+                            height: "100vh",
                             flexGrow: 1,
                             overflowY: "auto",
                             padding: 20,

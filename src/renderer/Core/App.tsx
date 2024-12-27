@@ -27,7 +27,7 @@ export const App = () => {
     });
 
     useI18n();
-    useScrollBar({ document });
+    useScrollBar({ fluentUiTheme });
 
     const navigate = useNavigate();
 
