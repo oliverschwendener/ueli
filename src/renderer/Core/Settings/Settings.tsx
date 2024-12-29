@@ -55,10 +55,7 @@ export const Settings = () => {
                                 overflowY: "auto",
                             }}
                         >
-                            <Navigation
-                                settingsPages={settingsPages}
-                                enabledExtensions={window.ContextBridge.getEnabledExtensions()}
-                            />
+                            <Navigation settingsPages={settingsPages} />
                         </div>
                     </div>
                     <div

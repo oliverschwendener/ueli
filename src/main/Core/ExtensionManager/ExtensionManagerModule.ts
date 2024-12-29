@@ -15,12 +15,13 @@ const mapExtensionToInfo = (extension: Extension): ExtensionInfo => ({
 
 export class ExtensionManagerModule {
     public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const ipcMain = dependencyRegistry.get("IpcMain");
-        const searchIndex = dependencyRegistry.get("SearchIndex");
-        const settingsManager = dependencyRegistry.get("SettingsManager");
-        const logger = dependencyRegistry.get("Logger");
+        const browserWindowNotifier = dependencyRegistry.get("BrowserWindowNotifier");
         const eventSubscriber = dependencyRegistry.get("EventSubscriber");
         const extensionRegistry = dependencyRegistry.get("ExtensionRegistry");
+        const ipcMain = dependencyRegistry.get("IpcMain");
+        const logger = dependencyRegistry.get("Logger");
+        const searchIndex = dependencyRegistry.get("SearchIndex");
+        const settingsManager = dependencyRegistry.get("SettingsManager");
 
         const scanCounter = new ScanCounter();
 
@@ -45,8 +46,13 @@ export class ExtensionManagerModule {
             event.returnValue = extensionManager.getInstantSearchResultItems(searchTerm);
         });
 
-        ipcMain.on("extensionEnabled", (_, { extensionId }: { extensionId: string }) => {
+        ipcMain.on("extensionEnabled", async (_, { extensionId }: { extensionId: string }) => {
             extensionManager.populateSearchIndexByExtensionId(extensionId);
+            browserWindowNotifier.notifyAll({ channel: "extensionEnabled", data: { extensionId } });
+        });
+
+        ipcMain.on("extensionDisabled", async (_, { extensionId }: { extensionId: string }) => {
+            browserWindowNotifier.notifyAll({ channel: "extensionDisabled", data: { extensionId } });
         });
 
         ipcMain.on("getAvailableExtensions", (event) => {
