@@ -33,7 +33,7 @@ export class UeliCommandInvoker implements UeliCommandInvokerInterface {
                     ueliCommand: "openAbout",
                     argument: { pathname: "/about" },
                 }),
-            quit: async () => this.app.exit(),
+            quit: async () => this.app.quit(),
             show: async () =>
                 this.emitUeliCommandInvokedEvent({
                     ueliCommand: "show",

@@ -4,6 +4,12 @@ import type { BrowserWindowRegistry as BrowserWindowRegistryInterface } from "./
 export class BrowserWindowRegistry implements BrowserWindowRegistryInterface {
     private browserWindows: Record<string, BrowserWindow> = {};
 
+    public remove(id: string): void {
+        if (Object.keys(this.browserWindows).includes(id)) {
+            delete this.browserWindows[id];
+        }
+    }
+
     public register(id: string, window: BrowserWindow): void {
         if (Object.keys(this.browserWindows).includes(id)) {
             throw new Error(`BrowserWindow with id ${id} already registered`);
@@ -12,14 +18,8 @@ export class BrowserWindowRegistry implements BrowserWindowRegistryInterface {
         this.browserWindows[id] = window;
     }
 
-    public getById(id: string): BrowserWindow {
-        const browserWindow: BrowserWindow | undefined = this.browserWindows[id];
-
-        if (!browserWindow) {
-            throw new Error(`BrowserWindow with id ${id} not found`);
-        }
-
-        return browserWindow;
+    public getById(id: string): BrowserWindow | undefined {
+        return this.browserWindows[id];
     }
 
     public getAll(): BrowserWindow[] {

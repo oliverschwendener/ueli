@@ -7,7 +7,7 @@ export class BrowserWindowNotifier implements BrowserWindowNotifierInterface {
     public notify<T>({ browserWindowId, channel, data }: { browserWindowId: string; channel: string; data?: T }) {
         const browserWindow = this.browserWindowRegistry.getById(browserWindowId);
 
-        if (!browserWindow.isDestroyed()) {
+        if (browserWindow && !browserWindow.isDestroyed()) {
             browserWindow.webContents.send(channel, data);
         }
     }

@@ -48,6 +48,8 @@ export class SearchWindowModule {
 
         const searchWindow = new BrowserWindow(browserWindowConstructorOptionsProviders[operatingSystem].get());
 
+        searchWindow.on("close", () => browserWindowRegistry.getById("settings")?.close());
+
         browserWindowRegistry.register("search", searchWindow);
 
         searchWindow.setVisibleOnAllWorkspaces(settingsManager.getValue("window.visibleOnAllWorkspaces", false));
@@ -58,12 +60,7 @@ export class SearchWindowModule {
 
         const settingsWindowIsVisible = () => {
             const settingsWindow = browserWindowRegistry.getById("settings");
-
-            if (settingsWindow) {
-                return !settingsWindow.isDestroyed() && settingsWindow.isVisible();
-            }
-
-            return false;
+            return settingsWindow && !settingsWindow.isDestroyed() && settingsWindow.isVisible();
         };
 
         const shouldHideWindowOnBlur = () =>
@@ -72,12 +69,6 @@ export class SearchWindowModule {
                 .includes("blur") && !settingsWindowIsVisible();
 
         searchWindow.on("blur", () => shouldHideWindowOnBlur() && browserWindowToggler.hide());
-
-        searchWindow.on("close", (event) => {
-            // Prevents the window from being destroyed. Instead just hide it.
-            event.preventDefault();
-            browserWindowToggler.hide();
-        });
 
         const shouldHideWindowAfterInvocation = (action: SearchResultItemAction) =>
             action.hideWindowAfterInvocation &&
