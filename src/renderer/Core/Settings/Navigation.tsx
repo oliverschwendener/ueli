@@ -25,6 +25,7 @@ export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps
             selectedValue={pathname}
             onNavItemSelect={(_, { value }) => navigate(value)}
             size="small"
+            style={{ height: "100%" }}
         >
             <NavDrawerBody>
                 <NavSectionHeader>{t("generalSettings", { ns: "general" })}</NavSectionHeader>
