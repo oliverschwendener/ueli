@@ -39,8 +39,8 @@ export class SettingsWindowManager {
     private async createBrowserWindow(): Promise<BrowserWindow> {
         const settingsWindow = new BrowserWindow({
             show: false,
-            height: 700,
-            width: 900,
+            height: 800,
+            width: 1000,
             autoHideMenuBar: true,
             icon: this.browserWindowAppIconFilePathResolver.getAppIconFilePath(),
             title: this.getWindowTitle(),
@@ -63,6 +63,10 @@ export class SettingsWindowManager {
         settingsWindow.on("close", () => {
             this.browserWindowRegistry.remove(SettingsWindowManager.SettingsWindowId);
             this.eventEmitter.emitEvent("settingsWindowClosed");
+        });
+
+        settingsWindow.on("resized", () => {
+            console.log(settingsWindow.getBounds());
         });
 
         await this.htmlLoader.loadHtmlFile(settingsWindow, "settings.html");
