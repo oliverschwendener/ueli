@@ -28,6 +28,8 @@ export class SettingsWindowModule {
 
         const settingsWindow = new BrowserWindow({
             show: false,
+            height: 700,
+            width: 900,
             autoHideMenuBar: true,
             icon: browserWindowAppIconFilePathResolver.getAppIconFilePath(),
             title: getWindowTitle(),

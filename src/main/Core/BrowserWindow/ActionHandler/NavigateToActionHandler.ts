@@ -12,7 +12,7 @@ export class NavigateToActionHandler implements ActionHandler {
 
     /**
      * Navigates to the given path in the renderer process.
-     * Expects the given action's argument to be a valid path, e.g.: "/general".
+     * Expects the given action's argument to be a valid path, e.g.: "/my/path".
      */
     public async invokeAction(action: SearchResultItemAction): Promise<void> {
         const { browserWindowId, pathname }: NavigateToArgument = JSON.parse(action.argument);

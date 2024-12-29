@@ -1,7 +1,7 @@
-import { ThemeContext } from "@Core/Theme/ThemeContext";
-import { getImageUrl } from "@Core/getImageUrl";
 import type { ExtensionInfo } from "@common/Core";
-import { Tab, TabList } from "@fluentui/react-components";
+import { getImageUrl } from "@Core/getImageUrl";
+import { ThemeContext } from "@Core/Theme";
+import { NavDivider, NavDrawer, NavDrawerBody, NavItem, NavSectionHeader } from "@fluentui/react-nav-preview";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router";
@@ -19,54 +19,49 @@ export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps
     const { pathname } = useLocation();
 
     return (
-        <TabList
+        <NavDrawer
+            open
+            type="inline"
             selectedValue={pathname}
-            onTabSelect={(_, { value }) => navigate({ pathname: value as string })}
-            vertical
-            appearance="subtle"
-            style={{ width: "100%" }}
-            selectTabOnFocus
+            onNavItemSelect={(_, { value }) => navigate(value)}
+            size="small"
         >
-            {settingsPages.map(({ translation, absolutePath, icon }, i) => (
-                <Tab
-                    autoFocus={i === 0}
-                    style={{ marginBottom: settingsPages.length - 1 === i ? 10 : undefined }}
-                    key={`settings-page-tab-${absolutePath}`}
-                    value={absolutePath}
-                    icon={icon}
-                >
-                    {t(translation.key, { ns: translation.namespace })}
-                </Tab>
-            ))}
-            {enabledExtensions.map(({ id, name, nameTranslation, image }) => (
-                <Tab key={`extension-settings-tab-${id}`} value={`/extension/${id}`}>
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            gap: 10,
-                        }}
+            <NavDrawerBody>
+                <NavSectionHeader>{t("generalSettings", { ns: "general" })}</NavSectionHeader>
+                {settingsPages.map(({ translation, absolutePath, icon }) => (
+                    <NavItem key={`settings-page-tab-${absolutePath}`} value={absolutePath} icon={icon}>
+                        {t(translation.key, { ns: translation.namespace })}
+                    </NavItem>
+                ))}
+                <NavDivider />
+                <NavSectionHeader>{t("extensionSettings", { ns: "general" })}</NavSectionHeader>
+                {enabledExtensions.map(({ id, name, nameTranslation, image }) => (
+                    <NavItem
+                        key={`extension-settings-tab-${id}`}
+                        value={`/extension/${id}`}
+                        icon={
+                            <div
+                                style={{
+                                    width: 16,
+                                    height: "100%",
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                <img
+                                    alt={name}
+                                    style={{ maxWidth: "100%", maxHeight: "100%" }}
+                                    src={getImageUrl({ image, shouldUseDarkColors })}
+                                />
+                            </div>
+                        }
                     >
-                        <div
-                            style={{
-                                width: 16,
-                                height: 16,
-                                display: "flex",
-                                flexDirection: "row",
-                                alignItems: "center",
-                            }}
-                        >
-                            <img
-                                alt={name}
-                                style={{ maxWidth: "100%", maxHeight: "100%" }}
-                                src={getImageUrl({ image, shouldUseDarkColors })}
-                            />
-                        </div>
                         {nameTranslation ? t(nameTranslation.key, { ns: nameTranslation.namespace }) : name}
-                    </div>
-                </Tab>
-            ))}
-        </TabList>
+                    </NavItem>
+                ))}
+            </NavDrawerBody>
+        </NavDrawer>
     );
 };

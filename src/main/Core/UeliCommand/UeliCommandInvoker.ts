@@ -26,7 +26,7 @@ export class UeliCommandInvoker implements UeliCommandInvokerInterface {
             openSettings: async () =>
                 this.emitUeliCommandInvokedEvent({
                     ueliCommand: "openSettings",
-                    argument: { pathname: "/general" },
+                    argument: { pathname: "/" },
                 }),
             openAbout: async () =>
                 this.emitUeliCommandInvokedEvent({

@@ -1,6 +1,7 @@
 import { useSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { Dropdown, Option } from "@fluentui/react-components";
+import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 
 export const Language = () => {
@@ -14,8 +15,12 @@ export const Language = () => {
     const { value: language, updateValue: setLanguage } = useSetting({
         key: "general.language",
         defaultValue: "en-US",
-        isSensitive: false,
     });
+
+    const changeLanguage = (language: string) => {
+        i18next.changeLanguage(language);
+        setLanguage(language);
+    };
 
     return (
         <Setting
@@ -24,7 +29,7 @@ export const Language = () => {
                 <Dropdown
                     value={languages.find(({ locale }) => locale === language)?.name}
                     selectedOptions={[language]}
-                    onOptionSelect={(_, { optionValue }) => optionValue && setLanguage(optionValue)}
+                    onOptionSelect={(_, { optionValue }) => optionValue && changeLanguage(optionValue)}
                 >
                     {languages.map(({ name, locale }) => (
                         <Option key={locale} value={locale} text={name}>

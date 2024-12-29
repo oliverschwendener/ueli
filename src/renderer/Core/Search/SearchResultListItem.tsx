@@ -1,4 +1,4 @@
-import { ThemeContext } from "@Core/Theme/ThemeContext";
+import { ThemeContext } from "@Core/Theme";
 import { getImageUrl } from "@Core/getImageUrl";
 import type { SearchResultItem } from "@common/Core";
 import { Text, tokens } from "@fluentui/react-components";

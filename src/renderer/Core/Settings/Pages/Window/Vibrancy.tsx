@@ -1,7 +1,6 @@
 import { useSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { Dropdown, Option } from "@fluentui/react-components";
-import { Virtualizer, useStaticVirtualizerMeasure } from "@fluentui/react-components/unstable";
 
 export const Vibrancy = () => {
     const { value: vibrancy, updateValue: setVibrancy } = useSetting({ key: "window.vibrancy", defaultValue: "None" });
@@ -24,11 +23,6 @@ export const Vibrancy = () => {
         "window",
     ];
 
-    const { virtualizerLength, bufferItems, bufferSize, scrollRef } = useStaticVirtualizerMeasure({
-        defaultItemSize: 20,
-        direction: "vertical",
-    });
-
     return (
         <Setting
             label="Vibrancy"
@@ -37,21 +31,12 @@ export const Vibrancy = () => {
                     value={vibrancy}
                     selectedOptions={[vibrancy]}
                     onOptionSelect={(_, { optionValue }) => optionValue && setVibrancy(optionValue)}
-                    listbox={{ ref: scrollRef, style: { maxHeight: 145 } }}
                 >
-                    <Virtualizer
-                        numItems={vibrancyOptions.length}
-                        virtualizerLength={virtualizerLength}
-                        bufferItems={bufferItems}
-                        bufferSize={bufferSize}
-                        itemSize={20}
-                    >
-                        {(i) => (
-                            <Option key={`window-vibrancy-option-${vibrancyOptions[i]}`} value={vibrancyOptions[i]}>
-                                {vibrancyOptions[i]}
-                            </Option>
-                        )}
-                    </Virtualizer>
+                    {vibrancyOptions.map((vibrancyOption) => (
+                        <Option key={`window-vibrancy-option-${vibrancyOption}`} value={vibrancyOption}>
+                            {vibrancyOption}
+                        </Option>
+                    ))}
                 </Dropdown>
             }
         />

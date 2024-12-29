@@ -7,11 +7,15 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
             resources: {
                 "en-US": {
                     settings: "Settings",
+                    generalSettings: "General settings",
+                    extensionSettings: "Extension settings",
                     actions: "Actions",
                     copiedToClipboard: "Copied",
                 },
                 "de-CH": {
                     settings: "Einstellungen",
+                    generalSettings: "Allgemeine Einstellungen",
+                    extensionSettings: "Erweiterungseinstellungen",
                     actions: "Aktionen",
                     copiedToClipboard: "Kopiert",
                 },

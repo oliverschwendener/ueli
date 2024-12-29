@@ -2,7 +2,7 @@ import { BaseLayout } from "@Core/BaseLayout";
 import type { ExtensionProps } from "@Core/ExtensionProps";
 import { Header } from "@Core/Header";
 import { useExtensionSetting } from "@Core/Hooks";
-import { ThemeContext } from "@Core/Theme/ThemeContext";
+import { ThemeContext } from "@Core/Theme";
 import { getImageUrl } from "@Core/getImageUrl";
 import { Button, Text, Tooltip } from "@fluentui/react-components";
 import { ArrowLeftFilled, CopyRegular, PersonRegular } from "@fluentui/react-icons";

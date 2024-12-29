@@ -1,12 +1,13 @@
 import { FluentProvider } from "@fluentui/react-components";
 import type { IpcRendererEvent } from "electron";
+import { changeLanguage } from "i18next";
 import { useContext, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router";
 import { Extension } from "./Extension";
 import { useExcludedSearchResultItems, useFavorites, useScrollBar, useSearchResultItems, useSetting } from "./Hooks";
 import { useI18n } from "./I18n";
 import { Search } from "./Search";
-import { ThemeContext } from "./Theme/ThemeContext";
+import { ThemeContext } from "./Theme";
 import { getAppCssProperties } from "./getAppCssProperties";
 
 export const App = () => {
@@ -36,10 +37,16 @@ export const App = () => {
             navigate({ pathname });
         };
 
+        const changeLanguageEventHandler = () => {
+            changeLanguage(window.ContextBridge.getSettingValue<string>("general.language", "en-US"));
+        };
+
         window.ContextBridge.ipcRenderer.on("navigateTo", navigateToEventHandler);
+        window.ContextBridge.ipcRenderer.on("settingUpdated[general.language]", changeLanguageEventHandler);
 
         return () => {
             window.ContextBridge.ipcRenderer.off("navigateTo", navigateToEventHandler);
+            window.ContextBridge.ipcRenderer.off("settingUpdated[general.language]", changeLanguageEventHandler);
         };
     }, []);
 

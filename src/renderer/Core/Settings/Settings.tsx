@@ -1,6 +1,6 @@
 import { useScrollBar } from "@Core/Hooks";
 import { useI18n } from "@Core/I18n";
-import { ThemeContext } from "@Core/Theme/ThemeContext";
+import { ThemeContext } from "@Core/Theme";
 import { FluentProvider } from "@fluentui/react-components";
 import type { IpcRendererEvent } from "electron";
 import { useContext, useEffect } from "react";
@@ -48,7 +48,6 @@ export const Settings = () => {
                             style={{
                                 display: "flex",
                                 flexDirection: "column",
-                                padding: 10,
                                 gap: 20,
                                 boxSizing: "border-box",
                                 height: "100vh",

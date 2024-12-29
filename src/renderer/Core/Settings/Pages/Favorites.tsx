@@ -1,6 +1,6 @@
 import { useFavorites, useSearchResultItems } from "@Core/Hooks";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
-import { ThemeContext } from "@Core/Theme/ThemeContext";
+import { ThemeContext } from "@Core/Theme";
 import { getImageUrl } from "@Core/getImageUrl";
 import { Badge, Button, Input, Text, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";

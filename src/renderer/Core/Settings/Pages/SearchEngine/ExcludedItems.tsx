@@ -1,5 +1,5 @@
 import { useSearchResultItems } from "@Core/Hooks";
-import { ThemeContext } from "@Core/Theme/ThemeContext";
+import { ThemeContext } from "@Core/Theme";
 import { getImageUrl } from "@Core/getImageUrl";
 import { Badge, Button, Input, Text, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";

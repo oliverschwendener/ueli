@@ -1,5 +1,5 @@
 import { useSetting } from "@Core/Hooks";
-import { ThemeContext } from "@Core/Theme/ThemeContext";
+import { ThemeContext } from "@Core/Theme";
 import { getImageUrl } from "@Core/getImageUrl";
 import {
     Avatar,
