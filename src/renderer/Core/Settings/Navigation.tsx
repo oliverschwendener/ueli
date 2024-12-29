@@ -29,7 +29,12 @@ export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps
             <NavDrawerBody>
                 <NavSectionHeader>{t("generalSettings", { ns: "general" })}</NavSectionHeader>
                 {settingsPages.map(({ translation, absolutePath, icon }) => (
-                    <NavItem key={`settings-page-tab-${absolutePath}`} value={absolutePath} icon={icon}>
+                    <NavItem
+                        key={`settings-page-tab-${absolutePath}`}
+                        value={absolutePath}
+                        onFocus={() => navigate(absolutePath)}
+                        icon={icon}
+                    >
                         {t(translation.key, { ns: translation.namespace })}
                     </NavItem>
                 ))}
@@ -39,6 +44,7 @@ export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps
                     <NavItem
                         key={`extension-settings-tab-${id}`}
                         value={`/extension/${id}`}
+                        onFocus={() => navigate(`/extension/${id}`)}
                         icon={
                             <div
                                 style={{
