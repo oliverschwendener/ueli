@@ -1,4 +1,5 @@
 import type { OperatingSystem } from "@common/Core";
+import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
 import type { App, BrowserWindow } from "electron";
 
 export class BrowserWindowToggler {
@@ -6,6 +7,7 @@ export class BrowserWindowToggler {
         private readonly operatingSystem: OperatingSystem,
         private readonly app: App,
         private readonly browserWindow: BrowserWindow,
+        private readonly browserWindowRegistry: BrowserWindowRegistry,
     ) {}
 
     public toggle(): void {
@@ -21,7 +23,7 @@ export class BrowserWindowToggler {
     }
 
     public hide(): void {
-        if (typeof this.app.hide === "function") {
+        if (this.operatingSystem === "macOS" && !this.settingsWindowIsVisible()) {
             this.app.hide();
         }
 
@@ -48,5 +50,15 @@ export class BrowserWindowToggler {
 
         this.browserWindow.focus();
         this.browserWindow.webContents.send("windowFocused");
+    }
+
+    private settingsWindowIsVisible(): boolean {
+        const settingsWindow = this.browserWindowRegistry.getById("settings");
+
+        if (!settingsWindow) {
+            return false;
+        }
+
+        return !settingsWindow.isDestroyed() && settingsWindow.isVisible();
     }
 }

@@ -54,7 +54,12 @@ export class SearchWindowModule {
 
         searchWindow.setVisibleOnAllWorkspaces(settingsManager.getValue("window.visibleOnAllWorkspaces", false));
 
-        const browserWindowToggler = new BrowserWindowToggler(operatingSystem, app, searchWindow);
+        const browserWindowToggler = new BrowserWindowToggler(
+            operatingSystem,
+            app,
+            searchWindow,
+            browserWindowRegistry,
+        );
 
         nativeTheme.on("updated", () => searchWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
 
