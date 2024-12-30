@@ -65,10 +65,6 @@ export class SettingsWindowManager {
             this.eventEmitter.emitEvent("settingsWindowClosed");
         });
 
-        settingsWindow.on("resized", () => {
-            console.log(settingsWindow.getBounds());
-        });
-
         await this.htmlLoader.loadHtmlFile(settingsWindow, "settings.html");
 
         return settingsWindow;
