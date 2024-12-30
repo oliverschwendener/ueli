@@ -1,9 +1,7 @@
-import { ThemeContext } from "@Core/ThemeContext";
-import { useContext, useEffect, useState } from "react";
+import { tokens } from "@fluentui/react-components";
+import { useEffect, useState } from "react";
 
 export const Logs = () => {
-    const { theme } = useContext(ThemeContext);
-
     const [logs, setLogs] = useState<string[]>(window.ContextBridge.getLogs());
 
     useEffect(() => {
@@ -24,12 +22,12 @@ export const Logs = () => {
             style={{
                 height: 300,
                 width: "100%",
-                fontFamily: theme.fontFamilyMonospace,
-                fontSize: theme.fontSizeBase200,
+                fontFamily: tokens.fontFamilyMonospace,
+                fontSize: tokens.fontSizeBase200,
                 resize: "vertical",
-                background: theme.colorNeutralBackground1,
-                color: theme.colorNeutralForeground1,
-                borderRadius: theme.borderRadiusMedium,
+                background: tokens.colorNeutralBackground1,
+                color: tokens.colorNeutralForeground1,
+                borderRadius: tokens.borderRadiusMedium,
                 padding: 10,
                 boxSizing: "border-box",
             }}

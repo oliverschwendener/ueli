@@ -1,68 +1,70 @@
-import type { Theme } from "@fluentui/react-components";
 import { FluentProvider } from "@fluentui/react-components";
 import type { IpcRendererEvent } from "electron";
-import { useEffect, useState } from "react";
+import { changeLanguage } from "i18next";
+import { useContext, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router";
 import { Extension } from "./Extension";
-import { useExcludedSearchResultItems, useFavorites, useScrollBar, useSearchResultItems } from "./Hooks";
+import { useExcludedSearchResultItems, useFavorites, useScrollBar, useSearchResultItems, useSetting } from "./Hooks";
 import { useI18n } from "./I18n";
 import { Search } from "./Search";
-import { Settings } from "./Settings";
-import { getTheme } from "./Theme";
-import { ThemeContext } from "./ThemeContext";
-import { useAppCssProperties } from "./useAppCssProperties";
+import { ThemeContext } from "./Theme";
+import { getAppCssProperties } from "./getAppCssProperties";
 
 export const App = () => {
-    const [theme, setTheme] = useState<Theme>(getTheme(window.ContextBridge));
-    const [shouldPreferDarkColors, setShouldPreferDarkColors] = useState<boolean>(
-        window.matchMedia("(prefers-color-scheme: dark)").matches,
-    );
+    const { fluentUiTheme, shouldUseDarkColors } = useContext(ThemeContext);
     const { searchResultItems } = useSearchResultItems();
     const { excludedSearchResultItemIds } = useExcludedSearchResultItems();
     const { favorites } = useFavorites();
 
-    const navigate = useNavigate();
-    const { appCssProperties } = useAppCssProperties();
+    const { value: backgroundMaterial } = useSetting({ key: "window.backgroundMaterial", defaultValue: "Mica" });
+    const { value: acrylicOpacity } = useSetting({ key: "window.acrylicOpacity", defaultValue: 0.6 });
+    const { value: vibrancy } = useSetting({ key: "window.vibrancy", defaultValue: "None" });
+
+    const { appCssProperties } = getAppCssProperties({
+        shouldUseDarkColors,
+        acrylicOpacity,
+        backgroundMaterial,
+        vibrancy,
+    });
 
     useI18n();
-    useScrollBar({ document, theme });
+    useScrollBar({ fluentUiTheme });
+
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const navigateToEventHandler = (_: IpcRendererEvent, { pathname }: { pathname: string }) =>
+        const navigateToEventHandler = (_: IpcRendererEvent, { pathname }: { pathname: string }) => {
             navigate({ pathname });
+        };
 
-        const nativeThemeChangedEventHandler = () => {
-            setTheme(getTheme(window.ContextBridge));
-            setShouldPreferDarkColors(window.matchMedia("(prefers-color-scheme: dark)").matches);
+        const changeLanguageEventHandler = () => {
+            changeLanguage(window.ContextBridge.getSettingValue<string>("general.language", "en-US"));
         };
 
         window.ContextBridge.ipcRenderer.on("navigateTo", navigateToEventHandler);
-        window.ContextBridge.ipcRenderer.on("nativeThemeChanged", nativeThemeChangedEventHandler);
+        window.ContextBridge.ipcRenderer.on("settingUpdated[general.language]", changeLanguageEventHandler);
 
         return () => {
             window.ContextBridge.ipcRenderer.off("navigateTo", navigateToEventHandler);
-            window.ContextBridge.ipcRenderer.off("nativeThemeChanged", nativeThemeChangedEventHandler);
+            window.ContextBridge.ipcRenderer.off("settingUpdated[general.language]", changeLanguageEventHandler);
         };
     }, []);
 
     return (
-        <ThemeContext.Provider value={{ theme, setTheme, shouldPreferDarkColors }}>
-            <FluentProvider theme={theme} style={appCssProperties}>
-                <Routes>
-                    <Route
-                        path="/"
-                        element={
-                            <Search
-                                searchResultItems={searchResultItems}
-                                excludedSearchResultItemIds={excludedSearchResultItemIds}
-                                favoriteSearchResultItemIds={favorites}
-                            />
-                        }
-                    />
-                    <Route path="/settings/*" element={<Settings />} />
-                    <Route path="/extension/:extensionId" element={<Extension />} />
-                </Routes>
-            </FluentProvider>
-        </ThemeContext.Provider>
+        <FluentProvider theme={fluentUiTheme} style={appCssProperties}>
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <Search
+                            searchResultItems={searchResultItems}
+                            excludedSearchResultItemIds={excludedSearchResultItemIds}
+                            favoriteSearchResultItemIds={favorites}
+                        />
+                    }
+                />
+                <Route path="/extension/:extensionId" element={<Extension />} />
+            </Routes>
+        </FluentProvider>
     );
 };

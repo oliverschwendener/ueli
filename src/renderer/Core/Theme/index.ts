@@ -1,2 +1,2 @@
 export * from "./getAvailableThemes";
-export * from "./getTheme";
+export * from "./ThemeContext";

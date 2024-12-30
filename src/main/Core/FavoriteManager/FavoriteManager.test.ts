@@ -26,8 +26,8 @@ describe(FavoriteManager, () => {
             updateValue: (k, v) => updateValueMock(k, v),
         };
 
-        const notifyMock = vi.fn();
-        const browserWindowNotifier = <BrowserWindowNotifier>{ notify: (e) => notifyMock(e) };
+        const notifyAllMock = vi.fn();
+        const browserWindowNotifier = <BrowserWindowNotifier>{ notifyAll: (a) => notifyAllMock(a) };
 
         const favoriteManager = new FavoriteManager(settingsManager, browserWindowNotifier);
 
@@ -36,7 +36,7 @@ describe(FavoriteManager, () => {
         expect(favoriteManager.favorites).toEqual(["id_1"]);
         expect(getValueMock).toHaveBeenCalledWith("favorites", []);
         expect(updateValueMock).toHaveBeenCalledWith("favorites", ["id_1"]);
-        expect(notifyMock).toHaveBeenCalledWith("favoritesUpdated");
+        expect(notifyAllMock).toHaveBeenCalledWith({ channel: "favoritesUpdated" });
     });
 
     it("should remove a favorite", async () => {
@@ -48,8 +48,8 @@ describe(FavoriteManager, () => {
             updateValue: (k, v) => updateValueMock(k, v),
         };
 
-        const notifyMock = vi.fn();
-        const eventEmitter = <BrowserWindowNotifier>{ notify: (c) => notifyMock(c) };
+        const notifyAllMock = vi.fn();
+        const eventEmitter = <BrowserWindowNotifier>{ notifyAll: (a) => notifyAllMock(a) };
 
         const favoriteManager = new FavoriteManager(settingsManager, eventEmitter);
 
@@ -58,6 +58,6 @@ describe(FavoriteManager, () => {
         expect(favoriteManager.favorites).toEqual([]);
         expect(getValueMock).toHaveBeenCalledWith("favorites", []);
         expect(updateValueMock).toHaveBeenCalledWith("favorites", []);
-        expect(notifyMock).toHaveBeenCalledWith("favoritesUpdated");
+        expect(notifyAllMock).toHaveBeenCalledWith({ channel: "favoritesUpdated" });
     });
 });

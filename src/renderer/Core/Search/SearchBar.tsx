@@ -1,6 +1,7 @@
+import { ThemeContext } from "@Core/Theme";
 import { Input } from "@fluentui/react-components";
 import { SearchRegular } from "@fluentui/react-icons";
-import type { ChangeEvent, KeyboardEvent, ReactElement, RefObject } from "react";
+import { useContext, type ChangeEvent, type KeyboardEvent, type ReactElement, type RefObject } from "react";
 import type { SearchBarAppearance } from "./SearchBarAppearance";
 import type { SearchBarSize } from "./SearchBarSize";
 
@@ -27,6 +28,8 @@ export const SearchBar = ({
     searchBarSize,
     showIcon,
 }: SearchBarProps) => {
+    const { shouldUseDarkColors } = useContext(ThemeContext);
+
     const onChange = onSearchTermUpdated
         ? (_: ChangeEvent<HTMLInputElement>, { value }: { value: string }) => onSearchTermUpdated(value)
         : undefined;
@@ -37,7 +40,7 @@ export const SearchBar = ({
             ref={refObject}
             appearance={
                 searchBarAppearance === "auto"
-                    ? window.ContextBridge.themeShouldUseDarkColors()
+                    ? shouldUseDarkColors
                         ? "filled-darker"
                         : "filled-lighter"
                     : searchBarAppearance

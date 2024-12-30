@@ -1,72 +1,91 @@
-import { getImageUrl } from "@Core/getImageUrl";
 import type { ExtensionInfo } from "@common/Core";
-import { Tab, TabList } from "@fluentui/react-components";
+import { getImageUrl } from "@Core/getImageUrl";
+import { ThemeContext } from "@Core/Theme";
+import { NavDivider, NavDrawer, NavDrawerBody, NavItem, NavSectionHeader } from "@fluentui/react-nav-preview";
+import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router";
 import type { SettingsPage } from "./Pages";
 
 type NavigationProps = {
     settingsPages: SettingsPage[];
-    enabledExtensions: ExtensionInfo[];
 };
 
-export const Navigation = ({ settingsPages, enabledExtensions }: NavigationProps) => {
+export const Navigation = ({ settingsPages }: NavigationProps) => {
+    const { shouldUseDarkColors } = useContext(ThemeContext);
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
+    const [enabledExtensions, setEnabledExtensios] = useState<ExtensionInfo[]>(
+        window.ContextBridge.getEnabledExtensions(),
+    );
+
+    useEffect(() => {
+        const extensionToggleEventHandler = () => {
+            setEnabledExtensios(window.ContextBridge.getEnabledExtensions());
+        };
+
+        window.ContextBridge.ipcRenderer.on("extensionEnabled", extensionToggleEventHandler);
+        window.ContextBridge.ipcRenderer.on("extensionDisabled", extensionToggleEventHandler);
+
+        return () => {
+            window.ContextBridge.ipcRenderer.off("extensionEnabled", extensionToggleEventHandler);
+            window.ContextBridge.ipcRenderer.off("extensionDisabled", extensionToggleEventHandler);
+        };
+    }, []);
+
     return (
-        <TabList
+        <NavDrawer
+            open
+            type="inline"
             selectedValue={pathname}
-            onTabSelect={(_, { value }) => navigate({ pathname: value as string })}
-            vertical
-            appearance="subtle"
-            style={{ width: "100%" }}
-            selectTabOnFocus
+            onNavItemSelect={(_, { value }) => navigate(value)}
+            size="small"
+            style={{ height: "100%" }}
         >
-            {settingsPages.map(({ translation, absolutePath, icon }, i) => (
-                <Tab
-                    autoFocus={i === 0}
-                    style={{ marginBottom: settingsPages.length - 1 === i ? 10 : undefined }}
-                    key={`settings-page-tab-${absolutePath}`}
-                    value={absolutePath}
-                    icon={icon}
-                >
-                    {t(translation.key, { ns: translation.namespace })}
-                </Tab>
-            ))}
-            {enabledExtensions.map((e) => (
-                <Tab key={`extension-settings-tab-${e.id}`} value={`/settings/extension/${e.id}`}>
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            gap: 10,
-                        }}
+            <NavDrawerBody>
+                <NavSectionHeader>{t("generalSettings", { ns: "general" })}</NavSectionHeader>
+                {settingsPages.map(({ translation, absolutePath, icon }) => (
+                    <NavItem
+                        key={`settings-page-tab-${absolutePath}`}
+                        value={absolutePath}
+                        onFocus={() => navigate(absolutePath)}
+                        icon={icon}
                     >
-                        <div
-                            style={{
-                                width: 16,
-                                height: 16,
-                                display: "flex",
-                                flexDirection: "row",
-                                alignItems: "center",
-                            }}
-                        >
-                            <img
-                                alt={e.name}
-                                style={{ maxWidth: "100%", maxHeight: "100%" }}
-                                src={getImageUrl({
-                                    image: e.image,
-                                    shouldPreferDarkColors: window.ContextBridge.themeShouldUseDarkColors(),
-                                })}
-                            />
-                        </div>
-                        {e.nameTranslation ? t(e.nameTranslation.key, { ns: e.nameTranslation.namespace }) : e.name}
-                    </div>
-                </Tab>
-            ))}
-        </TabList>
+                        {t(translation.key, { ns: translation.namespace })}
+                    </NavItem>
+                ))}
+                <NavDivider />
+                <NavSectionHeader>{t("extensionSettings", { ns: "general" })}</NavSectionHeader>
+                {enabledExtensions.map(({ id, name, nameTranslation, image }) => (
+                    <NavItem
+                        key={`extension-settings-tab-${id}`}
+                        value={`/extension/${id}`}
+                        onFocus={() => navigate(`/extension/${id}`)}
+                        icon={
+                            <div
+                                style={{
+                                    width: 20,
+                                    height: "100%",
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                <img
+                                    alt={name}
+                                    style={{ maxWidth: "100%", maxHeight: "100%" }}
+                                    src={getImageUrl({ image, shouldUseDarkColors })}
+                                />
+                            </div>
+                        }
+                    >
+                        {nameTranslation ? t(nameTranslation.key, { ns: nameTranslation.namespace }) : name}
+                    </NavItem>
+                ))}
+            </NavDrawerBody>
+        </NavDrawer>
     );
 };

@@ -1,5 +1,3 @@
-import { useExtensionSetting } from "@Core/Hooks";
-import type { ContextBridge } from "@common/Core";
 import { Dropdown, Option, ProgressBar, Textarea } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 import { sourceLanguages } from "./sourceLanguages";
@@ -8,7 +6,8 @@ import { targetLanguages } from "./targetLanguages";
 type TranslatorProps = {
     translatedText: string;
     setTranslatedText: (text: string) => void;
-    contextBridge: ContextBridge;
+    defaultSourceLanguage: string;
+    defaultTargetLanguage: string;
 };
 
 type InvocationArgument = {
@@ -19,21 +18,19 @@ type InvocationArgument = {
 
 type InvocationResult = string[];
 
-export const Translator = ({ translatedText, setTranslatedText, contextBridge }: TranslatorProps) => {
+export const Translator = ({
+    translatedText,
+    setTranslatedText,
+    defaultSourceLanguage,
+    defaultTargetLanguage,
+}: TranslatorProps) => {
     const extensionId = "DeeplTranslator";
 
     const [userInput, setUserInput] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(userInput.length > 0);
 
-    const { value: sourceLanguage, updateValue: setSourceLanguage } = useExtensionSetting<string>({
-        extensionId,
-        key: "defaultSourceLanguage",
-    });
-
-    const { value: targetLanguage, updateValue: setTargetLanguage } = useExtensionSetting<string>({
-        extensionId,
-        key: "defaultTargetLanguage",
-    });
+    const [sourceLanguage, setSourceLanguage] = useState<string>(defaultSourceLanguage);
+    const [targetLanguage, setTargetLanguage] = useState<string>(defaultTargetLanguage);
 
     const [clearTimeoutValue, setClearTimeoutValue] = useState<NodeJS.Timeout | undefined>(undefined);
 
@@ -45,7 +42,7 @@ export const Translator = ({ translatedText, setTranslatedText, contextBridge }:
         }
 
         try {
-            const translations = await contextBridge.invokeExtension<InvocationArgument, InvocationResult>(
+            const translations = await window.ContextBridge.invokeExtension<InvocationArgument, InvocationResult>(
                 extensionId,
                 { searchTerm, sourceLanguage, targetLanguage },
             );

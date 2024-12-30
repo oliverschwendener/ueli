@@ -2,19 +2,22 @@ import { useSetting } from "@Core/Hooks";
 import { useState } from "react";
 
 export const useSearchHistoryController = () => {
-    const isEnabled = () => window.ContextBridge.getSettingValue("general.searchHistory.enabled", false);
+    const { value: isEnabled } = useSetting({
+        key: "general.searchHistory.enabled",
+        defaultValue: false,
+    });
 
     const { value: searchHistory, updateValue: setSearchHistory } = useSetting<string[]>({
         key: "general.searchHistory.history",
         defaultValue: [],
     });
 
-    const limit = window.ContextBridge.getSettingValue("general.searchHistory.limit", 10);
-
     const [menuIsOpen, setMenuIsOpen] = useState(false);
 
     const add = (searchTerm: string) => {
-        if (!isEnabled() || searchHistory.includes(searchTerm.trim())) {
+        const limit = window.ContextBridge.getSettingValue("general.searchHistory.limit", 10);
+
+        if (!isEnabled || searchHistory.includes(searchTerm.trim())) {
             return;
         }
 

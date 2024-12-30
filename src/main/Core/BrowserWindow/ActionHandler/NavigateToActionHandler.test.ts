@@ -1,17 +1,31 @@
-import type { EventEmitter } from "@Core/EventEmitter";
+import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { SearchResultItemAction } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
 import { NavigateToActionHandler } from "./NavigateToActionHandler";
 
 describe(NavigateToActionHandler, () => {
     it("should navigate to pathname", async () => {
-        const emitEventMock = vi.fn();
-        const eventEmitter = <EventEmitter>{ emitEvent: (event, data) => emitEventMock(event, data) };
+        const notifyMock = vi.fn();
 
-        const actionHandler = new NavigateToActionHandler(eventEmitter);
-        await actionHandler.invokeAction(<SearchResultItemAction>{ argument: "pathname" });
+        const browserWindowNotifier = <BrowserWindowNotifier>{
+            notify: (a) => notifyMock(a),
+        };
+
+        const actionHandler = new NavigateToActionHandler(browserWindowNotifier);
+
+        await actionHandler.invokeAction(<SearchResultItemAction>{
+            argument: JSON.stringify({
+                browserWindowId: "window1",
+                pathname: "pathname",
+            }),
+        });
 
         expect(actionHandler.id).toEqual("navigateTo");
-        expect(emitEventMock).toHaveBeenCalledWith("navigateTo", { pathname: "pathname" });
+
+        expect(notifyMock).toHaveBeenCalledWith({
+            browserWindowId: "window1",
+            channel: "navigateTo",
+            data: { pathname: "pathname" },
+        });
     });
 });

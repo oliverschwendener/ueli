@@ -1,21 +1,18 @@
-import { ThemeContext } from "@Core/ThemeContext";
-import { useContext } from "react";
+import { tokens } from "@fluentui/react-components";
 
 type KeyboardShortcutProps = {
     shortcut: string;
 };
 
 export const KeyboardShortcut = ({ shortcut }: KeyboardShortcutProps) => {
-    const { theme } = useContext(ThemeContext);
-
     return (
         <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 2 }}>
             {shortcut.split("+").map((part) => (
                 <kbd
                     key={`keyboard-shortcut-part-${part}`}
                     style={{
-                        backgroundColor: theme.colorNeutralBackground5,
-                        borderRadius: theme.borderRadiusMedium,
+                        backgroundColor: tokens.colorNeutralBackground5,
+                        borderRadius: tokens.borderRadiusMedium,
                         padding: "0px 5px",
                     }}
                 >

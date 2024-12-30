@@ -20,14 +20,14 @@ export class FavoriteManager {
 
         this.favorites.push(id);
         await this.saveChanges();
-        this.browserWindowNotifier.notify("favoritesUpdated");
+        this.browserWindowNotifier.notifyAll({ channel: "favoritesUpdated" });
     }
 
     public async remove(id: string): Promise<void> {
         const indexToDelete = this.favorites.findIndex((f) => f === id);
         this.favorites.splice(indexToDelete, 1);
         await this.saveChanges();
-        this.browserWindowNotifier.notify("favoritesUpdated");
+        this.browserWindowNotifier.notifyAll({ channel: "favoritesUpdated" });
     }
 
     public getAll(): string[] {

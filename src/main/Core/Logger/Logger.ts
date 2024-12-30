@@ -32,6 +32,6 @@ export class Logger implements LoggerInterface {
 
     private writeLog(logLevel: string, message: string) {
         this.logs.push(`[${this.dateProvider.get().toLocaleString()}][${logLevel}] ${message}`);
-        this.browserWindowNotifier.notify("logsUpdated");
+        this.browserWindowNotifier.notifyAll({ channel: "logsUpdated" });
     }
 }

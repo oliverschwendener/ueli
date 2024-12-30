@@ -1,6 +1,6 @@
 import type { ActionHandler } from "@Core/ActionHandler";
-import type { EventEmitter } from "@Core/EventEmitter";
-import type { SearchResultItemAction } from "@common/Core";
+import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
+import type { NavigateToArgument, SearchResultItemAction } from "@common/Core";
 
 /**
  * Action handler for navigating to a specific path in the renderer process.
@@ -8,13 +8,19 @@ import type { SearchResultItemAction } from "@common/Core";
 export class NavigateToActionHandler implements ActionHandler {
     public id = "navigateTo";
 
-    public constructor(private readonly eventEmitter: EventEmitter) {}
+    public constructor(private readonly browserWindowNotifier: BrowserWindowNotifier) {}
 
     /**
      * Navigates to the given path in the renderer process.
-     * Expects the given action's argument to be a valid path, e.g.: "/settings".
+     * Expects the given action's argument to be a valid path, e.g.: "/my/path".
      */
     public async invokeAction(action: SearchResultItemAction): Promise<void> {
-        this.eventEmitter.emitEvent("navigateTo", { pathname: action.argument });
+        const { browserWindowId, pathname }: NavigateToArgument = JSON.parse(action.argument);
+
+        this.browserWindowNotifier.notify({
+            browserWindowId,
+            channel: "navigateTo",
+            data: { pathname },
+        });
     }
 }

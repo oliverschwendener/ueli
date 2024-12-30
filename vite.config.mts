@@ -28,6 +28,12 @@ export default defineConfig(({ command }) => {
             },
         },
         build: {
+            rollupOptions: {
+                input: {
+                    search: join(rendererRoot, "search.html"),
+                    settings: join(rendererRoot, "settings.html"),
+                },
+            },
             outDir: rendererOutDir,
             emptyOutDir: true,
             chunkSizeWarningLimit: 1200,

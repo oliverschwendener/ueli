@@ -47,6 +47,6 @@ export class ExcludedSearchResults {
     }
 
     private emitItemsUpdatedEvent() {
-        this.browserWindowNotifier.notify("excludedSearchResultItemsUpdated");
+        this.browserWindowNotifier.notifyAll({ channel: "excludedSearchResultItemsUpdated" });
     }
 }

@@ -1,5 +1,4 @@
 import { useSetting } from "@Core/Hooks";
-import { SearchBar } from "@Core/Search/SearchBar";
 import type { SearchBarAppearance } from "@Core/Search/SearchBarAppearance";
 import type { SearchBarSize } from "@Core/Search/SearchBarSize";
 import { Setting } from "@Core/Settings/Setting";
@@ -35,19 +34,6 @@ export const SearchBarSettings = () => {
 
     return (
         <SettingGroup title={t("searchBar", { ns: "settingsAppearance" })}>
-            <Setting
-                label={t("searchBarPreview", { ns: "settingsAppearance" })}
-                control={
-                    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-                        <SearchBar
-                            searchBarSize={searchBarSize}
-                            searchBarAppearance={searchBarAppearance}
-                            searchBarPlaceholderText={searchBarPlaceholderText}
-                            showIcon={showIcon}
-                        />
-                    </div>
-                }
-            />
             <Setting
                 label={t("searchBarSize", { ns: "settingsAppearance" })}
                 control={

@@ -40,12 +40,12 @@ const contextBridgeImplementation: ContextBridge = {
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
     invokeExtension: (extensionId, argument) => ipcRenderer.invoke("invokeExtension", { extensionId, argument }),
     openExternal: (url, options) => ipcRenderer.invoke("openExternal", { url, options }),
+    openSettings: () => ipcRenderer.send("openSettings"),
     removeExcludedSearchResultItem: (itemId: string) =>
         ipcRenderer.invoke("removeExcludedSearchResultItem", { itemId }),
     removeFavorite: (id) => ipcRenderer.invoke("removeFavorite", { id }),
     resetAllSettings: () => ipcRenderer.invoke("resetAllSettings"),
     showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),
-    themeShouldUseDarkColors: () => ipcRenderer.sendSync("themeShouldUseDarkColors"),
     triggerExtensionRescan: (extensionId) => ipcRenderer.invoke("triggerExtensionRescan", { extensionId }),
     updateSettingValue: (key, value, isSensitive) =>
         ipcRenderer.invoke("updateSettingValue", { key, value, isSensitive }),

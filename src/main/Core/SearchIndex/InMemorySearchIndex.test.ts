@@ -27,8 +27,8 @@ describe(InMemorySearchIndex, () => {
     });
 
     it("should add search result items to the index with the extension id as a key and emit an event", () => {
-        const notifyMock = vi.fn();
-        const eventEmitter = <BrowserWindowNotifier>{ notify: (c) => notifyMock(c) };
+        const notifyAllMock = vi.fn();
+        const eventEmitter = <BrowserWindowNotifier>{ notifyAll: (a) => notifyAllMock(a) };
 
         const searchResultItems: SearchResultItem[] = [
             <SearchResultItem>{ description: "item1", id: "item1", name: "item1" },
@@ -41,12 +41,12 @@ describe(InMemorySearchIndex, () => {
         searchIndex.addSearchResultItems("extensionId1", searchResultItems);
 
         expect(searchIndex.getIndex()).toEqual({ extensionId1: searchResultItems });
-        expect(notifyMock).toHaveBeenCalledWith("searchIndexUpdated");
+        expect(notifyAllMock).toHaveBeenCalledWith({ channel: "searchIndexUpdated" });
     });
 
     it("should delete the key from the index and emit an event when removing search result items by extension id", () => {
-        const notifyMock = vi.fn();
-        const eventEmitter = <BrowserWindowNotifier>{ notify: (c) => notifyMock(c) };
+        const notifyAllMock = vi.fn();
+        const eventEmitter = <BrowserWindowNotifier>{ notifyAll: (a) => notifyAllMock(a) };
 
         const searchIndex = new InMemorySearchIndex(eventEmitter);
 
@@ -61,6 +61,6 @@ describe(InMemorySearchIndex, () => {
         searchIndex.removeSearchResultItems("extensionId1");
 
         expect(searchIndex.getIndex()).toEqual({});
-        expect(notifyMock).toHaveBeenCalledWith("searchIndexUpdated");
+        expect(notifyAllMock).toHaveBeenCalledWith({ channel: "searchIndexUpdated" });
     });
 });

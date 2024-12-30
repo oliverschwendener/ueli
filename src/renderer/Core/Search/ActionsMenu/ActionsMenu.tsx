@@ -1,4 +1,5 @@
 import { KeyboardShortcut } from "@Core/Components";
+import { useSetting } from "@Core/Hooks";
 import { type SearchResultItem, type SearchResultItemAction } from "@common/Core";
 import {
     Button,
@@ -44,10 +45,10 @@ export const ActionsMenu = ({
 
     const actions = searchResultItem ? getActions(searchResultItem, favorites) : [];
 
-    const showKeyboardShortcuts = window.ContextBridge.getSettingValue<boolean>(
-        "appearance.showKeyboardShortcuts",
-        true,
-    );
+    const { value: showKeyboardShortcuts } = useSetting({
+        key: "appearance.showKeyboardShortcuts",
+        defaultValue: true,
+    });
 
     useEffect(() => {
         const copiedToClipboardHandler = () =>

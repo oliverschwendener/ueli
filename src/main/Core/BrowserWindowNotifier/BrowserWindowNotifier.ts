@@ -1,14 +1,24 @@
-import type { BrowserWindow } from "electron";
+import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
 import type { BrowserWindowNotifier as BrowserWindowNotifierInterface } from "./Contract";
 
 export class BrowserWindowNotifier implements BrowserWindowNotifierInterface {
-    private browserWindow?: BrowserWindow;
+    public constructor(private readonly browserWindowRegistry: BrowserWindowRegistry) {}
 
-    public setBrowserWindow(browserWindow: BrowserWindow) {
-        this.browserWindow = browserWindow;
+    public notify<T>({ browserWindowId, channel, data }: { browserWindowId: string; channel: string; data?: T }) {
+        const browserWindow = this.browserWindowRegistry.getById(browserWindowId);
+
+        if (browserWindow && !browserWindow.isDestroyed()) {
+            browserWindow.webContents.send(channel, data);
+        }
     }
 
-    public notify<T>(channel: string, data?: T) {
-        this.browserWindow?.webContents.send(channel, data);
+    public notifyAll<T>({ channel, data }: { channel: string; data?: T }) {
+        const aliveBrowserWindows = this.browserWindowRegistry
+            .getAll()
+            .filter((browserWindow) => !browserWindow.isDestroyed());
+
+        for (const browserWindow of aliveBrowserWindows) {
+            browserWindow.webContents.send(channel, data);
+        }
     }
 }

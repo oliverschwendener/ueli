@@ -1,4 +1,5 @@
-import { useState } from "react";
+import type { IpcRendererEvent } from "electron";
+import { useEffect, useState } from "react";
 
 export const useSetting = <Value>({
     key,
@@ -15,6 +16,18 @@ export const useSetting = <Value>({
         setValue(updatedValue);
         await window.ContextBridge.updateSettingValue(key, updatedValue, isSensitive);
     };
+
+    useEffect(() => {
+        const listener = (_: IpcRendererEvent, { value: newValue }: { value: Value }) => {
+            setValue(newValue);
+        };
+
+        window.ContextBridge.ipcRenderer.on(`settingUpdated[${key}]`, listener);
+
+        return () => {
+            window.ContextBridge.ipcRenderer.off(`settingUpdated[${key}]`, listener);
+        };
+    }, []);
 
     return { value, updateValue };
 };

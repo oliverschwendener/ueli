@@ -1,11 +1,10 @@
 import { KeyboardShortcut } from "@Core/Components";
-import { ThemeContext } from "@Core/ThemeContext";
+import { useSetting } from "@Core/Hooks";
 import type { SearchResultItem } from "@common/Core";
-import { Button, Text } from "@fluentui/react-components";
+import { Button, Text, tokens } from "@fluentui/react-components";
 import { SettingsRegular } from "@fluentui/react-icons";
-import { useContext, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import { BaseLayout } from "../BaseLayout";
 import { Footer } from "../Footer";
 import { ActionsMenu } from "./ActionsMenu";
@@ -32,7 +31,6 @@ export const Search = ({
     favoriteSearchResultItemIds,
 }: SearchProps) => {
     const { t } = useTranslation("search");
-    const { theme } = useContext(ThemeContext);
 
     const [additionalActionsMenuIsOpen, setAdditionalActionsMenuIsOpen] = useState(false);
 
@@ -55,18 +53,7 @@ export const Search = ({
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
 
-    const navigate = useNavigate();
-    const openSettings = () => navigate({ pathname: "/settings/general" });
-
-    const singleClickBehavior = window.ContextBridge.getSettingValue(
-        "keyboardAndMouse.singleClickBehavior",
-        "selectSearchResultItem",
-    );
-
-    const doubleClickBehavior = window.ContextBridge.getSettingValue(
-        "keyboardAndMouse.doubleClickBehavior",
-        "invokeSearchResultItem",
-    );
+    const openSettings = () => window.ContextBridge.openSettings();
 
     const handleUserInputKeyDownEvent = (keyboardEvent: ReactKeyboardEvent<HTMLElement>) => {
         const eventHandlers: KeyboardEventHandler[] = [
@@ -116,10 +103,20 @@ export const Search = ({
     };
 
     const handleSearchResultItemClickEvent = (searchResultItem: SearchResultItem) => {
+        const singleClickBehavior = window.ContextBridge.getSettingValue(
+            "keyboardAndMouse.singleClickBehavior",
+            "selectSearchResultItem",
+        );
+
         clickHandlers[singleClickBehavior](searchResultItem);
     };
 
     const handleSearchResultItemDoubleClickEvent = (searchResultItem: SearchResultItem) => {
+        const doubleClickBehavior = window.ContextBridge.getSettingValue(
+            "keyboardAndMouse.doubleClickBehavior",
+            "invokeSearchResultItem",
+        );
+
         clickHandlers[doubleClickBehavior](searchResultItem);
     };
 
@@ -128,10 +125,10 @@ export const Search = ({
         userInput.focus();
     };
 
-    const showKeyboardShortcuts = window.ContextBridge.getSettingValue<boolean>(
-        "appearance.showKeyboardShortcuts",
-        true,
-    );
+    const { value: showKeyboardShortcuts } = useSetting({
+        key: "appearance.showKeyboardShortcuts",
+        defaultValue: true,
+    });
 
     const toggleAdditionalActionsMenu = (open: boolean) => {
         setAdditionalActionsMenuIsOpen(open);
@@ -211,6 +208,26 @@ export const Search = ({
         search(searchTerm.value);
     }, [favoriteSearchResultItemIds, excludedSearchResultItemIds]);
 
+    const { value: searchBarAppearance } = useSetting<SearchBarAppearance>({
+        key: "appearance.searchBarAppearance",
+        defaultValue: "auto",
+    });
+
+    const { value: searchBarSize } = useSetting<SearchBarSize>({
+        key: "appearance.searchBarSize",
+        defaultValue: "large",
+    });
+
+    const { value: searchBarPlaceholderText } = useSetting({
+        key: "appearance.searchBarPlaceholderText",
+        defaultValue: t("searchBarPlaceholderText"),
+    });
+
+    const { value: searchBarShowSearchIcon } = useSetting({
+        key: "appearance.showSearchIcon",
+        defaultValue: true,
+    });
+
     return (
         <BaseLayout
             header={
@@ -229,21 +246,12 @@ export const Search = ({
                         onKeyDown={handleUserInputKeyDownEvent}
                         onSearchTermUpdated={search}
                         searchTerm={searchTerm.value}
-                        searchBarSize={window.ContextBridge.getSettingValue<SearchBarSize>(
-                            "appearance.searchBarSize",
-                            "large",
-                        )}
-                        searchBarAppearance={window.ContextBridge.getSettingValue<SearchBarAppearance>(
-                            "appearance.searchBarAppearance",
-                            "auto",
-                        )}
-                        searchBarPlaceholderText={window.ContextBridge.getSettingValue(
-                            "appearance.searchBarPlaceholderText",
-                            t("searchBarPlaceholderText"),
-                        )}
-                        showIcon={window.ContextBridge.getSettingValue("appearance.showSearchIcon", true)}
+                        searchBarSize={searchBarSize}
+                        searchBarAppearance={searchBarAppearance}
+                        searchBarPlaceholderText={searchBarPlaceholderText}
+                        showIcon={searchBarShowSearchIcon}
                         contentAfter={
-                            searchHistory.isEnabled() ? (
+                            searchHistory.isEnabled ? (
                                 <SearchHistory
                                     {...searchHistory}
                                     onItemSelected={search}
@@ -284,7 +292,7 @@ export const Search = ({
                                             <Text
                                                 size={200}
                                                 weight="medium"
-                                                style={{ color: theme.colorNeutralForeground4 }}
+                                                style={{ color: tokens.colorNeutralForeground4 }}
                                             >
                                                 {t(`searchResultGroup.${group}`)}
                                             </Text>

@@ -53,6 +53,7 @@ if (!app.requestSingleInstanceLock()) {
     Core.XmlParserModule.bootstrap(dependencyRegistry);
     Core.EventEmitterModule.bootstrap(dependencyRegistry);
     Core.EventSubscriberModule.bootstrap(dependencyRegistry);
+    Core.BrowserWindowRegistryModule.bootstrap(dependencyRegistry);
     Core.BrowserWindowNotifierModule.bootstrap(dependencyRegistry);
     Core.DateProviderModule.bootstrap(dependencyRegistry);
     Core.LoggerModule.bootstrap(dependencyRegistry);
@@ -70,12 +71,12 @@ if (!app.requestSingleInstanceLock()) {
     Core.SettingsReaderModule.bootstrap(dependencyRegistry);
     Core.SettingsWriterModule.bootstrap(dependencyRegistry);
     Core.SettingsManagerModule.bootstrap(dependencyRegistry);
+    Core.BrowserWindowModule.bootstrap(dependencyRegistry);
     Core.ShellModule.bootstrap(dependencyRegistry);
     Core.DockModule.bootstrap(dependencyRegistry);
     await Core.ImageGeneratorModule.bootstrap(dependencyRegistry);
     Core.TranslatorModule.bootstrap(dependencyRegistry);
     Core.SearchIndexModule.bootstrap(dependencyRegistry);
-    Core.NativeThemeModule.bootstrap(dependencyRegistry);
     Core.GlobalShortcutModule.bootstrap(dependencyRegistry);
     Core.AutostartModule.bootstrap(dependencyRegistry);
     Core.ExcludedSearchResultsModule.bootstrap(dependencyRegistry);
@@ -90,8 +91,9 @@ if (!app.requestSingleInstanceLock()) {
     Extensions.ExtensionLoader.bootstrap(dependencyRegistry);
     await Core.ExtensionManagerModule.bootstrap(dependencyRegistry);
 
-    // BrowserWindow
-    await Core.BrowserWindowModule.bootstrap(dependencyRegistry);
+    // Windows
+    await Core.SearchWindowModule.bootstrap(dependencyRegistry);
+    await Core.SettingsWindowModule.bootstrap(dependencyRegistry);
 
     Core.RescanOrchestratorModule.bootstrap(dependencyRegistry);
 })();

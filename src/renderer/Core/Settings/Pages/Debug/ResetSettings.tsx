@@ -16,11 +16,7 @@ export const ResetSettings = () => {
 
     return (
         <Field label={t("resetAllSettings")} hint={t("resetAllSettingsHint")}>
-            <Dialog
-                onOpenChange={(event) => {
-                    event.stopPropagation();
-                }}
-            >
+            <Dialog>
                 <DialogTrigger disableButtonEnhancement>
                     <div>
                         <Button>{t("resetAllSettingsButton")}</Button>

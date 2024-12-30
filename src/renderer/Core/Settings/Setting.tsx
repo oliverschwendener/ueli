@@ -9,7 +9,7 @@ type SettingSectionProps = {
 
 export const Setting = ({ control, label, description }: SettingSectionProps) => {
     return (
-        <Card appearance="outline">
+        <Card appearance="filled-alternative">
             <div
                 style={{
                     display: "flex",
